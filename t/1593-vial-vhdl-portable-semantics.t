@@ -54,7 +54,7 @@ subtest 'emitter produces a deterministic closed unqualified portable VHDL seman
     is_deeply([sort keys %$first],
         [sort @{FSM::VIAL::Backend::VHDLPortableGHDL->result_keys}],
         'backend result shell is closed');
-    is($first->{status}, 'emitted_unqualified_portable_semantics',
+    is($first->{status}, 'emitted_unqualified_portable_checking',
         'status cannot imply analysis, elaboration, or runtime');
     is($first->{backend_profile}, $profile, 'backend profile is exact');
     like($first->{operation_id}, qr/\Aop-[0-9a-f]{64}\z/,
@@ -70,8 +70,8 @@ subtest 'emitter produces a deterministic closed unqualified portable VHDL seman
     is_deeply([sort keys %{$first->{source_map}}],
         [sort @{FSM::VIAL::Backend::VHDLPortableGHDL->source_map_keys}],
         'source map is closed');
-    is(scalar(@{$first->{source_map}{entries}}), 52,
-        'portable semantic graph has fifty-two complete source-map entries');
+    is(scalar(@{$first->{source_map}{entries}}), 59,
+        'portable checking graph has fifty-nine complete source-map entries');
     my %mapped = map { $_->{generated_relpath} => 1 } @{$first->{source_map}{entries}};
     for my $artifact (grep { $_->{language} eq 'vhdl' } @{$first->{artifacts}}) {
         ok($mapped{$artifact->{relpath}}, "'$artifact->{relpath}' is source-mapped");
@@ -114,6 +114,12 @@ subtest 'portable source emits typed stimulus, scheduling, models, and declared 
         'runtime package owns bounded fiber state');
     like($runtime, qr/type vial_scenario_status_t is/,
         'runtime package owns bounded scenario state');
+    like($runtime, qr/VIAL_SCOREBOARD_CAPACITY : positive := 4;/,
+        'runtime package freezes the bounded scoreboard capacity');
+    like($runtime, qr/type vial_diagnostic_record_t is record/,
+        'runtime package owns typed diagnostic records');
+    like($runtime, qr/type vial_diagnostic_array_t is array/,
+        'runtime package owns the bounded diagnostic store');
     my $metadata = artifact_by_role($emission, 'vhdl_fixture_metadata')->{content};
     like($metadata, qr/VIAL_INACTIVE_EDGE : string := "falling";/,
         'metadata freezes the selected inactive edge');
@@ -141,6 +147,33 @@ subtest 'portable source emits typed stimulus, scheduling, models, and declared 
         'declared probe output is sampled with original-symbol evidence');
     like($top, qr/vial_model_00_count := vial_model_00_count \+ 1;/,
         'event-counter model update is deterministic');
+    like($top, qr/procedure vial_scoreboard_compare/,
+        'bounded scoreboard comparison is emitted');
+    like($top, qr/vial_coverage\.stalled := vial_coverage\.stalled \+ 1;/,
+        'portable stalled coverage counter is emitted');
+    like($top, qr/VIAL substitution fault preserves the immutable authored field/,
+        'fault substitution has an explicit immutable-source seam');
+    like($top, qr/VIAL_UNKNOWN_SAMPLE/,
+        'procedural checking records unknown-value evidence');
+    like($top, qr/vial_emit_trace\("footer"\)/,
+        'trace has an explicit closure record');
+    unlike($top, qr/\\"/,
+        'generated JSON uses VHDL quote doubling rather than C-style escapes');
+    like($runtime, qr/fsmgen\.verification_result_manifest\.v1/,
+        'normalized result schema is projected into generated VHDL');
+    for my $key (qw(
+        backend_evidence backend_profile capability_evidence coverage
+        diagnostics drives events exclusions execution_profile expectations
+        faults fibers fixture_id metrics models native_extensions parity_digest
+        parity_projection plan_id portable_parity_eligible random_decisions
+        result_id scenario_results schema schema_version scoreboards status
+        transactions
+    )) {
+        like($top, qr/\b\Q$key\E\b/,
+            "normalized result projection carries '$key'");
+    }
+    like($top, qr/sha256_counter_rejection_v1/,
+        'normalized result projection preserves the exact plan-time random decision');
     my @phase = map { index($top, "-- FSMGEN VIAL PHASE: $_") }
         qw(SAMPLE REACT CHECK DRIVE);
     ok($phase[0] < $phase[1] && $phase[1] < $phase[2] && $phase[2] < $phase[3],
@@ -190,7 +223,8 @@ subtest 'standard, tool, commands, and capability states are exact and honest' =
     is($evidence->{analysis}, 'not_run', 'analysis is not run');
     is($evidence->{elaboration}, 'not_run', 'elaboration is not run');
     is($evidence->{runtime}, 'not_run', 'runtime is not run');
-    is($evidence->{result}, 'not_produced', 'result is not produced');
+    is($evidence->{result}, 'projection_emitted_not_produced',
+        'result projection is emitted without claiming a produced result');
     is($evidence->{parity}, 'not_evaluated', 'parity is not evaluated');
     is($evidence->{psl}, 'not_emitted', 'PSL is not emitted');
     is($evidence->{full_vhdl_2008}, 'not_claimed', 'full VHDL-2008 is not claimed');
@@ -231,8 +265,8 @@ subtest 'static validation and negotiation fail closed on malformed inputs' => s
         'static result is closed');
     ok(!(grep { $_->{status} ne 'passed' } @{$static->{checks}}),
         'every selected structural check passes');
-    is(scalar(@{$static->{checks}}), 13,
-        'static validator runs the exact thirteen semantic checks');
+    is(scalar(@{$static->{checks}}), 20,
+        'static validator runs the exact twenty semantic checks');
 
     my @source = map { clone($_) }
         grep { $_->{language} eq 'vhdl' } @{$emission->{artifacts}};
@@ -279,6 +313,41 @@ subtest 'static validation and negotiation fail closed on malformed inputs' => s
         =~ s/VIAL_OPERATION_COUNT : natural := 21;/VIAL_OPERATION_COUNT : natural := 22;/;
     static_failure(\@rank_drift, 'VIAL_VHDL_STATIC_METADATA_ERROR',
         'operation-rank metadata drift');
+
+    my @scoreboard_overflow = map { clone($_) } @source;
+    artifact_in(\@scoreboard_overflow, 'vhdl_fixture_top')->{content}
+        =~ s/"VIAL_SCOREBOARD_OVERFLOW"/"VIAL_SCOREBOARD_UNBOUNDED"/;
+    static_failure(\@scoreboard_overflow, 'VIAL_VHDL_STATIC_SCOREBOARD_ERROR',
+        'missing scoreboard overflow oracle');
+
+    my @unknown_evidence = map { clone($_) } @source;
+    artifact_in(\@unknown_evidence, 'vhdl_fixture_top')->{content}
+        =~ s/VIAL_UNKNOWN_SAMPLE/VIAL_SAMPLE/;
+    static_failure(\@unknown_evidence, 'VIAL_VHDL_STATIC_DIAGNOSTIC_ERROR',
+        'missing unknown-value evidence');
+
+    my @trace_closure = map { clone($_) } @source;
+    artifact_in(\@trace_closure, 'vhdl_fixture_top')->{content}
+        =~ s/vial_emit_trace\("footer"\)/vial_emit_trace("open")/;
+    static_failure(\@trace_closure, 'VIAL_VHDL_STATIC_TRACE_CLOSURE_ERROR',
+        'trace non-closure');
+
+    my @invalid_json_quote = map { clone($_) } @source;
+    artifact_in(\@invalid_json_quote, 'vhdl_fixture_top')->{content}
+        =~ s/""payload""/\\"payload\\"/;
+    static_failure(\@invalid_json_quote, 'VIAL_VHDL_STATIC_TRACE_CLOSURE_ERROR',
+        'C-style JSON quote escaping in VHDL');
+
+    my @result_consistency = map { clone($_) } @source;
+    artifact_in(\@result_consistency, 'vhdl_fixture_top')->{content}
+        =~ s/vial_result_consistent\s*:=/vial_result_unchecked :=/;
+    static_failure(\@result_consistency, 'VIAL_VHDL_STATIC_RESULT_ERROR',
+        'result inconsistency');
+
+    my @psl_request = map { clone($_) } @source;
+    artifact_in(\@psl_request, 'vhdl_fixture_top')->{content} .= "-- psl assert always true\n";
+    static_failure(\@psl_request, 'VIAL_VHDL_STATIC_CHECK_ERROR',
+        'unsupported PSL request');
 
     backend_failure(emit_backend(backend_profile => 'vhdl_other'),
         'VIAL_VHDL_BACKEND_UNSUPPORTED', 'substituted backend profile');
@@ -366,13 +435,13 @@ subtest 'checked gallery and support discovery remain byte-exact and honest' => 
     my $contract = build_capability_manifest()->{language_surface}{vial_vhdl_emission};
     is($contract->{profile}, $profile, 'capability manifest discovers the exact private profile');
     is($contract->{backend_stage_status}{emission},
-        'shipped_portable_semantics_emission_only',
-        'support state advertises portable semantics as emission-only');
+        'shipped_portable_checking_emission_only',
+        'support state advertises portable checking as emission-only');
     is($contract->{limits}{generated_vhdl_sources}, 6,
         'support state reports the exact six-source graph');
-    is($contract->{limits}{source_map_entries}, 52,
+    is($contract->{limits}{source_map_entries}, 59,
         'support state reports the exact source-map count');
-    is($contract->{limits}{static_validation_checks}, 13,
+    is($contract->{limits}{static_validation_checks}, 20,
         'support state reports the exact static-check count');
     is($contract->{backend_stage_status}{analysis}, 'not_run',
         'support state does not infer VHDL analysis');

@@ -39,8 +39,10 @@ Implementation parent `.15` is active and decomposed. Completed `.15.1` now
 ships the provider-free emitter substrate and first deterministic review
 gallery. Completed `.15.2` adds typed drivers and samplers, the single
 inactive-edge scheduler, bounded scenarios and fibers, deterministic models,
-and a declared-probe adapter. Active `.15.3` owns portable checking, results,
-and closed trace; later children close review and independently qualify exact
+and a declared-probe adapter. Completed `.15.3` adds bounded scoreboards,
+coverage counters, substitution faults, procedural checks, diagnostics,
+closed trace framing, and normalized-result projection. Active `.15.4` closes
+the portable review matrix; later children independently qualify exact
 GHDL and OSVVM execution.
 
 The current shipped verification-output targets remain deliberately narrow:
@@ -1098,15 +1100,29 @@ authority.
 The metadata package carries all 21 exact operation identities and static
 ranks, both 256-cycle scenarios, four fibers, and two event-counter model
 instances. The scenario process maintains bounded lifecycle state and updates
-the models deterministically from transaction events. Checking and normalized
-results are still deferred to active `.15.3`.
+the models deterministically from transaction events.
+
+Completed `.15.3` adds a capacity-four in-order scoreboard with explicit
+overflow, comparison, mismatch, and empty-result invariants; the authored
+`not_stalled` and `stalled` coverage counters; and the one-cycle
+unsupported-size field-substitution seam without mutating the authored
+transaction. Procedural checks record success, ERROR, timeout,
+declared-probe, and unknown-value evidence in a bounded diagnostic family.
+Provider-free `textio` emits closed header/body/footer framing and the
+`fsmgen.verification_result_manifest.v1` projection. The projection carries
+every normalized top-level family, per-scenario status/time, aggregate
+scoreboard/coverage/fault metrics, and stored diagnostic codes, outcomes, and
+logical times. It deliberately leaves produced identity and parity fields
+empty. JSON strings use VHDL quote doubling; C-style escapes fail structural
+validation. Trace non-closure and result inconsistency are generated failures.
+PSL and methodology-provider requests remain unsupported.
 
 The sixth source is a source-mapped VHDL-2008 external-name adapter for the one
 bridge-declared `reg_data_q` probe. Generated hierarchy is forbidden anywhere
 else; ordinary DUT access remains through public named ports.
 
 The manifest and machine-readable capability contract say
-`emitted_unqualified_portable_semantics`. Thirteen static checks prove the
+`emitted_unqualified_portable_checking`. Twenty static checks prove the
 closed graph, deterministic provider-neutral source, typed value handling,
 single inactive-edge authority, phase order, exact ranks, bounded scenario and
 fiber metadata, deterministic model updates, and declared-probe-only
@@ -1134,9 +1150,10 @@ perl scripts/refresh_vial_vhdl_portable_gallery.pl --check
 The legacy `vhdl-observation-package` remains byte/schema-compatible,
 unchanged, and unconsumed.
 
-Analysis, elaboration, runtime, checking/trace/result production, parity, PSL,
+Analysis, elaboration, runtime, produced-result validation, parity, PSL,
 complete VHDL-2008, OSVVM/UVVM, mixed-language behavior, and product support
-remain explicit non-claims.
+remain explicit non-claims. Emitted checking and result projection are source
+evidence only until the exact GHDL profile runs them.
 
 The complete contract is in the selected VHDL section of the
 [HIAL/VIAL architecture audit](../../HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md#completed-vhdl-contract-selection).

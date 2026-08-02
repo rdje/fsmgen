@@ -2989,8 +2989,8 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     is(
         $manifest->{language_surface}{vial_vhdl_emission}{backend_stage_status}{emission},
-        'shipped_portable_semantics_emission_only',
-        'manifest advertises only the shipped portable VHDL semantic emission scope',
+        'shipped_portable_checking_emission_only',
+        'manifest advertises only the shipped portable VHDL checking emission scope',
     );
     is(
         $manifest->{language_surface}{vial_vhdl_emission}{backend_stage_status}{analysis},

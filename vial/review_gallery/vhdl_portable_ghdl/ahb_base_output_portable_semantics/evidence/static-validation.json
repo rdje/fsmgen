@@ -1,10 +1,10 @@
 {
    "artifacts" : [
       {
-         "bytes" : 15214,
+         "bytes" : 15323,
          "relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_metadata_pkg.vhd",
          "role" : "vhdl_fixture_metadata",
-         "sha256" : "80403331e71320eadea6fcdc3608a05527b64e6cab2e9de0571c30887632f694"
+         "sha256" : "54b836ea1ce852d0dad9a4f7ff6249626ffd7b1674604cb62b2f79cc6cec0d46"
       },
       {
          "bytes" : 623,
@@ -13,10 +13,10 @@
          "sha256" : "8765d4e8ab6640cd70206d501137be29d05b79bd206be8103b8f0bf5cd3ac45b"
       },
       {
-         "bytes" : 15780,
+         "bytes" : 36614,
          "relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_tb.vhd",
          "role" : "vhdl_fixture_top",
-         "sha256" : "ae9792be3c63c3f946f53bd5d0996db4282429fd9f2f1c0ae61d3978aff281e5"
+         "sha256" : "e97a9486b1d57244b009ec801991d4b15f485e0f9f536a5a92c5991bf11682a9"
       },
       {
          "bytes" : 47685,
@@ -25,16 +25,16 @@
          "sha256" : "2c96af7cb4c5b5666ad768a764e0b3b778f0c05139f1f16891bef79fc43856e6"
       },
       {
-         "bytes" : 1045,
+         "bytes" : 2186,
          "relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_runtime_pkg.vhd",
          "role" : "vhdl_runtime_package",
-         "sha256" : "85e30f1ab4feb47cdbe432c8bd83b3bf0609eb90ad8e48c728f02a3f1ab403bc"
+         "sha256" : "ca7178d38bd94b3c7785d61be824bcca31baadee4442ed322a3cd286f6761256"
       },
       {
-         "bytes" : 4530,
+         "bytes" : 4806,
          "relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_types_pkg.vhd",
          "role" : "vhdl_types_package",
-         "sha256" : "6f61afd4d096f6bf9a75466a65388b578816682820ee922bacf41897a3ed7449"
+         "sha256" : "6ab5eb49c57c47fc2c259ea26cdae19affe6637a3b77f599cca05955f417afb5"
       }
    ],
    "backend_profile" : "vhdl_portable_ghdl",
@@ -89,6 +89,34 @@
       },
       {
          "check" : "declared_source_mapped_probe_adapters",
+         "status" : "passed"
+      },
+      {
+         "check" : "bounded_scoreboard_queues_and_comparisons",
+         "status" : "passed"
+      },
+      {
+         "check" : "portable_coverage_counters",
+         "status" : "passed"
+      },
+      {
+         "check" : "bounded_substitution_fault_seam",
+         "status" : "passed"
+      },
+      {
+         "check" : "procedural_property_checks_without_psl",
+         "status" : "passed"
+      },
+      {
+         "check" : "bounded_diagnostics_and_unknown_evidence",
+         "status" : "passed"
+      },
+      {
+         "check" : "closed_trace_projection",
+         "status" : "passed"
+      },
+      {
+         "check" : "normalized_result_manifest_projection",
          "status" : "passed"
       }
    ],

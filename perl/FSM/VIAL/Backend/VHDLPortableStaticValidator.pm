@@ -271,7 +271,8 @@ sub _validate($raw) {
         && _count_matches($text{vhdl_fixture_metadata}, qr/^\s*constant\s+VIAL_MODEL_[0-9]+_TRIGGER_EVENT_ID\s*:/mi) == $model_count
         && _count_matches($text{vhdl_fixture_top}, qr/^\s*variable\s+vial_model_[0-9]+_count\s*:/mi) == $model_count
         && _count_matches($text{vhdl_fixture_top}, qr/^\s*-- VIAL model update [0-9]+:/mi) == $model_count
-        && $text{vhdl_fixture_top} !~ /\b(?:random|uniform|shared\s+variable)\b/i;
+        && $text{vhdl_fixture_top}
+            !~ /\b(?:impure\s+function\s+random|random\s*\(|uniform\s*\(|shared\s+variable)\b/i;
     _diagnose(\@diagnostics, 'VIAL_VHDL_STATIC_MODEL_ERROR',
         'deterministic model declarations and updates do not match metadata',
         '/roles/vhdl_fixture_top') unless $model_ok;
@@ -297,6 +298,96 @@ sub _validate($raw) {
         'probe hierarchy must occur only in source-mapped declared adapters',
         '/roles/vhdl_probe_adapter') unless $probe_ok;
     _record_check(\@checks, 'declared_source_mapped_probe_adapters', $probe_ok);
+
+    my $scoreboard_ok = $text{vhdl_runtime_package}
+            =~ /VIAL_SCOREBOARD_CAPACITY\s*:\s*positive\s*:=\s*4/i
+        && $text{vhdl_runtime_package} =~ /type\s+vial_scoreboard_state_t\s+is\s+record/i
+        && $text{vhdl_fixture_top} =~ /procedure\s+vial_scoreboard_enqueue_expected\b/i
+        && $text{vhdl_fixture_top} =~ /procedure\s+vial_scoreboard_compare\b/i
+        && $text{vhdl_fixture_top}
+            =~ /vial_record_diagnostic\("VIAL_SCOREBOARD_OVERFLOW"/i
+        && $text{vhdl_fixture_top} =~ /expected_depth\s*=\s*0/i
+        && $text{vhdl_fixture_top} =~ /actual_depth\s*=\s*0/i;
+    _diagnose(\@diagnostics, 'VIAL_VHDL_STATIC_SCOREBOARD_ERROR',
+        'bounded scoreboard queue, comparison, overflow, and empty-result checks are incomplete',
+        '/roles/vhdl_fixture_top') unless $scoreboard_ok;
+    _record_check(\@checks, 'bounded_scoreboard_queues_and_comparisons', $scoreboard_ok);
+
+    my $coverage_ok = $text{vhdl_runtime_package}
+            =~ /type\s+vial_coverage_counter_t\s+is\s+record/i
+        && $text{vhdl_fixture_top} =~ /vial_coverage\.stalled\s*:=\s*vial_coverage\.stalled\s*\+\s*1/i
+        && $text{vhdl_fixture_top} =~ /vial_coverage\.not_stalled\s*:=\s*vial_coverage\.not_stalled\s*\+\s*1/i
+        && $text{vhdl_fixture_top} =~ /vial_emit_trace\("coverage"\)/i;
+    _diagnose(\@diagnostics, 'VIAL_VHDL_STATIC_COVERAGE_ERROR',
+        'portable coverage counters do not preserve both selected stall bins',
+        '/roles/vhdl_fixture_top') unless $coverage_ok;
+    _record_check(\@checks, 'portable_coverage_counters', $coverage_ok);
+
+    my $fault_ok = $text{vhdl_runtime_package} =~ /type\s+vial_fault_state_t\s+is\s+record/i
+        && $text{vhdl_fixture_top} =~ /VIAL substitution fault preserves the immutable authored field/i
+        && $text{vhdl_fixture_top} =~ /vial_fault\.applications\s*:=/i
+        && $text{vhdl_fixture_top} =~ /vial_emit_trace\("faults"\)/i;
+    _diagnose(\@diagnostics, 'VIAL_VHDL_STATIC_FAULT_ERROR',
+        'bounded substitution fault state or immutable-field seam is incomplete',
+        '/roles/vhdl_fixture_top') unless $fault_ok;
+    _record_check(\@checks, 'bounded_substitution_fault_seam', $fault_ok);
+
+    my $checking_ok = $text{vhdl_runtime_package} =~ /type\s+vial_check_outcome_t\s+is/i
+        && $text{vhdl_fixture_top} =~ /VIAL_EXPECT_SUCCESS/i
+        && $text{vhdl_fixture_top} =~ /VIAL_EXPECT_ERROR/i
+        && $text{vhdl_fixture_top} =~ /VIAL_SCENARIO_TIMEOUT/i
+        && $text{vhdl_fixture_top} !~ /\bpsl\b/i;
+    _diagnose(\@diagnostics, 'VIAL_VHDL_STATIC_CHECK_ERROR',
+        'procedural properties are incomplete or leak unsupported PSL',
+        '/roles/vhdl_fixture_top') unless $checking_ok;
+    _record_check(\@checks, 'procedural_property_checks_without_psl', $checking_ok);
+
+    my $diagnostic_ok = $text{vhdl_runtime_package}
+            =~ /type\s+vial_diagnostic_record_t\s+is\s+record/i
+        && $text{vhdl_runtime_package} =~ /type\s+vial_diagnostic_array_t\s+is\s+array/i
+        && $text{vhdl_fixture_top} =~ /VIAL_DIAGNOSTIC_CAPACITY/i
+        && $text{vhdl_fixture_top} =~ /vial_diagnostics\s*\(vial_diagnostic_count\)\.logical_time\s*:=\s*vial_time/i
+        && $text{vhdl_fixture_top} =~ /VIAL_UNKNOWN_SAMPLE/i
+        && $text{vhdl_fixture_top} =~ /vial_unknown_evidence\s*=\s*0/i;
+    _diagnose(\@diagnostics, 'VIAL_VHDL_STATIC_DIAGNOSTIC_ERROR',
+        'bounded diagnostics or unknown-value evidence handling is incomplete',
+        '/roles/vhdl_fixture_top') unless $diagnostic_ok;
+    _record_check(\@checks, 'bounded_diagnostics_and_unknown_evidence', $diagnostic_ok);
+
+    my $trace_ok = $text{vhdl_runtime_package}
+            =~ /fsmgen\.vial_vhdl_runtime_trace\.v1/i
+        && $text{vhdl_fixture_top} =~ /procedure\s+vial_emit_trace\b/i
+        && $text{vhdl_fixture_top} =~ /vial_emit_trace\("header"\)/i
+        && $text{vhdl_fixture_top} =~ /vial_emit_trace\("footer"\)/i
+        && $text{vhdl_fixture_top} =~ /phase_rank/i
+        && $text{vhdl_fixture_top} !~ /\\"/
+        && $text{vhdl_fixture_top} =~ /vial_trace_closed\s*:=\s*true/i
+        && $text{vhdl_fixture_top} =~ /trace did not close exactly once/i;
+    _diagnose(\@diagnostics, 'VIAL_VHDL_STATIC_TRACE_CLOSURE_ERROR',
+        'trace schema, header/footer, or exact closure proof is incomplete',
+        '/roles/vhdl_fixture_top') unless $trace_ok;
+    _record_check(\@checks, 'closed_trace_projection', $trace_ok);
+
+    my @result_key = qw(
+        backend_evidence backend_profile capability_evidence coverage
+        diagnostics drives events exclusions execution_profile expectations
+        faults fibers fixture_id metrics models native_extensions parity_digest
+        parity_projection plan_id portable_parity_eligible random_decisions
+        result_id scenario_results schema schema_version scoreboards status
+        transactions
+    );
+    my $result_ok = $text{vhdl_runtime_package}
+            =~ /fsmgen\.verification_result_manifest\.v1/i
+        && $text{vhdl_fixture_top} =~ /procedure\s+vial_close_trace_and_project_result\b/i
+        && $text{vhdl_fixture_top} =~ /vial_result_consistent\s*:=/i
+        && $text{vhdl_fixture_top} =~ /FSMGEN_VIAL_RESULT_V1/i
+        && !(grep { $text{vhdl_fixture_top} !~ /\b\Q$_\E\b/i } @result_key)
+        && $text{vhdl_fixture_top} !~ /\\"/
+        && $text{vhdl_fixture_top} =~ /trace\/result closure inconsistency/i;
+    _diagnose(\@diagnostics, 'VIAL_VHDL_STATIC_RESULT_ERROR',
+        'normalized result projection or consistency proof is incomplete',
+        '/roles/vhdl_fixture_top') unless $result_ok;
+    _record_check(\@checks, 'normalized_result_manifest_projection', $result_ok);
 
     my $ok = !@diagnostics;
     return {

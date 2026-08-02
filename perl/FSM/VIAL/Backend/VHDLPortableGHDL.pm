@@ -141,7 +141,7 @@ sub _emit($raw) {
     my $unit = $bridge->{units}[0];
     my $entity_name = _backend_name($bridge, $unit->{unit_id}, 'entity');
     my $operation_id = 'op-' . sha256_hex(_canonical_json({
-        action => 'emit_portable_semantics',
+        action => 'emit_portable_checking',
         artifact_root => $raw->{artifact_root},
         backend_profile => $BACKEND_PROFILE,
         bridge_manifest_id => $bridge->{manifest_id},
@@ -331,6 +331,13 @@ sub _emit($raw) {
             scheduler => 'passed_emission_only',
             scenarios => 'passed_emission_only',
             models => 'passed_emission_only',
+            scoreboards => 'passed_bounded_emission_only',
+            coverage => 'passed_counter_emission_only',
+            faults => 'passed_substitution_emission_only',
+            procedural_checks => 'passed_emission_only',
+            diagnostic_records => 'passed_emission_only',
+            trace => 'passed_closed_projection_emission_only',
+            result_projection => 'passed_manifest_v1_emission_only',
             probe_adapters => $has_probe_adapter
                 ? 'passed_declared_external_name_emission_only'
                 : 'not_required',
@@ -338,17 +345,17 @@ sub _emit($raw) {
             analysis => 'not_run',
             elaboration => 'not_run',
             runtime => 'not_run',
-            result => 'not_produced',
+            result => 'projection_emitted_not_produced',
             parity => 'not_evaluated',
             psl => 'not_emitted',
             full_vhdl_2008 => 'not_claimed',
             product_support => 'not_claimed',
         },
         limitations => [qw(
-            portable_semantics_emission_only single_unit single_domain
-            scoreboards_deferred
-            coverage_deferred faults_deferred properties_deferred
-            trace_deferred results_deferred no_psl no_provider_library
+            portable_checking_emission_only single_unit single_domain
+            bounded_scoreboard_capacity_four bounded_coverage_counters
+            bounded_substitution_faults procedural_properties_only
+            result_projection_not_runtime_evidence no_psl no_provider_library
             no_analysis_evidence no_elaboration_evidence no_runtime_evidence
             no_parity_evidence
         )],
@@ -371,7 +378,11 @@ sub _emit($raw) {
             entry_count => scalar(@{$source_map->{entries}}),
             sha256 => sha256_hex(_json_text($source_map)),
         },
-        result => {status => 'not_produced', schema => undef, relpath => undef},
+        result => {
+            status => 'projection_emitted_not_produced',
+            schema => 'fsmgen.verification_result_manifest.v1',
+            relpath => undef,
+        },
         cleanup => {
             staging_identity => ".artifacts/tmp/vial/$operation_id",
             state => 'not_created',
@@ -388,7 +399,7 @@ sub _emit($raw) {
 
     return _result({
         ok => JSON::PP::true,
-        status => 'emitted_unqualified_portable_semantics',
+        status => 'emitted_unqualified_portable_checking',
         backend_profile => $BACKEND_PROFILE,
         plan_id => $execution->{plan_id},
         generated_top => $top,
@@ -647,9 +658,9 @@ sub _negotiate($execution, $bridge, $backend_inputs) {
     @required = sort _unique(@required);
     @satisfied = @required unless @unsatisfied;
     @limitations = qw(
-        portable_semantics_emission_only provider_free_vhdl_2008
+        portable_checking_emission_only provider_free_vhdl_2008
         one_unit one_clock_domain asynchronous_reset_is_dut_interface_only
-        analysis_not_run elaboration_not_run runtime_not_run result_not_produced
+        analysis_not_run elaboration_not_run runtime_not_run result_projection_only
         parity_not_evaluated psl_not_emitted support_not_claimed
     );
     return {
@@ -658,10 +669,7 @@ sub _negotiate($execution, $bridge, $backend_inputs) {
         satisfied => \@satisfied,
         unsatisfied => [sort _unique(@unsatisfied)],
         native_only => [sort _unique(@native_only)],
-        deferred => [qw(
-            scoreboards coverage faults properties checks trace results
-            analysis elaboration runtime parity psl osvvm support
-        )],
+        deferred => [qw(analysis elaboration runtime parity psl osvvm support)],
         limitations => \@limitations,
     };
 }
@@ -701,6 +709,7 @@ package fsmgen_vial_types_pkg is
   function observe_vial_vector(value : std_logic_vector) return vial_observation_vector_t;
   function vial_is_known_zero(value : vial_observation_t) return boolean;
   function vial_is_known_one(value : vial_observation_t) return boolean;
+  function vial_is_known(value : vial_observation_t) return boolean;
   function vial_matches(
     actual : vial_observation_vector_t;
     expected : vial_value_vector_t
@@ -774,6 +783,12 @@ package body fsmgen_vial_types_pkg is
     return value.normalized_value = VIAL_VALUE_1;
   end function vial_is_known_one;
 
+  function vial_is_known(value : vial_observation_t) return boolean is
+  begin
+    return value.normalized_value = VIAL_VALUE_0
+      or value.normalized_value = VIAL_VALUE_1;
+  end function vial_is_known;
+
   function vial_matches(
     actual : vial_observation_vector_t;
     expected : vial_value_vector_t
@@ -822,7 +837,7 @@ use ieee.std_logic_1164.all;
 use work.fsmgen_vial_types_pkg.all;
 
 package fsmgen_vial_runtime_pkg is
-  constant FSMGEN_VIAL_RUNTIME_SCHEMA : string := "fsmgen.vial_vhdl_runtime.v2";
+  constant FSMGEN_VIAL_RUNTIME_SCHEMA : string := "fsmgen.vial_vhdl_runtime.v3";
 
   type vial_logical_time_t is record
     cycle : natural;
@@ -854,6 +869,47 @@ package fsmgen_vial_runtime_pkg is
     VIAL_SCENARIO_TIMED_OUT
   );
 
+  type vial_check_outcome_t is (
+    VIAL_CHECK_PENDING,
+    VIAL_CHECK_PASSED,
+    VIAL_CHECK_FAILED,
+    VIAL_CHECK_UNKNOWN
+  );
+
+  type vial_diagnostic_record_t is record
+    code : string(1 to 32);
+    code_length : natural;
+    severity : string(1 to 8);
+    logical_time : vial_logical_time_t;
+    outcome : vial_check_outcome_t;
+  end record;
+
+  type vial_diagnostic_array_t is array (natural range <>) of vial_diagnostic_record_t;
+
+  type vial_scoreboard_state_t is record
+    expected_depth : natural;
+    actual_depth : natural;
+    comparisons : natural;
+    mismatches : natural;
+    overflowed : boolean;
+  end record;
+
+  type vial_coverage_counter_t is record
+    not_stalled : natural;
+    stalled : natural;
+  end record;
+
+  type vial_fault_state_t is record
+    armed : boolean;
+    remaining_cycles : natural;
+    applications : natural;
+  end record;
+
+  constant VIAL_SCOREBOARD_CAPACITY : positive := 4;
+  constant VIAL_DIAGNOSTIC_CAPACITY : positive := 64;
+  constant VIAL_TRACE_SCHEMA : string := "fsmgen.vial_vhdl_runtime_trace.v1";
+  constant VIAL_RESULT_SCHEMA : string := "fsmgen.verification_result_manifest.v1";
+
   constant VIAL_INITIAL_LOGICAL_TIME : vial_logical_time_t := (
     cycle => 0,
     phase => VIAL_DRIVE_PHASE,
@@ -872,10 +928,12 @@ sub _render_metadata_package(%arg) {
     my @line = (
         'library ieee;',
         'use ieee.std_logic_1164.all;',
+        'use std.textio.all;',
         '',
         "package $arg{package_name} is",
         '  constant VIAL_PLAN_ID : string := "' . _vhdl_string($execution->{plan_id}) . '";',
         '  constant VIAL_FIXTURE_ID : string := "' . _vhdl_string($execution->{fixture}{fixture_id}) . '";',
+        '  constant VIAL_EXECUTION_PROFILE : string := "' . _vhdl_string($execution->{profile}) . '";',
         '  constant VIAL_BRIDGE_MANIFEST_ID : string := "' . _vhdl_string($bridge->{manifest_id}) . '";',
         '  constant VIAL_UNIT_ID : string := "' . _vhdl_string($bridge->{units}[0]{unit_id}) . '";',
         '  constant VIAL_DOMAIN_ID : string := "' . _vhdl_string($domain->{domain_id}) . '";',
@@ -1135,7 +1193,32 @@ sub _render_fixture(%arg) {
         '    variable vial_scenario_started : boolean := false;',
         '    variable vial_scenario_done : boolean := false;',
         '    variable vial_transaction_active : boolean := false;',
-        '    variable vial_transaction_accepted : boolean := false;';
+        '    variable vial_transaction_accepted : boolean := false;',
+        '    variable vial_scoreboard : vial_scoreboard_state_t := (0, 0, 0, 0, false);',
+        '    variable vial_coverage : vial_coverage_counter_t := (0, 0);',
+        '    variable vial_fault : vial_fault_state_t := (false, 0, 0);',
+        '    variable vial_scoreboard_comparisons_total : natural := 0;',
+        '    variable vial_scoreboard_mismatches_total : natural := 0;',
+        '    variable vial_scoreboard_overflowed_any : boolean := false;',
+        '    variable vial_fault_applications_total : natural := 0;',
+        '    variable vial_check_passes : natural := 0;',
+        '    variable vial_check_failures : natural := 0;',
+        '    variable vial_unknown_evidence : natural := 0;',
+        '    variable vial_diagnostic_count : natural := 0;',
+        '    variable vial_diagnostics : vial_diagnostic_array_t(0 to VIAL_DIAGNOSTIC_CAPACITY - 1);',
+        '    variable vial_scenario_failure_baseline : natural := 0;',
+        '    variable vial_scenario_unknown_baseline : natural := 0;',
+        '    variable vial_trace_sequence : natural := 0;',
+        '    variable vial_trace_open : boolean := false;',
+        '    variable vial_trace_closed : boolean := false;',
+        '    variable vial_result_consistent : boolean := false;';
+    for my $index (0 .. $#{$execution->{scenarios}}) {
+        my $tag = sprintf('%02d', $index);
+        push @line,
+            "    variable vial_scenario_${tag}_passed : boolean := false;",
+            "    variable vial_scenario_${tag}_timed_out : boolean := false;",
+            "    variable vial_scenario_${tag}_cycles : natural := 0;";
+    }
     for my $endpoint (@{$bridge->{endpoints}}) {
         my $width = $type{$endpoint->{type_id}}{width};
         push @line, "    variable $sample_symbol{$endpoint->{endpoint_id}}"
@@ -1164,6 +1247,254 @@ sub _render_fixture(%arg) {
             . '_count : natural := 0;';
     }
     push @line,
+        '',
+        '    procedure vial_emit_trace(constant record_kind : in string) is',
+        '      variable trace_line : line;',
+        '    begin',
+        '      assert vial_trace_open and not vial_trace_closed',
+        '        report "FSMGen VIAL trace record outside the open trace interval"',
+        '        severity failure;',
+        '      write(trace_line, string\'("FSMGEN_VIAL_TRACE_V1"));',
+        '      write(trace_line, HT);',
+        '      write(trace_line, string\'("{""payload"":{""logical_time"":{""cycle"":"));',
+        '      write(trace_line, vial_time.cycle);',
+        '      write(trace_line, string\'(",""local_index"":"));',
+        '      write(trace_line, vial_time.local_index);',
+        '      write(trace_line, string\'(",""phase_rank"":"));',
+        '      write(trace_line, vial_phase_t\'pos(vial_time.phase));',
+        '      write(trace_line, string\'(",""static_rank"":"));',
+        '      write(trace_line, vial_time.static_rank);',
+        '      write(trace_line, string\'("}},""plan_id"":"""));',
+        '      write(trace_line, VIAL_PLAN_ID);',
+        '      write(trace_line, string\'(""",""record_kind"":"""));',
+        '      write(trace_line, record_kind);',
+        '      write(trace_line, string\'(""",""run_id"":"));',
+        '      if record_kind = "header" or record_kind = "footer" then',
+        '        write(trace_line, string\'("null"));',
+        '      else',
+        '        write(trace_line, string\'("""run/"));',
+        '        write(trace_line, VIAL_PLAN_ID);',
+        '        write(trace_line, string\'("/"));',
+        '        case vial_current_scenario is';
+    for my $index (0 .. $#{$execution->{scenarios}}) {
+        my $tag = sprintf('%02d', $index);
+        push @line,
+            "          when $index => write(trace_line, VIAL_SCENARIO_${tag}_ID);";
+    }
+    push @line,
+        '          when others => write(trace_line, string\'("unknown"));',
+        '        end case;',
+        '        write(trace_line, character\'val(34));',
+        '      end if;',
+        '      write(trace_line, string\'(",""schema"":"""));',
+        '      write(trace_line, VIAL_TRACE_SCHEMA);',
+        '      write(trace_line, string\'(""",""schema_version"":1,""sequence"":"));',
+        '      write(trace_line, vial_trace_sequence);',
+        '      write(trace_line, string\'("}"));',
+        '      writeline(output, trace_line);',
+        '      vial_trace_sequence := vial_trace_sequence + 1;',
+        '    end procedure vial_emit_trace;',
+        '',
+        '    procedure vial_record_diagnostic(',
+        '      constant code : in string;',
+        '      constant outcome : in vial_check_outcome_t',
+        '    ) is',
+        '    begin',
+        '      assert vial_diagnostic_count < VIAL_DIAGNOSTIC_CAPACITY',
+        '        report "FSMGen VIAL diagnostic capacity overflow" severity failure;',
+        '      assert code\'length <= vial_diagnostics(vial_diagnostic_count).code\'length',
+        '        report "FSMGen VIAL diagnostic code exceeds its portable bound" severity failure;',
+        '      vial_diagnostics(vial_diagnostic_count).code := (others => \' \');',
+        '      vial_diagnostics(vial_diagnostic_count).code(1 to code\'length) := code;',
+        '      vial_diagnostics(vial_diagnostic_count).code_length := code\'length;',
+        '      if outcome = VIAL_CHECK_PASSED then',
+        '        vial_diagnostics(vial_diagnostic_count).severity := "info    ";',
+        '      else',
+        '        vial_diagnostics(vial_diagnostic_count).severity := "error   ";',
+        '      end if;',
+        '      vial_diagnostics(vial_diagnostic_count).logical_time := vial_time;',
+        '      vial_diagnostics(vial_diagnostic_count).outcome := outcome;',
+        '      vial_diagnostic_count := vial_diagnostic_count + 1;',
+        '      if outcome = VIAL_CHECK_UNKNOWN then',
+        '        vial_unknown_evidence := vial_unknown_evidence + 1;',
+        '      elsif outcome = VIAL_CHECK_FAILED then',
+        '        vial_check_failures := vial_check_failures + 1;',
+        '      else',
+        '        vial_check_passes := vial_check_passes + 1;',
+        '      end if;',
+        '      vial_emit_trace("expectations");',
+        '    end procedure vial_record_diagnostic;',
+        '',
+        '    procedure vial_scoreboard_enqueue_expected is',
+        '    begin',
+        '      if vial_scoreboard.expected_depth = VIAL_SCOREBOARD_CAPACITY then',
+        '        vial_scoreboard.overflowed := true;',
+        '        vial_scoreboard_overflowed_any := true;',
+        '        vial_record_diagnostic("VIAL_SCOREBOARD_OVERFLOW", VIAL_CHECK_FAILED);',
+        '      else',
+        '        vial_scoreboard.expected_depth := vial_scoreboard.expected_depth + 1;',
+        '        vial_emit_trace("scoreboards");',
+        '      end if;',
+        '    end procedure vial_scoreboard_enqueue_expected;',
+        '',
+        '    procedure vial_scoreboard_compare(constant matches : in boolean) is',
+        '    begin',
+        '      assert vial_scoreboard.expected_depth > 0',
+        '        report "FSMGen VIAL scoreboard actual without expected item" severity failure;',
+        '      vial_scoreboard.actual_depth := vial_scoreboard.actual_depth + 1;',
+        '      vial_scoreboard.comparisons := vial_scoreboard.comparisons + 1;',
+        '      vial_scoreboard_comparisons_total := vial_scoreboard_comparisons_total + 1;',
+        '      if not matches then',
+        '        vial_scoreboard.mismatches := vial_scoreboard.mismatches + 1;',
+        '        vial_scoreboard_mismatches_total := vial_scoreboard_mismatches_total + 1;',
+        '        vial_record_diagnostic("VIAL_SCOREBOARD_MISMATCH", VIAL_CHECK_FAILED);',
+        '      end if;',
+        '      vial_scoreboard.expected_depth := vial_scoreboard.expected_depth - 1;',
+        '      vial_scoreboard.actual_depth := vial_scoreboard.actual_depth - 1;',
+        '      vial_emit_trace("scoreboards");',
+        '    end procedure vial_scoreboard_compare;',
+        '';
+    my $all_scenarios_passed = join ' and ', map {
+        'vial_scenario_' . sprintf('%02d', $_) . '_passed'
+    } 0 .. $#{$execution->{scenarios}};
+    my $any_scenario_timed_out = join ' or ', map {
+        'vial_scenario_' . sprintf('%02d', $_) . '_timed_out'
+    } 0 .. $#{$execution->{scenarios}};
+    my $random_decisions = _canonical_json($execution->{randomness}{decisions});
+    push @line,
+        '    procedure vial_close_trace_and_project_result is',
+        '      variable result_line : line;',
+        '      procedure vial_write_status(',
+        '        variable target : inout line;',
+        '        constant passed : in boolean;',
+        '        constant timed_out : in boolean',
+        '      ) is',
+        '      begin',
+        '        if timed_out then',
+        _vhdl_textio_write('target', 'timeout', '          '),
+        '        elsif passed then',
+        _vhdl_textio_write('target', 'pass', '          '),
+        '        else',
+        _vhdl_textio_write('target', 'fail', '          '),
+        '        end if;',
+        '      end procedure vial_write_status;',
+        '    begin',
+        '      assert vial_trace_open and not vial_trace_closed',
+        '        report "FSMGen VIAL trace did not close exactly once" severity failure;',
+        '      vial_emit_trace("footer");',
+        '      vial_trace_closed := true;',
+        '      vial_result_consistent := vial_check_failures = 0',
+        '        and vial_unknown_evidence = 0',
+        '        and not vial_scoreboard_overflowed_any',
+        '        and vial_scoreboard_mismatches_total = 0',
+        '        and vial_scoreboard.expected_depth = 0',
+        '        and vial_scoreboard.actual_depth = 0',
+        "        and $all_scenarios_passed;",
+        '      write(result_line, string\'("FSMGEN_VIAL_RESULT_V1"));',
+        '      write(result_line, HT);',
+        _vhdl_textio_write('result_line', '{"backend_evidence":{"analysis_status":"not_run","elaboration_status":"not_run","runtime_status":"projection_only"},"backend_profile":{"capabilities":["vial.backend.vhdl_portable_ghdl.v1","vial.backend.vhdl_portable_ghdl.result_manifest_projection.v1"],"id":"vhdl_portable_ghdl","methodology":"plain_vhdl_no_provider","target_language":"VHDL","tool_name":null,"tool_version":null,"uvm_revision":null,"vhdl_standard":"IEEE 1076-2008"},"capability_evidence":{"native_only":[],"required":[],"satisfied":["portable_checking_projection"],"unsatisfied":[]},"coverage":[{"bins":{"not_stalled":'),
+        '      write(result_line, vial_coverage.not_stalled);',
+        _vhdl_textio_write('result_line', ',"stalled":'),
+        '      write(result_line, vial_coverage.stalled);',
+        _vhdl_textio_write('result_line', '},"coverpoint_id":"coverpoint/stall_seen"}],"diagnostics":['),
+        '      if vial_diagnostic_count > 0 then',
+        '        for diagnostic_index in 0 to vial_diagnostic_count - 1 loop',
+        '          if diagnostic_index > 0 then',
+        _vhdl_textio_write('result_line', ',', '            '),
+        '          end if;',
+        _vhdl_textio_write('result_line', '{"code":"', '          '),
+        '          write(result_line, vial_diagnostics(diagnostic_index).code(',
+        '            1 to vial_diagnostics(diagnostic_index).code_length));',
+        _vhdl_textio_write('result_line', '","logical_time":{"cycle":', '          '),
+        '          write(result_line, vial_diagnostics(diagnostic_index).logical_time.cycle);',
+        _vhdl_textio_write('result_line', ',"local_index":', '          '),
+        '          write(result_line, vial_diagnostics(diagnostic_index).logical_time.local_index);',
+        _vhdl_textio_write('result_line', ',"phase_rank":', '          '),
+        '          write(result_line, vial_phase_t\'pos(',
+        '            vial_diagnostics(diagnostic_index).logical_time.phase));',
+        _vhdl_textio_write('result_line', ',"static_rank":', '          '),
+        '          write(result_line, vial_diagnostics(diagnostic_index).logical_time.static_rank);',
+        _vhdl_textio_write('result_line', '},"outcome":"', '          '),
+        '          if vial_diagnostics(diagnostic_index).outcome = VIAL_CHECK_PASSED then',
+        _vhdl_textio_write('result_line', 'pass', '            '),
+        '          elsif vial_diagnostics(diagnostic_index).outcome = VIAL_CHECK_UNKNOWN then',
+        _vhdl_textio_write('result_line', 'unknown', '            '),
+        '          else',
+        _vhdl_textio_write('result_line', 'fail', '            '),
+        '          end if;',
+        _vhdl_textio_write('result_line', '","severity":"', '          '),
+        '          if vial_diagnostics(diagnostic_index).outcome = VIAL_CHECK_PASSED then',
+        _vhdl_textio_write('result_line', 'info', '            '),
+        '          else',
+        _vhdl_textio_write('result_line', 'error', '            '),
+        '          end if;',
+        _vhdl_textio_write('result_line', '"}', '          '),
+        '        end loop;',
+        '      end if;',
+        _vhdl_textio_write('result_line', '],"drives":[],"events":[],"exclusions":[],"execution_profile":"'),
+        '      write(result_line, VIAL_EXECUTION_PROFILE);',
+        _vhdl_textio_write('result_line', '","expectations":[],"faults":[{"applications":'),
+        '      write(result_line, vial_fault_applications_total);',
+        _vhdl_textio_write('result_line', ',"fault_id":"fault/unsupported_size","kind":"substitution"}],"fibers":[],"fixture_id":"'),
+        '      write(result_line, VIAL_FIXTURE_ID);',
+        _vhdl_textio_write('result_line', '","metrics":{"coverage_not_stalled":'),
+        '      write(result_line, vial_coverage.not_stalled);',
+        _vhdl_textio_write('result_line', ',"coverage_stalled":'),
+        '      write(result_line, vial_coverage.stalled);',
+        _vhdl_textio_write('result_line', ',"diagnostic_records":'),
+        '      write(result_line, vial_diagnostic_count);',
+        _vhdl_textio_write('result_line', ',"fault_applications":'),
+        '      write(result_line, vial_fault_applications_total);',
+        _vhdl_textio_write('result_line', ',"scoreboard_comparisons":'),
+        '      write(result_line, vial_scoreboard_comparisons_total);',
+        _vhdl_textio_write('result_line', ',"scoreboard_mismatches":'),
+        '      write(result_line, vial_scoreboard_mismatches_total);',
+        _vhdl_textio_write('result_line', '},"models":[],"native_extensions":[],"parity_digest":null,"parity_projection":null,"plan_id":"'),
+        '      write(result_line, VIAL_PLAN_ID);',
+        _vhdl_textio_write('result_line', '","portable_parity_eligible":false,"random_decisions":' . $random_decisions . ',"result_id":null,"scenario_results":[');
+    for my $index (0 .. $#{$execution->{scenarios}}) {
+        my $tag = sprintf('%02d', $index);
+        push @line, _vhdl_textio_write('result_line', ',', '      ') if $index;
+        push @line,
+            _vhdl_textio_write('result_line', '{"cancelled_fiber_ids":[],"completion_reason":"'),
+            "      if vial_scenario_${tag}_timed_out then",
+            _vhdl_textio_write('result_line', 'timeout', '        '),
+            "      elsif vial_scenario_${tag}_passed then",
+            _vhdl_textio_write('result_line', 'completed', '        '),
+            '      else',
+            _vhdl_textio_write('result_line', 'expectation_failed', '        '),
+            '      end if;',
+            _vhdl_textio_write('result_line', '","diagnostic_ids":[],"end_time":{"cycle":'),
+            "      write(result_line, vial_scenario_${tag}_cycles);",
+            _vhdl_textio_write('result_line', ',"domain_id":"'),
+            '      write(result_line, VIAL_DOMAIN_ID);',
+            _vhdl_textio_write('result_line', '","ordinal":0,"phase":"check"},"expectation_ids":[],"logical_cycle_count":'),
+            "      write(result_line, vial_scenario_${tag}_cycles);",
+            _vhdl_textio_write('result_line', ',"run_id":"run/'),
+            '      write(result_line, VIAL_PLAN_ID);',
+            _vhdl_textio_write('result_line', '/'),
+            "      write(result_line, VIAL_SCENARIO_${tag}_ID);",
+            _vhdl_textio_write('result_line', '","scenario_id":"'),
+            "      write(result_line, VIAL_SCENARIO_${tag}_ID);",
+            _vhdl_textio_write('result_line', '","start_time":{"cycle":0,"domain_id":"'),
+            '      write(result_line, VIAL_DOMAIN_ID);',
+            _vhdl_textio_write('result_line', '","ordinal":0,"phase":"drive"},"status":"'),
+            "      vial_write_status(result_line, vial_scenario_${tag}_passed,",
+            "        vial_scenario_${tag}_timed_out);",
+            _vhdl_textio_write('result_line', '"}');
+    }
+    push @line,
+        _vhdl_textio_write('result_line', '],"schema":"'),
+        '      write(result_line, VIAL_RESULT_SCHEMA);',
+        _vhdl_textio_write('result_line', '","schema_version":1,"scoreboards":[{"capacity":4,"comparisons":'),
+        '      write(result_line, vial_scoreboard_comparisons_total);',
+        _vhdl_textio_write('result_line', ',"mismatches":'),
+        '      write(result_line, vial_scoreboard_mismatches_total);',
+        _vhdl_textio_write('result_line', '}],"status":"'),
+        "      vial_write_status(result_line, vial_result_consistent, $any_scenario_timed_out);",
+        _vhdl_textio_write('result_line', '","transactions":[]}'),
+        '      writeline(output, result_line);',
+        '    end procedure vial_close_trace_and_project_result;',
         '',
         '    procedure vial_inactive_barrier is',
         '      variable vial_accept_now : boolean := false;',
@@ -1209,12 +1540,21 @@ sub _render_fixture(%arg) {
         '      end if;',
         "      if vial_transaction_active and vial_is_known_zero(${ready_out_sample}(0)) then",
         '        vial_event_held_count := vial_event_held_count + 1;',
+        '        vial_coverage.stalled := vial_coverage.stalled + 1;',
+        '        vial_emit_trace("coverage");',
+        '      elsif vial_transaction_active and vial_is_known_one(' . $ready_out_sample . '(0)) then',
+        '        vial_coverage.not_stalled := vial_coverage.not_stalled + 1;',
+        '        vial_emit_trace("coverage");',
         '      end if;',
         "      if vial_transaction_active and vial_is_known_one(${response_sample}(0)) then",
         '        vial_event_error_count := vial_event_error_count + 1;',
         '      end if;',
         '      if vial_complete_now then',
         '        vial_event_completed_count := vial_event_completed_count + 1;',
+        '        vial_emit_trace("events");',
+        '        if vial_scoreboard.expected_depth > 0 then',
+        "          vial_scoreboard_compare(vial_is_known_zero(${response_sample}(0)));",
+        '        end if;',
         '      end if;';
     my %event_name;
     for my $event (@{$execution->{events}}) {
@@ -1303,7 +1643,26 @@ sub _render_fixture(%arg) {
         '      end if;',
         '',
         '      vial_time.phase := VIAL_CHECK_PHASE;',
-        '      -- FSMGEN VIAL PHASE: CHECK (checking and results are emitted by slice .15.3)',
+        '      -- FSMGEN VIAL PHASE: CHECK',
+        "      if not vial_is_known(${ready_out_sample}(0))",
+        "          or not vial_is_known(${response_sample}(0)) then",
+        '        vial_record_diagnostic("VIAL_UNKNOWN_SAMPLE", VIAL_CHECK_UNKNOWN);',
+        '      end if;',
+        '      if vial_scenario_done then',
+        '        if vial_scenario_status = VIAL_SCENARIO_TIMED_OUT then',
+        '          vial_record_diagnostic("VIAL_SCENARIO_TIMEOUT", VIAL_CHECK_FAILED);',
+        '        elsif vial_current_scenario = 0 then',
+        "          if vial_is_known_zero(${response_sample}(0)) then",
+        '            vial_record_diagnostic("VIAL_EXPECT_SUCCESS", VIAL_CHECK_PASSED);',
+        '          else',
+        '            vial_record_diagnostic("VIAL_EXPECT_SUCCESS", VIAL_CHECK_FAILED);',
+        '          end if;',
+        '        elsif vial_event_error_count = 0 then',
+        '          vial_record_diagnostic("VIAL_EXPECT_ERROR", VIAL_CHECK_FAILED);',
+        '        else',
+        '          vial_record_diagnostic("VIAL_EXPECT_ERROR", VIAL_CHECK_PASSED);',
+        '        end if;',
+        '      end if;',
         '',
         '      vial_time.phase := VIAL_DRIVE_PHASE;',
         '      -- FSMGEN VIAL PHASE: DRIVE',
@@ -1321,6 +1680,8 @@ sub _render_fixture(%arg) {
         '    vial_runtime_state := VIAL_RUNTIME_READY;',
         '    vial_time := VIAL_INITIAL_LOGICAL_TIME;',
         '    vial_runtime_state := VIAL_RUNTIME_RUNNING;',
+        '    vial_trace_open := true;',
+        '    vial_emit_trace("header");',
         '    for scenario_index in 0 to ' . $#{$execution->{scenarios}} . ' loop',
         '      vial_current_scenario := scenario_index;',
         '      vial_scenario_status := VIAL_SCENARIO_RUNNING;',
@@ -1328,6 +1689,10 @@ sub _render_fixture(%arg) {
         '      vial_scenario_done := false;',
         '      vial_transaction_active := false;',
         '      vial_transaction_accepted := false;',
+        '      vial_scoreboard := (0, 0, 0, 0, false);',
+        '      vial_fault := (false, 0, 0);',
+        '      vial_scenario_failure_baseline := vial_check_failures;',
+        '      vial_scenario_unknown_baseline := vial_unknown_evidence;',
         '      vial_time.cycle := 0;',
         '      vial_current_operation_rank := 0;';
     for my $index (0 .. $#fiber) {
@@ -1341,13 +1706,17 @@ sub _render_fixture(%arg) {
     for my $event (@{$execution->{events}}) {
         push @line, '      vial_event_' . _vhdl_slug($event->{name}) . '_count := 0;';
     }
-    push @line, '      case scenario_index is';
+    push @line,
+        '      vial_emit_trace("scenario_start");',
+        '      case scenario_index is';
     for my $scenario_index (0 .. $#{$execution->{scenarios}}) {
         my $scenario = $execution->{scenarios}[$scenario_index];
         my @ops = grep { $_->{scenario_id} eq $scenario->{scenario_id} }
             @{$execution->{operation_graph}{operations}};
         my ($reset_op) = grep { $_->{kind} eq 'reset' } @ops;
         my ($start_op) = grep { $_->{kind} eq 'start' } @ops;
+        my ($scoreboard_op) = grep { $_->{kind} eq 'scoreboard_expect' } @ops;
+        my ($fault_op) = grep { $_->{kind} eq 'inject' } @ops;
         my %reset_input = map { $_->{name} => $_->{value} } @{$reset_op->{typed_inputs}};
         my %start_input = map { $_->{name} => $_->{value} } @{$start_op->{typed_inputs}};
         my %field = map { $_->{field_id} => $_->{value}{value} } @{$start_input{fields}};
@@ -1361,6 +1730,18 @@ sub _render_fixture(%arg) {
             '            vial_inactive_barrier;',
             '          end loop;',
             "          drive_vial_value($reset, $reset_inactive);";
+        if ($scoreboard_op) {
+            push @line,
+                "          vial_current_operation_rank := $scoreboard_op->{static_rank};",
+                '          vial_scoreboard_enqueue_expected;';
+        }
+        if ($fault_op) {
+            push @line,
+                "          vial_current_operation_rank := $fault_op->{static_rank};",
+                '          vial_fault.armed := true;',
+                '          vial_fault.remaining_cycles := 1;',
+                '          vial_emit_trace("faults");';
+        }
         for my $carrier (@{$bridge->{transactions}[0]{fields}}) {
             my ($field_id) = grep { /::field::\Q$carrier->{name}\E\z/ } keys %field;
             next unless defined $field_id;
@@ -1369,6 +1750,19 @@ sub _render_fixture(%arg) {
             my $expression = $width == 1
                 ? _vhdl_value_symbol_expression($field{$field_id})
                 : _vhdl_value_vector_expression($field{$field_id}, $width);
+            if ($fault_op && $carrier->{name} eq $execution->{faults}[0]{field_name}) {
+                my $substitute = $execution->{faults}[0]{substitute}{value};
+                $expression = $width == 1
+                    ? _vhdl_value_symbol_expression($substitute)
+                    : _vhdl_value_vector_expression($substitute, $width);
+                push @line,
+                    '          -- VIAL substitution fault preserves the immutable authored field',
+                    '          vial_fault.applications := vial_fault.applications + 1;',
+                    '          vial_fault_applications_total := vial_fault_applications_total + 1;',
+                    '          vial_fault.remaining_cycles := 0;',
+                    '          vial_fault.armed := false;',
+                    '          vial_emit_trace("faults");';
+            }
             push @line, "          -- VIAL drive $field_id",
                 $width == 1
                     ? "          drive_vial_value($name, $expression);"
@@ -1391,7 +1785,19 @@ sub _render_fixture(%arg) {
             '          end loop;',
             '          if vial_scenario_status /= VIAL_SCENARIO_TIMED_OUT then',
             '            vial_scenario_status := VIAL_SCENARIO_STIMULUS_COMPLETED;',
-            '          end if;';
+            '          end if;',
+            '          vial_scenario_' . sprintf('%02d', $scenario_index)
+                . '_timed_out := vial_scenario_status = VIAL_SCENARIO_TIMED_OUT;',
+            '          vial_scenario_' . sprintf('%02d', $scenario_index)
+                . '_cycles := vial_time.cycle;',
+            '          vial_scenario_' . sprintf('%02d', $scenario_index)
+                . '_passed := vial_scenario_status /= VIAL_SCENARIO_TIMED_OUT',
+            '            and vial_check_failures = vial_scenario_failure_baseline',
+            '            and vial_unknown_evidence = vial_scenario_unknown_baseline',
+            '            and not vial_scoreboard.overflowed',
+            '            and vial_scoreboard.expected_depth = 0',
+            '            and vial_scoreboard.actual_depth = 0;',
+            '          vial_emit_trace("scenario_end");';
     }
     push @line,
         '        when others =>',
@@ -1399,6 +1805,9 @@ sub _render_fixture(%arg) {
         '      end case;',
         '    end loop;',
         '    vial_runtime_state := VIAL_RUNTIME_COMPLETED;',
+        '    vial_close_trace_and_project_result;',
+        '    assert vial_trace_closed and vial_result_consistent',
+        '      report "FSMGen VIAL trace/result closure inconsistency" severity failure;',
         '    vial_runtime_state := VIAL_RUNTIME_FINALIZED;',
         '    wait;',
         '  end process vial_scheduler;',
@@ -1538,6 +1947,46 @@ sub _source_map_entries(%arg) {
         facts => ['/domains/0'],
         locations => [$execution->{domains}[0]{source_location}],
     };
+    my @checking_region = (
+        ['vial_scoreboard_enqueue_expected', 'bounded_scoreboard_queue',
+            qr/^    procedure vial_scoreboard_enqueue_expected is$/m,
+            ['/scoreboards'], [map { $_->{instance_id} } @{$execution->{scoreboards}}]],
+        ['vial_scoreboard_compare', 'scoreboard_comparison',
+            qr/^    procedure vial_scoreboard_compare\(/m,
+            ['/scoreboards'], [map { $_->{instance_id} } @{$execution->{scoreboards}}]],
+        ['vial_coverage', 'portable_coverage_counters',
+            qr/^    variable vial_coverage\s*:/m,
+            ['/coverage'], [map { $_->{semantic_id} } @{$execution->{coverage}{coverpoints}}]],
+        ['vial_fault', 'bounded_substitution_fault',
+            qr/^    variable vial_fault\s*:/m,
+            ['/faults'], [map { $_->{semantic_id} } @{$execution->{faults}}]],
+        ['vial_record_diagnostic', 'procedural_checks_and_diagnostics',
+            qr/^    procedure vial_record_diagnostic\(/m,
+            ['/operation_graph/operations'], [map { $_->{operation_id} }
+                grep { $_->{kind} eq 'expect' } @{$execution->{operation_graph}{operations}}]],
+        ['vial_emit_trace', 'closed_trace_projection',
+            qr/^    procedure vial_emit_trace\(/m,
+            ['/fixture', '/scenarios'], [$execution->{fixture}{fixture_id}]],
+        ['vial_close_trace_and_project_result', 'normalized_result_projection',
+            qr/^    procedure vial_close_trace_and_project_result is$/m,
+            ['/fixture', '/scenarios', '/scoreboards', '/coverage', '/faults'],
+            [$execution->{fixture}{fixture_id}]],
+    );
+    for my $region (@checking_region) {
+        my ($symbol, $role, $pattern, $plan, $semantic) = @$region;
+        my $line = _find_line($top_text, $pattern);
+        push @spec, {
+            relpath => $arg{top_rel},
+            symbol => $symbol,
+            role => $role,
+            start => $line,
+            end => $line,
+            plan => $plan,
+            semantic => $semantic,
+            facts => [],
+            locations => [$execution->{fixture}{source_location}],
+        };
+    }
     for my $index (0 .. $#{$execution->{models}}) {
         my $model = $execution->{models}[$index];
         my $tag = sprintf('%02d', $index);
@@ -1975,6 +2424,11 @@ sub _vhdl_string($value) {
     $value //= '';
     $value =~ s/"/""/g;
     return $value;
+}
+
+sub _vhdl_textio_write($target, $value, $indent = '      ') {
+    return $indent . "write($target, string'(\""
+        . _vhdl_string($value) . '"));';
 }
 
 sub _line_count($text) {

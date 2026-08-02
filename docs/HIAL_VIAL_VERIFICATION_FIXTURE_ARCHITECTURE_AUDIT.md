@@ -1472,8 +1472,9 @@ children. Completed `.15.1` owns the provider-free emitter substrate,
 deterministic artifact/source-map/command-evidence shapes, structural checks,
 capability non-claims, and the first byte-locked review gallery. Completed
 `.15.2` adds the portable driver, sampler, scheduler, scenario, model, and
-probe-adapter semantics described below. `.15.3-.15.4` complete portable
-checking/results and review; `.15.5` owns exact GHDL 6.0.0 execution;
+probe-adapter semantics described below. Completed `.15.3` adds portable
+scoreboards, coverage, faults, procedural checks, diagnostics, trace closure,
+and normalized-result projection. `.15.4` closes portable review; `.15.5` owns exact GHDL 6.0.0 execution;
 `.15.6-.15.7` own OSVVM 2026.05 adapter emission and qualification. Unavailable
 tools do not block reviewable generation.
 
@@ -1485,10 +1486,10 @@ and SystemVerilog and UVM consumers continue to select only their own language
 family.
 
 The private `FSM::VIAL::Backend::VHDLPortableGHDL` emitter consumes the exact
-ExecutionIR, bridge manifest, and VHDL DUT record. After `.15.2` it emits
+ExecutionIR, bridge manifest, and VHDL DUT record. After `.15.3` it emits
 fourteen sorted artifacts: six provider-free VHDL sources, a closed manifest
 and source map, three unexecuted command records, and tool-profile,
-source-order, and structural-validation evidence. Fifty-two mappings cover
+source-order, and structural-validation evidence. Fifty-nine mappings cover
 the generated HIAL DUT, typed value/phase package, logical-time/runtime
 package, operation/scenario/fiber/model metadata, testbench semantics, and the
 declared probe adapter.
@@ -1510,18 +1511,29 @@ probe adapter contains the only generated hierarchical external name and may
 reference only the bridge-declared `reg_data_q` probe. Public DUT connectivity
 continues to use named ports.
 
-Checking, scoreboards, coverage, faults, properties, diagnostics, trace
-closure, and normalized results remain owned by `.15.3`. In particular, the
-unsupported-size scenario's authored injection is present in rank metadata but
-is not applied by `.15.2`; no emitted comment or artifact may imply otherwise.
-The manifest records the legacy observation package as an unchanged,
-unconsumed parallel surface.
+The capacity-four in-order scoreboard checks overflow, pairs queued expected
+and actual items, and requires empty queues in the result predicate. Explicit
+coverage counters preserve both authored stall bins. The unsupported-size
+scenario applies its one-cycle field substitution through an explicit seam
+without mutating the authored transaction value. Procedural checks record
+success, ERROR, timeout, declared-probe, and unknown-value evidence into a
+bounded diagnostic family. One provider-free `textio` path emits header/body/
+footer trace framing and a normalized-result projection with every top-level
+result family, per-scenario status/time records, aggregate checking metrics,
+and explicit unproduced identity/parity fields. The bounded diagnostic store
+retains each code, outcome, and logical time. JSON uses VHDL quote doubling;
+C-style escaping is a structural failure. Exact closure and trace/result
+consistency are generated invariants. These are reviewable emission semantics,
+not a produced runtime result. The manifest records the legacy observation
+package as an unchanged, unconsumed parallel surface.
 
-Thirteen fail-closed structural checks cover the closed safe graph, required
+Twenty fail-closed structural checks cover the closed safe graph, required
 roles, bounded input, deterministic text, provider neutrality, selected source
 shapes and normalization, typed drivers/samplers, one inactive-edge authority,
 fixed phase order, exact rank/scenario/fiber metadata, deterministic model
-updates, and declared-probe-only hierarchy. Capability negotiation additionally
+updates, declared-probe-only hierarchy, bounded scoreboards, exact coverage
+bins, substitution faults, procedural-only checks, unknown-value diagnostics,
+trace closure, and normalized-result consistency. Capability negotiation additionally
 rejects nine-state requirements, multiple domains, asynchronous semantic
 events, and malformed or unsupported binding shapes.
 
@@ -1533,9 +1545,9 @@ is regenerated or checked with
 `perl scripts/refresh_vial_vhdl_portable_gallery.pl [--check]`.
 
 This completion advances the honest capability state to private, unqualified
-portable-semantics emission. Exact GHDL 6.0.0 remains unavailable and
-unexecuted. VHDL analysis, elaboration, runtime, checking/trace/result
-production, parity, PSL, complete VHDL-2008, OSVVM/UVVM, mixed-language
+portable-checking emission. Exact GHDL 6.0.0 remains unavailable and
+unexecuted. VHDL analysis, elaboration, runtime, produced-result
+validation, parity, PSL, complete VHDL-2008, OSVVM/UVVM, mixed-language
 behavior, and product support remain explicitly unclaimed.
 
 ### Primary evidence

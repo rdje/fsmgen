@@ -29,7 +29,7 @@ sub vial_vhdl_emission_contract_keys {
 sub build_vial_vhdl_emission_contract {
     return {
         schema_version => 1,
-        status => 'shipped_private_unqualified_portable_semantics',
+        status => 'shipped_private_unqualified_portable_checking',
         contract_source => vial_vhdl_emission_contract_source(),
         implementation_entrypoints => [
             'FSM::VIAL::Backend::VHDLPortableGHDL->emit({...})',
@@ -69,20 +69,26 @@ sub build_vial_vhdl_emission_contract {
         backend_stage_status => {
             hial_vhdl_generation => 'shipped_deterministic_private_handoff',
             negotiation => 'shipped_portable_semantics_scope',
-            emission => 'shipped_portable_semantics_emission_only',
-            static_validation => 'shipped_thirteen_structural_checks',
-            source_map => 'shipped_portable_semantics_scope',
-            review_gallery => 'shipped_byte_locked_portable_semantics',
+            emission => 'shipped_portable_checking_emission_only',
+            static_validation => 'shipped_twenty_structural_checks',
+            source_map => 'shipped_portable_checking_scope',
+            review_gallery => 'shipped_byte_locked_portable_checking',
             drivers => 'shipped_emission_only',
             samplers => 'shipped_emission_only',
             scheduler => 'shipped_emission_only',
             scenarios => 'shipped_emission_only',
             models => 'shipped_emission_only',
             probe_adapters => 'shipped_emission_only',
+            scoreboards => 'shipped_bounded_emission_only',
+            coverage => 'shipped_counter_emission_only',
+            faults => 'shipped_substitution_emission_only',
+            properties => 'shipped_procedural_emission_only',
+            diagnostics => 'shipped_bounded_emission_only',
+            trace => 'shipped_closed_projection_emission_only',
             analysis => 'not_run',
             elaboration => 'not_run',
             runtime => 'not_run',
-            result => 'not_produced',
+            result => 'projection_emitted_not_produced',
             parity => 'not_evaluated',
             psl => 'not_emitted',
             product_support => 'not_claimed',
@@ -99,6 +105,13 @@ sub build_vial_vhdl_emission_contract {
             vial.backend.vhdl_portable_ghdl.inactive_edge_scheduler.v1
             vial.backend.vhdl_portable_ghdl.scenario_fibers.v1
             vial.backend.vhdl_portable_ghdl.deterministic_models.v1
+            vial.backend.vhdl_portable_ghdl.bounded_scoreboard.v1
+            vial.backend.vhdl_portable_ghdl.coverage_counters.v1
+            vial.backend.vhdl_portable_ghdl.substitution_faults.v1
+            vial.backend.vhdl_portable_ghdl.procedural_checks.v1
+            vial.backend.vhdl_portable_ghdl.diagnostic_records.v1
+            vial.backend.vhdl_portable_ghdl.closed_trace_projection.v1
+            vial.backend.vhdl_portable_ghdl.result_manifest_projection.v1
             vial.backend.vhdl_portable_ghdl.declared_probe_adapter.v1
             vial.backend.vhdl_portable_ghdl.exact_rank_maps.v1
             vial.backend.vhdl_portable_ghdl.source_order.v1
@@ -113,8 +126,10 @@ sub build_vial_vhdl_emission_contract {
             generated_vhdl_sources => 6,
             generated_source_bytes => 16_777_216,
             total_artifacts => 14,
-            source_map_entries => 52,
-            static_validation_checks => 13,
+            source_map_entries => 59,
+            static_validation_checks => 20,
+            scoreboard_capacity => 4,
+            diagnostic_capacity => 64,
             static_validation_artifacts => 32,
             identifier_bytes => 255,
         },
@@ -124,13 +139,13 @@ sub build_vial_vhdl_emission_contract {
         writes_files => JSON::PP::true,
         public_embedding_api => JSON::PP::false,
         explicit_nonclaims => [qw(
-            complete_vhdl_backend scoreboards coverage faults properties checks trace
-            vhdl_analysis elaboration simulation runtime result parity psl
+            complete_vhdl_backend vhdl_analysis elaboration simulation runtime
+            produced_result parity psl
             complete_vhdl_2008 osvvm uvvm mixed_language product_support scale
         )],
         guidance => [
-            'Use the private emitter to inspect deterministic provider-free VHDL-2008 typed drivers, original-symbol samplers, inactive-edge scheduling, scenario/fiber state, models, probe adapters, exact ranks, HIAL DUT bytes, and source maps.',
-            'Treat thirteen-check structural validation and the checked gallery as emission evidence only; neither proves VHDL analysis, elaboration, runtime behavior, checking, normalized results, parity, PSL, or product support.',
+            'Use the private emitter to inspect deterministic provider-free VHDL-2008 typed drivers, samplers, scheduling, scenarios, models, bounded scoreboards, coverage, substitution faults, procedural checks, diagnostics, trace closure, normalized result projection, probe adapters, exact ranks, HIAL DUT bytes, and source maps.',
+            'Treat twenty-check structural validation and the checked gallery as emission evidence only; neither proves VHDL analysis, elaboration, runtime behavior, a produced result, parity, PSL, or product support.',
             'Ordinary portable emission downloads and inspects no simulator or methodology-provider bytes. Exact GHDL and OSVVM materialization belong to later separately qualified slices.',
             'The generated native VIAL graph is separate from and does not consume, rewrite, or widen the inert vhdl-observation-package compatibility surface.',
             'Canonical VHDL source is provider-neutral. GHDL identity and ordered command shapes live only in JSON evidence until the exact tool is executed.',

@@ -31,6 +31,7 @@ package fsmgen_vial_types_pkg is
   function observe_vial_vector(value : std_logic_vector) return vial_observation_vector_t;
   function vial_is_known_zero(value : vial_observation_t) return boolean;
   function vial_is_known_one(value : vial_observation_t) return boolean;
+  function vial_is_known(value : vial_observation_t) return boolean;
   function vial_matches(
     actual : vial_observation_vector_t;
     expected : vial_value_vector_t
@@ -103,6 +104,12 @@ package body fsmgen_vial_types_pkg is
   begin
     return value.normalized_value = VIAL_VALUE_1;
   end function vial_is_known_one;
+
+  function vial_is_known(value : vial_observation_t) return boolean is
+  begin
+    return value.normalized_value = VIAL_VALUE_0
+      or value.normalized_value = VIAL_VALUE_1;
+  end function vial_is_known;
 
   function vial_matches(
     actual : vial_observation_vector_t;

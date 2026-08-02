@@ -61,6 +61,8 @@ answers:
   - "what is the portable VHDL inactive-edge scheduler?"
   - "how are VIAL scenarios fibers and models emitted in VHDL?"
   - "how are declared HIAL probes accessed from portable VHDL?"
+  - "does portable VIAL VHDL emit scoreboards coverage faults and checks?"
+  - "does portable VIAL VHDL emit a closed trace and normalized result projection?"
   - "where is the portable VHDL review gallery?"
   - "how do I regenerate or check the portable VHDL review gallery?"
   - "has the generated VIAL VHDL been analyzed or run?"
@@ -145,8 +147,15 @@ gates. It is explicitly a known-value/two-state runtime profile, not complete
 four-state, SystemVerilog, or UVM authority. `sv_uvm_qualified`,
 `vhdl_portable_ghdl`, `vhdl_methodology_qualified`, and
 `mixed_language_qualified` remain separate claims with exact tools, versions,
-providers, and exercised capabilities. Existing UVM 1.2 and VHDL observation
-outputs remain inert compatibility surfaces until later migration leaves.
+providers, and exercised capabilities. The private provider-free VHDL emitter
+now includes bounded scoreboards, explicit coverage counters, substitution
+faults, procedural checks, diagnostic records, closed trace framing, and a
+normalized-result projection with all top-level manifest families, bounded
+stored diagnostic details, and VHDL-native quote doubling. C-style JSON string
+escaping is rejected structurally. This is emission evidence only: GHDL
+analysis, elaboration, runtime, produced-result validation, and parity remain unclaimed.
+Existing UVM 1.2 and VHDL observation outputs remain inert compatibility
+surfaces.
 
 The architecture audit is complete and maps the handwritten AHB arbitration
 fixture, migration, public artifacts, parity, and scale boundaries. `.3` now
