@@ -1,0 +1,479 @@
+{
+   "backend_profile" : "vhdl_portable_ghdl",
+   "coverage_rule" : "every selected portable responsibility has emitted role evidence or one exact unsupported reason",
+   "emitted_foundations" : [
+      "bounded_scoreboard",
+      "closed_trace_projection",
+      "coverage_counters",
+      "declared_probe_adapter",
+      "deterministic_models",
+      "exact_rank_execution",
+      "fixture_metadata",
+      "hial_dut_binding",
+      "inactive_edge_scheduler",
+      "normalized_result_projection",
+      "original_symbol_sampling",
+      "plan_time_random_replay",
+      "procedural_properties",
+      "public_port_binding",
+      "scenario_fibers",
+      "structured_diagnostics",
+      "substitution_faults",
+      "typed_drivers",
+      "typed_four_state_values",
+      "typed_logical_time"
+   ],
+   "emitter_revision" : 4,
+   "entrypoint_legend" : {
+      "normal_source" : "normal public VIAL projection, derived compiler-owned intent, unavailable private preview, or exact unsupported boundary",
+      "terse_source" : "terse public VIAL projection, derived compiler-owned intent, unavailable private preview, or exact unsupported boundary",
+      "typed_ir" : "public ExecutionIR, compiler-owned ExecutionIR/bridge data, an explicitly unavailable private preview, or an unsupported boundary"
+   },
+   "excluded_qualification" : [
+      "vhdl_analysis",
+      "elaboration",
+      "runtime",
+      "produced_result",
+      "parity",
+      "complete_vhdl_2008",
+      "psl",
+      "osvvm",
+      "product_support"
+   ],
+   "fixture_id" : "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration",
+   "mappings" : [
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "bounded_scoreboard",
+         "generated_roles" : [
+            "vhdl_runtime_package",
+            "vhdl_fixture_top"
+         ],
+         "intent_owner" : "public_vial_v1",
+         "mapping_id" : "mapping/bounded-scoreboard",
+         "normal_source" : "public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "public_vial_v1",
+         "typed_ir" : "public_execution_ir",
+         "unsupported_reason" : null,
+         "vhdl_realization" : "capacity-four expected queue and typed in-order comparison",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "closed_trace_projection",
+         "generated_roles" : [
+            "vhdl_runtime_package",
+            "vhdl_fixture_top"
+         ],
+         "intent_owner" : "compiler_owned_from_public_vial",
+         "mapping_id" : "mapping/closed-trace-projection",
+         "normal_source" : "derived_from_public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "derived_from_public_vial_v1",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "vhdl_realization" : "logical-time header/body/footer JSONL projection with explicit closure",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "coverage_counters",
+         "generated_roles" : [
+            "vhdl_runtime_package",
+            "vhdl_fixture_top"
+         ],
+         "intent_owner" : "public_vial_v1",
+         "mapping_id" : "mapping/coverage-counters",
+         "normal_source" : "public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "public_vial_v1",
+         "typed_ir" : "public_execution_ir",
+         "unsupported_reason" : null,
+         "vhdl_realization" : "exact generated counters for the selected VIAL bins",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "declared_probe_adapter",
+         "generated_roles" : [
+            "vhdl_probe_adapter",
+            "vhdl_fixture_top"
+         ],
+         "intent_owner" : "compiler_owned_from_hial_bridge",
+         "mapping_id" : "mapping/declared-probe-adapter",
+         "normal_source" : "not_applicable_compiler_owned",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "not_applicable_compiler_owned",
+         "typed_ir" : "compiler_owned_bridge_manifest",
+         "unsupported_reason" : null,
+         "vhdl_realization" : "isolated VHDL-2008 external-name adapter for one declared HIAL probe",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "deterministic_models",
+         "generated_roles" : [
+            "vhdl_fixture_metadata",
+            "vhdl_fixture_top"
+         ],
+         "intent_owner" : "public_vial_v1",
+         "mapping_id" : "mapping/deterministic-models",
+         "normal_source" : "public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "public_vial_v1",
+         "typed_ir" : "public_execution_ir",
+         "unsupported_reason" : null,
+         "vhdl_realization" : "bounded deterministic event-counter model updates",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "not_emitted_unsupported",
+         "foundation_id" : "distinct_nine_state_semantics",
+         "generated_roles" : [],
+         "intent_owner" : "excluded_portable_boundary",
+         "mapping_id" : "mapping/distinct-nine-state-semantics",
+         "normal_source" : "unsupported_in_portable_profile",
+         "qualification_status" : "not_applicable_unsupported",
+         "static_review_status" : "not_applicable_unsupported",
+         "terse_source" : "unsupported_in_portable_profile",
+         "typed_ir" : "not_represented_unsupported",
+         "unsupported_reason" : "VIAL version 1 normalizes std_logic meta-values to four states and does not preserve nine distinct semantic states",
+         "vhdl_realization" : "not emitted by the provider-free profile",
+         "visual_review_status" : "not_applicable_unsupported"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "exact_rank_execution",
+         "generated_roles" : [
+            "vhdl_fixture_metadata",
+            "vhdl_fixture_top"
+         ],
+         "intent_owner" : "compiler_owned_backend",
+         "mapping_id" : "mapping/exact-rank-execution",
+         "normal_source" : "not_applicable_compiler_owned",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "not_applicable_compiler_owned",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "vhdl_realization" : "statically lowered operations in exact ExecutionIR rank order",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "fixture_metadata",
+         "generated_roles" : [
+            "vhdl_fixture_metadata"
+         ],
+         "intent_owner" : "compiler_owned_backend",
+         "mapping_id" : "mapping/fixture-metadata",
+         "normal_source" : "not_applicable_compiler_owned",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "not_applicable_compiler_owned",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "vhdl_realization" : "immutable fixture, operation, scenario, fiber, model, and rank metadata",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "hial_dut_binding",
+         "generated_roles" : [
+            "generated_hial_vhdl_dut",
+            "vhdl_fixture_top"
+         ],
+         "intent_owner" : "compiler_owned_from_hial_bridge",
+         "mapping_id" : "mapping/hial-dut-binding",
+         "normal_source" : "not_applicable_compiler_owned",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "not_applicable_compiler_owned",
+         "typed_ir" : "compiler_owned_bridge_manifest",
+         "unsupported_reason" : null,
+         "vhdl_realization" : "byte-identical generated HIAL VHDL plus direct entity binding",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "inactive_edge_scheduler",
+         "generated_roles" : [
+            "vhdl_fixture_metadata",
+            "vhdl_fixture_top"
+         ],
+         "intent_owner" : "compiler_owned_backend",
+         "mapping_id" : "mapping/inactive-edge-scheduler",
+         "normal_source" : "not_applicable_compiler_owned",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "not_applicable_compiler_owned",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "vhdl_realization" : "one inactive-edge SAMPLE/REACT/CHECK/DRIVE semantic scheduler",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "not_emitted_unsupported",
+         "foundation_id" : "multiple_clock_or_async_semantics",
+         "generated_roles" : [],
+         "intent_owner" : "excluded_portable_boundary",
+         "mapping_id" : "mapping/multiple-clock-or-async-semantics",
+         "normal_source" : "unsupported_in_portable_profile",
+         "qualification_status" : "not_applicable_unsupported",
+         "static_review_status" : "not_applicable_unsupported",
+         "terse_source" : "unsupported_in_portable_profile",
+         "typed_ir" : "not_represented_unsupported",
+         "unsupported_reason" : "the selected execution profile owns exactly one clock domain and rejects asynchronous semantic events",
+         "vhdl_realization" : "not emitted by the provider-free profile",
+         "visual_review_status" : "not_applicable_unsupported"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "normalized_result_projection",
+         "generated_roles" : [
+            "vhdl_runtime_package",
+            "vhdl_fixture_top"
+         ],
+         "intent_owner" : "compiler_owned_from_public_vial",
+         "mapping_id" : "mapping/normalized-result-projection",
+         "normal_source" : "derived_from_public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "derived_from_public_vial_v1",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "vhdl_realization" : "full fsmgen.verification_result_manifest.v1 projection without production claim",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "original_symbol_sampling",
+         "generated_roles" : [
+            "vhdl_types_package",
+            "vhdl_fixture_top"
+         ],
+         "intent_owner" : "compiler_owned_from_public_vial",
+         "mapping_id" : "mapping/original-symbol-sampling",
+         "normal_source" : "derived_from_public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "derived_from_public_vial_v1",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "vhdl_realization" : "stable-barrier sampling with normalized value and original std_logic evidence",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "not_emitted_unsupported",
+         "foundation_id" : "osvvm_native_services",
+         "generated_roles" : [],
+         "intent_owner" : "private_preview_not_selected",
+         "mapping_id" : "mapping/osvvm-native-services",
+         "normal_source" : "not_available_private_preview",
+         "qualification_status" : "not_applicable_unsupported",
+         "static_review_status" : "not_applicable_unsupported",
+         "terse_source" : "not_available_private_preview",
+         "typed_ir" : "private_typed_preview_not_selected",
+         "unsupported_reason" : "OSVVM-native randomization, coverage, scoreboard, and verification-component services belong to separately owned profile vhdl_osvvm_qualified",
+         "vhdl_realization" : "not emitted by the provider-free profile",
+         "visual_review_status" : "not_applicable_unsupported"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "plan_time_random_replay",
+         "generated_roles" : [
+            "vhdl_fixture_metadata",
+            "vhdl_fixture_top"
+         ],
+         "intent_owner" : "public_vial_v1",
+         "mapping_id" : "mapping/plan-time-random-replay",
+         "normal_source" : "public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "public_vial_v1",
+         "typed_ir" : "public_execution_ir",
+         "unsupported_reason" : null,
+         "vhdl_realization" : "immutable replay of compiler-resolved keyed random decisions",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "procedural_properties",
+         "generated_roles" : [
+            "vhdl_runtime_package",
+            "vhdl_fixture_top"
+         ],
+         "intent_owner" : "public_vial_v1_translation",
+         "mapping_id" : "mapping/procedural-properties",
+         "normal_source" : "public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "public_vial_v1",
+         "typed_ir" : "public_execution_ir",
+         "unsupported_reason" : null,
+         "vhdl_realization" : "bounded procedural success, error, timeout, and unknown checks",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "not_emitted_unsupported",
+         "foundation_id" : "psl_properties",
+         "generated_roles" : [],
+         "intent_owner" : "excluded_portable_boundary",
+         "mapping_id" : "mapping/psl-properties",
+         "normal_source" : "unsupported_in_portable_profile",
+         "qualification_status" : "not_applicable_unsupported",
+         "static_review_status" : "not_applicable_unsupported",
+         "terse_source" : "unsupported_in_portable_profile",
+         "typed_ir" : "not_represented_unsupported",
+         "unsupported_reason" : "portable properties lower procedurally; PSL syntax and tool flags are not selected or claimed",
+         "vhdl_realization" : "not emitted by the provider-free profile",
+         "visual_review_status" : "not_applicable_unsupported"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "public_port_binding",
+         "generated_roles" : [
+            "vhdl_fixture_top"
+         ],
+         "intent_owner" : "compiler_owned_from_hial_bridge",
+         "mapping_id" : "mapping/public-port-binding",
+         "normal_source" : "not_applicable_compiler_owned",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "not_applicable_compiler_owned",
+         "typed_ir" : "compiler_owned_bridge_manifest",
+         "unsupported_reason" : null,
+         "vhdl_realization" : "named port associations proved by the HIAL/VIAL bridge manifest",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "scenario_fibers",
+         "generated_roles" : [
+            "vhdl_fixture_metadata",
+            "vhdl_runtime_package",
+            "vhdl_fixture_top"
+         ],
+         "intent_owner" : "public_vial_v1",
+         "mapping_id" : "mapping/scenario-fibers",
+         "normal_source" : "public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "public_vial_v1",
+         "typed_ir" : "public_execution_ir",
+         "unsupported_reason" : null,
+         "vhdl_realization" : "bounded scenario/fiber state with exact completion, timeout, and cancellation",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "structured_diagnostics",
+         "generated_roles" : [
+            "vhdl_runtime_package",
+            "vhdl_fixture_top"
+         ],
+         "intent_owner" : "compiler_owned_from_public_vial",
+         "mapping_id" : "mapping/structured-diagnostics",
+         "normal_source" : "derived_from_public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "derived_from_public_vial_v1",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "vhdl_realization" : "bounded typed diagnostic storage and aggregate severity/outcome counts",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "substitution_faults",
+         "generated_roles" : [
+            "vhdl_runtime_package",
+            "vhdl_fixture_top"
+         ],
+         "intent_owner" : "public_vial_v1",
+         "mapping_id" : "mapping/substitution-faults",
+         "normal_source" : "public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "public_vial_v1",
+         "typed_ir" : "public_execution_ir",
+         "unsupported_reason" : null,
+         "vhdl_realization" : "one-drive-interval substitution seam preserving authored source values",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "typed_drivers",
+         "generated_roles" : [
+            "vhdl_types_package",
+            "vhdl_fixture_top"
+         ],
+         "intent_owner" : "public_vial_v1",
+         "mapping_id" : "mapping/typed-drivers",
+         "normal_source" : "public_vial_v1",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "public_vial_v1",
+         "typed_ir" : "public_execution_ir",
+         "unsupported_reason" : null,
+         "vhdl_realization" : "typed scalar/vector drive procedures and statically lowered drive operations",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "typed_four_state_values",
+         "generated_roles" : [
+            "vhdl_types_package"
+         ],
+         "intent_owner" : "compiler_owned_backend",
+         "mapping_id" : "mapping/typed-four-state-values",
+         "normal_source" : "not_applicable_compiler_owned",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "not_applicable_compiler_owned",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "vhdl_realization" : "provider-free VIAL 0/1/X/Z symbols and strong std_logic conversion",
+         "visual_review_status" : "pending"
+      },
+      {
+         "emission_status" : "emitted",
+         "foundation_id" : "typed_logical_time",
+         "generated_roles" : [
+            "vhdl_runtime_package"
+         ],
+         "intent_owner" : "compiler_owned_backend",
+         "mapping_id" : "mapping/typed-logical-time",
+         "normal_source" : "not_applicable_compiler_owned",
+         "qualification_status" : "not_run",
+         "static_review_status" : "passed_structural_only",
+         "terse_source" : "not_applicable_compiler_owned",
+         "typed_ir" : "compiler_owned_execution_ir",
+         "unsupported_reason" : null,
+         "vhdl_realization" : "typed domain, cycle, phase, and operation-rank records",
+         "visual_review_status" : "pending"
+      }
+   ],
+   "plan_id" : "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574",
+   "profile_state" : {
+      "emission" : "emitted",
+      "qualification" : "unqualified_not_run",
+      "static_review" : "reviewed_structurally",
+      "visual_review" : "pending"
+   },
+   "schema" : "fsmgen.vial_vhdl_selected_mapping_matrix.v1",
+   "schema_version" : 1,
+   "scope" : "complete_selected_provider_free_vhdl_matrix_with_exact_rejected_boundaries",
+   "unsupported_foundations" : [
+      "distinct_nine_state_semantics",
+      "multiple_clock_or_async_semantics",
+      "osvvm_native_services",
+      "psl_properties"
+   ]
+}

@@ -1121,13 +1121,43 @@ The sixth source is a source-mapped VHDL-2008 external-name adapter for the one
 bridge-declared `reg_data_q` probe. Generated hierarchy is forbidden anywhere
 else; ordinary DUT access remains through public named ports.
 
-The manifest and machine-readable capability contract say
-`emitted_unqualified_portable_checking`. Twenty static checks prove the
+Completed `.15.4` changes the manifest and machine-readable capability state
+to `emitted_structurally_reviewed_unqualified`. Twenty static checks prove the
 closed graph, deterministic provider-neutral source, typed value handling,
 single inactive-edge authority, phase order, exact ranks, bounded scenario and
 fiber metadata, deterministic model updates, and declared-probe-only
 hierarchy—not VHDL syntax or execution. Negotiation also rejects nine-state,
 multi-domain, and asynchronous semantic-event requests.
+
+Three additional canonical JSON artifacts close review without changing the
+six generated VHDL sources or 59 source-map entries. The 24-row selected
+mapping matrix gives 20 portable responsibilities exact emitted role evidence
+and gives four excluded boundaries one exact unsupported reason each: OSVVM-
+native services, PSL, distinct nine-state VIAL meaning, and multi-clock or
+asynchronous execution. Each row distinguishes public normal/terse source,
+compiler-owned ExecutionIR or bridge data, and unavailable private previews.
+
+| Matrix group | Exact selected responsibilities | Entry ownership |
+| --- | --- | --- |
+| values and binding | typed four-state values, original-symbol sampling, typed logical time, fixture metadata, HIAL DUT binding, public-port binding, declared probe adapter | compiler or bridge derived; no invented target-language authoring |
+| execution | typed drivers, inactive-edge scheduler, scenario fibers, deterministic models, plan-time random replay, exact-rank execution | drivers/scenarios/models/decisions are public VIAL; scheduler/ranks are compiler-owned |
+| checking and evidence | bounded scoreboard, coverage counters, substitution faults, procedural properties, structured diagnostics, closed trace projection, normalized-result projection | public intent with compiler-owned storage and evidence projection |
+
+| Rejected boundary | Exact reason in the matrix |
+| --- | --- |
+| OSVVM-native services | separately owned by `vhdl_osvvm_qualified`; not a provider-free private preview |
+| PSL properties | portable properties lower procedurally; PSL syntax and flags are not selected |
+| distinct nine-state VIAL semantics | version 1 normalizes `std_logic` meta-values to VIAL's four states |
+| multiple-clock/asynchronous semantics | the selected execution profile owns exactly one clock domain and rejects asynchronous semantic events |
+
+The seven-stage workflow records repository-relative regeneration and byte
+checking, structural review, pending director/delegated visual review, durable
+defect capture, migration/separation proof, and later qualified runtime. A
+review finding becomes durable only through a task-tree defect leaf containing
+the artifact path, generated symbol, source-map ID, observation, severity,
+reproduction, expected intent, and disposition. Seven closure invariants reject
+incomplete role accounting, entry-point or unsupported-reason drift, workflow
+drift, legacy/HIAL overlap, and accidental qualification claims.
 
 The selected GHDL 6.0.0 `-a`, `-e`, and `-r` command records use `--std=08`,
 the `fsmgen_vial` work library, and repository-relative work paths, but remain
@@ -1147,8 +1177,16 @@ Check it without writing with:
 perl scripts/refresh_vial_vhdl_portable_gallery.pl --check
 ```
 
-The legacy `vhdl-observation-package` remains byte/schema-compatible,
-unchanged, and unconsumed.
+The migration proof locks the checked inert legacy package at 976 bytes and
+SHA-256 `8d587b8dde4b7659290af6720ed4812079f36479d577dd5a0cf787bef2a22d4f`.
+Its canonical manifest projection excludes only the environment-resolved input
+path and is locked at SHA-256
+`29789c0b4b7400de45eec2ac1f62178d2e555f9c3d64ad871a1d87c5d39c5835`.
+The emitted HIAL DUT is separately proven byte-identical to the private
+handoff and isolated under the backend `src/dut` directory. The legacy
+`vhdl-observation-package` therefore remains byte/schema-compatible,
+unchanged, and unconsumed, while HIAL synthesis output remains outside VIAL
+backend authority.
 
 Analysis, elaboration, runtime, produced-result validation, parity, PSL,
 complete VHDL-2008, OSVVM/UVVM, mixed-language behavior, and product support

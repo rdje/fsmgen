@@ -200,7 +200,7 @@ my @REGRESSION_CORPUS = (
         relpath => 'vial/ahb_subordinate_base_output_arbitration.vial',
         family => 'verification_intent_tooling',
         classification => 'supported_smoke',
-        coverage => 'vial_vhdl_provider_free_portable_semantics_private_api',
+        coverage => 'vial_vhdl_provider_free_selected_matrix_review_private_api',
         source_kind => 'vial',
         strict_supported => 0,
         supported_phases => [qw(
@@ -208,8 +208,11 @@ my @REGRESSION_CORPUS = (
             hial_vhdl_generation backend_foundation_emission
             backend_portable_semantics_emission typed_drive_sample
             inactive_edge_scheduler scenario_fibers deterministic_models
-            declared_probe_adapter static_validation source_map review_gallery
-            atomic_publication
+            bounded_scoreboard coverage_counters substitution_faults
+            procedural_checks structured_diagnostics closed_trace_projection
+            normalized_result_projection declared_probe_adapter static_validation
+            source_map selected_mapping_matrix review_gallery review_workflow
+            migration_separation atomic_publication
         )],
         required_capabilities => [qw(
             vial.backend.vhdl_portable_ghdl.foundation.v1
@@ -223,17 +226,27 @@ my @REGRESSION_CORPUS = (
             vial.backend.vhdl_portable_ghdl.inactive_edge_scheduler.v1
             vial.backend.vhdl_portable_ghdl.scenario_fibers.v1
             vial.backend.vhdl_portable_ghdl.deterministic_models.v1
+            vial.backend.vhdl_portable_ghdl.bounded_scoreboard.v1
+            vial.backend.vhdl_portable_ghdl.coverage_counters.v1
+            vial.backend.vhdl_portable_ghdl.substitution_faults.v1
+            vial.backend.vhdl_portable_ghdl.procedural_checks.v1
+            vial.backend.vhdl_portable_ghdl.diagnostic_records.v1
+            vial.backend.vhdl_portable_ghdl.closed_trace_projection.v1
+            vial.backend.vhdl_portable_ghdl.result_manifest_projection.v1
             vial.backend.vhdl_portable_ghdl.declared_probe_adapter.v1
             vial.backend.vhdl_portable_ghdl.exact_rank_maps.v1
             vial.backend.vhdl_portable_ghdl.source_order.v1
             vial.backend.vhdl_portable_ghdl.command_evidence.v1
             vial.backend.vhdl_portable_ghdl.source_map.v1
             vial.backend.vhdl_portable_ghdl.static_validation.v1
+            vial.backend.vhdl_portable_ghdl.selected_mapping_matrix.v1
+            vial.backend.vhdl_portable_ghdl.review_workflow.v1
+            vial.backend.vhdl_portable_ghdl.migration_separation.v1
             vial.backend.vhdl_portable_ghdl.deterministic_artifacts.v1
         )],
         explicit_nonclaims => [qw(
-            complete_vhdl_backend scoreboards coverage faults properties checks trace
-            vhdl_analysis elaboration simulation runtime result parity psl
+            complete_vhdl_backend vhdl_analysis elaboration simulation runtime
+            produced_result parity psl
             complete_vhdl_2008 osvvm uvvm mixed_language product_support scale
         )],
     },

@@ -1,0 +1,125 @@
+{
+   "backend_profile" : "vhdl_portable_ghdl",
+   "check_command" : "perl scripts/refresh_vial_vhdl_portable_gallery.pl --check",
+   "defect_routing" : {
+      "conversation_only_is_durable" : false,
+      "required_fields" : [
+         "artifact_relpath",
+         "generated_symbol",
+         "source_map_id",
+         "observation",
+         "severity",
+         "reproduction",
+         "expected_intent",
+         "disposition"
+      ],
+      "task_tree" : "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md"
+   },
+   "emitter_revision" : 4,
+   "evidence_examples" : [
+      "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/evidence/selected-mapping-matrix.json",
+      "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/evidence/review-workflow.json",
+      "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/evidence/migration-proof.json"
+   ],
+   "examples" : [
+      {
+         "emitted_relpath" : "backends/vhdl_portable_ghdl/src/dut/ahb_lite_subordinate.vhd",
+         "gallery_relpath" : "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/dut/ahb_lite_subordinate.vhd",
+         "role" : "generated_hial_vhdl_dut"
+      },
+      {
+         "emitted_relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_metadata_pkg.vhd",
+         "gallery_relpath" : "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/base_output_arbitration_metadata_pkg.vhd",
+         "role" : "vhdl_fixture_metadata"
+      },
+      {
+         "emitted_relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_tb.vhd",
+         "gallery_relpath" : "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/base_output_arbitration_tb.vhd",
+         "role" : "vhdl_fixture_top"
+      },
+      {
+         "emitted_relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_probe_adapter.vhd",
+         "gallery_relpath" : "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/base_output_arbitration_probe_adapter.vhd",
+         "role" : "vhdl_probe_adapter"
+      },
+      {
+         "emitted_relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_runtime_pkg.vhd",
+         "gallery_relpath" : "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/fsmgen_vial_runtime_pkg.vhd",
+         "role" : "vhdl_runtime_package"
+      },
+      {
+         "emitted_relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_types_pkg.vhd",
+         "gallery_relpath" : "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/fsmgen_vial_types_pkg.vhd",
+         "role" : "vhdl_types_package"
+      }
+   ],
+   "fixture_id" : "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration",
+   "gallery_root" : "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics",
+   "nonclaims" : [
+      "visual_review_complete",
+      "vhdl_analysis",
+      "elaboration",
+      "runtime",
+      "produced_result",
+      "parity",
+      "complete_vhdl_2008",
+      "psl",
+      "osvvm",
+      "product_support"
+   ],
+   "plan_id" : "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574",
+   "regenerate_command" : "perl scripts/refresh_vial_vhdl_portable_gallery.pl",
+   "schema" : "fsmgen.vial_vhdl_review_workflow.v1",
+   "schema_version" : 1,
+   "stages" : [
+      {
+         "authority" : "emitter",
+         "command" : "perl scripts/refresh_vial_vhdl_portable_gallery.pl",
+         "evidence" : "refresh the exact source and evidence graph",
+         "stage_id" : "regenerate",
+         "status" : "ready"
+      },
+      {
+         "authority" : "gallery_check",
+         "command" : "perl scripts/refresh_vial_vhdl_portable_gallery.pl --check",
+         "evidence" : "reject missing, extra, or byte-drifted gallery snapshots",
+         "stage_id" : "byte_compare",
+         "status" : "ready"
+      },
+      {
+         "authority" : "static_validator",
+         "command" : null,
+         "evidence" : "twenty deterministic provider-free source-shape checks",
+         "stage_id" : "static_shape",
+         "status" : "passed_structural_only"
+      },
+      {
+         "authority" : "director_or_delegate",
+         "command" : null,
+         "evidence" : "readability, intent fidelity, and VHDL engineering judgment",
+         "stage_id" : "visual_review",
+         "status" : "pending"
+      },
+      {
+         "authority" : "task_tree",
+         "command" : null,
+         "evidence" : "record exact artifact, symbol, source-map ID, severity, and reproduction",
+         "stage_id" : "defect_capture",
+         "status" : "ready"
+      },
+      {
+         "authority" : "legacy_and_hial_regressions",
+         "command" : null,
+         "evidence" : "exact inert legacy bytes/schema and byte-identical isolated HIAL DUT",
+         "stage_id" : "migration_separation",
+         "status" : "passed_regression_contract"
+      },
+      {
+         "authority" : "future_exact_tool_profile",
+         "command" : null,
+         "evidence" : "separate analysis-through-parity qualification under task .15.5",
+         "stage_id" : "qualified_runtime",
+         "status" : "not_run"
+      }
+   ]
+}

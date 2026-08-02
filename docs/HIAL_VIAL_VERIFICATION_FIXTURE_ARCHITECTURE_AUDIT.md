@@ -1486,10 +1486,11 @@ and SystemVerilog and UVM consumers continue to select only their own language
 family.
 
 The private `FSM::VIAL::Backend::VHDLPortableGHDL` emitter consumes the exact
-ExecutionIR, bridge manifest, and VHDL DUT record. After `.15.3` it emits
-fourteen sorted artifacts: six provider-free VHDL sources, a closed manifest
-and source map, three unexecuted command records, and tool-profile,
-source-order, and structural-validation evidence. Fifty-nine mappings cover
+ExecutionIR, bridge manifest, and VHDL DUT record. Completed `.15.4` emits
+seventeen sorted artifacts: six provider-free VHDL sources, a closed manifest
+and source map, three unexecuted command records, tool-profile, source-order,
+and structural-validation evidence, plus the selected mapping matrix, review
+workflow, and migration/separation proof. Fifty-nine source-map entries cover
 the generated HIAL DUT, typed value/phase package, logical-time/runtime
 package, operation/scenario/fiber/model metadata, testbench semantics, and the
 declared probe adapter.
@@ -1527,6 +1528,34 @@ consistency are generated invariants. These are reviewable emission semantics,
 not a produced runtime result. The manifest records the legacy observation
 package as an unchanged, unconsumed parallel surface.
 
+The 24-row selected matrix closes the provider-free profile without pretending
+to cover all VHDL. Twenty responsibilities have exact emitted role evidence.
+Four rejected boundaries—OSVVM-native services, PSL, distinct nine-state VIAL
+semantics, and multi-clock/asynchronous semantic execution—have no generated
+role and each carries one exact reason. Every row distinguishes normal and
+terse public authoring, compiler-owned ExecutionIR or bridge data, and an
+explicitly unavailable private preview. Its profile state is exactly emitted,
+structurally reviewed, visual-review pending, and unqualified/not run.
+
+The seven-stage repository-relative review workflow defines regeneration,
+non-mutating byte comparison, structural review, pending director/delegated
+visual review, durable defect capture, migration/separation proof, and later
+qualified runtime. A finding is not durable until its task-tree leaf records
+artifact path, generated symbol, source-map ID, observation, severity,
+reproduction, expected intent, and disposition. Seven closure invariants reject
+missing source roles, entry-point drift, unsupported-reason drift, workflow
+drift, legacy/HIAL overlap, or an accidental qualification claim.
+
+The migration evidence locks the inert checked legacy package at 976 bytes and
+SHA-256 `8d587b8dde4b7659290af6720ed4812079f36479d577dd5a0cf787bef2a22d4f`.
+Its canonical manifest projection, after removing only the environment-resolved
+source path, is SHA-256
+`29789c0b4b7400de45eec2ac1f62178d2e555f9c3d64ad871a1d87c5d39c5835`.
+The separately generated HIAL DUT is byte-identical to the private handoff and
+remains isolated under `src/dut`; successor support source contains no legacy
+import or artifact. This proves parallel versioning without making either
+surface part of the other's semantic authority.
+
 Twenty fail-closed structural checks cover the closed safe graph, required
 roles, bounded input, deterministic text, provider neutrality, selected source
 shapes and normalization, typed drivers/samplers, one inactive-edge authority,
@@ -1544,9 +1573,9 @@ checked gallery is at
 is regenerated or checked with
 `perl scripts/refresh_vial_vhdl_portable_gallery.pl [--check]`.
 
-This completion advances the honest capability state to private, unqualified
-portable-checking emission. Exact GHDL 6.0.0 remains unavailable and
-unexecuted. VHDL analysis, elaboration, runtime, produced-result
+This completion advances the honest capability state to private, emitted,
+structurally reviewed, visual-review pending, and unqualified. Exact GHDL
+6.0.0 remains unavailable and unexecuted. VHDL analysis, elaboration, runtime, produced-result
 validation, parity, PSL, complete VHDL-2008, OSVVM/UVVM, mixed-language
 behavior, and product support remain explicitly unclaimed.
 

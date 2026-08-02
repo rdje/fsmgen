@@ -11,6 +11,7 @@ use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
+use FSM::VIAL::Backend::VHDLPortableReviewClosure;
 use FSM::VIAL::Backend::VHDLPortableStaticValidator;
 
 my $BACKEND_PROFILE = 'vhdl_portable_ghdl';
@@ -21,13 +22,15 @@ my $JSON = JSON::PP->new->canonical(1);
 
 my @RESULT_KEYS = qw(
     ok status backend_profile plan_id generated_top operation_id negotiation
-    backend_manifest source_map static_validation artifacts diagnostics
+    backend_manifest source_map static_validation mapping_matrix review_workflow
+    migration_proof artifacts diagnostics
 );
 my @MANIFEST_KEYS = qw(
     schema schema_version backend_profile plan_id fixture_id generated_top
-    execution_profile standard_profile tool_profile capability_evidence
-    limitations migration artifacts source_order commands source_map result
-    cleanup diagnostics
+    emitter_revision execution_profile standard_profile tool_profile
+    profile_state capability_evidence limitations migration migration_proof
+    mapping_matrix review_workflow artifacts source_order commands source_map
+    result cleanup diagnostics
 );
 my @SOURCE_MAP_KEYS = qw(schema schema_version plan_id artifacts entries);
 my @SOURCE_MAP_ENTRY_KEYS = qw(
@@ -141,7 +144,7 @@ sub _emit($raw) {
     my $unit = $bridge->{units}[0];
     my $entity_name = _backend_name($bridge, $unit->{unit_id}, 'entity');
     my $operation_id = 'op-' . sha256_hex(_canonical_json({
-        action => 'emit_portable_checking',
+        action => 'emit_portable_review_closure',
         artifact_root => $raw->{artifact_root},
         backend_profile => $BACKEND_PROFILE,
         bridge_manifest_id => $bridge->{manifest_id},
@@ -233,6 +236,24 @@ sub _emit($raw) {
         ),
     };
 
+    my $review = FSM::VIAL::Backend::VHDLPortableReviewClosure->build({
+        plan_id => $execution->{plan_id},
+        fixture_id => $execution->{fixture}{fixture_id},
+        emitter_revision => 4,
+        source_artifacts => \@source_artifacts,
+        review_gallery =>
+            'vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics',
+        hial_source_identity => {
+            source_id => $raw->{backend_inputs}{dut_vhdl}[0]{source_id},
+            content_sha256 => $raw->{backend_inputs}{dut_vhdl}[0]{content_sha256},
+            byte_length => $raw->{backend_inputs}{dut_vhdl}[0]{byte_length},
+            emitted_relpath => $dut_rel,
+        },
+    });
+    _throw('VIAL_VHDL_BACKEND_REVIEW_CLOSURE_ERROR',
+        'generated portable VHDL review evidence failed closure', '/review')
+        unless $review->{ok};
+
     my $work_rel = ".artifacts/tmp/vial/$operation_id/work/$BACKEND_PROFILE";
     my $input_rel = "$work_rel/input";
     my @work_sources = map { "$input_rel/$_" } @source_order;
@@ -302,6 +323,16 @@ sub _emit($raw) {
         _artifact("$BASE/evidence/tool-profile.json", 'tool_profile', 'json',
             'selected_tool_profile', _json_text($tool_profile),
             ['docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md']),
+        _artifact("$BASE/evidence/selected-mapping-matrix.json", 'mapping_matrix',
+            'json', 'selected_mapping_matrix', _json_text($review->{mapping_matrix}),
+            [$execution->{plan_id}]),
+        _artifact("$BASE/evidence/review-workflow.json", 'review_workflow',
+            'json', 'review_workflow', _json_text($review->{review_workflow}),
+            [$execution->{plan_id}]),
+        _artifact("$BASE/evidence/migration-proof.json", 'migration_proof',
+            'json', 'migration_proof', _json_text($review->{migration_proof}),
+            [$execution->{plan_id},
+                't/1465-isf-verification-output-vhdl-observation-package.t']),
     );
     my @referenced = sort { $a->{relpath} cmp $b->{relpath} }
         map { _artifact_ref($_) } (@source_artifacts, @support_artifacts);
@@ -312,6 +343,7 @@ sub _emit($raw) {
         plan_id => $execution->{plan_id},
         fixture_id => $execution->{fixture}{fixture_id},
         generated_top => $top,
+        emitter_revision => 4,
         execution_profile => $execution->{profile},
         standard_profile => {
             language => 'VHDL',
@@ -320,6 +352,7 @@ sub _emit($raw) {
             methodology => 'provider_free',
         },
         tool_profile => $tool_profile,
+        profile_state => _clone($review->{mapping_matrix}{profile_state}),
         capability_evidence => {
             hial_vhdl_input => 'passed_deterministic_generation',
             emission => 'passed_portable_semantics',
@@ -338,6 +371,9 @@ sub _emit($raw) {
             diagnostic_records => 'passed_emission_only',
             trace => 'passed_closed_projection_emission_only',
             result_projection => 'passed_manifest_v1_emission_only',
+            selected_mapping_matrix => 'passed_complete_selected_scope',
+            review_workflow => 'passed_deterministic_workflow_visual_pending',
+            migration_separation => 'passed_exact_regression_contract',
             probe_adapters => $has_probe_adapter
                 ? 'passed_declared_external_name_emission_only'
                 : 'not_required',
@@ -364,6 +400,31 @@ sub _emit($raw) {
             legacy_state => 'unchanged_not_consumed',
             successor_profile => $BACKEND_PROFILE,
             migration_kind => 'parallel_versioned_surface',
+        },
+        migration_proof => {
+            relpath => "$BASE/evidence/migration-proof.json",
+            schema => $review->{migration_proof}{schema},
+            sha256 => sha256_hex(_json_text($review->{migration_proof})),
+            legacy_package_sha256 =>
+                $review->{migration_proof}{legacy_surface}{package_sha256},
+            hial_byte_identical =>
+                $review->{migration_proof}{hial_successor}{byte_identical},
+        },
+        mapping_matrix => {
+            relpath => "$BASE/evidence/selected-mapping-matrix.json",
+            schema => $review->{mapping_matrix}{schema},
+            sha256 => sha256_hex(_json_text($review->{mapping_matrix})),
+            mapping_count => scalar(@{$review->{mapping_matrix}{mappings}}),
+            emitted_count => scalar(@{$review->{mapping_matrix}{emitted_foundations}}),
+            unsupported_count =>
+                scalar(@{$review->{mapping_matrix}{unsupported_foundations}}),
+        },
+        review_workflow => {
+            relpath => "$BASE/evidence/review-workflow.json",
+            schema => $review->{review_workflow}{schema},
+            sha256 => sha256_hex(_json_text($review->{review_workflow})),
+            stage_count => scalar(@{$review->{review_workflow}{stages}}),
+            check_count => scalar(@{$review->{checks}}),
         },
         artifacts => \@referenced,
         source_order => _clone($source_order_record),
@@ -394,12 +455,12 @@ sub _emit($raw) {
             'backend_manifest', _json_text($manifest), [$execution->{plan_id}]));
     my @artifacts = sort { $a->{relpath} cmp $b->{relpath} } @all;
     _throw('VIAL_VHDL_BACKEND_LIMIT_EXCEEDED',
-        'portable VHDL semantics emitted an unexpected artifact count', '/artifacts')
-        unless @artifacts == 13 + $has_probe_adapter;
+        'portable VHDL review closure emitted an unexpected artifact count', '/artifacts')
+        unless @artifacts == 16 + $has_probe_adapter;
 
     return _result({
         ok => JSON::PP::true,
-        status => 'emitted_unqualified_portable_checking',
+        status => 'emitted_structurally_reviewed_unqualified',
         backend_profile => $BACKEND_PROFILE,
         plan_id => $execution->{plan_id},
         generated_top => $top,
@@ -408,6 +469,9 @@ sub _emit($raw) {
         backend_manifest => $manifest,
         source_map => $source_map,
         static_validation => $static,
+        mapping_matrix => $review->{mapping_matrix},
+        review_workflow => $review->{review_workflow},
+        migration_proof => $review->{migration_proof},
         artifacts => \@artifacts,
         diagnostics => [],
     });
@@ -2491,6 +2555,9 @@ sub _failure($code, $message, $path, $negotiation = undef) {
         backend_manifest => undef,
         source_map => undef,
         static_validation => undef,
+        mapping_matrix => undef,
+        review_workflow => undef,
+        migration_proof => undef,
         artifacts => [],
         diagnostics => [{
             code => $code,

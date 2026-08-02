@@ -5,20 +5,20 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.3`: ship portable VHDL checking).
-- active_work_unit: HIAL/VIAL `.15.4` is active after completed `.15.3`;
-  NEXSIM `.2` remains proposed for evidence-driven amendments.
+- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.4`: close portable VHDL review).
+- active_work_unit: HIAL/VIAL `.15.4` is complete; `.15.5` is provider-blocked,
+  `.15.6` awaits exact project-local OSVVM materialization, and NEXSIM `.2`
+  remains proposed for evidence-driven amendments.
 - current_state: decision `0052` and the standalone 365-requirement NEXSIM
   contract make the native typed semantic API authoritative and MCP its bounded
   projection without claiming support. Its durable surfaces are synchronized.
-  HIAL/VIAL `.15.3` now emits 14 artifacts/six
-  provider-free VHDL sources/59 maps/20 checks: bounded scoreboards, coverage,
-  substitution faults, procedural checks, stored diagnostics, logical-time
-  closed trace, and a full top-level normalized-result projection with exact
-  VHDL quote escaping. Analysis, runtime, produced results, parity, and support
-  remain unclaimed.
-- next_action: implement `.15.4` portable VHDL mapping/review/migration closure;
-  amend the NEXSIM contract only from concrete input.
+  HIAL/VIAL `.15.4` now closes the 17-artifact provider-free VHDL profile:
+  six sources/59 maps/20 static checks, 24 selected mappings, seven review
+  stages/checks, and exact inert-legacy/HIAL separation. The profile is emitted
+  and structurally reviewed, with visual review and analysis through support
+  unclaimed.
+- next_action: obtain exact GHDL 6.0.0 for `.15.5` or materialize exact
+  repository-local OSVVM 2026.05 for `.15.6`; amend NEXSIM only from concrete input.
 - in_flight_uncommitted: none after commit; no background/output residue remains.
 - blockers: `.13.3` waits on capability-ready PGEN/NEXSIM handoff/API/MCP
   identities; IASIM is proposed, while live-document `.12` and inventory `.26` are deferred.

@@ -19,7 +19,8 @@ sub vial_vhdl_emission_contract_keys {
     return [qw(
         schema_version status contract_source implementation_entrypoints
         execution_schema profile backend_schema source_map_schema
-        static_validation_schema standard_identity tool_selection
+        static_validation_schema mapping_matrix_schema review_workflow_schema
+        migration_proof_schema standard_identity tool_selection
         methodology_identity library_materialization backend_stage_status
         capabilities limits fixture review_gallery writes_files
         public_embedding_api explicit_nonclaims guidance
@@ -29,11 +30,12 @@ sub vial_vhdl_emission_contract_keys {
 sub build_vial_vhdl_emission_contract {
     return {
         schema_version => 1,
-        status => 'shipped_private_unqualified_portable_checking',
+        status => 'shipped_private_structurally_reviewed_unqualified_portable_profile',
         contract_source => vial_vhdl_emission_contract_source(),
         implementation_entrypoints => [
             'FSM::VIAL::Backend::VHDLPortableGHDL->emit({...})',
             'FSM::VIAL::Backend::VHDLPortableStaticValidator->validate({...})',
+            'FSM::VIAL::Backend::VHDLPortableReviewClosure->build({...})',
             'FSM::VIAL::ArtifactTransaction->publish({...})',
         ],
         execution_schema => 'fsmgen.vial_execution_ir.v1',
@@ -41,6 +43,9 @@ sub build_vial_vhdl_emission_contract {
         backend_schema => 'fsmgen.vial_backend.vhdl_portable.v1',
         source_map_schema => 'fsmgen.vial_vhdl_backend_source_map.v1',
         static_validation_schema => 'fsmgen.vial_vhdl_static_validation.v1',
+        mapping_matrix_schema => 'fsmgen.vial_vhdl_selected_mapping_matrix.v1',
+        review_workflow_schema => 'fsmgen.vial_vhdl_review_workflow.v1',
+        migration_proof_schema => 'fsmgen.vial_vhdl_migration_proof.v1',
         standard_identity => {
             language => 'VHDL',
             standard => 'IEEE 1076-2008',
@@ -69,10 +74,13 @@ sub build_vial_vhdl_emission_contract {
         backend_stage_status => {
             hial_vhdl_generation => 'shipped_deterministic_private_handoff',
             negotiation => 'shipped_portable_semantics_scope',
-            emission => 'shipped_portable_checking_emission_only',
+            emission => 'shipped_complete_selected_portable_emission',
             static_validation => 'shipped_twenty_structural_checks',
             source_map => 'shipped_portable_checking_scope',
-            review_gallery => 'shipped_byte_locked_portable_checking',
+            selected_mapping_matrix => 'shipped_twenty_four_rows',
+            review_workflow => 'shipped_seven_stages_visual_pending',
+            migration_separation => 'shipped_exact_regression_contract',
+            review_gallery => 'shipped_byte_locked_review_closure',
             drivers => 'shipped_emission_only',
             samplers => 'shipped_emission_only',
             scheduler => 'shipped_emission_only',
@@ -118,6 +126,9 @@ sub build_vial_vhdl_emission_contract {
             vial.backend.vhdl_portable_ghdl.command_evidence.v1
             vial.backend.vhdl_portable_ghdl.source_map.v1
             vial.backend.vhdl_portable_ghdl.static_validation.v1
+            vial.backend.vhdl_portable_ghdl.selected_mapping_matrix.v1
+            vial.backend.vhdl_portable_ghdl.review_workflow.v1
+            vial.backend.vhdl_portable_ghdl.migration_separation.v1
             vial.backend.vhdl_portable_ghdl.deterministic_artifacts.v1
         )],
         limits => {
@@ -125,9 +136,14 @@ sub build_vial_vhdl_emission_contract {
             selected_domains => 1,
             generated_vhdl_sources => 6,
             generated_source_bytes => 16_777_216,
-            total_artifacts => 14,
+            total_artifacts => 17,
             source_map_entries => 59,
             static_validation_checks => 20,
+            selected_mappings => 24,
+            emitted_mappings => 20,
+            unsupported_mappings => 4,
+            review_workflow_stages => 7,
+            review_closure_checks => 7,
             scoreboard_capacity => 4,
             diagnostic_capacity => 64,
             static_validation_artifacts => 32,
@@ -145,9 +161,9 @@ sub build_vial_vhdl_emission_contract {
         )],
         guidance => [
             'Use the private emitter to inspect deterministic provider-free VHDL-2008 typed drivers, samplers, scheduling, scenarios, models, bounded scoreboards, coverage, substitution faults, procedural checks, diagnostics, trace closure, normalized result projection, probe adapters, exact ranks, HIAL DUT bytes, and source maps.',
-            'Treat twenty-check structural validation and the checked gallery as emission evidence only; neither proves VHDL analysis, elaboration, runtime behavior, a produced result, parity, PSL, or product support.',
+            'Treat the twenty-four-row selected matrix, twenty structural checks, seven-stage workflow, and checked gallery as emitted and structurally reviewed evidence only; visual review remains pending and none proves VHDL analysis, elaboration, runtime behavior, a produced result, parity, PSL, or product support.',
             'Ordinary portable emission downloads and inspects no simulator or methodology-provider bytes. Exact GHDL and OSVVM materialization belong to later separately qualified slices.',
-            'The generated native VIAL graph is separate from and does not consume, rewrite, or widen the inert vhdl-observation-package compatibility surface.',
+            'The exact migration proof locks the inert legacy fixture bytes/schema and byte-identical HIAL DUT handoff; the generated native VIAL graph remains separate and does not consume, rewrite, or widen either surface.',
             'Canonical VHDL source is provider-neutral. GHDL identity and ordered command shapes live only in JSON evidence until the exact tool is executed.',
         ],
     };

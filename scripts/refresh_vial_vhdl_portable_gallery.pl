@@ -103,7 +103,9 @@ print(($check_only ? 'portable VHDL semantics gallery current: ' : 'refreshed ')
     scalar(keys(%expected)) - scalar(grep { /\.vhd\z/ } keys %expected),
     ' evidence artifacts; ', scalar(@{$emission->{source_map}{entries}}),
     ' source-map entries; ', scalar(@{$emission->{static_validation}{checks}}),
-    " static checks\n");
+    ' static checks; ', scalar(@{$emission->{mapping_matrix}{mappings}}),
+    ' mappings; ', $emission->{backend_manifest}{review_workflow}{check_count},
+    " review-closure checks\n");
 
 sub _walk_files {
     my ($root, $relative) = @_;

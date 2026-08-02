@@ -36,7 +36,7 @@ my %allowed_coverages = map { $_ => 1 } qw(
     vial_sv_portable_verilator_runtime_cli_api
     vial_ahb_handwritten_oracle_parity
     vial_native_uvm_selected_matrix_review_private_api
-    vial_vhdl_provider_free_portable_semantics_private_api
+    vial_vhdl_provider_free_selected_matrix_review_private_api
     direct_root_pipeline_cli
     composition_top_pipeline_cli
     isf_pipeline_cli
@@ -406,7 +406,7 @@ my %coverage_classification = (
     vial_sv_portable_verilator_runtime_cli_api => 'supported_smoke',
     vial_ahb_handwritten_oracle_parity => 'supported_smoke',
     vial_native_uvm_selected_matrix_review_private_api => 'supported_smoke',
-    vial_vhdl_provider_free_portable_semantics_private_api => 'supported_smoke',
+    vial_vhdl_provider_free_selected_matrix_review_private_api => 'supported_smoke',
     direct_root_pipeline_cli => 'supported_smoke',
     composition_top_pipeline_cli => 'supported_smoke',
     isf_pipeline_cli => 'supported_smoke',
@@ -1358,20 +1358,20 @@ for my $entry (@entries) {
         );
     }
     elsif ($entry->{source_kind} eq 'vial'
-        && $entry->{coverage} eq 'vial_vhdl_provider_free_portable_semantics_private_api') {
+        && $entry->{coverage} eq 'vial_vhdl_provider_free_selected_matrix_review_private_api') {
         is_deeply(
             $entry->{supported_phases},
-            [qw(parse typecheck hial_review bridge_binding execution_plan hial_vhdl_generation backend_foundation_emission backend_portable_semantics_emission typed_drive_sample inactive_edge_scheduler scenario_fibers deterministic_models declared_probe_adapter static_validation source_map review_gallery atomic_publication)],
+            [qw(parse typecheck hial_review bridge_binding execution_plan hial_vhdl_generation backend_foundation_emission backend_portable_semantics_emission typed_drive_sample inactive_edge_scheduler scenario_fibers deterministic_models bounded_scoreboard coverage_counters substitution_faults procedural_checks structured_diagnostics closed_trace_projection normalized_result_projection declared_probe_adapter static_validation source_map selected_mapping_matrix review_gallery review_workflow migration_separation atomic_publication)],
             "portable VHDL semantics entry '$entry->{id}' claims only emitted structural evidence",
         );
         is_deeply(
             $entry->{required_capabilities},
-            [qw(vial.backend.vhdl_portable_ghdl.foundation.v1 vial.backend.vhdl_portable_ghdl.deterministic_hial_input.v1 vial.backend.vhdl_portable_ghdl.typed_values.v1 vial.backend.vhdl_portable_ghdl.typed_logical_time.v1 vial.backend.vhdl_portable_ghdl.fixture_metadata.v1 vial.backend.vhdl_portable_ghdl.dut_binding_foundation.v1 vial.backend.vhdl_portable_ghdl.typed_drivers.v1 vial.backend.vhdl_portable_ghdl.original_symbol_samplers.v1 vial.backend.vhdl_portable_ghdl.inactive_edge_scheduler.v1 vial.backend.vhdl_portable_ghdl.scenario_fibers.v1 vial.backend.vhdl_portable_ghdl.deterministic_models.v1 vial.backend.vhdl_portable_ghdl.declared_probe_adapter.v1 vial.backend.vhdl_portable_ghdl.exact_rank_maps.v1 vial.backend.vhdl_portable_ghdl.source_order.v1 vial.backend.vhdl_portable_ghdl.command_evidence.v1 vial.backend.vhdl_portable_ghdl.source_map.v1 vial.backend.vhdl_portable_ghdl.static_validation.v1 vial.backend.vhdl_portable_ghdl.deterministic_artifacts.v1)],
+            [qw(vial.backend.vhdl_portable_ghdl.foundation.v1 vial.backend.vhdl_portable_ghdl.deterministic_hial_input.v1 vial.backend.vhdl_portable_ghdl.typed_values.v1 vial.backend.vhdl_portable_ghdl.typed_logical_time.v1 vial.backend.vhdl_portable_ghdl.fixture_metadata.v1 vial.backend.vhdl_portable_ghdl.dut_binding_foundation.v1 vial.backend.vhdl_portable_ghdl.typed_drivers.v1 vial.backend.vhdl_portable_ghdl.original_symbol_samplers.v1 vial.backend.vhdl_portable_ghdl.inactive_edge_scheduler.v1 vial.backend.vhdl_portable_ghdl.scenario_fibers.v1 vial.backend.vhdl_portable_ghdl.deterministic_models.v1 vial.backend.vhdl_portable_ghdl.bounded_scoreboard.v1 vial.backend.vhdl_portable_ghdl.coverage_counters.v1 vial.backend.vhdl_portable_ghdl.substitution_faults.v1 vial.backend.vhdl_portable_ghdl.procedural_checks.v1 vial.backend.vhdl_portable_ghdl.diagnostic_records.v1 vial.backend.vhdl_portable_ghdl.closed_trace_projection.v1 vial.backend.vhdl_portable_ghdl.result_manifest_projection.v1 vial.backend.vhdl_portable_ghdl.declared_probe_adapter.v1 vial.backend.vhdl_portable_ghdl.exact_rank_maps.v1 vial.backend.vhdl_portable_ghdl.source_order.v1 vial.backend.vhdl_portable_ghdl.command_evidence.v1 vial.backend.vhdl_portable_ghdl.source_map.v1 vial.backend.vhdl_portable_ghdl.static_validation.v1 vial.backend.vhdl_portable_ghdl.selected_mapping_matrix.v1 vial.backend.vhdl_portable_ghdl.review_workflow.v1 vial.backend.vhdl_portable_ghdl.migration_separation.v1 vial.backend.vhdl_portable_ghdl.deterministic_artifacts.v1)],
             "portable VHDL semantics entry '$entry->{id}' keeps exact emitted capabilities",
         );
         is_deeply(
             $entry->{explicit_nonclaims},
-            [qw(complete_vhdl_backend scoreboards coverage faults properties checks trace vhdl_analysis elaboration simulation runtime result parity psl complete_vhdl_2008 osvvm uvvm mixed_language product_support scale)],
+            [qw(complete_vhdl_backend vhdl_analysis elaboration simulation runtime produced_result parity psl complete_vhdl_2008 osvvm uvvm mixed_language product_support scale)],
             "portable VHDL semantics entry '$entry->{id}' records every deferred checking/runtime/support claim",
         );
     }

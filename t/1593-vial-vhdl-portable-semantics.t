@@ -54,13 +54,13 @@ subtest 'emitter produces a deterministic closed unqualified portable VHDL seman
     is_deeply([sort keys %$first],
         [sort @{FSM::VIAL::Backend::VHDLPortableGHDL->result_keys}],
         'backend result shell is closed');
-    is($first->{status}, 'emitted_unqualified_portable_checking',
+    is($first->{status}, 'emitted_structurally_reviewed_unqualified',
         'status cannot imply analysis, elaboration, or runtime');
     is($first->{backend_profile}, $profile, 'backend profile is exact');
     like($first->{operation_id}, qr/\Aop-[0-9a-f]{64}\z/,
         'operation identity is deterministic and safe');
-    is(scalar(@{$first->{artifacts}}), 14,
-        'portable semantic graph has exactly fourteen artifacts');
+    is(scalar(@{$first->{artifacts}}), 17,
+        'portable review-closed graph has exactly seventeen artifacts');
     is_deeply([map { $_->{relpath} } @{$first->{artifacts}}],
         [sort map { $_->{relpath} } @{$first->{artifacts}}],
         'artifact graph is repository-relative and sorted');
@@ -435,8 +435,8 @@ subtest 'checked gallery and support discovery remain byte-exact and honest' => 
     my $contract = build_capability_manifest()->{language_surface}{vial_vhdl_emission};
     is($contract->{profile}, $profile, 'capability manifest discovers the exact private profile');
     is($contract->{backend_stage_status}{emission},
-        'shipped_portable_checking_emission_only',
-        'support state advertises portable checking as emission-only');
+        'shipped_complete_selected_portable_emission',
+        'support state advertises complete selected portable emission');
     is($contract->{limits}{generated_vhdl_sources}, 6,
         'support state reports the exact six-source graph');
     is($contract->{limits}{source_map_entries}, 59,

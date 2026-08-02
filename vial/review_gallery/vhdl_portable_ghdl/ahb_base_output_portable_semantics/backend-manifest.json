@@ -12,21 +12,42 @@
          "kind" : "command_record",
          "relpath" : "backends/vhdl_portable_ghdl/commands/analyze-command.json",
          "role" : "analyze_command",
-         "sha256" : "7569fc2965ca410cb80bcbe4d276a367c1228e98e3a4f4fd30928189c62ea1fc"
+         "sha256" : "f04a69118c7b74d58f6e2023cdcc13fab4ee8a42616e28e127db68b208eeb5b9"
       },
       {
          "bytes" : 883,
          "kind" : "command_record",
          "relpath" : "backends/vhdl_portable_ghdl/commands/elaborate-command.json",
          "role" : "elaborate_command",
-         "sha256" : "50a48ae221a76f0740363ebaf678c43075ae75d8af6b8e7a011e1120c3bcdafb"
+         "sha256" : "869cbb705f3ca9d14b38b58173cd9d1033dda7d9f1203da8f09770b10bf8a637"
       },
       {
          "bytes" : 868,
          "kind" : "command_record",
          "relpath" : "backends/vhdl_portable_ghdl/commands/run-command.json",
          "role" : "run_command",
-         "sha256" : "92b761e3ab17cbccafaa00e4fbba15818f039b7010fdfc9fe7df75cdf509e3e1"
+         "sha256" : "061baf767f17a357926bb2bb98eeae218a7be3ac95aa70585465397cc2b30df1"
+      },
+      {
+         "bytes" : 2304,
+         "kind" : "migration_proof",
+         "relpath" : "backends/vhdl_portable_ghdl/evidence/migration-proof.json",
+         "role" : "migration_proof",
+         "sha256" : "4af876133ee854328174e95b4ace5a3d48d11415db7a99bbc96b0e8fa18a60a0"
+      },
+      {
+         "bytes" : 5271,
+         "kind" : "review_workflow",
+         "relpath" : "backends/vhdl_portable_ghdl/evidence/review-workflow.json",
+         "role" : "review_workflow",
+         "sha256" : "386831d7bd45b6a4ee0c2104a5e5aef744ac26d21f8f0b4960ebe5352785b39c"
+      },
+      {
+         "bytes" : 21036,
+         "kind" : "mapping_matrix",
+         "relpath" : "backends/vhdl_portable_ghdl/evidence/selected-mapping-matrix.json",
+         "role" : "selected_mapping_matrix",
+         "sha256" : "34f17c10dd36c4b79c0b707e32570d14e3e97582c46a1e6d1c9889cb5d8c3ded"
       },
       {
          "bytes" : 683,
@@ -103,6 +124,7 @@
       "faults" : "passed_substitution_emission_only",
       "full_vhdl_2008" : "not_claimed",
       "hial_vhdl_input" : "passed_deterministic_generation",
+      "migration_separation" : "passed_exact_regression_contract",
       "models" : "passed_emission_only",
       "parity" : "not_evaluated",
       "probe_adapters" : "passed_declared_external_name_emission_only",
@@ -113,40 +135,43 @@
       "result" : "projection_emitted_not_produced",
       "result_projection" : "passed_manifest_v1_emission_only",
       "review_gallery" : "byte_locked",
+      "review_workflow" : "passed_deterministic_workflow_visual_pending",
       "runtime" : "not_run",
       "samplers" : "passed_emission_only",
       "scenarios" : "passed_emission_only",
       "scheduler" : "passed_emission_only",
       "scoreboards" : "passed_bounded_emission_only",
+      "selected_mapping_matrix" : "passed_complete_selected_scope",
       "source_map" : "passed_portable_semantics_scope",
       "static_validation" : "passed_structural_semantics",
       "trace" : "passed_closed_projection_emission_only"
    },
    "cleanup" : {
-      "staging_identity" : ".artifacts/tmp/vial/op-a619fcf87e5d2c05135236080a284825cc230cdfcef4dd07f4753d835114027a",
+      "staging_identity" : ".artifacts/tmp/vial/op-a8c56b037a971563b3e30d8294454d9346cc83c76d638a67462aad8219577bca",
       "state" : "not_created"
    },
    "commands" : [
       {
-         "command_digest" : "09d85e7858df694554665223788e9296a4d2c82078724dc6bdfff7b784f40acd",
+         "command_digest" : "807bb1dbcf593fd6438a0aed6682b4ed509be196d75f25c7a38023a984d79629",
          "execution_status" : "not_run",
          "relpath" : "backends/vhdl_portable_ghdl/commands/analyze-command.json",
-         "sha256" : "7569fc2965ca410cb80bcbe4d276a367c1228e98e3a4f4fd30928189c62ea1fc"
+         "sha256" : "f04a69118c7b74d58f6e2023cdcc13fab4ee8a42616e28e127db68b208eeb5b9"
       },
       {
-         "command_digest" : "acd6a4ab0833fc52eeb85c8c286629770989bccf9aeaf755c96fa7bb797165c2",
+         "command_digest" : "fc56847b4671b2e75162c3f45012fa0fc1f18acb0567a3e5cdcfc49de945b33c",
          "execution_status" : "not_run",
          "relpath" : "backends/vhdl_portable_ghdl/commands/elaborate-command.json",
-         "sha256" : "50a48ae221a76f0740363ebaf678c43075ae75d8af6b8e7a011e1120c3bcdafb"
+         "sha256" : "869cbb705f3ca9d14b38b58173cd9d1033dda7d9f1203da8f09770b10bf8a637"
       },
       {
-         "command_digest" : "6e2b0097173c98974ef01cdd286409c7c473ad0a8782f2b1e25f0de3db1d910a",
+         "command_digest" : "570e27f27edd7386b704b4f3a93e424012d89f8d2ce495647f710064907b5de8",
          "execution_status" : "not_run",
          "relpath" : "backends/vhdl_portable_ghdl/commands/run-command.json",
-         "sha256" : "92b761e3ab17cbccafaa00e4fbba15818f039b7010fdfc9fe7df75cdf509e3e1"
+         "sha256" : "061baf767f17a357926bb2bb98eeae218a7be3ac95aa70585465397cc2b30df1"
       }
    ],
    "diagnostics" : [],
+   "emitter_revision" : 4,
    "execution_profile" : "core_directed_single_clock_execution_v1",
    "fixture_id" : "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration",
    "generated_top" : "base_output_arbitration_tb",
@@ -166,17 +191,45 @@
       "no_runtime_evidence",
       "no_parity_evidence"
    ],
+   "mapping_matrix" : {
+      "emitted_count" : 20,
+      "mapping_count" : 24,
+      "relpath" : "backends/vhdl_portable_ghdl/evidence/selected-mapping-matrix.json",
+      "schema" : "fsmgen.vial_vhdl_selected_mapping_matrix.v1",
+      "sha256" : "34f17c10dd36c4b79c0b707e32570d14e3e97582c46a1e6d1c9889cb5d8c3ded",
+      "unsupported_count" : 4
+   },
    "migration" : {
       "legacy_state" : "unchanged_not_consumed",
       "legacy_surface" : "vhdl_observation_package_skeleton",
       "migration_kind" : "parallel_versioned_surface",
       "successor_profile" : "vhdl_portable_ghdl"
    },
+   "migration_proof" : {
+      "hial_byte_identical" : true,
+      "legacy_package_sha256" : "8d587b8dde4b7659290af6720ed4812079f36479d577dd5a0cf787bef2a22d4f",
+      "relpath" : "backends/vhdl_portable_ghdl/evidence/migration-proof.json",
+      "schema" : "fsmgen.vial_vhdl_migration_proof.v1",
+      "sha256" : "4af876133ee854328174e95b4ace5a3d48d11415db7a99bbc96b0e8fa18a60a0"
+   },
    "plan_id" : "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574",
+   "profile_state" : {
+      "emission" : "emitted",
+      "qualification" : "unqualified_not_run",
+      "static_review" : "reviewed_structurally",
+      "visual_review" : "pending"
+   },
    "result" : {
       "relpath" : null,
       "schema" : "fsmgen.verification_result_manifest.v1",
       "status" : "projection_emitted_not_produced"
+   },
+   "review_workflow" : {
+      "check_count" : 7,
+      "relpath" : "backends/vhdl_portable_ghdl/evidence/review-workflow.json",
+      "schema" : "fsmgen.vial_vhdl_review_workflow.v1",
+      "sha256" : "386831d7bd45b6a4ee0c2104a5e5aef744ac26d21f8f0b4960ebe5352785b39c",
+      "stage_count" : 7
    },
    "schema" : "fsmgen.vial_backend.vhdl_portable.v1",
    "schema_version" : 1,

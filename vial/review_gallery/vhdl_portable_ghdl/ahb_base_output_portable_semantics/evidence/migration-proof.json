@@ -1,0 +1,44 @@
+{
+   "backend_profile" : "vhdl_portable_ghdl",
+   "fixture_id" : "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration",
+   "hial_successor" : {
+      "byte_identical" : true,
+      "emitted_bytes" : 47685,
+      "emitted_relpath" : "backends/vhdl_portable_ghdl/src/dut/ahb_lite_subordinate.vhd",
+      "emitted_sha256" : "2c96af7cb4c5b5666ad768a764e0b3b778f0c05139f1f16891bef79fc43856e6",
+      "private_handoff_bytes" : 47685,
+      "private_handoff_sha256" : "2c96af7cb4c5b5666ad768a764e0b3b778f0c05139f1f16891bef79fc43856e6",
+      "role" : "generated_hial_vhdl_dut",
+      "source_id" : "ppif/ahb_lite_subordinate.ppif"
+   },
+   "legacy_surface" : {
+      "cli_target" : "vhdl-observation-package",
+      "compatibility_state" : "exact_fixture_bytes_and_schema_regression_locked",
+      "consumed_by_successor" : false,
+      "fixture" : "isf/verification_observation_metadata.isf",
+      "manifest_projection_rule" : "canonical JSON after removing environment-resolved source.resolved_path",
+      "manifest_projection_sha256" : "29789c0b4b7400de45eec2ac1f62178d2e555f9c3d64ad871a1d87c5d39c5835",
+      "manifest_schema_version" : 1,
+      "package_bytes" : 976,
+      "package_relpath" : "vhdl/verification_observation_metadata_observation_vhdl_pkg.vhd",
+      "package_sha256" : "8d587b8dde4b7659290af6720ed4812079f36479d577dd5a0cf787bef2a22d4f",
+      "target" : "vhdl_observation_package_skeleton"
+   },
+   "plan_id" : "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574",
+   "qualification_status" : "emission_review_proof_only_no_analyzer_run",
+   "schema" : "fsmgen.vial_vhdl_migration_proof.v1",
+   "schema_version" : 1,
+   "separation" : {
+      "hial_dut_role_count" : 1,
+      "legacy_artifacts_in_successor" : 0,
+      "legacy_imports_in_successor" : 0,
+      "migration_kind" : "parallel_versioned_surface",
+      "rules" : [
+         "legacy command, path, inert package bytes, manifest schema, and nonclaims stay unchanged",
+         "portable VIAL source never imports or rewrites the legacy observation package",
+         "generated HIAL VHDL remains a byte-identical DUT input under src/dut",
+         "HIAL synthesis behavior is outside VIAL verification-backend authority"
+      ],
+      "successor_profile" : "vhdl_portable_ghdl"
+   }
+}

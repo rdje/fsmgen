@@ -35,9 +35,23 @@ C-style escape sequences fail static validation.
 
 The JSON files preserve the closed backend manifest, complete
 portable-checking source map, ordered source list, exact
-selected-but-unexecuted GHDL 6.0.0 command shapes, and twenty-check static
-validation report. GHDL and OSVVM bytes were neither required nor fetched
-during emission.
+selected-but-unexecuted GHDL 6.0.0 command shapes, twenty-check static
+validation report, 24-row selected mapping matrix, seven-stage review
+workflow, and migration/separation proof. Twenty mapping rows have emitted
+role evidence. The OSVVM-native, PSL, distinct-nine-state, and multi-clock or
+asynchronous boundaries are not emitted and each has one exact reason.
+
+The workflow distinguishes public normal/terse authoring, compiler-owned IR or
+bridge data, and unavailable private previews. Structural review passes;
+director/delegated visual review and exact-tool qualification remain pending.
+Any visual or automated finding belongs in an exact task-tree defect leaf with
+the artifact, symbol, source-map ID, observation, severity, reproduction,
+expected intent, and disposition.
+
+The migration proof locks the checked inert legacy package bytes and manifest
+projection, proves the generated HIAL DUT byte-identical to its private
+handoff, and rejects a legacy import or artifact in successor source. GHDL and
+OSVVM bytes were neither required nor fetched during emission.
 
 These artifacts have not been analyzed, elaborated, or run. They provide no
 runtime, produced-result, parity, PSL, full VHDL-2008, OSVVM, mixed-language,
