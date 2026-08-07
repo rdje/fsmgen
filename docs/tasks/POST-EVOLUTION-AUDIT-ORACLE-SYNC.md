@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `POST-EVOLUTION-AUDIT-ORACLE-SYNC`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `test integrity / support contracts and mdBook audits`
 - Created: `2026-08-07`
 - Last updated: `2026-08-07`
@@ -33,7 +33,7 @@ did not follow already-shipped contract-status and Chapter 14 topology changes.
 ## Task Tree
 
 - ID: `POST-EVOLUTION-AUDIT-ORACLE-SYNC`
-  Status: `active`
+  Status: `done`
   Goal: `Synchronize static audit oracles with shipped contract and book topology changes.`
   Children: `POST-EVOLUTION-AUDIT-ORACLE-SYNC.1, POST-EVOLUTION-AUDIT-ORACLE-SYNC.2`
 
@@ -45,11 +45,11 @@ did not follow already-shipped contract-status and Chapter 14 topology changes.
   Commit: `POST-EVOLUTION-AUDIT-ORACLE-SYNC.1: synchronize support contract statuses`
 
 - ID: `POST-EVOLUTION-AUDIT-ORACLE-SYNC.2`
-  Status: `active`
+  Status: `done`
   Goal: `Route feature-backlog and ATL audits to canonical partitioned Chapter 14 pages.`
   Acceptance: `t/1256 and t/1332 locate every governed heading and retain their exact current-status and stale-wording assertions.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The pre-fix pair fails 12/15 and 2/6 assertions because all seven queried headings are absent from the landing page. Exact heading census locates two headings in 14a, four in 14k, and ATL in 14c after dc1c64afb. The partition-aware tests pass Files=2/Tests=21; the broader book-path, feature-matrix, relative-path, and containment cluster passes Files=6/Tests=335. Both tests remain syntax-clean and book prose is unchanged.`
+  Commit: `POST-EVOLUTION-AUDIT-ORACLE-SYNC.2: follow partitioned Chapter 14 pages`
 
 ## Decisions
 
@@ -76,6 +76,24 @@ did not follow already-shipped contract-status and Chapter 14 topology changes.
 - [x] **NO REGRESSION** — the support audit plus adjacent native-UVM,
   portable-VHDL, and capability-manifest tests report `All tests successful`
   at `Files=5, Tests=81`; no contract owner or product behavior changes.
+
+## Acceptance Checklist (enforced) — `.2` partitioned Chapter 14 paths
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` shows both audits still own
+  the pre-partition `14-feature-backlog.md` path, while partition commit
+  `dc1c64afb` moved their exact headings into `14a-language-and-data.md`,
+  `14k-isf-language-and-scheduling.md`, and
+  `14c-actor-network-orchestration.md`; the pre-fix pair fails 14 of 21
+  assertions solely because those sections are absent from the landing page.
+- [x] **ADDRESSED (verified)** — `t/1256` now declares each heading's canonical
+  topic page and reuses the same section/status/stale-wording assertions;
+  `t/1332` reads the canonical ATL page. Both remain syntax-clean and the
+  focused result changes from 14/21 failed assertions to PASS at
+  `Files=2, Tests=21`.
+- [x] **NO REGRESSION** — the focused pair plus public-book-path,
+  feature-matrix, relative-path, and focused-containment audits report
+  `All tests successful` at `Files=6, Tests=335`; book prose and product
+  behavior remain unchanged.
 
 ## Blockers
 

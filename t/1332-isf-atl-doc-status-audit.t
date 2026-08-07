@@ -8,7 +8,7 @@ use FindBin;
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 
 my $backlog_path = File::Spec->catfile(
-    $repo_root, 'docs', 'book', 'src', '14-feature-backlog.md',
+    $repo_root, 'docs', 'book', 'src', '14c-actor-network-orchestration.md',
 );
 my $proposal_path = File::Spec->catfile(
     $repo_root, 'docs', 'ISF_ATL_DESIGN_PROPOSAL.md',

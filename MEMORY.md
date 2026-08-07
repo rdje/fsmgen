@@ -5,13 +5,14 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`POST-EVOLUTION-AUDIT-ORACLE-SYNC.1: synchronize support contract statuses`).
-- active_work_unit: `POST-EVOLUTION-AUDIT-ORACLE-SYNC.2` is active.
-- current_state: `t/350` recognizes the two shipped private UVM/VHDL contract
-  statuses; its adjacent five-file suite passes 81 tests without a contract or
-  product change.
-- next_action: route `t/1256` and `t/1332` to the canonical partitioned Chapter
-  14 pages while retaining their exact status and stale-wording assertions.
+- latest_commit: this commit (`POST-EVOLUTION-AUDIT-ORACLE-SYNC.2: follow partitioned Chapter 14 pages`).
+- active_work_unit: no uncommitted work after the two-leaf audit-oracle tree.
+- current_state: `t/350` recognizes current private UVM/VHDL statuses, while
+  `t/1256` and `t/1332` read canonical 14a/14k/14c topic pages; the adjacent
+  suites pass 81 and 335 tests without product or book-prose changes.
+- next_action: at the next clean PNT boundary, select the first concrete
+  unblocked proposed test-integrity repair, beginning with
+  `SUPPORTED-LANGUAGE-FEATURE-RHS-SIMPLIFICATION-EXPECTATION-SYNC.1`.
 - in_flight_uncommitted: none after this commit; no background job or build residue.
 - blockers: none for the oracle repairs; HIAL/VIAL `.15.5`/`.15.6` remain
   provider-blocked and NEXSIM `.2` awaits concrete input.
