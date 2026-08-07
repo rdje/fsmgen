@@ -5,14 +5,14 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`POST-EVOLUTION-AUDIT-ORACLE-SYNC.2: follow partitioned Chapter 14 pages`).
-- active_work_unit: no uncommitted work after the two-leaf audit-oracle tree.
-- current_state: `t/350` recognizes current private UVM/VHDL statuses, while
-  `t/1256` and `t/1332` read canonical 14a/14k/14c topic pages; the adjacent
-  suites pass 81 and 335 tests without product or book-prose changes.
-- next_action: at the next clean PNT boundary, select the first concrete
-  unblocked proposed test-integrity repair, beginning with
-  `SUPPORTED-LANGUAGE-FEATURE-RHS-SIMPLIFICATION-EXPECTATION-SYNC.1`.
+- latest_commit: this commit (`SUPPORTED-LANGUAGE-FEATURE-RHS-SIMPLIFICATION-EXPECTATION-SYNC.1: activate RHS oracle sync`).
+- active_work_unit: `SUPPORTED-LANGUAGE-FEATURE-RHS-SIMPLIFICATION-EXPECTATION-SYNC.1` is active.
+- current_state: clean-tree t261 reproduces 24/613 default and 24/614 strict
+  failures from six stale simplification patterns across four corpus entries;
+  the task record now includes the previously omitted Boolean-identity case.
+- next_action: prove each emitted simplified form against focused simplifier
+  evidence, update only the six stale registry patterns, then run t261 in both
+  modes plus adjacent regression and doctrine gates.
 - in_flight_uncommitted: none after this commit; no background job or build residue.
 - blockers: none for the oracle repairs; HIAL/VIAL `.15.5`/`.15.6` remain
   provider-blocked and NEXSIM `.2` awaits concrete input.
