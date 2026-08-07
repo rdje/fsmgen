@@ -5,14 +5,14 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`SUPPORTED-LANGUAGE-FEATURE-RHS-SIMPLIFICATION-EXPECTATION-SYNC.1: activate RHS oracle sync`).
-- active_work_unit: `SUPPORTED-LANGUAGE-FEATURE-RHS-SIMPLIFICATION-EXPECTATION-SYNC.1` is active.
-- current_state: clean-tree t261 reproduces 24/613 default and 24/614 strict
-  failures from six stale simplification patterns across four corpus entries;
-  the task record now includes the previously omitted Boolean-identity case.
-- next_action: prove each emitted simplified form against focused simplifier
-  evidence, update only the six stale registry patterns, then run t261 in both
-  modes plus adjacent regression and doctrine gates.
+- latest_commit: this commit (`SUPPORTED-LANGUAGE-FEATURE-RHS-SIMPLIFICATION-EXPECTATION-SYNC.1: align simplification oracles`).
+- active_work_unit: none; the RHS simplification expectation-sync tree is complete.
+- current_state: twelve stale patterns across six supported-language corpus
+  entries now match the already-proved simplified HDL forms; focused, full
+  t261, and broader regression suites pass without a generator or book change.
+- next_action: reproduce and classify
+  `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1`, then activate it from the
+  clean tree if its recorded pipeline/CLI aggregate-top split remains current.
 - in_flight_uncommitted: none after this commit; no background job or build residue.
 - blockers: none for the oracle repairs; HIAL/VIAL `.15.5`/`.15.6` remain
   provider-blocked and NEXSIM `.2` awaits concrete input.
