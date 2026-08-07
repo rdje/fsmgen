@@ -42,15 +42,15 @@ first.
 
 ## Active Task Trees
 
-Only rows marked `active` are PNT-eligible. Completed and deferred tree
-chronology is query-first through the bounded archive described below.
+Only rows marked `active` are PNT-eligible; other chronology is query-first through the bounded archive below.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity / project-wide live-document lifecycle` | `.13` completes focused/ancillary classification, the generated complete index, and bounded ISF maintained-reference partitioning. Pending `.12` waits on director-deferred `.26`; no containment leaf is currently PNT-eligible. | [docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
-| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `Verification code generation / intent architecture` | Completed `.15.4` closes the 17-artifact provider-free VHDL profile with six sources, 59 maps, 20 static checks, a 24-row selected matrix, seven-stage review/defect workflow, and exact legacy/HIAL separation proof. `.15.5` is provider-blocked on exact GHDL 6.0.0; `.15.6` awaits exact project-local OSVVM 2026.05 materialization, and `.15.7` depends on both. `.13.3` remains provider-blocked. | [docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
-| `NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS` | `active` | `Verification infrastructure / external simulator operability` | Completed `.1` publishes the 365-requirement implementation-neutral native-API/MCP consumer baseline and decision `0052`; `.2` remains proposed for versioned amendments triggered only by concrete feedback, schemas, prototypes, or capability evidence. | [docs/tasks/NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.md](docs/tasks/NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.md) |
-| `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 / SV-backed feature completeness` | completed `.844` selected HIAL/VIAL `.1`; child `.1` selected architecture under decision `0032`, and child `.2` now selects proposed bounded VIAL parser/SemanticIR implementation `.3` under decision `0033` | [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
+| `BIN-FSMGEN-IMPORT-TREE-AUG07-VIAL-RUNTIME-REFRESH` | `active` | `bootstrap architecture maintenance` | `.1` synchronizes measured 254-file / 253-package public-VIAL-runtime documentation drift; no behavior change | [docs/tasks/BIN-FSMGEN-IMPORT-TREE-AUG07-VIAL-RUNTIME-REFRESH.md](docs/tasks/BIN-FSMGEN-IMPORT-TREE-AUG07-VIAL-RUNTIME-REFRESH.md) |
+| `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity / project-wide live-document lifecycle` | `.12` waits on director-deferred `.26`; no PNT-eligible leaf | [docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
+| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `Verification code generation / intent architecture` | `.15.4` complete; `.15.5` awaits exact GHDL 6.0.0, `.15.6` repo-local OSVVM 2026.05; `.15.7`/`.13.3` blocked | [docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
+| `NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS` | `active` | `Verification infrastructure / external simulator operability` | `.1` complete; `.2` requires concrete external evidence | [docs/tasks/NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.md](docs/tasks/NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.md) |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 / SV-backed feature completeness` | terminal `.844` delegates to HIAL/VIAL; no direct eligible leaf | [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
 
 ## Proposed Task Trees
 

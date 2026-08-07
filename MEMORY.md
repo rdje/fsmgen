@@ -5,23 +5,17 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.4`: close portable VHDL review).
-- active_work_unit: HIAL/VIAL `.15.4` is complete; `.15.5` is provider-blocked,
-  `.15.6` awaits exact project-local OSVVM materialization, and NEXSIM `.2`
-  remains proposed for evidence-driven amendments.
-- current_state: decision `0052` and the standalone 365-requirement NEXSIM
-  contract make the native typed semantic API authoritative and MCP its bounded
-  projection without claiming support. Its durable surfaces are synchronized.
-  HIAL/VIAL `.15.4` now closes the 17-artifact provider-free VHDL profile:
-  six sources/59 maps/20 static checks, 24 selected mappings, seven review
-  stages/checks, and exact inert-legacy/HIAL separation. The profile is emitted
-  and structurally reviewed, with visual review and analysis through support
-  unclaimed.
-- next_action: obtain exact GHDL 6.0.0 for `.15.5` or materialize exact
-  repository-local OSVVM 2026.05 for `.15.6`; amend NEXSIM only from concrete input.
-- in_flight_uncommitted: none after commit; no background/output residue remains.
-- blockers: `.13.3` waits on capability-ready PGEN/NEXSIM handoff/API/MCP
-  identities; IASIM is proposed, while live-document `.12` and inventory `.26` are deferred.
+- latest_commit: this commit (`BIN-FSMGEN-IMPORT-TREE-AUG07-VIAL-RUNTIME-REFRESH.1: activate VIAL runtime import-map refresh`).
+- active_work_unit: `BIN-FSMGEN-IMPORT-TREE-AUG07-VIAL-RUNTIME-REFRESH.1`
+  (continuity-only activation).
+- current_state: the exact documentation-only owner now records the measured
+  254-file / 253-package / 19-IAL2 / 17-VIAL / 3-HIAL closure drift. The stale
+  canonical note/fact and Chapter 14e snapshot remain unchanged during activation.
+- next_action: remeasure every family and selected line count; synchronize the
+  import-tree note, fact, and Chapter 14e; validate and commit `.1`.
+- in_flight_uncommitted: none after the activation commit; no background job.
+- blockers: none for `.1`; HIAL/VIAL `.15.5` still awaits exact GHDL 6.0.0,
+  `.15.6` awaits repository-local OSVVM 2026.05, and NEXSIM `.2` awaits concrete input.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not
