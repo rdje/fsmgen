@@ -5,14 +5,13 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`BIN-FSMGEN-IMPORT-TREE-AUG07-VIAL-RUNTIME-REFRESH.1: refresh public VIAL runtime map`).
-- active_work_unit: the August 7 import-map refresh is complete.
-- current_state: the canonical note/fact/book now match the 254-file /
-  253-package / Support-76 / IAL2-19 / VIAL-17 / HIAL-3 closure and qualified
-  public VIAL run/result path; runtime behavior is unchanged.
-- next_action: create and activate the smallest exact task tree for the
-  pre-existing t350 contract-status whitelist drift and t1256/t1332
-  post-Chapter-14-partition path drift, then repair each as a separate slice.
+- latest_commit: this commit (`POST-EVOLUTION-AUDIT-ORACLE-SYNC.1: activate audit-oracle synchronization`).
+- active_work_unit: `POST-EVOLUTION-AUDIT-ORACLE-SYNC.1` is active.
+- current_state: import-map refresh commit `6a489464d` is complete; a dedicated
+  two-leaf tree now owns the pre-existing support-status and partitioned-book
+  audit-oracle defects.
+- next_action: add the two shipped private UVM/VHDL status values to `t/350`,
+  retain all existing contract-shape assertions, verify, and commit `.1`.
 - in_flight_uncommitted: none after this commit; no background job or build residue.
 - blockers: none for the oracle repairs; HIAL/VIAL `.15.5`/`.15.6` remain
   provider-blocked and NEXSIM `.2` awaits concrete input.
