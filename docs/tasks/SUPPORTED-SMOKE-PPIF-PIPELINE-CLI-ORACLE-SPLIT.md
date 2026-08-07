@@ -3,10 +3,10 @@
 ## Metadata
 
 - Tree ID: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `test integrity / IAL2 PPIF support accounting`
 - Created: `2026-07-31`
-- Last updated: `2026-07-31`
+- Last updated: `2026-08-07`
 - Owner: repo-local workflow
 
 ## Goal
@@ -32,22 +32,22 @@ both surfaces.
 - Focused PPIF pipeline, CLI, support-accounting, and defensive-copy gates pass
   without generated HDL changes.
 - Project-local temporary output is used and removed exactly.
-- Task index, continuity records, and changelog are synchronized and the slice
+- Task index and bounded continuity records are synchronized and the slice
   commits through `COMMIT.md`.
 
 ## Task Tree
 
 - ID: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT`
-  Status: `proposed`
+  Status: `active`
   Goal: `Separate PPIF in-memory entry-module and CLI aggregate-top support oracles.`
   Children: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1`
 
 - ID: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Repair the supported-smoke PPIF runtime audit without changing product output.`
   Acceptance: `Each PPIF entry declares and proves the in-memory generated entry module plus public CLI aggregate top as applicable; t296 and focused PPIF/support gates pass with unchanged HDL bytes and semantic reports.`
-  Verification: `Discovery during HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3: after semantic-only VIAL is correctly excluded from HDL generation, t296 repeatedly expects module ahb_tb in an in-memory pipeline result whose source_info.generated_hdl_entry_artifact is ahb_interconnect.fsm and whose hdl_code contains module ahb_interconnect. The public CLI output for the same ppif/ahb_interconnect.ppif source contains amba_requester, ahb_interconnect, ahb_lite_subordinate, and aggregate module ahb_tb. t296 _assert_entry_hdl_shape currently applies expected_module_name=ahb_tb to both surfaces. The failing run was stopped after deterministic repeated PPIF mismatches to avoid generating further redundant output.`
-  Commit: `pending activation after the current dirty VIAL slice is committed cleanly`
+  Verification: `Discovery during HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3: after semantic-only VIAL is correctly excluded from HDL generation, t296 repeatedly expects module ahb_tb in an in-memory pipeline result whose source_info.generated_hdl_entry_artifact is ahb_interconnect.fsm and whose hdl_code contains module ahb_interconnect. Fresh clean-tree reproduction on 2026-08-07 reconfirms the same default-pipeline mismatch across distinct AHB interconnect fixtures; it was stopped after deterministic repetition because each failure dumps a very large HDL body. The public CLI output for ppif/ahb_interconnect.ppif contains amba_requester, ahb_interconnect, ahb_lite_subordinate, and aggregate module ahb_tb. The current corpus contains 240 strict PPIF smoke entries, including 18 ahb_tb and 37 apb_tb aggregate-top expectations. t296 _assert_entry_hdl_shape applies expected_module_name to both surfaces.`
+  Commit: `this commit (SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1: activate PPIF oracle split)`
 
 ## Decisions
 
@@ -64,7 +64,7 @@ both surfaces.
 
 ## Blockers
 
-- Activation waits for the current dirty VIAL task-tree leaf to commit cleanly.
+- None.
 
 ## Acceptance Checklist (enforced for implementation changes)
 

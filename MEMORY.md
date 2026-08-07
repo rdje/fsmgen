@@ -5,14 +5,15 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`SUPPORTED-LANGUAGE-FEATURE-RHS-SIMPLIFICATION-EXPECTATION-SYNC.1: align simplification oracles`).
-- active_work_unit: none; the RHS simplification expectation-sync tree is complete.
-- current_state: twelve stale patterns across six supported-language corpus
-  entries now match the already-proved simplified HDL forms; focused, full
-  t261, and broader regression suites pass without a generator or book change.
-- next_action: reproduce and classify
-  `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1`, then activate it from the
-  clean tree if its recorded pipeline/CLI aggregate-top split remains current.
+- latest_commit: this commit (`SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1: activate PPIF oracle split`).
+- active_work_unit: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1` is active.
+- current_state: fresh t296 reproduction confirms its shared PPIF module oracle
+  expects public aggregate `ahb_tb` in in-memory entry HDL that correctly emits
+  the selected generated child module; 240 strict PPIF smoke entries include
+  55 `ahb_tb`/`apb_tb` aggregate-top contracts.
+- next_action: select an explicit independent in-memory entry-module contract,
+  separate t296 pipeline and CLI assertions, then run the complete matrix plus
+  focused PPIF/support/defensive-copy gates.
 - in_flight_uncommitted: none after this commit; no background job or build residue.
 - blockers: none for the oracle repairs; HIAL/VIAL `.15.5`/`.15.6` remain
   provider-blocked and NEXSIM `.2` awaits concrete input.
