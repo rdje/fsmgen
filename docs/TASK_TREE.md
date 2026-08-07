@@ -46,7 +46,6 @@ Only rows marked `active` are PNT-eligible; other chronology is query-first thro
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `BIN-FSMGEN-IMPORT-TREE-AUG07-VIAL-RUNTIME-REFRESH` | `active` | `bootstrap architecture maintenance` | `.1` synchronizes measured 254-file / 253-package public-VIAL-runtime documentation drift; no behavior change | [docs/tasks/BIN-FSMGEN-IMPORT-TREE-AUG07-VIAL-RUNTIME-REFRESH.md](docs/tasks/BIN-FSMGEN-IMPORT-TREE-AUG07-VIAL-RUNTIME-REFRESH.md) |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity / project-wide live-document lifecycle` | `.12` waits on director-deferred `.26`; no PNT-eligible leaf | [docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `Verification code generation / intent architecture` | `.15.4` complete; `.15.5` awaits exact GHDL 6.0.0, `.15.6` repo-local OSVVM 2026.05; `.15.7`/`.13.3` blocked | [docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS` | `active` | `Verification infrastructure / external simulator operability` | `.1` complete; `.2` requires concrete external evidence | [docs/tasks/NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.md](docs/tasks/NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.md) |

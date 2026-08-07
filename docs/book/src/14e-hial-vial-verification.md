@@ -3,11 +3,12 @@
 ### Selected HIAL/VIAL architecture
 
 The architecture for full fixture generation is selected and decomposed. Its
-bounded semantic frontend, review-routed private bridge, and private target-
-neutral execution elaborator are shipped. Public source tooling and canonical
-planning/artifacts now ship. The first private portable-SystemVerilog emitter
-and pure trace validator also ship; no executable backend, external tool run,
-runtime result, or public backend action ships yet.
+bounded semantic frontend, review-routed private bridge, and target-neutral
+execution elaborator are shipped. Public source tooling, canonical planning,
+and the exact `sv_portable_verilator` run/result path now ship. The selected AHB
+fixture has bounded handwritten-oracle parity; this is not general cross-
+backend parity. Native-UVM and provider-free portable-VHDL review emission also
+ship privately, while their qualified runtime/result profiles remain pending.
 `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` names current synthesizable
 IAL0/IAL1/IAL2 collectively as **Hardware IAL (HIAL)** and defines a peer
 **Verification IAL (VIAL)** for pure verification intent:
@@ -42,13 +43,14 @@ Implementation `.3` now parses and type-checks the checked
 immutable `VIALSemanticIR` and exposes a defensive sanitized semantic report
 through a private checker. The semantic corpus still claims only parse,
 typecheck, and semantic-report phases. Capability discovery additionally
-reports the private target-neutral binder and public source/plan surfaces. The
-public planner publishes only canonical normal source, generated HIAL review
-artifacts, defensive bridge/plan projections, and its tool manifest; that
-public surface still exposes no private IR or target backend artifact. The
-separate private `.10.3` emitter returns deterministic virtual plain-SV
-artifacts and source maps, but compile, simulation, runtime, result, parity
-pass, UVM, VHDL, mixed-language, and scale remain unclaimed.
+reports the private target-neutral binder and public source/plan/run surfaces.
+The public planner publishes only canonical normal source, generated HIAL
+review artifacts, defensive bridge/plan projections, and its tool manifest;
+that action exposes no target artifact. Public `run` separately composes the
+private `.10.3` emitter with exact Verilator 5.046 compile/runtime, closed trace
+validation, normalized results, and atomic publication. Complete four-state
+behavior, general cross-backend parity, UVM/VHDL execution, mixed-language,
+and scale remain unclaimed.
 
 Decision `0034` sets the longer-term rule: **full power underneath, simpler
 intent above**. Abstraction means simplification, so mastering VIAL does not
@@ -101,21 +103,18 @@ before the absent tool/library are available, while analysis, elaboration,
 runtime, normalized result, parity, PSL, and methodology support remain
 unclaimed.
 
-Implementation parent `.15` is now active and split along those evidence
-boundaries. Completed `.15.1-.15.2` ship private provider-free VHDL semantics:
-deterministic HIAL VHDL bytes, typed values and original-symbol observations,
-logical time, exact operation/scenario/fiber/model metadata, a directly bound
-testbench, typed drivers and samplers, one inactive-edge scheduler, a declared
-probe adapter, 52 complete source maps, 13 structural checks, atomic
-publication, and a byte-locked review gallery.
+Implementation parent `.15` is active and split along those evidence
+boundaries. Completed `.15.1-.15.4` ship a 17-artifact provider-free VHDL
+review profile: six sources, 59 source maps, 20 static checks, a 24-row selected
+mapping matrix, deterministic checking/scoreboard/coverage/fault/result
+structures, and a seven-stage review/defect workflow.
 
-This is deliberately reviewable semantics emission, not VHDL execution.
-Active `.15.3` adds checking, scoreboards, coverage, faults, diagnostics,
-closed trace, and normalized results. Analysis, elaboration, runtime, produced
-results, parity, PSL, complete VHDL-2008, OSVVM/UVVM, mixed-language behavior,
-and product support remain unclaimed until their separate gates pass.
+This is reviewable semantics emission, not VHDL execution. `.15.5` is blocked
+on exact GHDL 6.0.0, `.15.6` awaits exact repository-local OSVVM 2026.05, and
+`.15.7` depends on both. Analysis, elaboration, runtime, produced results,
+parity, PSL, methodology support, and mixed-language behavior remain unclaimed.
 
-Inspect or byte-check the six VHDL sources and eight evidence artifacts with:
+Inspect or byte-check the six VHDL sources and eleven evidence artifacts with:
 
 ```text
 perl scripts/refresh_vial_vhdl_portable_gallery.pl --check
@@ -287,3 +286,10 @@ four and `.11` retains parity. Clean `.10.3` implementation commit
 `201590d84` activates `.10.4` alone without changing product behavior.
 See [the public tooling contract](../../VIAL_PUBLIC_TOOLING_V1_CONTRACT.md) and
 the [architecture chapter](16d-hial-vial-verification-architecture.md).
+Completed `.10.4` now composes that private emitter/validator through public
+`run`: exact Verilator 5.046 compile and execution, bounded repository-local
+staging, validated runtime traces, normalized result/output manifests,
+deterministic virtual or atomic publication, and exact cleanup all ship for the
+selected known-value profile. Completed `.11` independently compares 19
+public/shared AHB outcomes from generated VIAL and handwritten harnesses over
+byte-identical DUT source. General cross-backend parity remains unclaimed.

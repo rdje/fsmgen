@@ -41,9 +41,9 @@ gallery. Completed `.15.2` adds typed drivers and samplers, the single
 inactive-edge scheduler, bounded scenarios and fibers, deterministic models,
 and a declared-probe adapter. Completed `.15.3` adds bounded scoreboards,
 coverage counters, substitution faults, procedural checks, diagnostics,
-closed trace framing, and normalized-result projection. Active `.15.4` closes
-the portable review matrix; later children independently qualify exact
-GHDL and OSVVM execution.
+closed trace framing, and normalized-result projection. Completed `.15.4`
+closes the portable review matrix. `.15.5` awaits exact GHDL 6.0.0, `.15.6`
+awaits repository-local OSVVM 2026.05, and `.15.7` depends on both.
 
 The current shipped verification-output targets remain deliberately narrow:
 

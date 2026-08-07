@@ -5,17 +5,17 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`BIN-FSMGEN-IMPORT-TREE-AUG07-VIAL-RUNTIME-REFRESH.1: activate VIAL runtime import-map refresh`).
-- active_work_unit: `BIN-FSMGEN-IMPORT-TREE-AUG07-VIAL-RUNTIME-REFRESH.1`
-  (continuity-only activation).
-- current_state: the exact documentation-only owner now records the measured
-  254-file / 253-package / 19-IAL2 / 17-VIAL / 3-HIAL closure drift. The stale
-  canonical note/fact and Chapter 14e snapshot remain unchanged during activation.
-- next_action: remeasure every family and selected line count; synchronize the
-  import-tree note, fact, and Chapter 14e; validate and commit `.1`.
-- in_flight_uncommitted: none after the activation commit; no background job.
-- blockers: none for `.1`; HIAL/VIAL `.15.5` still awaits exact GHDL 6.0.0,
-  `.15.6` awaits repository-local OSVVM 2026.05, and NEXSIM `.2` awaits concrete input.
+- latest_commit: this commit (`BIN-FSMGEN-IMPORT-TREE-AUG07-VIAL-RUNTIME-REFRESH.1: refresh public VIAL runtime map`).
+- active_work_unit: the August 7 import-map refresh is complete.
+- current_state: the canonical note/fact/book now match the 254-file /
+  253-package / Support-76 / IAL2-19 / VIAL-17 / HIAL-3 closure and qualified
+  public VIAL run/result path; runtime behavior is unchanged.
+- next_action: create and activate the smallest exact task tree for the
+  pre-existing t350 contract-status whitelist drift and t1256/t1332
+  post-Chapter-14-partition path drift, then repair each as a separate slice.
+- in_flight_uncommitted: none after this commit; no background job or build residue.
+- blockers: none for the oracle repairs; HIAL/VIAL `.15.5`/`.15.6` remain
+  provider-blocked and NEXSIM `.2` awaits concrete input.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not
