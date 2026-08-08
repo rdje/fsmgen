@@ -5,18 +5,25 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1: activate PPIF oracle split`).
-- active_work_unit: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1` is active.
+- latest_commit: this commit (`SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1: separate runtime module oracles`).
+- active_work_unit: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2` is active; the oracle and profile-alias repairs are implemented and verified.
 - current_state: fresh t296 reproduction confirms its shared PPIF module oracle
   expects public aggregate `ahb_tb` in in-memory entry HDL that correctly emits
-  the selected generated child module; 240 strict PPIF smoke entries include
-  55 `ahb_tb`/`apb_tb` aggregate-top contracts.
-- next_action: select an explicit independent in-memory entry-module contract,
-  separate t296 pipeline and CLI assertions, then run the complete matrix plus
-  focused PPIF/support/defensive-copy gates.
+  the selected generated child module; an exhaustive census identifies 62 of
+  240 strict PPIF smoke entries with distinct pipeline/CLI module contracts;
+  the repaired full matrix now uses one-entry pipeline and four-entry CLI
+  workers to release same-process Perl allocator/cache growth below the
+  unchanged descendant-RSS ceiling.
+- next_action: obtain director direction on the existing proposed macOS
+  RAM-guard metric blocker; either authorize that safety-metric correction and
+  rerun the complete t296 parent, or accept the exact focused evidence and
+  close `.1.2` plus parent `.1` without bypassing the guard.
 - in_flight_uncommitted: none after this commit; no background job or build residue.
-- blockers: none for the oracle repairs; HIAL/VIAL `.15.5`/`.15.6` remain
-  provider-blocked and NEXSIM `.2` awaits concrete input.
+- blockers: complete t296 parent verification is stopped by the known proposed
+  macOS RAM-guard metric defect (81-82% real free while the guard reports
+  88-92% used); changing that safety mechanism needs director approval.
+  HIAL/VIAL `.15.5`/`.15.6` remain provider-blocked and NEXSIM `.2` awaits
+  concrete input.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not
