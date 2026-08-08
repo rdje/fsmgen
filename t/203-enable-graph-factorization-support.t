@@ -91,6 +91,34 @@ FSM
         'factorization support derives the expected live-usage evidence for the shared intermediate',
     );
 
+    my %batch_signal_info = map { $_ => {} } qw(A_or_B BOTH FINAL_ONLY NONE);
+    $prepared_backend->{intermediate_signals} = \%batch_signal_info;
+    $prepared_backend->{state_enables}{batch_both} =
+        FSM::HDL::IntermediateSignalRef->new(signal_name => 'BOTH');
+    $prepared_backend->{lhs_assignments}{batch_final_only} = [{
+        rhs => FSM::HDL::IntermediateSignalRef->new(signal_name => 'FINAL_ONLY'),
+    }];
+
+    my %scalar_live_usage;
+    for my $signal_name (sort keys %batch_signal_info) {
+        my %uncached_signal_info;
+        $scalar_live_usage{$signal_name} =
+            $support->resolve_intermediate_signal_live_usage($signal_name, \%uncached_signal_info);
+    }
+
+    my $batch_summary = $support->prime_intermediate_signal_live_usage(\%batch_signal_info);
+    is($batch_summary->{signal_count}, 4, 'bulk live-usage preparation covers the complete consolidated registry');
+    for my $signal_name (sort keys %batch_signal_info) {
+        is_deeply(
+            $support->resolve_intermediate_signal_live_usage(
+                $signal_name,
+                $batch_signal_info{$signal_name},
+            ),
+            $scalar_live_usage{$signal_name},
+            "bulk live-usage metadata matches the scalar fallback for $signal_name",
+        );
+    }
+
     my $second_pass_factorizer = FSM::HDL::ASTFactorization->new(
         min_usage_count => 2,
         debug => 0,

@@ -65,6 +65,7 @@ sub render_consolidated_intermediate_assignments ($self, $prepared_block) {
     my $recovery_support = $ctx->{backend_sv_intermediate_recovery_support};
     my $filtered_signals = $prepared_block->{filtered_signals} || {};
     my $sorted_signals = $prepared_block->{sorted_signals} || [];
+    my $trace_signal_detail = debug_enabled() && debug_level() >= 3;
     my $hdl = "";
 
     for my $signal_name (@{$sorted_signals}) {
@@ -80,7 +81,8 @@ sub render_consolidated_intermediate_assignments ($self, $prepared_block) {
         }
 
         $hdl .= "  assign $signal_name = $expression; // Source: $source\n";
-        fsm_debug("  CONSOLIDATED: assign $signal_name = $expression (source: $source)", 3);
+        fsm_debug("  CONSOLIDATED: assign $signal_name = $expression (source: $source)", 3)
+            if $trace_signal_detail;
     }
 
     return $hdl;

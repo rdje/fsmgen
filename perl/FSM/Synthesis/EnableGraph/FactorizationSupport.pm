@@ -35,7 +35,7 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use FSM::Debug;
-use Scalar::Util qw(blessed);
+use Scalar::Util qw(blessed refaddr);
 
 =head2 new
 
@@ -694,6 +694,174 @@ sub is_signal_actually_used_in_final_expressions ($self, $signal_name) {
 
     fsm_debug("    NOT FOUND: Signal '$signal_name' is not used in any final expressions", 3);
     return 0;
+}
+
+=head2 prime_intermediate_signal_live_usage
+
+Build substitution and final-expression live-usage sets in one traversal of
+the prepared backend AST roots, then cache the two booleans on every supplied
+intermediate-signal record.  This is the bounded bulk counterpart to the
+single-signal fallback queries below: callers with a consolidated registry
+must prime once instead of rescanning every AST for every signal.
+
+=cut
+
+sub prime_intermediate_signal_live_usage ($self, $all_intermediate_signals) {
+    my $ctx = $self->{flattened_dt};
+    return {
+        signal_count => 0,
+        referenced_in_substitutions => 0,
+        used_in_final_expressions => 0,
+    } unless $all_intermediate_signals && ref($all_intermediate_signals) eq 'HASH';
+
+    my (%referenced_in_substitutions, %used_in_final_expressions);
+    my (%seen_substitution_roots, %seen_final_roots);
+
+    if ($ctx->{ast_factorizer} && $ctx->{ast_factorizer}->{ast_expressions}) {
+        for my $expr_info (@{$ctx->{ast_factorizer}->{ast_expressions}}) {
+            my $ast = $expr_info->{ast};
+            next unless $ast && blessed($ast);
+            $self->_record_intermediate_signal_names_from_ast(
+                $ast,
+                \%referenced_in_substitutions,
+                \%seen_substitution_roots,
+            );
+        }
+    }
+
+    for my $lhs (keys %{$ctx->{assignment_analysis} || {}}) {
+        my $lhs_analysis = $ctx->{assignment_analysis}{$lhs} || {};
+        for my $rhs (keys %{$lhs_analysis->{rhs_groups} || {}}) {
+            my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs} || {};
+
+            for my $dt_enable_info (@{$rhs_group->{dt_specific_enables} || []}) {
+                my $enable_ast = $dt_enable_info->{enable_ast};
+                next unless $enable_ast && blessed($enable_ast);
+                $self->_record_shared_live_usage_ast(
+                    $enable_ast,
+                    \%referenced_in_substitutions,
+                    \%used_in_final_expressions,
+                    \%seen_substitution_roots,
+                    \%seen_final_roots,
+                );
+            }
+
+            my $lhs_enable_ast = $rhs_group->{lhs_level_enable}
+                ? $rhs_group->{lhs_level_enable}{ast}
+                : undef;
+            if ($lhs_enable_ast && blessed($lhs_enable_ast)) {
+                $self->_record_shared_live_usage_ast(
+                    $lhs_enable_ast,
+                    \%referenced_in_substitutions,
+                    \%used_in_final_expressions,
+                    \%seen_substitution_roots,
+                    \%seen_final_roots,
+                );
+            }
+        }
+    }
+
+    for my $enable_registry ($ctx->{state_enables} || {}, $ctx->{dt_enables} || {}) {
+        for my $name (keys %$enable_registry) {
+            my $enable_ast = $enable_registry->{$name};
+            next unless $enable_ast && blessed($enable_ast);
+            $self->_record_shared_live_usage_ast(
+                $enable_ast,
+                \%referenced_in_substitutions,
+                \%used_in_final_expressions,
+                \%seen_substitution_roots,
+                \%seen_final_roots,
+            );
+        }
+    }
+
+    for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
+        for my $assignment (@{$ctx->{lhs_assignments}{$lhs} || []}) {
+            my $conditions_ast = $assignment->{conditions_ast};
+            if ($conditions_ast && blessed($conditions_ast)) {
+                $self->_record_shared_live_usage_ast(
+                    $conditions_ast,
+                    \%referenced_in_substitutions,
+                    \%used_in_final_expressions,
+                    \%seen_substitution_roots,
+                    \%seen_final_roots,
+                );
+            }
+
+            my $rhs_ast;
+            if ($assignment->{rhs} && blessed($assignment->{rhs})) {
+                $rhs_ast = $assignment->{rhs};
+            } elsif (defined($assignment->{rhs})
+                && !ref($assignment->{rhs})
+                && $assignment->{rhs} ne ''
+                && $ctx->{expr_namer}
+                && $ctx->{expr_namer}->can('parse_expression'))
+            {
+                $rhs_ast = eval { $ctx->{expr_namer}->parse_expression($assignment->{rhs}) };
+            }
+
+            $self->_record_intermediate_signal_names_from_ast(
+                $rhs_ast,
+                \%used_in_final_expressions,
+                \%seen_final_roots,
+            ) if $rhs_ast && (blessed($rhs_ast) || ref($rhs_ast) eq 'HASH');
+        }
+    }
+
+    for my $signal_name (keys %$all_intermediate_signals) {
+        my $signal_info = $all_intermediate_signals->{$signal_name};
+        next unless $signal_info && ref($signal_info) eq 'HASH';
+        next if exists($signal_info->{referenced_in_substitutions})
+            && exists($signal_info->{used_in_final_expressions});
+
+        my $referenced = $referenced_in_substitutions{$signal_name} ? 1 : 0;
+        my $used = $used_in_final_expressions{$signal_name} ? 1 : 0;
+        my $evidence_state = $referenced
+            ? ($used ? 'substitutions_and_final_expressions' : 'substitutions')
+            : ($used ? 'final_expressions' : 'none');
+
+        $signal_info->{referenced_in_substitutions} = $referenced;
+        $signal_info->{used_in_final_expressions} = $used;
+        $signal_info->{live_usage_evidence_state} = $evidence_state;
+        $signal_info->{live_usage_source} = 'ast_live_usage_metadata';
+    }
+
+    return {
+        signal_count => scalar(keys %$all_intermediate_signals),
+        referenced_in_substitutions => scalar(keys %referenced_in_substitutions),
+        used_in_final_expressions => scalar(keys %used_in_final_expressions),
+    };
+}
+
+sub _record_shared_live_usage_ast (
+    $self,
+    $ast,
+    $referenced_in_substitutions,
+    $used_in_final_expressions,
+    $seen_substitution_roots,
+    $seen_final_roots,
+) {
+    $self->_record_intermediate_signal_names_from_ast(
+        $ast,
+        $referenced_in_substitutions,
+        $seen_substitution_roots,
+    );
+    $self->_record_intermediate_signal_names_from_ast(
+        $ast,
+        $used_in_final_expressions,
+        $seen_final_roots,
+    );
+}
+
+sub _record_intermediate_signal_names_from_ast ($self, $ast, $signal_names, $seen_roots) {
+    return unless $ast && (blessed($ast) || ref($ast) eq 'HASH');
+
+    my $root_id = refaddr($ast);
+    return if defined($root_id) && $seen_roots->{$root_id}++;
+
+    my @names = $self->{flattened_dt}{enable_graph_signal_support}
+        ->extract_intermediate_signals_from_ast($ast);
+    $signal_names->{$_} = 1 for @names;
 }
 
 =head2 resolve_intermediate_signal_live_usage

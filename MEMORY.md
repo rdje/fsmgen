@@ -5,24 +5,22 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.1: own disabled trace repair`).
-- active_work_unit: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.2` owns the remaining t296 index-116 backend CPU bound.
-- current_state: `.1.2.1` makes disabled consolidated inventory tracing
-  zero-cost before module/AST traversal. Focused t1596 passes six assertions,
-  both Perl files are syntax clean, and formerly failing pipeline index 114
-  passes all three assertions in 28 seconds below the unchanged cap. The full
-  parent progressed to index 116, whose exact 2,013,530-byte generated FSM is
-  memory-bounded near 425 MiB but CPU-bound inside direct SystemVerilog backend
-  emission; parsing and semantic/IR construction finish in about 16.4 seconds.
-- next_action: isolate index 116's exact direct-backend phase, repair its CPU
-  scaling without changing generated HDL, then resume the complete guarded
-  t296 parent matrix.
-- in_flight_uncommitted: `.1.2.1` source/test/docs are being committed; one
-  guarded full-t296 parent remains active at index 116 for `.1.2.2` evidence.
-- blockers: no decision blocker; `.1.2.2` must resolve the index-116 backend
-  CPU hotspot before complete-parent acceptance can close.
-  Containment `.26`, HIAL/VIAL provider qualification, and NEXSIM external
-  evidence remain independently blocked.
+- latest_commit: this commit (`SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.2: bound index-116 backend work`).
+- active_work_unit: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.2` remains active for complete-parent t296 verification.
+- current_state: exact pipeline index 116 now passes all three assertions in
+  668 seconds below the unchanged 4096-MiB cap, with a live late snapshot near
+  401 MiB RSS. One shared traversal primes live-usage evidence; low-use logical
+  classification no longer recursively proves an outcome fixed by usage; and
+  disabled backend diagnostics no longer render full expressions or
+  Data::Dumper-connected semantic objects. Focused counted-payload tests pass.
+- next_action: run the complete guarded
+  `t/296-regression-corpus-supported-behavior.t` parent matrix, close `.1.2.2`
+  and its parents if green, then select the queued containment doctrine tree.
+- in_flight_uncommitted: `.1.2.2` source/test/task/Knowledge-Map evidence is
+  being committed; no background worker remains.
+- blockers: no known implementation or decision blocker; only complete-parent
+  confirmation remains. Containment `.26`, HIAL/VIAL provider qualification,
+  and NEXSIM external evidence remain independently blocked.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not

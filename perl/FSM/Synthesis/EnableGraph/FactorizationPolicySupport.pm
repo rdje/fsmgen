@@ -745,12 +745,17 @@ sub contains_frequently_used_operations ($self, $ast, $visited_signal_names = un
     $visited_signal_names //= {};
 
     my $result = $self->_ast_contains_frequently_used_logical_operation($ast, $visited_signal_names);
-    my $ast_str = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($ast) } || eval { $ast->to_systemverilog() } || ref($ast) || 'unknown_ast';
+    if (debug_enabled() && debug_level() >= 3) {
+        my $ast_str = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($ast) }
+            || eval { $ast->to_systemverilog() }
+            || ref($ast)
+            || 'unknown_ast';
 
-    if ($result) {
-        fsm_debug("[FactorizationPolicySupport.pm][contains_frequently_used_operations()] Expression '$ast_str' contains high-count logical operations - FACTOR", 3);
-    } else {
-        fsm_debug("[FactorizationPolicySupport.pm][contains_frequently_used_operations()] Expression '$ast_str' contains no high-count logical operations - DON'T FACTOR", 3);
+        if ($result) {
+            fsm_debug("[FactorizationPolicySupport.pm][contains_frequently_used_operations()] Expression '$ast_str' contains high-count logical operations - FACTOR", 3);
+        } else {
+            fsm_debug("[FactorizationPolicySupport.pm][contains_frequently_used_operations()] Expression '$ast_str' contains no high-count logical operations - DON'T FACTOR", 3);
+        }
     }
 
     return $result;

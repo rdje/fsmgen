@@ -352,6 +352,7 @@ sub build_module_declaration_plan ($self, $fsm_module) {
 
     fsm_debug("HDL Generation: Processing " . scalar(keys %$signals) . " signals for module declaration", 3);
 
+    my $trace_signal_detail = debug_enabled() && debug_level() >= 3;
     my %seen_signals;
     my %port_directions;
     if ($system_contract->{declare_ports} // 1) {
@@ -366,7 +367,8 @@ sub build_module_declaration_plan ($self, $fsm_module) {
 
     for my $sig_name (sort keys %$signals) {
         if ($seen_signals{$sig_name}) {
-            fsm_debug("HDL Signal Processing: SKIPPING duplicate signal '$sig_name'", 3);
+            fsm_debug("HDL Signal Processing: SKIPPING duplicate signal '$sig_name'", 3)
+                if $trace_signal_detail;
             next;
         }
         $seen_signals{$sig_name} = 1;
@@ -382,27 +384,33 @@ sub build_module_declaration_plan ($self, $fsm_module) {
         }
 
         if ($is_intermediate) {
-            fsm_debug("HDL Signal Processing: SKIPPING intermediate signal '$sig_name' from interface", 3);
+            fsm_debug("HDL Signal Processing: SKIPPING intermediate signal '$sig_name' from interface", 3)
+                if $trace_signal_detail;
             next;
         }
 
-        fsm_debug("HDL Signal Processing: $sig_name", 3);
-        fsm_debug("  Signal object type: " . ref($signal), 3);
-        fsm_debug("  Signal dump: " . Dumper($signal), 3);
+        if ($trace_signal_detail) {
+            fsm_debug("HDL Signal Processing: $sig_name", 3);
+            fsm_debug("  Signal object type: " . ref($signal), 3);
+            fsm_debug("  Signal dump: " . Dumper($signal), 3);
+        }
 
         my $signal_width = 1;
         if ($signal->can('width')) {
             $signal_width = $signal->width;
             $signal_width = 1 unless ($signal_width && $signal_width > 0);
-            fsm_debug("  Signal width from ->width(): $signal_width", 3);
+            fsm_debug("  Signal width from ->width(): $signal_width", 3)
+                if $trace_signal_detail;
         } else {
-            fsm_debug("  Signal does not have width() method", 3);
+            fsm_debug("  Signal does not have width() method", 3)
+                if $trace_signal_detail;
         }
 
         my $is_output = 0;
         if ($driven_signals{$sig_name}) {
             $is_output = 1;
-            fsm_debug("  Signal '$sig_name' is DRIVEN by FSM -> OUTPUT", 3);
+            fsm_debug("  Signal '$sig_name' is DRIVEN by FSM -> OUTPUT", 3)
+                if $trace_signal_detail;
         } else {
             if ($signal->can('is_output')) {
                 $is_output = $signal->is_output;
@@ -412,7 +420,8 @@ sub build_module_declaration_plan ($self, $fsm_module) {
                 $is_output = 1;
             }
 
-            fsm_debug("  Signal '$sig_name' direction: " . ($is_output ? "OUTPUT" : "INPUT"), 3);
+            fsm_debug("  Signal '$sig_name' direction: " . ($is_output ? "OUTPUT" : "INPUT"), 3)
+                if $trace_signal_detail;
         }
 
         my $port_plan = {

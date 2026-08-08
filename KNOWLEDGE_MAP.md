@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1105** facts · **5699** unique questions · **5865** answer occurrences · **118** topic shards.
+> **1105** facts · **5700** unique questions · **5866** answer occurrences · **118** topic shards.
 
 Query first:
 
@@ -110,7 +110,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `nexsim-semantic` | 1 | 15 | [`nexsim-semantic.md`](knowledge-map/generated/nexsim-semantic.md) |
 | `normalized-semantic` | 26 | 109 | [`normalized-semantic.md`](knowledge-map/generated/normalized-semantic.md) |
 | `pdf-extraction` | 1 | 5 | [`pdf-extraction.md`](knowledge-map/generated/pdf-extraction.md) |
-| `ppif-check` | 1 | 4 | [`ppif-check.md`](knowledge-map/generated/ppif-check.md) |
+| `ppif-check` | 1 | 5 | [`ppif-check.md`](knowledge-map/generated/ppif-check.md) |
 | `project-data` | 1 | 6 | [`project-data.md`](knowledge-map/generated/project-data.md) |
 | `project-document` | 1 | 7 | [`project-document.md`](knowledge-map/generated/project-document.md) |
 | `protocol-composition` | 1 | 10 | [`protocol-composition.md`](knowledge-map/generated/protocol-composition.md) |

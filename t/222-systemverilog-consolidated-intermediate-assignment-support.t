@@ -12,6 +12,51 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::HDL::FlattenedDT;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateAssignmentSupport;
 use FSM::Pipeline::SourceFrontend;
+use FSM::Debug qw(
+    capture_fsm_debug_state
+    restore_fsm_debug_state
+    set_fsm_debug_level
+);
+
+my $saved_debug_state = capture_fsm_debug_state();
+END { restore_fsm_debug_state($saved_debug_state) if $saved_debug_state }
+
+{
+    package Local::CountedExpression;
+    use strict;
+    use warnings;
+    use overload '""' => sub {
+        my ($self) = @_;
+        $self->{stringify_count}++;
+        return $self->{text};
+    }, fallback => 1;
+
+    sub new {
+        my ($class, $text) = @_;
+        return bless { text => $text, stringify_count => 0 }, $class;
+    }
+
+    sub stringify_count {
+        return $_[0]->{stringify_count};
+    }
+}
+
+{
+    package Local::FakeRecoverySupport;
+    use v5.20;
+    use strict;
+    use warnings;
+    use feature qw(signatures);
+    no warnings 'experimental::signatures';
+
+    sub new ($class) {
+        return bless {}, $class;
+    }
+
+    sub render_intermediate_signal_expression ($self, $signal_name, $signal_info) {
+        return $signal_info->{rendered_expression};
+    }
+}
 
 subtest 'consolidated intermediate assignment support rebuilds prepared assign emission from a prepared backend context' => sub {
     my $fsm_module = parse_fsm_module(
@@ -71,6 +116,40 @@ FSM
         'assignment support leaves wire declarations to the narrowed emitter',
     );
 };
+
+subtest 'disabled assignment tracing does not duplicate rendered expression payloads' => sub {
+    set_fsm_debug_level(0);
+    my $expression = Local::CountedExpression->new('A & B');
+    my $support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateAssignmentSupport->new(
+        flattened_dt => {
+            backend_sv_intermediate_recovery_support => Local::FakeRecoverySupport->new(),
+        },
+    );
+
+    my $assignment_block = $support->render_consolidated_intermediate_assignments({
+        filtered_signals => {
+            counted_signal => {
+                rendered_expression => $expression,
+                source => 'ast_factorization',
+            },
+        },
+        sorted_signals => ['counted_signal'],
+    });
+
+    is(
+        $assignment_block,
+        "  assign counted_signal = A & B; // Source: ast_factorization\n",
+        'assignment emission still contains the required rendered expression',
+    );
+    is(
+        $expression->stringify_count,
+        2,
+        'disabled tracing performs only the renderability check and required HDL emission',
+    );
+};
+
+restore_fsm_debug_state($saved_debug_state);
+$saved_debug_state = undef;
 
 done_testing();
 

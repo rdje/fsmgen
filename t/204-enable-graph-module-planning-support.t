@@ -11,6 +11,14 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::HDL::FlattenedDT;
 use FSM::Pipeline::SourceFrontend;
+use FSM::Debug qw(
+    capture_fsm_debug_state
+    restore_fsm_debug_state
+    set_fsm_debug_level
+);
+
+my $saved_debug_state = capture_fsm_debug_state();
+END { restore_fsm_debug_state($saved_debug_state) if $saved_debug_state }
 
 subtest 'enable-graph module-planning support rebuilds module, declaration, and state plans from a prepared backend context' => sub {
     my $fsm_module = parse_fsm_module(
@@ -86,7 +94,26 @@ FSM
     is($decl_plan->{aux_signed}{OUT_q}, 1, 'module-planning support preserves signed semantic type intent on helper declarations');
     is($decl_plan->{aux_state_model}{OUT_q}, 'four_state', 'module-planning support preserves explicit four-state semantic type intent on helper declarations');
     is($decl_plan->{signal_decls}{FLAG}, 1, 'module-planning support keeps FLAG as an internal declared signal without explicit output exposure');
+
+    set_fsm_debug_level(0);
+    my $dump_count = 0;
+    {
+        no warnings 'redefine';
+        local *FSM::Synthesis::EnableGraph::ModulePlanningSupport::Dumper = sub {
+            $dump_count++;
+            return 'diagnostic signal dump';
+        };
+        $support->build_module_declaration_plan($fsm_module);
+    }
+    is(
+        $dump_count,
+        0,
+        'disabled module-planning tracing does not serialize semantic signal objects for diagnostics',
+    );
 };
+
+restore_fsm_debug_state($saved_debug_state);
+$saved_debug_state = undef;
 
 done_testing();
 

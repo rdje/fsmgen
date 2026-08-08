@@ -9,6 +9,14 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateClassificationSupport;
+use FSM::Debug qw(
+    capture_fsm_debug_state
+    restore_fsm_debug_state
+    set_fsm_debug_level
+);
+
+my $saved_debug_state = capture_fsm_debug_state();
+END { restore_fsm_debug_state($saved_debug_state) if $saved_debug_state }
 
 {
     package Local::FakeRecoverySupport;
@@ -41,6 +49,26 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateClass
 
     sub new ($class) {
         return bless {}, $class;
+    }
+}
+
+{
+    package Local::CountedExpression;
+    use strict;
+    use warnings;
+    use overload '""' => sub {
+        my ($self) = @_;
+        $self->{stringify_count}++;
+        return $self->{text};
+    }, fallback => 1;
+
+    sub new {
+        my ($class, $text) = @_;
+        return bless { text => $text, stringify_count => 0 }, $class;
+    }
+
+    sub stringify_count {
+        return $_[0]->{stringify_count};
     }
 }
 
@@ -128,5 +156,39 @@ subtest 'consolidated intermediate classification support owns the initial AST-f
         'classification support reports the initial filtered count',
     );
 };
+
+subtest 'disabled classification tracing does not duplicate rendered expression payloads' => sub {
+    set_fsm_debug_level(0);
+    my $expression = Local::CountedExpression->new('A & B');
+    my $fake_backend = {
+        backend_sv_intermediate_recovery_support => Local::FakeRecoverySupport->new(),
+        backend_sv_intermediate_filter_policy_support => Local::FakeFilterPolicySupport->new(),
+    };
+    my $support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateClassificationSupport->new(
+        flattened_dt => $fake_backend,
+    );
+
+    my $classification = $support->classify_consolidated_signals({
+        counted_signal => {
+            rendered_expression => $expression,
+            should_filter => 0,
+            source => 'ast_factorization',
+            runtime_ast => Local::FakeAST->new(),
+        },
+    });
+
+    ok(
+        exists $classification->{initially_kept_signals}{counted_signal},
+        'classification still keeps the selected AST-backed signal with tracing disabled',
+    );
+    is(
+        $expression->stringify_count,
+        1,
+        'disabled tracing performs only the required renderability check and constructs no expression diagnostics',
+    );
+};
+
+restore_fsm_debug_state($saved_debug_state);
+$saved_debug_state = undef;
 
 done_testing();

@@ -69,10 +69,21 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateNorma
     no warnings 'experimental::signatures';
 
     sub new ($class) {
-        return bless {}, $class;
+        return bless { prime_count => 0 }, $class;
+    }
+
+    sub prime_intermediate_signal_live_usage ($self, $signals) {
+        $self->{prime_count}++;
+        return {
+            signal_count => scalar(keys %{$signals || {}}),
+            referenced_in_substitutions => 1,
+            used_in_final_expressions => 1,
+        };
     }
 
     sub resolve_intermediate_signal_live_usage ($self, $signal_name, $signal_info) {
+        die 'normalization resolved live usage before bulk preparation'
+            unless $self->{prime_count};
         $signal_info->{referenced_in_substitutions} = $signal_info->{expected_referenced_in_substitutions} ? 1 : 0;
         $signal_info->{used_in_final_expressions} = $signal_info->{expected_used_in_final_expressions} ? 1 : 0;
         $signal_info->{live_usage_evidence_state} = $signal_info->{expected_live_usage_state};
@@ -151,6 +162,11 @@ subtest 'consolidated intermediate normalization support owns runtime metadata n
         $signals->{dep_term}{used_in_final_expressions},
         1,
         'normalization support preserves final-expression live-usage evidence for sibling signals',
+    );
+    is(
+        $fake_backend->{enable_graph_factorization_support}{prime_count},
+        1,
+        'normalization primes live-usage metadata once before per-signal consumers',
     );
 };
 

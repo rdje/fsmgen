@@ -64,8 +64,8 @@ both surfaces.
   Goal: `Bound t296's full runtime matrix below the repository descendant-RSS ceiling without dropping coverage.`
   Children: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.1, SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.2`
   Acceptance: `The four default/strict pipeline/CLI cohorts execute every selected entry in deterministic isolated batches, worker failures retain actionable TAP diagnostics, and the complete parent test passes under the unchanged 4096-MiB descendant cap.`
-  Verification: `A clean-host guarded post-oracle run started at 55.7% host occupancy, ran for eight minutes without assertion output, then the single t296 Perl process reached 5369.8 MiB and was terminated at the unchanged 4096-MiB descendant cutoff. The audit now uses one-entry pipeline and four-entry CLI self-workers with fail-closed surface/suffix and worker-bound validation plus failed-worker TAP replay. A guarded 32-entry conservative pipeline worker passed all 92 assertions before batch tightening; resumable guarded verification then passed every default-pipeline entry through index 113, which includes all 62 divergent PPIF contracts, plus strict AHB/APB/AXI/bundle representatives and default/strict CLI AHB aggregate checks. After the separately owned macOS host metric was corrected, the isolated zero-based pipeline entry 114 still reached 4222.3 MiB, proving a real per-worker backend cliff. Stage probes localize it to disabled signal-inventory tracing in consolidated-intermediate collection: lowering, parsing, semantic construction, flattening, prescan, and factorization remain bounded, while trace_fsm_signal_inventory eagerly Data::Dumper-serializes every driving AST before fsm_debug rejects the disabled messages. Manually bypassing only that trace holds the same 1,158-helper case near 124 MiB. No cutoff was raised or bypassed.`
-  Commit: `worker implementation in bfeb6d3ff; memory repair closes in this commit under .1.2.1; bounded CPU/full-matrix closeout continues under .1.2.2`
+  Verification: `A clean-host guarded post-oracle run started at 55.7% host occupancy, ran for eight minutes without assertion output, then the single t296 Perl process reached 5369.8 MiB and was terminated at the unchanged 4096-MiB descendant cutoff. The audit now uses one-entry pipeline and four-entry CLI self-workers with fail-closed surface/suffix and worker-bound validation plus failed-worker TAP replay. A guarded 32-entry conservative pipeline worker passed all 92 assertions before batch tightening; resumable guarded verification then passed every default-pipeline entry through index 113, which includes all 62 divergent PPIF contracts, plus strict AHB/APB/AXI/bundle representatives and default/strict CLI AHB aggregate checks. Entry 114's disabled inventory trace was repaired under .1.2.1. Entry 116 then exposed independent live-usage, classification, and module-inventory scaling defects; the exact uninstrumented worker now passes all three assertions in 668 seconds under the unchanged guard after .1.2.2's behavior-preserving repairs. The complete parent matrix remains the sole pending acceptance step. No cutoff was raised or bypassed.`
+  Commit: `worker implementation in bfeb6d3ff; disabled inventory repair in 33f926614; index-116 implementation in this commit under .1.2.2; complete-parent verification remains pending`
 
 - ID: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.1`
   Status: `done`
@@ -78,8 +78,8 @@ both surfaces.
   Status: `active`
   Goal: `Bound the multi-static AXI capacity/status direct-backend CPU path and complete the guarded t296 matrix.`
   Acceptance: `Exact pipeline index 116 completes within a declared guarded runtime bound without changing its generated HDL contract, and the complete t296 parent passes every default/strict pipeline/CLI cohort under the unchanged host and 4096-MiB descendant limits.`
-  Verification: `Initial isolation identifies intent.ppif_axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static at zero-based pipeline index 116. PPIF lowering takes 7.754 s and emits the exact active 2,013,530-byte axi0_capacity_status.fsm artifact with SHA-256 29a6d16044b67381c110b4d56e245712272f78ca70c74d5f1df374b25b63b0c5. On that artifact, source parsing takes 14.2 s, semantic construction 2.1 s, IntentHIR 0.05 s, and module-info construction 0.03 s; the hour-scale CPU cost begins inside direct SystemVerilog backend emission while RSS remains near 425 MiB.`
-  Commit: `pending`
+  Verification: `Initial isolation identifies intent.ppif_axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static at zero-based pipeline index 116. PPIF lowering takes 7.754 s and emits the exact active 2,013,530-byte axi0_capacity_status.fsm artifact with SHA-256 29a6d16044b67381c110b4d56e245712272f78ca70c74d5f1df374b25b63b0c5; direct generation owns 18,429 consolidated intermediates. The original full-parent worker eventually reached 9464.2 MiB after roughly 65 minutes, correcting the interim near-425-MiB observation. Stage isolation found four compounding backend defects: scalar live-usage fallback rescanned every final/substitution AST for each intermediate; classification and assignment built full-expression diagnostics while level-3 tracing was disabled; classification recursively re-proved factorization eligibility for 48 enormous low-use logical ASTs even though usage below two makes filtering unconditional; and operand inventory called Data::Dumper on each connected semantic signal object while tracing was disabled. One bulk AST traversal now primes exact live-usage metadata, low-use logical classification short-circuits after the existing live-use keeps, and all expensive diagnostic payloads are gated before construction. Focused counted-payload tests prove disabled paths perform no redundant renders or serialization. A post-repair inventory probe completes in 0.041 s with 19,251 declared and 19,203 assigned internal signals instead of crossing the cap. The exact uninstrumented index-116 worker passes all three assertions in 668 seconds under the unchanged 4096-MiB guard, with a live late snapshot near 401 MiB RSS. The complete guarded parent matrix is the remaining acceptance step.`
+  Commit: `implementation in this commit (SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.2: bound index-116 backend work); complete-parent verification remains pending`
 
 ## Decisions
 
@@ -127,6 +127,13 @@ both surfaces.
   gate on `.1.2`, and give the separately reproduced index-116 direct-backend
   CPU scaling defect explicit nested ownership under `.1.2.2`; do not weaken
   corpus coverage or raise either resource cutoff.
+- `2026-08-08`: Preserve output semantics while making resource work
+  proportional to owned data: prime live-usage evidence in one shared AST
+  traversal, trust factorizer usage metadata where it makes a filter outcome
+  unconditional, and guard expensive debug payload construction at the call
+  site. The mdBook and `DEVELOPMENT_NOTES.md` do not change because public
+  syntax, generated HDL policy, and user-visible behavior are unchanged; this
+  task and its Knowledge Map card own the backend diagnostic constraint.
 
 ## Open Questions
 
@@ -136,10 +143,9 @@ both surfaces.
 
 ## Blockers
 
-- The complete guarded t296 parent is temporarily blocked by the index-116
-  direct-SystemVerilog backend CPU hotspot owned by active leaf `.1.2.2`.
-  Index 114's disabled-trace memory cliff and the prior macOS host-metric defect
-  are resolved; neither guard threshold will be raised or bypassed.
+- No known implementation blocker remains. The complete guarded t296 parent
+  is the pending confirmation gate for active leaf `.1.2.2`; index 114 and
+  index 116 both pass their exact isolated workers below the unchanged cap.
 
 ## Acceptance Checklist (enforced for implementation changes)
 
@@ -188,3 +194,32 @@ both surfaces.
   `All tests successful` and `Files=1, Tests=6`; both changed Perl files report
   `syntax OK`. The full-parent run's independent index-116 CPU outlier is
   explicitly owned by `.1.2.2` rather than hidden or misclassified.
+
+## Acceptance Checklist (.1.2.2 index-116 backend containment; enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Dumper($signal)' --
+  perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm
+  perl/FSM/Synthesis/EnableGraph.pm` identifies commits `262e750be` and
+  `0660e5e6f` for the eager module-planning diagnostic, while
+  `git log -S'resolve_intermediate_signal_live_usage' --
+  perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm` identifies
+  `d32182686` for the scalar live-usage owner. Exact guarded probes then show
+  the original worker at 9464.2 MiB, classification at 423-435 seconds, and
+  operand inventory crossing 4.3-4.9 GiB before return; the branch census
+  isolates 48 parser-created usage-one logical roots whose recursive policy
+  result cannot affect filtering.
+- [x] **ADDRESSED (verified)** — live usage is primed for all 18,429
+  intermediates in one shared traversal; disabled classification, assignment,
+  factorization-policy, and module-planning traces construct no expression or
+  `Data::Dumper` payload; usage-one logical roots filter before recursive
+  factorization discovery. Counted-payload focused tests pass, the repaired
+  inventory returns in 0.041 seconds, and the exact uninstrumented zero-based
+  pipeline index 116 completes all three assertions in 668 seconds under the
+  unchanged 4096-MiB descendant cap.
+- [x] **NO REGRESSION** — the exact guarded t296 worker reports `All tests
+  successful` and `Files=1, Tests=3`; focused t204/t210/t216/t222/t226 reports
+  `All tests successful` and `Files=5, Tests=9`. The guarded adjacent backend,
+  planning, validation, and trace gate reports `All tests successful` and
+  `Files=15, Tests=533`; the doctrine driver is run again from the staged
+  implementation before commit. The complete guarded t296 parent remains the
+  explicit next action, not a weakened or implied pass.

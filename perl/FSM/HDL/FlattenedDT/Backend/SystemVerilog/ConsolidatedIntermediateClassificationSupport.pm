@@ -72,6 +72,7 @@ sub classify_consolidated_signals ($self, $all_intermediate_signals) {
     my $ctx = $self->{flattened_dt};
     my $recovery_support = $ctx->{backend_sv_intermediate_recovery_support};
     my $filter_policy_support = $ctx->{backend_sv_intermediate_filter_policy_support};
+    my $trace_signal_detail = debug_enabled() && debug_level() >= 3;
     my %initially_filtered_signals;
     my %initially_kept_signals;
 
@@ -80,19 +81,23 @@ sub classify_consolidated_signals ($self, $all_intermediate_signals) {
         my $expression = $recovery_support->render_intermediate_signal_expression($signal_name, $signal_info);
         next unless defined($expression) && $expression ne '';
 
-        fsm_debug("\n*** AST_FILTER_CHECK: Analyzing signal '$signal_name' ***", 3);
-        fsm_debug("  Expression: '$expression'", 3);
-        fsm_debug("  Source: $signal_info->{source}", 3);
-        fsm_debug("  Usage count: " . ($signal_info->{usage_count} || 'unknown'));
+        if ($trace_signal_detail) {
+            fsm_debug("\n*** AST_FILTER_CHECK: Analyzing signal '$signal_name' ***", 3);
+            fsm_debug("  Expression: '$expression'", 3);
+            fsm_debug("  Source: $signal_info->{source}", 3);
+            fsm_debug("  Usage count: " . ($signal_info->{usage_count} || 'unknown'));
+        }
 
         my $ast = $recovery_support->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
         if ($ast && blessed($ast)) {
-            fsm_debug("  Using runtime AST for filtering: " . ref($ast), 3);
+            fsm_debug("  Using runtime AST for filtering: " . ref($ast), 3)
+                if $trace_signal_detail;
         } else {
             my $miss_reason = ($signal_info && ref($signal_info) eq 'HASH')
                 ? ($signal_info->{runtime_ast_miss_reason} || 'unknown_runtime_ast_miss')
                 : 'unknown_runtime_ast_miss';
-            fsm_debug("  No runtime AST available - falling back to explicit runtime-AST-miss filtering ($miss_reason)", 3);
+            fsm_debug("  No runtime AST available - falling back to explicit runtime-AST-miss filtering ($miss_reason)", 3)
+                if $trace_signal_detail;
         }
 
         my $should_filter = ($ast && blessed($ast))
@@ -100,10 +105,12 @@ sub classify_consolidated_signals ($self, $all_intermediate_signals) {
             : $filter_policy_support->should_filter_runtime_ast_miss($signal_name, $signal_info);
         if ($should_filter) {
             $initially_filtered_signals{$signal_name} = $signal_info;
-            fsm_debug("[ConsolidatedIntermediateClassificationSupport.pm][classify_consolidated_signals()] INITIAL FILTER: '$signal_name' = $expression", 3);
+            fsm_debug("[ConsolidatedIntermediateClassificationSupport.pm][classify_consolidated_signals()] INITIAL FILTER: '$signal_name' = $expression", 3)
+                if $trace_signal_detail;
         } else {
             $initially_kept_signals{$signal_name} = $signal_info;
-            fsm_debug("[ConsolidatedIntermediateClassificationSupport.pm][classify_consolidated_signals()] INITIAL KEEP: '$signal_name' = $expression", 3);
+            fsm_debug("[ConsolidatedIntermediateClassificationSupport.pm][classify_consolidated_signals()] INITIAL KEEP: '$signal_name' = $expression", 3)
+                if $trace_signal_detail;
         }
     }
 

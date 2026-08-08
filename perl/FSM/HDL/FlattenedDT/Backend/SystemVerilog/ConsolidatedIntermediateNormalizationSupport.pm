@@ -114,6 +114,9 @@ sub normalize_consolidated_intermediate_metadata ($self, $all_intermediate_signa
         }
     }
 
+    $ctx->{enable_graph_factorization_support}
+        ->prime_intermediate_signal_live_usage($all_intermediate_signals);
+
     for my $signal_name (keys %{$all_intermediate_signals || {}}) {
         my $signal_info = $all_intermediate_signals->{$signal_name};
         my $live_usage = $ctx->{enable_graph_factorization_support}->resolve_intermediate_signal_live_usage($signal_name, $signal_info);

@@ -131,13 +131,23 @@ sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
         }
 
         if ($ctx->{enable_graph_ast_support}->is_logical_operation($ast)) {
+            if ($usage_count < 2) {
+                fsm_debug("  AST_FILTER: Low-use logical operation - FILTERING", 3);
+                return 1;
+            }
+
+            if ($source eq 'ast_factorization' && $usage_count >= 2) {
+                fsm_debug("  AST_FILTER: Factorizer-owned logical operation used $usage_count times - KEEPING", 3);
+                return 0;
+            }
+
             my $should_factor = $ctx->{enable_graph_ast_support}->should_factor_logical_operation($ast);
-            if ($should_factor && $usage_count >= 2) {
+            if ($should_factor) {
                 fsm_debug("  AST_FILTER: Multi-use logical operation - KEEPING", 3);
                 return 0;
             }
 
-            fsm_debug("  AST_FILTER: Low-use logical operation - FILTERING", 3);
+            fsm_debug("  AST_FILTER: Multi-use logical operation does not qualify for factoring - FILTERING", 3);
             return 1;
         }
 

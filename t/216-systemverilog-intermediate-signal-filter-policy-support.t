@@ -22,7 +22,7 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalSupport;
     no warnings 'experimental::signatures';
 
     sub new ($class) {
-        return bless {}, $class;
+        return bless { should_factor_call_count => 0 }, $class;
     }
 
     sub resolve_intermediate_signal_live_usage ($self, $signal_name, $signal_info) {
@@ -60,8 +60,13 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalSupport;
     }
 
     sub should_factor_logical_operation ($self, $ast) {
+        $self->{should_factor_call_count}++;
         return 0 unless $self->is_logical_operation($ast);
         return ($ast->operator || '') =~ /^(?:&|\|)$/ ? 1 : 0;
+    }
+
+    sub should_factor_call_count ($self) {
+        return $_[0]->{should_factor_call_count};
     }
 }
 
@@ -199,6 +204,7 @@ subtest 'intermediate filter-policy support owns AST-aware and runtime-AST-miss 
         0,
         'filter-policy support keeps arithmetic operations',
     );
+    my $policy_call_count_before_low_use = $fake_backend->{enable_graph_ast_support}->should_factor_call_count;
     is(
         $policy_support->should_filter_ast_based(
             $logical_or,
@@ -216,6 +222,11 @@ subtest 'intermediate filter-policy support owns AST-aware and runtime-AST-miss 
         'filter-policy support filters low-use logical operations',
     );
     is(
+        $fake_backend->{enable_graph_ast_support}->should_factor_call_count,
+        $policy_call_count_before_low_use,
+        'low-use logical operations do not run recursive factorization eligibility that cannot change the filter result',
+    );
+    is(
         $policy_support->should_filter_ast_based(
             $logical_or,
             'logical_twice',
@@ -230,6 +241,29 @@ subtest 'intermediate filter-policy support owns AST-aware and runtime-AST-miss 
         ),
         0,
         'filter-policy support keeps logical operations that qualify for factoring and are reused',
+    );
+    my $policy_call_count = $fake_backend->{enable_graph_ast_support}->should_factor_call_count;
+    is(
+        $policy_support->should_filter_ast_based(
+            $logical_or,
+            'factorizer_owned_logical',
+            {
+                usage_count => 2,
+                source => 'ast_factorization',
+                live_usage => {
+                    used_in_final_expressions => 1,
+                    referenced_in_substitutions => 0,
+                    evidence_state => 'final_expression',
+                },
+            },
+        ),
+        0,
+        'filter-policy support keeps a factorizer-owned multi-use logical operation from authoritative factorizer metadata',
+    );
+    is(
+        $fake_backend->{enable_graph_ast_support}->should_factor_call_count,
+        $policy_call_count,
+        'factorizer-owned multi-use metadata avoids recursively re-proving logical factorization eligibility',
     );
     is(
         $policy_support->should_filter_ast_based(

@@ -13,6 +13,60 @@ use FSM::AST::Node;
 use FSM::HDL::ASTFactorization;
 use FSM::HDL::FlattenedDT;
 use FSM::Pipeline::SourceFrontend;
+use FSM::Debug qw(
+    capture_fsm_debug_state
+    restore_fsm_debug_state
+    set_fsm_debug_level
+);
+
+my $saved_debug_state = capture_fsm_debug_state();
+END { restore_fsm_debug_state($saved_debug_state) if $saved_debug_state }
+
+{
+    package Local::CountedLogicalAST;
+    use strict;
+    use warnings;
+
+    sub new {
+        my ($class) = @_;
+        return bless { signature_count => 0 }, $class;
+    }
+
+    sub to_systemverilog {
+        my ($self) = @_;
+        $self->{signature_count}++;
+        return 'A | B';
+    }
+
+    sub signature_count {
+        return $_[0]->{signature_count};
+    }
+}
+
+{
+    package Local::CountedASTSupport;
+    use strict;
+    use warnings;
+
+    sub new {
+        my ($class) = @_;
+        return bless { render_count => 0 }, $class;
+    }
+
+    sub is_logical_operation {
+        return 1;
+    }
+
+    sub ast_to_systemverilog {
+        my ($self) = @_;
+        $self->{render_count}++;
+        return 'A | B';
+    }
+
+    sub render_count {
+        return $_[0]->{render_count};
+    }
+}
 
 subtest 'enable-graph factorization policy support rebuilds the factorization-policy and AST-feed contract from a prepared backend context' => sub {
     my $fsm_module = parse_fsm_module(
@@ -103,6 +157,38 @@ FSM
         'factorization policy support skips second-pass factoring for bare selector intermediates because DTE gating is emitted at the DT boundary',
     );
 };
+
+subtest 'disabled factorization-policy tracing does not render full AST diagnostics' => sub {
+    set_fsm_debug_level(0);
+    my $ast = Local::CountedLogicalAST->new();
+    my $ast_support = Local::CountedASTSupport->new();
+    my $support = FSM::Synthesis::EnableGraph::FactorizationPolicySupport->new(
+        flattened_dt => {
+            binary_logical_op_counts => {
+                'A | B' => 2,
+            },
+            enable_graph_ast_support => $ast_support,
+        },
+    );
+
+    ok(
+        $support->contains_frequently_used_operations($ast),
+        'factorization policy still recognizes the seeded high-count logical operation',
+    );
+    is(
+        $ast->signature_count,
+        1,
+        'factorization policy renders only the signature required for the decision',
+    );
+    is(
+        $ast_support->render_count,
+        0,
+        'disabled tracing performs no additional full-AST diagnostic render',
+    );
+};
+
+restore_fsm_debug_state($saved_debug_state);
+$saved_debug_state = undef;
 
 done_testing();
 
