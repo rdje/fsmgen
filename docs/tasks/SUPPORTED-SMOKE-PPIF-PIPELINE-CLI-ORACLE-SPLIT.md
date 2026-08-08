@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `test integrity / IAL2 PPIF support accounting`
 - Created: `2026-07-31`
-- Last updated: `2026-08-07`
+- Last updated: `2026-08-08`
 - Owner: repo-local workflow
 
 ## Goal
@@ -95,6 +95,13 @@ both surfaces.
   audit. Generated HDL, semantic reports, CLI behavior, and user-facing syntax
   are unchanged, so no mdBook or `DEVELOPMENT_NOTES.md` change is warranted;
   the task and Knowledge Map card own the test-contract rationale.
+- `2026-08-08`: Startup re-verification recomputed the transitive
+  `bin/fsmgen` import closure as 254 files / 253 Perl modules and found the
+  architecture map's selected `FSM::Support::RegressionCorpus` measurement
+  stale at 6,820 lines versus the current 6,884. Preserve that finding here
+  while `.1.2` remains active; synchronize the measured documentation under an
+  explicit owning leaf only after the director resolves this slice's RAM-guard
+  closeout decision.
 
 ## Open Questions
 

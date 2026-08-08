@@ -5,15 +5,15 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1: separate runtime module oracles`).
+- latest_commit: this commit (`SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2: record startup continuity`).
 - active_work_unit: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2` is active; the oracle and profile-alias repairs are implemented and verified.
 - current_state: fresh t296 reproduction confirms its shared PPIF module oracle
   expects public aggregate `ahb_tb` in in-memory entry HDL that correctly emits
   the selected generated child module; an exhaustive census identifies 62 of
   240 strict PPIF smoke entries with distinct pipeline/CLI module contracts;
   the repaired full matrix now uses one-entry pipeline and four-entry CLI
-  workers to release same-process Perl allocator/cache growth below the
-  unchanged descendant-RSS ceiling.
+  workers below the unchanged descendant-RSS ceiling. Startup also reconfirms
+  the 254-file / 253-module import closure and records the stale 6,820-versus-6,884-line RegressionCorpus map measurement for an owner after `.1.2`.
 - next_action: obtain director direction on the existing proposed macOS
   RAM-guard metric blocker; either authorize that safety-metric correction and
   rerun the complete t296 parent, or accept the exact focused evidence and
