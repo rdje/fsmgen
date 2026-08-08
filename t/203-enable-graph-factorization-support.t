@@ -13,6 +13,25 @@ use FSM::HDL::ASTFactorization;
 use FSM::HDL::FlattenedDT;
 use FSM::Pipeline::SourceFrontend;
 
+{
+    package Local::ReusedRHSParser;
+    use strict;
+    use warnings;
+
+    sub new {
+        my ($class) = @_;
+        return bless {
+            ast => FSM::HDL::IntermediateSignalRef->new(signal_name => 'PARSED_FINAL_A'),
+        }, $class;
+    }
+
+    sub parse_expression {
+        my ($self, $expression) = @_;
+        $self->{ast}{signal_name} = $expression;
+        return $self->{ast};
+    }
+}
+
 subtest 'enable-graph factorization support rebuilds the substitution and live-usage contract from a prepared backend context' => sub {
     my $fsm_module = parse_fsm_module(
         'enable_graph_factorization_contract',
@@ -118,6 +137,28 @@ FSM
             "bulk live-usage metadata matches the scalar fallback for $signal_name",
         );
     }
+
+    my $prior_intermediate_signals = $prepared_backend->{intermediate_signals};
+    my $prior_expr_namer = $prepared_backend->{expr_namer};
+    my $prior_lhs_assignments = $prepared_backend->{lhs_assignments};
+    my %reused_rhs_signal_info = map { $_ => {} } qw(PARSED_FINAL_A PARSED_FINAL_B);
+    $prepared_backend->{intermediate_signals} = \%reused_rhs_signal_info;
+    $prepared_backend->{expr_namer} = Local::ReusedRHSParser->new();
+    $prepared_backend->{lhs_assignments} = {
+        parsed_final_a => [{ rhs => 'PARSED_FINAL_A' }],
+        parsed_final_b => [{ rhs => 'PARSED_FINAL_B' }],
+    };
+
+    $support->prime_intermediate_signal_live_usage(\%reused_rhs_signal_info);
+    for my $signal_name (sort keys %reused_rhs_signal_info) {
+        ok(
+            $reused_rhs_signal_info{$signal_name}{used_in_final_expressions},
+            "bulk live-usage preparation scans reused parsed RHS roots for $signal_name",
+        );
+    }
+    $prepared_backend->{intermediate_signals} = $prior_intermediate_signals;
+    $prepared_backend->{expr_namer} = $prior_expr_namer;
+    $prepared_backend->{lhs_assignments} = $prior_lhs_assignments;
 
     my $second_pass_factorizer = FSM::HDL::ASTFactorization->new(
         min_usage_count => 2,

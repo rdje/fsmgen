@@ -11,19 +11,17 @@ date: 2026-06-26
 status: current
 tags: [check-json, ppif, ial2, resource-boundary, backend-portability, systemverilog]
 evidence: bin/fsmgen; t/1466-ppif-check-json-oversized-summary.t; docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md; docs/tasks/SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.md; docs/TASK_TREE.md
-reverify: prove -Iperl t/1466-ppif-check-json-oversized-summary.t
+reverify: prove -Iperl t/203-enable-graph-factorization-support.t t/1466-ppif-check-json-oversized-summary.t
 ---
 
-Oversized PPIF manager-capacity sources whose generated IAL0 `.fsm` entry is
-larger than the bounded check-summary threshold return successful check JSON
-directly from the already-lowered PPIF result. The replacement path preserves
-the public `.ppif` source identity, support-accounting match, module name,
-state/signal/count result keys, and `generated_output.emitted == false` without
-entering the HDL backend that caused the `t/301` resource blocker.
+Oversized PPIF manager-capacity check JSON returns from lowered PPIF when its
+IAL0 entry exceeds the summary threshold. It preserves source identity,
+support match, module/count fields, and `emitted == false` without the HDL
+backend; `t/1466-ppif-check-json-oversized-summary.t` proves this while normal
+generation and smaller check-json sources retain their existing paths.
 
-Normal HDL generation, semantic JSON, schedule JSON, generated review
-artifacts, and smaller manager-capacity PPIF check-json sources still use their
-existing paths. The focused regression is
-`t/1466-ppif-check-json-oversized-summary.t`; it asserts the depth-3 dynamic
-write same-ID issue-order queue fixture returns source-level summary counts
-instead of backend-expanded counts.
+For full generation, t296 index 116 bulk-collects intermediate live use and
+gates disabled diagnostics. Retained AST roots deduplicate by identity;
+temporary parsed assignment RHS roots do not, because Perl may reuse a
+reclaimed `refaddr`. `t/203` plus guarded t296 indices 10-13/116 prove
+referenced signals stay assigned while the resource repair remains bounded.

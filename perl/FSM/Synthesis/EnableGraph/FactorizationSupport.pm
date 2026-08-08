@@ -789,6 +789,7 @@ sub prime_intermediate_signal_live_usage ($self, $all_intermediate_signals) {
             }
 
             my $rhs_ast;
+            my $parsed_rhs_ast = 0;
             if ($assignment->{rhs} && blessed($assignment->{rhs})) {
                 $rhs_ast = $assignment->{rhs};
             } elsif (defined($assignment->{rhs})
@@ -798,13 +799,22 @@ sub prime_intermediate_signal_live_usage ($self, $all_intermediate_signals) {
                 && $ctx->{expr_namer}->can('parse_expression'))
             {
                 $rhs_ast = eval { $ctx->{expr_namer}->parse_expression($assignment->{rhs}) };
+                $parsed_rhs_ast = 1 if $rhs_ast;
             }
 
-            $self->_record_intermediate_signal_names_from_ast(
-                $rhs_ast,
-                \%used_in_final_expressions,
-                \%seen_final_roots,
-            ) if $rhs_ast && (blessed($rhs_ast) || ref($rhs_ast) eq 'HASH');
+            if ($rhs_ast && (blessed($rhs_ast) || ref($rhs_ast) eq 'HASH')) {
+                # Parsed RHS roots are temporary and may be destroyed between
+                # iterations.  Perl can then reuse their refaddr for a distinct
+                # later root, so cross-assignment root deduplication would drop
+                # real live-usage evidence.  Owner-retained ASTs remain safe to
+                # deduplicate globally.
+                my %seen_parsed_rhs_root;
+                $self->_record_intermediate_signal_names_from_ast(
+                    $rhs_ast,
+                    \%used_in_final_expressions,
+                    $parsed_rhs_ast ? \%seen_parsed_rhs_root : \%seen_final_roots,
+                );
+            }
         }
     }
 

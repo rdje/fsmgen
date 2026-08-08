@@ -64,8 +64,8 @@ both surfaces.
   Goal: `Bound t296's full runtime matrix below the repository descendant-RSS ceiling without dropping coverage.`
   Children: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.1, SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.2`
   Acceptance: `The four default/strict pipeline/CLI cohorts execute every selected entry in deterministic isolated batches, worker failures retain actionable TAP diagnostics, and the complete parent test passes under the unchanged 4096-MiB descendant cap.`
-  Verification: `A clean-host guarded post-oracle run started at 55.7% host occupancy, ran for eight minutes without assertion output, then the single t296 Perl process reached 5369.8 MiB and was terminated at the unchanged 4096-MiB descendant cutoff. The audit now uses one-entry pipeline and four-entry CLI self-workers with fail-closed surface/suffix and worker-bound validation plus failed-worker TAP replay. A guarded 32-entry conservative pipeline worker passed all 92 assertions before batch tightening; resumable guarded verification then passed every default-pipeline entry through index 113, which includes all 62 divergent PPIF contracts, plus strict AHB/APB/AXI/bundle representatives and default/strict CLI AHB aggregate checks. Entry 114's disabled inventory trace was repaired under .1.2.1. Entry 116 then exposed independent live-usage, classification, and module-inventory scaling defects; the exact uninstrumented worker now passes all three assertions in 668 seconds under the unchanged guard after .1.2.2's behavior-preserving repairs. The complete parent matrix remains the sole pending acceptance step. No cutoff was raised or bypassed.`
-  Commit: `worker implementation in bfeb6d3ff; disabled inventory repair in 33f926614; index-116 implementation in this commit under .1.2.2; complete-parent verification remains pending`
+  Verification: `A clean-host guarded post-oracle run started at 55.7% host occupancy, ran for eight minutes without assertion output, then the single t296 Perl process reached 5369.8 MiB and was terminated at the unchanged 4096-MiB descendant cutoff. The audit now uses one-entry pipeline and four-entry CLI self-workers with fail-closed surface/suffix and worker-bound validation plus failed-worker TAP replay. A guarded 32-entry conservative pipeline worker passed all 92 assertions before batch tightening; resumable guarded verification then passed every default-pipeline entry through index 113, which includes all 62 divergent PPIF contracts, plus strict AHB/APB/AXI/bundle representatives and default/strict CLI AHB aggregate checks. Entry 114's disabled inventory trace was repaired under .1.2.1. Entry 116 then exposed independent live-usage, classification, and module-inventory scaling defects. Its first bulk-cache repair passed index 116 but the restarted parent exposed false dead-signal classifications at entries 11-14 because temporary parsed RHS AST addresses were deduplicated across assignments. Parsed roots now scan independently; those four workers pass, and index 116 still passes in 660 seconds under the unchanged guard. The complete parent matrix remains the sole pending acceptance step. No cutoff was raised or bypassed.`
+  Commit: `worker implementation in bfeb6d3ff; disabled inventory repair in 33f926614; index-116 implementation in 10badb9b4; parsed-RHS correction in this commit under .1.2.2; complete-parent verification remains pending`
 
 - ID: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.1`
   Status: `done`
@@ -78,8 +78,8 @@ both surfaces.
   Status: `active`
   Goal: `Bound the multi-static AXI capacity/status direct-backend CPU path and complete the guarded t296 matrix.`
   Acceptance: `Exact pipeline index 116 completes within a declared guarded runtime bound without changing its generated HDL contract, and the complete t296 parent passes every default/strict pipeline/CLI cohort under the unchanged host and 4096-MiB descendant limits.`
-  Verification: `Initial isolation identifies intent.ppif_axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static at zero-based pipeline index 116. PPIF lowering takes 7.754 s and emits the exact active 2,013,530-byte axi0_capacity_status.fsm artifact with SHA-256 29a6d16044b67381c110b4d56e245712272f78ca70c74d5f1df374b25b63b0c5; direct generation owns 18,429 consolidated intermediates. The original full-parent worker eventually reached 9464.2 MiB after roughly 65 minutes, correcting the interim near-425-MiB observation. Stage isolation found four compounding backend defects: scalar live-usage fallback rescanned every final/substitution AST for each intermediate; classification and assignment built full-expression diagnostics while level-3 tracing was disabled; classification recursively re-proved factorization eligibility for 48 enormous low-use logical ASTs even though usage below two makes filtering unconditional; and operand inventory called Data::Dumper on each connected semantic signal object while tracing was disabled. One bulk AST traversal now primes exact live-usage metadata, low-use logical classification short-circuits after the existing live-use keeps, and all expensive diagnostic payloads are gated before construction. Focused counted-payload tests prove disabled paths perform no redundant renders or serialization. A post-repair inventory probe completes in 0.041 s with 19,251 declared and 19,203 assigned internal signals instead of crossing the cap. The exact uninstrumented index-116 worker passes all three assertions in 668 seconds under the unchanged 4096-MiB guard, with a live late snapshot near 401 MiB RSS. The complete guarded parent matrix is the remaining acceptance step.`
-  Commit: `implementation in this commit (SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.2: bound index-116 backend work); complete-parent verification remains pending`
+  Verification: `Initial isolation identifies intent.ppif_axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static at zero-based pipeline index 116. PPIF lowering takes 7.754 s and emits the exact active 2,013,530-byte axi0_capacity_status.fsm artifact with SHA-256 29a6d16044b67381c110b4d56e245712272f78ca70c74d5f1df374b25b63b0c5; direct generation owns 18,429 consolidated intermediates. The original full-parent worker eventually reached 9464.2 MiB after roughly 65 minutes, correcting the interim near-425-MiB observation. Stage isolation found four compounding backend defects: scalar live-usage fallback rescanned every final/substitution AST for each intermediate; classification and assignment built full-expression diagnostics while level-3 tracing was disabled; classification recursively re-proved factorization eligibility for 48 enormous low-use logical ASTs even though usage below two makes filtering unconditional; and operand inventory called Data::Dumper on each connected semantic signal object while tracing was disabled. One bulk AST traversal now primes live-usage metadata, low-use logical classification short-circuits after existing live-use keeps, and expensive diagnostic payloads are gated before construction. The first complete-parent restart exposed a correctness flaw in that bulk traversal: string RHS parsing creates temporary AST roots, so retaining only their numeric refaddr in a global seen set allowed a reclaimed address to suppress a distinct later assignment. Parsed RHS roots now use per-root seen sets while owner-retained ASTs keep global deduplication. Deterministic t203 reuse coverage passes; guarded pipeline entries 11-14 pass in 3 and 28 seconds; and exact index 116 passes again in 660 seconds under the unchanged cap. The complete guarded parent matrix is the remaining acceptance step.`
+  Commit: `resource implementation in 10badb9b4; parsed-RHS correctness correction in this commit; complete-parent verification remains pending`
 
 ## Decisions
 
@@ -134,6 +134,10 @@ both surfaces.
   site. The mdBook and `DEVELOPMENT_NOTES.md` do not change because public
   syntax, generated HDL policy, and user-visible behavior are unchanged; this
   task and its Knowledge Map card own the backend diagnostic constraint.
+- `2026-08-08`: Deduplicate only owner-retained AST roots across the bulk
+  live-usage traversal. Parsed string RHS roots are temporary, and a numeric
+  `refaddr` does not remain a unique identity after reclamation; scan each such
+  root independently so a later assignment can never lose liveness evidence.
 
 ## Open Questions
 
@@ -144,8 +148,8 @@ both surfaces.
 ## Blockers
 
 - No known implementation blocker remains. The complete guarded t296 parent
-  is the pending confirmation gate for active leaf `.1.2.2`; index 114 and
-  index 116 both pass their exact isolated workers below the unchanged cap.
+  is the pending confirmation gate for active leaf `.1.2.2`; indices 11-14,
+  114, and 116 pass their exact isolated workers below the unchanged cap.
 
 ## Acceptance Checklist (enforced for implementation changes)
 
@@ -223,3 +227,28 @@ both surfaces.
   `Files=15, Tests=533`; the doctrine driver is run again from the staged
   implementation before commit. The complete guarded t296 parent remains the
   explicit next action, not a weakened or implied pass.
+
+## Acceptance Checklist (.1.2.2 temporary parsed-RHS identity correction; enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'prime_intermediate_signal_live_usage' --
+  perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm` identifies
+  `10badb9b4` as the bulk-cache introduction. The first complete-parent restart
+  then failed consecutive pipeline entries 11-14 because assignment RHS
+  references were declared but unassigned. Inspection locates the false
+  negative in cross-assignment `refaddr` deduplication of temporary parsed RHS
+  roots: Perl may reclaim one root and reuse its numeric address for a distinct
+  later parse.
+- [x] **ADDRESSED (verified)** — parsed string RHS roots now receive a local
+  seen set for their own traversal, while context-owned AST roots retain global
+  identity deduplication. A deterministic parser double returns one mutable AST
+  object for two different RHS strings; t203 proves both referenced
+  intermediates receive final-expression liveness.
+- [x] **NO REGRESSION** — guarded t296 zero-based pipeline index 10 reports
+  `All tests successful` (`Files=1, Tests=3`) in 3 seconds; indices 11-13 report
+  `All tests successful` (`Files=1, Tests=9`) in 28 seconds; exact index 116
+  reports `All tests successful` (`Files=1, Tests=3`) in 660 seconds under the
+  unchanged cap. Focused t203/t204/t210/t216/t222/t225/t226 reports
+  `All tests successful` (`Files=7, Tests=11`); the adjacent backend/planning/
+  validation/trace gate reports `All tests successful` (`Files=15, Tests=531`),
+  t1466 passes 12 assertions, and the changed Perl file is syntax clean. The
+  doctrine driver runs again from the staged correction before commit.
