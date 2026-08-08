@@ -5,18 +5,19 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.27: publish portable adoption guide`).
-- active_work_unit: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2` remains the next decision-bound active unit after completed containment guide `.27`.
-- current_state: `docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md` now
-  provides the tracked, forwardable bridge from bounded durable memory to the
-  live-document containment doctrine. Decision 0053 owns its exact one-file
-  focused-governance expansion; the generated focused index and a canonical
-  mdBook include keep it discoverable without copying its prose.
-- next_action: obtain director direction on the existing macOS RAM-guard metric blocker; either authorize that safety-metric correction and rerun the complete t296 parent, or accept the exact focused evidence and close `.1.2` plus parent `.1` without bypassing the guard.
+- latest_commit: this commit (`AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.1: select macOS capacity metric`).
+- active_work_unit: `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.2` implements and qualifies the delegated signoff choice for the macOS RAM guard.
+- current_state: the director delegated the safety decision. The selected
+  contract uses the Stats 3.0.9 Mach-counter capacity formula, retains the
+  existing `88%` host and `4096 MiB` descendant thresholds, and requires
+  deterministic healthy/trip/malformed-input proof before real-host use.
+- next_action: implement the selected metric in `scripts/run_with_ram_guard.sh`,
+  add focused behavioral coverage, run a real-host check, then rerun the
+  blocked complete `t/296-regression-corpus-supported-behavior.t` parent.
 - in_flight_uncommitted: none after this commit; no background job or build residue.
-- blockers: complete t296 parent verification still awaits the macOS RAM-guard
-  direction. Containment `.26`, HIAL/VIAL provider qualification, and NEXSIM
-  external evidence remain independently blocked.
+- blockers: complete t296 parent verification awaits RAM-guard leaf `.2`.
+  Containment `.26`, HIAL/VIAL provider qualification, and NEXSIM external
+  evidence remain independently blocked.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not

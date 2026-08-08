@@ -3,23 +3,18 @@
 ## Metadata
 
 - Tree ID: `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `infra/continuity`
 - Created: `2026-07-12`
-- Last updated: `2026-07-12`
+- Last updated: `2026-08-08`
 - Owner: repo-local workflow
 
 ## Goal
 
-Make `scripts/run_with_ram_guard.sh`'s host-memory pressure metric reflect
-genuinely unavailable memory on macOS, so the guard stops runaway commands
-without tripping on reclaimable file-cache memory that macOS keeps in the
-`inactive`/`purgeable` buckets by design.
-
-This tree is **proposed, not PNT-eligible**: the guard is a safety mechanism,
-so any change to its trip metric needs the director's explicit judgment before
-implementation (it must not silently weaken protection against real
-out-of-memory conditions).
+Make `scripts/run_with_ram_guard.sh`'s macOS host-capacity metric use the same
+Mach VM counter model as the maintained Stats reference, so the guard stops
+runaway commands without treating reclaimable file-backed pages as occupied
+capacity.
 
 ## Background / Finding
 
@@ -75,10 +70,10 @@ Consequences:
 
 ## Acceptance Criteria
 
-- The macOS branch of `host_memory_pct()` counts reclaimable memory
-  (`inactive` + `purgeable`, and any equivalently-reclaimable buckets) as
-  available, so a healthy idle host reports pressure comparable to
-  `memory_pressure` (tens of percent, not ~90%+).
+- The macOS branch of `host_memory_pct()` computes Stats-compatible occupied
+  capacity from `active + inactive + speculative + wired + compressed -
+  purgeable - file_backed`, rather than treating `memory_pressure -Q` as an
+  inverse capacity reading.
 - A genuine high-pressure condition (little free + little reclaimable, high
   wired/active/compressor) still trips the cutoff.
 - The Linux `/proc/meminfo` branch (already using `MemAvailable`) and the
@@ -91,14 +86,21 @@ Consequences:
 ## Task Tree
 
 - ID: `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT`
-  Status: `proposed`
+  Status: `active`
   Goal: `Correct the macOS host-memory pressure metric in the RAM guard.`
-  Children: `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.1`
+  Children: `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.1, AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.2`
 
 - ID: `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the corrected macOS availability formula and its validation approach before changing the guard.`
-  Acceptance: `Chosen reclaimable-bucket set (inactive/purgeable/speculative/free), the vm_stat/sysctl fields used, the trip-behavior test plan for healthy and pressured hosts, and the MEMORY.md/COMMIT.md sync, with the director's approval that the safety trade-off is acceptable.`
+  Acceptance: `Choose the canonical capacity formula, exact vm_stat/sysctl fields, trip-behavior test plan for healthy and pressured hosts, and MEMORY.md/COMMIT.md sync contract, with director authority for the safety change.`
+  Verification: `passed: selected the Stats 3.0.9 Mach-counter formula already captured by the canonical fact card; retained the 88% host and 4096-MiB descendant thresholds; specified fixture-driven healthy/trip/malformed-input tests; director delegated the signoff choice on 2026-08-08.`
+  Commit: `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.1: select macOS capacity metric`
+
+- ID: `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.2`
+  Status: `active`
+  Goal: `Implement and qualify the selected Stats-compatible macOS capacity metric.`
+  Acceptance: `The guard parses every required vm_stat field, fails closed on incomplete or invalid samples, preserves Linux and descendant-RSS behavior, passes fixture-driven healthy and forced-pressure execution tests, reports a healthy real-host sample below the unchanged cutoff, and synchronizes COMMIT.md, MEMORY.md, and the canonical fact card.`
   Verification: `pending`
   Commit: `pending`
 
@@ -106,39 +108,54 @@ Consequences:
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.1` | `pending` | Needs director approval to change a safety mechanism; proposed until then. |
+| 1 | `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.2` | `active` | Implement the approved capacity contract before rerunning the blocked guarded parent test. |
 
 ## Decisions
 
 - `2026-07-12`: Filed as `proposed` (not PNT-eligible). The guard is a safety
   mechanism; correcting its trip metric could change when it protects against a
   real OOM, so it needs the director's explicit go-ahead before implementation.
+- `2026-08-08`: The director delegated the safety-metric decision to the agent
+  under a SOTA/signoff-quality mandate. Selected the Stats 3.0.9 counter model:
+  `active + inactive + speculative + wired + compressed - purgeable -
+  file_backed`, divided by physical memory. This is preferable to the earlier
+  additive-availability approximation because the reference model explicitly
+  accounts for compressed and external/file-backed pages without treating
+  `memory_pressure -Q` as inverse capacity.
+- `2026-08-08`: Keep the established `88%` host-capacity and `4096 MiB`
+  descendant-RSS cutoffs. This slice corrects the measured quantity; changing
+  thresholds at the same time would confound the safety qualification.
+- `2026-08-08`: Validate through deterministic fake macOS command fixtures:
+  a healthy sample must let the child exit normally, a high-occupancy sample
+  must terminate it with the guard's 137 result, and missing/invalid required
+  counters must fail closed. Then run one real-host sample and the previously
+  blocked complete `t/296-regression-corpus-supported-behavior.t` parent.
 
 ## Open Questions
 
-- Which reclaimable buckets should count as available on macOS? At minimum
-  `inactive` + `purgeable` alongside `free` + `speculative`; whether to also
-  discount part of the compressor pool needs judgment.
-- Should the default host cutoff (88%) be revisited once the metric is
-  corrected, or left as-is against the corrected denominator?
+- None for the implementation frontier.
 
 ## Blockers
 
-- Director approval to modify the safety guard (see Decisions).
+- None.
 
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-07-12` | `finding` | `sysctl hw.memsize`; `vm_stat`; `memory_pressure`; guard-formula recomputation | `confirmed`: guard reports 90.5% used vs ~54.6% real / 75% free |
+| `2026-08-08` | `.1` | canonical Knowledge Map fact; Stats 3.0.9 formula; director delegation; task-tree/doctrine baseline | `passed`: implementation contract selected with thresholds unchanged |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `finding` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.771` closeout | Finding surfaced and this proposed owner filed. |
+| `.1` | `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.1: select macOS capacity metric` | Activated the tree and fixed the implementation/qualification contract. |
 
 ## Changelog
 
 - `2026-07-12`: Created proposed task tree from the RAM-guard macOS-metric
   finding root-caused during `IAL2-FEATURE-COMPLETENESS-FRONTIER.771`.
+- `2026-08-08`: Activated under delegated director authority; completed metric
+  selection `.1` and opened implementation/qualification leaf `.2`.
