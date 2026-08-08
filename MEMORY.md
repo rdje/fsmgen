@@ -6,18 +6,21 @@ history; this file carries only the current bounded resume state.
 ## Resume
 
 - latest_commit: this commit (`SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.1: own disabled trace repair`).
-- active_work_unit: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.1` owns the isolated t296 backend-memory repair.
-- current_state: guarded stage probes localize entry 114's real memory cliff to
-  `trace_fsm_signal_inventory`: it eagerly Data::Dumper-serializes every
-  driving AST before disabled level-3 messages are rejected. The same
-  1,158-helper consolidation stays near 124 MiB when only that trace is
-  bypassed; parsing, semantic construction, flattening, prescan, and
-  factorization are bounded.
-- next_action: gate expensive inventory construction on enabled level-3
-  tracing, add disabled/enabled trace-contract regression coverage, then prove
-  isolated entry 114 and the complete t296 parent below the unchanged limits.
-- in_flight_uncommitted: none after this commit; no background job or build residue.
-- blockers: no decision blocker for `.1.2.1`; complete t296 awaits its repair.
+- active_work_unit: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.2` owns the remaining t296 index-116 backend CPU bound.
+- current_state: `.1.2.1` makes disabled consolidated inventory tracing
+  zero-cost before module/AST traversal. Focused t1596 passes six assertions,
+  both Perl files are syntax clean, and formerly failing pipeline index 114
+  passes all three assertions in 28 seconds below the unchanged cap. The full
+  parent progressed to index 116, whose exact 2,013,530-byte generated FSM is
+  memory-bounded near 425 MiB but CPU-bound inside direct SystemVerilog backend
+  emission; parsing and semantic/IR construction finish in about 16.4 seconds.
+- next_action: isolate index 116's exact direct-backend phase, repair its CPU
+  scaling without changing generated HDL, then resume the complete guarded
+  t296 parent matrix.
+- in_flight_uncommitted: `.1.2.1` source/test/docs are being committed; one
+  guarded full-t296 parent remains active at index 116 for `.1.2.2` evidence.
+- blockers: no decision blocker; `.1.2.2` must resolve the index-116 backend
+  CPU hotspot before complete-parent acceptance can close.
   Containment `.26`, HIAL/VIAL provider qualification, and NEXSIM external
   evidence remain independently blocked.
 

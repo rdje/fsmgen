@@ -69,6 +69,7 @@ entry to consolidated intermediate preparation.
 =cut
 
 sub trace_fsm_signal_inventory ($self, $fsm_module) {
+    return unless debug_enabled() && debug_level() >= 3;
     return unless $fsm_module && $fsm_module->signals;
 
     my $fsm_signals = $fsm_module->signals;
