@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `infra/continuity / project-wide live-document lifecycle`
 - Created: `2026-07-31`
-- Last updated: `2026-08-01`
+- Last updated: `2026-08-08`
 - Owner: repo-local workflow
 - Selected by: `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.2`
 
@@ -51,7 +51,7 @@ no routed destination becomes the next uninstrumented blob.
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION`
   Status: `active`
   Goal: `Bound all live document families over durable, addressable storage.`
-  Children: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.12, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.26`
+  Children: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.12, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.26, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.27`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1`
   Status: `done`
@@ -140,7 +140,7 @@ no routed destination becomes the next uninstrumented blob.
   Acceptance: `Every registered surface is remeasured; all live roots and parts are below warning; aggregate transitions and retrieval/reconstruction probes pass; temporary legacy headroom is reduced through a reviewed local registry update; doctrine/book/fact/task/roadmap/Memory agree; no artifact residue remains.`
   Verification: `pending`
   Commit: `pending`
-  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.26`
+  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.26, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.27`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13`
   Status: `done`
@@ -252,10 +252,22 @@ no routed destination becomes the next uninstrumented blob.
   Commit: `pending`
   Blocked by: `director review; do not activate during the current deferral`
 
+- ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.27`
+  Status: `active`
+  Goal: `Publish a forwardable guide for projects that already adopted the durable memory architecture but still encounter bounded live-document pressure.`
+  Acceptance: `Create docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md as a project-neutral handoff that explains why unbounding MEMORY.md is not the repair; identifies LIVE_DOCUMENT_SIZE_CONTAINMENT.md as the doctrine to adopt; separates the neutral body from adopter-local authority, measurements, thresholds, registries, checks, migrations, and retention choices; gives a task-owned, lossless, mechanically verified adoption sequence; distinguishes immediate resume-pointer repair from project-wide lifecycle adoption; names stop conditions and anti-patterns; and remains useful without FSMGen product knowledge. Integrate the guide into appropriate bounded navigation, classify it under the live-document registry, run focused documentation and all doctrine gates, and commit without changing product behavior or activating deferred .26.`
+  Verification: `Clean predecessor 7f48ae9e4; activation changes only this task, the bounded task index, and MEMORY.md. Task integrity passes at five active trees / 922 nodes / one segment / one index archive / one migration; MEMORY.md passes at 40 lines; the live-document checker covers 2,952/2,952 declared paths across 22 surfaces; diff hygiene passes. The guide, navigation, registry classification, doctrine text, thresholds, lifecycle decisions, migrations, and product behavior remain unchanged.`
+  Commit: `pending`
+  Blocked by: `none`
+
 ## Decisions
 
 - `2026-07-31`: Use the project-neutral, project-agnostic, harness-neutral
   doctrine selected by decision 0041; keep all FSMGen values in local data.
+- `2026-08-08`: The director requests one tracked, forwardable bridge for
+  projects that adopted memory architecture but still struggle with bounded
+  live documents. `.27` owns that guide and is active independently of the
+  still-deferred legacy-continuity inventory `.26`; `.12` waits for both.
 - `2026-07-31`: Preserve directly browsable user reference in semantic shards,
   but move rarely read exact chronology out of the working set only after
   digest-verified version retrieval exists.
@@ -508,9 +520,8 @@ no routed destination becomes the next uninstrumented blob.
 
 ## Blockers
 
-- None for completed `.13`. Pending `.12` still waits on director-deferred
-  `.26`, which owns the broader legacy-continuity inventory; no containment
-  leaf is currently PNT-eligible.
+- None for active `.27`. Pending `.12` still waits on director-deferred `.26`
+  and the new guide leaf; `.27` does not activate or pre-decide `.26`.
 
 ## Acceptance Checklist (enforced) — `.13` focused-document containment
 
@@ -834,9 +845,13 @@ no routed destination becomes the next uninstrumented blob.
 | `.10` bounded knowledge discovery | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10: bound cards and shard knowledge discovery` | Preserve exact over-limit source history and answers, bound canonical cards, generate a small root plus deterministic topic shards, and make cached/direct query parity executable; `.13` is the next clean selection. |
 | `.13` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13: activate focused-document containment` | Activate only focused/ancillary classification, stable-topic partitioning, and bounded complete-index work from clean `.10`; document topology and enforcement remain pending. |
 | `.13` focused-document containment | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13: bound focused document collections` | Classify every focused/ancillary member, generate its complete bounded index, and re-form three exact ISF contracts as bounded stable-topic maintained references. |
+| `.27` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.27: activate portable adoption guide` | Activate only the director-requested forwardable guide leaf; no guide, registry, doctrine, threshold, lifecycle, migration, or product behavior changes yet. |
 
 ## Changelog
 
+- `2026-08-08`: Director-requested clean activation selects `.27` to publish a
+  portable memory-to-containment adoption guide. Deferred `.26` remains
+  untouched, and `.12` now waits for both leaves.
 - `2026-08-01`: `.13` classifies every focused and ancillary document through
   one complete generated index, retains the live `BIN_FSMGEN_IMPORT_TREE.md`
   architecture role with bounded lines, and re-forms the three exact ISF
