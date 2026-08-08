@@ -44,6 +44,7 @@ Some docs are intentionally still focused references:
 - [../../../ROADMAP_V2.md](../../../ROADMAP_V2.md)
 - [../../../README_POLICY.md](../../../README_POLICY.md)
 - [../../../LIVE_DOCUMENT_SIZE_CONTAINMENT.md](../../../LIVE_DOCUMENT_SIZE_CONTAINMENT.md)
+- [Live-Document Containment Adoption](91-live-document-containment-adoption.md)
 - [../../LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md](../../LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md)
 - [../../audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.md](../../audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.md)
 - [../../audits/ROADMAP_STATUS_VALUE_AUDIT.md](../../audits/ROADMAP_STATUS_VALUE_AUDIT.md)
@@ -111,12 +112,22 @@ local JSONL data: one named object per line, path and route arrays, nested
 target/ceiling/milestone/baseline objects, and strict rejection of malformed,
 missing, or unknown fields. Every common registry now starts with declared
 record-count, file-byte, and maximum-record-byte limits; field byte bounds and
-array cardinalities make the control plane finite. This retains line-oriented diffs and streaming without the
-positional ambiguity of the discarded 22-column TSV prototype. The resulting
-unconditional census covers every tracked Markdown path, including README
+array cardinalities make the control plane finite. This retains line-oriented
+diffs and streaming without the positional ambiguity of the discarded
+22-column TSV prototype. The resulting unconditional census covers every tracked Markdown path, including README
 itself, broad root/focused/ancillary collections, and canonical knowledge
 cards; no family topology or established limit changes in the enforcement
-slice. Decision 0042 and `.6` define optional sealed task-subtree segments and
+slice.
+
+`LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md` is the non-normative,
+forwardable bridge for projects that already adopted durable memory but still
+experience bounded-pointer or routed-destination pressure. It keeps
+`MEMORY.md` bounded, separates immediate pointer stabilization from the wider
+lifecycle migration, and tells adopters to derive their own utility decisions,
+measurements, thresholds, registries, checks, and retention contracts rather
+than copying FSMGen's local data.
+
+Decision 0042 and `.6` define optional sealed task-subtree segments and
 compact completed terminals. `.7` now applies the design: the live IAL2 file
 keeps its active root while one exact-source segment reconstructs all 844
 terminal children, and the cross-tree index keeps only three active plus eleven

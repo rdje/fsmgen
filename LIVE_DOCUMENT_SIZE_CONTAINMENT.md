@@ -5,6 +5,10 @@
 - Authoritative copy: repository-root `LIVE_DOCUMENT_SIZE_CONTAINMENT.md`.
   Agent and harness bootstrap files may point here, but they are not the
   doctrine's authority.
+- Forwardable adoption bridge:
+  `docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md` explains how a
+  memory-architecture adopter applies this doctrine without copying FSMGen's
+  local thresholds, paths, debt, migrations, or retention conclusions.
 - Independence: the originating doctrine is a template, not an upstream.
   Later revisions require deliberate local review; there is no automatic sync.
 - Local pressure milestones: warning at 80% and rollover required at 90% of

@@ -50,3 +50,4 @@
   - [HIAL/VIAL Verification Architecture](16d-hial-vial-verification-architecture.md)
   - [NEXSIM Semantic API and MCP Agent-Consumer Requirements](16e-nexsim-api-mcp-consumer-requirements.md)
 - [Reference Map](90-reference-map.md)
+- [Live-Document Containment Adoption](91-live-document-containment-adoption.md)

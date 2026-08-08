@@ -5,18 +5,18 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.27: activate portable adoption guide`).
-- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.27` is active from a clean director-requested pivot; deferred `.26` remains untouched.
-- current_state: the existing containment tree now owns a forwardable guide for
-  projects that adopted the durable memory architecture but still experience
-  bounded live-document pressure. This activation changes continuity only;
-  the guide, navigation, registry classification, and validation remain for
-  the implementation commit.
-- next_action: write and integrate `docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md`, then run focused documentation and doctrine gates and close `.27`.
-- in_flight_uncommitted: activation continuity only until this commit; no background job or build residue.
-- blockers: none for `.27`. Deferred `.26`, the macOS RAM-guard decision for
-  `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2`, HIAL/VIAL provider
-  qualification, and NEXSIM external evidence remain independently blocked.
+- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.27: publish portable adoption guide`).
+- active_work_unit: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2` remains the next decision-bound active unit after completed containment guide `.27`.
+- current_state: `docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md` now
+  provides the tracked, forwardable bridge from bounded durable memory to the
+  live-document containment doctrine. Decision 0053 owns its exact one-file
+  focused-governance expansion; the generated focused index and a canonical
+  mdBook include keep it discoverable without copying its prose.
+- next_action: obtain director direction on the existing macOS RAM-guard metric blocker; either authorize that safety-metric correction and rerun the complete t296 parent, or accept the exact focused evidence and close `.1.2` plus parent `.1` without bypassing the guard.
+- in_flight_uncommitted: none after this commit; no background job or build residue.
+- blockers: complete t296 parent verification still awaits the macOS RAM-guard
+  direction. Containment `.26`, HIAL/VIAL provider qualification, and NEXSIM
+  external evidence remain independently blocked.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not

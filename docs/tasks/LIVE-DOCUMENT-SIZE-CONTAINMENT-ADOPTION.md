@@ -140,7 +140,7 @@ no routed destination becomes the next uninstrumented blob.
   Acceptance: `Every registered surface is remeasured; all live roots and parts are below warning; aggregate transitions and retrieval/reconstruction probes pass; temporary legacy headroom is reduced through a reviewed local registry update; doctrine/book/fact/task/roadmap/Memory agree; no artifact residue remains.`
   Verification: `pending`
   Commit: `pending`
-  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.26, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.27`
+  Blocked by: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.26`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13`
   Status: `done`
@@ -253,11 +253,11 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `director review; do not activate during the current deferral`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.27`
-  Status: `active`
+  Status: `done`
   Goal: `Publish a forwardable guide for projects that already adopted the durable memory architecture but still encounter bounded live-document pressure.`
   Acceptance: `Create docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md as a project-neutral handoff that explains why unbounding MEMORY.md is not the repair; identifies LIVE_DOCUMENT_SIZE_CONTAINMENT.md as the doctrine to adopt; separates the neutral body from adopter-local authority, measurements, thresholds, registries, checks, migrations, and retention choices; gives a task-owned, lossless, mechanically verified adoption sequence; distinguishes immediate resume-pointer repair from project-wide lifecycle adoption; names stop conditions and anti-patterns; and remains useful without FSMGen product knowledge. Integrate the guide into appropriate bounded navigation, classify it under the live-document registry, run focused documentation and all doctrine gates, and commit without changing product behavior or activating deferred .26.`
-  Verification: `Clean predecessor 7f48ae9e4; activation changes only this task, the bounded task index, and MEMORY.md. Task integrity passes at five active trees / 922 nodes / one segment / one index archive / one migration; MEMORY.md passes at 40 lines; the live-document checker covers 2,952/2,952 declared paths across 22 surfaces; diff hygiene passes. The guide, navigation, registry classification, doctrine text, thresholds, lifecycle decisions, migrations, and product behavior remain unchanged.`
-  Commit: `pending`
+  Verification: `Activation commit d2840aae6 establishes the clean owner. The 365-line / 16,843-byte project-neutral guide keeps MEMORY.md bounded, separates immediate pointer stabilization from project-wide lifecycle adoption, distinguishes donor-neutral policy from adopter-local data, supplies utility/lifecycle/measurement/migration/enforcement/stop contracts, and includes a ready-to-forward director instruction. Decision 0053 authorizes exactly the focused-document file count 1,006 -> 1,007; every line/byte/line-width/aggregate and other-surface ceiling remains unchanged, and the immutable baseline is unchanged. The complete generated index classifies 1,022 members at 1,089 lines / 149,695 bytes; focused documents measure 1,007 files / 201,854 lines / 8,702,450 bytes. The maintained book has 52 files / 48,449 lines / 2,566,533 bytes under exact +1/+13/+719 authority, all 52 chapters test, and the rendered canonical include contains the guide in an 87-file / 18,008,590-byte repository-local build removed with zero named residue. Focused path/lifecycle/ceiling/reference tests pass at Files=5/Tests=40; final staged live-document, task, Memory, Knowledge Map, mdBook, diff, and doctrine evidence completes the slice. Deferred .26, product behavior, compiler/runtime sources, and generated product artifacts remain unchanged.`
+  Commit: `this commit`
   Blocked by: `none`
 
 ## Decisions
@@ -268,6 +268,10 @@ no routed destination becomes the next uninstrumented blob.
   projects that adopted memory architecture but still struggle with bounded
   live documents. `.27` owns that guide and is active independently of the
   still-deferred legacy-continuity inventory `.26`; `.12` waits for both.
+- `2026-08-08`: `.27` publishes the non-normative guide beside decision 0053,
+  classifies it in the complete focused index, renders it from one canonical
+  source in the mdBook, and uses one exact file-count expansion authority.
+  `.26` remains deferred and `.12` again waits only on `.26`.
 - `2026-07-31`: Preserve directly browsable user reference in semantic shards,
   but move rarely read exact chronology out of the working set only after
   digest-verified version retrieval exists.
@@ -520,8 +524,14 @@ no routed destination becomes the next uninstrumented blob.
 
 ## Blockers
 
-- None for active `.27`. Pending `.12` still waits on director-deferred `.26`
-  and the new guide leaf; `.27` does not activate or pre-decide `.26`.
+- None for completed `.27`. Pending `.12` still waits on director-deferred
+  `.26`; the guide does not activate or pre-decide that inventory.
+
+## Acceptance Checklist (enforced) — `.27` portable adoption guide
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE' --all --oneline -- docs` returns no commit through activation `d2840aae6`: the durable memory doctrine and live-document doctrine existed, but no forwardable bridge connected a repeatedly full bounded pointer to project-wide lifecycle adoption. The activation census independently reports `focused_documents` at exactly 1,006 files against its inclusive 1,006-file ceiling, so adding the director-requested governance interface requires explicit authority rather than an unrecorded limit edit.
+- [x] **ADDRESSED (verified)** — `scripts/focused_document_index.pl check` reports `current (1022 members; 1089 lines; 149695 bytes)` and classifies the 365-line / 16,843-byte guide as project governance. `scripts/check_live_document_ceiling_authority.pl` reports exactly one accepted increase, and `scripts/check_live_document_reference_authority.pl` accepts one maintained-reference change at exact book delta `files=+1 / lines=+13 / bytes=+719`. The guide, local adoption note, decision 0053, generated index, and canonical mdBook include expose one source without copying FSMGen-local thresholds or outcomes into the neutral doctrine.
+- [x] **NO REGRESSION** — `prove -Iperl t/1414-docs-relative-paths-audit.t t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t t/1560-live-document-ceiling-authority.t t/1561-live-document-reference-authority.t` reports `All tests successful` at `Files=5, Tests=40`. All 52 mdBook chapters test; the repository-local build renders the guide at 87 files / 18,008,590 bytes and is removed exactly. The final live-document and doctrine gates cover the resulting tree; deferred `.26`, compiler/runtime behavior, generated product artifacts, and every unrelated pressure ceiling remain unchanged.
 
 ## Acceptance Checklist (enforced) — `.13` focused-document containment
 
@@ -793,6 +803,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-08-01` | `.10` bounded knowledge discovery | exact activation-source descriptors and deterministic answer partitions; constrained metadata folding; UTF-8-safe bounded root/shards; cached/direct fixed-substring query parity and stale-cache repair; generated-collection schema/freshness/index proof; bootstrap/hook/CI/book/fact/task sync; syntax/focused/path/locality/task/live-size/reference/ceiling/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; cards 1,105/41,346/3,126,393 with max 295/20,210/819; root 135/11,257; shards 117/14,363/1,634,587 with max 2,551/313,509/625; 1,104 facts/5,582 unique questions/5,748 occurrences; focused Files=4/Tests=26; trees=3/nodes=899/segments=1/index archives=1/migrations=1; 20 surfaces/2,925 staged paths; reference delta 0/+21/+762; Memory 45; Toolbox 319; all 49 chapters; repository-local build 85/17,707,985; mistaken off-root build matched at SHA-256 f66183f9... then was deleted with zero exact residue; zero ceiling increases; all doctrines pass; product behavior unchanged; `.13` next |
 | `2026-08-01` | `.13` activation | clean `3b71cb0b1` predecessor; exact focused/ancillary collection identities; stale t/1553 project-graph count repair; task/index/book/fact/Memory continuity; focused/path/task/live-size/reference/ceiling/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; source focused 1,005/212,294/9,400,050 with max 6,254/392,322/7,536-byte line; ancillary 12/1,558/79,973 with max 502/21,728/780-byte line; focused Files=5/Tests=73; checker 20 surfaces/2,925 paths; reference delta 0/+5/+308; zero ceiling increases; Knowledge Map 1,104/5,582; trees=3/nodes=899; Memory 45; all 49 chapters; removed build 85/17,710,132; all nine staged doctrines pass; exact stale expectations move 19/4/6 to 20/7/4; no content, path, partition, index, topology, limit, or product behavior change |
 | `2026-08-01` | `.13` focused-document containment | exact three-source ISF partition/rewrite identity; complete generated focused/ancillary classification; stable-topic landings/parts; direct-link, freshness, bounds, rewrite-count, and activation-content checks; long-line repair; rationale/book/fact/task sync; focused/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused 1,005/198,233/8,530,939 with max 1,774/172,995/794; ancillary 12/1,558/79,973 with max 502/21,728/780; index 1,017/1,084/149,147; ISF reference 14/14,564/880,417 with max 2,453/171,378/318; six dead links rerouted to task evidence; consumer Files=5/Tests=744; containment Files=4/Tests=35; all 49 chapters; removed build 85/16,598,327; zero ceiling increases; product behavior unchanged; `.12` waits on director-deferred `.26` |
+| `2026-08-08` | `.27` portable adoption guide | canonical guide and mdBook include; decision 0053; complete focused classification; exact ceiling/reference authority; focused path/lifecycle/authority/mdBook/live-size/task/Memory/Knowledge Map/diff/staged-doctrine gates; exact cleanup | `passed`; guide 365/16,843; index 1,022 members / 1,089 lines / 149,695 bytes; focused 1,007/201,854/8,702,450; one exact file-count increase and no other ceiling increase; book 52/48,449/2,566,533 at +1/+13/+719; Files=5/Tests=40; all 52 chapters; rendered build 87/18,008,590 and removed; product behavior unchanged; `.12` waits on deferred `.26` |
 
 ## Commit Log
 
@@ -846,9 +857,14 @@ no routed destination becomes the next uninstrumented blob.
 | `.13` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13: activate focused-document containment` | Activate only focused/ancillary classification, stable-topic partitioning, and bounded complete-index work from clean `.10`; document topology and enforcement remain pending. |
 | `.13` focused-document containment | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13: bound focused document collections` | Classify every focused/ancillary member, generate its complete bounded index, and re-form three exact ISF contracts as bounded stable-topic maintained references. |
 | `.27` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.27: activate portable adoption guide` | Activate only the director-requested forwardable guide leaf; no guide, registry, doctrine, threshold, lifecycle, migration, or product behavior changes yet. |
+| `.27` portable adoption guide | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.27: publish portable adoption guide` | Publish the canonical forwardable bridge, exact one-file ceiling authority, complete focused classification, and single-source mdBook rendering. |
 
 ## Changelog
 
+- `2026-08-08`: `.27` publishes the forwardable memory-to-containment adoption
+  bridge, decision 0053, complete focused classification, and canonical mdBook
+  rendering. One exact focused file-count expansion is authorized; all other
+  ceilings and deferred `.26` remain unchanged.
 - `2026-08-08`: Director-requested clean activation selects `.27` to publish a
   portable memory-to-containment adoption guide. Deferred `.26` remains
   untouched, and `.12` now waits for both leaves.
