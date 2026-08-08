@@ -32,6 +32,8 @@ both surfaces.
 - Focused PPIF pipeline, CLI, support-accounting, and defensive-copy gates pass
   without generated HDL changes.
 - Project-local temporary output is used and removed exactly.
+- Disabled backend tracing performs no AST rendering or serialization work;
+  enabled level-3 tracing retains its detailed signal inventory.
 - Task index and bounded continuity records are synchronized and the slice
   commits through `COMMIT.md`.
 
@@ -60,9 +62,17 @@ both surfaces.
 - ID: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2`
   Status: `active`
   Goal: `Bound t296's full runtime matrix below the repository descendant-RSS ceiling without dropping coverage.`
+  Children: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.1`
   Acceptance: `The four default/strict pipeline/CLI cohorts execute every selected entry in deterministic isolated batches, worker failures retain actionable TAP diagnostics, and the complete parent test passes under the unchanged 4096-MiB descendant cap.`
-  Verification: `A clean-host guarded post-oracle run started at 55.7% host occupancy, ran for eight minutes without assertion output, then the single t296 Perl process reached 5369.8 MiB and was terminated at the unchanged 4096-MiB descendant cutoff. The audit now uses one-entry pipeline and four-entry CLI self-workers with fail-closed surface/suffix and worker-bound validation plus failed-worker TAP replay. A guarded 32-entry conservative pipeline worker passed all 92 assertions before batch tightening; resumable guarded verification then passed every default-pipeline entry through index 113, which includes all 62 divergent PPIF contracts, plus strict AHB/APB/AXI/bundle representatives and default/strict CLI AHB aggregate checks. The complete parent remains blocked by the separately owned macOS host-metric defect: with memory_pressure reporting 81-82% free and no large process, the unchanged guard reports 88-92% used after one to four workers and terminates the tree. No cutoff was raised or bypassed.`
-  Commit: `worker implementation in this commit; complete guarded parent verification pending director direction on the existing guard-metric blocker`
+  Verification: `A clean-host guarded post-oracle run started at 55.7% host occupancy, ran for eight minutes without assertion output, then the single t296 Perl process reached 5369.8 MiB and was terminated at the unchanged 4096-MiB descendant cutoff. The audit now uses one-entry pipeline and four-entry CLI self-workers with fail-closed surface/suffix and worker-bound validation plus failed-worker TAP replay. A guarded 32-entry conservative pipeline worker passed all 92 assertions before batch tightening; resumable guarded verification then passed every default-pipeline entry through index 113, which includes all 62 divergent PPIF contracts, plus strict AHB/APB/AXI/bundle representatives and default/strict CLI AHB aggregate checks. After the separately owned macOS host metric was corrected, the isolated zero-based pipeline entry 114 still reached 4222.3 MiB, proving a real per-worker backend cliff. Stage probes localize it to disabled signal-inventory tracing in consolidated-intermediate collection: lowering, parsing, semantic construction, flattening, prescan, and factorization remain bounded, while trace_fsm_signal_inventory eagerly Data::Dumper-serializes every driving AST before fsm_debug rejects the disabled messages. Manually bypassing only that trace holds the same 1,158-helper case near 124 MiB. No cutoff was raised or bypassed.`
+  Commit: `worker implementation in bfeb6d3ff; bounded closeout continues under .1.2.1`
+
+- ID: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.1`
+  Status: `active`
+  Goal: `Make disabled consolidated-intermediate inventory tracing zero-cost before message construction while preserving enabled level-3 diagnostics.`
+  Acceptance: `A focused regression proves disabled tracing never calls driving-AST rendering or Data::Dumper, enabled level-3 tracing retains the inventory detail, the isolated pipeline entry 114 completes below 4096 MiB, and the complete t296 parent passes under the unchanged guard limits.`
+  Verification: `Fresh guarded stage isolation on 2026-08-08 measures PPIF lowering at 1.196 s, Lispish parsing at 0.899 s, semantic construction at 0.150 s, flattening at 0.093 s, prescan at 0.004 s, and first-pass factorization at 1.533 s. Direct consolidated collection intermittently reaches 5.0-5.35 GiB, while executing the same merge/normalization flow without trace_fsm_signal_inventory stays between 121.7 and 123.8 MiB across all 1,158 helper records. Source inspection identifies the disabled-path eager Data::Dumper call at ConsolidatedIntermediateSupport.pm:106.`
+  Commit: `pending`
 
 ## Decisions
 
@@ -100,25 +110,24 @@ both surfaces.
   architecture map's selected `FSM::Support::RegressionCorpus` measurement
   stale at 6,820 lines versus the current 6,884. Preserve that finding here
   while `.1.2` remains active; synchronize the measured documentation under an
-  explicit owning leaf only after the director resolves this slice's RAM-guard
-  closeout decision.
+  explicit owning leaf only after `.1.2.1` completes and the tree is clean.
+- `2026-08-08`: Preserve the unchanged guard limits and full corpus coverage.
+  The corrected guard disproved batching as sufficient for entry 114; the
+  backend must not construct expensive level-3 trace payloads while tracing is
+  disabled. Track the behavior-preserving repair explicitly under `.1.2.1`.
 
 ## Open Questions
 
-- Director decision: authorize the already-proposed
-  `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT` safety-metric correction
-  and then rerun the complete t296 parent, or accept the exact 240-entry census,
-  all-62 default-pipeline proof, strict shape representatives, and focused
-  no-regression gates as sufficient closeout evidence for this test-only task.
+- None. The corrected guard and stage-level evidence select a
+  behavior-preserving disabled-trace repair under `.1.2.1`; no threshold,
+  coverage, or product-output decision is delegated to the director.
 
 ## Blockers
 
-- The complete guarded t296 parent cannot currently finish because the known
-  macOS host metric excludes reclaimable inactive/purgeable memory. Guarded
-  attempts were stopped at reported 88-92% use while `memory_pressure`
-  reported 81-82% free. Changing that safety mechanism requires director
-  approval under the proposed `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT`
-  task; this slice did not raise or bypass either guard threshold.
+- The complete guarded t296 parent is temporarily blocked by the now-localized
+  disabled-trace AST serialization defect owned by active leaf `.1.2.1`. The
+  prior macOS host-metric blocker is resolved; neither guard threshold will be
+  raised or bypassed.
 
 ## Acceptance Checklist (enforced for implementation changes)
 

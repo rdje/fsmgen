@@ -5,20 +5,21 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.2: correct macOS host capacity metric`).
-- active_work_unit: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2` resumes with a newly isolated real t296 worker-memory blocker.
-- current_state: the macOS guard now uses the Stats-compatible capacity formula
-  with unchanged `88%` host and `4096 MiB` descendant limits. Fixtures prove
-  healthy/trip/malformed behavior; a real sample was 31.9% versus independent
-  31.8%. Complete t296 passed host inspection but one worker reached 4560.5 MiB
-  and was correctly stopped by the descendant cap.
-- next_action: under the existing PPIF oracle-split owner, root-cause why the
-  isolated t296 worker exceeds 4096 MiB, lock the resource regression, repair
-  it without loosening the guard, and rerun the complete parent.
+- latest_commit: this commit (`SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.1: own disabled trace repair`).
+- active_work_unit: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.1` owns the isolated t296 backend-memory repair.
+- current_state: guarded stage probes localize entry 114's real memory cliff to
+  `trace_fsm_signal_inventory`: it eagerly Data::Dumper-serializes every
+  driving AST before disabled level-3 messages are rejected. The same
+  1,158-helper consolidation stays near 124 MiB when only that trace is
+  bypassed; parsing, semantic construction, flattening, prescan, and
+  factorization are bounded.
+- next_action: gate expensive inventory construction on enabled level-3
+  tracing, add disabled/enabled trace-contract regression coverage, then prove
+  isolated entry 114 and the complete t296 parent below the unchanged limits.
 - in_flight_uncommitted: none after this commit; no background job or build residue.
-- blockers: complete t296 parent verification now has a genuine descendant-RSS
-  blocker, not a host-metric false positive. Containment `.26`, HIAL/VIAL
-  provider qualification, and NEXSIM external evidence remain independently blocked.
+- blockers: no decision blocker for `.1.2.1`; complete t296 awaits its repair.
+  Containment `.26`, HIAL/VIAL provider qualification, and NEXSIM external
+  evidence remain independently blocked.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not

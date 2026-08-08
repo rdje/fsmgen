@@ -50,7 +50,7 @@ Only rows marked `active` are PNT-eligible; other chronology is query-first thro
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `Verification code generation / intent architecture` | `.15.4` complete; `.15.5` awaits exact GHDL 6.0.0, `.15.6` repo-local OSVVM 2026.05; `.15.7`/`.13.3` blocked | [docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS` | `active` | `Verification infrastructure / external simulator operability` | `.1` complete; `.2` requires concrete external evidence | [docs/tasks/NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.md](docs/tasks/NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 / SV-backed feature completeness` | terminal `.844` delegates to HIAL/VIAL; no direct eligible leaf | [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
-| `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT` | `active` | `test integrity / IAL2 PPIF support accounting` | `.1` separate in-memory generated entry-module and public CLI aggregate-top oracles | [docs/tasks/SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.md](docs/tasks/SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.md) |
+| `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT` | `active` | `test integrity / IAL2 PPIF support accounting` | `.1.2.1` prevent disabled backend inventory tracing from materializing AST dumps, then rerun the full guarded t296 matrix | [docs/tasks/SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.md](docs/tasks/SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.md) |
 
 ## Proposed Task Trees
 
