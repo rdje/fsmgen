@@ -85,8 +85,8 @@ both surfaces.
   Status: `active`
   Goal: `Make the complete t296 acceptance matrix interruption-resumable without reducing exact coverage.`
   Acceptance: `An explicit opt-in stores completed worker batches atomically below .artifacts/t296, binds them to the exact clean HEAD and test-contract version, reuses only valid completions after a guard interruption, fails closed on unsafe paths or malformed/mismatched state, leaves default no-checkpoint behavior unchanged, and removes the checkpoint after one final parent pass covers all four current cohorts.`
-  Verification: `The latest guarded parent ran 194 minutes with no assertion failure, completing all 287 default-pipeline workers and default-CLI batches through index 199 before unrelated host occupancy crossed the unchanged 88% cutoff during batch 200-203. Exact default-CLI index 202 passes all three assertions in 699 seconds from a low-pressure start, so neither that fixture nor the repaired backend is a reproduced defect. The monolithic parent currently discards more than three hours of green evidence after any host-pressure interruption; no sanctioned exact-commit resume state exists.`
-  Commit: `pending`
+  Verification: `The latest guarded parent ran 194 minutes with no assertion failure, completing all 287 default-pipeline workers and default-CLI batches through index 199 before unrelated host occupancy crossed the unchanged 88% cutoff during batch 200-203. Exact default-CLI index 202 passes all three assertions in 699 seconds from a low-pressure start, so neither that fixture nor the repaired backend is a reproduced defect. The monolithic parent previously discarded more than three hours of green evidence after any host-pressure interruption. The opt-in checkpoint now validates a clean exact HEAD at startup, after each newly executed worker and before every reuse or final removal; strict schema/path/volume/symlink checks reject unsafe state, and same-directory sync-plus-rename publishes each completion atomically. Focused t1597 passes 18 contract assertions, a dirty-tree integration probe fails before state creation, and an ordinary isolated worker remains green. The implementation commit and complete checkpointed parent remain pending.`
+  Commit: `implementation pending in this commit; complete checkpointed parent verification remains pending`
 
 ## Decisions
 
@@ -158,10 +158,11 @@ both surfaces.
 
 ## Blockers
 
-- No product implementation blocker remains. Active leaf `.1.2.3` must add
-  fail-closed exact-commit checkpointing before the complete guarded t296
-  parent is restarted; indices 11-14, 114, pipeline 116, and its exact CLI
-  fixture pass their isolated workers below the unchanged cap.
+- No product implementation blocker remains. Active leaf `.1.2.3` has focused
+  checkpoint and unchanged-worker proof; its implementation must commit cleanly
+  before an exact-HEAD integration probe and the complete resumable parent can
+  run. Indices 11-14, 114, pipeline 116, and its exact CLI fixture pass their
+  isolated workers below the unchanged cap.
 
 ## Acceptance Checklist (enforced for implementation changes)
 
@@ -264,3 +265,26 @@ both surfaces.
   validation/trace gate reports `All tests successful` (`Files=15, Tests=531`),
   t1466 passes 12 assertions, and the changed Perl file is syntax clean. The
   doctrine driver runs again from the staged correction before commit.
+
+## Acceptance Checklist (.1.2.3 exact-revision checkpoint implementation; enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_assert_batched_acceptance'
+  -- t/296-regression-corpus-supported-behavior.t` identifies `bfeb6d3ff` as
+  the isolated-worker loop's introduction. That loop reports one parent TAP
+  result per batch but retains no completion state; the 194-minute guarded run
+  therefore lost all 287 green default-pipeline workers and 50 completed CLI
+  batches when unrelated host occupancy crossed 88%.
+- [x] **ADDRESSED (verified)** — `FSM::Test::T296Checkpoint` accepts only a
+  safe `.artifacts/t296/*.json` path, exact clean-HEAD fingerprint, versioned
+  schema, and same-volume non-symlink directory. It syncs a same-directory
+  temporary file before atomic rename, reloads only exact batch keys, rechecks
+  revision cleanliness before reuse/commit/removal, and clears state only when
+  the parent builder remains green. A dirty-tree t296 probe fails before state
+  creation with `t296 checkpointing requires a clean exact repository
+  revision`.
+- [x] **NO REGRESSION** — the guarded combined focused gate reports `All tests
+  successful` and `Files=2, Tests=20`: t1597 proves 18 persistence, mismatch,
+  malformed-state, unsafe-path, atomic-residue, symlink, and exact-removal
+  contracts; an ordinary t296 default-pipeline worker retains its two passing
+  assertions. All three changed Perl files report `syntax OK`; the full
+  doctrine driver runs again from the staged implementation before commit.

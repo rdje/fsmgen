@@ -15,6 +15,7 @@ use FSM::Pipeline::HDLGenerator;
 use FSM::Composition::Plan;
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
 use FSM::Test::ProjectDataLocality;
+use FSM::Test::T296Checkpoint;
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my $tempdir = tempdir(CLEANUP => 1);
@@ -23,6 +24,7 @@ my %worker_batch_size = (
     pipeline => 1,
     cli => 4,
 );
+my $checkpoint_contract_version = 'supported-smoke-matrix-v1';
 
 my @supported_entries = grep {
     $_->{classification} eq 'supported_smoke'
@@ -53,6 +55,7 @@ if (defined $worker_surface) {
     done_testing();
 }
 else {
+    my $checkpoint = _checkpoint_from_environment();
     ok(@supported_entries, 'regression corpus records supported-smoke entries');
     ok(@hdl_entries, 'regression corpus records HDL-generating supported-smoke entries');
     ok(@pipeline_hdl_entries, 'regression corpus records public-pipeline HDL entries');
@@ -69,6 +72,7 @@ else {
             entries => \@pipeline_hdl_entries,
             surface => 'pipeline',
             owner => 'default pipeline',
+            checkpoint => $checkpoint,
         );
     };
 
@@ -77,6 +81,7 @@ else {
             entries => \@hdl_entries,
             surface => 'cli',
             owner => 'default CLI',
+            checkpoint => $checkpoint,
         );
     };
 
@@ -86,6 +91,7 @@ else {
             surface => 'pipeline',
             strict_mode => 1,
             owner => 'strict pipeline',
+            checkpoint => $checkpoint,
         );
     };
 
@@ -95,9 +101,14 @@ else {
             surface => 'cli',
             strict_mode => 1,
             owner => 'strict CLI',
+            checkpoint => $checkpoint,
         );
     };
 
+    if (defined $checkpoint && Test::More->builder()->is_passing()) {
+        _assert_checkpoint_revision($checkpoint);
+        $checkpoint->clear();
+    }
     done_testing();
 }
 
@@ -132,6 +143,21 @@ sub _assert_batched_acceptance {
         my $first = $start + 1;
         my $last = $start + $count;
 
+        my %checkpoint_batch = (
+            surface => $args{surface},
+            strict_mode => $args{strict_mode} ? 1 : 0,
+            start => $start,
+            count => $count,
+        );
+        if (defined $args{checkpoint}
+            && $args{checkpoint}->is_complete(%checkpoint_batch)) {
+            _assert_checkpoint_revision($args{checkpoint});
+            pass(
+                "$args{owner} entries $first-$last already pass for this exact revision",
+            );
+            next;
+        }
+
         local $ENV{FSMGEN_T296_WORKER_SURFACE} = $args{surface};
         local $ENV{FSMGEN_T296_WORKER_STRICT} = $args{strict_mode} ? 1 : 0;
         local $ENV{FSMGEN_T296_WORKER_START} = $start;
@@ -150,7 +176,58 @@ sub _assert_batched_acceptance {
             diag($error_message) if defined $error_message && length $error_message;
             diag(join '', @{$full_buf || []});
         }
+        elsif (defined $args{checkpoint}) {
+            _assert_checkpoint_revision($args{checkpoint});
+            $args{checkpoint}->mark_complete(%checkpoint_batch);
+        }
     }
+}
+
+sub _checkpoint_from_environment {
+    return undef unless exists $ENV{FSMGEN_T296_CHECKPOINT};
+
+    my $relative_path = $ENV{FSMGEN_T296_CHECKPOINT};
+    my $fingerprint = _clean_head_fingerprint();
+
+    return FSM::Test::T296Checkpoint->new(
+        repo_root => $repo_root,
+        relative_path => $relative_path,
+        fingerprint => $fingerprint,
+        contract_version => $checkpoint_contract_version,
+    );
+}
+
+sub _assert_checkpoint_revision {
+    my ($checkpoint) = @_;
+    my $current = _clean_head_fingerprint();
+    die "t296 checkpoint revision changed while the matrix was running\n"
+        unless $current eq $checkpoint->fingerprint();
+}
+
+sub _clean_head_fingerprint {
+    my ($status_success, $status_error, $status_buf) = run(
+        command => [
+            'git', '-C', $repo_root,
+            'status', '--porcelain', '--untracked-files=all',
+        ],
+    );
+    die "Cannot verify clean t296 checkpoint revision: "
+        . ($status_error // '') . join('', @{$status_buf || []})
+        unless $status_success;
+    my $status = join '', @{$status_buf || []};
+    die "t296 checkpointing requires a clean exact repository revision\n$status"
+        if length $status;
+
+    my ($head_success, $head_error, $head_buf) = run(
+        command => ['git', '-C', $repo_root, 'rev-parse', '--verify', 'HEAD'],
+    );
+    die "Cannot resolve exact t296 checkpoint revision: "
+        . ($head_error // '') . join('', @{$head_buf || []})
+        unless $head_success;
+    my $fingerprint = join '', @{$head_buf || []};
+    $fingerprint =~ s/\s+\z//;
+
+    return $fingerprint;
 }
 
 sub _run_worker_acceptance {

@@ -5,21 +5,23 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: `b76c5f63e` (`SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.2: preserve parsed RHS liveness`).
+- latest_commit: `ef719be52` (`SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.3: own resumable matrix proof`).
 - active_work_unit: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.3` owns interruption-resumable complete-parent t296 verification.
-- current_state: `.1.2.2` is complete: guarded pipeline entries 11-14 pass,
-  exact pipeline index 116 passes in 660 seconds, and its exact CLI fixture
-  passes in 699 seconds below the unchanged cap. A 194-minute parent run had
-  completed all 287 default-pipeline entries and default-CLI through index 199
-  without assertion failure when unrelated host pressure crossed 88%.
-- next_action: commit `.1.2.3` task ownership, implement fail-closed atomic
-  checkpointing below `.artifacts/t296`, then resume the complete guarded
-  parent until all four cohorts pass before selecting containment adoption.
-- in_flight_uncommitted: task-tree-only `.1.2.3` activation; no code change or
+- current_state: `.1.2.3` now has opt-in atomic state below `.artifacts/t296`,
+  bound to a versioned contract and a clean exact HEAD at startup and every
+  completion/reuse boundary. Focused t1597 passes 18 fail-closed persistence
+  assertions; a dirty-tree integration probe creates no state; the ordinary
+  exact t296 worker remains green.
+- next_action: commit the checkpoint implementation, create an exact-HEAD
+  near-complete integration checkpoint and prove one execute/remaining reuse/
+  final removal cycle, then run/resume the complete guarded parent until all
+  four cohorts pass before selecting containment adoption.
+- in_flight_uncommitted: `.1.2.3` checkpoint implementation, focused test,
+  task evidence, and Knowledge Map fact await doctrine gate and commit; no
   background worker exists.
-- blockers: the monolithic parent lacks durable exact-commit progress across
-  host-pressure interruptions. Containment `.26`, HIAL/VIAL provider
-  qualification, and NEXSIM external evidence remain independently blocked.
+- blockers: complete exact-HEAD integration and full-parent confirmation must
+  run from the clean implementation commit. Containment `.26`, HIAL/VIAL
+  provider qualification, and NEXSIM external evidence remain independent.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not
