@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra/continuity`
 - Created: `2026-07-12`
 - Last updated: `2026-08-08`
@@ -86,7 +86,7 @@ Consequences:
 ## Task Tree
 
 - ID: `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT`
-  Status: `active`
+  Status: `done`
   Goal: `Correct the macOS host-memory pressure metric in the RAM guard.`
   Children: `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.1, AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.2`
 
@@ -98,17 +98,17 @@ Consequences:
   Commit: `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.1: select macOS capacity metric`
 
 - ID: `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement and qualify the selected Stats-compatible macOS capacity metric.`
   Acceptance: `The guard parses every required vm_stat field, fails closed on incomplete or invalid samples, preserves Linux and descendant-RSS behavior, passes fixture-driven healthy and forced-pressure execution tests, reports a healthy real-host sample below the unchanged cutoff, and synchronizes COMMIT.md, MEMORY.md, and the canonical fact card.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `passed: the Darwin branch now parses active/inactive/speculative/wired/purgeable/file-backed/compressor counters strictly, computes the selected Stats-compatible capacity percentage, clamps only over-total samples to 100%, and fails closed on missing/invalid/negative inputs; the Linux MemAvailable branch and 4096-MiB descendant limit remain intact. t1595 passes healthy 55.0% no-trip, pressured 96.0% exit-137 trip, missing and invalid pre-launch rejection, and preservation checks (All tests successful; Files=1, Tests=4). bash syntax and Perl test syntax pass. Real-host guard execution completed at 31.9%, matching an independent 31.8% recomputation below the unchanged 88% cutoff. The complete guarded t296 retry passed host inspection and ran until one worker reached 4560.5 MiB, where the unchanged 4096-MiB descendant guard correctly stopped it; that separate real worker-memory defect returns to its PPIF task owner.`
+  Commit: `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.2: correct macOS host capacity metric`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.2` | `active` | Implement the approved capacity contract before rerunning the blocked guarded parent test. |
+| 1 | `complete` | `done` | Corrected metric, fail-closed parsing, safety preservation, and real-host qualification are complete. |
 
 ## Decisions
 
@@ -130,6 +130,13 @@ Consequences:
   must terminate it with the guard's 137 result, and missing/invalid required
   counters must fail closed. Then run one real-host sample and the previously
   blocked complete `t/296-regression-corpus-supported-behavior.t` parent.
+- `2026-08-08`: Do not retain `memory_pressure` as a capacity fallback. Its
+  output omits file-backed pages, so it cannot implement the selected formula;
+  an incomplete safety sample must fail closed.
+- `2026-08-08`: The corrected host reading exposed, rather than masked, a
+  separate real `t/296` worker-memory problem: host inspection passed, then the
+  unchanged descendant limit stopped a 4560.5-MiB Perl worker. Its root cause
+  belongs to the existing PPIF oracle-split task after this tree commits cleanly.
 
 ## Open Questions
 
@@ -139,12 +146,19 @@ Consequences:
 
 - None.
 
+## Acceptance Checklist (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'available = (free_pages + speculative_pages)' --oneline -- scripts/run_with_ram_guard.sh` identifies `06c38fba7 AGENT-RUNTIME-RAM-GUARD.1: add RAM guard for heavy local runs` as the locus that introduced the free-plus-speculative formula.
+- [x] **ADDRESSED (verified)** — `prove -Iperl -v t/1595-agent-runtime-ram-guard-macos-metric.t` changes the old healthy-host false trip into exact 55.0% pass behavior, retains an exact 96.0% exit-137 pressure trip, and rejects both missing and invalid counters before child launch; the real-host wrapper completed at 31.9% and an independent formula reported 31.8%.
+- [x] **NO REGRESSION** — `prove -Iperl -v t/1595-agent-runtime-ram-guard-macos-metric.t` reports `All tests successful` and `Files=1, Tests=4`; `bash -n scripts/run_with_ram_guard.sh` and `perl -Iperl -c t/1595-agent-runtime-ram-guard-macos-metric.t` pass, and the complete t296 attempt proves the unchanged descendant cap still terminates a 4560.5-MiB worker.
+
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-07-12` | `finding` | `sysctl hw.memsize`; `vm_stat`; `memory_pressure`; guard-formula recomputation | `confirmed`: guard reports 90.5% used vs ~54.6% real / 75% free |
 | `2026-08-08` | `.1` | canonical Knowledge Map fact; Stats 3.0.9 formula; director delegation; task-tree/doctrine baseline | `passed`: implementation contract selected with thresholds unchanged |
+| `2026-08-08` | `.2` | `bash -n`; test syntax; escalated `prove -Iperl -v t/1595-agent-runtime-ram-guard-macos-metric.t`; real-host guard plus independent formula; complete guarded t296 attempt | `passed`: focused Files=1/Tests=4, real 31.9% vs independent 31.8%; t296 stopped only at genuine descendant RSS 4560.5 MiB > 4096 MiB |
 
 ## Commit Log
 
@@ -152,6 +166,7 @@ Consequences:
 | --- | --- | --- |
 | `finding` | `IAL2-FEATURE-COMPLETENESS-FRONTIER.771` closeout | Finding surfaced and this proposed owner filed. |
 | `.1` | `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.1: select macOS capacity metric` | Activated the tree and fixed the implementation/qualification contract. |
+| `.2` | `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.2: correct macOS host capacity metric` | Corrected and qualified the guard without changing either threshold. |
 
 ## Changelog
 
@@ -159,3 +174,6 @@ Consequences:
   finding root-caused during `IAL2-FEATURE-COMPLETENESS-FRONTIER.771`.
 - `2026-08-08`: Activated under delegated director authority; completed metric
   selection `.1` and opened implementation/qualification leaf `.2`.
+- `2026-08-08`: Completed `.2` and the tree; the guarded t296 retry surfaced a
+  separately owned real worker-RSS defect after the host-metric false positive
+  was removed.

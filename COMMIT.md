@@ -138,9 +138,10 @@ Ignoring it is not a style issue; it is a project-safety failure.
 - Keep attribution trailers out of task-scoped commits unless the user explicitly asks for them.
 - Run broad or potentially heavyweight local Perl/`prove`/`fsmgen` commands
   under `scripts/run_with_ram_guard.sh` or an equivalent active monitor. The
-  default guard stops before host memory reaches the 90% danger zone; if it
-  trips, record the resource caveat in the owning task tree instead of
-  continuing unbounded.
+  macOS host reading is Stats-compatible occupied capacity; Linux uses
+  `MemAvailable`. The default 88% host and 4096-MiB descendant cutoffs stop
+  before resource danger. If either trips, record the exact cause in the
+  owning task tree instead of continuing unbounded.
 - Prefer one completed slice per commit cycle. If a task naturally fans out into multiple independently valid slices, close each slice with this workflow before moving on.
 
 ## Git index safety

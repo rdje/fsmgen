@@ -51,7 +51,6 @@ Only rows marked `active` are PNT-eligible; other chronology is query-first thro
 | `NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS` | `active` | `Verification infrastructure / external simulator operability` | `.1` complete; `.2` requires concrete external evidence | [docs/tasks/NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.md](docs/tasks/NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 / SV-backed feature completeness` | terminal `.844` delegates to HIAL/VIAL; no direct eligible leaf | [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
 | `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT` | `active` | `test integrity / IAL2 PPIF support accounting` | `.1` separate in-memory generated entry-module and public CLI aggregate-top oracles | [docs/tasks/SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.md](docs/tasks/SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.md) |
-| `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT` | `active` | `infra/continuity` | `.2` implement and qualify the approved Stats-compatible macOS capacity metric with existing thresholds unchanged | [docs/tasks/AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.md](docs/tasks/AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.md) |
 
 ## Proposed Task Trees
 

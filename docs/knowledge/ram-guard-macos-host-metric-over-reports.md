@@ -9,25 +9,20 @@ answers:
   - "what does the RAM guard count as available memory?"
   - "how should an agent measure macOS RAM usage accurately?"
   - "what is the difference between Stats RAM usage and macOS memory pressure?"
-date: 2026-07-29
+date: 2026-08-08
 status: current
 tags: [infra, ram-guard, macos, memory, continuity]
-evidence: scripts/run_with_ram_guard.sh; docs/tasks/AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.md; docs/tasks/AGENT-RUNTIME-RAM-GUARD.md; docs/tasks/IAL2-AHB-INTERCONNECT-DEFAULT-DECODE-OUTPUT-ARBITRATION.md; MEMORY.md; https://github.com/exelban/stats/blob/master/Modules/RAM/readers.swift; https://support.apple.com/en-lamr/guide/activity-monitor/actmntr1004/mac
+evidence: scripts/run_with_ram_guard.sh; t/1595-agent-runtime-ram-guard-macos-metric.t; docs/tasks/AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT.md; MEMORY.md; https://github.com/exelban/stats/blob/master/Modules/RAM/readers.swift; https://support.apple.com/en-lamr/guide/activity-monitor/actmntr1004/mac
 reverify: "FSMGEN_TOTAL_BYTES=$(sysctl -n hw.memsize); vm_stat | awk -v t=$FSMGEN_TOTAL_BYTES '/page size of/{ps=$8}/^Pages active:/{gsub(/[^0-9]/,\"\",$3);a=$3}/^Pages inactive:/{gsub(/[^0-9]/,\"\",$3);i=$3}/^Pages speculative:/{gsub(/[^0-9]/,\"\",$3);s=$3}/^Pages wired down:/{gsub(/[^0-9]/,\"\",$4);w=$4}/^Pages purgeable:/{gsub(/[^0-9]/,\"\",$3);p=$3}/^File-backed pages:/{gsub(/[^0-9]/,\"\",$3);e=$3}/^Pages occupied by compressor:/{gsub(/[^0-9]/,\"\",$5);c=$5}END{printf \"stats_used=%.1f%%\\n\",(a+i+s+w+c-p-e)*ps*100/t}'; sysctl -n kern.memorystatus_vm_pressure_level; memory_pressure -Q"
 ---
 
-`scripts/run_with_ram_guard.sh` computes host memory usage as
+Before 2026-08-08, `scripts/run_with_ram_guard.sh` computed host usage as
 `used = total - (Pages free + Pages speculative)`. On macOS, `Pages free` is
 kept near-zero by design because idle RAM is used as file cache in the
 `inactive` (and `purgeable`) buckets, which are reclaimed on demand and are not
 real pressure. Because the formula excludes `inactive`/`purgeable`, it reports
 ~90%+ "used" on a healthy host and trips the default `88%` cutoff, killing any
 guarded command (exit 137) before it runs.
-
-Measured 2026-07-12 on a 24 GiB host: guard metric `90.5%` used vs approx real
-`54.6%` used (adding `inactive` + `purgeable` to available); `memory_pressure`
-reported `75%` free. Earlier the same session the guard reported `99.4-99.5%`
-and terminated `./bin/fsmgen`.
 
 The earlier `free + speculative + inactive + purgeable` estimate was also only
 an approximation and must not be reported as canonical usage. Stats 3.0.9
@@ -55,9 +50,12 @@ percentage is therefore not the inverse of Stats usage. Treat swap *movement*
 over a sampling interval as useful supporting evidence, not accumulated swap
 occupancy as immediate pressure.
 
-Practical rule until the guard itself is fixed: use the director-authorized
-macOS verification profile `--host-max-pct 100 --process-max-rss-mb 4096`,
-report the exact Stats-compatible percentage plus kernel pressure state, and
-retain the correct 4096-MiB descendant cap. Do not misread the guard's current
-host percentage as real memory usage. The implementation correction remains
-tracked by `AGENT-RUNTIME-RAM-GUARD-MACOS-METRIC-REFINEMENT`.
+Since 2026-08-08 the guard uses that Stats-compatible capacity formula on
+Darwin, retains the `88%` host and `4096 MiB` descendant cutoffs, and fails
+closed when any required counter is missing or invalid. `memory_pressure` is
+not a capacity fallback because it lacks the file-backed counter. Fixture
+tests prove 55% pass, 96% trip, and malformed-input rejection; a real-host
+sample matched the independent formula at 31.8-31.9%. A complete `t/296` retry
+then passed the corrected host check but correctly tripped when one descendant
+reached 4560.5 MiB, exposing a separate worker-memory issue rather than another
+host-metric false positive.

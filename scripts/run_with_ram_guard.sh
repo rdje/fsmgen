@@ -98,28 +98,81 @@ is_number "$grace_seconds" || die "grace interval must be numeric"
 process_max_rss_kb=$(awk -v mb="$process_max_rss_mb" 'BEGIN { printf "%d", mb * 1024 }')
 
 host_memory_pct() {
-    if command -v vm_stat >/dev/null 2>&1 && command -v sysctl >/dev/null 2>&1; then
+    os_name=$(uname -s 2>/dev/null) || return 1
+
+    if [ "$os_name" = "Darwin" ] \
+            && command -v vm_stat >/dev/null 2>&1 \
+            && command -v sysctl >/dev/null 2>&1; then
         if total_bytes=$(sysctl -n hw.memsize 2>/dev/null); then
             vm_stat 2>/dev/null | awk -v total="$total_bytes" '
-                /page size of/ { page_size = $8 + 0 }
-                /^Pages free:/ {
-                    value = $3
-                    gsub(/[^0-9]/, "", value)
-                    free_pages = value + 0
+                function counter_value(line, value) {
+                    value = line
+                    sub(/^[^:]*:[[:space:]]*/, "", value)
+                    sub(/[[:space:]].*$/, "", value)
+                    if (value !~ /^[0-9]+[.]?$/) {
+                        return -1
+                    }
+                    sub(/[.]$/, "", value)
+                    return value + 0
+                }
+
+                /page size of/ {
+                    value = $0
+                    sub(/^.*page size of[[:space:]]+/, "", value)
+                    sub(/[[:space:]].*$/, "", value)
+                    if (value ~ /^[0-9]+$/ && value > 0) {
+                        page_size = value + 0
+                        saw_page_size = 1
+                    }
+                }
+                /^Pages active:/ {
+                    active = counter_value($0)
+                    saw_active = active >= 0
+                }
+                /^Pages inactive:/ {
+                    inactive = counter_value($0)
+                    saw_inactive = inactive >= 0
                 }
                 /^Pages speculative:/ {
-                    value = $3
-                    gsub(/[^0-9]/, "", value)
-                    speculative_pages = value + 0
+                    speculative = counter_value($0)
+                    saw_speculative = speculative >= 0
+                }
+                /^Pages wired down:/ {
+                    wired = counter_value($0)
+                    saw_wired = wired >= 0
+                }
+                /^Pages purgeable:/ {
+                    purgeable = counter_value($0)
+                    saw_purgeable = purgeable >= 0
+                }
+                /^File-backed pages:/ {
+                    file_backed = counter_value($0)
+                    saw_file_backed = file_backed >= 0
+                }
+                /^Pages occupied by compressor:/ {
+                    compressed = counter_value($0)
+                    saw_compressed = compressed >= 0
                 }
                 END {
-                    if (total <= 0 || page_size <= 0) {
+                    if (total !~ /^[0-9]+$/ || total <= 0 ||
+                            !saw_page_size || !saw_active || !saw_inactive ||
+                            !saw_speculative || !saw_wired ||
+                            !saw_purgeable || !saw_file_backed ||
+                            !saw_compressed) {
                         exit 1
                     }
-                    available = (free_pages + speculative_pages) * page_size
-                    used = total - available
+
+                    # Stats-compatible occupied capacity. File-backed and
+                    # purgeable pages are reclaimable; compressed pages remain
+                    # occupied physical capacity.
+                    used_pages = active + inactive + speculative + wired \
+                        + compressed - purgeable - file_backed
+                    used = used_pages * page_size
                     if (used < 0) {
-                        used = 0
+                        exit 1
+                    }
+                    if (used > total) {
+                        used = total
                     }
                     printf "%.1f", (used * 100.0) / total
                 }
@@ -128,36 +181,7 @@ host_memory_pct() {
         fi
     fi
 
-    if command -v memory_pressure >/dev/null 2>&1; then
-        memory_pressure 2>/dev/null | awk '
-            /^The system has/ {
-                total = $4 + 0
-                for (i = 1; i <= NF; i++) {
-                    if ($i == "of" && (i + 1) <= NF) {
-                        value = $(i + 1)
-                        gsub(/[^0-9]/, "", value)
-                        page_size = value + 0
-                    }
-                }
-            }
-            /^Pages free:/ { free_pages = $3 + 0 }
-            /^Pages speculative:/ { speculative_pages = $3 + 0 }
-            END {
-                if (total <= 0 || page_size <= 0) {
-                    exit 1
-                }
-                available = (free_pages + speculative_pages) * page_size
-                used = total - available
-                if (used < 0) {
-                    used = 0
-                }
-                printf "%.1f", (used * 100.0) / total
-            }
-        '
-        return $?
-    fi
-
-    if [ -r /proc/meminfo ]; then
+    if [ "$os_name" = "Linux" ] && [ -r /proc/meminfo ]; then
         awk '
             /^MemTotal:/ { total = $2 }
             /^MemAvailable:/ { available = $2 }

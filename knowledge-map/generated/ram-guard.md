@@ -19,5 +19,5 @@
 
 _RAM guard host-memory metric over-reports on macOS (counts reclaimable cache as used)_
 
-- **date:** 2026-07-29 · **status:** current
+- **date:** 2026-08-08 · **status:** current
 - **source and verification:** [`docs/knowledge/ram-guard-macos-host-metric-over-reports.md`](../../docs/knowledge/ram-guard-macos-host-metric-over-reports.md)
