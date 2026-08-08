@@ -5,22 +5,21 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: `10badb9b4` (`SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.2: bound index-116 backend work`).
-- active_work_unit: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.2` remains active for complete-parent t296 verification.
-- current_state: the first complete-parent restart exposed temporary parsed-RHS
-  AST refaddr reuse, which could skip a distinct later assignment and falsely
-  filter a referenced intermediate. Parsed roots now scan independently while
-  owner-retained roots stay deduplicated. Guarded pipeline entries 11-14 pass;
-  exact index 116 still passes all three assertions in 660 seconds below the
-  unchanged 4096-MiB cap; focused support tests pass.
-- next_action: run the complete guarded
-  `t/296-regression-corpus-supported-behavior.t` parent matrix, close `.1.2.2`
-  and its parents if green, then select the queued containment doctrine tree.
-- in_flight_uncommitted: `.1.2.2` parsed-RHS correction and durable evidence
-  await focused/adjacent/doctrine gates and commit; no background worker remains.
-- blockers: no known implementation or decision blocker; only complete-parent
-  confirmation remains. Containment `.26`, HIAL/VIAL provider qualification,
-  and NEXSIM external evidence remain independently blocked.
+- latest_commit: `b76c5f63e` (`SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.2: preserve parsed RHS liveness`).
+- active_work_unit: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.3` owns interruption-resumable complete-parent t296 verification.
+- current_state: `.1.2.2` is complete: guarded pipeline entries 11-14 pass,
+  exact pipeline index 116 passes in 660 seconds, and its exact CLI fixture
+  passes in 699 seconds below the unchanged cap. A 194-minute parent run had
+  completed all 287 default-pipeline entries and default-CLI through index 199
+  without assertion failure when unrelated host pressure crossed 88%.
+- next_action: commit `.1.2.3` task ownership, implement fail-closed atomic
+  checkpointing below `.artifacts/t296`, then resume the complete guarded
+  parent until all four cohorts pass before selecting containment adoption.
+- in_flight_uncommitted: task-tree-only `.1.2.3` activation; no code change or
+  background worker exists.
+- blockers: the monolithic parent lacks durable exact-commit progress across
+  host-pressure interruptions. Containment `.26`, HIAL/VIAL provider
+  qualification, and NEXSIM external evidence remain independently blocked.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not
