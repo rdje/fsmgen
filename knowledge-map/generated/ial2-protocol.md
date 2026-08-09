@@ -1,7 +1,7 @@
 # Knowledge Map: `ial2-protocol`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **10** facts · **45** uniquely owned question entries.
+> **10** facts · **47** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -16,6 +16,7 @@
 - q="does the public PPIF boundary say AXI is only the first IAL2 profile?" · facts=[ial2-protocol-generality-guardrail-public-surface-sync](../../docs/knowledge/ial2-protocol-generality-guardrail-public-surface-sync.md)
 - q="how do I run the neutral Valid-Ready PPIF bundle?" · facts=[ial2-protocol-neutral-valid-ready-bundle-behavior](../../docs/knowledge/ial2-protocol-neutral-valid-ready-bundle-behavior.md)
 - q="how do I run the valid-ready PPIF sample?" · facts=[ial2-protocol-neutral-valid-ready-ppif-behavior](../../docs/knowledge/ial2-protocol-neutral-valid-ready-ppif-behavior.md)
+- q="is IAL2 one language or a separate dialect for each protocol?" · facts=[ial2-protocol-platform-intent-mdbook-chapter](../../docs/knowledge/ial2-protocol-platform-intent-mdbook-chapter.md)
 - q="is IAL2 only about AXI?" · facts=[ial2-protocol-generality-guardrail-selection](../../docs/knowledge/ial2-protocol-generality-guardrail-selection.md)
 - q="is Valid-Ready currently protocol-neutral in implementation?" · facts=[ial2-protocol-neutral-valid-ready-ppif-readiness-audit](../../docs/knowledge/ial2-protocol-neutral-valid-ready-ppif-readiness-audit.md)
 - q="what are the IAL2 guided more-control and raw/full-control documentation modes?" · facts=[ial2-protocol-platform-intent-mdbook-chapter](../../docs/knowledge/ial2-protocol-platform-intent-mdbook-chapter.md)
@@ -27,6 +28,7 @@
 - q="what did IAL2-FEATURE-COMPLETENESS-FRONTIER.530 select?" · facts=[ial2-protocol-neutral-valid-ready-ppif-contract-selection](../../docs/knowledge/ial2-protocol-neutral-valid-ready-ppif-contract-selection.md)
 - q="what did IAL2-FEATURE-COMPLETENESS-FRONTIER.533 select?" · facts=[ial2-protocol-neutral-valid-ready-bundle-readiness-audit](../../docs/knowledge/ial2-protocol-neutral-valid-ready-bundle-readiness-audit.md)
 - q="what did IAL2-FEATURE-COMPLETENESS-FRONTIER.534 select?" · facts=[ial2-protocol-neutral-valid-ready-bundle-contract-selection](../../docs/knowledge/ial2-protocol-neutral-valid-ready-bundle-contract-selection.md)
+- q="what do IAL2 protocol profiles change?" · facts=[ial2-protocol-platform-intent-mdbook-chapter](../../docs/knowledge/ial2-protocol-platform-intent-mdbook-chapter.md)
 - q="what follows mixed dynamic/static write multi-static same-ID issue-order queue behavior?" · facts=[ial2-protocol-generality-guardrail-selection](../../docs/knowledge/ial2-protocol-generality-guardrail-selection.md)
 - q="what is IAL2-FEATURE-COMPLETENESS-FRONTIER.526?" · facts=[ial2-protocol-generality-guardrail-selection](../../docs/knowledge/ial2-protocol-generality-guardrail-selection.md)
 - q="what is IAL2-FEATURE-COMPLETENESS-FRONTIER.527?" · facts=[ial2-protocol-generality-guardrail-readiness-audit](../../docs/knowledge/ial2-protocol-generality-guardrail-readiness-audit.md)
@@ -120,5 +122,5 @@ _Protocol-neutral Valid-Ready PPIF needs a public vocabulary contract first_
 
 _IAL2 protocol/platform intent mdBook chapter scaffold_
 
-- **date:** 2026-06-29 · **status:** current
+- **date:** 2026-08-09 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-protocol-platform-intent-mdbook-chapter.md`](../../docs/knowledge/ial2-protocol-platform-intent-mdbook-chapter.md)

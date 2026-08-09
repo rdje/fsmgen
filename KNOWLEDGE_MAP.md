@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1105** facts · **5713** unique questions · **5879** answer occurrences · **118** topic shards.
+> **1105** facts · **5716** unique questions · **5882** answer occurrences · **118** topic shards.
 
 Query first:
 
@@ -64,7 +64,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `ial1-vhdl` | 3 | 19 | [`ial1-vhdl.md`](knowledge-map/generated/ial1-vhdl.md) |
 | `ial2-ahb` | 147 | 781 | [`ial2-ahb.md`](knowledge-map/generated/ial2-ahb.md) |
 | `ial2-apb` | 102 | 473 | [`ial2-apb.md`](knowledge-map/generated/ial2-apb.md) |
-| `ial2-axi` | 216 | 1030 | [`ial2-axi.md`](knowledge-map/generated/ial2-axi.md) |
+| `ial2-axi` | 216 | 1031 | [`ial2-axi.md`](knowledge-map/generated/ial2-axi.md) |
 | `ial2-broader` | 4 | 17 | [`ial2-broader.md`](knowledge-map/generated/ial2-broader.md) |
 | `ial2-common` | 1 | 4 | [`ial2-common.md`](knowledge-map/generated/ial2-common.md) |
 | `ial2-counted` | 3 | 15 | [`ial2-counted.md`](knowledge-map/generated/ial2-counted.md) |
@@ -82,7 +82,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `ial2-post` | 181 | 809 | [`ial2-post.md`](knowledge-map/generated/ial2-post.md) |
 | `ial2-ppif` | 8 | 46 | [`ial2-ppif.md`](knowledge-map/generated/ial2-ppif.md) |
 | `ial2-profile` | 4 | 19 | [`ial2-profile.md`](knowledge-map/generated/ial2-profile.md) |
-| `ial2-protocol` | 10 | 45 | [`ial2-protocol.md`](knowledge-map/generated/ial2-protocol.md) |
+| `ial2-protocol` | 10 | 47 | [`ial2-protocol.md`](knowledge-map/generated/ial2-protocol.md) |
 | `ial2-reusable` | 1 | 3 | [`ial2-reusable.md`](knowledge-map/generated/ial2-reusable.md) |
 | `ial2-single` | 3 | 12 | [`ial2-single.md`](knowledge-map/generated/ial2-single.md) |
 | `ial2-three` | 23 | 105 | [`ial2-three.md`](knowledge-map/generated/ial2-three.md) |

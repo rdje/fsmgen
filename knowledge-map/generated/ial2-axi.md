@@ -1,7 +1,7 @@
 # Knowledge Map: `ial2-axi`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **216** facts · **1030** uniquely owned question entries.
+> **216** facts · **1031** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -953,6 +953,7 @@
 - q="when does the AXI write burst4 request done pulse occur?" · facts=[ial2-axi-write-burst4-request-composition-behavior](../../docs/knowledge/ial2-axi-write-burst4-request-composition-behavior.md)
 - q="when does the bounded AXI full-read composition arm R?" · facts=[ial2-axi-full-read-transaction-composition-readiness-audit](../../docs/knowledge/ial2-axi-full-read-transaction-composition-readiness-audit.md)
 - q="when should the bounded AXI full-write composition arm B?" · facts=[ial2-axi-full-write-transaction-composition-readiness-audit](../../docs/knowledge/ial2-axi-full-write-transaction-composition-readiness-audit.md)
+- q="where is the AXI AW W valid ready bundle documented?" · facts=[ial2-axi-trimode-mdbook-coverage](../../docs/knowledge/ial2-axi-trimode-mdbook-coverage.md)
 - q="where is the AXI IAL2 mdBook chapter?" · facts=[ial2-axi-trimode-mdbook-coverage](../../docs/knowledge/ial2-axi-trimode-mdbook-coverage.md)
 - q="where is the IAL2 AXI APB AHB tri-mode mdBook plan recorded?" · facts=[ial2-axi-apb-ahb-trimode-mdbook-coverage-audit](../../docs/knowledge/ial2-axi-apb-ahb-trimode-mdbook-coverage-audit.md)
 - q="where is the generated response-demux behavior recorded?" · facts=[ial2-axi-manager-write-response-demux-metadata-first-slice](../../docs/knowledge/ial2-axi-manager-write-response-demux-metadata-first-slice.md)
@@ -2484,7 +2485,7 @@ _The fixed-four AXI manager read transaction composition is ready for contract s
 
 _AXI IAL2 tri-mode mdBook coverage_
 
-- **date:** 2026-06-29 · **status:** current
+- **date:** 2026-08-09 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-axi-trimode-mdbook-coverage.md`](../../docs/knowledge/ial2-axi-trimode-mdbook-coverage.md)
 
 ### ial2-axi-w-burst4-driver-behavior

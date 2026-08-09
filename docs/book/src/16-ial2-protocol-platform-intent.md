@@ -28,6 +28,14 @@ FSMGen's public source layers are:
 `.axi`, `.apb`, and `.ahb` are aliases over the same IAL2 model, not separate
 language layers. A protocol alias does not get direct-lowering privileges.
 
+The direct answer to "one language or one dialect per protocol?" is **one IAL2
+language layer**. A `(profile ...)` selects a protocol-specific vocabulary
+inside that language: AXI, APB, and AHB expose different intent objects because
+their protocols differ, but they share the same PPIF envelope, source anchors,
+diagnostic/report rules, support accounting, and layered lowering contract.
+Adding a profile extends IAL2's vocabulary; it does not create another language
+or another path to HDL.
+
 ## Three Authoring Modes
 
 IAL2 documentation uses the same three modes for each protocol:

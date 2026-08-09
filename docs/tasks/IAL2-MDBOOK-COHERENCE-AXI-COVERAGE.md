@@ -166,11 +166,11 @@ what is actually shipped, matching the thoroughness AHB already has.
   Commit: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.1: audit AXI book coverage`
 
 - ID: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Repair IAL2 architecture/current-truth prose and remove AXI workflow-history contamination.`
   Acceptance: `Make the IAL2 overview answer one language versus per-protocol dialects explicitly: one IAL2 language layer, generic PPIF container, protocol-specific profile vocabularies, optional aliases, mandatory IAL2->IAL1->IAL0->HDL lowering. In 16a, replace the obsolete selector/activation/continuity narrative with the final shipped assertion truth, account for the checked-in axi_aw_w_valid_ready_bundle.ppif monitor source, and keep the current initiator examples and honest bounded residue intact. Do not change code, tests, public sources, generated artifacts, or behavior.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The overview now answers one language versus protocol dialects directly and locks shared PPIF/profile/alias/lowering semantics. 16a documents the two-channel AW/W monitor bundle, aggregate report/review-artifact/HDL-entry boundary, all 13 non-capacity AXI sources in its validation set, and the final grouped 4-KiB assertion truth; exact scans find no selector/activation/continuity narration. Bundle plus both read compositions pass strict check JSON and verify-hdl. t1468/t1303/t1305/t1414 pass Files=4 Tests=312. mdbook build passes; exact docs/book/book output was removed. Two canonical Knowledge Map cards were refreshed; generation/check passes at 1105 facts/5716 unique questions and both new queries resolve exactly. Diff hygiene passes; no code, test, source, artifact, or behavior changed.`
+  Commit: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.2: align IAL2 and AXI book truth`
   Blocked by: `none`
 
 - ID: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.3`
@@ -209,7 +209,7 @@ what is actually shipped, matching the thoroughness AHB already has.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.2` | `pending` | Establish the coherent architecture and final-truth narrative before adding the dedicated manager-family reference. |
+| 1 | `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.3` | `pending` | Add the dedicated manager-capacity/status reference on top of the corrected architecture and AXI entrypoint. |
 
 ## Decisions
 
@@ -236,12 +236,35 @@ what is actually shipped, matching the thoroughness AHB already has.
   one-section lag in subsections below top-level sections 36 through 42 of
   `docs/NEXSIM_API_MCP_AGENT_CONSUMER_REQUIREMENTS.md`.
 
+## Acceptance Checklist (enforced) — `.2` maintained-reference authority
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The full doctrine gate measured the staged
+  `shipped_behavior` surface at 52 files, 48,573 lines, and 2,572,792 bytes,
+  while `git log -S 'STARTUP-INTEGRITY-REPAIR-AUG09.3-BOOK-SYNC' --
+  doctrine/live_document_size/surfaces.jsonl` locates the reused authority from
+  the preceding slice. The maintained-reference checker correctly rejected a
+  changed mdBook without a unique exact authority for this slice.
+- [x] **ADDRESSED (verified)** —
+  `scripts/check_live_document_reference_authority.pl` accepts authority
+  `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.2-BOOK-SYNC` with the committed baseline
+  52 files / 48,572 lines / 2,572,914 bytes and exact staged delta 0 files / +1
+  line / -122 bytes; no ceiling changes. The two refreshed Knowledge Map cards
+  shrink from 60 lines / 3,967 bytes to 55 lines / 3,323 bytes while both new
+  queries continue to resolve exactly.
+- [x] **NO REGRESSION** — The bundle and both read compositions pass strict
+  check JSON plus HDL verification; the focused regression reports `All tests
+  successful` at `Files=4, Tests=312`; `mdbook build docs/book` passes and its
+  exact generated output is removed; Knowledge Map validation reports
+  `knowledge-map: OK` at 1,105 facts / 5,716 unique questions. The final staged
+  gate reports `[doctrine] all doctrine checks passed`.
+
 ## Notes
 
 - Activated on `2026-08-09`; `.1` completed the current audit and `.2` is the
-  sole PNT-eligible frontier.
-- Related: the AXI thread is a coherent-but-deliberately-partial spine — 140/142
-  sources compose one `axi0_capacity_status` module (a synthesizable
+  first implementation leaf. `.2` now completes architecture/current-truth
+  repair, leaving `.3` as the sole PNT-eligible frontier.
+- Related: the AXI thread is a coherent-but-deliberately-partial spine — all 140
+  manager-capacity/status sources compose one `axi0_capacity_status` module (a synthesizable
   capacity/status + response-demux + read-data-capture core that self-labels a
   "capacity-status-shell"), not yet a bus-driving initiator (it does not drive
   AW/AR/W handshakes, addresses, or WDATA/WLAST). Whether to keep deepening the AXI

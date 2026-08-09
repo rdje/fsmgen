@@ -12,7 +12,7 @@ organized by authoring mode, not by implementation module.
 
 | Mode | Start with | What it demonstrates |
 | --- | --- | --- |
-| Guided mode | `ppif/axi_aw_valid_ready.ppif` and `ppif/axi_aw_valid_ready.axi` | A single AXI AW Valid-Ready monitor, source anchors, generated assertions, and `.ppif`/`.axi` profile-alias parity for the selected first alias. |
+| Guided mode | `ppif/axi_aw_valid_ready.ppif`, `ppif/axi_aw_valid_ready.axi`, and `ppif/axi_aw_w_valid_ready_bundle.ppif` | A single AXI AW Valid-Ready monitor, source anchors, generated assertions, `.ppif`/`.axi` profile-alias parity, and the aggregate two-channel AW/W monitor boundary. |
 | Initiator mode | `ppif/axi_aw_driver.ppif`, `ppif/axi_w_driver.ppif`, `ppif/axi_w_burst4_driver.ppif`, `ppif/axi_b_response_acceptor.ppif`, `ppif/axi_write_request_composition.ppif`, `ppif/axi_write_burst4_request_composition.ppif`, `ppif/axi_write_transaction_composition.ppif`, `ppif/axi_ar_driver.ppif`, `ppif/axi_r_beat_acceptor.ppif`, `ppif/axi_read_transaction_composition.ppif`, and `ppif/axi_read_burst4_transaction_composition.ppif` | Bounded AXI manager AW/W/AR channel **drivers**, including fixed-four W payload progression, explicitly armed B-response and R-beat **acceptors**, and fixed-single-beat plus fixed-four-beat request/full-transaction **compositions**. |
 | More-control mode | `ppif/axi_manager_capacity_status.ppif`, `ppif/axi_manager_capacity_status_id_family.ppif`, and `ppif/axi_manager_capacity_status_transaction_envelope.ppif` | Bounded manager capacity/status, ID-family metadata, and logical transaction metadata while staying in the public AXI manager shell. |
 | Raw/full-control mode | `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif` | A deep shipped AXI manager shape with dynamic read transactions, same-ID issue-order queueing, burst-last response demux, runtime beat-count/`RLAST` validation, and multi-beat read-data output banks. |
@@ -71,6 +71,29 @@ generated/axi_aw_valid_ready_monitor.fsm
 The generated `.isf` contains the monitor transaction and the stall-stability
 assertions. The generated `.fsm` contains the corresponding `+assert` carriers
 and the one-cycle `axi_aw_valid_ready_monitor_done` pulse.
+
+### Two-channel AW/W monitoring bundle
+
+`ppif/axi_aw_w_valid_ready_bundle.ppif` is the second guided monitor shape. It
+contains two uniquely named `(valid-ready-channel ...)` objects under one PPIF
+intent: an AW monitor over `AWADDR`/`AWLEN` and a W monitor over
+`WDATA`/`WSTRB`. It observes both channels independently; it does not coordinate
+or drive an AXI write transaction.
+
+```bash
+./bin/fsmgen --quiet --strict --check --json ppif/axi_aw_w_valid_ready_bundle.ppif
+./bin/fsmgen --quiet --emit-schedule-json ppif/axi_aw_w_valid_ready_bundle.ppif
+./bin/fsmgen --quiet --strict --emit-semantic-json ppif/axi_aw_w_valid_ready_bundle.ppif
+./bin/fsmgen --verify-hdl ppif/axi_aw_w_valid_ready_bundle.ppif
+```
+
+The aggregate report schema is
+`fsmgen.ial2.protocol_intent.valid_ready_bundle.v1`. Generated review artifacts
+remain explicit: one `.isf` and one `.fsm` per channel, plus
+`axi_aw_w_valid_ready_bundle.fsm` as the aggregate wrapper/top HDL entry. The
+semantic root identifies a PPIF bundle and retains both channel records. This
+avoids an ambiguous "first channel wins" result while preserving the mandatory
+IAL2-to-IAL1-to-IAL0 chain.
 
 ## Initiator Mode (Driving)
 
@@ -989,55 +1012,14 @@ clean beats, reset after one accepted beat, and post-reset recovery. It ends
 idle at exact AR/R/request/beat/transaction counts `4/13/4/13/3`; Verilator and
 Yosys both pass.
 
-Current correctness caveat: t1507 runs that behavioral harness with
-`--no-assert`. The behavioral admission path correctly factors the nested
-4-KiB test as `high & (bit3 | bit2)`, but the generated concurrent property
-currently inlines it as `high & bit3 | bit2`. SystemVerilog precedence then
-falsely rejects legal address `0x00000004`. Parent selector `.832` selects
-no-behavior audit `ISF-ASSERT-NESTED-BITWISE-PRECEDENCE-REPAIR.1` to isolate a
-general AST-preserving renderer contract and freeze assertion-enabled legal-
-bit-2 coverage before repair. This caveat concerns the generated assertion,
-not the shipped behavioral admission set. See the
-[selection record](../../IAL2_POST_DIRECT_VHDL_REDUCTION_NEXT_OWNER_SELECTION.md).
-Clean selector commit `1be57f7bd` activates only that no-behavior audit. AXI
-admission, generated HDL, and the current assertion defect remain unchanged
-during activation.
-
-That audit is now complete. A recursive carrier trace proves the property and
-its nested operands are all CoreAST: direct nested rendering is correct, while
-inline-intermediate substitution turns a child AST into standalone text and
-loses its former parent precedence. The selected repair explicitly groups
-every substituted intermediate expression. Tracked t1544 freezes the current
-malformed property and correct behavioral intermediate; a separate cleanly
-activated implementation must enable t1507 assertions and add legal address
-`0x00000004` without changing the admission set. See the
-[readiness audit](../../ISF_ASSERT_NESTED_BITWISE_PRECEDENCE_READINESS_AUDIT.md).
-Clean audit commit `628ca0c33` activates only implementation `.2`. AXI
-admission, generated HDL, and the current assertion defect remain unchanged
-during this continuity transition.
-
-Implementation `.2` now ships the correction. The property contains
-`high & (bit3 | bit2)` and agrees with unchanged behavioral admission for legal
-address `0x00000004`. The expanded behavior harness retains two deliberate
-illegal commands and reaches `5/17/5/17/4`; because those commands correctly
-violate the boundary assertion, a separate all-assertion legal-only harness
-proves exact `1/4/1/4/1` retirement with fixed LEN3/SIZE2/INCR metadata and
-matching RID/RLAST. See the
-[behavior record](../../ISF_ASSERT_NESTED_BITWISE_PRECEDENCE_BEHAVIOR.md).
-
-Clean behavior commit `80aa203ab` activates parent selector `.833`
-continuity-only. AXI admission, assertions, generated HDL, and runtime behavior
-remain unchanged while the next roadmap owner is selected.
-
-Completed `.833` selects a no-behavior mdBook VHDL introduction/backend-summary
-truth repair. It changes no AXI source, generated HDL, assertion, or runtime
-contract; broader AXI work remains separately owned.
-Clean selector commit `191a65151` activates only that documentation leaf
-continuity-only; the AXI contract remains unchanged.
-That documentation leaf is complete with no AXI source, HDL, assertion, or
-runtime change. Parent selection may continue from a new clean selector.
-Clean documentation commit `0c9f402ca` activates only parent selector `.834`
-continuity-only; the AXI contract remains unchanged.
+The fixed-four composition's generated 4-KiB legality property preserves the
+nested low-bit expression as `high & (bit3 | bit2)`, matching behavioral
+admission for legal address `0x00000004`. The behavior harness retains two
+deliberately illegal commands and reaches exact `5/17/5/17/4`
+AR/R/request/beat/transaction counts; a separate assertion-enabled legal-only
+harness reaches `1/4/1/4/1` with fixed LEN3/SIZE2/INCR metadata and matching
+RID/RLAST. Internal repair and selector history is retained in task records and
+Git rather than in this user-facing final contract.
 
 General dynamic bursts, RRESP/output-bank aggregation, malformed-subordinate
 timeout/recovery, capacity/status adapter wiring, multiple outstanding and
@@ -1152,6 +1134,8 @@ This chapter was validated from checked-in sources with:
 ```bash
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_aw_valid_ready.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_aw_valid_ready.axi
+./bin/fsmgen --quiet --strict --check --json ppif/axi_aw_w_valid_ready_bundle.ppif
+./bin/fsmgen --verify-hdl ppif/axi_aw_w_valid_ready_bundle.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_aw_driver.ppif
 ./bin/fsmgen --verify-hdl ppif/axi_aw_driver.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_w_driver.ppif
@@ -1170,6 +1154,10 @@ This chapter was validated from checked-in sources with:
 ./bin/fsmgen --verify-hdl ppif/axi_write_request_composition.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_write_transaction_composition.ppif
 ./bin/fsmgen --verify-hdl ppif/axi_write_transaction_composition.ppif
+./bin/fsmgen --quiet --strict --check --json ppif/axi_read_transaction_composition.ppif
+./bin/fsmgen --verify-hdl ppif/axi_read_transaction_composition.ppif
+./bin/fsmgen --quiet --strict --check --json ppif/axi_read_burst4_transaction_composition.ppif
+./bin/fsmgen --verify-hdl ppif/axi_read_burst4_transaction_composition.ppif
 ./bin/fsmgen --quiet --emit-schedule-json ppif/axi_manager_capacity_status_id_family.ppif
 ./bin/fsmgen --quiet --strict --emit-semantic-json ppif/axi_manager_capacity_status_transaction_envelope.ppif
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif
@@ -1178,9 +1166,11 @@ This chapter was validated from checked-in sources with:
 
 The temporary outdir probe produced `axi_aw_valid_ready_monitor.isf` and
 `axi_aw_valid_ready_monitor.fsm`, confirming that the guided example still
-exposes the review artifacts the chapter describes. The nine listed initiator
-source checks and `--verify-hdl` runs confirm that six channel primitives plus
-the three write compositions are accepted and lower to lint/synthesis-clean HDL. The
+exposes the review artifacts the chapter describes. The two guided monitor
+sources plus all eleven listed driver/acceptor/composition sources are checked;
+the bundle and every bus-driving source also lower to lint/synthesis-clean HDL.
+The initiator spine comprises six channel primitives and five bounded
+compositions. The
 focused `t/1499-ial2-axi-aw-driver.t`, `t/1500-ial2-axi-w-driver.t`,
 `t/1501-ial2-axi-b-response-acceptor.t`, `t/1504-ial2-axi-ar-driver.t`, and
 `t/1505-ial2-axi-r-beat-acceptor.t` generated-HDL simulations separately prove
@@ -1188,6 +1178,9 @@ their transfer/response cardinality, completion-pulse, reset, and stability
 guarantees; the W test also proves the all-zero-strobe case remains legal, the
 B test proves unarmed responses cannot handshake, and the R test proves exact
 raw beat capture across held/delayed valid, busy arm, and active reset. The
+focused `t/1468-ial2-ppif-neutral-valid-ready-bundle.t` locks the aggregate
+bundle schema, per-channel review artifacts, wrapper/top entry, semantic root,
+and generated HDL selection. The
 four-subtest
 `t/1502-ial2-axi-write-request-composition.t` additionally proves the complete
 public/report/fail-closed/CLI artifact contract and executes the structural top

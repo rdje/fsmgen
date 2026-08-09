@@ -7,15 +7,15 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.2`.
-- current_state: `.1` remeasured 153 AXI PPIF sources (140 manager/13 other),
-  proved exact support accounting, selected a dedicated manager subchapter and
-  bounded `.2-.6` repair sequence, and durably routed two unrelated doc defects.
-- next_action: make the IAL2 overview explicitly answer one language versus
-  profiles, then replace obsolete AXI selector/commit narration with final
-  shipped truth and account for the AW/W monitor bundle.
-- in_flight_uncommitted: `.1` audit/task-plan synchronization before commit; no
-  background job or generated build residue.
+- active_work_unit: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.3`.
+- current_state: `.2` now states the one-language/profile-vocabulary contract,
+  documents all 13 non-capacity AXI sources including the AW/W monitor bundle,
+  and removes obsolete workflow history from the user-facing AXI chapter.
+- next_action: add `16aa-ial2-axi-manager-capacity-status.md`, link it after
+  16a, and document capacity/status, ID/transaction envelopes, event dispatch,
+  auto-ID lifecycle, and static/auto/dynamic identity fundamentals.
+- in_flight_uncommitted: `.2` book/fact/continuity synchronization before
+  commit; no background job or generated build residue.
 - blockers: none.
 
 ## Durable context
