@@ -634,7 +634,7 @@ sub _expression_width ($self, $ast) {
         my $signal_name = eval { $ast->signal_name } || $ast->{signal_name};
         my $width = $self->_intermediate_signal_width($signal_name);
         return $width if defined $width;
-        return 1;
+        return undef;
     }
 
     if ($ast->isa('FSM::CoreAST::AggregateRef') || $ast->isa('FSM::CoreAST::ParameterRef')) {
@@ -693,7 +693,7 @@ sub _signal_width ($self, $name) {
     if ($ctx->{enable_graph_signal_support}->is_intermediate_signal($name)) {
         my $width = $self->_intermediate_signal_width($name);
         return $width if defined $width;
-        return 1;
+        return undef;
     }
     return 1 if $name =~ /_(?:en|wen)$/;
 
@@ -756,7 +756,7 @@ sub _intermediate_signal_width ($self, $name) {
         }
     }
 
-    return 1;
+    return undef;
 }
 
 sub _boolean_constant ($self, $value) {
@@ -1465,7 +1465,7 @@ sub _signal_is_single_bit ($self, $name) {
 
     if ($ctx->{enable_graph_signal_support}->is_intermediate_signal($name)) {
         my $width = $self->_intermediate_signal_width($name);
-        my $result = (!defined($width) || $width == 1) ? 1 : 0;
+        my $result = (defined($width) && $width == 1) ? 1 : 0;
         fsm_debug("      PATH: Intermediate signal", 3);
         fsm_debug("      Intermediate signal width: " . (defined($width) ? $width : 'unknown'), 3);
         fsm_debug("      RESULT: " . ($result ? 'single-bit' : 'multi-bit') . " (from intermediate width)", 3);
@@ -1622,7 +1622,7 @@ sub _operand_is_single_bit ($self, $ast) {
         my $signal_name = eval { $ast->signal_name } || 'UNKNOWN';
         fsm_debug("      Intermediate signal name: '$signal_name'", 3);
         my $width = $self->_intermediate_signal_width($signal_name);
-        my $result = (!defined($width) || $width == 1) ? 1 : 0;
+        my $result = (defined($width) && $width == 1) ? 1 : 0;
         fsm_debug("      Intermediate signal width: " . (defined($width) ? $width : 'unknown'), 3);
         fsm_debug("      RESULT: " . ($result ? 'single-bit' : 'multi-bit') . " (from intermediate width)", 3);
         return $result;

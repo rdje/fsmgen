@@ -102,6 +102,16 @@ subtest 'consolidated intermediate normalization support owns runtime metadata n
         backend_sv_intermediate_recovery_support => Local::FakeRecoverySupport->new(),
         backend_sv_intermediate_width_support => Local::FakeWidthSupport->new(),
         enable_graph_factorization_support => Local::FakeFactorizationSupport->new(),
+        intermediate_signals => {
+            shared_term => { width => undef, width_source => 'unresolved_factorization_ast' },
+            dep_term => { width => undef, width_source => 'unresolved_factorization_ast' },
+        },
+        ast_factorizer => {
+            intermediate_signals => {
+                shared_term => { width => undef, width_source => 'unresolved_factorization_ast' },
+                dep_term => { width => undef, width_source => 'unresolved_factorization_ast' },
+            },
+        },
     };
     my $support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateNormalizationSupport->new(
         flattened_dt => $fake_backend,
@@ -137,6 +147,16 @@ subtest 'consolidated intermediate normalization support owns runtime metadata n
         $signals->{shared_term}{width},
         4,
         'normalization support records the normalized width',
+    );
+    is(
+        $fake_backend->{intermediate_signals}{shared_term}{width},
+        4,
+        'normalization publishes width to the live backend registry before downstream rendering',
+    );
+    is(
+        $fake_backend->{ast_factorizer}{intermediate_signals}{shared_term}{width_source},
+        'fake_width',
+        'normalization publishes authoritative width provenance to the factorizer registry',
     );
     is_deeply(
         $signals->{shared_term}{dependency_signal_names},

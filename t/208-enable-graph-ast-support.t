@@ -172,8 +172,15 @@ FSM
         expression => 'A & B',
         source => 'test_width_metadata',
     };
+    $prepared_backend->{intermediate_signals}{unresolved_expr} = {
+        width => undef,
+        width_source => 'unresolved_factorization_ast',
+        expression => 'CNT + CNT',
+        source => 'test_unresolved_width_metadata',
+    };
     my $sum_expr_ref = sub { FSM::HDL::IntermediateSignalRef->new(signal_name => 'sum_expr') };
     my $flag_expr_ref = sub { FSM::HDL::IntermediateSignalRef->new(signal_name => 'flag_expr') };
+    my $unresolved_expr_ref = sub { FSM::HDL::IntermediateSignalRef->new(signal_name => 'unresolved_expr') };
 
     is(
         $support->ast_to_systemverilog(
@@ -195,6 +202,20 @@ FSM
         ),
         '!flag_expr',
         'AST support still collapses one-bit intermediate equals-zero to direct negation',
+    );
+    is(
+        $support->ast_to_systemverilog(
+            FSM::AST::BinaryOp->new('==', $unresolved_expr_ref->(), FSM::AST::Literal->new("3'd0")),
+        ),
+        '(~|unresolved_expr)',
+        'AST support fails closed to reduction zero when an intermediate width is unresolved',
+    );
+    is(
+        $support->ast_to_systemverilog(
+            FSM::AST::BinaryOp->new('==', $unresolved_expr_ref->(), FSM::AST::Literal->new("3'd1")),
+        ),
+        "unresolved_expr == 3'd1",
+        'AST support preserves equals-one when an intermediate width is unresolved',
     );
 
     my $a_ref = sub { FSM::AST::SignalRef->new('A') };

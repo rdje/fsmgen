@@ -3,10 +3,10 @@
 ## Metadata
 
 - Tree ID: `IAL2-T1436-PREEXISTING-FAILURES`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra / test + HDL-quality hygiene`
 - Created: `2026-07-12`
-- Last updated: `2026-08-09`
+- Last updated: `2026-08-10`
 - Owner: repo-local workflow
 
 ## Origin — discovered while verifying `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`
@@ -69,6 +69,11 @@ targeted tests), which is likely why these drifted undetected.
   `IntermediateSignalWidthSupport` correctly infers the declaration width, but
   it runs too late to recover the removed comparison. The default-width seed
   dates to `57563dcaa4`; the truthiness rewrite was introduced by `425f03d1b`.
+- The exact ordering failure crosses two registry copies. Consolidated
+  normalization correctly infers widths on its merged signal set, while the
+  live backend and factorizer registries retain the provisional one-bit copy
+  until after expression rendering. `ASTSupport` consults those live copies,
+  so the later correct declaration width cannot protect the earlier rewrite.
 - The same mechanism reproduces across write/read multi-group, multi-depth-3,
   mixed-depth response-demux, and read-data queue-head fixtures observed in the
   `2026-08-09` run; this is one shared lowering defect, not several fixture
@@ -98,7 +103,7 @@ targeted tests), which is likely why these drifted undetected.
 ## Task Tree
 
 - ID: `IAL2-T1436-PREEXISTING-FAILURES`
-  Status: `active`
+  Status: `done`
   Goal: `Fix the two pre-existing t/1436 failures discovered during the AW-driver slice: (1) the stale APB cardinality diagnostic regex, and (2) the WIDTHTRUNC verilator lint in the generated capacity/status equality-to-zero lowering.`
   Children: `IAL2-T1436-PREEXISTING-FAILURES.1, IAL2-T1436-PREEXISTING-FAILURES.2`
 
@@ -110,17 +115,17 @@ targeted tests), which is likely why these drifted undetected.
   Commit: `IAL2-T1436-PREEXISTING-FAILURES.1: align APB diagnostic expectation`
 
 - ID: `IAL2-T1436-PREEXISTING-FAILURES.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Prevent multi-bit factored intermediates from being simplified as Boolean before authoritative width inference.`
   Acceptance: `Add a focused x==0/x==1 multi-bit intermediate regression; repair the width/simplification ordering or fail-closed classifier; prove the exact queue-head response-demux reproducer and representative read/write affected shapes with Verilator and Yosys; run t/1436 to green without weakening lint.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Factorization now records unresolved_factorization_ast instead of claiming one bit; consolidated normalization publishes inferred width and provenance to both live registries before rendering; unresolved intermediate classification fails closed. Focused factorization/AST/width/normalization tests pass Files=5 Tests=6, adjacent fixpoint tests pass Files=4 Tests=6, and truthiness tests pass Files=2 Tests=8. The exact write multi-group reproducer plus read multi-group, write mixed-depth, and read-burst mixed-depth representatives all pass --verify-hdl with Verilator and Yosys; generated zero/one assignments are (~|three_bit_value) and three_bit_value == 3'd1. The complete t1436 suite passes All tests successful, Files=1, Tests=346, in 6457 wall-clock seconds. A required RAM-guard rerun later stopped safely at host memory 88.6% versus the 88% cutoff (exit 137, complete PID tree terminated); per COMMIT.md it was recorded and not continued unbounded. Existing mdBook truthiness prose already states the repaired reduction contract, so no user-contract text changed.`
+  Commit: `IAL2-T1436-PREEXISTING-FAILURES.2: preserve multi-bit truthiness comparisons`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-T1436-PREEXISTING-FAILURES.2` | `pending` | Repair authoritative intermediate width before resuming the AXI queue-head documentation examples. |
+| — | none | `done` | Both repair leaves are complete; return to `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.4`. |
 
 ## Decisions
 
@@ -130,6 +135,36 @@ targeted tests), which is likely why these drifted undetected.
   affected response-demux/queue-head examples lowering-clean until `.2` is
   repaired. Complete the independent APB expectation leaf first, then the
   width/simplification leaf, committing each separately before returning.
+- `2026-08-10`: Treat factorizer width as unresolved until backend inference,
+  publish normalized widths to every live registry before expression rendering,
+  and classify an unresolved intermediate conservatively. This removes false
+  metadata at its source, repairs the copied-registry ordering, and preserves
+  the existing optimized form only when one-bit width is authoritative.
+
+## Acceptance Checklist (enforced) — `.2` intermediate-width ordering repair
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'width         => 1' --
+  perl/FSM/HDL/ASTFactorization.pm` locates the provisional scalar seed at
+  `57563dcaa4`; `git log -S '_simplify_truthiness_comparison' --
+  perl/FSM/Synthesis/EnableGraph/ASTSupport.pm` locates the rewrite at
+  `425f03d1b`. Runtime inspection then proved consolidated width inference
+  updated only the merged copy before render, while live backend/factorizer
+  copies still reported one bit.
+- [x] **ADDRESSED (verified)** — Factorization now emits unresolved width
+  metadata, normalization publishes inferred width/provenance before any
+  expression render, and unresolved AST classification fails closed. The exact
+  former Verilator failure now emits
+  `(~|concatenation_expr_plus_concatenation_expr)` for zero and preserves
+  `concatenation_expr_plus_concatenation_expr == 3'd1` for one; the exact source
+  plus three representative read/write and mixed-depth shapes pass both
+  `verilator_lint` and `yosys_synthesis` through `--verify-hdl`.
+- [x] **NO REGRESSION** — Focused and adjacent clusters report `All tests
+  successful` at `Files=5, Tests=6`, `Files=4, Tests=6`, and `Files=2,
+  Tests=8`. The complete `t/1436-ial2-ppif-parser-cli.t` run reports `All tests
+  successful`, `Files=1, Tests=346`. A subsequent mandated RAM-guard rerun
+  stopped safely at host memory 88.6% versus the 88% cutoff (exit 137); its PID
+  tree is gone and the already-complete green run remains the regression
+  result.
 
 ## Acceptance Checklist (enforced) — `.1` APB expectation alignment
 

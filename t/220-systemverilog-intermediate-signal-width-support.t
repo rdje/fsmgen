@@ -49,6 +49,12 @@ FSM
     my $signal_info = $intermediate_signals->{A_or_B};
 
     ok($signal_info, 'width support test fixture keeps the shared A_or_B intermediate signal');
+    ok(!defined($signal_info->{width}), 'factorization leaves width unresolved before backend inference');
+    is(
+        $signal_info->{width_source},
+        'unresolved_factorization_ast',
+        'factorization records why its initial width is unresolved',
+    );
 
     my $resolved_width = $width_support->resolve_intermediate_signal_width('A_or_B', $signal_info, $intermediate_signals);
     is($resolved_width, 8, 'width support infers the expected 8-bit width for the shared bitwise carrier');

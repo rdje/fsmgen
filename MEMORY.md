@@ -7,15 +7,15 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `IAL2-T1436-PREEXISTING-FAILURES.2`.
-- current_state: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.3` is complete; `.4` is
-  blocked on the now-active intermediate-width repair because selected
-  queue-head examples must be lowering-clean before publication.
-- next_action: add a focused multi-bit intermediate `== 0`/`== 1` regression,
-  then make truthiness simplification consume authoritative width or fail
-  closed before validating affected AXI queue-head sources.
+- active_work_unit: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.4`.
+- current_state: `IAL2-T1436-PREEXISTING-FAILURES` is complete; factorized
+  widths remain unresolved until inference, normalized widths are published
+  before render, and selected AXI queue-head examples pass both HDL gates.
+- next_action: extend `16aa` with same-ID reject/issue-order policies,
+  queue-head semantics, mixed populations, and representative BID/RID response
+  demultiplexing examples under `.4`.
 - in_flight_uncommitted: none; no background job or generated build residue.
-- blockers: none for the repair tree; mdBook `.4` waits on repair leaf `.2`.
+- blockers: none.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not

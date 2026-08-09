@@ -96,6 +96,24 @@ sub normalize_consolidated_intermediate_metadata ($self, $all_intermediate_signa
         fsm_debug("CONSOL_INTER_SIG: [WIDTH] '$signal_name' width normalized to $resolved_width", 3);
     }
 
+    # Rendering consults the live backend/factorizer registries when classifying
+    # intermediate references.  Publish every inferred width before rendering
+    # any expression so a copied provisional value cannot drive simplification.
+    for my $signal_name (keys %{$all_intermediate_signals || {}}) {
+        my $signal_info = $all_intermediate_signals->{$signal_name};
+        for my $registry (
+            $ctx->{intermediate_signals},
+            ($ctx->{ast_factorizer} && $ctx->{ast_factorizer}->{intermediate_signals})
+                ? $ctx->{ast_factorizer}->{intermediate_signals}
+                : undef,
+        ) {
+            next unless ref($registry) eq 'HASH';
+            next unless ref($registry->{$signal_name}) eq 'HASH';
+            $registry->{$signal_name}{width} = $signal_info->{width};
+            $registry->{$signal_name}{width_source} = $signal_info->{width_source};
+        }
+    }
+
     for my $signal_name (keys %{$all_intermediate_signals || {}}) {
         my $signal_info = $all_intermediate_signals->{$signal_name};
         my @dependencies = $recovery_support->resolve_intermediate_signal_dependencies($signal_name, $signal_info);

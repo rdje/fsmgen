@@ -547,7 +547,11 @@ sub generate_candidate_names {
             structural_id => $structural_id,
             usage_count   => $candidate_info->{usage_count},
             contexts      => _clone_factorization_value($candidate_info->{contexts} || []),
-            width         => 1  # Default to 1-bit, could be made configurable
+            # Factorization has no module-width context.  Keep the width
+            # unresolved until the backend infers it from the substituted AST;
+            # a provisional scalar value is unsafe for pre-render rewrites.
+            width         => undef,
+            width_source  => 'unresolved_factorization_ast',
         };
         
         fsm_debug("AST-FACTOR-DEBUG: Generated signal: $signal_name (usage: $candidate_info->{usage_count})", 3);

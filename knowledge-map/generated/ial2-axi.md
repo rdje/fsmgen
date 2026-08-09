@@ -1,7 +1,7 @@
 # Knowledge Map: `ial2-axi`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **216** facts · **1032** uniquely owned question entries.
+> **216** facts · **1034** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -242,6 +242,7 @@
 - q="how should the AXI AW driver double-handshake be corrected?" · facts=[ial2-axi-aw-single-transfer-correction-shape](../../docs/knowledge/ial2-axi-aw-single-transfer-correction-shape.md)
 - q="how should the AXI full-write composition handle BID mismatch?" · facts=[ial2-axi-full-write-transaction-composition-readiness-audit](../../docs/knowledge/ial2-axi-full-write-transaction-composition-readiness-audit.md)
 - q="how should the AXI read composition handle early RLAST?" · facts=[ial2-axi-read-burst4-transaction-composition-readiness-audit](../../docs/knowledge/ial2-axi-read-burst4-transaction-composition-readiness-audit.md)
+- q="how was the AXI queue-head WIDTHTRUNC truthiness bug fixed?" · facts=[ial2-axi-manager-write-depth3-queue-head-response-demux-behavior](../../docs/knowledge/ial2-axi-manager-write-depth3-queue-head-response-demux-behavior.md)
 - q="how will AXI transactions get per-transaction event provenance?" · facts=[ial2-axi-manager-transaction-event-dispatch-selection](../../docs/knowledge/ial2-axi-manager-transaction-event-dispatch-selection.md)
 - q="how will per-transaction AXI events fan into capacity/status?" · facts=[ial2-axi-manager-transaction-event-dispatch-readiness](../../docs/knowledge/ial2-axi-manager-transaction-event-dispatch-readiness.md)
 - q="is --verify-hdl enough to prove AXI transfer cardinality?" · facts=[ial2-axi-aw-driver-double-handshake](../../docs/knowledge/ial2-axi-aw-driver-double-handshake.md)
@@ -991,6 +992,7 @@
 - q="why audit read-data over read single-beat multi-group queue-head groups first?" · facts=[ial2-axi-manager-post-read-single-beat-multi-group-queue-head-response-demux-next-slice-selection](../../docs/knowledge/ial2-axi-manager-post-read-single-beat-multi-group-queue-head-response-demux-next-slice-selection.md)
 - q="why can axi_aw_driver produce two AW handshakes?" · facts=[ial2-axi-aw-driver-double-handshake](../../docs/knowledge/ial2-axi-aw-driver-double-handshake.md)
 - q="why did AXI IAL2 pivot from the response side to the initiator side?" · facts=[ial2-axi-manager-initiator-pivot](../../docs/knowledge/ial2-axi-manager-initiator-pivot.md)
+- q="why did a multi-bit factored intermediate become !x or bare x?" · facts=[ial2-axi-manager-write-depth3-queue-head-response-demux-behavior](../../docs/knowledge/ial2-axi-manager-write-depth3-queue-head-response-demux-behavior.md)
 - q="why did multi-group scalar runtime validation wait for a later owner?" · facts=[ial2-axi-manager-post-multi-group-queue-head-last-beat-read-data-next-slice-selection](../../docs/knowledge/ial2-axi-manager-post-multi-group-queue-head-last-beat-read-data-next-slice-selection.md)
 - q="why did response demux need an IAL1 rule-pulse prerequisite?" · facts=[ial2-axi-manager-write-response-demux-behavior-readiness-audit](../../docs/knowledge/ial2-axi-manager-write-response-demux-behavior-readiness-audit.md)
 - q="why did the multi-group raw-ARLEN and runtime-validation variants need later owners?" · facts=[ial2-axi-manager-multi-group-queue-head-last-beat-read-data-readiness-audit](../../docs/knowledge/ial2-axi-manager-multi-group-queue-head-last-beat-read-data-readiness-audit.md)
@@ -2386,9 +2388,9 @@ _AXI manager transaction event dispatch selected before ID allocation_
 
 ### ial2-axi-manager-write-depth3-queue-head-response-demux-behavior
 
-_Write depth-3 queue-head response-demux is generated for one BID group_
+_Write depth-3 response-demux width correctness_
 
-- **date:** 2026-06-17 · **status:** current
+- **date:** 2026-08-10 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-axi-manager-write-depth3-queue-head-response-demux-behavior.md`](../../docs/knowledge/ial2-axi-manager-write-depth3-queue-head-response-demux-behavior.md)
 
 ### ial2-axi-manager-write-depth3-queue-head-response-demux-readiness-audit

@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `roadmap/documentation alignment / IAL2 mdBook`
 - Created: `2026-07-12`
-- Last updated: `2026-08-09`
+- Last updated: `2026-08-10`
 - Owner: repo-local workflow
 
 ## Origin
@@ -187,7 +187,7 @@ what is actually shipped, matching the thoroughness AHB already has.
   Acceptance: `Extend 16aa with concrete/dynamic same-ID reject and issue-order-queue policy shapes, queue-head semantics, bounded depth/cardinality, mixed dynamic/static populations, write BID/read RID response-demux, generated completion, and representative runnable write/read sources. Clearly distinguish fixture combinations from independent language features and state scoreboard/interleaving residue without implying full AXI manager behavior.`
   Verification: `pending`
   Commit: `pending`
-  Blocked by: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.3, IAL2-T1436-PREEXISTING-FAILURES.2`
+  Blocked by: `none`
 
 - ID: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.5`
   Status: `pending`
@@ -209,7 +209,7 @@ what is actually shipped, matching the thoroughness AHB already has.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.4` | `pending` | Resume after the separately owned intermediate-width repair makes the selected queue-head examples lowering-clean. |
+| 1 | `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.4` | `pending` | The separately owned width repair is complete; document same-ID ordering, mixed populations, and response demultiplexing next. |
 
 ## Decisions
 
@@ -222,6 +222,9 @@ what is actually shipped, matching the thoroughness AHB already has.
 - `2026-08-09`: Keep the existing overview and `16a` entrypoint focused; place
   the 140-source manager family in new `16aa` rather than overloading `16a`,
   mixing IAL2 into the ISF-only `13k`, or using the backlog as a tutorial.
+- `2026-08-10`: `IAL2-T1436-PREEXISTING-FAILURES.2` makes the selected
+  queue-head response-demux examples width-correct and lowering-clean under
+  Verilator and Yosys. Remove the prerequisite blocker and resume `.4`.
 - `2026-08-09`: Document independent feature semantics in full, but document
   the combinatorial fixture matrix through representative sources. Ten selected
   sources span every current family and all passed strict check JSON.
