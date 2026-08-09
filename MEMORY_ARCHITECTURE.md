@@ -141,8 +141,11 @@ structurally unnecessary for any fact logged once.
   enforced — §9.)*
 - **Overwrite, don't append** — it always describes *now*, never the journey.
 - **No history** — that's git (D) and the task-tree logs (B).
-- **Prefer derived over hand-written** — a small script can regenerate the
-  current-state block from `git log` + each tree's frontier row, so it cannot drift.
+- **Derive exact state instead of hand-writing it** — when a canonical system
+  can answer a current-state question exactly and cheaply, keep the exact
+  accessor in the pointer rather than a copied value. A deliberately retained
+  projection needs an unconditional verifier against its authority. Immutable
+  evidence must name its capture boundary and must not claim to describe now.
 
 Existing bloat is **not deleted** — it is already preserved in git history. You simply
 stop carrying it forward.
@@ -158,7 +161,7 @@ stop carrying it forward.
 - Durable facts/decisions live in `docs/decisions/`.
 
 ## Current state (OVERWRITE this block each update — do not append)
-- latest_commit: `<hash>` — "<subject>"   (ahead of origin: <N>; push at ~<threshold>)
+- repository_revision: derive current `HEAD` with `git log -1 --format='%H %s'`
 - active_work_unit: `<TASK-TREE-ID>`  →  frontier leaf: `<LEAF-ID>` (<status>)
 - next_action: <one concrete sentence>
 - in_flight_uncommitted: <none | what is staged/unsaved and how to finish it>
@@ -361,8 +364,10 @@ work only by defeating all four layers, and CI (E4) cannot be defeated from a cl
 5. Install enforcement (§9): add `scripts/check_memory_architecture.sh`, the
    `.githooks/`, `git config core.hooksPath .githooks`, and the CI step.
 6. Adopt the write path (§4) and read path (§5) as the working discipline.
-7. *(Optional)* Add a script to regenerate the resume pointer's current-state block from
-   `git log` + tree frontiers, so layer A is derived, not hand-maintained.
+7. Classify mechanically owned current-state fields under the live-document
+   derived-state contract. Derive exact values on read; retain a copied
+   projection only with an executed authority verifier. Never store a value
+   whose own commit invalidates it.
 
 ---
 
@@ -373,7 +378,8 @@ work only by defeating all four layers, and CI (E4) cannot be defeated from a cl
 - ❌ Re-narrating git history into prose docs (duplication that goes stale).
 - ❌ Durable facts living only in the conversation or chat scrollback.
 - ❌ One giant file you must read top-to-bottom to find "what's next."
-- ❌ Hand-maintained current-state that drifts from reality (prefer derived).
+- ❌ Hand-maintained exact current-state, especially a value invalidated by the
+  commit that records it (derive on read or use a verified projection).
 - ❌ A harness-specific rules file treated as the system of record instead of a pointer.
 - ❌ Recommendations with no enforcement — a rule nothing checks is a rule nothing follows.
 

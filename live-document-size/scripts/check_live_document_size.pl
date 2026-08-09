@@ -12,7 +12,8 @@ use Getopt::Long qw(GetOptions);
 use JSON::PP;
 
 my ($root_arg, $registry_arg, $routes_arg, $archives_arg, $ledgers_arg,
-    $evidence_maps_arg, $retention_contracts_arg, $coverage_stdin, $help);
+    $evidence_maps_arg, $retention_contracts_arg, $derived_state_arg,
+    $coverage_stdin, $help);
 my @adapter_proofs;
 GetOptions(
     'root=s'          => \$root_arg,
@@ -22,6 +23,7 @@ GetOptions(
     'ledgers=s'       => \$ledgers_arg,
     'evidence-maps=s' => \$evidence_maps_arg,
     'retention-contracts=s' => \$retention_contracts_arg,
+    'derived-state=s' => \$derived_state_arg,
     'coverage-stdin!' => \$coverage_stdin,
     'adapter-proof=s@' => \@adapter_proofs,
     'help|h'          => \$help,
@@ -30,7 +32,8 @@ usage(0) if $help;
 usage(2) if !defined($root_arg) || !defined($registry_arg)
     || !defined($routes_arg) || !defined($archives_arg)
     || !defined($ledgers_arg)
-    || !defined($evidence_maps_arg) || !defined($retention_contracts_arg);
+    || !defined($evidence_maps_arg) || !defined($retention_contracts_arg)
+    || !defined($derived_state_arg);
 
 my $root = abs_path($root_arg);
 if (!defined($root) || !-d $root) {
@@ -48,7 +51,7 @@ sub usage {
     print STDERR <<'USAGE';
 Usage: check_live_document_size.pl --root DIR --registry FILE --routes FILE
        --archives FILE --ledgers FILE --evidence-maps FILE
-       --retention-contracts FILE
+       --retention-contracts FILE --derived-state FILE
        [--coverage-stdin]
 USAGE
     exit $status;
@@ -210,6 +213,19 @@ sub read_regular_file {
     return $contents;
 }
 
+sub literal_occurrences {
+    my ($contents, $literal) = @_;
+    return 0 if !defined($contents) || !defined($literal) || $literal eq '';
+    my ($count, $offset) = (0, 0);
+    while (1) {
+        my $found = index($contents, $literal, $offset);
+        last if $found < 0;
+        $count++;
+        $offset = $found + length($literal);
+    }
+    return $count;
+}
+
 sub raw_line_count {
     my ($contents) = @_;
     return ($contents =~ tr/\n//);
@@ -241,7 +257,7 @@ sub ledger_entries {
 
 my %adapter_proof;
 for my $proof (@adapter_proofs) {
-    if ($proof !~ /\A(?:surface|archive|currency|ledger):[a-z][a-z0-9_.-]*\z/) {
+    if ($proof !~ /\A(?:surface|archive|currency|derived|ledger):[a-z][a-z0-9_.-]*\z/) {
         problem("invalid adapter proof id: $proof");
         next;
     }
@@ -884,6 +900,118 @@ for my $row (@{$surface_rows}) {
 
 if (!@surface_order) {
     problem('surface registry declares no surfaces');
+}
+
+my $derived_rows = read_jsonl($derived_state_arg, 'derived-state registry');
+my %derived_contract_ids;
+my %derived_field_keys;
+for my $row (@{$derived_rows}) {
+    my ($line_number, $record) = @{$row};
+    my @keys = qw(
+        record_type schema_version contract_id surface_id path field_id
+        storage field_marker authority derivation verifier
+    );
+    next if !validate_keys(
+        'derived-state registry', $line_number, $record, \@keys, [],
+    );
+    my ($record_type, $schema_version, $contract_id, $surface_id, $path,
+        $field_id, $storage, $field_marker, $authority, $derivation, $verifier)
+        = @{$record}{@keys};
+    if (($record_type // '') ne 'contract') {
+        problem("derived-state registry line $line_number has invalid record_type");
+        next;
+    }
+    if (!nonnegative_integer($schema_version) || $schema_version ne '1') {
+        problem("derived-state contract $contract_id has unsupported schema_version");
+    }
+    if (!bounded_nonempty_string($contract_id, 128)
+            || $contract_id !~ /\A[a-z][a-z0-9_.-]*\z/) {
+        problem("derived-state registry line $line_number has invalid contract_id");
+        next;
+    }
+    if ($derived_contract_ids{$contract_id}++) {
+        problem("derived-state contract $contract_id is declared more than once");
+        next;
+    }
+    if (!bounded_nonempty_string($surface_id, 128)
+            || $surface_id !~ /\A[a-z][a-z0-9_]*\z/) {
+        problem("derived-state contract $contract_id has invalid surface_id");
+        next;
+    }
+    my $surface = $surfaces{$surface_id};
+    if (!defined $surface) {
+        problem("derived-state contract $contract_id names unknown surface: $surface_id");
+        next;
+    }
+    if ($surface->{lifecycle} =~ /\A(?:archive_terminal|external_terminal|frozen_legacy)\z/) {
+        problem("derived-state contract $contract_id must govern a current maintained surface");
+        next;
+    }
+    if (!bounded_nonempty_string($path, 512) || !relative_path_ok($path)) {
+        problem("derived-state contract $contract_id has unsafe or oversized path");
+        next;
+    }
+    my %surface_files = map { display_path($_) => 1 }
+        expand_patterns($surface_id, $surface->{target_patterns});
+    if (!$surface_files{$path}) {
+        problem("derived-state contract $contract_id path is outside surface $surface_id: $path");
+        next;
+    }
+    if (!bounded_nonempty_string($field_id, 128)
+            || $field_id !~ /\A[a-z][a-z0-9_.-]*\z/) {
+        problem("derived-state contract $contract_id has invalid field_id");
+        next;
+    }
+    my $field_key = join("\0", $surface_id, $path, $field_id);
+    problem("derived-state field is declared more than once: $surface_id $path $field_id")
+        if $derived_field_keys{$field_key}++;
+    my $storage_label = defined($storage) && !ref($storage) ? $storage : '<invalid>';
+    problem("derived-state contract $contract_id has invalid storage: $storage_label")
+        if !defined($storage) || ref($storage)
+            || $storage !~ /\A(?:derive_on_read|verified_copy)\z/;
+    for my $pair (
+        [field_marker => $field_marker, 512],
+        [authority => $authority, 512],
+        [derivation => $derivation, 1024],
+        [verifier => $verifier, 1024],
+    ) {
+        problem("derived-state contract $contract_id has invalid or oversized $pair->[0]")
+            if !bounded_nonempty_string($pair->[1], $pair->[2]);
+    }
+    next if !defined($storage) || ref($storage)
+        || $storage !~ /\A(?:derive_on_read|verified_copy)\z/
+        || !bounded_nonempty_string($field_marker, 512)
+        || !bounded_nonempty_string($authority, 512)
+        || !bounded_nonempty_string($derivation, 1024)
+        || !bounded_nonempty_string($verifier, 1024);
+
+    my $contents = read_regular_file($surface_id, $path);
+    next if !defined $contents;
+    my $field_occurrences = literal_occurrences($contents, $field_marker);
+    my $derivation_occurrences = literal_occurrences($contents, $derivation);
+    if ($storage eq 'derive_on_read') {
+        problem("derived-state contract $contract_id forbids stored field marker in $path: $field_marker")
+            if $field_occurrences;
+        problem("derived-state contract $contract_id derivation is absent from $path: $derivation")
+            if !$derivation_occurrences;
+        problem("derived-state contract $contract_id derive_on_read must use builtin:derive_on_read")
+            if $verifier ne 'builtin:derive_on_read';
+        ok_note("derived-state contract $contract_id derives $field_id on read from $authority")
+            if !$field_occurrences && $derivation_occurrences
+                && $verifier eq 'builtin:derive_on_read';
+    } else {
+        problem("derived-state contract $contract_id verified copy marker is absent from $path: $field_marker")
+            if !$field_occurrences;
+        problem("derived-state contract $contract_id derivation is absent from $path: $derivation")
+            if !$derivation_occurrences;
+        problem("derived-state contract $contract_id verified_copy must declare core:, adapter:, or external: execution")
+            if $verifier !~ /\A(?:core|adapter|external):.+\z/;
+        verify_execution(
+            "derived-state contract $contract_id",
+            "derived:$contract_id",
+            $verifier,
+        ) if $verifier =~ /\A(?:core|adapter|external):.+\z/;
+    }
 }
 
 my @coverage_patterns;

@@ -12,7 +12,7 @@ use JSON::PP;
 use Symbol qw(gensym);
 
 my ($root_arg, $surfaces, $routes, $archives, $ledgers, $evidence_maps,
-    $retention_contracts, $help);
+    $retention_contracts, $derived_state, $help);
 $surfaces = 'doctrine/live_document_size/surfaces.jsonl';
 $routes = 'doctrine/readme_entrypoint/routed_destinations.jsonl';
 $archives = 'doctrine/live_document_size/archive_descriptors.jsonl';
@@ -20,6 +20,7 @@ $ledgers = 'doctrine/live_document_size/ledger_manifests.jsonl';
 $evidence_maps = 'doctrine/live_document_size/evidence_maps.jsonl';
 $retention_contracts =
     'doctrine/live_document_size/version_retention_contracts.jsonl';
+$derived_state = 'doctrine/live_document_size/derived_state_contracts.jsonl';
 GetOptions(
     'root=s'          => \$root_arg,
     'surfaces=s'      => \$surfaces,
@@ -28,6 +29,7 @@ GetOptions(
     'ledgers=s'       => \$ledgers,
     'evidence-maps=s' => \$evidence_maps,
     'retention-contracts=s' => \$retention_contracts,
+    'derived-state=s' => \$derived_state,
     'help|h'          => \$help,
 ) or usage(2);
 usage(0) if $help;
@@ -46,6 +48,7 @@ Usage: check_live_document_resulting_tree.pl [--root DIR]
        [--surfaces FILE] [--routes FILE] [--archives FILE]
        [--ledgers FILE]
        [--evidence-maps FILE] [--retention-contracts FILE]
+       [--derived-state FILE]
 USAGE
     exit $status;
 }
@@ -107,7 +110,8 @@ if ($staged_status != 0 || $staged eq '') {
 }
 
 my %controlled = map { $_ => 1 }
-    ($surfaces, $routes, $archives, $ledgers, $evidence_maps, $retention_contracts);
+    ($surfaces, $routes, $archives, $ledgers, $evidence_maps,
+        $retention_contracts, $derived_state);
 for my $record (@{jsonl($surfaces)}) {
     $controlled{$record->{index}} = 1 if relative_path_ok($record->{index});
     for my $pattern (@{$record->{targets} || []}) {

@@ -79,6 +79,7 @@ live_document_files=(
   doctrine/live_document_size/ledger_manifests.jsonl
   doctrine/live_document_size/evidence_maps.jsonl
   doctrine/live_document_size/version_retention_contracts.jsonl
+  doctrine/live_document_size/derived_state_contracts.jsonl
   doctrine/live_document_size/isf_reference_partitions.jsonl
   doctrine/readme_entrypoint/routed_destinations.jsonl
   doctrine/task_tree/index_archives.jsonl
@@ -177,6 +178,15 @@ if grep -q -- '--ledgers' scripts/check_live_document_size.sh \
   ok "live-document adapter and neutral core require ledger manifests"
 else
   note "live-document adapter/core ledger-manifest wiring is incomplete"
+fi
+
+if grep -q -- '--derived-state' scripts/check_live_document_size.sh \
+    && grep -q -- '--derived-state' live-document-size/scripts/check_live_document_size.pl \
+    && grep -q -- '--derived-state' scripts/run_live_document_adapter_verifiers.pl \
+    && grep -q -- '--derived-state' scripts/check_live_document_resulting_tree.pl; then
+  ok "live-document adapter/core require derived-state contracts"
+else
+  note "live-document derived-state contract wiring is incomplete"
 fi
 
 if grep -q 'scripts/check_doctrines.sh' .github/workflows/regression.yml \

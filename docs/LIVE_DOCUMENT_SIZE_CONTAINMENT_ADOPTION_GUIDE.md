@@ -2,15 +2,21 @@
 
 ## Purpose
 
-This is a forwardable adoption bridge for a project that already uses the
-Durable Agent Memory Architecture but still struggles with a full or repeatedly
-firing `MEMORY.md` size cap, growing live-document destinations, or large files
-that every session must read or update.
+This is the canonical downstream entry point for the complete live-document
+containment package. It is a forwardable adoption bridge for a project that
+already uses the Durable Agent Memory Architecture but still struggles with a
+full or repeatedly firing `MEMORY.md` size cap, growing live-document
+destinations, or large files that every session must read or update.
 
 This guide is not the doctrine. The receiving project adopts a project-owned
 copy of `LIVE_DOCUMENT_SIZE_CONTAINMENT.md`; that doctrine is the normative
 contract. This guide explains how to adopt it safely and how it complements the
 memory architecture.
+
+Every portable revision to the doctrine must update this guide in the same
+change. A receiving project starts here to discover what changed, then adopts
+its own normative doctrine copy, checker contract, and local data. The guide is
+the complete route into the package; it does not replace those authorities.
 
 The desired result is not less durable information. It is a bounded working set
 over complete, addressable, mechanically verified history.
@@ -88,6 +94,15 @@ The receiving project should:
 Forward the doctrine together with this guide. Forwarding this guide alone does
 not create an enforceable policy.
 
+The portable package currently contains these coordinated contracts:
+
+| Contract area | What the adopter must preserve |
+| --- | --- |
+| Bounded live views | Lifecycle, pressure, routing, lossless transitions, and retrievable durable history from `LIVE_DOCUMENT_SIZE_CONTAINMENT.md`. |
+| Derived-state truth | Exact current values are derived on read; deliberately stored copies name their authority and run a drift verifier; immutable evidence names its capture boundary. |
+| Neutral checker | Bounded data-only registries, explicit field declarations, positive and fail-closed controls, and unconditional verifier execution from `live-document-size/`. |
+| Local adoption | Project-owned paths, fields, measurements, thresholds, debt, retention guarantees, and migration decisions—never donor values. |
+
 Do not copy another project's:
 
 - thresholds or current measurements;
@@ -138,10 +153,24 @@ Keep wider task rosters, task frontiers, priority queues, durable warnings, and
 history in their canonical task, decision, fact, or Git homes. If another
 source already owns a fact, point to it rather than copying it.
 
+Classify every mechanically owned current-state field:
+
+- **derive on read** when the authority can answer exactly and cheaply; keep
+  the exact command or accessor where the reader needs the answer;
+- **verified copy** only when the copy itself is a deliberate contract,
+  baseline, or bounded projection; name the authority and recomputation method
+  and execute a drift verifier unconditionally;
+- **authored intent** for judgement, rationale, ownership, blockers, and the
+  selected next action; these are not mechanical facts;
+- **immutable evidence** only when the value names an exact revision, digest,
+  invocation, or externally owned capture boundary and does not claim to
+  describe now.
+
 Avoid a hand-maintained `latest_commit` field that claims to equal `HEAD`.
 Obtain the current commit from Git when resuming, or explicitly name a different
-semantic such as the last commit that changed resume state. Do not label a
-lagging historical pointer as the latest commit.
+historical semantic such as the commit that produced a recorded result. A
+value changed by the commit that records it is wrong by construction and must
+be derived on read, never periodically corrected.
 
 ### 4. Remove ceremonial commit coupling
 
@@ -234,6 +263,9 @@ separate reviewed authority proving that the surface's contract expanded.
 - Rotate ordered ledgers at whole-record boundaries, then move sealed history
   to a declared archive terminal.
 - Remove duplicated prose only after proving its richer canonical source.
+- When removing a duplicate, compare it with its source and deliberately check
+  whether the convenient copy has been hiding divergence in that authority;
+  repair the authority before demotion.
 - Keep exact evidence in an immutable, retrievable store with an owner and a
   failure policy.
 
@@ -255,8 +287,9 @@ One migration change should:
 6. update indexes, routes, predecessor/successor links, and bootstrap pointers;
 7. execute freshness, retrieval, ordering, uniqueness, link, and pressure
    checks;
-8. remove a live duplicate only after its replacement or retrieval proof
-   passes;
+8. compare a duplicate with its authority, repair any hidden source divergence,
+   and remove it only after its in-place derivation, replacement, or retrieval
+   proof passes;
 9. commit the transition as one recoverable unit.
 
 If the project cannot prove what will be retained, stop before deletion.
@@ -273,6 +306,12 @@ least:
 - line, byte, line-width, file-count, per-part, or aggregate overflow;
 - unauthorized ceiling increases or widened transition baselines;
 - stale generated projections or broken current/history links;
+- a declared derive-on-read field that is still stored or lacks its reader
+  accessor;
+- a verified copy with no canonical authority, recomputation path, executed
+  verifier, or matching value;
+- a field contract that escapes its governed surface or guesses field names
+  heuristically instead of using an explicit local declaration;
 - mutable sealed or frozen units;
 - archive identity or retrieval failures;
 - incomplete collection indexes or cyclic routes;
@@ -280,7 +319,9 @@ least:
 
 Size checks prove boundedness, not semantic truth. A surface claiming currency
 needs a separate, lifecycle-specific verifier calibrated against its canonical
-source. Do not infer staleness globally from dates or file age.
+source. Field-level derived-state declarations close the decidable exact-value
+case; they still cannot prove authored intent. Do not infer staleness globally
+from dates, file age, number shapes, or prose.
 
 ### 9. Wire discovery without duplicating authority
 
@@ -299,6 +340,9 @@ A complete adoption produces:
 - a complete surface and route inventory;
 - lifecycle, owner, authority, health target, enforcement ceiling, and verifier
   declarations for every governed surface;
+- a published classification of mechanically owned current-state fields plus
+  a bounded local registry of exact markers, authorities, derivations, storage
+  choices, and executed verified-copy oracles;
 - explicit transition-debt records for existing pressure;
 - a deterministic checker plus fail-closed tests;
 - unconditional commit-hook and CI wiring;
@@ -334,6 +378,11 @@ reason to investigate under an owner.
 - Copying donor-project thresholds, paths, debt, or conclusions.
 - Treating a generated index as canonical or allowing unique facts in it.
 - Declaring a verifier without executing it in the unconditional gate.
+- Hand-maintaining an exact value whose own commit invalidates it.
+- Deleting a shadow value without leaving the exact derivation in the reader's
+  path, or without checking the canonical source it may have concealed.
+- Guessing project fields from dates, number shapes, or prose instead of using
+  an explicit bounded declaration.
 - Treating file presence, co-staging, dates, or self-ticked boxes as freshness.
 - Deleting live history before proving identity, retrieval, consumers, and
   replacement routes.
@@ -351,10 +400,13 @@ The following text can accompany this guide and the neutral doctrine:
 > removing scaling shadows and ceremonial commit coupling; then inventory every
 > live document and route, classify utility and lifecycle, derive local health
 > targets and inclusive ceilings, record exact transition debt, and implement
-> lossless bounded views over mechanically retrievable durable stores. Wire one
-> deterministic resulting-tree checker into the commit hook and CI. Commit each
-> independently verified slice and stop before any deletion, authority conflict,
-> unproved archive, or unauthorized ceiling increase.
+> lossless bounded views over mechanically retrievable durable stores. Classify
+> mechanically owned current-state fields: derive exact values on read, retain
+> copies only behind executed authority verifiers, and bind immutable evidence
+> to an exact capture boundary. Wire one deterministic resulting-tree checker
+> into the commit hook and CI. Commit each independently verified slice and
+> stop before any deletion, authority conflict, unproved archive, or
+> unauthorized ceiling increase.
 
 ## Completion test
 
@@ -362,4 +414,6 @@ The adoption is complete when a fresh session can load a small bounded current
 view, follow one exact pointer to the relevant unit, retrieve any retained
 history deterministically, and run one unconditional gate that rejects every
 undeclared or over-limit live-document path—without requiring the reader to
-load an ever-growing monolith.
+load an ever-growing monolith. Every declared exact current-state field is
+either derived at the moment of use or held as an executed, authority-checked
+copy, while revision-bound evidence remains clearly historical.

@@ -1,7 +1,7 @@
 # Knowledge Map: `live-document`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **45** uniquely owned question entries.
+> **1** facts · **50** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -22,14 +22,17 @@
 - q="how are live-document collection indexes checked for completeness?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how are live-document currency contracts declared?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how are live-document sizes contained project-wide?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="how are mechanically exact current-state fields contained?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how do I query the Knowledge Map?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how does a bounded rolling ledger preserve whole-entry history and exact reconstruction?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how does a live-document migration prove that no content was lost?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how does maintained_reference bound reads and authorize product-sized mdBook or ISF_SPEC change without a fixed aggregate cap?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="how is a deliberately retained derived-state copy verified?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is an enforcement ceiling increase authorized?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is archived document content proved retrievable?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is the ISF reference partitioned?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is the Knowledge Map kept bounded?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="is immutable task evidence the same as mutable current derived state?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="is neutral live-document checker identity mechanically tested?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="is the live-document doctrine harness neutral?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="is the live-document doctrine project neutral?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
@@ -38,7 +41,9 @@
 - q="what did PGEN and ANVIL find in the live-document review?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="what format does the live-document registry use?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="what happens when a live document reaches its size warning?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="what is the main downstream entry point for containment doctrine updates?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="what retention contract is required for a version object?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="when must a live-document value be derived on read?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="where are FSMGen live-document measurements recorded?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="where does old changelog or task-tree history go?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="where does the Knowledge Map query cache live?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
@@ -57,5 +62,5 @@
 
 _Live documents use bounded views over durable stores_
 
-- **date:** 2026-08-01 · **status:** current
+- **date:** 2026-08-09 · **status:** current
 - **source and verification:** [`docs/knowledge/live-document-size-containment.md`](../../docs/knowledge/live-document-size-containment.md)

@@ -25,7 +25,7 @@ ok(-x $partition, 'ISF semantic-part verifier is executable');
 subtest 'real generated index and exact activation partition pass' => sub {
     my ($index_ok, $index_output) = run_command($indexer, '--root', $repo, 'check');
     ok($index_ok, 'repository focused-document index is current') or diag($index_output);
-    like($index_output, qr/1021 members/, 'complete focused plus ancillary census is reported');
+    like($index_output, qr/1022 members/, 'complete focused plus ancillary census is reported');
 
     my ($part_ok, $part_output) = run_command(
         $partition, '--root', $repo, '--verify-activation-content', 'check');
@@ -141,6 +141,7 @@ sub seed_index_fixture {
         VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md
         VIAL_PUBLIC_TOOLING_V1_CONTRACT.md
         VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md
+        LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md
         LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md
         LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md
         LIVE_DOCUMENT_SIZE_CONTAINMENT_REVIEW.md

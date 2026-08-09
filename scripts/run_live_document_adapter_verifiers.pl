@@ -8,15 +8,17 @@ use File::Spec;
 use Getopt::Long qw(GetOptions);
 use JSON::PP;
 
-my ($root_arg, $registry, $archives, $ledgers, $help);
+my ($root_arg, $registry, $archives, $ledgers, $derived_state, $help);
 $registry = 'doctrine/live_document_size/surfaces.jsonl';
 $archives = 'doctrine/live_document_size/archive_descriptors.jsonl';
 $ledgers = 'doctrine/live_document_size/ledger_manifests.jsonl';
+$derived_state = 'doctrine/live_document_size/derived_state_contracts.jsonl';
 GetOptions(
     'root=s'     => \$root_arg,
     'registry=s' => \$registry,
     'archives=s' => \$archives,
     'ledgers=s'  => \$ledgers,
+    'derived-state=s' => \$derived_state,
     'help|h'     => \$help,
 ) or usage(2);
 usage(0) if $help;
@@ -33,6 +35,7 @@ sub usage {
     print STDERR <<'USAGE';
 Usage: run_live_document_adapter_verifiers.pl [--root DIR]
        [--registry FILE] [--archives FILE] [--ledgers FILE]
+       [--derived-state FILE]
 USAGE
     exit $status;
 }
@@ -121,6 +124,17 @@ for my $record (@{$surface_records}) {
     die "live-doc-adapter-verifier: invalid currency surface id\n"
         if $id !~ /\A[a-z][a-z0-9_]*\z/;
     push @adapters, ["currency:$id", $path];
+}
+for my $record (@{read_jsonl($derived_state, 'derived-state registry')}) {
+    next if ($record->{record_type} // '') ne 'contract';
+    next if ($record->{storage} // '') ne 'verified_copy';
+    my $verifier = $record->{verifier} // '';
+    next if $verifier !~ /\Aadapter:(.+)\z/;
+    my $path = $1;
+    my $id = $record->{contract_id} // '';
+    die "live-doc-adapter-verifier: invalid derived-state contract id\n"
+        if $id !~ /\A[a-z][a-z0-9_.-]*\z/;
+    push @adapters, ["derived:$id", $path];
 }
 for my $record (@{read_jsonl($archives, 'archive descriptor registry')}) {
     next if ($record->{record_type} // '') ne 'descriptor';

@@ -54,8 +54,19 @@ subtest 'project adapter executes delegated verifier before proving it to the co
         'bin/currency',
         "#!/bin/sh\nprintf 'currency-adapter-ran\\n' > currency-adapter-ran\n",
     );
+    write_file(
+        $fixture,
+        'bin/derived-state',
+        "#!/bin/sh\nprintf 'derived-adapter-ran\\n' > derived-adapter-ran\n",
+    );
+    write_file(
+        $fixture,
+        'bounded.md',
+        "one\ntwo\nStatus copy: green\nRecompute with bin/derived-state.\n",
+    );
     chmod 0755, File::Spec->catfile($fixture, 'bin', 'freshness'),
-        File::Spec->catfile($fixture, 'bin', 'currency')
+        File::Spec->catfile($fixture, 'bin', 'currency'),
+        File::Spec->catfile($fixture, 'bin', 'derived-state')
         or die "cannot chmod adapter fixture verifier: $!";
     mutate_file(
         $fixture,
@@ -68,16 +79,32 @@ subtest 'project adapter executes delegated verifier before proving it to the co
             verifier => 'adapter:bin/currency',
         };
     });
+    write_file(
+        $fixture,
+        'doctrine/live_document_size/derived_state_contracts.jsonl',
+        registry_header(8, 8192, 2048) . json_line({
+            record_type => 'contract', schema_version => 1,
+            contract_id => 'fixture_active_resume', surface_id => 'active_resume',
+            path => 'bounded.md', field_id => 'fixture_status',
+            storage => 'verified_copy', field_marker => 'Status copy:',
+            authority => 'fixture source', derivation => 'bin/derived-state',
+            verifier => 'adapter:bin/derived-state',
+        }),
+    );
     my ($ok, $output) = run_checker($fixture);
     ok($ok, 'adapter execution plus matching proof passes') or diag($output);
     ok(-f File::Spec->catfile($fixture, 'adapter-ran'),
         'delegated verifier side effect proves actual execution');
     ok(-f File::Spec->catfile($fixture, 'currency-adapter-ran'),
         'delegated currency side effect proves actual execution');
+    ok(-f File::Spec->catfile($fixture, 'derived-adapter-ran'),
+        'delegated derived-state side effect proves actual execution');
     like($output, qr/adapter verifier execution proved: surface:fact_index/,
         'core consumes the exact adapter proof');
     like($output, qr/adapter verifier execution proved: currency:active_index/,
         'core consumes the exact namespaced currency proof');
+    like($output, qr/adapter verifier execution proved: derived:fixture_active_resume/,
+        'core consumes the exact namespaced derived-state proof');
 };
 
 subtest 'missing required route fails closed' => sub {
@@ -302,6 +329,11 @@ sub make_fixture {
             begin_marker => '<!-- EVIDENCE:BEGIN -->',
             end_marker => '<!-- EVIDENCE:END -->',
         }),
+    );
+    write_file(
+        $root,
+        'doctrine/live_document_size/derived_state_contracts.jsonl',
+        registry_header(8, 8192, 2048),
     );
     return $root;
 }

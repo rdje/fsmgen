@@ -261,11 +261,11 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `none`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.28`
-  Status: `active`
+  Status: `done`
   Goal: `Integrate portable derived-state containment and make the adoption guide the complete downstream entry point for doctrine evolution.`
   Acceptance: `Reconcile PGEN's docs/DERIVED_STATE_CONTAINMENT.md as read-only external input against current FSMGen doctrine; define when a value must be computed from authoritative state instead of hand-maintained, the narrow evidence/snapshot exceptions, and the authority/freshness/recomputation contract; add fail-closed mechanical detection for declared derived values without imposing project-specific field names in the neutral package; audit FSMGen live surfaces and migrate or explicitly justify any affected field; update LIVE_DOCUMENT_SIZE_CONTAINMENT.md, its checker contract and focused fixtures, local enforcement/data, the canonical docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md, its single-source mdBook rendering, task/decision/fact/Memory layers, and all applicable checks in one slice. The adoption guide must summarize and route every portable doctrine addition so it remains the one document downstream projects receive. No lifecycle, threshold, retained history, compiler/runtime behavior, or generated product artifact changes without separate explicit ownership.`
-  Verification: `Clean predecessor b8df21eda; this documentation-only activation changes only task-tree ownership, the active index frontier, and bounded Memory continuity. Doctrine text, guide text, checker/schema/fixtures, thresholds, lifecycles, retained history, product behavior, and generated product artifacts remain unchanged. The staged doctrine gate passes before commit.`
-  Commit: `this commit (activation)`
+  Verification: `Activation commit 716d0080c fixes the clean owner. Read-only PGEN input is 253 lines / 13,892 bytes at SHA-256 93372d87.... The neutral core now consumes a bounded explicit derived-state registry and distinguishes derive_on_read from verified_copy without project field names or heuristic date/number/prose scanning. Three FSMGen contracts migrate the two HEAD shadows to exact git-log derivation and retain the active task frontier only as an authority-verified copy backed by task-tree integrity. Positive and fail-closed fixtures cover stored shadows, missing derivation, malformed/duplicate declarations, core and adapter execution/proofs, off-surface and historical declarations, and undeclared lookalike prose. The canonical adoption guide carries the complete portable rule and package route; decision 0054 and the Knowledge Map preserve rationale and discovery. RAM-guarded containment/authority/history/path checks pass at Files=8/Tests=54 from 54.4% host occupancy under the default 88%/4,096-MiB limits; all 52 mdBook chapters test, the 87-file / 17,772-KiB repository-local build passes at aggregate SHA-256 e8f392f0... and is removed exactly. Final live-size/task/Memory/Knowledge Map/staged-acceptance/doctrine evidence is recorded below. No lifecycle, predecessor ceiling, maintained-reference authority, retained history, compiler/runtime behavior, or generated product artifact changes.`
+  Commit: `this commit`
   Blocked by: `none`
 
 ## Decisions
@@ -286,6 +286,12 @@ no routed destination becomes the next uninstrumented blob.
   future containment-doctrine update. `.28` owns evidence-backed integration,
   checker coverage, local audit, and same-slice guide/book synchronization;
   it neither activates nor pre-decides deferred `.26`.
+- `2026-08-09`: Adopt the portable principle through decision 0054 with two
+  explicit storage modes: derive mutable current truth in its reader path, or
+  store a copy only with a named authority, exact recomputation path, and an
+  executed verifier. Immutable revision-bound evidence remains evidence;
+  authored intent remains authored state. The neutral checker consumes only
+  declared contracts and never guesses project fields from names or shapes.
 - `2026-07-31`: Preserve directly browsable user reference in semantic shards,
   but move rarely read exact chronology out of the working set only after
   digest-verified version retrieval exists.
@@ -538,10 +544,17 @@ no routed destination becomes the next uninstrumented blob.
 
 ## Blockers
 
-- None for active `.28`. Pending `.12` still waits on director-deferred `.26`;
-  derived-state work does not activate or pre-decide that inventory.
+- None for completed `.28`. Pending `.12` still waits on director-deferred
+  `.26`; no containment leaf is PNT-eligible, and derived-state work does not
+  activate or pre-decide that inventory.
 - None for completed `.27`. Pending `.12` still waits on director-deferred
   `.26`; the guide does not activate or pre-decide that inventory.
+
+## Acceptance Checklist (enforced) — `.28` derived-state containment
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'latest_commit' --oneline -- MEMORY.md MEMORY_ARCHITECTURE.md` identifies `d44e94691` and `de7a6e170` as the introductions of two hand-maintained HEAD shadows; activation object `716d0080c` contains exactly those two markers, while the resulting files contain none. PGEN's corrected read-only proposal is fixed at 253 lines / 13,892 bytes / SHA-256 `93372d87...`; local surface audit classifies the task frontier as an existing verified copy, generated indexes under their existing freshness proofs, immutable revisions/digests as historical evidence, and intent/blocker/next-action prose as authored state.
+- [x] **ADDRESSED (verified)** — `scripts/check_live_document_size.sh` executes three explicit contracts: `MEMORY.md` and `MEMORY_ARCHITECTURE.md` are `derive_on_read` with the exact `git log -1 --format='%H %s'` reader path, while `docs/TASK_TREE.md` is a `verified_copy` whose named authority is executed through `scripts/check_task_tree_integrity.pl`. The bounded neutral registry, checker contract/core, adapter runner, resulting-tree guard, bootstrap enforcement, focused fixtures, doctrine, canonical downstream adoption guide and mdBook include, decision 0054, Knowledge Map fact, and local surface registry agree. Stored shadow, missing derivation, missing adapter proof, off-surface declaration, and historical-surface misuse controls fail closed; a core-verifier side effect proves execution, an exact adapter proof passes, and an undeclared lookalike proves there is no project-name heuristic.
+- [x] **NO REGRESSION** — the RAM-guarded path/live-document/authority/Knowledge-Map/history/focused-index cluster starts at 54.4% host occupancy under the default 88%/4,096-MiB limits and reports `All tests successful` at `Files=8, Tests=54`, including the repaired `.27` guide membership oracle in `t/1569`. All 52 mdBook chapters test; the repository-local build renders 87 files / 17,772 KiB at aggregate SHA-256 `e8f392f0...` and is removed exactly. The final live-document checker, task integrity, bounded Memory, Knowledge Map, staged acceptance, and `scripts/check_doctrines.sh` report green; 22 surfaces cover the complete Markdown inventory, no predecessor ceiling increases, and lifecycle, maintained-reference authority, retained history, compiler/runtime behavior, and generated product artifacts remain unchanged.
 
 ## Acceptance Checklist (enforced) — `.27` portable adoption guide
 
@@ -820,6 +833,7 @@ no routed destination becomes the next uninstrumented blob.
 | `2026-08-01` | `.13` activation | clean `3b71cb0b1` predecessor; exact focused/ancillary collection identities; stale t/1553 project-graph count repair; task/index/book/fact/Memory continuity; focused/path/task/live-size/reference/ceiling/Knowledge Map/Memory/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; source focused 1,005/212,294/9,400,050 with max 6,254/392,322/7,536-byte line; ancillary 12/1,558/79,973 with max 502/21,728/780-byte line; focused Files=5/Tests=73; checker 20 surfaces/2,925 paths; reference delta 0/+5/+308; zero ceiling increases; Knowledge Map 1,104/5,582; trees=3/nodes=899; Memory 45; all 49 chapters; removed build 85/17,710,132; all nine staged doctrines pass; exact stale expectations move 19/4/6 to 20/7/4; no content, path, partition, index, topology, limit, or product behavior change |
 | `2026-08-01` | `.13` focused-document containment | exact three-source ISF partition/rewrite identity; complete generated focused/ancillary classification; stable-topic landings/parts; direct-link, freshness, bounds, rewrite-count, and activation-content checks; long-line repair; rationale/book/fact/task sync; focused/mdBook/staged-acceptance/doctrine gates; exact cleanup | `passed`; focused 1,005/198,233/8,530,939 with max 1,774/172,995/794; ancillary 12/1,558/79,973 with max 502/21,728/780; index 1,017/1,084/149,147; ISF reference 14/14,564/880,417 with max 2,453/171,378/318; six dead links rerouted to task evidence; consumer Files=5/Tests=744; containment Files=4/Tests=35; all 49 chapters; removed build 85/16,598,327; zero ceiling increases; product behavior unchanged; `.12` waits on director-deferred `.26` |
 | `2026-08-08` | `.27` portable adoption guide | canonical guide and mdBook include; decision 0053; complete focused classification; exact ceiling/reference authority; focused path/lifecycle/authority/mdBook/live-size/task/Memory/Knowledge Map/diff/staged-doctrine gates; exact cleanup | `passed`; guide 365/16,843; index 1,022 members / 1,089 lines / 149,695 bytes; focused 1,007/201,854/8,702,450; one exact file-count increase and no other ceiling increase; book 52/48,449/2,566,533 at +1/+13/+719; Files=5/Tests=40; all 52 chapters; rendered build 87/18,008,590 and removed; product behavior unchanged; `.12` waits on deferred `.26` |
+| `2026-08-09` | `.28` derived-state containment | corrected PGEN proposal reconciliation; derive-on-read/verified-copy contract; explicit bounded registry; neutral core/adapter/resulting-tree/bootstrap enforcement; two HEAD-shadow migrations and task-frontier authority; canonical guide/doctrine/checker/decision/fact/Memory lockstep; focused/path/live-size/authority/history/index/mdBook/task/staged-doctrine gates; exact cleanup | `passed`; donor 253/13,892/SHA-256 93372d87...; three contracts; 22 surfaces and complete Markdown coverage; RAM guard 54.4% under 88%/4,096 MiB; Files=8/Tests=54; all 52 chapters; rendered build 87 files/17,772 KiB at aggregate SHA-256 e8f392f0... and removed; no ceiling, maintained-reference, lifecycle, retained-history, compiler/runtime, or generated-product change; `.12` still waits on deferred `.26` |
 
 ## Commit Log
 
@@ -875,9 +889,16 @@ no routed destination becomes the next uninstrumented blob.
 | `.27` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.27: activate portable adoption guide` | Activate only the director-requested forwardable guide leaf; no guide, registry, doctrine, threshold, lifecycle, migration, or product behavior changes yet. |
 | `.27` portable adoption guide | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.27: publish portable adoption guide` | Publish the canonical forwardable bridge, exact one-file ceiling authority, complete focused classification, and single-source mdBook rendering. |
 | `.28` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.28: activate derived-state containment` | Activate only portable derived-state containment and canonical-guide synchronization from clean commit `b8df21eda`; the external proposal remains unread and implementation remains pending. |
+| `.28` derived-state containment | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.28: enforce derived-state containment` | Derive mutable current truth on read, execute authority checks for declared stored copies, migrate two HEAD shadows, and keep the adoption guide complete without heuristic field names. |
 
 ## Changelog
 
+- `2026-08-09`: `.28` integrates derived-state containment into the neutral
+  checker and canonical downstream guide, migrates the two live HEAD shadows
+  to an exact reader command, retains the task frontier through its existing
+  authority verifier, and records decision 0054 plus durable Knowledge Map
+  discovery. Explicit declarations replace field-name/date/number heuristics;
+  no lifecycle, ceiling, retained history, or product behavior changes.
 - `2026-08-09`: Clean supported-smoke closeout commit `b8df21eda` activates
   `.28` alone for evidence-backed derived-state containment and same-slice
   canonical adoption-guide synchronization. Doctrine, guide, enforcement,

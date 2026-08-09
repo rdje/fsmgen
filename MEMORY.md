@@ -5,21 +5,19 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.28: activate derived-state containment`).
-- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.28` is active.
-- current_state: the complete supported-smoke matrix is durable at
-  `b8df21eda`; the clean tree now owns derived-state containment separately
-  from deferred legacy inventory `.26`. The adoption guide is explicitly the
-  canonical downstream entry point for every portable doctrine update.
-- next_action: read PGEN's `docs/DERIVED_STATE_CONTAINMENT.md` read-only,
-  reconcile each proposal against FSMGen doctrine and live surfaces, then
-  implement the neutral rule, focused fail-closed checks, local audit, and
-  doctrine/guide/mdBook/decision/fact synchronization under `.28`.
-- in_flight_uncommitted: only `.28` activation continuity before its commit;
-  no background job or build residue.
-- blockers: none for `.28`; containment `.12` still waits on director-deferred
-  `.26`, while HIAL/VIAL provider qualification and NEXSIM external evidence
-  remain independent.
+- repository_revision: derive the current commit and subject with
+  `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
+- active_work_unit: none is PNT-eligible.
+- current_state: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.28` is complete.
+  Mutable current truth is derived on read or retained only as an explicitly
+  authority-verified copy; the canonical adoption guide carries the portable
+  doctrine/package route, and two stored HEAD shadows are removed.
+- next_action: select a newly eligible active-tree frontier when its recorded
+  prerequisite arrives; do not activate a proposed or director-deferred leaf.
+- in_flight_uncommitted: none; no background job or build residue.
+- blockers: containment `.12` waits on director-deferred `.26`; HIAL/VIAL
+  provider qualification awaits its exact external tools, NEXSIM `.2` awaits
+  concrete external evidence, and IAL2 has no direct eligible leaf.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not

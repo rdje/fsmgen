@@ -47,11 +47,17 @@ answers:
   - "does a generated projection support deterministic shard collections?"
   - "where is the complete focused and ancillary document index?"
   - "how is the ISF reference partitioned?"
-date: 2026-08-01
+  - "how are mechanically exact current-state fields contained?"
+  - "when must a live-document value be derived on read?"
+  - "how is a deliberately retained derived-state copy verified?"
+  - "is immutable task evidence the same as mutable current derived state?"
+  - "what is the main downstream entry point for containment doctrine updates?"
+date: 2026-08-09
 status: current
-tags: [documentation, doctrine, continuity, size, sharding, rollover, archive, harness-neutral]
+tags: [documentation, doctrine, continuity, size, derived-state, sharding, rollover, archive, harness-neutral]
 evidence: >-
-  LIVE_DOCUMENT_SIZE_CONTAINMENT.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/live_document_size/ledger_manifests.jsonl; doctrine/live_document_size/version_retention_contracts.jsonl; scripts/check_live_document_size.sh; scripts/run_live_document_adapter_verifiers.pl; scripts/check_live_document_resulting_tree.pl; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md; docs/decisions/0045-maintained-reference-bounds-the-read-path-not-product-scope.md;
+  LIVE_DOCUMENT_SIZE_CONTAINMENT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/derived_state_contracts.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/live_document_size/ledger_manifests.jsonl; doctrine/live_document_size/version_retention_contracts.jsonl;
+  scripts/check_live_document_size.sh; scripts/run_live_document_adapter_verifiers.pl; scripts/check_live_document_resulting_tree.pl; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md; docs/decisions/0045-maintained-reference-bounds-the-read-path-not-product-scope.md; docs/decisions/0054-derived-state-is-derived-on-read-or-authority-verified.md;
   docs/decisions/0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; knowledge-map/scripts/knowledge_map.pl; knowledge-map/scripts/query_knowledge_map.sh; scripts/check_knowledge_card_history.pl; t/1554-live-document-size-doctrine.t; t/1567-knowledge-map-shards.t; t/1568-knowledge-card-history.t
   doctrine/live_document_size/isf_reference_partitions.jsonl; scripts/check_isf_reference_partitions.pl; scripts/focused_document_index.pl; docs/index/FOCUSED_DOCUMENTS.md; t/1569-focused-document-containment.t
 reverify: >-
@@ -70,6 +76,28 @@ partitions, generated projections shard from small canonical sources, rolling
 ledgers rotate and later archive, and exact old evidence uses an immutable
 query-first terminal with digest/retrieval proof. Sharding alone is insufficient:
 collections also need file-count and aggregate transitions.
+
+Decision `0054` adds the content-truth rule for mechanically exact current
+fields. A `derive_on_read` contract forbids the declared stored marker and
+requires the exact accessor in the reader's path. A `verified_copy` keeps a
+deliberate contract, baseline, or projection only with a named authority,
+recomputation path, and executed verifier. The bounded local registry is
+`doctrine/live_document_size/derived_state_contracts.jsonl`; the neutral core
+contains no project field names and performs no date, number, or prose guess.
+
+FSMGen now obtains the current revision and subject with
+`git log -1 --format='%H %s'` instead of storing a `HEAD` shadow in either the
+resume pointer or its template. The active task-index frontier remains a
+verified copy backed by `scripts/check_task_tree_integrity.pl`; generated maps
+retain their canonical-input freshness checks. Revision- or invocation-bound
+task and decision measurements remain historical evidence, not claims about
+the current tree.
+
+`docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md` is the canonical
+downstream entry point and must be updated with every portable doctrine
+revision. The guide routes adopters to the normative doctrine and neutral
+checker while keeping donor paths, fields, measurements, thresholds, and
+migration decisions out of the portable body.
 
 Decision 0041 accepts the architecture. The measured revision and exact family
 owners are in `docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md`. Leaf `.2` uses

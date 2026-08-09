@@ -359,6 +359,184 @@ SCRIPT
     ok($adapter_ok, 'exact adapter currency proof passes') or diag($adapter_output);
 };
 
+subtest 'derived-state contracts reject shadow state and execute pinned-copy truth' => sub {
+    my $derive = make_fixture();
+    write_file(
+        $derive,
+        'entry.md',
+        "destination.md\nRun git log -1 --format='%H %s' when resuming.\n",
+    );
+    write_derived_registry($derive, derived_contract(
+        contract_id => 'resume_head',
+        field_marker => '- latest_commit:',
+        derivation => "git log -1 --format='%H %s'",
+    ));
+    my ($derive_ok, $derive_output) = run_checker($derive);
+    ok($derive_ok, 'derive-on-read contract passes with no stored value and an exact accessor')
+        or diag($derive_output);
+    like($derive_output, qr/derived-state contract resume_head derives repository_head on read/,
+        'derive-on-read classification is reported');
+
+    my $stored = make_fixture();
+    write_file(
+        $stored,
+        'entry.md',
+        "destination.md\n- latest_commit: deadbeef\nRun git log -1 --format='%H %s'.\n",
+    );
+    write_derived_registry($stored, derived_contract(
+        contract_id => 'resume_head',
+        field_marker => '- latest_commit:',
+        derivation => "git log -1 --format='%H %s'",
+    ));
+    my ($stored_ok, $stored_output) = run_checker($stored);
+    ok(!$stored_ok, 'declared exact shadow field is rejected');
+    like($stored_output, qr/forbids stored field marker in entry\.md: - latest_commit:/,
+        'failure names the exact declared field and location');
+
+    my $missing_derivation = make_fixture();
+    write_derived_registry($missing_derivation, derived_contract(
+        contract_id => 'resume_head',
+        field_marker => '- latest_commit:',
+        derivation => "git log -1 --format='%H %s'",
+    ));
+    my ($missing_ok, $missing_output) = run_checker($missing_derivation);
+    ok(!$missing_ok, 'deletion without preserving the reader derivation is rejected');
+    like($missing_output, qr/derivation is absent from entry\.md/,
+        'recoverability failure is explicit');
+
+    my $duplicate_id = make_fixture();
+    write_file(
+        $duplicate_id,
+        'entry.md',
+        "destination.md\nRun git log -1 --format='%H %s' when resuming.\n",
+    );
+    write_derived_registry(
+        $duplicate_id,
+        derived_contract(),
+        derived_contract(field_id => 'second_field'),
+    );
+    my ($duplicate_id_ok, $duplicate_id_output) = run_checker($duplicate_id);
+    ok(!$duplicate_id_ok, 'duplicate derived-state contract identifier is rejected');
+    like($duplicate_id_output, qr/contract resume_head is declared more than once/,
+        'duplicate identifier failure is explicit');
+
+    my $duplicate_field = make_fixture();
+    write_file(
+        $duplicate_field,
+        'entry.md',
+        "destination.md\nRun git log -1 --format='%H %s' when resuming.\n",
+    );
+    write_derived_registry(
+        $duplicate_field,
+        derived_contract(),
+        derived_contract(contract_id => 'second_contract'),
+    );
+    my ($duplicate_field_ok, $duplicate_field_output) = run_checker($duplicate_field);
+    ok(!$duplicate_field_ok, 'two contracts cannot claim the same governed field');
+    like($duplicate_field_output, qr/derived-state field is declared more than once/,
+        'duplicate field failure is explicit');
+
+    my $invalid_storage = make_fixture();
+    write_derived_registry($invalid_storage, derived_contract(storage => []));
+    my ($invalid_storage_ok, $invalid_storage_output) = run_checker($invalid_storage);
+    ok(!$invalid_storage_ok, 'non-scalar derived-state storage fails closed');
+    like($invalid_storage_output, qr/invalid storage: <invalid>/,
+        'malformed storage reports a stable diagnostic without crashing');
+
+    my $verified = make_fixture();
+    write_file(
+        $verified,
+        'entry.md',
+        "destination.md\nStatus copy: green\nRecompute with bin/derived-state.\n",
+    );
+    write_file(
+        $verified,
+        'bin/derived-state',
+        "#!/bin/sh\nprintf 'derived-state-ran\\n' > derived-state-ran\n",
+    );
+    chmod 0755, File::Spec->catfile($verified, 'bin', 'derived-state')
+        or die "cannot chmod verified-copy fixture: $!";
+    write_derived_registry($verified, derived_contract(
+        contract_id => 'status_projection',
+        storage => 'verified_copy',
+        field_id => 'status_projection',
+        field_marker => 'Status copy:',
+        authority => 'fixture canonical status',
+        derivation => 'bin/derived-state',
+        verifier => 'core:bin/derived-state',
+    ));
+    my ($verified_ok, $verified_output) = run_checker($verified);
+    ok($verified_ok, 'verified copy passes when its authority oracle executes')
+        or diag($verified_output);
+    ok(-f File::Spec->catfile($verified, 'derived-state-ran'),
+        'verified-copy side effect proves actual execution');
+    like($verified_output, qr/derived-state contract status_projection core verifier executed/,
+        'verified-copy execution is reported');
+
+    my $adapter = make_fixture();
+    write_file(
+        $adapter,
+        'entry.md',
+        "destination.md\nStatus copy: green\nRecompute with bin/derived-state.\n",
+    );
+    write_file($adapter, 'bin/derived-state', "#!/bin/sh\nexit 0\n");
+    chmod 0755, File::Spec->catfile($adapter, 'bin', 'derived-state')
+        or die "cannot chmod derived-state adapter fixture: $!";
+    write_derived_registry($adapter, derived_contract(
+        contract_id => 'status_projection',
+        storage => 'verified_copy',
+        field_id => 'status_projection',
+        field_marker => 'Status copy:',
+        authority => 'fixture canonical status',
+        derivation => 'bin/derived-state',
+        verifier => 'adapter:bin/derived-state',
+    ));
+    my ($adapter_missing_ok, $adapter_missing_output) = run_checker($adapter);
+    ok(!$adapter_missing_ok, 'verified-copy adapter declaration needs execution proof');
+    like($adapter_missing_output, qr/lacks executed proof: derived:status_projection/,
+        'derived-state proof has an independent namespace');
+    my ($adapter_ok, $adapter_output) = run_checker(
+        $adapter, adapter_proofs => ['derived:status_projection'],
+    );
+    ok($adapter_ok, 'exact one-use derived-state adapter proof passes')
+        or diag($adapter_output);
+
+    my $outside = make_fixture();
+    write_derived_registry($outside, derived_contract(
+        contract_id => 'outside_surface',
+        path => 'proof.md',
+        field_marker => 'proof',
+        derivation => 'proof',
+    ));
+    my ($outside_ok, $outside_output) = run_checker($outside);
+    ok(!$outside_ok, 'field contract cannot escape its governed surface');
+    like($outside_output, qr/path is outside surface bounded_entry: proof\.md/,
+        'surface-boundary failure is explicit');
+
+    my $historical = make_fixture();
+    write_derived_registry($historical, derived_contract(
+        contract_id => 'frozen_current_claim',
+        surface_id => 'frozen_record',
+        path => 'frozen.md',
+        field_marker => 'frozen',
+        derivation => 'frozen',
+    ));
+    my ($historical_ok, $historical_output) = run_checker($historical);
+    ok(!$historical_ok, 'frozen evidence cannot masquerade as mutable current-state copy');
+    like($historical_output, qr/must govern a current maintained surface/,
+        'historical evidence boundary is structural');
+
+    my $undeclared = make_fixture();
+    write_file(
+        $undeclared,
+        'entry.md',
+        "destination.md\n- latest_commit: illustrative prose outside any local declaration\n",
+    );
+    my ($undeclared_ok, $undeclared_output) = run_checker($undeclared);
+    ok($undeclared_ok, 'neutral core does not guess project-specific field names')
+        or diag($undeclared_output);
+};
+
 subtest 'lifecycle, locality, index, and same-tree file rules fail closed' => sub {
     my $mismatch = make_fixture();
     mutate_record($mismatch, 'registry/surfaces.jsonl', 'bounded_entry', sub {
@@ -1032,6 +1210,7 @@ sub make_fixture {
             guarantee => 'Fixture version objects remain reachable.',
             recovery => 'Fetch complete fixture history, restore the object, and rerun the gate.',
         }));
+    write_derived_registry($root);
     my @ranges = (
         ledger_range(
             'fixture_range_0001', 1, 1, $ledger_entries[0], 'fixture-revision',
@@ -1203,6 +1382,7 @@ sub run_checker {
         '--ledgers', 'registry/ledgers.jsonl',
         '--evidence-maps', 'registry/evidence.jsonl',
         '--retention-contracts', 'registry/retention.jsonl',
+        '--derived-state', 'registry/derived-state.jsonl',
     );
     my $input = '';
     if ($options{coverage}) {
@@ -1250,6 +1430,30 @@ sub registry_header {
         max_records => $max_records, max_bytes => $max_bytes,
         max_record_bytes => $max_record_bytes,
     });
+}
+
+sub derived_contract {
+    my (%overrides) = @_;
+    return {
+        record_type => 'contract', schema_version => 1,
+        contract_id => 'resume_head', surface_id => 'bounded_entry',
+        path => 'entry.md', field_id => 'repository_head',
+        storage => 'derive_on_read', field_marker => '- latest_commit:',
+        authority => 'fixture repository head',
+        derivation => "git log -1 --format='%H %s'",
+        verifier => 'builtin:derive_on_read',
+        %overrides,
+    };
+}
+
+sub write_derived_registry {
+    my ($root, @contracts) = @_;
+    write_file(
+        $root,
+        'registry/derived-state.jsonl',
+        registry_header(16, 16384, 4096)
+            . join('', map { json_line($_) } @contracts),
+    );
 }
 
 sub write_file {

@@ -21,13 +21,15 @@ ARGS=(
   --ledgers doctrine/live_document_size/ledger_manifests.jsonl
   --evidence-maps doctrine/live_document_size/evidence_maps.jsonl
   --retention-contracts doctrine/live_document_size/version_retention_contracts.jsonl
+  --derived-state doctrine/live_document_size/derived_state_contracts.jsonl
 )
 
 ADAPTER_OUTPUT="$(perl "${SCRIPT_DIR}/run_live_document_adapter_verifiers.pl" \
   --root "${PROJECT_ROOT}" \
   --registry doctrine/live_document_size/surfaces.jsonl \
   --archives doctrine/live_document_size/archive_descriptors.jsonl \
-  --ledgers doctrine/live_document_size/ledger_manifests.jsonl)"
+  --ledgers doctrine/live_document_size/ledger_manifests.jsonl \
+  --derived-state doctrine/live_document_size/derived_state_contracts.jsonl)"
 adapter_status=$?
 PROOF_ARGS=()
 while IFS= read -r proof; do
@@ -47,7 +49,8 @@ perl "${SCRIPT_DIR}/check_live_document_resulting_tree.pl" \
   --archives doctrine/live_document_size/archive_descriptors.jsonl \
   --ledgers doctrine/live_document_size/ledger_manifests.jsonl \
   --evidence-maps doctrine/live_document_size/evidence_maps.jsonl \
-  --retention-contracts doctrine/live_document_size/version_retention_contracts.jsonl || fail=1
+  --retention-contracts doctrine/live_document_size/version_retention_contracts.jsonl \
+  --derived-state doctrine/live_document_size/derived_state_contracts.jsonl || fail=1
 GIT_TOP="$(git -C "${PROJECT_ROOT}" rev-parse --show-toplevel 2>/dev/null || true)"
 if [ "${GIT_TOP}" = "${PROJECT_ROOT}" ]; then
   git -C "${PROJECT_ROOT}" ls-files -z -- '*.md' \

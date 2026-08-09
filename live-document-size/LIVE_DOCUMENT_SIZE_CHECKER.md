@@ -133,6 +133,45 @@ freshness `surface:ID` proofs. Archive, external-terminal, and frozen
 lifecycles cannot declare currency because their historical dates are not
 current-state claims.
 
+### Derived-state field contracts
+
+The separately bounded registry supplied with `--derived-state` classifies
+named, mechanically owned current-state fields. It is deliberately explicit:
+the neutral core does not guess field names or infer meaning from prose. A
+valid registry may be empty when the adopting project has no field-level
+contracts. Each data record has this shape:
+
+```json
+{"record_type":"contract","schema_version":1,"contract_id":"resume_revision","surface_id":"resume","path":"CURRENT.md","field_id":"repository_revision","storage":"derive_on_read","field_marker":"- revision:","authority":"repository revision authority","derivation":"tools/current-revision","verifier":"builtin:derive_on_read"}
+```
+
+`path` is one exact repository-relative regular file already owned by the
+named non-historical surface. The checker rejects off-surface paths, unknown
+surfaces, duplicate contract identifiers, duplicate
+surface/path/field declarations, unknown keys, unsafe paths, and oversized
+scalars. `field_marker` and `derivation` are exact literal strings, not regular
+expressions or semantic heuristics.
+
+`storage` has two values:
+
+- `derive_on_read` means the authority answers the question exactly and the
+  document must not store a shadow value. The declared field marker must be
+  absent, the exact derivation must be present for the reader, and `verifier`
+  must be `builtin:derive_on_read`.
+- `verified_copy` means a copy is intentionally retained as a contract,
+  baseline, or bounded projection. Both the field marker and exact derivation
+  must remain present, and a `core:`, `adapter:`, or fail-closed `external:`
+  verifier must compare the copy with its named authority. Adapter execution
+  consumes the exact `derived:CONTRACT_ID` proof token.
+
+A generated projection with canonical inputs and executed freshness already
+implements the same verified-copy principle at surface scope; it need not
+repeat every generated field here. Immutable evidence tied to an exact
+revision, digest, invocation, or other capture boundary is not a mutable
+current-state copy. It remains governed by the applicable evidence,
+retention, archive, or frozen-identity contract and must not claim to describe
+the current tree.
+
 Each route record has this shape:
 
 ```json
@@ -218,13 +257,15 @@ survive independently of repository history should instead use a
 content-addressed `file` retrieval. A failed local version-object verifier
 reports the contract identifier, owner, and recovery action.
 
-Generated projections and `version_object` retrievals use one explicit
+Generated projections, verified derived-state copies, and `version_object`
+retrievals use one explicit
 execution mode: `core:PATH`, `adapter:PATH`, or `external:CONTRACT`. The neutral
 core executes a `core:` program from the supplied project root and accepts its
 result only on exit zero. For `adapter:`, the adopter executes the program and
-passes the exact `surface:ID`, `archive:ID`, or `currency:ID` proof token;
-missing, duplicate, or unused tokens fail closed. `external:` is a visible degraded result and
-cannot produce a local green result. Ordinary measured rows use
+passes the exact `surface:ID`, `archive:ID`, `currency:ID`, or
+`derived:CONTRACT_ID` proof token; missing, duplicate, or unused tokens fail
+closed. `external:` is a visible degraded result and cannot produce a local
+green result. Ordinary measured rows use
 `builtin:budget`; file retrievals continue to use `builtin:file`.
 
 ## Coverage input
@@ -242,7 +283,8 @@ registries and scalar/array shapes, per-part and
 applicable aggregate targets/ceilings, maintained-reference classification and
 exact aggregate authority, inclusive equality, debt acknowledgement and
 ratchets, maximum content-line bytes, generated/version-object verifier execution, opt-in currency-oracle
-execution, frozen identity, typed route closure, collection-index contracts,
+execution, explicit derive-on-read field absence/accessors, executed verified-copy
+truth, frozen identity, typed route closure, collection-index contracts,
 evidence-map paths, retention-contract and archive-descriptor shape, bounded
 whole-entry ledger order/reconstruction/archive transition, and
 optional inventory coverage. It reports actual, target, ceiling, and
