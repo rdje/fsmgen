@@ -55,11 +55,11 @@ the August 9 startup audit without changing behavior or roadmap claims.
   Commit: `STARTUP-INTEGRITY-REPAIR-AUG09.2: repair HIAL VHDL determinism lock`
 
 - ID: `STARTUP-INTEGRITY-REPAIR-AUG09.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Restore canonical composition-wiring guidance and runnable cookbook examples.`
   Acceptance: `Recipe prose and examples use canonical '(source target)' or '(connect source target)' forms, describe '/source/target/' only as default-mode compatibility, and pass cookbook extraction plus strict-mode composition gates.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Recipes 4/5 use canonical list wiring; recipe 4 also uses strict-supported reset and assignment forms. Both pass exact strict --check-json probes. Cookbook/default, strict-wiring, composition-parser/diagnostic, ISF-book, and feature-matrix tests pass: Files=6, Tests=406. All 52 mdBook chapters test and the 87-file repository-local build succeeds; output is removed exactly.`
+  Commit: `STARTUP-INTEGRITY-REPAIR-AUG09.3: restore canonical cookbook wiring`
 
 - ID: `STARTUP-INTEGRITY-REPAIR-AUG09.4`
   Status: `pending`
@@ -84,6 +84,6 @@ the August 9 startup audit without changing behavior or roadmap claims.
 
 ## Acceptance Checklist (enforced for implementation changes)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` and the failing `t/1551-hial-vial-bridge-manifest.t at line 312` locate a stale pre-`a0e7149d5` hash; historical/live backend probes prove intentional output movement from 18,380 bytes / `a82f42e...` to 18,392 bytes / `ab668d3...`.
-- [x] **ADDRESSED (verified)** — The live generator probe returns exactly `18392 ab668d3104b9f8f75f7cb7a92e819a3645a13d552d71995d53280317c0ca87aa`, and `t/1551` now passes with only its hash expectation changed.
-- [x] **NO REGRESSION** — Guarded `prove` over `t/1551`, `t/1552`, `t/1593`, `t/1598`, and `t/1420` reports `All tests successful. Files=5, Tests=93`.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` plus the May 24 strict-wiring and May 29 cookbook task histories prove that the later runnable recipe slice reintroduced slash-only guidance after canonical strict forms shipped; the staged authority checker also named the exact changed `shipped_behavior` aggregate.
+- [x] **ADDRESSED (verified)** — Recipes 4/5 pass exact strict `--check-json` probes after canonical list wiring; recipe 4 also uses strict-supported reset/assignment forms. The authority records 52 files / 48,570-line / 2,572,780-byte baseline plus the exact +2-line / +134-byte delta.
+- [x] **NO REGRESSION** — Guarded book/composition tests report `All tests successful. Files=6, Tests=406`; all 52 chapter tests and the 87-file build pass, and the staged doctrine gate reports `[doctrine] all doctrine checks passed`.

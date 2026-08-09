@@ -103,21 +103,21 @@ ports (`go`, `done`).
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
   (?wiring:wiring
-    /start/producer.go/
-    /start/consumer.go/
-    /producer.payload/consumer.payload/
-    /consumer.result_data/status/
+    (start producer.go)
+    (start consumer.go)
+    (producer.payload consumer.payload)
+    (consumer.result_data status)
   )
 )
 
 (?fsm:producer_src
   (+system
     (clock clk)
-    (sreset rstn)
+    (areset rst_n)
   )
   (-state0
     (<go
-      (payload> <= 8'5)
+      (<= (payload> 8'5))
     )
   )
   (+size
@@ -129,11 +129,11 @@ ports (`go`, `done`).
 (?fsm:consumer_src
   (+system
     (clock clk)
-    (sreset rstn)
+    (areset rst_n)
   )
   (-state0
     (<go
-      (result_data> <= payload)
+      (<= (result_data> payload))
     )
   )
   (+size
@@ -151,13 +151,15 @@ Use this when:
 
 **Walkthrough.** Two generated children (`producer`, `consumer`)
 are realized from embedded `(?fsm:...)` roots. The `(?wiring:wiring
-...)` block uses the slash-delimited `/source/dest/` form: each
-entry routes a source endpoint to a destination endpoint. Here a
+...)` block uses the canonical `(source destination)` form; verbose
+`(connect source destination)` entries are equivalent. Each entry
+routes a source endpoint to a destination endpoint. Here a
 top-level `start` pulse fans out to both children's `go` inputs,
 the producer's `payload` output feeds the consumer's `payload`
 input, and the consumer's `result_data` is exposed as the inferred
-top port `status`. Slash-delimited wiring (`/a/b/`), not list-form
-`(a b)`, is the composition wiring spelling.
+top port `status`. Default mode still accepts legacy slash links
+such as `/a/b/` for compatibility, but strict mode rejects them;
+new sources should use a canonical list form.
 
 ## 5. Structural Actual Defaults
 
@@ -168,9 +170,9 @@ top port `status`. Slash-delimited wiring (`/a/b/`), not list-form
   )
   (?rtl:uart_tx)
   (?wiring:wiring
-    /=8'hA5/uart_tx.data_in/
-    /=open/uart_tx.enable/
-    /uart_tx.txd/serial_out/
+    (=8'hA5 uart_tx.data_in)
+    (=open uart_tx.enable)
+    (uart_tx.txd serial_out)
   )
 )
 
@@ -192,9 +194,9 @@ Use this when:
 its interface metadata is provided by the embedded
 `(?rtlif:uart_tx ...)` root (the `C3` lane requires that interface
 metadata, which can be embedded as companion source). In the
-wiring, `/=8'hA5/uart_tx.data_in/` drives a fixed actual literal
-into the child input, `/=open/uart_tx.enable/` leaves an input
-intentionally unconnected, and `/uart_tx.txd/serial_out/` exposes
+wiring, `(=8'hA5 uart_tx.data_in)` drives a fixed actual literal
+into the child input, `(=open uart_tx.enable)` leaves an input
+intentionally unconnected, and `(uart_tx.txd serial_out)` exposes
 the child output as the top port `serial_out`. The `=literal` and
 `=open` actual defaults are how structural composition supplies or
 omits child inputs without an FSM driver.
@@ -249,7 +251,7 @@ Use this when:
     packed_out>frame_t
   )
   (?wiring:wiring
-    /=FRAME/packed_out/
+    (=FRAME packed_out)
   )
 )
 ```

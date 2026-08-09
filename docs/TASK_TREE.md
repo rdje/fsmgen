@@ -47,7 +47,7 @@ The live `docs/tasks/` nodes are authoritative; validate with `scripts/check_tas
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `STARTUP-INTEGRITY-REPAIR-AUG09` | `active` | `bootstrap` | `.2-.4` repair audit drift | [task](docs/tasks/STARTUP-INTEGRITY-REPAIR-AUG09.md) |
+| `STARTUP-INTEGRITY-REPAIR-AUG09` | `active` | `bootstrap` | `.4` import-map refresh | [task](docs/tasks/STARTUP-INTEGRITY-REPAIR-AUG09.md) |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.28` done | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.15.7` done; `.13.3` deferred; `.16+` selection-dependent | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 completeness` | `.844` terminal | [task](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
