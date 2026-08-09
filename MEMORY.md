@@ -7,14 +7,14 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: none; no PNT-eligible leaf remains.
-- current_state: `STARTUP-INTEGRITY-REPAIR-AUG09` is closed after repairing the
-  HIAL VHDL hash, canonical cookbook wiring, and exact import-map/fact truth.
-- next_action: await director activation of the next proposed/selection-
-  dependent frontier; HIAL `.16`, `.17`, and `.19` remain leading choices.
-- in_flight_uncommitted: none after this commit; no job or build residue.
-- blockers: none in the closed tree; continuation needs director selection
-  because every remaining active-tree frontier is done, deferred, or proposed.
+- active_work_unit: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.1`.
+- current_state: the director delegated the next-frontier decision; the mdBook
+  coherence and AXI coverage audit is selected and activated as the sole live
+  leaf before mixed-language, scale, or broader expressive VIAL expansion.
+- next_action: remeasure the current IAL2 book and shipped AXI source families,
+  reconcile stale current-truth claims, and select bounded documentation leaves.
+- in_flight_uncommitted: none after the activation commit; no job or build residue.
+- blockers: none.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not

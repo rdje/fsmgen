@@ -3,10 +3,10 @@
 ## Metadata
 
 - Tree ID: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `roadmap/documentation alignment / IAL2 mdBook`
 - Created: `2026-07-12`
-- Last updated: `2026-07-12`
+- Last updated: `2026-08-09`
 - Owner: repo-local workflow
 
 ## Origin
@@ -95,7 +95,7 @@ what is actually shipped, matching the thoroughness AHB already has.
 ## Task Tree
 
 - ID: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE`
-  Status: `proposed`
+  Status: `active`
   Goal: `Present IAL2 as a coherent whole in the mdBook and backfill AXI coverage to its shipped surface.`
   Children: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.1`
 
@@ -106,10 +106,24 @@ what is actually shipped, matching the thoroughness AHB already has.
   Verification: `pending`
   Commit: `pending`
 
+## Current Frontier
+
+| Order | Leaf | Status | Why next |
+| --- | --- | --- | --- |
+| 1 | `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.1` | `pending` | Re-establish exact current measurements, reconcile shipped IAL2 behavior with the book, and select bounded documentation leaves before changing user-facing prose. |
+
+## Decisions
+
+- `2026-08-09`: The director delegated the choice among this audit and HIAL/VIAL
+  `.16`, `.17`, and `.19`. Select this audit first because the mdBook is the
+  director's primary project view and currently contains stale shipped-status
+  claims; mixed-language `.16` remains tool-dependent, scale `.17` should
+  measure a stable documented contract, and expressive expansion `.19` should
+  not widen scope while the current public reference is internally inconsistent.
+
 ## Notes
 
-- Not PNT-eligible until the director activates it (proposed backlog direction per
-  `docs/TASK_TREE.md`).
+- Activated on `2026-08-09`; `.1` is the sole PNT-eligible frontier.
 - Related: the AXI thread is a coherent-but-deliberately-partial spine — 140/142
   sources compose one `axi0_capacity_status` module (a synthesizable
   capacity/status + response-demux + read-data-capture core that self-labels a
