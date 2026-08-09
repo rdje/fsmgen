@@ -1559,8 +1559,8 @@ subtest 'direct VHDL scaffold lowers scalar bit and signed vector internal decla
     like($hdl, qr/\bsignal\s+NIB\s+:\s+signed\(3\s+downto\s+0\);/s, 'signed vector reg declaration lowers to numeric_std signed signal');
     like($hdl, qr/\bsignal\s+OUT\s+:\s+std_logic_vector\(7\s+downto\s+0\);/s, 'unsigned vector reg declaration remains std_logic_vector signal');
     like($hdl, qr/\bFLAG\s+<=\s+'0';\s+if\s+flag_1_en\s+=\s+'1'\s+then\s+FLAG\s+<=\s+'1';/s, 'scalar bit literal assignments lower to std_logic literals');
-    like($hdl, qr/\bNIB\s+<=\s+"0000";\s+if\s+nib__4_h7_en\s+=\s+'1'\s+then\s+NIB\s+<=\s+"0111";/s, 'signed vector literal assignments lower to deterministic bit strings');
-    unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\breg\s+signed\b|\bbit\s+FLAG\b/s, 'declarative bits VHDL output does not leak SystemVerilog declaration syntax');
+    like($hdl, qr/\bNIB\s+<=\s+"0000";\s+if\s+nib_4_h7_en\s+=\s+'1'\s+then\s+NIB\s+<=\s+"0111";/s, 'signed vector literal assignments lower through a legal VHDL basic identifier');
+    unlike($hdl, qr/\bmodule\b|\balways_(?:ff|comb)\b|\breg\s+signed\b|\bbit\s+FLAG\b|\bnib__4_h7_en\b/s, 'declarative bits VHDL output leaks neither SystemVerilog syntax nor illegal double-underscore identifiers');
 
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--language', 'vhdl', '--quiet', '-o', $output_path, repo_file('t/corpus/declarative_bits_symbol_widths.fsm')],

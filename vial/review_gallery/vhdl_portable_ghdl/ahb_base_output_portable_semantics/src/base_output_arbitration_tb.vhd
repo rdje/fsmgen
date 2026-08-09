@@ -1,8 +1,11 @@
 library ieee;
 use ieee.std_logic_1164.all;
+use std.textio.all;
+use std.env.all;
 
 use work.fsmgen_vial_types_pkg.all;
 use work.fsmgen_vial_runtime_pkg.all;
+use work.base_output_arbitration_metadata_pkg.all;
 
 entity base_output_arbitration_tb is
 end entity base_output_arbitration_tb;
@@ -80,6 +83,7 @@ begin
     variable vial_scoreboard_mismatches_total : natural := 0;
     variable vial_scoreboard_overflowed_any : boolean := false;
     variable vial_fault_applications_total : natural := 0;
+    variable vial_nonzero_read_data_count : natural := 0;
     variable vial_check_passes : natural := 0;
     variable vial_check_failures : natural := 0;
     variable vial_unknown_evidence : natural := 0;
@@ -94,9 +98,25 @@ begin
     variable vial_scenario_00_passed : boolean := false;
     variable vial_scenario_00_timed_out : boolean := false;
     variable vial_scenario_00_cycles : natural := 0;
+    variable vial_scenario_00_accepts : natural := 0;
+    variable vial_scenario_00_ready_low_cycles : natural := 0;
+    variable vial_scenario_00_response_error_cycles : natural := 0;
+    variable vial_scenario_00_nonzero_read_data_cycles : natural := 0;
+    variable vial_scenario_00_final_ready : vial_observation_t;
+    variable vial_scenario_00_final_response : vial_observation_t;
+    variable vial_scenario_00_final_read_data : vial_observation_vector_t(0 to 31);
+    variable vial_scenario_00_final_storage : vial_observation_vector_t(0 to 31);
     variable vial_scenario_01_passed : boolean := false;
     variable vial_scenario_01_timed_out : boolean := false;
     variable vial_scenario_01_cycles : natural := 0;
+    variable vial_scenario_01_accepts : natural := 0;
+    variable vial_scenario_01_ready_low_cycles : natural := 0;
+    variable vial_scenario_01_response_error_cycles : natural := 0;
+    variable vial_scenario_01_nonzero_read_data_cycles : natural := 0;
+    variable vial_scenario_01_final_ready : vial_observation_t;
+    variable vial_scenario_01_final_response : vial_observation_t;
+    variable vial_scenario_01_final_read_data : vial_observation_vector_t(0 to 31);
+    variable vial_scenario_01_final_storage : vial_observation_vector_t(0 to 31);
     variable vial_sample_haddr : vial_observation_vector_t(31 downto 0);
     variable vial_sample_hrdata : vial_observation_vector_t(31 downto 0);
     variable vial_sample_hready : vial_observation_vector_t(0 downto 0);
@@ -173,6 +193,41 @@ begin
       vial_trace_sequence := vial_trace_sequence + 1;
     end procedure vial_emit_trace;
 
+    procedure vial_write_observation_bits(
+      variable target : inout line;
+      constant value : in vial_observation_vector_t
+    ) is
+      variable value_index : natural;
+    begin
+      for offset in 0 to value'length - 1 loop
+        if value'ascending then
+          value_index := value'left + offset;
+        else
+          value_index := value'left - offset;
+        end if;
+        case value(value_index).normalized_value is
+          when VIAL_VALUE_0 => write(target, character'val(48));
+          when VIAL_VALUE_1 => write(target, character'val(49));
+          when VIAL_VALUE_X => write(target, character'val(88));
+          when VIAL_VALUE_Z => write(target, character'val(90));
+        end case;
+      end loop;
+    end procedure vial_write_observation_bits;
+
+    procedure vial_write_observation_number(
+      variable target : inout line;
+      constant value : in vial_observation_t
+    ) is
+    begin
+      if vial_is_known_zero(value) then
+        write(target, character'val(48));
+      elsif vial_is_known_one(value) then
+        write(target, character'val(49));
+      else
+        write(target, string'("null"));
+      end if;
+    end procedure vial_write_observation_number;
+
     procedure vial_record_diagnostic(
       constant code : in string;
       constant outcome : in vial_check_outcome_t
@@ -186,9 +241,9 @@ begin
       vial_diagnostics(vial_diagnostic_count).code(1 to code'length) := code;
       vial_diagnostics(vial_diagnostic_count).code_length := code'length;
       if outcome = VIAL_CHECK_PASSED then
-        vial_diagnostics(vial_diagnostic_count).severity := "info    ";
+        vial_diagnostics(vial_diagnostic_count).severity_name := "info    ";
       else
-        vial_diagnostics(vial_diagnostic_count).severity := "error   ";
+        vial_diagnostics(vial_diagnostic_count).severity_name := "error   ";
       end if;
       vial_diagnostics(vial_diagnostic_count).logical_time := vial_time;
       vial_diagnostics(vial_diagnostic_count).outcome := outcome;
@@ -319,7 +374,53 @@ begin
       write(result_line, vial_scoreboard_comparisons_total);
       write(result_line, string'(",""scoreboard_mismatches"":"));
       write(result_line, vial_scoreboard_mismatches_total);
-      write(result_line, string'("},""models"":[],""native_extensions"":[],""parity_digest"":null,""parity_projection"":null,""plan_id"":"""));
+      write(result_line, string'("},""models"":[],""native_extensions"":[],""parity_digest"":null,""parity_projection"":{""outcomes"":["));
+      write(result_line, string'("{""bus_accepts"":"));
+      write(result_line, vial_scenario_00_accepts);
+      write(result_line, string'(",""final_read_data_bits"":"""));
+      vial_write_observation_bits(result_line, vial_scenario_00_final_read_data);
+      write(result_line, string'(""",""final_ready"":"));
+      vial_write_observation_number(result_line, vial_scenario_00_final_ready);
+      write(result_line, string'(",""final_response"":"));
+      vial_write_observation_number(result_line, vial_scenario_00_final_response);
+      write(result_line, string'(",""nonzero_read_data_cycles"":"));
+      write(result_line, vial_scenario_00_nonzero_read_data_cycles);
+      write(result_line, string'(",""ready_low_cycles"":"));
+      write(result_line, vial_scenario_00_ready_low_cycles);
+      write(result_line, string'(",""response_error_cycles"":"));
+      write(result_line, vial_scenario_00_response_error_cycles);
+      write(result_line, string'(",""scenario_id"":"""));
+      write(result_line, VIAL_SCENARIO_00_ID);
+      write(result_line, string'(""",""status"":"""));
+      vial_write_status(result_line, vial_scenario_00_passed,
+        vial_scenario_00_timed_out);
+      write(result_line, string'(""",""storage_bits"":"""));
+      vial_write_observation_bits(result_line, vial_scenario_00_final_storage);
+      write(result_line, string'("""}"));
+      write(result_line, string'(","));
+      write(result_line, string'("{""bus_accepts"":"));
+      write(result_line, vial_scenario_01_accepts);
+      write(result_line, string'(",""final_read_data_bits"":"""));
+      vial_write_observation_bits(result_line, vial_scenario_01_final_read_data);
+      write(result_line, string'(""",""final_ready"":"));
+      vial_write_observation_number(result_line, vial_scenario_01_final_ready);
+      write(result_line, string'(",""final_response"":"));
+      vial_write_observation_number(result_line, vial_scenario_01_final_response);
+      write(result_line, string'(",""nonzero_read_data_cycles"":"));
+      write(result_line, vial_scenario_01_nonzero_read_data_cycles);
+      write(result_line, string'(",""ready_low_cycles"":"));
+      write(result_line, vial_scenario_01_ready_low_cycles);
+      write(result_line, string'(",""response_error_cycles"":"));
+      write(result_line, vial_scenario_01_response_error_cycles);
+      write(result_line, string'(",""scenario_id"":"""));
+      write(result_line, VIAL_SCENARIO_01_ID);
+      write(result_line, string'(""",""status"":"""));
+      vial_write_status(result_line, vial_scenario_01_passed,
+        vial_scenario_01_timed_out);
+      write(result_line, string'(""",""storage_bits"":"""));
+      vial_write_observation_bits(result_line, vial_scenario_01_final_storage);
+      write(result_line, string'("""}"));
+      write(result_line, string'("],""schema"":""fsmgen.vial_vhdl_portable_outcomes.v1"",""schema_version"":1},""plan_id"":"""));
       write(result_line, VIAL_PLAN_ID);
       write(result_line, string'(""",""portable_parity_eligible"":false,""random_decisions"":[{""algorithm"":""sha256_counter_rejection_v1"",""attempt"":0,""decision_id"":""success.wait_cycles"",""declaration_semantic_id"":""ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::choice::success_wait"",""distribution"":{""high"":{""kind"":""scalar"",""known_hex"":""f"",""signed"":0,""state_domain"":""two_state"",""type_id"":""execution-type/0bc61ad085c7a24e898dfd8612321a4ef7fa1cad5a908b6efd8903333044e1ee"",""value_hex"":""2"",""width"":4,""z_hex"":""0""},""kind"":""uniform"",""low"":{""kind"":""scalar"",""known_hex"":""f"",""signed"":0,""state_domain"":""two_state"",""type_id"":""execution-type/0bc61ad085c7a24e898dfd8612321a4ef7fa1cad5a908b6efd8903333044e1ee"",""value_hex"":""1"",""width"":4,""z_hex"":""0""}},""occurrence_id"":""decision/ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration/ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::success/success.wait_cycles/0"",""origin"":""generated"",""reference_operation_ids"":[""operation/ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::success/~1packages~10~1fixtures~10~1scenarios~10~1actions~11/root"",""operation/ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::success/~1packages~10~1fixtures~10~1scenarios~10~1actions~12/root""],""scenario_id"":""ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::success"",""seed"":1,""source_location"":{""end_byte_exclusive"":2302,""end_column"":55,""end_line"":64,""source_name"":""vial/ahb_subordinate_base_output_arbitration.vial"",""start_byte"":2131,""start_column"":11,""start_line"":61},""type_id"":""execution-type/0bc61ad085c7a24e898dfd8612321a4ef7fa1cad5a908b6efd8903333044e1ee"",""value"":{""kind"":""scalar"",""known_hex"":""f"",""signed"":0,""state_domain"":""two_state"",""type_id"":""execution-type/0bc61ad085c7a24e898dfd8612321a4ef7fa1cad5a908b6efd8903333044e1ee"",""value_hex"":""2"",""width"":4,""z_hex"":""0""}}],""result_id"":null,""scenario_results"":["));
       write(result_line, string'("{""cancelled_fiber_ids"":[],""completion_reason"":"""));
@@ -413,6 +514,7 @@ begin
       vial_time.phase := VIAL_REACT_PHASE;
       -- FSMGEN VIAL PHASE: REACT
       vial_accept_now := vial_transaction_active
+        and not vial_transaction_accepted
         and vial_is_known_one(vial_sample_hsel(0))
         and vial_is_known_one(vial_sample_hready(0))
         and vial_matches(vial_sample_htrans,
@@ -420,7 +522,7 @@ begin
       vial_complete_now := vial_transaction_active
         and vial_is_known_one(vial_sample_hreadyout(0))
         and (vial_transaction_accepted or vial_accept_now);
-      if vial_accept_now and not vial_transaction_accepted then
+      if vial_accept_now then
         vial_event_accepted_count := vial_event_accepted_count + 1;
         vial_event_captured_count := vial_event_captured_count + 1;
         vial_transaction_accepted := true;
@@ -435,6 +537,9 @@ begin
       end if;
       if vial_transaction_active and vial_is_known_one(vial_sample_hresp(0)) then
         vial_event_error_count := vial_event_error_count + 1;
+      end if;
+      if vial_transaction_active and not vial_matches(vial_sample_hrdata, to_vial_value_vector(std_logic_vector'("00000000000000000000000000000000"))) then
+        vial_nonzero_read_data_count := vial_nonzero_read_data_count + 1;
       end if;
       if vial_complete_now then
         vial_event_completed_count := vial_event_completed_count + 1;
@@ -465,7 +570,9 @@ begin
             vial_current_operation_rank := 3;
             if vial_fiber_01_status = VIAL_FIBER_COMPLETED and vial_fiber_02_status = VIAL_FIBER_COMPLETED then
               vial_fiber_00_status := VIAL_FIBER_COMPLETED;
-              vial_scenario_done := true;
+              if vial_is_known_zero(vial_sample_hresp(0)) then
+                vial_scenario_done := true;
+              end if;
             end if;
           when 1 =>
             vial_current_operation_rank := 3;
@@ -473,7 +580,9 @@ begin
               vial_fiber_03_status := VIAL_FIBER_COMPLETED;
             end if;
             if vial_fiber_03_status = VIAL_FIBER_COMPLETED then
-              vial_scenario_done := true;
+              if vial_is_known_zero(vial_sample_hresp(0)) then
+                vial_scenario_done := true;
+              end if;
             end if;
           when others =>
             vial_scenario_done := true;
@@ -494,15 +603,34 @@ begin
         if vial_scenario_status = VIAL_SCENARIO_TIMED_OUT then
           vial_record_diagnostic("VIAL_SCENARIO_TIMEOUT", VIAL_CHECK_FAILED);
         elsif vial_current_scenario = 0 then
-          if vial_is_known_zero(vial_sample_hresp(0)) then
+          if vial_event_accepted_count = 1
+              and vial_event_completed_count = 1
+              and vial_is_known_zero(vial_sample_hresp(0))
+              and vial_matches(vial_sample_hrdata, to_vial_value_vector(std_logic_vector'("00000000000000000000000000000000")))
+              and vial_matches(vial_sample_probe_reg_data_q, to_vial_value_vector(std_logic_vector'("11001010111111101011101010111110")))
+              and vial_nonzero_read_data_count = 0
+              and vial_event_held_count > 0
+              and vial_event_error_count = 0
+          then
             vial_record_diagnostic("VIAL_EXPECT_SUCCESS", VIAL_CHECK_PASSED);
           else
             vial_record_diagnostic("VIAL_EXPECT_SUCCESS", VIAL_CHECK_FAILED);
           end if;
-        elsif vial_event_error_count = 0 then
-          vial_record_diagnostic("VIAL_EXPECT_ERROR", VIAL_CHECK_FAILED);
+        elsif vial_current_scenario = 1 then
+          if vial_event_accepted_count = 1
+              and vial_event_completed_count = 1
+              and vial_is_known_zero(vial_sample_hresp(0))
+              and vial_matches(vial_sample_hrdata, to_vial_value_vector(std_logic_vector'("00000000000000000000000000000000")))
+              and vial_matches(vial_sample_probe_reg_data_q, to_vial_value_vector(std_logic_vector'("00000000000000000000000000000000")))
+              and vial_nonzero_read_data_count = 0
+              and vial_event_error_count = 2
+          then
+            vial_record_diagnostic("VIAL_EXPECT_ERROR", VIAL_CHECK_PASSED);
+          else
+            vial_record_diagnostic("VIAL_EXPECT_ERROR", VIAL_CHECK_FAILED);
+          end if;
         else
-          vial_record_diagnostic("VIAL_EXPECT_ERROR", VIAL_CHECK_PASSED);
+          vial_record_diagnostic("VIAL_SCENARIO_UNKNOWN", VIAL_CHECK_FAILED);
         end if;
       end if;
 
@@ -535,6 +663,7 @@ begin
       vial_fault := (false, 0, 0);
       vial_scenario_failure_baseline := vial_check_failures;
       vial_scenario_unknown_baseline := vial_unknown_evidence;
+      vial_nonzero_read_data_count := 0;
       vial_time.cycle := 0;
       vial_current_operation_rank := 0;
       vial_fiber_00_status := VIAL_FIBER_DORMANT;
@@ -591,6 +720,14 @@ begin
           end if;
           vial_scenario_00_timed_out := vial_scenario_status = VIAL_SCENARIO_TIMED_OUT;
           vial_scenario_00_cycles := vial_time.cycle;
+          vial_scenario_00_accepts := vial_event_accepted_count;
+          vial_scenario_00_ready_low_cycles := vial_event_held_count;
+          vial_scenario_00_response_error_cycles := vial_event_error_count;
+          vial_scenario_00_nonzero_read_data_cycles := vial_nonzero_read_data_count;
+          vial_scenario_00_final_ready := vial_sample_hreadyout(0);
+          vial_scenario_00_final_response := vial_sample_hresp(0);
+          vial_scenario_00_final_read_data := vial_sample_hrdata;
+          vial_scenario_00_final_storage := vial_sample_probe_reg_data_q;
           vial_scenario_00_passed := vial_scenario_status /= VIAL_SCENARIO_TIMED_OUT
             and vial_check_failures = vial_scenario_failure_baseline
             and vial_unknown_evidence = vial_scenario_unknown_baseline
@@ -644,6 +781,14 @@ begin
           end if;
           vial_scenario_01_timed_out := vial_scenario_status = VIAL_SCENARIO_TIMED_OUT;
           vial_scenario_01_cycles := vial_time.cycle;
+          vial_scenario_01_accepts := vial_event_accepted_count;
+          vial_scenario_01_ready_low_cycles := vial_event_held_count;
+          vial_scenario_01_response_error_cycles := vial_event_error_count;
+          vial_scenario_01_nonzero_read_data_cycles := vial_nonzero_read_data_count;
+          vial_scenario_01_final_ready := vial_sample_hreadyout(0);
+          vial_scenario_01_final_response := vial_sample_hresp(0);
+          vial_scenario_01_final_read_data := vial_sample_hrdata;
+          vial_scenario_01_final_storage := vial_sample_probe_reg_data_q;
           vial_scenario_01_passed := vial_scenario_status /= VIAL_SCENARIO_TIMED_OUT
             and vial_check_failures = vial_scenario_failure_baseline
             and vial_unknown_evidence = vial_scenario_unknown_baseline
@@ -660,6 +805,6 @@ begin
     assert vial_trace_closed and vial_result_consistent
       report "FSMGen VIAL trace/result closure inconsistency" severity failure;
     vial_runtime_state := VIAL_RUNTIME_FINALIZED;
-    wait;
+    finish;
   end process vial_scheduler;
 end architecture portable_semantics;

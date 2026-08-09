@@ -7,11 +7,9 @@
       "base_output_arbitration_tb",
       "--assert-level=error"
    ],
-   "command_digest" : "570e27f27edd7386b704b4f3a93e424012d89f8d2ce495647f710064907b5de8",
+   "command_digest" : "befa2cba649d676b48ae71c094018147127f28f066197f41363c728e4931f1cf",
    "execution_status" : "not_run",
-   "expected_outputs" : [
-      ".artifacts/gallery/vial-vhdl-portable-semantics/backends/vhdl_portable_ghdl/evidence/runtime-trace.jsonl"
-   ],
+   "expected_outputs" : [],
    "inputs" : [
       ".artifacts/tmp/vial/op-a8c56b037a971563b3e30d8294454d9346cc83c76d638a67462aad8219577bca/work/vhdl_portable_ghdl/library/fsmgen_vial-obj08.cf"
    ],

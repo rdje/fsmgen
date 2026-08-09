@@ -6,11 +6,9 @@
       "--workdir=.artifacts/tmp/vial/op-a8c56b037a971563b3e30d8294454d9346cc83c76d638a67462aad8219577bca/work/vhdl_portable_ghdl/library",
       "base_output_arbitration_tb"
    ],
-   "command_digest" : "fc56847b4671b2e75162c3f45012fa0fc1f18acb0567a3e5cdcfc49de945b33c",
+   "command_digest" : "14860b2e65ea2aaaa11312a487c023e6a87480b15ce64ebc7cb7f1716f339049",
    "execution_status" : "not_run",
-   "expected_outputs" : [
-      ".artifacts/tmp/vial/op-a8c56b037a971563b3e30d8294454d9346cc83c76d638a67462aad8219577bca/work/vhdl_portable_ghdl/elaborated/base_output_arbitration_tb"
-   ],
+   "expected_outputs" : [],
    "inputs" : [
       ".artifacts/tmp/vial/op-a8c56b037a971563b3e30d8294454d9346cc83c76d638a67462aad8219577bca/work/vhdl_portable_ghdl/library/fsmgen_vial-obj08.cf"
    ],

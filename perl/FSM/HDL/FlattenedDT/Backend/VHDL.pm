@@ -8,6 +8,7 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
 use FSM::Debug;
+use FSM::Support::HDLInstanceIdentifierPolicy;
 
 sub new ($class, %args) {
     my $flattened_dt = $args{flattened_dt}
@@ -26,6 +27,7 @@ sub generate_vhdl ($self, $fsm_module) {
 }
 
 sub convert_systemverilog_to_vhdl ($self, $sv_hdl) {
+    $sv_hdl = _normalize_generated_vhdl_identifiers($sv_hdl);
     my %aggregate_type_widths = _parse_packed_struct_typedef_widths($sv_hdl);
     my $module = _parse_module($sv_hdl);
     my @generics = _parse_generics($module->{parameters});
@@ -57,6 +59,69 @@ sub convert_systemverilog_to_vhdl ($self, $sv_hdl) {
         decls_by_name => \%decls_by_name,
         vector_reduction_helpers => \%vector_reduction_helpers,
     );
+}
+
+sub _normalize_generated_vhdl_identifiers ($sv_hdl) {
+    my $lexeme = qr{
+        "(?:\\.|[^"\\])*"
+        | //[^\n]*
+        | /\*.*?\*/
+        | [A-Za-z_][A-Za-z0-9_]*
+    }xs;
+    my %identifier;
+    while ($sv_hdl =~ /($lexeme)/g) {
+        my $token = $1;
+        next if $token =~ /\A(?:"|\/\/|\/\*)/;
+        $identifier{$token} = 1;
+    }
+
+    my %owner = map { lc($_) => $_ }
+        grep { _has_vhdl_basic_identifier_shape($_) } keys %identifier;
+    my %replacement;
+    for my $original (sort keys %identifier) {
+        next if _has_vhdl_basic_identifier_shape($original);
+        my $base = $original;
+        $base =~ s/_+/_/g;
+        $base =~ s/\A_+|_+\z//g;
+        $base = "n_$base" unless $base =~ /\A[A-Za-z]/;
+        $base = 'fsmgen_vhdl_identifier' unless length $base;
+        $base .= '_identifier'
+            if _is_vhdl_reserved_identifier($base);
+
+        my $candidate = $base;
+        my $suffix = 2;
+        while (
+            exists($owner{lc($candidate)})
+            || _is_vhdl_reserved_identifier($candidate)
+        ) {
+            $candidate = "${base}_$suffix";
+            ++$suffix;
+        }
+        $owner{lc($candidate)} = $original;
+        $replacement{$original} = $candidate;
+    }
+
+    return $sv_hdl unless %replacement;
+    $sv_hdl =~ s{($lexeme)}{
+        my $token = $1;
+        exists($replacement{$token}) ? $replacement{$token} : $token;
+    }gex;
+    return $sv_hdl;
+}
+
+sub _is_vhdl_basic_identifier ($value) {
+    return _has_vhdl_basic_identifier_shape($value)
+        && !_is_vhdl_reserved_identifier($value);
+}
+
+sub _has_vhdl_basic_identifier_shape ($value) {
+    return defined($value)
+        && $value =~ /\A[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*\z/;
+}
+
+sub _is_vhdl_reserved_identifier ($value) {
+    return scalar grep { $_ eq 'VHDL' }
+        @{FSM::Support::HDLInstanceIdentifierPolicy->reserved_target_languages($value)};
 }
 
 sub _parse_module ($sv_hdl) {
@@ -658,7 +723,7 @@ sub _sv_condition_to_vhdl ($expr, $ctx = {}) {
         return "$trimmed = '1'";
     }
 
-    my $converted = _sv_expr_to_vhdl($trimmed, $ctx);
+    my $converted = _sv_expr_to_vhdl($trimmed, {%$ctx, boolean_context => 1});
     return $converted if $converted =~ /=/;
     return "($converted) = '1'";
 }
@@ -681,22 +746,96 @@ sub _sv_expr_to_vhdl ($expr, $ctx = {}) {
     return _simple_arithmetic_to_vhdl($trimmed, $ctx)
         if _has_arithmetic_operator($trimmed);
 
+    $trimmed = _sv_decimal_equality_literals_to_vhdl(
+        $trimmed,
+        $ctx->{decls_by_name} || {},
+    );
+    $trimmed = _sv_scalar_condition_operands_to_vhdl(
+        $trimmed,
+        $ctx->{decls_by_name} || {},
+    ) if $ctx->{boolean_context};
+
     my $converted = $trimmed;
     $converted = _convert_concat_braces($converted);
     $converted =~ s/\b([A-Za-z_][A-Za-z0-9_]*)\[([0-9]+):([0-9]+)\]/$1($2 downto $3)/g;
     $converted =~ s/\b([A-Za-z_][A-Za-z0-9_]*)\[([0-9]+)\]/$1($2)/g;
     $converted =~ s/\b([0-9]+)'([bdhBDH])([0-9A-Fa-f_xXzZ]+)\b/_literal_match_to_vhdl($1, lc($2), $3)/ge;
+    $converted =~ s/!=/\/=/g;
     $converted =~ s/==/=/g;
     $converted =~ s/&&/ and /g;
     $converted =~ s/\|\|/ or /g;
     $converted =~ s/\s+\|\s+/ or /g;
-    $converted =~ s/(?<![<>=!])!(?=\s*[A-Za-z_]) /not /gx;
+    $converted =~ s/(?<![<>=!])!(?!=)/not /g;
     $converted =~ s/\s*&\s*/ and /g;
     $converted =~ s/__FSMGEN_CONCAT__/&/g;
     $converted =~ s/\s+/ /g;
+    my $arithmetic_residue = $converted;
+    $arithmetic_residue =~ s{/=}{}g;
     confess _unsupported("arithmetic expression '$expr' is outside the direct VHDL scaffold")
-        if $converted =~ /[+\-*\/%]/ || $converted =~ /\bmod\b/i;
+        if $arithmetic_residue =~ /[+\-*\/%]/ || $arithmetic_residue =~ /\bmod\b/i;
     return _trim($converted);
+}
+
+sub _sv_decimal_equality_literals_to_vhdl ($expr, $decls_by_name) {
+    my $identifier = qr/[A-Za-z_][A-Za-z0-9_]*/;
+    my $converted = $expr;
+    $converted =~ s{
+        \b($identifier)\b
+        (\s*(?:==|!=)\s*)
+        (-?\d+)(?!\s*')
+    }{
+        my ($name, $operator, $value) = ($1, $2, $3);
+        my $decl = $decls_by_name->{$name};
+        defined($decl)
+            ? $name . $operator . _vhdl_decimal_equality_literal($value, $decl)
+            : $&;
+    }gex;
+    $converted =~ s{
+        (?<![A-Za-z0-9_'])(-?\d+)
+        (\s*(?:==|!=)\s*)
+        \b($identifier)\b
+    }{
+        my ($value, $operator, $name) = ($1, $2, $3);
+        my $decl = $decls_by_name->{$name};
+        defined($decl)
+            ? _vhdl_decimal_equality_literal($value, $decl) . $operator . $name
+            : $&;
+    }gex;
+    return $converted;
+}
+
+sub _vhdl_decimal_equality_literal ($value, $decl) {
+    confess _unsupported("scalar equality literal '$value' is outside the direct VHDL scaffold")
+        if $decl->{scalar} && $value !~ /\A[01]\z/;
+    return "'$value'" if $decl->{scalar};
+
+    my $width = _decl_width($decl);
+    return "to_signed($value, $width)" if $decl->{signed};
+    confess _unsupported("negative equality literal '$value' is outside the unsigned direct VHDL scaffold")
+        if $value < 0;
+    return _literal_bits_value({
+        width => $width,
+        base => 'd',
+        digits => $value,
+    }, force_vector => 1);
+}
+
+sub _sv_scalar_condition_operands_to_vhdl ($expr, $decls_by_name) {
+    my $converted = $expr;
+    my @scalar = sort { length($b) <=> length($a) || $a cmp $b }
+        grep { $decls_by_name->{$_}{scalar} } keys %$decls_by_name;
+    for my $name (@scalar) {
+        $converted =~ s{!\s*\b\Q$name\E\b}{($name = '0')}g;
+        $converted =~ s{\b\Q$name\E\b}{
+            my $before = substr($converted, 0, $-[0]);
+            my $after = substr($converted, $+[0]);
+            $before =~ /(?:==|!=|<=|>=|=|<|>)\s*\z/
+                || $after =~ /\A\s*(?:==|!=|<=|>=|=|<|>)/
+                ? $name
+                : "($name = '1')";
+        }gex;
+    }
+    return $converted;
 }
 
 sub _sv_reduction_expressions_to_vhdl ($expr, $ctx) {
@@ -708,7 +847,14 @@ sub _sv_reduction_expressions_to_vhdl ($expr, $ctx) {
     $converted =~ s{
         (\(\s*(~?)\s*([|&^])\s*($candidate_operand)\s*\))
     }{
-        _sv_reduction_to_vhdl($1, $2, $3, $4, $decls_by_name)
+        _sv_reduction_to_vhdl(
+            $1,
+            $2,
+            $3,
+            $4,
+            $decls_by_name,
+            $ctx->{boolean_context} ? 1 : 0,
+        )
     }gex;
 
     if ($converted =~ /\(\s*~?\s*[|&^]/) {
@@ -722,7 +868,7 @@ sub _sv_reduction_expressions_to_vhdl ($expr, $ctx) {
     return $converted;
 }
 
-sub _sv_reduction_to_vhdl ($authored, $complement, $operator, $operand, $decls_by_name) {
+sub _sv_reduction_to_vhdl ($authored, $complement, $operator, $operand, $decls_by_name, $boolean_context = 0) {
     my ($base, $select) = $operand =~ /^([A-Za-z_][A-Za-z0-9_]*)(?:\[([^\]]+)\])?$/;
     my $decl = defined($base) ? $decls_by_name->{$base} : undef;
     confess _unsupported(
@@ -766,6 +912,8 @@ sub _sv_reduction_to_vhdl ($authored, $complement, $operator, $operand, $decls_b
         );
     }
 
+    return "($operand_vhdl = '" . ($complement ? '0' : '1') . "')"
+        if $boolean_context;
     return $complement ? "(not $operand_vhdl)" : "($operand_vhdl)";
 }
 

@@ -46,7 +46,7 @@ package fsmgen_vial_runtime_pkg is
   type vial_diagnostic_record_t is record
     code : string(1 to 32);
     code_length : natural;
-    severity : string(1 to 8);
+    severity_name : string(1 to 8);
     logical_time : vial_logical_time_t;
     outcome : vial_check_outcome_t;
   end record;

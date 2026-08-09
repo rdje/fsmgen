@@ -107,6 +107,14 @@ subtest 'portable source emits typed stimulus, scheduling, models, and declared 
         'typed vector driver is emitted');
     like($types, qr/function observe_vial_vector\s*\(/,
         'typed original-symbol sampler is emitted');
+    like($types, qr/vial_value_vector_t\(0 to value'length - 1\)/,
+        'typed literal conversion normalizes vectors into left-to-right positional order');
+    like($types, qr/source_index := value'left - offset;/,
+        'descending source vectors preserve their left-to-right bit order');
+    like($types, qr/target_index := target'left - offset;/,
+        'descending driven vectors preserve left-to-right semantic positions');
+    like($types, qr/value_index := value'left \+ offset;/,
+        'ascending semantic values are copied positionally into driven vectors');
     my $runtime = artifact_by_role($emission, 'vhdl_runtime_package')->{content};
     like($runtime, qr/type vial_logical_time_t is record/,
         'runtime package owns typed logical time');
@@ -147,6 +155,12 @@ subtest 'portable source emits typed stimulus, scheduling, models, and declared 
         'declared probe output is sampled with original-symbol evidence');
     like($top, qr/vial_model_00_count := vial_model_00_count \+ 1;/,
         'event-counter model update is deterministic');
+    like($top,
+        qr/vial_complete_now := vial_transaction_active\s+and vial_is_known_one\([^\n]+\(0\)\)\s+and \(vial_transaction_accepted or vial_accept_now\);/s,
+        'one returning-ready sample closes the accepted AHB transfer exactly as the portable SystemVerilog scheduler does');
+    like($top,
+        qr/if vial_fiber_03_status = VIAL_FIBER_COMPLETED then\s+if vial_is_known_zero\(vial_sample_hresp\(0\)\) then\s+vial_scenario_done := true;/s,
+        'completed ERROR traffic settles until the sampled response returns to OK');
     like($top, qr/procedure vial_scoreboard_compare/,
         'bounded scoreboard comparison is emitted');
     like($top, qr/vial_coverage\.stalled := vial_coverage\.stalled \+ 1;/,
@@ -429,8 +443,8 @@ subtest 'checked gallery and support discovery remain byte-exact and honest' => 
     my $readme = slurp_raw(File::Spec->catfile($gallery, 'README.md'));
     like($readme, qr/plan\/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574/,
         'gallery names its exact deterministic plan');
-    like($readme, qr/have not been analyzed, elaborated, or run/,
-        'gallery prominently preserves execution non-claims');
+    like($readme, qr/separately passed analysis, elaboration, bounded execution/,
+        'gallery points to the separately qualified exact execution evidence');
 
     my $contract = build_capability_manifest()->{language_surface}{vial_vhdl_emission};
     is($contract->{profile}, $profile, 'capability manifest discovers the exact private profile');
@@ -443,8 +457,9 @@ subtest 'checked gallery and support discovery remain byte-exact and honest' => 
         'support state reports the exact source-map count');
     is($contract->{limits}{static_validation_checks}, 20,
         'support state reports the exact static-check count');
-    is($contract->{backend_stage_status}{analysis}, 'not_run',
-        'support state does not infer VHDL analysis');
+    is($contract->{backend_stage_status}{analysis},
+        'passed_exact_ghdl_6_0_0_llvm_jit',
+        'support state records the separately checked exact GHDL analysis qualification');
     ok(!$contract->{public_embedding_api}, 'private emitter is not promoted to public embedding API');
 };
 

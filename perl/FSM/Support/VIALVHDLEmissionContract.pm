@@ -30,13 +30,15 @@ sub vial_vhdl_emission_contract_keys {
 sub build_vial_vhdl_emission_contract {
     return {
         schema_version => 1,
-        status => 'shipped_private_structurally_reviewed_unqualified_portable_profile',
+        status => 'shipped_private_exact_ghdl_6_0_0_qualified_portable_profile',
         contract_source => vial_vhdl_emission_contract_source(),
         implementation_entrypoints => [
             'FSM::VIAL::Backend::VHDLPortableGHDL->emit({...})',
             'FSM::VIAL::Backend::VHDLPortableStaticValidator->validate({...})',
             'FSM::VIAL::Backend::VHDLPortableReviewClosure->build({...})',
+            'FSM::VIAL::Backend::VHDLPortableGHDLQualification->qualify({...})',
             'FSM::VIAL::ArtifactTransaction->publish({...})',
+            'perl scripts/run_vial_vhdl_portable_ghdl_qualification.pl --check',
         ],
         execution_schema => 'fsmgen.vial_execution_ir.v1',
         profile => 'vhdl_portable_ghdl',
@@ -50,13 +52,20 @@ sub build_vial_vhdl_emission_contract {
             language => 'VHDL',
             standard => 'IEEE 1076-2008',
             standard_option => '--std=08',
-            status => 'selected_unexecuted',
+            status => 'executed_qualified_selected_fixture',
         },
         tool_selection => {
             tool => 'GHDL',
             exact_version => '6.0.0',
-            local_state => 'not_available',
-            execution_evidence => JSON::PP::false,
+            backend => 'llvm_jit',
+            build_commit => 'e589c698c351369ac5bcfe7abe1f1152ac5d4727',
+            local_state => 'repository_local_exact_materialization',
+            archive => '.artifacts/cache/providers/ghdl/6.0.0/llvm-jit-archive/ghdl-llvm-jit-6.0.0-macos15-aarch64.tar.gz',
+            archive_sha256 => 'c21312d5a0cc5833e6d8690d8c4343e67f4fc32f070c07343816cd11a31c7769',
+            binary => '.artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl',
+            binary_sha256 => '38a99c1cc18b04dfae128b118c7344910e08b8ba6eeb9c1e67f950a84bca3c3d',
+            qualification_report => 'vial/qualification/vhdl_portable_ghdl/ghdl-6.0.0-qualification.json',
+            execution_evidence => JSON::PP::true,
         },
         methodology_identity => {
             portable_core => 'provider_free_vhdl_2008',
@@ -68,7 +77,7 @@ sub build_vial_vhdl_emission_contract {
             required_for_foundation_emission => JSON::PP::false,
             required_for_portable_emission => JSON::PP::false,
             network_fetch_during_emission => JSON::PP::false,
-            current_state => 'no_provider_requested_or_inspected',
+            current_state => 'no_methodology_provider_requested_or_inspected',
             verified_project_local_copy_required_before_provider_use => JSON::PP::true,
         },
         backend_stage_status => {
@@ -92,14 +101,15 @@ sub build_vial_vhdl_emission_contract {
             faults => 'shipped_substitution_emission_only',
             properties => 'shipped_procedural_emission_only',
             diagnostics => 'shipped_bounded_emission_only',
-            trace => 'shipped_closed_projection_emission_only',
-            analysis => 'not_run',
-            elaboration => 'not_run',
-            runtime => 'not_run',
-            result => 'projection_emitted_not_produced',
-            parity => 'not_evaluated',
+            trace => 'passed_closed_forty_two_record_runtime_trace',
+            analysis => 'passed_exact_ghdl_6_0_0_llvm_jit',
+            elaboration => 'passed_exact_ghdl_6_0_0_llvm_jit',
+            runtime => 'passed_bounded_selected_fixture',
+            four_state => 'passed_bounded_timed_0_1_x_z_probe',
+            result => 'produced_normalized_pass',
+            parity => 'passed_nineteen_applicable_portable_sv_paths',
             psl => 'not_emitted',
-            product_support => 'not_claimed',
+            product_support => 'qualified_private_fixture_profile_not_public_api',
         },
         capabilities => [qw(
             vial.backend.vhdl_portable_ghdl.foundation.v1
@@ -130,6 +140,12 @@ sub build_vial_vhdl_emission_contract {
             vial.backend.vhdl_portable_ghdl.review_workflow.v1
             vial.backend.vhdl_portable_ghdl.migration_separation.v1
             vial.backend.vhdl_portable_ghdl.deterministic_artifacts.v1
+            vial.backend.vhdl_portable_ghdl.ghdl_6_0_0_qualification.v1
+            vial.backend.vhdl_portable_ghdl.four_state_timed_probe.v1
+            vial.backend.vhdl_portable_ghdl.normalized_result.v1
+            vial.backend.vhdl_portable_ghdl.bounded_ahb_portable_sv_parity.v1
+            vial.backend.vhdl_portable_ghdl.deterministic_runtime.v1
+            vial.backend.vhdl_portable_ghdl.exact_cleanup.v1
         )],
         limits => {
             selected_units => 1,
@@ -148,6 +164,9 @@ sub build_vial_vhdl_emission_contract {
             diagnostic_capacity => 64,
             static_validation_artifacts => 32,
             identifier_bytes => 255,
+            qualification_trace_records => 42,
+            qualification_parity_paths => 19,
+            qualification_process_rss_mib => 4_096,
         },
         fixture => 'vial/ahb_subordinate_base_output_arbitration.vial',
         review_gallery =>
@@ -155,16 +174,16 @@ sub build_vial_vhdl_emission_contract {
         writes_files => JSON::PP::true,
         public_embedding_api => JSON::PP::false,
         explicit_nonclaims => [qw(
-            complete_vhdl_backend vhdl_analysis elaboration simulation runtime
-            produced_result parity psl
-            complete_vhdl_2008 osvvm uvvm mixed_language product_support scale
+            complete_vhdl_backend general_cross_backend_parity psl
+            complete_vhdl_2008 osvvm uvvm another_simulator mixed_language scale
         )],
         guidance => [
             'Use the private emitter to inspect deterministic provider-free VHDL-2008 typed drivers, samplers, scheduling, scenarios, models, bounded scoreboards, coverage, substitution faults, procedural checks, diagnostics, trace closure, normalized result projection, probe adapters, exact ranks, HIAL DUT bytes, and source maps.',
-            'Treat the twenty-four-row selected matrix, twenty structural checks, seven-stage workflow, and checked gallery as emitted and structurally reviewed evidence only; visual review remains pending and none proves VHDL analysis, elaboration, runtime behavior, a produced result, parity, PSL, or product support.',
-            'Ordinary portable emission downloads and inspects no simulator or methodology-provider bytes. Exact GHDL and OSVVM materialization belong to later separately qualified slices.',
+            'Treat the twenty-four-row selected matrix, twenty structural checks, seven-stage workflow, and checked gallery as emission/review evidence; visual review remains pending. The separate checked qualification report proves only the bounded selected fixture under exact GHDL 6.0.0 LLVM-JIT.',
+            'Ordinary portable emission downloads and inspects no simulator or methodology-provider bytes. The exact GHDL qualification runner consumes a verified repository-local tool; OSVVM materialization remains separately owned.',
             'The exact migration proof locks the inert legacy fixture bytes/schema and byte-identical HIAL DUT handoff; the generated native VIAL graph remains separate and does not consume, rewrite, or widen either surface.',
-            'Canonical VHDL source is provider-neutral. GHDL identity and ordered command shapes live only in JSON evidence until the exact tool is executed.',
+            'Canonical VHDL source remains provider-neutral. The qualification report freezes and executes exact GHDL identity, ordered analysis/elaboration/run commands, deterministic reruns, four-state timing, trace/result validation, applicable portable-SV parity, resource controls, and cleanup.',
+            'Do not generalize the LLVM-JIT result to GHDL LLVM AOT: the exact 6.0.0 AOT package analyzed and elaborated the fixture but failed its external-name adapter at runtime.',
         ],
     };
 }

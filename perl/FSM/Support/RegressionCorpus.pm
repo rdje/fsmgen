@@ -200,7 +200,7 @@ my @REGRESSION_CORPUS = (
         relpath => 'vial/ahb_subordinate_base_output_arbitration.vial',
         family => 'verification_intent_tooling',
         classification => 'supported_smoke',
-        coverage => 'vial_vhdl_provider_free_selected_matrix_review_private_api',
+        coverage => 'vial_vhdl_provider_free_ghdl_qualified_private_api',
         source_kind => 'vial',
         strict_supported => 0,
         supported_phases => [qw(
@@ -213,6 +213,9 @@ my @REGRESSION_CORPUS = (
             normalized_result_projection declared_probe_adapter static_validation
             source_map selected_mapping_matrix review_gallery review_workflow
             migration_separation atomic_publication
+            ghdl_6_0_0_analysis ghdl_6_0_0_elaboration bounded_four_state_runtime
+            closed_runtime_trace produced_normalized_result deterministic_runtime
+            applicable_portable_sv_parity exact_runtime_cleanup
         )],
         required_capabilities => [qw(
             vial.backend.vhdl_portable_ghdl.foundation.v1
@@ -243,11 +246,16 @@ my @REGRESSION_CORPUS = (
             vial.backend.vhdl_portable_ghdl.review_workflow.v1
             vial.backend.vhdl_portable_ghdl.migration_separation.v1
             vial.backend.vhdl_portable_ghdl.deterministic_artifacts.v1
+            vial.backend.vhdl_portable_ghdl.ghdl_6_0_0_qualification.v1
+            vial.backend.vhdl_portable_ghdl.four_state_timed_probe.v1
+            vial.backend.vhdl_portable_ghdl.normalized_result.v1
+            vial.backend.vhdl_portable_ghdl.bounded_ahb_portable_sv_parity.v1
+            vial.backend.vhdl_portable_ghdl.deterministic_runtime.v1
+            vial.backend.vhdl_portable_ghdl.exact_cleanup.v1
         )],
         explicit_nonclaims => [qw(
-            complete_vhdl_backend vhdl_analysis elaboration simulation runtime
-            produced_result parity psl
-            complete_vhdl_2008 osvvm uvvm mixed_language product_support scale
+            complete_vhdl_backend general_cross_backend_parity psl
+            complete_vhdl_2008 osvvm uvvm another_simulator mixed_language scale
         )],
     },
     {

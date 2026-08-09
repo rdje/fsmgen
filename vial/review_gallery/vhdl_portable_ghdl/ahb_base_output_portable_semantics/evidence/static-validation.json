@@ -7,34 +7,34 @@
          "sha256" : "54b836ea1ce852d0dad9a4f7ff6249626ffd7b1674604cb62b2f79cc6cec0d46"
       },
       {
-         "bytes" : 623,
+         "bytes" : 591,
          "relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_probe_adapter.vhd",
          "role" : "vhdl_probe_adapter",
-         "sha256" : "8765d4e8ab6640cd70206d501137be29d05b79bd206be8103b8f0bf5cd3ac45b"
+         "sha256" : "7a7e3b4e81fd222e53e2098653fcf1131f1b58dbeba35698c1cfe67a4fab5b56"
       },
       {
-         "bytes" : 36614,
+         "bytes" : 44758,
          "relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_tb.vhd",
          "role" : "vhdl_fixture_top",
-         "sha256" : "e97a9486b1d57244b009ec801991d4b15f485e0f9f536a5a92c5991bf11682a9"
+         "sha256" : "4a3665cb0e14b599962a3a29bafb2ff99787cc8cb332b0f35e50b75583a6666b"
       },
       {
-         "bytes" : 47685,
+         "bytes" : 47670,
          "relpath" : "backends/vhdl_portable_ghdl/src/dut/ahb_lite_subordinate.vhd",
          "role" : "generated_hial_vhdl_dut",
-         "sha256" : "2c96af7cb4c5b5666ad768a764e0b3b778f0c05139f1f16891bef79fc43856e6"
+         "sha256" : "8d93b0ade4d9561d19fdd12ab10b4d8ba1a3dc06de9f911d1c0d8d1bf18518cf"
       },
       {
-         "bytes" : 2186,
+         "bytes" : 2191,
          "relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_runtime_pkg.vhd",
          "role" : "vhdl_runtime_package",
-         "sha256" : "ca7178d38bd94b3c7785d61be824bcca31baadee4442ed322a3cd286f6761256"
+         "sha256" : "82cb0d22e03a661ff88aecbf5b94b89f91381801576d1c683d749ac02e258017"
       },
       {
-         "bytes" : 4806,
+         "bytes" : 6025,
          "relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_types_pkg.vhd",
          "role" : "vhdl_types_package",
-         "sha256" : "6ab5eb49c57c47fc2c259ea26cdae19affe6637a3b77f599cca05955f417afb5"
+         "sha256" : "3777706b911ce90c9a3b05107233ec925c1029b175932ed10f1b1a588fb3c08e"
       }
    ],
    "backend_profile" : "vhdl_portable_ghdl",

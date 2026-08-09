@@ -131,3 +131,22 @@ feasibility argv: runtime performance is irrelevant to the control, and the
 lower-memory build passes the repository guard. Transcript identity removes
 variable wall/resource measurements and hashes the control runtime's semantic
 marker/error/fatal/finish proof, so an independent rerun is byte-stable.
+
+## 2026-08-09: VHDL qualification identities include the GHDL code-generation backend
+
+GHDL's version alone is not a sufficient runtime identity for this fixture.
+The exact 6.0.0 macOS ARM64 LLVM AOT build analyzes and elaborates the selected
+source set, but its VHDL-2008 external-name adapter dereferences null at
+runtime. The matching exact LLVM-JIT build executes the same adapter and passes
+the full bounded qualification. Support evidence therefore freezes the release
+commit, backend, archive and binary hashes, complete version output, source
+set, and commands; it cannot generalize a JIT result to AOT.
+
+The executable gate also exposed a scheduler boundary that structural review
+could not prove. On AHB's returning-ready sample, a previously stalled transfer
+may be accepted and completed together. Portable VHDL must use that same
+sample for both facts, as the qualified portable-SystemVerilog scheduler does,
+and must hold an error transaction until the complete two-cycle response has
+settled. Encoding those rules explicitly prevents repeated transfers and
+double-counted outcomes without making HDL process or delta ordering semantic
+authority.

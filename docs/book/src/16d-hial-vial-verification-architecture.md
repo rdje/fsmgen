@@ -31,9 +31,10 @@ profile.
 Completed slice `.14` now selects the VHDL-2008 verification contract. The
 portable core is provider-free, OSVVM 2026.05 is the exact advanced-methodology
 provider, and GHDL 6.0.0 is the first exact qualification tool. UVVM was
-audited but is not selected. The official macOS ARM64 GHDL package is now
-available and `.15.5` is active, but it has not yet produced analysis,
-elaboration, simulation, result, or support evidence. OSVVM remains absent.
+audited but is not selected. Completed `.15.5` now qualifies the exact official
+macOS ARM64 GHDL 6.0.0 LLVM-JIT package through analysis, elaboration, bounded
+execution, normalized results, and applicable portable-SV parity. OSVVM remains
+the next separately materialized provider.
 
 Implementation parent `.15` is active and decomposed. Completed `.15.1` now
 ships the provider-free emitter substrate and first deterministic review
@@ -42,10 +43,9 @@ inactive-edge scheduler, bounded scenarios and fibers, deterministic models,
 and a declared-probe adapter. Completed `.15.3` adds bounded scoreboards,
 coverage counters, substitution faults, procedural checks, diagnostics,
 closed trace framing, and normalized-result projection. Completed `.15.4`
-closes the portable review matrix. Director selection now activates `.15.5`
-against the available exact official macOS ARM64 GHDL 6.0.0 LLVM package;
-materialization and execution evidence remain pending. `.15.6` awaits
-repository-local OSVVM 2026.05, and `.15.7` depends on both. NEXSIM-dependent
+closes the portable review matrix. Completed `.15.5` qualifies the available
+exact official macOS ARM64 GHDL 6.0.0 LLVM-JIT package. `.15.6` is next for repository-local OSVVM
+2026.05 materialization/emission, and `.15.7` depends on both. NEXSIM-dependent
 runtime qualification is director-deferred until capability-ready releases
 provide exact evidence.
 
@@ -1054,13 +1054,32 @@ output become evidence. Analyze, elaborate, bounded run, closed trace,
 normalized result, semantic outcomes, rerun, parity, and cleanup are separate
 gates.
 
-The exact GHDL 6.0.0 macOS ARM64 LLVM package is available for active `.15.5`,
-but it is not yet materialized or executed in this continuity state. OSVVM is
-not materialized either. Completed `.15.1-.15.4` therefore ship deterministic
-source, source maps, structural checks, and a review gallery without
-advertising VHDL analysis or runtime support. OSVVM-dependent work must verify
+Completed `.15.5` materializes the exact 37,155,806-byte macOS ARM64 LLVM-JIT
+archive (SHA-256
+`c21312d5a0cc5833e6d8690d8c4343e67f4fc32f070c07343816cd11a31c7769`)
+under the repository-derived provider cache. Its selected binary is SHA-256
+`38a99c1cc18b04dfae128b118c7344910e08b8ba6eeb9c1e67f950a84bca3c3d` and
+reports GHDL 6.0.0, commit `e589c698c351369ac5bcfe7abe1f1152ac5d4727`,
+with the LLVM JIT backend. OSVVM-dependent work must still verify
 the recursive release, every submodule identity, licenses, and notices under a
 repository-derived dependency root.
+
+The checked qualification runner analyzes all six gallery sources plus a
+standalone timed four-state probe, elaborates both tops, runs the fixture and
+probe twice, and removes its exact same-volume work library. The fixture emits
+one closed 42-record trace and a passing normalized result. Its success and
+unsupported-size scenarios match nineteen applicable paths in the already
+qualified portable-SV AHB oracle; the `0/1/X/Z` probe also repeats
+byte-identically. Run the checked proof from the repository root:
+
+```text
+scripts/run_with_ram_guard.sh --process-max-rss-mb 4096 -- \
+  perl scripts/run_vial_vhdl_portable_ghdl_qualification.pl --check
+```
+
+The profile names its backend deliberately. The exact GHDL 6.0.0 LLVM AOT
+package analyzes and elaborates this fixture but dereferences null when the
+VHDL-2008 external-name adapter runs. Only LLVM-JIT is qualified.
 
 ### Shipped provider-free VHDL semantics
 
@@ -1164,9 +1183,10 @@ reproduction, expected intent, and disposition. Seven closure invariants reject
 incomplete role accounting, entry-point or unsupported-reason drift, workflow
 drift, legacy/HIAL overlap, and accidental qualification claims.
 
-The selected GHDL 6.0.0 `-a`, `-e`, and `-r` command records use `--std=08`,
-the `fsmgen_vial` work library, and repository-relative work paths, but remain
-`not_run`.
+The ordinary emission graph retains selected GHDL 6.0.0 `-a`, `-e`, and `-r`
+command records using `--std=08`, the `fsmgen_vial` work library, and
+repository-relative work paths. The separate `.15.5` qualifier has executed
+those stages against this exact canonical source set.
 
 Review the byte-locked output under
 `vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics`.
@@ -1193,10 +1213,13 @@ handoff and isolated under the backend `src/dut` directory. The legacy
 unchanged, and unconsumed, while HIAL synthesis output remains outside VIAL
 backend authority.
 
-Analysis, elaboration, runtime, produced-result validation, parity, PSL,
-complete VHDL-2008, OSVVM/UVVM, mixed-language behavior, and product support
-remain explicit non-claims. Emitted checking and result projection are source
-evidence only until the exact GHDL profile runs them.
+For this bounded canonical fixture, exact LLVM-JIT analysis, elaboration,
+runtime, normalized-result validation, deterministic rerun, timed four-state
+behavior, and nineteen-path applicable portable-SV parity are qualified.
+Complete VHDL backend/language breadth, PSL, OSVVM/UVVM, another simulator,
+mixed-language behavior, general cross-backend parity, and scale remain
+explicit non-claims. The emitter remains private rather than a public
+embedding API.
 
 The complete contract is in the selected VHDL section of the
 [HIAL/VIAL architecture audit](../../HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md#completed-vhdl-contract-selection).

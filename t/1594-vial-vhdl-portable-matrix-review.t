@@ -228,8 +228,8 @@ subtest 'legacy bytes/schema and HIAL successor separation are exact' => sub {
 };
 
 subtest 'artifact graph, manifest references, and gallery evidence are byte exact' => sub {
-    is($emission->{backend_manifest}{emitter_revision}, 4,
-        'matrix/review closure is emitter revision four');
+    is($emission->{backend_manifest}{emitter_revision}, 5,
+        'matrix/review closure is emitter revision five');
     is(scalar(@{$emission->{artifacts}}), 17,
         'artifact graph contains seventeen artifacts');
     is(scalar(grep { $_->{language} eq 'vhdl' } @{$emission->{artifacts}}), 6,
@@ -283,7 +283,7 @@ subtest 'review-closure API rejects malformed or incomplete evidence fail closed
     my $base = {
         plan_id => $emission->{plan_id},
         fixture_id => $emission->{backend_manifest}{fixture_id},
-        emitter_revision => 4,
+        emitter_revision => 5,
         source_artifacts => \@source,
         review_gallery => $gallery_rel,
         hial_source_identity => {
@@ -310,7 +310,7 @@ subtest 'review-closure API rejects malformed or incomplete evidence fail closed
 
     my $revision = clone($base);
     $revision->{emitter_revision} = 3;
-    review_failure($revision, qr/emitter_revision must be 4/,
+    review_failure($revision, qr/emitter_revision must be 5/,
         'substituted emitter revision');
 
     my $digest = clone($base);

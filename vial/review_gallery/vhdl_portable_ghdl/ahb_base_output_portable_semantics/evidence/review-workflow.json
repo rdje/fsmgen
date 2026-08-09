@@ -15,7 +15,7 @@
       ],
       "task_tree" : "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md"
    },
-   "emitter_revision" : 4,
+   "emitter_revision" : 5,
    "evidence_examples" : [
       "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/evidence/selected-mapping-matrix.json",
       "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/evidence/review-workflow.json",

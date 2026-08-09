@@ -2994,13 +2994,13 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     );
     is(
         $manifest->{language_surface}{vial_vhdl_emission}{backend_stage_status}{analysis},
-        'not_run',
-        'manifest does not infer VHDL analysis from structural validation',
+        'passed_exact_ghdl_6_0_0_llvm_jit',
+        'manifest records exact GHDL LLVM-JIT analysis qualification',
     );
     is(
         $manifest->{language_surface}{vial_vhdl_emission}{backend_stage_status}{runtime},
-        'not_run',
-        'manifest does not infer portable VHDL runtime execution',
+        'passed_bounded_selected_fixture',
+        'manifest records bounded portable VHDL runtime qualification',
     );
     is_deeply(
         [sort keys %{$manifest->{language_surface}{vial_tooling}}],

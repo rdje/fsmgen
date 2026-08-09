@@ -182,9 +182,9 @@ sub _build($raw) {
     confess 'fixture_id is malformed'
         unless defined($raw->{fixture_id}) && !ref($raw->{fixture_id})
             && length($raw->{fixture_id});
-    confess 'emitter_revision must be 4'
+    confess 'emitter_revision must be 5'
         unless defined($raw->{emitter_revision}) && !ref($raw->{emitter_revision})
-            && $raw->{emitter_revision} == 4;
+            && $raw->{emitter_revision} == 5;
     confess 'source_artifacts must be a non-empty array'
         unless ref($raw->{source_artifacts}) eq 'ARRAY' && @{$raw->{source_artifacts}};
     confess 'review_gallery must be a safe repository-relative path'

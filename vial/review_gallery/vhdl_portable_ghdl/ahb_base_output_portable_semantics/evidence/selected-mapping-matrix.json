@@ -23,7 +23,7 @@
       "typed_four_state_values",
       "typed_logical_time"
    ],
-   "emitter_revision" : 4,
+   "emitter_revision" : 5,
    "entrypoint_legend" : {
       "normal_source" : "normal public VIAL projection, derived compiler-owned intent, unavailable private preview, or exact unsupported boundary",
       "terse_source" : "terse public VIAL projection, derived compiler-owned intent, unavailable private preview, or exact unsupported boundary",

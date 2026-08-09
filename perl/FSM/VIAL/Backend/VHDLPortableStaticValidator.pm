@@ -288,7 +288,7 @@ sub _validate($raw) {
         grep { $_ ne 'vhdl_probe_adapter' } @REQUIRED_SOURCE_ROLES);
     $probe_ok = 0 if $combined_non_adapter =~ /<<\s*signal\s+/i;
     my $parsed_probe = 0;
-    while ($text{vhdl_probe_adapter} =~ /^\s*-- VIAL declared probe\s+(\S+)\s+maps to\s+([A-Za-z][A-Za-z0-9_]*)\s*\n\s*alias\s+([A-Za-z][A-Za-z0-9_]*)\s*:[^\n]+\s+is\s*\n\s*<<\s*signal\s+\.([A-Za-z][A-Za-z0-9_]*)\.dut\.([A-Za-z][A-Za-z0-9_]*)\s*:/gmi) {
+    while ($text{vhdl_probe_adapter} =~ /^\s*-- VIAL declared probe\s+(\S+)\s+maps to\s+([A-Za-z][A-Za-z0-9_]*)\s*\n\s*alias\s+([A-Za-z][A-Za-z0-9_]*)\s+is\s*\n\s*<<\s*signal\s+\.([A-Za-z][A-Za-z0-9_]*)\.dut\.([A-Za-z][A-Za-z0-9_]*)\s*:/gmi) {
         $parsed_probe++;
         $probe_ok = 0 unless $2 eq $5 && lc($4) eq lc($top_name);
     }

@@ -68,10 +68,16 @@ package body fsmgen_vial_types_pkg is
   end function observe_vial_value;
 
   function to_vial_value_vector(value : std_logic_vector) return vial_value_vector_t is
-    variable result : vial_value_vector_t(value'range);
+    variable result : vial_value_vector_t(0 to value'length - 1);
+    variable source_index : natural;
   begin
-    for index in value'range loop
-      result(index) := normalize_vial_value(value(index));
+    for offset in 0 to value'length - 1 loop
+      if value'ascending then
+        source_index := value'left + offset;
+      else
+        source_index := value'left - offset;
+      end if;
+      result(offset) := normalize_vial_value(value(source_index));
     end loop;
     return result;
   end function to_vial_value_vector;
@@ -87,10 +93,16 @@ package body fsmgen_vial_types_pkg is
   end function to_strong_std_logic;
 
   function observe_vial_vector(value : std_logic_vector) return vial_observation_vector_t is
-    variable result : vial_observation_vector_t(value'range);
+    variable result : vial_observation_vector_t(0 to value'length - 1);
+    variable source_index : natural;
   begin
-    for index in value'range loop
-      result(index) := observe_vial_value(value(index));
+    for offset in 0 to value'length - 1 loop
+      if value'ascending then
+        source_index := value'left + offset;
+      else
+        source_index := value'left - offset;
+      end if;
+      result(offset) := observe_vial_value(value(source_index));
     end loop;
     return result;
   end function observe_vial_vector;
@@ -115,12 +127,24 @@ package body fsmgen_vial_types_pkg is
     actual : vial_observation_vector_t;
     expected : vial_value_vector_t
   ) return boolean is
+    variable actual_index : natural;
+    variable expected_index : natural;
   begin
     if actual'length /= expected'length then
       return false;
     end if;
-    for index in actual'range loop
-      if actual(index).normalized_value /= expected(index) then
+    for offset in 0 to actual'length - 1 loop
+      if actual'ascending then
+        actual_index := actual'left + offset;
+      else
+        actual_index := actual'left - offset;
+      end if;
+      if expected'ascending then
+        expected_index := expected'left + offset;
+      else
+        expected_index := expected'left - offset;
+      end if;
+      if actual(actual_index).normalized_value /= expected(expected_index) then
         return false;
       end if;
     end loop;
@@ -139,12 +163,24 @@ package body fsmgen_vial_types_pkg is
     signal target : out std_logic_vector;
     constant value : in vial_value_vector_t
   ) is
+    variable target_index : natural;
+    variable value_index : natural;
   begin
     assert target'length = value'length
       report "FSMGen VIAL driver width mismatch"
       severity failure;
-    for index in target'range loop
-      target(index) <= to_strong_std_logic(value(index));
+    for offset in 0 to target'length - 1 loop
+      if target'ascending then
+        target_index := target'left + offset;
+      else
+        target_index := target'left - offset;
+      end if;
+      if value'ascending then
+        value_index := value'left + offset;
+      else
+        value_index := value'left - offset;
+      end if;
+      target(target_index) <= to_strong_std_logic(value(value_index));
     end loop;
   end procedure drive_vial_vector;
 end package body fsmgen_vial_types_pkg;

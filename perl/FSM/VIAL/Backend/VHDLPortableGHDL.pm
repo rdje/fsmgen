@@ -176,6 +176,7 @@ sub _emit($raw) {
     ) : undef;
     my $fixture = _render_fixture(
         top => $top,
+        metadata_package => $metadata_package,
         entity_name => $entity_name,
         probe_adapter => $probe_adapter,
         execution => $execution,
@@ -239,7 +240,7 @@ sub _emit($raw) {
     my $review = FSM::VIAL::Backend::VHDLPortableReviewClosure->build({
         plan_id => $execution->{plan_id},
         fixture_id => $execution->{fixture}{fixture_id},
-        emitter_revision => 4,
+        emitter_revision => 5,
         source_artifacts => \@source_artifacts,
         review_gallery =>
             'vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics',
@@ -271,7 +272,7 @@ sub _emit($raw) {
         arguments => ['-e', '--std=08', '--work=fsmgen_vial',
             "--workdir=$work_rel/library", $top],
         inputs => ["$work_rel/library/fsmgen_vial-obj08.cf"],
-        expected_outputs => ["$work_rel/elaborated/$top"],
+        expected_outputs => [],
     );
     my $run = _command_record(
         logical_executable => 'ghdl',
@@ -279,9 +280,7 @@ sub _emit($raw) {
         arguments => ['-r', '--std=08', '--work=fsmgen_vial',
             "--workdir=$work_rel/library", $top, '--assert-level=error'],
         inputs => ["$work_rel/library/fsmgen_vial-obj08.cf"],
-        expected_outputs => [
-            "$raw->{artifact_root}/$BASE/evidence/runtime-trace.jsonl",
-        ],
+        expected_outputs => [],
     );
     my $source_order_record = {
         schema => 'fsmgen.vial_vhdl_source_order.v1',
@@ -297,7 +296,21 @@ sub _emit($raw) {
         selection_status => 'selected_not_executed',
         tool_name => 'ghdl',
         qualified_version => '6.0.0',
-        qualified_version_output => 'not_observed_exact_6_0_0_unavailable',
+        qualified_version_output => join("\n",
+            'GHDL 6.0.0 (6.0.0.r0.ge589c698c) [Dunoon edition]',
+            ' Compiled with GNAT Version: 14.2.0',
+            ' static elaboration, LLVM JIT code generator',
+            'Written by Tristan Gingold.',
+            '',
+            'Copyright (C) 2003 - 2026 Tristan Gingold.',
+            'GHDL is free software, covered by the GNU General Public License.  There is NO',
+            'warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.'),
+        backend => 'llvm_jit',
+        build_commit => 'e589c698c351369ac5bcfe7abe1f1152ac5d4727',
+        official_asset => 'ghdl-llvm-jit-6.0.0-macos15-aarch64.tar.gz',
+        official_asset_bytes => 37_155_806,
+        official_asset_sha256 =>
+            'c21312d5a0cc5833e6d8690d8c4343e67f4fc32f070c07343816cd11a31c7769',
         target_language => 'VHDL',
         language_standard => 'IEEE 1076-2008',
         standard_option => '--std=08',
@@ -343,7 +356,7 @@ sub _emit($raw) {
         plan_id => $execution->{plan_id},
         fixture_id => $execution->{fixture}{fixture_id},
         generated_top => $top,
-        emitter_revision => 4,
+        emitter_revision => 5,
         execution_profile => $execution->{profile},
         standard_profile => {
             language => 'VHDL',
@@ -810,10 +823,16 @@ package body fsmgen_vial_types_pkg is
   end function observe_vial_value;
 
   function to_vial_value_vector(value : std_logic_vector) return vial_value_vector_t is
-    variable result : vial_value_vector_t(value'range);
+    variable result : vial_value_vector_t(0 to value'length - 1);
+    variable source_index : natural;
   begin
-    for index in value'range loop
-      result(index) := normalize_vial_value(value(index));
+    for offset in 0 to value'length - 1 loop
+      if value'ascending then
+        source_index := value'left + offset;
+      else
+        source_index := value'left - offset;
+      end if;
+      result(offset) := normalize_vial_value(value(source_index));
     end loop;
     return result;
   end function to_vial_value_vector;
@@ -829,10 +848,16 @@ package body fsmgen_vial_types_pkg is
   end function to_strong_std_logic;
 
   function observe_vial_vector(value : std_logic_vector) return vial_observation_vector_t is
-    variable result : vial_observation_vector_t(value'range);
+    variable result : vial_observation_vector_t(0 to value'length - 1);
+    variable source_index : natural;
   begin
-    for index in value'range loop
-      result(index) := observe_vial_value(value(index));
+    for offset in 0 to value'length - 1 loop
+      if value'ascending then
+        source_index := value'left + offset;
+      else
+        source_index := value'left - offset;
+      end if;
+      result(offset) := observe_vial_value(value(source_index));
     end loop;
     return result;
   end function observe_vial_vector;
@@ -857,12 +882,24 @@ package body fsmgen_vial_types_pkg is
     actual : vial_observation_vector_t;
     expected : vial_value_vector_t
   ) return boolean is
+    variable actual_index : natural;
+    variable expected_index : natural;
   begin
     if actual'length /= expected'length then
       return false;
     end if;
-    for index in actual'range loop
-      if actual(index).normalized_value /= expected(index) then
+    for offset in 0 to actual'length - 1 loop
+      if actual'ascending then
+        actual_index := actual'left + offset;
+      else
+        actual_index := actual'left - offset;
+      end if;
+      if expected'ascending then
+        expected_index := expected'left + offset;
+      else
+        expected_index := expected'left - offset;
+      end if;
+      if actual(actual_index).normalized_value /= expected(expected_index) then
         return false;
       end if;
     end loop;
@@ -881,12 +918,24 @@ package body fsmgen_vial_types_pkg is
     signal target : out std_logic_vector;
     constant value : in vial_value_vector_t
   ) is
+    variable target_index : natural;
+    variable value_index : natural;
   begin
     assert target'length = value'length
       report "FSMGen VIAL driver width mismatch"
       severity failure;
-    for index in target'range loop
-      target(index) <= to_strong_std_logic(value(index));
+    for offset in 0 to target'length - 1 loop
+      if target'ascending then
+        target_index := target'left + offset;
+      else
+        target_index := target'left - offset;
+      end if;
+      if value'ascending then
+        value_index := value'left + offset;
+      else
+        value_index := value'left - offset;
+      end if;
+      target(target_index) <= to_strong_std_logic(value(value_index));
     end loop;
   end procedure drive_vial_vector;
 end package body fsmgen_vial_types_pkg;
@@ -943,7 +992,7 @@ package fsmgen_vial_runtime_pkg is
   type vial_diagnostic_record_t is record
     code : string(1 to 32);
     code_length : natural;
-    severity : string(1 to 8);
+    severity_name : string(1 to 8);
     logical_time : vial_logical_time_t;
     outcome : vial_check_outcome_t;
   end record;
@@ -1113,7 +1162,7 @@ sub _render_probe_adapter(%arg) {
             : 'std_logic_vector(' . ($width - 1) . ' downto 0)';
         push @line,
             "  -- VIAL declared probe $probe->{probe_id} maps to $target",
-            "  alias $alias : $kind is",
+            "  alias $alias is",
             "    << signal .$arg{top}.dut.$target : $kind >>;";
     }
     push @line, 'begin';
@@ -1163,13 +1212,42 @@ sub _render_fixture(%arg) {
         $sample_symbol{$item->{probe_id}}
             = 'vial_sample_probe_' . _vhdl_slug($item->{name});
     }
+    my $read_data_id = _endpoint_id_by_role($bridge, 'read_data');
+    my $read_data_sample = $sample_symbol{$read_data_id};
+    my ($storage_probe) = @{$bridge->{probes}};
+    _throw('VIAL_VHDL_BACKEND_UNSUPPORTED',
+        'portable outcome qualification requires exactly one declared storage probe',
+        '/bridge_manifest/probes')
+        unless @{$bridge->{probes}} == 1;
+    my $storage_sample = $sample_symbol{$storage_probe->{probe_id}};
+    my $read_data_width = $type{$endpoint{$read_data_id}{type_id}}{width};
+    my $storage_width = $type{$storage_probe->{type_id}}{width};
+    my $zero_read_data = q{to_vial_value_vector(std_logic_vector'("}
+        . ('0' x $read_data_width) . q{"))};
+    my $zero_storage = q{to_vial_value_vector(std_logic_vector'("}
+        . ('0' x $storage_width) . q{"))};
+    my @storage_expected;
+    for my $scenario (@{$execution->{scenarios}}) {
+        my ($start) = grep {
+            $_->{scenario_id} eq $scenario->{scenario_id} && $_->{kind} eq 'start'
+        } @{$execution->{operation_graph}{operations}};
+        my %input = map { $_->{name} => $_->{value} } @{$start->{typed_inputs}};
+        my %field = map { $_->{field_id} => $_->{value}{value} } @{$input{fields}};
+        my ($data_id) = grep { /::field::data\z/ } keys %field;
+        $storage_expected[@storage_expected] = $scenario->{name} eq 'success'
+            ? _vhdl_value_vector_expression($field{$data_id}, $storage_width)
+            : $zero_storage;
+    }
 
     my @line = (
         'library ieee;',
         'use ieee.std_logic_1164.all;',
+        'use std.textio.all;',
+        'use std.env.all;',
         '',
         'use work.fsmgen_vial_types_pkg.all;',
         'use work.fsmgen_vial_runtime_pkg.all;',
+        "use work.$arg{metadata_package}.all;",
         '',
         "entity $arg{top} is",
         "end entity $arg{top};",
@@ -1265,6 +1343,7 @@ sub _render_fixture(%arg) {
         '    variable vial_scoreboard_mismatches_total : natural := 0;',
         '    variable vial_scoreboard_overflowed_any : boolean := false;',
         '    variable vial_fault_applications_total : natural := 0;',
+        '    variable vial_nonzero_read_data_count : natural := 0;',
         '    variable vial_check_passes : natural := 0;',
         '    variable vial_check_failures : natural := 0;',
         '    variable vial_unknown_evidence : natural := 0;',
@@ -1281,7 +1360,17 @@ sub _render_fixture(%arg) {
         push @line,
             "    variable vial_scenario_${tag}_passed : boolean := false;",
             "    variable vial_scenario_${tag}_timed_out : boolean := false;",
-            "    variable vial_scenario_${tag}_cycles : natural := 0;";
+            "    variable vial_scenario_${tag}_cycles : natural := 0;",
+            "    variable vial_scenario_${tag}_accepts : natural := 0;",
+            "    variable vial_scenario_${tag}_ready_low_cycles : natural := 0;",
+            "    variable vial_scenario_${tag}_response_error_cycles : natural := 0;",
+            "    variable vial_scenario_${tag}_nonzero_read_data_cycles : natural := 0;",
+            "    variable vial_scenario_${tag}_final_ready : vial_observation_t;",
+            "    variable vial_scenario_${tag}_final_response : vial_observation_t;",
+            "    variable vial_scenario_${tag}_final_read_data : vial_observation_vector_t(0 to "
+                . ($read_data_width - 1) . ');',
+            "    variable vial_scenario_${tag}_final_storage : vial_observation_vector_t(0 to "
+                . ($storage_width - 1) . ');';
     }
     for my $endpoint (@{$bridge->{endpoints}}) {
         my $width = $type{$endpoint->{type_id}}{width};
@@ -1359,6 +1448,41 @@ sub _render_fixture(%arg) {
         '      vial_trace_sequence := vial_trace_sequence + 1;',
         '    end procedure vial_emit_trace;',
         '',
+        '    procedure vial_write_observation_bits(',
+        '      variable target : inout line;',
+        '      constant value : in vial_observation_vector_t',
+        '    ) is',
+        '      variable value_index : natural;',
+        '    begin',
+        '      for offset in 0 to value\'length - 1 loop',
+        '        if value\'ascending then',
+        '          value_index := value\'left + offset;',
+        '        else',
+        '          value_index := value\'left - offset;',
+        '        end if;',
+        '        case value(value_index).normalized_value is',
+        q{          when VIAL_VALUE_0 => write(target, character'val(48));},
+        q{          when VIAL_VALUE_1 => write(target, character'val(49));},
+        q{          when VIAL_VALUE_X => write(target, character'val(88));},
+        q{          when VIAL_VALUE_Z => write(target, character'val(90));},
+        '        end case;',
+        '      end loop;',
+        '    end procedure vial_write_observation_bits;',
+        '',
+        '    procedure vial_write_observation_number(',
+        '      variable target : inout line;',
+        '      constant value : in vial_observation_t',
+        '    ) is',
+        '    begin',
+        '      if vial_is_known_zero(value) then',
+        q{        write(target, character'val(48));},
+        '      elsif vial_is_known_one(value) then',
+        q{        write(target, character'val(49));},
+        '      else',
+        q{        write(target, string'("null"));},
+        '      end if;',
+        '    end procedure vial_write_observation_number;',
+        '',
         '    procedure vial_record_diagnostic(',
         '      constant code : in string;',
         '      constant outcome : in vial_check_outcome_t',
@@ -1372,9 +1496,9 @@ sub _render_fixture(%arg) {
         '      vial_diagnostics(vial_diagnostic_count).code(1 to code\'length) := code;',
         '      vial_diagnostics(vial_diagnostic_count).code_length := code\'length;',
         '      if outcome = VIAL_CHECK_PASSED then',
-        '        vial_diagnostics(vial_diagnostic_count).severity := "info    ";',
+        '        vial_diagnostics(vial_diagnostic_count).severity_name := "info    ";',
         '      else',
-        '        vial_diagnostics(vial_diagnostic_count).severity := "error   ";',
+        '        vial_diagnostics(vial_diagnostic_count).severity_name := "error   ";',
         '      end if;',
         '      vial_diagnostics(vial_diagnostic_count).logical_time := vial_time;',
         '      vial_diagnostics(vial_diagnostic_count).outcome := outcome;',
@@ -1513,7 +1637,36 @@ sub _render_fixture(%arg) {
         '      write(result_line, vial_scoreboard_comparisons_total);',
         _vhdl_textio_write('result_line', ',"scoreboard_mismatches":'),
         '      write(result_line, vial_scoreboard_mismatches_total);',
-        _vhdl_textio_write('result_line', '},"models":[],"native_extensions":[],"parity_digest":null,"parity_projection":null,"plan_id":"'),
+        _vhdl_textio_write('result_line', '},"models":[],"native_extensions":[],"parity_digest":null,"parity_projection":{"outcomes":[');
+    for my $index (0 .. $#{$execution->{scenarios}}) {
+        my $tag = sprintf('%02d', $index);
+        push @line, _vhdl_textio_write('result_line', ',', '      ') if $index;
+        push @line,
+            _vhdl_textio_write('result_line', '{"bus_accepts":'),
+            "      write(result_line, vial_scenario_${tag}_accepts);",
+            _vhdl_textio_write('result_line', ',"final_read_data_bits":"'),
+            "      vial_write_observation_bits(result_line, vial_scenario_${tag}_final_read_data);",
+            _vhdl_textio_write('result_line', '","final_ready":'),
+            "      vial_write_observation_number(result_line, vial_scenario_${tag}_final_ready);",
+            _vhdl_textio_write('result_line', ',"final_response":'),
+            "      vial_write_observation_number(result_line, vial_scenario_${tag}_final_response);",
+            _vhdl_textio_write('result_line', ',"nonzero_read_data_cycles":'),
+            "      write(result_line, vial_scenario_${tag}_nonzero_read_data_cycles);",
+            _vhdl_textio_write('result_line', ',"ready_low_cycles":'),
+            "      write(result_line, vial_scenario_${tag}_ready_low_cycles);",
+            _vhdl_textio_write('result_line', ',"response_error_cycles":'),
+            "      write(result_line, vial_scenario_${tag}_response_error_cycles);",
+            _vhdl_textio_write('result_line', ',"scenario_id":"'),
+            "      write(result_line, VIAL_SCENARIO_${tag}_ID);",
+            _vhdl_textio_write('result_line', '","status":"'),
+            "      vial_write_status(result_line, vial_scenario_${tag}_passed,",
+            "        vial_scenario_${tag}_timed_out);",
+            _vhdl_textio_write('result_line', '","storage_bits":"'),
+            "      vial_write_observation_bits(result_line, vial_scenario_${tag}_final_storage);",
+            _vhdl_textio_write('result_line', '"}');
+    }
+    push @line,
+        _vhdl_textio_write('result_line', '],"schema":"fsmgen.vial_vhdl_portable_outcomes.v1","schema_version":1},"plan_id":"'),
         '      write(result_line, VIAL_PLAN_ID);',
         _vhdl_textio_write('result_line', '","portable_parity_eligible":false,"random_decisions":' . $random_decisions . ',"result_id":null,"scenario_results":[');
     for my $index (0 .. $#{$execution->{scenarios}}) {
@@ -1590,6 +1743,7 @@ sub _render_fixture(%arg) {
         '      vial_time.phase := VIAL_REACT_PHASE;',
         '      -- FSMGEN VIAL PHASE: REACT',
         '      vial_accept_now := vial_transaction_active',
+        '        and not vial_transaction_accepted',
         "        and vial_is_known_one(${select_sample}(0))",
         "        and vial_is_known_one(${ready_in_sample}(0))",
         "        and vial_matches($transfer_sample,",
@@ -1597,7 +1751,7 @@ sub _render_fixture(%arg) {
         '      vial_complete_now := vial_transaction_active',
         "        and vial_is_known_one(${ready_out_sample}(0))",
         '        and (vial_transaction_accepted or vial_accept_now);',
-        '      if vial_accept_now and not vial_transaction_accepted then',
+        '      if vial_accept_now then',
         '        vial_event_accepted_count := vial_event_accepted_count + 1;',
         '        vial_event_captured_count := vial_event_captured_count + 1;',
         '        vial_transaction_accepted := true;',
@@ -1612,6 +1766,9 @@ sub _render_fixture(%arg) {
         '      end if;',
         "      if vial_transaction_active and vial_is_known_one(${response_sample}(0)) then",
         '        vial_event_error_count := vial_event_error_count + 1;',
+        '      end if;',
+        "      if vial_transaction_active and not vial_matches($read_data_sample, $zero_read_data) then",
+        '        vial_nonzero_read_data_count := vial_nonzero_read_data_count + 1;',
         '      end if;',
         '      if vial_complete_now then',
         '        vial_event_completed_count := vial_event_completed_count + 1;',
@@ -1679,14 +1836,18 @@ sub _render_fixture(%arg) {
                 "            vial_current_operation_rank := $parallel[0]{static_rank};",
                 '            if ' . join($join, @done) . ' then',
                 "              vial_fiber_${root_tag}_status := VIAL_FIBER_COMPLETED;",
-                '              vial_scenario_done := true;',
+                "              if vial_is_known_zero(${response_sample}(0)) then",
+                '                vial_scenario_done := true;',
+                '              end if;',
                 '            end if;';
         }
         elsif (@root_await) {
             my $root_tag = sprintf('%02d', $fiber_index{$scenario->{root_fiber_id}});
             push @line,
                 "            if vial_fiber_${root_tag}_status = VIAL_FIBER_COMPLETED then",
-                '              vial_scenario_done := true;',
+                "              if vial_is_known_zero(${response_sample}(0)) then",
+                '                vial_scenario_done := true;',
+                '              end if;',
                 '            end if;';
         }
         else {
@@ -1714,17 +1875,40 @@ sub _render_fixture(%arg) {
         '      end if;',
         '      if vial_scenario_done then',
         '        if vial_scenario_status = VIAL_SCENARIO_TIMED_OUT then',
-        '          vial_record_diagnostic("VIAL_SCENARIO_TIMEOUT", VIAL_CHECK_FAILED);',
-        '        elsif vial_current_scenario = 0 then',
-        "          if vial_is_known_zero(${response_sample}(0)) then",
-        '            vial_record_diagnostic("VIAL_EXPECT_SUCCESS", VIAL_CHECK_PASSED);',
-        '          else',
-        '            vial_record_diagnostic("VIAL_EXPECT_SUCCESS", VIAL_CHECK_FAILED);',
-        '          end if;',
-        '        elsif vial_event_error_count = 0 then',
-        '          vial_record_diagnostic("VIAL_EXPECT_ERROR", VIAL_CHECK_FAILED);',
+        '          vial_record_diagnostic("VIAL_SCENARIO_TIMEOUT", VIAL_CHECK_FAILED);';
+    for my $scenario_index (0 .. $#{$execution->{scenarios}}) {
+        my $scenario = $execution->{scenarios}[$scenario_index];
+        my $diagnostic = $scenario->{name} eq 'success'
+            ? 'VIAL_EXPECT_SUCCESS' : 'VIAL_EXPECT_ERROR';
+        my @condition = (
+            'vial_event_accepted_count = 1',
+            'vial_event_completed_count = 1',
+            'vial_is_known_zero(' . $response_sample . '(0))',
+            "vial_matches($read_data_sample, $zero_read_data)",
+            "vial_matches($storage_sample, $storage_expected[$scenario_index])",
+            'vial_nonzero_read_data_count = 0',
+        );
+        if ($scenario->{name} eq 'success') {
+            push @condition, 'vial_event_held_count > 0',
+                'vial_event_error_count = 0';
+        }
+        else {
+            push @condition, 'vial_event_error_count = 2';
+        }
+        push @line,
+            "        elsif vial_current_scenario = $scenario_index then",
+            '          if ' . shift(@condition);
+        push @line, map { "              and $_" } @condition;
+        push @line,
+            '          then',
+            qq{            vial_record_diagnostic("$diagnostic", VIAL_CHECK_PASSED);},
+            '          else',
+            qq{            vial_record_diagnostic("$diagnostic", VIAL_CHECK_FAILED);},
+            '          end if;';
+    }
+    push @line,
         '        else',
-        '          vial_record_diagnostic("VIAL_EXPECT_ERROR", VIAL_CHECK_PASSED);',
+        '          vial_record_diagnostic("VIAL_SCENARIO_UNKNOWN", VIAL_CHECK_FAILED);',
         '        end if;',
         '      end if;',
         '',
@@ -1757,6 +1941,7 @@ sub _render_fixture(%arg) {
         '      vial_fault := (false, 0, 0);',
         '      vial_scenario_failure_baseline := vial_check_failures;',
         '      vial_scenario_unknown_baseline := vial_unknown_evidence;',
+        '      vial_nonzero_read_data_count := 0;',
         '      vial_time.cycle := 0;',
         '      vial_current_operation_rank := 0;';
     for my $index (0 .. $#fiber) {
@@ -1855,6 +2040,22 @@ sub _render_fixture(%arg) {
             '          vial_scenario_' . sprintf('%02d', $scenario_index)
                 . '_cycles := vial_time.cycle;',
             '          vial_scenario_' . sprintf('%02d', $scenario_index)
+                . '_accepts := vial_event_accepted_count;',
+            '          vial_scenario_' . sprintf('%02d', $scenario_index)
+                . '_ready_low_cycles := vial_event_held_count;',
+            '          vial_scenario_' . sprintf('%02d', $scenario_index)
+                . '_response_error_cycles := vial_event_error_count;',
+            '          vial_scenario_' . sprintf('%02d', $scenario_index)
+                . '_nonzero_read_data_cycles := vial_nonzero_read_data_count;',
+            '          vial_scenario_' . sprintf('%02d', $scenario_index)
+                . "_final_ready := ${ready_out_sample}(0);",
+            '          vial_scenario_' . sprintf('%02d', $scenario_index)
+                . "_final_response := ${response_sample}(0);",
+            '          vial_scenario_' . sprintf('%02d', $scenario_index)
+                . "_final_read_data := $read_data_sample;",
+            '          vial_scenario_' . sprintf('%02d', $scenario_index)
+                . "_final_storage := $storage_sample;",
+            '          vial_scenario_' . sprintf('%02d', $scenario_index)
                 . '_passed := vial_scenario_status /= VIAL_SCENARIO_TIMED_OUT',
             '            and vial_check_failures = vial_scenario_failure_baseline',
             '            and vial_unknown_evidence = vial_scenario_unknown_baseline',
@@ -1873,7 +2074,7 @@ sub _render_fixture(%arg) {
         '    assert vial_trace_closed and vial_result_consistent',
         '      report "FSMGen VIAL trace/result closure inconsistency" severity failure;',
         '    vial_runtime_state := VIAL_RUNTIME_FINALIZED;',
-        '    wait;',
+        '    finish;',
         '  end process vial_scheduler;',
         "end architecture portable_semantics;",
         '';

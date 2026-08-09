@@ -7,16 +7,17 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.5`.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`; `.15.5`
+  is complete and `.15.6` is the next proposed frontier.
 - current_state: the director deferred NEXSIM-dependent `.13.3` and the
-  NEXSIM consumer-amendment tree; the exact official macOS ARM64 GHDL 6.0.0
-  LLVM release asset is available but not yet materialized or executed.
-- next_action: materialize and verify exact GHDL 6.0.0 under repository-derived
-  storage, then run `.15.5` analysis/elaboration/runtime/result/parity gates.
+  NEXSIM consumer-amendment tree; exact repository-local GHDL 6.0.0 LLVM-JIT
+  qualification now passes analysis through bounded applicable parity.
+- next_action: after the clean `.15.5` commit, activate `.15.6` alone and
+  materialize/verify exact recursive OSVVM 2026.05 under repository storage.
 - in_flight_uncommitted: none; no background job or build residue.
 - blockers: containment `.12` and IAL2 eligibility remain unavailable;
-  NEXSIM-dependent work is director-deferred; OSVVM qualification follows
-  `.15.5` under separately committed `.15.6` and `.15.7` slices.
+  NEXSIM-dependent work is director-deferred; `.15.6` OSVVM emission and
+  `.15.7` combined qualification remain separate cleanly activated slices.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not
@@ -36,5 +37,6 @@ history; this file carries only the current bounded resume state.
 - Decision `0051`: portable VHDL is provider-free IEEE 1076-2008; OSVVM is the
   selected advanced provider and GHDL 6.0.0 is the first exact tool profile.
   Provider/tool behavior cannot redefine logical time, values, or results.
-- `.15.1-.15.4` own unblocked portable emission/review; `.15.5-.15.7` own GHDL/OSVVM qualification.
+- `.15.1-.15.4` ship portable emission/review; `.15.5` qualifies exact GHDL
+  6.0.0 LLVM-JIT; `.15.6-.15.7` own OSVVM emission/combined qualification.
 - Decisions `0041`/`0042`/`0044`/`0045` retain containment authority; retired views are Git-retrievable. Push only on request; PNT is autonomous.

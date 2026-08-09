@@ -1,7 +1,7 @@
 # Knowledge Map: `hial-vial`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **101** uniquely owned question entries.
+> **2** facts · **104** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -42,6 +42,7 @@
 - q="how do HIAL designs connect to VIAL fixtures?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="how do I regenerate or check the native UVM review gallery?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="how do I regenerate or check the portable VHDL review gallery?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
+- q="how do I rerun the exact portable VHDL GHDL qualification?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="how do I rerun the native UVM experimental probe?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="how do IAL2 protocol facts enter the VIAL bridge?" · facts=[hial-vial-bridge-manifest-v1-contract](../../docs/knowledge/hial-vial-bridge-manifest-v1-contract.md)
 - q="how does IASIM avoid common-mode code generation bugs?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
@@ -103,7 +104,9 @@
 - q="where is the portable VHDL review gallery?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="which UVM revision does native VIAL target?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="which bridge IDs bind the AHB VIAL fixture?" · facts=[hial-vial-bridge-manifest-v1-contract](../../docs/knowledge/hial-vial-bridge-manifest-v1-contract.md)
+- q="which exact GHDL 6.0.0 backend is qualified?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="who owns objections in generated VIAL UVM?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
+- q="why is GHDL LLVM AOT not qualified for portable VIAL?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="will FSMGen require Xcelium VCS or Questa for UVM?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="will VIAL have VIAL0 VIAL1 and VIAL2 layers?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 
@@ -120,5 +123,5 @@ _HIALVIALBridgeManifest v1 is produced only from reviewable HIAL routes_
 
 _VIAL uses one public source, two private IRs, and a versioned HIAL bridge_
 
-- **date:** 2026-08-02 · **status:** current
+- **date:** 2026-08-09 · **status:** current
 - **source and verification:** [`docs/knowledge/hial-vial-verification-fixture-architecture.md`](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)

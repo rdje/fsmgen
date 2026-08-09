@@ -5,7 +5,7 @@
          "kind" : "source_map",
          "relpath" : "backends/vhdl_portable_ghdl/backend-source-map.json",
          "role" : "backend_source_map",
-         "sha256" : "0bc4847a5acc151a9b8cb9d2a65b069dd5a97dcd8a193884a1edcce4c8ae4593"
+         "sha256" : "c64ba3741e43f1e56e2f9ade60ce1321fdffe41ae2325f5788094e1004c2cc1b"
       },
       {
          "bytes" : 2990,
@@ -15,39 +15,39 @@
          "sha256" : "f04a69118c7b74d58f6e2023cdcc13fab4ee8a42616e28e127db68b208eeb5b9"
       },
       {
-         "bytes" : 883,
+         "bytes" : 721,
          "kind" : "command_record",
          "relpath" : "backends/vhdl_portable_ghdl/commands/elaborate-command.json",
          "role" : "elaborate_command",
-         "sha256" : "869cbb705f3ca9d14b38b58173cd9d1033dda7d9f1203da8f09770b10bf8a637"
+         "sha256" : "f295d97611c370dd74c6e05844350d1af00f7ebe5309ea9ebf170fc7e91fd722"
       },
       {
-         "bytes" : 868,
+         "bytes" : 751,
          "kind" : "command_record",
          "relpath" : "backends/vhdl_portable_ghdl/commands/run-command.json",
          "role" : "run_command",
-         "sha256" : "061baf767f17a357926bb2bb98eeae218a7be3ac95aa70585465397cc2b30df1"
+         "sha256" : "551338d4c09e192539a47de5f2144f13e9286e75b7b254209172a65ad427e1aa"
       },
       {
          "bytes" : 2304,
          "kind" : "migration_proof",
          "relpath" : "backends/vhdl_portable_ghdl/evidence/migration-proof.json",
          "role" : "migration_proof",
-         "sha256" : "4af876133ee854328174e95b4ace5a3d48d11415db7a99bbc96b0e8fa18a60a0"
+         "sha256" : "928098a80def010fd2d16e86a55b03666f8679f70246e66e32811519a100959e"
       },
       {
          "bytes" : 5271,
          "kind" : "review_workflow",
          "relpath" : "backends/vhdl_portable_ghdl/evidence/review-workflow.json",
          "role" : "review_workflow",
-         "sha256" : "386831d7bd45b6a4ee0c2104a5e5aef744ac26d21f8f0b4960ebe5352785b39c"
+         "sha256" : "fff3dd3d97ceed19462f9c9e2320d5b61026008959fdaf9d68dd0ee60f51e55a"
       },
       {
          "bytes" : 21036,
          "kind" : "mapping_matrix",
          "relpath" : "backends/vhdl_portable_ghdl/evidence/selected-mapping-matrix.json",
          "role" : "selected_mapping_matrix",
-         "sha256" : "34f17c10dd36c4b79c0b707e32570d14e3e97582c46a1e6d1c9889cb5d8c3ded"
+         "sha256" : "9ff3199462ab51a47ed317f51207ca9a6d2f81d02ff5a7c8eddbb00b6f0217ff"
       },
       {
          "bytes" : 683,
@@ -61,14 +61,14 @@
          "kind" : "static_validation",
          "relpath" : "backends/vhdl_portable_ghdl/evidence/static-validation.json",
          "role" : "vhdl_static_validation",
-         "sha256" : "d946193868ad33afee79bdc358b6ba1bf554cbaa9773052a714c747fc1bce6c7"
+         "sha256" : "b9d82600962dc5df0347d16549fcfab4e1f67a8468eee1b0f2d6b2111514f95d"
       },
       {
-         "bytes" : 516,
+         "bytes" : 1138,
          "kind" : "tool_profile",
          "relpath" : "backends/vhdl_portable_ghdl/evidence/tool-profile.json",
          "role" : "selected_tool_profile",
-         "sha256" : "e9ee1bd187e4782b750c09b5b31104136236359ffd1566968e8afc2888e2a4be"
+         "sha256" : "b15984f2de16b540d1a9979d6135b45601a74919c0ae81106f2298b7b23fb2d6"
       },
       {
          "bytes" : 15323,
@@ -78,39 +78,39 @@
          "sha256" : "54b836ea1ce852d0dad9a4f7ff6249626ffd7b1674604cb62b2f79cc6cec0d46"
       },
       {
-         "bytes" : 623,
+         "bytes" : 591,
          "kind" : "vhdl_source",
          "relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_probe_adapter.vhd",
          "role" : "vhdl_probe_adapter",
-         "sha256" : "8765d4e8ab6640cd70206d501137be29d05b79bd206be8103b8f0bf5cd3ac45b"
+         "sha256" : "7a7e3b4e81fd222e53e2098653fcf1131f1b58dbeba35698c1cfe67a4fab5b56"
       },
       {
-         "bytes" : 36614,
+         "bytes" : 44758,
          "kind" : "vhdl_source",
          "relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_tb.vhd",
          "role" : "vhdl_fixture_top",
-         "sha256" : "e97a9486b1d57244b009ec801991d4b15f485e0f9f536a5a92c5991bf11682a9"
+         "sha256" : "4a3665cb0e14b599962a3a29bafb2ff99787cc8cb332b0f35e50b75583a6666b"
       },
       {
-         "bytes" : 47685,
+         "bytes" : 47670,
          "kind" : "vhdl_source",
          "relpath" : "backends/vhdl_portable_ghdl/src/dut/ahb_lite_subordinate.vhd",
          "role" : "generated_hial_vhdl_dut",
-         "sha256" : "2c96af7cb4c5b5666ad768a764e0b3b778f0c05139f1f16891bef79fc43856e6"
+         "sha256" : "8d93b0ade4d9561d19fdd12ab10b4d8ba1a3dc06de9f911d1c0d8d1bf18518cf"
       },
       {
-         "bytes" : 2186,
+         "bytes" : 2191,
          "kind" : "vhdl_source",
          "relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_runtime_pkg.vhd",
          "role" : "vhdl_runtime_package",
-         "sha256" : "ca7178d38bd94b3c7785d61be824bcca31baadee4442ed322a3cd286f6761256"
+         "sha256" : "82cb0d22e03a661ff88aecbf5b94b89f91381801576d1c683d749ac02e258017"
       },
       {
-         "bytes" : 4806,
+         "bytes" : 6025,
          "kind" : "vhdl_source",
          "relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_types_pkg.vhd",
          "role" : "vhdl_types_package",
-         "sha256" : "6ab5eb49c57c47fc2c259ea26cdae19affe6637a3b77f599cca05955f417afb5"
+         "sha256" : "3777706b911ce90c9a3b05107233ec925c1029b175932ed10f1b1a588fb3c08e"
       }
    ],
    "backend_profile" : "vhdl_portable_ghdl",
@@ -158,20 +158,20 @@
          "sha256" : "f04a69118c7b74d58f6e2023cdcc13fab4ee8a42616e28e127db68b208eeb5b9"
       },
       {
-         "command_digest" : "fc56847b4671b2e75162c3f45012fa0fc1f18acb0567a3e5cdcfc49de945b33c",
+         "command_digest" : "14860b2e65ea2aaaa11312a487c023e6a87480b15ce64ebc7cb7f1716f339049",
          "execution_status" : "not_run",
          "relpath" : "backends/vhdl_portable_ghdl/commands/elaborate-command.json",
-         "sha256" : "869cbb705f3ca9d14b38b58173cd9d1033dda7d9f1203da8f09770b10bf8a637"
+         "sha256" : "f295d97611c370dd74c6e05844350d1af00f7ebe5309ea9ebf170fc7e91fd722"
       },
       {
-         "command_digest" : "570e27f27edd7386b704b4f3a93e424012d89f8d2ce495647f710064907b5de8",
+         "command_digest" : "befa2cba649d676b48ae71c094018147127f28f066197f41363c728e4931f1cf",
          "execution_status" : "not_run",
          "relpath" : "backends/vhdl_portable_ghdl/commands/run-command.json",
-         "sha256" : "061baf767f17a357926bb2bb98eeae218a7be3ac95aa70585465397cc2b30df1"
+         "sha256" : "551338d4c09e192539a47de5f2144f13e9286e75b7b254209172a65ad427e1aa"
       }
    ],
    "diagnostics" : [],
-   "emitter_revision" : 4,
+   "emitter_revision" : 5,
    "execution_profile" : "core_directed_single_clock_execution_v1",
    "fixture_id" : "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration",
    "generated_top" : "base_output_arbitration_tb",
@@ -196,7 +196,7 @@
       "mapping_count" : 24,
       "relpath" : "backends/vhdl_portable_ghdl/evidence/selected-mapping-matrix.json",
       "schema" : "fsmgen.vial_vhdl_selected_mapping_matrix.v1",
-      "sha256" : "34f17c10dd36c4b79c0b707e32570d14e3e97582c46a1e6d1c9889cb5d8c3ded",
+      "sha256" : "9ff3199462ab51a47ed317f51207ca9a6d2f81d02ff5a7c8eddbb00b6f0217ff",
       "unsupported_count" : 4
    },
    "migration" : {
@@ -210,7 +210,7 @@
       "legacy_package_sha256" : "8d587b8dde4b7659290af6720ed4812079f36479d577dd5a0cf787bef2a22d4f",
       "relpath" : "backends/vhdl_portable_ghdl/evidence/migration-proof.json",
       "schema" : "fsmgen.vial_vhdl_migration_proof.v1",
-      "sha256" : "4af876133ee854328174e95b4ace5a3d48d11415db7a99bbc96b0e8fa18a60a0"
+      "sha256" : "928098a80def010fd2d16e86a55b03666f8679f70246e66e32811519a100959e"
    },
    "plan_id" : "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574",
    "profile_state" : {
@@ -228,7 +228,7 @@
       "check_count" : 7,
       "relpath" : "backends/vhdl_portable_ghdl/evidence/review-workflow.json",
       "schema" : "fsmgen.vial_vhdl_review_workflow.v1",
-      "sha256" : "386831d7bd45b6a4ee0c2104a5e5aef744ac26d21f8f0b4960ebe5352785b39c",
+      "sha256" : "fff3dd3d97ceed19462f9c9e2320d5b61026008959fdaf9d68dd0ee60f51e55a",
       "stage_count" : 7
    },
    "schema" : "fsmgen.vial_backend.vhdl_portable.v1",
@@ -237,7 +237,7 @@
       "entry_count" : 59,
       "relpath" : "backends/vhdl_portable_ghdl/backend-source-map.json",
       "schema" : "fsmgen.vial_vhdl_backend_source_map.v1",
-      "sha256" : "0bc4847a5acc151a9b8cb9d2a65b069dd5a97dcd8a193884a1edcce4c8ae4593"
+      "sha256" : "c64ba3741e43f1e56e2f9ade60ce1321fdffe41ae2325f5788094e1004c2cc1b"
    },
    "source_order" : {
       "library" : "fsmgen_vial",
@@ -261,12 +261,17 @@
       "standard_option" : "--std=08"
    },
    "tool_profile" : {
+      "backend" : "llvm_jit",
+      "build_commit" : "e589c698c351369ac5bcfe7abe1f1152ac5d4727",
       "execution_evidence" : false,
       "language_standard" : "IEEE 1076-2008",
       "methodology" : "provider_free_vhdl_2008",
+      "official_asset" : "ghdl-llvm-jit-6.0.0-macos15-aarch64.tar.gz",
+      "official_asset_bytes" : 37155806,
+      "official_asset_sha256" : "c21312d5a0cc5833e6d8690d8c4343e67f4fc32f070c07343816cd11a31c7769",
       "provider_library" : "none",
       "qualified_version" : "6.0.0",
-      "qualified_version_output" : "not_observed_exact_6_0_0_unavailable",
+      "qualified_version_output" : "GHDL 6.0.0 (6.0.0.r0.ge589c698c) [Dunoon edition]\n Compiled with GNAT Version: 14.2.0\n static elaboration, LLVM JIT code generator\nWritten by Tristan Gingold.\n\nCopyright (C) 2003 - 2026 Tristan Gingold.\nGHDL is free software, covered by the GNU General Public License.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
       "schema" : "fsmgen.vial_backend_tool_profile.v1",
       "schema_version" : 1,
       "selection_status" : "selected_not_executed",

@@ -1,0 +1,268 @@
+{
+   "backend_profile" : "vhdl_portable_ghdl",
+   "cleanup" : {
+      "removed" : true,
+      "same_volume" : true,
+      "staging_identity" : ".artifacts/tmp/vial-ghdl-qualification/c7f14c8b40630f675c5d36ca536ff464010a81fee15188b90365121e6956ae6a",
+      "state" : "completed_removed"
+   },
+   "commands" : {
+      "analyze" : {
+         "argv" : [
+            ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+            "-a",
+            "--std=08",
+            "--work=fsmgen_vial",
+            "--workdir=.artifacts/tmp/vial-ghdl-qualification/c7f14c8b40630f675c5d36ca536ff464010a81fee15188b90365121e6956ae6a/library",
+            "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/fsmgen_vial_types_pkg.vhd",
+            "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/fsmgen_vial_runtime_pkg.vhd",
+            "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/base_output_arbitration_metadata_pkg.vhd",
+            "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/dut/ahb_lite_subordinate.vhd",
+            "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/base_output_arbitration_tb.vhd",
+            "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/base_output_arbitration_probe_adapter.vhd",
+            "vial/qualification/vhdl_portable_ghdl/ghdl_6_0_0_four_state_probe.vhd"
+         ],
+         "command_digest" : "7bd352c00d0bd8341b75149ed3e9e9c51b58db410fa1262da9b0e31aaaef4a7a",
+         "execution_status" : "passed",
+         "working_directory" : "."
+      },
+      "elaborate_fixture" : {
+         "argv" : [
+            ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+            "-e",
+            "--std=08",
+            "--work=fsmgen_vial",
+            "--workdir=.artifacts/tmp/vial-ghdl-qualification/c7f14c8b40630f675c5d36ca536ff464010a81fee15188b90365121e6956ae6a/library",
+            "base_output_arbitration_tb"
+         ],
+         "command_digest" : "d55c8c112176dd4cf3f17eed49294fb6c7da84b7c50af87119299c2cac8a03a5",
+         "execution_status" : "passed",
+         "working_directory" : "."
+      },
+      "elaborate_four_state_probe" : {
+         "argv" : [
+            ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+            "-e",
+            "--std=08",
+            "--work=fsmgen_vial",
+            "--workdir=.artifacts/tmp/vial-ghdl-qualification/c7f14c8b40630f675c5d36ca536ff464010a81fee15188b90365121e6956ae6a/library",
+            "ghdl_6_0_0_four_state_probe"
+         ],
+         "command_digest" : "afc4b0928a5d09e9a5710e52fa1f714349ca0572d7e0863a81ec90a3561589ff",
+         "execution_status" : "passed",
+         "working_directory" : "."
+      },
+      "run_fixture" : {
+         "argv" : [
+            ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+            "-r",
+            "--std=08",
+            "--work=fsmgen_vial",
+            "--workdir=.artifacts/tmp/vial-ghdl-qualification/c7f14c8b40630f675c5d36ca536ff464010a81fee15188b90365121e6956ae6a/library",
+            "base_output_arbitration_tb",
+            "--assert-level=error"
+         ],
+         "command_digest" : "b5da84a340432a4c5bc9d16446ab0091c05547b05eca3a3f6f149b7563e58874",
+         "execution_status" : "passed",
+         "working_directory" : "."
+      },
+      "run_four_state_probe" : {
+         "argv" : [
+            ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+            "-r",
+            "--std=08",
+            "--work=fsmgen_vial",
+            "--workdir=.artifacts/tmp/vial-ghdl-qualification/c7f14c8b40630f675c5d36ca536ff464010a81fee15188b90365121e6956ae6a/library",
+            "ghdl_6_0_0_four_state_probe",
+            "--assert-level=error"
+         ],
+         "command_digest" : "96dd9eb0ed7576fca6a2027f45444a8dc03420a62b76039ee2de45980b06fe12",
+         "execution_status" : "passed",
+         "working_directory" : "."
+      }
+   },
+   "deterministic_rerun" : {
+      "fixture_stdout_identical" : true,
+      "fixture_stdout_sha256" : "e0e412a038eb6771862ae91b84281124352cba2bae40b0325c17aada782b290e",
+      "four_state_stdout_identical" : true,
+      "four_state_stdout_sha256" : "ec08f35b66013e85449928a29cac765d95751465a846a1c8f61a8cdc6b1cfbc9",
+      "status" : "passed"
+   },
+   "execution" : {
+      "analysis" : "passed",
+      "fixture_elaboration" : "passed",
+      "fixture_execution" : "passed",
+      "four_state_probe_elaboration" : "passed",
+      "four_state_probe_execution" : "passed"
+   },
+   "four_state_probe" : {
+      "normalized_values_exercised" : [
+         "VIAL_VALUE_0",
+         "VIAL_VALUE_1",
+         "VIAL_VALUE_X",
+         "VIAL_VALUE_Z"
+      ],
+      "original_symbols_exercised" : [
+         "0",
+         "1",
+         "X",
+         "Z"
+      ],
+      "status" : "passed",
+      "stdout_sha256" : "ec08f35b66013e85449928a29cac765d95751465a846a1c8f61a8cdc6b1cfbc9",
+      "timed_wait" : "1_ns"
+   },
+   "limitations" : [
+      "qualification covers only the emitted bounded single-unit single-clock provider-free fixture and its declared probe adapter",
+      "GHDL VHDL-2008 and PSL implementations are partial; complete VHDL-2008 and PSL are not claimed",
+      "the LLVM AOT macOS package analyzed and elaborated this fixture but its external-name adapter dereferenced null at runtime; only LLVM-JIT is qualified",
+      "OSVVM, UVVM, another simulator, mixed-language execution, and legacy observation-package analysis are not inferred"
+   ],
+   "portable_sv_parity" : {
+      "compared_paths" : [
+         "/outcomes/0/bus_accepts",
+         "/outcomes/0/final_read_data_bits",
+         "/outcomes/0/final_ready",
+         "/outcomes/0/final_response",
+         "/outcomes/0/nonzero_read_data_cycles",
+         "/outcomes/0/ready_low_cycles",
+         "/outcomes/0/response_error_cycles",
+         "/outcomes/0/scenario",
+         "/outcomes/0/status",
+         "/outcomes/0/storage_bits",
+         "/outcomes/1/bus_accepts",
+         "/outcomes/1/final_read_data_bits",
+         "/outcomes/1/final_ready",
+         "/outcomes/1/final_response",
+         "/outcomes/1/nonzero_read_data_cycles",
+         "/outcomes/1/response_error_cycles",
+         "/outcomes/1/scenario",
+         "/outcomes/1/status",
+         "/outcomes/1/storage_bits"
+      ],
+      "eligible" : true,
+      "equivalent" : true,
+      "exclusions" : [
+         "unsupported_size.ready_low_cycles is not part of the qualified handwritten AHB oracle"
+      ],
+      "mismatches" : [],
+      "oracle" : "t/1559-vial-ahb-runtime-parity.t",
+      "oracle_profile" : "sv_portable_verilator/5.046",
+      "status" : "equivalent"
+   },
+   "provider" : {
+      "archive" : ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-archive/ghdl-llvm-jit-6.0.0-macos15-aarch64.tar.gz",
+      "archive_bytes" : 37155806,
+      "archive_sha256" : "c21312d5a0cc5833e6d8690d8c4343e67f4fc32f070c07343816cd11a31c7769",
+      "binary" : ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+      "binary_sha256" : "38a99c1cc18b04dfae128b118c7344910e08b8ba6eeb9c1e67f950a84bca3c3d",
+      "official_asset" : "ghdl-llvm-jit-6.0.0-macos15-aarch64.tar.gz",
+      "release_url" : "https://github.com/ghdl/ghdl/releases/tag/v6.0.0",
+      "root" : ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64"
+   },
+   "qualification_id" : "qualification/c7f14c8b40630f675c5d36ca536ff464010a81fee15188b90365121e6956ae6a",
+   "resource_controls" : {
+      "analysis_timeout_seconds" : 120,
+      "descendant_rss_limit_mib" : 4096,
+      "elaboration_timeout_seconds" : 60,
+      "execution_timeout_seconds" : 30,
+      "host_occupied_cutoff_percent" : 88,
+      "maximum_runtime_output_bytes" : 67108864,
+      "outer_guard" : "scripts/run_with_ram_guard.sh --process-max-rss-mb 4096",
+      "version_timeout_seconds" : 10
+   },
+   "result" : {
+      "outcomes" : [
+         {
+            "bus_accepts" : 1,
+            "final_read_data_bits" : "00000000000000000000000000000000",
+            "final_ready" : 1,
+            "final_response" : 0,
+            "nonzero_read_data_cycles" : 0,
+            "ready_low_cycles" : 15,
+            "response_error_cycles" : 0,
+            "scenario_id" : "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::success",
+            "status" : "pass",
+            "storage_bits" : "11001010111111101011101010111110"
+         },
+         {
+            "bus_accepts" : 1,
+            "final_read_data_bits" : "00000000000000000000000000000000",
+            "final_ready" : 1,
+            "final_response" : 0,
+            "nonzero_read_data_cycles" : 0,
+            "ready_low_cycles" : 11,
+            "response_error_cycles" : 2,
+            "scenario_id" : "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::unsupported_size",
+            "status" : "pass",
+            "storage_bits" : "00000000000000000000000000000000"
+         }
+      ],
+      "plan_id" : "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574",
+      "result_record_sha256" : "644f5621b95964da4b5d1daf13e5161cf33eb4f8b7ab4429ae448f347bb6ffef",
+      "schema" : "fsmgen.verification_result_manifest.v1",
+      "schema_version" : 1,
+      "status" : "pass"
+   },
+   "schema" : "fsmgen.vial_vhdl_portable_ghdl_qualification.v1",
+   "schema_version" : 1,
+   "source_set" : [
+      {
+         "bytes" : 6025,
+         "relpath" : "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/fsmgen_vial_types_pkg.vhd",
+         "sha256" : "3777706b911ce90c9a3b05107233ec925c1029b175932ed10f1b1a588fb3c08e"
+      },
+      {
+         "bytes" : 2191,
+         "relpath" : "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/fsmgen_vial_runtime_pkg.vhd",
+         "sha256" : "82cb0d22e03a661ff88aecbf5b94b89f91381801576d1c683d749ac02e258017"
+      },
+      {
+         "bytes" : 15323,
+         "relpath" : "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/base_output_arbitration_metadata_pkg.vhd",
+         "sha256" : "54b836ea1ce852d0dad9a4f7ff6249626ffd7b1674604cb62b2f79cc6cec0d46"
+      },
+      {
+         "bytes" : 47670,
+         "relpath" : "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/dut/ahb_lite_subordinate.vhd",
+         "sha256" : "8d93b0ade4d9561d19fdd12ab10b4d8ba1a3dc06de9f911d1c0d8d1bf18518cf"
+      },
+      {
+         "bytes" : 44758,
+         "relpath" : "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/base_output_arbitration_tb.vhd",
+         "sha256" : "4a3665cb0e14b599962a3a29bafb2ff99787cc8cb332b0f35e50b75583a6666b"
+      },
+      {
+         "bytes" : 591,
+         "relpath" : "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/base_output_arbitration_probe_adapter.vhd",
+         "sha256" : "7a7e3b4e81fd222e53e2098653fcf1131f1b58dbeba35698c1cfe67a4fab5b56"
+      },
+      {
+         "bytes" : 1318,
+         "relpath" : "vial/qualification/vhdl_portable_ghdl/ghdl_6_0_0_four_state_probe.vhd",
+         "sha256" : "fd949fd1dfe28d89b9397e47b2a82a49a4d89f5fbf8f5b7f787f90adbd2493c8"
+      }
+   ],
+   "status" : "qualified",
+   "task_id" : "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.5",
+   "tool_profile" : {
+      "backend" : "llvm_jit",
+      "build_commit" : "e589c698c351369ac5bcfe7abe1f1152ac5d4727",
+      "language_standard" : "IEEE 1076-2008",
+      "qualified_version" : "6.0.0",
+      "selection_status" : "executed_qualified",
+      "standard_option" : "--std=08",
+      "tool_name" : "ghdl",
+      "version_output" : "GHDL 6.0.0 (6.0.0.r0.ge589c698c) [Dunoon edition]\n Compiled with GNAT Version: 14.2.0\n static elaboration, LLVM JIT code generator\nWritten by Tristan Gingold.\n\nCopyright (C) 2003 - 2026 Tristan Gingold.\nGHDL is free software, covered by the GNU General Public License.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+   },
+   "trace" : {
+      "footer_count" : 1,
+      "header_count" : 1,
+      "record_count" : 42,
+      "scenario_end_count" : 2,
+      "scenario_start_count" : 2,
+      "schema" : "fsmgen.vial_vhdl_runtime_trace.v1",
+      "status" : "closed_validated",
+      "stdout_sha256" : "e0e412a038eb6771862ae91b84281124352cba2bae40b0325c17aada782b290e"
+   }
+}

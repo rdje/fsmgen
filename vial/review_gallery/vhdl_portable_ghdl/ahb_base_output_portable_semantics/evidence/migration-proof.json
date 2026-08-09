@@ -3,11 +3,11 @@
    "fixture_id" : "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration",
    "hial_successor" : {
       "byte_identical" : true,
-      "emitted_bytes" : 47685,
+      "emitted_bytes" : 47670,
       "emitted_relpath" : "backends/vhdl_portable_ghdl/src/dut/ahb_lite_subordinate.vhd",
-      "emitted_sha256" : "2c96af7cb4c5b5666ad768a764e0b3b778f0c05139f1f16891bef79fc43856e6",
-      "private_handoff_bytes" : 47685,
-      "private_handoff_sha256" : "2c96af7cb4c5b5666ad768a764e0b3b778f0c05139f1f16891bef79fc43856e6",
+      "emitted_sha256" : "8d93b0ade4d9561d19fdd12ab10b4d8ba1a3dc06de9f911d1c0d8d1bf18518cf",
+      "private_handoff_bytes" : 47670,
+      "private_handoff_sha256" : "8d93b0ade4d9561d19fdd12ab10b4d8ba1a3dc06de9f911d1c0d8d1bf18518cf",
       "role" : "generated_hial_vhdl_dut",
       "source_id" : "ppif/ahb_lite_subordinate.ppif"
    },

@@ -345,11 +345,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.4: close portable VHDL review`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.5`
-  Status: `active`
+  Status: `done`
   Goal: `Materialize or locate exact GHDL 6.0.0 and capability-qualify the provider-free backend through normalized runtime results.`
   Acceptance: `An exact GHDL 6.0.0 build identity, backend, repository-local work/cache/output roots, and ordered --std=08 analyze/elaborate/run commands are frozen and executed. Independent gates prove library/source analysis, elaboration, bounded four-state timed execution, closed trace, normalized result/outcomes, deterministic rerun, applicable portable-SV parity, resource limits, and exact cleanup; partial VHDL-2008/PSL and every unexercised feature remain explicit, and no other simulator is inferred.`
-  Verification: `Clean director activation on 2026-08-09 follows completed .15.4. Official release metadata now exposes an exact macOS ARM64 GHDL 6.0.0 LLVM package and published SHA-256; materialization, identity proof, and all analysis-through-parity gates remain pending implementation.`
-  Commit: `pending implementation`
+  Verification: `The exact official macOS ARM64 GHDL 6.0.0 LLVM-JIT archive is repository-local at 37,155,806 bytes/SHA-256 c21312d5a0cc5833e6d8690d8c4343e67f4fc32f070c07343816cd11a31c7769; the selected binary is SHA-256 38a99c1cc18b04dfae128b118c7344910e08b8ba6eeb9c1e67f950a84bca3c3d and reports commit e589c698c with the LLVM JIT backend. The checked qualifier executes ordered --std=08 analysis/elaboration/run commands from the repository root into an exact same-volume staging identity, removes it, and repeats fixture and timed 0/1/X/Z probe output byte-identically. The fixture produces one closed 42-record trace, a passing normalized result, exact success/error outcomes, and equivalence across 19 applicable portable-SV oracle paths. Qualification-driven emitter repairs cover VHDL identifiers/boolean and reduction lowering, left-to-right carrier position, same-returning-ready acceptance/completion, and AHB ERROR settling. The exact LLVM AOT package remains explicitly unqualified because its external-name adapter dereferences null at runtime; PSL, complete VHDL-2008, OSVVM/UVVM, other simulators, mixed language, general parity, and scale remain unclaimed.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.5: qualify exact GHDL 6.0.0`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.6`
   Status: `proposed`
@@ -477,14 +477,23 @@ this bounded profile is not VIAL's language ceiling: target SV/UVM/VHDL
 machinery is compiler-owned in the same architectural sense that assembly is
 compiler-owned beneath C/C++ or Rust.
 
-Director selection on `2026-08-09` activates `.15.5` after completed `.15.4`.
-The exact official macOS ARM64 GHDL 6.0.0 LLVM asset is available for
-repository-volume materialization; installation, execution, normalized-result
-qualification, and parity evidence remain unperformed in this continuity-only
-transition. `.15.6` and `.15.7` remain proposed behind their exact OSVVM and
-combined provider/tool gates.
+Completed `.15.5` repository-locally materializes and qualifies the exact
+official macOS ARM64 GHDL 6.0.0 LLVM-JIT profile. Analysis, elaboration,
+bounded runtime, timed four-state behavior, a closed normalized result,
+deterministic rerun, applicable portable-SV parity, resource controls, and
+exact same-volume cleanup pass. `.15.6` is the next cleanly activatable leaf
+for OSVVM 2026.05 materialization and emission; `.15.7` remains proposed
+behind both completed inputs.
 
 ## Decisions
+
+- `2026-08-09`: Qualify only exact GHDL 6.0.0 LLVM-JIT for the selected
+  provider-free fixture. The matching LLVM AOT package analyzes and elaborates
+  the source but fails its VHDL-2008 external-name adapter at runtime with a
+  null access, so backend identity is part of the support claim. A returning-
+  ready AHB sample may accept and complete the same transfer; the VHDL
+  scheduler must mirror that portable-SV semantic boundary and wait through
+  the complete two-cycle ERROR response before advancing.
 
 - `2026-08-09`: Defer every NEXSIM-dependent runtime-qualification action
   represented by `.13.3` until capability-ready PGEN and NEXSIM releases
@@ -766,9 +775,9 @@ combined provider/tool gates.
 - Director-deferred `.13.3` must select exact PGEN/NEXSIM versions, handoff
   schema, semantic-introspection API schema, and MCP profile only after
   explicit reactivation against capability-ready releases.
-- Active `.15.5` must materialize the exact GHDL 6.0.0 package and execute the
-  already selected provider-free qualification gates without implying broader
-  VHDL-2008, PSL, another simulator, or methodology support.
+- `.15.6` must materialize the complete recursive OSVVM 2026.05 release and
+  implement its separately negotiated provider adapter/gallery without
+  changing portable VIAL semantics or inferring runtime qualification.
 - `.16` must choose the first available mixed-language tool/profile.
 - `.17` must select measured architecture-specific capacity budgets; the
   separate whole-product scale tree retains big/really-big qualification.
@@ -781,10 +790,10 @@ combined provider/tool gates.
   PGEN and NEXSIM releases exist. Commercial simulator availability is not a
   roadmap prerequisite, and Verilator/Icarus cannot be promoted from
   experimental evidence to `sv_uvm_qualified`.
-- No availability blocker remains for active `.15.5`: the exact official
-  GHDL 6.0.0 macOS ARM64 LLVM package exists. Materialization and execution
-  are the active work. OSVVM 2026.05 is not yet locally materialized, so
-  `.15.6-.15.7` remain proposed behind their separate provider gates.
+- No availability blocker remains for `.15.5`; it is complete. No external
+  prerequisite is currently missing for `.15.6`: exact OSVVM 2026.05
+  materialization is implementation work that starts only after this `.15.5`
+  tree is committed cleanly. `.15.7` then depends on both exact inputs.
 - Later UVM, VHDL, and mixed-language implementation/qualification leaves
   retain explicit tool availability prerequisites and cannot borrow the
   current Verilator result.
@@ -848,6 +857,7 @@ combined provider/tool gates.
 | `2026-08-02` | `.15.3` implementation | provider-free checking emitter/validator/support syntax; fourteen-artifact/six-source graph; capacity-four scoreboard, exact stall bins, immutable-source substitution, procedural checks, bounded stored diagnostics, logical-time closed trace, full top-level normalized-result projection; quote-escaping/result/trace/overflow/unknown/PSL/provider/probe mutations; checked gallery; impacted VIAL/support/capability suite; task/live/Knowledge Map/Memory; mdBook test/build/rendered-paragraph inspection; staged acceptance/doctrines; artifact census and exact cleanup | `passed`; the final guarded impacted suite reports `All tests successful` at Files=12/Tests=7,164; five changed Perl/test paths report `syntax OK`; the gallery checker reports six VHDL sources/eight evidence artifacts/59 maps/20 checks. All 50 chapters test and the repository-local build contains 86 files/17,822,884 bytes; rendered VHDL prose preserves distinct paragraphs and the VHDL-quote/full-result boundary before exact removal. Task integrity is four trees/917 nodes/one segment/one index archive; all registered live surfaces and 2,950/2,950 paths pass with exact mdBook delta 0/+17/+1,170 and zero ceiling increases; Knowledge Map is current at 1,105 facts/5,683 questions/5,849 occurrences/118 shards; Memory is 45 lines; final staged acceptance and all nine doctrines pass. No local VHDL analyzer is available, and no `.bin`/`.log`, repository-local verification output, mdBook build, or VIAL staging residue remains; analysis through support stays unclaimed. |
 | `2026-08-02` | `.15.4` implementation | revision-4 review-closure/emitter/support/corpus syntax; 24-row selected matrix with public/compiler/bridge/private-preview partition and four exact unsupported reasons; seven-stage repository-relative review/durable-defect workflow; exact inert-legacy bytes/schema and HIAL byte/separation proof; seven closure invariants and fail-closed mutations; 17-artifact checked gallery; focused/impacted VIAL/support/capability suite; task/live/Knowledge Map/Memory; mdBook test/build/rendered structure; staged acceptance/doctrines; artifact census and exact cleanup | `passed`; the guarded impacted suite reports `All tests successful` at Files=13/Tests=7,172; ten changed Perl/script/test paths report `syntax OK`; the gallery checker reports six VHDL sources/11 evidence artifacts/59 maps/20 static checks/24 mappings/seven closure checks. The inert legacy fixture remains 976 bytes with exact package SHA-256 `8d587b8dde4b7659290af6720ed4812079f36479d577dd5a0cf787bef2a22d4f` and path-independent manifest-projection SHA-256 `29789c0b4b7400de45eec2ac1f62178d2e555f9c3d64ad871a1d87c5d39c5835`; HIAL DUT bytes match the private handoff. All 50 chapters test and the repository-local build contains 86 files/17,845,293 bytes; the changed chapter renders 213 paragraphs/11 tables/41 code blocks with the matrix, rejection, workflow, and migration sections present before exact removal. Task integrity remains four trees/917 nodes/one segment/one index archive; Knowledge Map is current at 1,105 facts/5,687 questions/5,853 occurrences/118 shards; Memory is 45 lines; all live surfaces and the final staged acceptance/nine doctrines pass with zero ceiling increases. No exact VHDL analyzer or provider is local, and no `.bin`/`.log`, legacy-proof output, mdBook build, or VIAL staging residue remains; visual review and analysis through support stay pending or unclaimed. |
 | `2026-08-09` | `.15.5` activation and NEXSIM deferral | director priority; official GHDL v6.0.0 release metadata and macOS ARM64 package digest; task/index/audit/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook test; diff/staged-doctrine gates | `passed`; NEXSIM-dependent `.13.3` and the separate amendment tree are deferred, exact GHDL asset `ghdl-llvm-6.0.0-macos15-aarch64.tar.gz` is available at 42,445,801 bytes with SHA-256 `69beb5913a490b5971980bd045af6a63b6f52e861b444fa990bffac436587478`, `.15.5` alone becomes active, task integrity reports three active trees/916 nodes, Knowledge Map remains 1,105 facts/5,706 questions/5,872 occurrences/118 shards, all 52 mdBook chapters test, Memory is 40 lines, and final staged doctrines pass; no provider bytes are installed and no product behavior or support claim changes. |
+| `2026-08-09` | `.15.5` exact GHDL qualification | exact repository-local GHDL 6.0.0 LLVM-JIT archive/binary identities; provider-free source repairs; ordered `--std=08` analysis/elaboration/run; 42-record trace/result validation; timed `0/1/X/Z` probe; deterministic reruns; 19-path portable-SV parity; resource guard; exact cleanup; support/capability/gallery/docs/task/Knowledge Map/Memory/staged-doctrine gates | `passed`; canonical report `vial/qualification/vhdl_portable_ghdl/ghdl-6.0.0-qualification.json` is qualified, while the exact LLVM AOT external-name runtime failure and every broader language/provider/tool/profile non-claim remain explicit; `.15.6` is next after the clean commit. |
 
 ## Acceptance Checklist (enforced) — `.15.5` activation and NEXSIM deferral
 
@@ -2353,3 +2363,28 @@ combined provider/tool gates.
   smaller shipped AXI concurrent-assertion correctness audit first. HIAL/VIAL
   remains proposed and unchanged for a later clean roadmap selector.
 - `2026-07-29`: Created the proposed, inactive HIAL/VIAL architecture tree.
+
+## Acceptance Checklist (enforced) — `.15.5` exact GHDL qualification
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'not_run' --
+  perl/FSM/Support/VIALVHDLEmissionContract.pm
+  perl/FSM/VIAL/Backend/VHDLPortableGHDL.pm` locates the structural-only
+  predecessor. Exact GHDL execution then exposed VHDL-invalid generated
+  identifiers/expressions, reversed positional carriers, a blocked returning-
+  ready accept/complete boundary, and an incomplete ERROR settle boundary;
+  the exact LLVM AOT backend additionally failed its external-name adapter.
+- [x] **ADDRESSED (verified)** — the repository-local LLVM-JIT qualifier
+  freezes provider/source/command identities and proves analysis,
+  elaboration, bounded runtime, timed `0/1/X/Z`, closed normalized results,
+  deterministic reruns, nineteen applicable portable-SV parity paths,
+  resource controls, and exact cleanup; capability/support, gallery, mdBook,
+  task-tree, Knowledge Map, and Memory are synchronized to that bounded truth.
+- [x] **NO REGRESSION** — guarded direct-VHDL regression reports `All tests
+  successful` at Files=1/Tests=64. The guarded GHDL/support/parity suite reports
+  `All tests successful` at Files=6/Tests=7,119, including a fresh exact
+  qualification. Syntax, gallery byte check, `git diff --check`, and exact
+  residue checks pass. `knowledge-map: OK` reports 1,105 facts, 5,709 unique
+  questions, 5,875 occurrences, and 118 shards; task integrity reports three
+  active trees/916 nodes; all 52 mdBook chapters test and the 87-file
+  repository-local build passes before exact removal. The final staged
+  doctrine result is recorded by the commit workflow.

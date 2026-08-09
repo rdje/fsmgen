@@ -93,15 +93,14 @@ exact source/IR, bridge, execution, tooling, backend, parity, migration, and
 scale leaves. See [HIAL/VIAL Verification Architecture](16d-hial-vial-verification-architecture.md)
 for the topology, profile matrix, worked mapping, and current boundaries.
 
-Decision `0051` now selects the VHDL side without claiming it runs yet:
-provider-free IEEE VHDL-2008 is the portable core, exact GHDL 6.0.0 is the
+Decision `0051` selects provider-free IEEE VHDL-2008 as the portable core,
+exact GHDL 6.0.0 as the
 first qualification tool, and OSVVM 2026.05 is the advanced methodology
 provider. UVVM was audited but is not the version-1 provider. The native VIAL
 artifact graph is a parallel versioned successor; it does not promote or
 rewrite the inert `vhdl-observation-package`. Reviewable emission may progress
-before the absent tool/library are available, while analysis, elaboration,
-runtime, normalized result, parity, PSL, and methodology support remain
-unclaimed.
+before a tool/library is available. Completed `.15.5` now supplies the first
+bounded exact-tool evidence without implying PSL or methodology support.
 
 Implementation parent `.15` is active and split along those evidence
 boundaries. Completed `.15.1-.15.4` ship a 17-artifact provider-free VHDL
@@ -109,17 +108,25 @@ review profile: six sources, 59 source maps, 20 static checks, a 24-row selected
 mapping matrix, deterministic checking/scoreboard/coverage/fault/result
 structures, and a seven-stage review/defect workflow.
 
-This is reviewable semantics emission, not VHDL execution. Director selection
-now activates `.15.5`: the exact official macOS ARM64 GHDL 6.0.0 LLVM package
-is available for repository-volume materialization, while execution evidence
-remains pending. `.15.6` awaits exact repository-local OSVVM 2026.05, and
-`.15.7` depends on both. Analysis, elaboration, runtime, produced results,
-parity, PSL, methodology support, and mixed-language behavior remain unclaimed.
+Completed `.15.5` separately qualifies this exact canonical graph under the
+repository-local GHDL 6.0.0 LLVM-JIT backend: analysis, elaboration, bounded
+execution, timed `0/1/X/Z`, one closed 42-record trace, a passing normalized
+result, deterministic reruns, and nineteen applicable portable-SV parity paths
+pass. `.15.6` is next for exact repository-local OSVVM 2026.05, and `.15.7`
+depends on both. Complete VHDL breadth, PSL, methodology support, another
+simulator, mixed-language behavior, general parity, and scale remain unclaimed.
 
 Inspect or byte-check the six VHDL sources and eleven evidence artifacts with:
 
 ```text
 perl scripts/refresh_vial_vhdl_portable_gallery.pl --check
+```
+
+Rerun the exact checked qualification under the repository RAM guard with:
+
+```text
+scripts/run_with_ram_guard.sh --process-max-rss-mb 4096 -- \
+  perl scripts/run_vial_vhdl_portable_ghdl_qualification.pl --check
 ```
 
 The gallery lives at
