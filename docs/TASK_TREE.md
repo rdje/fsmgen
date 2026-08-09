@@ -50,7 +50,6 @@ Only rows marked `active` are PNT-eligible; other chronology is query-first thro
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `Verification code generation / intent architecture` | `.15.4` complete; `.15.5` awaits exact GHDL 6.0.0, `.15.6` repo-local OSVVM 2026.05; `.15.7`/`.13.3` blocked | [docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS` | `active` | `Verification infrastructure / external simulator operability` | `.1` complete; `.2` requires concrete external evidence | [docs/tasks/NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.md](docs/tasks/NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 / SV-backed feature completeness` | terminal `.844` delegates to HIAL/VIAL; no direct eligible leaf | [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
-| `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT` | `active` | `test integrity / IAL2 PPIF support accounting` | `.1.2.3` focused checkpoint contract green; commit cleanly, probe exact-HEAD resume, then run complete guarded t296 | [docs/tasks/SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.md](docs/tasks/SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.md) |
 
 ## Proposed Task Trees
 

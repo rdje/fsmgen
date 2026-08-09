@@ -3,10 +3,10 @@
 ## Metadata
 
 - Tree ID: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `test integrity / IAL2 PPIF support accounting`
 - Created: `2026-07-31`
-- Last updated: `2026-08-08`
+- Last updated: `2026-08-09`
 - Owner: repo-local workflow
 
 ## Goal
@@ -40,17 +40,19 @@ both surfaces.
 ## Task Tree
 
 - ID: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT`
-  Status: `active`
+  Status: `done`
   Goal: `Separate PPIF in-memory entry-module and CLI aggregate-top support oracles.`
   Children: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1`
+  Verification: `The independent pipeline-entry and CLI aggregate-top contracts now pass the complete guarded default/strict matrix. Exact-revision checkpointing preserved every completed batch across four host-pressure interruptions, and the final parent reports Files=1, Tests=10 with all 762 isolated batches covered and the checkpoint removed.`
+  Commit: `oracle split and bounded-worker history recorded below; checkpoint implementation in c990583ac; complete-parent closeout in this commit`
 
 - ID: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1`
-  Status: `active`
+  Status: `done`
   Goal: `Repair the supported-smoke PPIF runtime audit without changing product output.`
   Children: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.1, SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2`
   Acceptance: `Each PPIF entry declares and proves the in-memory generated entry module plus public CLI aggregate top as applicable; t296 and focused PPIF/support gates pass with unchanged HDL bytes and semantic reports.`
-  Verification: `Discovery during HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3: after semantic-only VIAL is correctly excluded from HDL generation, t296 repeatedly expects module ahb_tb in an in-memory pipeline result whose source_info.generated_hdl_entry_artifact is ahb_interconnect.fsm and whose hdl_code contains module ahb_interconnect. Fresh clean-tree reproduction on 2026-08-07 reconfirmed the same default-pipeline mismatch across distinct AHB interconnect fixtures. A complete guarded adapter/artifact census then proved 62 of 240 strict PPIF smoke entries have distinct pipeline and CLI module contracts: 18 AHB, 37 APB, five AXI composition, and two valid-ready bundle entries. The bundles additionally have aggregate entry-artifact filenames that differ from their emitted monitor module names. t296 _assert_entry_hdl_shape had applied expected_module_name to both surfaces. The exact 240-entry post-fix census reports TOTAL 240 MISMATCHES 0; all 62 divergent entries pass default-pipeline workers, while strict AHB, APB, AXI-composition, and bundle/artifact-override representatives pass. Final t248/t491 pass 7,094 assertions, and focused AXI/AHB alias tests pass 10.`
-  Commit: `implementation in this commit (SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1: separate runtime module oracles); complete parent verification remains blocked under .1.2`
+  Verification: `Discovery during HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3: after semantic-only VIAL is correctly excluded from HDL generation, t296 repeatedly expects module ahb_tb in an in-memory pipeline result whose source_info.generated_hdl_entry_artifact is ahb_interconnect.fsm and whose hdl_code contains module ahb_interconnect. Fresh clean-tree reproduction on 2026-08-07 reconfirmed the same default-pipeline mismatch across distinct AHB interconnect fixtures. A complete guarded adapter/artifact census then proved 62 of 240 strict PPIF smoke entries have distinct pipeline and CLI module contracts: 18 AHB, 37 APB, five AXI composition, and two valid-ready bundle entries. The bundles additionally have aggregate entry-artifact filenames that differ from their emitted monitor module names. t296 _assert_entry_hdl_shape had applied expected_module_name to both surfaces. The exact 240-entry post-fix census reports TOTAL 240 MISMATCHES 0; all 62 divergent entries pass default-pipeline workers, while strict AHB, APB, AXI-composition, and bundle/artifact-override representatives pass. Final t248/t491 pass 7,094 assertions, focused AXI/AHB alias tests pass 10, and the complete default/strict pipeline/CLI parent passes all four cohorts under the unchanged guard.`
+  Commit: `oracle implementation in the original .1 commit; complete parent verified by the .1.2.3 closeout in this commit`
 
 - ID: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.1`
   Status: `done`
@@ -60,12 +62,12 @@ both surfaces.
   Commit: `this commit (SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1: separate runtime module oracles)`
 
 - ID: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2`
-  Status: `active`
+  Status: `done`
   Goal: `Bound t296's full runtime matrix below the repository descendant-RSS ceiling without dropping coverage.`
   Children: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.1, SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.2, SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.3`
   Acceptance: `The four default/strict pipeline/CLI cohorts execute every selected entry in deterministic isolated batches, worker failures retain actionable TAP diagnostics, and the complete parent test passes under the unchanged 4096-MiB descendant cap.`
-  Verification: `A clean-host guarded post-oracle run started at 55.7% host occupancy, ran for eight minutes without assertion output, then the single t296 Perl process reached 5369.8 MiB and was terminated at the unchanged 4096-MiB descendant cutoff. The audit now uses one-entry pipeline and four-entry CLI self-workers with fail-closed surface/suffix and worker-bound validation plus failed-worker TAP replay. A guarded 32-entry conservative pipeline worker passed all 92 assertions before batch tightening; resumable guarded verification then passed every default-pipeline entry through index 113, which includes all 62 divergent PPIF contracts, plus strict AHB/APB/AXI/bundle representatives and default/strict CLI AHB aggregate checks. Entry 114's disabled inventory trace was repaired under .1.2.1. Entry 116 then exposed independent live-usage, classification, and module-inventory scaling defects. Its first bulk-cache repair passed index 116 but the restarted parent exposed false dead-signal classifications at entries 11-14 because temporary parsed RHS AST addresses were deduplicated across assignments. Parsed roots now scan independently; those four workers pass, and index 116 still passes in 660 seconds under the unchanged guard. A subsequent full guarded run completed all 287 default-pipeline workers and default-CLI batches through index 199 before unrelated host occupancy crossed 88% after 194 minutes; exact default-CLI index 202 then passed in 699 seconds from a low-pressure start. `.1.2.3` owns exact-commit checkpoint continuity so a host-pressure interruption cannot discard already-green cohorts. No cutoff was raised or bypassed.`
-  Commit: `worker implementation in bfeb6d3ff; disabled inventory repair in 33f926614; index-116 implementation in 10badb9b4; parsed-RHS correction in b76c5f63e; exact-commit checkpoint and complete-parent verification pending under .1.2.3`
+  Verification: `A clean-host guarded post-oracle run started at 55.7% host occupancy, ran for eight minutes without assertion output, then the single t296 Perl process reached 5369.8 MiB and was terminated at the unchanged 4096-MiB descendant cutoff. The audit now uses one-entry pipeline and four-entry CLI self-workers with fail-closed surface/suffix and worker-bound validation plus failed-worker TAP replay. A guarded 32-entry conservative pipeline worker passed all 92 assertions before batch tightening; resumable guarded verification then passed every default-pipeline entry through index 113, which includes all 62 divergent PPIF contracts, plus strict AHB/APB/AXI/bundle representatives and default/strict CLI AHB aggregate checks. Entry 114's disabled inventory trace was repaired under .1.2.1. Entry 116 then exposed independent live-usage, classification, and module-inventory scaling defects. Its first bulk-cache repair passed index 116 but the restarted parent exposed false dead-signal classifications at entries 11-14 because temporary parsed RHS AST addresses were deduplicated across assignments. Parsed roots now scan independently; those four workers pass, and index 116 still passes in 660 seconds under the unchanged guard. A subsequent full guarded run completed all 287 default-pipeline workers and default-CLI batches through index 199 before unrelated host occupancy crossed 88% after 194 minutes; exact default-CLI index 202 then passed in 699 seconds from a low-pressure start. Exact-commit checkpointing under `.1.2.3` then completed all 287 default-pipeline, 94 default-CLI, 287 strict-pipeline, and 94 strict-CLI batches. The final parent reports `Files=1, Tests=10`, `Result: PASS`; no cutoff was raised or bypassed.`
+  Commit: `worker implementation in bfeb6d3ff; disabled inventory repair in 33f926614; index-116 implementation in 10badb9b4; parsed-RHS correction in b76c5f63e; exact-commit checkpoint in c990583ac; complete-parent closeout in this commit`
 
 - ID: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.1`
   Status: `done`
@@ -82,11 +84,11 @@ both surfaces.
   Commit: `resource implementation in 10badb9b4; parsed-RHS correctness correction in b76c5f63e`
 
 - ID: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Make the complete t296 acceptance matrix interruption-resumable without reducing exact coverage.`
   Acceptance: `An explicit opt-in stores completed worker batches atomically below .artifacts/t296, binds them to the exact clean HEAD and test-contract version, reuses only valid completions after a guard interruption, fails closed on unsafe paths or malformed/mismatched state, leaves default no-checkpoint behavior unchanged, and removes the checkpoint after one final parent pass covers all four current cohorts.`
-  Verification: `The latest guarded parent ran 194 minutes with no assertion failure, completing all 287 default-pipeline workers and default-CLI batches through index 199 before unrelated host occupancy crossed the unchanged 88% cutoff during batch 200-203. Exact default-CLI index 202 passes all three assertions in 699 seconds from a low-pressure start, so neither that fixture nor the repaired backend is a reproduced defect. The monolithic parent previously discarded more than three hours of green evidence after any host-pressure interruption. The opt-in checkpoint now validates a clean exact HEAD at startup, after each newly executed worker and before every reuse or final removal; strict schema/path/volume/symlink checks reject unsafe state, and same-directory sync-plus-rename publishes each completion atomically. Focused t1597 passes 18 contract assertions, a dirty-tree integration probe fails before state creation, and an ordinary isolated worker remains green. The implementation commit and complete checkpointed parent remain pending.`
-  Commit: `implementation pending in this commit; complete checkpointed parent verification remains pending`
+  Verification: `The latest pre-checkpoint guarded parent ran 194 minutes with no assertion failure, completing all 287 default-pipeline workers and default-CLI batches through index 199 before unrelated host occupancy crossed the unchanged 88% cutoff during batch 200-203. Exact default-CLI index 202 passes all three assertions in 699 seconds from a low-pressure start, so neither that fixture nor the repaired backend is a reproduced defect. The monolithic parent previously discarded more than three hours of green evidence after any host-pressure interruption. The opt-in checkpoint validates a clean exact HEAD at startup, after each newly executed worker and before every reuse or final removal; strict schema/path/volume/symlink checks reject unsafe state, and same-directory sync-plus-rename publishes each completion atomically. Focused t1597 passes 18 contract assertions, a dirty-tree integration probe fails before state creation, and an ordinary isolated worker remains green. A synthetic exact-HEAD near-complete checkpoint then reused 761 batches, executed the one omitted batch, passed all four parent subtests (`Files=1, Tests=10`), and removed itself. The real guarded matrix preserved exact progress across four RAM-guard terminations: 126 default-pipeline batches, then 131, then 718 total batches at strict-CLI batch 50, and again 718 while an unrelated PGEN release/LTO compiler occupied up to 7.25 GiB. Every interrupted batch remained uncredited, every killed PID was absent before cleanup, and only the exact fingerprinted run-owned scratch directories were removed. After host occupancy fell to 77.0%, the same clean `c990583ac` revision resumed from 718 completions, reran strict-CLI batch 50, completed all remaining work, and reported `Files=1, Tests=10`, 5,112 wallclock seconds for the final resumed process, and `Result: PASS`. The completed state contains all 762 batches (287 default pipeline, 94 default CLI, 287 strict pipeline, 94 strict CLI); the checkpoint auto-cleared and all exact successful-run scratch paths were absent.`
+  Commit: `implementation in c990583ac; complete checkpointed parent verification in this commit`
 
 ## Decisions
 
@@ -153,16 +155,13 @@ both surfaces.
 
 ## Open Questions
 
-- None requiring director input. `.1.2.3` owns test-run continuity without
-  changing coverage, thresholds, product output, or default test behavior.
+- None. The tree is terminal; checkpoint continuity changed neither coverage,
+  thresholds, product output, nor default test behavior.
 
 ## Blockers
 
-- No product implementation blocker remains. Active leaf `.1.2.3` has focused
-  checkpoint and unchanged-worker proof; its implementation must commit cleanly
-  before an exact-HEAD integration probe and the complete resumable parent can
-  run. Indices 11-14, 114, pipeline 116, and its exact CLI fixture pass their
-  isolated workers below the unchanged cap.
+- None. The exact-revision complete parent and every focused/adjacent gate are
+  green under the unchanged resource limits.
 
 ## Acceptance Checklist (enforced for implementation changes)
 
@@ -286,5 +285,8 @@ both surfaces.
   successful` and `Files=2, Tests=20`: t1597 proves 18 persistence, mismatch,
   malformed-state, unsafe-path, atomic-residue, symlink, and exact-removal
   contracts; an ordinary t296 default-pipeline worker retains its two passing
-  assertions. All three changed Perl files report `syntax OK`; the full
-  doctrine driver runs again from the staged implementation before commit.
+  assertions. All three changed Perl files report `syntax OK`; the staged
+  implementation doctrine gate passed before `c990583ac`. The subsequent
+  exact-commit parent survived four guarded interruptions without false credit,
+  covered all 762 batches, reported `Files=1, Tests=10` and `Result: PASS`, and
+  removed its checkpoint only after the final green parent result.

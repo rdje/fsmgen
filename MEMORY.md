@@ -5,23 +5,21 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: `ef719be52` (`SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.3: own resumable matrix proof`).
-- active_work_unit: `SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.3` owns interruption-resumable complete-parent t296 verification.
-- current_state: `.1.2.3` now has opt-in atomic state below `.artifacts/t296`,
-  bound to a versioned contract and a clean exact HEAD at startup and every
-  completion/reuse boundary. Focused t1597 passes 18 fail-closed persistence
-  assertions; a dirty-tree integration probe creates no state; the ordinary
-  exact t296 worker remains green.
-- next_action: commit the checkpoint implementation, create an exact-HEAD
-  near-complete integration checkpoint and prove one execute/remaining reuse/
-  final removal cycle, then run/resume the complete guarded parent until all
-  four cohorts pass before selecting containment adoption.
-- in_flight_uncommitted: `.1.2.3` checkpoint implementation, focused test,
-  task evidence, and Knowledge Map fact await doctrine gate and commit; no
-  background worker exists.
-- blockers: complete exact-HEAD integration and full-parent confirmation must
-  run from the clean implementation commit. Containment `.26`, HIAL/VIAL
-  provider qualification, and NEXSIM external evidence remain independent.
+- latest_commit: this commit (`SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.3: close complete resumable matrix`).
+- active_work_unit: none; the supported-smoke PPIF pipeline/CLI oracle-split tree is complete.
+- current_state: exact-revision checkpointing at `c990583ac` preserved all
+  progress across four RAM-guard interruptions and the final guarded t296
+  parent passed all 762 batches (`Files=1, Tests=10`, `Result: PASS`). The
+  checkpoint auto-cleared, exact run-owned scratch paths are absent, and no
+  coverage or resource cutoff was weakened.
+- next_action: from the clean tree, add and activate the smallest honest
+  `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` leaf for derived-state containment;
+  use `docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md` as the canonical
+  downstream entry point and read PGEN's `docs/DERIVED_STATE_CONTAINMENT.md`
+  read-only as the proposed source before changing the doctrine.
+- in_flight_uncommitted: none after this commit; no background job or build residue.
+- blockers: none for supported-smoke. Containment `.26`, HIAL/VIAL provider
+  qualification, and NEXSIM external evidence remain independent.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not
