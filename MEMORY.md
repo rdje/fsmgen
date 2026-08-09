@@ -7,14 +7,14 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `IAL2-T1436-PREEXISTING-FAILURES.1`.
+- active_work_unit: `IAL2-T1436-PREEXISTING-FAILURES.2`.
 - current_state: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.3` is complete; `.4` is
   blocked on the now-active intermediate-width repair because selected
   queue-head examples must be lowering-clean before publication.
-- next_action: align the stale `t/1436` APB cardinality diagnostic expectation
-  with the shipped multi-peripheral message and run focused APB coverage.
-- in_flight_uncommitted: activation/continuity synchronization before its
-  dedicated commit; no background job or generated build residue.
+- next_action: add a focused multi-bit intermediate `== 0`/`== 1` regression,
+  then make truthiness simplification consume authoritative width or fail
+  closed before validating affected AXI queue-head sources.
+- in_flight_uncommitted: none; no background job or generated build residue.
 - blockers: none for the repair tree; mdBook `.4` waits on repair leaf `.2`.
 
 ## Durable context

@@ -51,7 +51,7 @@ The live `docs/tasks/` nodes are authoritative; validate with `scripts/check_tas
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.15.7` done; `.13.3` deferred; `.16+` selection-dependent | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 completeness` | `.844` terminal | [task](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
 | `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE` | `active` | `IAL2 mdBook alignment` | `.4` blocked by the separately owned multi-bit intermediate-width repair | [task](docs/tasks/IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.md) |
-| `IAL2-T1436-PREEXISTING-FAILURES` | `active` | `infra / test + HDL-quality hygiene` | `.1` align stale APB diagnostic expectation, then `.2` repair intermediate truthiness width | [task](docs/tasks/IAL2-T1436-PREEXISTING-FAILURES.md) |
+| `IAL2-T1436-PREEXISTING-FAILURES` | `active` | `infra / test + HDL-quality hygiene` | `.2` repair intermediate truthiness width; `.1` APB expectation done | [task](docs/tasks/IAL2-T1436-PREEXISTING-FAILURES.md) |
 
 ## Proposed Task Trees
 

@@ -103,11 +103,11 @@ targeted tests), which is likely why these drifted undetected.
   Children: `IAL2-T1436-PREEXISTING-FAILURES.1, IAL2-T1436-PREEXISTING-FAILURES.2`
 
 - ID: `IAL2-T1436-PREEXISTING-FAILURES.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Align the stale APB cardinality diagnostic expectation with the shipped multi-peripheral diagnostic.`
   Acceptance: `Update only the obsolete t/1436 expectation after proving the shipped diagnostic and its provenance; run the focused APB subtest or t/1436 and the directly relevant APB tests.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Commit 73013cb4f proves the product diagnostic gained the selected one-requester/multi-peripheral clause while the t1436 expectation retained the older fixed-composition wording. Updated only that regex; an in-memory valid-ready/profile-apb rejection probe reports targeted APB diagnostic: PASS. perl -Iperl -c t/1436 reports syntax OK. With TMPDIR=.artifacts/tmp/tests, t1470 profile aliases and t1472 APB composition report All tests successful, Files=2, Tests=115. Product parser, diagnostics, PPIF sources, generators, and behavior are unchanged.`
+  Commit: `IAL2-T1436-PREEXISTING-FAILURES.1: align APB diagnostic expectation`
 
 - ID: `IAL2-T1436-PREEXISTING-FAILURES.2`
   Status: `pending`
@@ -120,8 +120,7 @@ targeted tests), which is likely why these drifted undetected.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-T1436-PREEXISTING-FAILURES.1` | `pending` | Align the stale APB expectation first as the smaller independent failure. |
-| 2 | `IAL2-T1436-PREEXISTING-FAILURES.2` | `pending` | Repair authoritative intermediate width before resuming the AXI queue-head documentation examples. |
+| 1 | `IAL2-T1436-PREEXISTING-FAILURES.2` | `pending` | Repair authoritative intermediate width before resuming the AXI queue-head documentation examples. |
 
 ## Decisions
 
@@ -131,6 +130,21 @@ targeted tests), which is likely why these drifted undetected.
   affected response-demux/queue-head examples lowering-clean until `.2` is
   repaired. Complete the independent APB expectation leaf first, then the
   width/simplification leaf, committing each separately before returning.
+
+## Acceptance Checklist (enforced) — `.1` APB expectation alignment
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'selected
+  one-requester/multi-peripheral APB composition shape'` identifies
+  `73013cb4f`: the product diagnostic gained the multi-peripheral alternative,
+  while the older `t/1436` regex still ended at fixed composition.
+- [x] **ADDRESSED (verified)** — The test expectation now matches the complete
+  shipped diagnostic. The in-memory valid-ready/profile-apb rejection probe
+  prints `targeted APB diagnostic: PASS`; `perl -Iperl -c t/1436-ial2-ppif-parser-cli.t`
+  reports `syntax OK`.
+- [x] **NO REGRESSION** — With repository-local `TMPDIR`, `t/1470` plus
+  `t/1472` report `All tests successful`, `Files=2, Tests=115`. Only the stale
+  expectation changed; parser code, product diagnostics, public PPIF sources,
+  generated artifacts, and behavior are byte-identical to the parent commit.
 
 ## Notes
 
