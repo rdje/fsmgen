@@ -7,17 +7,13 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: none PNT-eligible; `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`
-  remains active with `.15.7` done and its next leaves proposed or unavailable.
-- current_state: the director deferred NEXSIM-dependent `.13.3` and the
-  NEXSIM consumer-amendment tree; exact repository-local GHDL 6.0.0 LLVM-JIT
-  recursive OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT qualification now passes
-  61-source provider compilation through bounded result/parity/report evidence.
-- next_action: await director selection/reactivation: `.13.3` needs NEXSIM;
-  `.16` needs an exact mixed-language profile; `.17` needs capacity budgets.
-- in_flight_uncommitted: none; no background job or build residue.
-- blockers: containment `.12` and IAL2 eligibility remain unavailable;
-  NEXSIM-dependent work is director-deferred; `.16+` are not active PNT leaves.
+- active_work_unit: `STARTUP-INTEGRITY-REPAIR-AUG09.2`.
+- current_state: the full August 9 startup audit found a stale HIAL VHDL hash,
+  canonical-wiring cookbook drift, and stale import-map measurements.
+- next_action: repair only the stale `t/1551` direct-VHDL SHA-256 lock and
+  prove the intentional pre/post output difference; commit `.2` next.
+- in_flight_uncommitted: activation docs only; no job or build residue.
+- blockers: none; after `.4`, HIAL `.16+` need director/tool selection.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not
