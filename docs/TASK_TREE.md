@@ -47,7 +47,6 @@ The live `docs/tasks/` nodes are authoritative; validate with `scripts/check_tas
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `BIN-FSMGEN-IMPORT-TREE-AUG09-BACKEND-REFRESH` | `active` | `bootstrap maintenance` | `.2` restores the map | [task](docs/tasks/BIN-FSMGEN-IMPORT-TREE-AUG09-BACKEND-REFRESH.md) |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.28` complete; remaining work unavailable | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.15.4` complete; remaining leaves provider-blocked | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS` | `active` | `external simulator operability` | `.2` awaits external evidence | [task](docs/tasks/NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.md) |

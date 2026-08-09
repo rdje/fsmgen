@@ -7,10 +7,11 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `BIN-FSMGEN-IMPORT-TREE-AUG09-BACKEND-REFRESH.2`.
-- current_state: `254` / `253` topology is unchanged; the map has one stale
-  count and 49 containment-reflow link breaks.
-- next_action: execute `.2`, verify the restored map/fact, and close the tree.
+- active_work_unit: none is PNT-eligible.
+- current_state: the `254` / `253` import map and fact are current; all 253
+  package links and 71 measured counts match source, with no split links.
+- next_action: select a newly eligible active-tree frontier when its recorded
+  prerequisite arrives; do not activate proposed or director-deferred work.
 - in_flight_uncommitted: none; no background job or build residue.
 - blockers: containment `.12`, provider qualification, NEXSIM evidence, and
   IAL2 eligibility remain unavailable.

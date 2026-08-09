@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `BIN-FSMGEN-IMPORT-TREE-AUG09-BACKEND-REFRESH`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `bootstrap architecture maintenance`
 - Created: `2026-08-09`
 - Last updated: `2026-08-09`
@@ -33,7 +33,7 @@ backend-work fixes.
 ## Task Tree
 
 - ID: `BIN-FSMGEN-IMPORT-TREE-AUG09-BACKEND-REFRESH`
-  Status: `active`
+  Status: `done`
   Goal: `Synchronize and restore the post-backend-fix bin/fsmgen import-tree architecture map.`
   Children: `BIN-FSMGEN-IMPORT-TREE-AUG09-BACKEND-REFRESH.1, BIN-FSMGEN-IMPORT-TREE-AUG09-BACKEND-REFRESH.2`
 
@@ -45,10 +45,10 @@ backend-work fixes.
   Commit: `BIN-FSMGEN-IMPORT-TREE-AUG09-BACKEND-REFRESH.1: activate backend import-map refresh`
 
 - ID: `BIN-FSMGEN-IMPORT-TREE-AUG09-BACKEND-REFRESH.2`
-  Status: `active`
+  Status: `done`
   Goal: `Remeasure and restore the maintained import map and canonical fact.`
   Acceptance: `Closure counts and package membership remain exact, every selected measured line count matches source, no malformed Markdown link remains, and documentation/doctrine gates pass without behavior changes.`
-  Verification: `pending`
+  Verification: `Activated by clean commit 2411e012f. Module::ScanDeps reports 254 project files / 253 packages / Support 76 / IAL2 19 / VIAL 17 / HIAL 3; the map has exactly 253 unique live-package links with zero missing or extra owners. All 71 selected line counts match source. The August 1 reflow root cause is repaired from 49 split destinations, four split labels, and two split label/destination delimiters to zero; all 13 parent-relative link targets are repository-root-relative, and maximum physical line length remains 473 bytes. The canonical fact and generated shard are current; bin/fsmgen syntax, task integrity, Memory, Knowledge Map, relative paths, diff hygiene, and containment pass. All 52 mdBook chapters test and the 87-file repository-local build succeeds; its exact output is removed. Runtime, tests, source inputs, generated artifacts, public support claims, and mdBook content remain unchanged.`
   Commit: `BIN-FSMGEN-IMPORT-TREE-AUG09-BACKEND-REFRESH.2: refresh backend import map`
 
 ## Decisions
@@ -58,9 +58,12 @@ backend-work fixes.
   public support claims are unchanged.
 - `2026-08-09`: Post-baseline backend commits changed nine reachable owners;
   only the selected `RegressionCorpus.pm` count is stale, `6820 -> 6884`.
-- `2026-08-09`: Exact Markdown-link parsing finds 49 destinations split across
-  physical lines by `ea1b76dd5`; eight live packages have no remaining valid
-  canonical link. Restore atomic Markdown tokens within bounded lines.
+- `2026-08-09`: Exact Markdown-link parsing finds 49 destinations, four
+  labels, and two label/destination delimiters split across physical lines by
+  `ea1b76dd5`; eight live packages have no remaining valid canonical link.
+  Restore atomic Markdown tokens within bounded lines.
+- `2026-08-09`: Completed the documentation-only refresh without topology or
+  behavior change; the restored map is exact and navigable under containment.
 
 ## Blockers
 
