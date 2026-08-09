@@ -43,15 +43,15 @@ first.
 ## Active Task Trees
 
 Only rows marked `active` are PNT-eligible; other chronology is query-first through the bounded archive below.
-The live node lists under `docs/tasks/` are authoritative; validate this
-current projection with `scripts/check_task_tree_integrity.pl`.
+The live `docs/tasks/` nodes are authoritative; validate with `scripts/check_task_tree_integrity.pl`.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity / project-wide live-document lifecycle` | `.28` complete; `.12` waits on director-deferred `.26`, so no containment leaf is eligible | [docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
-| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `Verification code generation / intent architecture` | `.15.4` complete; `.15.5` awaits exact GHDL 6.0.0, `.15.6` repo-local OSVVM 2026.05; `.15.7`/`.13.3` blocked | [docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
-| `NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS` | `active` | `Verification infrastructure / external simulator operability` | `.1` complete; `.2` requires concrete external evidence | [docs/tasks/NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.md](docs/tasks/NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.md) |
-| `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 / SV-backed feature completeness` | terminal `.844` delegates to HIAL/VIAL; no direct eligible leaf | [docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
+| `BIN-FSMGEN-IMPORT-TREE-AUG09-BACKEND-REFRESH` | `active` | `bootstrap maintenance` | `.2` restores the map | [task](docs/tasks/BIN-FSMGEN-IMPORT-TREE-AUG09-BACKEND-REFRESH.md) |
+| `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.28` complete; remaining work unavailable | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
+| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.15.4` complete; remaining leaves provider-blocked | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
+| `NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS` | `active` | `external simulator operability` | `.2` awaits external evidence | [task](docs/tasks/NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.md) |
+| `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 completeness` | terminal `.844`; no eligible leaf | [task](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
 
 ## Proposed Task Trees
 

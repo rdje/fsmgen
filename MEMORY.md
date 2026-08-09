@@ -7,17 +7,13 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: none is PNT-eligible.
-- current_state: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.28` is complete.
-  Mutable current truth is derived on read or retained only as an explicitly
-  authority-verified copy; the canonical adoption guide carries the portable
-  doctrine/package route, and two stored HEAD shadows are removed.
-- next_action: select a newly eligible active-tree frontier when its recorded
-  prerequisite arrives; do not activate a proposed or director-deferred leaf.
+- active_work_unit: `BIN-FSMGEN-IMPORT-TREE-AUG09-BACKEND-REFRESH.2`.
+- current_state: `254` / `253` topology is unchanged; the map has one stale
+  count and 49 containment-reflow link breaks.
+- next_action: execute `.2`, verify the restored map/fact, and close the tree.
 - in_flight_uncommitted: none; no background job or build residue.
-- blockers: containment `.12` waits on director-deferred `.26`; HIAL/VIAL
-  provider qualification awaits its exact external tools, NEXSIM `.2` awaits
-  concrete external evidence, and IAL2 has no direct eligible leaf.
+- blockers: containment `.12`, provider qualification, NEXSIM evidence, and
+  IAL2 eligibility remain unavailable.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not
