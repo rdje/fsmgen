@@ -187,7 +187,7 @@ what is actually shipped, matching the thoroughness AHB already has.
   Acceptance: `Extend 16aa with concrete/dynamic same-ID reject and issue-order-queue policy shapes, queue-head semantics, bounded depth/cardinality, mixed dynamic/static populations, write BID/read RID response-demux, generated completion, and representative runnable write/read sources. Clearly distinguish fixture combinations from independent language features and state scoreboard/interleaving residue without implying full AXI manager behavior.`
   Verification: `pending`
   Commit: `pending`
-  Blocked by: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.3`
+  Blocked by: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.3, IAL2-T1436-PREEXISTING-FAILURES.2`
 
 - ID: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.5`
   Status: `pending`
@@ -209,7 +209,7 @@ what is actually shipped, matching the thoroughness AHB already has.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.4` | `pending` | Extend the new foundation reference with same-ID ordering, mixed populations, and response-demultiplexing semantics. |
+| 1 | `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.4` | `pending` | Resume after the separately owned intermediate-width repair makes the selected queue-head examples lowering-clean. |
 
 ## Decisions
 

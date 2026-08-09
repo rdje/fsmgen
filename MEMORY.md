@@ -7,16 +7,15 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.4`.
-- current_state: `.3` adds the canonical AXI manager-capacity/status chapter,
-  documents the six foundation sources and static/auto/dynamic identity
-  boundary, and routes two pre-existing broad-test defects to proposed
-  `IAL2-T1436-PREEXISTING-FAILURES.1/.2`.
-- next_action: extend 16aa with same-ID reject/issue-order queues, mixed
-  populations, and write-BID/read-RID response demultiplexing using the
-  representative sources selected by `.1`.
-- in_flight_uncommitted: none; no background job or generated build residue.
-- blockers: none for `.4`; the separate `t/1436` repair tree remains proposed.
+- active_work_unit: `IAL2-T1436-PREEXISTING-FAILURES.1`.
+- current_state: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.3` is complete; `.4` is
+  blocked on the now-active intermediate-width repair because selected
+  queue-head examples must be lowering-clean before publication.
+- next_action: align the stale `t/1436` APB cardinality diagnostic expectation
+  with the shipped multi-peripheral message and run focused APB coverage.
+- in_flight_uncommitted: activation/continuity synchronization before its
+  dedicated commit; no background job or generated build residue.
+- blockers: none for the repair tree; mdBook `.4` waits on repair leaf `.2`.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not

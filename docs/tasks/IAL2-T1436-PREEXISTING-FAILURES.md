@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `IAL2-T1436-PREEXISTING-FAILURES`
-- Status: `proposed` (needs director prioritization; not PNT-eligible until then)
+- Status: `active`
 - Roadmap lane: `infra / test + HDL-quality hygiene`
 - Created: `2026-07-12`
 - Last updated: `2026-08-09`
@@ -98,7 +98,7 @@ targeted tests), which is likely why these drifted undetected.
 ## Task Tree
 
 - ID: `IAL2-T1436-PREEXISTING-FAILURES`
-  Status: `proposed`
+  Status: `active`
   Goal: `Fix the two pre-existing t/1436 failures discovered during the AW-driver slice: (1) the stale APB cardinality diagnostic regex, and (2) the WIDTHTRUNC verilator lint in the generated capacity/status equality-to-zero lowering.`
   Children: `IAL2-T1436-PREEXISTING-FAILURES.1, IAL2-T1436-PREEXISTING-FAILURES.2`
 
@@ -106,15 +106,31 @@ targeted tests), which is likely why these drifted undetected.
   Status: `pending`
   Goal: `Align the stale APB cardinality diagnostic expectation with the shipped multi-peripheral diagnostic.`
   Acceptance: `Update only the obsolete t/1436 expectation after proving the shipped diagnostic and its provenance; run the focused APB subtest or t/1436 and the directly relevant APB tests.`
-  Verification: `pending activation`
-  Commit: `pending activation`
+  Verification: `pending`
+  Commit: `pending`
 
 - ID: `IAL2-T1436-PREEXISTING-FAILURES.2`
   Status: `pending`
   Goal: `Prevent multi-bit factored intermediates from being simplified as Boolean before authoritative width inference.`
   Acceptance: `Add a focused x==0/x==1 multi-bit intermediate regression; repair the width/simplification ordering or fail-closed classifier; prove the exact queue-head response-demux reproducer and representative read/write affected shapes with Verilator and Yosys; run t/1436 to green without weakening lint.`
-  Verification: `pending activation`
-  Commit: `pending activation`
+  Verification: `pending`
+  Commit: `pending`
+
+## Current Frontier
+
+| Order | Leaf | Status | Why next |
+| --- | --- | --- | --- |
+| 1 | `IAL2-T1436-PREEXISTING-FAILURES.1` | `pending` | Align the stale APB expectation first as the smaller independent failure. |
+| 2 | `IAL2-T1436-PREEXISTING-FAILURES.2` | `pending` | Repair authoritative intermediate width before resuming the AXI queue-head documentation examples. |
+
+## Decisions
+
+- `2026-08-09`: Activate this existing repair tree as a prerequisite discovered
+  during `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.3`. The director delegated roadmap
+  choice and autonomous engineering decisions; `.4` cannot truthfully call the
+  affected response-demux/queue-head examples lowering-clean until `.2` is
+  repaired. Complete the independent APB expectation leaf first, then the
+  width/simplification leaf, committing each separately before returning.
 
 ## Notes
 
