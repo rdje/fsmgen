@@ -48,11 +48,11 @@ the August 9 startup audit without changing behavior or roadmap claims.
   Commit: `STARTUP-INTEGRITY-REPAIR-AUG09.1: activate startup integrity repairs`
 
 - ID: `STARTUP-INTEGRITY-REPAIR-AUG09.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Repair the stale direct-VHDL HIAL determinism lock exposed by the startup smoke gate.`
   Acceptance: `The lock changes only from the pre-normalization 18,380-byte SHA-256 to the current intentional 18,392-byte SHA-256; exact historical and current-output probes plus focused HIAL/VIAL tests prove the cause and result.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Startup reproduced t/1551 at line 312: expected a82f42e... but generated ab668d3.... Historical backend injection measured the pre-a0e7149d5 output at 18,380 bytes / a82f42e...; live generation measures 18,392 bytes / ab668d3.... The exact diff contains only intended identifier normalization and typed equality/boolean lowering. Guarded focused tests pass: Files=5, Tests=93.`
+  Commit: `STARTUP-INTEGRITY-REPAIR-AUG09.2: repair HIAL VHDL determinism lock`
 
 - ID: `STARTUP-INTEGRITY-REPAIR-AUG09.3`
   Status: `pending`
@@ -84,6 +84,6 @@ the August 9 startup audit without changing behavior or roadmap claims.
 
 ## Acceptance Checklist (enforced for implementation changes)
 
-- [ ] **ROOT CAUSE (WHY + WHERE)** — `pending first implementation slice`
-- [ ] **ADDRESSED (verified)** — `pending first implementation slice`
-- [ ] **NO REGRESSION** — `pending first implementation slice`
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` and the failing `t/1551-hial-vial-bridge-manifest.t at line 312` locate a stale pre-`a0e7149d5` hash; historical/live backend probes prove intentional output movement from 18,380 bytes / `a82f42e...` to 18,392 bytes / `ab668d3...`.
+- [x] **ADDRESSED (verified)** — The live generator probe returns exactly `18392 ab668d3104b9f8f75f7cb7a92e819a3645a13d552d71995d53280317c0ca87aa`, and `t/1551` now passes with only its hash expectation changed.
+- [x] **NO REGRESSION** — Guarded `prove` over `t/1551`, `t/1552`, `t/1593`, `t/1598`, and `t/1420` reports `All tests successful. Files=5, Tests=93`.

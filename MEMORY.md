@@ -7,12 +7,12 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `STARTUP-INTEGRITY-REPAIR-AUG09.2`.
-- current_state: the full August 9 startup audit found a stale HIAL VHDL hash,
-  canonical-wiring cookbook drift, and stale import-map measurements.
-- next_action: repair only the stale `t/1551` direct-VHDL SHA-256 lock and
-  prove the intentional pre/post output difference; commit `.2` next.
-- in_flight_uncommitted: activation docs only; no job or build residue.
+- active_work_unit: `STARTUP-INTEGRITY-REPAIR-AUG09.3`.
+- current_state: `.2` repairs the stale HIAL VHDL hash with exact historical
+  and live-output evidence; cookbook and import-map drift remain.
+- next_action: convert cookbook composition wiring prose/examples to canonical
+  list forms and prove plain/strict runnable coverage; commit `.3` next.
+- in_flight_uncommitted: `.2` test/continuity changes; no job or build residue.
 - blockers: none; after `.4`, HIAL `.16+` need director/tool selection.
 
 ## Durable context

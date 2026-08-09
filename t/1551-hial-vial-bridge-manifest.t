@@ -309,7 +309,7 @@ subtest 'generation remains deterministic, immutable, and behavior-preserving' =
         quiet => 1,
         strict_mode => 1,
     )->generate_hdl_from_file($ial0_path)->{hdl_code};
-    is(sha256_hex($vhdl), 'a82f42e0015b662d432df842633854d16c73cc7805f355d84a902bf553f77e62', 'direct VHDL HIAL output is byte stable');
+    is(sha256_hex($vhdl), 'ab668d3104b9f8f75f7cb7a92e819a3645a13d552d71995d53280317c0ca87aa', 'direct VHDL HIAL output is byte stable');
 };
 
 subtest 'malformed routes and annotations fail closed with sanitized diagnostics' => sub {
