@@ -1,7 +1,7 @@
 # Knowledge Map: `ial2-axi`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **216** facts · **1031** uniquely owned question entries.
+> **216** facts · **1032** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -955,6 +955,7 @@
 - q="when should the bounded AXI full-write composition arm B?" · facts=[ial2-axi-full-write-transaction-composition-readiness-audit](../../docs/knowledge/ial2-axi-full-write-transaction-composition-readiness-audit.md)
 - q="where is the AXI AW W valid ready bundle documented?" · facts=[ial2-axi-trimode-mdbook-coverage](../../docs/knowledge/ial2-axi-trimode-mdbook-coverage.md)
 - q="where is the AXI IAL2 mdBook chapter?" · facts=[ial2-axi-trimode-mdbook-coverage](../../docs/knowledge/ial2-axi-trimode-mdbook-coverage.md)
+- q="where is the AXI manager capacity status family documented?" · facts=[ial2-axi-manager-capacity-status-ppif-first-slice](../../docs/knowledge/ial2-axi-manager-capacity-status-ppif-first-slice.md)
 - q="where is the IAL2 AXI APB AHB tri-mode mdBook plan recorded?" · facts=[ial2-axi-apb-ahb-trimode-mdbook-coverage-audit](../../docs/knowledge/ial2-axi-apb-ahb-trimode-mdbook-coverage-audit.md)
 - q="where is the generated response-demux behavior recorded?" · facts=[ial2-axi-manager-write-response-demux-metadata-first-slice](../../docs/knowledge/ial2-axi-manager-write-response-demux-metadata-first-slice.md)
 - q="which AR payload fields will the bounded driver carry?" · facts=[ial2-axi-ar-driver-readiness-audit](../../docs/knowledge/ial2-axi-ar-driver-readiness-audit.md)

@@ -1031,6 +1031,13 @@ protocol-neutral transaction interface remain separate later directions.
 Move to manager capacity/status when the user needs AXI manager-level control
 instead of a single channel monitor.
 
+The detailed [AXI Manager Capacity and
+Status](16aa-ial2-axi-manager-capacity-status.md) chapter is the canonical
+reference for the 140-source manager family. It explains the progressive
+capacity, ID-family, transaction, event-dispatch, auto-ID, and dynamic-ID
+contracts; report and review-artifact expectations; and the exact boundary
+between metadata and generated behavior.
+
 `ppif/axi_manager_capacity_status.ppif` introduces:
 
 - read and write pending-capacity limits;

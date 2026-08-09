@@ -45,6 +45,7 @@
   - [Adding IAL2 Protocols](15a-ial2-new-protocol-support.md)
 - [IAL2 Protocol and Platform Intent](16-ial2-protocol-platform-intent.md)
   - [AXI IAL2 Examples](16a-ial2-axi.md)
+  - [AXI Manager Capacity and Status](16aa-ial2-axi-manager-capacity-status.md)
   - [APB IAL2 Examples](16b-ial2-apb.md)
   - [AHB Current Boundary](16c-ial2-ahb.md)
   - [HIAL/VIAL Verification Architecture](16d-hial-vial-verification-architecture.md)

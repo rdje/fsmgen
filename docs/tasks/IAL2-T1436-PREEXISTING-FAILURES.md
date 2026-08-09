@@ -6,7 +6,7 @@
 - Status: `proposed` (needs director prioritization; not PNT-eligible until then)
 - Roadmap lane: `infra / test + HDL-quality hygiene`
 - Created: `2026-07-12`
-- Last updated: `2026-07-12`
+- Last updated: `2026-08-09`
 - Owner: repo-local workflow
 
 ## Origin — discovered while verifying `IAL2-AXI-MANAGER-INITIATOR-FRONTIER.4`
@@ -29,13 +29,20 @@ targeted tests), which is likely why these drifted undetected.
 
 - `t/1436-ial2-ppif-parser-cli.t` (subtest "PPIF adapter rejects malformed APB
   requester-transfer source shapes", the "apb profile rejects valid-ready object
-  diagnostic is targeted" case, ~line 3686) asserts the APB cardinality error via
-  a regex that ends `... or the explicit one-requester/one-completer/one-composition shape in this slice`.
-- The actual message (`perl/FSM/Adapter/IAL2/PPIF.pm:459`, and the `.apb` variant
-  at `:245`) was extended to `... the explicit one-requester/one-completer/one-composition shape, or the selected one-requester/multi-peripheral APB composition shape in this slice`.
+  diagnostic is targeted" case) asserts the APB cardinality error via a regex
+  at current line `3677` that ends `... or the explicit
+  one-requester/one-completer/one-composition shape in this slice`.
+- The actual message (`perl/FSM/Adapter/IAL2/PPIF.pm:702`, and the `.apb` variant
+  at `:275` on `2026-08-09`) was extended to `... the explicit
+  one-requester/one-completer/one-composition shape, or the selected
+  one-requester/multi-peripheral APB composition shape in this slice`.
 - The test regex was not updated when the message gained the multi-peripheral
   clause. **Fix:** update the expected regex to match the current message (trivial,
   test-only).
+- Exact provenance: commit `73013cb4f` shipped multi-peripheral decode and
+  changed both product diagnostics. The current `t/1436` case at line `3677`
+  retains the earlier expectation. This is expectation drift, not a product
+  diagnostic regression.
 
 ### Finding 2 — `WIDTHTRUNC` verilator lint in generated capacity/status SV (HDL-quality)
 
@@ -46,9 +53,26 @@ targeted tests), which is likely why these drifted undetected.
   `axi0_capacity_status`, from `perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm`).
 - Cause: `%Warning-WIDTHTRUNC ... Logical operator LOGNOT expects 1 bit on the LHS,
   but LHS's VARREF 'concatenation_expr_plus_concatenation_expr' generates 3 bits`
-  (`assign ..._eq_const_0 = !concatenation_expr_plus_concatenation_expr;`). The
-  generated equality-to-zero lowering applies `!` to a 3-bit concatenation instead
-  of a reduction/`== 0`.
+  (`assign ..._eq_const_0 = !concatenation_expr_plus_concatenation_expr;`). A
+  paired `..._eq_const_1` assignment also copies the same three-bit expression
+  into a one-bit wire. The generated equality-to-zero/equality-to-one lowering
+  has treated a multi-bit intermediate as Boolean.
+- The exact standalone reproducer is
+  `ppif/axi_manager_capacity_status_write_multi_group_same_id_queue_head_response_demux.ppif`:
+  `./bin/fsmgen --verify-hdl` fails under Verilator `5.046`, while the generated
+  declaration correctly gives the intermediate width `[2:0]`.
+- Root-cause locus: `perl/FSM/HDL/ASTFactorization.pm` seeds every factored
+  intermediate with `width => 1`; then
+  `perl/FSM/Synthesis/EnableGraph/ASTSupport.pm::_simplify_truthiness_comparison`
+  consults that stale width through `_node_is_booleanish` and rewrites `x == 0`
+  to `!x` or `x == 1` to `x`. The later SystemVerilog
+  `IntermediateSignalWidthSupport` correctly infers the declaration width, but
+  it runs too late to recover the removed comparison. The default-width seed
+  dates to `57563dcaa4`; the truthiness rewrite was introduced by `425f03d1b`.
+- The same mechanism reproduces across write/read multi-group, multi-depth-3,
+  mixed-depth response-demux, and read-data queue-head fixtures observed in the
+  `2026-08-09` run; this is one shared lowering defect, not several fixture
+  defects.
 - This is the same width-lint class the AW-driver ISF investigation flagged as
   pre-existing in some shipped generators. **Fix:** a real generator/lowering fix
   (emit `(… == 0)` or a reduction) — larger than a test edit; needs an owner.
@@ -62,9 +86,12 @@ targeted tests), which is likely why these drifted undetected.
 ## Acceptance Criteria (when activated)
 
 - Finding 1: update the `t/1436` APB diagnostic regex; the subtest passes.
-- Finding 2: correct the capacity/status equality-to-zero lowering so
-  `--verify-hdl` passes verilator lint for the affected source(s); add/keep a
-  guarding assertion; no behavior regression.
+- Finding 2: make truthiness simplification consume authoritative intermediate
+  width or fail closed when that width is unresolved. Preserve multi-bit
+  comparisons/reductions so `x == 0` and `x == 1` cannot become `!x` and `x` for
+  a multi-bit factored expression. Add a focused lowering regression covering
+  both constants and prove `--verify-hdl` with Verilator and Yosys on the exact
+  reproducer plus representative read/write multi-group and mixed-depth sources.
 - Re-run `t/1436` (under resource-aware conditions) to green; record which other
   sources shared the width-lint pattern.
 
@@ -73,7 +100,21 @@ targeted tests), which is likely why these drifted undetected.
 - ID: `IAL2-T1436-PREEXISTING-FAILURES`
   Status: `proposed`
   Goal: `Fix the two pre-existing t/1436 failures discovered during the AW-driver slice: (1) the stale APB cardinality diagnostic regex, and (2) the WIDTHTRUNC verilator lint in the generated capacity/status equality-to-zero lowering.`
-  Children: `(none yet — split into a test-fix leaf and a generator-lowering leaf when activated)`
+  Children: `IAL2-T1436-PREEXISTING-FAILURES.1, IAL2-T1436-PREEXISTING-FAILURES.2`
+
+- ID: `IAL2-T1436-PREEXISTING-FAILURES.1`
+  Status: `pending`
+  Goal: `Align the stale APB cardinality diagnostic expectation with the shipped multi-peripheral diagnostic.`
+  Acceptance: `Update only the obsolete t/1436 expectation after proving the shipped diagnostic and its provenance; run the focused APB subtest or t/1436 and the directly relevant APB tests.`
+  Verification: `pending activation`
+  Commit: `pending activation`
+
+- ID: `IAL2-T1436-PREEXISTING-FAILURES.2`
+  Status: `pending`
+  Goal: `Prevent multi-bit factored intermediates from being simplified as Boolean before authoritative width inference.`
+  Acceptance: `Add a focused x==0/x==1 multi-bit intermediate regression; repair the width/simplification ordering or fail-closed classifier; prove the exact queue-head response-demux reproducer and representative read/write affected shapes with Verilator and Yosys; run t/1436 to green without weakening lint.`
+  Verification: `pending activation`
+  Commit: `pending activation`
 
 ## Notes
 

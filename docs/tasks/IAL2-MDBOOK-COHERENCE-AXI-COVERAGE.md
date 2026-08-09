@@ -174,11 +174,11 @@ what is actually shipped, matching the thoroughness AHB already has.
   Blocked by: `none`
 
 - ID: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Add the AXI manager-capacity/status subchapter and document its foundational source model.`
   Acceptance: `Create docs/book/src/16aa-ial2-axi-manager-capacity-status.md and link it after 16a in SUMMARY.md. Explain the 140-source family as composable bounded fixtures, then document full runnable source shapes for capacity/status, id-families, transactions, event dispatch, auto-ID lifecycle, and static/auto/dynamic ID modes with report/artifact expectations and explicit residue. Preserve 16a as the mode/initiator entrypoint and do not add IAL2 content to 13k.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Added the dedicated 361-line 16aa reference and linked it from SUMMARY plus 16a. It documents the six-source progression, full base source, exact additive clauses, 44/44/46/72/142/44 signal results, static/auto/dynamic ownership, Boolean event fan-in, first-free auto-ID lifecycle, report/artifact views, 140-source family counts, and explicit bounded residue without changing product behavior or 13k. All six sources pass strict check JSON and --verify-hdl with Verilator/Yosys; the lifecycle outdir probe produced exactly axi0_capacity_status.isf/.fsm under the repository-local task path, which was removed. A locality-correct focused t1438 metadata-only run plus full t248 passes Files=2, Tests=7098. The broader t1436 attempt reproduced two pre-existing failures—stale APB diagnostic expectation and multi-bit intermediate truthiness WIDTHTRUNC—whose exact provenance and repair leaves are updated in proposed IAL2-T1436-PREEXISTING-FAILURES; it is not acceptance evidence for this doc-only slice. mdBook and Knowledge Map generation/check pass; the final doctrine result is recorded in the acceptance checklist below.`
+  Commit: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.3: document AXI manager foundations`
   Blocked by: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.2`
 
 - ID: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.4`
@@ -209,7 +209,7 @@ what is actually shipped, matching the thoroughness AHB already has.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.3` | `pending` | Add the dedicated manager-capacity/status reference on top of the corrected architecture and AXI entrypoint. |
+| 1 | `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.4` | `pending` | Extend the new foundation reference with same-ID ordering, mixed populations, and response-demultiplexing semantics. |
 
 ## Decisions
 
@@ -235,6 +235,35 @@ what is actually shipped, matching the thoroughness AHB already has.
 - `NEXSIM-REQUIREMENTS-HEADING-NUMBERING-REPAIR` now tracks the deterministic
   one-section lag in subsections below top-level sections 36 through 42 of
   `docs/NEXSIM_API_MCP_AGENT_CONSUMER_REQUIREMENTS.md`.
+- `IAL2-T1436-PREEXISTING-FAILURES.1` now owns the stale APB cardinality
+  diagnostic expectation, with product-message provenance at `73013cb4f`.
+  `.2` owns the multi-bit intermediate truthiness defect: factorization's
+  provisional one-bit width reaches simplification before the SystemVerilog
+  backend infers the correct width. Both defects predate and are outside this
+  documentation-only tree.
+
+## Acceptance Checklist (enforced) — `.3` maintained-reference authority
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The `.1` census found only `4/140` manager
+  sources named in the AXI entrypoint despite a 140-source composable shipped
+  family. `--emit-schedule-json` on the six selected foundation sources exposes
+  their shared capacity-status shell, progressive identity/transaction clauses,
+  generated-behavior boundary, and residue. The committed `.2` mdBook baseline
+  is 52 files / 48,573 lines / 2,572,792 bytes; the dedicated bounded
+  subchapter is the selected placement rather than expanding 16a or the
+  IAL1-only feature matrix.
+- [x] **ADDRESSED (verified)** — Authority
+  `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.3-BOOK-SYNC` records that exact baseline
+  and the measured +1 file / +369 lines / +16,309 bytes. SUMMARY and 16a link
+  the new 16aa chapter; its six checked-in foundation sources all pass strict
+  check JSON and Verilator/Yosys `--verify-hdl`.
+- [x] **NO REGRESSION** — Repository-local filtered `t/1438` plus full `t/248`
+  report `All tests successful`, `Files=2, Tests=7098`; mdBook generation and
+  Knowledge Map generation/check pass. The unrelated broad `t/1436` failures
+  are root-caused and durably owned by `IAL2-T1436-PREEXISTING-FAILURES.1/.2`;
+  no implementation, test, public PPIF, or generated product artifact changed.
+  The staged doctrine gate must report `[doctrine] all doctrine checks passed`
+  before commit.
 
 ## Acceptance Checklist (enforced) — `.2` maintained-reference authority
 
