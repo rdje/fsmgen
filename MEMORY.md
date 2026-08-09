@@ -5,21 +5,21 @@ history; this file carries only the current bounded resume state.
 
 ## Resume
 
-- latest_commit: this commit (`SUPPORTED-SMOKE-PPIF-PIPELINE-CLI-ORACLE-SPLIT.1.2.3: close complete resumable matrix`).
-- active_work_unit: none; the supported-smoke PPIF pipeline/CLI oracle-split tree is complete.
-- current_state: exact-revision checkpointing at `c990583ac` preserved all
-  progress across four RAM-guard interruptions and the final guarded t296
-  parent passed all 762 batches (`Files=1, Tests=10`, `Result: PASS`). The
-  checkpoint auto-cleared, exact run-owned scratch paths are absent, and no
-  coverage or resource cutoff was weakened.
-- next_action: from the clean tree, add and activate the smallest honest
-  `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` leaf for derived-state containment;
-  use `docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md` as the canonical
-  downstream entry point and read PGEN's `docs/DERIVED_STATE_CONTAINMENT.md`
-  read-only as the proposed source before changing the doctrine.
-- in_flight_uncommitted: none after this commit; no background job or build residue.
-- blockers: none for supported-smoke. Containment `.26`, HIAL/VIAL provider
-  qualification, and NEXSIM external evidence remain independent.
+- latest_commit: this commit (`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.28: activate derived-state containment`).
+- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.28` is active.
+- current_state: the complete supported-smoke matrix is durable at
+  `b8df21eda`; the clean tree now owns derived-state containment separately
+  from deferred legacy inventory `.26`. The adoption guide is explicitly the
+  canonical downstream entry point for every portable doctrine update.
+- next_action: read PGEN's `docs/DERIVED_STATE_CONTAINMENT.md` read-only,
+  reconcile each proposal against FSMGen doctrine and live surfaces, then
+  implement the neutral rule, focused fail-closed checks, local audit, and
+  doctrine/guide/mdBook/decision/fact synchronization under `.28`.
+- in_flight_uncommitted: only `.28` activation continuity before its commit;
+  no background job or build residue.
+- blockers: none for `.28`; containment `.12` still waits on director-deferred
+  `.26`, while HIAL/VIAL provider qualification and NEXSIM external evidence
+  remain independent.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not

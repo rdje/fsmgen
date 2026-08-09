@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `infra/continuity / project-wide live-document lifecycle`
 - Created: `2026-07-31`
-- Last updated: `2026-08-08`
+- Last updated: `2026-08-09`
 - Owner: repo-local workflow
 - Selected by: `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.2`
 
@@ -51,7 +51,7 @@ no routed destination becomes the next uninstrumented blob.
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION`
   Status: `active`
   Goal: `Bound all live document families over durable, addressable storage.`
-  Children: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.12, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.26, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.27`
+  Children: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.12, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.26, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.27, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.28`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1`
   Status: `done`
@@ -260,6 +260,14 @@ no routed destination becomes the next uninstrumented blob.
   Commit: `this commit`
   Blocked by: `none`
 
+- ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.28`
+  Status: `active`
+  Goal: `Integrate portable derived-state containment and make the adoption guide the complete downstream entry point for doctrine evolution.`
+  Acceptance: `Reconcile PGEN's docs/DERIVED_STATE_CONTAINMENT.md as read-only external input against current FSMGen doctrine; define when a value must be computed from authoritative state instead of hand-maintained, the narrow evidence/snapshot exceptions, and the authority/freshness/recomputation contract; add fail-closed mechanical detection for declared derived values without imposing project-specific field names in the neutral package; audit FSMGen live surfaces and migrate or explicitly justify any affected field; update LIVE_DOCUMENT_SIZE_CONTAINMENT.md, its checker contract and focused fixtures, local enforcement/data, the canonical docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md, its single-source mdBook rendering, task/decision/fact/Memory layers, and all applicable checks in one slice. The adoption guide must summarize and route every portable doctrine addition so it remains the one document downstream projects receive. No lifecycle, threshold, retained history, compiler/runtime behavior, or generated product artifact changes without separate explicit ownership.`
+  Verification: `Clean predecessor b8df21eda; this documentation-only activation changes only task-tree ownership, the active index frontier, and bounded Memory continuity. Doctrine text, guide text, checker/schema/fixtures, thresholds, lifecycles, retained history, product behavior, and generated product artifacts remain unchanged. The staged doctrine gate passes before commit.`
+  Commit: `this commit (activation)`
+  Blocked by: `none`
+
 ## Decisions
 
 - `2026-07-31`: Use the project-neutral, project-agnostic, harness-neutral
@@ -272,6 +280,12 @@ no routed destination becomes the next uninstrumented blob.
   classifies it in the complete focused index, renders it from one canonical
   source in the mdBook, and uses one exact file-count expansion authority.
   `.26` remains deferred and `.12` again waits only on `.26`.
+- `2026-08-09`: The director identifies PGEN's
+  `docs/DERIVED_STATE_CONTAINMENT.md` as the corrected external proposal and
+  requires the adoption guide to remain the main downstream entry for every
+  future containment-doctrine update. `.28` owns evidence-backed integration,
+  checker coverage, local audit, and same-slice guide/book synchronization;
+  it neither activates nor pre-decides deferred `.26`.
 - `2026-07-31`: Preserve directly browsable user reference in semantic shards,
   but move rarely read exact chronology out of the working set only after
   digest-verified version retrieval exists.
@@ -524,6 +538,8 @@ no routed destination becomes the next uninstrumented blob.
 
 ## Blockers
 
+- None for active `.28`. Pending `.12` still waits on director-deferred `.26`;
+  derived-state work does not activate or pre-decide that inventory.
 - None for completed `.27`. Pending `.12` still waits on director-deferred
   `.26`; the guide does not activate or pre-decide that inventory.
 
@@ -858,9 +874,14 @@ no routed destination becomes the next uninstrumented blob.
 | `.13` focused-document containment | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13: bound focused document collections` | Classify every focused/ancillary member, generate its complete bounded index, and re-form three exact ISF contracts as bounded stable-topic maintained references. |
 | `.27` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.27: activate portable adoption guide` | Activate only the director-requested forwardable guide leaf; no guide, registry, doctrine, threshold, lifecycle, migration, or product behavior changes yet. |
 | `.27` portable adoption guide | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.27: publish portable adoption guide` | Publish the canonical forwardable bridge, exact one-file ceiling authority, complete focused classification, and single-source mdBook rendering. |
+| `.28` activation | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.28: activate derived-state containment` | Activate only portable derived-state containment and canonical-guide synchronization from clean commit `b8df21eda`; the external proposal remains unread and implementation remains pending. |
 
 ## Changelog
 
+- `2026-08-09`: Clean supported-smoke closeout commit `b8df21eda` activates
+  `.28` alone for evidence-backed derived-state containment and same-slice
+  canonical adoption-guide synchronization. Doctrine, guide, enforcement,
+  thresholds, lifecycle, retained history, and product behavior remain pending.
 - `2026-08-08`: `.27` publishes the forwardable memory-to-containment adoption
   bridge, decision 0053, complete focused classification, and canonical mdBook
   rendering. One exact focused file-count expansion is authorized; all other
