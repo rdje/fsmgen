@@ -1291,7 +1291,7 @@ _AXI manager capacity/status in-process generator first slice_
 
 _AXI manager capacity/status public PPIF first slice shipped_
 
-- **date:** 2026-06-12 · **status:** current
+- **date:** 2026-08-10 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-axi-manager-capacity-status-ppif-first-slice.md`](../../docs/knowledge/ial2-axi-manager-capacity-status-ppif-first-slice.md)
 
 ### ial2-axi-manager-capacity-status-ppif-syntax-selection

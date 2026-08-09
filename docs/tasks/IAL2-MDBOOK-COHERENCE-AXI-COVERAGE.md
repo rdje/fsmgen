@@ -182,11 +182,11 @@ what is actually shipped, matching the thoroughness AHB already has.
   Blocked by: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.2`
 
 - ID: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Document AXI same-ID ordering, mixed populations, and response demultiplexing.`
   Acceptance: `Extend 16aa with concrete/dynamic same-ID reject and issue-order-queue policy shapes, queue-head semantics, bounded depth/cardinality, mixed dynamic/static populations, write BID/read RID response-demux, generated completion, and representative runnable write/read sources. Clearly distinguish fixture combinations from independent language features and state scoreboard/interleaving residue without implying full AXI manager behavior.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Extended 16aa by 196 lines / 8,731 bytes with exact policy-only versus generated-behavior boundaries, admitted-request and queue-head semantics, completion ownership, a runnable concrete multi-group BID/RID pair with measured queue/demux counts, the generated mixed dynamic/static write issue-order queue, bounded population/cardinality tables, and explicit scoreboard/interleaving/full-manager residue. All seven documented policy/behavior sources pass strict check JSON and Verilator/Yosys --verify-hdl; their schedule reports confirm the stated enforcement modes, queue depths, storage/rule/assertion counts, and completion semantics. mdbook build passes and its repository-local output was removed. The RAM-guarded t1437/t1438/t248 attempt and reduced t1438/t248 attempt were safely terminated at the 88% host-memory cutoff (88.5% and 88.0% respectively), so neither is claimed as pass evidence; a process census found no residual test process. Knowledge Map generation/check and the staged doctrine gate pass as recorded below. No code, test, PPIF, or generated product artifact changed.`
+  Commit: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.4: document AXI ordering and response demux`
   Blocked by: `none`
 
 - ID: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.5`
@@ -209,7 +209,7 @@ what is actually shipped, matching the thoroughness AHB already has.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.4` | `pending` | The separately owned width repair is complete; document same-ID ordering, mixed populations, and response demultiplexing next. |
+| 1 | `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.5` | `pending` | Build on the documented response-routing boundary with read-data, burst-length, RLAST validation, and bounded output-bank semantics. |
 
 ## Decisions
 
@@ -228,6 +228,10 @@ what is actually shipped, matching the thoroughness AHB already has.
 - `2026-08-09`: Document independent feature semantics in full, but document
   the combinatorial fixture matrix through representative sources. Ten selected
   sources span every current family and all passed strict check JSON.
+- `2026-08-10`: Policy acceptance is not a uniform generated-behavior claim.
+  Document concrete reject as static validation, dynamic reject and policy-only
+  dynamic queueing as selected-not-generated, and queue behavior only through
+  exact bounded response-demux fixtures whose schedule reports mark it generated.
 
 ## Findings Routed Outside This Tree
 
@@ -244,6 +248,29 @@ what is actually shipped, matching the thoroughness AHB already has.
   provisional one-bit width reaches simplification before the SystemVerilog
   backend infers the correct width. Both defects predate and are outside this
   documentation-only tree.
+
+## Acceptance Checklist (enforced) — `.4` maintained-reference authority
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The `.1` census measured an undocumented
+  same-ID/mixed/response-demux family, while fresh `--emit-schedule-json`
+  evidence distinguishes policy-only selection from generated queue behavior
+  and exposes the exact queue, routing, completion, cardinality, and residue
+  boundaries. The committed `.3` mdBook baseline is 53 files / 48,942 lines /
+  2,589,101 bytes; `git show HEAD:docs/book/src/16aa-ial2-axi-manager-capacity-status.md
+  | wc -l -c` measures its prior 361 lines / 15,851 bytes.
+- [x] **ADDRESSED (verified)** — Authority
+  `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.4-BOOK-SYNC` records the exact baseline
+  and measured +0 files / +196 lines / +8,731 bytes. The chapter now separates
+  accepted policy syntax from generated enforcement and documents runnable
+  concrete write/read plus mixed dynamic/static behavior without implying a
+  general scoreboard, arbitrary interleaver, or complete AXI manager.
+- [x] **NO REGRESSION** — Seven exact sources pass strict check JSON,
+  `verilator_lint`, and `yosys_synthesis`; `mdbook build docs/book` passes and
+  its output is removed. The two RAM-guarded broader attempts stopped safely at
+  the declared host-memory cutoff and are not pass evidence. Knowledge Map
+  validation reports `knowledge-map: OK`; the staged doctrine gate must report
+  `[doctrine] all doctrine checks passed` before commit. No implementation,
+  public PPIF, test, or generated product artifact changed.
 
 ## Acceptance Checklist (enforced) — `.3` maintained-reference authority
 

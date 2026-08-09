@@ -8,7 +8,7 @@ answers:
   - "does AXI manager capacity/status .ppif preserve public source identity?"
   - "what remains out of scope after the capacity/status PPIF first slice?"
   - "where is the AXI manager capacity status family documented?"
-date: 2026-06-12
+date: 2026-08-10
 status: current
 tags: [ial2, ppif, axi, manager, capacity, status, cli, semantic-json]
 evidence: docs/AXI_IAL2_MANAGER_CAPACITY_STATUS_PPIF_FIRST_SLICE.md; docs/book/src/16aa-ial2-axi-manager-capacity-status.md; ppif/axi_manager_capacity_status.ppif; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/Support/RegressionCorpus.pm; t/1436-ial2-ppif-parser-cli.t; docs/tasks/IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.md
@@ -28,13 +28,12 @@ reviewable: the adapter maps the PPIF object to
 then emits the `axi0_capacity_status` SystemVerilog module from the generated
 `.fsm`.
 
-`docs/book/src/16aa-ial2-axi-manager-capacity-status.md` is the user-facing
-reference for the 140-source family and its foundational capacity, identity,
-transaction, dispatch, auto-ID, and dynamic-ID shapes.
+`docs/book/src/16aa-ial2-axi-manager-capacity-status.md` documents the 140-source
+family's foundations and bounded same-ID, mixed-ID, and demux contracts.
 
 Support accounting names the sample
 `intent.ppif_axi_manager_capacity_status`; check JSON and normalized semantic
-JSON preserve `source.resolved_path` on the public `.ppif` source. Mixed
-Valid-Ready/manager objects, multiple managers, IDs, ordering, response
-matching, bursts, queued/blocking policy, profile aliases, full AXI manager
-behavior, and VHDL remain future task-tree-owned residue.
+JSON preserve `source.resolved_path` on the public `.ppif` source. The base
+sample selects no ID, ordering, demux, or burst behavior; exact checked-in
+combinations do. Mixed objects, multiple managers, blocking, aliases, general
+scoreboarding, full-manager behavior, and VHDL stay outside its contract.

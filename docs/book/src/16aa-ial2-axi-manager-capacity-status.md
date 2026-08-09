@@ -298,6 +298,201 @@ contracts explicitly. Their behavior comes from those additional clauses.
 The explicit clauses prevent an authoring convenience from silently becoming a
 different hardware ownership model.
 
+## Select a same-ID policy explicitly
+
+Same-ID ordering is a per-direction contract. The policy names both the ID
+ownership model and the permitted reuse behavior:
+
+```text
+(same-id-ordering
+  (read (concrete-id-reuse reject)))
+
+(same-id-ordering
+  (read (dynamic-id-reuse reject)))
+
+(same-id-ordering
+  (read (concrete-id-reuse issue-order-queue)))
+
+(same-id-ordering
+  (read (dynamic-id-reuse issue-order-queue)))
+```
+
+Accepted syntax does not by itself promise generated hardware. The schedule
+report is authoritative for the selected source:
+
+| Policy-only source | Enforcement in that source | Generated queue |
+| --- | --- | --- |
+| `ppif/axi_manager_capacity_status_same_id_reject_policy.ppif` | `static_validation`: duplicate authored concrete IDs fail closed. | No |
+| `ppif/axi_manager_capacity_status_dynamic_same_id_reject_policy.ppif` | `selected_not_generated`: the user-owned runtime ID cannot be rejected by metadata alone. | No |
+| `ppif/axi_manager_capacity_status_same_id_issue_order_queue_policy.ppif` | Generates one capacity-guarded admitted-request pulse, but its single concrete transaction does not reuse an ID. | No |
+| `ppif/axi_manager_capacity_status_dynamic_same_id_issue_order_queue_policy.ppif` | `selected_not_generated` until a supported bounded response-demux shape supplies the runtime matching contract. | No |
+
+The `reject` forms therefore have different proof boundaries. Concrete values
+can be compared while the source is validated. A dynamic value exists only at
+runtime; the policy-only fixture records `request_conflict_policy:
+no_active_same_id`, but reports `enforcement: not_generated`. Integrators must
+not treat that metadata as a generated exclusion circuit.
+
+Likewise, `issue-order-queue` becomes behavior-bearing only for an explicitly
+supported transaction population plus response-demux clause. Policy-only
+metadata does not imply a queue, a scoreboard, or acceptance of duplicate IDs.
+
+## Queue-head ordering and generated completion
+
+For a generated concrete queue-head contract, FSMGen groups transactions by
+their authored concrete ID. An admitted request appends its transaction to that
+ID group's compact one-hot slot queue. A matching response may complete only
+the transaction at the queue head:
+
+```text
+admitted request -> append transaction to its concrete-ID queue
+accepted B + matching BID -> pulse the matching write queue head
+accepted R + matching RID + RLAST -> pulse the matching burst-read queue head
+```
+
+The request boundary is capacity-aware and includes same-cycle completion when
+deciding whether the request set fits. In a multi-group fixture, request events
+are OR-reduced within each concrete-ID group, asserted one-hot-or-zero within
+that group, and counted across groups. Thus ID 3 and ID 5 may each admit one
+request in the same cycle when capacity permits; two transactions in the same
+ID group may not both be admitted in that cycle.
+
+Generated state covers empty enqueue, append, dequeue, and same-cycle
+dequeue/enqueue transitions. Assertions cover compact slots, queue capacity,
+nonempty response/dequeue, unique head matching, and transaction uniqueness.
+This is finite queue-head routing for declared groups, not a general AXI
+scoreboard.
+
+The response clause changes completion ownership:
+
+```text
+(response-demux
+  (write
+    (response-event axi0_write_complete)
+    (transaction-completion generated)))
+
+(response-demux
+  (read
+    (response-event axi0_read_complete)
+    (response-scope burst-last)
+    (last-signal axi0_rlast (width 1))
+    (transaction-completion generated)))
+```
+
+The direction-level response event and `BID`/`RID` remain inputs representing
+an accepted response supplied by the surrounding design. Transaction-local
+completion names become generated pulse outputs. Write demux matches `BID`;
+single-beat read demux matches `RID`; burst-last read demux additionally
+requires `RLAST`. A response-demux-only read source does not capture `RDATA` or
+`RRESP`; read-data capture is a separate explicit contract, not implied here.
+
+## Run the concrete multi-group write/read pair
+
+These two complete sources exercise the same two independent depth-2 groups in
+opposite directions:
+
+| Source | Groups | Generated completion rule |
+| --- | --- | --- |
+| `ppif/axi_manager_capacity_status_write_multi_group_same_id_queue_head_response_demux.ppif` | `w0/w1` use `BID=3`; `w2/w3` use `BID=5`. | Matching `BID` plus that group's queue head. |
+| `ppif/axi_manager_capacity_status_read_multi_group_same_id_queue_head_response_demux.ppif` | `r0/r1` use `RID=3`; `r2/r3` use `RID=5`. | Matching `RID`, asserted `RLAST`, and that group's queue head. |
+
+Both author:
+
+```text
+(same-id-ordering
+  (<direction> (concrete-id-reuse issue-order-queue)))
+(response-demux
+  (<direction>
+    (response-event <accepted-response-event>)
+    ...
+    (transaction-completion generated)))
+```
+
+Their schedule reports make the bounded implementation measurable:
+
+| Report fact | Write pair | Read pair |
+| --- | ---: | ---: |
+| Concrete-ID groups | 2 | 2 |
+| Queue depth per group | 2 | 2 |
+| Admitted-request pulses | 4 | 4 |
+| Queue slot signals | 8 | 8 |
+| Queue update rules | 24 | 24 |
+| Queue assertions | 22 | 24 |
+| Completion outputs / demux rules | 4 / 4 | 4 / 4 |
+| Response-demux assertions | 7 | 7 |
+
+Run the sources from the repository root:
+
+```bash
+for manager_example in \
+  ppif/axi_manager_capacity_status_write_multi_group_same_id_queue_head_response_demux.ppif \
+  ppif/axi_manager_capacity_status_read_multi_group_same_id_queue_head_response_demux.ppif
+do
+  ./bin/fsmgen --quiet --strict --check --json "$manager_example"
+  ./bin/fsmgen --quiet --emit-schedule-json "$manager_example"
+  ./bin/fsmgen --quiet --verify-hdl "$manager_example"
+done
+```
+
+Depth-3, multiple-depth-3, and mixed depth-3/depth-2 checked-in sources extend
+the same finite model. The filename identifies the selected cardinality; it is
+not a request for an arbitrary queue depth.
+
+## Mix dynamic and concrete IDs within a bounded contract
+
+`ppif/axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue.ppif`
+is the compact behavior-bearing mixed example. Its two write transactions and
+additive clauses are:
+
+```text
+(transactions
+  (write w0
+    (tag wr0)
+    (request axi0_w0_request)
+    (completion axi0_w0_complete)
+    (id dynamic))
+  (write w1
+    (tag wr1)
+    (request axi0_w1_request)
+    (completion axi0_w1_complete)
+    (id (value 3))))
+(same-id-ordering
+  (write (dynamic-id-reuse issue-order-queue)))
+(response-demux
+  (write
+    (response-event axi0_write_complete)
+    (transaction-completion generated)))
+```
+
+An admitted `w0` request captures the user-supplied `AWID`; `w1` contributes
+the literal ID 3. The generated depth-2 queue stores both transaction identity
+and the captured-or-static runtime ID. An accepted `BID` completes the earliest
+matching slot, so a dynamic `w0` request using ID 3 is ordered with `w1` rather
+than treated as a distinct population. The report exposes six slot signals, 18
+update rules, 15 queue assertions, two demux rules, two demux assertions, and
+two generated completion outputs. It explicitly reports
+`generated_scoreboard_behavior: false`.
+
+Current public sources intentionally enumerate bounded combinations:
+
+| Population family | Checked-in bounds |
+| --- | --- |
+| Concrete queue-head | Depth 2 or 3; single, multiple independent, and mixed depth-3/depth-2 groups for selected write, read single-beat, and read burst-last shapes. |
+| All-dynamic issue-order queue | Two or three same-direction transactions for selected write `BID`, read single-beat `RID`, and read burst-last `RID/RLAST` shapes. |
+| Mixed dynamic/static issue-order queue | One dynamic plus one concrete transaction for selected write and read shapes. |
+| Mixed dynamic/static response matching | One dynamic plus one, two, or three concrete transactions, and selected two-dynamic-plus-one-concrete shapes. |
+
+These rows describe fixture populations, not four orthogonal language switches.
+Support for one clause in one row does not authorize a new cardinality or a
+different cross-row composition. Use a checked-in source with the desired shape
+and confirm its schedule report; absent combinations fail closed.
+
+The remaining boundary is deliberate: there is no arbitrary transaction
+cardinality, arbitrary-depth per-ID queue, generalized scoreboard policy, or
+general different-ID interleaving beyond the selected auto-ID, dynamic, mixed,
+and concrete queue-head fixtures. This chapter also does not turn the
+capacity/status object into a bus-driving AXI manager.
+
 ## Reports, artifacts, and support identity
 
 The six foundation sources are independently support-accounted:
@@ -331,7 +526,7 @@ select response demultiplexing, 79 select read-data behavior, and 48 select
 burst-length behavior. Those counts describe a composition matrix; they must
 not be added together or interpreted as independent feature totals.
 
-The foundation documented here does not claim:
+This bounded manager family does not claim:
 
 - a bus-driving AXI manager or automatic derivation of submits/completions from
   AW/W/B/AR/R handshakes;
@@ -356,6 +551,7 @@ Parser/CLI, generator, dynamic-ID, and corpus-accounting coverage lives in
 `t/248-regression-corpus-accounting.t`, respectively.
 
 For a bounded review of this chapter, run strict check JSON and `--verify-hdl`
-on all six foundation sources listed at the start, then build the book with
-`mdbook build docs/book`. That bounds the review to the documented public
-shapes.
+on all six foundation sources listed at the start, the four policy-only sources
+in the same-ID table, the mixed dynamic/static write example, and the concrete
+multi-group write/read pair. Then build the book with `mdbook build docs/book`.
+That bounds the review to the documented public shapes.

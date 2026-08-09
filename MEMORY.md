@@ -7,13 +7,14 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.4`.
-- current_state: `IAL2-T1436-PREEXISTING-FAILURES` is complete; factorized
-  widths remain unresolved until inference, normalized widths are published
-  before render, and selected AXI queue-head examples pass both HDL gates.
-- next_action: extend `16aa` with same-ID reject/issue-order policies,
-  queue-head semantics, mixed populations, and representative BID/RID response
-  demultiplexing examples under `.4`.
+- active_work_unit: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.5`.
+- current_state: `.4` documents policy-only versus generated same-ID behavior,
+  concrete queue-head BID/RID routing, mixed dynamic/static queueing, bounded
+  populations, completion ownership, and explicit scoreboard/interleaving
+  residue; its seven public sources pass strict check and both HDL gates.
+- next_action: extend `16aa` with read-data capture, raw-ARLEN burst length,
+  RLAST validation, multi-beat status/output banks, and representative runnable
+  sources under `.5`.
 - in_flight_uncommitted: none; no background job or generated build residue.
 - blockers: none.
 
