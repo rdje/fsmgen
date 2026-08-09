@@ -112,7 +112,7 @@ Completed `.15.5` separately qualifies this exact canonical graph under the
 repository-local GHDL 6.0.0 LLVM-JIT backend: analysis, elaboration, bounded
 execution, timed `0/1/X/Z`, one closed 42-record trace, a passing normalized
 result, deterministic reruns, and nineteen applicable portable-SV parity paths
-pass. `.15.6` is next for exact repository-local OSVVM 2026.05, and `.15.7`
+pass. `.15.6` is active for exact repository-local OSVVM 2026.05, and `.15.7`
 depends on both. Complete VHDL breadth, PSL, methodology support, another
 simulator, mixed-language behavior, general parity, and scale remain unclaimed.
 

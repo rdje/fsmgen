@@ -7,13 +7,13 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`; `.15.5`
-  is complete and `.15.6` is the next proposed frontier.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`; `.15.6`
+  alone is active after completed exact-GHDL predecessor `.15.5`.
 - current_state: the director deferred NEXSIM-dependent `.13.3` and the
   NEXSIM consumer-amendment tree; exact repository-local GHDL 6.0.0 LLVM-JIT
   qualification now passes analysis through bounded applicable parity.
-- next_action: after the clean `.15.5` commit, activate `.15.6` alone and
-  materialize/verify exact recursive OSVVM 2026.05 under repository storage.
+- next_action: materialize and verify exact recursive OSVVM 2026.05 under
+  repository storage, then implement its bounded adapter/gallery emission.
 - in_flight_uncommitted: none; no background job or build residue.
 - blockers: containment `.12` and IAL2 eligibility remain unavailable;
   NEXSIM-dependent work is director-deferred; `.15.6` OSVVM emission and

@@ -332,7 +332,7 @@ reaches a Verilator internal fault/139. `UVM_NO_DPI` is experiment-wide.
 Fixture runtime/results/parity/four-state/full breadth remain unexercised, so
 the byte-checked report is `partial_tool_limited`, `product_support=false`.
 `.13.3` is director-deferred. Completed `.15.5` owns the exact GHDL 6.0.0
-LLVM-JIT proof; `.15.6` is next for OSVVM 2026.05 materialization/emission.
+LLVM-JIT proof; `.15.6` is active for OSVVM 2026.05 materialization/emission.
 
 Completed `.15.1-.15.5` ship and qualify the private provider-free VHDL
 profile. Its 17 artifacts retain six sources, 59 maps, 20 checks, exact HIAL

@@ -352,11 +352,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.5: qualify exact GHDL 6.0.0`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.6`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the exact OSVVM 2026.05 advanced-methodology adapter and deterministic provider-dependent gallery.`
   Acceptance: `The recursive OSVVM release, every gitlink, license, and notice are verified under a repository-derived dependency root before provider-dependent work. Exact negotiated advanced randomization, coverage, scoreboard, reporting, synchronization, data-structure, and verification-component mappings emit behind a versioned adapter/profile with complete source maps and static negatives; portable pre-resolved randomness, phase order, comparison/coverage meaning, trace, and normalized results remain unchanged; no provider presence or structural evidence becomes a compile/runtime claim.`
-  Verification: `pending .15.4 and exact repository-local OSVVM 2026.05 materialization`
-  Commit: `pending`
+  Verification: `Clean exact-GHDL predecessor a0e7149d5757b2bfa232bc2abcf9a06bfadd96a5 permits .15.6 to activate alone. Exact recursive OSVVM 2026.05 materialization, identities/licenses/notices, adapter emission, gallery, and static negatives remain pending implementation; activation changes no provider bytes, source, artifact, capability, runtime, result, or support behavior.`
+  Commit: `pending activation commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.7`
   Status: `proposed`
@@ -481,9 +481,10 @@ Completed `.15.5` repository-locally materializes and qualifies the exact
 official macOS ARM64 GHDL 6.0.0 LLVM-JIT profile. Analysis, elaboration,
 bounded runtime, timed four-state behavior, a closed normalized result,
 deterministic rerun, applicable portable-SV parity, resource controls, and
-exact same-volume cleanup pass. `.15.6` is the next cleanly activatable leaf
-for OSVVM 2026.05 materialization and emission; `.15.7` remains proposed
-behind both completed inputs.
+exact same-volume cleanup pass. Clean predecessor `a0e7149d5` activates `.15.6`
+alone for OSVVM 2026.05 materialization and advanced-methodology
+adapter/gallery emission; `.15.7` remains proposed behind both completed
+inputs.
 
 ## Decisions
 
@@ -791,9 +792,10 @@ behind both completed inputs.
   roadmap prerequisite, and Verilator/Icarus cannot be promoted from
   experimental evidence to `sv_uvm_qualified`.
 - No availability blocker remains for `.15.5`; it is complete. No external
-  prerequisite is currently missing for `.15.6`: exact OSVVM 2026.05
-  materialization is implementation work that starts only after this `.15.5`
-  tree is committed cleanly. `.15.7` then depends on both exact inputs.
+  prerequisite is currently missing for active `.15.6`: exact OSVVM 2026.05
+  recursive materialization, identity/licence/notice verification, adapter,
+  gallery, and static negatives are the current implementation work. `.15.7`
+  then depends on both exact inputs.
 - Later UVM, VHDL, and mixed-language implementation/qualification leaves
   retain explicit tool availability prerequisites and cannot borrow the
   current Verilator result.
@@ -858,6 +860,7 @@ behind both completed inputs.
 | `2026-08-02` | `.15.4` implementation | revision-4 review-closure/emitter/support/corpus syntax; 24-row selected matrix with public/compiler/bridge/private-preview partition and four exact unsupported reasons; seven-stage repository-relative review/durable-defect workflow; exact inert-legacy bytes/schema and HIAL byte/separation proof; seven closure invariants and fail-closed mutations; 17-artifact checked gallery; focused/impacted VIAL/support/capability suite; task/live/Knowledge Map/Memory; mdBook test/build/rendered structure; staged acceptance/doctrines; artifact census and exact cleanup | `passed`; the guarded impacted suite reports `All tests successful` at Files=13/Tests=7,172; ten changed Perl/script/test paths report `syntax OK`; the gallery checker reports six VHDL sources/11 evidence artifacts/59 maps/20 static checks/24 mappings/seven closure checks. The inert legacy fixture remains 976 bytes with exact package SHA-256 `8d587b8dde4b7659290af6720ed4812079f36479d577dd5a0cf787bef2a22d4f` and path-independent manifest-projection SHA-256 `29789c0b4b7400de45eec2ac1f62178d2e555f9c3d64ad871a1d87c5d39c5835`; HIAL DUT bytes match the private handoff. All 50 chapters test and the repository-local build contains 86 files/17,845,293 bytes; the changed chapter renders 213 paragraphs/11 tables/41 code blocks with the matrix, rejection, workflow, and migration sections present before exact removal. Task integrity remains four trees/917 nodes/one segment/one index archive; Knowledge Map is current at 1,105 facts/5,687 questions/5,853 occurrences/118 shards; Memory is 45 lines; all live surfaces and the final staged acceptance/nine doctrines pass with zero ceiling increases. No exact VHDL analyzer or provider is local, and no `.bin`/`.log`, legacy-proof output, mdBook build, or VIAL staging residue remains; visual review and analysis through support stay pending or unclaimed. |
 | `2026-08-09` | `.15.5` activation and NEXSIM deferral | director priority; official GHDL v6.0.0 release metadata and macOS ARM64 package digest; task/index/audit/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook test; diff/staged-doctrine gates | `passed`; NEXSIM-dependent `.13.3` and the separate amendment tree are deferred, exact GHDL asset `ghdl-llvm-6.0.0-macos15-aarch64.tar.gz` is available at 42,445,801 bytes with SHA-256 `69beb5913a490b5971980bd045af6a63b6f52e861b444fa990bffac436587478`, `.15.5` alone becomes active, task integrity reports three active trees/916 nodes, Knowledge Map remains 1,105 facts/5,706 questions/5,872 occurrences/118 shards, all 52 mdBook chapters test, Memory is 40 lines, and final staged doctrines pass; no provider bytes are installed and no product behavior or support claim changes. |
 | `2026-08-09` | `.15.5` exact GHDL qualification | exact repository-local GHDL 6.0.0 LLVM-JIT archive/binary identities; provider-free source repairs; ordered `--std=08` analysis/elaboration/run; 42-record trace/result validation; timed `0/1/X/Z` probe; deterministic reruns; 19-path portable-SV parity; resource guard; exact cleanup; support/capability/gallery/docs/task/Knowledge Map/Memory/staged-doctrine gates | `passed`; canonical report `vial/qualification/vhdl_portable_ghdl/ghdl-6.0.0-qualification.json` is qualified, while the exact LLVM AOT external-name runtime failure and every broader language/provider/tool/profile non-claim remain explicit; `.15.6` is next after the clean commit. |
+| `2026-08-09` | `.15.6` activation | clean exact-GHDL predecessor `a0e7149d5`; task/index/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook test; live-reference authority; diff/staged-doctrine gates | `passed`; `.15.6` alone is active for exact recursive OSVVM 2026.05 materialization and adapter/gallery emission, `.15.7` remains proposed, task integrity reports three active trees/916 nodes, Knowledge Map reports 1,105 facts/5,709 questions/5,875 occurrences/118 shards, all 52 mdBook chapters test, and the exact maintained-reference delta is 0 files/0 lines/+4 bytes; no provider bytes, source, generated artifact, capability, runtime, result, or support behavior changes. |
 
 ## Acceptance Checklist (enforced) — `.15.5` activation and NEXSIM deferral
 
@@ -2388,3 +2391,22 @@ behind both completed inputs.
   active trees/916 nodes; all 52 mdBook chapters test and the 87-file
   repository-local build passes before exact removal. The final staged
   doctrine result is recorded by the commit workflow.
+
+## Acceptance Checklist (enforced) — `.15.6` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'pending .15.4 and exact
+  repository-local OSVVM 2026.05 materialization' --
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md` locates the
+  proposed-only predecessor: completed exact-GHDL `.15.5` left `.15.6` as the
+  next clean frontier, so provider materialization could not begin until this
+  task/index/book/fact/Memory activation slice made `.15.6` the sole owner.
+- [x] **ADDRESSED (verified)** — `.15.6` alone is active for exact recursive
+  OSVVM 2026.05 materialization plus bounded adapter/gallery emission;
+  `.15.7` remains proposed for combined execution, and this continuity-only
+  commit changes no provider bytes, source, generated artifact, capability,
+  runtime result, or support behavior.
+- [x] **NO REGRESSION** — `knowledge-map: OK` reports 1,105 facts, 5,709
+  unique questions, 5,875 occurrences, and 118 shards; task integrity reports
+  three active trees/916 nodes; all 52 mdBook chapters test; maintained-
+  reference authority accepts the exact 0-file/0-line/+4-byte book delta; and
+  the final staged driver reports `[doctrine] all doctrine checks passed`.

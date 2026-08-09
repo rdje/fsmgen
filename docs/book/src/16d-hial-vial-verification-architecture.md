@@ -44,7 +44,7 @@ and a declared-probe adapter. Completed `.15.3` adds bounded scoreboards,
 coverage counters, substitution faults, procedural checks, diagnostics,
 closed trace framing, and normalized-result projection. Completed `.15.4`
 closes the portable review matrix. Completed `.15.5` qualifies the available
-exact official macOS ARM64 GHDL 6.0.0 LLVM-JIT package. `.15.6` is next for repository-local OSVVM
+exact official macOS ARM64 GHDL 6.0.0 LLVM-JIT package. `.15.6` is active for repository-local OSVVM
 2026.05 materialization/emission, and `.15.7` depends on both. NEXSIM-dependent
 runtime qualification is director-deferred until capability-ready releases
 provide exact evidence.
