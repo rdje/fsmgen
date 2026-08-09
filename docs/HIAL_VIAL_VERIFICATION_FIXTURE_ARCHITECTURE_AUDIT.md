@@ -312,7 +312,7 @@ fixture supplies paired implementations and a shared logical outcome oracle.
 | `sv_uvm_experimental.<tool-and-version>` | same native artifacts under an incomplete open-source tool | exact tool/version and exercised probe matrix | experimental evidence only; cannot qualify product runtime |
 | `sv_uvm_qualified` | executable native SystemVerilog/UVM components, sequences, monitors, scoreboards, subscribers/coverage | exact PGEN parser + NEXSIM simulator tuple, handoff, UVM revision, parse/compile/elaborate/simulate/result gates | unavailable until capability-qualified releases exist; no invented version |
 | `vhdl_portable_ghdl` | Provider-free VHDL-2008 packages, scheduler, adapters, testbench, closed trace/result | exact GHDL 6.0.0 LLVM-JIT, `--std=08`, analyze/elaborate/run/result/parity, exercised capability list | bounded canonical fixture qualified; GHDL's VHDL/PSL implementation is explicitly partial and LLVM AOT is not inferred |
-| `vhdl_osvvm_qualified` | Same VIAL semantics plus negotiated advanced OSVVM services | exact OSVVM 2026.05 recursive identity plus GHDL 6.0.0 and provider adapter/result gates | selected next but not materialized/implemented; provider presence alone is not capability |
+| `vhdl_osvvm_qualified` | Same VIAL semantics plus negotiated advanced OSVVM services | exact OSVVM 2026.05 recursive identity plus GHDL 6.0.0 and provider adapter/result gates | provider recursively materialized and adapter structurally reviewed; combined execution/result qualification remains not run, and provider presence alone is not capability |
 | `vhdl_*_qualified.<tool-id>` | Portable or OSVVM graph under another VHDL simulator | exact tool/version/build, standard/options, provider where applicable, compile/elaborate/run/result/parity | no broader simulator is inferred from GHDL evidence |
 | `mixed_language_qualified` | HIAL and VIAL in different HDLs | named mixed-language tool/version, binding adapter, compile/elaborate/run | never inferred from single-language success |
 
@@ -1352,9 +1352,12 @@ not inferred because its external-name adapter fails at runtime.
 `2f7c391051dfb11890fa4bdbda9918d1db492250` for negotiated advanced
 randomization, coverage, scoreboards, reporting, synchronization, data
 structures, and verification components. The provider is a recursive
-superproject; implementation must verify the top commit, every gitlink,
-content/license/notice identity, and repository-local dependency root before a
-provider-dependent gate. UVVM 2026.03.20 at commit
+superproject. Completed `.15.6` verifies its top commit/tree plus thirteen
+gitlinks by commit/tree/origin/tracked-entry identity under
+`.artifacts/cache/providers/osvvm/2026.05/source`, with every worktree clean.
+Fourteen tracked Apache-2.0 licence files and zero notice files are locked. The
+exact pinned `Documentation` repository contains no tracked licence or notice
+file, so no coverage is inferred for it. UVVM 2026.03.20 at commit
 `4f1e13bf96dca5571597ca7416b9340e9de94efd` was audited but is not selected;
 adding an overlapping second provider would double adapter/qualification
 surfaces without a demonstrated version-1 semantic benefit.
@@ -1366,6 +1369,17 @@ closed trace records, and normalized results. OSVVM can implement only exact
 negotiated native/advanced requirements or supplementary reports. It cannot
 rerandomize plan-resolved decisions, change drive/sample/react/check ordering,
 redefine comparison/bin semantics, or replace the normalized parity oracle.
+
+The revision-1 advanced graph contains six byte-identical portable sources and
+one isolated adapter package. Seven negotiated mappings bind native-only
+randomization to `RandomPkg`, supplementary coverage to `CoveragePkg`,
+scoreboarding to `ScoreboardGenericPkg` through `ScoreboardPkg_slv`, reporting
+to `AlertLogPkg`, coordination to `TbUtilPkg`, provider memory to `MemoryPkg`,
+and address-bus verification components to
+`osvvm_common.AddressBusTransactionPkg`. Thirteen source-map entries, twelve
+structural checks, six explicit unchanged-semantic guards, and a deterministic
+fifteen-artifact gallery prove emission only. Exact combined OSVVM 2026.05 plus
+GHDL 6.0.0 analysis, elaboration, execution, result, and parity remain `.15.7`.
 
 The portable backend schema is `fsmgen.vial_backend.vhdl_portable.v1`; the
 advanced schema is `fsmgen.vial_backend.vhdl_osvvm.v1`. Broader simulator

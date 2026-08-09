@@ -1,0 +1,17 @@
+{
+   "combined_execution" : "not_run_separate_leaf_15_7",
+   "language" : "VHDL",
+   "materialization" : "complete_recursive_verified",
+   "profile" : "vhdl_osvvm_qualified",
+   "provider" : "OSVVM",
+   "provider_commit" : "2f7c391051dfb11890fa4bdbda9918d1db492250",
+   "provider_version" : "2026.05",
+   "schema" : "fsmgen.vial_backend_tool_profile.v1",
+   "schema_version" : 1,
+   "standard" : "IEEE 1076-2008",
+   "standard_option" : "--std=08",
+   "tool" : "GHDL",
+   "tool_backend" : "llvm_jit",
+   "tool_commit" : "e589c698c351369ac5bcfe7abe1f1152ac5d4727",
+   "tool_version" : "6.0.0"
+}

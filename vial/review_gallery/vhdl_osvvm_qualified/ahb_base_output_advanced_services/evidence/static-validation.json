@@ -1,0 +1,69 @@
+{
+   "checks" : [
+      {
+         "check_id" : "one_adapter",
+         "evidence" : "backends/vhdl_osvvm_qualified/src/fsmgen_vial_osvvm_adapter_pkg.vhd",
+         "status" : "passed"
+      },
+      {
+         "check_id" : "exact_recursive_provider_identity",
+         "evidence" : "14 repositories; 13 gitlinks; 14 licence files; 0 notice files",
+         "status" : "passed"
+      },
+      {
+         "check_id" : "adapter_provider_context",
+         "evidence" : "library osvvm;, context osvvm.OsvvmContext;",
+         "status" : "passed"
+      },
+      {
+         "check_id" : "adapter_randomization",
+         "evidence" : "osvvm.RandomPkg.RandomPType, .Uniform(minimum, maximum)",
+         "status" : "passed"
+      },
+      {
+         "check_id" : "adapter_coverage",
+         "evidence" : "osvvm.CoveragePkg.CoverageIDType, osvvm.CoveragePkg.ICover",
+         "status" : "passed"
+      },
+      {
+         "check_id" : "adapter_scoreboard",
+         "evidence" : "osvvm.ScoreboardGenericPkg, osvvm.ScoreboardPkg_slv.Check",
+         "status" : "passed"
+      },
+      {
+         "check_id" : "adapter_reporting",
+         "evidence" : "osvvm.AlertLogPkg.AffirmIf",
+         "status" : "passed"
+      },
+      {
+         "check_id" : "adapter_synchronization",
+         "evidence" : "osvvm.TbUtilPkg.BarrierType, osvvm.TbUtilPkg.WaitForBarrier",
+         "status" : "passed"
+      },
+      {
+         "check_id" : "adapter_data_structure",
+         "evidence" : "osvvm.MemoryPkg.MemoryIDType, osvvm.MemoryPkg.MemWrite",
+         "status" : "passed"
+      },
+      {
+         "check_id" : "adapter_verification_component",
+         "evidence" : "library osvvm_common;, osvvm_common.AddressBusTransactionPkg.AddressBusRecType",
+         "status" : "passed"
+      },
+      {
+         "check_id" : "closed_mapping_matrix",
+         "evidence" : "7 emitted/static-only mappings",
+         "status" : "passed"
+      },
+      {
+         "check_id" : "portable_semantic_authority",
+         "evidence" : "6 byte-identical sources and 6 explicit unchanged guards",
+         "status" : "passed"
+      }
+   ],
+   "diagnostics" : [],
+   "ok" : true,
+   "schema" : "fsmgen.vial_vhdl_osvvm_static_validation.v1",
+   "schema_version" : 1,
+   "status" : "passed_structural_only"
+}

@@ -1,0 +1,306 @@
+{
+   "dependency_root" : ".artifacts/cache/providers/osvvm/2026.05/source",
+   "license_notice_files" : [
+      {
+         "byte_length" : 10571,
+         "kind" : "license",
+         "relpath" : "AXI4/LICENSE.md",
+         "sha256" : "0c5e2bf896eccff640498e158d5d1965569a1d8907f5adb4064544c69abc7681"
+      },
+      {
+         "byte_length" : 10571,
+         "kind" : "license",
+         "relpath" : "CoSim/LICENSE.md",
+         "sha256" : "0c5e2bf896eccff640498e158d5d1965569a1d8907f5adb4064544c69abc7681"
+      },
+      {
+         "byte_length" : 11357,
+         "kind" : "license",
+         "relpath" : "CoSimPCIe/LICENSE",
+         "sha256" : "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+      },
+      {
+         "byte_length" : 10571,
+         "kind" : "license",
+         "relpath" : "Common/LICENSE.md",
+         "sha256" : "0c5e2bf896eccff640498e158d5d1965569a1d8907f5adb4064544c69abc7681"
+      },
+      {
+         "byte_length" : 10571,
+         "kind" : "license",
+         "relpath" : "DpRam/LICENSE.md",
+         "sha256" : "0c5e2bf896eccff640498e158d5d1965569a1d8907f5adb4064544c69abc7681"
+      },
+      {
+         "byte_length" : 10571,
+         "kind" : "license",
+         "relpath" : "Ethernet/LICENSE.md",
+         "sha256" : "0c5e2bf896eccff640498e158d5d1965569a1d8907f5adb4064544c69abc7681"
+      },
+      {
+         "byte_length" : 10571,
+         "kind" : "license",
+         "relpath" : "LICENSE.md",
+         "sha256" : "0c5e2bf896eccff640498e158d5d1965569a1d8907f5adb4064544c69abc7681"
+      },
+      {
+         "byte_length" : 10571,
+         "kind" : "license",
+         "relpath" : "SPI_GuyEschemann/LICENSE.md",
+         "sha256" : "0c5e2bf896eccff640498e158d5d1965569a1d8907f5adb4064544c69abc7681"
+      },
+      {
+         "byte_length" : 10571,
+         "kind" : "license",
+         "relpath" : "Scripts/LICENSE.md",
+         "sha256" : "0c5e2bf896eccff640498e158d5d1965569a1d8907f5adb4064544c69abc7681"
+      },
+      {
+         "byte_length" : 10851,
+         "kind" : "license",
+         "relpath" : "Scripts/doc/License.rst",
+         "sha256" : "16e0fbcd0710e08f3476338d6089f1889ca7106bb4098914deff1b04fe2b96b8"
+      },
+      {
+         "byte_length" : 10571,
+         "kind" : "license",
+         "relpath" : "UART/LICENSE.md",
+         "sha256" : "0c5e2bf896eccff640498e158d5d1965569a1d8907f5adb4064544c69abc7681"
+      },
+      {
+         "byte_length" : 11356,
+         "kind" : "license",
+         "relpath" : "VideoBus_LouisAdriaens/LICENSE",
+         "sha256" : "43070e2d4e532684de521b885f385d0841030efa2b1a20bafb76133a5e1379c1"
+      },
+      {
+         "byte_length" : 10571,
+         "kind" : "license",
+         "relpath" : "Wishbone/LICENSE.md",
+         "sha256" : "0c5e2bf896eccff640498e158d5d1965569a1d8907f5adb4064544c69abc7681"
+      },
+      {
+         "byte_length" : 10571,
+         "kind" : "license",
+         "relpath" : "osvvm/LICENSE.md",
+         "sha256" : "0c5e2bf896eccff640498e158d5d1965569a1d8907f5adb4064544c69abc7681"
+      }
+   ],
+   "license_notice_summary" : {
+      "inferred_license_coverage" : false,
+      "license_file_count" : 14,
+      "notice_file_count" : 0,
+      "repositories_without_tracked_license_or_notice" : [
+         "Documentation"
+      ]
+   },
+   "limitations" : [
+      "Documentation has no tracked licence or notice file at its exact pinned commit; no licence coverage is inferred for that repository.",
+      "Materialization and identity verification are not VHDL analysis, elaboration, execution, result, parity, or product-support evidence."
+   ],
+   "materialization" : {
+      "gitlink_count" : 13,
+      "network_fetch_during_emission" : false,
+      "repository_count" : 14,
+      "same_volume_repository_local" : true,
+      "state" : "complete_recursive_verified"
+   },
+   "provider" : "OSVVM",
+   "recursive_gitlinks" : [
+      {
+         "commit" : "19a50724bf94bd61e1a5515f74a7f4a55d688e57",
+         "path" : "AXI4"
+      },
+      {
+         "commit" : "aa0fb69ead20f666ccad52707d1c5f2dfc9288e4",
+         "path" : "CoSim"
+      },
+      {
+         "commit" : "acb605ffe516dc598b22a6cded29cb4cefb37a49",
+         "path" : "CoSimPCIe"
+      },
+      {
+         "commit" : "b2ec7481e6744427d2f6ca5ba6cc8d1966a9aeba",
+         "path" : "Common"
+      },
+      {
+         "commit" : "a4fd58f749f11b2d66b9c1011e0bf5a6e3dc7e0f",
+         "path" : "Documentation"
+      },
+      {
+         "commit" : "96cd28f7d9abbf9ad1f209f2a9484adba3372081",
+         "path" : "DpRam"
+      },
+      {
+         "commit" : "ca2ea560f9b0f06a2ea3b49561c88fd203cf055b",
+         "path" : "Ethernet"
+      },
+      {
+         "commit" : "f7cfe171ad26c361241367845af4408e34716b94",
+         "path" : "SPI_GuyEschemann"
+      },
+      {
+         "commit" : "b93f63b8f4bbc030c95aa0a15966afa93b239a78",
+         "path" : "Scripts"
+      },
+      {
+         "commit" : "f214a00ab65c45e9c351a73ee7d5c796430329ce",
+         "path" : "UART"
+      },
+      {
+         "commit" : "9870d9317630c55ef6147a7fa0c3a7a6ce134697",
+         "path" : "VideoBus_LouisAdriaens"
+      },
+      {
+         "commit" : "2e76b71ece2d0bf0dc559cc1c5cd491ac0031f57",
+         "path" : "Wishbone"
+      },
+      {
+         "commit" : "dd5f7fd76996d1ed9a18a9a93ff53d5c6bb1171a",
+         "path" : "osvvm"
+      }
+   ],
+   "release_tag" : "2026.05",
+   "repositories" : [
+      {
+         "clean" : true,
+         "commit" : "2f7c391051dfb11890fa4bdbda9918d1db492250",
+         "name" : "OsvvmLibraries",
+         "origin" : "https://github.com/OSVVM/OsvvmLibraries.git",
+         "path" : ".",
+         "tracked_entries" : 35,
+         "tree" : "bd4fdc594f2c26d564cf8907ff599578b9a39e22"
+      },
+      {
+         "clean" : true,
+         "commit" : "19a50724bf94bd61e1a5515f74a7f4a55d688e57",
+         "name" : "AXI4",
+         "origin" : "https://github.com/OSVVM/AXI4.git",
+         "path" : "AXI4",
+         "tracked_entries" : 399,
+         "tree" : "cf915880a8f1914372bc4793afd93110040d735e"
+      },
+      {
+         "clean" : true,
+         "commit" : "aa0fb69ead20f666ccad52707d1c5f2dfc9288e4",
+         "name" : "CoSim",
+         "origin" : "https://github.com/OSVVM/CoSim.git",
+         "path" : "CoSim",
+         "tracked_entries" : 149,
+         "tree" : "3bbb953b12c2ab73f479e62574fc1a6de3faa789"
+      },
+      {
+         "clean" : true,
+         "commit" : "acb605ffe516dc598b22a6cded29cb4cefb37a49",
+         "name" : "CoSimPCIe",
+         "origin" : "https://github.com/OSVVM/CoSimPCIe.git",
+         "path" : "CoSimPCIe",
+         "tracked_entries" : 105,
+         "tree" : "a71cbe2a94baa8fc7928cc8911fd78083cddec72"
+      },
+      {
+         "clean" : true,
+         "commit" : "b2ec7481e6744427d2f6ca5ba6cc8d1966a9aeba",
+         "name" : "OSVVM-Common",
+         "origin" : "https://github.com/OSVVM/OSVVM-Common.git",
+         "path" : "Common",
+         "tracked_entries" : 242,
+         "tree" : "9efe59a83674ddb040ffdc7f1bcf107d536b9ec1"
+      },
+      {
+         "clean" : true,
+         "commit" : "a4fd58f749f11b2d66b9c1011e0bf5a6e3dc7e0f",
+         "name" : "Documentation",
+         "origin" : "https://github.com/OSVVM/Documentation.git",
+         "path" : "Documentation",
+         "tracked_entries" : 47,
+         "tree" : "a8706ff03b62ae5f0170f1c69cec12635f33f974"
+      },
+      {
+         "clean" : true,
+         "commit" : "96cd28f7d9abbf9ad1f209f2a9484adba3372081",
+         "name" : "DpRam",
+         "origin" : "https://github.com/OSVVM/DpRam.git",
+         "path" : "DpRam",
+         "tracked_entries" : 19,
+         "tree" : "c5b6d039f7d979b29b6d552f2560fe7d1df795f3"
+      },
+      {
+         "clean" : true,
+         "commit" : "ca2ea560f9b0f06a2ea3b49561c88fd203cf055b",
+         "name" : "Ethernet",
+         "origin" : "https://github.com/OSVVM/Ethernet.git",
+         "path" : "Ethernet",
+         "tracked_entries" : 24,
+         "tree" : "c68a22e1a2e2102d43d4b0aec779f75e74e4b0d6"
+      },
+      {
+         "clean" : true,
+         "commit" : "f7cfe171ad26c361241367845af4408e34716b94",
+         "name" : "SPI_GuyEschemann",
+         "origin" : "https://github.com/OSVVM/SPI_GuyEschemann.git",
+         "path" : "SPI_GuyEschemann",
+         "tracked_entries" : 26,
+         "tree" : "2a3d78f05e4690614aeaa62e911ef440fb079f4e"
+      },
+      {
+         "clean" : true,
+         "commit" : "b93f63b8f4bbc030c95aa0a15966afa93b239a78",
+         "name" : "OSVVM-Scripts",
+         "origin" : "https://github.com/OSVVM/OSVVM-Scripts.git",
+         "path" : "Scripts",
+         "tracked_entries" : 115,
+         "tree" : "320790356c236493699f78fdec56a1c97c9e68b8"
+      },
+      {
+         "clean" : true,
+         "commit" : "f214a00ab65c45e9c351a73ee7d5c796430329ce",
+         "name" : "UART",
+         "origin" : "https://github.com/OSVVM/UART.git",
+         "path" : "UART",
+         "tracked_entries" : 60,
+         "tree" : "3b0932b965f7cead5903e373b97e1e5d513e0dd2"
+      },
+      {
+         "clean" : true,
+         "commit" : "9870d9317630c55ef6147a7fa0c3a7a6ce134697",
+         "name" : "VideoBus_LouisAdriaens",
+         "origin" : "https://github.com/OSVVM/VideoBus_LouisAdriaens.git",
+         "path" : "VideoBus_LouisAdriaens",
+         "tracked_entries" : 21,
+         "tree" : "b029ded8038d91833501d55a03b81779df631cd9"
+      },
+      {
+         "clean" : true,
+         "commit" : "2e76b71ece2d0bf0dc559cc1c5cd491ac0031f57",
+         "name" : "Wishbone",
+         "origin" : "https://github.com/OSVVM/Wishbone.git",
+         "path" : "Wishbone",
+         "tracked_entries" : 25,
+         "tree" : "fc0c14d266ef7e75a34e8a2320afa0653533d45e"
+      },
+      {
+         "clean" : true,
+         "commit" : "dd5f7fd76996d1ed9a18a9a93ff53d5c6bb1171a",
+         "name" : "OSVVM",
+         "origin" : "https://github.com/OSVVM/OSVVM.git",
+         "path" : "osvvm",
+         "tracked_entries" : 78,
+         "tree" : "c7063be70cd51c8132194f9ebaf6a145897eaf2f"
+      }
+   ],
+   "root_commit" : "2f7c391051dfb11890fa4bdbda9918d1db492250",
+   "root_tree" : "bd4fdc594f2c26d564cf8907ff599578b9a39e22",
+   "schema" : "fsmgen.vial_osvvm_materialization.v1",
+   "schema_version" : 1,
+   "verification" : {
+      "clean_worktrees_verified" : true,
+      "clone_command" : "git clone --recursive --branch 2026.05 --single-branch https://github.com/OSVVM/OsvvmLibraries.git .artifacts/cache/providers/osvvm/2026.05/source",
+      "licence_notice_identities_verified" : true,
+      "local_verify_entrypoint" : "FSM::VIAL::Backend::OSVVM2026_05Materialization->verify({...})",
+      "recursive_status_verified" : true,
+      "tag_commit_verified" : true,
+      "tree_identities_verified" : true
+   },
+   "version" : "2026.05"
+}

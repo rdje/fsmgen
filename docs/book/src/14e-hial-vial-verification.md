@@ -112,9 +112,12 @@ Completed `.15.5` separately qualifies this exact canonical graph under the
 repository-local GHDL 6.0.0 LLVM-JIT backend: analysis, elaboration, bounded
 execution, timed `0/1/X/Z`, one closed 42-record trace, a passing normalized
 result, deterministic reruns, and nineteen applicable portable-SV parity paths
-pass. `.15.6` is active for exact repository-local OSVVM 2026.05, and `.15.7`
-depends on both. Complete VHDL breadth, PSL, methodology support, another
-simulator, mixed-language behavior, general parity, and scale remain unclaimed.
+pass. Completed `.15.6` now installs and recursively verifies exact OSVVM
+2026.05, then emits its isolated seven-service adapter beside six
+byte-identical portable sources. `.15.7` is next for the combined exact
+provider/tool run. Complete VHDL breadth, PSL, qualified methodology support,
+another simulator, mixed-language behavior, general parity, and scale remain
+unclaimed.
 
 Inspect or byte-check the six VHDL sources and eleven evidence artifacts with:
 
@@ -128,6 +131,20 @@ Rerun the exact checked qualification under the repository RAM guard with:
 scripts/run_with_ram_guard.sh --process-max-rss-mb 4096 -- \
   perl scripts/run_vial_vhdl_portable_ghdl_qualification.pl --check
 ```
+
+Inspect the exact provider identity, additive adapter, mapping matrix, and
+semantic-preservation proof without rewriting the checked gallery:
+
+```text
+perl scripts/refresh_vial_vhdl_osvvm_gallery.pl --check
+```
+
+The repository-local provider graph contains the OSVVM superproject plus 13
+pinned gitlinks. Its evidence locks 14 Apache-2.0 licence files and finds no
+notice file. The pinned `Documentation` gitlink has no tracked licence or
+notice file; FSMGen records that absence and infers no legal coverage. The
+code-bearing adapter is therefore reviewable and ready for `.15.7`, but the
+gallery alone is not analysis, elaboration, runtime, result, or parity proof.
 
 The gallery lives at
 `vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics`.

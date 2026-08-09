@@ -1,0 +1,111 @@
+{
+   "mappings" : [
+      {
+         "emission_status" : "emitted",
+         "generated_end_line" : 36,
+         "generated_role" : "vhdl_osvvm_adapter_package",
+         "generated_start_line" : 36,
+         "mapping_id" : "advanced_coverage",
+         "mode" : "supplementary_provider_coverage",
+         "provider_package" : "osvvm.CoveragePkg",
+         "provider_symbol" : "fsmgen_osvvm_coverage_sample",
+         "qualification_status" : "not_run",
+         "semantic_guard" : "portable VIAL coverage counters and bin meaning remain authoritative",
+         "source_map_id" : "osvvm-map-advanced_coverage",
+         "static_status" : "passed"
+      },
+      {
+         "emission_status" : "emitted",
+         "generated_end_line" : 66,
+         "generated_role" : "vhdl_osvvm_adapter_package",
+         "generated_start_line" : 66,
+         "mapping_id" : "advanced_data_structure",
+         "mode" : "negotiated_provider_memory",
+         "provider_package" : "osvvm.MemoryPkg",
+         "provider_symbol" : "fsmgen_osvvm_memory_write",
+         "qualification_status" : "not_run",
+         "semantic_guard" : "provider storage is available only for a distinct native requirement",
+         "source_map_id" : "osvvm-map-advanced_data_structure",
+         "static_status" : "passed"
+      },
+      {
+         "emission_status" : "emitted",
+         "generated_end_line" : 29,
+         "generated_role" : "vhdl_osvvm_adapter_package",
+         "generated_start_line" : 29,
+         "mapping_id" : "advanced_randomization",
+         "mode" : "isolated_native_decision",
+         "provider_package" : "osvvm.RandomPkg",
+         "provider_symbol" : "fsmgen_osvvm_native_random",
+         "qualification_status" : "not_run",
+         "semantic_guard" : "portable keyed decisions are replayed and never rerandomized",
+         "source_map_id" : "osvvm-map-advanced_randomization",
+         "static_status" : "passed"
+      },
+      {
+         "emission_status" : "emitted",
+         "generated_end_line" : 51,
+         "generated_role" : "vhdl_osvvm_adapter_package",
+         "generated_start_line" : 51,
+         "mapping_id" : "advanced_reporting",
+         "mode" : "supplementary_provider_reporting",
+         "provider_package" : "osvvm.AlertLogPkg",
+         "provider_symbol" : "fsmgen_osvvm_affirm",
+         "qualification_status" : "not_run",
+         "semantic_guard" : "provider reports cannot replace the normalized result oracle",
+         "source_map_id" : "osvvm-map-advanced_reporting",
+         "static_status" : "passed"
+      },
+      {
+         "emission_status" : "emitted",
+         "generated_end_line" : 46,
+         "generated_role" : "vhdl_osvvm_adapter_package",
+         "generated_start_line" : 46,
+         "mapping_id" : "advanced_scoreboard",
+         "mode" : "supplementary_provider_scoreboard",
+         "provider_package" : "osvvm.ScoreboardGenericPkg",
+         "provider_symbol" : "fsmgen_osvvm_scoreboard_check",
+         "qualification_status" : "not_run",
+         "semantic_guard" : "portable comparison meaning and bounded scoreboard remain authoritative",
+         "source_map_id" : "osvvm-map-advanced_scoreboard",
+         "static_status" : "passed"
+      },
+      {
+         "emission_status" : "emitted",
+         "generated_end_line" : 56,
+         "generated_role" : "vhdl_osvvm_adapter_package",
+         "generated_start_line" : 56,
+         "mapping_id" : "advanced_synchronization",
+         "mode" : "provider_component_coordination",
+         "provider_package" : "osvvm.TbUtilPkg",
+         "provider_symbol" : "fsmgen_osvvm_wait_for_barrier",
+         "qualification_status" : "not_run",
+         "semantic_guard" : "provider synchronization cannot move the generated phase barrier",
+         "source_map_id" : "osvvm-map-advanced_synchronization",
+         "static_status" : "passed"
+      },
+      {
+         "emission_status" : "emitted",
+         "generated_end_line" : 26,
+         "generated_role" : "vhdl_osvvm_adapter_package",
+         "generated_start_line" : 26,
+         "mapping_id" : "verification_component_adapter",
+         "mode" : "negotiated_mit_adapter",
+         "provider_package" : "osvvm_common.AddressBusTransactionPkg",
+         "provider_symbol" : "fsmgen_vial_osvvm_address_bus_t",
+         "qualification_status" : "not_run",
+         "semantic_guard" : "component completion projects into unchanged generated plan ranks",
+         "source_map_id" : "osvvm-map-verification_component_adapter",
+         "static_status" : "passed"
+      }
+   ],
+   "profile" : "vhdl_osvvm_qualified",
+   "profile_state" : {
+      "emission" : "emitted",
+      "qualification" : "not_run",
+      "static_review" : "passed_structural_only"
+   },
+   "provider" : "OSVVM 2026.05",
+   "schema" : "fsmgen.vial_vhdl_osvvm_mapping_matrix.v1",
+   "schema_version" : 1
+}

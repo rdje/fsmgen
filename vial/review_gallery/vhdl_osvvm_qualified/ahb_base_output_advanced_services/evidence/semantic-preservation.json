@@ -1,0 +1,72 @@
+{
+   "advanced_profile" : "vhdl_osvvm_qualified",
+   "guards" : {
+      "closed_trace_unchanged" : true,
+      "comparison_semantics_unchanged" : true,
+      "coverage_semantics_unchanged" : true,
+      "normalized_result_unchanged" : true,
+      "phase_order_unchanged" : true,
+      "portable_random_replay_unchanged" : true
+   },
+   "portable_plan_id" : "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574",
+   "portable_profile" : "vhdl_portable_ghdl",
+   "portable_sources" : [
+      {
+         "advanced_relpath" : "backends/vhdl_osvvm_qualified/src/portable/dut/ahb_lite_subordinate.vhd",
+         "advanced_sha256" : "8d93b0ade4d9561d19fdd12ab10b4d8ba1a3dc06de9f911d1c0d8d1bf18518cf",
+         "byte_identical" : true,
+         "byte_length" : 47670,
+         "portable_relpath" : "backends/vhdl_portable_ghdl/src/dut/ahb_lite_subordinate.vhd",
+         "portable_sha256" : "8d93b0ade4d9561d19fdd12ab10b4d8ba1a3dc06de9f911d1c0d8d1bf18518cf",
+         "role" : "generated_hial_vhdl_dut"
+      },
+      {
+         "advanced_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_metadata_pkg.vhd",
+         "advanced_sha256" : "54b836ea1ce852d0dad9a4f7ff6249626ffd7b1674604cb62b2f79cc6cec0d46",
+         "byte_identical" : true,
+         "byte_length" : 15323,
+         "portable_relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_metadata_pkg.vhd",
+         "portable_sha256" : "54b836ea1ce852d0dad9a4f7ff6249626ffd7b1674604cb62b2f79cc6cec0d46",
+         "role" : "vhdl_fixture_metadata"
+      },
+      {
+         "advanced_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
+         "advanced_sha256" : "4a3665cb0e14b599962a3a29bafb2ff99787cc8cb332b0f35e50b75583a6666b",
+         "byte_identical" : true,
+         "byte_length" : 44758,
+         "portable_relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_tb.vhd",
+         "portable_sha256" : "4a3665cb0e14b599962a3a29bafb2ff99787cc8cb332b0f35e50b75583a6666b",
+         "role" : "vhdl_fixture_top"
+      },
+      {
+         "advanced_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_probe_adapter.vhd",
+         "advanced_sha256" : "7a7e3b4e81fd222e53e2098653fcf1131f1b58dbeba35698c1cfe67a4fab5b56",
+         "byte_identical" : true,
+         "byte_length" : 591,
+         "portable_relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_probe_adapter.vhd",
+         "portable_sha256" : "7a7e3b4e81fd222e53e2098653fcf1131f1b58dbeba35698c1cfe67a4fab5b56",
+         "role" : "vhdl_probe_adapter"
+      },
+      {
+         "advanced_relpath" : "backends/vhdl_osvvm_qualified/src/portable/fsmgen_vial_runtime_pkg.vhd",
+         "advanced_sha256" : "82cb0d22e03a661ff88aecbf5b94b89f91381801576d1c683d749ac02e258017",
+         "byte_identical" : true,
+         "byte_length" : 2191,
+         "portable_relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_runtime_pkg.vhd",
+         "portable_sha256" : "82cb0d22e03a661ff88aecbf5b94b89f91381801576d1c683d749ac02e258017",
+         "role" : "vhdl_runtime_package"
+      },
+      {
+         "advanced_relpath" : "backends/vhdl_osvvm_qualified/src/portable/fsmgen_vial_types_pkg.vhd",
+         "advanced_sha256" : "3777706b911ce90c9a3b05107233ec925c1029b175932ed10f1b1a588fb3c08e",
+         "byte_identical" : true,
+         "byte_length" : 6025,
+         "portable_relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_types_pkg.vhd",
+         "portable_sha256" : "3777706b911ce90c9a3b05107233ec925c1029b175932ed10f1b1a588fb3c08e",
+         "role" : "vhdl_types_package"
+      }
+   ],
+   "provider_role" : "isolated negotiated native services and supplementary evidence only",
+   "schema" : "fsmgen.vial_vhdl_osvvm_semantic_preservation.v1",
+   "schema_version" : 1
+}

@@ -48,7 +48,7 @@ The live `docs/tasks/` nodes are authoritative; validate with `scripts/check_tas
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.28` complete; remaining work unavailable | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
-| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.15.6` active for exact recursive OSVVM 2026.05 materialization and advanced-methodology adapter/gallery implementation after completed GHDL `.15.5`; NEXSIM-dependent `.13.3` director-deferred | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
+| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.15.6` complete with exact recursive OSVVM 2026.05 materialization and advanced-methodology adapter/gallery emission; `.15.7` is next after the clean implementation commit for combined exact GHDL/OSVVM qualification; NEXSIM-dependent `.13.3` director-deferred | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 completeness` | terminal `.844`; no eligible leaf | [task](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
 
 ## Proposed Task Trees

@@ -150,3 +150,19 @@ and must hold an error transaction until the complete two-cycle response has
 settled. Encoding those rules explicitly prevents repeated transfers and
 double-counted outcomes without making HDL process or delta ordering semantic
 authority.
+
+## 2026-08-09: Exact OSVVM identity is a recursive graph, not a release label
+
+The `2026.05` superproject tag alone cannot identify the provider used by a
+generated advanced adapter. Qualification must freeze the superproject and all
+thirteen gitlinks by commit, tree, origin, and tracked-entry count, then prove
+every worktree clean before provider-dependent emission. The verifier remains
+offline during emission so an existing exact repository-local graph is the
+only accepted input; fetching and execution evidence stay separate actions.
+
+Legal metadata is also an observed property of each pinned repository, not an
+inference from the aggregate project. Fourteen tracked Apache-2.0 licence files
+and zero notice files are locked exactly. The Documentation gitlink has neither
+a tracked licence nor a notice, so FSMGen records that absence without claiming
+coverage. This upstream packaging gap does not alter or block the code-bearing
+adapter, but it remains visible for any future redistribution decision.

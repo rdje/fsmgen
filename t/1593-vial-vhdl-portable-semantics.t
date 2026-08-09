@@ -443,7 +443,8 @@ subtest 'checked gallery and support discovery remain byte-exact and honest' => 
     my $readme = slurp_raw(File::Spec->catfile($gallery, 'README.md'));
     like($readme, qr/plan\/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574/,
         'gallery names its exact deterministic plan');
-    like($readme, qr/separately passed analysis, elaboration, bounded execution/,
+    like($readme,
+        qr/Separately, this snapshot passes\s+analysis, elaboration, bounded execution/,
         'gallery points to the separately qualified exact execution evidence');
 
     my $contract = build_capability_manifest()->{language_surface}{vial_vhdl_emission};

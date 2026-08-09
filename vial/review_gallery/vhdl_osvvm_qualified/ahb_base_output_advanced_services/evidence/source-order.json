@@ -1,0 +1,19 @@
+{
+   "generated_sources" : [
+      "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_metadata_pkg.vhd",
+      "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_probe_adapter.vhd",
+      "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
+      "backends/vhdl_osvvm_qualified/src/portable/dut/ahb_lite_subordinate.vhd",
+      "backends/vhdl_osvvm_qualified/src/portable/fsmgen_vial_runtime_pkg.vhd",
+      "backends/vhdl_osvvm_qualified/src/portable/fsmgen_vial_types_pkg.vhd",
+      "backends/vhdl_osvvm_qualified/src/fsmgen_vial_osvvm_adapter_pkg.vhd"
+   ],
+   "order_digest" : "a8c18950446fd1239b7c8e2cc66dc361d4f00179254ee8ed069f81deaee15fe5",
+   "provider_build_roots" : [
+      ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/osvvm.pro",
+      ".artifacts/cache/providers/osvvm/2026.05/source/Common/build.pro"
+   ],
+   "schema" : "fsmgen.vial_vhdl_osvvm_source_order.v1",
+   "schema_version" : 1,
+   "status" : "selected_not_executed"
+}

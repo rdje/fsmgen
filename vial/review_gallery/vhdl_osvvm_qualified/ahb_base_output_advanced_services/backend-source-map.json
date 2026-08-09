@@ -1,0 +1,314 @@
+{
+   "artifacts" : [
+      {
+         "byte_length" : 4351,
+         "kind" : "vhdl_source",
+         "language" : "vhdl",
+         "relpath" : "backends/vhdl_osvvm_qualified/src/fsmgen_vial_osvvm_adapter_pkg.vhd",
+         "role" : "vhdl_osvvm_adapter_package",
+         "sha256" : "1a547b8de38c072600a76497778758affab25ccd479c0c1dfce7f0e0579c9e94",
+         "source_ids" : [
+            "2f7c391051dfb11890fa4bdbda9918d1db492250",
+            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+         ]
+      },
+      {
+         "byte_length" : 15323,
+         "kind" : "vhdl_source",
+         "language" : "vhdl",
+         "relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_metadata_pkg.vhd",
+         "role" : "portable_vhdl_fixture_metadata",
+         "sha256" : "54b836ea1ce852d0dad9a4f7ff6249626ffd7b1674604cb62b2f79cc6cec0d46",
+         "source_ids" : [
+            "54b836ea1ce852d0dad9a4f7ff6249626ffd7b1674604cb62b2f79cc6cec0d46",
+            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+         ]
+      },
+      {
+         "byte_length" : 591,
+         "kind" : "vhdl_source",
+         "language" : "vhdl",
+         "relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_probe_adapter.vhd",
+         "role" : "portable_vhdl_probe_adapter",
+         "sha256" : "7a7e3b4e81fd222e53e2098653fcf1131f1b58dbeba35698c1cfe67a4fab5b56",
+         "source_ids" : [
+            "7a7e3b4e81fd222e53e2098653fcf1131f1b58dbeba35698c1cfe67a4fab5b56",
+            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+         ]
+      },
+      {
+         "byte_length" : 44758,
+         "kind" : "vhdl_source",
+         "language" : "vhdl",
+         "relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
+         "role" : "portable_vhdl_fixture_top",
+         "sha256" : "4a3665cb0e14b599962a3a29bafb2ff99787cc8cb332b0f35e50b75583a6666b",
+         "source_ids" : [
+            "4a3665cb0e14b599962a3a29bafb2ff99787cc8cb332b0f35e50b75583a6666b",
+            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+         ]
+      },
+      {
+         "byte_length" : 47670,
+         "kind" : "vhdl_source",
+         "language" : "vhdl",
+         "relpath" : "backends/vhdl_osvvm_qualified/src/portable/dut/ahb_lite_subordinate.vhd",
+         "role" : "portable_generated_hial_vhdl_dut",
+         "sha256" : "8d93b0ade4d9561d19fdd12ab10b4d8ba1a3dc06de9f911d1c0d8d1bf18518cf",
+         "source_ids" : [
+            "8d93b0ade4d9561d19fdd12ab10b4d8ba1a3dc06de9f911d1c0d8d1bf18518cf",
+            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+         ]
+      },
+      {
+         "byte_length" : 2191,
+         "kind" : "vhdl_source",
+         "language" : "vhdl",
+         "relpath" : "backends/vhdl_osvvm_qualified/src/portable/fsmgen_vial_runtime_pkg.vhd",
+         "role" : "portable_vhdl_runtime_package",
+         "sha256" : "82cb0d22e03a661ff88aecbf5b94b89f91381801576d1c683d749ac02e258017",
+         "source_ids" : [
+            "82cb0d22e03a661ff88aecbf5b94b89f91381801576d1c683d749ac02e258017",
+            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+         ]
+      },
+      {
+         "byte_length" : 6025,
+         "kind" : "vhdl_source",
+         "language" : "vhdl",
+         "relpath" : "backends/vhdl_osvvm_qualified/src/portable/fsmgen_vial_types_pkg.vhd",
+         "role" : "portable_vhdl_types_package",
+         "sha256" : "3777706b911ce90c9a3b05107233ec925c1029b175932ed10f1b1a588fb3c08e",
+         "source_ids" : [
+            "3777706b911ce90c9a3b05107233ec925c1029b175932ed10f1b1a588fb3c08e",
+            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+         ]
+      }
+   ],
+   "entries" : [
+      {
+         "generated_end_line" : 36,
+         "generated_relpath" : "backends/vhdl_osvvm_qualified/src/fsmgen_vial_osvvm_adapter_pkg.vhd",
+         "generated_start_line" : 36,
+         "generated_symbol" : "fsmgen_osvvm_coverage_sample",
+         "plan_paths" : [
+            "/advanced_requirements/advanced_coverage"
+         ],
+         "role" : "vhdl_osvvm_adapter_package",
+         "semantic_paths" : [
+            "/provider_mappings/advanced_coverage"
+         ],
+         "source_locations" : [
+            "docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md"
+         ],
+         "source_map_id" : "osvvm-map-advanced_coverage"
+      },
+      {
+         "generated_end_line" : 66,
+         "generated_relpath" : "backends/vhdl_osvvm_qualified/src/fsmgen_vial_osvvm_adapter_pkg.vhd",
+         "generated_start_line" : 66,
+         "generated_symbol" : "fsmgen_osvvm_memory_write",
+         "plan_paths" : [
+            "/advanced_requirements/advanced_data_structure"
+         ],
+         "role" : "vhdl_osvvm_adapter_package",
+         "semantic_paths" : [
+            "/provider_mappings/advanced_data_structure"
+         ],
+         "source_locations" : [
+            "docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md"
+         ],
+         "source_map_id" : "osvvm-map-advanced_data_structure"
+      },
+      {
+         "generated_end_line" : 29,
+         "generated_relpath" : "backends/vhdl_osvvm_qualified/src/fsmgen_vial_osvvm_adapter_pkg.vhd",
+         "generated_start_line" : 29,
+         "generated_symbol" : "fsmgen_osvvm_native_random",
+         "plan_paths" : [
+            "/advanced_requirements/advanced_randomization"
+         ],
+         "role" : "vhdl_osvvm_adapter_package",
+         "semantic_paths" : [
+            "/provider_mappings/advanced_randomization"
+         ],
+         "source_locations" : [
+            "docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md"
+         ],
+         "source_map_id" : "osvvm-map-advanced_randomization"
+      },
+      {
+         "generated_end_line" : 51,
+         "generated_relpath" : "backends/vhdl_osvvm_qualified/src/fsmgen_vial_osvvm_adapter_pkg.vhd",
+         "generated_start_line" : 51,
+         "generated_symbol" : "fsmgen_osvvm_affirm",
+         "plan_paths" : [
+            "/advanced_requirements/advanced_reporting"
+         ],
+         "role" : "vhdl_osvvm_adapter_package",
+         "semantic_paths" : [
+            "/provider_mappings/advanced_reporting"
+         ],
+         "source_locations" : [
+            "docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md"
+         ],
+         "source_map_id" : "osvvm-map-advanced_reporting"
+      },
+      {
+         "generated_end_line" : 46,
+         "generated_relpath" : "backends/vhdl_osvvm_qualified/src/fsmgen_vial_osvvm_adapter_pkg.vhd",
+         "generated_start_line" : 46,
+         "generated_symbol" : "fsmgen_osvvm_scoreboard_check",
+         "plan_paths" : [
+            "/advanced_requirements/advanced_scoreboard"
+         ],
+         "role" : "vhdl_osvvm_adapter_package",
+         "semantic_paths" : [
+            "/provider_mappings/advanced_scoreboard"
+         ],
+         "source_locations" : [
+            "docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md"
+         ],
+         "source_map_id" : "osvvm-map-advanced_scoreboard"
+      },
+      {
+         "generated_end_line" : 56,
+         "generated_relpath" : "backends/vhdl_osvvm_qualified/src/fsmgen_vial_osvvm_adapter_pkg.vhd",
+         "generated_start_line" : 56,
+         "generated_symbol" : "fsmgen_osvvm_wait_for_barrier",
+         "plan_paths" : [
+            "/advanced_requirements/advanced_synchronization"
+         ],
+         "role" : "vhdl_osvvm_adapter_package",
+         "semantic_paths" : [
+            "/provider_mappings/advanced_synchronization"
+         ],
+         "source_locations" : [
+            "docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md"
+         ],
+         "source_map_id" : "osvvm-map-advanced_synchronization"
+      },
+      {
+         "generated_end_line" : 26,
+         "generated_relpath" : "backends/vhdl_osvvm_qualified/src/fsmgen_vial_osvvm_adapter_pkg.vhd",
+         "generated_start_line" : 26,
+         "generated_symbol" : "fsmgen_vial_osvvm_address_bus_t",
+         "plan_paths" : [
+            "/advanced_requirements/verification_component_adapter"
+         ],
+         "role" : "vhdl_osvvm_adapter_package",
+         "semantic_paths" : [
+            "/provider_mappings/verification_component_adapter"
+         ],
+         "source_locations" : [
+            "docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md"
+         ],
+         "source_map_id" : "osvvm-map-verification_component_adapter"
+      },
+      {
+         "generated_end_line" : 897,
+         "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/dut/ahb_lite_subordinate.vhd",
+         "generated_start_line" : 1,
+         "generated_symbol" : "portable_generated_hial_vhdl_dut",
+         "plan_paths" : [
+            "/portable_foundation"
+         ],
+         "role" : "portable_generated_hial_vhdl_dut",
+         "semantic_paths" : [
+            "/semantic_preservation/portable_sources"
+         ],
+         "source_locations" : [
+            "FSM::VIAL::Backend::VHDLPortableGHDL"
+         ],
+         "source_map_id" : "portable-8d93b0ade4d9561d19fdd12ab10b4d8ba1a3dc06de9f911d1c0d8d1bf18518cf"
+      },
+      {
+         "generated_end_line" : 182,
+         "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_metadata_pkg.vhd",
+         "generated_start_line" : 1,
+         "generated_symbol" : "portable_vhdl_fixture_metadata",
+         "plan_paths" : [
+            "/portable_foundation"
+         ],
+         "role" : "portable_vhdl_fixture_metadata",
+         "semantic_paths" : [
+            "/semantic_preservation/portable_sources"
+         ],
+         "source_locations" : [
+            "FSM::VIAL::Backend::VHDLPortableGHDL"
+         ],
+         "source_map_id" : "portable-54b836ea1ce852d0dad9a4f7ff6249626ffd7b1674604cb62b2f79cc6cec0d46"
+      },
+      {
+         "generated_end_line" : 810,
+         "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
+         "generated_start_line" : 1,
+         "generated_symbol" : "portable_vhdl_fixture_top",
+         "plan_paths" : [
+            "/portable_foundation"
+         ],
+         "role" : "portable_vhdl_fixture_top",
+         "semantic_paths" : [
+            "/semantic_preservation/portable_sources"
+         ],
+         "source_locations" : [
+            "FSM::VIAL::Backend::VHDLPortableGHDL"
+         ],
+         "source_map_id" : "portable-4a3665cb0e14b599962a3a29bafb2ff99787cc8cb332b0f35e50b75583a6666b"
+      },
+      {
+         "generated_end_line" : 16,
+         "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_probe_adapter.vhd",
+         "generated_start_line" : 1,
+         "generated_symbol" : "portable_vhdl_probe_adapter",
+         "plan_paths" : [
+            "/portable_foundation"
+         ],
+         "role" : "portable_vhdl_probe_adapter",
+         "semantic_paths" : [
+            "/semantic_preservation/portable_sources"
+         ],
+         "source_locations" : [
+            "FSM::VIAL::Backend::VHDLPortableGHDL"
+         ],
+         "source_map_id" : "portable-7a7e3b4e81fd222e53e2098653fcf1131f1b58dbeba35698c1cfe67a4fab5b56"
+      },
+      {
+         "generated_end_line" : 86,
+         "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/fsmgen_vial_runtime_pkg.vhd",
+         "generated_start_line" : 1,
+         "generated_symbol" : "portable_vhdl_runtime_package",
+         "plan_paths" : [
+            "/portable_foundation"
+         ],
+         "role" : "portable_vhdl_runtime_package",
+         "semantic_paths" : [
+            "/semantic_preservation/portable_sources"
+         ],
+         "source_locations" : [
+            "FSM::VIAL::Backend::VHDLPortableGHDL"
+         ],
+         "source_map_id" : "portable-82cb0d22e03a661ff88aecbf5b94b89f91381801576d1c683d749ac02e258017"
+      },
+      {
+         "generated_end_line" : 186,
+         "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/fsmgen_vial_types_pkg.vhd",
+         "generated_start_line" : 1,
+         "generated_symbol" : "portable_vhdl_types_package",
+         "plan_paths" : [
+            "/portable_foundation"
+         ],
+         "role" : "portable_vhdl_types_package",
+         "semantic_paths" : [
+            "/semantic_preservation/portable_sources"
+         ],
+         "source_locations" : [
+            "FSM::VIAL::Backend::VHDLPortableGHDL"
+         ],
+         "source_map_id" : "portable-3777706b911ce90c9a3b05107233ec925c1029b175932ed10f1b1a588fb3c08e"
+      }
+   ],
+   "plan_id" : "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574",
+   "schema" : "fsmgen.vial_vhdl_osvvm_source_map.v1",
+   "schema_version" : 1
+}

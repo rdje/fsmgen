@@ -1,0 +1,280 @@
+{
+   "artifacts" : [
+      {
+         "byte_length" : 12843,
+         "kind" : "source_map",
+         "language" : "json",
+         "relpath" : "backends/vhdl_osvvm_qualified/backend-source-map.json",
+         "role" : "backend_source_map",
+         "sha256" : "5fee0fd05c1a0f982e0e08931088a0ff2dbce5181273fc34392ec75e57be0515",
+         "source_ids" : [
+            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+         ]
+      },
+      {
+         "byte_length" : 4834,
+         "kind" : "mapping_matrix",
+         "language" : "json",
+         "relpath" : "backends/vhdl_osvvm_qualified/evidence/advanced-mapping-matrix.json",
+         "role" : "advanced_mapping_matrix",
+         "sha256" : "a9999dad8a687fb57ee45720893e1cfb2a42aabebbb9edb3f4726c93bbadb593",
+         "source_ids" : [
+            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+         ]
+      },
+      {
+         "byte_length" : 10652,
+         "kind" : "provider_identity",
+         "language" : "json",
+         "relpath" : "backends/vhdl_osvvm_qualified/evidence/provider-materialization.json",
+         "role" : "provider_materialization",
+         "sha256" : "800d081f159ce25c2eb6ddbf332bf9730ecf790306d4ce4cdd492332ad31edd3",
+         "source_ids" : [
+            "2f7c391051dfb11890fa4bdbda9918d1db492250"
+         ]
+      },
+      {
+         "byte_length" : 3830,
+         "kind" : "semantic_preservation",
+         "language" : "json",
+         "relpath" : "backends/vhdl_osvvm_qualified/evidence/semantic-preservation.json",
+         "role" : "semantic_preservation",
+         "sha256" : "73ae51c455724dacccdbbcef5ac9f148af76a1ccac4239b13ca763466232f8eb",
+         "source_ids" : [
+            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+         ]
+      },
+      {
+         "byte_length" : 1011,
+         "kind" : "source_order",
+         "language" : "json",
+         "relpath" : "backends/vhdl_osvvm_qualified/evidence/source-order.json",
+         "role" : "source_order",
+         "sha256" : "062b076c9c97fd8a085db10aa41ee343b77ca461ea1204c441a9c9872606838e",
+         "source_ids" : [
+            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+         ]
+      },
+      {
+         "byte_length" : 2273,
+         "kind" : "static_validation",
+         "language" : "json",
+         "relpath" : "backends/vhdl_osvvm_qualified/evidence/static-validation.json",
+         "role" : "static_validation",
+         "sha256" : "8e2183cd106f7459e45513683d4470446b3841727e7a3245d0b082244b17e23c",
+         "source_ids" : [
+            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+         ]
+      },
+      {
+         "byte_length" : 594,
+         "kind" : "tool_profile",
+         "language" : "json",
+         "relpath" : "backends/vhdl_osvvm_qualified/evidence/tool-profile.json",
+         "role" : "tool_profile",
+         "sha256" : "e65b11dfd78e85c7c9f9ef67bcd30d33f9d2ec1444d1dfb8b52fdda438a4bbd5",
+         "source_ids" : [
+            "2f7c391051dfb11890fa4bdbda9918d1db492250"
+         ]
+      },
+      {
+         "byte_length" : 4351,
+         "kind" : "vhdl_source",
+         "language" : "vhdl",
+         "relpath" : "backends/vhdl_osvvm_qualified/src/fsmgen_vial_osvvm_adapter_pkg.vhd",
+         "role" : "vhdl_osvvm_adapter_package",
+         "sha256" : "1a547b8de38c072600a76497778758affab25ccd479c0c1dfce7f0e0579c9e94",
+         "source_ids" : [
+            "2f7c391051dfb11890fa4bdbda9918d1db492250",
+            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+         ]
+      },
+      {
+         "byte_length" : 15323,
+         "kind" : "vhdl_source",
+         "language" : "vhdl",
+         "relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_metadata_pkg.vhd",
+         "role" : "portable_vhdl_fixture_metadata",
+         "sha256" : "54b836ea1ce852d0dad9a4f7ff6249626ffd7b1674604cb62b2f79cc6cec0d46",
+         "source_ids" : [
+            "54b836ea1ce852d0dad9a4f7ff6249626ffd7b1674604cb62b2f79cc6cec0d46",
+            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+         ]
+      },
+      {
+         "byte_length" : 591,
+         "kind" : "vhdl_source",
+         "language" : "vhdl",
+         "relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_probe_adapter.vhd",
+         "role" : "portable_vhdl_probe_adapter",
+         "sha256" : "7a7e3b4e81fd222e53e2098653fcf1131f1b58dbeba35698c1cfe67a4fab5b56",
+         "source_ids" : [
+            "7a7e3b4e81fd222e53e2098653fcf1131f1b58dbeba35698c1cfe67a4fab5b56",
+            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+         ]
+      },
+      {
+         "byte_length" : 44758,
+         "kind" : "vhdl_source",
+         "language" : "vhdl",
+         "relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
+         "role" : "portable_vhdl_fixture_top",
+         "sha256" : "4a3665cb0e14b599962a3a29bafb2ff99787cc8cb332b0f35e50b75583a6666b",
+         "source_ids" : [
+            "4a3665cb0e14b599962a3a29bafb2ff99787cc8cb332b0f35e50b75583a6666b",
+            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+         ]
+      },
+      {
+         "byte_length" : 47670,
+         "kind" : "vhdl_source",
+         "language" : "vhdl",
+         "relpath" : "backends/vhdl_osvvm_qualified/src/portable/dut/ahb_lite_subordinate.vhd",
+         "role" : "portable_generated_hial_vhdl_dut",
+         "sha256" : "8d93b0ade4d9561d19fdd12ab10b4d8ba1a3dc06de9f911d1c0d8d1bf18518cf",
+         "source_ids" : [
+            "8d93b0ade4d9561d19fdd12ab10b4d8ba1a3dc06de9f911d1c0d8d1bf18518cf",
+            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+         ]
+      },
+      {
+         "byte_length" : 2191,
+         "kind" : "vhdl_source",
+         "language" : "vhdl",
+         "relpath" : "backends/vhdl_osvvm_qualified/src/portable/fsmgen_vial_runtime_pkg.vhd",
+         "role" : "portable_vhdl_runtime_package",
+         "sha256" : "82cb0d22e03a661ff88aecbf5b94b89f91381801576d1c683d749ac02e258017",
+         "source_ids" : [
+            "82cb0d22e03a661ff88aecbf5b94b89f91381801576d1c683d749ac02e258017",
+            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+         ]
+      },
+      {
+         "byte_length" : 6025,
+         "kind" : "vhdl_source",
+         "language" : "vhdl",
+         "relpath" : "backends/vhdl_osvvm_qualified/src/portable/fsmgen_vial_types_pkg.vhd",
+         "role" : "portable_vhdl_types_package",
+         "sha256" : "3777706b911ce90c9a3b05107233ec925c1029b175932ed10f1b1a588fb3c08e",
+         "source_ids" : [
+            "3777706b911ce90c9a3b05107233ec925c1029b175932ed10f1b1a588fb3c08e",
+            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+         ]
+      }
+   ],
+   "backend_profile" : "vhdl_osvvm_qualified",
+   "capability_evidence" : {
+      "advanced_adapter_emission" : "passed",
+      "advanced_mapping_matrix" : "passed_seven_exact_mappings",
+      "analysis" : "not_run",
+      "elaboration" : "not_run",
+      "parity" : "not_evaluated",
+      "portable_semantic_preservation" : "passed_six_byte_identical_sources",
+      "product_support" : "not_claimed",
+      "provider_licence_notice_inventory" : "passed_exact_inventory_with_documentation_absence_explicit",
+      "provider_materialization" : "passed_exact_recursive_identity",
+      "result" : "not_produced",
+      "runtime" : "not_run",
+      "source_map" : "passed_adapter_mapping_scope",
+      "static_validation" : "passed_structural_only"
+   },
+   "cleanup" : {
+      "staging_identity" : ".artifacts/tmp/vial/op-9d9bb98a66a79c8826fb65826cd7dca3df37118eeff598bde74b6a2121abbd06",
+      "state" : "not_created"
+   },
+   "diagnostics" : [],
+   "emitter_revision" : 1,
+   "execution_profile" : "core_directed_single_clock_execution_v1",
+   "fixture_id" : "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration",
+   "generated_top" : "base_output_arbitration_tb",
+   "limitations" : [
+      "The exact Documentation submodule has no tracked licence or notice file; no coverage is inferred.",
+      "Advanced provider services cannot rerandomize portable decisions, move phase barriers, redefine comparison or coverage meaning, alter the closed trace, or replace normalized results.",
+      "Provider presence, adapter emission, and structural checks are not analysis, elaboration, execution, result, parity, or product-support evidence."
+   ],
+   "negotiation" : {
+      "required" : [
+         "advanced_coverage",
+         "advanced_data_structure",
+         "advanced_randomization",
+         "advanced_reporting",
+         "advanced_scoreboard",
+         "advanced_synchronization",
+         "verification_component_adapter"
+      ],
+      "satisfied" : [
+         "advanced_coverage",
+         "advanced_data_structure",
+         "advanced_randomization",
+         "advanced_reporting",
+         "advanced_scoreboard",
+         "advanced_synchronization",
+         "verification_component_adapter"
+      ],
+      "semantic_authority" : "portable_vhdl_execution_and_result_oracles",
+      "unsatisfied" : []
+   },
+   "plan_id" : "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574",
+   "profile_state" : {
+      "emission" : "emitted",
+      "materialization" : "complete_recursive_verified",
+      "qualification" : "not_run_separate_leaf_15_7",
+      "static_review" : "passed_structural_only",
+      "visual_review" : "pending"
+   },
+   "provider_profile" : {
+      "combined_execution" : "not_run_separate_leaf_15_7",
+      "language" : "VHDL",
+      "materialization" : "complete_recursive_verified",
+      "profile" : "vhdl_osvvm_qualified",
+      "provider" : "OSVVM",
+      "provider_commit" : "2f7c391051dfb11890fa4bdbda9918d1db492250",
+      "provider_version" : "2026.05",
+      "schema" : "fsmgen.vial_backend_tool_profile.v1",
+      "schema_version" : 1,
+      "standard" : "IEEE 1076-2008",
+      "standard_option" : "--std=08",
+      "tool" : "GHDL",
+      "tool_backend" : "llvm_jit",
+      "tool_commit" : "e589c698c351369ac5bcfe7abe1f1152ac5d4727",
+      "tool_version" : "6.0.0"
+   },
+   "result" : {
+      "relpath" : null,
+      "schema" : "fsmgen.verification_result_manifest.v1",
+      "status" : "not_produced"
+   },
+   "schema" : "fsmgen.vial_backend.vhdl_osvvm.v1",
+   "schema_version" : 1,
+   "source_map" : {
+      "entry_count" : 13,
+      "relpath" : "backends/vhdl_osvvm_qualified/backend-source-map.json",
+      "schema" : "fsmgen.vial_vhdl_osvvm_source_map.v1",
+      "sha256" : "5fee0fd05c1a0f982e0e08931088a0ff2dbce5181273fc34392ec75e57be0515"
+   },
+   "source_order" : {
+      "generated_sources" : [
+         "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_metadata_pkg.vhd",
+         "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_probe_adapter.vhd",
+         "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
+         "backends/vhdl_osvvm_qualified/src/portable/dut/ahb_lite_subordinate.vhd",
+         "backends/vhdl_osvvm_qualified/src/portable/fsmgen_vial_runtime_pkg.vhd",
+         "backends/vhdl_osvvm_qualified/src/portable/fsmgen_vial_types_pkg.vhd",
+         "backends/vhdl_osvvm_qualified/src/fsmgen_vial_osvvm_adapter_pkg.vhd"
+      ],
+      "order_digest" : "a8c18950446fd1239b7c8e2cc66dc361d4f00179254ee8ed069f81deaee15fe5",
+      "provider_build_roots" : [
+         ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/osvvm.pro",
+         ".artifacts/cache/providers/osvvm/2026.05/source/Common/build.pro"
+      ],
+      "schema" : "fsmgen.vial_vhdl_osvvm_source_order.v1",
+      "schema_version" : 1,
+      "status" : "selected_not_executed"
+   },
+   "standard_profile" : {
+      "language" : "VHDL",
+      "methodology" : "OSVVM 2026.05",
+      "standard" : "IEEE 1076-2008",
+      "standard_option" : "--std=08"
+   }
+}

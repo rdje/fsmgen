@@ -34,7 +34,8 @@ provider, and GHDL 6.0.0 is the first exact qualification tool. UVVM was
 audited but is not selected. Completed `.15.5` now qualifies the exact official
 macOS ARM64 GHDL 6.0.0 LLVM-JIT package through analysis, elaboration, bounded
 execution, normalized results, and applicable portable-SV parity. OSVVM remains
-the next separately materialized provider.
+separately isolated from that provider-free qualification; completed `.15.6`
+now installs its exact recursive 2026.05 graph and emits the advanced adapter.
 
 Implementation parent `.15` is active and decomposed. Completed `.15.1` now
 ships the provider-free emitter substrate and first deterministic review
@@ -44,8 +45,9 @@ and a declared-probe adapter. Completed `.15.3` adds bounded scoreboards,
 coverage counters, substitution faults, procedural checks, diagnostics,
 closed trace framing, and normalized-result projection. Completed `.15.4`
 closes the portable review matrix. Completed `.15.5` qualifies the available
-exact official macOS ARM64 GHDL 6.0.0 LLVM-JIT package. `.15.6` is active for repository-local OSVVM
-2026.05 materialization/emission, and `.15.7` depends on both. NEXSIM-dependent
+exact official macOS ARM64 GHDL 6.0.0 LLVM-JIT package. Completed `.15.6`
+installs exact recursive OSVVM 2026.05 and emits its isolated advanced adapter;
+`.15.7` is next for combined qualification. NEXSIM-dependent
 runtime qualification is director-deferred until capability-ready releases
 provide exact evidence.
 
@@ -959,6 +961,42 @@ Selecting one provider avoids two overlapping generated adapter systems and
 two qualification matrices. It does not declare UVVM inferior or permanently
 unsupported; a future UVVM profile needs its own explicit identity and
 evidence.
+
+The checked OSVVM materialization is not a shallow source snapshot. It contains
+the superproject and all 13 recursive gitlinks under the repository-derived
+`.artifacts/cache/providers/osvvm/2026.05/source` root. Each repository is
+verified by commit, tree, origin, tracked-entry count, and clean worktree. The
+inventory locks 14 Apache-2.0 licence files and finds no notice file. The
+pinned `Documentation` repository itself has no tracked licence or notice
+file; FSMGen preserves that upstream absence and does not infer coverage.
+
+The advanced gallery is additive:
+
+```text
+backends/vhdl_osvvm_qualified/
+  backend-manifest.json
+  backend-source-map.json
+  evidence/{provider-materialization,advanced-mapping-matrix}.json
+  evidence/{semantic-preservation,source-order,static-validation}.json
+  evidence/tool-profile.json
+  src/fsmgen_vial_osvvm_adapter_pkg.vhd
+  src/portable/<six byte-identical portable VHDL sources>
+```
+
+Seven mappings cover `RandomPkg`, `CoveragePkg`, `ScoreboardGenericPkg`,
+`AlertLogPkg`, `TbUtilPkg`, `MemoryPkg`, and
+`osvvm_common.AddressBusTransactionPkg`. Thirteen source-map entries, twelve
+structural checks, and six unchanged-semantic guards keep portable replay,
+phase order, comparison/coverage meaning, trace, and normalized results in
+authority. Check the exact 15-artifact graph with:
+
+```text
+perl scripts/refresh_vial_vhdl_osvvm_gallery.pl --check
+```
+
+This command verifies materialization and emitted bytes without fetching the
+network. It does not analyze, elaborate, or execute VHDL; those combined
+OSVVM 2026.05 plus GHDL 6.0.0 gates belong to `.15.7`.
 
 ### Logical time without delta-cycle folklore
 
