@@ -312,7 +312,7 @@ fixture supplies paired implementations and a shared logical outcome oracle.
 | `sv_uvm_experimental.<tool-and-version>` | same native artifacts under an incomplete open-source tool | exact tool/version and exercised probe matrix | experimental evidence only; cannot qualify product runtime |
 | `sv_uvm_qualified` | executable native SystemVerilog/UVM components, sequences, monitors, scoreboards, subscribers/coverage | exact PGEN parser + NEXSIM simulator tuple, handoff, UVM revision, parse/compile/elaborate/simulate/result gates | unavailable until capability-qualified releases exist; no invented version |
 | `vhdl_portable_ghdl` | Provider-free VHDL-2008 packages, scheduler, adapters, testbench, closed trace/result | exact GHDL 6.0.0 LLVM-JIT, `--std=08`, analyze/elaborate/run/result/parity, exercised capability list | bounded canonical fixture qualified; GHDL's VHDL/PSL implementation is explicitly partial and LLVM AOT is not inferred |
-| `vhdl_osvvm_qualified` | Same VIAL semantics plus negotiated advanced OSVVM services | exact OSVVM 2026.05 recursive identity plus GHDL 6.0.0 and provider adapter/result gates | provider recursively materialized and adapter structurally reviewed; combined execution/result qualification remains not run, and provider presence alone is not capability |
+| `vhdl_osvvm_qualified` | Same VIAL semantics plus negotiated advanced OSVVM services | exact OSVVM 2026.05 recursive identity plus GHDL 6.0.0 and provider adapter/result gates | bounded canonical fixture and adapter probe qualified: 61 provider sources, closed result/parity, four supplementary reports, and exact cleanup; broader provider breadth is not inferred |
 | `vhdl_*_qualified.<tool-id>` | Portable or OSVVM graph under another VHDL simulator | exact tool/version/build, standard/options, provider where applicable, compile/elaborate/run/result/parity | no broader simulator is inferred from GHDL evidence |
 | `mixed_language_qualified` | HIAL and VIAL in different HDLs | named mixed-language tool/version, binding adapter, compile/elaborate/run | never inferred from single-language success |
 
@@ -1370,17 +1370,21 @@ negotiated native/advanced requirements or supplementary reports. It cannot
 rerandomize plan-resolved decisions, change drive/sample/react/check ordering,
 redefine comparison/bin semantics, or replace the normalized parity oracle.
 
-The revision-1 advanced graph contains six byte-identical portable sources and
+The revision-2 advanced graph contains six byte-identical portable sources and
 one isolated adapter package. Seven negotiated mappings bind native-only
 randomization to `RandomPkg`, supplementary coverage to `CoveragePkg`,
 scoreboarding to `ScoreboardGenericPkg` through `ScoreboardPkg_slv`, reporting
 to `AlertLogPkg`, coordination to `TbUtilPkg`, provider memory to `MemoryPkg`,
 and address-bus verification components to
 `osvvm_common.AddressBusTransactionPkg`. Thirteen source-map entries, twelve
-structural checks, six explicit unchanged-semantic guards, and a deterministic
-fifteen-artifact gallery prove emission only. Active `.15.7` now owns exact
-combined OSVVM 2026.05 plus GHDL 6.0.0 analysis, elaboration, execution,
-result, and parity.
+structural checks, six explicit unchanged-semantic guards, a qualification
+reference, and a deterministic sixteen-artifact gallery preserve exact scope.
+Completed `.15.7` compiles 44 OSVVM core and 17 Common sources in selected
+VHDL-2008 order, analyzes the adapter and generated fixture, and executes both
+the fixture and provider probe twice. The unchanged 42-record trace, passing
+normalized result, and nineteen portable parity paths remain authoritative.
+Four deterministic OSVVM reports record three clean affirmations, one of four
+coverage bins sampled, and one scoreboard item checked with zero errors.
 
 The portable backend schema is `fsmgen.vial_backend.vhdl_portable.v1`; the
 advanced schema is `fsmgen.vial_backend.vhdl_osvvm.v1`. Broader simulator
@@ -1483,10 +1487,10 @@ The new backend manifest records legacy migration as
 `migration_kind=parallel_versioned_surface`. Any future conversion,
 deprecation, or retirement requires another explicit compatibility owner.
 
-The bounded GHDL proof claims no complete backend or IEEE 1076-2008 breadth,
-PSL, OSVVM/UVVM, another simulator, formal, mixed-language, VHDL-2019,
-provider-component breadth, general cross-backend parity, scale, or legacy
-package analyzer support.
+The bounded combined proof claims no complete backend or IEEE 1076-2008
+breadth, PSL, UVVM, another simulator, formal, mixed-language, VHDL-2019,
+provider verification-component transactions, general provider breadth,
+general cross-backend parity, scale, or legacy-package analyzer support.
 
 Clean selection commit `e5aa90b7a` activates `.15` and decomposes seven
 children. Completed `.15.1` owns the provider-free emitter substrate,
@@ -1496,9 +1500,9 @@ capability non-claims, and the first byte-locked review gallery. Completed
 probe-adapter semantics described below. Completed `.15.3` adds portable
 scoreboards, coverage, faults, procedural checks, diagnostics, trace closure,
 and normalized-result projection. `.15.4` closes portable review; completed
-`.15.5` owns exact GHDL 6.0.0 LLVM-JIT qualification. `.15.6-.15.7` own OSVVM
-2026.05 adapter emission and combined qualification. Unavailable tools do not
-block reviewable generation.
+`.15.5` owns exact GHDL 6.0.0 LLVM-JIT qualification. Completed `.15.6-.15.7`
+own OSVVM 2026.05 adapter emission and bounded combined qualification.
+Unavailable tools do not block reviewable generation.
 
 Completed `.15.1` now ships that foundation. `PlanBuilder` preserves one
 deterministic generated HIAL VHDL source beside its existing SystemVerilog
@@ -1595,11 +1599,12 @@ checked gallery is at
 is regenerated or checked with
 `perl scripts/refresh_vial_vhdl_portable_gallery.pl [--check]`.
 
-This completion advances the honest capability state to private, emitted,
-structurally reviewed, visual-review pending, and unqualified. Exact GHDL
-6.0.0 remains unavailable and unexecuted. VHDL analysis, elaboration, runtime, produced-result
-validation, parity, PSL, complete VHDL-2008, OSVVM/UVVM, mixed-language
-behavior, and product support remain explicitly unclaimed.
+The later `.15.5` and `.15.7` executable gates advance the honest capability
+state to private, emitted, structurally reviewed, and bounded-qualified under
+exact GHDL 6.0.0 LLVM-JIT, both provider-free and with OSVVM 2026.05. Visual
+review remains pending. Complete VHDL-2008, PSL, UVVM, general OSVVM breadth,
+another simulator, mixed-language behavior, general parity, scale, and public
+embedding support remain explicitly unclaimed.
 
 ### Primary evidence
 

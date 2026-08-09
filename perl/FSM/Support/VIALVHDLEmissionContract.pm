@@ -30,7 +30,7 @@ sub vial_vhdl_emission_contract_keys {
 sub build_vial_vhdl_emission_contract {
     return {
         schema_version => 1,
-        status => 'shipped_private_portable_qualified_and_osvvm_emitted_profiles',
+        status => 'shipped_private_portable_and_osvvm_qualified_profiles',
         contract_source => vial_vhdl_emission_contract_source(),
         implementation_entrypoints => [
             'FSM::VIAL::Backend::VHDLPortableGHDL->emit({...})',
@@ -40,9 +40,11 @@ sub build_vial_vhdl_emission_contract {
             'FSM::VIAL::Backend::OSVVM2026_05Materialization->verify({...})',
             'FSM::VIAL::Backend::VHDLOSVVM2026_05->emit({...})',
             'FSM::VIAL::Backend::VHDLOSVVMStaticValidator->validate({...})',
+            'FSM::VIAL::Backend::VHDLOSVVMGHDLQualification->qualify({...})',
             'FSM::VIAL::ArtifactTransaction->publish({...})',
             'perl scripts/run_vial_vhdl_portable_ghdl_qualification.pl --check',
             'perl scripts/refresh_vial_vhdl_osvvm_gallery.pl --check',
+            'perl scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl --check',
         ],
         execution_schema => 'fsmgen.vial_execution_ir.v1',
         profile => 'vhdl_portable_ghdl',
@@ -76,9 +78,11 @@ sub build_vial_vhdl_emission_contract {
             provider_required_for_emission => JSON::PP::false,
             advanced_provider => 'OSVVM 2026.05',
             advanced_provider_status =>
-                'exact_recursive_materialization_adapter_emitted_structurally_reviewed_unqualified',
+                'exact_recursive_materialization_adapter_emitted_and_bounded_qualified',
             advanced_profile => 'vhdl_osvvm_qualified',
             advanced_mapping_count => 7,
+            advanced_qualification_report =>
+                'vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json',
         },
         library_materialization => {
             required_for_foundation_emission => JSON::PP::false,
@@ -128,7 +132,12 @@ sub build_vial_vhdl_emission_contract {
             osvvm_portable_semantic_preservation =>
                 'passed_six_byte_identical_sources_and_six_guards',
             osvvm_static_validation => 'passed_twelve_structural_checks',
-            osvvm_combined_qualification => 'not_run_separate_profile',
+            osvvm_combined_qualification =>
+                'passed_exact_osvvm_2026_05_ghdl_6_0_0_bounded_profile',
+            osvvm_provider_compilation => 'passed_sixty_one_ordered_sources',
+            osvvm_adapter_analysis => 'passed_exact_provider_tool_tuple',
+            osvvm_runtime => 'passed_bounded_fixture_and_provider_probe',
+            osvvm_supplementary_reports => 'passed_four_deterministic_reports',
             product_support => 'qualified_private_fixture_profile_not_public_api',
         },
         capabilities => [qw(
@@ -172,6 +181,14 @@ sub build_vial_vhdl_emission_contract {
             vial.backend.vhdl_osvvm_qualified.semantic_preservation.v1
             vial.backend.vhdl_osvvm_qualified.static_validation.v1
             vial.backend.vhdl_osvvm_qualified.review_gallery.v1
+            vial.backend.vhdl_osvvm_qualified.provider_compilation.v1
+            vial.backend.vhdl_osvvm_qualified.generated_analysis.v1
+            vial.backend.vhdl_osvvm_qualified.bounded_runtime.v1
+            vial.backend.vhdl_osvvm_qualified.normalized_result.v1
+            vial.backend.vhdl_osvvm_qualified.portable_result_parity.v1
+            vial.backend.vhdl_osvvm_qualified.supplementary_reports.v1
+            vial.backend.vhdl_osvvm_qualified.deterministic_runtime.v1
+            vial.backend.vhdl_osvvm_qualified.exact_cleanup.v1
         )],
         limits => {
             selected_units => 1,
@@ -201,6 +218,10 @@ sub build_vial_vhdl_emission_contract {
             osvvm_generated_vhdl_sources => 7,
             osvvm_source_map_entries => 13,
             osvvm_static_validation_checks => 12,
+            osvvm_provider_analyzed_sources => 61,
+            osvvm_runtime_probed_mappings => 6,
+            osvvm_analysis_only_mappings => 1,
+            osvvm_supplementary_reports => 4,
         },
         fixture => 'vial/ahb_subordinate_base_output_arbitration.vial',
         review_gallery =>
@@ -209,8 +230,8 @@ sub build_vial_vhdl_emission_contract {
         public_embedding_api => JSON::PP::false,
         explicit_nonclaims => [qw(
             complete_vhdl_backend general_cross_backend_parity psl
-            complete_vhdl_2008 osvvm_combined_qualification uvvm
-            another_simulator mixed_language scale
+            complete_vhdl_2008 general_osvvm_breadth uvvm another_simulator
+            mixed_language scale
         )],
         guidance => [
             'Use the private emitter to inspect deterministic provider-free VHDL-2008 typed drivers, samplers, scheduling, scenarios, models, bounded scoreboards, coverage, substitution faults, procedural checks, diagnostics, trace closure, normalized result projection, probe adapters, exact ranks, HIAL DUT bytes, and source maps.',
@@ -219,7 +240,8 @@ sub build_vial_vhdl_emission_contract {
             'The exact migration proof locks the inert legacy fixture bytes/schema and byte-identical HIAL DUT handoff; the generated native VIAL graph remains separate and does not consume, rewrite, or widen either surface.',
             'Canonical VHDL source remains provider-neutral. The qualification report freezes and executes exact GHDL identity, ordered analysis/elaboration/run commands, deterministic reruns, four-state timing, trace/result validation, applicable portable-SV parity, resource controls, and cleanup.',
             'Do not generalize the LLVM-JIT result to GHDL LLVM AOT: the exact 6.0.0 AOT package analyzed and elaborated the fixture but failed its external-name adapter at runtime.',
-            'Treat the OSVVM adapter, seven-mapping matrix, six byte-identical portable sources, twelve structural checks, and checked advanced gallery as emission evidence only. Exact OSVVM 2026.05 plus GHDL 6.0.0 analysis through parity remains unqualified.',
+            'The separate checked combined report qualifies exact OSVVM 2026.05 plus GHDL 6.0.0 for 61-source provider compilation, adapter/generated-fixture analysis, bounded fixture and provider-probe execution, unchanged normalized results, nineteen portable parity paths, four supplementary reports, deterministic rerun, and exact cleanup.',
+            'Do not generalize the bounded OSVVM result to provider verification-component transactions, UVVM, PSL, complete VHDL-2008, another simulator, mixed-language execution, general parity, or scale.',
             'The exact Documentation submodule contains no tracked licence or notice file at its pinned commit. This absence is identity-locked and no licence coverage is inferred.',
         ],
     };

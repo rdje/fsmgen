@@ -12,12 +12,12 @@
          ]
       },
       {
-         "byte_length" : 4834,
+         "byte_length" : 4961,
          "kind" : "mapping_matrix",
          "language" : "json",
          "relpath" : "backends/vhdl_osvvm_qualified/evidence/advanced-mapping-matrix.json",
          "role" : "advanced_mapping_matrix",
-         "sha256" : "a9999dad8a687fb57ee45720893e1cfb2a42aabebbb9edb3f4726c93bbadb593",
+         "sha256" : "42dcdc7a79217d6e5065c00f5d8513f26712f23bd5049b5dd750adde6b93fbb6",
          "source_ids" : [
             "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
          ]
@@ -34,6 +34,17 @@
          ]
       },
       {
+         "byte_length" : 489,
+         "kind" : "qualification_reference",
+         "language" : "json",
+         "relpath" : "backends/vhdl_osvvm_qualified/evidence/qualification-reference.json",
+         "role" : "combined_qualification_reference",
+         "sha256" : "74a1a48e3152a78d6747e52a93f12a515fefaf9598212b39307043d3c59b55e8",
+         "source_ids" : [
+            "qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1"
+         ]
+      },
+      {
          "byte_length" : 3830,
          "kind" : "semantic_preservation",
          "language" : "json",
@@ -45,34 +56,34 @@
          ]
       },
       {
-         "byte_length" : 1011,
+         "byte_length" : 1008,
          "kind" : "source_order",
          "language" : "json",
          "relpath" : "backends/vhdl_osvvm_qualified/evidence/source-order.json",
          "role" : "source_order",
-         "sha256" : "062b076c9c97fd8a085db10aa41ee343b77ca461ea1204c441a9c9872606838e",
+         "sha256" : "a7b277bb5fba941d95676dab0f3aff351c0880f2390a2fb5d7d498292977df2d",
          "source_ids" : [
             "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
          ]
       },
       {
-         "byte_length" : 2273,
+         "byte_length" : 2298,
          "kind" : "static_validation",
          "language" : "json",
          "relpath" : "backends/vhdl_osvvm_qualified/evidence/static-validation.json",
          "role" : "static_validation",
-         "sha256" : "8e2183cd106f7459e45513683d4470446b3841727e7a3245d0b082244b17e23c",
+         "sha256" : "3e20f47a8be0292d16417068ba415926124e54df27ceda8dfeae1a4777279d02",
          "source_ids" : [
             "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
          ]
       },
       {
-         "byte_length" : 594,
+         "byte_length" : 824,
          "kind" : "tool_profile",
          "language" : "json",
          "relpath" : "backends/vhdl_osvvm_qualified/evidence/tool-profile.json",
          "role" : "tool_profile",
-         "sha256" : "e65b11dfd78e85c7c9f9ef67bcd30d33f9d2ec1444d1dfb8b52fdda438a4bbd5",
+         "sha256" : "30124c109be2ab5e007d9504b0ee83e0005829b4499f8ad391f3c5d29a28fa54",
          "source_ids" : [
             "2f7c391051dfb11890fa4bdbda9918d1db492250"
          ]
@@ -166,31 +177,37 @@
    "capability_evidence" : {
       "advanced_adapter_emission" : "passed",
       "advanced_mapping_matrix" : "passed_seven_exact_mappings",
-      "analysis" : "not_run",
-      "elaboration" : "not_run",
-      "parity" : "not_evaluated",
+      "analysis" : "passed_adapter_and_generated_fixture",
+      "cleanup" : "passed_same_volume_exact_removal",
+      "deterministic_rerun" : "passed_fixture_probe_and_reports",
+      "elaboration" : "passed_fixture_and_provider_probe",
+      "parity" : "passed_nineteen_applicable_portable_paths",
       "portable_semantic_preservation" : "passed_six_byte_identical_sources",
-      "product_support" : "not_claimed",
+      "product_support" : "qualified_private_fixture_profile_not_public_api",
+      "provider_compilation" : "passed_sixty_one_ordered_sources",
       "provider_licence_notice_inventory" : "passed_exact_inventory_with_documentation_absence_explicit",
       "provider_materialization" : "passed_exact_recursive_identity",
-      "result" : "not_produced",
-      "runtime" : "not_run",
+      "result" : "produced_normalized_pass",
+      "runtime" : "passed_bounded_fixture_and_provider_probe",
       "source_map" : "passed_adapter_mapping_scope",
-      "static_validation" : "passed_structural_only"
+      "static_validation" : "passed_structural_only",
+      "supplementary_provider_reports" : "passed_four_deterministic_osvvm_reports",
+      "trace" : "passed_closed_forty_two_records"
    },
    "cleanup" : {
       "staging_identity" : ".artifacts/tmp/vial/op-9d9bb98a66a79c8826fb65826cd7dca3df37118eeff598bde74b6a2121abbd06",
       "state" : "not_created"
    },
    "diagnostics" : [],
-   "emitter_revision" : 1,
+   "emitter_revision" : 2,
    "execution_profile" : "core_directed_single_clock_execution_v1",
    "fixture_id" : "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration",
    "generated_top" : "base_output_arbitration_tb",
    "limitations" : [
       "The exact Documentation submodule has no tracked licence or notice file; no coverage is inferred.",
       "Advanced provider services cannot rerandomize portable decisions, move phase barriers, redefine comparison or coverage meaning, alter the closed trace, or replace normalized results.",
-      "Provider presence, adapter emission, and structural checks are not analysis, elaboration, execution, result, parity, or product-support evidence."
+      "Qualification covers one bounded generated fixture and one supplementary adapter probe; it is not general VHDL or OSVVM breadth.",
+      "The OSVVM Common address-bus type is analyzed through the adapter, but no provider verification-component transaction executes."
    ],
    "negotiation" : {
       "required" : [
@@ -218,18 +235,20 @@
    "profile_state" : {
       "emission" : "emitted",
       "materialization" : "complete_recursive_verified",
-      "qualification" : "not_run_separate_leaf_15_7",
+      "qualification" : "qualified_bounded_fixture_and_adapter_probe",
       "static_review" : "passed_structural_only",
       "visual_review" : "pending"
    },
    "provider_profile" : {
-      "combined_execution" : "not_run_separate_leaf_15_7",
+      "combined_execution" : "qualified_bounded_fixture_and_adapter_probe",
       "language" : "VHDL",
       "materialization" : "complete_recursive_verified",
       "profile" : "vhdl_osvvm_qualified",
       "provider" : "OSVVM",
       "provider_commit" : "2f7c391051dfb11890fa4bdbda9918d1db492250",
       "provider_version" : "2026.05",
+      "qualification_report" : "vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json",
+      "qualification_report_sha256" : "15df2a9b0755a8c66c13e4423881e05606c439ff8f846e947e29bea0d54cfc42",
       "schema" : "fsmgen.vial_backend_tool_profile.v1",
       "schema_version" : 1,
       "standard" : "IEEE 1076-2008",
@@ -240,9 +259,10 @@
       "tool_version" : "6.0.0"
    },
    "result" : {
-      "relpath" : null,
+      "relpath" : "vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json",
+      "result_record_sha256" : "644f5621b95964da4b5d1daf13e5161cf33eb4f8b7ab4429ae448f347bb6ffef",
       "schema" : "fsmgen.verification_result_manifest.v1",
-      "status" : "not_produced"
+      "status" : "pass"
    },
    "schema" : "fsmgen.vial_backend.vhdl_osvvm.v1",
    "schema_version" : 1,
@@ -269,7 +289,7 @@
       ],
       "schema" : "fsmgen.vial_vhdl_osvvm_source_order.v1",
       "schema_version" : 1,
-      "status" : "selected_not_executed"
+      "status" : "executed_qualified"
    },
    "standard_profile" : {
       "language" : "VHDL",

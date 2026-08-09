@@ -19,6 +19,10 @@ my $BACKEND_PROFILE = 'vhdl_osvvm_qualified';
 my $BACKEND_SCHEMA = 'fsmgen.vial_backend.vhdl_osvvm.v1';
 my $BASE = 'backends/vhdl_osvvm_qualified';
 my $DEPENDENCY_ROOT = '.artifacts/cache/providers/osvvm/2026.05/source';
+my $QUALIFICATION_REPORT =
+    'vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json';
+my $QUALIFICATION_SHA256 =
+    '15df2a9b0755a8c66c13e4423881e05606c439ff8f846e947e29bea0d54cfc42';
 my $JSON = JSON::PP->new->canonical(1);
 my $PRETTY_JSON = JSON::PP->new->canonical(1)->pretty(1);
 my @REQUIREMENT_IDS = qw(
@@ -74,6 +78,7 @@ sub _emit($raw) {
     return _failure('VIAL_OSVVM_PROVIDER_MATERIALIZATION_ERROR',
         $provider->{diagnostics}[0]{message}, '/dependency_root')
         unless $provider->{ok};
+    my $qualification = _load_qualification_report();
 
     my $portable = FSM::VIAL::Backend::VHDLPortableGHDL->emit({
         execution_ir => $raw->{execution_ir},
@@ -176,7 +181,7 @@ sub _emit($raw) {
         ],
         generated_sources => \@source_order,
         order_digest => sha256_hex(join("\n", @source_order) . "\n"),
-        status => 'selected_not_executed',
+        status => 'executed_qualified',
     };
     my $tool_profile = {
         schema => 'fsmgen.vial_backend_tool_profile.v1',
@@ -193,7 +198,9 @@ sub _emit($raw) {
         tool_backend => 'llvm_jit',
         tool_commit => 'e589c698c351369ac5bcfe7abe1f1152ac5d4727',
         materialization => 'complete_recursive_verified',
-        combined_execution => 'not_run_separate_leaf_15_7',
+        combined_execution => 'qualified_bounded_fixture_and_adapter_probe',
+        qualification_report => $QUALIFICATION_REPORT,
+        qualification_report_sha256 => $QUALIFICATION_SHA256,
     };
 
     my @support_artifacts = (
@@ -215,6 +222,18 @@ sub _emit($raw) {
         _artifact("$BASE/evidence/tool-profile.json", 'tool_profile',
             'tool_profile', 'json', _json_text($tool_profile),
             [$provider->{manifest}{root_commit}]),
+        _artifact("$BASE/evidence/qualification-reference.json",
+            'combined_qualification_reference', 'qualification_reference',
+            'json', _json_text({
+                schema => 'fsmgen.vial_vhdl_osvvm_qualification_reference.v1',
+                schema_version => 1,
+                status => 'qualified',
+                qualification_id => $qualification->{qualification_id},
+                report_relpath => $QUALIFICATION_REPORT,
+                report_sha256 => $QUALIFICATION_SHA256,
+                tool => 'GHDL 6.0.0 LLVM-JIT',
+                provider => 'OSVVM 2026.05',
+            }), [$qualification->{qualification_id}]),
     );
 
     my $operation_id = 'op-' . sha256_hex($JSON->encode({
@@ -233,7 +252,7 @@ sub _emit($raw) {
         plan_id => $portable->{plan_id},
         fixture_id => $portable->{backend_manifest}{fixture_id},
         generated_top => $portable->{generated_top},
-        emitter_revision => 1,
+        emitter_revision => 2,
         execution_profile => $portable->{backend_manifest}{execution_profile},
         standard_profile => {
             language => 'VHDL',
@@ -247,7 +266,7 @@ sub _emit($raw) {
             emission => 'emitted',
             static_review => 'passed_structural_only',
             visual_review => 'pending',
-            qualification => 'not_run_separate_leaf_15_7',
+            qualification => 'qualified_bounded_fixture_and_adapter_probe',
         },
         negotiation => {
             required => \@requirements,
@@ -264,17 +283,24 @@ sub _emit($raw) {
             portable_semantic_preservation => 'passed_six_byte_identical_sources',
             static_validation => 'passed_structural_only',
             source_map => 'passed_adapter_mapping_scope',
-            analysis => 'not_run',
-            elaboration => 'not_run',
-            runtime => 'not_run',
-            result => 'not_produced',
-            parity => 'not_evaluated',
-            product_support => 'not_claimed',
+            provider_compilation => 'passed_sixty_one_ordered_sources',
+            analysis => 'passed_adapter_and_generated_fixture',
+            elaboration => 'passed_fixture_and_provider_probe',
+            runtime => 'passed_bounded_fixture_and_provider_probe',
+            trace => 'passed_closed_forty_two_records',
+            result => 'produced_normalized_pass',
+            parity => 'passed_nineteen_applicable_portable_paths',
+            supplementary_provider_reports =>
+                'passed_four_deterministic_osvvm_reports',
+            deterministic_rerun => 'passed_fixture_probe_and_reports',
+            cleanup => 'passed_same_volume_exact_removal',
+            product_support => 'qualified_private_fixture_profile_not_public_api',
         },
         limitations => [
             'The exact Documentation submodule has no tracked licence or notice file; no coverage is inferred.',
             'Advanced provider services cannot rerandomize portable decisions, move phase barriers, redefine comparison or coverage meaning, alter the closed trace, or replace normalized results.',
-            'Provider presence, adapter emission, and structural checks are not analysis, elaboration, execution, result, parity, or product-support evidence.',
+            'Qualification covers one bounded generated fixture and one supplementary adapter probe; it is not general VHDL or OSVVM breadth.',
+            'The OSVVM Common address-bus type is analyzed through the adapter, but no provider verification-component transaction executes.',
         ],
         source_order => $source_order,
         source_map => {
@@ -286,8 +312,9 @@ sub _emit($raw) {
         artifacts => \@referenced,
         result => {
             schema => 'fsmgen.verification_result_manifest.v1',
-            status => 'not_produced',
-            relpath => undef,
+            status => 'pass',
+            relpath => $QUALIFICATION_REPORT,
+            result_record_sha256 => $qualification->{result}{result_record_sha256},
         },
         cleanup => {
             staging_identity => ".artifacts/tmp/vial/$operation_id",
@@ -303,7 +330,7 @@ sub _emit($raw) {
 
     return {
         ok => JSON::PP::true,
-        status => 'emitted_structurally_reviewed_unqualified',
+        status => 'emitted_structurally_reviewed_qualified',
         backend_profile => $BACKEND_PROFILE,
         plan_id => $portable->{plan_id},
         generated_top => $portable->{generated_top},
@@ -360,7 +387,8 @@ sub _mapping_matrix($adapter_text) {
             generated_end_line => $end,
             emission_status => 'emitted',
             static_status => 'passed',
-            qualification_status => 'not_run',
+            qualification_status => $mapping_id eq 'verification_component_adapter'
+                ? 'passed_analysis_only' : 'passed_runtime_probe',
             semantic_guard => $guard,
         };
     }
@@ -373,7 +401,7 @@ sub _mapping_matrix($adapter_text) {
         profile_state => {
             emission => 'emitted',
             static_review => 'passed_structural_only',
-            qualification => 'not_run',
+            qualification => 'qualified_bounded_fixture_and_adapter_probe',
         },
     };
 }
@@ -573,6 +601,34 @@ sub _line_span($text, $symbol) {
     my $prefix = substr($text, 0, $offset);
     my $line = 1 + (() = $prefix =~ /\n/g);
     return ($line, $line);
+}
+
+sub _load_qualification_report() {
+    open my $fh, '<:raw', $QUALIFICATION_REPORT
+        or confess "checked OSVVM/GHDL qualification report is absent\n";
+    local $/;
+    my $content = <$fh>;
+    close $fh
+        or confess "cannot close checked OSVVM/GHDL qualification report\n";
+    confess "checked OSVVM/GHDL qualification report digest drifted\n"
+        unless sha256_hex($content) eq $QUALIFICATION_SHA256;
+    my $report = eval { JSON::PP->new->decode($content) };
+    confess "checked OSVVM/GHDL qualification report is malformed\n"
+        unless defined($report) && !$@ && ref($report) eq 'HASH'
+            && !blessed($report);
+    confess "checked OSVVM/GHDL qualification identity drifted\n"
+        unless ($report->{schema} // '')
+                eq 'fsmgen.vial_vhdl_osvvm_ghdl_qualification.v1'
+            && ($report->{status} // '') eq 'qualified'
+            && ($report->{backend_profile} // '') eq $BACKEND_PROFILE
+            && ($report->{tool_profile}{qualified_version} // '') eq '6.0.0'
+            && ($report->{provider_profile}{version} // '') eq '2026.05'
+            && ($report->{result}{status} // '') eq 'pass'
+            && $report->{portable_result_parity}{equivalent}
+            && ($report->{supplementary_provider_reports}{report_count} // 0) == 4
+            && $report->{cleanup}{removed}
+            && $report->{cleanup}{same_volume};
+    return $report;
 }
 
 sub _artifact($relpath, $role, $kind, $language, $content, $source_ids) {

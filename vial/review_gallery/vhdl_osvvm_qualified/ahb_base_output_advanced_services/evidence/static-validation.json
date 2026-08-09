@@ -52,7 +52,7 @@
       },
       {
          "check_id" : "closed_mapping_matrix",
-         "evidence" : "7 emitted/static-only mappings",
+         "evidence" : "6 runtime-probed and 1 analysis-only qualified mappings",
          "status" : "passed"
       },
       {

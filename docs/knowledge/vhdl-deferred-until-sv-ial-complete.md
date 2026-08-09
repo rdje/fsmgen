@@ -21,7 +21,7 @@ answers:
   - "what happens to the legacy VHDL observation package?"
   - "does selecting GHDL imply VHDL compile support now?"
   - "can VHDL generation progress before GHDL is available?"
-date: 2026-08-01
+date: 2026-08-09
 status: current
 tags: [vhdl, hial, vial, vhdl-2008, ghdl, osvvm, uvvm, backend, verification, roadmap, four-state, psl]
 evidence: >-
@@ -30,6 +30,13 @@ evidence: >-
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md;
   docs/decisions/0051-vial-vhdl-uses-a-provider-free-core-and-osvvm-qualified-tier.md;
+  perl/FSM/VIAL/Backend/VHDLPortableGHDLQualification.pm;
+  perl/FSM/VIAL/Backend/OSVVM2026_05Materialization.pm;
+  perl/FSM/VIAL/Backend/VHDLOSVVMGHDLQualification.pm;
+  scripts/run_vial_vhdl_portable_ghdl_qualification.pl;
+  scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl;
+  vial/qualification/vhdl_portable_ghdl/ghdl-6.0.0-qualification.json;
+  vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json;
   perl/FSM/VerificationOutput/VHDL/ObservationPackageSkeleton.pm;
   perl/FSM/Support/VerificationOutputsContract.pm;
   t/1465-isf-verification-output-vhdl-observation-package.t;
@@ -42,7 +49,9 @@ evidence: >-
   https://github.com/OSVVM/OsvvmLibraries/releases/tag/2026.05;
   https://github.com/UVVM/UVVM/releases/tag/2026.03.20
 reverify: >-
-  rg -n 'vhdl_portable_ghdl|vhdl_osvvm_qualified|6\.0\.0|2026\.05|provider-free|unchanged_not_consumed|PSL' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/decisions/0051-vial-vhdl-uses-a-provider-free-core-and-osvvm-qualified-tier.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md
+  rg -n 'vhdl_portable_ghdl|vhdl_osvvm_qualified|6\.0\.0|2026\.05|provider-free|unchanged_not_consumed|PSL' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/decisions/0051-vial-vhdl-uses-a-provider-free-core-and-osvvm-qualified-tier.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md &&
+  perl scripts/run_vial_vhdl_portable_ghdl_qualification.pl --check &&
+  perl scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl --check
 ---
 
 The historical direct-HIAL decision remains narrow: do not promote the direct
@@ -53,12 +62,12 @@ contracts are now mature enough for exact architecture selection.
 
 Decision `0051` selects provider-free IEEE VHDL-2008 as the VIAL portable
 semantic core and OSVVM 2026.05 as its advanced methodology provider. GHDL
-6.0.0 is the first exact analysis/elaboration/runtime tool. On 2026-08-09, its
-official macOS ARM64 LLVM release asset became verified as available and
-`.15.5` was director-activated for repository-volume materialization and
-qualification; it remains unexecuted until that slice records evidence. OSVVM
-remains selected and unexecuted. UVVM 2026.03.20 was audited but is not the
-version-1 provider.
+6.0.0 is the first exact analysis/elaboration/runtime tool. Completed `.15.5`
+materialized the verified official macOS ARM64 LLVM release under a
+repository-derived dependency root and qualified the canonical provider-free
+fixture. Completed `.15.6` materialized the exact recursive OSVVM 2026.05
+graph, and completed `.15.7` qualified that provider with exact GHDL 6.0.0.
+UVVM 2026.03.20 was audited but is not the version-1 provider.
 
 `vhdl_portable_ghdl` statically lowers one bound execution plan into standard
 VHDL packages, a deterministic single-clock scheduler/testbench, explicit
@@ -84,6 +93,9 @@ exercised subset and flags independently.
 The legacy `vhdl-observation-package` remains an unchanged inert compatibility
 surface with no analyzer/runtime claim. Native VIAL uses a separate profile,
 artifact graph, metadata package, manifest, and source map. Completed
-`.15.1-.15.4` own provider-free emission/review. Active `.15.5` owns exact
-GHDL materialization and qualification; `.15.6-.15.7` retain the separate
-OSVVM gates.
+`.15.1-.15.5` own provider-free emission, review, and exact GHDL
+qualification. Completed `.15.6-.15.7` own exact recursive OSVVM
+materialization and the combined provider/tool qualification. The combined
+proof directly compiles 61 OSVVM/Common sources, analyzes the emitted graph,
+and exercises randomization, coverage, scoreboard, reporting, memory, and
+barrier services without changing the portable normalized-result oracle.

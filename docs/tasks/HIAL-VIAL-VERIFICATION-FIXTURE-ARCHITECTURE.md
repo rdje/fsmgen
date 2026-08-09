@@ -359,11 +359,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.6: emit exact OSVVM 2026.05 adapter`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.7`
-  Status: `active`
+  Status: `done`
   Goal: `Capability-qualify the OSVVM 2026.05 plus GHDL 6.0.0 profile and close VHDL support accounting.`
   Acceptance: `The exact provider/tool tuple independently proves provider compilation order, adapter and generated-fixture analysis, elaboration, bounded execution, closed trace, normalized semantic outcomes, deterministic rerun, applicable portable-result parity, supplementary provider reports, limits, cleanup, manifest/capability/support truth, and honest unsupported breadth. OSVVM qualification cannot imply UVVM, PSL, complete VHDL-2008, another simulator, mixed-language execution, or legacy-package analyzer support.`
-  Verification: `Clean completed OSVVM-emission predecessor 4f350f29cd3c7e22c6a749aadb88150ee987433f activates .15.7 alone. Exact GHDL 6.0.0 LLVM-JIT and recursive OSVVM 2026.05 inputs are repository-local, so combined provider compilation, generated-source analysis, elaboration, runtime, result, parity, support accounting, and cleanup may proceed without borrowing the completed provider-free qualification. Activation changes no source, generated artifact, qualification evidence, capability, runtime result, or support behavior.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.7: activate exact OSVVM GHDL qualification`
+  Verification: `The checked exact tuple compiles 44 OSVVM core plus 17 Common sources in the selected GHDL/VHDL-2008 order, then analyzes the seven-source generated graph and dedicated provider probe. Fixture and probe elaboration/execution pass twice with byte-identical stdout; the portable fixture retains one closed 42-record trace, a passing normalized result, and equivalence across 19 applicable portable-SV paths. The supplementary probe runtime-exercises six advanced mappings, analysis-qualifies the Common address-bus type, and produces four byte-identical OSVVM reports: three clean affirmations, one-of-four-bin/25% coverage, and one scoreboard item checked with zero errors. The exact digest-named same-volume staging root is removed, provider trees remain clean, and support claims remain private/bounded. UVVM, PSL, complete VHDL-2008, provider verification-component transactions, another simulator, mixed language, legacy-package analysis, general parity, and scale remain unclaimed.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.7: qualify exact OSVVM GHDL profile`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.16`
   Status: `proposed`
@@ -483,10 +483,19 @@ bounded runtime, timed four-state behavior, a closed normalized result,
 deterministic rerun, applicable portable-SV parity, resource controls, and
 exact same-volume cleanup pass. Completed `.15.6` materializes exact recursive
 OSVVM 2026.05 and ships its structurally reviewed advanced adapter/gallery.
-Both exact inputs are now available; `.15.7` is active for combined
-provider/tool qualification.
+Completed `.15.7` qualifies the combined exact tuple through 61-source
+provider compilation, generated analysis/elaboration/runtime, unchanged
+normalized result and parity, deterministic OSVVM reports, bounded support,
+and exact same-volume cleanup.
 
 ## Decisions
+
+- `2026-08-09`: Resolve the exact OSVVM project-file order for GHDL
+  VHDL-2008 into 44 core and 17 Common sources and compile it without a
+  cross-volume project cache. Keep OSVVM reports supplementary: a dedicated
+  probe may runtime-exercise six adapter families and analysis-qualify the
+  Common address-bus type, while only the unchanged portable trace/result and
+  its nineteen applicable parity paths decide semantic success.
 
 - `2026-08-09`: Materialize the complete official OSVVM 2026.05 superproject
   recursively and freeze every repository by commit, tree, origin, and tracked
@@ -786,9 +795,6 @@ provider/tool qualification.
 - Director-deferred `.13.3` must select exact PGEN/NEXSIM versions, handoff
   schema, semantic-introspection API schema, and MCP profile only after
   explicit reactivation against capability-ready releases.
-- Active `.15.7` must compile the exact OSVVM libraries and adapter with exact
-  GHDL 6.0.0 LLVM-JIT, then prove bounded runtime/result/parity and support
-  accounting without widening provider-free VIAL semantics.
 - `.16` must choose the first available mixed-language tool/profile.
 - `.17` must select measured architecture-specific capacity budgets; the
   separate whole-product scale tree retains big/really-big qualification.
@@ -801,10 +807,9 @@ provider/tool qualification.
   PGEN and NEXSIM releases exist. Commercial simulator availability is not a
   roadmap prerequisite, and Verilator/Icarus cannot be promoted from
   experimental evidence to `sv_uvm_qualified`.
-- No availability blocker remains for `.15.7`; exact GHDL 6.0.0 LLVM-JIT and
-  exact recursive OSVVM 2026.05 are repository-local. Active `.15.7` owns
-  combined analysis, elaboration, execution, normalized result, and
-  parity qualification. The pinned Documentation gitlink's absent tracked
+- `.15.7` is complete: exact GHDL 6.0.0 LLVM-JIT and recursive OSVVM 2026.05
+  are repository-local and their bounded combined profile is qualified. The
+  pinned Documentation gitlink's absent tracked
   licence/notice metadata remains an explicit non-inferred packaging finding,
   not a code-bearing library or tool-availability blocker.
 - Later UVM, VHDL, and mixed-language implementation/qualification leaves
@@ -874,6 +879,7 @@ provider/tool qualification.
 | `2026-08-09` | `.15.6` activation | clean exact-GHDL predecessor `a0e7149d5`; task/index/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook test; live-reference authority; diff/staged-doctrine gates | `passed`; `.15.6` alone is active for exact recursive OSVVM 2026.05 materialization and adapter/gallery emission, `.15.7` remains proposed, task integrity reports three active trees/916 nodes, Knowledge Map reports 1,105 facts/5,709 questions/5,875 occurrences/118 shards, all 52 mdBook chapters test, and the exact maintained-reference delta is 0 files/0 lines/+4 bytes; no provider bytes, source, generated artifact, capability, runtime, result, or support behavior changes. |
 | `2026-08-09` | `.15.6` implementation | official tag identity; complete repository-local recursive clone; 14 repository commit/tree/origin/tracked-entry identities; 13 gitlinks; clean-worktree proof; 14 licence/0 notice identities; Documentation metadata absence; revision-1 adapter, mapping matrix, source map, semantic-preservation proof, static negatives, gallery, support/docs/task/Knowledge Map/Memory/staged-doctrine gates | `passed`; exact OSVVM 2026.05 is installed, seven advanced mappings emit in one isolated adapter beside six byte-identical portable sources, and the fifteen-artifact gallery carries 13 maps/12 checks/six unchanged-semantic guards. The Documentation gitlink has no tracked licence/notice file and no coverage is inferred. Guarded impacted Files=6/Tests=36 and the exact gallery check pass; Knowledge Map is current at 1,105 facts/5,713 questions/5,879 occurrences/118 shards; task integrity reports three active trees/916 nodes; all 52 mdBook chapters test and the 87-file/18,073,088-byte repository-local build passes before exact removal. Combined OSVVM/GHDL analysis through parity remains solely `.15.7`. |
 | `2026-08-09` | `.15.7` activation | clean `.15.6` predecessor `4f350f29c`; task/index/audit/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook test; live-reference authority; diff/staged-doctrine gates | `passed`; `.15.7` alone is active for combined exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT qualification. Both inputs remain repository-local; task integrity reports three active trees/916 nodes, Knowledge Map remains 1,105 facts/5,713 questions/5,879 occurrences/118 shards, all 52 mdBook chapters test, and maintained-reference authority accepts the exact 0-file/0-line/+16-byte delta. Activation changes no source, generated artifact, qualification evidence, capability, runtime result, or support behavior. |
+| `2026-08-09` | `.15.7` exact combined qualification | exact GHDL archive/binary and recursive OSVVM identities; 44-core/17-Common ordered provider compilation; adapter/generated-fixture/probe analysis; fixture/probe elaboration and double execution; 42-record trace/result validation; 19-path portable parity; four deterministic OSVVM reports; bounded support/capability truth; same-volume cleanup; focused/corpus/capability/gallery/docs/task/Knowledge Map/mdBook/staged-doctrine gates | `passed`; `vhdl_osvvm_qualified` is bounded-qualified under exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT. Six adapter mappings execute in the probe; the Common address-bus mapping is analysis-only. OSVVM reports record three clean affirmations, 25% one-of-four-bin coverage, and one checked scoreboard item with zero errors, while portable trace/result/parity remain authoritative. Broader provider/language/tool/profile claims remain explicit non-claims. |
 
 ## Acceptance Checklist (enforced) — `.15.5` activation and NEXSIM deferral
 
@@ -2464,3 +2470,36 @@ provider/tool qualification.
   accepts the exact 0-file/0-line/+16-byte delta; diff checks and the final staged
   `[doctrine] all doctrine checks passed` result are recorded by the commit
   workflow.
+
+## Acceptance Checklist (enforced) — `.15.7` exact combined qualification
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'pending .15.5 and .15.6'
+  --oneline -- perl/FSM/Support/VIALVHDLEmissionContract.pm` locates selection
+  commit `9729f1f0c`; activation commit `03b2f7f76` and the predecessor
+  manifest/gallery still marked combined provider compilation, adapter
+  analysis, execution, result, parity, reports, and support as not run. Direct
+  compilation against the exact installed libraries proved the emitted adapter
+  API was sound; the remaining gap was an absent independent tuple qualifier,
+  not missing provider bytes or a generated-source defect.
+- [x] **ADDRESSED (verified)** —
+  guarded `perl scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl --check`
+  passes and changes the combined tuple from `not_run` to `qualified`.
+  `VHDLOSVVMGHDLQualification.pm` freezes exact tool/provider/source identities,
+  compiles 44 OSVVM and 17 Common sources, analyzes the generated graph and
+  checked probe, elaborates/runs both tops twice, validates the closed 42-record
+  trace, passing result, 19 parity paths, and four deterministic OSVVM reports,
+  then removes its exact same-volume staging identity. The checked report,
+  runner, gallery qualification reference, capability/support accounting, and
+  regression-corpus claims all agree on bounded private support and explicit
+  non-claims. The rationale ledger and exact focused/ancillary/card/mdBook
+  growth authorities are refreshed without increasing an enforcement ceiling.
+- [x] **NO REGRESSION** — the final guarded impacted suite reports `All tests successful`
+  at `Files=7, Tests=7127`, including fresh standalone and combined
+  exact-tool qualification; the combined qualifier subtests contain 42
+  assertions. The checked gallery reports seven VHDL sources, nine evidence
+  artifacts, seven mappings, thirteen maps, and twelve structural checks.
+  Knowledge Map is current at 1,105 facts/5,713 questions/5,879 occurrences/118
+  shards; task integrity reports three active trees/916 nodes; all 52 mdBook
+  chapters test and the 87-file/18,083,443-byte repository-local build passes
+  before exact removal. Final diff, staged acceptance, doctrine, and residue
+  results are recorded by the commit workflow.

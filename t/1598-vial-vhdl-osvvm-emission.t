@@ -103,8 +103,8 @@ subtest 'advanced negotiation and profile claims are exact and bounded' => sub {
         [sort @{FSM::VIAL::Backend::VHDLOSVVM2026_05->result_keys}],
         'backend result is closed',
     );
-    is($emission->{status}, 'emitted_structurally_reviewed_unqualified',
-        'status separates emission/static review from qualification');
+    is($emission->{status}, 'emitted_structurally_reviewed_qualified',
+        'status records emission/static review plus bounded qualification');
     is_deeply($emission->{negotiation}{required}, \@requirements,
         'seven exact advanced requirements are negotiated');
     is_deeply($emission->{negotiation}{satisfied}, \@requirements,
@@ -118,23 +118,27 @@ subtest 'advanced negotiation and profile claims are exact and bounded' => sub {
     my $manifest = $emission->{backend_manifest};
     is($manifest->{schema}, 'fsmgen.vial_backend.vhdl_osvvm.v1',
         'advanced backend schema is exact');
-    is($manifest->{emitter_revision}, 1, 'advanced emitter revision is exact');
+    is($manifest->{emitter_revision}, 2, 'advanced emitter revision is exact');
     is($manifest->{profile_state}{materialization},
         'complete_recursive_verified', 'profile records complete provider graph');
     is($manifest->{profile_state}{qualification},
-        'not_run_separate_leaf_15_7', 'combined qualification remains separate');
-    is($manifest->{capability_evidence}{analysis}, 'not_run',
-        'provider presence is not analysis evidence');
-    is($manifest->{capability_evidence}{runtime}, 'not_run',
-        'provider presence is not runtime evidence');
-    is($manifest->{capability_evidence}{result}, 'not_produced',
-        'provider emission produces no normalized runtime result');
-    is($manifest->{capability_evidence}{product_support}, 'not_claimed',
-        'provider emission makes no product-support claim');
+        'qualified_bounded_fixture_and_adapter_probe',
+        'combined qualification is exact and bounded');
+    is($manifest->{capability_evidence}{analysis},
+        'passed_adapter_and_generated_fixture',
+        'manifest records exact adapter and fixture analysis');
+    is($manifest->{capability_evidence}{runtime},
+        'passed_bounded_fixture_and_provider_probe',
+        'manifest records exact bounded execution');
+    is($manifest->{capability_evidence}{result}, 'produced_normalized_pass',
+        'manifest records the normalized runtime result');
+    is($manifest->{capability_evidence}{product_support},
+        'qualified_private_fixture_profile_not_public_api',
+        'manifest keeps product support bounded and private');
 
     my $contract = build_capability_manifest()->{language_surface}{vial_vhdl_emission};
     is($contract->{methodology_identity}{advanced_provider_status},
-        'exact_recursive_materialization_adapter_emitted_structurally_reviewed_unqualified',
+        'exact_recursive_materialization_adapter_emitted_and_bounded_qualified',
         'support discovery reports the exact bounded advanced-provider state');
     is($contract->{library_materialization}{root_commit},
         '2f7c391051dfb11890fa4bdbda9918d1db492250',
@@ -144,8 +148,8 @@ subtest 'advanced negotiation and profile claims are exact and bounded' => sub {
     is($contract->{limits}{osvvm_advanced_mappings}, 7,
         'support discovery reports the exact advanced mapping count');
     is($contract->{backend_stage_status}{osvvm_combined_qualification},
-        'not_run_separate_profile',
-        'support discovery does not promote structural evidence to qualification');
+        'passed_exact_osvvm_2026_05_ghdl_6_0_0_bounded_profile',
+        'support discovery records the exact combined qualification');
 };
 
 subtest 'adapter maps seven provider families without changing portable semantics' => sub {
@@ -162,8 +166,10 @@ subtest 'adapter maps seven provider families without changing portable semantic
             "mapping '$mapping->{mapping_id}' is emitted");
         is($mapping->{static_status}, 'passed',
             "mapping '$mapping->{mapping_id}' passes structural checks");
-        is($mapping->{qualification_status}, 'not_run',
-            "mapping '$mapping->{mapping_id}' remains unqualified");
+        my $qualified = $mapping->{mapping_id} eq 'verification_component_adapter'
+            ? 'passed_analysis_only' : 'passed_runtime_probe';
+        is($mapping->{qualification_status}, $qualified,
+            "mapping '$mapping->{mapping_id}' records exact qualification scope");
         ok(length($mapping->{semantic_guard}),
             "mapping '$mapping->{mapping_id}' carries an exact semantic guard");
     }
@@ -213,8 +219,8 @@ subtest 'adapter maps seven provider families without changing portable semantic
 };
 
 subtest 'artifact graph, source map, static checks, and gallery bytes are exact' => sub {
-    is(scalar(@{$emission->{artifacts}}), 15,
-        'advanced graph contains seven VHDL and eight evidence artifacts');
+    is(scalar(@{$emission->{artifacts}}), 16,
+        'advanced graph contains seven VHDL and nine evidence artifacts');
     is(scalar(grep { $_->{language} eq 'vhdl' } @{$emission->{artifacts}}), 7,
         'advanced graph contains six portable sources plus one adapter');
     is(scalar(@{$emission->{source_map}{entries}}), 13,
@@ -243,7 +249,7 @@ subtest 'artifact graph, source map, static checks, and gallery bytes are exact'
     close $check_fh;
     is($? >> 8, 0, 'non-mutating OSVVM gallery check succeeds');
     is($check_output,
-        "OSVVM 2026.05 VHDL gallery current: 7 VHDL sources; 8 evidence artifacts; 7 advanced mappings; 13 source-map entries; 12 static checks\n",
+        "OSVVM 2026.05 VHDL gallery current: 7 VHDL sources; 9 evidence artifacts; 7 advanced mappings; 13 source-map entries; 12 static checks\n",
         'gallery check reports the exact closed graph');
 
     is(artifact('provider_materialization')->{content},

@@ -1,0 +1,1386 @@
+{
+   "backend_profile" : "vhdl_osvvm_qualified",
+   "capability_support" : {
+      "analysis_only_mappings" : [
+         "verification_component_adapter"
+      ],
+      "exercised_runtime_mappings" : [
+         "advanced_coverage",
+         "advanced_data_structure",
+         "advanced_randomization",
+         "advanced_reporting",
+         "advanced_scoreboard",
+         "advanced_synchronization"
+      ],
+      "normalized_result_authority" : "fsmgen.verification_result_manifest.v1",
+      "portable_semantic_authority" : "unchanged",
+      "product_support" : "qualified_private_fixture_profile_not_public_api",
+      "profile" : "vhdl_osvvm_qualified",
+      "status" : "qualified_private_fixture_profile_not_public_api"
+   },
+   "cleanup" : {
+      "provider_tree_clean" : true,
+      "removed" : true,
+      "same_volume" : true,
+      "staging_identity" : ".artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1",
+      "state" : "completed_removed"
+   },
+   "commands" : {
+      "analyze_generated" : {
+         "argv" : [
+            ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+            "-a",
+            "--std=08",
+            "-Wno-library",
+            "-Wno-hide",
+            "--work=fsmgen_vial",
+            "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/fsmgen_vial/v08",
+            "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+            "vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/src/portable/fsmgen_vial_types_pkg.vhd",
+            "vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/src/portable/fsmgen_vial_runtime_pkg.vhd",
+            "vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/src/portable/base_output_arbitration_metadata_pkg.vhd",
+            "vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/src/portable/dut/ahb_lite_subordinate.vhd",
+            "vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/src/portable/base_output_arbitration_tb.vhd",
+            "vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/src/portable/base_output_arbitration_probe_adapter.vhd",
+            "vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/src/fsmgen_vial_osvvm_adapter_pkg.vhd",
+            "vial/qualification/vhdl_osvvm_ghdl/osvvm_2026_05_runtime_probe.vhd"
+         ],
+         "command_digest" : "1490a7bba7e526c9829e0d3c43e07111ae06d0d5ffce2fedd15ae9aae0c87032",
+         "execution_status" : "passed",
+         "working_directory" : "."
+      },
+      "elaborate_fixture" : {
+         "argv" : [
+            ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+            "-e",
+            "--std=08",
+            "--work=fsmgen_vial",
+            "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/fsmgen_vial/v08",
+            "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+            "base_output_arbitration_tb"
+         ],
+         "command_digest" : "e6c2944f8880fd57bbcbe123d19533021e1443f0af673d740010aad5bfee84f5",
+         "execution_status" : "passed",
+         "working_directory" : "."
+      },
+      "elaborate_provider_probe" : {
+         "argv" : [
+            ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+            "-e",
+            "--std=08",
+            "--work=fsmgen_vial",
+            "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/fsmgen_vial/v08",
+            "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+            "fsmgen_vial_osvvm_runtime_probe"
+         ],
+         "command_digest" : "ec8e8403ec2b2e0f780fbc7906cdb82e88f58925ed1bced9e5a5ef18f1a10eab",
+         "execution_status" : "passed",
+         "working_directory" : "."
+      },
+      "provider_analyze" : [
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/IfElsePkg.vhd"
+            ],
+            "command_digest" : "7fd14065f3e166bbc57b4ea41f4b9967ef8a9aceb47332c27e97077639919528",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/OsvvmTypesPkg.vhd"
+            ],
+            "command_digest" : "252d090935ab82ebcb99f2ba80235fbc688fd75fcded1582d37a85e6adc9f380",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/OsvvmScriptSettingsPkg.vhd"
+            ],
+            "command_digest" : "5ea4376d10800ed37c0cb5e6edaabe770dfec304fc43daa7dcb62ae646fa864b",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/OsvvmSettingsPkg.vhd"
+            ],
+            "command_digest" : "76070defc38f81c078a3a185af505e72eb140809aba8c572494f2a9a834152be",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/OsvvmScriptSettingsPkg_generated.vhd"
+            ],
+            "command_digest" : "9878a4344bf5a518d222a3125e8cfba5450fc10f2339e311d77a02a985afd052",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/OsvvmSettingsPkg_default.vhd"
+            ],
+            "command_digest" : "f2e826ff31267c11ac28d3138705ca8e5e02c4c5c6b054611e18546af7e33125",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/TextUtilPkg.vhd"
+            ],
+            "command_digest" : "3a1808492d5a5f630df4fdf27c361e7ab7ff25ee811863dc4885bbfa8ff12b3d",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/FileUtilPkg.vhd"
+            ],
+            "command_digest" : "b3655efc2c08f681a316de796f016d126a25be2a5adc304d97296fa132bded2b",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/ResolutionPkg.vhd"
+            ],
+            "command_digest" : "d3750bafb17df6b0401a9142f411c057538983c48fc26b0d586a6788f33f3a89",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/NamePkg.vhd"
+            ],
+            "command_digest" : "4d84439fa3e92c0eb494cb1206a0ca39515b82c224aafb88b03640970eaa623d",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/OsvvmGlobalPkg.vhd"
+            ],
+            "command_digest" : "fe521c7220af797e6c927bad1f53af30c3969f20738a4328c1ff1d0dc670f6ae",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/CoverageVendorApiPkg_default.vhd"
+            ],
+            "command_digest" : "77f97adf8d9d3a2efc5868cd5f0cb8fed18578b9aa094b72413382d05fa66eac",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/TranscriptPkg.vhd"
+            ],
+            "command_digest" : "f4954b01da2fcf7921a5f60098bd9798606d73c6a2ec0261607f73e04403f1fd",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/deprecated/LanguageSupport2019Pkg_c.vhd"
+            ],
+            "command_digest" : "befd5b4c10f321c7b3737c77c1f2bf26125d4363db73b338f3630b53afdd0167",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/deprecated/FileLinePathPkg_c.vhd"
+            ],
+            "command_digest" : "f4448b654883a660ef32c58507af8f2974c1ca97c764691a214c233f226120d6",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/deprecated/AssertApiPkg_c.vhd"
+            ],
+            "command_digest" : "2e53d7b12a0659c798ac4ee9ae9b85197cc1064c5606ecefafbb35c34785c8c4",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/AlertLogPkg.vhd"
+            ],
+            "command_digest" : "9ad941fd37b5d7e98935b4e32f6513c94f640980b22bdc103d53d710f1bd8246",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/IdFifoPtPkg.vhd"
+            ],
+            "command_digest" : "5a4b32d5b0f87b907082768ab01035b7e72f11b0586b2ff328bea00728011e62",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/TbUtilPkg.vhd"
+            ],
+            "command_digest" : "633dd56aca246fe28dc5beb879a203b2feca6108b51e20032e64eb1439f1f0ea",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/NameStorePkg.vhd"
+            ],
+            "command_digest" : "549a9944d76dbaec50ebb165815627a4e7209fdcce5fe334ffe37d95e265e9e5",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/MessageListPkg.vhd"
+            ],
+            "command_digest" : "2aeb21e23b23bbf2f83b44b2e3708b03880fe22f0ad97597fa83403d8a63e8e9",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/SortListPkg_int.vhd"
+            ],
+            "command_digest" : "edf7c4e31ae4c8005cf5cb322d41a88064a7d762e9117ecbd19045498f94c9cf",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/RandomBasePkg.vhd"
+            ],
+            "command_digest" : "fe25779b0f138e0b2c17c2f565e288f867c70d7ad27f31d7d4aab267bd7de9f1",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/RandomPkg.vhd"
+            ],
+            "command_digest" : "0e080acb4e0e04c50c7b8148ccaf7115d616c41a4798c5d8e4f803a4fd6d6769",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/RandomProcedurePkg.vhd"
+            ],
+            "command_digest" : "4607cb5f5f461fccdcf76d568269bd0827c699d29e728638b1cd8741ca4371c2",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/CoveragePkg.vhd"
+            ],
+            "command_digest" : "a5228a05589f43e9add6dec5670f6d4dd94fb8ef9547593284e6bfc777491dcd",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/CoveragePtPkg.vhd"
+            ],
+            "command_digest" : "c15767357e08740605f45a6794f6f0e29c8b8c5f8763b91104c0827c56b654a0",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/DelayCoveragePkg.vhd"
+            ],
+            "command_digest" : "f3f326fb948499b820e72de81afc974efd661d86db0a854e77d51bee96cb8c1f",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/ClockResetPkg.vhd"
+            ],
+            "command_digest" : "daf734da7dda16a8fa7ca4b35dd9976cfa9377e2b258a000c1fcb3dbfe774d16",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/ResizePkg.vhd"
+            ],
+            "command_digest" : "b873c1e2036cd8056db0576053825961b216fbd0836615e01f4aa94fc71691f8",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/deprecated/DynamicVectorPkg_IntV_c.vhd"
+            ],
+            "command_digest" : "5462c2553810a8524d79d2c31fa68b08962fa9c10cdb3cdf66323a60f47cbe26",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/deprecated/DynamicVectorPkg_slv_c.vhd"
+            ],
+            "command_digest" : "3a6db4ec048f61da49b5e95ecb20faa532e1458be036e501d6787ee12dc76ab2",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/ScoreboardGenericPkg.vhd"
+            ],
+            "command_digest" : "6b14692a0bf41aff0147ab4ec3b32e802280b6a032da5afcfc19276fb8621518",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/ScoreboardPkg_IntV.vhd"
+            ],
+            "command_digest" : "a5c50dcb9d685f0ca1f113e140b93587bc1be8578befcd05edbe15b13e5d7255",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/ScoreboardPkg_slv.vhd"
+            ],
+            "command_digest" : "afe1c3142c6ddde2195eb57519315a54665ac060ab7510ed2316bd63b0cf2936",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/ScoreboardPkg_int.vhd"
+            ],
+            "command_digest" : "e431c973df048a8def541a9057eec28c090fd629a67b888f34f5f79dc285fdf2",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/ScoreboardPkg_signed.vhd"
+            ],
+            "command_digest" : "8f6949388be22e56ada3ad4553e72f1c5f1372615208d059193d5807e73dfa73",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/ScoreboardPkg_unsigned.vhd"
+            ],
+            "command_digest" : "777a662367bd4de177b29983243465e90cda71ff563c9f6f7f977807f65bfe80",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/MemorySupportPkg.vhd"
+            ],
+            "command_digest" : "e2c1871571cb2923b69de2120c2e28bfda0959dc416a010ebab934aca5aae647",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/MemoryGenericPkg.vhd"
+            ],
+            "command_digest" : "ca7f0c40952a047faf1cc732bf7a0e10b55a2489aaf62551b3900d9db29875a4",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/MemoryPkg.vhd"
+            ],
+            "command_digest" : "2ff76fe480381f2be2044bc0be85718d098c4fbea66ac0fb09e339a5732b8c4b",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/ReportPkg.vhd"
+            ],
+            "command_digest" : "57285bfaf8f2d4ace01d8753acf63c3e3404d4bb0008870921787c75a0cae326",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/deprecated/RandomPkg2019_c.vhd"
+            ],
+            "command_digest" : "3d1374ddd92c7a3cbe2d04bf55e9faa58d40868ab6229abf4ccc560929187bc0",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/osvvm/OsvvmContext.vhd"
+            ],
+            "command_digest" : "631bbcc178aa1384f6cbe8e18100672047854955a04759330200fdde8ffe4c46",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm_common",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm_common/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/Common/src/ModelParametersPtPkg.vhd"
+            ],
+            "command_digest" : "2bc5804bfb6d4bdd42ae06ec7eb333db3a4b9525b4ab38210be9b7ddc69b7211",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm_common",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm_common/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/Common/src/ModelParametersSingletonPkg.vhd"
+            ],
+            "command_digest" : "3e4f00632979530f628c78d123439f0801a8cc160ff329acbd3acb4f5bb1d779",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm_common",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm_common/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/Common/src/FifoFillPkg_slv.vhd"
+            ],
+            "command_digest" : "676f539d0788a250b3cfdfd4d884bf411b48f4e168e51c54cfac67cc0128644f",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm_common",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm_common/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/Common/src/deprecated/StreamTransactionPkg.vhd"
+            ],
+            "command_digest" : "9df38d5f8418fdb712d5163a2e127b6c0eef88b28e61a4b133730eed7007ca81",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm_common",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm_common/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/Common/src/deprecated/StreamTransactionArrayPkg.vhd"
+            ],
+            "command_digest" : "39d384a2847bddeb5789c2ed067de725aade6d90b658370d9abb4e3ee31328db",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm_common",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm_common/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/Common/src/deprecated/AddressBusTransactionPkg.vhd"
+            ],
+            "command_digest" : "34a27ac4513dabeaf15d819c5cbd14dd592eb27684749a0680d7d1dc570ac6ed",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm_common",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm_common/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/Common/src/deprecated/AddressBusTransactionArrayPkg.vhd"
+            ],
+            "command_digest" : "3e59aee5c291c081e1237a7ad67213d7421f14396bfadcb1af30d030aaf71507",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm_common",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm_common/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/Common/src/deprecated/AddressBusResponderTransactionPkg.vhd"
+            ],
+            "command_digest" : "bdad203400c613909d805a4951052a70520f331c8967e4d8409846beb465380c",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm_common",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm_common/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/Common/src/deprecated/AddressBusResponderTransactionArrayPkg.vhd"
+            ],
+            "command_digest" : "62cad0805af4e5c389aa690e2b727066406624afe062e728b18f6239fe2f67b5",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm_common",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm_common/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/Common/src/AddressBusVersionCompatibilityPkg.vhd"
+            ],
+            "command_digest" : "ff45a668aa2fd698102a0b777d69f83075bd4c936234eacceacf2ef265c23d35",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm_common",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm_common/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/Common/src/InterruptGlobalSignalPkg.vhd"
+            ],
+            "command_digest" : "c549b03622456ab780cf7ab65a97212ed83a64c387f90e595f414668c1a53fb1",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm_common",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm_common/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/Common/src/deprecated/InterruptHandler_c.vhd"
+            ],
+            "command_digest" : "12278d8b7841da4a5653fbcc9c5e17fe45ebe7719f2a5ee0d4bcb2c7ac69cdcb",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm_common",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm_common/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/Common/src/deprecated/InterruptHandlerComponentPkg_c.vhd"
+            ],
+            "command_digest" : "0329f88aa7d31fe7009a97137b3081fb3a291f16e6e439fe703262dbfdfda891",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm_common",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm_common/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/Common/src/InterruptGeneratorBit.vhd"
+            ],
+            "command_digest" : "a3c17c5aa680bc23f15e83a5d98ed753b58ca1e1dcdf6522b7646baee99d031a",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm_common",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm_common/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/Common/src/InterruptGeneratorBitVti.vhd"
+            ],
+            "command_digest" : "8b56209e1ee525f11dc089269b8cd705a1f81c49e9d3d1521f311ad3476ac311",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm_common",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm_common/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/Common/src/InterruptGeneratorComponentPkg.vhd"
+            ],
+            "command_digest" : "35d1676169a0e33ff39ffd7b299e7b7a8c365a9a1b93aa299dd2fb67fcb0b584",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         },
+         {
+            "argv" : [
+               ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+               "-a",
+               "--std=08",
+               "-Wno-library",
+               "-Wno-hide",
+               "--work=osvvm_common",
+               "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/osvvm_common/v08",
+               "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+               ".artifacts/cache/providers/osvvm/2026.05/source/Common/src/OsvvmCommonContext.vhd"
+            ],
+            "command_digest" : "6615c28bee4c6a35ffd8b48a95ac4b26f39d1be63a3c4d38982833ac26aa326a",
+            "execution_status" : "passed",
+            "working_directory" : "."
+         }
+      ],
+      "run_fixture" : {
+         "argv" : [
+            ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+            "-r",
+            "--std=08",
+            "--work=fsmgen_vial",
+            "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/fsmgen_vial/v08",
+            "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+            "base_output_arbitration_tb",
+            "--assert-level=error"
+         ],
+         "command_digest" : "d7a97fe56cf5239ec7931d6467bab5482a79189fa924b210142ac8f7a379a931",
+         "execution_status" : "passed",
+         "working_directory" : "."
+      },
+      "run_provider_probe" : {
+         "argv" : [
+            ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+            "-r",
+            "--std=08",
+            "--work=fsmgen_vial",
+            "--workdir=.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries/fsmgen_vial/v08",
+            "-P.artifacts/tmp/vial-osvvm-ghdl-qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1/libraries",
+            "fsmgen_vial_osvvm_runtime_probe",
+            "--assert-level=error"
+         ],
+         "command_digest" : "3066df8ca487b8b81680966f81aa7be57c150e08ccedd642998553529ac8cb75",
+         "execution_status" : "passed",
+         "working_directory" : "."
+      }
+   },
+   "deterministic_rerun" : {
+      "fixture_stdout_identical" : true,
+      "fixture_stdout_sha256" : "e0e412a038eb6771862ae91b84281124352cba2bae40b0325c17aada782b290e",
+      "provider_reports_identical" : true,
+      "provider_stdout_identical" : true,
+      "provider_stdout_sha256" : "5ac8c5d89770d94124daa643509fa9e96fc9ef699193584807a4ba110b3fa348",
+      "status" : "passed"
+   },
+   "execution" : {
+      "adapter_analysis" : "passed",
+      "fixture_elaboration" : "passed",
+      "fixture_execution" : "passed",
+      "generated_fixture_analysis" : "passed",
+      "provider_analysis" : "passed",
+      "provider_probe_elaboration" : "passed",
+      "provider_probe_execution" : "passed"
+   },
+   "limitations" : [
+      "qualification covers one bounded generated single-unit single-clock fixture and one supplementary adapter probe",
+      "the OSVVM Common address-bus transaction type is analyzed through the adapter but no OSVVM verification-component transaction executes",
+      "OSVVM reports are supplementary evidence and do not redefine portable scheduling, comparison, coverage meaning, trace, normalized results, or parity",
+      "the pinned Documentation repository has no tracked licence or notice file; no licence coverage is inferred",
+      "UVVM, PSL, complete VHDL-2008, another simulator, mixed-language execution, legacy observation-package analysis, general parity, and scale are not inferred"
+   ],
+   "portable_result_parity" : {
+      "compared_paths" : [
+         "/outcomes/0/bus_accepts",
+         "/outcomes/0/final_read_data_bits",
+         "/outcomes/0/final_ready",
+         "/outcomes/0/final_response",
+         "/outcomes/0/nonzero_read_data_cycles",
+         "/outcomes/0/ready_low_cycles",
+         "/outcomes/0/response_error_cycles",
+         "/outcomes/0/scenario",
+         "/outcomes/0/status",
+         "/outcomes/0/storage_bits",
+         "/outcomes/1/bus_accepts",
+         "/outcomes/1/final_read_data_bits",
+         "/outcomes/1/final_ready",
+         "/outcomes/1/final_response",
+         "/outcomes/1/nonzero_read_data_cycles",
+         "/outcomes/1/response_error_cycles",
+         "/outcomes/1/scenario",
+         "/outcomes/1/status",
+         "/outcomes/1/storage_bits"
+      ],
+      "eligible" : true,
+      "equivalent" : true,
+      "exclusions" : [
+         "unsupported_size.ready_low_cycles is not part of the qualified handwritten AHB oracle",
+         "supplementary OSVVM reports have no portable-SystemVerilog parity meaning"
+      ],
+      "mismatches" : [],
+      "oracle" : "t/1559-vial-ahb-runtime-parity.t",
+      "oracle_profile" : "sv_portable_verilator/5.046",
+      "portable_vhdl_qualification" : "vial/qualification/vhdl_portable_ghdl/ghdl-6.0.0-qualification.json",
+      "status" : "equivalent"
+   },
+   "provider_compilation" : {
+      "basis" : "exact OSVVM 2026.05 project-file order resolved for GHDL VHDL-2008",
+      "common_analyzed_source_count" : 17,
+      "common_library" : "osvvm_common",
+      "common_source_order" : [
+         "ModelParametersPtPkg.vhd",
+         "ModelParametersSingletonPkg.vhd",
+         "FifoFillPkg_slv.vhd",
+         "deprecated/StreamTransactionPkg.vhd",
+         "deprecated/StreamTransactionArrayPkg.vhd",
+         "deprecated/AddressBusTransactionPkg.vhd",
+         "deprecated/AddressBusTransactionArrayPkg.vhd",
+         "deprecated/AddressBusResponderTransactionPkg.vhd",
+         "deprecated/AddressBusResponderTransactionArrayPkg.vhd",
+         "AddressBusVersionCompatibilityPkg.vhd",
+         "InterruptGlobalSignalPkg.vhd",
+         "deprecated/InterruptHandler_c.vhd",
+         "deprecated/InterruptHandlerComponentPkg_c.vhd",
+         "InterruptGeneratorBit.vhd",
+         "InterruptGeneratorBitVti.vhd",
+         "InterruptGeneratorComponentPkg.vhd",
+         "OsvvmCommonContext.vhd"
+      ],
+      "compiler_output_bytes" : 0,
+      "generated_settings_sha256" : "d3d809968822d9932556320fb9a3c31918f61116708407d3c43e4557dd82fe57",
+      "osvvm_analyzed_source_count" : 44,
+      "osvvm_library" : "osvvm",
+      "osvvm_source_order" : [
+         "IfElsePkg.vhd",
+         "OsvvmTypesPkg.vhd",
+         "OsvvmScriptSettingsPkg.vhd",
+         "OsvvmSettingsPkg.vhd",
+         "__FSMGEN_GENERATED_SETTINGS__",
+         "OsvvmSettingsPkg_default.vhd",
+         "TextUtilPkg.vhd",
+         "FileUtilPkg.vhd",
+         "ResolutionPkg.vhd",
+         "NamePkg.vhd",
+         "OsvvmGlobalPkg.vhd",
+         "CoverageVendorApiPkg_default.vhd",
+         "TranscriptPkg.vhd",
+         "deprecated/LanguageSupport2019Pkg_c.vhd",
+         "deprecated/FileLinePathPkg_c.vhd",
+         "deprecated/AssertApiPkg_c.vhd",
+         "AlertLogPkg.vhd",
+         "IdFifoPtPkg.vhd",
+         "TbUtilPkg.vhd",
+         "NameStorePkg.vhd",
+         "MessageListPkg.vhd",
+         "SortListPkg_int.vhd",
+         "RandomBasePkg.vhd",
+         "RandomPkg.vhd",
+         "RandomProcedurePkg.vhd",
+         "CoveragePkg.vhd",
+         "CoveragePtPkg.vhd",
+         "DelayCoveragePkg.vhd",
+         "ClockResetPkg.vhd",
+         "ResizePkg.vhd",
+         "deprecated/DynamicVectorPkg_IntV_c.vhd",
+         "deprecated/DynamicVectorPkg_slv_c.vhd",
+         "ScoreboardGenericPkg.vhd",
+         "ScoreboardPkg_IntV.vhd",
+         "ScoreboardPkg_slv.vhd",
+         "ScoreboardPkg_int.vhd",
+         "ScoreboardPkg_signed.vhd",
+         "ScoreboardPkg_unsigned.vhd",
+         "MemorySupportPkg.vhd",
+         "MemoryGenericPkg.vhd",
+         "MemoryPkg.vhd",
+         "ReportPkg.vhd",
+         "deprecated/RandomPkg2019_c.vhd",
+         "OsvvmContext.vhd"
+      ],
+      "status" : "passed",
+      "total_analyzed_source_count" : 61
+   },
+   "provider_profile" : {
+      "dependency_root" : ".artifacts/cache/providers/osvvm/2026.05/source",
+      "documentation_licence_notice_absence_explicit" : true,
+      "licence_file_count" : 14,
+      "materialization_manifest_sha256" : "128e483049521c2d4882bac0a6ceb66d9d127ca3e33109961942662409e06f96",
+      "notice_file_count" : 0,
+      "provider" : "OSVVM",
+      "recursive_gitlink_count" : 13,
+      "release_tag" : "2026.05",
+      "repository_count" : 14,
+      "root_commit" : "2f7c391051dfb11890fa4bdbda9918d1db492250",
+      "root_tree" : "bd4fdc594f2c26d564cf8907ff599578b9a39e22",
+      "selection_status" : "executed_qualified",
+      "version" : "2026.05"
+   },
+   "qualification_id" : "qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1",
+   "resource_controls" : {
+      "descendant_rss_limit_mib" : 4096,
+      "elaboration_timeout_seconds" : 60,
+      "execution_timeout_seconds" : 30,
+      "generated_analysis_timeout_seconds" : 120,
+      "host_occupied_cutoff_percent" : 88,
+      "maximum_fixture_output_bytes" : 67108864,
+      "maximum_provider_output_bytes" : 8388608,
+      "outer_guard" : "scripts/run_with_ram_guard.sh --process-max-rss-mb 4096",
+      "provider_analysis_timeout_seconds_per_source" : 120,
+      "version_timeout_seconds" : 10
+   },
+   "result" : {
+      "outcomes" : [
+         {
+            "bus_accepts" : 1,
+            "final_read_data_bits" : "00000000000000000000000000000000",
+            "final_ready" : 1,
+            "final_response" : 0,
+            "nonzero_read_data_cycles" : 0,
+            "ready_low_cycles" : 15,
+            "response_error_cycles" : 0,
+            "scenario_id" : "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::success",
+            "status" : "pass",
+            "storage_bits" : "11001010111111101011101010111110"
+         },
+         {
+            "bus_accepts" : 1,
+            "final_read_data_bits" : "00000000000000000000000000000000",
+            "final_ready" : 1,
+            "final_response" : 0,
+            "nonzero_read_data_cycles" : 0,
+            "ready_low_cycles" : 11,
+            "response_error_cycles" : 2,
+            "scenario_id" : "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::unsupported_size",
+            "status" : "pass",
+            "storage_bits" : "00000000000000000000000000000000"
+         }
+      ],
+      "plan_id" : "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574",
+      "result_record_sha256" : "644f5621b95964da4b5d1daf13e5161cf33eb4f8b7ab4429ae448f347bb6ffef",
+      "schema" : "fsmgen.verification_result_manifest.v1",
+      "schema_version" : 1,
+      "status" : "pass"
+   },
+   "schema" : "fsmgen.vial_vhdl_osvvm_ghdl_qualification.v1",
+   "schema_version" : 1,
+   "source_set" : [
+      {
+         "bytes" : 6025,
+         "relpath" : "vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/src/portable/fsmgen_vial_types_pkg.vhd",
+         "sha256" : "3777706b911ce90c9a3b05107233ec925c1029b175932ed10f1b1a588fb3c08e"
+      },
+      {
+         "bytes" : 2191,
+         "relpath" : "vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/src/portable/fsmgen_vial_runtime_pkg.vhd",
+         "sha256" : "82cb0d22e03a661ff88aecbf5b94b89f91381801576d1c683d749ac02e258017"
+      },
+      {
+         "bytes" : 15323,
+         "relpath" : "vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/src/portable/base_output_arbitration_metadata_pkg.vhd",
+         "sha256" : "54b836ea1ce852d0dad9a4f7ff6249626ffd7b1674604cb62b2f79cc6cec0d46"
+      },
+      {
+         "bytes" : 47670,
+         "relpath" : "vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/src/portable/dut/ahb_lite_subordinate.vhd",
+         "sha256" : "8d93b0ade4d9561d19fdd12ab10b4d8ba1a3dc06de9f911d1c0d8d1bf18518cf"
+      },
+      {
+         "bytes" : 44758,
+         "relpath" : "vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/src/portable/base_output_arbitration_tb.vhd",
+         "sha256" : "4a3665cb0e14b599962a3a29bafb2ff99787cc8cb332b0f35e50b75583a6666b"
+      },
+      {
+         "bytes" : 591,
+         "relpath" : "vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/src/portable/base_output_arbitration_probe_adapter.vhd",
+         "sha256" : "7a7e3b4e81fd222e53e2098653fcf1131f1b58dbeba35698c1cfe67a4fab5b56"
+      },
+      {
+         "bytes" : 4351,
+         "relpath" : "vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/src/fsmgen_vial_osvvm_adapter_pkg.vhd",
+         "sha256" : "1a547b8de38c072600a76497778758affab25ccd479c0c1dfce7f0e0579c9e94"
+      },
+      {
+         "bytes" : 2373,
+         "relpath" : "vial/qualification/vhdl_osvvm_ghdl/osvvm_2026_05_runtime_probe.vhd",
+         "sha256" : "07bc359798d8d478008663754fa325e5acea3e70a3278b34dfa93cb41e3c87f4"
+      }
+   ],
+   "status" : "qualified",
+   "supplementary_provider_reports" : {
+      "alert_status" : "passed_three_affirmations_zero_errors",
+      "coverage_status" : "passed_one_of_four_bins_25_percent",
+      "report_count" : 4,
+      "reports" : [
+         {
+            "bytes" : 381,
+            "name" : "OsvvmRun.yml",
+            "sha256" : "8e5afd5e4de3434b588647a5d75387c57858ba73aa4dc9b36d510823511df8e8"
+         },
+         {
+            "bytes" : 1889,
+            "name" : "AlertLogTop_alerts.yml",
+            "sha256" : "0b5fbaab0639ab0204372025de8bf4887decada4e6fa9d2cbd59f07b80f7979e"
+         },
+         {
+            "bytes" : 1160,
+            "name" : "AlertLogTop_cov.yml",
+            "sha256" : "e96b4783a20fbc834173e46b78758bf8ceb2f36b65f17918b4da933f526b55ff"
+         },
+         {
+            "bytes" : 245,
+            "name" : "AlertLogTop_sb_slv.yml",
+            "sha256" : "9d1d97e6f81a501d5ff11638227a2963e2383ec217947e7f51a70cd9c1d79a47"
+         }
+      ],
+      "runtime_marker" : "FSMGEN_VIAL_OSVVM_PROVIDER_PROBE_V1 pass random=3",
+      "scoreboard_status" : "passed_one_checked_item_zero_errors",
+      "semantic_authority" : "supplementary_not_normalized_result",
+      "status" : "passed_supplementary_only"
+   },
+   "task_id" : "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.7",
+   "tool_profile" : {
+      "archive" : ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-archive/ghdl-llvm-jit-6.0.0-macos15-aarch64.tar.gz",
+      "archive_bytes" : 37155806,
+      "archive_sha256" : "c21312d5a0cc5833e6d8690d8c4343e67f4fc32f070c07343816cd11a31c7769",
+      "backend" : "llvm_jit",
+      "binary" : ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl",
+      "binary_sha256" : "38a99c1cc18b04dfae128b118c7344910e08b8ba6eeb9c1e67f950a84bca3c3d",
+      "build_commit" : "e589c698c351369ac5bcfe7abe1f1152ac5d4727",
+      "language_standard" : "IEEE 1076-2008",
+      "qualified_version" : "6.0.0",
+      "selection_status" : "executed_qualified",
+      "standard_option" : "--std=08",
+      "tool_name" : "ghdl",
+      "version_output" : "GHDL 6.0.0 (6.0.0.r0.ge589c698c) [Dunoon edition]\n Compiled with GNAT Version: 14.2.0\n static elaboration, LLVM JIT code generator\nWritten by Tristan Gingold.\n\nCopyright (C) 2003 - 2026 Tristan Gingold.\nGHDL is free software, covered by the GNU General Public License.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+   },
+   "trace" : {
+      "footer_count" : 1,
+      "header_count" : 1,
+      "record_count" : 42,
+      "scenario_end_count" : 2,
+      "scenario_start_count" : 2,
+      "schema" : "fsmgen.vial_vhdl_runtime_trace.v1",
+      "status" : "closed_validated",
+      "stdout_sha256" : "e0e412a038eb6771862ae91b84281124352cba2bae40b0325c17aada782b290e"
+   }
+}

@@ -200,7 +200,7 @@ my @REGRESSION_CORPUS = (
         relpath => 'vial/ahb_subordinate_base_output_arbitration.vial',
         family => 'verification_intent_tooling',
         classification => 'supported_smoke',
-        coverage => 'vial_vhdl_provider_free_ghdl_qualified_private_api',
+        coverage => 'vial_vhdl_ghdl_osvvm_qualified_private_api',
         source_kind => 'vial',
         strict_supported => 0,
         supported_phases => [qw(
@@ -216,6 +216,10 @@ my @REGRESSION_CORPUS = (
             ghdl_6_0_0_analysis ghdl_6_0_0_elaboration bounded_four_state_runtime
             closed_runtime_trace produced_normalized_result deterministic_runtime
             applicable_portable_sv_parity exact_runtime_cleanup
+            osvvm_2026_05_materialization osvvm_provider_compilation
+            osvvm_adapter_analysis osvvm_provider_probe_runtime
+            osvvm_supplementary_reports osvvm_deterministic_runtime
+            osvvm_portable_result_parity osvvm_exact_runtime_cleanup
         )],
         required_capabilities => [qw(
             vial.backend.vhdl_portable_ghdl.foundation.v1
@@ -252,10 +256,25 @@ my @REGRESSION_CORPUS = (
             vial.backend.vhdl_portable_ghdl.bounded_ahb_portable_sv_parity.v1
             vial.backend.vhdl_portable_ghdl.deterministic_runtime.v1
             vial.backend.vhdl_portable_ghdl.exact_cleanup.v1
+            vial.backend.vhdl_osvvm_qualified.materialization.v1
+            vial.backend.vhdl_osvvm_qualified.advanced_adapter.v1
+            vial.backend.vhdl_osvvm_qualified.mapping_matrix.v1
+            vial.backend.vhdl_osvvm_qualified.semantic_preservation.v1
+            vial.backend.vhdl_osvvm_qualified.static_validation.v1
+            vial.backend.vhdl_osvvm_qualified.review_gallery.v1
+            vial.backend.vhdl_osvvm_qualified.provider_compilation.v1
+            vial.backend.vhdl_osvvm_qualified.generated_analysis.v1
+            vial.backend.vhdl_osvvm_qualified.bounded_runtime.v1
+            vial.backend.vhdl_osvvm_qualified.normalized_result.v1
+            vial.backend.vhdl_osvvm_qualified.portable_result_parity.v1
+            vial.backend.vhdl_osvvm_qualified.supplementary_reports.v1
+            vial.backend.vhdl_osvvm_qualified.deterministic_runtime.v1
+            vial.backend.vhdl_osvvm_qualified.exact_cleanup.v1
         )],
         explicit_nonclaims => [qw(
             complete_vhdl_backend general_cross_backend_parity psl
-            complete_vhdl_2008 osvvm uvvm another_simulator mixed_language scale
+            complete_vhdl_2008 general_osvvm_breadth uvvm another_simulator
+            mixed_language scale
         )],
     },
     {

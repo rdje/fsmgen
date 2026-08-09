@@ -166,3 +166,21 @@ and zero notice files are locked exactly. The Documentation gitlink has neither
 a tracked licence nor a notice, so FSMGen records that absence without claiming
 coverage. This upstream packaging gap does not alter or block the code-bearing
 adapter, but it remains visible for any future redistribution decision.
+
+## 2026-08-09: Provider reports supplement portable semantics; they do not replace them
+
+The exact combined profile compiles OSVVM from a frozen resolution of its own
+2026.05 project files: 44 core sources and 17 VHDL-2008-compatible Common
+sources. This avoids a hidden mutable library installation and keeps every
+work library, generated settings body, report, and log inside one digest-named
+repository-volume stage. The settings body is generated only inside that stage
+and all qualification outputs are removed after their evidence is validated.
+
+One dedicated provider probe is enough to distinguish API presence from useful
+execution evidence. It runs OSVVM randomization, coverage, scoreboard,
+reporting, memory, and barrier services through the generated adapter; the
+Common address-bus type is analysis-qualified because no provider transaction
+is part of the selected fixture. Four deterministic OSVVM YAML reports remain
+supplementary. FSMGen's unchanged closed trace, normalized result, and nineteen
+portable parity paths retain semantic authority, preventing provider-specific
+reporting or scheduling from redefining VIAL behavior.

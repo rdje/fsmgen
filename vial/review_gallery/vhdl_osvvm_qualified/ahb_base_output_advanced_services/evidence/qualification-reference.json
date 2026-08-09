@@ -1,0 +1,10 @@
+{
+   "provider" : "OSVVM 2026.05",
+   "qualification_id" : "qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1",
+   "report_relpath" : "vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json",
+   "report_sha256" : "15df2a9b0755a8c66c13e4423881e05606c439ff8f846e947e29bea0d54cfc42",
+   "schema" : "fsmgen.vial_vhdl_osvvm_qualification_reference.v1",
+   "schema_version" : 1,
+   "status" : "qualified",
+   "tool" : "GHDL 6.0.0 LLVM-JIT"
+}

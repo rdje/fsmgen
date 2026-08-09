@@ -15,5 +15,5 @@
    ],
    "schema" : "fsmgen.vial_vhdl_osvvm_source_order.v1",
    "schema_version" : 1,
-   "status" : "selected_not_executed"
+   "status" : "executed_qualified"
 }

@@ -36,6 +36,9 @@ macOS ARM64 GHDL 6.0.0 LLVM-JIT package through analysis, elaboration, bounded
 execution, normalized results, and applicable portable-SV parity. OSVVM remains
 separately isolated from that provider-free qualification; completed `.15.6`
 now installs its exact recursive 2026.05 graph and emits the advanced adapter.
+Completed `.15.7` qualifies their bounded combination through provider
+compilation, adapter/fixture analysis, execution, unchanged result/parity,
+supplementary reports, deterministic rerun, and cleanup.
 
 Implementation parent `.15` is active and decomposed. Completed `.15.1` now
 ships the provider-free emitter substrate and first deterministic review
@@ -47,7 +50,7 @@ closed trace framing, and normalized-result projection. Completed `.15.4`
 closes the portable review matrix. Completed `.15.5` qualifies the available
 exact official macOS ARM64 GHDL 6.0.0 LLVM-JIT package. Completed `.15.6`
 installs exact recursive OSVVM 2026.05 and emits its isolated advanced adapter;
-`.15.7` is active for combined qualification. NEXSIM-dependent
+completed `.15.7` qualifies the combined exact tuple. NEXSIM-dependent
 runtime qualification is director-deferred until capability-ready releases
 provide exact evidence.
 
@@ -914,7 +917,7 @@ mechanisms.
 | `sv_uvm_experimental.<tool-and-version>` | optional open-source feasibility probe | exact tool/version and measured deviations; never product runtime support |
 | `sv_uvm_qualified` | executable native UVM components, sequences, monitors, scoreboards, coverage | future exact PGEN parser + NEXSIM simulator tuple; parse/compile/elaborate/run/result gates |
 | `vhdl_portable_ghdl` | provider-free VHDL-2008 packages, scheduler, adapters, testbench, trace/result | exact GHDL 6.0.0 with `--std=08`; analyze/elaborate/run/result/parity and explicit language/PSL limits |
-| `vhdl_osvvm_qualified` | same VIAL semantics plus negotiated advanced OSVVM services | exact OSVVM 2026.05 recursive identity plus GHDL 6.0.0 provider/tool gates |
+| `vhdl_osvvm_qualified` | same VIAL semantics plus negotiated advanced OSVVM services | exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT; 61-source provider compile, bounded fixture/probe runtime, unchanged result/parity, four supplementary reports |
 | `vhdl_*_qualified.<tool-id>` | portable or OSVVM graph under another VHDL simulator | exact tool/version/build, standard/options, provider where applicable, result/parity gates |
 | `mixed_language_qualified` | HIAL and VIAL in different HDLs | named mixed-language tool/version and binding adapter; never inferred from single-language success |
 
@@ -978,7 +981,7 @@ backends/vhdl_osvvm_qualified/
   backend-source-map.json
   evidence/{provider-materialization,advanced-mapping-matrix}.json
   evidence/{semantic-preservation,source-order,static-validation}.json
-  evidence/tool-profile.json
+  evidence/{tool-profile,qualification-reference}.json
   src/fsmgen_vial_osvvm_adapter_pkg.vhd
   src/portable/<six byte-identical portable VHDL sources>
 ```
@@ -988,15 +991,30 @@ Seven mappings cover `RandomPkg`, `CoveragePkg`, `ScoreboardGenericPkg`,
 `osvvm_common.AddressBusTransactionPkg`. Thirteen source-map entries, twelve
 structural checks, and six unchanged-semantic guards keep portable replay,
 phase order, comparison/coverage meaning, trace, and normalized results in
-authority. Check the exact 15-artifact graph with:
+authority. Check the exact 16-artifact graph with:
 
 ```text
 perl scripts/refresh_vial_vhdl_osvvm_gallery.pl --check
 ```
 
 This command verifies materialization and emitted bytes without fetching the
-network. It does not analyze, elaborate, or execute VHDL; those combined
-OSVVM 2026.05 plus GHDL 6.0.0 gates now run under active `.15.7`.
+network or rerunning a simulator. The graph references the separate checked
+combined report; structure alone is still not execution evidence.
+
+Completed `.15.7` resolves the exact provider order to 44 OSVVM core and 17
+VHDL-2008-compatible Common sources. It analyzes the adapter and generated
+fixture, elaborates and runs the fixture and provider probe twice, validates
+the unchanged closed 42-record trace, passing normalized result, and nineteen
+portable parity paths, then compares four OSVVM YAML reports byte-for-byte.
+The probe runtime-exercises randomization, coverage, scoreboard, reporting,
+memory, and barrier mappings. The Common address-bus type is analysis-only;
+no provider verification-component transaction is claimed. Rerun the exact
+proof from the repository root:
+
+```text
+scripts/run_with_ram_guard.sh --process-max-rss-mb 4096 -- \
+  perl scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl --check
+```
 
 ### Logical time without delta-cycle folklore
 
@@ -1098,9 +1116,9 @@ archive (SHA-256
 under the repository-derived provider cache. Its selected binary is SHA-256
 `38a99c1cc18b04dfae128b118c7344910e08b8ba6eeb9c1e67f950a84bca3c3d` and
 reports GHDL 6.0.0, commit `e589c698c351369ac5bcfe7abe1f1152ac5d4727`,
-with the LLVM JIT backend. OSVVM-dependent work must still verify
-the recursive release, every submodule identity, licenses, and notices under a
-repository-derived dependency root.
+with the LLVM JIT backend. The combined qualifier independently re-verifies
+the recursive OSVVM release, every submodule identity, licences, and notices
+under its repository-derived dependency root before provider compilation.
 
 The checked qualification runner analyzes all six gallery sources plus a
 standalone timed four-state probe, elaborates both tops, runs the fixture and
@@ -1254,10 +1272,10 @@ backend authority.
 For this bounded canonical fixture, exact LLVM-JIT analysis, elaboration,
 runtime, normalized-result validation, deterministic rerun, timed four-state
 behavior, and nineteen-path applicable portable-SV parity are qualified.
-Complete VHDL backend/language breadth, PSL, OSVVM/UVVM, another simulator,
-mixed-language behavior, general cross-backend parity, and scale remain
-explicit non-claims. The emitter remains private rather than a public
-embedding API.
+Complete VHDL backend/language breadth, PSL, general OSVVM breadth, UVVM,
+another simulator, mixed-language behavior, general cross-backend parity, and
+scale remain explicit non-claims. The emitter remains private rather than a
+public embedding API.
 
 The complete contract is in the selected VHDL section of the
 [HIAL/VIAL architecture audit](../../HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md#completed-vhdl-contract-selection).

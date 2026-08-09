@@ -31,5 +31,5 @@
 
 _Direct HIAL VHDL remains separately sequenced while VIAL VHDL now has an exact provider-free and OSVVM architecture_
 
-- **date:** 2026-08-01 · **status:** current
+- **date:** 2026-08-09 · **status:** current
 - **source and verification:** [`docs/knowledge/vhdl-deferred-until-sv-ial-complete.md`](../../docs/knowledge/vhdl-deferred-until-sv-ial-complete.md)

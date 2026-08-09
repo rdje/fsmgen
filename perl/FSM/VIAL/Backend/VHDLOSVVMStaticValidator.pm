@@ -126,14 +126,19 @@ sub _validate($raw) {
         unless join("\0", @mapping_id) eq join("\0", sort @mapping_id)
             && keys(%{{map { $_ => 1 } @mapping_id}}) == @mapping_id;
     for my $mapping (@mapping) {
+        my $qualification_status = $mapping->{mapping_id}
+                eq 'verification_component_adapter'
+            ? 'passed_analysis_only' : 'passed_runtime_probe';
         return _rejected('VIAL_OSVVM_STATIC_MAPPING_MATRIX_ERROR',
-            "mapping '$mapping->{mapping_id}' overstates qualification",
+            "mapping '$mapping->{mapping_id}' has invalid qualification truth",
             '/mapping_matrix/mappings')
             unless ($mapping->{emission_status} // '') eq 'emitted'
                 && ($mapping->{static_status} // '') eq 'passed'
-                && ($mapping->{qualification_status} // '') eq 'not_run';
+                && ($mapping->{qualification_status} // '')
+                    eq $qualification_status;
     }
-    push @checks, _check('closed_mapping_matrix', '7 emitted/static-only mappings');
+    push @checks, _check('closed_mapping_matrix',
+        '6 runtime-probed and 1 analysis-only qualified mappings');
 
     my $preservation = $raw->{semantic_preservation};
     my @portable = @{$preservation->{portable_sources} || []};
