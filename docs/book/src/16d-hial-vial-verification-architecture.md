@@ -31,9 +31,9 @@ profile.
 Completed slice `.14` now selects the VHDL-2008 verification contract. The
 portable core is provider-free, OSVVM 2026.05 is the exact advanced-methodology
 provider, and GHDL 6.0.0 is the first exact qualification tool. UVVM was
-audited but is not selected. GHDL and OSVVM are absent locally, so this is an
-architecture contract—not an analysis, elaboration, simulation, result, or
-support claim.
+audited but is not selected. The official macOS ARM64 GHDL package is now
+available and `.15.5` is active, but it has not yet produced analysis,
+elaboration, simulation, result, or support evidence. OSVVM remains absent.
 
 Implementation parent `.15` is active and decomposed. Completed `.15.1` now
 ships the provider-free emitter substrate and first deterministic review
@@ -42,8 +42,12 @@ inactive-edge scheduler, bounded scenarios and fibers, deterministic models,
 and a declared-probe adapter. Completed `.15.3` adds bounded scoreboards,
 coverage counters, substitution faults, procedural checks, diagnostics,
 closed trace framing, and normalized-result projection. Completed `.15.4`
-closes the portable review matrix. `.15.5` awaits exact GHDL 6.0.0, `.15.6`
-awaits repository-local OSVVM 2026.05, and `.15.7` depends on both.
+closes the portable review matrix. Director selection now activates `.15.5`
+against the available exact official macOS ARM64 GHDL 6.0.0 LLVM package;
+materialization and execution evidence remain pending. `.15.6` awaits
+repository-local OSVVM 2026.05, and `.15.7` depends on both. NEXSIM-dependent
+runtime qualification is director-deferred until capability-ready releases
+provide exact evidence.
 
 The current shipped verification-output targets remain deliberately narrow:
 
@@ -1050,11 +1054,12 @@ output become evidence. Analyze, elaborate, bounded run, closed trace,
 normalized result, semantic outcomes, rerun, parity, and cleanup are separate
 gates.
 
-GHDL is not installed in the current workspace. OSVVM is not materialized
-either. Completed `.15.1-.15.2` therefore ship deterministic source, source
-maps, structural checks, and a review gallery without advertising VHDL
-analysis or runtime support. OSVVM-dependent work must later verify the
-recursive release, every submodule identity, licenses, and notices under a
+The exact GHDL 6.0.0 macOS ARM64 LLVM package is available for active `.15.5`,
+but it is not yet materialized or executed in this continuity state. OSVVM is
+not materialized either. Completed `.15.1-.15.4` therefore ship deterministic
+source, source maps, structural checks, and a review gallery without
+advertising VHDL analysis or runtime support. OSVVM-dependent work must verify
+the recursive release, every submodule identity, licenses, and notices under a
 repository-derived dependency root.
 
 ### Shipped provider-free VHDL semantics

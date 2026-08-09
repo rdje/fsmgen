@@ -109,8 +109,10 @@ review profile: six sources, 59 source maps, 20 static checks, a 24-row selected
 mapping matrix, deterministic checking/scoreboard/coverage/fault/result
 structures, and a seven-stage review/defect workflow.
 
-This is reviewable semantics emission, not VHDL execution. `.15.5` is blocked
-on exact GHDL 6.0.0, `.15.6` awaits exact repository-local OSVVM 2026.05, and
+This is reviewable semantics emission, not VHDL execution. Director selection
+now activates `.15.5`: the exact official macOS ARM64 GHDL 6.0.0 LLVM package
+is available for repository-volume materialization, while execution evidence
+remains pending. `.15.6` awaits exact repository-local OSVVM 2026.05, and
 `.15.7` depends on both. Analysis, elaboration, runtime, produced results,
 parity, PSL, methodology support, and mixed-language behavior remain unclaimed.
 

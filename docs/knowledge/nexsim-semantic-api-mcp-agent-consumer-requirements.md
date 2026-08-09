@@ -46,6 +46,5 @@ performance, error behavior, conformance, and schema evolution.
 
 The document is a request, not evidence that NEXSIM implements any capability.
 Capability negotiation must keep requested, accepted, implemented, and verified
-states distinct. The owning task-tree keeps an explicit amendment leaf open so
-future NEXSIM schemas, prototypes, evidence, and director feedback can update
-the contract without rewriting history silently.
+states distinct. The baseline remains canonical; its director-deferred task
+tree requires explicit reactivation and concrete evidence before amendment.

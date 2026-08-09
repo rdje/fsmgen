@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS`
-- Status: `active`
+- Status: `deferred`
 - Roadmap lane: `Verification infrastructure / external simulator operability`
 - Created: `2026-08-02`
 - Last updated: `2026-08-02`
@@ -54,7 +54,7 @@ FSMGEN-private intent-language or reference-simulator architecture.
 ## Task Tree
 
 - ID: `NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS`
-  Status: `active`
+  Status: `deferred`
   Goal: `Maintain the versioned external-consumer requirements for NEXSIM's semantic API and MCP operability surface.`
   Children: `NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.1, NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.2`
 
@@ -66,7 +66,7 @@ FSMGEN-private intent-language or reference-simulator architecture.
   Commit: `this commit (NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.1: publish agent-consumer contract)`
 
 - ID: `NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.2`
-  Status: `proposed`
+  Status: `deferred`
   Goal: `Amend the consumer contract as NEXSIM schemas, prototypes, capability evidence, and director feedback become concrete.`
   Acceptance: `Each amendment identifies its trigger, preserves version history and compatibility meaning, updates conformance priorities/examples, and never converts requested capability into an observed support claim without evidence.`
   Verification: `pending the version-1 baseline and future concrete input`
@@ -77,9 +77,13 @@ FSMGEN-private intent-language or reference-simulator architecture.
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | Version 1.0 is canonical, book-rendered, indexed, contained, and verified without making a NEXSIM support claim. |
-| 2 | `.2` | `proposed` | Amend only when concrete director feedback, schemas, prototypes, or capability evidence justify a versioned change. |
+| 2 | `.2` | `deferred` | Director-deferred until concrete schemas, prototypes, capability evidence, or new feedback justify reactivation. |
 
 ## Decisions
+
+- `2026-08-09`: The director deferred this tree and the evidence-driven `.2`
+  amendment lane. The version-1 baseline remains canonical and current, but
+  no NEXSIM-dependent work is PNT-eligible until explicit reactivation.
 
 - `2026-08-02`: Use a standalone external-consumer contract rather than burying
   requirements inside an FSMGEN qualification leaf. This lets NEXSIM consume
@@ -102,7 +106,8 @@ FSMGEN-private intent-language or reference-simulator architecture.
 
 ## Blockers
 
-- None for `.1`.
+- None for completed `.1`. Deferred `.2` requires explicit reactivation plus
+  concrete schemas, prototypes, capability evidence, or director feedback.
 
 ## Verification Log
 
@@ -115,6 +120,22 @@ FSMGEN-private intent-language or reference-simulator architecture.
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `.1` | `this commit` | Publish the implementation-neutral agent-consumer requirements baseline; `.2` remains proposed for evidence-driven amendments. |
+
+## Acceptance Checklist (enforced) — director deferral
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Completed `.1` already publishes the
+  version-1 external-consumer baseline. `.2` cannot make an evidence-driven
+  amendment because no concrete NEXSIM schema, prototype, implemented
+  capability report, or new feedback exists, and the director explicitly
+  deferred NEXSIM-dependent work on 2026-08-09.
+- [x] **ADDRESSED (verified)** — The root and `.2` are `deferred`, the active
+  index no longer presents this tree as PNT-eligible, the canonical baseline
+  remains unchanged, and the task, book, fact, HIAL provider leaf, and bounded
+  Memory all require explicit reactivation plus concrete evidence.
+- [x] **NO REGRESSION** — Task integrity, Knowledge Map generation/check, all
+  52 mdBook chapter tests, `git diff --check`, and final staged doctrines pass.
+  No requirement ID, schema, example, requested capability, implementation
+  claim, runtime integration, or product behavior changes.
 
 ## Acceptance Checklist (enforced) — `.1` baseline
 

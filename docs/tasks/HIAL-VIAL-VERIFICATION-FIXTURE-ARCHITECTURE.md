@@ -295,11 +295,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.2: ship exact experimental UVM probe`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.3`
-  Status: `proposed`
+  Status: `deferred`
   Goal: `Select, integrate, and capability-qualify the first exact PGEN parser plus MCP-operated NEXSIM simulator UVM runtime tuple.`
   Acceptance: `Once executable provider releases exist, a documentation selection freezes exact PGEN and NEXSIM versions/content/commands, parser-to-simulator handoff schema, NEXSIM semantic-introspection API schema, MCP protocol/profile, Accellera UVM identity, capability matrix, project-local artifacts, permissions, limits, and failure boundaries before implementation. The selected NEXSIM contract must expose stable source-mapped semantic identities; snapshot-consistent deterministic bounded queries; explicit side-effect-free inspection versus authorized control; hierarchy, types, four-state values, processes/events/scheduler state, assertions/coverage, and UVM topology/phases/objections/factory/configuration/TLM/sequences/RAL state where supported; plus run/step/pause/breakpoint/checkpoint/replay/cancel controls where selected. Implementation then proves parse, UVM/DUT compile, elaboration, four-state timed execution, notification/interception results, semantic checkpoint correlation, first-divergence localization against applicable IASIM/portable normalized oracles, deterministic rerun, cleanup, and every applicable normalized parity oracle without borrowing experimental or commercial-tool evidence. NEXSIM introspection remains provider evidence: it cannot redefine VIAL meaning, leak into canonical generated source, or turn one observed subset into full SystemVerilog/UVM qualification.`
-  Verification: `provider direction is clarified: NEXSIM will expose deep semantic introspection through a clean API operated via MCP; exact release/API/schema/protocol/capability identities remain blocked on capability-ready PGEN and NEXSIM releases`
-  Commit: `pending activation`
+  Verification: `Director-deferred on 2026-08-09 until capability-ready PGEN and NEXSIM releases provide the exact release, API, schema, protocol, handoff, and capability evidence required by this leaf; no placeholder provider work remains PNT-eligible.`
+  Commit: `this commit (director deferral)`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.14`
   Status: `done`
@@ -345,11 +345,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.4: close portable VHDL review`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.5`
-  Status: `proposed`
+  Status: `active`
   Goal: `Materialize or locate exact GHDL 6.0.0 and capability-qualify the provider-free backend through normalized runtime results.`
   Acceptance: `An exact GHDL 6.0.0 build identity, backend, repository-local work/cache/output roots, and ordered --std=08 analyze/elaborate/run commands are frozen and executed. Independent gates prove library/source analysis, elaboration, bounded four-state timed execution, closed trace, normalized result/outcomes, deterministic rerun, applicable portable-SV parity, resource limits, and exact cleanup; partial VHDL-2008/PSL and every unexercised feature remain explicit, and no other simulator is inferred.`
-  Verification: `blocked until exact GHDL 6.0.0 is available after .15.4; absence does not block .15.1-.15.4`
-  Commit: `pending`
+  Verification: `Clean director activation on 2026-08-09 follows completed .15.4. Official release metadata now exposes an exact macOS ARM64 GHDL 6.0.0 LLVM package and published SHA-256; materialization, identity proof, and all analysis-through-parity gates remain pending implementation.`
+  Commit: `pending implementation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.6`
   Status: `proposed`
@@ -467,8 +467,9 @@ workflow, and exact deferred-runtime defect boundary. Completed `.13.2` ships
 the exact reusable Verilator-5.046/UVM-2020.3.1-vlt experimental probe, repairs
 the invalid generated `context` identifier, proves the isolated UVM library
 through runtime smoke, and classifies the complete generated fixture as
-tool-limited before runtime without advertising support. `.13.3` remains
-blocked on capability-ready PGEN and NEXSIM releases. Clean predecessor
+tool-limited before runtime without advertising support. Director-deferred
+`.13.3` remains unavailable until capability-ready PGEN and NEXSIM releases
+provide exact provider evidence. Clean predecessor
 `adc88817e` activates `.14` alone for VHDL-2008 methodology/backend contract
 selection; selection and implementation remain unperformed.
 Decision `0034` records that
@@ -476,7 +477,20 @@ this bounded profile is not VIAL's language ceiling: target SV/UVM/VHDL
 machinery is compiler-owned in the same architectural sense that assembly is
 compiler-owned beneath C/C++ or Rust.
 
+Director selection on `2026-08-09` activates `.15.5` after completed `.15.4`.
+The exact official macOS ARM64 GHDL 6.0.0 LLVM asset is available for
+repository-volume materialization; installation, execution, normalized-result
+qualification, and parity evidence remain unperformed in this continuity-only
+transition. `.15.6` and `.15.7` remain proposed behind their exact OSVVM and
+combined provider/tool gates.
+
 ## Decisions
+
+- `2026-08-09`: Defer every NEXSIM-dependent runtime-qualification action
+  represented by `.13.3` until capability-ready PGEN and NEXSIM releases
+  provide exact identities and schemas. Activate `.15.5` instead because the
+  selected official GHDL 6.0.0 macOS ARM64 artifact is now available; keep
+  tool installation and all runtime claims outside this continuity commit.
 
 - `2026-08-01`: Clean completed experimental-probe predecessor
   `adc88817e88fee47f1b1bd568761add02a93f655` permits `.14` to activate
@@ -749,13 +763,12 @@ compiler-owned beneath C/C++ or Rust.
 
 ## Open Questions
 
-- `.13.3` must select exact PGEN/NEXSIM versions, handoff schema, semantic-
-  introspection API schema, and MCP profile when capability-ready releases
-  exist; no version or unsupported query/control capability is invented in
-  advance.
-- Active `.15.1` must implement only the provider-free emitter substrate and
-  first gallery; its exact private module placement and reuse of existing
-  VIAL artifact/publication helpers are routine implementation decisions.
+- Director-deferred `.13.3` must select exact PGEN/NEXSIM versions, handoff
+  schema, semantic-introspection API schema, and MCP profile only after
+  explicit reactivation against capability-ready releases.
+- Active `.15.5` must materialize the exact GHDL 6.0.0 package and execute the
+  already selected provider-free qualification gates without implying broader
+  VHDL-2008, PSL, another simulator, or methodology support.
 - `.16` must choose the first available mixed-language tool/profile.
 - `.17` must select measured architecture-specific capacity budgets; the
   separate whole-product scale tree retains big/really-big qualification.
@@ -764,14 +777,14 @@ compiler-owned beneath C/C++ or Rust.
 
 ## Blockers
 
-- `.13.3` runtime qualification is intentionally blocked on capability-ready
-  PGEN and NEXSIM releases. The planned NEXSIM API/MCP direction removes no
-  release/schema/capability prerequisite. Commercial simulator availability
-  is not a roadmap prerequisite, and Verilator/Icarus cannot be promoted from
+- `.13.3` runtime qualification is director-deferred until capability-ready
+  PGEN and NEXSIM releases exist. Commercial simulator availability is not a
+  roadmap prerequisite, and Verilator/Icarus cannot be promoted from
   experimental evidence to `sv_uvm_qualified`.
-- GHDL 6.0.0 and OSVVM 2026.05 are not locally materialized. This blocks
-  `.15.5` execution and later provider-dependent qualification, not active
-  `.15.3` or the provider-free emission/review sequence through `.15.4`.
+- No availability blocker remains for active `.15.5`: the exact official
+  GHDL 6.0.0 macOS ARM64 LLVM package exists. Materialization and execution
+  are the active work. OSVVM 2026.05 is not yet locally materialized, so
+  `.15.6-.15.7` remain proposed behind their separate provider gates.
 - Later UVM, VHDL, and mixed-language implementation/qualification leaves
   retain explicit tool availability prerequisites and cannot borrow the
   current Verilator result.
@@ -834,6 +847,34 @@ compiler-owned beneath C/C++ or Rust.
 | `2026-08-02` | `.15.2` implementation | provider-free emitter/validator/support syntax; fourteen-artifact/six-source semantics graph; 52 maps and 13 checks; typed drive/sample, inactive-edge scheduling, exact ranks, bounded scenarios/fibers, deterministic models, declared probe adapter; negotiation/mutation negatives; checked gallery; impacted VIAL/support/capability suite; task/live/Knowledge Map/Memory; mdBook test/build/rendered-paragraph inspection; staged acceptance/doctrines; artifact census and exact cleanup | `passed`; the guarded impacted suite reports `All tests successful` at Files=12/Tests=7,168; six changed Perl/script/test paths report `syntax OK`; the gallery checker reports six VHDL sources/eight evidence artifacts/52 maps/13 checks. All 49 chapters test and the repository-local build contains 85 files/16,928,012 bytes; the changed VHDL prose renders as distinct paragraph and code blocks before exact removal. Task integrity is three trees/914 nodes/one segment/one index archive; all 22 live surfaces and 2,944/2,944 paths pass with exact mdBook delta 0/+24/+1,385 and zero ceiling increases; Knowledge Map is current at 1,104 facts/5,666 questions/5,832 occurrences/117 shards; Memory is 47 lines; final staged acceptance and all nine doctrines pass. Two initially misresolved same-volume mdBook destinations were measured at 85 files/16,696 KiB each, replaced by the verified repository-local build, deleted exactly, and residue-checked absent. No `.bin`/`.log`, mdBook build, or VIAL staging residue remains; analysis through support stays unclaimed. |
 | `2026-08-02` | `.15.3` implementation | provider-free checking emitter/validator/support syntax; fourteen-artifact/six-source graph; capacity-four scoreboard, exact stall bins, immutable-source substitution, procedural checks, bounded stored diagnostics, logical-time closed trace, full top-level normalized-result projection; quote-escaping/result/trace/overflow/unknown/PSL/provider/probe mutations; checked gallery; impacted VIAL/support/capability suite; task/live/Knowledge Map/Memory; mdBook test/build/rendered-paragraph inspection; staged acceptance/doctrines; artifact census and exact cleanup | `passed`; the final guarded impacted suite reports `All tests successful` at Files=12/Tests=7,164; five changed Perl/test paths report `syntax OK`; the gallery checker reports six VHDL sources/eight evidence artifacts/59 maps/20 checks. All 50 chapters test and the repository-local build contains 86 files/17,822,884 bytes; rendered VHDL prose preserves distinct paragraphs and the VHDL-quote/full-result boundary before exact removal. Task integrity is four trees/917 nodes/one segment/one index archive; all registered live surfaces and 2,950/2,950 paths pass with exact mdBook delta 0/+17/+1,170 and zero ceiling increases; Knowledge Map is current at 1,105 facts/5,683 questions/5,849 occurrences/118 shards; Memory is 45 lines; final staged acceptance and all nine doctrines pass. No local VHDL analyzer is available, and no `.bin`/`.log`, repository-local verification output, mdBook build, or VIAL staging residue remains; analysis through support stays unclaimed. |
 | `2026-08-02` | `.15.4` implementation | revision-4 review-closure/emitter/support/corpus syntax; 24-row selected matrix with public/compiler/bridge/private-preview partition and four exact unsupported reasons; seven-stage repository-relative review/durable-defect workflow; exact inert-legacy bytes/schema and HIAL byte/separation proof; seven closure invariants and fail-closed mutations; 17-artifact checked gallery; focused/impacted VIAL/support/capability suite; task/live/Knowledge Map/Memory; mdBook test/build/rendered structure; staged acceptance/doctrines; artifact census and exact cleanup | `passed`; the guarded impacted suite reports `All tests successful` at Files=13/Tests=7,172; ten changed Perl/script/test paths report `syntax OK`; the gallery checker reports six VHDL sources/11 evidence artifacts/59 maps/20 static checks/24 mappings/seven closure checks. The inert legacy fixture remains 976 bytes with exact package SHA-256 `8d587b8dde4b7659290af6720ed4812079f36479d577dd5a0cf787bef2a22d4f` and path-independent manifest-projection SHA-256 `29789c0b4b7400de45eec2ac1f62178d2e555f9c3d64ad871a1d87c5d39c5835`; HIAL DUT bytes match the private handoff. All 50 chapters test and the repository-local build contains 86 files/17,845,293 bytes; the changed chapter renders 213 paragraphs/11 tables/41 code blocks with the matrix, rejection, workflow, and migration sections present before exact removal. Task integrity remains four trees/917 nodes/one segment/one index archive; Knowledge Map is current at 1,105 facts/5,687 questions/5,853 occurrences/118 shards; Memory is 45 lines; all live surfaces and the final staged acceptance/nine doctrines pass with zero ceiling increases. No exact VHDL analyzer or provider is local, and no `.bin`/`.log`, legacy-proof output, mdBook build, or VIAL staging residue remains; visual review and analysis through support stay pending or unclaimed. |
+| `2026-08-09` | `.15.5` activation and NEXSIM deferral | director priority; official GHDL v6.0.0 release metadata and macOS ARM64 package digest; task/index/audit/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook test; diff/staged-doctrine gates | `passed`; NEXSIM-dependent `.13.3` and the separate amendment tree are deferred, exact GHDL asset `ghdl-llvm-6.0.0-macos15-aarch64.tar.gz` is available at 42,445,801 bytes with SHA-256 `69beb5913a490b5971980bd045af6a63b6f52e861b444fa990bffac436587478`, `.15.5` alone becomes active, task integrity reports three active trees/916 nodes, Knowledge Map remains 1,105 facts/5,706 questions/5,872 occurrences/118 shards, all 52 mdBook chapters test, Memory is 40 lines, and final staged doctrines pass; no provider bytes are installed and no product behavior or support claim changes. |
+
+## Acceptance Checklist (enforced) — `.15.5` activation and NEXSIM deferral
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'blocked until exact GHDL
+  6.0.0 is available' --oneline --
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md` identifies
+  `9729f1f0c`, which records the now-stale availability blocker. The clean
+  predecessor has no PNT-eligible leaf because `.13.3` and the NEXSIM
+  amendment tree await future releases. The director
+  explicitly defers NEXSIM-dependent work. Official GHDL release metadata now
+  exposes exact macOS ARM64 LLVM asset
+  `ghdl-llvm-6.0.0-macos15-aarch64.tar.gz`, 42,445,801 bytes, SHA-256
+  `69beb5913a490b5971980bd045af6a63b6f52e861b444fa990bffac436587478`,
+  so the old availability blocker is stale.
+- [x] **ADDRESSED (verified)** — `.13.3` and the standalone NEXSIM amendment
+  tree are explicitly deferred with reactivation conditions; `.15.5` alone is
+  active. The task index, canonical audit, two mdBook views, three fact cards,
+  and bounded Memory agree that provider installation and execution remain
+  unperformed in this transition. Task integrity reports three active trees
+  and 916 nodes; Memory is 40 lines.
+- [x] **NO REGRESSION** — `knowledge-map: OK` reports 1,105 facts, 5,706
+  unique questions, 5,872 answer occurrences, and 118 shards. All 52 mdBook
+  chapters test, `git diff --check` passes, and `scripts/check_doctrines.sh`
+  reports `[doctrine] all doctrine checks passed`. No compiler/runtime source,
+  generated product
+  artifact, installed provider byte, capability state, or support claim
+  changes.
 
 ## Acceptance Checklist (enforced) — `.15` activation/decomposition
 

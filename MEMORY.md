@@ -7,14 +7,16 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: none is PNT-eligible.
-- current_state: the `254` / `253` import map and fact are current; all 253
-  package links and 71 measured counts match source, with no split links.
-- next_action: select a newly eligible active-tree frontier when its recorded
-  prerequisite arrives; do not activate proposed or director-deferred work.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.5`.
+- current_state: the director deferred NEXSIM-dependent `.13.3` and the
+  NEXSIM consumer-amendment tree; the exact official macOS ARM64 GHDL 6.0.0
+  LLVM release asset is available but not yet materialized or executed.
+- next_action: materialize and verify exact GHDL 6.0.0 under repository-derived
+  storage, then run `.15.5` analysis/elaboration/runtime/result/parity gates.
 - in_flight_uncommitted: none; no background job or build residue.
-- blockers: containment `.12`, provider qualification, NEXSIM evidence, and
-  IAL2 eligibility remain unavailable.
+- blockers: containment `.12` and IAL2 eligibility remain unavailable;
+  NEXSIM-dependent work is director-deferred; OSVVM qualification follows
+  `.15.5` under separately committed `.15.6` and `.15.7` slices.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not

@@ -1155,8 +1155,8 @@ source-map obligations needs regression evidence but not a new VIAL semantic
 version. A semantic, profile, public artifact-schema, or compatibility change
 does require explicit versioning.
 
-Future `.13.3` activates only when usable PGEN and NEXSIM releases exist. It
-must then select and execute this exact order:
+Director-deferred `.13.3` can reactivate only when usable PGEN and NEXSIM
+releases exist. It must then select and execute this exact order:
 
 1. **discover tuple** — exact PGEN and NEXSIM version/content/executable
    identities plus the parser-to-simulator handoff, semantic-introspection API,
@@ -1328,9 +1328,10 @@ separate `.13.2` experimental report records its partial evidence without
 changing those product stage states or blurring emission truth.
 
 Verilator and other available tools can catch whatever they support early.
-`.13.3` alone is blocked until PGEN and NEXSIM expose the required exact
-releases, handoff, and capabilities. An experimental parse, compile, or
-elaboration result cannot discharge that runtime blocker.
+`.13.3` is director-deferred until PGEN and NEXSIM expose the required exact
+releases, handoff, and capabilities and the director explicitly reactivates
+it. An experimental parse, compile, or elaboration result cannot discharge
+that runtime prerequisite.
 
 ## Completed VHDL contract selection
 

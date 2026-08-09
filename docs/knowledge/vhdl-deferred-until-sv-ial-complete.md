@@ -53,9 +53,11 @@ contracts are now mature enough for exact architecture selection.
 
 Decision `0051` selects provider-free IEEE VHDL-2008 as the VIAL portable
 semantic core and OSVVM 2026.05 as its advanced methodology provider. GHDL
-6.0.0 is the first exact analysis/elaboration/runtime tool, but it is not
-installed locally; both profiles are selected and unexecuted rather than
-supported runtime capabilities. UVVM 2026.03.20 was audited but is not the
+6.0.0 is the first exact analysis/elaboration/runtime tool. On 2026-08-09, its
+official macOS ARM64 LLVM release asset became verified as available and
+`.15.5` was director-activated for repository-volume materialization and
+qualification; it remains unexecuted until that slice records evidence. OSVVM
+remains selected and unexecuted. UVVM 2026.03.20 was audited but is not the
 version-1 provider.
 
 `vhdl_portable_ghdl` statically lowers one bound execution plan into standard
@@ -81,9 +83,7 @@ exercised subset and flags independently.
 
 The legacy `vhdl-observation-package` remains an unchanged inert compatibility
 surface with no analyzer/runtime claim. Native VIAL uses a separate profile,
-artifact graph, metadata package, manifest, and source map. Reviewable emission
-may proceed before GHDL is available, while analysis, elaboration, run, result,
-parity, and OSVVM capability claims wait for `.15` exact gates. Active `.15.1`
-owns the provider-free emitter substrate and first gallery; `.15.2-.15.4`
-complete unblocked portable emission/review before separate `.15.5` GHDL and
-`.15.6-.15.7` OSVVM gates.
+artifact graph, metadata package, manifest, and source map. Completed
+`.15.1-.15.4` own provider-free emission/review. Active `.15.5` owns exact
+GHDL materialization and qualification; `.15.6-.15.7` retain the separate
+OSVVM gates.
