@@ -72,17 +72,17 @@ Current baseline:
   atomic repository-local artifact publisher. Public `run` additionally
   reaches the qualified `sv_portable_verilator` emitter, exact Verilator 5.046
   runner, closed-trace validator, and normalized-result producer. Native-UVM
-  and portable-VHDL implementation packages remain
-  private/test-driven; only their bounded language-surface contracts enter this
-  closure, so their parse/runtime/support claims remain unchanged.
+  remains private and review-only. The reachable portable-VHDL contract records
+  bounded exact GHDL 6.0.0/OSVVM 2026.05 private-fixture qualification; its
+  implementation stays outside this closure/API and widens no public claim.
 - The former composition-local parameter/generic helper is now a compatibility shim; the active neutral owner is [perl/FSM/ParameterValueSupport.pm](perl/FSM/ParameterValueSupport.pm), including bounded scalar expressions, matching-shape leafwise aggregate expression folding, and unary aggregate bitwise complement folding.
 - Shared integer literal parsing is now reachable through [perl/FSM/Package/IntegerLiteralSupport.pm](perl/FSM/Package/IntegerLiteralSupport.pm), keeping common decimal, `0d`, based SystemVerilog, `0x`, `0b`, `0o`, and intent-level sized `.fsm` spellings such as `5'23`, `8'-10`, `8'-0xA`, `8'-0b1010`, and `20'x1` consistent across scalar widths, constants, and direct `+size` expression terms while normalizing to legal target-HDL literals before backend emission.
 - The bounded VHDL generation owners are now reachable from [bin/fsmgen](bin/fsmgen):
   direct roots route through [perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm](perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm),
   and structural composition roots route through
   [perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm](perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm).
-  The shipped VHDL surface remains scoped by the backend/API validation frontier and
-  does not imply GHDL validation availability.
+  The shipped direct-generation VHDL surface remains scoped by the backend/API
+  validation frontier and does not imply general GHDL validation availability.
 - The top-level manifest owner
   [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm) is now
   intentionally thin: it is a small assembler over dedicated top-level public section builders
@@ -239,12 +239,11 @@ The best current architecture in the tree is the newer composition/forward-IR/ba
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)
 - [perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm](perl/FSM/Backend/VHDL/StructuralRTLIREmitter.pm)
 
-The newest closure growth is the public VIAL runtime path:
-[perl/FSM/VIAL/Tool.pm](perl/FSM/VIAL/Tool.pm) now composes the qualified
-portable-SystemVerilog emitter and runner, which validate a closed trace and
-produce normalized results before atomic publication. The two newly reachable
-native-UVM and portable-VHDL support contracts expose review boundaries only;
-their backend implementations remain outside the entrypoint closure.
+The public VIAL runtime path composes its qualified portable-SystemVerilog
+emitter/runner, closed-trace validator, and normalized-result producer through
+[perl/FSM/VIAL/Tool.pm](perl/FSM/VIAL/Tool.pm). Native-UVM remains review-only;
+portable-VHDL records bounded private GHDL 6.0.0/OSVVM 2026.05 profiles while
+both implementations stay outside the closure/API.
 
 The IAL2 protocol-intent family remains a major surface: the PPIF adapter
 reaches bounded AXI initiator primitives and
@@ -429,13 +428,13 @@ Current thin-coordinator / public-surface assembler line counts:
 - [perl/FSM/VIAL/Backend/TraceValidator.pm](perl/FSM/VIAL/Backend/TraceValidator.pm): `473`
 - [perl/FSM/VIAL/Backend/ResultProducer.pm](perl/FSM/VIAL/Backend/ResultProducer.pm): `371`
 - [perl/FSM/Support/VIALNativeUVMEmissionContract.pm](perl/FSM/Support/VIALNativeUVMEmissionContract.pm): `178`
-- [perl/FSM/Support/VIALVHDLEmissionContract.pm](perl/FSM/Support/VIALVHDLEmissionContract.pm): `172`
+- [perl/FSM/Support/VIALVHDLEmissionContract.pm](perl/FSM/Support/VIALVHDLEmissionContract.pm): `250`
 
-Current largest reachable files by line count:
+Current largest reachable files by line count (complete at `>= 1400` lines):
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm): `13066`
 - [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm): `10477`
 - [perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm](perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm): `9773`
-- [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm): `6884`
+- [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm): `6911`
 - [perl/FSM/Adapter/IAL2/PPIF.pm](perl/FSM/Adapter/IAL2/PPIF.pm): `4626`
 - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm): `3906`
 - [perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm](perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm): `2517`
@@ -444,16 +443,17 @@ Current largest reachable files by line count:
 - [perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm](perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm): `1904`
 - [perl/FSM/VIAL/Backend/SVPortableVerilator.pm](perl/FSM/VIAL/Backend/SVPortableVerilator.pm): `1893`
 - [perl/FSM/VIAL/SemanticBuilder.pm](perl/FSM/VIAL/SemanticBuilder.pm): `1888`
+- [perl/FSM/VIAL/ExecutionBuilder.pm](perl/FSM/VIAL/ExecutionBuilder.pm): `1855`
 - [bin/fsmgen](bin/fsmgen): `1838`
 - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm): `1835`
 - [perl/FSM/Scheduler/ISF/ControlFlowEffects.pm](perl/FSM/Scheduler/ISF/ControlFlowEffects.pm): `1769`
 - [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm): `1726`
 - [perl/FSM/Synthesis/EnableGraph/ASTSupport.pm](perl/FSM/Synthesis/EnableGraph/ASTSupport.pm): `1694`
+- [perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm](perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm): `1520`
 - [perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm](perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm): `1515`
 - [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm): `1501`
 - [perl/FSM/Support/NormalizedSemanticReportContract.pm](perl/FSM/Support/NormalizedSemanticReportContract.pm): `1484`
 - [perl/FSM/ExpressionNamer.pm](perl/FSM/ExpressionNamer.pm): `1443`
-- [perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm](perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm): `1372`
 
 Interpretation:
 - line count alone is not the same thing as current architectural risk,
@@ -754,9 +754,10 @@ selects the exact qualified Verilator 5.046 profile, emits portable
 SystemVerilog, executes in bounded repository-local staging, validates the
 closed trace, and produces normalized result/output manifests. The API returns
 an ordered caller-owned graph; the CLI atomically publishes the same graph.
-Backend objects remain private, and complete four-state behavior, general
-cross-backend parity, UVM, VHDL, mixed-language execution, and scale remain
-explicit non-claims.
+Backend objects remain private. Contract-only VHDL profiles add no public `run`
+selection; complete four-state behavior, general cross-backend parity, UVM,
+general VHDL/OSVVM breadth, mixed-language execution, and scale remain explicit
+non-claims.
 
 ### IAL2 protocol/platform and ISF intent-scheduling pre-lowering
 - [perl/FSM/Adapter/IAL2/PPIF.pm](perl/FSM/Adapter/IAL2/PPIF.pm)

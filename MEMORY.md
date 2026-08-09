@@ -7,13 +7,14 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `STARTUP-INTEGRITY-REPAIR-AUG09.4`.
-- current_state: `.2` repairs the stale HIAL VHDL hash; `.3` restores canonical
-  cookbook wiring with plain/strict runnable coverage; import-map drift remains.
-- next_action: rerun the canonical import closure, refresh selected map/fact
-  measurements and largest-file navigation, then close and commit `.4`.
-- in_flight_uncommitted: `.3` book/continuity changes; no job or build residue.
-- blockers: none; after `.4`, HIAL `.16+` need director/tool selection.
+- active_work_unit: none; no PNT-eligible leaf remains.
+- current_state: `STARTUP-INTEGRITY-REPAIR-AUG09` is closed after repairing the
+  HIAL VHDL hash, canonical cookbook wiring, and exact import-map/fact truth.
+- next_action: await director activation of the next proposed/selection-
+  dependent frontier; HIAL `.16`, `.17`, and `.19` remain leading choices.
+- in_flight_uncommitted: none after this commit; no job or build residue.
+- blockers: none in the closed tree; continuation needs director selection
+  because every remaining active-tree frontier is done, deferred, or proposed.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not

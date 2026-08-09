@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `STARTUP-INTEGRITY-REPAIR-AUG09`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `bootstrap integrity maintenance`
 - Created: `2026-08-09`
 - Last updated: `2026-08-09`
@@ -36,7 +36,7 @@ the August 9 startup audit without changing behavior or roadmap claims.
 ## Task Tree
 
 - ID: `STARTUP-INTEGRITY-REPAIR-AUG09`
-  Status: `active`
+  Status: `done`
   Goal: `Restore the exact test, mdBook, and maintained entrypoint-architecture truths found stale by the August 9 startup audit.`
   Children: `STARTUP-INTEGRITY-REPAIR-AUG09.1, STARTUP-INTEGRITY-REPAIR-AUG09.2, STARTUP-INTEGRITY-REPAIR-AUG09.3, STARTUP-INTEGRITY-REPAIR-AUG09.4`
 
@@ -62,11 +62,11 @@ the August 9 startup audit without changing behavior or roadmap claims.
   Commit: `STARTUP-INTEGRITY-REPAIR-AUG09.3: restore canonical cookbook wiring`
 
 - ID: `STARTUP-INTEGRITY-REPAIR-AUG09.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Remeasure and refresh the maintained bin/fsmgen import map and canonical fact.`
-  Acceptance: `The canonical closure remains exact at 254 files / 253 packages, every selected source line count and largest-file entry matches live source, the canonical fact and generated shard agree, and documentation/doctrine gates pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `The canonical closure remains exact at 254 files / 253 packages, every selected source line count matches live source, the largest-file list is complete at its declared threshold, the canonical fact and generated shard agree, and documentation/doctrine gates pass.`
+  Verification: `Module::ScanDeps reports 254 files / 253 packages / Support 76 / IAL2 19 / VIAL 17 / HIAL 3, totaling 156,459 lines / 6,791,808 bytes. The map has 253 unique live-package links with zero missing/extra owners, 72 exact selected line claims, and a complete 23-entry >=1,400-line set. VIALVHDLEmissionContract 172->250, RegressionCorpus 6884->6911, direct VHDL 1372->1520, and the omitted 1,855-line ExecutionBuilder are repaired. Map/fact distinguish contract-only private VHDL qualification from public run/API support. Bin syntax, Knowledge Map (1,105 facts / 5,713 questions / 5,879 occurrences / 118 shards), paths (Files=1/Tests=2), 52 mdBook tests, its 87-file local build/cleanup, and all doctrines pass. Runtime/source/tests/product artifacts/API/support/roadmap/book are unchanged.`
+  Commit: `STARTUP-INTEGRITY-REPAIR-AUG09.4: refresh startup import map`
 
 ## Decisions
 
@@ -77,6 +77,15 @@ the August 9 startup audit without changing behavior or roadmap claims.
 - `2026-08-09`: The May 29 cookbook slice reintroduced slash-only guidance
   after the May 24 strict cut; canonical list forms remain authoritative.
 - `2026-08-09`: Import topology is unchanged; measurements are stale.
+- `2026-08-09`: The post-map GHDL/OSVVM slices changed three selected
+  reachable-owner counts and the VHDL contract's qualitative state without
+  changing topology. The prior checker validated only existing claims, so it
+  could not detect an omitted ranked owner.
+- `2026-08-09`: The largest-file view is now mechanically complete at an
+  explicit `>= 1400`-line threshold; this includes the previously omitted
+  1,855-line VIAL ExecutionBuilder and fixes the prior undefined boundary.
+- `2026-08-09`: All three startup-integrity repairs are committed, verified,
+  behavior-neutral, and the bounded tree is closed.
 
 ## Blockers
 
