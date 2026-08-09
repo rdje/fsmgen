@@ -359,11 +359,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.6: emit exact OSVVM 2026.05 adapter`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.7`
-  Status: `proposed`
+  Status: `active`
   Goal: `Capability-qualify the OSVVM 2026.05 plus GHDL 6.0.0 profile and close VHDL support accounting.`
   Acceptance: `The exact provider/tool tuple independently proves provider compilation order, adapter and generated-fixture analysis, elaboration, bounded execution, closed trace, normalized semantic outcomes, deterministic rerun, applicable portable-result parity, supplementary provider reports, limits, cleanup, manifest/capability/support truth, and honest unsupported breadth. OSVVM qualification cannot imply UVVM, PSL, complete VHDL-2008, another simulator, mixed-language execution, or legacy-package analyzer support.`
-  Verification: `pending .15.5 and .15.6`
-  Commit: `pending`
+  Verification: `Clean completed OSVVM-emission predecessor 4f350f29cd3c7e22c6a749aadb88150ee987433f activates .15.7 alone. Exact GHDL 6.0.0 LLVM-JIT and recursive OSVVM 2026.05 inputs are repository-local, so combined provider compilation, generated-source analysis, elaboration, runtime, result, parity, support accounting, and cleanup may proceed without borrowing the completed provider-free qualification. Activation changes no source, generated artifact, qualification evidence, capability, runtime result, or support behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.7: activate exact OSVVM GHDL qualification`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.16`
   Status: `proposed`
@@ -483,8 +483,8 @@ bounded runtime, timed four-state behavior, a closed normalized result,
 deterministic rerun, applicable portable-SV parity, resource controls, and
 exact same-volume cleanup pass. Completed `.15.6` materializes exact recursive
 OSVVM 2026.05 and ships its structurally reviewed advanced adapter/gallery.
-Both exact inputs are now available; `.15.7` is the next cleanly activatable
-leaf for combined provider/tool qualification.
+Both exact inputs are now available; `.15.7` is active for combined
+provider/tool qualification.
 
 ## Decisions
 
@@ -786,9 +786,9 @@ leaf for combined provider/tool qualification.
 - Director-deferred `.13.3` must select exact PGEN/NEXSIM versions, handoff
   schema, semantic-introspection API schema, and MCP profile only after
   explicit reactivation against capability-ready releases.
-- `.15.6` must materialize the complete recursive OSVVM 2026.05 release and
-  implement its separately negotiated provider adapter/gallery without
-  changing portable VIAL semantics or inferring runtime qualification.
+- Active `.15.7` must compile the exact OSVVM libraries and adapter with exact
+  GHDL 6.0.0 LLVM-JIT, then prove bounded runtime/result/parity and support
+  accounting without widening provider-free VIAL semantics.
 - `.16` must choose the first available mixed-language tool/profile.
 - `.17` must select measured architecture-specific capacity budgets; the
   separate whole-product scale tree retains big/really-big qualification.
@@ -801,9 +801,9 @@ leaf for combined provider/tool qualification.
   PGEN and NEXSIM releases exist. Commercial simulator availability is not a
   roadmap prerequisite, and Verilator/Icarus cannot be promoted from
   experimental evidence to `sv_uvm_qualified`.
-- No availability blocker remains for `.15.5` or `.15.6`; exact GHDL 6.0.0
-  LLVM-JIT and exact recursive OSVVM 2026.05 are repository-local. `.15.7` is
-  next for combined analysis, elaboration, execution, normalized result, and
+- No availability blocker remains for `.15.7`; exact GHDL 6.0.0 LLVM-JIT and
+  exact recursive OSVVM 2026.05 are repository-local. Active `.15.7` owns
+  combined analysis, elaboration, execution, normalized result, and
   parity qualification. The pinned Documentation gitlink's absent tracked
   licence/notice metadata remains an explicit non-inferred packaging finding,
   not a code-bearing library or tool-availability blocker.
@@ -873,6 +873,7 @@ leaf for combined provider/tool qualification.
 | `2026-08-09` | `.15.5` exact GHDL qualification | exact repository-local GHDL 6.0.0 LLVM-JIT archive/binary identities; provider-free source repairs; ordered `--std=08` analysis/elaboration/run; 42-record trace/result validation; timed `0/1/X/Z` probe; deterministic reruns; 19-path portable-SV parity; resource guard; exact cleanup; support/capability/gallery/docs/task/Knowledge Map/Memory/staged-doctrine gates | `passed`; canonical report `vial/qualification/vhdl_portable_ghdl/ghdl-6.0.0-qualification.json` is qualified, while the exact LLVM AOT external-name runtime failure and every broader language/provider/tool/profile non-claim remain explicit; `.15.6` is next after the clean commit. |
 | `2026-08-09` | `.15.6` activation | clean exact-GHDL predecessor `a0e7149d5`; task/index/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook test; live-reference authority; diff/staged-doctrine gates | `passed`; `.15.6` alone is active for exact recursive OSVVM 2026.05 materialization and adapter/gallery emission, `.15.7` remains proposed, task integrity reports three active trees/916 nodes, Knowledge Map reports 1,105 facts/5,709 questions/5,875 occurrences/118 shards, all 52 mdBook chapters test, and the exact maintained-reference delta is 0 files/0 lines/+4 bytes; no provider bytes, source, generated artifact, capability, runtime, result, or support behavior changes. |
 | `2026-08-09` | `.15.6` implementation | official tag identity; complete repository-local recursive clone; 14 repository commit/tree/origin/tracked-entry identities; 13 gitlinks; clean-worktree proof; 14 licence/0 notice identities; Documentation metadata absence; revision-1 adapter, mapping matrix, source map, semantic-preservation proof, static negatives, gallery, support/docs/task/Knowledge Map/Memory/staged-doctrine gates | `passed`; exact OSVVM 2026.05 is installed, seven advanced mappings emit in one isolated adapter beside six byte-identical portable sources, and the fifteen-artifact gallery carries 13 maps/12 checks/six unchanged-semantic guards. The Documentation gitlink has no tracked licence/notice file and no coverage is inferred. Guarded impacted Files=6/Tests=36 and the exact gallery check pass; Knowledge Map is current at 1,105 facts/5,713 questions/5,879 occurrences/118 shards; task integrity reports three active trees/916 nodes; all 52 mdBook chapters test and the 87-file/18,073,088-byte repository-local build passes before exact removal. Combined OSVVM/GHDL analysis through parity remains solely `.15.7`. |
+| `2026-08-09` | `.15.7` activation | clean `.15.6` predecessor `4f350f29c`; task/index/audit/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook test; live-reference authority; diff/staged-doctrine gates | `passed`; `.15.7` alone is active for combined exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT qualification. Both inputs remain repository-local; task integrity reports three active trees/916 nodes, Knowledge Map remains 1,105 facts/5,713 questions/5,879 occurrences/118 shards, all 52 mdBook chapters test, and maintained-reference authority accepts the exact 0-file/0-line/+16-byte delta. Activation changes no source, generated artifact, qualification evidence, capability, runtime result, or support behavior. |
 
 ## Acceptance Checklist (enforced) — `.15.5` activation and NEXSIM deferral
 
@@ -2445,3 +2446,21 @@ leaf for combined provider/tool qualification.
   and the 87-file/18,073,088-byte repository-local build passes before exact
   removal. Final diff, residue, staged acceptance, and `[doctrine] all doctrine
   checks passed` evidence is recorded by the commit workflow.
+
+## Acceptance Checklist (enforced) — `.15.7` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'pending .15.5 and .15.6' --
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md` locates the
+  proposed-only predecessor. Clean completed commit `4f350f29c` closes both
+  prerequisites, so combined qualification still lacked an active owner even
+  though both exact inputs were repository-local.
+- [x] **ADDRESSED (verified)** — `.15.7` alone is active for exact OSVVM
+  2026.05 plus GHDL 6.0.0 LLVM-JIT qualification; this continuity slice
+  changes no implementation, generated artifact, qualification evidence,
+  capability, runtime result, or support behavior.
+- [x] **NO REGRESSION** — `knowledge-map: OK` reports 1,105 facts/5,713
+  questions/5,879 occurrences/118 shards; task integrity reports three active
+  trees/916 nodes; all 52 mdBook chapters test; maintained-reference authority
+  accepts the exact 0-file/0-line/+16-byte delta; diff checks and the final staged
+  `[doctrine] all doctrine checks passed` result are recorded by the commit
+  workflow.

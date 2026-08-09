@@ -7,18 +7,18 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`; `.15.6`
-  is complete after completed exact-GHDL predecessor `.15.5`.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`; `.15.7`
+  alone is active after completed exact-GHDL `.15.5` and OSVVM `.15.6`.
 - current_state: the director deferred NEXSIM-dependent `.13.3` and the
   NEXSIM consumer-amendment tree; exact repository-local GHDL 6.0.0 LLVM-JIT
   qualification passes analysis through bounded applicable parity; exact
   recursive OSVVM 2026.05 and its isolated advanced adapter are installed.
-- next_action: cleanly activate `.15.7`, then qualify the combined exact OSVVM
-  2026.05 plus GHDL 6.0.0 provider/tool profile.
+- next_action: compile the exact provider graph and generated adapter with
+  GHDL LLVM-JIT, then qualify bounded runtime, result, parity, and support.
 - in_flight_uncommitted: none; no background job or build residue.
 - blockers: containment `.12` and IAL2 eligibility remain unavailable;
   NEXSIM-dependent work is director-deferred; no provider-availability blocker
-  remains for `.15.7`, which stays a separate cleanly activated slice.
+  remains for active `.15.7`.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not
@@ -39,6 +39,6 @@ history; this file carries only the current bounded resume state.
   selected advanced provider and GHDL 6.0.0 is the first exact tool profile.
   Provider/tool behavior cannot redefine logical time, values, or results.
 - `.15.1-.15.4` ship portable emission/review; `.15.5` qualifies exact GHDL
-  6.0.0 LLVM-JIT; `.15.6` ships exact OSVVM materialization/emission; `.15.7`
-  next owns combined qualification.
+  6.0.0 LLVM-JIT; `.15.6` ships exact OSVVM materialization/emission; active
+  `.15.7` owns combined qualification.
 - Decisions `0041`/`0042`/`0044`/`0045` retain containment authority; retired views are Git-retrievable. Push only on request; PNT is autonomous.

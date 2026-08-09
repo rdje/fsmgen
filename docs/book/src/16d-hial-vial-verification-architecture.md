@@ -47,7 +47,7 @@ closed trace framing, and normalized-result projection. Completed `.15.4`
 closes the portable review matrix. Completed `.15.5` qualifies the available
 exact official macOS ARM64 GHDL 6.0.0 LLVM-JIT package. Completed `.15.6`
 installs exact recursive OSVVM 2026.05 and emits its isolated advanced adapter;
-`.15.7` is next for combined qualification. NEXSIM-dependent
+`.15.7` is active for combined qualification. NEXSIM-dependent
 runtime qualification is director-deferred until capability-ready releases
 provide exact evidence.
 
@@ -996,7 +996,7 @@ perl scripts/refresh_vial_vhdl_osvvm_gallery.pl --check
 
 This command verifies materialization and emitted bytes without fetching the
 network. It does not analyze, elaborate, or execute VHDL; those combined
-OSVVM 2026.05 plus GHDL 6.0.0 gates belong to `.15.7`.
+OSVVM 2026.05 plus GHDL 6.0.0 gates now run under active `.15.7`.
 
 ### Logical time without delta-cycle folklore
 

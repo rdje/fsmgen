@@ -1378,8 +1378,9 @@ to `AlertLogPkg`, coordination to `TbUtilPkg`, provider memory to `MemoryPkg`,
 and address-bus verification components to
 `osvvm_common.AddressBusTransactionPkg`. Thirteen source-map entries, twelve
 structural checks, six explicit unchanged-semantic guards, and a deterministic
-fifteen-artifact gallery prove emission only. Exact combined OSVVM 2026.05 plus
-GHDL 6.0.0 analysis, elaboration, execution, result, and parity remain `.15.7`.
+fifteen-artifact gallery prove emission only. Active `.15.7` now owns exact
+combined OSVVM 2026.05 plus GHDL 6.0.0 analysis, elaboration, execution,
+result, and parity.
 
 The portable backend schema is `fsmgen.vial_backend.vhdl_portable.v1`; the
 advanced schema is `fsmgen.vial_backend.vhdl_osvvm.v1`. Broader simulator

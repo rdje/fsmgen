@@ -114,7 +114,7 @@ execution, timed `0/1/X/Z`, one closed 42-record trace, a passing normalized
 result, deterministic reruns, and nineteen applicable portable-SV parity paths
 pass. Completed `.15.6` now installs and recursively verifies exact OSVVM
 2026.05, then emits its isolated seven-service adapter beside six
-byte-identical portable sources. `.15.7` is next for the combined exact
+byte-identical portable sources. Active `.15.7` owns the combined exact
 provider/tool run. Complete VHDL breadth, PSL, qualified methodology support,
 another simulator, mixed-language behavior, general parity, and scale remain
 unclaimed.
@@ -143,7 +143,7 @@ The repository-local provider graph contains the OSVVM superproject plus 13
 pinned gitlinks. Its evidence locks 14 Apache-2.0 licence files and finds no
 notice file. The pinned `Documentation` gitlink has no tracked licence or
 notice file; FSMGen records that absence and infers no legal coverage. The
-code-bearing adapter is therefore reviewable and ready for `.15.7`, but the
+code-bearing adapter is therefore reviewable and active under `.15.7`, but the
 gallery alone is not analysis, elaboration, runtime, result, or parity proof.
 
 The gallery lives at

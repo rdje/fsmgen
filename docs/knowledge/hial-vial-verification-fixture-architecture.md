@@ -340,7 +340,7 @@ the byte-checked report is `partial_tool_limited`, `product_support=false`.
 `.13.3` is director-deferred. Completed `.15.5` owns the exact GHDL 6.0.0
 LLVM-JIT proof; completed `.15.6` owns exact recursive OSVVM 2026.05
 materialization and structurally reviewed adapter/gallery emission. `.15.7` is
-next for combined provider/tool qualification.
+active for combined provider/tool qualification.
 
 Completed `.15.1-.15.5` ship and qualify the private provider-free VHDL
 profile. Its 17 artifacts retain six sources, 59 maps, 20 checks, exact HIAL
