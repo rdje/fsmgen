@@ -450,8 +450,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement the selected canonical execution-graph generator and exact plan/replay oracles.`
   Acceptance: `Implement only after .17.2.4.1 commits cleanly; construct every reachable execution_graph_v1 axis through ordinary VIAL parsing, canonical bridge production, and the shipped binder; prove the selected exact or earliest-cap outcomes, structural topology and logical-time invariants, generated/replayed decision equality, immutable byte-equal reports and plan hashes, hostile-input rejection, deterministic reruns, and exact repository-local staging cleanup with default and RAM-guarded qualification tests plus synchronized user documentation.`
-  Verification: `The first implementation slice adds ArchitectureScaleExecutionGraph and the decision-0061 caller-sealed ExecutionBuilder admission. Ordinary generated IAL1 and VIAL carry exactly 2,042 ordinal scale events; canonical bridge and semantic construction add the six unit/domain/endpoint/probe/transaction/field records, producing exactly 2,048 bindings. The plan isolates the private capability as qualification_only/private_nonportable and contains one type/scenario/reset/root fiber, 2,047 source maps, and 2,656,823 bytes. Direct calls, public build, altered metadata, non-gate construction, and post-identity mutation fail closed; independent private builds are byte-equal and target-neutral. RAM-guarded t1603 passes Files=1/Tests=3; guarded adjacent t1552/t1600/t1602 pass Files=3/Tests=18; syntax, documentation, task, Knowledge Map, mdBook, live-reference, containment, diff, and staged-doctrine gates pass. The leaf remains active for every other axis/level, replay, exact plan-byte, qualification, and cleanup slice; no public planning/backend/support or capacity claim changes.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2: establish sealed execution binding gate`
+  Verification: `ArchitectureScaleExecutionGraph now owns the binding, scenario, operations-per-scenario, and total-operation gate candidates. The sealed binding route remains private; the other three use the exact 1,326-byte checked AHB PPIF through canonical IAL2/IAL1/IAL0 production and the unchanged public binder. Exact shapes are 32x1, 1x256, and 32x32 resets, with 59,907/121,163/409,363 plan bytes and 49/273/1,041 maps. The scenario gate exposed and this slice repairs a pre-existing 44dbecd1a local/global source-map-index collision without changing scenario-local ranks or operation IDs. Native-UVM, portable-VHDL, and OSVVM galleries plus exact GHDL 6.0.0 and OSVVM 2026.05 qualification reports are refreshed from the corrected plan identity. Focused and full impacted evidence, synchronized docs, and final doctrine results are recorded below. The leaf remains active for the other axes/levels, replay, exact plan-byte, qualification, and cleanup slices; no public capability/support or capacity claim changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2: generate execution topology gates`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5`
   Status: `proposed`
@@ -1095,6 +1095,34 @@ defect before `.17.2.2` begins semantic-family generation.
 | `2026-08-10` | `.17` selection/activation | clean predecessor `6d23b5843`; mixed-language command/provider census; decisions 0032/0051; five-leaf scale decomposition; task/index/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook build; relative paths; live-reference authority; diff/staged-doctrine gates; exact cleanup | `passed`; `.16` remains proposed because no compatible mixed-language runtime is available, and `.17.1` alone is active for documentation-only scale-contract selection. Task integrity reports three active trees/921 nodes; Knowledge Map reports 1,105 facts/5,723 questions/5,889 occurrences/118 shards; the book shrinks by 34 lines/2,676 bytes while replacing stale chronology with current capability and scale boundaries; generated output is removed. No product behavior or scale claim changes. |
 | `2026-08-10` | `.17.2.4.2` activation | clean selection predecessor `b82426c85`; decision 0061; caller-sealed admission and canonical route/oracle scope; task/index/Memory continuity; task integrity; Knowledge Map; relative paths; diff/staged-doctrine gates | `passed`; `.17.2.4.1` is done and `.17.2.4.2` alone is active for canonical execution-scale generator implementation. The mdBook and fact card already identify this implementation owner and its exact route/nonclaim contract, so activation adds no status-board prose. No code, test, config, generated artifact, support, or product behavior changes. |
 | `2026-08-10` | `.17.2.4.2` binding-gate foundation | caller-sealed binder entry; exact direct-IAL1 qualification metadata; 2,042-event ordinary IAL1/VIAL construction; canonical bridge/SemanticIR/ExecutionIR/plan route; exact 2,048-binding and isolation oracles; public/direct/metadata/construction negatives; deterministic plan; focused/adjacent guarded regressions; task/book/fact/Memory/live/staged-doctrine gates | `passed`; the private gate produces 2,048 bindings, 2,042 events, one type/scenario/reset/root fiber, 2,047 source maps, and a 2,656,823-byte target-neutral plan. Public planning remains closed, and the private capability is qualification-only/nonportable. `.17.2.4.2` remains active for the other axes and levels. |
+| `2026-08-10` | `.17.2.4.2` scenario/operation topology gates and source-map repair | exact checked-AHB source; 32x1/1x256/32x32 reset constructions; canonical public bind; source-map path census; Knowledge Map absence query; `git log -S`/blame; global-offset repair; exact semantic/bridge/plan hashes and byte counts; hostile inputs; native-UVM/portable-VHDL/OSVVM gallery refresh; exact GHDL/OSVVM requalification; guarded focused/impacted regression; task/book/fact/rationale/Memory/live/staged-doctrine gates | `implementation verified`; the three gates contain 32/256/1,024 genuine operations, 32/1/32 root fibers, one live fiber, 49/273/1,041 maps, and 59,907/121,163/409,363 plan bytes. The pre-existing `44dbecd1a` source-map writer now adds each scenario's global operation offset, so every flat-plan operation has one map while scenario-local ranks/IDs remain stable. Public/private capability separation holds. Final documentation and staged acceptance evidence is appended below before commit. |
+
+## Acceptance Checklist (enforced) — `.17.2.4.2` topology gates and source-map repair
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Canonical 32-scenario construction
+  produces 32 real operations but the clean predecessor emits 32 copies of
+  `/operation_graph/operations/0`. `git log -S'_add_source_map($ctx,
+  "/operation_graph/operations/"' --oneline --
+  perl/FSM/VIAL/ExecutionBuilder.pm` and blame locate `44dbecd1a`: `_emit_sequence`
+  correctly uses scenario-local operation arrays/ranks but incorrectly reused
+  their local index for the flat plan's global source-map path.
+- [x] **ADDRESSED (verified)** — `ExecutionBuilder` now records a scenario's
+  global operation offset and applies it only to operation source-map paths;
+  local ranks, IDs, successor chains, logical time, and semantics remain stable.
+  `ArchitectureScaleExecutionGraph` generates checked-AHB 32x1, 1x256, and
+  32x32 reset shapes through the public binder, freezes exact 59,907/121,163/
+  409,363-byte plans and hashes, and proves every global operation index maps
+  exactly once. Byte-locked native-UVM/VHDL/OSVVM galleries and exact GHDL/
+  OSVVM qualification reports are refreshed from the corrected identity.
+- [x] **NO REGRESSION** — The final RAM-guarded planning/runtime/parity/native-
+  UVM/portable-VHDL/GHDL/OSVVM/scale matrix reports `All tests successful` at
+  `Files=17, Tests=102`; changed Perl/tests report `syntax OK`. All three
+  gallery `--check` modes pass. Documentation paths report `All tests
+  successful` at `Files=1, Tests=2`; mdBook test/build/render inspection,
+  `knowledge-map: OK`, 936-node task integrity, 2,972-path live containment,
+  rationale-ledger reconstruction, zero ceiling increases, diff hygiene, and
+  staged doctrines pass. No public capability/support, backend semantics,
+  performance budget, or scale-capacity claim changes.
 
 ## Acceptance Checklist (enforced) — `.17.2.4.2` binding-gate foundation
 

@@ -166,6 +166,17 @@ subtest 'operation graph, decisions, source maps, and hashes are deterministic a
         'static ranks are depth-first and scenario-local',
     );
     ok(scalar(@{$first->{plan}{source_map}}) >= 31, 'plan carries relation, operation, and decision source maps');
+    my %operation_map_count;
+    for my $record (@{$first->{plan}{source_map}}) {
+        $operation_map_count{$1}++
+            if $record->{plan_path}
+                =~ m{\A/operation_graph/operations/([0-9]+)\z};
+    }
+    is_deeply(
+        \%operation_map_count,
+        {map { $_ => 1 } 0 .. 20},
+        'multi-scenario operation source maps use unique global plan indexes',
+    );
 
     my @executable_references = grep {
         ($_->{op} // '') =~ /\A(?:sample|event|event_count)\z/

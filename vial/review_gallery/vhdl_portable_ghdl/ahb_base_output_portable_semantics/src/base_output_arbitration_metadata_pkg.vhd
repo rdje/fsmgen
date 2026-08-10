@@ -3,7 +3,7 @@ use ieee.std_logic_1164.all;
 use std.textio.all;
 
 package base_output_arbitration_metadata_pkg is
-  constant VIAL_PLAN_ID : string := "plan/dff960e224818f42aee83cda21cbcea82d49d23384c196618ea67415353e14ad";
+  constant VIAL_PLAN_ID : string := "plan/e236297c8b434a9b374d1800112841e00327bdbd5d8d9130440bd20681fbed6e";
   constant VIAL_FIXTURE_ID : string := "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration";
   constant VIAL_EXECUTION_PROFILE : string := "core_directed_single_clock_execution_v1";
   constant VIAL_BRIDGE_MANIFEST_ID : string := "bridge/326606e2b4d02515173c4512d65f9ae6ae591bd5ccf0e8414226268234d039b3";

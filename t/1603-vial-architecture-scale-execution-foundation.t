@@ -57,13 +57,20 @@ subtest 'binding-gate construction is closed, canonical, and exact' => sub {
     like($@, qr/unknown key 'extra'/,
         'unknown-key failure names the closed invocation boundary');
 
-    for my $bad (
-        {primary_axis => 'scenarios', level => 'gate_candidate_v1'},
-        {primary_axis => 'bindings', level => 'qualification_candidate_v1'},
+    for my $case (
+        [
+            {primary_axis => 'scenarios', level => 'gate_candidate_v1'},
+            qr/checked-AHB reference text is required/,
+        ],
+        [
+            {primary_axis => 'bindings', level => 'qualification_candidate_v1'},
+            qr/execution-graph gate slice does not own the requested shape/,
+        ],
     ) {
+        my ($bad, $failure) = @$case;
         my $accepted = eval { $class->construct($bad); 1 };
         ok(!$accepted, 'unfinished execution shapes cannot enter the foundation slice');
-        like($@, qr/currently owns only the binding gate/,
+        like($@, $failure,
             'unfinished shape rejection names the bounded implementation frontier');
     }
 

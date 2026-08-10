@@ -12,6 +12,7 @@ use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
+use FSM::Adapter::IAL2::PPIF;
 use FSM::Adapter::ISF;
 use FSM::HIAL::VIALBridge::Builder;
 use FSM::Scheduler::ISF;
@@ -22,11 +23,16 @@ use FSM::VIAL::Parser;
 my $FAMILY = 'execution_graph_v1';
 my $HIAL_SOURCE = 'generated/vial-scale/execution_graph/vial_architecture_scale.isf';
 my $VIAL_SOURCE = 'generated/vial-scale/execution_graph/vial_architecture_scale.vial';
+my $REFERENCE_HIAL_SOURCE = 'ppif/ahb_lite_subordinate.ppif';
+my $REFERENCE_HIAL_BYTES = 1_326;
+my $REFERENCE_HIAL_SHA256 =
+    '9a1d7a591d3ec9a3419b07f05bc83aefa2b213b2cae45f5332f9349ffa27056c';
 my $EVALUATION_SCHEMA = 'fsmgen.vial_architecture_scale_execution_evaluation.v1';
 my $EXECUTION_PROFILE = 'core_directed_single_clock_execution_v1';
 my $ARCHITECTURE_SCALE_CAPABILITY =
     'hial_vial.bridge_qualification.architecture_scale_v1';
-my @CONSTRUCT_KEYS = qw(level primary_axis);
+my @CONSTRUCT_KEYS = qw(level primary_axis reference_hial_text);
+my @REQUIRED_CONSTRUCT_KEYS = qw(level primary_axis);
 my @EVALUATE_KEYS = qw(construction);
 my @EVALUATION_KEYS = qw(
     ok status schema schema_version workload_identity family level primary_axis
@@ -39,19 +45,47 @@ sub construct($class, @args) {
     confess __PACKAGE__ . "->construct expects one closed hash\n"
         unless @args == 1 && ref($args[0]) eq 'HASH' && !blessed($args[0]);
     my $raw = $args[0];
-    _confess_exact_keys($raw, \@CONSTRUCT_KEYS, 'execution construction');
+    _confess_known_required_keys(
+        $raw, \@CONSTRUCT_KEYS, \@REQUIRED_CONSTRUCT_KEYS,
+        'execution construction',
+    );
 
     my ($axis, $level) = @{$raw}{qw(primary_axis level)};
-    confess "execution-graph foundation currently owns only the binding gate\n"
-        unless defined($axis) && $axis eq 'bindings'
+    my %owned_axis = map { $_ => 1 } qw(
+        bindings scenarios operations_per_scenario operations_total
+    );
+    confess "execution-graph gate slice does not own the requested shape\n"
+        unless defined($axis) && $owned_axis{$axis}
             && defined($level) && $level eq 'gate_candidate_v1';
     my $axis_contract = FSM::VIAL::ArchitectureScaleWorkload->catalog
         ->{families}{$FAMILY}{axes}{$axis};
     my $requested = $axis_contract->{levels}{$level};
-    my $binding_count = $requested->{bindings};
-    my $event_count = $binding_count - 6;
-    confess "execution binding gate has no valid ordinal-event construction\n"
-        unless $event_count > 0;
+    my $inputs;
+    if ($axis eq 'bindings') {
+        confess "reference_hial_text is accepted only for checked-AHB execution gates\n"
+            if defined $raw->{reference_hial_text};
+        my $binding_count = $requested->{bindings};
+        my $event_count = $binding_count - 6;
+        confess "execution binding gate has no valid ordinal-event construction\n"
+            unless $event_count > 0;
+        $inputs = [
+            _input($HIAL_SOURCE, 'hial_source', _render_hial($event_count)),
+            _input($VIAL_SOURCE, 'vial_source', _render_vial($event_count)),
+        ];
+    }
+    else {
+        _validate_reference_hial($raw->{reference_hial_text});
+        $inputs = [
+            _input(
+                $REFERENCE_HIAL_SOURCE, 'hial_source',
+                $raw->{reference_hial_text},
+            ),
+            _input(
+                $VIAL_SOURCE, 'vial_source',
+                _render_ahb_vial($axis, $requested->{$axis}),
+            ),
+        ];
+    }
 
     return FSM::VIAL::ArchitectureScaleWorkload->construct({
         family => $FAMILY,
@@ -59,10 +93,7 @@ sub construct($class, @args) {
         primary_axis => $axis,
         backend_profile => undef,
         tool_profile => undef,
-        inputs => [
-            _input($HIAL_SOURCE, 'hial_source', _render_hial($event_count)),
-            _input($VIAL_SOURCE, 'vial_source', _render_vial($event_count)),
-        ],
+        inputs => $inputs,
     });
 }
 
@@ -72,9 +103,7 @@ sub build($class, @args) {
         unless @args == 1 && ref($args[0]) eq 'HASH' && !blessed($args[0]);
     _confess_exact_keys($args[0], \@EVALUATE_KEYS, 'execution build');
     my $inputs = _canonical_inputs($args[0]{construction});
-    return FSM::VIAL::ExecutionBuilder->build_architecture_scale_qualification(
-        $inputs->{arguments},
-    );
+    return _build_execution($inputs);
 }
 
 sub evaluate($class, @args) {
@@ -85,20 +114,16 @@ sub evaluate($class, @args) {
     my $construction = _validated_construction($args[0]{construction});
     my $spec = $construction->{specification};
     my $inputs = _canonical_inputs($construction);
-    my $first = FSM::VIAL::ExecutionBuilder->build_architecture_scale_qualification(
-        $inputs->{arguments},
-    );
+    my $first = _build_execution($inputs);
     return _rejected_evaluation($construction, $first->{diagnostics})
         unless $first->{ok};
 
     my @oracle_errors;
     my $canonical = JSON::PP->new->canonical(1)->utf8(1);
-    my $second = FSM::VIAL::ExecutionBuilder->build_architecture_scale_qualification(
-        $inputs->{arguments},
-    );
+    my $second = _build_execution($inputs);
     push @oracle_errors, _oracle_error(
         'VIAL_SCALE_EXECUTION_DETERMINISM_ERROR',
-        'independent qualification binding did not reproduce byte-equal plan output',
+        'independent execution binding did not reproduce byte-equal plan output',
         '/plan',
     ) unless $second->{ok}
         && $canonical->encode($second->{plan}) eq $canonical->encode($first->{plan});
@@ -107,32 +132,11 @@ sub evaluate($class, @args) {
     my $plan_json = $canonical->encode($first->{plan});
     my $semantic = $inputs->{semantic_ir}->as_hashref;
     my $manifest = $inputs->{bridge_manifest}->as_hashref;
-    my $requested_bindings = $spec->{requested_counts}{bindings};
     my $observed_bindings = $ir->{resource_summary}{bindings};
     my $event_count = scalar(@{$ir->{bindings}{events}});
-    push @oracle_errors, _oracle_error(
-        'VIAL_SCALE_EXECUTION_COUNT_ERROR',
-        "observed binding count $observed_bindings does not equal requested count $requested_bindings",
-        '/metrics/bindings',
-    ) unless $observed_bindings == $requested_bindings;
-    push @oracle_errors, _oracle_error(
-        'VIAL_SCALE_EXECUTION_EVENT_ERROR',
-        'binding gate does not contain the exact ordinal private-event family',
-        '/metrics/execution_events',
-    ) unless $event_count == $requested_bindings - 6
-        && _ordinal_events($ir->{bindings}{events});
-
-    my ($scale_capability) = grep {
-        ($_->{capability_id} // '') eq $ARCHITECTURE_SCALE_CAPABILITY
-    } @{$first->{plan}{capability_ledger}};
-    push @oracle_errors, _oracle_error(
-        'VIAL_SCALE_EXECUTION_CAPABILITY_ERROR',
-        'private architecture-scale evidence is not isolated in the capability ledger',
-        '/capability_ledger',
-    ) unless $scale_capability
-        && ($scale_capability->{classification} // '') eq 'qualification_only'
-        && ($scale_capability->{portable_class} // '') eq 'private_nonportable'
-        && join("\0", @{$scale_capability->{origins} || []}) eq 'bridge_manifest';
+    push @oracle_errors, _axis_oracle_errors(
+        $spec, $construction, $ir, $first->{plan}, $inputs,
+    );
     push @oracle_errors, _oracle_error(
         'VIAL_SCALE_EXECUTION_TARGET_ERROR',
         'target or methodology spelling escaped into the target-neutral plan',
@@ -155,6 +159,7 @@ sub evaluate($class, @args) {
             execution_events => $event_count,
             execution_types => scalar(@{$ir->{type_table}}),
             selected_scenarios => scalar(@{$ir->{scenarios}}),
+            expanded_operations_per_scenario => _maximum_operation_count($ir),
             expanded_operations_total => 0 + $ir->{operation_graph}{total_operation_count},
             total_fibers => 0 + $ir->{operation_graph}{total_fiber_count},
             simultaneous_live_fibers =>
@@ -179,6 +184,8 @@ sub _canonical_inputs($raw) {
     my $construction = _validated_construction($raw);
     my $hial = _role_input($construction, 'hial_source');
     my $vial = _role_input($construction, 'vial_source');
+    return _canonical_ahb_inputs($construction, $hial, $vial)
+        unless $construction->{specification}{primary_axis} eq 'bindings';
     my $adapter = FSM::Adapter::ISF->new();
     my $actor = $adapter->parse_source($hial->{content}, basename($hial->{relative_path}));
     my $scheduler = FSM::Scheduler::ISF->new();
@@ -216,6 +223,7 @@ sub _canonical_inputs($raw) {
     return {
         semantic_ir => $semantic_ir,
         bridge_manifest => $bridge->{manifest},
+        private_qualification => 1,
         arguments => {
             semantic_ir => $semantic_ir,
             bridge_manifest => $bridge->{manifest},
@@ -228,16 +236,84 @@ sub _canonical_inputs($raw) {
     };
 }
 
+sub _canonical_ahb_inputs($construction, $hial, $vial) {
+    my $ppif = FSM::Adapter::IAL2::PPIF->new()->parse_source(
+        $hial->{content}, $hial->{relative_path},
+    );
+    my $ial1_text = $ppif->{generated_ial1}{text};
+    my $actor = FSM::Adapter::ISF->new()->parse_source(
+        $ial1_text, $ppif->{generated_ial1}{name},
+    );
+    my $bridge = FSM::HIAL::VIALBridge::Builder->build_ial2_via_ial1({
+        profile => 'core_single_unit_v1',
+        authored_source => _source_record(
+            $hial->{content}, $hial->{relative_path},
+        ),
+        generated_ial1 => {
+            source => _source_record(
+                $ial1_text, undef, $ppif->{generated_ial1}{name},
+            ),
+            actor => $actor,
+            schedule_report => $ppif->{generated_ial1_schedule_report},
+        },
+        generated_ial0 => _source_record(
+            $ppif->{generated_ial0}{files}{'ahb_lite_subordinate.fsm'},
+            undef, 'ahb_lite_subordinate.fsm',
+        ),
+        backend_names => _backend_names($actor),
+    });
+    confess "canonical checked-AHB bridge construction failed\n"
+        unless $bridge->{ok};
+
+    my $semantic_ir = FSM::VIAL::Parser->parse_source({
+        text => $vial->{content},
+        source_name => $vial->{relative_path},
+        source_catalog => {},
+    });
+    my $semantic = $semantic_ir->as_hashref;
+    confess "checked-AHB execution gate must contain exactly one package and fixture\n"
+        unless @{$semantic->{packages}} == 1
+            && @{$semantic->{packages}[0]{fixtures}} == 1;
+    my $fixture = $semantic->{packages}[0]{fixtures}[0];
+    my @scenario_ids = map { $_->{semantic_id} } @{$fixture->{scenarios}};
+    confess "checked-AHB execution gate must contain at least one scenario\n"
+        unless @scenario_ids;
+    return {
+        semantic_ir => $semantic_ir,
+        bridge_manifest => $bridge->{manifest},
+        private_qualification => 0,
+        arguments => {
+            semantic_ir => $semantic_ir,
+            bridge_manifest => $bridge->{manifest},
+            fixture_id => $fixture->{semantic_id},
+            scenario_ids => \@scenario_ids,
+            execution_profile => $EXECUTION_PROFILE,
+            replay_manifest => undef,
+            native_extension_catalog => [],
+        },
+    };
+}
+
+sub _build_execution($inputs) {
+    return FSM::VIAL::ExecutionBuilder->build_architecture_scale_qualification(
+        $inputs->{arguments},
+    ) if $inputs->{private_qualification};
+    return FSM::VIAL::ExecutionBuilder->build($inputs->{arguments});
+}
+
 sub _validated_construction($raw) {
     confess "construction must be one unblessed hash\n"
         unless ref($raw) eq 'HASH' && !blessed($raw);
     my $spec = $raw->{specification};
     confess "construction must be successful and carry one specification hash\n"
         unless $raw->{ok} && ref($spec) eq 'HASH' && !blessed($spec);
-    my $rebuilt = __PACKAGE__->construct({
+    my $invocation = {
         primary_axis => $spec->{primary_axis},
         level => $spec->{level},
-    });
+    };
+    $invocation->{reference_hial_text} = _role_input($raw, 'hial_source')->{content}
+        unless $spec->{primary_axis} eq 'bindings';
+    my $rebuilt = __PACKAGE__->construct($invocation);
     my $canonical = JSON::PP->new->canonical(1)->allow_nonref(1);
     confess "construction is not canonical\n"
         unless $rebuilt->{ok}
@@ -298,6 +374,227 @@ sub _render_vial($event_count) {
         ' (steps (reset scale 1))))))))',
         "\n",
     );
+}
+
+sub _render_ahb_vial($axis, $requested_count) {
+    my ($scenario_count, $operations_per_scenario);
+    if ($axis eq 'scenarios') {
+        ($scenario_count, $operations_per_scenario) = ($requested_count, 1);
+    }
+    elsif ($axis eq 'operations_per_scenario') {
+        ($scenario_count, $operations_per_scenario) = (1, $requested_count);
+    }
+    elsif ($axis eq 'operations_total') {
+        $scenario_count = 32;
+        confess "total-operation gate is not divisible by its scenario fanout\n"
+            if $requested_count % $scenario_count;
+        $operations_per_scenario = int($requested_count / $scenario_count);
+    }
+    else {
+        confess "checked-AHB renderer does not own axis '$axis'\n";
+    }
+
+    my @scenarios;
+    for my $scenario_ordinal (0 .. $scenario_count - 1) {
+        my $name = sprintf('scenario_%08d', $scenario_ordinal);
+        my @steps = ('(reset bus 1)') x $operations_per_scenario;
+        push @scenarios, join('',
+            '(scenario ', $name,
+            ' (timeout (cycles bus ', $operations_per_scenario + 1, '))',
+            ' (steps ', join(' ', @steps), '))',
+        );
+    }
+    return join('',
+        '(vial (version 1) (package architecture_scale_execution',
+        ' (imports)',
+        ' (types',
+        ' (enum htrans_t (logic 2) (idle #b00) (nonseq #b10))',
+        ' (type address_t (logic 32))',
+        ' (type data_t (logic 32)))',
+        ' (transactions (transaction ahb_write',
+        ' (fields',
+        ' (address (type address_t))',
+        ' (transfer (type htrans_t))',
+        ' (write bool)',
+        ' (size (logic 3))',
+        ' (data (type data_t))',
+        ' (wait_cycles (u 4)))',
+        ' (events requested accepted captured held completed error)))',
+        ' (models)',
+        ' (scoreboards)',
+        ' (fixtures (fixture execution_gate',
+        ' (dut dut',
+        ' (unit "unit/ahb_lite_subordinate")',
+        ' (domains (domain bus "domain/ahb_bus"))',
+        ' (endpoints',
+        ' (endpoint ready_out "endpoint/HREADYOUT" (logic 1) public_port)',
+        ' (endpoint response "endpoint/HRESP" (logic 1) public_port)',
+        ' (endpoint read_data "endpoint/HRDATA" (logic 32) public_port)',
+        ' (endpoint stored_data "probe/reg_data_q" (logic 32) verification_probe))',
+        ' (transactions (transaction write "transaction/ahb_write" ahb_write)))',
+        ' (instances)',
+        ' (coverage)',
+        ' (faults)',
+        ' (randomness (seed 1701))',
+        ' (scenarios ', join(' ', @scenarios), ')))))',
+        "\n",
+    );
+}
+
+sub _validate_reference_hial($text) {
+    confess "checked-AHB reference text is required for this execution gate\n"
+        unless defined($text) && !ref($text);
+    confess "checked-AHB reference byte length changed\n"
+        unless bytes::length($text) == $REFERENCE_HIAL_BYTES;
+    confess "checked-AHB reference identity changed\n"
+        unless sha256_hex($text) eq $REFERENCE_HIAL_SHA256;
+}
+
+sub _axis_oracle_errors($spec, $construction, $ir, $plan, $inputs) {
+    my @errors;
+    my $axis = $spec->{primary_axis};
+    my $ledger = $plan->{capability_ledger};
+    my ($scale_capability) = grep {
+        ($_->{capability_id} // '') eq $ARCHITECTURE_SCALE_CAPABILITY
+    } @$ledger;
+    if ($axis eq 'bindings') {
+        my $requested = $spec->{requested_counts}{bindings};
+        my $observed = $ir->{resource_summary}{bindings};
+        my $events = scalar(@{$ir->{bindings}{events}});
+        push @errors, _oracle_error(
+            'VIAL_SCALE_EXECUTION_COUNT_ERROR',
+            "observed binding count $observed does not equal requested count $requested",
+            '/metrics/bindings',
+        ) unless $observed == $requested;
+        push @errors, _oracle_error(
+            'VIAL_SCALE_EXECUTION_EVENT_ERROR',
+            'binding gate does not contain the exact ordinal private-event family',
+            '/metrics/execution_events',
+        ) unless $events == $requested - 6
+            && _ordinal_events($ir->{bindings}{events});
+        push @errors, _oracle_error(
+            'VIAL_SCALE_EXECUTION_CAPABILITY_ERROR',
+            'private architecture-scale evidence is not isolated in the capability ledger',
+            '/capability_ledger',
+        ) unless $scale_capability
+            && ($scale_capability->{classification} // '') eq 'qualification_only'
+            && ($scale_capability->{portable_class} // '') eq 'private_nonportable'
+            && join("\0", @{$scale_capability->{origins} || []}) eq 'bridge_manifest';
+        return @errors;
+    }
+
+    my ($ahb_capability) = grep {
+        ($_->{capability_id} // '') eq 'hial_vial.bridge_protocol.ahb_subordinate_v1'
+    } @$ledger;
+    push @errors, _oracle_error(
+        'VIAL_SCALE_EXECUTION_CAPABILITY_ERROR',
+        'checked-AHB execution gate did not retain only the public bridge capability',
+        '/capability_ledger',
+    ) unless !$scale_capability
+        && $ahb_capability
+        && ($ahb_capability->{classification} // '') eq 'satisfied_by_execution_profile'
+        && ($ahb_capability->{portable_class} // '') eq 'portable';
+
+    my @layers = map { $_->{layer} // '' }
+        @{$inputs->{bridge_manifest}->as_hashref->{review_route}{stages} || []};
+    push @errors, _oracle_error(
+        'VIAL_SCALE_EXECUTION_ROUTE_ERROR',
+        'execution topology gate did not traverse the frozen IAL2/IAL1/IAL0 review route',
+        '/bridge_manifest/review_route',
+    ) unless join("\0", @layers) eq join("\0", qw(IAL2 IAL1 IAL0));
+
+    my $requested = $spec->{requested_counts}{$axis};
+    my $observed = $axis eq 'scenarios'
+        ? scalar(@{$ir->{scenarios}})
+        : $axis eq 'operations_per_scenario'
+            ? _maximum_operation_count($ir)
+            : $ir->{operation_graph}{total_operation_count};
+    push @errors, _oracle_error(
+        'VIAL_SCALE_EXECUTION_COUNT_ERROR',
+        "observed $axis count $observed does not equal requested count $requested",
+        "/metrics/$axis",
+    ) unless $observed == $requested;
+
+    my ($expected_scenarios, $expected_per_scenario) = $axis eq 'scenarios'
+        ? ($requested, 1)
+        : $axis eq 'operations_per_scenario'
+            ? (1, $requested)
+            : (32, 32);
+    my @per_scenario = map {
+        0 + $_->{plan_summary}{operation_count}
+    } @{$ir->{scenarios}};
+    push @errors, _oracle_error(
+        'VIAL_SCALE_EXECUTION_ISOLATION_ERROR',
+        'execution topology gate did not preserve its selected scenario/operation isolation recipe',
+        '/operation_graph',
+    ) unless @per_scenario == $expected_scenarios
+        && !scalar(grep { $_ != $expected_per_scenario } @per_scenario)
+        && $ir->{operation_graph}{total_fiber_count} == $expected_scenarios
+        && $ir->{operation_graph}{maximum_simultaneous_live_fibers} == 1;
+
+    push @errors, _topology_oracle_errors($ir);
+    return @errors;
+}
+
+sub _topology_oracle_errors($ir) {
+    my @errors;
+    my $graph = $ir->{operation_graph};
+    push @errors, _oracle_error(
+        'VIAL_SCALE_EXECUTION_LOGICAL_TIME_ERROR',
+        'execution gate changed the selected logical-time or tie-break order',
+        '/operation_graph',
+    ) unless join("\0", @{$graph->{phase_order}}) eq join("\0", qw(drive sample react check))
+        && join("\0", @{$graph->{tie_break_order}})
+            eq join("\0", qw(domain_rank static_operation_rank local_emission_index semantic_id));
+
+    my %operation = map { $_->{operation_id} => $_ } @{$graph->{operations}};
+    my $chain_ok = 1;
+    for my $scenario (@{$ir->{scenarios}}) {
+        my $ids = $scenario->{operation_ids};
+        for my $index (0 .. $#$ids) {
+            my $entry = $operation{$ids->[$index]};
+            my @expected_successors = $index == $#$ids ? () : ($ids->[$index + 1]);
+            $chain_ok = 0 unless $entry
+                && ($entry->{kind} // '') eq 'reset'
+                && ($entry->{eligible_phase} // '') eq 'drive'
+                && $entry->{static_rank} == $index
+                && ($entry->{scenario_id} // '') eq $scenario->{scenario_id}
+                && join("\0", @{$entry->{successor_ids}})
+                    eq join("\0", @expected_successors);
+        }
+    }
+    push @errors, _oracle_error(
+        'VIAL_SCALE_EXECUTION_TOPOLOGY_ERROR',
+        'execution gate operation IDs, ranks, phases, or successor chains are not closed',
+        '/operation_graph/operations',
+    ) unless $chain_ok && scalar(keys %operation) == @{$graph->{operations}};
+
+    my %operation_map_count;
+    for my $record (@{$ir->{source_map}}) {
+        $operation_map_count{$1}++
+            if ($record->{plan_path} // '')
+                =~ m{\A/operation_graph/operations/([0-9]+)\z};
+    }
+    my $source_map_closed = keys(%operation_map_count) == @{$graph->{operations}};
+    for my $index (0 .. $#{$graph->{operations}}) {
+        $source_map_closed = 0
+            unless ($operation_map_count{$index} // 0) == 1;
+    }
+    push @errors, _oracle_error(
+        'VIAL_SCALE_EXECUTION_SOURCE_MAP_ERROR',
+        'execution operation source maps are not a unique globally indexed projection',
+        '/source_map',
+    ) unless $source_map_closed;
+    return @errors;
+}
+
+sub _maximum_operation_count($ir) {
+    my $maximum = 0;
+    for my $scenario (@{$ir->{scenarios}}) {
+        my $count = 0 + $scenario->{plan_summary}{operation_count};
+        $maximum = $count if $count > $maximum;
+    }
+    return $maximum;
 }
 
 sub _ordinal_events($events) {
@@ -398,6 +695,14 @@ sub _confess_exact_keys($value, $keys, $label) {
     my %expected = map { $_ => 1 } @$keys;
     my @unknown = sort grep { !$expected{$_} } keys %$value;
     my @missing = grep { !exists($value->{$_}) } @$keys;
+    confess "$label has unknown key '$unknown[0]'\n" if @unknown;
+    confess "$label is missing key '$missing[0]'\n" if @missing;
+}
+
+sub _confess_known_required_keys($value, $known, $required, $label) {
+    my %known = map { $_ => 1 } @$known;
+    my @unknown = sort grep { !$known{$_} } keys %$value;
+    my @missing = grep { !exists($value->{$_}) } @$required;
     confess "$label has unknown key '$unknown[0]'\n" if @unknown;
     confess "$label is missing key '$missing[0]'\n" if @missing;
 }

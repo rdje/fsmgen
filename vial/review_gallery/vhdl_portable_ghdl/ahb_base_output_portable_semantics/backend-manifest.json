@@ -5,49 +5,49 @@
          "kind" : "source_map",
          "relpath" : "backends/vhdl_portable_ghdl/backend-source-map.json",
          "role" : "backend_source_map",
-         "sha256" : "825bf134af45651d9a5fa69b533efd618e212ef4dfd5c19e9f61cb7c22ca534d"
+         "sha256" : "8757e25981325659f2f32619647598f86e3a4325c424a8298ad85fb94c6461c4"
       },
       {
          "bytes" : 2990,
          "kind" : "command_record",
          "relpath" : "backends/vhdl_portable_ghdl/commands/analyze-command.json",
          "role" : "analyze_command",
-         "sha256" : "2dcc21bd9a0ec0871bc939b01dc02d2479e1e0b5c39ead5e06d063ea4e710083"
+         "sha256" : "24fc6e409acbf7669de2147bf34cb03a5903886ef3ee1ea0aac06c89aed0ed3e"
       },
       {
          "bytes" : 721,
          "kind" : "command_record",
          "relpath" : "backends/vhdl_portable_ghdl/commands/elaborate-command.json",
          "role" : "elaborate_command",
-         "sha256" : "83bc9137430389cd917483588c9f18cb6c0da681551e090d80bba5c386fb09c1"
+         "sha256" : "fb3233741d796e228d5fab3899f2d05b87b8cd0316413ac095b17809bae62bdd"
       },
       {
          "bytes" : 751,
          "kind" : "command_record",
          "relpath" : "backends/vhdl_portable_ghdl/commands/run-command.json",
          "role" : "run_command",
-         "sha256" : "582cfa3fad0f4b87b9c8304a403da02350ada26ed44daaa5eb56f8dd6e263af0"
+         "sha256" : "62a3f72e6ce9e367330c0f75aa68bcb3b06dada6e69c5727272f868742fd4921"
       },
       {
          "bytes" : 2304,
          "kind" : "migration_proof",
          "relpath" : "backends/vhdl_portable_ghdl/evidence/migration-proof.json",
          "role" : "migration_proof",
-         "sha256" : "3d32bd8ccdc99e54e6accfdf2af48b4741bb3b839c9f01a91e71ed70ff992e8b"
+         "sha256" : "286015e3ab86977ce7e0e798aa3b5fdbe6ff382a32e4a7894e4618fe3310342f"
       },
       {
          "bytes" : 5271,
          "kind" : "review_workflow",
          "relpath" : "backends/vhdl_portable_ghdl/evidence/review-workflow.json",
          "role" : "review_workflow",
-         "sha256" : "c9b8a295a4114459005d9efc2ea5fcb7c168236164f659cefacfa142e36da548"
+         "sha256" : "4be8e099e38840bd5af70dee32bff3072e3720b3bb097563269c2485dcd57ca6"
       },
       {
          "bytes" : 21036,
          "kind" : "mapping_matrix",
          "relpath" : "backends/vhdl_portable_ghdl/evidence/selected-mapping-matrix.json",
          "role" : "selected_mapping_matrix",
-         "sha256" : "2eedbf416e4b79e36c4bd8639003949022547ef41c5850779f44fa559fc64b04"
+         "sha256" : "1663ce6b99b2847ab386c21cfcae069378b632defda0083ff595a48657ba10c3"
       },
       {
          "bytes" : 683,
@@ -61,7 +61,7 @@
          "kind" : "static_validation",
          "relpath" : "backends/vhdl_portable_ghdl/evidence/static-validation.json",
          "role" : "vhdl_static_validation",
-         "sha256" : "a3ce502e0fced654c35a61b2d784ad6d1946ba121e161884f30d5afed9bae892"
+         "sha256" : "e92539b47b52b9de4b0919c33940d5a219fae0c7326826cc92ff0b8d3b6a9f0e"
       },
       {
          "bytes" : 1138,
@@ -75,7 +75,7 @@
          "kind" : "vhdl_source",
          "relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_metadata_pkg.vhd",
          "role" : "vhdl_fixture_metadata",
-         "sha256" : "22dd0261f7074fbb3f5a140db5037b14f0bf6f3191c6018c4ca7b4ca8cd3f741"
+         "sha256" : "2ba00d6481361b3e2d876ff3fffd63b6f5c07417717e4f53f4be24950e142bb3"
       },
       {
          "bytes" : 591,
@@ -147,27 +147,27 @@
       "trace" : "passed_closed_projection_emission_only"
    },
    "cleanup" : {
-      "staging_identity" : ".artifacts/tmp/vial/op-eb887ccfbde1e2423595588e4e84b339a108055037e24dc7114c46ac52fc9f5e",
+      "staging_identity" : ".artifacts/tmp/vial/op-5ab12e3a3a7babbf657f356c53e7fbf91538777469b5fc53573401efd2b67c36",
       "state" : "not_created"
    },
    "commands" : [
       {
-         "command_digest" : "75efc33b97e480f9bbe786a061acd3012841b455c17bfe7a15fc840c8d99a328",
+         "command_digest" : "e71b94e69183b1c9a537eb94e9c171d0107fd3312bb5359da853e90ace78f2ce",
          "execution_status" : "not_run",
          "relpath" : "backends/vhdl_portable_ghdl/commands/analyze-command.json",
-         "sha256" : "2dcc21bd9a0ec0871bc939b01dc02d2479e1e0b5c39ead5e06d063ea4e710083"
+         "sha256" : "24fc6e409acbf7669de2147bf34cb03a5903886ef3ee1ea0aac06c89aed0ed3e"
       },
       {
-         "command_digest" : "da837ab3ff62abf6a02c68b88db90e0306c7f6596a89dceb631fb0407cb63801",
+         "command_digest" : "93f91499fc56665cad036b524c87f3021c291b034f2922ca405153b241b8225d",
          "execution_status" : "not_run",
          "relpath" : "backends/vhdl_portable_ghdl/commands/elaborate-command.json",
-         "sha256" : "83bc9137430389cd917483588c9f18cb6c0da681551e090d80bba5c386fb09c1"
+         "sha256" : "fb3233741d796e228d5fab3899f2d05b87b8cd0316413ac095b17809bae62bdd"
       },
       {
-         "command_digest" : "0ea098209389bb2bbc5e7bba2a2d2c1c751e7759c4750ef53e595dee24b95f39",
+         "command_digest" : "8cf999b4eec5090e7c859fbbfc6d91956d7064eb5ffe214a04109260296ae6c1",
          "execution_status" : "not_run",
          "relpath" : "backends/vhdl_portable_ghdl/commands/run-command.json",
-         "sha256" : "582cfa3fad0f4b87b9c8304a403da02350ada26ed44daaa5eb56f8dd6e263af0"
+         "sha256" : "62a3f72e6ce9e367330c0f75aa68bcb3b06dada6e69c5727272f868742fd4921"
       }
    ],
    "diagnostics" : [],
@@ -196,7 +196,7 @@
       "mapping_count" : 24,
       "relpath" : "backends/vhdl_portable_ghdl/evidence/selected-mapping-matrix.json",
       "schema" : "fsmgen.vial_vhdl_selected_mapping_matrix.v1",
-      "sha256" : "2eedbf416e4b79e36c4bd8639003949022547ef41c5850779f44fa559fc64b04",
+      "sha256" : "1663ce6b99b2847ab386c21cfcae069378b632defda0083ff595a48657ba10c3",
       "unsupported_count" : 4
    },
    "migration" : {
@@ -210,9 +210,9 @@
       "legacy_package_sha256" : "8d587b8dde4b7659290af6720ed4812079f36479d577dd5a0cf787bef2a22d4f",
       "relpath" : "backends/vhdl_portable_ghdl/evidence/migration-proof.json",
       "schema" : "fsmgen.vial_vhdl_migration_proof.v1",
-      "sha256" : "3d32bd8ccdc99e54e6accfdf2af48b4741bb3b839c9f01a91e71ed70ff992e8b"
+      "sha256" : "286015e3ab86977ce7e0e798aa3b5fdbe6ff382a32e4a7894e4618fe3310342f"
    },
-   "plan_id" : "plan/dff960e224818f42aee83cda21cbcea82d49d23384c196618ea67415353e14ad",
+   "plan_id" : "plan/e236297c8b434a9b374d1800112841e00327bdbd5d8d9130440bd20681fbed6e",
    "profile_state" : {
       "emission" : "emitted",
       "qualification" : "unqualified_not_run",
@@ -228,7 +228,7 @@
       "check_count" : 7,
       "relpath" : "backends/vhdl_portable_ghdl/evidence/review-workflow.json",
       "schema" : "fsmgen.vial_vhdl_review_workflow.v1",
-      "sha256" : "c9b8a295a4114459005d9efc2ea5fcb7c168236164f659cefacfa142e36da548",
+      "sha256" : "4be8e099e38840bd5af70dee32bff3072e3720b3bb097563269c2485dcd57ca6",
       "stage_count" : 7
    },
    "schema" : "fsmgen.vial_backend.vhdl_portable.v1",
@@ -237,7 +237,7 @@
       "entry_count" : 59,
       "relpath" : "backends/vhdl_portable_ghdl/backend-source-map.json",
       "schema" : "fsmgen.vial_vhdl_backend_source_map.v1",
-      "sha256" : "825bf134af45651d9a5fa69b533efd618e212ef4dfd5c19e9f61cb7c22ca534d"
+      "sha256" : "8757e25981325659f2f32619647598f86e3a4325c424a8298ad85fb94c6461c4"
    },
    "source_order" : {
       "library" : "fsmgen_vial",

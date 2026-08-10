@@ -2232,8 +2232,8 @@ through a caller-sealed scale-generator path. Public
 `ExecutionBuilder->build`, public planning, backends, and support accounting
 must continue to reject that private bridge capability.
 
-The first execution-generator slice now implements that exceptional gate and
-only that gate. `ArchitectureScaleExecutionGraph` authors ordinary IAL1 and
+The first execution-generator slice implements that exceptional binding gate.
+`ArchitectureScaleExecutionGraph` authors ordinary IAL1 and
 VIAL sources containing 2,042 closed ordinal events. Canonical bridge and
 semantic construction then add exactly six non-event bindings: unit, domain,
 public endpoint, probe, transaction, and transaction field. The resulting
@@ -2267,8 +2267,57 @@ manifest must retain direct `IAL1 -> IAL0` review plus exact
 private capability as `qualification_only` and `private_nonportable`. A direct
 caller, the public builder, an AHB capability, altered metadata, or a forged
 post-identity construction fails closed. This does not make the private path a
-public planning or embedding API; all other execution axes remain owned by
-later slices of the active generator task.
+public planning or embedding API.
+
+The next slice implements three topology gates through the unchanged public
+builder and the frozen checked-AHB PPIF route:
+
+| Primary axis | Canonical shape | Source maps | Plan bytes |
+| --- | ---: | ---: | ---: |
+| scenarios | 32 scenarios × 1 reset | 49 | 59,907 |
+| operations in one scenario | 1 scenario × 256 resets | 273 | 121,163 |
+| operations total | 32 scenarios × 32 resets | 1,041 | 409,363 |
+
+Each shape retains 22 checked-AHB bindings, seven normalized execution types,
+one root fiber per scenario, and one maximum simultaneously live fiber. Every
+operation is a genuine parsed reset eligible in the `drive` phase. Scenario-
+local static ranks still restart at zero, while source-map plan paths use the
+operation's unique global index. This distinction repaired an older collision
+where every scenario's first operation mapped to
+`/operation_graph/operations/0`.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+open my $fh, '<:raw', 'ppif/ahb_lite_subordinate.ppif'
+    or die "cannot read checked AHB source: $!";
+local $/;
+my $checked_ahb = <$fh>;
+close $fh or die "cannot close checked AHB source: $!";
+
+my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+    primary_axis => 'operations_total',
+    level => 'gate_candidate_v1',
+    reference_hial_text => $checked_ahb,
+});
+die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+    construction => $workload,
+});
+die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+die "unexpected operation count\n"
+    unless $evaluation->{metrics}{expanded_operations_total} == 1_024;
+```
+
+The constructor accepts only the exact 1,326-byte checked PPIF identity for
+these three gates. Independent runs reproduce byte-equal plans and frozen
+semantic, bridge, and plan hashes; post-identity source mutation fails closed.
+The corrected multi-scenario plan identity was propagated through the native-
+UVM, portable-VHDL, and OSVVM galleries and requalified with the repository-
+local GHDL 6.0.0 and OSVVM 2026.05 tool/provider tuple. No backend or runtime
+capability was added. Fibers, types, maps, random/replay, exact plan-byte
+boundaries, and higher levels remain owned by later slices of the active
+generator task.
 
 The reachability audit selects these outcomes before generator implementation:
 

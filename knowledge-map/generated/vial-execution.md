@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-execution`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **23** uniquely owned question entries.
+> **2** facts · **24** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -28,6 +28,7 @@
 - q="which VIAL execution scale axes reach their selected limits?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="which cap wins for VIAL operations bindings types and source maps?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="why does VIAL execution scale need a private qualification binder?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
+- q="why must VIAL operation source maps use global indexes across scenarios?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 
 ## Facts
 

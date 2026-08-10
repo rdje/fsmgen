@@ -8,11 +8,11 @@ history; this file carries only the current bounded resume state.
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`.
-- current_state: clean activation commit `30811f70e` precedes the implemented
-  `.17.2.4.2` foundation: caller-sealed private admission plus an ordinary-source
-  2,042-event construction reaches the exact 2,048-binding gate.
-- next_action: after the foundation commit, extend the generator through the
-  frozen AHB route for scenario and operation gate candidates and their oracles.
+- current_state: `.17.2.4.2` implements binding plus checked-AHB scenario and
+  operation gate candidates. The topology slice also repairs multi-scenario
+  operation source maps to use unique global paths while preserving local ranks.
+- next_action: commit the verified topology slice, then extend the generator
+  with total- and simultaneously-live-fiber gate constructions and oracles.
 - in_flight_uncommitted: none.
 - blockers: none.
 

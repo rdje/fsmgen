@@ -552,7 +552,7 @@ package base_output_arbitration_pkg;
       if (!uvm_config_db#(virtual base_output_arbitration_if)::get(this, "", "vif", cfg.vif))
         `uvm_fatal("VIAL/VIF", "missing generated virtual interface")
       vial_context = fsmgen_vial_execution_context::type_id::create("vial_context");
-      vial_context.plan_id = "plan/dff960e224818f42aee83cda21cbcea82d49d23384c196618ea67415353e14ad";
+      vial_context.plan_id = "plan/e236297c8b434a9b374d1800112841e00327bdbd5d8d9130440bd20681fbed6e";
       notifications = base_output_arbitration_notification_registry::type_id::create("notifications");
       notifications.configure_preview();
       cfg.scenario_timeout_cycles = 256;

@@ -961,6 +961,7 @@ sub _build_operations($ctx) {
         my $state = {
             scenario => $scenario,
             rank => 0,
+            operation_offset => scalar(@all_operations),
             operations => [],
             fibers => [],
         };
@@ -1077,7 +1078,8 @@ sub _emit_sequence($ctx, $state, $actions, $fiber_id, $repeat_path) {
         };
         push @{$state->{operations}}, $operation;
         push @sequence_operations, $operation;
-        _add_source_map($ctx, "/operation_graph/operations/" . $#{$state->{operations}},
+        my $operation_index = $state->{operation_offset} + $#{$state->{operations}};
+        _add_source_map($ctx, "/operation_graph/operations/$operation_index",
             $action->{semantic_path}, [], $action->{source_span});
 
         if ($action->{kind} eq 'parallel') {

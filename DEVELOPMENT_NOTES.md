@@ -214,3 +214,21 @@ the cap. This calibrated construction is deliberately path-identity-sensitive:
 repository-relative authored paths participate in the report, so changing a
 path requires recalibration and the exact-byte oracle will fail rather than
 silently weakening evidence.
+
+## 2026-08-10: Scenario-local ranks do not imply scenario-local source-map paths
+
+VIAL static operation ranks restart at zero for each scenario by design; tie
+breaking is scenario-scoped and operation IDs already include the scenario.
+Execution-plan source maps are different: their `plan_path` addresses the one
+flat `operation_graph.operations` array and must therefore use a global index.
+The original builder conflated these two coordinate systems, so every scenario
+after the first reused `/operation_graph/operations/0...` paths.
+
+The scale scenario gate made the collision unambiguous: 32 real operations
+produced only one distinct operation-map path. The builder now records each
+scenario's global operation offset before emission and adds it only when
+forming source-map paths. Static ranks, operation IDs, successor chains,
+logical time, and backend meaning remain unchanged. Exact regressions require
+one unique global source-map path per operation; because this changes canonical
+plan identity, all byte-locked galleries and exact VHDL qualification reports
+must be regenerated and requalified together.
