@@ -425,11 +425,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3.1: select bridge-scale reachability contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the selected canonical bridge-fanout generator and exact manifest oracles.`
   Acceptance: `Implement only after .17.2.3.1 commits cleanly; exercise every reachable bridge_fanout_v1 axis through ordinary HIAL parsing/lowering and the shipped builder, prove the selected exact or earliest-cap outcomes, retain the AHB and IAL2 route invariants, and add focused/default/exact qualification tests plus synchronized user documentation.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean selection predecessor 9c5212cc4 fixes decision 0060 and permits this implementation leaf alone to activate. The selected ordinary direct-IAL1 qualification route, exact AHB/IAL2 invariants, private capability boundary, earliest-cap truth, and support/performance/capacity nonclaims are the implementation constraints. No generator, parser, scheduler, builder, manifest, capability, support, performance, or scale behavior changes in this activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3.2: activate canonical bridge-fanout implementation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4`
   Status: `proposed`
@@ -1006,6 +1006,7 @@ defect before `.17.2.2` begins semantic-family generation.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-10` | `.17.2.3.2` activation | clean selection predecessor `9c5212cc4`; decision `0060`; exact route/nonclaim boundary; task/index/Memory continuity; task-tree, relative-path, diff, and staged-doctrine gates | `passed`; `.17.2.3.2` alone is active for canonical bridge-fanout implementation. Generator, parser, scheduler, builder, manifest, capability/support, performance, and scale behavior remain unchanged. |
 | `2026-08-10` | `.17.2.3.1` bridge-scale reachability selection | exact history `51434a2ae`/`0516f2c66`; parser/builder/contract source audit; real ordinary IAL1 parse/scheduler-report/lower probe; decision `0060`; task/index/contract/book/fact/rationale/Memory/containment continuity; task-tree, Knowledge Map, documentation, mdBook, relative-path, diff, and staged-doctrine gates | `passed`; one closed `qualification_only` direct-IAL1 profile is selected for `.17.2.3.2` implementation, with private scale-evidence capability and earliest-cap authority. Task integrity reports three trees/934 nodes; Knowledge Map reports 1,106 facts/5,733 questions/5,899 occurrences/119 shards; documentation reports Files=8/Tests=89; all 52 chapters test; and the inspected repository-local build contains 88 files/18,396,279 bytes before exact removal. The exact AHB and IAL2 routes, product code, support classification, performance budgets, and all capacity nonclaims remain unchanged. |
 | `2026-08-10` | `.17.2.3.1` activation after reachability audit | clean parent activation `4a6e5f6de`; implementation/contract/history audit across decisions `0035`/`0055`, the IAL1 annotation parser, bridge builder, manifest contract, and t1551; task/index/Memory continuity; task-tree, relative-path, diff, and staged-doctrine gates | `passed`; the exact fixed-AHB/candidate mismatch is durably isolated before code. `.17.2.3.1` alone is active to select the repair; `.17.2.3.2` remains proposed. No parser, scheduler, builder, manifest, route, artifact, capability/support, performance-budget, or capacity behavior changes. |
 | `2026-08-10` | `.17.2.3` activation | clean `.17.2.2` predecessor `145d3084a`; selected decision-0055 bridge-family route/oracle contract; task/index/fact/Memory continuity; task-tree, Knowledge Map, relative-path, diff, and staged-doctrine gates | `passed`; `.17.2.3` alone is active for canonical bridge-fanout workload generation and exact manifest oracles. Builder, bridge, manifest, route, artifact, capability/support, performance-budget, and capacity behavior remain unchanged. |
