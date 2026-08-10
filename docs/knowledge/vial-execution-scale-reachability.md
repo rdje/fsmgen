@@ -15,13 +15,37 @@ answers:
   - "how does the VIAL execution gate produce exactly 8192 source maps?"
   - "how does the VIAL execution gate prove exactly 8192 random attempts and replay equality?"
   - "how does the VIAL execution gate produce an exact one MiB semantic plan?"
+  - "how does the VIAL execution qualification produce an exact four MiB semantic plan?"
 date: 2026-08-10
 status: current
 tags: [vial, execution-ir, scale, binder, bridge, random, replay, plan, limits]
 evidence: >-
-  docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md; docs/decisions/0060-vial-bridge-scale-uses-a-qualification-only-direct-ial1-profile.md; perl/FSM/VIAL/ArchitectureScaleExecutionGraph.pm; perl/FSM/VIAL/ExecutionBuilder.pm; perl/FSM/VIAL/ExecutionRandom.pm; perl/FSM/Support/VIALExecutionContract.pm; t/1552-vial-execution-ir.t; t/1603-vial-architecture-scale-execution-foundation.t; t/1604-vial-architecture-scale-execution-topology.t; t/1605-vial-architecture-scale-execution-fibers.t; t/1606-vial-architecture-scale-execution-types.t; t/1607-vial-architecture-scale-execution-source-maps.t; t/1608-vial-architecture-scale-execution-random-replay.t; t/1609-vial-architecture-scale-execution-plan-bytes.t;
+  docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md;
+  docs/decisions/0060-vial-bridge-scale-uses-a-qualification-only-direct-ial1-profile.md;
+  perl/FSM/VIAL/ArchitectureScaleExecutionGraph.pm; perl/FSM/VIAL/ExecutionBuilder.pm;
+  perl/FSM/VIAL/ExecutionRandom.pm; perl/FSM/Support/VIALExecutionContract.pm;
+  t/1552-vial-execution-ir.t; t/1603-vial-architecture-scale-execution-foundation.t;
+  t/1604-vial-architecture-scale-execution-topology.t;
+  t/1605-vial-architecture-scale-execution-fibers.t;
+  t/1606-vial-architecture-scale-execution-types.t;
+  t/1607-vial-architecture-scale-execution-source-maps.t;
+  t/1608-vial-architecture-scale-execution-random-replay.t;
+  t/1609-vial-architecture-scale-execution-plan-bytes.t;
+  t/1610-vial-architecture-scale-execution-plan-qualification.t;
   vial/qualification/vhdl_portable_ghdl/ghdl-6.0.0-qualification.json; vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md
-reverify: prove -Iperl t/1552-vial-execution-ir.t t/1603-vial-architecture-scale-execution-foundation.t t/1604-vial-architecture-scale-execution-topology.t t/1605-vial-architecture-scale-execution-fibers.t t/1606-vial-architecture-scale-execution-types.t t/1607-vial-architecture-scale-execution-source-maps.t t/1608-vial-architecture-scale-execution-random-replay.t t/1609-vial-architecture-scale-execution-plan-bytes.t && rg -n 'selected_scenarios|expanded_operations_per_scenario|expanded_operations_total|total_fibers|simultaneous_live_fibers|bindings|execution_types|source_map_records|random_attempts|serialized_plan_bytes' perl/FSM/Support/VIALExecutionContract.pm perl/FSM/VIAL/ExecutionBuilder.pm docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md
+reverify: >-
+  prove -Iperl t/1552-vial-execution-ir.t
+  t/1603-vial-architecture-scale-execution-foundation.t
+  t/1604-vial-architecture-scale-execution-topology.t
+  t/1605-vial-architecture-scale-execution-fibers.t
+  t/1606-vial-architecture-scale-execution-types.t
+  t/1607-vial-architecture-scale-execution-source-maps.t
+  t/1608-vial-architecture-scale-execution-random-replay.t
+  t/1609-vial-architecture-scale-execution-plan-bytes.t
+  t/1610-vial-architecture-scale-execution-plan-qualification.t &&
+  rg -n 'selected_scenarios|expanded_operations_per_scenario|expanded_operations_total|total_fibers|simultaneous_live_fibers|bindings|execution_types|source_map_records|random_attempts|serialized_plan_bytes'
+  perl/FSM/Support/VIALExecutionContract.pm perl/FSM/VIAL/ExecutionBuilder.pm
+  docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md
 ---
 
 Decision `0061` selects the `execution_graph_v1` reachability contract. The
@@ -123,6 +147,19 @@ source, SemanticIR, bridge, workload, and plan identities, contiguous reset
 topology, semantic source spans, public capability isolation, and hostile-input
 rejection are frozen.
 
+The eighth slice generalizes that closed semantic recipe to the exact four-MiB
+qualification without changing the public binder. It authors 12,166 real
+resets under scenario `sg_4_mib`; endpoint alias `ready_out_q` remains used by
+coverpoint `ready_sampled`, which samples the real HREADYOUT binding on compact
+domain alias `b`. The one-line generated VIAL source is 147,115 bytes. The
+canonical plan is exactly 4,194,304 bytes with ID
+`plan/63673374ece891a4234613c00c920ffe60cb4d6d73904ba0be2a2d5799f60d62`
+and SHA-256
+`bc5d44cd8bdafcb50654c1a7c8c3e0ac7101b496b16084cad9535d901253d076`.
+It contains one scenario/root/live fiber, seven types, 22 bindings, six events,
+and 12,183 unique maps. Exact source, SemanticIR, unchanged bridge, workload,
+and plan identities plus hostile-input rejection are frozen.
+
 The nominal execution limits are not all reachable. Scenarios and
 simultaneously live fibers reach their exact 4,096 and 16,384 limits. Operations
 per scenario, total operations, total fibers, and source maps encounter the
@@ -138,9 +175,9 @@ the candidate at zero-based attempt `N - 1`. Attempts 8,192, 262,144, and
 attempt exactly.
 
 The AHB plan-byte recipes use real reset operations and referenced semantic
-identifiers. The one-MiB gate is now implemented; the selected 4,194,304- and
-16,777,216-byte recipes and their first complete over-limit operation remain
-unfinished. These are construction/boundary facts only. `.17.2.4.2` remains
-active for the larger exact plans, higher random levels, final qualification,
-and cleanup; no scale capacity is supported until later measurement and
-promotion.
+identifiers. The one-MiB gate and four-MiB qualification are now implemented;
+the selected 16,777,216-byte recipe and its first complete over-limit operation
+remain unfinished. These are construction/boundary facts only. `.17.2.4.2`
+remains active for the exact limit plan, higher random levels, final
+qualification, and cleanup; no scale capacity is supported until later
+measurement and promotion.
