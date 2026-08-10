@@ -53,7 +53,7 @@ sub construct($class, @args) {
     my ($axis, $level) = @{$raw}{qw(primary_axis level)};
     my %owned_axis = map { $_ => 1 } qw(
         bindings scenarios operations_per_scenario operations_total
-        fibers_total simultaneously_live_fibers
+        fibers_total simultaneously_live_fibers execution_types
     );
     confess "execution-graph gate slice does not own the requested shape\n"
         unless defined($axis) && $owned_axis{$axis}
@@ -72,6 +72,20 @@ sub construct($class, @args) {
         $inputs = [
             _input($HIAL_SOURCE, 'hial_source', _render_hial($event_count)),
             _input($VIAL_SOURCE, 'vial_source', _render_vial($event_count)),
+        ];
+    }
+    elsif ($axis eq 'execution_types') {
+        confess "reference_hial_text is accepted only for checked-AHB execution gates\n"
+            if defined $raw->{reference_hial_text};
+        $inputs = [
+            _input(
+                $HIAL_SOURCE, 'hial_source',
+                _render_type_hial($requested->{execution_types}),
+            ),
+            _input(
+                $VIAL_SOURCE, 'vial_source',
+                _render_type_vial($requested->{execution_types}),
+            ),
         ];
     }
     else {
@@ -166,6 +180,8 @@ sub evaluate($class, @args) {
             simultaneous_live_fibers =>
                 0 + $ir->{operation_graph}{maximum_simultaneous_live_fibers},
             source_map_records => scalar(@{$ir->{source_map}}),
+            serialized_bridge_manifest_bytes =>
+                bytes::length($canonical->encode($manifest)),
             serialized_plan_bytes => bytes::length($plan_json),
         },
         semantic_ir_sha256 => sha256_hex($canonical->encode($semantic)),
@@ -185,8 +201,9 @@ sub _canonical_inputs($raw) {
     my $construction = _validated_construction($raw);
     my $hial = _role_input($construction, 'hial_source');
     my $vial = _role_input($construction, 'vial_source');
+    my $axis = $construction->{specification}{primary_axis};
     return _canonical_ahb_inputs($construction, $hial, $vial)
-        unless $construction->{specification}{primary_axis} eq 'bindings';
+        unless $axis eq 'bindings' || $axis eq 'execution_types';
     my $adapter = FSM::Adapter::ISF->new();
     my $actor = $adapter->parse_source($hial->{content}, basename($hial->{relative_path}));
     my $scheduler = FSM::Scheduler::ISF->new();
@@ -215,16 +232,17 @@ sub _canonical_inputs($raw) {
         source_catalog => {},
     });
     my $semantic = $semantic_ir->as_hashref;
-    confess "binding gate must contain exactly one package and fixture\n"
+    confess "direct-IAL1 execution gate must contain exactly one package and fixture\n"
         unless @{$semantic->{packages}} == 1
             && @{$semantic->{packages}[0]{fixtures}} == 1;
     my $fixture = $semantic->{packages}[0]{fixtures}[0];
     my @scenario_ids = map { $_->{semantic_id} } @{$fixture->{scenarios}};
-    confess "binding gate must contain one scenario\n" unless @scenario_ids == 1;
+    confess "direct-IAL1 execution gate must contain one scenario\n"
+        unless @scenario_ids == 1;
     return {
         semantic_ir => $semantic_ir,
         bridge_manifest => $bridge->{manifest},
-        private_qualification => 1,
+        private_qualification => $axis eq 'bindings' ? 1 : 0,
         arguments => {
             semantic_ir => $semantic_ir,
             bridge_manifest => $bridge->{manifest},
@@ -313,7 +331,8 @@ sub _validated_construction($raw) {
         level => $spec->{level},
     };
     $invocation->{reference_hial_text} = _role_input($raw, 'hial_source')->{content}
-        unless $spec->{primary_axis} eq 'bindings';
+        unless $spec->{primary_axis} eq 'bindings'
+            || $spec->{primary_axis} eq 'execution_types';
     my $rebuilt = __PACKAGE__->construct($invocation);
     my $canonical = JSON::PP->new->canonical(1)->allow_nonref(1);
     confess "construction is not canonical\n"
@@ -366,6 +385,58 @@ sub _render_vial($event_count) {
         ' (endpoint anchor "endpoint/scale_input" (type bit_t) public_port)',
         ' (endpoint retained "probe/probe_00000000" (type bit_t) verification_probe))',
         ' (transactions (transaction bridge "transaction/bridge_anchor" bridge_anchor)))',
+        ' (instances)',
+        ' (coverage)',
+        ' (faults)',
+        ' (randomness (seed 1701))',
+        ' (scenarios (scenario smoke',
+        ' (timeout (cycles scale 16))',
+        ' (steps (reset scale 1))))))))',
+        "\n",
+    );
+}
+
+sub _render_type_hial($type_count) {
+    confess "execution-type gate requires at least one type\n"
+        unless defined($type_count) && $type_count >= 1;
+    my @inputs = map {
+        sprintf('(input typed_%08d (width %d))', $_ - 1, $_)
+    } 1 .. $type_count;
+    return join('',
+        '(actor vial_architecture_scale',
+        ' (clock clk)',
+        ' (reset (rst_n async active_low))',
+        ' (interface ', join(' ', @inputs), '))',
+        "\n",
+    );
+}
+
+sub _render_type_vial($type_count) {
+    confess "execution-type gate requires at least one type\n"
+        unless defined($type_count) && $type_count >= 1;
+    my @types = map {
+        sprintf('(type width_%08d_t (logic %d))', $_ - 1, $_)
+    } 1 .. $type_count;
+    my @endpoints = map {
+        sprintf(
+            '(endpoint typed_%08d "endpoint/typed_%08d" '
+                . '(type width_%08d_t) public_port)',
+            $_, $_, $_,
+        )
+    } 0 .. $type_count - 1;
+    return join('',
+        '(vial (version 1) (package architecture_scale_execution',
+        ' (imports)',
+        ' (types ', join(' ', @types), ')',
+        ' (transactions)',
+        ' (models)',
+        ' (scoreboards)',
+        ' (fixtures (fixture type_gate',
+        ' (dut dut',
+        ' (unit "unit/vial_architecture_scale")',
+        ' (domains (domain scale "domain/default"))',
+        ' (endpoints ', join(' ', @endpoints), ')',
+        ' (transactions))',
         ' (instances)',
         ' (coverage)',
         ' (faults)',
@@ -560,6 +631,80 @@ sub _axis_oracle_errors($spec, $construction, $ir, $plan, $inputs) {
             && ($scale_capability->{classification} // '') eq 'qualification_only'
             && ($scale_capability->{portable_class} // '') eq 'private_nonportable'
             && join("\0", @{$scale_capability->{origins} || []}) eq 'bridge_manifest';
+        return @errors;
+    }
+
+    if ($axis eq 'execution_types') {
+        my $requested = $spec->{requested_counts}{execution_types};
+        my $observed = scalar(@{$ir->{type_table}});
+        my $manifest = $inputs->{bridge_manifest}->as_hashref;
+        my @layers = map { $_->{layer} // '' }
+            @{$manifest->{review_route}{stages} || []};
+        my ($ial1_capability) = grep {
+            ($_->{capability_id} // '') eq 'hial_vial.bridge_source.ial1'
+        } @$ledger;
+        my ($ahb_capability) = grep {
+            ($_->{capability_id} // '') eq 'hial_vial.bridge_protocol.ahb_subordinate_v1'
+        } @$ledger;
+        push @errors, _oracle_error(
+            'VIAL_SCALE_EXECUTION_COUNT_ERROR',
+            "observed execution type count $observed does not equal requested count $requested",
+            '/metrics/execution_types',
+        ) unless $observed == $requested;
+        push @errors, _oracle_error(
+            'VIAL_SCALE_EXECUTION_CAPABILITY_ERROR',
+            'execution-type gate did not retain only the public direct-IAL1 source capability',
+            '/capability_ledger',
+        ) unless !$scale_capability && !$ahb_capability
+            && $ial1_capability
+            && ($ial1_capability->{classification} // '')
+                eq 'satisfied_by_execution_profile'
+            && ($ial1_capability->{portable_class} // '') eq 'portable';
+        push @errors, _oracle_error(
+            'VIAL_SCALE_EXECUTION_ROUTE_ERROR',
+            'execution-type gate did not traverse the ordinary IAL1/IAL0 review route',
+            '/bridge_manifest/review_route',
+        ) unless ($manifest->{review_route}{authored_layer} // '') eq 'IAL1'
+            && join("\0", @layers) eq join("\0", qw(IAL1 IAL0));
+
+        my @widths = map { $_->{semantic_type}{width} // 0 } @{$ir->{type_table}};
+        my $types_closed = @widths == $requested
+            && join("\0", @widths) eq join("\0", 1 .. $requested)
+            && !scalar(grep {
+                ($_->{semantic_type}{kind} // '') ne 'scalar'
+                    || ($_->{semantic_type}{family} // '') ne 'logic'
+                    || ($_->{semantic_type}{state_domain} // '') ne 'four_state'
+                    || ($_->{semantic_type}{signed} // 0)
+                    || @{$_->{semantic_ids} || []} != 1
+                    || @{$_->{carrier_type_ids} || []} != 1
+            } @{$ir->{type_table}});
+        my @carrier_widths = map { $_->{width} // 0 } @{$manifest->{types}};
+        $types_closed &&= @carrier_widths == $requested
+            && join("\0", sort { $a <=> $b } @carrier_widths)
+                eq join("\0", 1 .. $requested);
+        push @errors, _oracle_error(
+            'VIAL_SCALE_EXECUTION_TYPE_ERROR',
+            'execution-type gate did not preserve one exact public four-state scalar relation per width',
+            '/type_table',
+        ) unless $types_closed;
+
+        my $bindings = $ir->{bindings};
+        my $binding_closed = @{$bindings->{endpoints}} == $requested
+            && !@{$bindings->{probes}}
+            && !@{$bindings->{transactions}}
+            && !@{$bindings->{events}}
+            && $ir->{resource_summary}{bindings} == $requested + 2
+            && @{$manifest->{endpoints}} == $requested + 2
+            && !scalar(grep {
+                @{$_->{relations} || []} != 1
+                    || ($_->{relations}[0]{direction} // '') ne 'drive'
+            } @{$bindings->{endpoints}});
+        push @errors, _oracle_error(
+            'VIAL_SCALE_EXECUTION_BINDING_ERROR',
+            'execution-type gate did not bind every public data endpoint exactly once',
+            '/bindings/endpoints',
+        ) unless $binding_closed;
+        push @errors, _topology_oracle_errors($ir, 'reset_chain');
         return @errors;
     }
 
@@ -830,7 +975,9 @@ sub _backend_names($actor) {
     my @endpoints = (@clock_names, @reset_names);
     push @endpoints, map { $_->{name} } @{$actor->{interface}{inputs} || []};
     push @endpoints, map { $_->{name} } @{$actor->{interface}{outputs} || []};
-    my @probes = map { $_->{name} } @{$actor->{verification_bridge}{probes} || []};
+    my @probes = ref($actor->{verification_bridge}) eq 'HASH'
+        ? map { $_->{name} } @{$actor->{verification_bridge}{probes} || []}
+        : ();
     my %endpoint = map { $_ => $_ } @endpoints;
     my %probe = map { $_ => $_ } @probes;
     return {

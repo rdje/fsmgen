@@ -9,10 +9,11 @@ history; this file carries only the current bounded resume state.
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`.
 - current_state: `.17.2.4.2` implements binding, checked-AHB scenario/operation,
-  and exact 128-total/32-live fiber gate candidates. Multi-scenario operation
-  source maps use unique global paths while preserving scenario-local ranks.
-- next_action: implement the plain-IAL1 execution-type gate with exact type,
-  bridge, plan, determinism, and fail-closed oracles.
+  exact 128-total/32-live fiber, and plain-IAL1 512-type gate candidates.
+  Multi-scenario maps use unique global paths; every type has one public exact-
+  width drive relation through the unchanged binder.
+- next_action: implement the checked-AHB 8,192-source-map gate with exact map,
+  topology, plan, determinism, and fail-closed oracles.
 - in_flight_uncommitted: none.
 - blockers: none.
 

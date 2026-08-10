@@ -2365,10 +2365,45 @@ for my $axis (qw(fibers_total simultaneously_live_fibers)) {
 The fiber gates retain 22 checked-AHB bindings, seven normalized types, the
 public portable AHB capability, and exact `IAL2 -> IAL1 -> IAL0` review
 closure. They never admit the private binding-scale capability. Post-identity
-source mutation and unfinished qualification levels fail closed. Execution
-types, large source-map construction, random/replay, exact plan-byte
-boundaries, higher levels, and scale qualification remain unfinished and make
-no capacity claim.
+source mutation and unfinished qualification levels fail closed.
+
+The execution-type gate uses a different canonical route because the frozen
+AHB actor exposes only seven distinct normalized types. It generates one
+ordinary, non-annotated direct-IAL1 public input for each width from 1 through
+512 and binds each from one VIAL endpoint of the exact same unsigned
+four-state logic shape. These are used representation proofs, not unreferenced
+type declarations: the unchanged public binder materializes exactly 512 type-
+table entries, each with one semantic identity, one carrier type, and one
+`drive` relation.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+    primary_axis => 'execution_types',
+    level => 'gate_candidate_v1',
+});
+die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+
+my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+    construction => $workload,
+});
+die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+die "unexpected type count\n"
+    unless $evaluation->{metrics}{execution_types} == 512;
+```
+
+The resulting target-neutral plan has 514 bindings (unit, domain, and 512
+endpoints), 514 source maps, one scenario/reset/root fiber, and 735,488
+canonical bytes. Its direct-IAL1 bridge report is exactly 8,237,394 bytes,
+reproducing the reachability selection. It retains the public
+`hial_vial.bridge_source.ial1` capability and exact `IAL1 -> IAL0` review
+route, with neither the AHB protocol capability nor the private scale
+capability. Independent construction freezes the generated HIAL/VIAL,
+SemanticIR, bridge, and plan identities. A mutated source, caller-injected
+HIAL, or unfinished level fails closed. Large source-map construction,
+random/replay, exact plan-byte boundaries, higher levels, and scale
+qualification remain unfinished and make no capacity claim.
 
 The reachability audit selects these outcomes before generator implementation:
 

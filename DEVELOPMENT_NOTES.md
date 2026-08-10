@@ -248,3 +248,21 @@ levels without widening parser limits. At the gate level, two outer fibers—one
 containing a 29-child nested parallel—produce exactly 32 total and live fibers.
 The builder remains unchanged; exact tree, join, operation, parent, successor,
 phase, map, and identity oracles keep both constructions honest.
+
+## 2026-08-10: Execution-type scale must use every shape through a real binding
+
+`ExecutionBuilder` deduplicates its type table by canonical semantic shape at
+the point a representation relation or value actually uses the type. Merely
+declaring 512 aliases, or creating 512 bridge types that VIAL never binds,
+would therefore be a false scale witness. The gate uses 512 public direct-IAL1
+inputs and matching VIAL endpoints at widths 1 through 512. This gives each
+four-state unsigned logic shape one semantic identity, one carrier identity,
+and one exact-width drive proof through the unchanged public binder.
+
+Optional metadata readers must also preserve absence. The scale helper once
+read `verification_bridge.probes` without first checking that
+`verification_bridge` was a hash. Perl autovivified the absent annotation to
+`{}` after the scheduler had reported `null`, and the canonical bridge rightly
+rejected the actor/report mismatch. Guarding the optional hash before probe
+collection keeps ordinary non-annotated IAL1 ordinary; it does not weaken the
+bridge identity check or introduce a private admission.
