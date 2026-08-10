@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `roadmap/documentation alignment / IAL2 mdBook`
 - Created: `2026-07-12`
 - Last updated: `2026-08-10`
@@ -154,7 +154,7 @@ what is actually shipped, matching the thoroughness AHB already has.
 ## Task Tree
 
 - ID: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE`
-  Status: `active`
+  Status: `done`
   Goal: `Present IAL2 as a coherent whole in the mdBook and backfill AXI coverage to its shipped surface.`
   Children: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.1, IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.2, IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.3, IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.4, IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.5, IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.6`
 
@@ -198,18 +198,18 @@ what is actually shipped, matching the thoroughness AHB already has.
   Blocked by: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.4`
 
 - ID: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.6`
-  Status: `pending`
+  Status: `done`
   Goal: `Run the final IAL2/AXI coherence proof and close the documentation tree.`
   Acceptance: `Re-census the current AXI corpus and map every source to the documented monitor/initiator or manager feature families; rerun the ten representative strict checks and relevant schedule/semantic/outdir probes; build the mdBook; run public book/path/doctrine gates; confirm 13k remains ISF-only, APB remains honestly partial, AHB is preserved, no internal workflow narration remains in 16a/16aa, and all supported/residue claims agree with current reports. Close the task tree and bounded Memory only after a clean committed result.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `A fresh corpus census maps all 153 AXI PPIF sources to the book: all 13 monitor/driver/acceptor/composition sources occur in 16a, while all 140 manager-capacity/status sources are covered by 16aa's exact overlapping 140 shell / 139 ID / 138 transaction / 17 automatic-ID / 78 same-ID-ordering / 130 response-demux / 79 read-data / 48 burst-length families. All ten representatives pass strict check JSON and schedule JSON; semantic probes pass for the AW/W bundle, automatic-ID lifecycle, mixed dynamic/static write queue, and deepest dynamic depth-3 multi-beat read path. The repository-local lifecycle outdir probe emits exactly axi0_capacity_status.isf and .fsm and is removed. Guarded t248 passes All tests successful at Files=1, Tests=7092; guarded public-book/path tests pass Files=3, Tests=308. mdbook build and Knowledge Map generation/check pass, the rendered output is removed, and both new census queries resolve to the canonical card. Exact scans prove 13k remains AXI-free/ISF-only, APB retains explicit bounded residue, AHB is unchanged from the tree baseline, and 16a/16aa contain no internal workflow terms. The only final book edit removes 106 bytes and one line of residual workflow narration without changing the AXI contract. No implementation, public PPIF, test, generated product artifact, or runtime behavior changed; the staged doctrine result is recorded below.`
+  Commit: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.6: close AXI book coherence proof`
   Blocked by: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.5`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.6` | `pending` | Re-census the complete AXI corpus, prove representative coverage, and close the coherence tree. |
+| 1 | `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.6` | `done` | The complete AXI corpus, representative execution surfaces, book boundaries, and documentation gates are proved; this tree is closed. |
 
 ## Decisions
 
@@ -253,6 +253,30 @@ what is actually shipped, matching the thoroughness AHB already has.
   provisional one-bit width reaches simplification before the SystemVerilog
   backend infers the correct width. Both defects predate and are outside this
   documentation-only tree.
+
+## Acceptance Checklist (enforced) — `.6` maintained-reference authority
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The final exact-source census finds 153
+  AXI PPIF sources and maps their 13-source monitor/initiator spine to 16a and
+  140-source manager family to 16aa. Fresh `--emit-schedule-json` reports prove
+  the documented overlapping feature counts and boundaries. An exact workflow
+  scan then locates three residual process-facing phrases in 16a even though
+  `.6` requires a product-only final contract. The committed `.5` mdBook
+  baseline is 53 files / 49,272 lines / 2,604,771 bytes.
+- [x] **ADDRESSED (verified)** — Authority
+  `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.6-BOOK-SYNC` records that exact baseline
+  and the measured +0 files / -1 line / -106 bytes. The three phrases are
+  replaced or removed without altering supported behavior or residue. The
+  canonical AXI card now answers the previously absent 153/140-source census
+  questions and remains inside the strict Knowledge Map transition allowance.
+- [x] **NO REGRESSION** — Ten representative sources pass strict check and
+  schedule JSON; four semantic probes and the exact two-file repository-local
+  outdir probe pass. The guarded regression reports `All tests successful` at
+  `Files=1, Tests=7092`; guarded public-book/path tests report the same at
+  `Files=3, Tests=308`. `mdbook build docs/book` and `knowledge-map: OK` pass,
+  all generated output is removed, and the staged doctrine gate must report
+  `[doctrine] all doctrine checks passed` before commit. No implementation,
+  public PPIF, test, generated product artifact, or runtime behavior changed.
 
 ## Acceptance Checklist (enforced) — `.5` maintained-reference authority
 

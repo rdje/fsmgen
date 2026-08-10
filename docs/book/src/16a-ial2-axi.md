@@ -1018,8 +1018,7 @@ admission for legal address `0x00000004`. The behavior harness retains two
 deliberately illegal commands and reaches exact `5/17/5/17/4`
 AR/R/request/beat/transaction counts; a separate assertion-enabled legal-only
 harness reaches `1/4/1/4/1` with fixed LEN3/SIZE2/INCR metadata and matching
-RID/RLAST. Internal repair and selector history is retained in task records and
-Git rather than in this user-facing final contract.
+RID/RLAST.
 
 General dynamic bursts, RRESP/output-bank aggregation, malformed-subordinate
 timeout/recovery, capacity/status adapter wiring, multiple outstanding and
@@ -1110,8 +1109,8 @@ Validate that deep shape with:
 ./bin/fsmgen --quiet --strict --check --json ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif
 ```
 
-Use `--emit-schedule-json` or `--outdir` on this family when reviewing a
-specific implementation slice. For routine documentation review, the strict
+Use `--emit-schedule-json` or `--outdir` on this family when reviewing its
+generated execution details. For routine documentation review, the strict
 check is usually the fastest proof that the checked-in source still parses and
 passes the selected static contract.
 
@@ -1131,8 +1130,8 @@ claimed by this chapter:
 - backend-language variants;
 - VHDL behavior.
 
-Those items need future task-tree leaves before they can become user-facing
-behavior.
+Those items remain unsupported until their contracts, implementation, and
+verification are complete.
 
 ## Validation Used For This Chapter
 

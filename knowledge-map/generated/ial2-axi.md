@@ -1,7 +1,7 @@
 # Knowledge Map: `ial2-axi`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **216** facts · **1034** uniquely owned question entries.
+> **216** facts · **1036** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -234,6 +234,8 @@
 - q="how is an AXI fixed-four read kept within 4 KiB?" · facts=[ial2-axi-read-burst4-transaction-composition-readiness-audit](../../docs/knowledge/ial2-axi-read-burst4-transaction-composition-readiness-audit.md)
 - q="how is the AXI write burst4 4-KiB boundary checked?" · facts=[ial2-axi-write-burst4-request-composition-behavior](../../docs/knowledge/ial2-axi-write-burst4-request-composition-behavior.md)
 - q="how is the fixed-four AXI write 4-KiB boundary checked?" · facts=[ial2-axi-write-burst4-request-composition-readiness-audit](../../docs/knowledge/ial2-axi-write-burst4-request-composition-readiness-audit.md)
+- q="how many AXI PPIF sources are shipped?" · facts=[ial2-axi-manager-capacity-status-ppif-first-slice](../../docs/knowledge/ial2-axi-manager-capacity-status-ppif-first-slice.md)
+- q="how many AXI manager capacity status PPIF sources are shipped?" · facts=[ial2-axi-manager-capacity-status-ppif-first-slice](../../docs/knowledge/ial2-axi-manager-capacity-status-ppif-first-slice.md)
 - q="how should AXI ID-family static validation be implemented?" · facts=[ial2-axi-manager-id-family-readiness-audit](../../docs/knowledge/ial2-axi-manager-id-family-readiness-audit.md)
 - q="how should AXI multi-beat RRESP be aggregated?" · facts=[ial2-axi-manager-rresp-aggregation-contract-selection](../../docs/knowledge/ial2-axi-manager-rresp-aggregation-contract-selection.md)
 - q="how should WLAST progress across a four-beat AXI write burst?" · facts=[ial2-axi-w-burst4-driver-readiness-audit](../../docs/knowledge/ial2-axi-w-burst4-driver-readiness-audit.md)
@@ -1289,7 +1291,7 @@ _AXI manager capacity/status in-process generator first slice_
 
 ### ial2-axi-manager-capacity-status-ppif-first-slice
 
-_AXI manager capacity/status public PPIF first slice shipped_
+_AXI manager capacity/status PPIF shipped_
 
 - **date:** 2026-08-10 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-axi-manager-capacity-status-ppif-first-slice.md`](../../docs/knowledge/ial2-axi-manager-capacity-status-ppif-first-slice.md)

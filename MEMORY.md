@@ -7,14 +7,14 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.6`.
-- current_state: `.5` documents single/last/multi-beat read-data capture,
-  report-only/runtime raw-ARLEN behavior, RLAST checks, bounded output banks,
-  RID interleaving, and concrete/mixed/dynamic compositions; all six selected
-  sources pass strict check and both HDL gates.
-- next_action: re-census all 153 AXI PPIF sources against the documented
-  monitor/initiator/manager families, rerun the ten representative proof set,
-  and close the coherence tree under `.6`.
+- active_work_unit: none; `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE` is closed.
+- current_state: `.1-.6` now align the one-language IAL2 overview, the complete
+  153-source AXI corpus, representative manager-family semantics, supported
+  boundaries, and executable validation with the mdBook and Knowledge Map.
+- next_action: from the clean closing commit, evaluate and activate
+  `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.16` only if an exact available
+  mixed-language tool/profile can satisfy its selection contract; otherwise
+  record the evidence and choose the next unblocked proposed HIAL/VIAL leaf.
 - in_flight_uncommitted: none; no background job or generated build residue.
 - blockers: none.
 
