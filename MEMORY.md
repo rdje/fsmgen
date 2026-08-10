@@ -7,14 +7,12 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.2`.
-- current_state: `.17.2.2` implementation, exact semantic proof, dependent
-  galleries/qualifications, impacted regression, and documentation gates pass;
-  the completed slice is ready for final staged doctrines and commit.
-- next_action: commit `.17.2.2` cleanly, then activate proposed `.17.2.3` for
-  canonical bridge-fanout generation.
-- in_flight_uncommitted: completed `.17.2.2` source, generated evidence,
-  tests, decisions `0058`/`0059`, and synchronized task/book/fact continuity.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3`.
+- current_state: clean `.17.2.2` predecessor `145d3084a` is complete;
+  continuity-only `.17.2.3` activation is being committed.
+- next_action: implement canonical bridge-fanout workload generation and exact
+  manifest oracles through the selected HIAL routes.
+- in_flight_uncommitted: `.17.2.3` activation continuity only.
 - blockers: none.
 
 ## Durable context

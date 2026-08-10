@@ -410,11 +410,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.2: generate canonical semantic scale workloads`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Generate bridge-fanout workloads through canonical HIAL routes with exact manifest oracles.`
   Acceptance: `Construct each bridge_fanout_v1 axis through shipped direct-IAL0/direct-IAL1 or reviewed IAL2 routing as selected; prove normalized counts, immutable IDs/data, source/review identity, complete resolution/mapping/bindings, byte-equal manifests/reports, earliest-cap diagnostics, IAL2 bypass rejection, and cleanup.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean semantic-family predecessor 145d3084a permits .17.2.3 alone to activate for canonical bridge-fanout construction and exact manifest oracles. Activation changes only task/index/fact/Memory continuity: no builder, bridge, manifest, source route, generated artifact, capability/support classification, performance budget, or scale-capacity claim changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3: activate canonical bridge-fanout generation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4`
   Status: `proposed`
@@ -991,6 +991,7 @@ defect before `.17.2.2` begins semantic-family generation.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-10` | `.17.2.3` activation | clean `.17.2.2` predecessor `145d3084a`; selected decision-0055 bridge-family route/oracle contract; task/index/fact/Memory continuity; task-tree, Knowledge Map, relative-path, diff, and staged-doctrine gates | `passed`; `.17.2.3` alone is active for canonical bridge-fanout workload generation and exact manifest oracles. Builder, bridge, manifest, route, artifact, capability/support, performance-budget, and capacity behavior remain unchanged. |
 | `2026-08-10` | `.17.2.2` canonical semantic generation | canonical 70-spec source construction; exact counts/IDs/spans/references/types/order/reports/formatting/boundaries/diagnostics; success/failure staging cleanup; decisions `0058`/`0059`; semantic-ID regressions; exact opt-in qualification/limit/excess proof; canonical native-UVM/portable-VHDL/OSVVM gallery and exact GHDL qualification refreshes; guarded 21-file impacted suite; task/book/Knowledge Map/Memory/live-reference/staged-acceptance/doctrine gates; repository-local mdBook build and exact artifact cleanup | `passed`; default t1601 reports Files=1/Tests=4 in 17 seconds and exact guarded t1601 reports Files=1/Tests=4 in 359 seconds. Final impacted regression reports Files=21/Tests=140 in 221 seconds, including real Verilator and exact GHDL/OSVVM qualification. Documentation governance reports Files=8/Tests=89, 2,969/2,969 paths, exact book delta 0/+67/+3,225, and one reviewed 1,106→1,107 knowledge-card ceiling change. Knowledge Map is current at 1,106 facts/5,733 questions/5,899 occurrences/119 shards. All 52 chapters test; the rendered repository-local build contains 88 files/18,392,884 bytes before exact removal. The semantic family accepts no IR, checked action-local IDs are globally unambiguous, and the literal-repeat interaction remains an explicit `.17.4` repair input. No support, performance-budget, or capacity claim is made. |
 | `2026-08-10` | `.17.2.2` activation | clean `.17.9` repair predecessor `3c948294b`; dependency and ownership boundary; task/index/fact/Memory continuity; task-tree, Knowledge Map, relative-path, diff, staged acceptance, and doctrine gates | `passed`; `.17.2.2` alone is active for canonical semantic-catalog workload generation and semantic oracles. Generator implementation, parser behavior, SemanticIR, artifact, capability/support, performance, and scale claims remain unchanged. |
 | `2026-08-10` | `.17.9` failed-stage cleanup repair | git history/blame; all repository remove_tree error collectors; one scalar-reference production repair; public CLI first-write failure, stable diagnostic, exact stage/target absence, identical retry; successful/unchanged/collision/path safety; source/planning/real-Verilator/AHB-parity regression; task/book/Knowledge Map/Memory/live-reference/staged-acceptance/doctrine gates; mdBook test/build/render inspection; artifact census and exact cleanup | `passed`; bad collector originates in `045629c97`; all six production collectors are now correct. Focused t1556 reports Files=1/Tests=6 and the impacted suite reports Files=4/Tests=20. The failure returns exact `VIAL_HOST_ERROR`, leaves neither operation stage nor target, and retries to atomic success. No artifact graph, target root, parser, plan, backend, runtime, capability/support, or scale behavior changes. |
@@ -1057,6 +1058,22 @@ defect before `.17.2.2` begins semantic-family generation.
 | `2026-08-09` | `.15.7` activation | clean `.15.6` predecessor `4f350f29c`; task/index/audit/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook test; live-reference authority; diff/staged-doctrine gates | `passed`; `.15.7` alone is active for combined exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT qualification. Both inputs remain repository-local; task integrity reports three active trees/916 nodes, Knowledge Map remains 1,105 facts/5,713 questions/5,879 occurrences/118 shards, all 52 mdBook chapters test, and maintained-reference authority accepts the exact 0-file/0-line/+16-byte delta. Activation changes no source, generated artifact, qualification evidence, capability, runtime result, or support behavior. |
 | `2026-08-09` | `.15.7` exact combined qualification | exact GHDL archive/binary and recursive OSVVM identities; 44-core/17-Common ordered provider compilation; adapter/generated-fixture/probe analysis; fixture/probe elaboration and double execution; 42-record trace/result validation; 19-path portable parity; four deterministic OSVVM reports; bounded support/capability truth; same-volume cleanup; focused/corpus/capability/gallery/docs/task/Knowledge Map/mdBook/staged-doctrine gates | `passed`; `vhdl_osvvm_qualified` is bounded-qualified under exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT. Six adapter mappings execute in the probe; the Common address-bus mapping is analysis-only. OSVVM reports record three clean affirmations, 25% one-of-four-bin/25% coverage, and one checked scoreboard item with zero errors, while portable trace/result/parity remain authoritative. Broader provider/language/tool/profile claims remain explicit non-claims. |
 | `2026-08-10` | `.17` selection/activation | clean predecessor `6d23b5843`; mixed-language command/provider census; decisions 0032/0051; five-leaf scale decomposition; task/index/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook build; relative paths; live-reference authority; diff/staged-doctrine gates; exact cleanup | `passed`; `.16` remains proposed because no compatible mixed-language runtime is available, and `.17.1` alone is active for documentation-only scale-contract selection. Task integrity reports three active trees/921 nodes; Knowledge Map reports 1,105 facts/5,723 questions/5,889 occurrences/118 shards; the book shrinks by 34 lines/2,676 bytes while replacing stale chronology with current capability and scale boundaries; generated output is removed. No product behavior or scale claim changes. |
+
+## Acceptance Checklist (enforced) — `.17.2.3` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -1 --oneline` identifies clean
+  predecessor `145d3084a`, where `.17.2.2` completed the semantic family and
+  left proposed `.17.2.3` as the precise next PNT leaf. Decision `0055` places
+  canonical HIAL bridge routes and manifest oracles in that leaf; no bridge
+  generator implementation is present or authorized before activation.
+- [x] **ADDRESSED (verified)** — This continuity-only slice activates exactly
+  `.17.2.3` in the owning tree and synchronizes the bounded task index,
+  Knowledge Map fact, and Memory resume pointer. All later `.17.2` leaves
+  remain proposed, and no product file or user-facing behavior changes.
+- [x] **NO REGRESSION** — `scripts/check_doctrines.sh` passes all staged
+  doctrine gates after task integrity, Knowledge Map currency, relative-path,
+  and diff checks. No builder, bridge, manifest, source route, artifact,
+  capability/support, performance-budget, or scale-capacity claim changes.
 
 ## Acceptance Checklist (enforced) — `.17.2.2` canonical semantic generation
 

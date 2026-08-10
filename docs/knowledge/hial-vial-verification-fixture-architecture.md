@@ -221,7 +221,7 @@ Decision `0057` and `.17.2.1` ship the bounded source-only foundation.
 Completed `.17.9` repairs cleanup. Completed `.17.2.2` now generates every
 semantic-catalog level through the canonical parser, repairs action-local ID
 scope, and records the repeat/action-cap interaction for `.17.4`; no capacity
-claim is made. `.17.2.3` is next for bridge fanout.
+claim is made. `.17.2.3` owns bridge fanout.
 
 Decision `0050` and completed `.12` select IEEE 1800.2-2020 with exact
 Accellera UVM 2020-3.1 tag/commit as the native methodology source. Commercial
