@@ -217,8 +217,9 @@ language, whole-product `big`/`really_big`, synthesis, or general-parity claims.
 Completed `.17.7` removes `t/1569`'s stale focused-index count shadow by
 validating the authority's complete nonzero census instead. Completed `.17.6`
 aligns the public support snapshot with the Runner/normative 8-MiB compile and
-64-MiB runtime capture limits. Active `.17.8` reconciles decisions `0055`/
-`0056` with that execution before `.17.2` consumes `backend_limits`.
+64-MiB runtime capture limits. Completed `.17.8` preserves the decisions
+`0055`/`0056` selection audit while recording that execution as current
+authority; `.17.2` may consume the aligned `backend_limits`.
 
 Decision `0050` and completed `.12` select IEEE 1800.2-2020 with exact
 Accellera UVM 2020-3.1 tag/commit as the native methodology source. Commercial

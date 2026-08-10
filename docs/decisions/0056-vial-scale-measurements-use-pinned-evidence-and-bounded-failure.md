@@ -2,7 +2,7 @@
 
 - Date: 2026-08-10
 - Type: verification architecture/scalability
-- Status: accepted
+- Status: accepted; `.17.6` execution recorded by `.17.8`
 - Refines: [0055](0055-vial-scale-proof-uses-orthogonal-workloads-and-stage-local-oracles.md)
 - Evidence owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.1`
 
@@ -57,11 +57,25 @@ choose whichever number is convenient.
 - Measurement, cap repair, and stable promotion remain separate implementation
   and rollback owners.
 
+## Execution Status
+
+The context and decision below preserve the exact discrepancy and proposed-
+`.17.6` repair selected by `.17.1`; they are selection-time audit evidence.
+Completed `.17.6` commit `5db70fa08` aligns the public support snapshot with
+the authoritative 8,388,608-byte compile and 67,108,864-byte runtime capture
+limits. Direct contract, published capability-manifest, exact Runner, mdBook,
+and doctrine gates pass. `.17.2` through `.17.5` may consume the aligned
+`backend_limits`; the measurement contract, runtime behavior, capability set,
+support classification, and scale nonclaims are unchanged.
+
 ## Selected Contract
 
 The following measurement and bounded-failure contract is normative for
 implementation leaves `.17.2` through `.17.5`. Selection itself changes no
 code, runtime behavior, support record, or scale claim.
+
+Any current-truth discrepancy and future-`.17.6` wording retained above records
+the `.17.1` selection audit; the execution status is the current authority.
 
 ## Measurement Record
 

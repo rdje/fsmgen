@@ -2,7 +2,7 @@
 
 - Date: 2026-08-10
 - Type: verification architecture/scalability
-- Status: accepted
+- Status: accepted; `.17.6` execution recorded by `.17.8`
 - Refines: [0032](0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md), [0036](0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md), [0043](0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md)
 - Evidence owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.1`
 
@@ -41,11 +41,26 @@ timing without semantic or artifact oracles would also reward incorrect work.
   cap repair, and gate promotion.
 - Candidate profiles cannot become capacity claims by naming alone.
 
+## Execution Status
+
+The selected contract below preserves the exact discrepancy and proposed-
+`.17.6` language observed during `.17.1`; it is selection-time audit evidence,
+not current support accounting. Completed `.17.6` commit `5db70fa08` aligns
+`FSM::Support::VIALExecutionContract` with the already-authoritative 8,388,608-
+byte compile and 67,108,864-byte runtime capture limits. Direct contract,
+capability-manifest, exact Runner, mdBook, and doctrine gates pass. `.17.2` may
+consume `backend_limits`; no workload contract, runtime, capability set,
+support classification, or scale claim changed.
+
 ## Selected Contract
 
 The following version-1 contract is normative for the implementation leaves.
 Its selection changes no parser, IR, bridge, emitter, tool, artifact,
 capability, support record, or scale claim.
+
+Any present-tense discrepancy and proposed-`.17.6` wording retained inside this
+contract records the `.17.1` selection audit; the execution status above is the
+current authority.
 
 ## Outcome
 

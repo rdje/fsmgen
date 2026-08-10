@@ -8,14 +8,13 @@ history; this file carries only the current bounded resume state.
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.8`.
-- current_state: clean commit `5db70fa08` closes `.17.6` with aligned 8-MiB /
-  64-MiB support accounting. `.17.8` is active because decisions `0055`/`0056`
-  still describe that now-completed repair as current/proposed.
-- next_action: commit `.17.8` activation, preserve the selection-time audit and
-  append exact execution status to both decisions/index; close it before
-  activating `.17.2` workload generation.
-- in_flight_uncommitted: documentation-only `.17.8` activation is being
-  verified for commit; no background job or generated residue.
+- current_state: clean activation commit `8201334c4`; `.17.8` preserves the
+  decisions `0055`/`0056` selection audit and records completed `.17.6` commit
+  `5db70fa08` as current aligned transcript-limit authority.
+- next_action: verify and commit `.17.8`, then activate `.17.2` workload
+  generation from the clean reconciliation commit.
+- in_flight_uncommitted: documentation-only `.17.8` decision/index/task/Memory
+  reconciliation; no background job or generated residue.
 - blockers: none.
 
 ## Durable context
