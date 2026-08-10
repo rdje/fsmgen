@@ -214,8 +214,9 @@ budgets derive immutably from clean pinned-host calibration and do not fail on
 unmatched hosts. Earliest-cap dominance is reported honestly. These candidates
 are not support, multi-unit/domain, mixed-language, native-UVM-runtime, full-
 language, whole-product `big`/`really_big`, synthesis, or general-parity claims.
-Active `.17.7` first removes `t/1569`'s stale focused-index member-count shadow.
-Proposed `.17.6` then aligns a pre-existing support-snapshot 4-MiB/4-MiB drift
+Completed `.17.7` removes `t/1569`'s stale focused-index count shadow by
+validating the authority's complete nonzero census instead. Proposed `.17.6`
+then aligns a pre-existing support-snapshot 4-MiB/4-MiB drift
 with the Runner/normative 8-MiB/64-MiB capture limits before scale automation.
 
 Decision `0050` and completed `.12` select IEEE 1800.2-2020 with exact

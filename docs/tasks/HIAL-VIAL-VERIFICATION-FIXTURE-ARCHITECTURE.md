@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
-- Last updated: `2026-08-02`
+- Last updated: `2026-08-10`
 - Owner: repo-local workflow
 
 ## Goal
@@ -423,11 +423,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `pending activation after the clean .17.1 selection commit; complete before scale automation consumes backend_limits`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.7`
-  Status: `active`
+  Status: `done`
   Goal: `Remove the stale hard-coded focused-document member-count shadow from the containment regression.`
   Acceptance: `From a separate clean activation, apply decision 0054 to t/1569-focused-document-containment.t: consume the focused-document indexer's successful current census rather than storing a second mutable literal count; retain proof that the real index is current and complete, retain all generated-index unclassified/stale/duplicate/escaping/empty-group and semantic-part negative gates, and change no surface membership, ceiling, classifier, product behavior, or scale claim.`
-  Verification: `pending; clean HEAD's generated docs/index/FOCUSED_DOCUMENTS.md is byte-current and scripts/focused_document_index.pl check reports 1,023 members, while git blame identifies 70ba62f35 as the 1,022-member literal in t/1569. The intervening exact OSVVM gallery README is a registered ancillary member; changing the literal to 1,023 would preserve the derived-state defect rather than repair it.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.7: activate focused-index authority repair`
+  Verification: `Clean activation commit 44ad589ce owns the repair. git log -S'1022 members' identifies 70ba62f35 as the stale shadow; the assertion now accepts only the indexer's complete successful nonzero current-census record and stores no mutable member count. scripts/focused_document_index.pl check remains byte-current at 1,023 members/1,090 lines/149,801 bytes. Perl syntax passes and the focused containment/reference suite reports All tests successful at Files=4/Tests=36. Every existing stale/unclassified/duplicate/escaping/empty-group and semantic-part negative remains exercised; membership, classifier, ceilings, generation, and product behavior are unchanged.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.7: derive focused-index census`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18`
   Status: `proposed`
@@ -543,18 +543,18 @@ Verilator, Icarus, and repository-local GHDL are not a mixed-language runtime,
 and no compatible mixed-language simulator is installed. Completed `.17.1`
 selects decisions `0055`/`0056` and the architecture-scale contracts without claiming
 capacity. Its audit finds one pre-existing support-snapshot limit drift;
-active `.17.7` now owns the stale focused-document regression oracle discovered
-by the selection gates. Proposed `.17.6` then aligns the support snapshot before
-`.17.2` may build scale automation against those values.
+completed `.17.7` removes the stale focused-document regression shadow without
+storing a replacement count. Proposed `.17.6` is next to align the support
+snapshot before `.17.2` may build scale automation against those values.
 
 ## Decisions
 
 - `2026-08-10`: The generated focused-document index and its own checker agree
   on 1,023 members, but `t/1569` retains the 1,022-member literal added before
   the registered OSVVM gallery README. Do not update one stale shadow to
-  another. Proposed `.17.7` applies decision `0054` from a separate clean
-  activation so the test consumes current indexer authority while retaining
-  its complete negative matrix.
+  another. Completed `.17.7` applies decision `0054`: the test consumes the
+  complete successful nonzero census reported by current indexer authority
+  while retaining its complete negative matrix.
 
 - `2026-08-10`: Accept decisions `0055`/`0056` and prove scale with six orthogonal
   workload families plus one conservative balanced candidate. Correctness
@@ -967,6 +967,28 @@ by the selection gates. Proposed `.17.6` then aligns the support snapshot before
 | `2026-08-09` | `.15.7` activation | clean `.15.6` predecessor `4f350f29c`; task/index/audit/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook test; live-reference authority; diff/staged-doctrine gates | `passed`; `.15.7` alone is active for combined exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT qualification. Both inputs remain repository-local; task integrity reports three active trees/916 nodes, Knowledge Map remains 1,105 facts/5,713 questions/5,879 occurrences/118 shards, all 52 mdBook chapters test, and maintained-reference authority accepts the exact 0-file/0-line/+16-byte delta. Activation changes no source, generated artifact, qualification evidence, capability, runtime result, or support behavior. |
 | `2026-08-09` | `.15.7` exact combined qualification | exact GHDL archive/binary and recursive OSVVM identities; 44-core/17-Common ordered provider compilation; adapter/generated-fixture/probe analysis; fixture/probe elaboration and double execution; 42-record trace/result validation; 19-path portable parity; four deterministic OSVVM reports; bounded support/capability truth; same-volume cleanup; focused/corpus/capability/gallery/docs/task/Knowledge Map/mdBook/staged-doctrine gates | `passed`; `vhdl_osvvm_qualified` is bounded-qualified under exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT. Six adapter mappings execute in the probe; the Common address-bus mapping is analysis-only. OSVVM reports record three clean affirmations, 25% one-of-four-bin coverage, and one checked scoreboard item with zero errors, while portable trace/result/parity remain authoritative. Broader provider/language/tool/profile claims remain explicit non-claims. |
 | `2026-08-10` | `.17` selection/activation | clean predecessor `6d23b5843`; mixed-language command/provider census; decisions 0032/0051; five-leaf scale decomposition; task/index/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook build; relative paths; live-reference authority; diff/staged-doctrine gates; exact cleanup | `passed`; `.16` remains proposed because no compatible mixed-language runtime is available, and `.17.1` alone is active for documentation-only scale-contract selection. Task integrity reports three active trees/921 nodes; Knowledge Map reports 1,105 facts/5,723 questions/5,889 occurrences/118 shards; the book shrinks by 34 lines/2,676 bytes while replacing stale chronology with current capability and scale boundaries; generated output is removed. No product behavior or scale claim changes. |
+
+## Acceptance Checklist (enforced) — `.17.7` focused-index authority repair
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — on clean activation predecessor
+  `44ad589ce`, `scripts/focused_document_index.pl check` reports the byte-current
+  generated projection at 1,023 members, but `git log -S'1022 members' --
+  t/1569-focused-document-containment.t` locates the second mutable count at
+  `70ba62f35`. The registered OSVVM gallery README legitimately advanced index
+  membership after that commit, so replacing 1,022 with 1,023 would reproduce
+  the same derived-state defect.
+- [x] **ADDRESSED (verified)** — the real-index positive now requires the
+  indexer's complete anchored success record with nonzero member, line, and
+  byte fields, without embedding any current count. The separate byte-current
+  check and every generated-index stale/unclassified/duplicate/escaping/empty-
+  group and semantic-part negative remain intact.
+- [x] **NO REGRESSION** — `t/1569-focused-document-containment.t` reports
+  `syntax OK`; the focused containment/reference suite reports `All tests
+  successful` at `Files=4, Tests=36`; and the authority reports
+  `focused-document-index: current (1023 members; 1090 lines; 149801 bytes)`.
+  Task integrity, Knowledge Map, live-document containment, staged acceptance,
+  and all nine doctrines pass. No surface membership, classifier, ceiling,
+  generator, product behavior, support state, or scale claim changes.
 
 ## Acceptance Checklist (enforced) — `.17.1` scale-contract selection
 
