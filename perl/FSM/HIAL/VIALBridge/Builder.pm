@@ -18,6 +18,8 @@ use FSM::Support::HIALVIALBridgeContract qw(build_hial_vial_bridge_contract);
 
 my $SCHEMA = 'fsmgen.hial_vial_bridge_manifest.v1';
 my $PROFILE = 'core_single_unit_v1';
+my $ARCHITECTURE_SCALE_CAPABILITY =
+    'hial_vial.bridge_qualification.architecture_scale_v1';
 
 my %LIMIT = %{build_hial_vial_bridge_contract()->{limits}};
 
@@ -378,6 +380,8 @@ sub _validate_actor_and_report($actor, $report, $layer) {
     if ($layer eq 'IAL2') {
         _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation', 'IAL2 bridge route requires generated and reparsed IAL1 verification-bridge metadata', '/actor/verification_bridge')
             unless ref($actor_bridge) eq 'HASH';
+        _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation', 'architecture-scale qualification is accepted only through the direct IAL1 route', '/actor/verification_bridge/protocol')
+            if _is_architecture_scale_protocol($actor_bridge);
     }
 }
 
@@ -431,12 +435,14 @@ sub _build_semantic_model($actor, $layer, $backend_names, $sources, $artifacts) 
     my $unit_name = $actor->{actor_name};
     my $unit_id = "unit/$unit_name";
     my $bridge = ref($actor->{verification_bridge}) eq 'HASH' ? $actor->{verification_bridge} : undef;
+    my $bridge_kind = $bridge && _is_architecture_scale_protocol($bridge)
+        ? 'architecture_scale' : $bridge ? 'ahb' : 'plain';
     my $domain_name = $bridge ? $bridge->{domain} : 'default';
     my $domain_id = "domain/$domain_name";
     my (%types_by_key, @types, @endpoints);
     my $logic1 = _ensure_logic_type(\%types_by_key, \@types, 1, 0);
 
-    my %protocol_role = $bridge ? _ahb_endpoint_roles($bridge) : ();
+    my %protocol_role = $bridge_kind eq 'ahb' ? _ahb_endpoint_roles($bridge) : ();
     my @port_specs = (
         { name => $actor->{clock}, direction => 'input', width => 1, signed => 0, role => 'clock' },
         { name => $actor->{reset}{name}, direction => 'input', width => 1, signed => 0, role => 'reset' },
@@ -476,20 +482,36 @@ sub _build_semantic_model($actor, $layer, $backend_names, $sources, $artifacts) 
     @endpoints = sort { $a->{endpoint_id} cmp $b->{endpoint_id} } @endpoints;
     my %endpoint_by_name = map { $_->{name} => $_ } @endpoints;
 
-    my @configurations = _build_configurations($actor, $unit_id, \%types_by_key, \@types);
+    my @configurations = _build_configurations(
+        $actor, $unit_id, \%types_by_key, \@types, $bridge_kind,
+    );
     my @observations = _build_observations($actor, $unit_id, $domain_id, \%endpoint_by_name);
     my (@transactions, @events, @protocols, @probes, @residue);
     if ($bridge) {
-        _validate_ahb_bridge($bridge, \%endpoint_by_name, $actor);
+        if ($bridge_kind eq 'architecture_scale') {
+            _validate_architecture_scale_bridge(
+                $bridge, \%endpoint_by_name, $actor, $layer,
+            );
+        }
+        else {
+            _validate_ahb_bridge($bridge, \%endpoint_by_name, $actor);
+        }
         my $semantics = _build_bridge_semantics(
             $bridge, $actor, $unit_id, $domain_id, \%endpoint_by_name,
-            \%types_by_key, \@types, $layer,
+            \%types_by_key, \@types, $layer, $bridge_kind,
         );
         @transactions = @{$semantics->{transactions}};
         @events = @{$semantics->{events}};
         @protocols = @{$semantics->{protocols}};
         @probes = @{$semantics->{probes}};
         @residue = @{$semantics->{unsupported_residue}};
+        if ($bridge_kind eq 'architecture_scale') {
+            my $plain = _build_plain_transactions(
+                $actor, $unit_id, \%endpoint_by_name, \%types_by_key, \@types,
+            );
+            push @transactions, @{$plain->{transactions}};
+            push @events, @{$plain->{events}};
+        }
     } else {
         my $semantics = _build_plain_transactions(
             $actor, $unit_id, \%endpoint_by_name, \%types_by_key, \@types,
@@ -515,7 +537,9 @@ sub _build_semantic_model($actor, $layer, $backend_names, $sources, $artifacts) 
             : $layer eq 'IAL1' ? 'hial_vial.bridge_source.ial1'
             : 'hial_vial.bridge_source.ial2_via_generated_ial1',
         (@observations ? 'hial_vial.bridge_observation.passive_monitor' : ()),
-        (@protocols ? 'hial_vial.bridge_protocol.ahb_subordinate_v1' : ()),
+        (@protocols ? ($bridge_kind eq 'architecture_scale'
+            ? $ARCHITECTURE_SCALE_CAPABILITY
+            : 'hial_vial.bridge_protocol.ahb_subordinate_v1') : ()),
         (@probes ? 'hial_vial.bridge_probe.equivalent_adapter_required' : ()),
     );
 
@@ -588,24 +612,37 @@ sub _ensure_logic_type($by_key, $types, $width, $signed) {
     return $id;
 }
 
-sub _build_configurations($actor, $unit_id, $types_by_key, $types) {
+sub _build_configurations($actor, $unit_id, $types_by_key, $types, $bridge_kind = 'plain') {
     my @configurations;
     for my $param (@{$actor->{params} || []}) {
+        my ($width, $signed) = ($param->{width}, $param->{signed} ? 1 : 0);
+        if ($bridge_kind eq 'architecture_scale' && !defined $width) {
+            ($width, $signed) = _architecture_scale_parameter_type($param);
+        }
         _throw('HIAL_VIAL_BRIDGE_TYPE_ERROR', 'type', "configuration '$param->{name}' requires resolved scalar width and value", '/actor/params')
-            unless _is_identifier($param->{name}) && defined($param->{width}) && !ref($param->{width})
-                && "$param->{width}" =~ /\A[1-9][0-9]*\z/ && defined($param->{value}) && !ref($param->{value});
-        my $type_id = _ensure_logic_type($types_by_key, $types, $param->{width}, $param->{signed} ? 1 : 0);
+            unless _is_identifier($param->{name}) && defined($width) && !ref($width)
+                && "$width" =~ /\A[1-9][0-9]*\z/ && defined($param->{value}) && !ref($param->{value});
+        my $type_id = _ensure_logic_type($types_by_key, $types, $width, $signed);
         push @configurations, {
             configuration_id => "configuration/$param->{name}",
             unit_id => $unit_id,
             name => $param->{name},
             type_id => $type_id,
-            value => _normalized_value($type_id, $param->{width}, $param->{value}),
+            value => _normalized_value($type_id, $width, $param->{value}),
             origin => 'parameter',
             backend_binding_ids => [],
         };
     }
     return @configurations;
+}
+
+sub _architecture_scale_parameter_type($param) {
+    return unless ref($param) eq 'HASH'
+        && ($param->{name} // '') =~ /\Aconfiguration_[0-9]{8}\z/;
+    my $value = $param->{value};
+    return unless defined($value) && !ref($value)
+        && $value =~ /\A([1-9][0-9]*)'[hH][0-9a-fA-F_]+\z/;
+    return (0 + $1, 0);
 }
 
 sub _normalized_value($type_id, $width, $raw) {
@@ -722,6 +759,134 @@ sub _build_plain_transactions($actor, $unit_id, $endpoint_by_name, $types_by_key
     };
 }
 
+sub _is_architecture_scale_protocol($bridge) {
+    return ref($bridge) eq 'HASH'
+        && ref($bridge->{protocol}) eq 'HASH'
+        && ($bridge->{protocol}{name} // '') eq 'architecture_scale_probe';
+}
+
+sub _validate_architecture_scale_bridge($bridge, $endpoint_by_name, $actor, $layer) {
+    _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation', 'architecture-scale qualification is accepted only through the direct IAL1 route', '/actor/verification_bridge/protocol')
+        unless $layer eq 'IAL1';
+
+    my $protocol = $bridge->{protocol};
+    my @facts = @{$protocol->{facts} || []};
+    _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation', 'architecture-scale protocol metadata must match the closed qualification-only profile', '/actor/verification_bridge/protocol')
+        unless ($protocol->{name} // '') eq 'architecture_scale_probe'
+            && ($protocol->{profile} // '') eq 'qualification_only'
+            && ($protocol->{revision} // '') eq '1'
+            && ($protocol->{role} // '') eq 'verification'
+            && @facts == 1
+            && ($facts[0]{name} // '') eq 'scale_evidence_only'
+            && ($facts[0]{value} // '') eq 'true'
+            && ($bridge->{domain} // '') eq 'scale';
+
+    my $transaction = $bridge->{transaction};
+    my @fields = @{$transaction->{fields} || []};
+    my @events = @{$transaction->{events} || []};
+    my $anchor_endpoint = $endpoint_by_name->{scale_input};
+    _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation', 'architecture-scale bridge anchor must be one resolved one-bit input field', '/actor/verification_bridge/transaction/fields')
+        unless ref($transaction) eq 'HASH'
+            && ($transaction->{name} // '') eq 'bridge_anchor'
+            && @fields == 1
+            && ($fields[0]{name} // '') eq 'anchor'
+            && ($fields[0]{direction} // '') eq 'drive'
+            && ($fields[0]{phase_role} // '') eq 'unspecified'
+            && ref($fields[0]{source}) eq 'HASH'
+            && ($fields[0]{source}{kind} // '') eq 'endpoint'
+            && ($fields[0]{source}{name} // '') eq 'scale_input'
+            && ($fields[0]{source}{direction} // '') eq 'input'
+            && ($fields[0]{source}{width} // 0) == 1
+            && !$fields[0]{source}{signed}
+            && ref($anchor_endpoint) eq 'HASH'
+            && ($anchor_endpoint->{direction} // '') eq 'input'
+            && ($anchor_endpoint->{type_id} // '') eq _logic_type_id(1, 0);
+    _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation', 'architecture-scale bridge requires at least one generated event', '/actor/verification_bridge/transaction/events')
+        unless @events;
+    for my $index (0 .. $#events) {
+        my $event = $events[$index];
+        my $expected = sprintf('bridge_event_%08d', $index);
+        _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation', 'architecture-scale event family is not closed and ordinal', "/actor/verification_bridge/transaction/events/$index")
+            unless ($event->{name} // '') eq $expected
+                && ($event->{kind} // '') eq 'predicate'
+                && ($event->{phase} // '') eq 'sample'
+                && !ref($event->{expression})
+                && ($event->{expression} // '') eq 'scale_input';
+    }
+
+    my @probes = @{$bridge->{probes} || []};
+    _throw('HIAL_VIAL_BRIDGE_ACCESS_ERROR', 'access', 'architecture-scale bridge requires at least one storage-backed probe', '/actor/verification_bridge/probes')
+        unless @probes;
+    for my $index (0 .. $#probes) {
+        my $probe = $probes[$index];
+        my $expected = sprintf('probe_%08d', $index);
+        my $storage = _actor_storage($actor, $expected);
+        _throw('HIAL_VIAL_BRIDGE_ACCESS_ERROR', 'access', 'architecture-scale probe family is not closed, ordinal, read-only, and storage-backed', "/actor/verification_bridge/probes/$index")
+            unless ($probe->{name} // '') eq $expected
+                && ($probe->{access} // '') eq 'read_only'
+                && ref($probe->{source}) eq 'HASH'
+                && ($probe->{source}{kind} // '') eq 'storage'
+                && ($probe->{source}{name} // '') eq $expected
+                && ($probe->{source}{direction} // '') eq 'sample'
+                && ($probe->{source}{width} // 0) == 1
+                && !$probe->{source}{signed}
+                && ref($storage) eq 'HASH'
+                && ($storage->{width} // 0) == 1
+                && !$storage->{signed};
+    }
+
+    for my $index (0 .. $#{$bridge->{residues} || []}) {
+        my $expected = sprintf('retained_%08d', $index);
+        _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation', 'architecture-scale residue family is not closed and ordinal', "/actor/verification_bridge/residues/$index")
+            unless ($bridge->{residues}[$index] // '') eq $expected;
+    }
+    for my $index (0 .. $#{$actor->{params} || []}) {
+        my $expected = sprintf('configuration_%08d', $index);
+        my $param = $actor->{params}[$index];
+        _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation', 'architecture-scale configuration family is not closed and ordinal', "/actor/params/$index")
+            unless ($param->{name} // '') eq $expected
+                && defined($param->{value}) && !ref($param->{value})
+                && $param->{value} =~ /\A[1-9][0-9]*'[hH][0-9a-fA-F_]+\z/;
+    }
+    for my $index (0 .. $#{$actor->{transactions} || []}) {
+        my $expected = sprintf('transaction_%08d', $index);
+        my $transaction = $actor->{transactions}[$index];
+        my @clauses = @{$transaction->{clauses} || []};
+        _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation', 'architecture-scale ordinary transaction family is not closed and ordinal', "/actor/transactions/$index")
+            unless ($transaction->{name} // '') eq $expected
+                && @clauses == 1
+                && ref($clauses[0]) eq 'ARRAY'
+                && @{$clauses[0]} == 2
+                && ($clauses[0][0] // '') eq 'on'
+                && ($clauses[0][1] // '') eq 'scale_input';
+    }
+    for my $index (0 .. $#{$actor->{verification_observations} || []}) {
+        my $expected = sprintf('observation_%08d', $index);
+        my $observation = $actor->{verification_observations}[$index];
+        my @signals = @{$observation->{signals} || []};
+        _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation', 'architecture-scale observation family is not closed and ordinal', "/actor/verification_observations/$index")
+            unless ($observation->{name} // '') eq $expected
+                && ($observation->{role} // '') eq 'passive_monitor'
+                && @signals == 1
+                && ref($signals[0]) eq 'HASH'
+                && ($signals[0]{name} // '') eq 'scale_input';
+    }
+
+    my @inputs = @{($actor->{interface} || {})->{inputs} || []};
+    my @outputs = @{($actor->{interface} || {})->{outputs} || []};
+    _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation', 'architecture-scale interface must retain the closed scale output', '/actor/interface/outputs')
+        unless @outputs == 1
+            && ($outputs[0]{name} // '') eq 'scale_output'
+            && ($outputs[0]{width} // 0) == 1;
+    for my $index (0 .. $#inputs) {
+        my $expected = $index == 0
+            ? 'scale_input' : sprintf('endpoint_%08d', $index - 1);
+        _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation', 'architecture-scale input endpoint family is not closed and ordinal', "/actor/interface/inputs/$index")
+            unless ($inputs[$index]{name} // '') eq $expected
+                && ($inputs[$index]{width} // 0) == 1;
+    }
+}
+
 sub _ahb_endpoint_roles($bridge) {
     my %field_role = (
         address => 'address', transfer => 'transfer', write => 'write',
@@ -829,7 +994,7 @@ sub _logic_type_id($width, $signed) {
     return 'type/logic_' . ($signed ? 's' : 'u') . $width;
 }
 
-sub _build_bridge_semantics($bridge, $actor, $unit_id, $domain_id, $endpoint_by_name, $types_by_key, $types, $layer) {
+sub _build_bridge_semantics($bridge, $actor, $unit_id, $domain_id, $endpoint_by_name, $types_by_key, $types, $layer, $bridge_kind = 'ahb') {
     my $protocol_id = "protocol/$bridge->{protocol}{name}";
     my $transaction_id = "transaction/$bridge->{transaction}{name}";
     my (@fields, @events, @event_ids, @probes, @residue);
@@ -905,7 +1070,13 @@ sub _build_bridge_semantics($bridge, $actor, $unit_id, $domain_id, $endpoint_by_
     };
     my $residue_source = $layer eq 'IAL2' ? 'source/generated_ial1' : 'source/authored';
     for my $id (@{$bridge->{residues}}) {
-        my $definition = $AHB_RESIDUE{$id};
+        my $definition = $bridge_kind eq 'architecture_scale'
+            ? {
+                detail => "Architecture-scale qualification retained record $id.",
+                owner => undef,
+                required_capability => $ARCHITECTURE_SCALE_CAPABILITY,
+            }
+            : $AHB_RESIDUE{$id};
         _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation', "unknown bridge residue '$id'", '/actor/verification_bridge/residues')
             unless $definition;
         push @residue, {

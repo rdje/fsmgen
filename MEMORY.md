@@ -7,12 +7,12 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3.2`.
-- current_state: clean selection commit `9c5212cc4` fixes the closed direct-IAL1
-  qualification profile; `.17.2.3.2` alone is active for implementation.
-- next_action: implement the canonical bridge-fanout generator and exact or
-  earliest-cap manifest oracles under decision `0060`.
-- in_flight_uncommitted: `.17.2.3.2` activation continuity only.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3`.
+- current_state: `.17.2.3.1/.2` complete the closed direct-IAL1 bridge-fanout
+  route with exact/earliest-cap manifest oracles and unchanged AHB invariants.
+- next_action: activate proposed `.17.2.4` for canonical execution-graph
+  workload generation after this clean implementation commit.
+- in_flight_uncommitted: none after the `.17.2.3.2` implementation commit.
 - blockers: none.
 
 ## Durable context

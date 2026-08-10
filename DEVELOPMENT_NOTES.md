@@ -198,3 +198,19 @@ profile. Generated `.isf` must survive the ordinary parser, scheduler report,
 and `.fsm` lowering before the shipped bridge builder sees it. The AHB profile
 does not widen, and a source-map or serialized-byte cap that dominates a
 nominal structural count is reported as the result rather than bypassed.
+
+The implemented generator scales representation with reachable semantic
+records, not comments or forged reports. A baseline qualification manifest has
+221 source-map records; each configuration contributes 28 and each retained
+residue contributes five. Those measured increments permit an exact 8,192-
+record gate and exact valid 49,152/65,536 shapes. The latter two cross the
+already authoritative 16-MiB canonical-report cap, so their correct result is
+the earlier serialized rejection; 65,537 still rejects at the source-map cap.
+
+Canonical byte profiles combine real configurations, residues, observations,
+and one referenced logical width to produce exactly 1,048,576, 4,194,304, and
+16,777,216 JSON bytes. The next complete representable logical width crosses
+the cap. This calibrated construction is deliberately path-identity-sensitive:
+repository-relative authored paths participate in the report, so changing a
+path requires recalibration and the exact-byte oracle will fail rather than
+silently weakening evidence.

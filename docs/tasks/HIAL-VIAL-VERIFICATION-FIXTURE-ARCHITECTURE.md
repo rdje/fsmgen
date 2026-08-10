@@ -410,10 +410,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.2: generate canonical semantic scale workloads`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Generate bridge-fanout workloads through canonical HIAL routes with exact manifest oracles.`
   Acceptance: `Construct each bridge_fanout_v1 axis through shipped direct-IAL0/direct-IAL1 or reviewed IAL2 routing as selected; prove normalized counts, immutable IDs/data, source/review identity, complete resolution/mapping/bindings, byte-equal manifests/reports, earliest-cap diagnostics, IAL2 bypass rejection, and cleanup.`
-  Verification: `Clean semantic-family predecessor 145d3084a permits .17.2.3 alone to activate for canonical bridge-fanout construction and exact manifest oracles. Read-only implementation audit then found that decision 0055's transaction/event/probe/residue candidates are not reachable through the shipped fixed AHB annotation profile: Builder::_validate_ahb_bridge requires exactly one transaction, six events, one probe, and five residues, while an annotated actor's ordinary transactions are not projected. Child .17.2.3.1 now owns a documentation-only reachability/profile selection before separate implementation child .17.2.3.2. The parent activation changes only continuity; no builder, bridge, manifest, source route, generated artifact, capability/support classification, performance budget, or scale-capacity claim changes.`
+  Verification: `Children .17.2.3.1/.2 complete the selected bridge-fanout route. Decision 0060 reconciles the fixed AHB annotation with one closed qualification-only direct-IAL1 profile. ArchitectureScaleBridgeFanout constructs all 65 axis/level inputs as ordinary HIAL/VIAL source, and canonical evaluation proves exact or earliest-cap counts, complete maps/bindings/VIAL references, immutable byte-equal manifests/reports, the unchanged frozen AHB IAL2 route, IAL2 scale-profile rejection, deterministic reruns, and exact staging cleanup. Default and RAM-guarded exact t1602 pass; no protocol/support/performance/capacity claim is promoted.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3: activate canonical bridge-fanout generation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3.2`
 
@@ -425,11 +425,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3.1: select bridge-scale reachability contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the selected canonical bridge-fanout generator and exact manifest oracles.`
   Acceptance: `Implement only after .17.2.3.1 commits cleanly; exercise every reachable bridge_fanout_v1 axis through ordinary HIAL parsing/lowering and the shipped builder, prove the selected exact or earliest-cap outcomes, retain the AHB and IAL2 route invariants, and add focused/default/exact qualification tests plus synchronized user documentation.`
-  Verification: `Clean selection predecessor 9c5212cc4 fixes decision 0060 and permits this implementation leaf alone to activate. The selected ordinary direct-IAL1 qualification route, exact AHB/IAL2 invariants, private capability boundary, earliest-cap truth, and support/performance/capacity nonclaims are the implementation constraints. No generator, parser, scheduler, builder, manifest, capability, support, performance, or scale behavior changes in this activation.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3.2: activate canonical bridge-fanout implementation`
+  Verification: `All 65 closed HIAL/VIAL constructions traverse ordinary parse/report/lower/Builder authority. Oracles prove exact or earliest-cap counts, unique IDs, total maps, closed bindings and checked VIAL references, immutable deterministic reports, review routes, and cleanup. Serialized reports are exactly 1/4/16 MiB; source-map gate is exactly 8,192, with larger valid shapes stopping at the earlier byte cap and 65,537 rejecting. Scale IAL2 fails closed and frozen AHB SHA-256 remains a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca. Default/exact t1602 pass at Files=1/Tests=5 in 17/122 seconds; adjacent t1551/t1600/t1601 pass at Files=3/Tests=17. Synced durable layers and final gates preserve all public support/performance/capacity nonclaims.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3.2: generate canonical bridge-fanout scale workloads`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4`
   Status: `proposed`
@@ -1006,6 +1006,7 @@ defect before `.17.2.2` begins semantic-family generation.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-10` | `.17.2.3.2` canonical bridge-fanout generation | closed generated HIAL/VIAL producer; ordinary parse/report/lower/Builder route; 13 axes/five levels; exact count/map/binding/reference/manifest/determinism oracles; exact 1/4/16-MiB reports; earlier-cap truth; frozen AHB/IAL2 invariant and scale-bypass rejection; staging cleanup; default/exact/adjacent regression; contract/book/card/rationale/task/Memory continuity; staged acceptance/doctrines and artifact census | `passed`; default t1602 Files=1/Tests=5 in 17 seconds, final RAM-guarded exact t1602 Files=1/Tests=5 in 122 seconds, and adjacent t1551/t1600/t1601 Files=3/Tests=17. Source-map gate is exactly 8,192; its higher valid profiles stop at the earlier serialized cap; serialized reports are exactly 1,048,576/4,194,304/16,777,216 bytes. The AHB report SHA-256 remains `a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca`; no public support/performance/capacity claim changes. |
 | `2026-08-10` | `.17.2.3.2` activation | clean selection predecessor `9c5212cc4`; decision `0060`; exact route/nonclaim boundary; task/index/Memory continuity; task-tree, relative-path, diff, and staged-doctrine gates | `passed`; `.17.2.3.2` alone is active for canonical bridge-fanout implementation. Generator, parser, scheduler, builder, manifest, capability/support, performance, and scale behavior remain unchanged. |
 | `2026-08-10` | `.17.2.3.1` bridge-scale reachability selection | exact history `51434a2ae`/`0516f2c66`; parser/builder/contract source audit; real ordinary IAL1 parse/scheduler-report/lower probe; decision `0060`; task/index/contract/book/fact/rationale/Memory/containment continuity; task-tree, Knowledge Map, documentation, mdBook, relative-path, diff, and staged-doctrine gates | `passed`; one closed `qualification_only` direct-IAL1 profile is selected for `.17.2.3.2` implementation, with private scale-evidence capability and earliest-cap authority. Task integrity reports three trees/934 nodes; Knowledge Map reports 1,106 facts/5,733 questions/5,899 occurrences/119 shards; documentation reports Files=8/Tests=89; all 52 chapters test; and the inspected repository-local build contains 88 files/18,396,279 bytes before exact removal. The exact AHB and IAL2 routes, product code, support classification, performance budgets, and all capacity nonclaims remain unchanged. |
 | `2026-08-10` | `.17.2.3.1` activation after reachability audit | clean parent activation `4a6e5f6de`; implementation/contract/history audit across decisions `0035`/`0055`, the IAL1 annotation parser, bridge builder, manifest contract, and t1551; task/index/Memory continuity; task-tree, relative-path, diff, and staged-doctrine gates | `passed`; the exact fixed-AHB/candidate mismatch is durably isolated before code. `.17.2.3.1` alone is active to select the repair; `.17.2.3.2` remains proposed. No parser, scheduler, builder, manifest, route, artifact, capability/support, performance-budget, or capacity behavior changes. |
@@ -1076,6 +1077,29 @@ defect before `.17.2.2` begins semantic-family generation.
 | `2026-08-09` | `.15.7` activation | clean `.15.6` predecessor `4f350f29c`; task/index/audit/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook test; live-reference authority; diff/staged-doctrine gates | `passed`; `.15.7` alone is active for combined exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT qualification. Both inputs remain repository-local; task integrity reports three active trees/916 nodes, Knowledge Map remains 1,105 facts/5,713 questions/5,879 occurrences/118 shards, all 52 mdBook chapters test, and maintained-reference authority accepts the exact 0-file/0-line/+16-byte delta. Activation changes no source, generated artifact, qualification evidence, capability, runtime result, or support behavior. |
 | `2026-08-09` | `.15.7` exact combined qualification | exact GHDL archive/binary and recursive OSVVM identities; 44-core/17-Common ordered provider compilation; adapter/generated-fixture/probe analysis; fixture/probe elaboration and double execution; 42-record trace/result validation; 19-path portable parity; four deterministic OSVVM reports; bounded support/capability truth; same-volume cleanup; focused/corpus/capability/gallery/docs/task/Knowledge Map/mdBook/staged-doctrine gates | `passed`; `vhdl_osvvm_qualified` is bounded-qualified under exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT. Six adapter mappings execute in the probe; the Common address-bus mapping is analysis-only. OSVVM reports record three clean affirmations, 25% one-of-four-bin/25% coverage, and one checked scoreboard item with zero errors, while portable trace/result/parity remain authoritative. Broader provider/language/tool/profile claims remain explicit non-claims. |
 | `2026-08-10` | `.17` selection/activation | clean predecessor `6d23b5843`; mixed-language command/provider census; decisions 0032/0051; five-leaf scale decomposition; task/index/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook build; relative paths; live-reference authority; diff/staged-doctrine gates; exact cleanup | `passed`; `.16` remains proposed because no compatible mixed-language runtime is available, and `.17.1` alone is active for documentation-only scale-contract selection. Task integrity reports three active trees/921 nodes; Knowledge Map reports 1,105 facts/5,723 questions/5,889 occurrences/118 shards; the book shrinks by 34 lines/2,676 bytes while replacing stale chronology with current capability and scale boundaries; generated output is removed. No product behavior or scale claim changes. |
+
+## Acceptance Checklist (enforced) — `.17.2.3.2` canonical bridge-fanout generation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_validate_ahb_bridge'` locates
+  fixed AHB origin `51434a2ae`; `git log -S'bridge_fanout_v1'` locates later
+  scale selection `0516f2c66` without a reachable producer. Decision `0060`
+  selects the repair. Real-Builder calibration also proves that valid
+  49,152/65,536 source-map shapes reach the 16-MiB report cap first.
+- [x] **ADDRESSED (verified)** — `ArchitectureScaleBridgeFanout` generates all
+  65 axis/level inputs as ordinary HIAL/VIAL source and evaluates them only
+  through parse, scheduler report, IAL0 lowering, and Builder. Oracles cover
+  exact/earliest-cap counts, unique IDs, total maps, closed bindings and VIAL
+  references, immutable byte-equal reports, deterministic reruns, route
+  layers, IAL2 rejection, and cleanup. Serialized reports are exactly
+  1/4/16 MiB and source-map gate is exactly 8,192 records.
+- [x] **NO REGRESSION** — Default t1602 reports `Files=1, Tests=5` in 17
+  seconds; the final RAM-guarded exact matrix reports `Files=1, Tests=5` in 122
+  seconds; adjacent t1551/t1600/t1601 report `Files=3, Tests=17`. The frozen
+  AHB report remains SHA-256
+  `a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca`.
+  Documentation, mdBook, Knowledge Map, task integrity, staged acceptance,
+  doctrines, and residue checks complete in the commit workflow; support,
+  performance, and capacity claims remain unchanged.
 
 ## Acceptance Checklist (enforced) — `.17.2.3.1` reachability selection
 

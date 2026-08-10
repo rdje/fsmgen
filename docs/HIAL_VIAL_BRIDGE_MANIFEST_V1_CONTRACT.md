@@ -2,7 +2,7 @@
 
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4`
-Status: implemented privately in-process by completed `.5`; decision `0060` selects a later qualification-only direct-IAL1 scale profile without changing the AHB carrier contract
+Status: private `.5` contract plus `.17.2.3.2` scale profile; AHB unchanged
 
 ## Outcome
 
@@ -28,16 +28,15 @@ profiles until later owners qualify them.
 
 ### Selected scale-profile boundary
 
-Decision `0060` records that the fixed AHB annotation cannot honestly exercise
-the manifest's broader transaction/event/probe/residue safety caps. It selects
-one closed `qualification_only` direct-IAL1 annotation profile for later
-`.17.2.3.2` implementation. That profile must traverse ordinary `.isf` parse,
-scheduler-report, `.fsm` lowering, and bridge-builder authorities; it cannot
-accept caller-created actors, reports, or manifests. It advertises only
-`hial_vial.bridge_qualification.architecture_scale_v1` and cannot become an
-accepted protocol, backend/runtime path, support classification, performance
-budget, or capacity claim. The exact AHB route and IAL2 review constraint are
-unchanged.
+Decision `0060` preserves fixed AHB and selects a closed `qualification_only`
+direct-IAL1 profile. `.17.2.3.2` implements it through ordinary parse, report,
+lowering, and Builder authority without caller-created IR. It advertises only
+`hial_vial.bridge_qualification.architecture_scale_v1`, rejects IAL2, and
+keeps the AHB report byte-identical.
+
+All 13 axes use semantic records, total maps, and closed bindings. Reports
+reach exactly 1/4/16 MiB; an earlier byte cap remains authoritative. Proof is
+`t/1602-vial-architecture-scale-bridge-fanout.t`. No public claim follows.
 
 ## Canonical Review Routes
 
@@ -483,12 +482,13 @@ hial_vial.bridge_source.ial1
 hial_vial.bridge_source.ial2_via_generated_ial1
 hial_vial.bridge_observation.passive_monitor
 hial_vial.bridge_protocol.ahb_subordinate_v1
+hial_vial.bridge_qualification.architecture_scale_v1
 hial_vial.bridge_probe.equivalent_adapter_required
 ```
 
-Only capabilities exercised by a manifest are present. The last three are
-conditional on observation, AHB, and probe records. Backend execution
-capabilities remain absent.
+Only capabilities exercised by a manifest are present. Observation, AHB,
+architecture-scale qualification, and probe capabilities are conditional on
+their exact records/profile. Backend execution capabilities remain absent.
 
 ### Unsupported residue and source maps
 

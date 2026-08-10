@@ -2144,6 +2144,85 @@ repeat qualification candidate and 1,000,000 repeat boundary are recorded as
 honest earlier-cap rejections; decision `0059` routes any policy repair to
 `.17.4`. No candidate or boundary is a capacity/support claim.
 
+### Canonical bridge-fanout generation
+
+`FSM::VIAL::ArchitectureScaleBridgeFanout` now constructs all 13
+`bridge_fanout_v1` axes at all five selected levels. Candidate source is an
+ordinary generated `.isf` actor plus one checked `.vial` fixture. The evaluator
+parses the actor, obtains its scheduler report, lowers it to reviewable `.fsm`,
+and calls the shipped direct-IAL1 bridge builder. It cannot accept a caller-
+created actor, schedule report, manifest, or bridge report.
+
+The private annotation is closed to this exact identity:
+
+```lisp
+(protocol architecture_scale_probe
+  (profile qualification_only)
+  (revision 1)
+  (role verification)
+  (facts (fact scale_evidence_only true)))
+```
+
+It publishes only
+`hial_vial.bridge_qualification.architecture_scale_v1`. Attempting to carry
+that annotation through the IAL2 route fails with
+`HIAL_VIAL_BRIDGE_ANNOTATION_ERROR`; the checked AHB IAL2-via-IAL1 report stays
+byte-identical. Every accepted candidate records exactly the `IAL1 -> IAL0`
+review route, while the AHB reference records `IAL2 -> IAL1 -> IAL0`.
+
+The generator uses reachable semantic structure for each axis: parameters for
+configurations and distinct logical widths, public inputs for endpoints,
+ordinary transactions, annotation events, passive observations, storage-
+backed probes, retained residue, and exact target-name bindings. Source maps
+are total and one-to-one, every backend binding resolves to a semantic ID, and
+all checked VIAL unit/domain/endpoint/probe/transaction references resolve by
+ID, access, and type. Independent construction and bridge passes must produce
+byte-equal reports and immutable-manifest projections.
+
+This repository-root-relative example evaluates the 256-event gate candidate:
+
+```perl
+use FSM::VIAL::ArchitectureScaleBridgeFanout;
+
+my $workload = FSM::VIAL::ArchitectureScaleBridgeFanout->construct({
+    primary_axis => 'events',
+    level => 'gate_candidate_v1',
+    reference_hial_text => undef,
+    reference_vial_text => undef,
+});
+die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+
+my $evaluation = FSM::VIAL::ArchitectureScaleBridgeFanout->evaluate({
+    construction => $workload,
+});
+die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+die "unexpected event count\n" unless $evaluation->{metrics}{events} == 256;
+```
+
+Representation-derived profiles are exact rather than padded. The serialized-
+manifest axis produces canonical reports of exactly 1 MiB, 4 MiB, and 16 MiB;
+the first complete valid wider type above 16 MiB is rejected. The source-map
+gate produces exactly 8,192 mapped facts. Its 49,152-record qualification and
+65,536-record limit shapes honestly stop at the earlier 16-MiB serialized-
+manifest cap, while the 65,537-record excess stops at the source-map cap. These
+are successful oracle outcomes, not successful product workloads.
+
+The default test covers the frozen AHB reference and every gate axis. The full
+qualification/boundary/excess matrix is explicit and RAM-guarded:
+
+```text
+prove -Iperl t/1602-vial-architecture-scale-bridge-fanout.t
+
+FSMGEN_VIAL_SCALE_EXACT=1 scripts/run_with_ram_guard.sh -- \
+  prove -Iperl t/1602-vial-architecture-scale-bridge-fanout.t
+```
+
+Both generated inputs use repository-relative identities and can be staged
+only below the shared repository-derived VIAL-scale staging root. Success and
+consumer failure remove the exact owned tree. None of this evidence promotes
+a protocol, public embedding API, backend/runtime support state, performance
+budget, or whole-product capacity.
+
 For example, the scenario-count axis holds the source/bridge/checking anchor
 fixed and requests 32 scenarios for the gate candidate, 512 for qualification,
 4,096 at the declared plan limit, and 4,097 for deterministic rejection. Every

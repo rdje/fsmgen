@@ -11,11 +11,13 @@ answers:
   - "does the HIAL VIAL bridge expose hierarchy?"
   - "does the HIAL VIAL bridge bind VIAL yet?"
   - "what does core_single_unit_v1 mean?"
+  - "how does the architecture scale bridge fanout generator work?"
+  - "which bridge scale limits are reached exactly?"
 date: 2026-07-31
 status: current
-tags: [hial, vial, bridge, manifest, ial0, ial1, ial2, review-route, provenance, ahb]
+tags: [hial, vial, bridge, manifest, ial0, ial1, ial2, review-route, provenance, ahb, scale]
 evidence: docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md; docs/decisions/0060-vial-bridge-scale-uses-a-qualification-only-direct-ial1-profile.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/book/src/16d-hial-vial-verification-architecture.md
-reverify: prove -Iperl t/1551-hial-vial-bridge-manifest.t && rg -n 'core_single_unit_v1|direct_ial2_to_verification|verification-bridge|transaction/ahb_write|probe/reg_data_q|semantic_path|shipped_private_in_process|authoritative hardware carriers|decision `0037`|\.7\.3' perl/FSM/HIAL/VIALBridge/Builder.pm perl/FSM/Support/HIALVIALBridgeContract.pm docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
+reverify: prove -Iperl t/1551-hial-vial-bridge-manifest.t t/1602-vial-architecture-scale-bridge-fanout.t && rg -n 'core_single_unit_v1|direct_ial2_to_verification|verification-bridge|architecture_scale_probe|transaction/ahb_write|probe/reg_data_q|semantic_path|shipped_private_in_process' perl/FSM/HIAL/VIALBridge/Builder.pm perl/FSM/VIAL/ArchitectureScaleBridgeFanout.pm perl/FSM/Support/HIALVIALBridgeContract.pm docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md
 ---
 
 Decision `0035` selects `fsmgen.hial_vial_bridge_manifest.v1` with initial
@@ -50,3 +52,12 @@ Decision `0060` preserves the exact AHB profile and selects one separate
 parse, report, lowering, and builder authorities and advertises only private
 scale evidence—not protocol support, performance, or capacity. Earlier
 source-map/manifest limits remain authoritative.
+
+Completed `.17.2.3.2` implements that closed profile and all 13
+`bridge_fanout_v1` axes through generated source. Default proof exercises the
+frozen AHB reference plus every gate axis; explicit RAM-guarded proof covers
+qualification, exact boundaries, and excess. Canonical serialized manifests
+reach exactly 1 MiB, 4 MiB, and 16 MiB. The source-map gate reaches 8,192
+records, while its larger valid shapes stop honestly at the earlier 16-MiB
+manifest cap. Scale IAL2 bypass is rejected, direct-IAL1 reports retain
+`IAL1 -> IAL0`, and the AHB report identity remains unchanged.

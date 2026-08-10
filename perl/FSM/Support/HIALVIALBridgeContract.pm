@@ -59,6 +59,7 @@ sub build_hial_vial_bridge_contract {
             hial_vial.bridge_probe.equivalent_adapter_required
             hial_vial.bridge_profile.core_single_unit_v1
             hial_vial.bridge_protocol.ahb_subordinate_v1
+            hial_vial.bridge_qualification.architecture_scale_v1
             hial_vial.bridge_source.ial0
             hial_vial.bridge_source.ial1
             hial_vial.bridge_source.ial2_via_generated_ial1
