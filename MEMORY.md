@@ -7,15 +7,15 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.1`.
-- current_state: clean activation `49b6e1ba4`; `.17.2.1` implementation and
-  decision `0057` are complete under verification. A pre-existing public
-  ArtifactTransaction cleanup defect is tracked separately as proposed `.17.9`.
-- next_action: verify and commit `.17.2.1`, then activate `.17.9` from the clean
-  foundation commit before `.17.2.2` semantic-family generation.
-- in_flight_uncommitted: workload foundation module/test, decision/book/task/
-  fact/Memory sync, and maintained-reference authority; no background job or
-  generated residue.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.9`.
+- current_state: clean foundation commit `063b990f3` completes `.17.2.1`;
+  `.17.9` is active for the independently reproduced public
+  ArtifactTransaction failed-stage cleanup defect.
+- next_action: commit the continuity-only activation, then repair the one
+  File::Path error collector and add the forced-failure cleanup regression
+  before `.17.2.2` semantic-family generation.
+- in_flight_uncommitted: `.17.9` task/index/fact/Memory activation only; no
+  implementation change, background job, or generated residue.
 - blockers: none.
 
 ## Durable context

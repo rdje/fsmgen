@@ -220,8 +220,8 @@ aligns the public support snapshot with the Runner/normative 8-MiB compile and
 64-MiB runtime capture limits. Completed `.17.8` records that current authority.
 Decision `0057` and completed `.17.2.1` ship a bounded source-only catalog,
 identity, seeded payload, and same-volume staging/cleanup foundation without a
-capacity claim. `.17.9` repairs an adjacent pre-existing cleanup defect before
-`.17.2.2` generates semantic-family workloads.
+capacity claim. Active `.17.9` repairs the pre-existing cleanup defect before
+`.17.2.2` semantic generation.
 
 Decision `0050` and completed `.12` select IEEE 1800.2-2020 with exact
 Accellera UVM 2020-3.1 tag/commit as the native methodology source. Commercial
