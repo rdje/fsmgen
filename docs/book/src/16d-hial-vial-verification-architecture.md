@@ -2489,8 +2489,8 @@ scenario, operation, and root/live fiber, eight normalized types, 22 bindings,
 and 19 maps: the 17 fixed checked-AHB maps plus one operation map and one
 decision map. Independent identities, public capability isolation, replay-
 attempt mutation, source mutation, missing checked source, and unfinished-level
-rejection are regression-locked. The exact 16-MiB plan-byte boundary, higher
-random levels, final qualification, and any capacity claim remain unfinished.
+rejection are regression-locked. The plan-byte one-over proof, higher random
+levels, final qualification, and any capacity claim remain unfinished.
 
 The first serialized-plan byte gate now reaches exactly one MiB through the
 same checked-AHB source and public binder. It authors 2,974 real reset actions,
@@ -2580,8 +2580,56 @@ and canonical SHA-256
 The checked-AHB bridge remains byte-identical to the one-MiB gate. Independent
 construction, every reset successor, every source span, the public capability
 boundary, post-identity mutation rejection, missing checked source, and the
-still-unimplemented limit level are regression-locked. This is qualification
+still-unimplemented over-limit level are regression-locked. This is qualification
 construction evidence, not a promoted support or capacity claim.
+
+The limit recipe reaches exactly sixteen MiB without changing the binder or
+its declared byte ceiling. It authors 48,850 genuine resets under one scenario
+whose referenced semantic suffix has the selected 106 characters. Endpoint
+`ready_out_q` remains sampled by coverpoint `ready_sampled`; bin `asserted1`
+names the genuine value-one match. The compact repository-relative source route
+is `generated/vial-scale/execution_graph/p16m.vial`. Its 587,422-byte VIAL
+source is one semantic form plus its newline, with no comments, blank data,
+path inflation, caller-created plan, or opaque padding.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+open my $fh, '<:raw', 'ppif/ahb_lite_subordinate.ppif'
+    or die "cannot read checked AHB source: $!";
+local $/;
+my $checked_ahb = <$fh>;
+close $fh or die "cannot close checked AHB source: $!";
+
+my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+    primary_axis => 'serialized_plan_bytes',
+    level => 'limit_v1',
+    reference_hial_text => $checked_ahb,
+});
+die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+
+my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+    construction => $workload,
+});
+die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+die "unexpected limit plan\n"
+    unless $evaluation->{metrics}{serialized_plan_bytes} == 16_777_216
+        && $evaluation->{metrics}{expanded_operations_total} == 48_850
+        && $evaluation->{metrics}{source_map_records} == 48_867;
+```
+
+The plan has ID
+`plan/0709d0c4d1432a218a0f26d9cce0c2b308d2f6fcf95f008bf6ceb65b15dc1e64`
+and canonical SHA-256
+`0fcf9649c03cf53745842ed4161d42ced9030df297a30a894b56e9ba3448b98e`.
+It retains one scenario/root/live fiber, 22 bindings, seven execution types,
+six bridge events, and 48,867 unique source maps. The checked-AHB bridge remains
+508,968 bytes and byte-identical to the smaller exact plans. Independent
+construction, the complete reset successor chain, source spans, public
+capability isolation, hostile-input rejection, missing checked source, and the
+still-unimplemented first complete over-limit operation are regression-locked.
+This exact limit is construction evidence, not promoted scale support or a
+performance budget.
 
 The reachability audit selects these outcomes before generator implementation:
 

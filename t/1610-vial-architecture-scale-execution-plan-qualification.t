@@ -277,12 +277,12 @@ subtest 'four-MiB qualification rejects mutation and unfinished levels' => sub {
     my $unfinished = eval {
         $class->construct({
             primary_axis => 'serialized_plan_bytes',
-            level => 'limit_v1',
+            level => 'over_limit_v1',
             reference_hial_text => $reference_hial,
         });
         1;
     };
-    ok(!$unfinished, 'limit plan level cannot enter the implemented slice');
+    ok(!$unfinished, 'over-limit plan level cannot enter the implemented slice');
     like($@, qr/execution-graph gate slice does not own the requested shape/,
         'unfinished-level rejection names the bounded frontier');
 };

@@ -77,6 +77,22 @@ my %PLAN_BYTE_RECIPES = (
         bin_name => 'asserted',
         domain_name => 'b',
     },
+    16_777_216 => {
+        level => 'limit_v1',
+        operation_count => 48_850,
+        source => 'generated/vial-scale/execution_graph/p16m.vial',
+        fixture_name => 'limit_plan',
+        scenario_stem => 'sg',
+        scenario_suffix =>
+            '_exact_sixteen_mib_execution_plan_limit_with_referenced_checked_ahb_resets_and_ready_out_coverpoint_signal',
+        scenario_suffix_length => 106,
+        endpoint_stem => 'ready_out',
+        endpoint_suffix => '_q',
+        endpoint_suffix_length => 2,
+        coverpoint_name => 'ready_sampled',
+        bin_name => 'asserted1',
+        domain_name => 'b',
+    },
 );
 my @CHECKED_AHB_FIXED_SOURCE_MAP_PATHS = (
     '/bindings/domains/0',
@@ -112,7 +128,8 @@ sub construct($class, @args) {
     );
     my $owned_level = defined($level) && $level eq 'gate_candidate_v1';
     $owned_level = 1 if defined($axis) && $axis eq 'serialized_plan_bytes'
-        && defined($level) && $level eq 'qualification_candidate_v1';
+        && defined($level) && ($level eq 'qualification_candidate_v1'
+            || $level eq 'limit_v1');
     confess "execution-graph gate slice does not own the requested shape\n"
         unless defined($axis) && $owned_axis{$axis} && $owned_level;
     my $axis_contract = FSM::VIAL::ArchitectureScaleWorkload->catalog

@@ -17,13 +17,15 @@ use FSM::VIAL::ArchitectureScaleExecutionGraph;
 my $class = 'FSM::VIAL::ArchitectureScaleExecutionGraph';
 my $json = JSON::PP->new->canonical(1)->utf8(1);
 my $reference_hial = slurp_raw(repo_path('ppif/ahb_lite_subordinate.ppif'));
-my $scenario_suffix = '_exact_mib_serialized_execution_plan_gate';
+my $scenario_suffix =
+    '_exact_sixteen_mib_execution_plan_limit_with_referenced_checked_ahb_resets_and_ready_out_coverpoint_signal';
 my $endpoint_suffix = '_q';
 my $scenario_name = 'sg' . $scenario_suffix;
-my $fixture_id = 'architecture_scale_execution::fixture::p';
+my $fixture_id = 'architecture_scale_execution::fixture::limit_plan';
 my $scenario_id = "$fixture_id\::scenario\::$scenario_name";
-my $endpoint_id = "$fixture_id\::endpoint\::r$endpoint_suffix";
-my $coverpoint_id = "$fixture_id\::coverpoint\::c";
+my $domain_id = "$fixture_id\::domain\::b";
+my $endpoint_id = "$fixture_id\::endpoint\::ready_out$endpoint_suffix";
+my $coverpoint_id = "$fixture_id\::coverpoint\::ready_sampled";
 my @fixed_map_paths = (
     '/bindings/domains/0',
     map("/bindings/endpoints/$_/relations/0", 0 .. 2),
@@ -32,53 +34,53 @@ my @fixed_map_paths = (
     map("/bindings/events/$_", 0 .. 5),
 );
 my %expected = (
-    plan_bytes => 1_048_576,
-    operations => 2_974,
+    plan_bytes => 16_777_216,
+    operations => 48_850,
     scenarios => 1,
     fibers => 1,
     live_fibers => 1,
-    source_maps => 2_991,
+    source_maps => 48_867,
     bindings => 22,
     execution_events => 6,
     execution_types => 7,
     hial_bytes => 1_326,
-    vial_bytes => 42_760,
+    vial_bytes => 587_422,
     bridge_bytes => 508_968,
     workload_identity =>
-        'workload/11902a20b3b496810fe90fc260a85ea33e10764e4f76875ffa2970d5e63dee85',
+        'workload/5d5d752208dca0a09ba9a6896289f4baba86f4f88a72f0b0ba6858cc259c2c64',
     hial_sha256 =>
         '9a1d7a591d3ec9a3419b07f05bc83aefa2b213b2cae45f5332f9349ffa27056c',
     vial_sha256 =>
-        '0c8ff492f74afab2ce64d4941d569c6e7682c97f0031772b9494e4dd61186b46',
+        'edd4efc53d2c5c6788b6841feaeed9770d77338893eec2377f5a44071b4f5025',
     semantic_sha256 =>
-        '8a3beae388259682feefbf0231570106f5b84db546d11b0778bb4cd0a7b0a6a6',
+        'b975faf98dab3c03c7fdfe6414d227e58848d307f087294e5d564044fab402db',
     bridge_sha256 =>
         'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',
     plan_id =>
-        'plan/ee10e4a5749a4398b9e62d5a1624d24c74e585459afd57f8cb7503306545c035',
+        'plan/0709d0c4d1432a218a0f26d9cce0c2b308d2f6fcf95f008bf6ceb65b15dc1e64',
     plan_sha256 =>
-        '15106539d198cc3a3df2cfc73c87a7f8039cda02a9327f151bec196228a258be',
+        '0fcf9649c03cf53745842ed4161d42ced9030df297a30a894b56e9ba3448b98e',
 );
 
 sub construction {
     return $class->construct({
         primary_axis => 'serialized_plan_bytes',
-        level => 'gate_candidate_v1',
+        level => 'limit_v1',
         reference_hial_text => $reference_hial,
     });
 }
 
-subtest 'one-MiB construction is canonical referenced source' => sub {
+subtest 'sixteen-MiB construction is canonical referenced source' => sub {
     my $first = construction();
     my $second = construction();
-    ok($first->{ok}, 'serialized-plan gate constructs through the workload contract');
+    ok($first->{ok}, 'limit construction satisfies the workload contract');
     diag($json->encode($first->{diagnostics})) unless $first->{ok};
     is($json->encode($second), $json->encode($first),
-        'independent serialized-plan construction is byte-identical');
+        'independent limit construction is byte-identical');
     is($first->{specification}{requested_counts}{serialized_plan_bytes},
-        $expected{plan_bytes}, 'construction retains the exact one-MiB request');
+        $expected{plan_bytes}, 'construction retains the exact sixteen-MiB request');
     is($first->{workload_identity}, $expected{workload_identity},
-        'construction identity is exact');
+        'limit construction identity is exact');
 
     my %input = map { $_->{role} => $_ } @{$first->{inputs}};
     is_deeply([sort keys %input], [qw(hial_source vial_source)],
@@ -88,35 +90,35 @@ subtest 'one-MiB construction is canonical referenced source' => sub {
     is(sha256_hex($input{hial_source}{content}), $expected{hial_sha256},
         'checked-AHB source identity is frozen');
     is($input{vial_source}{relative_path},
-        'generated/vial-scale/execution_graph/plan_bytes.vial',
-        'generated source uses the bounded semantic plan-byte route');
+        'generated/vial-scale/execution_graph/p16m.vial',
+        'generated source uses the bounded limit route');
     is(bytes::length($input{vial_source}{content}), $expected{vial_bytes},
-        'generated VIAL byte count is exact');
+        'generated limit VIAL byte count is exact');
     is(sha256_hex($input{vial_source}{content}), $expected{vial_sha256},
-        'generated VIAL identity is frozen');
-    is(scalar(() = $input{vial_source}{content} =~ /\(reset bus 1\)/g),
-        $expected{operations}, 'source contains exactly 2,974 real resets');
-    is(length($scenario_suffix), 41,
-        'scenario identifier has the selected 41-character semantic suffix');
+        'generated limit VIAL identity is frozen');
+    is(scalar(() = $input{vial_source}{content} =~ /\(reset b 1\)/g),
+        $expected{operations}, 'source contains exactly 48,850 real resets');
+    is(length($scenario_suffix), 106,
+        'scenario identifier has the selected 106-character semantic suffix');
     is(length($endpoint_suffix), 2,
         'endpoint identifier has the selected two-character semantic suffix');
     is(scalar(() = $input{vial_source}{content} =~ /\Q$scenario_name\E/g), 1,
         'scenario suffix occurs only on the selected scenario identifier');
     like($input{vial_source}{content},
-        qr{\(endpoint r_q "endpoint/HREADYOUT" \(logic 1\) public_port\)},
-        'bounded endpoint alias binds the genuine checked-AHB carrier');
+        qr{\(endpoint ready_out_q "endpoint/HREADYOUT" \(logic 1\) public_port\)},
+        'limit endpoint alias binds the genuine checked-AHB carrier');
     like($input{vial_source}{content},
-        qr{\(coverpoint c \(sample bus\) \(expr \(sample r_q\)\) \(bins \(bin asserted normal \(value #b1\)\)\)\)},
-        'one genuine coverpoint references the bounded endpoint alias');
+        qr{\(coverpoint ready_sampled \(sample b\) \(expr \(sample ready_out_q\)\) \(bins \(bin asserted1 normal \(value #b1\)\)\)\)},
+        'one genuine coverpoint references the limit endpoint alias');
     is(scalar(() = $input{vial_source}{content} =~ /\n/g), 1,
         'source is one semantic form plus its terminating newline');
     unlike($input{vial_source}{content}, qr/\n\n|\/\*|\*\/|;/,
         'source contains no blank-data or comment padding');
 };
 
-subtest 'public binder closes the exact semantic plan boundary' => sub {
+subtest 'public binder closes the sixteen-MiB semantic boundary' => sub {
     my $built = $class->build({construction => construction()});
-    ok($built->{ok}, 'one-MiB plan builds through the public binder');
+    ok($built->{ok}, 'sixteen-MiB plan builds through the public binder');
     diag($json->encode($built->{diagnostics})) unless $built->{ok};
     my $ir = $built->{execution_ir}->as_hashref;
     my $graph = $ir->{operation_graph};
@@ -125,13 +127,13 @@ subtest 'public binder closes the exact semantic plan boundary' => sub {
     my $plan_json = $json->encode($built->{plan});
 
     is(bytes::length($plan_json), $expected{plan_bytes},
-        'canonical serialized plan is exactly 1,048,576 bytes');
+        'canonical serialized plan is exactly 16,777,216 bytes');
     is(sha256_hex($plan_json), $expected{plan_sha256},
-        'canonical plan hash is exact');
+        'canonical limit plan hash is exact');
     is($built->{plan}{plan_id}, $expected{plan_id},
-        'content-derived plan identity is exact');
+        'content-derived limit plan identity is exact');
     is($graph->{total_operation_count}, $expected{operations},
-        'plan contains exactly 2,974 genuine operations');
+        'plan contains exactly 48,850 genuine operations');
     is($graph->{total_fiber_count}, $expected{fibers},
         'plan contains one root fiber');
     is($graph->{maximum_simultaneous_live_fibers}, $expected{live_fibers},
@@ -139,9 +141,11 @@ subtest 'public binder closes the exact semantic plan boundary' => sub {
     is(scalar(@{$ir->{scenarios}}), $expected{scenarios},
         'plan contains one scenario');
     is($scenario->{scenario_id}, $scenario_id,
-        'scenario retains the bounded semantic identifier');
+        'scenario retains the limit semantic identifier');
+    is($scenario->{domain_id}, $domain_id,
+        'scenario retains the compact checked-AHB domain alias');
     is_deeply($scenario->{plan_summary}{coverpoint_ids}, [$coverpoint_id],
-        'scenario references the exact coverpoint');
+        'scenario references the exact limit coverpoint');
     is($coverpoint->{semantic_id}, $coverpoint_id,
         'coverpoint identity is exact');
     is($coverpoint->{expression}{semantic_id}, $endpoint_id,
@@ -149,6 +153,8 @@ subtest 'public binder closes the exact semantic plan boundary' => sub {
     is($coverpoint->{expression}{binding_id},
         "binding/$fixture_id/endpoint/HREADYOUT",
         'coverpoint reference resolves the real HREADYOUT binding');
+    is($coverpoint->{bins}[0]{name}, 'asserted1',
+        'coverpoint retains the meaningful asserted-one bin name');
     is_deeply(
         $coverpoint->{bins}[0]{matcher}{value},
         {
@@ -174,7 +180,7 @@ subtest 'public binder closes the exact semantic plan boundary' => sub {
     my %by_plan_path;
     push @{$by_plan_path{$_->{plan_path}}}, $_ for @{$ir->{source_map}};
     is(scalar(@{$ir->{source_map}}), $expected{source_maps},
-        '2,974 operation maps plus 17 checked-AHB maps are exact');
+        '48,850 operation maps plus 17 checked-AHB maps are exact');
     is(scalar(keys %by_plan_path), $expected{source_maps},
         'every source map owns one unique plan path');
     my @observed_fixed = sort grep {
@@ -185,9 +191,9 @@ subtest 'public binder closes the exact semantic plan boundary' => sub {
     ok(!scalar(grep {
         @{$_->{source_locations}} != 1
             || $_->{source_locations}[0]{source_name}
-                ne 'generated/vial-scale/execution_graph/plan_bytes.vial'
+                ne 'generated/vial-scale/execution_graph/p16m.vial'
     } @{$ir->{source_map}}),
-        'every semantic record resolves the bounded generated source path');
+        'every semantic record resolves the bounded limit source path');
 
     my %capability = map { $_->{capability_id} => $_ }
         @{$built->{plan}{capability_ledger}};
@@ -197,15 +203,15 @@ subtest 'public binder closes the exact semantic plan boundary' => sub {
         'plan does not admit private scale capability');
     unlike($plan_json,
         qr/(?:systemverilog|\buvm\b|\bvhdl\b|target_name|build_phase|objection)/i,
-        'exact plan remains target-neutral');
+        'exact limit plan remains target-neutral');
 };
 
-subtest 'one-MiB evaluation freezes exact metrics and identities' => sub {
+subtest 'sixteen-MiB evaluation freezes exact metrics and identities' => sub {
     my $evaluation = $class->evaluate({construction => construction()});
-    ok($evaluation->{ok}, 'one-MiB gate passes every closed oracle');
+    ok($evaluation->{ok}, 'sixteen-MiB limit passes every closed oracle');
     diag($json->encode($evaluation->{diagnostics})) unless $evaluation->{ok};
     is($evaluation->{metrics}{serialized_plan_bytes}, $expected{plan_bytes},
-        'evaluation freezes the exact one-MiB boundary');
+        'evaluation freezes the exact sixteen-MiB boundary');
     is($evaluation->{metrics}{expanded_operations_per_scenario},
         $expected{operations}, 'evaluation freezes per-scenario operations');
     is($evaluation->{metrics}{expanded_operations_total}, $expected{operations},
@@ -214,8 +220,8 @@ subtest 'one-MiB evaluation freezes exact metrics and identities' => sub {
         'evaluation freezes scenario isolation');
     is($evaluation->{metrics}{total_fibers}, $expected{fibers},
         'evaluation freezes total fibers');
-    is($evaluation->{metrics}{simultaneous_live_fibers}, $expected{live_fibers},
-        'evaluation freezes simultaneous liveness');
+    is($evaluation->{metrics}{simultaneous_live_fibers},
+        $expected{live_fibers}, 'evaluation freezes simultaneous liveness');
     is($evaluation->{metrics}{source_map_records}, $expected{source_maps},
         'evaluation freezes exact source-map count');
     is($evaluation->{metrics}{bindings}, $expected{bindings},
@@ -225,7 +231,7 @@ subtest 'one-MiB evaluation freezes exact metrics and identities' => sub {
     is($evaluation->{metrics}{execution_types}, $expected{execution_types},
         'evaluation freezes checked-AHB types');
     is($evaluation->{metrics}{random_occurrences}, 0,
-        'plan-byte recipe adds no random occurrence');
+        'limit recipe adds no random occurrence');
     is($evaluation->{metrics}{serialized_bridge_manifest_bytes},
         $expected{bridge_bytes}, 'evaluation freezes canonical bridge bytes');
     is($evaluation->{semantic_ir_sha256}, $expected{semantic_sha256},
@@ -235,10 +241,10 @@ subtest 'one-MiB evaluation freezes exact metrics and identities' => sub {
     is($evaluation->{plan_sha256}, $expected{plan_sha256},
         'plan identity is exact');
     is_deeply($evaluation->{contract_discrepancies}, [],
-        'plan-byte gate has no selected contract discrepancy');
+        'limit construction has no selected contract discrepancy');
 };
 
-subtest 'plan-byte gate rejects mutation and unfinished levels' => sub {
+subtest 'sixteen-MiB limit rejects mutation and unfinished over-limit' => sub {
     my $forged = clone_json(construction());
     my ($vial) = grep { $_->{role} eq 'vial_source' } @{$forged->{inputs}};
     $vial->{content} .= ' ';
@@ -251,7 +257,8 @@ subtest 'plan-byte gate rejects mutation and unfinished levels' => sub {
     my ($unreferenced_vial) = grep {
         $_->{role} eq 'vial_source'
     } @{$unreferenced->{inputs}};
-    $unreferenced_vial->{content} =~ s/\(expr \(sample r_q\)\)/(expr #b1)/;
+    $unreferenced_vial->{content}
+        =~ s/\(expr \(sample ready_out_q\)\)/(expr #b1)/;
     my $referenced = eval { $class->build({construction => $unreferenced}); 1 };
     ok(!$referenced, 'removing the endpoint reference fails closed');
     like($@, qr/construction is not canonical/,
@@ -260,11 +267,11 @@ subtest 'plan-byte gate rejects mutation and unfinished levels' => sub {
     my $missing = eval {
         $class->construct({
             primary_axis => 'serialized_plan_bytes',
-            level => 'gate_candidate_v1',
+            level => 'limit_v1',
         });
         1;
     };
-    ok(!$missing, 'plan-byte gate requires the frozen checked-AHB source');
+    ok(!$missing, 'limit construction requires the frozen checked-AHB source');
     like($@, qr/checked-AHB reference text is required/,
         'missing-source rejection names checked-AHB authority');
 
@@ -276,7 +283,7 @@ subtest 'plan-byte gate rejects mutation and unfinished levels' => sub {
         });
         1;
     };
-    ok(!$unfinished, 'over-limit plan level cannot enter the implemented slice');
+    ok(!$unfinished, 'over-limit plan cannot enter the implemented slice');
     like($@, qr/execution-graph gate slice does not own the requested shape/,
         'unfinished-level rejection names the bounded frontier');
 };

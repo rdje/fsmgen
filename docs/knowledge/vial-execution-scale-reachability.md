@@ -16,6 +16,7 @@ answers:
   - "how does the VIAL execution gate prove exactly 8192 random attempts and replay equality?"
   - "how does the VIAL execution gate produce an exact one MiB semantic plan?"
   - "how does the VIAL execution qualification produce an exact four MiB semantic plan?"
+  - "how does the VIAL execution limit produce an exact sixteen MiB semantic plan?"
 date: 2026-08-10
 status: current
 tags: [vial, execution-ir, scale, binder, bridge, random, replay, plan, limits]
@@ -32,6 +33,7 @@ evidence: >-
   t/1608-vial-architecture-scale-execution-random-replay.t;
   t/1609-vial-architecture-scale-execution-plan-bytes.t;
   t/1610-vial-architecture-scale-execution-plan-qualification.t;
+  t/1611-vial-architecture-scale-execution-plan-limit.t;
   vial/qualification/vhdl_portable_ghdl/ghdl-6.0.0-qualification.json; vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
   prove -Iperl t/1552-vial-execution-ir.t
@@ -42,7 +44,8 @@ reverify: >-
   t/1607-vial-architecture-scale-execution-source-maps.t
   t/1608-vial-architecture-scale-execution-random-replay.t
   t/1609-vial-architecture-scale-execution-plan-bytes.t
-  t/1610-vial-architecture-scale-execution-plan-qualification.t &&
+  t/1610-vial-architecture-scale-execution-plan-qualification.t
+  t/1611-vial-architecture-scale-execution-plan-limit.t &&
   rg -n 'selected_scenarios|expanded_operations_per_scenario|expanded_operations_total|total_fibers|simultaneous_live_fibers|bindings|execution_types|source_map_records|random_attempts|serialized_plan_bytes'
   perl/FSM/Support/VIALExecutionContract.pm perl/FSM/VIAL/ExecutionBuilder.pm
   docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md
@@ -160,6 +163,20 @@ It contains one scenario/root/live fiber, seven types, 22 bindings, six events,
 and 12,183 unique maps. Exact source, SemanticIR, unchanged bridge, workload,
 and plan identities plus hostile-input rejection are frozen.
 
+The ninth slice reaches the exact sixteen-MiB limit through the same route and
+public binder. It authors 48,850 real resets under one referenced
+106-character scenario suffix. Endpoint `ready_out_q` remains used by
+coverpoint `ready_sampled`; bin `asserted1` names the genuine value-one match.
+The repository-relative source route is `generated/vial-scale/execution_graph/p16m.vial`;
+the one-line VIAL source is 587,422 bytes. The canonical plan is exactly
+16,777,216 bytes with ID
+`plan/0709d0c4d1432a218a0f26d9cce0c2b308d2f6fcf95f008bf6ceb65b15dc1e64`
+and SHA-256
+`0fcf9649c03cf53745842ed4161d42ced9030df297a30a894b56e9ba3448b98e`.
+It contains one scenario/root/live fiber, seven types, 22 bindings, six events,
+and 48,867 unique maps. Exact identities, reset topology, source spans, public
+capability isolation, and hostile-input rejection are frozen.
+
 The nominal execution limits are not all reachable. Scenarios and
 simultaneously live fibers reach their exact 4,096 and 16,384 limits. Operations
 per scenario, total operations, total fibers, and source maps encounter the
@@ -175,9 +192,8 @@ the candidate at zero-based attempt `N - 1`. Attempts 8,192, 262,144, and
 attempt exactly.
 
 The AHB plan-byte recipes use real reset operations and referenced semantic
-identifiers. The one-MiB gate and four-MiB qualification are now implemented;
-the selected 16,777,216-byte recipe and its first complete over-limit operation
-remain unfinished. These are construction/boundary facts only. `.17.2.4.2`
-remains active for the exact limit plan, higher random levels, final
-qualification, and cleanup; no scale capacity is supported until later
-measurement and promotion.
+identifiers. The exact one-/four-/sixteen-MiB gate, qualification, and limit are
+now implemented; the first complete over-limit operation remains unfinished.
+These are construction/boundary facts only. `.17.2.4.2` remains active for that
+stable rejection, higher random levels, final qualification, and cleanup; no
+scale capacity is supported until later measurement and promotion.
