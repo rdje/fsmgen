@@ -18,6 +18,7 @@ use FSM::HIAL::VIALBridge::Builder;
 use FSM::Scheduler::ISF;
 use FSM::VIAL::ArchitectureScaleWorkload;
 use FSM::VIAL::ExecutionBuilder;
+use FSM::VIAL::ExecutionRandom;
 use FSM::VIAL::Parser;
 
 my $FAMILY = 'execution_graph_v1';
@@ -31,6 +32,18 @@ my $EVALUATION_SCHEMA = 'fsmgen.vial_architecture_scale_execution_evaluation.v1'
 my $EXECUTION_PROFILE = 'core_directed_single_clock_execution_v1';
 my $ARCHITECTURE_SCALE_CAPABILITY =
     'hial_vial.bridge_qualification.architecture_scale_v1';
+my $RANDOM_SEED = 1701;
+my $RANDOM_DECISION_ID = 'scale.random_attempt';
+my $RANDOM_FIXTURE_ID =
+    'architecture_scale_execution::fixture::execution_gate';
+my $RANDOM_SCENARIO_ID =
+    $RANDOM_FIXTURE_ID . '::scenario::scenario_00000000';
+my $RANDOM_CHOICE_ID = $RANDOM_FIXTURE_ID . '::choice::attempt_target';
+my $RANDOM_OCCURRENCE_ID = join('/',
+    'decision',
+    $RANDOM_FIXTURE_ID, $RANDOM_SCENARIO_ID, $RANDOM_DECISION_ID, 0,
+);
+my $U64_MAX = '18446744073709551615';
 my @CHECKED_AHB_FIXED_SOURCE_MAP_PATHS = (
     '/bindings/domains/0',
     map("/bindings/endpoints/$_/relations/0", 0 .. 2),
@@ -61,7 +74,7 @@ sub construct($class, @args) {
     my %owned_axis = map { $_ => 1 } qw(
         bindings scenarios operations_per_scenario operations_total
         fibers_total simultaneously_live_fibers execution_types
-        source_map_records
+        source_map_records random_attempts
     );
     confess "execution-graph gate slice does not own the requested shape\n"
         unless defined($axis) && $owned_axis{$axis}
@@ -151,6 +164,16 @@ sub evaluate($class, @args) {
     ) unless $second->{ok}
         && $canonical->encode($second->{plan}) eq $canonical->encode($first->{plan});
 
+    my $replayed;
+    if ($spec->{primary_axis} eq 'random_attempts') {
+        $replayed = eval { _build_replay_execution($inputs, $first->{plan}) };
+        push @oracle_errors, _oracle_error(
+            'VIAL_SCALE_EXECUTION_REPLAY_ERROR',
+            'strict replay construction did not return one accepted plan',
+            '/replay',
+        ) unless $replayed && $replayed->{ok};
+    }
+
     my $ir = $first->{execution_ir}->as_hashref;
     my $plan_json = $canonical->encode($first->{plan});
     my $semantic = $inputs->{semantic_ir}->as_hashref;
@@ -158,7 +181,7 @@ sub evaluate($class, @args) {
     my $observed_bindings = $ir->{resource_summary}{bindings};
     my $event_count = scalar(@{$ir->{bindings}{events}});
     push @oracle_errors, _axis_oracle_errors(
-        $spec, $construction, $ir, $first->{plan}, $inputs,
+        $spec, $construction, $ir, $first->{plan}, $inputs, $replayed,
     );
     push @oracle_errors, _oracle_error(
         'VIAL_SCALE_EXECUTION_TARGET_ERROR',
@@ -188,6 +211,8 @@ sub evaluate($class, @args) {
             simultaneous_live_fibers =>
                 0 + $ir->{operation_graph}{maximum_simultaneous_live_fibers},
             source_map_records => scalar(@{$ir->{source_map}}),
+            random_occurrences => scalar(@{$ir->{randomness}{decisions}}),
+            random_attempts => _maximum_random_attempts($ir),
             serialized_bridge_manifest_bytes =>
                 bytes::length($canonical->encode($manifest)),
             serialized_plan_bytes => bytes::length($plan_json),
@@ -328,6 +353,42 @@ sub _build_execution($inputs) {
     return FSM::VIAL::ExecutionBuilder->build($inputs->{arguments});
 }
 
+sub _build_replay_execution($inputs, $plan) {
+    confess "private qualification does not own execution replay\n"
+        if $inputs->{private_qualification};
+    my @decisions = @{$plan->{random_decisions} || []};
+    confess "execution replay requires at least one generated decision\n"
+        unless @decisions;
+    my @decision_keys = qw(
+        occurrence_id declaration_semantic_id decision_id scenario_id algorithm
+        seed type_id distribution value attempt
+    );
+    my $replay = {
+        schema => 'fsmgen.vial_replay.v1',
+        schema_version => 1,
+        replay_id => undef,
+        semantic_ir_id => $plan->{semantic_identity}{semantic_ir_id},
+        bridge_manifest_id => $plan->{bridge_identity}{manifest_id},
+        fixture_id => $plan->{fixture}{fixture_id},
+        scenario_ids => _clone($plan->{fixture}{scenario_ids}),
+        algorithm => $decisions[0]{algorithm},
+        decisions => [map {
+            my $decision = $_;
+            +{map { $_ => _clone($decision->{$_}) } @decision_keys}
+        } @decisions],
+    };
+    my $digest = _clone($replay);
+    delete $digest->{replay_id};
+    my $canonical = JSON::PP->new->canonical(1)->utf8(1);
+    $replay->{replay_id} = 'replay/' . sha256_hex($canonical->encode($digest));
+
+    my %arguments = %{$inputs->{arguments}};
+    $arguments{scenario_ids} = _clone($inputs->{arguments}{scenario_ids});
+    $arguments{native_extension_catalog} = [];
+    $arguments{replay_manifest} = $replay;
+    return FSM::VIAL::ExecutionBuilder->build(\%arguments);
+}
+
 sub _validated_construction($raw) {
     confess "construction must be one unblessed hash\n"
         unless ref($raw) eq 'HASH' && !blessed($raw);
@@ -457,7 +518,9 @@ sub _render_type_vial($type_count) {
 }
 
 sub _render_ahb_vial($axis, $requested_count) {
-    my ($scenario_count, $operations_per_scenario, @scenario_actions);
+    my ($scenario_count, $operations_per_scenario, $scenario_timeout_cycles,
+        @scenario_actions);
+    my $randomness = '(randomness (seed 1701))';
     if ($axis eq 'scenarios') {
         ($scenario_count, $operations_per_scenario) = ($requested_count, 1);
     }
@@ -485,6 +548,22 @@ sub _render_ahb_vial($axis, $requested_count) {
         $scenario_count = 1;
         $operations_per_scenario = $requested_count - $fixed_count;
     }
+    elsif ($axis eq 'random_attempts') {
+        my $target = _random_target_candidate($requested_count);
+        $scenario_count = 1;
+        $scenario_timeout_cycles = 2;
+        @scenario_actions = (
+            '(expect selected_random_attempt '
+                . '(value_eq (choice attempt_target) ' . $target . '))',
+        );
+        $randomness = join('',
+            '(randomness (seed ', $RANDOM_SEED, ')',
+            ' (choice attempt_target (u 64)',
+            ' (decision_id "', $RANDOM_DECISION_ID, '")',
+            ' (distribution (uniform 0 ', $U64_MAX, '))',
+            ' (constraints (value_eq (choice attempt_target) ', $target, '))))',
+        );
+    }
     else {
         confess "checked-AHB renderer does not own axis '$axis'\n";
     }
@@ -495,9 +574,11 @@ sub _render_ahb_vial($axis, $requested_count) {
         my @steps = @scenario_actions
             ? @scenario_actions
             : ('(reset bus 1)') x $operations_per_scenario;
-        my $timeout_cycles = @scenario_actions
-            ? $requested_count + 1
-            : $operations_per_scenario + 1;
+        my $timeout_cycles = defined($scenario_timeout_cycles)
+            ? $scenario_timeout_cycles
+            : @scenario_actions
+                ? $requested_count + 1
+                : $operations_per_scenario + 1;
         push @scenarios, join('',
             '(scenario ', $name,
             ' (timeout (cycles bus ', $timeout_cycles, '))',
@@ -535,10 +616,32 @@ sub _render_ahb_vial($axis, $requested_count) {
         ' (instances)',
         ' (coverage)',
         ' (faults)',
-        ' (randomness (seed 1701))',
+        ' ', $randomness,
         ' (scenarios ', join(' ', @scenarios), ')))))',
         "\n",
     );
+}
+
+sub _random_target_candidate($attempt_count) {
+    confess "random-attempt gate requires an integer within the shipped attempt limit\n"
+        unless defined($attempt_count) && !ref($attempt_count)
+            && $attempt_count =~ /\A[1-9][0-9]*\z/
+            && $attempt_count <= 1_000_000;
+    my $proposal_index = 0;
+    my $generated = FSM::VIAL::ExecutionRandom->generate({
+        width => 64,
+        seed => $RANDOM_SEED,
+        occurrence_id => $RANDOM_OCCURRENCE_ID,
+        low => 0,
+        high => $U64_MAX,
+        max_attempts => $attempt_count,
+        accept => sub($proposal) {
+            return $proposal_index++ == $attempt_count - 1;
+        },
+    });
+    confess "random-attempt target generation did not reach its exact proposal\n"
+        unless $generated && $generated->{attempt} == $attempt_count - 1;
+    return $generated->{value}->bstr;
 }
 
 sub _total_fiber_actions($requested_count) {
@@ -616,7 +719,7 @@ sub _validate_reference_hial($text) {
         unless sha256_hex($text) eq $REFERENCE_HIAL_SHA256;
 }
 
-sub _axis_oracle_errors($spec, $construction, $ir, $plan, $inputs) {
+sub _axis_oracle_errors($spec, $construction, $ir, $plan, $inputs, $replayed) {
     my @errors;
     my $axis = $spec->{primary_axis};
     my $ledger = $plan->{capability_ledger};
@@ -756,6 +859,14 @@ sub _axis_oracle_errors($spec, $construction, $ir, $plan, $inputs) {
         return @errors;
     }
 
+    if ($axis eq 'random_attempts') {
+        push @errors, _random_attempt_oracle_errors(
+            $ir, $plan, $replayed, $requested,
+        );
+        push @errors, _topology_oracle_errors($ir, 'forward_chain');
+        return @errors;
+    }
+
     if ($axis eq 'fibers_total' || $axis eq 'simultaneously_live_fibers') {
         my $observed = $axis eq 'fibers_total'
             ? $ir->{operation_graph}{total_fiber_count}
@@ -800,6 +911,136 @@ sub _axis_oracle_errors($spec, $construction, $ir, $plan, $inputs) {
 
     push @errors, _topology_oracle_errors($ir, 'reset_chain');
     return @errors;
+}
+
+sub _random_attempt_oracle_errors($ir, $plan, $replayed, $requested) {
+    my @errors;
+    my $canonical = JSON::PP->new->canonical(1)->utf8(1);
+    my $target = _random_target_candidate($requested);
+    my $decisions = $plan->{random_decisions};
+    my $decision = ref($decisions) eq 'ARRAY' && @$decisions == 1
+        ? $decisions->[0]
+        : undef;
+    my $operation = @{$ir->{operation_graph}{operations}} == 1
+        ? $ir->{operation_graph}{operations}[0]
+        : undef;
+    my @references = $operation
+        ? _decision_references($operation->{typed_inputs})
+        : ();
+    my @decision_maps = grep {
+        ($_->{plan_path} // '') =~ m{\A/random_decisions/}
+    } @{$ir->{source_map}};
+    my $expected_value = $decision
+        ? FSM::VIAL::ExecutionRandom->normalized_scalar(
+            $target, $decision->{type_id}, 'two_state', 0, 64,
+        )
+        : undef;
+    my $expected_distribution = $decision
+        ? {
+            kind => 'uniform',
+            low => FSM::VIAL::ExecutionRandom->normalized_scalar(
+                0, $decision->{type_id}, 'two_state', 0, 64,
+            ),
+            high => FSM::VIAL::ExecutionRandom->normalized_scalar(
+                $U64_MAX, $decision->{type_id}, 'two_state', 0, 64,
+            ),
+        }
+        : undef;
+    my ($u64_type) = grep {
+        ($_->{semantic_type}{kind} // '') eq 'scalar'
+            && ($_->{semantic_type}{family} // '') eq 'u'
+            && ($_->{semantic_type}{width} // 0) == 64
+            && !($_->{semantic_type}{signed} // 0)
+            && ($_->{semantic_type}{state_domain} // '') eq 'two_state'
+    } @{$ir->{type_table}};
+    my $generated_closed = $decision
+        && ($decision->{occurrence_id} // '') eq $RANDOM_OCCURRENCE_ID
+        && ($decision->{declaration_semantic_id} // '') eq $RANDOM_CHOICE_ID
+        && ($decision->{decision_id} // '') eq $RANDOM_DECISION_ID
+        && ($decision->{scenario_id} // '') eq $RANDOM_SCENARIO_ID
+        && ($decision->{algorithm} // '') eq 'sha256_counter_rejection_v1'
+        && ($decision->{seed} // -1) == $RANDOM_SEED
+        && ($decision->{attempt} // -1) == $requested - 1
+        && ($decision->{origin} // '') eq 'generated'
+        && $canonical->encode($decision->{value})
+            eq $canonical->encode($expected_value)
+        && $canonical->encode($decision->{distribution})
+            eq $canonical->encode($expected_distribution)
+        && @{$ir->{type_table}} == 8
+        && $u64_type
+        && ($u64_type->{type_id} // '') eq ($decision->{type_id} // '')
+        && join("\0", @{$u64_type->{semantic_ids} || []}) eq $RANDOM_CHOICE_ID
+        && !@{$u64_type->{carrier_type_ids} || []}
+        && @{$decision->{reference_operation_ids} || []} == 1
+        && $operation
+        && $decision->{reference_operation_ids}[0] eq $operation->{operation_id}
+        && ($operation->{kind} // '') eq 'expect'
+        && ($operation->{eligible_phase} // '') eq 'check'
+        && @references == 1
+        && ($references[0]{occurrence_id} // '') eq $RANDOM_OCCURRENCE_ID
+        && $canonical->encode($references[0]{value})
+            eq $canonical->encode($expected_value)
+        && $ir->{resource_summary}{random_occurrences} == 1
+        && @{$ir->{scenarios}} == 1
+        && join("\0", @{$ir->{scenarios}[0]{plan_summary}{decision_occurrence_ids} || []})
+            eq $RANDOM_OCCURRENCE_ID
+        && @decision_maps == 1
+        && ($decision_maps[0]{plan_path} // '') eq '/random_decisions/0'
+        && ($decision_maps[0]{semantic_path} // '')
+            eq '/packages/0/fixtures/0/randomness/choices/0'
+        && !@{$decision_maps[0]{bridge_fact_paths} || []}
+        && @{$decision_maps[0]{source_locations} || []} == 1
+        && ($decision_maps[0]{source_locations}[0]{source_name} // '')
+            eq $VIAL_SOURCE
+        && ($decision_maps[0]{source_locations}[0]{start_line} // 0) == 1
+        && ($decision_maps[0]{source_locations}[0]{end_line} // 0) == 1
+        && ($decision_maps[0]{source_locations}[0]{end_byte_exclusive} // -1)
+            > ($decision_maps[0]{source_locations}[0]{start_byte} // -1);
+
+    my $replay_closed = $replayed && $replayed->{ok}
+        && ref($replayed->{plan}{random_decisions}) eq 'ARRAY'
+        && @{$replayed->{plan}{random_decisions}} == 1;
+    if ($replay_closed) {
+        my $generated_decision = _clone($decision);
+        my $replayed_decision = _clone($replayed->{plan}{random_decisions}[0]);
+        $replay_closed = 0 unless ($replayed_decision->{origin} // '') eq 'replayed';
+        delete $generated_decision->{origin};
+        delete $replayed_decision->{origin};
+        $replay_closed = 0 unless $canonical->encode($generated_decision)
+            eq $canonical->encode($replayed_decision);
+
+        my $generated_plan = _clone($plan);
+        my $replayed_plan = _clone($replayed->{plan});
+        delete $generated_plan->{plan_id};
+        delete $replayed_plan->{plan_id};
+        $generated_plan->{random_decisions}[0]{origin} = 'replayed';
+        $replay_closed = 0 unless $canonical->encode($generated_plan)
+            eq $canonical->encode($replayed_plan);
+    }
+
+    push @errors, _oracle_error(
+        'VIAL_SCALE_EXECUTION_RANDOM_ERROR',
+        'random-attempt gate did not preserve its exact candidate, attempt, operation, and source-map closure',
+        '/random_decisions/0',
+    ) unless $generated_closed;
+    push @errors, _oracle_error(
+        'VIAL_SCALE_EXECUTION_REPLAY_ERROR',
+        'generated and replayed decisions differ beyond the selected origin field',
+        '/replay/random_decisions/0',
+    ) unless $replay_closed;
+    return @errors;
+}
+
+sub _decision_references($value) {
+    return () unless defined $value;
+    return map { _decision_references($_) } @$value if ref($value) eq 'ARRAY';
+    if (ref($value) eq 'HASH') {
+        my @own = ($value->{kind} // '') eq 'decision_reference'
+            ? ($value)
+            : ();
+        return (@own, map { _decision_references($value->{$_}) } sort keys %$value);
+    }
+    return ();
 }
 
 sub _source_map_oracle_errors($ir, $requested) {
@@ -986,7 +1227,9 @@ sub _topology_oracle_errors($ir, $mode) {
             next unless $entry;
             my $expected_phase = ($entry->{kind} // '') eq 'reset'
                 ? 'drive'
-                : ($entry->{kind} // '') eq 'parallel' ? 'react' : undef;
+                : ($entry->{kind} // '') eq 'parallel'
+                    ? 'react'
+                    : ($entry->{kind} // '') eq 'expect' ? 'check' : undef;
             $chain_ok = 0 unless defined($expected_phase)
                 && ($entry->{eligible_phase} // '') eq $expected_phase;
             if ($mode eq 'reset_chain') {
@@ -1037,6 +1280,17 @@ sub _maximum_operation_count($ir) {
     for my $scenario (@{$ir->{scenarios}}) {
         my $count = 0 + $scenario->{plan_summary}{operation_count};
         $maximum = $count if $count > $maximum;
+    }
+    return $maximum;
+}
+
+sub _maximum_random_attempts($ir) {
+    my @decisions = @{$ir->{randomness}{decisions} || []};
+    return 0 unless @decisions;
+    my $maximum = 0;
+    for my $decision (@decisions) {
+        my $attempts = ($decision->{attempt} // -1) + 1;
+        $maximum = $attempts if $attempts > $maximum;
     }
     return $maximum;
 }

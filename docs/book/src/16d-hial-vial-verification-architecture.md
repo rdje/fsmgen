@@ -2444,8 +2444,53 @@ is 508,968 bytes, and the deterministic plan is 2,949,646 bytes. Exact source,
 SemanticIR, bridge, workload, and plan identities are regression-locked. The
 public AHB capability remains present, the private scale capability remains
 absent, and mutation, missing checked source, or an unfinished level fails
-closed. Random/replay, exact plan-byte boundaries, higher levels, and final
-scale qualification remain unfinished and make no capacity claim.
+closed.
+
+The random-attempt gate also uses the frozen checked-AHB route, but isolates the
+primary axis to one referenced two-state `u64` choice. Its uniform distribution
+covers `0..2^64-1`; an authored equality constraint selects decimal
+`9053010565424434193` (`0x7da2c124f3fb4c11`), the deterministic proposal at
+zero-based attempt 8,191. One real `expect` operation references that choice in
+the portable `check` phase, so the decision cannot be optimized away or counted
+without executable semantics.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+open my $fh, '<:raw', 'ppif/ahb_lite_subordinate.ppif'
+    or die "cannot read checked AHB source: $!";
+local $/;
+my $checked_ahb = <$fh>;
+close $fh or die "cannot close checked AHB source: $!";
+
+my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+    primary_axis => 'random_attempts',
+    level => 'gate_candidate_v1',
+    reference_hial_text => $checked_ahb,
+});
+die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+
+my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+    construction => $workload,
+});
+die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+die "unexpected random construction\n"
+    unless $evaluation->{metrics}{random_attempts} == 8_192
+        && $evaluation->{metrics}{random_occurrences} == 1;
+```
+
+Evaluation performs two independent generated builds and a strict
+`fsmgen.vial_replay.v1` build through the unchanged public binder. Generated
+and replayed decision records are byte-equal after removing `origin`; the only
+permitted values are `generated` and `replayed`. The derived plan identity also
+changes, while every other plan field is equal. The generated/replayed plans
+are exactly 34,295/34,294 canonical bytes. The execution graph contains one
+scenario, operation, and root/live fiber, eight normalized types, 22 bindings,
+and 19 maps: the 17 fixed checked-AHB maps plus one operation map and one
+decision map. Independent identities, public capability isolation, replay-
+attempt mutation, source mutation, missing checked source, and unfinished-level
+rejection are regression-locked. Exact plan-byte boundaries, higher random
+levels, final qualification, and any capacity claim remain unfinished.
 
 The reachability audit selects these outcomes before generator implementation:
 
