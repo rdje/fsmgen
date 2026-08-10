@@ -47,8 +47,9 @@ my $U64_MAX = '18446744073709551615';
 # These compact stems and descriptive suffixes are referenced semantic names;
 # none is an unreferenced payload or serialized-plan padding field.
 my %PLAN_BYTE_RECIPES = (
-    1_048_576 => {
+    gate_candidate_v1 => {
         level => 'gate_candidate_v1',
+        serialized_plan_bytes => 1_048_576,
         operation_count => 2_974,
         source => 'generated/vial-scale/execution_graph/plan_bytes.vial',
         fixture_name => 'p',
@@ -62,8 +63,9 @@ my %PLAN_BYTE_RECIPES = (
         bin_name => 'asserted',
         domain_name => 'bus',
     },
-    4_194_304 => {
+    qualification_candidate_v1 => {
         level => 'qualification_candidate_v1',
+        serialized_plan_bytes => 4_194_304,
         operation_count => 12_166,
         source => 'generated/vial-scale/execution_graph/plan_4m.vial',
         fixture_name => 'qualify_plan',
@@ -77,9 +79,32 @@ my %PLAN_BYTE_RECIPES = (
         bin_name => 'asserted',
         domain_name => 'b',
     },
-    16_777_216 => {
+    limit_v1 => {
         level => 'limit_v1',
+        serialized_plan_bytes => 16_777_216,
         operation_count => 48_850,
+        source => 'generated/vial-scale/execution_graph/p16m.vial',
+        fixture_name => 'limit_plan',
+        scenario_stem => 'sg',
+        scenario_suffix =>
+            '_exact_sixteen_mib_execution_plan_limit_with_referenced_checked_ahb_resets_and_ready_out_coverpoint_signal',
+        scenario_suffix_length => 106,
+        endpoint_stem => 'ready_out',
+        endpoint_suffix => '_q',
+        endpoint_suffix_length => 2,
+        coverpoint_name => 'ready_sampled',
+        bin_name => 'asserted1',
+        domain_name => 'b',
+    },
+    over_limit_v1 => {
+        level => 'over_limit_v1',
+        minimum_bytes => 16_777_217,
+        declared_cap_bytes => 16_777_216,
+        operation_count => 48_851,
+        # Holding every other referenced value fixed makes the source delta
+        # exactly one complete reset record. The boundary plan's timeout is
+        # already sufficient for the additional one-cycle operation.
+        timeout_cycles => 48_851,
         source => 'generated/vial-scale/execution_graph/p16m.vial',
         fixture_name => 'limit_plan',
         scenario_stem => 'sg',
@@ -129,12 +154,15 @@ sub construct($class, @args) {
     my $owned_level = defined($level) && $level eq 'gate_candidate_v1';
     $owned_level = 1 if defined($axis) && $axis eq 'serialized_plan_bytes'
         && defined($level) && ($level eq 'qualification_candidate_v1'
-            || $level eq 'limit_v1');
+            || $level eq 'limit_v1' || $level eq 'over_limit_v1');
     confess "execution-graph gate slice does not own the requested shape\n"
         unless defined($axis) && $owned_axis{$axis} && $owned_level;
     my $axis_contract = FSM::VIAL::ArchitectureScaleWorkload->catalog
         ->{families}{$FAMILY}{axes}{$axis};
     my $requested = $axis_contract->{levels}{$level};
+    my $plan_byte_recipe = $axis eq 'serialized_plan_bytes'
+        ? _plan_byte_recipe($level, $requested)
+        : undef;
     my $inputs;
     if ($axis eq 'bindings') {
         confess "reference_hial_text is accepted only for checked-AHB execution gates\n"
@@ -171,10 +199,12 @@ sub construct($class, @args) {
             ),
             _input(
                 $axis eq 'serialized_plan_bytes'
-                    ? _plan_byte_recipe($requested->{$axis})->{source}
+                    ? $plan_byte_recipe->{source}
                     : $VIAL_SOURCE,
                 'vial_source',
-                _render_ahb_vial($axis, $requested->{$axis}),
+                _render_ahb_vial(
+                    $axis, $requested->{$axis}, $plan_byte_recipe,
+                ),
             ),
         ];
     }
@@ -209,6 +239,8 @@ sub evaluate($class, @args) {
     my $first = _build_execution($inputs);
     return _rejected_evaluation($construction, $first->{diagnostics})
         unless $first->{ok};
+    return _unexpected_over_limit_acceptance($construction, $inputs, $first)
+        if _expects_plan_byte_rejection($spec);
 
     my @oracle_errors;
     my $canonical = JSON::PP->new->canonical(1)->utf8(1);
@@ -573,15 +605,30 @@ sub _render_type_vial($type_count) {
     );
 }
 
-sub _plan_byte_recipe($requested_bytes) {
+sub _plan_byte_recipe($level, $requested) {
     confess "serialized-plan slice does not own the requested byte boundary\n"
-        unless defined($requested_bytes) && !ref($requested_bytes)
-            && $requested_bytes =~ /\A[1-9][0-9]*\z/
-            && exists $PLAN_BYTE_RECIPES{$requested_bytes};
-    return $PLAN_BYTE_RECIPES{$requested_bytes};
+        unless defined($level) && !ref($level)
+            && exists($PLAN_BYTE_RECIPES{$level})
+            && ref($requested) eq 'HASH' && !blessed($requested);
+    my $recipe = $PLAN_BYTE_RECIPES{$level};
+    if ($level eq 'over_limit_v1') {
+        confess "serialized-plan over-limit contract changed\n"
+            unless ($requested->{minimum_bytes} // 0)
+                    == $recipe->{minimum_bytes}
+                && ($requested->{declared_cap_bytes} // 0)
+                    == $recipe->{declared_cap_bytes}
+                && ($requested->{construction_rule} // '')
+                    eq 'first_complete_valid_record_over_boundary';
+    }
+    else {
+        confess "serialized-plan byte boundary changed\n"
+            unless ($requested->{serialized_plan_bytes} // 0)
+                == $recipe->{serialized_plan_bytes};
+    }
+    return $recipe;
 }
 
-sub _render_ahb_vial($axis, $requested_count) {
+sub _render_ahb_vial($axis, $requested_count, $plan_byte_recipe = undef) {
     my ($scenario_count, $operations_per_scenario, $scenario_timeout_cycles,
         @scenario_actions);
     my $randomness = '(randomness (seed 1701))';
@@ -638,9 +685,10 @@ sub _render_ahb_vial($axis, $requested_count) {
         );
     }
     elsif ($axis eq 'serialized_plan_bytes') {
-        my $recipe = _plan_byte_recipe($requested_count);
+        my $recipe = $plan_byte_recipe;
         confess "serialized-plan semantic suffix contract changed\n"
-            unless length($recipe->{scenario_suffix})
+            unless ref($recipe) eq 'HASH' && !blessed($recipe)
+                && length($recipe->{scenario_suffix})
                     == $recipe->{scenario_suffix_length}
                 && length($recipe->{endpoint_suffix})
                     == $recipe->{endpoint_suffix_length};
@@ -654,6 +702,8 @@ sub _render_ahb_vial($axis, $requested_count) {
         $bin_name = $recipe->{bin_name};
         $fixture_name = $recipe->{fixture_name};
         $domain_name = $recipe->{domain_name};
+        $scenario_timeout_cycles = $recipe->{timeout_cycles}
+            if defined $recipe->{timeout_cycles};
         $coverage = join('',
             '(coverage (coverpoint ', $coverpoint_name,
             ' (sample ', $domain_name, ')',
@@ -1026,7 +1076,8 @@ sub _plan_byte_oracle_errors($construction, $ir, $plan, $requested) {
     my $canonical = JSON::PP->new->canonical(1)->utf8(1);
     my $plan_json = $canonical->encode($plan);
     my $vial = _role_input($construction, 'vial_source');
-    my $recipe = _plan_byte_recipe($requested);
+    my $spec = $construction->{specification};
+    my $recipe = _plan_byte_recipe($spec->{level}, $spec->{requested_counts});
     my $fixture_id =
         "architecture_scale_execution::fixture::$recipe->{fixture_name}";
     my $scenario_name =
@@ -1575,9 +1626,11 @@ sub _input($relative_path, $role, $content) {
 
 sub _rejected_evaluation($construction, $diagnostics) {
     my $spec = $construction->{specification};
+    my @oracle_errors = _rejection_oracle_errors($spec, $diagnostics);
+    my $expected = _expects_plan_byte_rejection($spec) && !@oracle_errors;
     return _evaluation({
-        ok => JSON::PP::false,
-        status => 'unexpected_rejection',
+        ok => $expected ? JSON::PP::true : JSON::PP::false,
+        status => $expected ? 'expected_rejection' : 'oracle_failure',
         schema => $EVALUATION_SCHEMA,
         schema_version => 1,
         workload_identity => $construction->{workload_identity},
@@ -1590,7 +1643,70 @@ sub _rejected_evaluation($construction, $diagnostics) {
         semantic_ir_sha256 => undef,
         bridge_manifest_sha256 => undef,
         plan_sha256 => undef,
-        diagnostics => _clone($diagnostics || []),
+        diagnostics => [@{_clone($diagnostics || [])}, @oracle_errors],
+        contract_discrepancies => [],
+    });
+}
+
+sub _expects_plan_byte_rejection($spec) {
+    return ($spec->{primary_axis} // '') eq 'serialized_plan_bytes'
+        && ($spec->{level} // '') eq 'over_limit_v1';
+}
+
+sub _rejection_oracle_errors($spec, $diagnostics) {
+    return (_oracle_error(
+        'VIAL_SCALE_EXECUTION_OUTCOME_ERROR',
+        'execution construction was rejected before its declared authoritative outcome',
+        '/observed_outcome',
+    )) unless _expects_plan_byte_rejection($spec);
+
+    my $expected = [{
+        schema_version => 1,
+        severity => 'error',
+        code => 'VIAL_EXECUTION_LIMIT_ERROR',
+        phase => 'limit',
+        message => 'serialized_plan_bytes exceeds the limit 16777216',
+        semantic_path => '/plan',
+        source_location => undef,
+        bridge_fact_paths => [],
+        related => [],
+    }];
+    my $canonical = JSON::PP->new->canonical(1)->allow_nonref(1);
+    return () if ref($diagnostics) eq 'ARRAY'
+        && $canonical->encode($diagnostics) eq $canonical->encode($expected);
+    return (_oracle_error(
+        'VIAL_SCALE_EXECUTION_DIAGNOSTIC_ERROR',
+        'over-limit plan did not return the one exact authoritative byte-cap diagnostic',
+        '/diagnostics',
+    ));
+}
+
+sub _unexpected_over_limit_acceptance($construction, $inputs, $built) {
+    my $canonical = JSON::PP->new->canonical(1)->utf8(1);
+    my $semantic = $inputs->{semantic_ir}->as_hashref;
+    my $manifest = $inputs->{bridge_manifest}->as_hashref;
+    my $plan_json = $canonical->encode($built->{plan});
+    my $spec = $construction->{specification};
+    return _evaluation({
+        ok => JSON::PP::false,
+        status => 'oracle_failure',
+        schema => $EVALUATION_SCHEMA,
+        schema_version => 1,
+        workload_identity => $construction->{workload_identity},
+        family => $FAMILY,
+        level => $spec->{level},
+        primary_axis => $spec->{primary_axis},
+        requested_counts => _clone($spec->{requested_counts}),
+        observed_outcome => 'accepted',
+        metrics => {serialized_plan_bytes => bytes::length($plan_json)},
+        semantic_ir_sha256 => sha256_hex($canonical->encode($semantic)),
+        bridge_manifest_sha256 => sha256_hex($canonical->encode($manifest)),
+        plan_sha256 => sha256_hex($plan_json),
+        diagnostics => [_oracle_error(
+            'VIAL_SCALE_EXECUTION_OUTCOME_ERROR',
+            'over-limit plan was accepted but the selected oracle requires rejection',
+            '/observed_outcome',
+        )],
         contract_discrepancies => [],
     });
 }

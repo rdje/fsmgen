@@ -450,8 +450,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement the selected canonical execution-graph generator and exact plan/replay oracles.`
   Acceptance: `Implement only after .17.2.4.1 commits cleanly; construct every reachable execution_graph_v1 axis through ordinary VIAL parsing, canonical bridge production, and the shipped binder; prove the selected exact or earliest-cap outcomes, structural topology and logical-time invariants, generated/replayed decision equality, immutable byte-equal reports and plan hashes, hostile-input rejection, deterministic reruns, and exact repository-local staging cleanup with default and RAM-guarded qualification tests plus synchronized user documentation.`
-  Verification: `ArchitectureScaleExecutionGraph now owns binding, topology, fiber, type, map, random/replay, and exact one-/four-/sixteen-MiB plan candidates. The exact plans use the frozen checked-AHB route and unchanged public binder: 2,974/12,166/48,850 genuine resets plus referenced semantic names produce exactly 1,048,576/4,194,304/16,777,216 canonical bytes. The sixteen-MiB limit contains one scenario/root-live fiber, seven types, 22 bindings, six events, and 48,867 unique maps; endpoint alias ready_out_q remains live through coverpoint ready_sampled on the real HREADYOUT binding. Source/SemanticIR/bridge/workload/plan identities, reset topology, source spans, public capability isolation, mutation rejection, and unfinished-level closure are frozen. Focused t1609/t1610/t1611 and the guarded 14-file/63-test impact matrix pass. Earlier binding/topology/fiber/type/map/random evidence remains unchanged. The leaf remains active for the first complete over-limit operation, higher random levels, final qualification, and cleanup slices; no public capability/support or capacity claim changes.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2: generate exact sixteen-MiB execution plan limit`
+  Verification: `ArchitectureScaleExecutionGraph now owns binding, topology, fiber, type, map, random/replay, and the complete one-/four-/sixteen-MiB/over-limit plan ladder. The accepted plans use 2,974/12,166/48,850 genuine resets plus referenced semantic names to produce exactly 1,048,576/4,194,304/16,777,216 canonical bytes. The over-limit source retains the exact limit route, timeout, referenced identifiers, and coverpoint, then appends only one complete reset record. Ordinary parsing accepts all 48,851 actions before the unchanged public builder returns the exact VIAL_EXECUTION_LIMIT_ERROR at /plan with no partial ExecutionIR or plan; the scale evaluator recognizes only that byte-identical diagnostic as the selected rejection. Exact source/SemanticIR/workload identities, adjacency, mutation rejection, and public capability isolation are frozen. Focused t1609-t1612 and the guarded 15-file/67-test impact matrix pass. Earlier binding/topology/fiber/type/map/random evidence remains unchanged. The leaf remains active for higher random levels, remaining structural levels, final qualification, and cleanup slices; no public capability/support or capacity claim changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2: reject first complete execution plan excess`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5`
   Status: `proposed`
@@ -1103,6 +1103,37 @@ defect before `.17.2.2` begins semantic-family generation.
 | `2026-08-10` | `.17.2.4.2` exact one-MiB execution plan gate | frozen checked-AHB source; decision-0061 2,974-reset recipe; referenced 41/2-character scenario/endpoint suffixes; real HREADYOUT coverpoint; public canonical binder; exact source/SemanticIR/bridge/workload/plan identities; unique map/source-span closure; contiguous reset topology; hostile-input and missing-source/unfinished-level rejection; focused and guarded impacted regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; canonical plan is exactly 1,048,576 bytes with ID `plan/ee10e4a5749a4398b9e62d5a1624d24c74e585459afd57f8cb7503306545c035`. It contains 2,974 real resets, one scenario/root-live fiber, seven types, 22 bindings, six events, and 2,991 maps. Focused t1609 passes at Files=1/Tests=4 in 4 seconds; the guarded impact matrix passes at Files=12/Tests=55 in 127 seconds. No private capability, backend behavior, support, performance, or capacity claim changes. |
 | `2026-08-10` | `.17.2.4.2` exact four-MiB execution plan qualification | frozen checked-AHB source; decision-0061 12,166-reset recipe; referenced six-/two-character scenario/endpoint suffixes; real HREADYOUT coverpoint; public canonical binder; exact source/SemanticIR/bridge/workload/plan identities; unique map/source-span closure; contiguous reset topology; hostile-input and missing-source/unfinished-level rejection; focused and guarded impacted regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; canonical plan is exactly 4,194,304 bytes with ID `plan/63673374ece891a4234613c00c920ffe60cb4d6d73904ba0be2a2d5799f60d62`. It contains 12,166 real resets, one scenario/root-live fiber, seven types, 22 bindings, six events, and 12,183 maps. Paired t1609/t1610 passes at Files=2/Tests=8 in 17 seconds; the guarded impact matrix passes at Files=13/Tests=59 in 142 seconds. No private capability, backend behavior, support, performance, or capacity claim changes. |
 | `2026-08-10` | `.17.2.4.2` exact sixteen-MiB execution plan limit | frozen checked-AHB source; decision-0061 48,850-reset recipe; referenced 106-/two-character scenario/endpoint suffixes; real HREADYOUT coverpoint; public canonical binder; exact source/SemanticIR/bridge/workload/plan identities; unique map/source-span closure; contiguous reset topology; hostile-input and missing-source/unfinished-level rejection; focused and guarded impacted regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; canonical plan is exactly 16,777,216 bytes with ID `plan/0709d0c4d1432a218a0f26d9cce0c2b308d2f6fcf95f008bf6ceb65b15dc1e64`. It contains 48,850 real resets, one scenario/root-live fiber, seven types, 22 bindings, six events, and 48,867 maps. Focused t1609/t1610/t1611 passes at Files=3/Tests=12 in 67 seconds; the guarded impact matrix passes at Files=14/Tests=63 in 191 seconds. No private capability, backend behavior, support, performance, or capacity claim changes. |
+| `2026-08-10` | `.17.2.4.2` first complete execution-plan excess | exact limit route/name/timeout reuse; one appended complete reset; ordinary SemanticIR parse; exact source/workload/SemanticIR identities; unchanged public builder; stable plan-cap diagnostic; no partial ExecutionIR/plan; expected-rejection evaluation; deterministic rerun; mutation/missing-source/unowned-level rejection; focused and guarded impacted regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; the 587,434-byte source contains exactly 48,851 resets and differs from the accepted limit source by only the final 12-byte ` (reset b 1)` record. The builder returns only `VIAL_EXECUTION_LIMIT_ERROR`, phase `limit`, message `serialized_plan_bytes exceeds the limit 16777216`, semantic path `/plan`; the evaluator classifies that exact result as `expected_rejection`. Focused t1609-t1612 passes at Files=4/Tests=16; the guarded impact matrix passes at Files=15/Tests=67. No parser, SemanticIR, bridge, public binder, backend behavior, support, performance, or capacity claim changes. |
+
+## Acceptance Checklist (enforced) — `.17.2.4.2` first complete plan excess
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'over_limit_v1' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleExecutionGraph.pm` returns no commit. Clean
+  predecessor `67d463045` froze the exact 16,777,216-byte plan and decision
+  `0061` selected one additional complete reset as the excess witness, but the
+  generator still rejected `over_limit_v1` at admission and the evaluator
+  classified every builder rejection as unexpected. No canonical excess
+  source, adjacency proof, or exact diagnostic oracle existed.
+- [x] **ADDRESSED (verified)** — the generator retains the limit source path,
+  fixture, scenario, domain, endpoint, coverpoint, bin, and 48,851-cycle
+  timeout while appending exactly one 12-byte reset record. Ordinary parsing
+  accepts all 48,851 actions with exact SemanticIR identity; the unchanged
+  public builder rejects at its shipped 16-MiB cap and returns no partial IR or
+  plan. The evaluator accepts only the complete exact limit diagnostic as the
+  selected rejection; mutation, missing checked source, and unowned reference
+  level fail closed. `prove -Iperl t/1609-vial-architecture-scale-execution-plan-bytes.t
+  t/1610-vial-architecture-scale-execution-plan-qualification.t
+  t/1611-vial-architecture-scale-execution-plan-limit.t
+  t/1612-vial-architecture-scale-execution-plan-over-limit.t` reports
+  `All tests successful` at `Files=4, Tests=16`.
+- [x] **NO REGRESSION** — all five changed Perl/test paths report `syntax OK`;
+  the guarded execution/public-planning matrix reports `All tests successful` at
+  `Files=15, Tests=67`. All mdBook chapters test and the inspected repository-
+  local render is removed exactly. Knowledge Map, task integrity, all live-
+  document surfaces, relative paths, exact book authority, zero ceiling
+  increases, and staged doctrines pass. No parser, SemanticIR, bridge, public
+  binder, backend semantics, runtime result, capability/support, performance
+  budget, or capacity claim changes.
 
 ## Acceptance Checklist (enforced) — `.17.2.4.2` exact sixteen-MiB plan limit
 

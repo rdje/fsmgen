@@ -2580,8 +2580,9 @@ and canonical SHA-256
 The checked-AHB bridge remains byte-identical to the one-MiB gate. Independent
 construction, every reset successor, every source span, the public capability
 boundary, post-identity mutation rejection, missing checked source, and the
-still-unimplemented over-limit level are regression-locked. This is qualification
-construction evidence, not a promoted support or capacity claim.
+separately exercised adjacent over-limit boundary are regression-locked. This
+is qualification construction evidence, not a promoted support or capacity
+claim.
 
 The limit recipe reaches exactly sixteen MiB without changing the binder or
 its declared byte ceiling. It authors 48,850 genuine resets under one scenario
@@ -2626,10 +2627,43 @@ It retains one scenario/root/live fiber, 22 bindings, seven execution types,
 six bridge events, and 48,867 unique source maps. The checked-AHB bridge remains
 508,968 bytes and byte-identical to the smaller exact plans. Independent
 construction, the complete reset successor chain, source spans, public
-capability isolation, hostile-input rejection, missing checked source, and the
-still-unimplemented first complete over-limit operation are regression-locked.
-This exact limit is construction evidence, not promoted scale support or a
-performance budget.
+capability isolation, hostile-input rejection, and missing checked source are
+regression-locked. This exact limit is construction evidence, not promoted
+scale support or a performance budget.
+
+The adjacent over-limit recipe changes no limit semantic name, source path,
+coverpoint, bin, or timeout. It appends exactly one complete 12-byte
+` (reset b 1)` record to the accepted source, producing 48,851 genuine resets
+in 587,434 source bytes. Removing that last record reproduces the exact limit
+source byte-for-byte. Ordinary parsing accepts the complete source; the
+unchanged public builder then rejects the serialized plan at its authoritative
+16-MiB cap.
+
+```perl
+my $over = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+    primary_axis => 'serialized_plan_bytes',
+    level => 'over_limit_v1',
+    reference_hial_text => $checked_ahb,
+});
+die $over->{diagnostics}[0]{message} unless $over->{ok};
+
+my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+    construction => $over,
+});
+die "over-limit oracle failed\n"
+    unless $evaluation->{ok}
+        && $evaluation->{status} eq 'expected_rejection'
+        && $evaluation->{diagnostics}[0]{code}
+            eq 'VIAL_EXECUTION_LIMIT_ERROR'
+        && $evaluation->{diagnostics}[0]{phase} eq 'limit'
+        && $evaluation->{diagnostics}[0]{semantic_path} eq '/plan';
+```
+
+The exact message is
+`serialized_plan_bytes exceeds the limit 16777216`. Rejection publishes no
+partial ExecutionIR or plan, and the scale evaluator accepts no looser or
+different diagnostic as the selected result. This is a boundary-conformance
+fact, not evidence that the project supports a 16-MiB production workload.
 
 The reachability audit selects these outcomes before generator implementation:
 

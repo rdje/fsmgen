@@ -17,6 +17,7 @@ answers:
   - "how does the VIAL execution gate produce an exact one MiB semantic plan?"
   - "how does the VIAL execution qualification produce an exact four MiB semantic plan?"
   - "how does the VIAL execution limit produce an exact sixteen MiB semantic plan?"
+  - "how does VIAL reject the first complete execution plan operation above sixteen MiB?"
 date: 2026-08-10
 status: current
 tags: [vial, execution-ir, scale, binder, bridge, random, replay, plan, limits]
@@ -34,6 +35,7 @@ evidence: >-
   t/1609-vial-architecture-scale-execution-plan-bytes.t;
   t/1610-vial-architecture-scale-execution-plan-qualification.t;
   t/1611-vial-architecture-scale-execution-plan-limit.t;
+  t/1612-vial-architecture-scale-execution-plan-over-limit.t;
   vial/qualification/vhdl_portable_ghdl/ghdl-6.0.0-qualification.json; vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
   prove -Iperl t/1552-vial-execution-ir.t
@@ -45,7 +47,8 @@ reverify: >-
   t/1608-vial-architecture-scale-execution-random-replay.t
   t/1609-vial-architecture-scale-execution-plan-bytes.t
   t/1610-vial-architecture-scale-execution-plan-qualification.t
-  t/1611-vial-architecture-scale-execution-plan-limit.t &&
+  t/1611-vial-architecture-scale-execution-plan-limit.t
+  t/1612-vial-architecture-scale-execution-plan-over-limit.t &&
   rg -n 'selected_scenarios|expanded_operations_per_scenario|expanded_operations_total|total_fibers|simultaneous_live_fibers|bindings|execution_types|source_map_records|random_attempts|serialized_plan_bytes'
   perl/FSM/Support/VIALExecutionContract.pm perl/FSM/VIAL/ExecutionBuilder.pm
   docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md
@@ -177,6 +180,20 @@ It contains one scenario/root/live fiber, seven types, 22 bindings, six events,
 and 48,867 unique maps. Exact identities, reset topology, source spans, public
 capability isolation, and hostile-input rejection are frozen.
 
+The tenth slice proves the adjacent over-limit boundary without a forged plan
+or a test-only ceiling override. It keeps the exact limit source path,
+referenced identifiers, coverpoint, bin, and 48,851-cycle timeout, then appends
+one complete 12-byte ` (reset b 1)` record. The resulting 587,434-byte source
+contains 48,851 genuine reset actions and has SHA-256
+`499cf6b0747d312a6593865fbc3fcde5211083c08fd659d504babefd83eae89a`.
+Ordinary parsing succeeds with SemanticIR SHA-256
+`89ee52afc611520db4bbd48f31b76b8d042a2115038bfe43cbe3fb09a0e94ae1`;
+the unchanged public builder then returns exactly one
+`VIAL_EXECUTION_LIMIT_ERROR` in phase `limit`, message
+`serialized_plan_bytes exceeds the limit 16777216`, and semantic path `/plan`.
+It publishes neither a partial ExecutionIR nor a partial plan. The scale
+evaluator treats only that byte-identical diagnostic as `expected_rejection`.
+
 The nominal execution limits are not all reachable. Scenarios and
 simultaneously live fibers reach their exact 4,096 and 16,384 limits. Operations
 per scenario, total operations, total fibers, and source maps encounter the
@@ -192,8 +209,8 @@ the candidate at zero-based attempt `N - 1`. Attempts 8,192, 262,144, and
 attempt exactly.
 
 The AHB plan-byte recipes use real reset operations and referenced semantic
-identifiers. The exact one-/four-/sixteen-MiB gate, qualification, and limit are
-now implemented; the first complete over-limit operation remains unfinished.
-These are construction/boundary facts only. `.17.2.4.2` remains active for that
-stable rejection, higher random levels, final qualification, and cleanup; no
-scale capacity is supported until later measurement and promotion.
+identifiers. The exact one-/four-/sixteen-MiB gate, qualification, limit, and
+first-complete-record rejection are now implemented. These are construction/
+boundary facts only. `.17.2.4.2` remains active for higher random and structural
+levels, final qualification, and cleanup; no scale capacity is supported until
+later measurement and promotion.

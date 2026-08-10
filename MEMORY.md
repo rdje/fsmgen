@@ -9,11 +9,12 @@ history; this file carries only the current bounded resume state.
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`.
 - current_state: `.17.2.4.2` implements binding, topology, fiber, type, map,
-  checked-AHB 8,192-attempt random/replay, and exact 1-/4-/16-MiB plans. The
-  limit plan uses 48,850 real resets and referenced scenario, HREADYOUT, and
-  coverpoint semantics to reach exactly 16,777,216 canonical bytes.
-- next_action: add one complete reset operation to the exact limit recipe and
-  prove the selected stable serialized-plan over-limit rejection.
+  checked-AHB 8,192-attempt random/replay, and the complete 1-/4-/16-MiB plan
+  ladder. The over-limit source appends exactly one complete reset to the exact
+  16-MiB recipe and receives the stable public-builder rejection at `/plan`
+  without a partial ExecutionIR or plan.
+- next_action: construct the exact 262,144-attempt qualification candidate and
+  prove deterministic generated/replayed decision equality.
 - in_flight_uncommitted: none.
 - blockers: none.
 - push_state: decision `0062`; derive with `git rev-list --count @{upstream}..HEAD`.
