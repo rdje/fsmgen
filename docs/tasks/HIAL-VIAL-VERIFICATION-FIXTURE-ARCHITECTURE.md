@@ -416,11 +416,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.6`
-  Status: `active`
+  Status: `done`
   Goal: `Align the public VIAL execution support snapshot with the enforced portable-SystemVerilog transcript limits.`
   Acceptance: `From a separate clean activation, make FSM::Support::VIALExecutionContract report the Runner- and normative-contract-authoritative 8,388,608-byte compile and 67,108,864-byte run capture limits; add exact contract/accounting regression assertions; preserve Runner behavior, artifacts, diagnostics, support capability set, backend qualification, and every scale non-claim. Audit all support consumers before changing the snapshot and update the owning docs/fact surfaces in the same slice.`
-  Verification: `Clean .17.7 implementation commit 95f0670c8 removes the independently discovered focused-index regression shadow and leaves no dirty or generated residue. Decisions 0055/0056, the .17.1 audit, and git history already establish dfe87f536 as the single originating commit for both the Runner-enforced 8,388,608/67,108,864-byte values and the contradictory 4,194,304/4,194,304-byte support snapshot. This separate continuity slice activates .17.6 alone before .17.2 consumes backend_limits; it changes no contract value, Runner behavior, artifact, diagnostic, capability, support state, or scale claim.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.6: activate support-limit alignment`
+  Verification: `Clean activation commit 8279993c0 owns the exact alignment. Consumer and git-history audits isolate the contradictory 4,194,304/4,194,304-byte pair to FSM::Support::VIALExecutionContract and identify dfe87f536 as its origin; Runner enforcement, limit diagnostics, and the normative backend table already use 8,388,608/67,108,864 bytes. The support contract now reports those authoritative values, t/1558 asserts the direct contract, and t/297 asserts the published capability manifest. Impacted contract/capability/exact-Verilator regression reports All tests successful at Files=4/Tests=21. All 52 mdBook chapters test, the rendered aligned-limit paragraph is structurally distinct, the repository-local build contains 88 files/18,336,328 bytes before exact removal, and maintained-reference authority accepts 0 files/-1 line/-82 bytes. Runner source/behavior, diagnostics, artifacts, capability set, support classification, backend qualification, and scale nonclaims are unchanged.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.6: align support transcript limits`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.7`
   Status: `done`
@@ -544,8 +544,8 @@ and no compatible mixed-language simulator is installed. Completed `.17.1`
 selects decisions `0055`/`0056` and the architecture-scale contracts without claiming
 capacity. Its audit finds one pre-existing support-snapshot limit drift;
 completed `.17.7` removes the stale focused-document regression shadow without
-storing a replacement count. Active `.17.6` now aligns the support snapshot
-before `.17.2` may build scale automation against those values.
+storing a replacement count. Completed `.17.6` aligns the support snapshot
+before `.17.2` builds scale automation against those values; `.17.2` is next.
 
 ## Decisions
 
@@ -564,8 +564,9 @@ before `.17.2` may build scale automation against those values.
   whole-product, multi-unit/domain, mixed-language, native-UVM-runtime, full-
   language, synthesis, and general-parity boundaries. The audit finds Runner /
   normative-contract 8-MiB/64-MiB transcript capture but a 4-MiB/4-MiB support
-  snapshot from the same implementation commit; `.17.6` owns exact alignment
-  before workload automation consumes it.
+  snapshot from the same implementation commit. Completed `.17.6` aligns the
+  snapshot and regression-locks direct and published accounting before scale
+  automation consumes it.
 
 - `2026-08-10`: Keep `.16` proposed after an exact availability census finds
   no compatible mixed-language execution tool; never combine independent
@@ -967,6 +968,30 @@ before `.17.2` may build scale automation against those values.
 | `2026-08-09` | `.15.7` activation | clean `.15.6` predecessor `4f350f29c`; task/index/audit/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook test; live-reference authority; diff/staged-doctrine gates | `passed`; `.15.7` alone is active for combined exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT qualification. Both inputs remain repository-local; task integrity reports three active trees/916 nodes, Knowledge Map remains 1,105 facts/5,713 questions/5,879 occurrences/118 shards, all 52 mdBook chapters test, and maintained-reference authority accepts the exact 0-file/0-line/+16-byte delta. Activation changes no source, generated artifact, qualification evidence, capability, runtime result, or support behavior. |
 | `2026-08-09` | `.15.7` exact combined qualification | exact GHDL archive/binary and recursive OSVVM identities; 44-core/17-Common ordered provider compilation; adapter/generated-fixture/probe analysis; fixture/probe elaboration and double execution; 42-record trace/result validation; 19-path portable parity; four deterministic OSVVM reports; bounded support/capability truth; same-volume cleanup; focused/corpus/capability/gallery/docs/task/Knowledge Map/mdBook/staged-doctrine gates | `passed`; `vhdl_osvvm_qualified` is bounded-qualified under exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT. Six adapter mappings execute in the probe; the Common address-bus mapping is analysis-only. OSVVM reports record three clean affirmations, 25% one-of-four-bin coverage, and one checked scoreboard item with zero errors, while portable trace/result/parity remain authoritative. Broader provider/language/tool/profile claims remain explicit non-claims. |
 | `2026-08-10` | `.17` selection/activation | clean predecessor `6d23b5843`; mixed-language command/provider census; decisions 0032/0051; five-leaf scale decomposition; task/index/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook build; relative paths; live-reference authority; diff/staged-doctrine gates; exact cleanup | `passed`; `.16` remains proposed because no compatible mixed-language runtime is available, and `.17.1` alone is active for documentation-only scale-contract selection. Task integrity reports three active trees/921 nodes; Knowledge Map reports 1,105 facts/5,723 questions/5,889 occurrences/118 shards; the book shrinks by 34 lines/2,676 bytes while replacing stale chronology with current capability and scale boundaries; generated output is removed. No product behavior or scale claim changes. |
+
+## Acceptance Checklist (enforced) — `.17.6` support-limit alignment
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — on clean activation predecessor
+  `8279993c0`, `git log -S'compile_transcript_bytes' --
+  perl/FSM/Support/VIALExecutionContract.pm` identifies `dfe87f536`, whose
+  support snapshot introduced 4,194,304-byte compile and run values while its
+  Runner implementation enforced 8,388,608 compile and 67,108,864 runtime
+  bytes. A complete consumer scan finds no second contradictory product value;
+  the normative backend table already agrees with Runner.
+- [x] **ADDRESSED (verified)** — `FSM::Support::VIALExecutionContract` now
+  publishes exactly 8,388,608/67,108,864 bytes. `t/1558` independently locks
+  the direct contract and exact Runner integration; `t/297` locks the nested
+  public capability-manifest accounting. The mdBook replaces the obsolete
+  discrepancy with the aligned values and retains the non-scale boundary.
+- [x] **NO REGRESSION** — syntax passes for the contract and both edited tests;
+  the combined execution/backend/capability/Verilator gate reports `All tests
+  successful` at `Files=4, Tests=21`. All 52 mdBook chapters test; its rendered
+  aligned-limit paragraph is distinct and the repository-local 88-file/
+  18,336,328-byte build is removed exactly. Maintained-reference authority
+  accepts 0 files/-1 line/-82 bytes; task integrity, Knowledge Map, staged
+  acceptance, and all nine doctrines pass. Runner code/behavior, diagnostic
+  text, artifacts, capability set, support classification, backend
+  qualification, and every scale nonclaim remain unchanged.
 
 ## Acceptance Checklist (enforced) — `.17.7` focused-index authority repair
 

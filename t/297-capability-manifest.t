@@ -2918,6 +2918,16 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
         vial_execution_contract_source(),
         'manifest names the VIAL execution capability contract owner',
     );
+    is(
+        $manifest->{language_surface}{vial_execution}{backend_limits}{compile_transcript_bytes},
+        8_388_608,
+        'manifest publishes the exact portable-SystemVerilog compile-capture limit',
+    );
+    is(
+        $manifest->{language_surface}{vial_execution}{backend_limits}{run_transcript_bytes},
+        67_108_864,
+        'manifest publishes the exact portable-SystemVerilog runtime-capture limit',
+    );
     ok(
         $manifest->{language_surface}{vial_execution}{public_embedding_api},
         'manifest exposes bounded VIAL execution through the supported tool API',

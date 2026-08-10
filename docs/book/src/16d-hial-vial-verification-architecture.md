@@ -2010,11 +2010,10 @@ stage with a stable diagnostic, no partial publication, and no residue. Host
 exhaustion, signal 137, or an external-tool crash is never accepted as the
 product's limit behavior.
 
-The contract also records a pre-existing accounting discrepancy: the portable-
-SV Runner and normative contract enforce 8-MiB compile and 64-MiB runtime
-capture, while the support snapshot says 4 MiB for both. A separate repair leaf
-must align the snapshot before scale automation consumes it; this selection
-does not change runtime behavior or support claims.
+The public support snapshot and normative contract report the portable-SV
+Runner's enforced 8-MiB compile and 64-MiB runtime capture limits. Those are
+bounded transcript-capture controls, not scale qualification or evidence that
+the selected AHB fixture approaches either limit.
 
 Even a later passing architecture profile will not substitute for the
 separately owned whole-product `big`/`really_big` qualification, mixed-language

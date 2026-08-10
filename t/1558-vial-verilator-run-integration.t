@@ -254,6 +254,10 @@ subtest 'discovery and support accounting expose only the qualified shipped boun
     ok($tool_cap{'vial.parity.ahb_base_output_arbitration.v1'}, 'tooling exposes bounded AHB qualification evidence');
     my %execution_cap = map { $_ => 1 } @{$execution->{capabilities}};
     ok($execution_cap{'vial.backend.sv_portable_verilator.runtime_trace_v1'}, 'execution exposes validated runtime traces');
+    is($execution->{backend_limits}{compile_transcript_bytes}, 8_388_608,
+        'execution support reports the Runner compile-capture limit');
+    is($execution->{backend_limits}{run_transcript_bytes}, 67_108_864,
+        'execution support reports the Runner runtime-capture limit');
     my %nonclaim = map { $_ => 1 } @{$execution->{explicit_nonclaims}};
     ok($nonclaim{complete_four_state} && $nonclaim{general_cross_backend_parity} && $nonclaim{uvm} && $nonclaim{vhdl_methodology}, 'four-state/general-parity/methodology non-claims remain explicit');
     my ($entry) = grep { $_->{id} eq 'feature.vial_sv_portable_verilator_runtime' } regression_corpus_entries();
