@@ -413,8 +413,23 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Generate bridge-fanout workloads through canonical HIAL routes with exact manifest oracles.`
   Acceptance: `Construct each bridge_fanout_v1 axis through shipped direct-IAL0/direct-IAL1 or reviewed IAL2 routing as selected; prove normalized counts, immutable IDs/data, source/review identity, complete resolution/mapping/bindings, byte-equal manifests/reports, earliest-cap diagnostics, IAL2 bypass rejection, and cleanup.`
-  Verification: `Clean semantic-family predecessor 145d3084a permits .17.2.3 alone to activate for canonical bridge-fanout construction and exact manifest oracles. Activation changes only task/index/fact/Memory continuity: no builder, bridge, manifest, source route, generated artifact, capability/support classification, performance budget, or scale-capacity claim changes.`
+  Verification: `Clean semantic-family predecessor 145d3084a permits .17.2.3 alone to activate for canonical bridge-fanout construction and exact manifest oracles. Read-only implementation audit then found that decision 0055's transaction/event/probe/residue candidates are not reachable through the shipped fixed AHB annotation profile: Builder::_validate_ahb_bridge requires exactly one transaction, six events, one probe, and five residues, while an annotated actor's ordinary transactions are not projected. Child .17.2.3.1 now owns a documentation-only reachability/profile selection before separate implementation child .17.2.3.2. The parent activation changes only continuity; no builder, bridge, manifest, source route, generated artifact, capability/support classification, performance budget, or scale-capacity claim changes.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3: activate canonical bridge-fanout generation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3.1`
+  Status: `active`
+  Goal: `Reconcile the selected bridge-fanout candidates with the fixed first AHB annotation profile before implementation.`
+  Acceptance: `Root-cause the exact unreachable transaction/event/probe/residue axes from implementation, contract, and history; select a closed canonical direct-IAL1 qualification route or reduce the candidates honestly; preserve the exact AHB route and every support/nonclaim boundary; record the decision in the task tree, decision store, Knowledge Map, and mdBook without changing code or product behavior.`
+  Verification: `Clean parent activation 4a6e5f6de permits this selection leaf alone to become active. Implementation, parser, scheduler, builder, manifest, capability/support, performance, and capacity behavior remain unchanged.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3.1: select bridge-scale reachability contract`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3.2`
+  Status: `proposed`
+  Goal: `Implement the selected canonical bridge-fanout generator and exact manifest oracles.`
+  Acceptance: `Implement only after .17.2.3.1 commits cleanly; exercise every reachable bridge_fanout_v1 axis through ordinary HIAL parsing/lowering and the shipped builder, prove the selected exact or earliest-cap outcomes, retain the AHB and IAL2 route invariants, and add focused/default/exact qualification tests plus synchronized user documentation.`
+  Verification: `pending`
+  Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4`
   Status: `proposed`
@@ -991,6 +1006,7 @@ defect before `.17.2.2` begins semantic-family generation.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-10` | `.17.2.3.1` activation after reachability audit | clean parent activation `4a6e5f6de`; implementation/contract/history audit across decisions `0035`/`0055`, the IAL1 annotation parser, bridge builder, manifest contract, and t1551; task/index/Memory continuity; task-tree, relative-path, diff, and staged-doctrine gates | `passed`; the exact fixed-AHB/candidate mismatch is durably isolated before code. `.17.2.3.1` alone is active to select the repair; `.17.2.3.2` remains proposed. No parser, scheduler, builder, manifest, route, artifact, capability/support, performance-budget, or capacity behavior changes. |
 | `2026-08-10` | `.17.2.3` activation | clean `.17.2.2` predecessor `145d3084a`; selected decision-0055 bridge-family route/oracle contract; task/index/fact/Memory continuity; task-tree, Knowledge Map, relative-path, diff, and staged-doctrine gates | `passed`; `.17.2.3` alone is active for canonical bridge-fanout workload generation and exact manifest oracles. Builder, bridge, manifest, route, artifact, capability/support, performance-budget, and capacity behavior remain unchanged. |
 | `2026-08-10` | `.17.2.2` canonical semantic generation | canonical 70-spec source construction; exact counts/IDs/spans/references/types/order/reports/formatting/boundaries/diagnostics; success/failure staging cleanup; decisions `0058`/`0059`; semantic-ID regressions; exact opt-in qualification/limit/excess proof; canonical native-UVM/portable-VHDL/OSVVM gallery and exact GHDL qualification refreshes; guarded 21-file impacted suite; task/book/Knowledge Map/Memory/live-reference/staged-acceptance/doctrine gates; repository-local mdBook build and exact artifact cleanup | `passed`; default t1601 reports Files=1/Tests=4 in 17 seconds and exact guarded t1601 reports Files=1/Tests=4 in 359 seconds. Final impacted regression reports Files=21/Tests=140 in 221 seconds, including real Verilator and exact GHDL/OSVVM qualification. Documentation governance reports Files=8/Tests=89, 2,969/2,969 paths, exact book delta 0/+67/+3,225, and one reviewed 1,106→1,107 knowledge-card ceiling change. Knowledge Map is current at 1,106 facts/5,733 questions/5,899 occurrences/119 shards. All 52 chapters test; the rendered repository-local build contains 88 files/18,392,884 bytes before exact removal. The semantic family accepts no IR, checked action-local IDs are globally unambiguous, and the literal-repeat interaction remains an explicit `.17.4` repair input. No support, performance-budget, or capacity claim is made. |
 | `2026-08-10` | `.17.2.2` activation | clean `.17.9` repair predecessor `3c948294b`; dependency and ownership boundary; task/index/fact/Memory continuity; task-tree, Knowledge Map, relative-path, diff, staged acceptance, and doctrine gates | `passed`; `.17.2.2` alone is active for canonical semantic-catalog workload generation and semantic oracles. Generator implementation, parser behavior, SemanticIR, artifact, capability/support, performance, and scale claims remain unchanged. |
@@ -1058,6 +1074,22 @@ defect before `.17.2.2` begins semantic-family generation.
 | `2026-08-09` | `.15.7` activation | clean `.15.6` predecessor `4f350f29c`; task/index/audit/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook test; live-reference authority; diff/staged-doctrine gates | `passed`; `.15.7` alone is active for combined exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT qualification. Both inputs remain repository-local; task integrity reports three active trees/916 nodes, Knowledge Map remains 1,105 facts/5,713 questions/5,879 occurrences/118 shards, all 52 mdBook chapters test, and maintained-reference authority accepts the exact 0-file/0-line/+16-byte delta. Activation changes no source, generated artifact, qualification evidence, capability, runtime result, or support behavior. |
 | `2026-08-09` | `.15.7` exact combined qualification | exact GHDL archive/binary and recursive OSVVM identities; 44-core/17-Common ordered provider compilation; adapter/generated-fixture/probe analysis; fixture/probe elaboration and double execution; 42-record trace/result validation; 19-path portable parity; four deterministic OSVVM reports; bounded support/capability truth; same-volume cleanup; focused/corpus/capability/gallery/docs/task/Knowledge Map/mdBook/staged-doctrine gates | `passed`; `vhdl_osvvm_qualified` is bounded-qualified under exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT. Six adapter mappings execute in the probe; the Common address-bus mapping is analysis-only. OSVVM reports record three clean affirmations, 25% one-of-four-bin/25% coverage, and one checked scoreboard item with zero errors, while portable trace/result/parity remain authoritative. Broader provider/language/tool/profile claims remain explicit non-claims. |
 | `2026-08-10` | `.17` selection/activation | clean predecessor `6d23b5843`; mixed-language command/provider census; decisions 0032/0051; five-leaf scale decomposition; task/index/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook build; relative paths; live-reference authority; diff/staged-doctrine gates; exact cleanup | `passed`; `.16` remains proposed because no compatible mixed-language runtime is available, and `.17.1` alone is active for documentation-only scale-contract selection. Task integrity reports three active trees/921 nodes; Knowledge Map reports 1,105 facts/5,723 questions/5,889 occurrences/118 shards; the book shrinks by 34 lines/2,676 bytes while replacing stale chronology with current capability and scale boundaries; generated output is removed. No product behavior or scale claim changes. |
+
+## Acceptance Checklist (enforced) — `.17.2.3.1` activation after reachability audit
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_validate_ahb_bridge'
+  --oneline -- perl/FSM/HIAL/VIALBridge/Builder.pm` identifies implementation
+  origin `51434a2ae`; `git log -S'bridge_fanout_v1' --oneline -- docs perl t`
+  identifies later scale selection `0516f2c66`. The fixed AHB validator and
+  annotated-actor projection make four nominal bridge-family caps unreachable.
+- [x] **ADDRESSED (verified)** — Parent `.17.2.3` now decomposes into active
+  documentation-only reachability selection `.17.2.3.1` and proposed
+  implementation `.17.2.3.2`. The exact mismatch is durable before any source
+  change, and the selection must preserve the shipped AHB route and nonclaims.
+- [x] **NO REGRESSION** — `scripts/check_doctrines.sh` passes all staged
+  doctrine gates after task integrity, relative-path, and diff checks. No
+  parser, scheduler, builder, manifest, route, artifact, capability/support,
+  performance-budget, or scale-capacity behavior changes.
 
 ## Acceptance Checklist (enforced) — `.17.2.3` activation
 
