@@ -31,6 +31,13 @@ my $EVALUATION_SCHEMA = 'fsmgen.vial_architecture_scale_execution_evaluation.v1'
 my $EXECUTION_PROFILE = 'core_directed_single_clock_execution_v1';
 my $ARCHITECTURE_SCALE_CAPABILITY =
     'hial_vial.bridge_qualification.architecture_scale_v1';
+my @CHECKED_AHB_FIXED_SOURCE_MAP_PATHS = (
+    '/bindings/domains/0',
+    map("/bindings/endpoints/$_/relations/0", 0 .. 2),
+    '/bindings/probes/0/relations/0',
+    map("/bindings/transactions/0/fields/$_/relation", 0 .. 5),
+    map("/bindings/events/$_", 0 .. 5),
+);
 my @CONSTRUCT_KEYS = qw(level primary_axis reference_hial_text);
 my @REQUIRED_CONSTRUCT_KEYS = qw(level primary_axis);
 my @EVALUATE_KEYS = qw(construction);
@@ -54,6 +61,7 @@ sub construct($class, @args) {
     my %owned_axis = map { $_ => 1 } qw(
         bindings scenarios operations_per_scenario operations_total
         fibers_total simultaneously_live_fibers execution_types
+        source_map_records
     );
     confess "execution-graph gate slice does not own the requested shape\n"
         unless defined($axis) && $owned_axis{$axis}
@@ -470,6 +478,13 @@ sub _render_ahb_vial($axis, $requested_count) {
         $scenario_count = 1;
         @scenario_actions = (_live_fiber_action($requested_count));
     }
+    elsif ($axis eq 'source_map_records') {
+        my $fixed_count = scalar(@CHECKED_AHB_FIXED_SOURCE_MAP_PATHS);
+        confess "source-map gate cannot subtract its fixed checked-AHB maps\n"
+            unless $requested_count > $fixed_count;
+        $scenario_count = 1;
+        $operations_per_scenario = $requested_count - $fixed_count;
+    }
     else {
         confess "checked-AHB renderer does not own axis '$axis'\n";
     }
@@ -729,6 +744,18 @@ sub _axis_oracle_errors($spec, $construction, $ir, $plan, $inputs) {
     ) unless join("\0", @layers) eq join("\0", qw(IAL2 IAL1 IAL0));
 
     my $requested = $spec->{requested_counts}{$axis};
+    if ($axis eq 'source_map_records') {
+        my $observed = scalar(@{$ir->{source_map}});
+        push @errors, _oracle_error(
+            'VIAL_SCALE_EXECUTION_COUNT_ERROR',
+            "observed source-map count $observed does not equal requested count $requested",
+            '/metrics/source_map_records',
+        ) unless $observed == $requested;
+        push @errors, _source_map_oracle_errors($ir, $requested);
+        push @errors, _topology_oracle_errors($ir, 'reset_chain');
+        return @errors;
+    }
+
     if ($axis eq 'fibers_total' || $axis eq 'simultaneously_live_fibers') {
         my $observed = $axis eq 'fibers_total'
             ? $ir->{operation_graph}{total_fiber_count}
@@ -772,6 +799,59 @@ sub _axis_oracle_errors($spec, $construction, $ir, $plan, $inputs) {
         && $ir->{operation_graph}{maximum_simultaneous_live_fibers} == 1;
 
     push @errors, _topology_oracle_errors($ir, 'reset_chain');
+    return @errors;
+}
+
+sub _source_map_oracle_errors($ir, $requested) {
+    my @errors;
+    my $graph = $ir->{operation_graph};
+    my $operation_count = $requested - scalar(@CHECKED_AHB_FIXED_SOURCE_MAP_PATHS);
+    my %records_by_plan_path;
+    push @{$records_by_plan_path{$_->{plan_path} // ''}}, $_
+        for @{$ir->{source_map}};
+    my @fixed_paths = sort grep {
+        $_ !~ m{\A/operation_graph/operations/[0-9]+\z}
+    } keys %records_by_plan_path;
+    my $closed = @{$ir->{source_map}} == $requested
+        && scalar(keys %records_by_plan_path) == $requested
+        && join("\0", @fixed_paths)
+            eq join("\0", sort @CHECKED_AHB_FIXED_SOURCE_MAP_PATHS)
+        && @{$ir->{scenarios}} == 1
+        && $graph->{total_operation_count} == $operation_count
+        && $graph->{total_fiber_count} == 1
+        && $graph->{maximum_simultaneous_live_fibers} == 1
+        && $ir->{scenarios}[0]{plan_summary}{operation_count} == $operation_count
+        && !scalar(grep {
+            ($_->{kind} // '') ne 'reset'
+                || ($_->{eligible_phase} // '') ne 'drive'
+        } @{$graph->{operations}});
+
+    for my $index (0 .. $operation_count - 1) {
+        my $plan_path = "/operation_graph/operations/$index";
+        my $records = $records_by_plan_path{$plan_path} || [];
+        my $record = @$records == 1 ? $records->[0] : undef;
+        $closed = 0 unless $record
+            && ($record->{semantic_path} // '')
+                eq "/packages/0/fixtures/0/scenarios/0/actions/$index"
+            && !@{$record->{bridge_fact_paths} || []};
+    }
+    for my $record (@{$ir->{source_map}}) {
+        my $locations = $record->{source_locations};
+        $closed = 0 unless ref($locations) eq 'ARRAY' && @$locations == 1;
+        next unless ref($locations) eq 'ARRAY' && @$locations == 1;
+        my $location = $locations->[0];
+        $closed = 0 unless ($location->{source_name} // '') eq $VIAL_SOURCE
+            && ($location->{start_line} // 0) == 1
+            && ($location->{end_line} // 0) == 1
+            && ($location->{start_byte} // -1) >= 0
+            && ($location->{end_byte_exclusive} // -1) > $location->{start_byte};
+    }
+
+    push @errors, _oracle_error(
+        'VIAL_SCALE_EXECUTION_SOURCE_MAP_ERROR',
+        'execution source-map gate did not preserve its exact checked-AHB maps, spans, and reset topology',
+        '/source_map',
+    ) unless $closed;
     return @errors;
 }
 

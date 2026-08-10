@@ -2315,9 +2315,9 @@ semantic, bridge, and plan hashes; post-identity source mutation fails closed.
 The corrected multi-scenario plan identity was propagated through the native-
 UVM, portable-VHDL, and OSVVM galleries and requalified with the repository-
 local GHDL 6.0.0 and OSVVM 2026.05 tool/provider tuple. No backend or runtime
-capability was added. Types, large maps, random/replay, exact plan-byte
-boundaries, and higher levels remain owned by later slices of the active
-generator task.
+capability was added. The type and large-map gates below retain the same
+boundary; random/replay, exact plan-byte boundaries, and higher levels remain
+owned by later slices of the active generator task.
 
 The following slice implements both gate-level fiber axes through the same
 frozen checked-AHB route and unchanged public builder:
@@ -2401,9 +2401,51 @@ reproducing the reachability selection. It retains the public
 route, with neither the AHB protocol capability nor the private scale
 capability. Independent construction freezes the generated HIAL/VIAL,
 SemanticIR, bridge, and plan identities. A mutated source, caller-injected
-HIAL, or unfinished level fails closed. Large source-map construction,
-random/replay, exact plan-byte boundaries, higher levels, and scale
-qualification remain unfinished and make no capacity claim.
+HIAL, or unfinished level fails closed.
+
+The source-map gate returns to the frozen checked-AHB route. That binding has
+exactly 17 fixed maps: one domain, three public endpoint relations, one probe
+relation, six transaction-field relations, and six event bindings. The gate
+therefore authors 8,175 real one-cycle resets so the target-neutral execution
+plan contains exactly 8,192 source-map records without duplicating a map or
+padding the source.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+open my $fh, '<:raw', 'ppif/ahb_lite_subordinate.ppif'
+    or die "cannot read checked AHB source: $!";
+local $/;
+my $checked_ahb = <$fh>;
+close $fh or die "cannot close checked AHB source: $!";
+
+my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+    primary_axis => 'source_map_records',
+    level => 'gate_candidate_v1',
+    reference_hial_text => $checked_ahb,
+});
+die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+
+my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+    construction => $workload,
+});
+die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+die "unexpected map construction\n"
+    unless $evaluation->{metrics}{source_map_records} == 8_192
+        && $evaluation->{metrics}{expanded_operations_total} == 8_175;
+```
+
+All 8,192 plan paths are unique. Operation map `N` points to semantic action
+`N`, carries one ordered non-empty generated-VIAL byte span, and needs no
+fabricated bridge fact; each fixed binding map resolves to its real bridge
+fact. The 8,175 resets form one contiguous successor chain in one root fiber.
+The generated VIAL is 115,478 bytes, the unchanged checked-AHB bridge report
+is 508,968 bytes, and the deterministic plan is 2,949,646 bytes. Exact source,
+SemanticIR, bridge, workload, and plan identities are regression-locked. The
+public AHB capability remains present, the private scale capability remains
+absent, and mutation, missing checked source, or an unfinished level fails
+closed. Random/replay, exact plan-byte boundaries, higher levels, and final
+scale qualification remain unfinished and make no capacity claim.
 
 The reachability audit selects these outcomes before generator implementation:
 

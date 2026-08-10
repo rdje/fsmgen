@@ -450,8 +450,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement the selected canonical execution-graph generator and exact plan/replay oracles.`
   Acceptance: `Implement only after .17.2.4.1 commits cleanly; construct every reachable execution_graph_v1 axis through ordinary VIAL parsing, canonical bridge production, and the shipped binder; prove the selected exact or earliest-cap outcomes, structural topology and logical-time invariants, generated/replayed decision equality, immutable byte-equal reports and plan hashes, hostile-input rejection, deterministic reruns, and exact repository-local staging cleanup with default and RAM-guarded qualification tests plus synchronized user documentation.`
-  Verification: `ArchitectureScaleExecutionGraph now owns binding, scenario, operation, total-fiber, simultaneously-live-fiber, and execution-type gate candidates. The sealed binding route remains private; topology and fiber gates use the exact checked AHB PPIF; the type gate uses an ordinary non-annotated direct-IAL1 actor with widths 1..512. Its 512 public endpoint relations materialize 512 distinct four-state unsigned execution types through the unchanged public binder, with 514 bindings/maps, an exact 8,237,394-byte bridge report, one reset/root fiber, a 735,488-byte plan, exact IAL1/IAL0 route/capability closure, stable hashes, deterministic reruns, and hostile-input rejection. The helper preserves an absent verification bridge instead of autovivifying an empty annotation. Earlier gate and source-map repair evidence remains unchanged. Focused and impacted evidence plus synchronized docs and final doctrine results are recorded below. The leaf remains active for source maps, replay, exact plan-byte, higher-level, qualification, and cleanup slices; no public capability/support or capacity claim changes.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2: generate execution type gate`
+  Verification: `ArchitectureScaleExecutionGraph now owns binding, scenario, operation, total/live-fiber, execution-type, and source-map gate candidates. The source-map gate uses the frozen checked-AHB route and unchanged public binder: 17 fixed domain/binding/field/event maps plus 8,175 real resets produce exactly 8,192 unique plan paths in one scenario/root fiber. Operation map N resolves semantic action N and one ordered byte span; fixed maps resolve real bridge facts; the reset successor chain, public capability, frozen route, exact source/SemanticIR/bridge/workload/plan identities, 508,968-byte bridge report, and 2,949,646-byte plan are closed. Focused t1607 and the guarded 10-file/47-test impact matrix pass. Earlier binding/topology/fiber/type evidence remains unchanged. The leaf remains active for random/replay, exact plan-byte, higher-level, qualification, and cleanup slices; no public capability/support or capacity claim changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2: generate execution source-map gate`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5`
   Status: `proposed`
@@ -1098,6 +1098,38 @@ defect before `.17.2.2` begins semantic-family generation.
 | `2026-08-10` | `.17.2.4.2` scenario/operation topology gates and source-map repair | exact checked-AHB source; 32x1/1x256/32x32 reset constructions; canonical public bind; source-map path census; Knowledge Map absence query; `git log -S`/blame; global-offset repair; exact semantic/bridge/plan hashes and byte counts; hostile inputs; native-UVM/portable-VHDL/OSVVM gallery refresh; exact GHDL/OSVVM requalification; guarded focused/impacted regression; task/book/fact/rationale/Memory/live/staged-doctrine gates | `passed`; the three gates contain 32/256/1,024 genuine operations, 32/1/32 root fibers, one live fiber, 49/273/1,041 maps, and 59,907/121,163/409,363 plan bytes. The pre-existing `44dbecd1a` source-map writer now adds each scenario's global operation offset, so every flat-plan operation has one map while scenario-local ranks/IDs remain stable. Public/private capability separation holds; committed as `0f9d27611`. |
 | `2026-08-10` | `.17.2.4.2` total/live fiber gates | exact checked-AHB source; sequential 31/31/31/31/3 all-join groups; bounded 2-outer/29-nested depth-two all-join tree; exact fiber/operation/live/map/plan/hash identities; parent/child, successor, rank, phase, and source-map closure; public capability isolation; mutation/unfinished-level rejection; focused and adjacent regression; task/book/fact/rationale/Memory/live/staged-doctrine gates | `passed`; total-fiber construction reaches 128 total and 32 live fibers through 132 operations, 149 maps, and a 79,987-byte plan. Live-fiber construction reaches exactly 32 total/live fibers through 32 operations, 49 maps, and a 43,811-byte plan. Both traverse ordinary checked-AHB IAL2/IAL1/IAL0 and the public binder. Final guarded architecture/public-planning regression passes at Files=9/Tests=44; all 52 book chapters test and the 88-file/18,216-KiB render is inspected then removed; Knowledge Map, 936-node task integrity, 2,972-path live containment, rationale reconstruction, relative paths, zero ceiling increases, and staged doctrines pass. No private capability, backend behavior, support, performance, or capacity claim changes. |
 | `2026-08-10` | `.17.2.4.2` execution-type gate | ordinary non-annotated direct-IAL1 source; exact widths 1..512; 512 public endpoint relations; canonical public binder; IAL1/IAL0 route and capability closure; exact type/binding/map/bridge-byte/plan/hash identities; null-annotation preservation; mutation/source-injection/unfinished-level rejection; focused and adjacent regression; task/book/fact/rationale/Memory/live/staged-doctrine gates | `passed`; the gate contains 512 distinct four-state unsigned logic shapes, 514 bindings, 514 maps, an exact 8,237,394-byte bridge report, one scenario/reset/root fiber, and a 735,488-byte plan. Generated HIAL/VIAL sources are 17,901/63,780 bytes with frozen identities. The scale helper no longer autovivifies an absent verification bridge while collecting optional probe names. Final verification details are recorded below. No private capability, backend behavior, support, performance, or capacity claim changes. |
+| `2026-08-10` | `.17.2.4.2` execution source-map gate | frozen checked-AHB source; exact census of 17 fixed maps; 8,175 genuine resets; public canonical binder; unique plan paths; exact semantic-action and ordered byte-span projection; real bridge facts; closed reset chain; exact source/SemanticIR/bridge/workload/plan identities; mutation/missing-source/unfinished-level rejection; focused and guarded impacted regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; the gate contains exactly 8,192 source maps, 8,175 operations, one scenario/root/live fiber, 22 bindings, seven types, six events, a 508,968-byte unchanged bridge report, and a 2,949,646-byte target-neutral plan. Focused t1607 passes at Files=1/Tests=4; the guarded impact matrix passes at Files=10/Tests=47 in 111 seconds. No private capability, backend behavior, support, performance, or capacity claim changes. |
+
+## Acceptance Checklist (enforced) — `.17.2.4.2` execution source-map gate
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'source_map_records' --oneline
+  -- perl/FSM/VIAL/ArchitectureScaleExecutionGraph.pm` identifies `bfd85ade9`
+  as the metric-only introduction: its diff places the token solely in the
+  evaluation metric, while `construct` did not own that primary axis. Decision
+  `0061` assigns the gate to the frozen checked-AHB route. A canonical public-
+  binder census then shows 17 stable non-operation maps—domain, three endpoint
+  relations, one probe relation, six transaction fields, and six events—so
+  treating the requested 8,192 maps as 8,192 operations would miss the selected
+  axis by 17.
+- [x] **ADDRESSED (verified)** — the generator now subtracts the exact fixed
+  family and authors 8,175 genuine reset actions. Closed oracles freeze all
+  8,192 unique plan paths, action-indexed semantic paths, ordered non-empty
+  source spans, real fixed bridge facts, one contiguous reset chain, logical
+  time, checked-AHB IAL2/IAL1/IAL0 route, public capability isolation,
+  deterministic source/SemanticIR/bridge/workload/plan identities, and
+  mutation/missing-source/unfinished-level rejection. Focused t1607 passes at
+  `Files=1, Tests=4`.
+- [x] **NO REGRESSION** — changed Perl/test syntax is `OK`; the final guarded
+  architecture/public-planning matrix reports `All tests successful` at
+  `Files=10, Tests=47` in 111 seconds. All 52 mdBook chapters test; its exact
+  runnable example appears in the inspected 88-file/18,224-KiB repository-
+  local render before removal. Knowledge Map is current at 1,108 facts/5,752
+  questions/5,918 occurrences/120 shards; task integrity remains 936 nodes;
+  all 22 live surfaces and 2,975 paths pass with exact book/card authority and
+  zero ceiling increases; the 14-entry rationale ledger reconstructs. Staged
+  acceptance and all nine doctrines pass. No parser, SemanticIR, bridge,
+  public binder, backend semantics, runtime result, capability/support,
+  performance budget, or capacity claim changes.
 
 ## Acceptance Checklist (enforced) — `.17.2.4.2` execution-type gate
 

@@ -9,11 +9,10 @@ history; this file carries only the current bounded resume state.
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`.
 - current_state: `.17.2.4.2` implements binding, checked-AHB scenario/operation,
-  exact 128-total/32-live fiber, and plain-IAL1 512-type gate candidates.
-  Multi-scenario maps use unique global paths; every type has one public exact-
-  width drive relation through the unchanged binder.
-- next_action: implement the checked-AHB 8,192-source-map gate with exact map,
-  topology, plan, determinism, and fail-closed oracles.
+  exact fiber, plain-IAL1 512-type, and checked-AHB 8,192-source-map gates.
+  The map gate is 17 fixed bindings plus 8,175 real resets in one closed chain.
+- next_action: implement the 8,192-attempt deterministic random gate and prove
+  generated/replayed decision equality through the unchanged binder.
 - in_flight_uncommitted: none.
 - blockers: none.
 - push_state: decision `0062`; derive with `git rev-list --count @{upstream}..HEAD`.
