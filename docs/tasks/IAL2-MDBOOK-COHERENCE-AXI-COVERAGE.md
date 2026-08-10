@@ -190,11 +190,11 @@ what is actually shipped, matching the thoroughness AHB already has.
   Blocked by: `none`
 
 - ID: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Document AXI read-data, burst-length, RLAST validation, and multi-beat output banks.`
   Acceptance: `Extend 16aa with single-beat, last-beat, and multi-beat read-data shapes; completion-source response-demux; raw ARLEN axlen-plus-one capture; report-only versus runtime-assertion validation; beat-count/RLAST behavior; per-beat status, worst-observed aggregation, valid masks, RID interleaving, and bounded output banks. Include runnable representative sources for concrete queue-head, mixed report-only, and dynamic depth-3 runtime multi-beat paths plus accurate residue.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Extended 16aa by 134 lines / 6,939 bytes with the three generated capture scopes, response-demux ownership, request-time raw-ARLEN capture and AXI axlen-plus-one meaning, report-only versus runtime-assertion behavior, matched-beat counters and RLAST assertions, bounded per-beat data/status banks, valid masks, lengths, worst-observed RRESP aggregation, RID routing, composite examples, and exact residue limits. All six documented base/composite sources pass strict check JSON and Verilator/Yosys --verify-hdl; the attached dynamic depth-3 runtime multi-beat verification completed with exit 0 after its expected long generation phase. Schedule reports confirm the stated 4/4/70 base output counts, 2/2/42 rule counts, 32-lane base and 48-lane depth-3 banks, report-only absence of counters/assertions, and empty exact-source residue where claimed. mdbook build and Knowledge Map generation/check pass. A one-second process sample used to diagnose the long verifier created a 30,366-byte /tmp diagnostic; it was consumed, deleted exactly, and an absence check proves no off-volume residue. No code, test, PPIF, or generated product artifact changed; the staged doctrine result is recorded below.`
+  Commit: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.5: document AXI read-data and output banks`
   Blocked by: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.4`
 
 - ID: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.6`
@@ -209,7 +209,7 @@ what is actually shipped, matching the thoroughness AHB already has.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.5` | `pending` | Build on the documented response-routing boundary with read-data, burst-length, RLAST validation, and bounded output-bank semantics. |
+| 1 | `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.6` | `pending` | Re-census the complete AXI corpus, prove representative coverage, and close the coherence tree. |
 
 ## Decisions
 
@@ -232,6 +232,11 @@ what is actually shipped, matching the thoroughness AHB already has.
   Document concrete reject as static validation, dynamic reject and policy-only
   dynamic queueing as selected-not-generated, and queue behavior only through
   exact bounded response-demux fixtures whose schedule reports mark it generated.
+- `2026-08-10`: Treat request-time raw-ARLEN capture and runtime validation as
+  separate contracts. `report-only` captures and reports without beat checks;
+  only `runtime-assertion` owns expected counts, matched-beat counters, and
+  early/missing/extra-beat `RLAST` assertions. Empty residue remains
+  exact-source evidence, never a general reassembly claim.
 
 ## Findings Routed Outside This Tree
 
@@ -248,6 +253,28 @@ what is actually shipped, matching the thoroughness AHB already has.
   provisional one-bit width reaches simplification before the SystemVerilog
   backend infers the correct width. Both defects predate and are outside this
   documentation-only tree.
+
+## Acceptance Checklist (enforced) — `.5` maintained-reference authority
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The `.1` census found 79 read-data and 48
+  burst-length sources absent from the user-facing manager reference. Fresh
+  `--emit-schedule-json` evidence proves three distinct capture scopes and
+  locates raw-ARLEN capture, validation ownership, output-bank structure,
+  interleaving, and exact residue. The committed `.4` mdBook baseline is 53
+  files / 49,138 lines / 2,597,832 bytes; `git show HEAD:docs/book/src/16aa-ial2-axi-manager-capacity-status.md
+  | wc -l -c` measures its prior 557 lines / 24,582 bytes.
+- [x] **ADDRESSED (verified)** — Authority
+  `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.5-BOOK-SYNC` records the exact baseline
+  and measured +0 files / +134 lines / +6,939 bytes. The chapter now documents
+  single-, last-, and multi-beat capture plus bounded concrete, mixed, and
+  dynamic depth-3 runnable examples without promoting fixture-local empty
+  residue into an unbounded behavior claim.
+- [x] **NO REGRESSION** — Six exact sources pass strict check JSON,
+  `verilator_lint`, and `yosys_synthesis`; `mdbook build docs/book` and
+  `knowledge-map: OK` pass, and all generated book and off-volume diagnostic
+  residue is removed. The staged doctrine gate must report
+  `[doctrine] all doctrine checks passed` before commit. No implementation,
+  public PPIF, test, or generated product artifact changed.
 
 ## Acceptance Checklist (enforced) — `.4` maintained-reference authority
 

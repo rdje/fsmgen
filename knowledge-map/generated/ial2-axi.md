@@ -1417,7 +1417,7 @@ _AXI multi-beat read-data metadata accepted output-bank syntax before behavior s
 
 _AXI multi-beat read-data output-bank behavior now generates payload lanes_
 
-- **date:** 2026-06-14 · **status:** current
+- **date:** 2026-08-10 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-axi-manager-multi-beat-read-data-output-bank-behavior.md`](../../docs/knowledge/ial2-axi-manager-multi-beat-read-data-output-bank-behavior.md)
 
 ### ial2-axi-manager-multi-beat-read-data-output-readiness-audit

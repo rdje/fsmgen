@@ -7,14 +7,14 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.5`.
-- current_state: `.4` documents policy-only versus generated same-ID behavior,
-  concrete queue-head BID/RID routing, mixed dynamic/static queueing, bounded
-  populations, completion ownership, and explicit scoreboard/interleaving
-  residue; its seven public sources pass strict check and both HDL gates.
-- next_action: extend `16aa` with read-data capture, raw-ARLEN burst length,
-  RLAST validation, multi-beat status/output banks, and representative runnable
-  sources under `.5`.
+- active_work_unit: `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.6`.
+- current_state: `.5` documents single/last/multi-beat read-data capture,
+  report-only/runtime raw-ARLEN behavior, RLAST checks, bounded output banks,
+  RID interleaving, and concrete/mixed/dynamic compositions; all six selected
+  sources pass strict check and both HDL gates.
+- next_action: re-census all 153 AXI PPIF sources against the documented
+  monitor/initiator/manager families, rerun the ten representative proof set,
+  and close the coherence tree under `.6`.
 - in_flight_uncommitted: none; no background job or generated build residue.
 - blockers: none.
 

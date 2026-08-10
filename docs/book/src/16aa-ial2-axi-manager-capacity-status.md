@@ -493,6 +493,139 @@ general different-ID interleaving beyond the selected auto-ID, dynamic, mixed,
 and concrete queue-head fixtures. This chapter also does not turn the
 capacity/status object into a bus-driving AXI manager.
 
+## Capture read payload through response demux
+
+`(read-data ...)` consumes an explicit generated response-demux boundary. It
+does not independently decide which transaction owns an R-channel beat. The
+common clause shape is:
+
+```text
+(read-data
+  (read
+    (capture-scope <single-beat|last-beat|multi-beat>)
+    (completion-source response-demux)
+    (data-signal axi0_rdata (width 32))
+    (status-signal axi0_rresp (width 2))
+    ...
+    (transaction r0 <output-bindings>)
+    (transaction r1 <output-bindings>)))
+```
+
+The three scopes are distinct generated contracts:
+
+| Complete source | Capture contract | Two-transaction report result |
+| --- | --- | --- |
+| `ppif/axi_manager_capacity_status_read_data.ppif` | `single-beat`: the generated RID-demux completion pulse captures one `RDATA`/`RRESP` value. | 4 outputs, 2 capture rules |
+| `ppif/axi_manager_capacity_status_read_data_last_beat.ppif` | `last-beat`: burst-last RID/`RLAST` completion captures only the final beat and its status. | 4 outputs, 2 capture rules |
+| `ppif/axi_manager_capacity_status_read_data_multi_beat.ppif` | `multi-beat`: every matched RID beat enters a bounded per-transaction output bank; completion still occurs on `RLAST`. | 70 outputs, 42 read-data rules |
+
+For single- and last-beat scopes, each transaction binds one held data output
+and one held status output. Multi-beat scope instead binds output prefixes,
+validity and length outputs, and a status aggregate. In every case the raw
+`RDATA` and `RRESP` ports are generated inputs; payload routing follows the
+response-demux match already selected for that transaction.
+
+## Capture raw ARLEN and choose validation deliberately
+
+Last-beat and multi-beat scopes may add:
+
+```text
+(burst-length
+  (source arlen)
+  (signal axi0_arlen (width 8))
+  (encoding axlen-plus-one)
+  (capture request)
+  (max-beats 16)
+  (validation <report-only|runtime-assertion>))
+```
+
+FSMGen captures raw `ARLEN` on the admitted transaction request. AXI encoding
+means the expected beat count is `ARLEN + 1`; `max-beats 16` bounds both the
+accepted value and generated storage. The validation modes are intentionally
+different:
+
+| Mode | Generated behavior |
+| --- | --- |
+| `report-only` | Captures raw `ARLEN` and reports `arlen_signal`, `axlen_plus_one`, and the maximum. It generates no expected-beat register, beat counter, or `RLAST` timing assertion. |
+| `runtime-assertion` | Adds expected-beat storage, a matched-beat counter, initialization/increment rules, and per-transaction assertions for ARLEN bounds, extra beats, early `RLAST`, and a missing final `RLAST`. |
+
+The counter advances from `response_demux_matched_read_beat`, not from every
+R-channel event. Interleaved beats therefore update only the transaction
+selected by the supported RID/queue contract. `report-only` is observability,
+not silent runtime enforcement.
+
+## Generate bounded per-beat output banks
+
+Multi-beat capture requires per-beat status, worst-observed aggregation, and
+explicit output bindings:
+
+```text
+(status-policy per-beat)
+(status-aggregation (policy worst-observed))
+(interleaving multi-beat-by-rid)
+(transaction r0
+  (data-output-prefix axi0_r0_beat_rdata)
+  (status-output-prefix axi0_r0_beat_rresp)
+  (status-aggregate-output axi0_r0_rresp)
+  (valid-mask-output axi0_r0_beat_valid)
+  (length-output axi0_r0_read_beats))
+```
+
+For `max-beats 16`, each transaction receives 16 data lanes, 16 two-bit status
+lanes, a 16-bit valid mask, a five-bit captured-length output, and a scalar
+worst-observed `RRESP`. A new admitted request clears that transaction's bank,
+mask, length, and aggregate. Each matched beat writes exactly the lane selected
+by its beat count, sets the corresponding valid bit, advances the recorded
+length, and updates the aggregate status.
+
+The two-transaction base source generates 32 data lanes, 32 status lanes, two
+valid masks, two lengths, two aggregate statuses, 32 lane-capture rules, four
+beat-count rules, and eight beat-count/`RLAST` assertions. Its `read_data` and
+`response_demux` residue arrays are empty for this selected contract. That
+empty result is local to the fixture, not a claim of unbounded reassembly.
+
+## Run the composite read-data progression
+
+Three support-accounted sources show how the same clause composes with the
+ordering families from the preceding section:
+
+| Source | Identity/ordering | Payload and validation boundary |
+| --- | --- | --- |
+| `ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data.ppif` | Three concrete transactions share RID 3 through one depth-3 queue head. | Runtime-validated 16-beat banks: 48 data lanes, 48 status lanes, 48 capture rules, 12 beat assertions. |
+| `ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_burst_length.ppif` | One dynamic plus one concrete transaction use bounded mixed RID matching. | Last-beat outputs plus request-time raw-ARLEN capture in `report-only` mode; no beat counter or beat assertion. |
+| `ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif` | Three dynamic transactions use the generated depth-3 runtime-ID issue-order queue. | Runtime-validated 16-beat banks with the same 48/48 lanes, 48 capture rules, and 12 beat assertions. |
+
+Review all three from the repository root:
+
+```bash
+for manager_example in \
+  ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data.ppif \
+  ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_burst_length.ppif \
+  ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif
+do
+  ./bin/fsmgen --quiet --strict --check --json "$manager_example"
+  ./bin/fsmgen --quiet --emit-schedule-json "$manager_example"
+  ./bin/fsmgen --quiet --verify-hdl "$manager_example"
+done
+```
+
+## Interleaving and residue boundary
+
+`single-beat-by-rid`, `last-beat-by-rid`, and `multi-beat-by-rid` name routing
+inside supported response-demux populations. For multi-beat sources, the
+matched-beat expression lets different covered RIDs update different output
+banks while each transaction retains its own captured ARLEN and beat counter.
+For reused IDs, the selected concrete, dynamic, or mixed issue-order queue also
+constrains ownership; RID alone does not replace queue order.
+
+This remains bounded storage, not a generic payload engine. The public shapes
+enumerate transaction populations, queue depths, and `max-beats`; they do not
+provide arbitrary bank sizing, packed whole-burst vectors, alternate full-burst
+assembly, a generalized scoreboard, or interleaving beyond a checked-in
+matching contract. Inspect all three residue arrays—`read_data`,
+`response_demux`, and `same_id_ordering`—for the selected source rather than
+transferring an empty result from another fixture.
+
 ## Reports, artifacts, and support identity
 
 The six foundation sources are independently support-accounted:
@@ -551,7 +684,8 @@ Parser/CLI, generator, dynamic-ID, and corpus-accounting coverage lives in
 `t/248-regression-corpus-accounting.t`, respectively.
 
 For a bounded review of this chapter, run strict check JSON and `--verify-hdl`
-on all six foundation sources listed at the start, the four policy-only sources
-in the same-ID table, the mixed dynamic/static write example, and the concrete
-multi-group write/read pair. Then build the book with `mdbook build docs/book`.
-That bounds the review to the documented public shapes.
+on all six foundation sources listed at the start; the four policy-only
+sources, mixed write, and concrete multi-group pair from the ordering sections;
+and the six base/composite read-data sources above. Then build the book with
+`mdbook build docs/book`. That bounds the review to the documented public
+shapes.
