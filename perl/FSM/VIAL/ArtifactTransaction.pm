@@ -104,9 +104,9 @@ sub _publish($raw) {
     if (!$ok) {
         my $error = $@;
         if ($stage_created && !$committed && -d $stage_abs && !-l $stage_abs) {
-            my $cleanup_error = [];
-            remove_tree($stage_abs, {error => $cleanup_error});
-            if (@$cleanup_error) {
+            my $cleanup_error;
+            remove_tree($stage_abs, {error => \$cleanup_error});
+            if ($cleanup_error && @$cleanup_error) {
                 _throw('VIAL_HOST_ERROR', "cannot remove failed staging root '$stage_rel'", '/staging');
             }
         }

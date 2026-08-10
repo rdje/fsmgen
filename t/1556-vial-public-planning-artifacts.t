@@ -20,6 +20,7 @@ use FSM::Adapter::IAL2::PPIF;
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
 use FSM::Support::VIALToolingContract qw(build_vial_tooling_contract);
+use FSM::VIAL::ToolCLI;
 use FSM::VIAL::Tool qw(execute_vial_tool_request);
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
@@ -214,6 +215,68 @@ subtest 'invocation, HIAL, runtime, and sink failures remain atomic and sanitize
     my $run = execute_vial_tool_request($run_request, {source_catalog => {}, artifact_sink => $run_sink});
     is($run->{diagnostics}[0]{code}, 'VIAL_TOOL_INVOCATION_ERROR', 'run without the required repository root fails closed');
     is_deeply($run_sink, [], 'invalid run environment produces no artifacts');
+};
+
+subtest 'failed public artifact staging is removed exactly and remains retryable' => sub {
+    my $out_rel = "$test_root_rel/forced-write-recovery";
+    my $prepared_sink = [];
+    my $prepared = execute_vial_tool_request(plan_request(
+        options => {
+            artifact_policy => {mode => 'repository', artifact_root => $out_rel},
+        },
+    ), {
+        source_catalog => {},
+        artifact_sink => $prepared_sink,
+        repository_root => $repo_root,
+    });
+    ok($prepared->{success}, 'public plan prepares the exact repository transaction');
+    my $stage_rel = $prepared->{tool_manifest}{cleanup}{staging_identity};
+    like($stage_rel, qr{\A\.artifacts/tmp/vial/op-[0-9a-f]{64}\z},
+        'public manifest exposes the exact operation-owned staging identity');
+    ok(!-e repo_path($stage_rel) && !-l repo_path($stage_rel),
+        'forced-failure staging root begins absent');
+    ok(!-e repo_path($out_rel) && !-l repo_path($out_rel),
+        'forced-failure target begins absent');
+
+    my ($status, $stdout, $stderr, $write_attempts) = (undef, '', '', 0);
+    {
+        no warnings qw(once redefine);
+        local *FSM::VIAL::ArtifactTransaction::_write_exact = sub {
+            $write_attempts++;
+            die "forced artifact write failure\n";
+        };
+        open my $stdout_capture, '>', \$stdout
+            or die "cannot capture forced-failure stdout: $!";
+        open my $stderr_capture, '>', \$stderr
+            or die "cannot capture forced-failure stderr: $!";
+        local *STDOUT = $stdout_capture;
+        local *STDERR = $stderr_capture;
+        $status = FSM::VIAL::ToolCLI->run({
+            argv => ['plan', '--dut', $hial_id, '--outdir', $out_rel, $vial_id],
+            repo_root => $repo_root,
+        });
+        close $stdout_capture or die "cannot close forced-failure stdout: $!";
+        close $stderr_capture or die "cannot close forced-failure stderr: $!";
+    }
+    is($write_attempts, 1, 'failure is injected only after staging creation reaches its first artifact write');
+    is($status, 2, 'public host failure returns the stable host-error exit class');
+    is($stdout, '', 'failed publication writes no success output');
+    is($stderr, "Error [VIAL_HOST_ERROR] /: forced artifact write failure\n",
+        'failed publication returns one stable sanitized diagnostic');
+    ok(!-e repo_path($stage_rel) && !-l repo_path($stage_rel),
+        'failed publication removes the exact operation-owned staging tree');
+    ok(!-e repo_path($out_rel) && !-l repo_path($out_rel),
+        'failed publication leaves no target tree');
+
+    my ($retry_status, $retry_out, $retry_err) = run_cli(
+        'vial', 'plan', '--dut', $hial_id, '--outdir', $out_rel, $vial_id,
+    );
+    is($retry_status, 0, 'the same public transaction retries successfully');
+    is($retry_out, "VIAL plan planned ($out_rel)\n", 'retry reports a fresh atomic publication');
+    is($retry_err, '', 'retry has no diagnostic');
+    ok(-d repo_path($out_rel) && !-l repo_path($out_rel), 'retry publishes the declared target tree');
+    ok(!-e repo_path($stage_rel) && !-l repo_path($stage_rel),
+        'successful retry also leaves no operation staging tree');
 };
 
 subtest 'filesystem CLI atomically publishes, detects identity, collision, and unsafe paths' => sub {

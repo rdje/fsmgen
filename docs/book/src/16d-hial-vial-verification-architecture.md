@@ -670,6 +670,10 @@ identity/digest and is not copied as a generated artifact. The first bounded
 direct-IAL0 route accepts one root `.fsm`; package imports fail closed until a
 later slice defines their complete review graph.
 
+A failure after staging begins removes the exact operation-owned staging tree
+before returning its diagnostic, so the same operation can retry without
+residue blocking atomic publication.
+
 Embedding callers choose an exact `artifact_policy`: `virtual` returns the
 same ordered graph in an initially empty caller-owned sink, while `repository`
 delegates atomic publication to a filesystem adapter such as the CLI. The
