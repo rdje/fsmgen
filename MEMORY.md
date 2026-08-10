@@ -7,14 +7,14 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.8`.
-- current_state: clean activation commit `8201334c4`; `.17.8` preserves the
-  decisions `0055`/`0056` selection audit and records completed `.17.6` commit
-  `5db70fa08` as current aligned transcript-limit authority.
-- next_action: verify and commit `.17.8`, then activate `.17.2` workload
-  generation from the clean reconciliation commit.
-- in_flight_uncommitted: documentation-only `.17.8` decision/index/task/Memory
-  reconciliation; no background job or generated residue.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.1`.
+- current_state: clean `.17.8` commit `62979adc4`; `.17.2` is decomposed into
+  shared foundation plus six family/integration leaves and `.17.2.1` is active.
+- next_action: commit `.17.2`/`.17.2.1` activation, then implement the immutable
+  workload specification, catalog, identity, deterministic payload, and
+  same-volume staging foundation with focused tests and mdBook sync.
+- in_flight_uncommitted: documentation-only `.17.2` decomposition/activation;
+  no background job or generated residue.
 - blockers: none.
 
 ## Durable context
