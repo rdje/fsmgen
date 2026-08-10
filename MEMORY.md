@@ -7,15 +7,15 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17`.
-- current_state: `.17.1` selects orthogonal correctness-gated scale contracts;
-  clean activation `44ad589ce` owns `.17.7`, whose implementation now removes
-  the stale focused-index count shadow without storing a replacement count.
-- next_action: commit completed `.17.7` after its staged doctrine gate, then
-  activate proposed `.17.6` from the clean result to align support transcript
-  limits before `.17.2` consumes them.
-- in_flight_uncommitted: `.17.7` test and closeout surfaces are being verified
-  for commit; no background job or generated residue.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.6`.
+- current_state: clean commit `95f0670c8` closes `.17.7` without a replacement
+  mutable count. `.17.6` is active from that clean result to align the public
+  support snapshot with already-enforced transcript limits.
+- next_action: commit the documentation-only `.17.6` activation, then audit
+  every support consumer and align exact contract/accounting assertions before
+  `.17.2` consumes `backend_limits`.
+- in_flight_uncommitted: documentation-only `.17.6` activation is being
+  verified for commit; no background job or generated residue.
 - blockers: none.
 
 ## Durable context

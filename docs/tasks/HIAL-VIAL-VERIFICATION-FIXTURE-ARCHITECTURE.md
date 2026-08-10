@@ -416,11 +416,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.6`
-  Status: `proposed`
+  Status: `active`
   Goal: `Align the public VIAL execution support snapshot with the enforced portable-SystemVerilog transcript limits.`
   Acceptance: `From a separate clean activation, make FSM::Support::VIALExecutionContract report the Runner- and normative-contract-authoritative 8,388,608-byte compile and 67,108,864-byte run capture limits; add exact contract/accounting regression assertions; preserve Runner behavior, artifacts, diagnostics, support capability set, backend qualification, and every scale non-claim. Audit all support consumers before changing the snapshot and update the owning docs/fact surfaces in the same slice.`
-  Verification: `pending; git blame and git show identify dfe87f536 as the single originating commit for both the enforced Runner values and contradictory support values.`
-  Commit: `pending activation after the clean .17.1 selection commit; complete before scale automation consumes backend_limits`
+  Verification: `Clean .17.7 implementation commit 95f0670c8 removes the independently discovered focused-index regression shadow and leaves no dirty or generated residue. Decisions 0055/0056, the .17.1 audit, and git history already establish dfe87f536 as the single originating commit for both the Runner-enforced 8,388,608/67,108,864-byte values and the contradictory 4,194,304/4,194,304-byte support snapshot. This separate continuity slice activates .17.6 alone before .17.2 consumes backend_limits; it changes no contract value, Runner behavior, artifact, diagnostic, capability, support state, or scale claim.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.6: activate support-limit alignment`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.7`
   Status: `done`
@@ -544,8 +544,8 @@ and no compatible mixed-language simulator is installed. Completed `.17.1`
 selects decisions `0055`/`0056` and the architecture-scale contracts without claiming
 capacity. Its audit finds one pre-existing support-snapshot limit drift;
 completed `.17.7` removes the stale focused-document regression shadow without
-storing a replacement count. Proposed `.17.6` is next to align the support
-snapshot before `.17.2` may build scale automation against those values.
+storing a replacement count. Active `.17.6` now aligns the support snapshot
+before `.17.2` may build scale automation against those values.
 
 ## Decisions
 
