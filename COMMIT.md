@@ -27,6 +27,24 @@ Ignoring it is not a style issue; it is a project-safety failure.
 - Run before starting the next task/activity, before replying as if a slice is done, and before any context switch that could blur task boundaries.
 - Do not wait for approval for commit-workflow steps.
 
+## Push cadence
+- Commit and push are separate continuity layers. Complete and commit every
+  finished slice immediately; do not push every commit.
+- The normal automatic cadence is one push after **200 accumulated local
+  commits** since the previous successful push. Derive the live count from Git
+  with `git rev-list --count @{upstream}..HEAD`; do not maintain a handwritten
+  shadow counter.
+- After the 200th committed slice has completed this workflow and the worktree
+  is clean, push the current branch to its configured upstream. A successful
+  push must leave the derived count at zero and starts the next 200-commit
+  interval.
+- Before 200 commits, push only when the user explicitly directs an earlier
+  push. A successful user-directed early push also starts a fresh 200-commit
+  interval, but it does not change the standing cadence.
+- A failed or incomplete push does not reset the count. Preserve the local
+  commits, diagnose the exact failure, and treat any unresolved remote state
+  as in-flight continuity work.
+
 ## Files involved and precise role
 - `COMMIT.md`
   - This workflow specification (tracked in git).
@@ -111,7 +129,9 @@ Ignoring it is not a style issue; it is a project-safety failure.
    - `truncate -s 0 git_message_brief.txt`
 11. Verify final state:
    - `git --no-pager status --short`
-12. The user-facing close-out should include the current live status from the
+12. Derive the ahead-of-upstream commit count and apply the `Push cadence`
+    section above.
+13. The user-facing close-out should include the current live status from the
    task-trees (`docs/TASK_TREE.md` Active table + the owning `docs/tasks/*.md`
    frontier), since decision `0049` retires the former roadmap-status board.
    - State how the completed task changed the active task-tree's status/frontier, or

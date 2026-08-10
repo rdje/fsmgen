@@ -16,6 +16,7 @@ history; this file carries only the current bounded resume state.
   topology, plan, determinism, and fail-closed oracles.
 - in_flight_uncommitted: none.
 - blockers: none.
+- push_state: decision `0062`; derive with `git rev-list --count @{upstream}..HEAD`.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not
@@ -41,4 +42,4 @@ history; this file carries only the current bounded resume state.
 - Decisions `0058`/`0059`: action-local SemanticIR IDs follow scenario/parallel
   scope; the current expanded-action cap dominates higher repeat candidates,
   and `.17.4` alone owns any limit-policy repair.
-- Decisions `0041`/`0042`/`0044`/`0045` retain containment authority; retired views are Git-retrievable. Push only on request; PNT is autonomous.
+- Decisions `0041`/`0042`/`0044`/`0045` retain containment authority; retired views are Git-retrievable. Decision `0062` sets the 200-commit normal push cadence; PNT is autonomous.

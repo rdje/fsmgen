@@ -2,7 +2,7 @@
 
 - Date: 2026-06-02
 - Type: feedback
-- Status: accepted (supersedes the earlier "~30-commit cadence" rule)
+- Status: superseded by [0062](0062-push-cadence-is-200-commits.md)
 
 ## Context
 
