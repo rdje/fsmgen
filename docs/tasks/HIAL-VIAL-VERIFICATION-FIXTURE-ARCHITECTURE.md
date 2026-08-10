@@ -423,11 +423,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `pending activation after the clean .17.1 selection commit; complete before scale automation consumes backend_limits`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.7`
-  Status: `proposed`
+  Status: `active`
   Goal: `Remove the stale hard-coded focused-document member-count shadow from the containment regression.`
   Acceptance: `From a separate clean activation, apply decision 0054 to t/1569-focused-document-containment.t: consume the focused-document indexer's successful current census rather than storing a second mutable literal count; retain proof that the real index is current and complete, retain all generated-index unclassified/stale/duplicate/escaping/empty-group and semantic-part negative gates, and change no surface membership, ceiling, classifier, product behavior, or scale claim.`
   Verification: `pending; clean HEAD's generated docs/index/FOCUSED_DOCUMENTS.md is byte-current and scripts/focused_document_index.pl check reports 1,023 members, while git blame identifies 70ba62f35 as the 1,022-member literal in t/1569. The intervening exact OSVVM gallery README is a registered ancillary member; changing the literal to 1,023 would preserve the derived-state defect rather than repair it.`
-  Commit: `pending clean activation before .17.6 and any behavior-bearing scale work`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.7: activate focused-index authority repair`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18`
   Status: `proposed`
@@ -543,10 +543,9 @@ Verilator, Icarus, and repository-local GHDL are not a mixed-language runtime,
 and no compatible mixed-language simulator is installed. Completed `.17.1`
 selects decisions `0055`/`0056` and the architecture-scale contracts without claiming
 capacity. Its audit finds one pre-existing support-snapshot limit drift;
-proposed `.17.7` is the next clean activation to repair a stale focused-
-document regression oracle discovered by the selection gates. Proposed `.17.6`
-then aligns the support snapshot before `.17.2` may build scale automation
-against those values.
+active `.17.7` now owns the stale focused-document regression oracle discovered
+by the selection gates. Proposed `.17.6` then aligns the support snapshot before
+`.17.2` may build scale automation against those values.
 
 ## Decisions
 

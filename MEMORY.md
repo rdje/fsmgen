@@ -7,20 +7,16 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17`; clean
-  activation of proposed `.17.7` is next.
-- current_state: the clean AXI/mdBook tree closed at `6d23b5843`; a fresh tool
-  census leaves `.16` proposed because separately available Verilator/Icarus
-  and repository-local GHDL do not provide mixed-language execution. Decision
-  `0055`/`0056` select orthogonal workloads, correctness-gated measurement,
-  bounded failure, and evidence-derived budgets without a capacity claim.
-- next_action: from the clean `.17.1` selection commit, activate `.17.7` alone
-  and replace `t/1569`'s stale 1,022-member shadow with the current focused-
-  index authority; then cleanly activate `.17.6` to align VIAL support limits
-  before `.17.2` scale automation.
-- in_flight_uncommitted: `.17.1` documentation/decision/task/book/fact/Memory
-  selection is being verified and committed; no background job or generated
-  build residue.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.7`.
+- current_state: clean commit `0516f2c66` closes `.17.1` with decisions
+  `0055`/`0056`: orthogonal workloads, correctness-gated measurement, bounded
+  failure, and evidence-derived budgets without a capacity claim. `.17.7` is
+  active for the independently discovered focused-index count shadow.
+- next_action: replace `t/1569`'s stale 1,022-member literal with the focused-
+  indexer's current authority while preserving its complete negative matrix;
+  then close `.17.7` before activating `.17.6`.
+- in_flight_uncommitted: documentation-only `.17.7` activation is being
+  verified and committed; no background job or generated residue.
 - blockers: none.
 
 ## Durable context
