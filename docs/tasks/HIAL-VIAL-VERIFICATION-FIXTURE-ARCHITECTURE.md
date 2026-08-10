@@ -435,7 +435,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Generate execution-graph workloads through the shipped binder with exact plan and replay oracles.`
   Acceptance: `Construct every execution_graph_v1 axis from successful generated SemanticIR and bridge inputs; prove topology/counts, stable IDs/ranks/types/maps, drive/sample/react/check and parallel semantics, keyed random decisions/replay, defensive reports, plan hashes, earliest-cap diagnostics, determinism, and cleanup without backend terms.`
-  Verification: `Clean bridge-fanout predecessor 97dda148d leaves the repository handoff-ready. Source and contract inspection confirms that execution scale must reconcile selected nominal axes with canonical upstream semantic limits, the shipped single-fixture/unit/domain profile, the 16-MiB serialized-plan cap, and the random generator's exact attempt semantics before generator code is safe. This activation therefore selects .17.2.4.1 alone for a read-only reachability and earliest-cap decision; .17.2.4.2 remains proposed for implementation. No parser, SemanticIR, bridge, binder, plan, replay, capability/support, performance, or capacity behavior changes.`
+  Verification: `Clean bridge-fanout predecessor 97dda148d enabled the read-only reachability selection. Decision 0061 and clean selection commit b82426c85 now reconcile every nominal axis with canonical upstream semantics, the single-fixture/unit/domain profile, bridge event/type and byte caps, execution structural and random limits, and the 16-MiB serialized-plan cap. Child .17.2.4.1 is done and .17.2.4.2 alone is active for the selected implementation; no parser, SemanticIR, bridge, binder, plan, replay, capability/support, performance, or capacity behavior changes in either activation.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4: activate execution-graph generation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`
 
@@ -447,11 +447,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.1: select execution-scale reachability`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the selected canonical execution-graph generator and exact plan/replay oracles.`
   Acceptance: `Implement only after .17.2.4.1 commits cleanly; construct every reachable execution_graph_v1 axis through ordinary VIAL parsing, canonical bridge production, and the shipped binder; prove the selected exact or earliest-cap outcomes, structural topology and logical-time invariants, generated/replayed decision equality, immutable byte-equal reports and plan hashes, hostile-input rejection, deterministic reruns, and exact repository-local staging cleanup with default and RAM-guarded qualification tests plus synchronized user documentation.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean predecessor b82426c85 closes .17.2.4.1 with decision 0061, the exact 13-axis/five-level earliest-cap matrix, deterministic attempt construction, genuine exact 1/4/16-MiB plan recipes, and unchanged public-boundary nonclaims. This documentation-only activation freezes .17.2.4.2 to one caller-sealed private binder admission, canonical AHB/plain-IAL1/private-event routes, minimum-representation preflight, structural/logical-time/replay/hash oracles, focused default plus opt-in RAM-guarded qualification, and repository-local cleanup. Task/index/Memory continuity, task integrity, Knowledge Map freshness, relative paths, diff, and staged doctrines pass; no code, test, config, generated artifact, support, or product behavior changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2: activate canonical execution-scale generation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5`
   Status: `proposed`
@@ -1093,6 +1093,22 @@ defect before `.17.2.2` begins semantic-family generation.
 | `2026-08-09` | `.15.7` activation | clean `.15.6` predecessor `4f350f29c`; task/index/audit/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook test; live-reference authority; diff/staged-doctrine gates | `passed`; `.15.7` alone is active for combined exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT qualification. Both inputs remain repository-local; task integrity reports three active trees/916 nodes, Knowledge Map remains 1,105 facts/5,713 questions/5,879 occurrences/118 shards, all 52 mdBook chapters test, and maintained-reference authority accepts the exact 0-file/0-line/+16-byte delta. Activation changes no source, generated artifact, qualification evidence, capability, runtime result, or support behavior. |
 | `2026-08-09` | `.15.7` exact combined qualification | exact GHDL archive/binary and recursive OSVVM identities; 44-core/17-Common ordered provider compilation; adapter/generated-fixture/probe analysis; fixture/probe elaboration and double execution; 42-record trace/result validation; 19-path portable parity; four deterministic OSVVM reports; bounded support/capability truth; same-volume cleanup; focused/corpus/capability/gallery/docs/task/Knowledge Map/mdBook/staged-doctrine gates | `passed`; `vhdl_osvvm_qualified` is bounded-qualified under exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT. Six adapter mappings execute in the probe; the Common address-bus mapping is analysis-only. OSVVM reports record three clean affirmations, 25% one-of-four-bin/25% coverage, and one checked scoreboard item with zero errors, while portable trace/result/parity remain authoritative. Broader provider/language/tool/profile claims remain explicit non-claims. |
 | `2026-08-10` | `.17` selection/activation | clean predecessor `6d23b5843`; mixed-language command/provider census; decisions 0032/0051; five-leaf scale decomposition; task/index/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook build; relative paths; live-reference authority; diff/staged-doctrine gates; exact cleanup | `passed`; `.16` remains proposed because no compatible mixed-language runtime is available, and `.17.1` alone is active for documentation-only scale-contract selection. Task integrity reports three active trees/921 nodes; Knowledge Map reports 1,105 facts/5,723 questions/5,889 occurrences/118 shards; the book shrinks by 34 lines/2,676 bytes while replacing stale chronology with current capability and scale boundaries; generated output is removed. No product behavior or scale claim changes. |
+| `2026-08-10` | `.17.2.4.2` activation | clean selection predecessor `b82426c85`; decision 0061; caller-sealed admission and canonical route/oracle scope; task/index/Memory continuity; task integrity; Knowledge Map; relative paths; diff/staged-doctrine gates | `passed`; `.17.2.4.1` is done and `.17.2.4.2` alone is active for canonical execution-scale generator implementation. The mdBook and fact card already identify this implementation owner and its exact route/nonclaim contract, so activation adds no status-board prose. No code, test, config, generated artifact, support, or product behavior changes. |
+
+## Acceptance Checklist (enforced) — `.17.2.4.2` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -1 --format='%h %s'` identifies
+  clean predecessor `b82426c85`, whose decision `0061` closes reachability and
+  explicitly assigns implementation to `.17.2.4.2`; the leaf cannot own code
+  until its status changes from proposed to active in a separate clean slice.
+- [x] **ADDRESSED (verified)** — `.17.2.4.2` alone is active with the exact
+  caller-sealed binder, canonical construction routes, earliest-cap matrix,
+  deterministic random/replay, exact plan-byte recipes, preflight/resource
+  policy, oracle set, and cleanup boundary selected by decision `0061`.
+- [x] **NO REGRESSION** — `knowledge-map: OK`, task-tree integrity,
+  documentation-relative paths, `git diff --check`, and staged doctrines pass.
+  No code, test, config, generated artifact, parser, bridge, binder, plan,
+  backend, capability/support, performance-budget, or capacity behavior changes.
 
 ## Acceptance Checklist (enforced) — `.17.2.4.1` execution-scale reachability
 

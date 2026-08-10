@@ -8,11 +8,11 @@ history; this file carries only the current bounded resume state.
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`.
-- current_state: `.17.2.4.1` selects decision `0061`, the complete execution-
-  graph route/earliest-cap matrix, and a caller-sealed binding qualification;
-  `.17.2.4.2` remains proposed until a separate clean activation commit.
-- next_action: after the clean `.17.2.4.1` selection commit, activate
-  `.17.2.4.2` without implementation and freeze its exact validation scope.
+- current_state: clean selection commit `b82426c85` closes `.17.2.4.1` with
+  decision `0061`; `.17.2.4.2` alone is being activated for its exact canonical
+  execution-scale generator, private binder admission, and plan/replay oracles.
+- next_action: after the clean activation commit, implement the caller-sealed
+  binder admission and generator foundation with focused fail-closed tests.
 - in_flight_uncommitted: none.
 - blockers: none.
 
