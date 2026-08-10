@@ -7,14 +7,16 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: none; `IAL2-MDBOOK-COHERENCE-AXI-COVERAGE` is closed.
-- current_state: `.1-.6` now align the one-language IAL2 overview, the complete
-  153-source AXI corpus, representative manager-family semantics, supported
-  boundaries, and executable validation with the mdBook and Knowledge Map.
-- next_action: from the clean closing commit, evaluate and activate
-  `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.16` only if an exact available
-  mixed-language tool/profile can satisfy its selection contract; otherwise
-  record the evidence and choose the next unblocked proposed HIAL/VIAL leaf.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.1`.
+- current_state: the clean AXI/mdBook tree closed at `6d23b5843`; a fresh tool
+  census leaves `.16` proposed because separately available Verilator/Icarus
+  and repository-local GHDL do not provide mixed-language execution. `.17` is
+  active and decomposed into contract, generation, measurement, caps, and
+  closeout leaves without changing product behavior or scale claims.
+- next_action: audit the shipped VIAL semantic/bridge/execution/backend limit
+  and resource contracts, then select exact deterministic scale profiles,
+  stage oracles, measurements, budgets, failure semantics, and non-claims
+  under documentation-only `.17.1`.
 - in_flight_uncommitted: none; no background job or generated build residue.
 - blockers: none.
 

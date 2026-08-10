@@ -1934,64 +1934,30 @@ The migration order is additive:
 6. keep `.ppif` verification output unsupported; and
 7. keep native extensions typed, external, capability-qualified, and reported.
 
-The selected implementation order is source/semantic-IR contract and
-implementation, bridge contract and implementation, execution/result/parity
-contract and implementation, public tooling, plain-SystemVerilog backend, AHB
-runtime parity, then separately qualified UVM, VHDL, mixed-language, scale,
-and closeout work. Each leaf requires its own clean activation and acceptance
-evidence. The canonical architecture record is
+The canonical architecture record is
 [HIAL/VIAL Verification Fixture Architecture Audit](../../HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md),
-and the owning [task tree](../../tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md)
-tracks the exact frontier.
+while the owning [task tree](../../tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md)
+retains detailed validation evidence.
 
-The bounded source/SemanticIR, private bridge, and private execution-
-elaboration implementations are complete. Public tooling contract `.8` is
-also complete as selection only.
-Bridge leaf `.5` ships the 27-key defensive in-process manifest through
-canonical HIAL review routes without writing a file or binding VIAL. Completed
-`.6` accepts decision `0036` and the exact target-neutral execution contract:
-binding, logical phases, actions/fibers, plan-time random/replay, declarative
-native implementations, plan/result/parity records, diagnostics, limits, and
-the AHB oracle. Proposed `.7` is selected next for separate clean activation of
-private no-backend implementation. Clean selection commit `eaf3f95dc` permits
-that continuity-only activation, which committed cleanly at `3ec8eab93`.
-Audit `.7.1` then confirmed that the exact type-identity rule could not bind
-the checked enum/Boolean/unsigned transaction fields to three HIAL four-state
-logic carriers. Director-approved decision `0037` and `.7.2` select the
-directional proof rule described above. Clean selection commit `2a1b3cefc`
-activated `.7.3`, which now ships the private binder, immutable ExecutionIR,
-deterministic random/replay elaboration, defensive in-process plan, exact
-resource accounting, and fail-closed contract oracles. Clean `.7.3`
-implementation commit `44dbecd1a` activates `.8` continuity-only for public
-tooling-contract selection. Decision `0039` now freezes `fsmgen vial`, exact
-normal/terse equivalence, separate VIAL/HIAL inputs, the portable API,
-repository-local atomic artifacts, manifests, discovery, diagnostics, and
-compatibility. Clean `.8` selection commit `d34da3254` activates `.9` alone
-for the separate plain-SystemVerilog/Verilator backend-contract selection.
-Decision `0043` and completed `.9` now select the exact deterministic known-
-value contract described above. Clean `.9` commit `ab3e73b72` activates `.10`
-alone for implementation. Clean activation commit `5fd766600` then decomposes
-that parent into `.10.1` public capabilities/check/normal-terse formatting,
-`.10.2` canonical planning and artifact transactions, `.10.3` portable backend
-emission and trace projection, and `.10.4` exact Verilator run/results. `.10.1`
-now ships the first three source commands, equivalent normal and terse
-projections, the defensive source-only API, and exact discovery and support
-accounting. Clean `.10.1` commit `50a0d7d39` activates `.10.2` alone for
-planning/artifacts. Completed `.10.2` now ships all three canonical review
-routes, defensive bridge/plan/tool-manifest projections, transaction-free
-direct-IAL0 endpoint fixtures, and virtual or atomic repository-local artifact
-graphs. Clean `.10.2` commit `045629c97` activates `.10.3` alone for backend/
-trace emission without simulator execution. Completed `.10.3` now ships the
-private exact-profile emitter, eight-artifact virtual graph, complete source
-map, one-scheduler plain-SystemVerilog fixture, selected-but-unexecuted command
-records, and pure closed-trace projection. Completed `.10.4` now ships public
-run, exact Verilator execution, trace capture, normalized results,
-deterministic reruns, and atomic cleanup. Completed `.11` now qualifies the
-selected AHB handwritten-oracle
-comparison while leaving general cross-backend parity unclaimed.
+The current product boundary is:
 
-Clean commit `ea1b76dd54` activates `.12` alone to select the native
-SystemVerilog/UVM contract: exact UVM revision, typed intent-to-methodology
-mapping, inert-skeleton migration, and the `sv_uvm_qualified` tool profile.
-Activation itself adds no UVM backend or qualification claim; the current
-local command census still finds no full-language UVM simulator.
+- the typed `.vial` frontend, review-routed bridge, deterministic ExecutionIR,
+  public planning/run tools, atomic artifacts, closed traces, and normalized
+  results are shipped;
+- portable SystemVerilog is qualified for the exact Verilator 5.046
+  known-value profile, including the selected 19-path AHB parity oracle;
+- simulator-neutral Accellera UVM 2020-3.1 emission is shipped, while its
+  Verilator/UVM probe remains explicitly tool-limited rather than qualified;
+- provider-free VHDL-2008 is qualified under repository-local GHDL 6.0.0
+  LLVM-JIT, and the OSVVM 2026.05 advanced profile is independently qualified;
+- general cross-backend parity, complete UVM runtime, and mixed-language
+  execution remain unsupported.
+
+No installed tool currently provides a qualified mixed-language HIAL/VIAL
+runtime. Separate Verilator and GHDL successes cannot be combined into that
+claim. The next measurable boundary is architecture-specific scale: named,
+deterministic workloads must vary HIAL/VIAL/bridge/execution dimensions; prove
+stage-local correctness; measure wall time, CPU time, descendant RSS, artifact
+and result size, and compile/run cost; enforce explicit graceful caps; and
+publish only the exact measured profiles. That evidence will not substitute
+for the separately owned whole-product big/really-big qualification.

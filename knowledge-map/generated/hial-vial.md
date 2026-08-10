@@ -1,7 +1,7 @@
 # Knowledge Map: `hial-vial`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **108** uniquely owned question entries.
+> **2** facts · **110** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -65,6 +65,7 @@
 - q="is Perl 5 fast enough for IASIM?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="is Verilator a traditional event-driven simulator?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md), [ial2-post-exact-three-paired-composition-next-owner-selection](../../docs/knowledge/ial2-post-exact-three-paired-composition-next-owner-selection.md)
 - q="is Verilator enough to validate full SystemVerilog and UVM VIAL output?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
+- q="is a mixed-language HIAL VIAL simulator available?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="is exact OSVVM 2026.05 installed for FSMGen?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="is portable VHDL visually reviewed or qualified?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="is the HIAL VIAL architecture selected now?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md), [ial2-post-task-tree-integrity-next-owner-selection](../../docs/knowledge/ial2-post-task-tree-integrity-next-owner-selection.md)
@@ -111,6 +112,7 @@
 - q="which exact GHDL 6.0.0 backend is qualified?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="who owns objections in generated VIAL UVM?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="why is GHDL LLVM AOT not qualified for portable VIAL?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
+- q="why is mixed-language qualification not active?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="will FSMGen require Xcelium VCS or Questa for UVM?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="will VIAL have VIAL0 VIAL1 and VIAL2 layers?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 

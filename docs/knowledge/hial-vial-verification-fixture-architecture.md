@@ -70,6 +70,8 @@ answers:
   - "how does portable VHDL prove legacy and HIAL separation?"
   - "is portable VHDL visually reviewed or qualified?"
   - "has the generated VIAL VHDL been analyzed or run?"
+  - "is a mixed-language HIAL VIAL simulator available?"
+  - "why is mixed-language qualification not active?"
   - "which exact GHDL 6.0.0 backend is qualified?"
   - "how do I rerun the exact portable VHDL GHDL qualification?"
   - "why is GHDL LLVM AOT not qualified for portable VIAL?"
@@ -182,52 +184,18 @@ not inferred because its external-name adapter fails at runtime.
 Existing UVM 1.2 and VHDL observation outputs remain inert compatibility
 surfaces.
 
-The architecture audit is complete and maps the handwritten AHB arbitration
-fixture, migration, public artifacts, parity, and scale boundaries. `.3` now
-ships the bounded semantic-only `.vial` frontend under decision `0033`.
-Completed `.4` selects the exact review-routed bridge v1 contract under
-decision `0035`: IAL2 facts must appear in a generated-IAL1
-`(verification-bridge ...)` annotation, exact AHB IDs match the checked VIAL
-source, and clean contract commit `0366dfe30` activates `.5` alone for private
-no-file implementation without changing product behavior. Completed `.5` now
-ships that private producer through canonical HIAL review routes, including the
-additive generated/reparsed IAL1 annotation for IAL2. It binds no VIAL and
-emits no file, plan, target artifact, or runtime behavior. Clean implementation
-commit `51434a2ae` permitted the separate `.6` execution-contract selection.
+The shipped stack now covers the typed `.vial` frontend, review-routed bridge,
+bound deterministic ExecutionIR, public source/planning/run tools, atomic
+artifacts, portable-SystemVerilog execution, normalized results, and the
+selected 19-path AHB parity oracle. General cross-backend parity remains
+unclaimed.
 
-Completed `.6` accepts decision `0036` and the exact target-neutral
-ExecutionIR/logical-time/random-replay/native/plan/result/parity contract.
-Clean selection commit `eaf3f95dc` permitted `.7` to own private no-backend
-work after separate continuity activation. Audit `.7.1` found the
-exact-type/carrier mismatch; director-approved decision `0037` and `.7.2`
-selected closed directional proof relations without changing VIAL source or
-the bridge schema. `.7.3` now ships the private binder, immutable ExecutionIR,
-deterministic plan-time random/replay, defensive in-process plan, event/
-adapter binding, exact resource accounting, atomic diagnostics, and private
-capability discovery. It emits no file or backend and exposes no supported
-public API. Completed `.8` now accepts decision `0039` and the exact public-
-tooling contract: `fsmgen vial`, equivalent normal/terse source projections,
-separate VIAL/HIAL inputs, a portable source-catalog/artifact-sink API, atomic
-repository-local artifacts, and explicit manifest compatibility. No command,
-API, parser widening, file, backend, or runtime ships in selection. Decision
-`0043` and completed `.9` now select the exact portable backend contract;
-clean selection commit `ab3e73b72` activates `.10` as the first implementation
-owner. Clean activation commit `5fd766600` decomposes it into public source,
-planning/artifact, backend/trace, and runtime/result children. Completed
-`.10.1` ships the defensive capabilities/check/normal-terse source CLI/API and
-exact discovery/support accounting without HIAL binding or writes. Clean
-`.10.1` implementation commit `50a0d7d39` activates `.10.2`; completed `.10.2`
-ships all three canonical HIAL planning routes plus defensive virtual or
-atomic repository-local artifacts. Transaction-free direct-IAL0 endpoint
-fixtures are supported without inventing transaction truth. Completed `.10.3`
-ships the private deterministic portable-SystemVerilog emitter, complete
-operation/state-family source map, one-scheduler known-value fixture, honest
-emission-only tool records, and a pure closed-JSONL trace validator. Completed
-`.10.4` now ships public run/publication, exact Verilator 5.046 compile/runtime,
-validated trace capture, normalized results, deterministic reruns, and atomic
-cleanup. Completed `.11` independently executes both harnesses over byte-identical DUT
-source and compares 19 public/shared AHB outcomes. Undeclared internal metrics
-are explicit exclusions; general cross-backend parity remains unclaimed.
+The 2026-08-10 mixed-language census finds Verilator and Icarus on `PATH` and
+exact GHDL 6.0.0 LLVM-JIT under the repository-local provider cache, but no
+compatible mixed-language simulator. Separate Verilator/GHDL qualifications
+cannot satisfy `mixed_language_qualified`; `.16` stays proposed. `.17.1` is
+the active next leaf and selects architecture-specific scale workloads,
+oracles, measurements, budgets, bounded-failure semantics, and non-claims.
 
 Decision `0050` and completed `.12` select IEEE 1800.2-2020 with exact
 Accellera UVM 2020-3.1 tag/commit as the native methodology source. Commercial

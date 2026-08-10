@@ -369,13 +369,49 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `proposed`
   Goal: `Select and validate the first mixed-language HIAL/VIAL binding profile.`
   Acceptance: `An exact HIAL HDL plus VIAL verification-language combination, tool/version, bridge binding adapter, compile/elaboration/run sequence, capability/non-claim matrix, result parity oracle, project-local artifacts, licensing/CI policy, and unsupported combinations are selected and executed; no mixed-language claim is inferred from single-language gates.`
-  Verification: `pending compatible mixed-language tool availability`
+  Verification: `The 2026-08-10 eligibility census finds Verilator 5.046 and Icarus 13.0 on PATH plus exact repository-local GHDL 6.0.0 LLVM-JIT, but no vsim/Questa, qrun, xrun/irun, VCS, Riviera, NVC, or other compatible mixed-language execution tool. The Icarus version probe referenced one transient off-volume response path; an exact post-command absence check proves it left no residue. Decisions 0032 and 0051 forbid inferring mixed-language qualification from the separately qualified Verilator and GHDL lanes. This leaf remains proposed and unavailable until the external tool state changes; no adapter, execution, capability, or support claim is selected.`
   Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17`
-  Status: `proposed`
+  Status: `active`
   Goal: `Define and prove architecture-specific large-fixture scalability and bounded failure.`
   Acceptance: `Deterministic workload profiles scale bridge units/endpoints/domains/transactions/probes and VIAL declarations/scenarios/fibers/events/checks/models/scoreboards/coverage/random decisions; stage correctness oracles, wall/CPU time, descendant RSS, artifact/result size, compile/simulation cost, explicit caps, graceful failures, and stable gates are measured without substituting for the separately owned whole-product big/really-big qualification.`
+  Verification: `Clean predecessor 6d23b5843 closes the selected AXI/mdBook activity before this task-tree pivot. The 2026-08-10 eligibility census leaves .16 unavailable, while the shipped and independently qualified portable SystemVerilog, VHDL, and OSVVM profiles provide stable concrete inputs for architecture-specific scale measurement. This activation selects .17.1 alone; it changes no parser, IR, bridge, generator, artifact, runtime, capability, support, or scale claim.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17: activate scale-proof contract`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.1`
+  Status: `active`
+  Goal: `Select the exact architecture-specific scale workloads, correctness oracles, measurements, budgets, and non-claims.`
+  Acceptance: `Audit the current SemanticIR, bridge, ExecutionIR, portable-SystemVerilog, portable-VHDL, OSVVM, trace/result, artifact-publication, resource-limit, and RAM-guard contracts. Select deterministic workload dimensions and named profiles; stage-local structural and semantic oracles; wall/CPU/RSS/artifact/compile/run measurements; repository-local staging and cleanup; calibration versus regression budgets; graceful-failure requirements; host/tool normalization; and the boundary from the separately owned whole-product big/really-big qualification. No code, fixture generator, capability, support, or scale claim changes in selection.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2`
+  Status: `proposed`
+  Goal: `Implement deterministic architecture-scale workload generation and stage-local correctness oracles.`
+  Acceptance: `Generate bounded named workloads from the selected contract across HIAL/VIAL/bridge/execution dimensions with stable identities and seeded content; prove parse/type/bind/plan/emission invariants and deterministic bytes without requiring external runtime execution; publish no support claim before measurement.`
+  Verification: `pending`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3`
+  Status: `proposed`
+  Goal: `Measure portable backend generation, compile, execution, result, and artifact scaling.`
+  Acceptance: `Run the selected workload profiles under active RAM/time controls for every applicable qualified backend, collect normalized wall/CPU/descendant-RSS/artifact/compile/run/result evidence, prove deterministic reruns and semantic outcomes, and distinguish tool cost from architecture cost without generalizing beyond measured profiles.`
+  Verification: `pending`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4`
+  Status: `proposed`
+  Goal: `Implement and prove explicit architecture resource caps and graceful bounded failure.`
+  Acceptance: `Apply the selected caps at the earliest authoritative stages with deterministic diagnostics, atomic no-partial-output behavior, same-volume cleanup, boundary/over-bound tests, and unchanged accepted-profile semantics; host exhaustion and external-tool crashes are not accepted as product limit enforcement.`
+  Verification: `pending`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
+  Status: `proposed`
+  Goal: `Stabilize architecture-scale regression gates, public documentation, capability truth, and closeout.`
+  Acceptance: `Promote representative bounded profiles into stable non-flaky gates; document exact measured envelopes, budgets, commands, variability policy, cleanup, supported claims, and residue; synchronize support/capability/Knowledge Map/task/Memory surfaces without claiming whole-product big/really-big qualification.`
   Verification: `pending`
   Commit: `pending activation`
 
@@ -488,7 +524,22 @@ provider compilation, generated analysis/elaboration/runtime, unchanged
 normalized result and parity, deterministic OSVVM reports, bounded support,
 and exact same-volume cleanup.
 
+The 2026-08-10 tool census leaves `.16` proposed: separately available
+Verilator, Icarus, and repository-local GHDL are not a mixed-language runtime,
+and no compatible mixed-language simulator is installed. `.17` is therefore
+selected next, with `.17.1` as the sole active frontier for a documentation-only
+scale-contract audit before workload or measurement implementation.
+
 ## Decisions
+
+- `2026-08-10`: Keep `.16` proposed after an exact availability census finds
+  no compatible mixed-language execution tool; never combine independent
+  Verilator and GHDL results into a mixed-language claim. Select `.17` because
+  the portable SystemVerilog, VHDL, and OSVVM contracts are now stable and
+  executable enough to define architecture-specific scale workloads and
+  budgets. Decompose scale work into contract, deterministic generation,
+  measurement, graceful caps, and stable closeout so calibration evidence is
+  never conflated with product support or whole-product qualification.
 
 - `2026-08-09`: Resolve the exact OSVVM project-file order for GHDL
   VHDL-2008 into 44 core and 17 Common sources and compile it without a
@@ -880,6 +931,31 @@ and exact same-volume cleanup.
 | `2026-08-09` | `.15.6` implementation | official tag identity; complete repository-local recursive clone; 14 repository commit/tree/origin/tracked-entry identities; 13 gitlinks; clean-worktree proof; 14 licence/0 notice identities; Documentation metadata absence; revision-1 adapter, mapping matrix, source map, semantic-preservation proof, static negatives, gallery, support/docs/task/Knowledge Map/Memory/staged-doctrine gates | `passed`; exact OSVVM 2026.05 is installed, seven advanced mappings emit in one isolated adapter beside six byte-identical portable sources, and the fifteen-artifact gallery carries 13 maps/12 checks/six unchanged-semantic guards. The Documentation gitlink has no tracked licence/notice file and no coverage is inferred. Guarded impacted Files=6/Tests=36 and the exact gallery check pass; Knowledge Map is current at 1,105 facts/5,713 questions/5,879 occurrences/118 shards; task integrity reports three active trees/916 nodes; all 52 mdBook chapters test and the 87-file/18,073,088-byte repository-local build passes before exact removal. Combined OSVVM/GHDL analysis through parity remains solely `.15.7`. |
 | `2026-08-09` | `.15.7` activation | clean `.15.6` predecessor `4f350f29c`; task/index/audit/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook test; live-reference authority; diff/staged-doctrine gates | `passed`; `.15.7` alone is active for combined exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT qualification. Both inputs remain repository-local; task integrity reports three active trees/916 nodes, Knowledge Map remains 1,105 facts/5,713 questions/5,879 occurrences/118 shards, all 52 mdBook chapters test, and maintained-reference authority accepts the exact 0-file/0-line/+16-byte delta. Activation changes no source, generated artifact, qualification evidence, capability, runtime result, or support behavior. |
 | `2026-08-09` | `.15.7` exact combined qualification | exact GHDL archive/binary and recursive OSVVM identities; 44-core/17-Common ordered provider compilation; adapter/generated-fixture/probe analysis; fixture/probe elaboration and double execution; 42-record trace/result validation; 19-path portable parity; four deterministic OSVVM reports; bounded support/capability truth; same-volume cleanup; focused/corpus/capability/gallery/docs/task/Knowledge Map/mdBook/staged-doctrine gates | `passed`; `vhdl_osvvm_qualified` is bounded-qualified under exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT. Six adapter mappings execute in the probe; the Common address-bus mapping is analysis-only. OSVVM reports record three clean affirmations, 25% one-of-four-bin coverage, and one checked scoreboard item with zero errors, while portable trace/result/parity remain authoritative. Broader provider/language/tool/profile claims remain explicit non-claims. |
+| `2026-08-10` | `.17` selection/activation | clean predecessor `6d23b5843`; mixed-language command/provider census; decisions 0032/0051; five-leaf scale decomposition; task/index/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook build; relative paths; live-reference authority; diff/staged-doctrine gates; exact cleanup | `passed`; `.16` remains proposed because no compatible mixed-language runtime is available, and `.17.1` alone is active for documentation-only scale-contract selection. Task integrity reports three active trees/921 nodes; Knowledge Map reports 1,105 facts/5,723 questions/5,889 occurrences/118 shards; the book shrinks by 34 lines/2,676 bytes while replacing stale chronology with current capability and scale boundaries; generated output is removed. No product behavior or scale claim changes. |
+
+## Acceptance Checklist (enforced) — `.17` selection and activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `command -v` finds Verilator and Icarus
+  but no compatible mixed-language simulator; the exact GHDL 6.0.0 LLVM-JIT
+  binary is repository-local and independently VHDL-qualified. Decisions 0032
+  and 0051 forbid combining those single-language results into `.16` evidence.
+  `git log -S'IAL2-MDBOOK-COHERENCE-AXI-COVERAGE.6-BOOK-SYNC' --
+  doctrine/live_document_size/surfaces.jsonl` identifies the clean current
+  mdBook aggregate authority at 53 files / 49,271 lines / 2,604,665 bytes.
+- [x] **ADDRESSED (verified)** — `.16` remains proposed with exact unavailable-
+  tool evidence; `.17` and documentation-only `.17.1` are active, and later
+  generation, measurement, cap, and closeout work has separate proposed
+  children. Authority
+  `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17-ACTIVATION-BOOK-SYNC`
+  records the exact +0 files / -34 lines / -2,676-byte book delta. The public
+  chapter replaces stale commit chronology with current capability and scale
+  boundaries; the canonical fact card shrinks while adding two exact queries.
+- [x] **NO REGRESSION** — `mdbook build docs/book` and `knowledge-map: OK` must
+  pass; both census queries must resolve to the canonical architecture card;
+  the generated book output must be removed; and the staged doctrine gate must
+  report `[doctrine] all doctrine checks passed`. No parser, IR, bridge,
+  generator, fixture, artifact, runtime, capability, support, or scale claim
+  changes in activation.
 
 ## Acceptance Checklist (enforced) — `.15.5` activation and NEXSIM deferral
 
