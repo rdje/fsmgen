@@ -440,11 +440,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.1`
-  Status: `active`
+  Status: `done`
   Goal: `Reconcile every selected execution-graph axis with canonical source, bridge, binder, replay, and earliest-cap reachability before implementation.`
   Acceptance: `Audit all 13 execution_graph_v1 axes and five levels against ordinary VIAL source construction, canonical SemanticIR and bridge production, the shipped ExecutionBuilder and ExecutionRandom APIs, structural and serialized-plan limits, memory-safe construction envelopes, and the fixed AHB reference. Prove representative routes where inspection is insufficient; select exact accepted or earlier-cap outcomes, deterministic random-attempt construction, and any closed qualification-only bridge profile needed; preserve every public support/nonclaim boundary in a decision, Knowledge Map fact, mdBook, and task evidence without changing product behavior.`
-  Verification: `pending`
-  Commit: `pending implementation`
+  Verification: `Decision 0061 selects the complete 13-axis/five-level route and earliest-cap matrix. History and a real binder probe prove that decision-0060 bridge qualification is correctly rejected by the public execution allow-list, so public planning remains unchanged and .17.2.4.2 must add only a caller-sealed scale-generator admission. Frozen AHB inputs reach exact scenarios, operation, fiber, live-fiber, source-map, random-attempt, and plan-byte representatives; plain direct IAL1 reaches 512 execution types; endpoint-only 2,048 bindings hit the earlier 16-MiB bridge report, selecting the compact scale-event route for that gate. RAM-guarded probes accept 4,096 scenarios, 16,384 live fibers, exactly 1,000,000 attempts, and exact 1/4/16-MiB plans; their one-over forms reject at stable authoritative boundaries. The selected matrix records semantic, VIAL-source, bridge event/type, execution structural, random exhaustion, or serialized-plan dominance without host exhaustion or forged IR. RAM-guarded execution/foundation/bridge regression passes 3 files/18 tests; documentation paths pass 1 file/2 tests; live ceiling/reference authorities pass 2 files/12 tests; Knowledge Map reports 1,107 facts/5,743 questions/5,909 occurrences/119 shards; mdBook test/render, task integrity, live containment, diff, and staged doctrines pass. No product behavior, support, performance, or capacity claim changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.1: select execution-scale reachability`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`
   Status: `proposed`
@@ -1093,6 +1093,33 @@ defect before `.17.2.2` begins semantic-family generation.
 | `2026-08-09` | `.15.7` activation | clean `.15.6` predecessor `4f350f29c`; task/index/audit/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook test; live-reference authority; diff/staged-doctrine gates | `passed`; `.15.7` alone is active for combined exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT qualification. Both inputs remain repository-local; task integrity reports three active trees/916 nodes, Knowledge Map remains 1,105 facts/5,713 questions/5,879 occurrences/118 shards, all 52 mdBook chapters test, and maintained-reference authority accepts the exact 0-file/0-line/+16-byte delta. Activation changes no source, generated artifact, qualification evidence, capability, runtime result, or support behavior. |
 | `2026-08-09` | `.15.7` exact combined qualification | exact GHDL archive/binary and recursive OSVVM identities; 44-core/17-Common ordered provider compilation; adapter/generated-fixture/probe analysis; fixture/probe elaboration and double execution; 42-record trace/result validation; 19-path portable parity; four deterministic OSVVM reports; bounded support/capability truth; same-volume cleanup; focused/corpus/capability/gallery/docs/task/Knowledge Map/mdBook/staged-doctrine gates | `passed`; `vhdl_osvvm_qualified` is bounded-qualified under exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT. Six adapter mappings execute in the probe; the Common address-bus mapping is analysis-only. OSVVM reports record three clean affirmations, 25% one-of-four-bin/25% coverage, and one checked scoreboard item with zero errors, while portable trace/result/parity remain authoritative. Broader provider/language/tool/profile claims remain explicit non-claims. |
 | `2026-08-10` | `.17` selection/activation | clean predecessor `6d23b5843`; mixed-language command/provider census; decisions 0032/0051; five-leaf scale decomposition; task/index/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook build; relative paths; live-reference authority; diff/staged-doctrine gates; exact cleanup | `passed`; `.16` remains proposed because no compatible mixed-language runtime is available, and `.17.1` alone is active for documentation-only scale-contract selection. Task integrity reports three active trees/921 nodes; Knowledge Map reports 1,105 facts/5,723 questions/5,889 occurrences/118 shards; the book shrinks by 34 lines/2,676 bytes while replacing stale chronology with current capability and scale boundaries; generated output is removed. No product behavior or scale claim changes. |
+
+## Acceptance Checklist (enforced) — `.17.2.4.1` execution-scale reachability
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'hial_vial.bridge_qualification.architecture_scale_v1'
+  --oneline -- perl docs t` locates private bridge qualification in
+  `9c5212cc4`/`97dda148d`,
+  after the public execution allow-list in `44dbecd1a`. Source inspection and
+  a real canonical binder probe return `VIAL_CAPABILITY_ERROR` for that exact
+  private capability, proving the public binder is correctly closed. Separate
+  guarded probes locate plan-byte, bridge-byte, semantic-action, structural,
+  and random-exhaustion boundaries rather than assuming the nominal table is
+  reachable.
+- [x] **ADDRESSED (verified)** — Decision `0061` selects one caller-sealed
+  qualification admission for the binding gate while leaving public build and
+  planning unchanged. It freezes the AHB/plain-IAL1/private-event routes, all
+  13 axes at five levels, exact earliest-cap outcomes, depth-two live-fiber
+  construction, deterministic attempt targeting/replay, genuine exact
+  1/4/16-MiB plan recipes, preflight/RAM safety, and unchanged nonclaims in the
+  task, book, and Knowledge Map.
+- [x] **NO REGRESSION** — RAM-guarded `t/1552`, `t/1600`, and `t/1602`
+  report `All tests successful` at `Files=3, Tests=18`; documentation paths
+  report `Files=1, Tests=2`; ceiling and maintained-reference authorities report
+  `Files=2, Tests=12`; `knowledge-map: OK` reports 1,107 facts/5,743 questions/
+  5,909 occurrences/119 shards; task-tree integrity reports three active trees/
+  936 nodes; live containment, mdBook test/render, `git diff --check`, and staged
+  doctrines pass. No parser, SemanticIR, bridge, public binder, plan, replay,
+  backend, capability/support, performance-budget, or capacity behavior changes.
 
 ## Acceptance Checklist (enforced) — `.17.2.4` activation
 

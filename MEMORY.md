@@ -7,12 +7,13 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.1`.
-- current_state: `.17.2.4` is decomposed into reachability selection `.1` and
-  implementation `.2`; `.1` alone is active after clean bridge-fanout closure.
-- next_action: audit all 13 execution-graph axes against canonical semantic,
-  bridge, binder, replay, random-attempt, and serialized-plan authorities.
-- in_flight_uncommitted: `.17.2.4` activation documentation before its commit.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`.
+- current_state: `.17.2.4.1` selects decision `0061`, the complete execution-
+  graph route/earliest-cap matrix, and a caller-sealed binding qualification;
+  `.17.2.4.2` remains proposed until a separate clean activation commit.
+- next_action: after the clean `.17.2.4.1` selection commit, activate
+  `.17.2.4.2` without implementation and freeze its exact validation scope.
+- in_flight_uncommitted: none.
 - blockers: none.
 
 ## Durable context

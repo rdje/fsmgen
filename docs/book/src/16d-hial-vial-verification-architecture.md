@@ -2223,21 +2223,48 @@ consumer failure remove the exact owned tree. None of this evidence promotes
 a protocol, public embedding API, backend/runtime support state, performance
 budget, or whole-product capacity.
 
-Execution-graph generation is deliberately split into reachability selection
-and implementation. Before generator code is admitted, every selected axis is
-checked against ordinary VIAL source construction, canonical bridge inputs,
-the shipped single-fixture/unit/domain binder, deterministic random/replay
-semantics, and the 16-MiB serialized-plan cap. Nominal structural limits that
-are necessarily preceded by one of those authorities are recorded as earlier-
-cap outcomes; they are not simulated with forged IR or advertised as reached.
+Execution-graph reachability is now selected by
+[decision `0061`](../../decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md).
+The frozen AHB route owns topology, operations, fibers, maps, random/replay,
+and plan bytes. An ordinary non-annotated direct-IAL1 actor owns the type axis.
+The 2,048-binding gate alone needs the decision-`0060` event family, admitted
+through a caller-sealed scale-generator path. Public
+`ExecutionBuilder->build`, public planning, backends, and support accounting
+must continue to reject that private bridge capability.
 
-For example, the scenario-count axis holds the source/bridge/checking anchor
-fixed and requests 32 scenarios for the gate candidate, 512 for qualification,
-4,096 at the declared plan limit, and 4,097 for deterministic rejection. Every
-accepted run must prove exact counts and IDs, logical-time ordering, replay,
-source maps, immutable reports, and equal plan identity on rerun. If the
-16-MiB plan limit necessarily wins first, the evidence records that earlier
-cap; it does not claim that 4,096 scenarios were exercised.
+The reachability audit selects these outcomes before generator implementation:
+
+| Axis | Gate | Qualification | Limit | Over limit |
+| --- | --- | --- | --- | --- |
+| selected fixture/unit/domain | `1` accepted | `1` accepted | `1` accepted | scalar selection or bridge cap rejects `2` |
+| scenarios | `32` accepted | `512` accepted | `4,096` accepted | scenario cap rejects `4,097` |
+| operations in one scenario | `256` accepted | `8,192` accepted | plan-byte cap wins at `65,536` | semantic action cap rejects `65,537` |
+| operations total | `1,024` accepted | plan-byte cap wins at `65,536` | plan-byte cap wins at `1,000,000` | total-operation cap rejects `1,000,001` |
+| fibers total | `128` accepted | `8,192` accepted | plan-byte cap wins at `65,536` | total-fiber cap rejects `65,537` |
+| simultaneously live fibers | `32` accepted | `1,024` accepted | `16,384` accepted | live-fiber cap rejects `16,385` |
+| bindings | `2,048` accepted through the sealed event route | bridge event cap wins | VIAL source-byte cap wins | VIAL source-byte cap wins |
+| execution types | `512` accepted through plain IAL1 | bridge type cap wins | VIAL source-byte cap wins | VIAL source-byte cap wins |
+| source-map records | `8,192` accepted | plan-byte cap wins | plan-byte cap wins | source-map cap rejects `1,000,001` |
+| random attempts | `8,192` accepted | `262,144` accepted | `1,000,000` accepted | deterministic exhaustion rejects `1,000,001` |
+| serialized plan | exact 1 MiB | exact 4 MiB | exact 16 MiB | first additional complete operation is rejected |
+
+These are construction outcomes, not supported capacities. The exact 1/4/16-
+MiB plans contain 2,974/12,166/48,850 real reset operations plus bounded,
+referenced scenario and endpoint identifiers that close the remaining byte
+difference. The endpoint alias remains used by its coverpoint; comments, blank
+data, path inflation, caller-created plans, and opaque padding are forbidden.
+
+Random attempt level `N` authors a u64 equality constraint for the deterministic
+candidate at zero-based attempt `N - 1`. This makes the million-attempt limit a
+real successful generation, while the one-over target exhausts exactly. Replay
+must preserve the keyed value and attempt byte-for-byte; only the decision
+origin changes from generated to replayed.
+
+Every accepted run must prove exact counts and IDs, logical-time ordering,
+parallel join/cancel semantics, replay equality, source-map closure, immutable
+reports, and equal plan identity on rerun. High-count construction is preflighted
+against minimum representation and runs only under the repository RAM guard;
+a killed or exhausted host is never accepted as a cap result.
 
 Performance never substitutes for correctness. One validation plus three
 measured gate runs, or one plus five qualification runs, must first pass every

@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1106** facts · **5735** unique questions · **5901** answer occurrences · **119** topic shards.
+> **1107** facts · **5743** unique questions · **5909** answer occurrences · **119** topic shards.
 
 Query first:
 
@@ -53,7 +53,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `generation-result` | 1 | 5 | [`generation-result.md`](knowledge-map/generated/generation-result.md) |
 | `generic-fifo` | 1 | 5 | [`generic-fifo.md`](knowledge-map/generated/generic-fifo.md) |
 | `hdl-validation` | 1 | 4 | [`hdl-validation.md`](knowledge-map/generated/hdl-validation.md) |
-| `hial-vial` | 2 | 117 | [`hial-vial.md`](knowledge-map/generated/hial-vial.md) |
+| `hial-vial` | 2 | 118 | [`hial-vial.md`](knowledge-map/generated/hial-vial.md) |
 | `ial-contracts` | 1 | 14 | [`ial-contracts.md`](knowledge-map/generated/ial-contracts.md) |
 | `ial0-ahb` | 3 | 14 | [`ial0-ahb.md`](knowledge-map/generated/ial0-ahb.md) |
 | `ial1-direct` | 1 | 5 | [`ial1-direct.md`](knowledge-map/generated/ial1-direct.md) |
@@ -128,7 +128,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `vhdl-deferred` | 1 | 19 | [`vhdl-deferred.md`](knowledge-map/generated/vhdl-deferred.md) |
 | `vhdl-external` | 1 | 1 | [`vhdl-external.md`](knowledge-map/generated/vhdl-external.md) |
 | `vhdl-package` | 1 | 5 | [`vhdl-package.md`](knowledge-map/generated/vhdl-package.md) |
-| `vial-execution` | 1 | 16 | [`vial-execution.md`](knowledge-map/generated/vial-execution.md) |
+| `vial-execution` | 2 | 23 | [`vial-execution.md`](knowledge-map/generated/vial-execution.md) |
 | `vial-expressive` | 1 | 13 | [`vial-expressive.md`](knowledge-map/generated/vial-expressive.md) |
 | `vial-hial` | 2 | 15 | [`vial-hial.md`](knowledge-map/generated/vial-hial.md) |
 | `vial-portable` | 1 | 12 | [`vial-portable.md`](knowledge-map/generated/vial-portable.md) |
