@@ -2232,6 +2232,44 @@ through a caller-sealed scale-generator path. Public
 `ExecutionBuilder->build`, public planning, backends, and support accounting
 must continue to reject that private bridge capability.
 
+The first execution-generator slice now implements that exceptional gate and
+only that gate. `ArchitectureScaleExecutionGraph` authors ordinary IAL1 and
+VIAL sources containing 2,042 closed ordinal events. Canonical bridge and
+semantic construction then add exactly six non-event bindings: unit, domain,
+public endpoint, probe, transaction, and transaction field. The resulting
+target-neutral plan therefore reports exactly 2,048 bindings, one execution
+type, one scenario, one reset operation, one root fiber, and 2,047 source-map
+records. Its current canonical serialization is 2,656,823 bytes, safely below
+the independent 16-MiB plan cap.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+    primary_axis => 'bindings',
+    level => 'gate_candidate_v1',
+});
+die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+
+my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+    construction => $workload,
+});
+die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+die "unexpected binding count\n"
+    unless $evaluation->{metrics}{bindings} == 2_048;
+```
+
+The admission is doubly closed. Only the exact
+`FSM::VIAL::ArchitectureScaleExecutionGraph` caller can enter it, and the
+manifest must retain direct `IAL1 -> IAL0` review plus exact
+`architecture_scale_probe` / `qualification_only` / revision `1` /
+`verification` / `scale_evidence_only=true` metadata. The plan classifies the
+private capability as `qualification_only` and `private_nonportable`. A direct
+caller, the public builder, an AHB capability, altered metadata, or a forged
+post-identity construction fails closed. This does not make the private path a
+public planning or embedding API; all other execution axes remain owned by
+later slices of the active generator task.
+
 The reachability audit selects these outcomes before generator implementation:
 
 | Axis | Gate | Qualification | Limit | Over limit |

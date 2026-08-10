@@ -8,11 +8,11 @@ history; this file carries only the current bounded resume state.
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`.
-- current_state: clean selection commit `b82426c85` closes `.17.2.4.1` with
-  decision `0061`; `.17.2.4.2` alone is being activated for its exact canonical
-  execution-scale generator, private binder admission, and plan/replay oracles.
-- next_action: after the clean activation commit, implement the caller-sealed
-  binder admission and generator foundation with focused fail-closed tests.
+- current_state: clean activation commit `30811f70e` precedes the implemented
+  `.17.2.4.2` foundation: caller-sealed private admission plus an ordinary-source
+  2,042-event construction reaches the exact 2,048-binding gate.
+- next_action: after the foundation commit, extend the generator through the
+  frozen AHB route for scenario and operation gate candidates and their oracles.
 - in_flight_uncommitted: none.
 - blockers: none.
 

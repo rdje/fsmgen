@@ -12,8 +12,8 @@ answers:
 date: 2026-08-10
 status: current
 tags: [vial, execution-ir, scale, binder, bridge, random, replay, plan, limits]
-evidence: docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md; docs/decisions/0060-vial-bridge-scale-uses-a-qualification-only-direct-ial1-profile.md; perl/FSM/VIAL/ExecutionBuilder.pm; perl/FSM/VIAL/ExecutionRandom.pm; perl/FSM/Support/VIALExecutionContract.pm; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md
-reverify: git log -S'hial_vial.bridge_qualification.architecture_scale_v1' --oneline -- perl docs t && rg -n 'selected_scenarios|expanded_operations_per_scenario|expanded_operations_total|total_fibers|simultaneous_live_fibers|bindings|execution_types|source_map_records|random_attempts|serialized_plan_bytes' perl/FSM/Support/VIALExecutionContract.pm perl/FSM/VIAL/ExecutionBuilder.pm docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md
+evidence: docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md; docs/decisions/0060-vial-bridge-scale-uses-a-qualification-only-direct-ial1-profile.md; perl/FSM/VIAL/ArchitectureScaleExecutionGraph.pm; perl/FSM/VIAL/ExecutionBuilder.pm; perl/FSM/VIAL/ExecutionRandom.pm; perl/FSM/Support/VIALExecutionContract.pm; t/1603-vial-architecture-scale-execution-foundation.t; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md
+reverify: git log -S'hial_vial.bridge_qualification.architecture_scale_v1' --oneline -- perl docs t && prove -Iperl t/1603-vial-architecture-scale-execution-foundation.t && rg -n 'selected_scenarios|expanded_operations_per_scenario|expanded_operations_total|total_fibers|simultaneous_live_fibers|bindings|execution_types|source_map_records|random_attempts|serialized_plan_bytes' perl/FSM/Support/VIALExecutionContract.pm perl/FSM/VIAL/ExecutionBuilder.pm docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md
 ---
 
 Decision `0061` selects the `execution_graph_v1` reachability contract. The
@@ -22,6 +22,15 @@ and plan bytes. A plain direct-IAL1 actor owns execution types. The scale-only
 bridge event family owns the 2,048-binding gate through a caller-sealed private
 binder admission. Public `ExecutionBuilder->build`, public planning, backends,
 support accounting, and the decision-`0060` nonclaims remain unchanged.
+
+The first `.17.2.4.2` implementation slice now constructs that binding gate
+from ordinary IAL1 and VIAL sources. Exactly 2,042 ordinal events plus the six
+unit/domain/endpoint/probe/transaction/field records produce 2,048 bindings.
+The plan contains one type, scenario, operation, and fiber, 2,047 source-map
+records, and 2,656,823 serialized bytes. The private binder admits only the
+exact generator caller and exact qualification protocol metadata; the public
+binder and altered metadata still return stable closed errors. The private
+capability is labelled `qualification_only` and `private_nonportable`.
 
 The nominal execution limits are not all reachable. Scenarios and
 simultaneously live fibers reach their exact 4,096 and 16,384 limits. Operations
@@ -40,5 +49,6 @@ attempt exactly.
 The AHB plan-byte recipes use real reset operations and referenced semantic
 identifiers. They produce canonical plans of exactly 1,048,576, 4,194,304, and
 16,777,216 bytes; one additional complete reset operation is rejected. These
-are construction/boundary facts only. `.17.2.4.2` remains the implementation
-owner, and no scale capacity is supported until later measurement and promotion.
+are construction/boundary facts only. `.17.2.4.2` remains active for every
+other execution axis, and no scale capacity is supported until later
+measurement and promotion.

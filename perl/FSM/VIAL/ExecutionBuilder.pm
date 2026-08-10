@@ -21,6 +21,8 @@ use FSM::VIAL::SemanticIR;
 my $SCHEMA = 'fsmgen.vial_execution_ir.v1';
 my $PROFILE = 'core_directed_single_clock_execution_v1';
 my $RANDOM_ALGORITHM = 'sha256_counter_rejection_v1';
+my $ARCHITECTURE_SCALE_CAPABILITY =
+    'hial_vial.bridge_qualification.architecture_scale_v1';
 my %LIMIT = %{build_vial_execution_contract()->{limits}};
 
 my @EXECUTION_CAPABILITIES = qw(
@@ -86,7 +88,37 @@ sub build($class, @args) {
     );
 }
 
-sub _build($raw) {
+sub build_architecture_scale_qualification($class, @args) {
+    my $caller = caller;
+    return _failure_result(
+        code => 'VIAL_EXECUTION_INVOCATION_ERROR',
+        phase => 'invocation',
+        message => 'architecture-scale qualification binding is private to FSM::VIAL::ArchitectureScaleExecutionGraph',
+        semantic_path => '/',
+    ) unless defined($class) && !ref($class) && $class eq __PACKAGE__
+        && defined($caller)
+        && $caller eq 'FSM::VIAL::ArchitectureScaleExecutionGraph';
+    return _failure_result(
+        code => 'VIAL_EXECUTION_INVOCATION_ERROR',
+        phase => 'invocation',
+        message => 'architecture-scale qualification binding expects exactly one closed argument hash',
+        semantic_path => '/',
+    ) unless @args == 1 && ref($args[0]) eq 'HASH' && !blessed($args[0]);
+
+    my $result = eval { _build($args[0], 1) };
+    return $result if $result;
+    my $error = $@;
+    return _failure_result(%$error)
+        if blessed($error) && $error->isa('FSM::VIAL::ExecutionBuilder::Failure');
+    return _failure_result(
+        code => 'VIAL_EXECUTION_INTERNAL_ERROR',
+        phase => 'internal',
+        message => 'internal VIAL execution construction failure',
+        semantic_path => '/',
+    );
+}
+
+sub _build($raw, $architecture_scale_qualification = 0) {
     my %allowed = map { $_ => 1 } qw(
         semantic_ir bridge_manifest fixture_id scenario_ids execution_profile
         replay_manifest native_extension_catalog
@@ -135,7 +167,7 @@ sub _build($raw) {
 
     my $semantic = $raw->{semantic_ir}->as_hashref;
     my $bridge = $raw->{bridge_manifest}->as_hashref;
-    _validate_input_profiles($semantic, $bridge);
+    _validate_input_profiles($semantic, $bridge, $architecture_scale_qualification);
 
     my ($package, $fixture) = _find_fixture($semantic, $raw->{fixture_id});
     my @selected_scenarios = _select_scenarios($fixture, $raw->{scenario_ids});
@@ -196,7 +228,9 @@ sub _build($raw) {
     _limit('coverage_bins_and_cross_tuples', $coverage_materialization, '/coverage');
     _limit('faults', scalar(@{$fixture->{faults}}), '/faults');
 
-    my $capability_ledger = _capability_ledger($semantic, $bridge);
+    my $capability_ledger = _capability_ledger(
+        $semantic, $bridge, $architecture_scale_qualification,
+    );
     my $resource_summary = _resource_summary(
         $ctx, $bindings, $models, $scoreboards, $coverage, $faults,
         $randomness, $scenario_records, $operation_graph, $scalar_state_cells,
@@ -252,7 +286,7 @@ sub _build($raw) {
     };
 }
 
-sub _validate_input_profiles($semantic, $bridge) {
+sub _validate_input_profiles($semantic, $bridge, $architecture_scale_qualification) {
     _throw('VIAL_CAPABILITY_ERROR', 'capability', 'SemanticIR schema/profile is unsupported', '/semantic_ir')
         unless $semantic->{schema_version} == 1
             && $semantic->{language} eq 'vial'
@@ -267,6 +301,34 @@ sub _validate_input_profiles($semantic, $bridge) {
         '/bridge_manifest/review_route')
         unless ($bridge->{review_route}{authored_layer} // '') =~ /\A(?:IAL0|IAL1|IAL2)\z/
             && !$bridge->{review_route}{direct_ial2_to_verification};
+    _validate_architecture_scale_qualification($bridge)
+        if $architecture_scale_qualification;
+}
+
+sub _validate_architecture_scale_qualification($bridge) {
+    my @protocols = @{$bridge->{protocols} || []};
+    my $protocol = @protocols == 1 ? $protocols[0] : {};
+    my @facts = @{$protocol->{facts} || []};
+    my @capabilities = @{$bridge->{required_capabilities} || []};
+    my %capability = map { $_ => 1 } @capabilities;
+    my @layers = map { $_->{layer} // '' }
+        @{$bridge->{review_route}{stages} || []};
+    _throw('VIAL_CAPABILITY_ERROR', 'capability',
+        'architecture-scale qualification requires the exact private direct-IAL1 protocol profile',
+        '/bridge_manifest/protocols')
+        unless ($bridge->{review_route}{authored_layer} // '') eq 'IAL1'
+            && !$bridge->{review_route}{direct_ial2_to_verification}
+            && join("\0", @layers) eq join("\0", qw(IAL1 IAL0))
+            && ($protocol->{protocol_id} // '') eq 'protocol/architecture_scale_probe'
+            && ($protocol->{name} // '') eq 'architecture_scale_probe'
+            && ($protocol->{profile} // '') eq 'qualification_only'
+            && ($protocol->{revision} // '') eq '1'
+            && ($protocol->{role} // '') eq 'verification'
+            && @facts == 1
+            && ($facts[0]{name} // '') eq 'scale_evidence_only'
+            && ($facts[0]{value} // '') eq 'true'
+            && $capability{$ARCHITECTURE_SCALE_CAPABILITY}
+            && !$capability{'hial_vial.bridge_protocol.ahb_subordinate_v1'};
 }
 
 sub _find_fixture($semantic, $fixture_id) {
@@ -1654,7 +1716,7 @@ sub _execution_value_type($ctx, $node) {
     return $entry->{semantic_type};
 }
 
-sub _capability_ledger($semantic, $bridge) {
+sub _capability_ledger($semantic, $bridge, $architecture_scale_qualification) {
     my %known = map { $_ => 1 } (
         @{$semantic->{required_capabilities}}, @{$bridge->{required_capabilities}},
         @EXECUTION_CAPABILITIES,
@@ -1680,6 +1742,7 @@ sub _capability_ledger($semantic, $bridge) {
             hial_vial.bridge_source.ial1
             hial_vial.bridge_source.ial2_via_generated_ial1
         ),
+        ($architecture_scale_qualification ? $ARCHITECTURE_SCALE_CAPABILITY : ()),
         @EXECUTION_CAPABILITIES,
     );
     for my $capability (sort keys %known) {
@@ -1689,11 +1752,14 @@ sub _capability_ledger($semantic, $bridge) {
     }
     return [map {
         my $adapter = $_ eq 'hial_vial.bridge_probe.equivalent_adapter_required';
+        my $scale_qualification = $_ eq $ARCHITECTURE_SCALE_CAPABILITY;
         {
             capability_id => $_,
             origins => [sort(_ordered_unique(@{$origin{$_} || []}))],
-            classification => $adapter ? 'required_from_backend' : 'satisfied_by_execution_profile',
-            portable_class => $adapter ? 'portable_with_equivalent_adapter' : 'portable',
+            classification => $scale_qualification ? 'qualification_only'
+                : $adapter ? 'required_from_backend' : 'satisfied_by_execution_profile',
+            portable_class => $scale_qualification ? 'private_nonportable'
+                : $adapter ? 'portable_with_equivalent_adapter' : 'portable',
             evidence_ids => [sort(_ordered_unique(@{$origin{$_} || []}))],
         }
     } sort keys %known];
