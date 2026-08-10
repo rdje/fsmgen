@@ -2223,6 +2223,14 @@ consumer failure remove the exact owned tree. None of this evidence promotes
 a protocol, public embedding API, backend/runtime support state, performance
 budget, or whole-product capacity.
 
+Execution-graph generation is deliberately split into reachability selection
+and implementation. Before generator code is admitted, every selected axis is
+checked against ordinary VIAL source construction, canonical bridge inputs,
+the shipped single-fixture/unit/domain binder, deterministic random/replay
+semantics, and the 16-MiB serialized-plan cap. Nominal structural limits that
+are necessarily preceded by one of those authorities are recorded as earlier-
+cap outcomes; they are not simulated with forged IR or advertised as reached.
+
 For example, the scenario-count axis holds the source/bridge/checking anchor
 fixed and requests 32 scenarios for the gate candidate, 512 for qualification,
 4,096 at the declared plan limit, and 4,097 for deterministic rejection. Every

@@ -432,9 +432,24 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3.2: generate canonical bridge-fanout scale workloads`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Generate execution-graph workloads through the shipped binder with exact plan and replay oracles.`
   Acceptance: `Construct every execution_graph_v1 axis from successful generated SemanticIR and bridge inputs; prove topology/counts, stable IDs/ranks/types/maps, drive/sample/react/check and parallel semantics, keyed random decisions/replay, defensive reports, plan hashes, earliest-cap diagnostics, determinism, and cleanup without backend terms.`
+  Verification: `Clean bridge-fanout predecessor 97dda148d leaves the repository handoff-ready. Source and contract inspection confirms that execution scale must reconcile selected nominal axes with canonical upstream semantic limits, the shipped single-fixture/unit/domain profile, the 16-MiB serialized-plan cap, and the random generator's exact attempt semantics before generator code is safe. This activation therefore selects .17.2.4.1 alone for a read-only reachability and earliest-cap decision; .17.2.4.2 remains proposed for implementation. No parser, SemanticIR, bridge, binder, plan, replay, capability/support, performance, or capacity behavior changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4: activate execution-graph generation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.1`
+  Status: `active`
+  Goal: `Reconcile every selected execution-graph axis with canonical source, bridge, binder, replay, and earliest-cap reachability before implementation.`
+  Acceptance: `Audit all 13 execution_graph_v1 axes and five levels against ordinary VIAL source construction, canonical SemanticIR and bridge production, the shipped ExecutionBuilder and ExecutionRandom APIs, structural and serialized-plan limits, memory-safe construction envelopes, and the fixed AHB reference. Prove representative routes where inspection is insufficient; select exact accepted or earlier-cap outcomes, deterministic random-attempt construction, and any closed qualification-only bridge profile needed; preserve every public support/nonclaim boundary in a decision, Knowledge Map fact, mdBook, and task evidence without changing product behavior.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`
+  Status: `proposed`
+  Goal: `Implement the selected canonical execution-graph generator and exact plan/replay oracles.`
+  Acceptance: `Implement only after .17.2.4.1 commits cleanly; construct every reachable execution_graph_v1 axis through ordinary VIAL parsing, canonical bridge production, and the shipped binder; prove the selected exact or earliest-cap outcomes, structural topology and logical-time invariants, generated/replayed decision equality, immutable byte-equal reports and plan hashes, hostile-input rejection, deterministic reruns, and exact repository-local staging cleanup with default and RAM-guarded qualification tests plus synchronized user documentation.`
   Verification: `pending`
   Commit: `pending activation`
 
@@ -1006,6 +1021,7 @@ defect before `.17.2.2` begins semantic-family generation.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-10` | `.17.2.4` activation | clean bridge-fanout predecessor `97dda148d`; decisions `0036`/`0055`/`0056`; workload catalog, semantic limits, ExecutionBuilder/ExecutionRandom/plan-limit source audit; task/index/Memory/book continuity; task-tree, relative-path, diff, and staged-doctrine gates | `passed`; `.17.2.4.1` alone is active to reconcile all 13 execution axes and their earliest reachable caps before implementation. `.17.2.4.2` remains proposed. No parser, IR, bridge, binder, plan, replay, capability/support, performance, or capacity behavior changes. |
 | `2026-08-10` | `.17.2.3.2` canonical bridge-fanout generation | closed generated HIAL/VIAL producer; ordinary parse/report/lower/Builder route; 13 axes/five levels; exact count/map/binding/reference/manifest/determinism oracles; exact 1/4/16-MiB reports; earlier-cap truth; frozen AHB/IAL2 invariant and scale-bypass rejection; staging cleanup; default/exact/adjacent regression; contract/book/card/rationale/task/Memory continuity; staged acceptance/doctrines and artifact census | `passed`; default t1602 Files=1/Tests=5 in 17 seconds, final RAM-guarded exact t1602 Files=1/Tests=5 in 122 seconds, and adjacent t1551/t1600/t1601 Files=3/Tests=17. Source-map gate is exactly 8,192; its higher valid profiles stop at the earlier serialized cap; serialized reports are exactly 1,048,576/4,194,304/16,777,216 bytes. The AHB report SHA-256 remains `a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca`; no public support/performance/capacity claim changes. |
 | `2026-08-10` | `.17.2.3.2` activation | clean selection predecessor `9c5212cc4`; decision `0060`; exact route/nonclaim boundary; task/index/Memory continuity; task-tree, relative-path, diff, and staged-doctrine gates | `passed`; `.17.2.3.2` alone is active for canonical bridge-fanout implementation. Generator, parser, scheduler, builder, manifest, capability/support, performance, and scale behavior remain unchanged. |
 | `2026-08-10` | `.17.2.3.1` bridge-scale reachability selection | exact history `51434a2ae`/`0516f2c66`; parser/builder/contract source audit; real ordinary IAL1 parse/scheduler-report/lower probe; decision `0060`; task/index/contract/book/fact/rationale/Memory/containment continuity; task-tree, Knowledge Map, documentation, mdBook, relative-path, diff, and staged-doctrine gates | `passed`; one closed `qualification_only` direct-IAL1 profile is selected for `.17.2.3.2` implementation, with private scale-evidence capability and earliest-cap authority. Task integrity reports three trees/934 nodes; Knowledge Map reports 1,106 facts/5,733 questions/5,899 occurrences/119 shards; documentation reports Files=8/Tests=89; all 52 chapters test; and the inspected repository-local build contains 88 files/18,396,279 bytes before exact removal. The exact AHB and IAL2 routes, product code, support classification, performance budgets, and all capacity nonclaims remain unchanged. |
@@ -1077,6 +1093,30 @@ defect before `.17.2.2` begins semantic-family generation.
 | `2026-08-09` | `.15.7` activation | clean `.15.6` predecessor `4f350f29c`; task/index/audit/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook test; live-reference authority; diff/staged-doctrine gates | `passed`; `.15.7` alone is active for combined exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT qualification. Both inputs remain repository-local; task integrity reports three active trees/916 nodes, Knowledge Map remains 1,105 facts/5,713 questions/5,879 occurrences/118 shards, all 52 mdBook chapters test, and maintained-reference authority accepts the exact 0-file/0-line/+16-byte delta. Activation changes no source, generated artifact, qualification evidence, capability, runtime result, or support behavior. |
 | `2026-08-09` | `.15.7` exact combined qualification | exact GHDL archive/binary and recursive OSVVM identities; 44-core/17-Common ordered provider compilation; adapter/generated-fixture/probe analysis; fixture/probe elaboration and double execution; 42-record trace/result validation; 19-path portable parity; four deterministic OSVVM reports; bounded support/capability truth; same-volume cleanup; focused/corpus/capability/gallery/docs/task/Knowledge Map/mdBook/staged-doctrine gates | `passed`; `vhdl_osvvm_qualified` is bounded-qualified under exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT. Six adapter mappings execute in the probe; the Common address-bus mapping is analysis-only. OSVVM reports record three clean affirmations, 25% one-of-four-bin/25% coverage, and one checked scoreboard item with zero errors, while portable trace/result/parity remain authoritative. Broader provider/language/tool/profile claims remain explicit non-claims. |
 | `2026-08-10` | `.17` selection/activation | clean predecessor `6d23b5843`; mixed-language command/provider census; decisions 0032/0051; five-leaf scale decomposition; task/index/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook build; relative paths; live-reference authority; diff/staged-doctrine gates; exact cleanup | `passed`; `.16` remains proposed because no compatible mixed-language runtime is available, and `.17.1` alone is active for documentation-only scale-contract selection. Task integrity reports three active trees/921 nodes; Knowledge Map reports 1,105 facts/5,723 questions/5,889 occurrences/118 shards; the book shrinks by 34 lines/2,676 bytes while replacing stale chronology with current capability and scale boundaries; generated output is removed. No product behavior or scale claim changes. |
+
+## Acceptance Checklist (enforced) — `.17.2.4` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'execution_graph_v1'
+  --oneline -- docs perl t` locates scale-contract selection `0516f2c66`, while
+  clean predecessor `97dda148d` completes only bridge-fanout generation.
+  Direct inspection of `ArchitectureScaleWorkload`, `SemanticBuilder`,
+  `ExecutionBuilder`, `ExecutionRandom`, and their support contracts proves
+  that canonical source limits, the fixed one-fixture/unit/domain profile,
+  random-attempt semantics, and the 16-MiB plan cap must be reconciled before
+  the nominal execution-axis table can safely drive implementation.
+- [x] **ADDRESSED (verified)** — `.17.2.4` now owns execution-graph generation
+  and decomposes it into active read-only reachability selection `.17.2.4.1`
+  plus proposed implementation `.17.2.4.2`. The task frontier, bounded resume
+  pointer, mdBook explanation, and exact maintained-reference authority agree;
+  no generator or product behavior is changed by activation.
+- [x] **NO REGRESSION** — task-tree integrity reports three active trees and
+  936 nodes; relative-path tests report `All tests successful` at
+  `Files=1, Tests=2`; all 52 mdBook
+  chapters test; the verified 87-file repository-local render is removed
+  exactly; diff and staging-residue checks pass. The final staged doctrine
+  rerun supplies the governing acceptance result; parser, IR, bridge, binder,
+  plan, replay, capability/support, performance, and capacity behavior remain
+  unchanged.
 
 ## Acceptance Checklist (enforced) — `.17.2.3.2` canonical bridge-fanout generation
 
