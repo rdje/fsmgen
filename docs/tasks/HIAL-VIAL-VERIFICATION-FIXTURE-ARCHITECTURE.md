@@ -378,7 +378,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Deterministic workload profiles scale bridge units/endpoints/domains/transactions/probes and VIAL declarations/scenarios/fibers/events/checks/models/scoreboards/coverage/random decisions; stage correctness oracles, wall/CPU time, descendant RSS, artifact/result size, compile/simulation cost, explicit caps, graceful failures, and stable gates are measured without substituting for the separately owned whole-product big/really-big qualification.`
   Verification: `Clean predecessor 6d23b5843 closes the selected AXI/mdBook activity before this task-tree pivot. The 2026-08-10 eligibility census leaves .16 unavailable, while the shipped and independently qualified portable SystemVerilog, VHDL, and OSVVM profiles provide stable concrete inputs for architecture-specific scale measurement. This activation selects .17.1 alone; it changes no parser, IR, bridge, generator, artifact, runtime, capability, support, or scale claim.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17: activate scale-proof contract`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.8`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.9`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.1`
   Status: `done`
@@ -396,11 +396,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the immutable version-1 workload specification, catalog, identity, deterministic payload, and repository-local staging foundation.`
   Acceptance: `Provide one fail-closed public construction boundary for fsmgen.vial_architecture_scale_workload.v1: exact schema fields/enums/counts, fixed seed 1701, stable ordinal naming, existing SHA-256 counter/rejection payload semantics, canonical JSON plus ordered input-digest identity, path-independent deterministic reruns, defensive immutable reports, explicit nonclaims, and repository-derived same-volume staging with exact owned cleanup. Catalog all six orthogonal families, every selected level, balanced_portable_v1, backend/tool selectors, applicable stage oracles, and exact accepted/rejected specifications without forging downstream IR/artifacts or claiming capacity. Add focused positive, mutation, determinism, locality, and cleanup tests plus synced user documentation.`
-  Verification: `Selected by the clean .17.2 activation; implementation pending.`
-  Commit: `pending implementation`
+  Verification: `Clean activation commit 49b6e1ba4 owns the foundation. Decision 0057 closes the selection-time byte-axis gap with cap/16 and cap/4 source candidates, whole-valid-record excess, bounded source-only envelopes, genuine backend-output rules, exact logical tool selectors, and unchanged nonclaims. FSM::VIAL::ArchitectureScaleWorkload ships one closed defensive catalog/construction/staging boundary with exact schema fields, six families plus balanced_portable_v1, all 250 axis/level combinations, fixed seed 1701, shipped SHA-256 counter/rejection payloads, eight-digit names, canonical path-sorted input identity, role/path/size rejection, canonical-construction revalidation, same-volume staging, concurrent collision rejection, and exact success/failure cleanup. The first cleanup regression exposed an incorrect local File::Path error-collector reference; the exact test-owned residue was removed, the implementation was corrected, and reruns leave no vial-scale stage. An independent probe finds the same pre-existing defect in ArtifactTransaction; proposed .17.9 durably owns that separate public-path repair. Module/test syntax passes; focused/adjacent VIAL regression reports All tests successful at Files=5/Tests=38; all 52 mdBook chapters test and the rendered foundation is present in a repository-local 88-file build removed exactly. Maintained-reference authority accepts 0 files/+78 lines/+3,685 bytes. Task/Knowledge Map/Memory/staged acceptance/doctrines pass with no scale staging, mdBook, probe, .bin, or .log residue. No parser, SemanticIR, bridge, ExecutionIR, emitter, runtime, capability, support classification, performance budget, or scale capacity claim changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.1: build deterministic workload foundation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.2`
   Status: `proposed`
@@ -485,6 +485,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `From a separate clean activation, append an execution-status correction to decisions 0055/0056 and their index summary: preserve the exact selection-time discrepancy and rationale, record .17.6 commit 5db70fa08 as the completed 8-MiB/64-MiB support-accounting alignment, remove no historical evidence, and change no workload contract, implementation, runtime, capability, support classification, or scale claim. Complete this leaf before activating .17.2.`
   Verification: `Clean activation commit 8201334c4 owns the reconciliation. Decisions 0055/0056 retain their exact selection-time discrepancy, rationale, and proposed-.17.6 text, but now identify it explicitly as historical audit evidence and record completed .17.6 commit 5db70fa08 as current authority for the aligned 8,388,608-byte compile and 67,108,864-byte runtime limits. The index records the same execution state. Decision records remain bounded; relative-path, task-tree, Knowledge Map, Memory, staged acceptance, and doctrine gates pass. No workload contract, implementation, runtime behavior, capability set, support classification, or scale claim changes.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.8: record transcript-limit execution`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.9`
+  Status: `proposed`
+  Goal: `Repair the public VIAL artifact transaction's failed-stage cleanup error collector and prove exact residue removal.`
+  Acceptance: `From a separate clean activation, change only FSM::VIAL::ArtifactTransaction's File::Path remove_tree error collector from the invalid array reference to the required scalar reference; add a focused regression that forces failure after staging creation and proves the exact operation-owned tree is removed with a stable sanitized error. Audit every repository remove_tree error collector, retain successful/unchanged/collision/atomic-publication behavior, and change no artifact graph, target root, parser, plan, backend, runtime, capability, support, or scale claim.`
+  Verification: `During .17.2.1 cleanup testing, the invalid error-reference form leaves the owned tree and throws Not a SCALAR reference from File::Path. A repository-local probe reproduces that behavior and then removes its exact fixture with the correct scalar-reference form. Source audit finds ArtifactTransaction uses the invalid form while Runner already uses the correct form. No ArtifactTransaction code is changed under .17.2.1.`
+  Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18`
   Status: `proposed`
@@ -601,10 +608,23 @@ and no compatible mixed-language simulator is installed. Completed `.17.1`
 selects decisions `0055`/`0056` and the architecture-scale contracts without claiming
 capacity. Its audit finds one pre-existing support-snapshot limit drift;
 completed `.17.7` removes the stale focused-document regression shadow without
-storing a replacement count. Completed `.17.6` aligns the support snapshot
-before `.17.2` builds scale automation against those values; `.17.2` is next.
+storing a replacement count. Completed `.17.6` aligns the support snapshot and
+completed `.17.8` records that execution in the accepted decisions. Decision
+`0057` and completed `.17.2.1` now ship the bounded source-only workload
+catalog, identity, payload, and staging foundation without claiming capacity.
+Proposed `.17.9` owns the independently reproduced ArtifactTransaction cleanup
+defect before `.17.2.2` begins semantic-family generation.
 
 ## Decisions
+
+- `2026-08-10`: Accept decision `0057`. Derive source-byte correctness
+  candidates from their declared caps at one-sixteenth and one-quarter, use
+  exact valid bytes at the limit, and cross the limit only with the first
+  complete valid referenced record. Bound the shared source-only constructor
+  above those product caps, keep backend bytes as genuine measured output,
+  reuse fixed seed 1701 plus the shipped counter/rejection algorithm, and
+  remove repository-volume staging on every outcome. None is a capacity or
+  performance-budget claim.
 
 - `2026-08-10`: The generated focused-document index and its own checker agree
   on 1,023 members, but `t/1569` retains the 1,022-member literal added before
@@ -964,6 +984,7 @@ before `.17.2` builds scale automation against those values; `.17.2` is next.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-10` | `.17.2.1` deterministic workload foundation | decision `0057`; exact workload/catalog/construction/staging schemas; all 250 family/axis/level specifications; backend/tool selectors; stable names and fixed-seed payloads; canonical identity and reordered-input reruns; malformed schema/path/role/size/construction mutations; same-volume success/failure/collision cleanup; syntax and adjacent semantic/execution/public-tool regression; task/book/Knowledge Map/Memory/live-reference/staged-acceptance/doctrine gates; repository-local mdBook test/build/render inspection; artifact census and exact cleanup | `passed`; `FSM::VIAL::ArchitectureScaleWorkload` ships the source-only unmeasured foundation, while parser-through-runtime, capability/support, performance, and capacity remain unchanged. The focused/adjacent suite reports `All tests successful` at Files=5/Tests=38; all 52 chapters test and the rendered section is present in an 88-file/18,367,391-byte repository-local build removed exactly; maintained-reference authority accepts 0 files/+78 lines/+3,685 bytes. An initially incorrect local cleanup collector was corrected and its exact residue removed; no scale-stage residue remains. A separately reproduced pre-existing public ArtifactTransaction cleanup defect is owned by proposed `.17.9` rather than changed in this leaf. |
 | `2026-07-29` | architecture parking | `knowledge-map/scripts/gen_knowledge_map.sh`; `knowledge-map/scripts/check_knowledge_map.sh`; `mdbook build docs/book --dest-dir build`; `scripts/check_doctrines.sh`; task/roadmap/book/fact positive scans; `git diff --check`; all heavyweight commands under authorized `--host-max-pct 100 --process-max-rss-mb 4096` | `passed`; Knowledge Map is current at 1,017 facts / 5,175 question keys; mdBook built 72 files / 15,852 KiB under repository-root `build/`, which was removed with no residue; all doctrine gates passed; exact post-gate Stats-compatible capacity was 46.7% (11.21/24.00 GiB) and kernel pressure was 1 (normal); the guard percentage was not used as capacity truth |
 | `2026-07-31` | `.1` | architecture evidence audit; decision `0032`; exact AHB mapping; `.2`-.18 decomposition; `scripts/check_task_tree_integrity.pl`; docs audits; `mdbook test`; repository-local `mdbook build`; Knowledge Map generation/check; memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; selected one public `.vial`, two private IRs, versioned bridge, portable/native/result/profile contracts, and plain-SV/Verilator first; trees=2 / nodes=864; docs Files=3 / Tests=40; 37 chapters; 73 files / 16,810,633 bytes; Knowledge Map 1,085 facts / 5,600 keys; no product behavior change |
 | `2026-07-31` | `.2` activation | clean `.1` predecessor; task/index/roadmap/book/fact/Memory/changelog continuity; task-tree/docs/mdBook/Knowledge Map/memory/diff/staged acceptance/doctrines; exact cleanup | `passed`; `.2` alone active; trees=2 / nodes=864; docs Files=3 / Tests=40; 37 chapters; 73 files / 16,812,484 bytes; Knowledge Map 1,085 facts / 5,600 keys; Memory 46 lines; contract and product behavior unchanged |
@@ -1025,6 +1046,39 @@ before `.17.2` builds scale automation against those values; `.17.2` is next.
 | `2026-08-09` | `.15.7` activation | clean `.15.6` predecessor `4f350f29c`; task/index/audit/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook test; live-reference authority; diff/staged-doctrine gates | `passed`; `.15.7` alone is active for combined exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT qualification. Both inputs remain repository-local; task integrity reports three active trees/916 nodes, Knowledge Map remains 1,105 facts/5,713 questions/5,879 occurrences/118 shards, all 52 mdBook chapters test, and maintained-reference authority accepts the exact 0-file/0-line/+16-byte delta. Activation changes no source, generated artifact, qualification evidence, capability, runtime result, or support behavior. |
 | `2026-08-09` | `.15.7` exact combined qualification | exact GHDL archive/binary and recursive OSVVM identities; 44-core/17-Common ordered provider compilation; adapter/generated-fixture/probe analysis; fixture/probe elaboration and double execution; 42-record trace/result validation; 19-path portable parity; four deterministic OSVVM reports; bounded support/capability truth; same-volume cleanup; focused/corpus/capability/gallery/docs/task/Knowledge Map/mdBook/staged-doctrine gates | `passed`; `vhdl_osvvm_qualified` is bounded-qualified under exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT. Six adapter mappings execute in the probe; the Common address-bus mapping is analysis-only. OSVVM reports record three clean affirmations, 25% one-of-four-bin/25% coverage, and one checked scoreboard item with zero errors, while portable trace/result/parity remain authoritative. Broader provider/language/tool/profile claims remain explicit non-claims. |
 | `2026-08-10` | `.17` selection/activation | clean predecessor `6d23b5843`; mixed-language command/provider census; decisions 0032/0051; five-leaf scale decomposition; task/index/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook build; relative paths; live-reference authority; diff/staged-doctrine gates; exact cleanup | `passed`; `.16` remains proposed because no compatible mixed-language runtime is available, and `.17.1` alone is active for documentation-only scale-contract selection. Task integrity reports three active trees/921 nodes; Knowledge Map reports 1,105 facts/5,723 questions/5,889 occurrences/118 shards; the book shrinks by 34 lines/2,676 bytes while replacing stale chronology with current capability and scale boundaries; generated output is removed. No product behavior or scale claim changes. |
+
+## Acceptance Checklist (enforced) — `.17.2.1` deterministic workload foundation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — On clean activation commit `49b6e1ba4`,
+  `git log -S'fsmgen.vial_architecture_scale_workload.v1' --oneline --
+  perl/FSM/VIAL scripts t` returns no producer. Decisions `0055`/`0056`
+  selected only the scale contract, while source audit finds reusable canonical
+  JSON, `ExecutionRandom`, repository-local staging, and cleanup authorities.
+  The selection also left source-byte candidates unassigned; decision `0057`
+  closes that gap without inventing a capacity claim. A separate source audit
+  finds the pre-existing ArtifactTransaction cleanup-collector defect owned by
+  proposed `.17.9`, not by this foundation leaf.
+- [x] **ADDRESSED (verified)** — `FSM::VIAL::ArchitectureScaleWorkload` now
+  provides exact versioned catalog, construction, and staging schemas; six
+  orthogonal families plus the balanced profile; all 250 selected
+  family/axis/level specifications; four backend profiles and exact logical
+  tool selectors; fixed seed 1701; shipped SHA-256 counter/rejection payloads;
+  stable names; path-sorted content identity; bounded source-only validation;
+  canonical-construction revalidation; and repository-volume staging with
+  collision rejection and exact cleanup. Decision `0057`, the mdBook, task
+  index, fact card, and bounded Memory state the same shipped boundary.
+- [x] **NO REGRESSION** — Module and test syntax pass. The guarded focused and
+  adjacent suite reports `All tests successful` at Files=5/Tests=38, including
+  every catalog specification, mutation boundaries, deterministic reruns, and
+  success/failure cleanup. All 52 mdBook chapters test and the rendered
+  foundation appears in an 88-file/18,367,391-byte repository-local build removed exactly;
+  maintained-reference authority accepts 0 files/+78 lines/+3,685 bytes. The
+  initially exposed local cleanup residue was removed exactly, its collector
+  corrected, and repeat execution leaves no scale stage. Task-tree, Knowledge
+  Map, Memory, relative-path, staged acceptance, doctrine, diff, `.bin`/`.log`,
+  and generated-artifact checks pass. No parser, SemanticIR, bridge,
+  ExecutionIR, emitter, runtime, capability, support classification,
+  performance budget, or architecture-scale capacity changes.
 
 ## Acceptance Checklist (enforced) — `.17.8` decision execution reconciliation
 

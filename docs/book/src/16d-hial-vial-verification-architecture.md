@@ -1987,6 +1987,84 @@ measurement, bounded failure, and stable-gate owners all complete. The current
 single-unit/single-domain profiles test `1` as accepted and `2` as rejected;
 repeating a one-unit result cannot claim multi-unit or multi-domain scale.
 
+### Deterministic construction foundation
+
+The provider-free construction foundation is now available through
+`FSM::VIAL::ArchitectureScaleWorkload`. It is qualification infrastructure,
+not a user capacity or support claim. Its versioned catalog contains the six
+families above, every selected axis/level, the separate
+`balanced_portable_v1` interaction profile, exact backend/tool selectors,
+the checked AHB anchor, applicable stage oracles, and explicit nonclaims.
+
+Each successful construction carries the exact
+`fsmgen.vial_architecture_scale_workload.v1` specification fields selected by
+decision `0055`:
+
+```text
+schema / schema_version
+family / level / primary_axis / requested_counts
+expected_stage / expected_outcome
+generator_revision / seed / anchor_identity
+source_route / backend_profile / tool_profile
+applicable_oracles / explicit_nonclaims
+```
+
+[Decision `0057`](../../decisions/0057-vial-scale-byte-candidates-and-construction-envelopes-are-derived-and-bounded.md)
+closes the byte-axis construction detail. A source-byte gate candidate is
+`floor(cap / 16)` and a qualification candidate is `floor(cap / 4)`. Thus the
+1-MiB per-source cap uses 64-KiB and 256-KiB candidates; the 16-MiB combined
+cap uses 1-MiB and 4-MiB candidates. A byte over-limit workload appends the
+first complete valid referenced record above the cap. It does not use comment,
+blank-data, or exact-plus-one padding.
+
+The boundary accepts only VIAL source, HIAL source, and optional replay-
+manifest inputs. It cannot accept or forge SemanticIR, a bridge manifest, an
+execution plan, backend artifacts, a trace, or a result. Those must come from
+the canonical producers exercised by the later family-specific leaves. The
+source envelope is bounded at 1,114,112 bytes per input and 17,825,792 bytes
+combined so the exact source caps and one bounded whole-record excess fit
+without creating an unbounded fixture builder.
+
+This repository-root-relative example constructs an unmeasured semantic
+candidate and prints its stable identity:
+
+```perl
+use FSM::VIAL::ArchitectureScaleWorkload;
+
+my $workload = FSM::VIAL::ArchitectureScaleWorkload->construct({
+    family => 'semantic_catalog_v1',
+    level => 'gate_candidate_v1',
+    primary_axis => 'imports',
+    backend_profile => undef,
+    tool_profile => undef,
+    inputs => [{
+        relative_path => 'source/workload.vial',
+        role => 'vial_source',
+        encoding => 'utf-8',
+        content => "(vial\n  (version 1)\n)\n",
+    }],
+});
+die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+print "$workload->{workload_identity}\n";
+```
+
+Input order is normalized by repository-relative path. The workload identity
+is SHA-256 over canonical JSON containing the complete specification and those
+ordered input identities, including their content digests. Host paths,
+timestamps, process IDs, tool-discovery paths, run ordinals, and measurements
+cannot enter it. Payloads use fixed seed `1701` and the shipped
+`sha256_counter_rejection_v1` algorithm; structure, names, ordering, requested
+counts, and expected outcomes never come from randomness. Stable names use the
+family, axis, and an eight-digit ordinal.
+
+`with_staging` materializes the source-only input graph below the derived
+`.artifacts/tmp/vial-scale/<identity>` directory on the repository volume,
+runs a caller-supplied canonical-producer callback, and removes the exact owned
+tree on success or failure. A concurrent identity collision fails without
+touching the existing tree. Its returned report contains only the repository-
+relative staging identity, same-volume proof, cleanup state, and diagnostics;
+runtime-derived absolute paths are never durable identity.
+
 For example, the scenario-count axis holds the source/bridge/checking anchor
 fixed and requests 32 scenarios for the gate candidate, 512 for qualification,
 4,096 at the declared plan limit, and 4,097 for deterministic rejection. Every

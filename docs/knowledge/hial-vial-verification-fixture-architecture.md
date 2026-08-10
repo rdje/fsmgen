@@ -218,8 +218,10 @@ Completed `.17.7` removes `t/1569`'s stale focused-index count shadow by
 validating the authority's complete nonzero census instead. Completed `.17.6`
 aligns the public support snapshot with the Runner/normative 8-MiB compile and
 64-MiB runtime capture limits. Completed `.17.8` records that current authority.
-Active `.17.2.1` builds the shared deterministic workload foundation before
-six bounded semantic-family and integration leaves consume it.
+Decision `0057` and completed `.17.2.1` ship a bounded source-only catalog,
+identity, seeded payload, and same-volume staging/cleanup foundation without a
+capacity claim. `.17.9` repairs an adjacent pre-existing cleanup defect before
+`.17.2.2` generates semantic-family workloads.
 
 Decision `0050` and completed `.12` select IEEE 1800.2-2020 with exact
 Accellera UVM 2020-3.1 tag/commit as the native methodology source. Commercial
