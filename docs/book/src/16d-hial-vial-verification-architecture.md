@@ -2489,8 +2489,53 @@ scenario, operation, and root/live fiber, eight normalized types, 22 bindings,
 and 19 maps: the 17 fixed checked-AHB maps plus one operation map and one
 decision map. Independent identities, public capability isolation, replay-
 attempt mutation, source mutation, missing checked source, and unfinished-level
-rejection are regression-locked. Exact plan-byte boundaries, higher random
-levels, final qualification, and any capacity claim remain unfinished.
+rejection are regression-locked. Exact 4/16-MiB plan-byte boundaries, higher
+random levels, final qualification, and any capacity claim remain unfinished.
+
+The first serialized-plan byte gate now reaches exactly one MiB through the
+same checked-AHB source and public binder. It authors 2,974 real reset actions,
+not an imported plan or opaque byte field. A bounded scenario identifier closes
+the selected 41-character semantic suffix, while endpoint alias `r_q` closes
+the two-character suffix and remains live because coverpoint `c` samples its
+real `HREADYOUT` binding. The generated source is a single semantic form plus
+its terminating newline; comments, blank data, and path inflation contribute
+nothing.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+open my $fh, '<:raw', 'ppif/ahb_lite_subordinate.ppif'
+    or die "cannot read checked AHB source: $!";
+local $/;
+my $checked_ahb = <$fh>;
+close $fh or die "cannot close checked AHB source: $!";
+
+my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+    primary_axis => 'serialized_plan_bytes',
+    level => 'gate_candidate_v1',
+    reference_hial_text => $checked_ahb,
+});
+die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+
+my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+    construction => $workload,
+});
+die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+die "unexpected plan-byte construction\n"
+    unless $evaluation->{metrics}{serialized_plan_bytes} == 1_048_576
+        && $evaluation->{metrics}{expanded_operations_total} == 2_974;
+```
+
+The canonical plan contains one scenario and root/live fiber, 22 bindings,
+seven execution types, six bridge events, and exactly 2,991 source maps: 17
+fixed checked-AHB maps plus one for every reset. All map paths and generated
+source spans are unique and closed; every reset is a drive-phase operation in
+one contiguous successor chain. Independent construction is byte-stable. The
+plan has ID
+`plan/ee10e4a5749a4398b9e62d5a1624d24c74e585459afd57f8cb7503306545c035`
+and canonical SHA-256
+`15106539d198cc3a3df2cfc73c87a7f8039cda02a9327f151bec196228a258be`.
+These are reproducible construction facts, not a support or capacity claim.
 
 The reachability audit selects these outcomes before generator implementation:
 

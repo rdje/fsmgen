@@ -24,6 +24,7 @@ use FSM::VIAL::Parser;
 my $FAMILY = 'execution_graph_v1';
 my $HIAL_SOURCE = 'generated/vial-scale/execution_graph/vial_architecture_scale.isf';
 my $VIAL_SOURCE = 'generated/vial-scale/execution_graph/vial_architecture_scale.vial';
+my $PLAN_VIAL_SOURCE = 'generated/vial-scale/execution_graph/plan_bytes.vial';
 my $REFERENCE_HIAL_SOURCE = 'ppif/ahb_lite_subordinate.ppif';
 my $REFERENCE_HIAL_BYTES = 1_326;
 my $REFERENCE_HIAL_SHA256 =
@@ -44,6 +45,17 @@ my $RANDOM_OCCURRENCE_ID = join('/',
     $RANDOM_FIXTURE_ID, $RANDOM_SCENARIO_ID, $RANDOM_DECISION_ID, 0,
 );
 my $U64_MAX = '18446744073709551615';
+my $PLAN_GATE_OPERATION_COUNT = 2_974;
+my $PLAN_GATE_SCENARIO_SUFFIX_LENGTH = 41;
+my $PLAN_GATE_ENDPOINT_SUFFIX_LENGTH = 2;
+# These compact stems and descriptive suffixes are referenced semantic names;
+# none is an unreferenced payload or serialized-plan padding field.
+my $PLAN_GATE_FIXTURE_NAME = 'p';
+my $PLAN_GATE_SCENARIO_STEM = 'sg';
+my $PLAN_GATE_ENDPOINT_STEM = 'r';
+my $PLAN_GATE_COVERPOINT_NAME = 'c';
+my $PLAN_GATE_SCENARIO_SUFFIX = '_exact_mib_serialized_execution_plan_gate';
+my $PLAN_GATE_ENDPOINT_SUFFIX = '_q';
 my @CHECKED_AHB_FIXED_SOURCE_MAP_PATHS = (
     '/bindings/domains/0',
     map("/bindings/endpoints/$_/relations/0", 0 .. 2),
@@ -74,7 +86,7 @@ sub construct($class, @args) {
     my %owned_axis = map { $_ => 1 } qw(
         bindings scenarios operations_per_scenario operations_total
         fibers_total simultaneously_live_fibers execution_types
-        source_map_records random_attempts
+        source_map_records random_attempts serialized_plan_bytes
     );
     confess "execution-graph gate slice does not own the requested shape\n"
         unless defined($axis) && $owned_axis{$axis}
@@ -117,7 +129,8 @@ sub construct($class, @args) {
                 $raw->{reference_hial_text},
             ),
             _input(
-                $VIAL_SOURCE, 'vial_source',
+                $axis eq 'serialized_plan_bytes' ? $PLAN_VIAL_SOURCE : $VIAL_SOURCE,
+                'vial_source',
                 _render_ahb_vial($axis, $requested->{$axis}),
             ),
         ];
@@ -521,6 +534,12 @@ sub _render_ahb_vial($axis, $requested_count) {
     my ($scenario_count, $operations_per_scenario, $scenario_timeout_cycles,
         @scenario_actions);
     my $randomness = '(randomness (seed 1701))';
+    my $scenario_suffix = '';
+    my $endpoint_suffix = '';
+    my $endpoint_name = 'ready_out';
+    my $coverpoint_name = 'ready_reference';
+    my $coverage = '(coverage)';
+    my $fixture_name = 'execution_gate';
     if ($axis eq 'scenarios') {
         ($scenario_count, $operations_per_scenario) = ($requested_count, 1);
     }
@@ -564,13 +583,37 @@ sub _render_ahb_vial($axis, $requested_count) {
             ' (constraints (value_eq (choice attempt_target) ', $target, '))))',
         );
     }
+    elsif ($axis eq 'serialized_plan_bytes') {
+        confess "serialized-plan gate requires its exact one-MiB request\n"
+            unless $requested_count == 1_048_576;
+        confess "serialized-plan semantic suffix contract changed\n"
+            unless length($PLAN_GATE_SCENARIO_SUFFIX)
+                    == $PLAN_GATE_SCENARIO_SUFFIX_LENGTH
+                && length($PLAN_GATE_ENDPOINT_SUFFIX)
+                    == $PLAN_GATE_ENDPOINT_SUFFIX_LENGTH;
+        $scenario_count = 1;
+        $operations_per_scenario = $PLAN_GATE_OPERATION_COUNT;
+        $scenario_suffix = $PLAN_GATE_SCENARIO_SUFFIX;
+        $endpoint_suffix = $PLAN_GATE_ENDPOINT_SUFFIX;
+        $endpoint_name = $PLAN_GATE_ENDPOINT_STEM;
+        $coverpoint_name = $PLAN_GATE_COVERPOINT_NAME;
+        $fixture_name = $PLAN_GATE_FIXTURE_NAME;
+        $coverage = join('',
+            '(coverage (coverpoint ', $coverpoint_name,
+            ' (sample bus)',
+            ' (expr (sample ', $endpoint_name, $endpoint_suffix, '))',
+            ' (bins (bin asserted normal (value #b1)))))',
+        );
+    }
     else {
         confess "checked-AHB renderer does not own axis '$axis'\n";
     }
 
     my @scenarios;
     for my $scenario_ordinal (0 .. $scenario_count - 1) {
-        my $name = sprintf('scenario_%08d', $scenario_ordinal);
+        my $name = $axis eq 'serialized_plan_bytes'
+            ? $PLAN_GATE_SCENARIO_STEM . $scenario_suffix
+            : sprintf('scenario_%08d', $scenario_ordinal);
         my @steps = @scenario_actions
             ? @scenario_actions
             : ('(reset bus 1)') x $operations_per_scenario;
@@ -603,18 +646,19 @@ sub _render_ahb_vial($axis, $requested_count) {
         ' (events requested accepted captured held completed error)))',
         ' (models)',
         ' (scoreboards)',
-        ' (fixtures (fixture execution_gate',
+        ' (fixtures (fixture ', $fixture_name,
         ' (dut dut',
         ' (unit "unit/ahb_lite_subordinate")',
         ' (domains (domain bus "domain/ahb_bus"))',
         ' (endpoints',
-        ' (endpoint ready_out "endpoint/HREADYOUT" (logic 1) public_port)',
+        ' (endpoint ', $endpoint_name, $endpoint_suffix,
+        ' "endpoint/HREADYOUT" (logic 1) public_port)',
         ' (endpoint response "endpoint/HRESP" (logic 1) public_port)',
         ' (endpoint read_data "endpoint/HRDATA" (logic 32) public_port)',
         ' (endpoint stored_data "probe/reg_data_q" (logic 32) verification_probe))',
         ' (transactions (transaction write "transaction/ahb_write" ahb_write)))',
         ' (instances)',
-        ' (coverage)',
+        ' ', $coverage,
         ' (faults)',
         ' ', $randomness,
         ' (scenarios ', join(' ', @scenarios), ')))))',
@@ -867,6 +911,14 @@ sub _axis_oracle_errors($spec, $construction, $ir, $plan, $inputs, $replayed) {
         return @errors;
     }
 
+    if ($axis eq 'serialized_plan_bytes') {
+        push @errors, _plan_byte_oracle_errors(
+            $construction, $ir, $plan, $requested,
+        );
+        push @errors, _topology_oracle_errors($ir, 'reset_chain');
+        return @errors;
+    }
+
     if ($axis eq 'fibers_total' || $axis eq 'simultaneously_live_fibers') {
         my $observed = $axis eq 'fibers_total'
             ? $ir->{operation_graph}{total_fiber_count}
@@ -910,6 +962,111 @@ sub _axis_oracle_errors($spec, $construction, $ir, $plan, $inputs, $replayed) {
         && $ir->{operation_graph}{maximum_simultaneous_live_fibers} == 1;
 
     push @errors, _topology_oracle_errors($ir, 'reset_chain');
+    return @errors;
+}
+
+sub _plan_byte_oracle_errors($construction, $ir, $plan, $requested) {
+    my @errors;
+    my $canonical = JSON::PP->new->canonical(1)->utf8(1);
+    my $plan_json = $canonical->encode($plan);
+    my $vial = _role_input($construction, 'vial_source');
+    my $fixture_id =
+        "architecture_scale_execution::fixture::$PLAN_GATE_FIXTURE_NAME";
+    my $scenario_name = $PLAN_GATE_SCENARIO_STEM . $PLAN_GATE_SCENARIO_SUFFIX;
+    my $scenario_id = "$fixture_id\::scenario\::$scenario_name";
+    my $endpoint_name = $PLAN_GATE_ENDPOINT_STEM . $PLAN_GATE_ENDPOINT_SUFFIX;
+    my $endpoint_id = "$fixture_id\::endpoint\::$endpoint_name";
+    my $coverpoint_id =
+        "$fixture_id\::coverpoint\::$PLAN_GATE_COVERPOINT_NAME";
+    my $coverage = $ir->{coverage};
+    my $coverpoint = ref($coverage->{coverpoints}) eq 'ARRAY'
+        && @{$coverage->{coverpoints}} == 1
+            ? $coverage->{coverpoints}[0]
+            : undef;
+    my $bin = $coverpoint && ref($coverpoint->{bins}) eq 'ARRAY'
+        && @{$coverpoint->{bins}} == 1
+            ? $coverpoint->{bins}[0]
+            : undef;
+    my $scenario = @{$ir->{scenarios}} == 1 ? $ir->{scenarios}[0] : undef;
+    my $graph = $ir->{operation_graph};
+
+    my %records_by_plan_path;
+    push @{$records_by_plan_path{$_->{plan_path} // ''}}, $_
+        for @{$ir->{source_map}};
+    my @fixed_paths = sort grep {
+        $_ !~ m{\A/operation_graph/operations/[0-9]+\z}
+    } keys %records_by_plan_path;
+    my $maps_closed = @{$ir->{source_map}}
+            == $PLAN_GATE_OPERATION_COUNT + @CHECKED_AHB_FIXED_SOURCE_MAP_PATHS
+        && scalar(keys %records_by_plan_path) == @{$ir->{source_map}}
+        && join("\0", @fixed_paths)
+            eq join("\0", sort @CHECKED_AHB_FIXED_SOURCE_MAP_PATHS);
+    for my $index (0 .. $PLAN_GATE_OPERATION_COUNT - 1) {
+        my $records = $records_by_plan_path{"/operation_graph/operations/$index"}
+            || [];
+        $maps_closed = 0 unless @$records == 1
+            && ($records->[0]{semantic_path} // '')
+                eq "/packages/0/fixtures/0/scenarios/0/actions/$index";
+    }
+    for my $record (@{$ir->{source_map}}) {
+        my $locations = $record->{source_locations};
+        $maps_closed = 0 unless ref($locations) eq 'ARRAY' && @$locations == 1
+            && ($locations->[0]{source_name} // '') eq $PLAN_VIAL_SOURCE
+            && ($locations->[0]{start_line} // 0) == 1
+            && ($locations->[0]{end_line} // 0) == 1
+            && ($locations->[0]{end_byte_exclusive} // -1)
+                > ($locations->[0]{start_byte} // -1);
+    }
+
+    my $source_closed = ($vial->{relative_path} // '') eq $PLAN_VIAL_SOURCE
+        && $vial->{content} =~ /\A[^\r\n]+\n\z/
+        && scalar(() = $vial->{content} =~ /\(reset bus 1\)/g)
+            == $PLAN_GATE_OPERATION_COUNT
+        && scalar(() = $vial->{content} =~ /\Q$scenario_name\E/g) == 1
+        && scalar(() = $vial->{content} =~ /\(endpoint \Q$endpoint_name\E /g)
+            == 1
+        && scalar(() = $vial->{content}
+            =~ /\(expr \(sample \Q$endpoint_name\E\)\)/g) == 1;
+
+    my $coverage_closed = $coverpoint
+        && !@{$coverage->{crosses} || []}
+        && ($coverpoint->{semantic_id} // '') eq $coverpoint_id
+        && ($coverpoint->{domain_id} // '') eq "$fixture_id\::domain\::bus"
+        && ($coverpoint->{expression}{kind} // '') eq 'reference'
+        && ($coverpoint->{expression}{op} // '') eq 'sample'
+        && ($coverpoint->{expression}{semantic_id} // '') eq $endpoint_id
+        && ($coverpoint->{expression}{binding_id} // '')
+            eq "binding/$fixture_id/endpoint/HREADYOUT"
+        && $bin
+        && ($bin->{name} // '') eq 'asserted'
+        && ($bin->{classification} // '') eq 'normal'
+        && ($bin->{matcher}{kind} // '') eq 'value'
+        && ($bin->{matcher}{value}{width} // 0) == 1
+        && ($bin->{matcher}{value}{known_mask} // '') eq '1'
+        && ($bin->{matcher}{value}{value_bits} // '') eq '1';
+
+    my $plan_closed = bytes::length($plan_json) == $requested
+        && $requested == 1_048_576
+        && $scenario
+        && ($scenario->{name} // '') eq $scenario_name
+        && ($scenario->{scenario_id} // '') eq $scenario_id
+        && $scenario->{plan_summary}{operation_count} == $PLAN_GATE_OPERATION_COUNT
+        && join("\0", @{$scenario->{plan_summary}{coverpoint_ids} || []})
+            eq $coverpoint_id
+        && $graph->{total_operation_count} == $PLAN_GATE_OPERATION_COUNT
+        && $graph->{total_fiber_count} == 1
+        && $graph->{maximum_simultaneous_live_fibers} == 1
+        && !@{$ir->{randomness}{decisions} || []}
+        && !scalar(grep {
+            ($_->{kind} // '') ne 'reset'
+                || ($_->{eligible_phase} // '') ne 'drive'
+        } @{$graph->{operations}});
+
+    push @errors, _oracle_error(
+        'VIAL_SCALE_EXECUTION_PLAN_BYTES_ERROR',
+        'serialized-plan gate did not preserve its exact semantic recipe and one-MiB canonical boundary',
+        '/metrics/serialized_plan_bytes',
+    ) unless $source_closed && $coverage_closed && $maps_closed && $plan_closed;
     return @errors;
 }
 

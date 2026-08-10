@@ -450,8 +450,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement the selected canonical execution-graph generator and exact plan/replay oracles.`
   Acceptance: `Implement only after .17.2.4.1 commits cleanly; construct every reachable execution_graph_v1 axis through ordinary VIAL parsing, canonical bridge production, and the shipped binder; prove the selected exact or earliest-cap outcomes, structural topology and logical-time invariants, generated/replayed decision equality, immutable byte-equal reports and plan hashes, hostile-input rejection, deterministic reruns, and exact repository-local staging cleanup with default and RAM-guarded qualification tests plus synchronized user documentation.`
-  Verification: `ArchitectureScaleExecutionGraph now owns binding, topology, fiber, type, map, and random/replay gate candidates. The random gate uses the frozen checked-AHB route and unchanged public binder. One referenced two-state u64 equality choice targets 0x7da2c124f3fb4c11 at zero-based attempt 8,191. Its one check-phase expectation produces exactly one occurrence/operation/root-live fiber, eight types, 22 bindings, and 19 maps. Independent generation is byte-stable; a strict replay retains every keyed decision field except origin, with exact generated/replayed plan identities and 34,295/34,294 canonical bytes. Replay tampering, source mutation, missing source, and unfinished levels fail closed. Focused t1608 and the guarded 11-file/51-test impact matrix pass. Earlier binding/topology/fiber/type/map evidence remains unchanged. The leaf remains active for exact plan-byte, higher random levels, qualification, and cleanup slices; no public capability/support or capacity claim changes.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2: generate execution random replay gate`
+  Verification: `ArchitectureScaleExecutionGraph now owns binding, topology, fiber, type, map, random/replay, and exact one-MiB plan gate candidates. The plan gate uses the frozen checked-AHB route and unchanged public binder: 2,974 genuine resets plus referenced 41/2-character scenario/endpoint semantic suffixes produce exactly 1,048,576 canonical bytes, one scenario/root-live fiber, seven types, 22 bindings, six events, and 2,991 unique maps. The endpoint alias remains live through a real HREADYOUT coverpoint. Source/SemanticIR/bridge/workload/plan identities, reset topology, source spans, public capability isolation, mutation rejection, and unfinished-level closure are frozen. Focused t1609 and the guarded 12-file/55-test impact matrix pass. Earlier binding/topology/fiber/type/map/random evidence remains unchanged. The leaf remains active for exact four-/sixteen-MiB plans, higher random levels, qualification, and cleanup slices; no public capability/support or capacity claim changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2: generate exact one-MiB execution plan gate`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5`
   Status: `proposed`
@@ -1100,6 +1100,33 @@ defect before `.17.2.2` begins semantic-family generation.
 | `2026-08-10` | `.17.2.4.2` execution-type gate | ordinary non-annotated direct-IAL1 source; exact widths 1..512; 512 public endpoint relations; canonical public binder; IAL1/IAL0 route and capability closure; exact type/binding/map/bridge-byte/plan/hash identities; null-annotation preservation; mutation/source-injection/unfinished-level rejection; focused and adjacent regression; task/book/fact/rationale/Memory/live/staged-doctrine gates | `passed`; the gate contains 512 distinct four-state unsigned logic shapes, 514 bindings, 514 maps, an exact 8,237,394-byte bridge report, one scenario/reset/root fiber, and a 735,488-byte plan. Generated HIAL/VIAL sources are 17,901/63,780 bytes with frozen identities. The scale helper no longer autovivifies an absent verification bridge while collecting optional probe names. Final verification details are recorded below. No private capability, backend behavior, support, performance, or capacity claim changes. |
 | `2026-08-10` | `.17.2.4.2` execution source-map gate | frozen checked-AHB source; exact census of 17 fixed maps; 8,175 genuine resets; public canonical binder; unique plan paths; exact semantic-action and ordered byte-span projection; real bridge facts; closed reset chain; exact source/SemanticIR/bridge/workload/plan identities; mutation/missing-source/unfinished-level rejection; focused and guarded impacted regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; the gate contains exactly 8,192 source maps, 8,175 operations, one scenario/root/live fiber, 22 bindings, seven types, six events, a 508,968-byte unchanged bridge report, and a 2,949,646-byte target-neutral plan. Focused t1607 passes at Files=1/Tests=4; the guarded impact matrix passes at Files=10/Tests=47 in 111 seconds. No private capability, backend behavior, support, performance, or capacity claim changes. |
 | `2026-08-10` | `.17.2.4.2` execution random/replay gate | frozen checked-AHB source; one referenced two-state u64 choice over the full unsigned range; exact deterministic attempt-8,191 candidate; check-phase operation; public canonical binder; independent generation; strict replay; decision/plan equality; exact source/SemanticIR/bridge/workload/generated/replayed identities; replay/source mutation and missing-source/unfinished-level rejection; focused and guarded impacted regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; candidate `0x7da2c124f3fb4c11` accepts after exactly 8,192 attempts. Generated/replayed decisions differ only in origin; their plans are 34,295/34,294 bytes. The graph contains one occurrence/scenario/operation/root-live fiber, eight types, 22 bindings, and 19 maps. Focused t1608 passes at Files=1/Tests=4 in 14 seconds; the guarded impact matrix passes at Files=11/Tests=51 in 126 seconds. No private capability, backend behavior, support, performance, or capacity claim changes. |
+| `2026-08-10` | `.17.2.4.2` exact one-MiB execution plan gate | frozen checked-AHB source; decision-0061 2,974-reset recipe; referenced 41/2-character scenario/endpoint suffixes; real HREADYOUT coverpoint; public canonical binder; exact source/SemanticIR/bridge/workload/plan identities; unique map/source-span closure; contiguous reset topology; hostile-input and missing-source/unfinished-level rejection; focused and guarded impacted regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; canonical plan is exactly 1,048,576 bytes with ID `plan/ee10e4a5749a4398b9e62d5a1624d24c74e585459afd57f8cb7503306545c035`. It contains 2,974 real resets, one scenario/root-live fiber, seven types, 22 bindings, six events, and 2,991 maps. Focused t1609 passes at Files=1/Tests=4 in 4 seconds; the guarded impact matrix passes at Files=12/Tests=55 in 127 seconds. No private capability, backend behavior, support, performance, or capacity claim changes. |
+
+## Acceptance Checklist (enforced) — `.17.2.4.2` exact one-MiB plan gate
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'serialized_plan_bytes'
+  --oneline -- perl/FSM/VIAL/ArchitectureScaleExecutionGraph.pm` identifies
+  `bfd85ade9`, whose implementation reported canonical plan bytes but did not
+  admit `serialized_plan_bytes` as a constructible primary axis. Decision `0061`
+  already selected a 2,974-reset gate recipe and required every remaining byte
+  to come from referenced semantics rather than comments, blank data, caller-
+  supplied plans, path inflation, or opaque padding.
+- [x] **ADDRESSED (verified)** — the generator now authors exactly 2,974 real
+  reset actions, a 41-character semantic scenario suffix, and a two-character
+  endpoint suffix referenced by a real HREADYOUT coverpoint. The unchanged
+  public binder produces exactly 1,048,576 canonical bytes, one scenario/root-
+  live fiber, seven types, 22 bindings, six events, and 2,991 unique maps. Closed
+  oracles freeze source spans, reset successors, logical time, public capability
+  isolation, exact identities, and hostile-input failure. Focused t1609 reports
+  `Files=1, Tests=4`.
+- [x] **NO REGRESSION** — changed Perl/test syntax is `OK`; the guarded final
+  execution/public-planning matrix reports `All tests successful` at
+  `Files=12, Tests=55` in 127 seconds. All mdBook chapters test; the inspected
+  repository-local render is removed exactly. Knowledge Map, task integrity,
+  all live-document surfaces, relative paths, exact book authority, zero ceiling
+  increases, and staged doctrines pass. No parser, SemanticIR, bridge, public
+  binder, backend semantics, runtime result, capability/support, performance
+  budget, or capacity claim changes.
 
 ## Acceptance Checklist (enforced) — `.17.2.4.2` execution random/replay gate
 

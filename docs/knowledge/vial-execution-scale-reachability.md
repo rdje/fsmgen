@@ -14,13 +14,14 @@ answers:
   - "how does the VIAL execution scale gate materialize 512 distinct types?"
   - "how does the VIAL execution gate produce exactly 8192 source maps?"
   - "how does the VIAL execution gate prove exactly 8192 random attempts and replay equality?"
+  - "how does the VIAL execution gate produce an exact one MiB semantic plan?"
 date: 2026-08-10
 status: current
 tags: [vial, execution-ir, scale, binder, bridge, random, replay, plan, limits]
 evidence: >-
-  docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md; docs/decisions/0060-vial-bridge-scale-uses-a-qualification-only-direct-ial1-profile.md; perl/FSM/VIAL/ArchitectureScaleExecutionGraph.pm; perl/FSM/VIAL/ExecutionBuilder.pm; perl/FSM/VIAL/ExecutionRandom.pm; perl/FSM/Support/VIALExecutionContract.pm; t/1552-vial-execution-ir.t; t/1603-vial-architecture-scale-execution-foundation.t; t/1604-vial-architecture-scale-execution-topology.t; t/1605-vial-architecture-scale-execution-fibers.t; t/1606-vial-architecture-scale-execution-types.t; t/1607-vial-architecture-scale-execution-source-maps.t; t/1608-vial-architecture-scale-execution-random-replay.t;
+  docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md; docs/decisions/0060-vial-bridge-scale-uses-a-qualification-only-direct-ial1-profile.md; perl/FSM/VIAL/ArchitectureScaleExecutionGraph.pm; perl/FSM/VIAL/ExecutionBuilder.pm; perl/FSM/VIAL/ExecutionRandom.pm; perl/FSM/Support/VIALExecutionContract.pm; t/1552-vial-execution-ir.t; t/1603-vial-architecture-scale-execution-foundation.t; t/1604-vial-architecture-scale-execution-topology.t; t/1605-vial-architecture-scale-execution-fibers.t; t/1606-vial-architecture-scale-execution-types.t; t/1607-vial-architecture-scale-execution-source-maps.t; t/1608-vial-architecture-scale-execution-random-replay.t; t/1609-vial-architecture-scale-execution-plan-bytes.t;
   vial/qualification/vhdl_portable_ghdl/ghdl-6.0.0-qualification.json; vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md
-reverify: prove -Iperl t/1552-vial-execution-ir.t t/1603-vial-architecture-scale-execution-foundation.t t/1604-vial-architecture-scale-execution-topology.t t/1605-vial-architecture-scale-execution-fibers.t t/1606-vial-architecture-scale-execution-types.t t/1607-vial-architecture-scale-execution-source-maps.t t/1608-vial-architecture-scale-execution-random-replay.t && rg -n 'selected_scenarios|expanded_operations_per_scenario|expanded_operations_total|total_fibers|simultaneous_live_fibers|bindings|execution_types|source_map_records|random_attempts|serialized_plan_bytes' perl/FSM/Support/VIALExecutionContract.pm perl/FSM/VIAL/ExecutionBuilder.pm docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md
+reverify: prove -Iperl t/1552-vial-execution-ir.t t/1603-vial-architecture-scale-execution-foundation.t t/1604-vial-architecture-scale-execution-topology.t t/1605-vial-architecture-scale-execution-fibers.t t/1606-vial-architecture-scale-execution-types.t t/1607-vial-architecture-scale-execution-source-maps.t t/1608-vial-architecture-scale-execution-random-replay.t t/1609-vial-architecture-scale-execution-plan-bytes.t && rg -n 'selected_scenarios|expanded_operations_per_scenario|expanded_operations_total|total_fibers|simultaneous_live_fibers|bindings|execution_types|source_map_records|random_attempts|serialized_plan_bytes' perl/FSM/Support/VIALExecutionContract.pm perl/FSM/VIAL/ExecutionBuilder.pm docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md
 ---
 
 Decision `0061` selects the `execution_graph_v1` reachability contract. The
@@ -110,6 +111,18 @@ maps. Exact source/SemanticIR/bridge/workload/generated-plan/replayed-plan
 identities, public capability isolation, replay mutation, source mutation,
 missing-source rejection, and unfinished-level closure are frozen.
 
+The seventh slice implements the exact one-MiB serialized-plan gate through the
+same public AHB route. It authors 2,974 real reset actions, a scenario with the
+selected 41-character semantic suffix, and endpoint alias `r_q` with the
+selected two-character suffix. Coverpoint `c` samples that alias through the
+real HREADYOUT binding, so no identifier is unreferenced padding. The canonical
+plan is exactly 1,048,576 bytes and contains one scenario/root/live fiber, seven
+types, 22 bindings, six events, and 2,991 unique maps. Its ID is
+`plan/ee10e4a5749a4398b9e62d5a1624d24c74e585459afd57f8cb7503306545c035`;
+source, SemanticIR, bridge, workload, and plan identities, contiguous reset
+topology, semantic source spans, public capability isolation, and hostile-input
+rejection are frozen.
+
 The nominal execution limits are not all reachable. Scenarios and
 simultaneously live fibers reach their exact 4,096 and 16,384 limits. Operations
 per scenario, total operations, total fibers, and source maps encounter the
@@ -125,8 +138,9 @@ the candidate at zero-based attempt `N - 1`. Attempts 8,192, 262,144, and
 attempt exactly.
 
 The AHB plan-byte recipes use real reset operations and referenced semantic
-identifiers. They produce canonical plans of exactly 1,048,576, 4,194,304, and
-16,777,216 bytes; one additional complete reset operation is rejected. These
-are construction/boundary facts only. `.17.2.4.2` remains active for exact plan
-bytes, higher random levels, final qualification, and cleanup; no scale
-capacity is supported until later measurement and promotion.
+identifiers. The one-MiB gate is now implemented; the selected 4,194,304- and
+16,777,216-byte recipes and their first complete over-limit operation remain
+unfinished. These are construction/boundary facts only. `.17.2.4.2` remains
+active for the larger exact plans, higher random levels, final qualification,
+and cleanup; no scale capacity is supported until later measurement and
+promotion.
