@@ -378,14 +378,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Deterministic workload profiles scale bridge units/endpoints/domains/transactions/probes and VIAL declarations/scenarios/fibers/events/checks/models/scoreboards/coverage/random decisions; stage correctness oracles, wall/CPU time, descendant RSS, artifact/result size, compile/simulation cost, explicit caps, graceful failures, and stable gates are measured without substituting for the separately owned whole-product big/really-big qualification.`
   Verification: `Clean predecessor 6d23b5843 closes the selected AXI/mdBook activity before this task-tree pivot. The 2026-08-10 eligibility census leaves .16 unavailable, while the shipped and independently qualified portable SystemVerilog, VHDL, and OSVVM profiles provide stable concrete inputs for architecture-specific scale measurement. This activation selects .17.1 alone; it changes no parser, IR, bridge, generator, artifact, runtime, capability, support, or scale claim.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17: activate scale-proof contract`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.7`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.1`
-  Status: `active`
+  Status: `done`
   Goal: `Select the exact architecture-specific scale workloads, correctness oracles, measurements, budgets, and non-claims.`
   Acceptance: `Audit the current SemanticIR, bridge, ExecutionIR, portable-SystemVerilog, portable-VHDL, OSVVM, trace/result, artifact-publication, resource-limit, and RAM-guard contracts. Select deterministic workload dimensions and named profiles; stage-local structural and semantic oracles; wall/CPU/RSS/artifact/compile/run measurements; repository-local staging and cleanup; calibration versus regression budgets; graceful-failure requirements; host/tool normalization; and the boundary from the separately owned whole-product big/really-big qualification. No code, fixture generator, capability, support, or scale claim changes in selection.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Decisions 0055/0056 and their selected version-1 contracts define six orthogonal workload families, reference/gate-candidate/qualification-candidate/limit/over-limit levels, exact source/bridge/execution/checking axes, one conservative balanced profile, canonical-producer construction, stage-local correctness oracles, a closed measurement record, one-validation-plus-three/five-sample policies, 88%-host/4096-MiB-descendant safety, stage timeouts, immutable evidence-derived pinned-host regression formulas, earliest-cap authority, same-volume staging/cleanup, and explicit whole-product/multi-unit/mixed-language/native-UVM/full-language/general-parity nonclaims. The audit root-causes a support-snapshot drift introduced in dfe87f536: Runner and normative contract enforce 8 MiB compile/64 MiB run capture while support reports 4 MiB/4 MiB; proposed .17.6 owns alignment. The focused index is byte-current at 1,023 members, while pre-existing t/1569 retains 1,022; proposed .17.7 owns authority-derived repair. Decisions remain bounded at 389/244 lines. Focused documentation passes at Files=8/Tests=86; task integrity reports three trees/923 nodes; Knowledge Map is current at 1,105 facts/5,728 questions/5,894 occurrences/118 shards; all 52 mdBook chapters test, the 53-source-file maintained reference grows by exactly 58 lines/3,710 bytes, and the repository-local build contains 88 files/18,336,770 bytes before exact removal. Live-document coverage passes at 2,962 paths, acceptance/doctrines pass, and generated book/scale staging residue is absent. No parser, IR, bridge, generator, artifact, runtime, capability, support, or scale claim changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.1: select orthogonal scale-proof contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2`
   Status: `proposed`
@@ -414,6 +414,20 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Promote representative bounded profiles into stable non-flaky gates; document exact measured envelopes, budgets, commands, variability policy, cleanup, supported claims, and residue; synchronize support/capability/Knowledge Map/task/Memory surfaces without claiming whole-product big/really-big qualification.`
   Verification: `pending`
   Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.6`
+  Status: `proposed`
+  Goal: `Align the public VIAL execution support snapshot with the enforced portable-SystemVerilog transcript limits.`
+  Acceptance: `From a separate clean activation, make FSM::Support::VIALExecutionContract report the Runner- and normative-contract-authoritative 8,388,608-byte compile and 67,108,864-byte run capture limits; add exact contract/accounting regression assertions; preserve Runner behavior, artifacts, diagnostics, support capability set, backend qualification, and every scale non-claim. Audit all support consumers before changing the snapshot and update the owning docs/fact surfaces in the same slice.`
+  Verification: `pending; git blame and git show identify dfe87f536 as the single originating commit for both the enforced Runner values and contradictory support values.`
+  Commit: `pending activation after the clean .17.1 selection commit; complete before scale automation consumes backend_limits`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.7`
+  Status: `proposed`
+  Goal: `Remove the stale hard-coded focused-document member-count shadow from the containment regression.`
+  Acceptance: `From a separate clean activation, apply decision 0054 to t/1569-focused-document-containment.t: consume the focused-document indexer's successful current census rather than storing a second mutable literal count; retain proof that the real index is current and complete, retain all generated-index unclassified/stale/duplicate/escaping/empty-group and semantic-part negative gates, and change no surface membership, ceiling, classifier, product behavior, or scale claim.`
+  Verification: `pending; clean HEAD's generated docs/index/FOCUSED_DOCUMENTS.md is byte-current and scripts/focused_document_index.pl check reports 1,023 members, while git blame identifies 70ba62f35 as the 1,022-member literal in t/1569. The intervening exact OSVVM gallery README is a registered ancillary member; changing the literal to 1,023 would preserve the derived-state defect rather than repair it.`
+  Commit: `pending clean activation before .17.6 and any behavior-bearing scale work`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18`
   Status: `proposed`
@@ -526,11 +540,33 @@ and exact same-volume cleanup.
 
 The 2026-08-10 tool census leaves `.16` proposed: separately available
 Verilator, Icarus, and repository-local GHDL are not a mixed-language runtime,
-and no compatible mixed-language simulator is installed. `.17` is therefore
-selected next, with `.17.1` as the sole active frontier for a documentation-only
-scale-contract audit before workload or measurement implementation.
+and no compatible mixed-language simulator is installed. Completed `.17.1`
+selects decisions `0055`/`0056` and the architecture-scale contracts without claiming
+capacity. Its audit finds one pre-existing support-snapshot limit drift;
+proposed `.17.7` is the next clean activation to repair a stale focused-
+document regression oracle discovered by the selection gates. Proposed `.17.6`
+then aligns the support snapshot before `.17.2` may build scale automation
+against those values.
 
 ## Decisions
+
+- `2026-08-10`: The generated focused-document index and its own checker agree
+  on 1,023 members, but `t/1569` retains the 1,022-member literal added before
+  the registered OSVVM gallery README. Do not update one stale shadow to
+  another. Proposed `.17.7` applies decision `0054` from a separate clean
+  activation so the test consumes current indexer authority while retaining
+  its complete negative matrix.
+
+- `2026-08-10`: Accept decisions `0055`/`0056` and prove scale with six orthogonal
+  workload families plus one conservative balanced candidate. Correctness
+  oracles gate every measurement; fixed RAM/time safety applies immediately;
+  performance budgets derive immutably from clean pinned-host calibration and
+  never self-adjust. Treat the earliest authoritative cap honestly and retain
+  whole-product, multi-unit/domain, mixed-language, native-UVM-runtime, full-
+  language, synthesis, and general-parity boundaries. The audit finds Runner /
+  normative-contract 8-MiB/64-MiB transcript capture but a 4-MiB/4-MiB support
+  snapshot from the same implementation commit; `.17.6` owns exact alignment
+  before workload automation consumes it.
 
 - `2026-08-10`: Keep `.16` proposed after an exact availability census finds
   no compatible mixed-language execution tool; never combine independent
@@ -932,6 +968,35 @@ scale-contract audit before workload or measurement implementation.
 | `2026-08-09` | `.15.7` activation | clean `.15.6` predecessor `4f350f29c`; task/index/audit/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook test; live-reference authority; diff/staged-doctrine gates | `passed`; `.15.7` alone is active for combined exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT qualification. Both inputs remain repository-local; task integrity reports three active trees/916 nodes, Knowledge Map remains 1,105 facts/5,713 questions/5,879 occurrences/118 shards, all 52 mdBook chapters test, and maintained-reference authority accepts the exact 0-file/0-line/+16-byte delta. Activation changes no source, generated artifact, qualification evidence, capability, runtime result, or support behavior. |
 | `2026-08-09` | `.15.7` exact combined qualification | exact GHDL archive/binary and recursive OSVVM identities; 44-core/17-Common ordered provider compilation; adapter/generated-fixture/probe analysis; fixture/probe elaboration and double execution; 42-record trace/result validation; 19-path portable parity; four deterministic OSVVM reports; bounded support/capability truth; same-volume cleanup; focused/corpus/capability/gallery/docs/task/Knowledge Map/mdBook/staged-doctrine gates | `passed`; `vhdl_osvvm_qualified` is bounded-qualified under exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT. Six adapter mappings execute in the probe; the Common address-bus mapping is analysis-only. OSVVM reports record three clean affirmations, 25% one-of-four-bin coverage, and one checked scoreboard item with zero errors, while portable trace/result/parity remain authoritative. Broader provider/language/tool/profile claims remain explicit non-claims. |
 | `2026-08-10` | `.17` selection/activation | clean predecessor `6d23b5843`; mixed-language command/provider census; decisions 0032/0051; five-leaf scale decomposition; task/index/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook build; relative paths; live-reference authority; diff/staged-doctrine gates; exact cleanup | `passed`; `.16` remains proposed because no compatible mixed-language runtime is available, and `.17.1` alone is active for documentation-only scale-contract selection. Task integrity reports three active trees/921 nodes; Knowledge Map reports 1,105 facts/5,723 questions/5,889 occurrences/118 shards; the book shrinks by 34 lines/2,676 bytes while replacing stale chronology with current capability and scale boundaries; generated output is removed. No product behavior or scale claim changes. |
+
+## Acceptance Checklist (enforced) — `.17.1` scale-contract selection
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the architecture audit requires scale
+  proof across independent HIAL/VIAL/IR/backend/resource dimensions, while the
+  separate whole-product tree forbids inventing `big`/`really_big` capacity.
+  Exact limit scans cover the shipped source, bridge, execution, portable-SV,
+  VHDL, OSVVM, artifact, trace/result, timeout, and RAM-guard authorities.
+  `git log -S'compile_transcript_bytes' -- perl/FSM/Support/VIALExecutionContract.pm`
+  and `git show dfe87f536` prove that one historical commit added Runner-
+  enforced 8,388,608/67,108,864-byte capture and contradictory public support
+  values of 4,194,304/4,194,304 bytes.
+- [x] **ADDRESSED (verified)** — decisions `0055`/`0056` and their normative
+  selected contracts define six orthogonal workload
+  families, exact candidate/limit tables, one balanced interaction candidate,
+  canonical construction, stage oracles, measurement/repetition records,
+  fixed safety, evidence-derived budgets, cap dominance, same-volume cleanup,
+  promotion gates, and exact nonclaims. Proposed `.17.6` durably owns support-
+  snapshot alignment before `.17.2` automation consumes it; this docs-only
+  slice does not edit that product snapshot.
+- [x] **NO REGRESSION** — focused checks report `All tests successful` at
+  `Files=8, Tests=86`; focused-document index authority, relative-path audit,
+  task-tree integrity, mdBook test/build, Knowledge Map generation/check, live-
+  document authority, diff hygiene, staged acceptance, and all doctrine checks
+  must pass; generated book and scale-staging residue must be absent. The
+  focused index itself is byte-current at 1,023 members; the independently
+  pre-existing `t/1569` assertion for 1,022 is owned by proposed `.17.7` and is
+  not rewritten in this docs-only selection. No parser, IR, bridge, generator,
+  artifact, tool, runtime, capability, support, or scale claim changes.
 
 ## Acceptance Checklist (enforced) — `.17` selection and activation
 

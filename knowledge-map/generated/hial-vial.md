@@ -1,11 +1,12 @@
 # Knowledge Map: `hial-vial`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **110** uniquely owned question entries.
+> **2** facts · **115** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="are RAL and factory overrides publicly authored VIAL?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
+- q="are VIAL scale gate and qualification candidates supported capacity?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="are native VIAL interceptor tables publicly authorable?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="can FSMGen generate full UVM before a full simulator exists?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="can IASIM replace an HDL simulator?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
@@ -19,6 +20,7 @@
 - q="does FSMGen plan a Verification IAL?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="does IASIM need to be rewritten in Rust?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="does NEXSIM semantic introspection define VIAL meaning?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
+- q="does VIAL architecture scale prove whole product big and really big designs?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="does Verilator support events with timing enabled?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="does generated native UVM rerandomize portable VIAL decisions?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="does native UVM result collection mean a result was produced?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
@@ -33,6 +35,7 @@
 - q="has OSVVM 2026.05 plus GHDL 6.0.0 been qualified?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="has the generated VIAL VHDL been analyzed or run?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="has the native VIAL UVM gallery been parsed or compiled?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
+- q="how are VIAL scale performance budgets selected?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="how are VIAL scenarios fibers and models emitted in VHDL?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="how are declared HIAL probes accessed from portable VHDL?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="how are generated VIAL UVM interceptors ordered?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
@@ -58,6 +61,7 @@
 - q="how may Rust accelerate IASIM?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="how will NEXSIM MCP help compare IASIM and generated UVM?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="how will PGEN and NEXSIM qualify VIAL UVM runtime?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
+- q="how will VIAL architecture scalability be proved?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="how would IASIM combine HIAL and VIAL?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="is HDL export optional in the xIAL framework?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="is IASIM constrained by HDL?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
@@ -75,6 +79,7 @@
 - q="should HIAL lower to SystemVerilog and VHDL?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="should VIAL lower to SV UVM and VHDL verification code?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="what are VIAL drive sample react check phases?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
+- q="what are the VIAL scale workload families?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="what can FSMGen do with NEXSIM semantic introspection through MCP?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="what do HIAL and VIAL mean in FSMGen?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="what does core_single_unit_v1 mean?" · facts=[hial-vial-bridge-manifest-v1-contract](../../docs/knowledge/hial-vial-bridge-manifest-v1-contract.md)
@@ -129,5 +134,5 @@ _HIALVIALBridgeManifest v1 is produced only from reviewable HIAL routes_
 
 _VIAL uses one public source, two private IRs, and a versioned HIAL bridge_
 
-- **date:** 2026-08-09 · **status:** current
+- **date:** 2026-08-10 · **status:** current
 - **source and verification:** [`docs/knowledge/hial-vial-verification-fixture-architecture.md`](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)

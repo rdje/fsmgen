@@ -1955,9 +1955,67 @@ The current product boundary is:
 
 No installed tool currently provides a qualified mixed-language HIAL/VIAL
 runtime. Separate Verilator and GHDL successes cannot be combined into that
-claim. The next measurable boundary is architecture-specific scale: named,
-deterministic workloads must vary HIAL/VIAL/bridge/execution dimensions; prove
-stage-local correctness; measure wall time, CPU time, descendant RSS, artifact
-and result size, and compile/run cost; enforce explicit graceful caps; and
-publish only the exact measured profiles. That evidence will not substitute
-for the separately owned whole-product big/really-big qualification.
+claim.
+
+## How architecture-scale qualification works
+
+Decisions `0055` and `0056` select the
+[VIAL workload/correctness contract](../../decisions/0055-vial-scale-proof-uses-orthogonal-workloads-and-stage-local-oracles.md#selected-contract)
+and its
+[measurement/bounded-failure contract](../../decisions/0056-vial-scale-measurements-use-pinned-evidence-and-bounded-failure.md#selected-contract).
+They do not yet qualify a capacity. Scale is
+split into six orthogonal families so a result identifies what grew and where:
+
+| Family | Primary question |
+| --- | --- |
+| `semantic_catalog_v1` | Can source parsing, validation, and SemanticIR preserve many valid declarations, fixtures, actions, fibers, and aggregates? |
+| `bridge_fanout_v1` | Can the canonical HIAL route preserve many endpoints, types, transactions, events, probes, bindings, and maps? |
+| `execution_graph_v1` | Can binding and planning preserve many scenarios, operations, fibers, types, and deterministic ranks? |
+| `checking_state_v1` | Can models, scoreboards, coverage, faults, and replay decisions scale without implicit expansion or unbounded state? |
+| `backend_emission_v1` | Can each applicable backend emit a complete, source-mapped, byte-deterministic artifact graph? |
+| `runtime_stream_v1` | Can an exactly qualified tool compile, run, close the trace, and produce the expected normalized result? |
+
+One primary axis changes per workload; the other axes stay at the smallest
+valid anchor. A separately named balanced candidate checks conservative
+interactions. This is more diagnostic than one combinatorial “huge” fixture,
+which could hit an unrelated byte cap before exercising its advertised axis.
+
+Each axis has `reference_v1`, `gate_candidate_v1`,
+`qualification_candidate_v1`, `limit_v1`, and `over_limit_v1` levels.
+“Candidate” is deliberate: no profile becomes supported until generation,
+measurement, bounded failure, and stable-gate owners all complete. The current
+single-unit/single-domain profiles test `1` as accepted and `2` as rejected;
+repeating a one-unit result cannot claim multi-unit or multi-domain scale.
+
+For example, the scenario-count axis holds the source/bridge/checking anchor
+fixed and requests 32 scenarios for the gate candidate, 512 for qualification,
+4,096 at the declared plan limit, and 4,097 for deterministic rejection. Every
+accepted run must prove exact counts and IDs, logical-time ordering, replay,
+source maps, immutable reports, and equal plan identity on rerun. If the
+16-MiB plan limit necessarily wins first, the evidence records that earlier
+cap; it does not claim that 4,096 scenarios were exercised.
+
+Performance never substitutes for correctness. One validation plus three
+measured gate runs, or one plus five qualification runs, must first pass every
+stage oracle. Measurements retain wall and CPU time, peak process-tree and
+single-descendant RSS, files/lines/bytes, semantic counts, exact tool/host
+identity, and raw samples. The repository RAM guard retains its 88% host and
+4,096-MiB descendant ceilings. A promoted pinned-host budget is frozen from
+clean calibration with explicit headroom; unknown hosts run correctness,
+determinism, safety, and cleanup without flaky performance failure.
+
+Generated work stays below repository-derived `.artifacts/tmp/vial-scale/` and
+is removed exactly. An over-limit proof must fail at the earliest authoritative
+stage with a stable diagnostic, no partial publication, and no residue. Host
+exhaustion, signal 137, or an external-tool crash is never accepted as the
+product's limit behavior.
+
+The contract also records a pre-existing accounting discrepancy: the portable-
+SV Runner and normative contract enforce 8-MiB compile and 64-MiB runtime
+capture, while the support snapshot says 4 MiB for both. A separate repair leaf
+must align the snapshot before scale automation consumes it; this selection
+does not change runtime behavior or support claims.
+
+Even a later passing architecture profile will not substitute for the
+separately owned whole-product `big`/`really_big` qualification, mixed-language
+scale, native-UVM runtime scale, synthesis scale, or general backend parity.

@@ -103,11 +103,16 @@ answers:
   - "is HDL export optional in the xIAL framework?"
   - "how is xIAL to HDL export signed off?"
   - "must published xIAL HDL meet HDL standards?"
-date: 2026-08-09
+  - "how will VIAL architecture scalability be proved?"
+  - "what are the VIAL scale workload families?"
+  - "are VIAL scale gate and qualification candidates supported capacity?"
+  - "how are VIAL scale performance budgets selected?"
+  - "does VIAL architecture scale prove whole product big and really big designs?"
+date: 2026-08-10
 status: current
-tags: [hial, vial, ial0, ial1, ial2, verification, semantic-ir, execution-ir, bridge, sv-uvm, vhdl, verilator, simulator-profile, architecture, task-tree]
+tags: [hial, vial, ial0, ial1, ial2, verification, semantic-ir, execution-ir, bridge, sv-uvm, vhdl, verilator, simulator-profile, architecture, scalability, task-tree]
 evidence: >-
-  docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md; perl/FSM/VIAL/Backend/SVPortableVerilator.pm; perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/VIAL/Parity/AHBBaseOutput.pm; t/1557-vial-portable-sv-backend-emission.t; t/1559-vial-ahb-runtime-parity.t;
+  docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md; docs/decisions/0055-vial-scale-proof-uses-orthogonal-workloads-and-stage-local-oracles.md; docs/decisions/0056-vial-scale-measurements-use-pinned-evidence-and-bounded-failure.md; perl/FSM/VIAL/Backend/SVPortableVerilator.pm; perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/VIAL/Parity/AHBBaseOutput.pm; t/1557-vial-portable-sv-backend-emission.t; t/1559-vial-ahb-runtime-parity.t;
   docs/decisions/0032-vial-uses-one-source-two-private-irs-and-a-versioned-hial-bridge.md; docs/decisions/0033-vial-v1-uses-spanned-s-expressions-and-typed-semantic-records.md; docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md;
   docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md; docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; perl/FSM/VIAL/Backend/SVUVMAccellera2020_3_1.pm; perl/FSM/VIAL/Backend/SVUVMStaticValidator.pm; perl/FSM/VIAL/Backend/SVUVMReviewClosure.pm; perl/FSM/VIAL/Backend/SVUVMExperimentalProbe.pm; perl/FSM/Support/VIALNativeUVMEmissionContract.pm; scripts/refresh_vial_native_uvm_gallery.pl; scripts/run_vial_native_uvm_experimental_probe.pl; t/1560-vial-native-uvm-emitter-substrate.t; t/1570-vial-native-uvm-topology-lifecycle-notification.t; t/1580-vial-native-uvm-stimulus-services.t; t/1590-vial-native-uvm-checking-results.t; t/1591-vial-native-uvm-matrix-review.t; t/1592-vial-native-uvm-experimental-probe.t;
@@ -124,6 +129,8 @@ reverify: >-
   rg -n 'sv_uvm_emit\.accellera_2020_3_1|sv_uvm_experimental|sv_uvm_qualified|PGEN|NEXSIM|semantic introspection|MCP|snapshot-consistent|first divergence|2020\.3\.1|78c06547a2a0a29b3dc9dcafae62b75b2ff61544' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md &&
   rg -n 'native Intent Abstraction|signoff|direct semantic adapters|HDL-independent|kernel/session|Perl 5|versioned C ABI|shared library|differential equivalence' docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md docs/book/src/16d-hial-vial-verification-architecture.md &&
   rg -n 'complete native framework|xIAL|HIAL IP|VIAL VIP|functional/intent signoff' docs/tasks/XIAL-NATIVE-DEVELOPMENT-FRAMEWORK.md &&
+  rg -n 'semantic_catalog_v1|bridge_fanout_v1|execution_graph_v1|checking_state_v1|backend_emission_v1|runtime_stream_v1|big.*really_big' docs/decisions/0055-vial-scale-proof-uses-orthogonal-workloads-and-stage-local-oracles.md docs/book/src/16d-hial-vial-verification-architecture.md &&
+  rg -n '88%|4,096 MiB|pinned host|earliest authoritative cap|same-volume' docs/decisions/0056-vial-scale-measurements-use-pinned-evidence-and-bounded-failure.md docs/book/src/16d-hial-vial-verification-architecture.md &&
   prove -Iperl t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t t/1559-vial-ahb-runtime-parity.t t/1560-vial-native-uvm-emitter-substrate.t t/1570-vial-native-uvm-topology-lifecycle-notification.t t/1580-vial-native-uvm-stimulus-services.t t/1590-vial-native-uvm-checking-results.t t/1591-vial-native-uvm-matrix-review.t t/1592-vial-native-uvm-experimental-probe.t t/1593-vial-vhdl-portable-semantics.t t/1594-vial-vhdl-portable-matrix-review.t t/1595-vial-vhdl-portable-ghdl-qualification.t t/1598-vial-vhdl-osvvm-emission.t t/1599-vial-vhdl-osvvm-ghdl-qualification.t &&
   perl scripts/refresh_vial_native_uvm_gallery.pl --check &&
   perl scripts/run_vial_native_uvm_experimental_probe.pl --check &&
@@ -193,9 +200,22 @@ unclaimed.
 The 2026-08-10 mixed-language census finds Verilator and Icarus on `PATH` and
 exact GHDL 6.0.0 LLVM-JIT under the repository-local provider cache, but no
 compatible mixed-language simulator. Separate Verilator/GHDL qualifications
-cannot satisfy `mixed_language_qualified`; `.16` stays proposed. `.17.1` is
-the active next leaf and selects architecture-specific scale workloads,
-oracles, measurements, budgets, bounded-failure semantics, and non-claims.
+cannot satisfy `mixed_language_qualified`; `.16` stays proposed.
+
+Decisions `0055` and `0056` select architecture-scale proof without claiming capacity.
+Six orthogonal families isolate source/SemanticIR, bridge fanout, execution
+graphs, checking state, backend emission, and runtime streams; one conservative
+balanced candidate checks interaction. Each axis has reference, gate-candidate,
+qualification-candidate, exact-limit, and over-limit levels. Every timing/RSS
+sample is invalid unless its stage-local semantic, identity, source-map,
+artifact, deterministic-rerun, result, failure, and cleanup oracles pass.
+Fixed 88%-host/4,096-MiB-descendant safety applies immediately; performance
+budgets derive immutably from clean pinned-host calibration and do not fail on
+unmatched hosts. Earliest-cap dominance is reported honestly. These candidates
+are not support, multi-unit/domain, mixed-language, native-UVM-runtime, full-
+language, whole-product `big`/`really_big`, synthesis, or general-parity claims.
+Proposed `.17.6` must align a pre-existing support-snapshot 4-MiB/4-MiB drift
+with the Runner/normative 8-MiB/64-MiB capture limits before scale automation.
 
 Decision `0050` and completed `.12` select IEEE 1800.2-2020 with exact
 Accellera UVM 2020-3.1 tag/commit as the native methodology source. Commercial
