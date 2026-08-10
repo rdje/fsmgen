@@ -403,11 +403,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.1: build deterministic workload foundation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Generate semantic-catalog workloads through the canonical parser and validator with exact semantic oracles.`
   Acceptance: `Construct every selected semantic_catalog_v1 axis from the shared specification without padding or forged IR; prove exact counts, IDs, spans, references, types, authored ordering, reports, literal-repeat pre-materialization limits, byte boundaries, deterministic source/format reruns, earliest-cap diagnostics, and cleanup.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean repair commit 3c948294b closes the independently found ArtifactTransaction cleanup dependency and leaves no uncommitted or generated residue. The shared .17.2.1 specification/identity/staging foundation is shipped, while this leaf alone owns canonical parser/validator source generation and semantic oracles for semantic_catalog_v1. Activation changes only task/index/fact/Memory continuity; no generator implementation, parser behavior, IR, artifact, capability/support, performance, or scale claim changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.2: activate semantic scale generation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3`
   Status: `proposed`
@@ -984,6 +984,7 @@ defect before `.17.2.2` begins semantic-family generation.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-10` | `.17.2.2` activation | clean `.17.9` repair predecessor `3c948294b`; dependency and ownership boundary; task/index/fact/Memory continuity; task-tree, Knowledge Map, relative-path, diff, staged acceptance, and doctrine gates | `passed`; `.17.2.2` alone is active for canonical semantic-catalog workload generation and semantic oracles. Generator implementation, parser behavior, SemanticIR, artifact, capability/support, performance, and scale claims remain unchanged. |
 | `2026-08-10` | `.17.9` failed-stage cleanup repair | git history/blame; all repository remove_tree error collectors; one scalar-reference production repair; public CLI first-write failure, stable diagnostic, exact stage/target absence, identical retry; successful/unchanged/collision/path safety; source/planning/real-Verilator/AHB-parity regression; task/book/Knowledge Map/Memory/live-reference/staged-acceptance/doctrine gates; mdBook test/build/render inspection; artifact census and exact cleanup | `passed`; bad collector originates in `045629c97`; all six production collectors are now correct. Focused t1556 reports Files=1/Tests=6 and the impacted suite reports Files=4/Tests=20. The failure returns exact `VIAL_HOST_ERROR`, leaves neither operation stage nor target, and retries to atomic success. No artifact graph, target root, parser, plan, backend, runtime, capability/support, or scale behavior changes. |
 | `2026-08-10` | `.17.9` activation | clean `.17.2.1` predecessor `063b990f3`; exact File::Path error-collector source/probe evidence; task/index/fact/Memory continuity; task-tree, Knowledge Map, relative-path, diff, staged acceptance, and doctrine gates | `passed`; `.17.9` alone is active for the bounded public ArtifactTransaction failed-stage cleanup repair before `.17.2.2`. Implementation, test behavior, artifact graph, target root, parser, plan, backend, runtime, capability/support, and scale claims remain unchanged. |
 | `2026-08-10` | `.17.2.1` deterministic workload foundation | decision `0057`; exact workload/catalog/construction/staging schemas; all 250 family/axis/level specifications; backend/tool selectors; stable names and fixed-seed payloads; canonical identity and reordered-input reruns; malformed schema/path/role/size/construction mutations; same-volume success/failure/collision cleanup; syntax and adjacent semantic/execution/public-tool regression; task/book/Knowledge Map/Memory/live-reference/staged-acceptance/doctrine gates; repository-local mdBook test/build/render inspection; artifact census and exact cleanup | `passed`; `FSM::VIAL::ArchitectureScaleWorkload` ships the source-only unmeasured foundation, while parser-through-runtime, capability/support, performance, and capacity remain unchanged. The focused/adjacent suite reports `All tests successful` at Files=5/Tests=38; all 52 chapters test and the rendered section is present in an 88-file/18,367,391-byte repository-local build removed exactly; maintained-reference authority accepts 0 files/+78 lines/+3,685 bytes. An initially incorrect local cleanup collector was corrected and its exact residue removed; no scale-stage residue remains. A separately reproduced pre-existing public ArtifactTransaction cleanup defect is owned by proposed `.17.9` rather than changed in this leaf. |
@@ -1048,6 +1049,26 @@ defect before `.17.2.2` begins semantic-family generation.
 | `2026-08-09` | `.15.7` activation | clean `.15.6` predecessor `4f350f29c`; task/index/audit/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook test; live-reference authority; diff/staged-doctrine gates | `passed`; `.15.7` alone is active for combined exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT qualification. Both inputs remain repository-local; task integrity reports three active trees/916 nodes, Knowledge Map remains 1,105 facts/5,713 questions/5,879 occurrences/118 shards, all 52 mdBook chapters test, and maintained-reference authority accepts the exact 0-file/0-line/+16-byte delta. Activation changes no source, generated artifact, qualification evidence, capability, runtime result, or support behavior. |
 | `2026-08-09` | `.15.7` exact combined qualification | exact GHDL archive/binary and recursive OSVVM identities; 44-core/17-Common ordered provider compilation; adapter/generated-fixture/probe analysis; fixture/probe elaboration and double execution; 42-record trace/result validation; 19-path portable parity; four deterministic OSVVM reports; bounded support/capability truth; same-volume cleanup; focused/corpus/capability/gallery/docs/task/Knowledge Map/mdBook/staged-doctrine gates | `passed`; `vhdl_osvvm_qualified` is bounded-qualified under exact OSVVM 2026.05 plus GHDL 6.0.0 LLVM-JIT. Six adapter mappings execute in the probe; the Common address-bus mapping is analysis-only. OSVVM reports record three clean affirmations, 25% one-of-four-bin/25% coverage, and one checked scoreboard item with zero errors, while portable trace/result/parity remain authoritative. Broader provider/language/tool/profile claims remain explicit non-claims. |
 | `2026-08-10` | `.17` selection/activation | clean predecessor `6d23b5843`; mixed-language command/provider census; decisions 0032/0051; five-leaf scale decomposition; task/index/book/fact/Memory continuity; task integrity; Knowledge Map; mdBook build; relative paths; live-reference authority; diff/staged-doctrine gates; exact cleanup | `passed`; `.16` remains proposed because no compatible mixed-language runtime is available, and `.17.1` alone is active for documentation-only scale-contract selection. Task integrity reports three active trees/921 nodes; Knowledge Map reports 1,105 facts/5,723 questions/5,889 occurrences/118 shards; the book shrinks by 34 lines/2,676 bytes while replacing stale chronology with current capability and scale boundaries; generated output is removed. No product behavior or scale claim changes. |
+
+## Acceptance Checklist (enforced) — `.17.2.2` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Clean commit `3c948294b` completes the
+  prerequisite failed-stage cleanup repair. Completed `.17.2.1` supplies the
+  immutable specification, identity, payload, and staging foundation, but no
+  canonical producer yet materializes any `semantic_catalog_v1` workload or
+  proves its parser/validator oracles; proposed `.17.2.2` is the exact next
+  dependency-closed owner.
+- [x] **ADDRESSED (verified)** — Only task/index/fact/Memory continuity now
+  activates `.17.2.2` for semantic source construction through the shipped
+  parser and validator. Its existing acceptance retains exact counts, IDs,
+  spans, references, types, ordering, reports, pre-materialization limits,
+  byte boundaries, deterministic formatting, earliest-cap diagnostics, and
+  cleanup without accepting or forging SemanticIR.
+- [x] **NO REGRESSION** — Task-tree, Knowledge Map, Memory, relative-path,
+  diff, staged docs-only acceptance, and all doctrine gates pass from the
+  clean repair predecessor. No generator implementation, parser behavior,
+  SemanticIR, bridge, artifact, capability/support, performance, or scale
+  claim changes during activation.
 
 ## Acceptance Checklist (enforced) — `.17.9` failed-stage cleanup repair
 

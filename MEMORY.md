@@ -7,14 +7,13 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.9`.
-- current_state: clean activation `4e9382d8a`; `.17.9` implementation and
-  regression are complete under verification. The public failed-stage path
-  removes its exact operation tree and retries successfully.
-- next_action: verify and commit `.17.9`, then activate `.17.2.2` from the
-  clean repair commit for semantic-catalog workload generation.
-- in_flight_uncommitted: one ArtifactTransaction collector repair, focused
-  regression, and task/book/fact/Memory sync; no background job or residue.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.2`.
+- current_state: clean repair commit `3c948294b` completes `.17.9`; `.17.2.2`
+  is active for canonical semantic-catalog workload generation and oracles.
+- next_action: commit the continuity-only activation, then implement bounded
+  source generation through the shipped parser/validator without forged IR.
+- in_flight_uncommitted: `.17.2.2` task/index/fact/Memory activation only; no
+  implementation change, background job, or generated residue.
 - blockers: none.
 
 ## Durable context
