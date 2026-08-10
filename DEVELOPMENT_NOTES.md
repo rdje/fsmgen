@@ -232,3 +232,19 @@ logical time, and backend meaning remain unchanged. Exact regressions require
 one unique global source-map path per operation; because this changes canonical
 plan identity, all byte-locked galleries and exact VHDL qualification reports
 must be regenerated and requalified together.
+
+## 2026-08-10: Total fibers and live fibers need different parallel shapes
+
+A single 127-child parallel would prove 128 allocated fibers, but it would also
+make all 128 live and entangle two independently selected scale axes. The gate
+recipe instead limits each sequential group to 31 children. Five groups with
+31/31/31/31/3 children retain exactly 128 total fibers while the root plus the
+widest group produces exactly 32 live fibers, matching the separate gate value.
+
+Live-width scaling has the opposite constraint: every selected descendant must
+be structurally concurrent, while one semantic parallel can contain at most 256
+fibers. A two-level tree makes that representation extend to the selected high
+levels without widening parser limits. At the gate level, two outer fibers—one
+containing a 29-child nested parallel—produce exactly 32 total and live fibers.
+The builder remains unchanged; exact tree, join, operation, parent, successor,
+phase, map, and identity oracles keep both constructions honest.

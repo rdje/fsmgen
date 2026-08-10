@@ -10,11 +10,12 @@ answers:
   - "how is the one million random attempt boundary proved?"
   - "which cap wins for VIAL operations bindings types and source maps?"
   - "why must VIAL operation source maps use global indexes across scenarios?"
+  - "how do VIAL total-fiber and simultaneously-live-fiber gate workloads stay orthogonal?"
 date: 2026-08-10
 status: current
 tags: [vial, execution-ir, scale, binder, bridge, random, replay, plan, limits]
-evidence: docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md; docs/decisions/0060-vial-bridge-scale-uses-a-qualification-only-direct-ial1-profile.md; perl/FSM/VIAL/ArchitectureScaleExecutionGraph.pm; perl/FSM/VIAL/ExecutionBuilder.pm; perl/FSM/VIAL/ExecutionRandom.pm; perl/FSM/Support/VIALExecutionContract.pm; t/1552-vial-execution-ir.t; t/1603-vial-architecture-scale-execution-foundation.t; t/1604-vial-architecture-scale-execution-topology.t; vial/qualification/vhdl_portable_ghdl/ghdl-6.0.0-qualification.json; vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md
-reverify: git log -S'hial_vial.bridge_qualification.architecture_scale_v1' --oneline -- perl docs t && prove -Iperl t/1552-vial-execution-ir.t t/1603-vial-architecture-scale-execution-foundation.t t/1604-vial-architecture-scale-execution-topology.t && perl scripts/refresh_vial_native_uvm_gallery.pl --check && perl scripts/refresh_vial_vhdl_portable_gallery.pl --check && perl scripts/refresh_vial_vhdl_osvvm_gallery.pl --check && rg -n 'selected_scenarios|expanded_operations_per_scenario|expanded_operations_total|total_fibers|simultaneous_live_fibers|bindings|execution_types|source_map_records|random_attempts|serialized_plan_bytes' perl/FSM/Support/VIALExecutionContract.pm perl/FSM/VIAL/ExecutionBuilder.pm docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md
+evidence: docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md; docs/decisions/0060-vial-bridge-scale-uses-a-qualification-only-direct-ial1-profile.md; perl/FSM/VIAL/ArchitectureScaleExecutionGraph.pm; perl/FSM/VIAL/ExecutionBuilder.pm; perl/FSM/VIAL/ExecutionRandom.pm; perl/FSM/Support/VIALExecutionContract.pm; t/1552-vial-execution-ir.t; t/1603-vial-architecture-scale-execution-foundation.t; t/1604-vial-architecture-scale-execution-topology.t; t/1605-vial-architecture-scale-execution-fibers.t; vial/qualification/vhdl_portable_ghdl/ghdl-6.0.0-qualification.json; vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md
+reverify: prove -Iperl t/1552-vial-execution-ir.t t/1603-vial-architecture-scale-execution-foundation.t t/1604-vial-architecture-scale-execution-topology.t t/1605-vial-architecture-scale-execution-fibers.t && rg -n 'selected_scenarios|expanded_operations_per_scenario|expanded_operations_total|total_fibers|simultaneous_live_fibers|bindings|execution_types|source_map_records|random_attempts|serialized_plan_bytes' perl/FSM/Support/VIALExecutionContract.pm perl/FSM/VIAL/ExecutionBuilder.pm docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md
 ---
 
 Decision `0061` selects the `execution_graph_v1` reachability contract. The
@@ -51,6 +52,19 @@ every `/operation_graph/operations/N` path occurs exactly once. The resulting
 plan identity is propagated through byte-locked native-UVM, portable-VHDL, and
 OSVVM galleries and exact GHDL/OSVVM qualification reports.
 
+The third slice implements the two gate-level fiber axes without changing the
+builder. The 128-total-fiber gate authors five sequential `all` parallels with
+31/31/31/31/3 reset-bearing children. It therefore has exactly 128 total and
+32 simultaneously live fibers, 132 operations, 149 source maps, and a
+79,987-byte plan. The live-width gate authors one depth-two `all` tree with two
+outer fibers and 29 nested children. It has exactly 32 total/live fibers, 32
+operations, 49 maps, and a 43,811-byte plan. Exact parent/child closure, joins,
+successor chains, ranks, phases, semantic/bridge/plan hashes, public checked-AHB
+capability, independent reruns, and hostile-input rejection are frozen. The
+gate-level group width deliberately holds the non-primary live count to its own
+gate value; higher fiber levels and their earlier-cap evidence remain separate
+unfinished constructions.
+
 The nominal execution limits are not all reachable. Scenarios and
 simultaneously live fibers reach their exact 4,096 and 16,384 limits. Operations
 per scenario, total operations, total fibers, and source maps encounter the
@@ -68,6 +82,7 @@ attempt exactly.
 The AHB plan-byte recipes use real reset operations and referenced semantic
 identifiers. They produce canonical plans of exactly 1,048,576, 4,194,304, and
 16,777,216 bytes; one additional complete reset operation is rejected. These
-are construction/boundary facts only. `.17.2.4.2` remains active for the
-remaining execution axes and levels, and no scale capacity is supported until later
-measurement and promotion.
+are construction/boundary facts only. `.17.2.4.2` remains active for execution
+types, source maps, random/replay, exact plan bytes, higher levels, and final
+qualification; no scale capacity is supported until later measurement and
+promotion.

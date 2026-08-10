@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-execution`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **24** uniquely owned question entries.
+> **2** facts · **25** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -12,6 +12,7 @@
 - q="how are VIAL drive sample react check phases ordered?" · facts=[vial-execution-ir-v1-contract](../../docs/knowledge/vial-execution-ir-v1-contract.md)
 - q="how are VIAL fiber ties and cancellations deterministic?" · facts=[vial-execution-ir-v1-contract](../../docs/knowledge/vial-execution-ir-v1-contract.md)
 - q="how are exact 1 MiB 4 MiB and 16 MiB VIAL plans constructed?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
+- q="how do VIAL total-fiber and simultaneously-live-fiber gate workloads stay orthogonal?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="how does VIAL bind SemanticIR to the HIAL bridge?" · facts=[vial-execution-ir-v1-contract](../../docs/knowledge/vial-execution-ir-v1-contract.md)
 - q="how does VIAL compare SV UVM and VHDL result parity?" · facts=[vial-execution-ir-v1-contract](../../docs/knowledge/vial-execution-ir-v1-contract.md)
 - q="how does VIAL random replay work?" · facts=[vial-execution-ir-v1-contract](../../docs/knowledge/vial-execution-ir-v1-contract.md)

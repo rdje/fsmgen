@@ -53,6 +53,7 @@ sub construct($class, @args) {
     my ($axis, $level) = @{$raw}{qw(primary_axis level)};
     my %owned_axis = map { $_ => 1 } qw(
         bindings scenarios operations_per_scenario operations_total
+        fibers_total simultaneously_live_fibers
     );
     confess "execution-graph gate slice does not own the requested shape\n"
         unless defined($axis) && $owned_axis{$axis}
@@ -377,7 +378,7 @@ sub _render_vial($event_count) {
 }
 
 sub _render_ahb_vial($axis, $requested_count) {
-    my ($scenario_count, $operations_per_scenario);
+    my ($scenario_count, $operations_per_scenario, @scenario_actions);
     if ($axis eq 'scenarios') {
         ($scenario_count, $operations_per_scenario) = ($requested_count, 1);
     }
@@ -390,6 +391,14 @@ sub _render_ahb_vial($axis, $requested_count) {
             if $requested_count % $scenario_count;
         $operations_per_scenario = int($requested_count / $scenario_count);
     }
+    elsif ($axis eq 'fibers_total') {
+        $scenario_count = 1;
+        @scenario_actions = _total_fiber_actions($requested_count);
+    }
+    elsif ($axis eq 'simultaneously_live_fibers') {
+        $scenario_count = 1;
+        @scenario_actions = (_live_fiber_action($requested_count));
+    }
     else {
         confess "checked-AHB renderer does not own axis '$axis'\n";
     }
@@ -397,10 +406,15 @@ sub _render_ahb_vial($axis, $requested_count) {
     my @scenarios;
     for my $scenario_ordinal (0 .. $scenario_count - 1) {
         my $name = sprintf('scenario_%08d', $scenario_ordinal);
-        my @steps = ('(reset bus 1)') x $operations_per_scenario;
+        my @steps = @scenario_actions
+            ? @scenario_actions
+            : ('(reset bus 1)') x $operations_per_scenario;
+        my $timeout_cycles = @scenario_actions
+            ? $requested_count + 1
+            : $operations_per_scenario + 1;
         push @scenarios, join('',
             '(scenario ', $name,
-            ' (timeout (cycles bus ', $operations_per_scenario + 1, '))',
+            ' (timeout (cycles bus ', $timeout_cycles, '))',
             ' (steps ', join(' ', @steps), '))',
         );
     }
@@ -439,6 +453,72 @@ sub _render_ahb_vial($axis, $requested_count) {
         ' (scenarios ', join(' ', @scenarios), ')))))',
         "\n",
     );
+}
+
+sub _total_fiber_actions($requested_count) {
+    confess "total-fiber gate requires at least three fibers\n"
+        unless defined($requested_count) && $requested_count >= 3;
+    my $remaining = $requested_count - 1;
+    my @group_sizes;
+    while ($remaining) {
+        my $group_size = $remaining > 31 ? 31 : $remaining;
+        if ($group_size == 1) {
+            confess "total-fiber gate cannot form a final singleton parallel group\n"
+                unless @group_sizes && $group_sizes[-1] > 2;
+            --$group_sizes[-1];
+            ++$remaining;
+            ++$group_size;
+        }
+        push @group_sizes, $group_size;
+        $remaining -= $group_size;
+    }
+
+    my @actions;
+    for my $group_ordinal (0 .. $#group_sizes) {
+        my @fibers = map {
+            sprintf(
+                '(fiber total_%08d_%08d (reset bus 1))',
+                $group_ordinal, $_,
+            )
+        } 0 .. $group_sizes[$group_ordinal] - 1;
+        push @actions, '(parallel all ' . join(' ', @fibers) . ')';
+    }
+    return @actions;
+}
+
+sub _live_fiber_action($requested_count) {
+    confess "live-fiber gate requires at least four fibers\n"
+        unless defined($requested_count) && $requested_count >= 4;
+    my $descendant_count = $requested_count - 1;
+    my $outer_count = int(($descendant_count + 255) / 256);
+    $outer_count = 2 if $outer_count < 2;
+    confess "live-fiber gate exceeds the outer parallel fanout\n"
+        if $outer_count > 256;
+
+    my $nested_remaining = $descendant_count - $outer_count;
+    my @outer_fibers;
+    for my $outer_ordinal (0 .. $outer_count - 1) {
+        my $nested_count = $nested_remaining > 255 ? 255 : $nested_remaining;
+        confess "live-fiber gate would require a singleton nested parallel\n"
+            if $nested_count == 1;
+        my $action = '(reset bus 1)';
+        if ($nested_count) {
+            my @nested_fibers = map {
+                sprintf(
+                    '(fiber live_%08d_%08d (reset bus 1))',
+                    $outer_ordinal, $_,
+                )
+            } 0 .. $nested_count - 1;
+            $action = '(parallel all ' . join(' ', @nested_fibers) . ')';
+            $nested_remaining -= $nested_count;
+        }
+        push @outer_fibers, sprintf(
+            '(fiber live_outer_%08d %s)', $outer_ordinal, $action,
+        );
+    }
+    confess "live-fiber gate did not consume its exact descendant count\n"
+        if $nested_remaining;
+    return '(parallel all ' . join(' ', @outer_fibers) . ')';
 }
 
 sub _validate_reference_hial($text) {
@@ -504,6 +584,20 @@ sub _axis_oracle_errors($spec, $construction, $ir, $plan, $inputs) {
     ) unless join("\0", @layers) eq join("\0", qw(IAL2 IAL1 IAL0));
 
     my $requested = $spec->{requested_counts}{$axis};
+    if ($axis eq 'fibers_total' || $axis eq 'simultaneously_live_fibers') {
+        my $observed = $axis eq 'fibers_total'
+            ? $ir->{operation_graph}{total_fiber_count}
+            : $ir->{operation_graph}{maximum_simultaneous_live_fibers};
+        push @errors, _oracle_error(
+            'VIAL_SCALE_EXECUTION_COUNT_ERROR',
+            "observed $axis count $observed does not equal requested count $requested",
+            "/metrics/$axis",
+        ) unless $observed == $requested;
+        push @errors, _fiber_oracle_errors($ir, $axis, $requested);
+        push @errors, _topology_oracle_errors($ir, 'fiber_tree');
+        return @errors;
+    }
+
     my $observed = $axis eq 'scenarios'
         ? scalar(@{$ir->{scenarios}})
         : $axis eq 'operations_per_scenario'
@@ -532,11 +626,119 @@ sub _axis_oracle_errors($spec, $construction, $ir, $plan, $inputs) {
         && $ir->{operation_graph}{total_fiber_count} == $expected_scenarios
         && $ir->{operation_graph}{maximum_simultaneous_live_fibers} == 1;
 
-    push @errors, _topology_oracle_errors($ir);
+    push @errors, _topology_oracle_errors($ir, 'reset_chain');
     return @errors;
 }
 
-sub _topology_oracle_errors($ir) {
+sub _fiber_oracle_errors($ir, $axis, $requested) {
+    my @errors;
+    my $graph = $ir->{operation_graph};
+    my $scenario = @{$ir->{scenarios}} == 1 ? $ir->{scenarios}[0] : undef;
+    my @parallel = grep { ($_->{kind} // '') eq 'parallel' } @{$graph->{operations}};
+    my @reset = grep { ($_->{kind} // '') eq 'reset' } @{$graph->{operations}};
+    my %fiber = $scenario
+        ? map { $_->{fiber_id} => $_ } @{$scenario->{fibers}}
+        : ();
+    my %operation = map { $_->{operation_id} => $_ } @{$graph->{operations}};
+    my %operations_by_fiber;
+    push @{$operations_by_fiber{$_->{fiber_id}}}, $_ for @{$graph->{operations}};
+    my @roots = grep { !defined($_->{parent_fiber_id}) } values %fiber;
+    my $root = @roots == 1 ? $roots[0] : undef;
+    my $closed = $scenario
+        && scalar(keys %fiber) == $requested
+        && $scenario->{plan_summary}{fiber_count} == $requested
+        && $root
+        && !scalar(grep { !exists($fiber{$_->{fiber_id}}) } @{$graph->{operations}})
+        && !scalar(grep {
+            defined($_->{parent_fiber_id}) && !exists($fiber{$_->{parent_fiber_id}})
+        } values %fiber)
+        && !scalar(grep {
+            ($_->{effects}[0]{join} // '') ne 'all'
+        } @parallel);
+    my %child_root_count;
+    for my $parallel (@parallel) {
+        for my $child_root_id (@{$parallel->{effects}[0]{child_root_operation_ids} || []}) {
+            ++$child_root_count{$child_root_id};
+            my $child_root = $operation{$child_root_id};
+            my $child_fiber = $child_root ? $fiber{$child_root->{fiber_id}} : undef;
+            $closed = 0 unless $child_fiber
+                && defined($child_fiber->{parent_fiber_id})
+                && $child_fiber->{parent_fiber_id} eq $parallel->{fiber_id};
+        }
+    }
+    for my $entry (grep { defined($_->{parent_fiber_id}) } values %fiber) {
+        my $operations = $operations_by_fiber{$entry->{fiber_id}} || [];
+        $closed = 0 unless @$operations
+            && ($child_root_count{$operations->[0]{operation_id}} // 0) == 1;
+    }
+    $closed = 0 unless scalar(keys %child_root_count) == $requested - 1;
+
+    if ($closed && $axis eq 'fibers_total') {
+        my @group_sizes = map {
+            scalar(@{$_->{effects}[0]{child_root_operation_ids} || []})
+        } @parallel;
+        my @root_operations = @{$operations_by_fiber{$root->{fiber_id}} || []};
+        $closed = @parallel == 5
+            && @reset == 127
+            && @{$graph->{operations}} == 132
+            && $graph->{maximum_simultaneous_live_fibers} == 32
+            && join("\0", @group_sizes) eq join("\0", qw(31 31 31 31 3))
+            && @root_operations == @parallel
+            && !scalar(grep {
+                defined($_->{parent_fiber_id})
+                    && $_->{parent_fiber_id} ne $root->{fiber_id}
+            } values %fiber)
+            && !scalar(grep {
+                $_->{fiber_id} ne $root->{fiber_id}
+                    && @{$operations_by_fiber{$_->{fiber_id}} || []} != 1
+            } values %fiber);
+        for my $index (0 .. $#root_operations) {
+            my @expected = $index == $#root_operations
+                ? ()
+                : ($root_operations[$index + 1]{operation_id});
+            $closed = 0 unless join("\0", @{$root_operations[$index]{successor_ids}})
+                eq join("\0", @expected);
+        }
+    }
+    elsif ($closed && $axis eq 'simultaneously_live_fibers') {
+        my @child_counts = sort { $a <=> $b } map {
+            scalar(@{$_->{effects}[0]{child_root_operation_ids} || []})
+        } @parallel;
+        my @root_children = grep {
+            defined($_->{parent_fiber_id})
+                && $_->{parent_fiber_id} eq $root->{fiber_id}
+        } values %fiber;
+        my @nested_parents = grep {
+            scalar(@{$operations_by_fiber{$_->{fiber_id}} || []}) == 1
+                && ($operations_by_fiber{$_->{fiber_id}}[0]{kind} // '') eq 'parallel'
+        } @root_children;
+        my @nested_children = @nested_parents == 1 ? grep {
+            defined($_->{parent_fiber_id})
+                && $_->{parent_fiber_id} eq $nested_parents[0]{fiber_id}
+        } values %fiber : ();
+        $closed = @parallel == 2
+            && @reset == 30
+            && @{$graph->{operations}} == 32
+            && $graph->{total_fiber_count} == 32
+            && @{$operations_by_fiber{$root->{fiber_id}} || []} == 1
+            && @root_children == 2
+            && @nested_parents == 1
+            && @nested_children == 29
+            && join("\0", @child_counts) eq join("\0", qw(2 29));
+    }
+    else {
+        $closed = 0;
+    }
+
+    push @errors, _oracle_error(
+        'VIAL_SCALE_EXECUTION_FIBER_ERROR',
+        'execution fiber gate did not preserve its exact bounded parallel-tree recipe',
+        '/operation_graph/fibers',
+    ) unless $closed;
+    return @errors;
+}
+
+sub _topology_oracle_errors($ir, $mode) {
     my @errors;
     my $graph = $ir->{operation_graph};
     push @errors, _oracle_error(
@@ -553,14 +755,31 @@ sub _topology_oracle_errors($ir) {
         my $ids = $scenario->{operation_ids};
         for my $index (0 .. $#$ids) {
             my $entry = $operation{$ids->[$index]};
-            my @expected_successors = $index == $#$ids ? () : ($ids->[$index + 1]);
             $chain_ok = 0 unless $entry
-                && ($entry->{kind} // '') eq 'reset'
-                && ($entry->{eligible_phase} // '') eq 'drive'
                 && $entry->{static_rank} == $index
-                && ($entry->{scenario_id} // '') eq $scenario->{scenario_id}
-                && join("\0", @{$entry->{successor_ids}})
-                    eq join("\0", @expected_successors);
+                && ($entry->{scenario_id} // '') eq $scenario->{scenario_id};
+            next unless $entry;
+            my $expected_phase = ($entry->{kind} // '') eq 'reset'
+                ? 'drive'
+                : ($entry->{kind} // '') eq 'parallel' ? 'react' : undef;
+            $chain_ok = 0 unless defined($expected_phase)
+                && ($entry->{eligible_phase} // '') eq $expected_phase;
+            if ($mode eq 'reset_chain') {
+                my @expected_successors = $index == $#$ids
+                    ? ()
+                    : ($ids->[$index + 1]);
+                $chain_ok = 0 unless ($entry->{kind} // '') eq 'reset'
+                    && join("\0", @{$entry->{successor_ids}})
+                        eq join("\0", @expected_successors);
+            }
+            else {
+                for my $successor_id (@{$entry->{successor_ids}}) {
+                    my $successor = $operation{$successor_id};
+                    $chain_ok = 0 unless $successor
+                        && ($successor->{scenario_id} // '') eq $scenario->{scenario_id}
+                        && $successor->{static_rank} > $entry->{static_rank};
+                }
+            }
         }
     }
     push @errors, _oracle_error(

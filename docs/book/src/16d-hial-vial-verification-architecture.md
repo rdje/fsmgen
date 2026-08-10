@@ -2315,9 +2315,60 @@ semantic, bridge, and plan hashes; post-identity source mutation fails closed.
 The corrected multi-scenario plan identity was propagated through the native-
 UVM, portable-VHDL, and OSVVM galleries and requalified with the repository-
 local GHDL 6.0.0 and OSVVM 2026.05 tool/provider tuple. No backend or runtime
-capability was added. Fibers, types, maps, random/replay, exact plan-byte
+capability was added. Types, large maps, random/replay, exact plan-byte
 boundaries, and higher levels remain owned by later slices of the active
 generator task.
+
+The following slice implements both gate-level fiber axes through the same
+frozen checked-AHB route and unchanged public builder:
+
+| Primary axis | Canonical parallel shape | Operations | Total fibers | Maximum live | Source maps | Plan bytes |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| fibers total | five sequential `all` groups with `31/31/31/31/3` children | 132 | 128 | 32 | 149 | 79,987 |
+| simultaneously live fibers | one depth-two `all` tree with `2` outer and `29` nested children | 32 | 32 | 32 | 49 | 43,811 |
+
+Every generated child is a real parsed fiber containing a one-cycle bus reset;
+none is an allocated-but-unused count. Sequential groups let the total-fiber
+gate reach 128 while holding its non-primary live count to the separate gate
+value of 32. The live-width tree keeps parser nesting at two and every authored
+parallel below the 256-child limit. Both plans prove exact `all` joins,
+parent/child closure, stable operation and fiber IDs, static ranks, successor
+chains, `drive` resets, `react` parallel activation, one source map per global
+operation index, and byte-equal independent reruns.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+open my $fh, '<:raw', 'ppif/ahb_lite_subordinate.ppif'
+    or die "cannot read checked AHB source: $!";
+local $/;
+my $checked_ahb = <$fh>;
+close $fh or die "cannot close checked AHB source: $!";
+
+for my $axis (qw(fibers_total simultaneously_live_fibers)) {
+    my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+        primary_axis => $axis,
+        level => 'gate_candidate_v1',
+        reference_hial_text => $checked_ahb,
+    });
+    die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+
+    my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+        construction => $workload,
+    });
+    die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+    die "unexpected live width\n"
+        unless $evaluation->{metrics}{simultaneous_live_fibers} == 32;
+}
+```
+
+The fiber gates retain 22 checked-AHB bindings, seven normalized types, the
+public portable AHB capability, and exact `IAL2 -> IAL1 -> IAL0` review
+closure. They never admit the private binding-scale capability. Post-identity
+source mutation and unfinished qualification levels fail closed. Execution
+types, large source-map construction, random/replay, exact plan-byte
+boundaries, higher levels, and scale qualification remain unfinished and make
+no capacity claim.
 
 The reachability audit selects these outcomes before generator implementation:
 
