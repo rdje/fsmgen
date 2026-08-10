@@ -1069,9 +1069,10 @@ sub _build_scenarios {
         _fail('VIAL_REFERENCE_ERROR', 'resolve', "unknown domain '$domain_name'", $cycles_items->[1]{span}, "$item_path/timeout/domain") unless $domain;
         my $timeout_cycles = _positive_integer($cycles_items->[2], "$item_path/timeout/cycles", 1, MAX_CYCLES);
         my $steps_items = _form($scenario_items->[3], 'steps', 2, undef, "$item_path/steps");
+        my $scenario_id = "$fixture->{semantic_id}\::scenario\::$name";
         my $state = {
             handles => {}, expectations => {}, injected_faults => {},
-            action_count => 0, fiber_count => 0,
+            action_count => 0, fiber_count => 0, scenario_id => $scenario_id,
         };
         my @actions;
         for my $action_index (1 .. $#{$steps_items}) {
@@ -1084,7 +1085,7 @@ sub _build_scenarios {
             if $state->{action_count} > MAX_SCENARIO_ACTIONS;
         push @scenarios, {
             %{$self->_meta($item_path, $items->[$index])},
-            semantic_id => "$fixture->{semantic_id}\::scenario\::$name",
+            semantic_id => $scenario_id,
             name => $name, domain_id => $domain->{semantic_id}, timeout_cycles => $timeout_cycles,
             actions => \@actions, action_count => $state->{action_count}, fiber_count => $state->{fiber_count},
         };
@@ -1124,7 +1125,7 @@ sub _action {
         _fail('VIAL_REFERENCE_ERROR', 'resolve', "unknown transaction binding '$binding_name'", $items->[2]{span}, "$path/transaction") unless $binding;
         my $fields = $self->_transaction_field_values($context, $fixture, $binding->{transaction}, $items->[3], "$path/fields", $env);
         my $handle = {
-            semantic_id => "$fixture->{semantic_id}\::handle\::$handle_name",
+            semantic_id => "$state->{scenario_id}\::handle\::$handle_name",
             name => $handle_name, transaction => $binding->{transaction}, transaction_id => $binding->{transaction_id},
         };
         $state->{handles}{$handle_name} = $handle;
@@ -1157,7 +1158,7 @@ sub _action {
             }
             push @fibers, {
                 %{$self->_meta($fiber_path, $fiber_nodes[$fiber_index])},
-                semantic_id => "$fixture->{semantic_id}\::fiber\::$name",
+                semantic_id => "$state->{scenario_id}\::fiber_scope\::$fiber_path\::fiber\::$name",
                 name => $name, actions => \@actions,
             };
         }
@@ -1179,7 +1180,7 @@ sub _action {
         _shape($items, 3, 3, $node, $path, $head);
         my $name = _identifier($items->[1], "$path/name", 0);
         _unique_name($state->{expectations}, $name, $items->[1], $path, 'expectation');
-        return { %{$meta}, kind => 'expect', semantic_id => "$fixture->{semantic_id}\::expectation\::$name", name => $name, property => $self->_property($context, $items->[2], "$path/property", $env) };
+        return { %{$meta}, kind => 'expect', semantic_id => "$state->{scenario_id}\::expectation\::$name", name => $name, property => $self->_property($context, $items->[2], "$path/property", $env) };
     }
     if ($head eq 'scoreboard_expect') {
         _shape($items, 3, 3, $node, $path, $head);

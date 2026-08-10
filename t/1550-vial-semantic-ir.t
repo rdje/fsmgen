@@ -113,6 +113,36 @@ sub contains_parser_node {
     return 1;
 }
 
+sub semantic_id_path_conflicts {
+    my ($value, $path, $seen, $conflicts) = @_;
+    return unless ref($value);
+    $path //= '';
+    $seen //= {};
+    $conflicts //= [];
+    if (ref($value) eq 'HASH') {
+        if (defined($value->{semantic_id}) && defined($value->{name})
+            && defined($value->{semantic_path})) {
+            my $previous = $seen->{$value->{semantic_id}};
+            push @{$conflicts}, [$value->{semantic_id}, $previous, $value->{semantic_path}]
+                if defined($previous) && $previous ne $value->{semantic_path};
+            $seen->{$value->{semantic_id}} //= $value->{semantic_path};
+        }
+        if (($value->{kind} // '') eq 'start' && defined($value->{handle_id})) {
+            my $previous = $seen->{$value->{handle_id}};
+            push @{$conflicts}, [$value->{handle_id}, $previous, $value->{semantic_path}]
+                if defined($previous) && $previous ne $value->{semantic_path};
+            $seen->{$value->{handle_id}} //= $value->{semantic_path};
+        }
+        semantic_id_path_conflicts($value->{$_}, "$path/$_", $seen, $conflicts)
+            for sort keys %{$value};
+    }
+    elsif (ref($value) eq 'ARRAY') {
+        semantic_id_path_conflicts($value->[$_], "$path/$_", $seen, $conflicts)
+            for 0 .. $#{$value};
+    }
+    return $conflicts;
+}
+
 subtest 'checked AHB source constructs immutable typed semantic intent' => sub {
     my $checked = check_source($source);
     ok($checked->{ok}, 'checked source succeeds');
@@ -170,6 +200,56 @@ subtest 'semantic order, IDs, values, provenance, and reports are deterministic'
     ok($location->{start_byte} < $location->{end_byte_exclusive}, 'provenance uses half-open byte offsets');
     ok($location->{start_line} > 1, 'provenance retains authored line coordinates');
     is_deeply($location, $first->source_location_for('/packages/0/fixtures/0/dut/endpoints/0/unrecorded-child'), 'provenance lookup falls back to the nearest recorded ancestor');
+
+    is_deeply(
+        semantic_id_path_conflicts($data),
+        [],
+        'checked reference maps every named semantic and scenario-local handle ID to one authored entity',
+    );
+    my @accepted_once = map { $_->{semantic_id} }
+        grep { ($_->{name} // '') eq 'accepted_once' }
+        map { @{$_->{actions}} } @{$fixture->{scenarios}};
+    is_deeply(
+        \@accepted_once,
+        [
+            'ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::success::expectation::accepted_once',
+            'ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::unsupported_size::expectation::accepted_once',
+        ],
+        'scenario-local expectations retain readable names without colliding across scenarios',
+    );
+};
+
+subtest 'scenario and parallel scopes keep reused local names globally unambiguous' => sub {
+    my $scenario = first_form_text($source, 'scenario success');
+    my $clone = $scenario;
+    $clone =~ s/\(scenario success/\(scenario success_clone/;
+    my $duplicated = changed($source, $scenario, "$scenario\n          $clone", 'scenario-local ID reuse');
+    my $data = FSM::VIAL::Parser->parse_source({
+        text => $duplicated,
+        source_name => $source_name,
+    })->as_hashref;
+    is_deeply(
+        semantic_id_path_conflicts($data),
+        [],
+        'reused handle, fiber, and expectation names remain unique at their authored scope',
+    );
+    my @handles;
+    my @fibers;
+    my $walk_actions;
+    $walk_actions = sub {
+        my ($actions) = @_;
+        for my $action (@{$actions}) {
+            push @handles, $action->{handle_id} if ($action->{kind} // '') eq 'start';
+            next unless ($action->{kind} // '') eq 'parallel';
+            for my $fiber (@{$action->{fibers}}) {
+                push @fibers, $fiber->{semantic_id};
+                $walk_actions->($fiber->{actions});
+            }
+        }
+    };
+    $walk_actions->($_->{actions}) for @{$data->{packages}[0]{fixtures}[0]{scenarios}};
+    is(scalar(@handles), scalar(keys %{ { map { $_ => 1 } @handles } }), 'scenario-local handle IDs are globally unique');
+    is(scalar(@fibers), scalar(keys %{ { map { $_ => 1 } @fibers } }), 'parallel-local fiber IDs are globally unique');
 };
 
 subtest 'contextual scalar inference is symmetric without implicit conversion' => sub {

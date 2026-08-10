@@ -127,7 +127,7 @@ subtest 'declared fault, property, diagnostic, and result structures remain hone
         qr/class base_output_arbitration_property_checker extends uvm_component;/,
         'property expectation component is emitted');
     like($fixture,
-        qr/properties\.record\("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::expectation::two_error_cycles"/,
+        qr/properties\.record\("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::unsupported_size::expectation::two_error_cycles"/,
         'public error-count expectation is emitted with exact identity');
     like($checking,
         qr/virtual function void do_copy\(uvm_object rhs\);.*diagnostic_id = rhs_item\.diagnostic_id/s,

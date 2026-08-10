@@ -306,16 +306,16 @@ package base_output_arbitration_pkg;
       writes_scoreboard.enqueue_expected(expected);
       success_sequence = base_output_arbitration_success_sequence::type_id::create("success_sequence");
       success_sequence.start(sequencer);
-      properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::expectation::accepted_once",
+      properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::success::expectation::accepted_once",
         notifications.accepted_notification.occurrence_count - accepted_before == 1,
         "accepted event count differs from one", vial_context.logical_time);
-      properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::expectation::completed_once",
+      properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::success::expectation::completed_once",
         notifications.completed_notification.occurrence_count - completed_before == 1,
         "completed event count differs from one", vial_context.logical_time);
-      properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::expectation::response_ok",
+      properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::success::expectation::response_ok",
         cfg.vif.monitor_cb.HRESP === 1'b0,
         "response did not return to the expected value", vial_context.logical_time);
-      properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::expectation::read_zero",
+      properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::success::expectation::read_zero",
         cfg.vif.monitor_cb.HRDATA === 32'h00000000,
         "read data differs from zero", vial_context.logical_time);
       void'(writes_scoreboard.check_empty());
@@ -325,16 +325,16 @@ package base_output_arbitration_pkg;
       faults.arm();
       unsupported_size_sequence = base_output_arbitration_unsupported_size_sequence::type_id::create("unsupported_size_sequence");
       unsupported_size_sequence.start(sequencer);
-      properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::expectation::accepted_once",
+      properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::unsupported_size::expectation::accepted_once",
         notifications.accepted_notification.occurrence_count - accepted_before == 1,
         "accepted event count differs from one", vial_context.logical_time);
-      properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::expectation::two_error_cycles",
+      properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::unsupported_size::expectation::two_error_cycles",
         notifications.error_notification.occurrence_count - error_before == 2,
         "error event count differs from two", vial_context.logical_time);
-      properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::expectation::response_returns_ok",
+      properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::unsupported_size::expectation::response_returns_ok",
         cfg.vif.monitor_cb.HRESP === 1'b0,
         "response did not return to the expected value", vial_context.logical_time);
-      properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::expectation::read_zero",
+      properties.record("ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::unsupported_size::expectation::read_zero",
         cfg.vif.monitor_cb.HRDATA === 32'h00000000,
         "read data differs from zero", vial_context.logical_time);
       vial_context.transition_lifecycle(VIAL_LIFECYCLE_RUNNING, VIAL_LIFECYCLE_DRAINING);
@@ -552,7 +552,7 @@ package base_output_arbitration_pkg;
       if (!uvm_config_db#(virtual base_output_arbitration_if)::get(this, "", "vif", cfg.vif))
         `uvm_fatal("VIAL/VIF", "missing generated virtual interface")
       vial_context = fsmgen_vial_execution_context::type_id::create("vial_context");
-      vial_context.plan_id = "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574";
+      vial_context.plan_id = "plan/dff960e224818f42aee83cda21cbcea82d49d23384c196618ea67415353e14ad";
       notifications = base_output_arbitration_notification_registry::type_id::create("notifications");
       notifications.configure_preview();
       cfg.scenario_timeout_cycles = 256;

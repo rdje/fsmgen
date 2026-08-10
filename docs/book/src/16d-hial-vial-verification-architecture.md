@@ -120,6 +120,14 @@ repository's legacy raw Lispish arrays: exact byte/line/column provenance,
 stable semantic IDs, deterministic diagnostics, and later replay/source maps
 are language requirements.
 
+Semantic IDs follow the language's uniqueness scopes. Package, declaration,
+fixture, and scenario IDs remain readable named identities. Handles and
+expectations add their scenario ID because their names may be reused in another
+scenario. Fibers add their scenario plus canonical structural path because a
+parallel action has no authored name and fiber names are local to one parallel.
+This prevents two legal local declarations from collapsing into one trace,
+result, or replay key.
+
 Every file contains one versioned package with explicit sections:
 
 ```lisp
@@ -2068,6 +2076,65 @@ tree on success or failure. A concurrent identity collision fails without
 touching the existing tree. Its returned report contains only the repository-
 relative staging identity, same-volume proof, cleanup state, and diagnostics;
 runtime-derived absolute paths are never durable identity.
+
+### Canonical semantic-catalog generation
+
+`FSM::VIAL::ArchitectureScaleSemanticCatalog` now constructs all 14
+`semantic_catalog_v1` axes at all five selected levels. It produces ordinary
+`.vial` text, feeds only the public parser/validator, and exposes the resulting
+private `VIALSemanticIR` only through that canonical parser. It cannot accept a
+caller-created IR.
+
+The generated sources use reachable, typed declarations rather than comments,
+blank data, or unreachable padding. Imports are exercised through an in-memory
+catalog; declared types are referenced by transaction fields and fixtures;
+fixtures contain valid DUT/domain/endpoint/transaction/scenario anchors;
+actions, parallel depth/fanout, aggregates, scoreboards, and coverage use their
+real semantic forms. Byte workloads use referenced width-4,096 enum
+declarations with seed-1701 payloads. A bounded semantic unit reference adjusts
+only the final whole-source byte remainder, and an over-limit source appends a
+complete referenced declaration.
+
+This repository-root-relative example builds and checks the imports gate
+candidate:
+
+```perl
+use FSM::VIAL::ArchitectureScaleSemanticCatalog;
+
+my $workload = FSM::VIAL::ArchitectureScaleSemanticCatalog->construct({
+    primary_axis => 'imports',
+    level => 'gate_candidate_v1',
+    reference_text => undef,
+});
+die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+
+my $evaluation = FSM::VIAL::ArchitectureScaleSemanticCatalog->evaluate({
+    construction => $workload,
+});
+die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+print "$evaluation->{workload_identity}\n";
+```
+
+An accepted evaluation proves exact requested counts, globally unambiguous
+named IDs, in-bounds source spans, closed internal references and resolved
+types, authored ordering, equal reports from independent canonical parses,
+semantic-projection identity, and deterministic normal formatting. An
+over-limit evaluation succeeds as an oracle only when the parser rejects at
+the exact earliest `VIAL_LIMIT_ERROR` family and semantic path. Qualification,
+exact-boundary, and excess exercises are opt-in and run under the repository
+RAM guard:
+
+```text
+FSMGEN_VIAL_SCALE_EXACT=1 scripts/run_with_ram_guard.sh -- \
+  prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t
+```
+
+The exact proof covers all 70 axis/level constructions. The current repeat
+gate of 4,096 is accepted, but a one-action literal repeat reaches the 65,536
+expanded-action cap at repeat count 65,535. Therefore the selected 262,144
+repeat qualification candidate and 1,000,000 repeat boundary are recorded as
+honest earlier-cap rejections; decision `0059` routes any policy repair to
+`.17.4`. No candidate or boundary is a capacity/support claim.
 
 For example, the scenario-count axis holds the source/bridge/checking anchor
 fixed and requests 32 scenarios for the gate candidate, 512 for qualification,

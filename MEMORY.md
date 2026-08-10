@@ -8,12 +8,13 @@ history; this file carries only the current bounded resume state.
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.2`.
-- current_state: clean repair commit `3c948294b` completes `.17.9`; `.17.2.2`
-  is active for canonical semantic-catalog workload generation and oracles.
-- next_action: commit the continuity-only activation, then implement bounded
-  source generation through the shipped parser/validator without forged IR.
-- in_flight_uncommitted: `.17.2.2` task/index/fact/Memory activation only; no
-  implementation change, background job, or generated residue.
+- current_state: `.17.2.2` implementation, exact semantic proof, dependent
+  galleries/qualifications, impacted regression, and documentation gates pass;
+  the completed slice is ready for final staged doctrines and commit.
+- next_action: commit `.17.2.2` cleanly, then activate proposed `.17.2.3` for
+  canonical bridge-fanout generation.
+- in_flight_uncommitted: completed `.17.2.2` source, generated evidence,
+  tests, decisions `0058`/`0059`, and synchronized task/book/fact continuity.
 - blockers: none.
 
 ## Durable context
@@ -37,4 +38,7 @@ history; this file carries only the current bounded resume state.
 - `.15.1-.15.4` ship portable emission/review; `.15.5` qualifies exact GHDL
   6.0.0 LLVM-JIT; `.15.6` ships exact OSVVM materialization/emission; `.15.7`
   qualifies their bounded combined profile with portable semantics unchanged.
+- Decisions `0058`/`0059`: action-local SemanticIR IDs follow scenario/parallel
+  scope; the current expanded-action cap dominates higher repeat candidates,
+  and `.17.4` alone owns any limit-policy repair.
 - Decisions `0041`/`0042`/`0044`/`0045` retain containment authority; retired views are Git-retrievable. Push only on request; PNT is autonomous.

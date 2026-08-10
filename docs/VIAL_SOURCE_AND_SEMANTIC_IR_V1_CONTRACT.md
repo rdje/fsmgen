@@ -636,9 +636,13 @@ source_span: exact source location record
 
 Stable IDs use
 `<package>::<kind>::<name>` and extend with `::<child-kind>::<child-name>` for
-fixture-local entities. They contain names, never list ordinals. Semantic paths
-contain normalized array indices and are the provenance lookup keys. Reordering
-declarations changes paths/order but not named IDs.
+fixture-local entities. Scenario-local handles and expectations extend the
+named scenario ID. Fibers extend that scenario ID with their semantic path
+before the authored fiber name because VIAL v1 parallel actions are unnamed
+and fiber names are unique only inside one parallel. Semantic paths contain
+normalized array indices and are the provenance lookup keys. Reordering named
+declarations changes paths/order but not their IDs; moving a fiber between
+unnamed parallel scopes necessarily changes that fiber's structural identity.
 
 Normalized type records are closed discriminated hashes for scalar, enum,
 record, and list. References carry both authored qualified spelling and
@@ -663,8 +667,9 @@ After construction:
 2. every aggregate/scalar literal is normalized without truncation or unknown
    coercion;
 3. every container is closed and every authored-order array is deterministic;
-4. every semantic node has a stable ID where named, a recognized semantic
-   path, and exact or ancestor-resolvable provenance;
+4. every semantic node has a stable ID where named, no named entity or handle
+   ID maps to multiple authored paths, and every path has exact or
+   ancestor-resolvable provenance;
 5. import/source identities are repository-relative and content-hashed;
 6. bridge references remain explicitly unresolved and typed as binding
    assertions, never treated as verified HIAL facts;
@@ -830,6 +835,12 @@ Before IR construction, version 1 enforces:
 | scalar width / list length | 65,536 / 65,536 |
 | record fields | 256 |
 | scoreboard capacity / coverage max bins | 1,000,000 / 1,000,000 |
+
+The repeat-count ceiling is not an independent accepted capacity under the
+current expanded-action rule. A one-action body with repeat count 65,535 has
+65,536 expanded actions; count 65,536 and the selected higher repeat
+qualification/limit levels stop at the scenario action cap. Decision `0059`
+records this interaction and routes any policy repair to `.17.4`.
 
 Exceeding a limit yields `VIAL_LIMIT_ERROR`; the implementation must not rely
 on Perl recursion failure, memory exhaustion, or a backend to reject it. These

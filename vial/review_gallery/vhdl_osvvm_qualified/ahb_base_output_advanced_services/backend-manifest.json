@@ -6,9 +6,9 @@
          "language" : "json",
          "relpath" : "backends/vhdl_osvvm_qualified/backend-source-map.json",
          "role" : "backend_source_map",
-         "sha256" : "5fee0fd05c1a0f982e0e08931088a0ff2dbce5181273fc34392ec75e57be0515",
+         "sha256" : "e6925c8da2ab589e8698a572431b6d787de7be989affae49bec969fb8df34372",
          "source_ids" : [
-            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+            "plan/dff960e224818f42aee83cda21cbcea82d49d23384c196618ea67415353e14ad"
          ]
       },
       {
@@ -19,7 +19,7 @@
          "role" : "advanced_mapping_matrix",
          "sha256" : "42dcdc7a79217d6e5065c00f5d8513f26712f23bd5049b5dd750adde6b93fbb6",
          "source_ids" : [
-            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+            "plan/dff960e224818f42aee83cda21cbcea82d49d23384c196618ea67415353e14ad"
          ]
       },
       {
@@ -39,9 +39,9 @@
          "language" : "json",
          "relpath" : "backends/vhdl_osvvm_qualified/evidence/qualification-reference.json",
          "role" : "combined_qualification_reference",
-         "sha256" : "74a1a48e3152a78d6747e52a93f12a515fefaf9598212b39307043d3c59b55e8",
+         "sha256" : "40dacf312cb383c4578aa1bc652ba938067aa2e96d8fcf787866a10238782569",
          "source_ids" : [
-            "qualification/cbe83289f0271a04db11255f47c05a27ce9c770a15cc5efe00fa89c697478ea1"
+            "qualification/cc6cebec4869ffeba7a1ca56449e71d2bb5ebb3905cba3bbd6f46f0011472531"
          ]
       },
       {
@@ -50,9 +50,9 @@
          "language" : "json",
          "relpath" : "backends/vhdl_osvvm_qualified/evidence/semantic-preservation.json",
          "role" : "semantic_preservation",
-         "sha256" : "73ae51c455724dacccdbbcef5ac9f148af76a1ccac4239b13ca763466232f8eb",
+         "sha256" : "32f4b7534b5b8ab8e500ddc125dfd03bb24a0ac4db42ea015ee9b6302989ff6d",
          "source_ids" : [
-            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+            "plan/dff960e224818f42aee83cda21cbcea82d49d23384c196618ea67415353e14ad"
          ]
       },
       {
@@ -63,7 +63,7 @@
          "role" : "source_order",
          "sha256" : "a7b277bb5fba941d95676dab0f3aff351c0880f2390a2fb5d7d498292977df2d",
          "source_ids" : [
-            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+            "plan/dff960e224818f42aee83cda21cbcea82d49d23384c196618ea67415353e14ad"
          ]
       },
       {
@@ -74,7 +74,7 @@
          "role" : "static_validation",
          "sha256" : "3e20f47a8be0292d16417068ba415926124e54df27ceda8dfeae1a4777279d02",
          "source_ids" : [
-            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+            "plan/dff960e224818f42aee83cda21cbcea82d49d23384c196618ea67415353e14ad"
          ]
       },
       {
@@ -83,7 +83,7 @@
          "language" : "json",
          "relpath" : "backends/vhdl_osvvm_qualified/evidence/tool-profile.json",
          "role" : "tool_profile",
-         "sha256" : "30124c109be2ab5e007d9504b0ee83e0005829b4499f8ad391f3c5d29a28fa54",
+         "sha256" : "95c0a1506c0af814e06734c0303e8823a3e095ad44880bad66e1cd663fa27bea",
          "source_ids" : [
             "2f7c391051dfb11890fa4bdbda9918d1db492250"
          ]
@@ -97,7 +97,7 @@
          "sha256" : "1a547b8de38c072600a76497778758affab25ccd479c0c1dfce7f0e0579c9e94",
          "source_ids" : [
             "2f7c391051dfb11890fa4bdbda9918d1db492250",
-            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+            "plan/dff960e224818f42aee83cda21cbcea82d49d23384c196618ea67415353e14ad"
          ]
       },
       {
@@ -106,10 +106,10 @@
          "language" : "vhdl",
          "relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_metadata_pkg.vhd",
          "role" : "portable_vhdl_fixture_metadata",
-         "sha256" : "54b836ea1ce852d0dad9a4f7ff6249626ffd7b1674604cb62b2f79cc6cec0d46",
+         "sha256" : "22dd0261f7074fbb3f5a140db5037b14f0bf6f3191c6018c4ca7b4ca8cd3f741",
          "source_ids" : [
-            "54b836ea1ce852d0dad9a4f7ff6249626ffd7b1674604cb62b2f79cc6cec0d46",
-            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+            "22dd0261f7074fbb3f5a140db5037b14f0bf6f3191c6018c4ca7b4ca8cd3f741",
+            "plan/dff960e224818f42aee83cda21cbcea82d49d23384c196618ea67415353e14ad"
          ]
       },
       {
@@ -121,7 +121,7 @@
          "sha256" : "7a7e3b4e81fd222e53e2098653fcf1131f1b58dbeba35698c1cfe67a4fab5b56",
          "source_ids" : [
             "7a7e3b4e81fd222e53e2098653fcf1131f1b58dbeba35698c1cfe67a4fab5b56",
-            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+            "plan/dff960e224818f42aee83cda21cbcea82d49d23384c196618ea67415353e14ad"
          ]
       },
       {
@@ -133,7 +133,7 @@
          "sha256" : "4a3665cb0e14b599962a3a29bafb2ff99787cc8cb332b0f35e50b75583a6666b",
          "source_ids" : [
             "4a3665cb0e14b599962a3a29bafb2ff99787cc8cb332b0f35e50b75583a6666b",
-            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+            "plan/dff960e224818f42aee83cda21cbcea82d49d23384c196618ea67415353e14ad"
          ]
       },
       {
@@ -145,7 +145,7 @@
          "sha256" : "8d93b0ade4d9561d19fdd12ab10b4d8ba1a3dc06de9f911d1c0d8d1bf18518cf",
          "source_ids" : [
             "8d93b0ade4d9561d19fdd12ab10b4d8ba1a3dc06de9f911d1c0d8d1bf18518cf",
-            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+            "plan/dff960e224818f42aee83cda21cbcea82d49d23384c196618ea67415353e14ad"
          ]
       },
       {
@@ -157,7 +157,7 @@
          "sha256" : "82cb0d22e03a661ff88aecbf5b94b89f91381801576d1c683d749ac02e258017",
          "source_ids" : [
             "82cb0d22e03a661ff88aecbf5b94b89f91381801576d1c683d749ac02e258017",
-            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+            "plan/dff960e224818f42aee83cda21cbcea82d49d23384c196618ea67415353e14ad"
          ]
       },
       {
@@ -169,7 +169,7 @@
          "sha256" : "3777706b911ce90c9a3b05107233ec925c1029b175932ed10f1b1a588fb3c08e",
          "source_ids" : [
             "3777706b911ce90c9a3b05107233ec925c1029b175932ed10f1b1a588fb3c08e",
-            "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574"
+            "plan/dff960e224818f42aee83cda21cbcea82d49d23384c196618ea67415353e14ad"
          ]
       }
    ],
@@ -195,7 +195,7 @@
       "trace" : "passed_closed_forty_two_records"
    },
    "cleanup" : {
-      "staging_identity" : ".artifacts/tmp/vial/op-9d9bb98a66a79c8826fb65826cd7dca3df37118eeff598bde74b6a2121abbd06",
+      "staging_identity" : ".artifacts/tmp/vial/op-24c89828721dda645617c7d52ae5d14bfa50e93a5aa96e4c1838a02fe23f3ef3",
       "state" : "not_created"
    },
    "diagnostics" : [],
@@ -231,7 +231,7 @@
       "semantic_authority" : "portable_vhdl_execution_and_result_oracles",
       "unsatisfied" : []
    },
-   "plan_id" : "plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574",
+   "plan_id" : "plan/dff960e224818f42aee83cda21cbcea82d49d23384c196618ea67415353e14ad",
    "profile_state" : {
       "emission" : "emitted",
       "materialization" : "complete_recursive_verified",
@@ -248,7 +248,7 @@
       "provider_commit" : "2f7c391051dfb11890fa4bdbda9918d1db492250",
       "provider_version" : "2026.05",
       "qualification_report" : "vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json",
-      "qualification_report_sha256" : "15df2a9b0755a8c66c13e4423881e05606c439ff8f846e947e29bea0d54cfc42",
+      "qualification_report_sha256" : "7dd596cfb53f85d04ccf73e96d1f1b2615db1354bcb51e5f263900f9e619671e",
       "schema" : "fsmgen.vial_backend_tool_profile.v1",
       "schema_version" : 1,
       "standard" : "IEEE 1076-2008",
@@ -260,7 +260,7 @@
    },
    "result" : {
       "relpath" : "vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json",
-      "result_record_sha256" : "644f5621b95964da4b5d1daf13e5161cf33eb4f8b7ab4429ae448f347bb6ffef",
+      "result_record_sha256" : "88a21fb59f77b353f1fb16d62b50969143c1ca6c6a2fdde09dd5c18412e29248",
       "schema" : "fsmgen.verification_result_manifest.v1",
       "status" : "pass"
    },
@@ -270,7 +270,7 @@
       "entry_count" : 13,
       "relpath" : "backends/vhdl_osvvm_qualified/backend-source-map.json",
       "schema" : "fsmgen.vial_vhdl_osvvm_source_map.v1",
-      "sha256" : "5fee0fd05c1a0f982e0e08931088a0ff2dbce5181273fc34392ec75e57be0515"
+      "sha256" : "e6925c8da2ab589e8698a572431b6d787de7be989affae49bec969fb8df34372"
    },
    "source_order" : {
       "generated_sources" : [

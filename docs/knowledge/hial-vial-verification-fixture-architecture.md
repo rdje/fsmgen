@@ -122,8 +122,7 @@ evidence: >-
   vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/README.md; vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/evidence/selected-mapping-matrix.json; vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/evidence/review-workflow.json; vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/evidence/migration-proof.json; vial/qualification/vhdl_portable_ghdl/ghdl-6.0.0-qualification.json;
   perl/FSM/VIAL/Backend/OSVVM2026_05Materialization.pm; perl/FSM/VIAL/Backend/VHDLOSVVM2026_05.pm; perl/FSM/VIAL/Backend/VHDLOSVVMStaticValidator.pm; perl/FSM/VIAL/Backend/VHDLOSVVMGHDLQualification.pm; scripts/refresh_vial_vhdl_osvvm_gallery.pl; scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl; t/1598-vial-vhdl-osvvm-emission.t; t/1599-vial-vhdl-osvvm-ghdl-qualification.t; vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json;
   vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/README.md; vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/evidence/provider-materialization.json; vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/evidence/advanced-mapping-matrix.json; vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/evidence/semantic-preservation.json; vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/evidence/qualification-reference.json;
-  docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md; docs/tasks/XIAL-NATIVE-DEVELOPMENT-FRAMEWORK.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/book/src/16d-hial-vial-verification-architecture.md; https://www.accellera.org/downloads/standards/uvm; https://github.com/accellera-official/uvm-core/releases/tag/2020.3.1; https://github.com/chipsalliance/uvm-verilator; https://verilator.org/guide/latest/languages.html;
-  https://verilator.org/guide/latest/connecting.html; https://ghdl.github.io/ghdl/using/ImplementationOfVHDL.html; https://osvvm.org/about-os-vvm; https://uvvm.github.io/
+  docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md; docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md; docs/tasks/XIAL-NATIVE-DEVELOPMENT-FRAMEWORK.md; docs/decisions/0004-simulate-to-catch-codegen-bugs.md; docs/TASK_TREE.md; README.md; ROADMAP_V2.md; docs/book/src/14-feature-backlog.md; docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
   scripts/check_task_tree_integrity.pl &&
   rg -n 'sv_uvm_emit\.accellera_2020_3_1|sv_uvm_experimental|sv_uvm_qualified|PGEN|NEXSIM|semantic introspection|MCP|snapshot-consistent|first divergence|2020\.3\.1|78c06547a2a0a29b3dc9dcafae62b75b2ff61544' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md &&
@@ -218,10 +217,11 @@ Completed `.17.7` removes `t/1569`'s stale focused-index count shadow by
 validating the authority's complete nonzero census instead. Completed `.17.6`
 aligns the public support snapshot with the Runner/normative 8-MiB compile and
 64-MiB runtime capture limits. Completed `.17.8` records that current authority.
-Decision `0057` and completed `.17.2.1` ship a bounded source-only catalog,
-identity, seeded payload, and same-volume staging/cleanup foundation without a
-capacity claim. Completed `.17.9` repairs cleanup; active `.17.2.2` owns
-semantic generation.
+Decision `0057` and `.17.2.1` ship the bounded source-only foundation.
+Completed `.17.9` repairs cleanup. Completed `.17.2.2` now generates every
+semantic-catalog level through the canonical parser, repairs action-local ID
+scope, and records the repeat/action-cap interaction for `.17.4`; no capacity
+claim is made. `.17.2.3` is next for bridge fanout.
 
 Decision `0050` and completed `.12` select IEEE 1800.2-2020 with exact
 Accellera UVM 2020-3.1 tag/commit as the native methodology source. Commercial

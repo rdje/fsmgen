@@ -240,7 +240,7 @@ package base_output_arbitration_checking_pkg;
     expected = base_output_arbitration_ahb_write_item::type_id::create("success_expected");
     expected.semantic_id = "ahb_subordinate_base_output_arbitration::transaction::ahb_write";
     expected.scenario_id = "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::success";
-    expected.handle_id = "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::handle::success_write";
+    expected.handle_id = "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::success::handle::success_write";
     expected.address = 32'h00000000;
     expected.transfer = 2'h2;
     expected.write = 1'h1;

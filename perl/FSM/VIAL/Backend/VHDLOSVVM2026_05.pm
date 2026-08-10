@@ -22,7 +22,7 @@ my $DEPENDENCY_ROOT = '.artifacts/cache/providers/osvvm/2026.05/source';
 my $QUALIFICATION_REPORT =
     'vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json';
 my $QUALIFICATION_SHA256 =
-    '15df2a9b0755a8c66c13e4423881e05606c439ff8f846e947e29bea0d54cfc42';
+    '7dd596cfb53f85d04ccf73e96d1f1b2615db1354bcb51e5f263900f9e619671e';
 my $JSON = JSON::PP->new->canonical(1);
 my $PRETTY_JSON = JSON::PP->new->canonical(1)->pretty(1);
 my @REQUIREMENT_IDS = qw(
