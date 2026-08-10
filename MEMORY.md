@@ -8,11 +8,11 @@ history; this file carries only the current bounded resume state.
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.3.1`.
-- current_state: read-only audit proves the fixed AHB annotation profile cannot
-  reach four later-selected bridge-scale candidate axes; selection leaf active.
-- next_action: select and document the bounded canonical reachability repair,
-  preserving exact AHB behavior and every scale/support nonclaim.
-- in_flight_uncommitted: `.17.2.3.1` task decomposition/activation continuity.
+- current_state: decision `0060` selects a closed qualification-only direct-
+  IAL1 bridge-scale profile while preserving the exact AHB/IAL2 contract.
+- next_action: commit `.17.2.3.1` cleanly, then activate proposed
+  implementation leaf `.17.2.3.2`.
+- in_flight_uncommitted: `.17.2.3.1` decision/book/fact/rationale continuity.
 - blockers: none.
 
 ## Durable context

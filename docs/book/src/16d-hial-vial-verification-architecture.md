@@ -1999,6 +1999,14 @@ measurement, bounded failure, and stable-gate owners all complete. The current
 single-unit/single-domain profiles test `1` as accepted and `2` as rejected;
 repeating a one-unit result cannot claim multi-unit or multi-domain scale.
 
+[Decision `0060`](../../decisions/0060-vial-bridge-scale-uses-a-qualification-only-direct-ial1-profile.md)
+closes a bridge-fixture reachability gap before implementation. The shipped AHB
+annotation stays exact; a separate `qualification_only` direct-IAL1 profile
+must pass through normal parse, scheduler report, IAL0 lowering, and bridge
+construction to exercise wider manifest arrays. It is private measurement
+infrastructure, not a protocol, support, performance, or capacity claim. If a
+source-map or manifest-byte cap dominates, that earlier limit is the result.
+
 ### Deterministic construction foundation
 
 The provider-free construction foundation is now available through

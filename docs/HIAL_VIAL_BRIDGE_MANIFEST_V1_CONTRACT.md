@@ -2,7 +2,7 @@
 
 Date: 2026-07-31
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4`
-Status: implemented privately in-process by completed `.5`; decision `0037` selects later directional VIAL binding without changing this carrier schema
+Status: implemented privately in-process by completed `.5`; decision `0060` selects a later qualification-only direct-IAL1 scale profile without changing the AHB carrier contract
 
 ## Outcome
 
@@ -25,6 +25,19 @@ subordinate IAL2 source through generated IAL1 and IAL0 review artifacts. The
 schema is multi-record and composition-ready, but `.5` rejects multiple units,
 multiple domains, aggregate types, native hierarchy, and unselected protocol
 profiles until later owners qualify them.
+
+### Selected scale-profile boundary
+
+Decision `0060` records that the fixed AHB annotation cannot honestly exercise
+the manifest's broader transaction/event/probe/residue safety caps. It selects
+one closed `qualification_only` direct-IAL1 annotation profile for later
+`.17.2.3.2` implementation. That profile must traverse ordinary `.isf` parse,
+scheduler-report, `.fsm` lowering, and bridge-builder authorities; it cannot
+accept caller-created actors, reports, or manifests. It advertises only
+`hial_vial.bridge_qualification.architecture_scale_v1` and cannot become an
+accepted protocol, backend/runtime path, support classification, performance
+budget, or capacity claim. The exact AHB route and IAL2 review constraint are
+unchanged.
 
 ## Canonical Review Routes
 

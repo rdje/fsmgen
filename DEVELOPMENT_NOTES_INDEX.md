@@ -10,7 +10,7 @@ work-unit Git history remain preferred when they answer the question directly.
 | Sequence | Range | Ordinals | Entries | Storage | Retrieval |
 | --- | --- | ---: | ---: | --- | --- |
 | 1 | `engineering-rationale-0001` | 1–2843 | 2843 | exact version-backed archive descriptor | `git show d3c22e003d6e732a51dc69e6a999cdbd41963e84:DEVELOPMENT_NOTES.md`; the range is the entry body after the two-line legacy preamble |
-| 2 | `engineering-rationale-current` | 2844–2852 | 9 | bounded current view | [DEVELOPMENT_NOTES.md](DEVELOPMENT_NOTES.md) |
+| 2 | `engineering-rationale-current` | 2844–2854 | 11 | bounded current view | [DEVELOPMENT_NOTES.md](DEVELOPMENT_NOTES.md) |
 
 The complete pre-cutover source is fixed by descriptor
 `engineering-rationale-source-2026-08-01`. The ordered entry body is checked

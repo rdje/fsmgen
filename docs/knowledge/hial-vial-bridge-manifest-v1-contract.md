@@ -14,7 +14,7 @@ answers:
 date: 2026-07-31
 status: current
 tags: [hial, vial, bridge, manifest, ial0, ial1, ial2, review-route, provenance, ahb]
-evidence: docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md; docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/book/src/16d-hial-vial-verification-architecture.md
+evidence: docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md; docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md; docs/decisions/0060-vial-bridge-scale-uses-a-qualification-only-direct-ial1-profile.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: prove -Iperl t/1551-hial-vial-bridge-manifest.t && rg -n 'core_single_unit_v1|direct_ial2_to_verification|verification-bridge|transaction/ahb_write|probe/reg_data_q|semantic_path|shipped_private_in_process|authoritative hardware carriers|decision `0037`|\.7\.3' perl/FSM/HIAL/VIALBridge/Builder.pm perl/FSM/Support/HIALVIALBridgeContract.pm docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md docs/decisions/0035-hial-vial-bridge-is-produced-from-reviewable-hial-routes.md docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/book/src/16d-hial-vial-verification-architecture.md ROADMAP_V2.md
 ---
 
@@ -40,27 +40,13 @@ parser supplies them; otherwise a stable semantic path and null span fields
 state the honest precision. IAL2-derived facts cite authored PPIF and generated
 IAL1 annotation provenance.
 
-Completed `.5` ships private `FSM::HIAL::VIALBridge::Builder`, `Manifest`, and
-`Report` owners, with focused t1551 coverage and capability/support discovery
-through `FSM::Support::HIALVIALBridgeContract`. The first scalar-only AHB
-profile represents transaction fields individually and leaves aggregate
-transaction `type_id` null. Bridge expressions use a closed canonical record
-owned by this manifest contract rather than pretending that the current IAL1
-schedule report already exposes a reusable expression AST.
+Completed `.5` ships private Builder/Manifest/Report owners and t1551. The
+producer writes no bridge file and makes no binding, backend, runtime, parity,
+or scale claim. Decision `0037` keeps bridge types as hardware carriers while
+the later binder proves directional VIAL relations.
 
-The producer writes no bridge file and does not bind VIAL, create an execution
-plan, generate verification code, compile/simulate, or claim backend parity.
-Decision `0039` and completed `.8` select a future sanitized public bridge file
-inside the VIAL plan artifact tree; `.10` remains its first writer. Clean
-implementation commit `51434a2ae` permitted the separate `.6` execution-
-contract selection.
-Completed `.6` now selects decision `0036` and the exact target-neutral
-execution contract without changing this bridge. Clean selection commit
-`eaf3f95dc` permitted `.7` to own private binding/ExecutionIR work after
-separate continuity activation. Decision `0037` and `.7.2` now
-clarify that bridge field types remain authoritative hardware carriers while
-the later ExecutionIR binder proves a closed directional relation from the
-independently owned VIAL semantic type. This bridge schema and producer remain
-unchanged. Clean selection commit `2a1b3cefc` permitted `.7.3` to implement
-that private binder after separate continuity activation; completed `.7.3`
-consumes the bridge defensively without changing its schema or producer.
+Decision `0060` preserves the exact AHB profile and selects one separate
+`qualification_only` direct-IAL1 scale profile. It must traverse ordinary
+parse, report, lowering, and builder authorities and advertises only private
+scale evidence—not protocol support, performance, or capacity. Earlier
+source-map/manifest limits remain authoritative.

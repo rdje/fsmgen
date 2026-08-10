@@ -184,3 +184,17 @@ is part of the selected fixture. Four deterministic OSVVM YAML reports remain
 supplementary. FSMGen's unchanged closed trace, normalized result, and nineteen
 portable parity paths retain semantic authority, preventing provider-specific
 reporting or scheduling from redefining VIAL behavior.
+
+## 2026-08-10: Nominal bridge limits require a reachable canonical profile
+
+The manifest schema's defensive array caps are not proof that the fixed first
+AHB annotation can reach them. Its exact validator correctly admits one
+transaction, six events, one probe, and five residue records. A later scale
+catalog selected wider candidates without selecting the missing canonical
+route; repeating or mutating the AHB result would manufacture evidence.
+
+Bridge-scale qualification therefore uses a separate closed direct-IAL1
+profile. Generated `.isf` must survive the ordinary parser, scheduler report,
+and `.fsm` lowering before the shipped bridge builder sees it. The AHB profile
+does not widen, and a source-map or serialized-byte cap that dominates a
+nominal structural count is reported as the result rather than bypassed.
