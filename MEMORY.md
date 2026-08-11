@@ -7,17 +7,18 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.18`; final terminal inventory and ordinary-job runtime-headroom repair before repaired-push authorization.
+- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.18.1`; repair and case-shard the three monolithic supported-corpus audits.
 - current_state: exact push `a28e9adf46b7861ee728703662ad18b64f0325d0` has green Knowledge Map/book workflows; regression run `31494487181` has 14 failed jobs and three running ordinary shards.
   All 13 observed failed-job families are locally repaired; direct actions are
   Node-24-compatible; mdBook and downstream/SPECFORGE lockstep is green. The
-  three running shards are near the 300-minute ceiling despite suppressed
-  external-tool work, so terminal logs must drive a headroom repair before push.
-- next_action: consume the final three terminal shard results, restore ordinary-job runtime headroom, then request fresh push authorization.
+  exact run is terminal at 69 success/15 failure/3 cancelled; t296/t301/t303
+  were still running at the five-hour cancellations. Corpus repair/sharding,
+  dedicated outlier/provider jobs, and final contract lockstep remain before push.
+- next_action: implement and verify `.6.2.2.18.1` only.
 - in_flight_uncommitted: none after this commit.
-- in_flight_background: exact regression run `31494487181`; three ordinary shards remain running and must be consumed.
+- in_flight_background: none; exact regression run `31494487181` is terminal.
 - blockers: a new early repair push requires director authorization after fixes.
-- push_state: remote `a28e9adf4`; exact run has failed and remains in progress.
+- push_state: remote `a28e9adf4`; exact run completed/failure and no repaired push is authorized yet.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not

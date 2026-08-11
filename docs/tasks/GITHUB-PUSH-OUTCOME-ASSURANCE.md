@@ -249,7 +249,29 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Status: `active`
   Goal: `Restore credible hosted ordinary-shard runtime headroom before the repaired revision is pushed.`
   Acceptance: `Consume the final three exact ordinary-job terminal results and logs from run 31494487181; distinguish slow-but-complete execution from five-hour timeout; account for the additional Verilator, Yosys, and Icarus work enabled by the repaired workflow; select a deterministic complete/disjoint ordinary partition whose per-job bound has material headroom below the 300-minute timeout without reducing coverage or changing the unchanged local full gate; lock the exact matrix and aggregate contract in tests and workflow guidance; update decision, continuity, mdBook, and downstream/SPECFORGE surfaces only where their owned contract actually changes; pass focused selection/workflow/doctrine checks and do not push.`
-  Verification: `Pending exact terminal logs. At 2026-08-11T17:26:46Z, jobs 93788675385 (1/16), 93788675473 (15/16), and 93788675594 (9/16) remained inside Run full-suite file shard after starting at 13:06:35Z..13:06:43Z. The pushed workflow has timeout-minutes: 300, while the local repair now provisions and exercises three external HDL tools that this failed old run omitted. Near-ceiling completion therefore cannot by itself prove safe repaired-run headroom.`
+  Verification: `Run 31494487181 completed/failure at 18:07:05Z with 69 successful, 15 failed, and 3 cancelled jobs. Exact jobs 93788675385 (1/16), 93788675473 (15/16), and 93788675594 (9/16) were cancelled at 18:06:50Z..18:06:59Z after starting at 13:06:35Z..13:06:43Z; all three logs end with The operation was canceled inside the full-suite prove process. Their terminal tails identify monolithic t303, t301, and t296 respectively as the in-flight tests. Earlier failures add t1510/t1525/t1568/t1598/t1509/t1523/t1538/t1503/t1532; prior children already own HDL-tool/numeric-residue families, local t1568/t1598 passes at Files=2/Tests=12, and hosted OSVVM materialization remains absent. Children separate corpus correctness/sharding, dedicated outlier/provider execution, and final lockstep closure.`
+  Commit: `pending children`
+  Children: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.18.1, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.18.2, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.18.3`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.18.1`
+  Status: `active`
+  Goal: `Make the three monolithic supported-corpus audits correct and deterministically case-shardable for hosted execution.`
+  Acceptance: `Root-cause every t296/t301/t303 failure or incomplete tail exposed by the cancelled jobs; keep unsharded local behavior complete; exclude explicitly unsupported tool/source phases from main-CLI audits without weakening catalog coverage; make semantic composition expectations follow the declared semantic root contract; add one fail-closed hosted corpus coordinate that selects one of the three tests plus a complete/disjoint entry shard; prove the union for every test and both default/strict cohorts; pass representative formerly red entries, focused corpus accounting, syntax, and staged doctrines.`
+  Verification: `Pending implementation.`
+  Commit: `pending`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.18.2`
+  Status: `pending`
+  Goal: `Move long single-file and provider-dependent tests out of ordinary shards and provision their exact hosted dependencies.`
+  Acceptance: `Exclude t1436, t1437, t1598, t296, t301, t303, and already-separated t1438 from ordinary file shards; schedule t1436/t1437/t1598 as exact dedicated coordinates; materialize OSVVM 2026.05 at its repository-relative dependency root only for t1598 and verify its immutable root identity; retain pinned ordinary HDL tools and complete history wherever the selected tests require them; schedule every t296/t301/t303 corpus coordinate from .18.1; prove the combined ordinary/dedicated/corpus/dynamic inventory is complete and disjoint, all matrices disable fail-fast, and the aggregate requires every family.`
+  Verification: `Pending .18.1.`
+  Commit: `pending`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.18.3`
+  Status: `pending`
+  Goal: `Close the failed-run inventory and repeat repaired-branch mdBook plus downstream-consumer lockstep before push authorization.`
+  Acceptance: `Map every one of the run's 15 failed, 3 cancelled, and aggregate jobs to an exact completed repair or qualification; run the canonical downstream/SPECFORGE handoff suite and hosted mdBook path against the final branch; synchronize any real public drift or record an exact no-drift classification; update task/index/Memory and request fresh authorization without pushing.`
+  Verification: `Pending .18.2.`
   Commit: `pending`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.7`
