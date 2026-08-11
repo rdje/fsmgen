@@ -10,6 +10,7 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Adapter::ISF;
+use FSM::Adapter::IAL2::PPIF;
 use FSM::ProjectDataLocality qw(configure_project_temp_environment create_project_tempdir);
 use FSM::Scheduler::ISF;
 use FSM::Support::ISFPublicInterfaceContract qw(
@@ -198,6 +199,23 @@ sub golden_matrix_cases {
                   schedule_report_verification_observation_keys
                   schedule_report_verification_observation_signal_keys
                   schedule_report_verification_observation_role_values
+                )
+            ],
+        },
+        {
+            name => 'verification_bridge',
+            filename => 'verification_bridge_report.isf',
+            source => verification_bridge_source(),
+            covers => [
+                qw(
+                  schedule_report_verification_bridge_keys
+                  schedule_report_verification_bridge_protocol_keys
+                  schedule_report_verification_bridge_fact_keys
+                  schedule_report_verification_bridge_transaction_keys
+                  schedule_report_verification_bridge_field_keys
+                  schedule_report_verification_bridge_source_keys
+                  schedule_report_verification_bridge_event_keys
+                  schedule_report_verification_bridge_probe_keys
                 )
             ],
         },
@@ -684,6 +702,43 @@ sub assert_key_branch {
         assert_entry_keys(first_entry($observation->{signals}), $contract->{$branch}, "$label verification observation signal keys");
         return 1;
     }
+    if ($branch eq 'schedule_report_verification_bridge_keys') {
+        assert_entry_keys($report->{verification_bridge}, $contract->{$branch}, "$label verification bridge keys");
+        return 1;
+    }
+    if ($branch eq 'schedule_report_verification_bridge_protocol_keys') {
+        assert_entry_keys($report->{verification_bridge}{protocol}, $contract->{$branch}, "$label verification bridge protocol keys");
+        return 1;
+    }
+    if ($branch eq 'schedule_report_verification_bridge_fact_keys') {
+        my $protocol = $report->{verification_bridge}{protocol};
+        assert_entry_keys(first_entry($protocol->{facts}), $contract->{$branch}, "$label verification bridge fact keys");
+        return 1;
+    }
+    if ($branch eq 'schedule_report_verification_bridge_transaction_keys') {
+        assert_entry_keys($report->{verification_bridge}{transaction}, $contract->{$branch}, "$label verification bridge transaction keys");
+        return 1;
+    }
+    if ($branch eq 'schedule_report_verification_bridge_field_keys') {
+        my $transaction = $report->{verification_bridge}{transaction};
+        assert_entry_keys(first_entry($transaction->{fields}), $contract->{$branch}, "$label verification bridge field keys");
+        return 1;
+    }
+    if ($branch eq 'schedule_report_verification_bridge_source_keys') {
+        my $transaction = $report->{verification_bridge}{transaction};
+        my $field = first_entry($transaction->{fields});
+        assert_entry_keys($field->{source}, $contract->{$branch}, "$label verification bridge source keys");
+        return 1;
+    }
+    if ($branch eq 'schedule_report_verification_bridge_event_keys') {
+        my $transaction = $report->{verification_bridge}{transaction};
+        assert_entry_keys(first_entry($transaction->{events}), $contract->{$branch}, "$label verification bridge event keys");
+        return 1;
+    }
+    if ($branch eq 'schedule_report_verification_bridge_probe_keys') {
+        assert_entry_keys(first_entry($report->{verification_bridge}{probes}), $contract->{$branch}, "$label verification bridge probe keys");
+        return 1;
+    }
 
     return 0;
 }
@@ -1007,6 +1062,13 @@ sub verification_observation_source {
     (on valid)
     (complete done)))
 ISF
+}
+
+sub verification_bridge_source {
+    my $result = FSM::Adapter::IAL2::PPIF->new()->parse_file(
+        repo_file('ppif/ahb_lite_subordinate.ppif'),
+    );
+    return $result->{generated_ial1}{text};
 }
 
 sub actor_param_source {

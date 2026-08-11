@@ -63,11 +63,11 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (portable fixture and current CLI-help contract repair)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Restore complete schedule-report golden-matrix ownership for every advertised branch.`
-  Acceptance: `The schedule_report_verification_bridge_event_keys branch has one truthful matrix owner or is removed from advertising by its canonical owner; the focused matrix test and its relevant schedule-report cluster pass without suppressing discovery.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `All eight advertised schedule_report_verification_bridge_* key families have one truthful emitted-report matrix owner or are removed from advertising by their canonical owner; the owner exercises the public generated-IAL1 route rather than a synthetic hash, and the focused matrix test plus its relevant schedule-report cluster pass without suppressing discovery. The hosted failure displayed only schedule_report_verification_bridge_event_keys because is_deeply reports the first array difference; a local contract-to-matrix census proves event, fact, field, top-level bridge, probe, protocol, source, and transaction key families are all currently unowned.`
+  Verification: `The local RED reproduces the hosted t/1255 failure at line 47 (Files=1, Tests=2), and an exact contract/covers census proves all eight advertised verification-bridge key families lacked owners; Test::More displayed only the lexicographically first event-key difference. The new verification_bridge case obtains generated IAL1 text from the tracked public ppif/ahb_lite_subordinate.ppif through FSM::Adapter::IAL2::PPIF, then compares its in-process schedule report with CLI --emit-schedule-json before checking exact bridge, protocol, fact, transaction, field, source, event, and probe key families. The test is syntax-clean and focused t/1255 passes. The RAM-guarded public contract/JSON/defensive-copy/manifest/key-family/discovery/report/freeze/golden-matrix/ordinary-null/AHB-bridge cluster reports All tests successful at Files=11, Tests=22. No production contract, parser, scheduler, IAL2 generation, public capability, or mdBook behavior changed; the book's existing claim that every advertised branch has an executable owner is now true.`
+  Commit: `this commit (complete real verification-bridge matrix ownership)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.4`
   Status: `pending`
@@ -116,24 +116,20 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 
 - None.
 
-## Acceptance Checklist — `.2` (enforced)
+## Acceptance Checklist — `.3` (enforced)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — The pre-fix RAM-guarded reproduction
-  reports the fatal portable-child diagnostic at t/1247-isf-clock-domain-partition.t line 438:
-  the public fixture lowers
-  domain `bus` to `?fsmc:bus`, which HDL generation rejects because `bus` is
-  VHDL-reserved. The parallel stale help regex fails at
-  t/132-cli-help-wording.t line 38 because it still requires a
-  current-working-directory default while the CLI already advertises the
-  canonical `.artifacts/<language>/<fsm_name>.<ext>` path.
-- [x] **ADDRESSED (verified)** — The three file-backed event-crossing fixtures
-  and their exact t/1247/book expectations now use portable domain child name
-  `source` without renaming bus-facing signals or clocks; t/132 now checks the
-  shipped repository-local, language-specific help contract. The combined
-  focused and adjacent run passes all 20 assertions.
-- [x] **NO REGRESSION** — RAM-guarded t/1247, t/132, and adjacent CLI artifact
-  placement t/1463 report `All tests successful` at `Files=3, Tests=20`.
-  Every mdBook chapter test passes; its repository-local HTML build succeeds
-  and the exact ignored build output is removed before staging. Its maintained
-  reference authority records the exact 0-line/+93-byte delta without changing
-  a ceiling.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Pre-fix guarded t/1255 reports the
+  missing-owner failure at t/1255-isf-schedule-report-golden-matrix.t line 47.
+  Test::More displays only the first array difference (`event_keys`), while an
+  exact public-contract versus `covers` census proves all eight advertised
+  verification-bridge key families had no matrix owner.
+- [x] **ADDRESSED (verified)** — A new matrix case derives generated IAL1 from
+  the tracked public AHB subordinate PPIF, proves in-process/CLI schedule-report
+  equality, and checks the exact bridge, protocol, fact, transaction, field,
+  source, event, and probe key sets. Focused t/1255 moves from RED to pass, and
+  the changed Perl test reports `syntax OK`.
+- [x] **NO REGRESSION** — The RAM-guarded public-contract, JSON, defensive-copy,
+  manifest, key-family, discovery, metadata, freeze, golden-matrix,
+  ordinary-null, and real AHB-bridge cluster reports `All tests successful` at
+  `Files=11, Tests=22`. Production and user-facing behavior are unchanged, so
+  the already-accurate mdBook needs no edit.

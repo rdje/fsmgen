@@ -7,13 +7,13 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.3`; director-selected before
+- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.4`; director-selected before
   the otherwise-next HIAL/VIAL one-million-attempt slice.
 - current_state: `.1` audits pushed SHA `de9d50a5fb17074d29615ea866cd3cc6af503a3b`;
-  `.2` repairs its portable-identifier and CLI-help failures. Regression
-  `31367105225` still owns t/1255, t/1437, t/1438, hosted runtime, and an
-  unsigned 1,103-file tail through separate leaves.
-- next_action: restore the missing schedule-report golden-matrix owner in `.3`.
+  `.2` repairs its CLI failures and `.3` gives all eight verification-bridge
+  report families a real public matrix owner. Regression `31367105225` still
+  owns t/1437, t/1438, hosted runtime, and an unsigned 1,103-file tail.
+- next_action: reconcile the five failed t/1437 IAL2 generator contracts in `.4`.
 - in_flight_uncommitted: none.
 - blockers: none.
 - push_state: decision `0062`; derive with `git rev-list --count @{upstream}..HEAD`.
