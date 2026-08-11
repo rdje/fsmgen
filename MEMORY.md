@@ -9,13 +9,13 @@ history; this file carries only the current bounded resume state.
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`;
   remaining canonical execution-graph structural levels.
-- current_state: canonical construction targets candidate `0xdd7997a868500a54`
-  at attempt 999,999 and `0xce7d67adbe54da82` at attempt 1,000,000. The real
-  public binder accepts the first and returns exact `VIAL_RANDOM_EXHAUSTED`
-  with no partial IR/plan for the second. The guarded 18-file/79-test impact
-  matrix passes; GitHub-assurance `.6.2` awaits the next authorized push.
-- next_action: implement the decision-0061 scenario ladder at 512
-  qualification, exact 4,096 limit, and adjacent 4,097 rejection.
+- current_state: the caller-sealed scenario ladder reaches 512 qualification
+  and the exact 4,096 public-binder limit, then 4,097 returns exact
+  `VIAL_EXECUTION_LIMIT_ERROR` at `/scenario_ids` without partial IR/plan. The
+  guarded 21-file/91-test impact matrix passes; GitHub-assurance `.6.2` still
+  awaits downstream-consumer contract audit and the next authorized push.
+- next_action: implement the decision-0061 operations-per-scenario ladder:
+  8,192 qualification, 16-MiB plan cap at 65,536, semantic cap at 65,537.
 - in_flight_uncommitted: none after this commit.
 - blockers: none.
 - push_state: decision `0062`; derive with `git rev-list --count @{upstream}..HEAD`.

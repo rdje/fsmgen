@@ -159,6 +159,9 @@ sub construct($class, @args) {
     $owned_level = 1 if defined($axis) && $axis eq 'random_attempts'
         && defined($level) && ($level eq 'qualification_candidate_v1'
             || $level eq 'limit_v1' || $level eq 'over_limit_v1');
+    $owned_level = 1 if defined($axis) && $axis eq 'scenarios'
+        && defined($level) && ($level eq 'qualification_candidate_v1'
+            || $level eq 'limit_v1' || $level eq 'over_limit_v1');
     confess "execution-graph gate slice does not own the requested shape\n"
         unless defined($axis) && $owned_axis{$axis} && $owned_level;
     my $axis_contract = FSM::VIAL::ArchitectureScaleWorkload->catalog
@@ -1649,6 +1652,7 @@ sub _expects_selected_rejection($spec) {
     return 0 unless ($spec->{level} // '') eq 'over_limit_v1';
     return 1 if ($spec->{primary_axis} // '') eq 'serialized_plan_bytes';
     return 1 if ($spec->{primary_axis} // '') eq 'random_attempts';
+    return 1 if ($spec->{primary_axis} // '') eq 'scenarios';
     return 0;
 }
 
@@ -1679,6 +1683,19 @@ sub _expected_rejection_diagnostics($spec) {
             phase => 'limit',
             message => 'serialized_plan_bytes exceeds the limit 16777216',
             semantic_path => '/plan',
+            source_location => undef,
+            bridge_fact_paths => [],
+            related => [],
+        }];
+    }
+    if (($spec->{primary_axis} // '') eq 'scenarios') {
+        return [{
+            schema_version => 1,
+            severity => 'error',
+            code => 'VIAL_EXECUTION_LIMIT_ERROR',
+            phase => 'limit',
+            message => 'selected_scenarios exceeds the limit 4096',
+            semantic_path => '/scenario_ids',
             source_location => undef,
             bridge_fact_paths => [],
             related => [],

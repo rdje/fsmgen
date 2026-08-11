@@ -174,7 +174,7 @@ subtest 'scenario and operation gates preserve exact topology and global maps' =
     }
 };
 
-subtest 'post-identity topology mutation and unfinished levels fail closed' => sub {
+subtest 'post-identity topology mutation fails closed' => sub {
     my $construction = construction('scenarios');
     my $forged = $json->decode($json->encode($construction));
     my ($forged_vial) = grep { $_->{role} eq 'vial_source' } @{$forged->{inputs}};
@@ -184,16 +184,6 @@ subtest 'post-identity topology mutation and unfinished levels fail closed' => s
     like($@, qr/construction is not canonical/,
         'post-identity mutation rejection names canonical regeneration');
 
-    my $unfinished = eval {
-        $class->construct({
-            primary_axis => 'scenarios', level => 'qualification_candidate_v1',
-            reference_hial_text => $reference_hial,
-        });
-        1;
-    };
-    ok(!$unfinished, 'qualification topology level cannot enter the gate slice');
-    like($@, qr/execution-graph gate slice does not own the requested shape/,
-        'unfinished-level rejection names the bounded implementation frontier');
 };
 
 done_testing();

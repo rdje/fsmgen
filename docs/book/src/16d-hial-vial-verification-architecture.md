@@ -2319,6 +2319,57 @@ capability was added. The type and large-map gates below retain the same
 boundary; random/replay, exact plan-byte boundaries, and higher levels remain
 owned by later slices of the active generator task.
 
+The scenario ladder now extends that same checked-AHB construction to its
+selected qualification, limit, and adjacent rejection boundaries:
+
+| Level | Scenarios / operations / root fibers | Source maps | Plan result |
+| --- | ---: | ---: | --- |
+| qualification | 512 | 529 | 496,709 bytes; accepted |
+| exact limit | 4,096 | 4,113 | 3,779,103 bytes; accepted |
+| first over limit | 4,097 | n/a | `VIAL_EXECUTION_LIMIT_ERROR` at `/scenario_ids` |
+
+Each accepted scenario contains one real reset, has one root fiber and one
+maximum live fiber, and preserves contiguous IDs from `scenario_00000000`.
+The over-limit source parses normally; the unchanged public binder returns
+only phase `limit`, message `selected_scenarios exceeds the limit 4096`, with
+no partial ExecutionIR or plan. The helper admission remains caller-sealed and
+qualification-only—it is evidence about a real boundary, not a public API or
+a supported scale-capacity promise.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+open my $fh, '<:raw', 'ppif/ahb_lite_subordinate.ppif'
+    or die "cannot read checked AHB source: $!";
+local $/;
+my $checked_ahb = <$fh>;
+close $fh or die "cannot close checked AHB source: $!";
+
+for my $case (
+    [qualification_candidate_v1 => 512],
+    [limit_v1                  => 4_096],
+    [over_limit_v1             => undef],
+) {
+    my ($level, $accepted) = @{$case};
+    my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+        primary_axis => 'scenarios', level => $level,
+        reference_hial_text => $checked_ahb,
+    });
+    die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+    my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+        construction => $workload,
+    });
+    if (defined $accepted) {
+        die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+        die "unexpected scenario count\n"
+            unless $evaluation->{metrics}{selected_scenarios} == $accepted;
+    } else {
+        die "over-limit scenario unexpectedly accepted\n"
+            unless $evaluation->{status} eq 'expected_rejection';
+    }
+}
+```
+
 The following slice implements both gate-level fiber axes through the same
 frozen checked-AHB route and unchanged public builder:
 

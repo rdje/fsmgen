@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
-- Last updated: `2026-08-10`
+- Last updated: `2026-08-11`
 - Owner: repo-local workflow
 
 ## Goal
@@ -450,7 +450,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement the selected canonical execution-graph generator and exact plan/replay oracles.`
   Acceptance: `Implement only after .17.2.4.1 commits cleanly; construct every reachable execution_graph_v1 axis through ordinary VIAL parsing, canonical bridge production, and the shipped binder; prove the selected exact or earliest-cap outcomes, structural topology and logical-time invariants, generated/replayed decision equality, immutable byte-equal reports and plan hashes, hostile-input rejection, deterministic reruns, and exact repository-local staging cleanup with default and RAM-guarded qualification tests plus synchronized user documentation.`
-  Verification: `ArchitectureScaleExecutionGraph now owns binding, topology, fiber, type, map, the complete exact 8,192-/262,144-/1,000,000-/1,000,001-attempt random ladder, and the complete one-/four-/sixteen-MiB/over-limit plan ladder. The random limit accepts deterministic candidate 0xdd7997a868500a54 exactly at zero-based attempt 999,999; generated/replayed decisions preserve every keyed field except origin, with exact 34,297/34,296-byte plans. Candidate 0xce7d67adbe54da82 at attempt 1,000,000 receives exact public-binder VIAL_RANDOM_EXHAUSTED with no partial ExecutionIR or plan. The accepted plan-byte ladder uses 2,974/12,166/48,850 genuine resets plus referenced semantic names to produce exactly 1,048,576/4,194,304/16,777,216 canonical bytes; one additional complete reset receives the exact public-builder VIAL_EXECUTION_LIMIT_ERROR at /plan with no partial ExecutionIR or plan. Exact source/SemanticIR/bridge/workload/plan identities, deterministic reruns, mutation rejection, and public capability isolation are frozen. Focused t1608/t1613/t1614/t1615 and the guarded 18-file/79-test execution impact matrix pass. The leaf remains active for the remaining structural levels, final qualification, and cleanup slices; no public capability/support, performance, or capacity claim changes.`
+  Verification: `ArchitectureScaleExecutionGraph now owns binding, topology, fiber, type, map, the complete 8,192-/262,144-/1,000,000-/1,000,001-attempt random ladder, the one-/four-/sixteen-MiB/over-limit plan ladder, and the 512-/4,096-/4,097-scenario ladder. The unchanged public binder accepts 512 and exact-limit 4,096 canonical scenarios into 496,709-/3,779,103-byte plans, then rejects 4,097 with only exact VIAL_EXECUTION_LIMIT_ERROR at /scenario_ids and no partial ExecutionIR or plan. Exact source/SemanticIR/bridge/workload/plan identities, topology, deterministic reruns, mutation rejection, and public capability isolation are frozen. Focused t1616-t1618 pass at 3 files/12 tests in 20 seconds; the guarded 21-file/91-test execution impact matrix passes in 815 seconds. The leaf remains active for the remaining operations-per-scenario, total-operation, total-fiber, live-fiber, binding/type/map higher levels, final qualification, and cleanup slices; no public capability/support, performance, or capacity claim changes.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2: reject first complete execution plan excess`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5`
@@ -1107,6 +1107,39 @@ defect before `.17.2.2` begins semantic-family generation.
 | `2026-08-11` | `.17.2.4.2` startup import-map measurement refresh | mandatory `bin/fsmgen` source/import-tree comparison; live `Module::ScanDeps` closure and family census; exact source line counts; map/fact/Knowledge Map synchronization; documentation and doctrine gates | `passed`; the live closure remains exactly 254 project files / 253 packages with Support 76, IAL2 19, VIAL 17, and HIAL 3. Architecture topology is unchanged; the maintained map now records the current 1,889-/1,923-line VIAL SemanticBuilder/ExecutionBuilder measurements. Knowledge Map reports 1,108 facts/5,757 questions/5,923 occurrences/120 shards; task integrity, relative paths, live containment, maintained-reference authority, and diff checks pass. The correction does not pivot the tree, change the 262,144-attempt frontier, or alter product behavior. |
 | `2026-08-11` | `.17.2.4.2` 262,144-attempt random/replay qualification | decision-0061 exact qualification candidate; caller-sealed level admission; deterministic u64 proposal at zero-based attempt 262,143; ordinary checked-AHB VIAL/bridge/binder route; strict generated/replayed equality; exact identities and mutation negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; exact candidate `0x00f233516a996304` accepts at attempt 262,143. Generated/replayed decisions differ only in origin and their target-neutral plans are exactly 34,297/34,296 bytes. The graph remains one occurrence/scenario/operation/root-live fiber, eight types, 22 bindings, and 19 maps. Focused t1613 passes at Files=1/Tests=4 in 207 seconds; the guarded impact matrix passes at Files=16/Tests=71 in 459 seconds. All 53 book chapters test; the repository-local 87-file/18,312-KiB render preserves distinct prose/code blocks and is removed exactly. Knowledge Map reports 1,108 facts/5,758 questions/5,924 occurrences/120 shards; task integrity, relative paths, live containment, exact book/fact authority, zero ceiling increases, and artifact residue checks pass. No public binder, capability/support, performance, or capacity claim changes. |
 | `2026-08-11` | `.17.2.4.2` one-million random limit/exhaustion | decision-0061 exact limit and adjacent first-unreachable candidates; caller-sealed level admission; ordinary checked-AHB VIAL/bridge/public-binder route; strict replay; exact exhaustion diagnostic and no-partial-output oracle; source/replay mutation negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; candidate `0xdd7997a868500a54` accepts at zero-based attempt 999,999 and candidate `0xce7d67adbe54da82` exhausts at attempt 1,000,000. Accepted generated/replayed plans are exactly 34,297/34,296 bytes with IDs `plan/02b9207cd9392ba8b0d9e52afe9912f026fc00412ace076ff0fc30a32868b614`/`plan/90660802ee2bbbebdad84f79f66e1f5b6102befdb45de2f4c36f9a0d7f359f90`; the adjacent failure returns only exact `VIAL_RANDOM_EXHAUSTED` and no partial ExecutionIR/plan. Focused t1614 passes at Files=1/Tests=4 in 252 seconds, t1615 at Files=1/Tests=4 in 251 seconds, compatibility t1608/t1613 at Files=2/Tests=8 in 71 seconds, and the uninterrupted guarded impact matrix at Files=18/Tests=79 in 784 seconds. No public binder, capability/support, performance, or capacity claim changes. |
+| `2026-08-11` | `.17.2.4.2` scenario qualification/limit/over-limit ladder | decision-0061 exact 512/4,096/4,097 scenarios; caller-sealed level admission; ordinary checked-AHB VIAL/bridge/public-binder route; one real reset/root fiber per scenario; exact source/workload/SemanticIR/bridge/plan identities and topology; stable first-excess diagnostic/no partial output; mutation/missing-source negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; qualification accepts 512 scenarios/operations/fibers, one live fiber, 529 maps, and a 496,709-byte plan with ID `plan/22aedcf295c44c0a1b411b557cb12c9e5476e19077e57e7efe60ec4d7dc1ebe7`. The exact limit accepts 4,096 scenarios/operations/fibers, one live fiber, 4,113 maps, and a 3,779,103-byte plan with ID `plan/036742cfb80ab0f04cf7a7c8d9be1de833f310f5fde98ca3be9e47d331294cfc`. The adjacent 4,097 source returns only `VIAL_EXECUTION_LIMIT_ERROR`, phase `limit`, message `selected_scenarios exceeds the limit 4096`, semantic path `/scenario_ids`, with no partial IR/plan. Focused t1616-t1618 passes at Files=3/Tests=12 in 20 seconds; the guarded impact matrix passes at Files=21/Tests=91 in 815 seconds. No public binder, capability/support, performance, or capacity claim changes. |
+
+## Acceptance Checklist (enforced) — `.17.2.4.2` scenario qualification/limit/over-limit ladder
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S"axis eq 'scenarios'"
+  --oneline -- perl/FSM/VIAL/ArchitectureScaleExecutionGraph.pm` identifies
+  only topology-gate commit `0f9d27611`: the caller-sealed constructor admitted
+  `gate_candidate_v1` but not the selected qualification, limit, or over-limit
+  levels. Decision `0061` already proved the real public builder accepts 4,096
+  scenarios and rejects 4,097, so missing generator ownership—not a public
+  limit defect—was the exact unimplemented boundary.
+- [x] **ADDRESSED (verified)** — the caller-sealed helper now admits precisely
+  `qualification_candidate_v1`, `limit_v1`, and `over_limit_v1` for scenarios.
+  t1616-t1618 freeze 512/4,096 accepted scenario-operation-root-fiber chains,
+  529/4,113 maps, one live fiber, exact 496,709-/3,779,103-byte plans and IDs,
+  source/SemanticIR/bridge/workload identities, contiguous scenario IDs,
+  deterministic reruns, and hostile inputs. The adjacent 4,097 construction
+  requires only the exact unchanged public-binder diagnostic at
+  `/scenario_ids` and exposes no partial IR or plan.
+- [x] **NO REGRESSION** — all five changed Perl/test paths report `syntax OK`;
+  focused t1616-t1618 reports `All tests successful` at `Files=3, Tests=12` in
+  20 seconds (fresh final rerun: 21 seconds). The uninterrupted RAM-guarded execution/bridge impact matrix
+  reports `All tests successful` at `Files=21, Tests=91` in 815 seconds.
+  All 53 mdBook chapters test; the inspected repository-local render contains
+  88 files/18,605,978 bytes and the exact scenario table, diagnostic, and
+  runnable example before exact removal. Knowledge Map generation/check/query
+  reports 1,109 facts/5,764 questions/5,930 occurrences/121 shards. Focused
+  task/tree/live/reference/card documentation tests pass at Files=4/Tests=69
+  plus Files=3/Tests=11. Bounded Memory, maintained-reference authority,
+  artifact cleanup, staged acceptance, and final doctrines complete this
+  slice. No parser, SemanticIR, bridge, public binder, backend, downstream
+  contract, capability/support, performance-budget, or capacity behavior
+  changes.
 
 ## Acceptance Checklist (enforced) — `.17.2.4.2` one-million random limit/exhaustion
 
