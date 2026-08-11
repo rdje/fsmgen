@@ -7,17 +7,17 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.1`; mandatory pre-push
-  downstream-consumer integration-contract audit.
-- current_state: hosted-CI root-cause repairs and the 16-file/68-case partition
-  are locally verified. Scenario scale commit `18a994468` is clean; it changes
-  only private qualification construction. The branch is 18 commits ahead and
-  remains below the 200-commit automatic push cadence.
-- next_action: inventory SPECFORGE/general downstream handoff contracts, map
-  every post-push repair to public schema/API/artifact/report/diagnostic/
-  capability/support impact, and synchronize real drift or prove exact none.
+- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.1.1`; downstream source-path provenance decision.
+- current_state: all 19 pre-audit commits are classified; exact upstream/current
+  probes show no CI-repair drift in public CLI/schema meaning;
+  19 stale downstream handoff commands now use repository-local `.artifacts`
+  destinations. The branch is 20 commits ahead after this commit and remains
+  below the 200-commit automatic push cadence.
+- next_action: director selects a compatible repository-relative migration or
+  a narrow explicit exemption for public JSON `source.resolved_path`; implement
+  that choice in code/contracts/book/tests before `.6.2.2` may push-qualify.
 - in_flight_uncommitted: none after this commit.
-- blockers: none.
+- blockers: `.6.2.1.1` requires the director's compatibility/policy judgment; no push is authorized meanwhile.
 - push_state: decision `0062`; derive with `git rev-list --count @{upstream}..HEAD`.
 
 ## Durable context

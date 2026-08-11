@@ -81,7 +81,7 @@ public contract, tests, or code is a bug.
 ```bash
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --emit-schedule-json isf/i2c_master.isf
-./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
+./bin/fsmgen --strict --outdir .artifacts/ial1/isf-build isf/spawn_parent.isf
 ```
 
 Current CLI behavior:

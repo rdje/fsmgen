@@ -7,11 +7,12 @@ answers:
   - "what surfaces must change together for downstream-visible behavior?"
   - "is the downstream integration handoff SPECFORGE-specific?"
   - "where is the downstream consumer lockstep doctrine recorded?"
-date: 2026-06-16
+  - "must public source.resolved_path be repository relative?"
+date: 2026-08-11
 status: current
 tags: [downstream, contracts, mdbook, handoff, integration, manifest, support-accounting]
-evidence: README.md; ROADMAP_V2.md; docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md; docs/ISF_PUBLIC_INTERFACE_CONTRACT.md; perl/FSM/Support/LanguageSurfaceSection.pm; docs/book/src/11-extensions-and-embedding.md; docs/book/src/13i-downstream-integration.md; docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md
-reverify: rg -n 'downstream consumer|downstream-visible|lockstep|language_surface\\.file_surfaces|deeper concrete same-ID|IAL2-FEATURE-COMPLETENESS-FRONTIER\\.148' README.md ROADMAP_V2.md docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md docs/ISF_PUBLIC_INTERFACE_CONTRACT.md perl/FSM/Support/LanguageSurfaceSection.pm docs/book/src/11-extensions-and-embedding.md docs/tasks/BACKEND-LANGUAGE-PORTABILITY-CONTRACT-FRONTIER.md docs/TASK_TREE.md
+evidence: README.md; ROADMAP_V2.md; docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md; docs/ISF_PUBLIC_INTERFACE_CONTRACT.md; perl/FSM/Support/LanguageSurfaceSection.pm; perl/FSM/Support/ReportSourceContract.pm; docs/book/src/11-extensions-and-embedding.md; docs/book/src/13i-downstream-integration.md; docs/tasks/GITHUB-PUSH-OUTCOME-ASSURANCE.md
+reverify: rg -n 'downstream consumer|downstream-visible|lockstep|language_surface\\.file_surfaces|source\\.resolved_path|GITHUB-PUSH-OUTCOME-ASSURANCE\\.6\\.2\\.1' README.md ROADMAP_V2.md docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md docs/ISF_PUBLIC_INTERFACE_CONTRACT.md perl/FSM/Support/LanguageSurfaceSection.pm perl/FSM/Support/ReportSourceContract.pm docs/book/src/11-extensions-and-embedding.md docs/tasks/GITHUB-PUSH-OUTCOME-ASSURANCE.md docs/TASK_TREE.md
 ---
 
 Any downstream-visible change must keep the codebase, downstream
@@ -30,3 +31,16 @@ For `.isf` and `.ppif`, the lockstep surfaces include
 embedding chapters, `language_surface.file_surfaces` in the capability
 manifest, support-accounting catalog entries, tests, README, roadmap, Memory,
 Knowledge Map, and the owning task tree.
+
+The 2026-08-11 pre-push audit classified all 19 commits after the pushed SHA.
+CLI help and strict schedule JSON were byte-identical; capability, check, and
+semantic JSON were identical after normalizing only documented revision/path
+provenance. Nineteen stale handoff commands were corrected from off-volume
+`/tmp` destinations to repository-local `.artifacts` paths.
+
+Public check/semantic JSON deliberately emits absolute `source.resolved_path`;
+code, docs, and tests agree, and the CI repair did not change it. That old
+consumer-visible contract conflicts with a literal reading of the newer
+repository-relative path doctrine. Active leaf
+`GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.1.1` therefore blocks push until the director
+selects a compatible relative-path migration or a narrow explicit exemption.

@@ -142,8 +142,8 @@ Supported `.isf` CLI surfaces:
 ./bin/fsmgen source.isf
 ./bin/fsmgen --strict source.isf
 ./bin/fsmgen --emit-schedule-json source.isf
-./bin/fsmgen --outdir /tmp/isf-build source.isf
-./bin/fsmgen --output /tmp/out.sv source.isf
+./bin/fsmgen --outdir .artifacts/ial1/isf-build source.isf
+./bin/fsmgen --output .artifacts/sv/out.sv source.isf
 ```
 
 CLI behavior:

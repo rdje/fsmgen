@@ -50,7 +50,7 @@ validate with `scripts/check_task_tree_integrity.pl`.
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.28` done | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.17.2.4.2` scenario qualification/limit ladder complete; operations-per-scenario structural ladder next | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 completeness` | `.844` terminal | [task](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
-| `GITHUB-PUSH-OUTCOME-ASSURANCE` | `active` | `hosted CI` | `.6.2.1` downstream contract audit; `.6.2.2` next-push qualification | [task](docs/tasks/GITHUB-PUSH-OUTCOME-ASSURANCE.md) |
+| `GITHUB-PUSH-OUTCOME-ASSURANCE` | `active` | `hosted CI` | `.6.2.1.1` path policy; `.6.2.2` push qualification | [task](docs/tasks/GITHUB-PUSH-OUTCOME-ASSURANCE.md) |
 
 ## Proposed Task Trees
 

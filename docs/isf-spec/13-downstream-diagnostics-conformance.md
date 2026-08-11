@@ -568,23 +568,23 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_two_child_vector_data_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_two_child_multi_data_pipeline.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
-./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
-./bin/fsmgen --strict --outdir /tmp/isf-fifo-library isf/fifo_library_use.isf
-./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child isf/atl_resolved_child_pipeline.isf
-./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress isf/atl_resolved_child_pin_ingress_pipeline.isf
-./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress-vector isf/atl_resolved_child_pin_ingress_vector_pipeline.isf
-./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress-vector-multi isf/atl_resolved_child_pin_ingress_vector_multi_pipeline.isf
-./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress-mixed isf/atl_resolved_child_pin_ingress_mixed_pipeline.isf
-./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress-multi isf/atl_resolved_child_pin_ingress_multi_pipeline.isf
-./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-egress isf/atl_resolved_child_pin_egress_pipeline.isf
-./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-egress-vector isf/atl_resolved_child_pin_egress_vector_pipeline.isf
-./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-egress-vector-multi isf/atl_resolved_child_pin_egress_vector_multi_pipeline.isf
-./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-egress-mixed isf/atl_resolved_child_pin_egress_mixed_pipeline.isf
-./bin/fsmgen --strict --outdir /tmp/isf-atl-two-child-data isf/atl_two_child_data_pipeline.isf
-./bin/fsmgen --strict --outdir /tmp/isf-atl-two-child-vector-data isf/atl_two_child_vector_data_pipeline.isf
-./bin/fsmgen --strict --outdir /tmp/isf-atl-two-child-multi-data isf/atl_two_child_multi_data_pipeline.isf
+./bin/fsmgen --strict --outdir .artifacts/ial1/isf-build isf/spawn_parent.isf
+./bin/fsmgen --strict --outdir .artifacts/ial1/isf-fifo-library isf/fifo_library_use.isf
+./bin/fsmgen --strict --outdir .artifacts/ial1/isf-atl-resolved-child isf/atl_resolved_child_pipeline.isf
+./bin/fsmgen --strict --outdir .artifacts/ial1/isf-atl-resolved-child-pin-ingress isf/atl_resolved_child_pin_ingress_pipeline.isf
+./bin/fsmgen --strict --outdir .artifacts/ial1/isf-atl-resolved-child-pin-ingress-vector isf/atl_resolved_child_pin_ingress_vector_pipeline.isf
+./bin/fsmgen --strict --outdir .artifacts/ial1/isf-atl-resolved-child-pin-ingress-vector-multi isf/atl_resolved_child_pin_ingress_vector_multi_pipeline.isf
+./bin/fsmgen --strict --outdir .artifacts/ial1/isf-atl-resolved-child-pin-ingress-mixed isf/atl_resolved_child_pin_ingress_mixed_pipeline.isf
+./bin/fsmgen --strict --outdir .artifacts/ial1/isf-atl-resolved-child-pin-ingress-multi isf/atl_resolved_child_pin_ingress_multi_pipeline.isf
+./bin/fsmgen --strict --outdir .artifacts/ial1/isf-atl-resolved-child-pin-egress isf/atl_resolved_child_pin_egress_pipeline.isf
+./bin/fsmgen --strict --outdir .artifacts/ial1/isf-atl-resolved-child-pin-egress-vector isf/atl_resolved_child_pin_egress_vector_pipeline.isf
+./bin/fsmgen --strict --outdir .artifacts/ial1/isf-atl-resolved-child-pin-egress-vector-multi isf/atl_resolved_child_pin_egress_vector_multi_pipeline.isf
+./bin/fsmgen --strict --outdir .artifacts/ial1/isf-atl-resolved-child-pin-egress-mixed isf/atl_resolved_child_pin_egress_mixed_pipeline.isf
+./bin/fsmgen --strict --outdir .artifacts/ial1/isf-atl-two-child-data isf/atl_two_child_data_pipeline.isf
+./bin/fsmgen --strict --outdir .artifacts/ial1/isf-atl-two-child-vector-data isf/atl_two_child_vector_data_pipeline.isf
+./bin/fsmgen --strict --outdir .artifacts/ial1/isf-atl-two-child-multi-data isf/atl_two_child_multi_data_pipeline.isf
 ./bin/fsmgen --emit-schedule-json isf/clock_domain_event_crossing.isf
-./bin/fsmgen --outdir /tmp/isf-cdc isf/clock_domain_dual_event_crossing.isf
+./bin/fsmgen --outdir .artifacts/ial1/isf-cdc isf/clock_domain_dual_event_crossing.isf
 ./bin/fsmgen --emit-schedule-json isf/clock_domain_no_reset_event_crossing.isf
 ./bin/fsmgen --capability-manifest
 ```
