@@ -7,16 +7,16 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2`; terminal inventory and repaired-push lockstep.
+- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2`; terminal inventory before repaired-push authorization.
 - current_state: exact push `a28e9adf46b7861ee728703662ad18b64f0325d0` has green Knowledge Map/book workflows.
   Regression run `31494487181` has 13 failed jobs and four running ordinary shards. Verilator/Yosys,
   manifest discovery, t40 spelling, ordinary complete-history checkout, and
-  hosted Icarus, APB/CLI/VIAL audits, DTE/MCP assertions, and aggregate AHB
-  all 13 observed failed-job families are locally repaired and every direct
-  workflow action is immutably Node-24-compatible. This slice will be seventeen commits ahead.
-- next_action: consume the final four terminal shard results, then run the consolidated mdBook/downstream-contract lockstep audit and request fresh push authorization.
+  hosted Icarus, APB/CLI/VIAL audits, DTE/MCP assertions, aggregate AHB,
+  direct VHDL, and the dynamic output banks are locally repaired across all 13
+  observed failed-job families; direct actions are immutably Node-24-compatible; consolidated mdBook and downstream/SPECFORGE lockstep is green.
+- next_action: consume the final four terminal shard results, then request fresh push authorization.
 - in_flight_uncommitted: none after this commit.
-- in_flight_background: exact regression run `31494487181` and watcher session `95229`; their terminal inventory must be consumed.
+- in_flight_background: exact regression run `31494487181`; four ordinary shards remain running and must be consumed.
 - blockers: a new early repair push requires director authorization after fixes.
 - push_state: remote `a28e9adf4`; exact run has failed and remains in progress.
 
