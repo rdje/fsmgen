@@ -7,14 +7,14 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.4`; Node 24 action migration.
+- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2`; terminal inventory and repaired-push lockstep.
 - current_state: exact push `a28e9adf46b7861ee728703662ad18b64f0325d0` has green Knowledge Map/book workflows.
   Regression run `31494487181` has 13 failed jobs and four running ordinary shards. Verilator/Yosys,
   manifest discovery, t40 spelling, ordinary complete-history checkout, and
   hosted Icarus, APB/CLI/VIAL audits, DTE/MCP assertions, and aggregate AHB
-  wiring/residue, direct-VHDL, and the exact dynamic case are locally repaired;
-  every observed family has an owning child. This slice will be sixteen commits ahead.
-- next_action: complete the Node 24 action migration in .6.2.2.4 while consuming any new terminal results from the final four shards.
+  all 13 observed failed-job families are locally repaired and every direct
+  workflow action is immutably Node-24-compatible. This slice will be seventeen commits ahead.
+- next_action: consume the final four terminal shard results, then run the consolidated mdBook/downstream-contract lockstep audit and request fresh push authorization.
 - in_flight_uncommitted: none after this commit.
 - in_flight_background: exact regression run `31494487181` and watcher session `95229`; their terminal inventory must be consumed.
 - blockers: a new early repair push requires director authorization after fixes.

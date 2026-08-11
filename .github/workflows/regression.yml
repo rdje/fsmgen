@@ -17,7 +17,7 @@ jobs:
     timeout-minutes: 30
     steps:
     - name: Check out repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         fetch-depth: 0
 
@@ -45,10 +45,12 @@ jobs:
     timeout-minutes: 30
     steps:
     - name: Check out repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
     - name: Set up mdBook
-      uses: peaceiris/actions-mdbook@v2
+      uses: peaceiris/actions-mdbook@a6f333f62c4b46ed5190d00cab3b7f9a6996274c # Node 24 main, 2026-05-11
+      with:
+        mdbook-version: '0.5.4'
 
     - name: Build user documentation
       run: mdbook build docs/book
@@ -67,12 +69,12 @@ jobs:
         shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     steps:
     - name: Check out repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         fetch-depth: 0
 
     - name: Set up Perl
-      uses: shogo82148/actions-setup-perl@v1
+      uses: shogo82148/actions-setup-perl@53e33bb27be492a926eee378e8a5f7ff6618b061 # v1.43.1
       with:
         perl-version: '5.32'
 
@@ -174,10 +176,10 @@ jobs:
           - 67
     steps:
     - name: Check out repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
     - name: Set up Perl
-      uses: shogo82148/actions-setup-perl@v1
+      uses: shogo82148/actions-setup-perl@53e33bb27be492a926eee378e8a5f7ff6618b061 # v1.43.1
       with:
         perl-version: '5.32'
 

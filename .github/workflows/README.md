@@ -31,8 +31,8 @@ Hosted jobs call `./bin/ci-regression full --no-book` with repository-owned
 shard options; one separate job owns the book. Local `./bin/ci-regression`
 remains the unsharded full pre-push gate and builds the book by default.
 
-Perl setup stays minimal: runtime paths avoid undeclared CPAN dependencies and
-clean-stderr CLI paths remain compatible with the hosted Perl version.
+Perl setup stays minimal and clean-stderr compatible. Direct actions use
+immutable Node 24-compatible pins, book jobs pin mdBook 0.5.4, and no insecure Node fallback is enabled.
 
 ## GitHub Pages
 

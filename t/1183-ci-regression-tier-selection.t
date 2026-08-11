@@ -19,6 +19,18 @@ my $workflow = File::Spec->catfile(
     'workflows',
     'regression.yml',
 );
+my $pages_workflow = File::Spec->catfile(
+    $repo_root,
+    '.github',
+    'workflows',
+    'pages.yml',
+);
+my $knowledge_map_workflow = File::Spec->catfile(
+    $repo_root,
+    '.github',
+    'workflows',
+    'knowledge-map-gate.yml',
+);
 
 sub run_ci {
     my (@args) = @_;
@@ -351,6 +363,49 @@ subtest 'hosted workflow runs every shard family to a terminal aggregate' => sub
         $yaml,
         qr/needs:\s+\[doctrines, book, perl_files, perl_dynamic\]/,
         'aggregate waits for every required CI family',
+    );
+};
+
+subtest 'hosted workflows pin the audited Node 24 action family' => sub {
+    my %yaml = (
+        regression    => slurp($workflow),
+        pages         => slurp($pages_workflow),
+        knowledge_map => slurp($knowledge_map_workflow),
+    );
+    my $all = join "\n", values %yaml;
+
+    my %pins = (
+        'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' => 6,
+        'peaceiris/actions-mdbook@a6f333f62c4b46ed5190d00cab3b7f9a6996274c' => 2,
+        'shogo82148/actions-setup-perl@53e33bb27be492a926eee378e8a5f7ff6618b061' => 2,
+        'actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d' => 1,
+        'actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9' => 1,
+        'actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128' => 1,
+    );
+    for my $pin (sort keys %pins) {
+        my @matches = $all =~ /\Q$pin\E/g;
+        is(scalar(@matches), $pins{$pin}, "$pin has the exact expected workflow use count");
+    }
+
+    my @uses = $all =~ /^\s*uses:\s+(\S+)/mg;
+    is(scalar(@uses), 13, 'all thirteen direct workflow action uses are inventoried');
+    for my $use (@uses) {
+        like($use, qr/\A[^@\s]+\@[0-9a-f]{40}\z/, "$use is pinned to an immutable commit");
+    }
+    unlike($all, qr/^\s*uses:\s+\S+\@v[0-9]/m, 'no direct action use floats on a movable major tag');
+    unlike($all, qr/ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION/, 'workflows do not enable an insecure Node fallback');
+
+    for my $owner (qw(regression pages)) {
+        like(
+            $yaml{$owner},
+            qr/peaceiris\/actions-mdbook\@a6f333f62c4b46ed5190d00cab3b7f9a6996274c.*?with:\s+mdbook-version:\s+'0\.5\.4'/s,
+            "$owner workflow pins mdBook 0.5.4 beneath the audited setup action",
+        );
+    }
+    like(
+        $yaml{pages},
+        qr/actions\/upload-pages-artifact\@fc324d3547104276b827a68afc52ff2a11cc49c9.*?path:\s+docs\/book\/book\s+include-hidden-files:\s+true/s,
+        'Pages upload retains the prior hidden-file archive scope under v5',
     );
 };
 
