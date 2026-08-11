@@ -7,13 +7,14 @@ answers:
   - "what is the public IAL2 AHB interconnect behavior?"
   - "what report schema and support accounting identify AHB interconnect PPIF?"
   - "does AHB interconnect PPIF lower through generated isf and fsm artifacts?"
+  - "what composition child count should intent.ppif_ahb_interconnect report in check and semantic JSON?"
   - "is aggregate AHB .ahb alias shipped?"
 date: 2026-07-29
 status: current
 tags: [ial2, ahb, interconnect, decode, ppif, behavior]
-evidence: docs/IAL2_AHB_INTERCONNECT_DECODE_BEHAVIOR.md; docs/IAL2_AHB_INTERCONNECT_DEFAULT_DECODE_OUTPUT_ARBITRATION_BEHAVIOR.md; docs/IAL2_AHB_INTERCONNECT_PROFILE_ALIAS_BEHAVIOR.md; ppif/ahb_interconnect.ppif; ppif/ahb_interconnect.ahb; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; perl/FSM/IAL2/ProtocolIntent/AhbSubordinate.pm; perl/FSM/Support/RegressionCorpus.pm; perl/FSM/Support/LanguageSurfaceSection.pm; t/1478-ial2-ahb-interconnect.t; t/1479-ial2-ahb-interconnect-profile-alias.t; t/1530-ial2-ahb-interconnect-output-arbitration.t; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; docs/book/src/16c-ial2-ahb.md; docs/book/src/14-feature-backlog.md; MEMORY.md; README.md; ROADMAP_V2.md
+evidence: docs/IAL2_AHB_INTERCONNECT_DECODE_BEHAVIOR.md; ppif/ahb_interconnect.ppif; ppif/ahb_interconnect.ahb; perl/FSM/Adapter/IAL2/PPIF.pm; perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm; perl/FSM/Support/RegressionCorpus.pm; t/301-check-json-supported-corpus.t; t/303-normalized-semantic-json-supported-corpus.t; t/1478-ial2-ahb-interconnect.t; docs/tasks/GITHUB-PUSH-OUTCOME-ASSURANCE.md; docs/book/src/16c-ial2-ahb.md
 reverify: >-
-  prove -Iperl t/1478-ial2-ahb-interconnect.t t/1479-ial2-ahb-interconnect-profile-alias.t && ./bin/fsmgen --quiet --strict --check --json ppif/ahb_interconnect.ppif && ./bin/fsmgen --quiet --strict --check --json ppif/ahb_interconnect.ahb && rg -n 'IAL2-FEATURE-COMPLETENESS-FRONTIER\.723|IAL2-FEATURE-COMPLETENESS-FRONTIER\.726|ppif/ahb_interconnect\.(ppif|ahb)|ahb-interconnect|ahb_interconnect\.(isf|fsm)|ahb_tb\.fsm|fsmgen\.ial2\.protocol_intent\.ahb_interconnect\.v1|intent\.ppif_ahb_interconnect|intent\.ahb_profile_alias_interconnect|ial2_ppif_ahb_interconnect_pipeline_cli|ial2_ahb_profile_alias_interconnect_pipeline_cli|two-cycle unmapped' docs/IAL2_AHB_INTERCONNECT_DECODE_BEHAVIOR.md docs/IAL2_AHB_INTERCONNECT_PROFILE_ALIAS_BEHAVIOR.md docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md docs/TASK_TREE.md
+  prove -Iperl t/1478-ial2-ahb-interconnect.t t/1479-ial2-ahb-interconnect-profile-alias.t && ./bin/ci-regression full --no-book --hosted-corpus-shard 301:14/16 && ./bin/ci-regression full --no-book --hosted-corpus-shard 303:14/16 && ./bin/fsmgen --quiet --strict --check --json ppif/ahb_interconnect.ppif && ./bin/fsmgen --quiet --strict --check --json ppif/ahb_interconnect.ahb && rg -n 'ppif/ahb_interconnect\.(ppif|ahb)|ahb_interconnect\.(isf|fsm)|ahb_tb\.fsm|fsmgen\.ial2\.protocol_intent\.ahb_interconnect\.v1|intent\.ppif_ahb_interconnect|intent\.ahb_profile_alias_interconnect|two-cycle unmapped' docs/IAL2_AHB_INTERCONNECT_DECODE_BEHAVIOR.md docs/tasks/GITHUB-PUSH-OUTCOME-ASSURANCE.md docs/TASK_TREE.md
   README.md ROADMAP_V2.md MEMORY.md docs/book/src/16c-ial2-ahb.md docs/book/src/14-feature-backlog.md ppif/ahb_interconnect.ppif ppif/ahb_interconnect.ahb
 ---
 
@@ -33,6 +34,9 @@ The report schema is `fsmgen.ial2.protocol_intent.ahb_interconnect.v1`.
 Support accounting identifies the sample as `intent.ppif_ahb_interconnect`
 with coverage `ial2_ppif_ahb_interconnect_pipeline_cli` and `source_kind`
 `ppif`.
+
+Check and normalized semantic JSON report exactly three generated composition
+children. RegressionCorpus owns both counts; t303 rejects a `top` row lacking an explicit semantic count or legacy exact instance count.
 
 The shipped behavior is one requester, one subordinate, one static address
 window at base 0 size 4, fixed `HGRANT=1`, decoded `HSEL_REGS`, local

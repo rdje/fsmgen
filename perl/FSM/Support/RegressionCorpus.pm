@@ -458,6 +458,8 @@ my @REGRESSION_CORPUS = (
         expected_module_name => 'ahb_tb',
         expected_pipeline_module_name => 'ahb_interconnect',
         expected_semantic_source_root_kind => 'top',
+        expected_check_composition_child_count => 3,
+        expected_semantic_composition_child_count => 3,
     },
     {
         id => 'intent.ppif_ahb_interconnect_byte_lane',

@@ -45,6 +45,18 @@ if (hosted_corpus_list_only()) {
 
 ok(@supported_entries, 'corpus has supported-smoke main-CLI sources for semantic JSON coverage');
 ok(@strict_entries, 'corpus has strict-supported main-CLI sources for strict semantic JSON coverage');
+is_deeply(
+    [
+        map { $_->{id} }
+        grep {
+            ($_->{expected_semantic_source_root_kind} || '') eq 'top'
+                && !defined $_->{expected_semantic_composition_child_count}
+                && !defined $_->{expected_instance_count}
+        } @supported_entries
+    ],
+    [],
+    'every semantic top-root source declares an exact composition or instance count',
+);
 
 subtest 'semantic JSON accepts every supported-smoke main-CLI source in default mode' => sub {
     for my $entry (@supported_entries) {
