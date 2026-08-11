@@ -1482,7 +1482,7 @@ sub assert_dynamic_behavior {
             like($isf, qr/\(output axi0_${tx}_rresp \(width 2\)\)/, "dynamic read burst-last depth-3 issue-order queue read-data multi-beat exposes $tx scalar RRESP aggregate");
             like($isf, qr/\(var axi0_${tx}_expected_beats_q \(width 5\)\)/, "dynamic read burst-last depth-3 issue-order queue read-data multi-beat allocates $tx expected-beat storage");
             like($isf, qr/\(var axi0_${tx}_read_beat_count_q \(width 5\)\)/, "dynamic read burst-last depth-3 issue-order queue read-data multi-beat allocates $tx read-beat counter");
-            like($isf, qr/\(rule axi0_${tx}_read_data_output_init axi0_${tx}_request[\s\S]*\(axi0_${tx}_beat_valid 0\)[\s\S]*\(axi0_${tx}_read_beats 0\)[\s\S]*\(axi0_${tx}_rresp 0\)\)/, "dynamic read burst-last depth-3 issue-order queue read-data multi-beat initializes $tx output bank");
+            like($isf, qr/\(rule axi0_${tx}_read_data_output_init axi0_${tx}_request[\s\S]*\(axi0_${tx}_rresp 2'd0\)\s+\(axi0_${tx}_beat_valid 16'b0\)\s+\(axi0_${tx}_read_beats 5'd0\)\)/, "dynamic read burst-last depth-3 issue-order queue read-data multi-beat initializes $tx output bank");
         }
         like($isf, qr/\(input axi0_arid \(width 4\)\)/, 'dynamic read burst-last depth-3 issue-order queue read-data multi-beat declares ARID input');
         like($isf, qr/\(input axi0_rid \(width 4\)\)/, 'dynamic read burst-last depth-3 issue-order queue read-data multi-beat declares RID input');
@@ -1491,7 +1491,7 @@ sub assert_dynamic_behavior {
         like($isf, qr/\(input axi0_rresp \(width 2\)\)/, 'dynamic read burst-last depth-3 issue-order queue read-data multi-beat declares RRESP input');
         like($isf, qr/\(input axi0_arlen \(width 8\)\)/, 'dynamic read burst-last depth-3 issue-order queue read-data multi-beat declares ARLEN input');
         like($isf, qr/\(rule axi0_r2_response_demux [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_id_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_id_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot2_id_q[\s\S]*axi0_rlast[\s\S]*\(pulse axi0_r2_complete\)\)/, 'dynamic read burst-last depth-3 issue-order queue read-data multi-beat keeps queue-owned r2 RID/RLAST demux');
-        like($isf, qr/\(rule axi0_r2_read_beat_15_capture [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_r2_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_r2_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot2_r2_q[\s\S]*\(axi0_r2_beat_rdata_15 axi0_rdata\)[\s\S]*\(axi0_r2_beat_rresp_15 axi0_rresp\)\)/, 'dynamic read burst-last depth-3 issue-order queue read-data multi-beat captures r2 final lane from matched raw read beats');
+        like($isf, qr/\(rule axi0_r2_read_beat_15_capture [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_r2_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_r2_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot2_r2_q[\s\S]*\(axi0_r2_beat_rdata_15 axi0_rdata\)[\s\S]*\(axi0_r2_beat_rresp_15 axi0_rresp\)\s+\(axi0_r2_beat_valid 16'b1111111111111111\)\s+\(axi0_r2_read_beats 5'd16\)\)/, 'dynamic read burst-last depth-3 issue-order queue read-data multi-beat captures r2 final lane from matched raw read beats');
         assert_dynamic_read_burst_last_depth3_same_id_issue_order_queue_report(
             $result->{report},
             response_demux_residue => [],
