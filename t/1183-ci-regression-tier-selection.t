@@ -289,9 +289,34 @@ subtest 'hosted shard arguments fail closed' => sub {
 subtest 'hosted workflow runs every shard family to a terminal aggregate' => sub {
     my $yaml = slurp($workflow);
     my @non_fail_fast = $yaml =~ /fail-fast:\s+false/g;
+    my ($file_job) = $yaml =~ /\n  perl_files:(.*?)\n  perl_dynamic:/s;
+    my ($dynamic_job) = $yaml =~ /\n  perl_dynamic:(.*?)\n  build:/s;
 
     is(scalar(@non_fail_fast), 2, 'both hosted matrices disable fail-fast cancellation');
     like($yaml, qr/timeout-minutes:\s+300/, 'long-running shard jobs have a five-hour ceiling');
+    like($file_job || '', qr/runs-on:\s+ubuntu-24\.04/, 'ordinary shards pin the Ubuntu Noble package base');
+    like(
+        $file_job || '',
+        qr/FSMGEN_CI_VERILATOR_APT_VERSION:\s+'5\.020-1'/,
+        'ordinary shards pin the Verilator package revision',
+    );
+    like(
+        $file_job || '',
+        qr/FSMGEN_CI_YOSYS_APT_VERSION:\s+'0\.33-5build2'/,
+        'ordinary shards pin the Yosys package revision',
+    );
+    like(
+        $file_job || '',
+        qr/apt-get install --yes --no-install-recommends.*?verilator=.*?yosys=/s,
+        'ordinary shards install both external HDL validation tools',
+    );
+    my @package_revision_checks = ($file_job || '') =~ /dpkg-query --show --showformat=/g;
+    is(scalar(@package_revision_checks), 2, 'ordinary shards verify both installed package revisions');
+    unlike(
+        $dynamic_job || '',
+        qr/Install hosted HDL validation tools|apt-get install/,
+        'dynamic shards avoid unrelated HDL tool installation',
+    );
     like(
         $yaml,
         qr/shard:\s+\[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15\]/,

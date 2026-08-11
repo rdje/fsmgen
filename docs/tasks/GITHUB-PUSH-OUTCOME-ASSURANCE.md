@@ -127,11 +127,11 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Children: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.1, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.2, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.3, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.4`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Provision the external HDL tools required by hosted ordinary shards.`
   Acceptance: `Reproduce the t1506/t1520/t1535 missing-tool failures from job 93788675553; install deterministic Verilator and Yosys profiles before hosted shard execution without changing local full selection; prove the three exact tests and shard plumbing; update workflow guidance and mdBook only if the supported public tool contract changes.`
-  Verification: `GitHub job 93788675553 reports Missing external HDL validation tool(s): verilator, yosys; the same job then fails public verification/yosys_synthesis and three Verilator harness checks. The workflow currently sets up Perl only.`
-  Commit: `pending implementation`
+  Verification: `GitHub job 93788675553 reports Missing external HDL validation tool(s): verilator, yosys; jobs 93788675417, 93788675536, 93788675550, and 93788675569 independently repeat the same mechanism across other verifier and executable-harness tests. The ordinary matrix now pins ubuntu-24.04 plus exact Ubuntu Noble package revisions verilator=5.020-1 and yosys=0.33-5build2, verifies each installed dpkg revision, and prints both runtime versions before test selection. Canonical package records are https://packages.ubuntu.com/noble/verilator and https://packages.ubuntu.com/noble/yosys. Dynamic shards remain Perl-only because t/1438 contains no Verilator, Yosys, or external-validation invocation. Ruby parses the workflow YAML. Focused t/1183/t1506/t1520/t1535 passes at Files=4, Tests=20 in 95 seconds; t308 exercises generic Verilator lint, ABC-free and ABC-backed Yosys synthesis, 15 MIPI fixtures, historical fixtures, direct/composed protocols, and CLI verification at Files=1, Tests=8. All mdBook chapters test and build successfully; project-data locality passes and the exact generated book is removed. This CI-only repair changes no public CLI, schema, generated HDL, mdBook behavior, downstream handoff contract, or exact Verilator 5.046 VIAL backend qualification.`
+  Commit: `this commit (provision pinned hosted HDL validation tools)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.2`
   Status: `pending`
@@ -162,6 +162,12 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (mandatory exact-SHA post-push result qualification)`
 
 ## Decisions
+
+- `2026-08-11`: Pin hosted ordinary shards to Ubuntu 24.04 and the repository
+  packages Verilator 5.020-1 and Yosys 0.33-5build2. These versions exercise
+  the ordinary suite's generic lint/synthesis/harness contract; they do not
+  replace the exact Verilator 5.046 public VIAL backend qualification, whose
+  exact-version tests remain independently guarded.
 
 - `2026-08-11`: Treat the cancelled regression as incomplete and failed
   signoff. Git transport, two green workflows, and an eventual cancellation do
@@ -197,6 +203,12 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 - Local remediation is unblocked. After verified repairs, a new early repair
   push still requires director authorization under decision `0062`; the
   current authorization was consumed by push `a28e9adf4`.
+
+## Acceptance Checklist — `.6.2.2.1` (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Hosted job `93788675553` reports `Missing external HDL validation tool(s): verilator, yosys`, then fails t1506/t1520/t1535 at their public verification and executable-harness assertions. `git log -S'apt-get install' -- .github/workflows/regression.yml` returns no commit: the ordinary shard job selected tool-requiring tests but its setup installed only Perl.
+- [x] **ADDRESSED (verified)** — The ordinary job now pins `ubuntu-24.04`, installs exact Noble packages `verilator=5.020-1` and `yosys=0.33-5build2`, checks both dpkg revisions, and emits both tool versions before executing its shard. t1183 locks those invariants and proves the unrelated dynamic job has no HDL-tool installation; Ruby reports `workflow YAML parses`.
+- [x] **NO REGRESSION** — Focused workflow plus exact hosted reproductions report `All tests successful` at `Files=4, Tests=20`; generic external validation separately reports `All tests successful` at `Files=1, Tests=8`, including `verilator_lint` and `yosys_synthesis`. Every mdBook chapter tests successfully, the HTML build completes, project-data locality reports OK, and the exact generated book is removed. The staged doctrine driver reports `[doctrine] all doctrine checks passed`.
 
 ## Acceptance Checklist — `.6.2.1` (enforced)
 

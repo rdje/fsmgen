@@ -55,8 +55,11 @@ jobs:
 
   perl_files:
     name: Perl files ${{ matrix.shard }}/16
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 300
+    env:
+      FSMGEN_CI_VERILATOR_APT_VERSION: '5.020-1'
+      FSMGEN_CI_YOSYS_APT_VERSION: '0.33-5build2'
     strategy:
       fail-fast: false
       matrix:
@@ -69,6 +72,19 @@ jobs:
       uses: shogo82148/actions-setup-perl@v1
       with:
         perl-version: '5.32'
+
+    - name: Install hosted HDL validation tools
+      run: |
+        sudo apt-get update
+        sudo apt-get install --yes --no-install-recommends \
+          "verilator=${FSMGEN_CI_VERILATOR_APT_VERSION}" \
+          "yosys=${FSMGEN_CI_YOSYS_APT_VERSION}"
+        test "$(dpkg-query --show --showformat='${Version}' verilator)" = \
+          "$FSMGEN_CI_VERILATOR_APT_VERSION"
+        test "$(dpkg-query --show --showformat='${Version}' yosys)" = \
+          "$FSMGEN_CI_YOSYS_APT_VERSION"
+        verilator --version
+        yosys -V
 
     - name: Run full-suite file shard
       run: ./bin/ci-regression full --no-book --hosted-file-shard "${{ matrix.shard }}/16"

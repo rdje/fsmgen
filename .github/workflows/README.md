@@ -1,44 +1,38 @@
 # GitHub Workflows
 
-This directory contains the active hosted automation that GitHub discovers for
-the public FSMGen repository.
+This directory documents the public FSMGen repository's hosted automation.
 
 ## Regression CI
 
-`regression.yml` runs the repo-owned regression gate on pushes to `main`, pull
-requests targeting `main`, and manual `workflow_dispatch` runs.
+`regression.yml` runs the repository gate on `main` pushes, pull requests, and
+manual `workflow_dispatch` requests.
 
-The hosted workflow runs four independent required families: doctrine
-enforcement, the mdBook build, 16 ordinary Perl file shards, and 68 isolated
-cases from the exceptionally large dynamic transaction-ID focused test. Both
-Perl matrices disable fail-fast, so one failure does not cancel or conceal the
-remaining coverage. Every long-running shard has a five-hour job timeout, and
-the final `build` result succeeds only after all four families succeed.
+Four families are required: doctrine enforcement, mdBook, 16 ordinary Perl file
+shards, and 68 cases from the large dynamic transaction-ID test. Both matrices
+disable fail-fast, each long shard has a five-hour timeout, and final `build`
+succeeds only when every family succeeds.
 
-The file shards are a deterministic, disjoint partition of every tracked
-`t/*.t` file except
-`t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t`. The 68 dynamic
-shards partition that test's canonical 68 cases one per job; its four shared
-checks run only in shard zero. `t/1183-ci-regression-tier-selection.t` audits
-both unions, rejects duplicates and omissions, and locks the workflow matrix
-coordinates. This preserves the complete suite while preventing a single
-six-hour sequential job from hiding the tail.
+File shards partition every tracked `t/*.t` except the separately case-sharded
+`t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t`. Its 68 canonical
+cases run one per job, with four shared checks only in shard zero. `t/1183` locks
+both disjoint unions and all matrix coordinates so no tail is hidden.
 
-Hosted jobs call `./bin/ci-regression` with the repository-owned shard options.
-The ordinary local `./bin/ci-regression` command remains the unsharded full
-pre-push gate and still builds the mdBook by default. Hosted shard invocations
-must use `full` mode and `--no-book`; the workflow owns its one separate book
-job.
+Ordinary shards pin `ubuntu-24.04`, `verilator=5.020-1`, and
+`yosys=0.33-5build2`; they verify both package revisions and print tool versions
+before lint, synthesis, and harness tests. The dynamic test invokes neither
+tool and stays Perl-only. These ephemeral OS dependencies are not project data
+and do not alter FSMGen's separately qualified public Verilator backend.
 
-The workflow's Perl setup is intentionally minimal. Runtime code should avoid
-undeclared CPAN dependencies in ordinary execution, and CLI paths that are
-tested for clean stderr must stay compatible with the hosted Perl version.
+Hosted jobs call `./bin/ci-regression full --no-book` with repository-owned
+shard options; one separate job owns the book. Local `./bin/ci-regression`
+remains the unsharded full pre-push gate and builds the book by default.
+
+Perl setup stays minimal: runtime paths avoid undeclared CPAN dependencies and
+clean-stderr CLI paths remain compatible with the hosted Perl version.
 
 ## GitHub Pages
 
-`pages.yml` builds the mdBook from `docs/book` and uploads `docs/book/book` as
-the Pages artifact. It runs on pushes to `main` and manual
-`workflow_dispatch` runs.
+`pages.yml` builds `docs/book`, uploads `docs/book/book`, and runs on `main`
+pushes or manual dispatch.
 
-The repository's GitHub Pages source must be set to GitHub Actions in the
-GitHub repository settings for this workflow to publish the site.
+Repository settings must select GitHub Actions as the Pages source.
