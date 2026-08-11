@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-execution`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **32** uniquely owned question entries.
+> **2** facts · **33** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -22,6 +22,7 @@
 - q="how does the VIAL execution gate prove exactly 8192 random attempts and replay equality?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="how does the VIAL execution limit produce an exact sixteen MiB semantic plan?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="how does the VIAL execution qualification produce an exact four MiB semantic plan?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
+- q="how does the VIAL execution qualification prove exactly 262144 random attempts and replay equality?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="how does the VIAL execution scale gate materialize 512 distinct types?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="how is the one million random attempt boundary proved?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="how will VIAL execution graph scale workloads be generated?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
@@ -51,5 +52,5 @@ _VIAL execution v1 is deterministic logical time above backend methodology_
 
 _VIAL execution scale uses canonical routes and reports the earliest real cap_
 
-- **date:** 2026-08-10 · **status:** current
+- **date:** 2026-08-11 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-execution-scale-reachability.md`](../../docs/knowledge/vial-execution-scale-reachability.md)

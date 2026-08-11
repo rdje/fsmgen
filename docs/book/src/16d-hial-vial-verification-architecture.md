@@ -2489,8 +2489,49 @@ scenario, operation, and root/live fiber, eight normalized types, 22 bindings,
 and 19 maps: the 17 fixed checked-AHB maps plus one operation map and one
 decision map. Independent identities, public capability isolation, replay-
 attempt mutation, source mutation, missing checked source, and unfinished-level
-rejection are regression-locked. The plan-byte one-over proof, higher random
-levels, final qualification, and any capacity claim remain unfinished.
+rejection are regression-locked.
+
+The random-attempt qualification reuses that exact route at 262,144 attempts.
+Its equality constraint selects decimal `68173369137783556`
+(`0x00f233516a996304`), the deterministic proposal at zero-based attempt
+262,143. The generated decision and strict replay retain the same occurrence,
+normalized value, attempt, distribution, type, operation reference, and source
+span; again, only `origin` changes. The generated/replayed plans are exactly
+34,297/34,296 canonical bytes with IDs
+`plan/1f01b357206cb9b768172be41b415084b0ee49ef5494131dd50df74d195d185e`
+and
+`plan/a6d4516c28989dccf67d0989d7a71d8e60cc6315451761947386d86a75123ba7`.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+open my $fh, '<:raw', 'ppif/ahb_lite_subordinate.ppif'
+    or die "cannot read checked AHB source: $!";
+local $/;
+my $checked_ahb = <$fh>;
+close $fh or die "cannot close checked AHB source: $!";
+
+my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+    primary_axis => 'random_attempts',
+    level => 'qualification_candidate_v1',
+    reference_hial_text => $checked_ahb,
+});
+die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+
+my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+    construction => $workload,
+});
+die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+die "unexpected random qualification\n"
+    unless $evaluation->{metrics}{random_attempts} == 262_144
+        && $evaluation->{metrics}{random_occurrences} == 1;
+```
+
+The graph remains isolated to one scenario, operation, occurrence, and
+root/live fiber, with eight types, 22 bindings, and 19 source maps. This is
+qualification-construction and replay evidence, not throughput, capacity, or
+support promotion. The one-million-attempt limit, final qualification, and any
+capacity claim remain unfinished.
 
 The first serialized-plan byte gate now reaches exactly one MiB through the
 same checked-AHB source and public binder. It authors 2,974 real reset actions,

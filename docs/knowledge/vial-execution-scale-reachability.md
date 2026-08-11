@@ -14,11 +14,12 @@ answers:
   - "how does the VIAL execution scale gate materialize 512 distinct types?"
   - "how does the VIAL execution gate produce exactly 8192 source maps?"
   - "how does the VIAL execution gate prove exactly 8192 random attempts and replay equality?"
+  - "how does the VIAL execution qualification prove exactly 262144 random attempts and replay equality?"
   - "how does the VIAL execution gate produce an exact one MiB semantic plan?"
   - "how does the VIAL execution qualification produce an exact four MiB semantic plan?"
   - "how does the VIAL execution limit produce an exact sixteen MiB semantic plan?"
   - "how does VIAL reject the first complete execution plan operation above sixteen MiB?"
-date: 2026-08-10
+date: 2026-08-11
 status: current
 tags: [vial, execution-ir, scale, binder, bridge, random, replay, plan, limits]
 evidence: >-
@@ -32,6 +33,7 @@ evidence: >-
   t/1606-vial-architecture-scale-execution-types.t;
   t/1607-vial-architecture-scale-execution-source-maps.t;
   t/1608-vial-architecture-scale-execution-random-replay.t;
+  t/1613-vial-architecture-scale-execution-random-qualification.t;
   t/1609-vial-architecture-scale-execution-plan-bytes.t;
   t/1610-vial-architecture-scale-execution-plan-qualification.t;
   t/1611-vial-architecture-scale-execution-plan-limit.t;
@@ -45,6 +47,7 @@ reverify: >-
   t/1606-vial-architecture-scale-execution-types.t
   t/1607-vial-architecture-scale-execution-source-maps.t
   t/1608-vial-architecture-scale-execution-random-replay.t
+  t/1613-vial-architecture-scale-execution-random-qualification.t
   t/1609-vial-architecture-scale-execution-plan-bytes.t
   t/1610-vial-architecture-scale-execution-plan-qualification.t
   t/1611-vial-architecture-scale-execution-plan-limit.t
@@ -194,6 +197,20 @@ the unchanged public builder then returns exactly one
 It publishes neither a partial ExecutionIR nor a partial plan. The scale
 evaluator treats only that byte-identical diagnostic as `expected_rejection`.
 
+The eleventh slice extends the existing random route to the exact 262,144-
+attempt qualification. The full-range u64 equality constraint selects
+candidate `0x00f233516a996304` at zero-based attempt 262,143. Generated and
+strict-replay decisions preserve every keyed field except origin; their plans
+are 34,297/34,296 bytes with IDs
+`plan/1f01b357206cb9b768172be41b415084b0ee49ef5494131dd50df74d195d185e`
+and
+`plan/a6d4516c28989dccf67d0989d7a71d8e60cc6315451761947386d86a75123ba7`.
+The graph remains one occurrence/scenario/operation/root-live fiber, eight
+types, 22 bindings, and 19 maps. Exact source, SemanticIR, bridge, workload,
+generated/replayed plan identities, replay mutation, missing source, and
+unowned-level closure are frozen without changing the public binder or any
+support, performance, or capacity claim.
+
 The nominal execution limits are not all reachable. Scenarios and
 simultaneously live fibers reach their exact 4,096 and 16,384 limits. Operations
 per scenario, total operations, total fibers, and source maps encounter the
@@ -203,14 +220,14 @@ must report the first diagnostic in the canonical semantic → bridge → plan
 order; it may not forge a downstream object to reach a preferred number.
 
 Random attempts are independently reachable: a u64 equality constraint targets
-the candidate at zero-based attempt `N - 1`. Attempts 8,192, 262,144, and
-1,000,000 succeed exactly; target 1,000,001 returns
-`VIAL_RANDOM_EXHAUSTED`. Replay must preserve the keyed normalized value and
-attempt exactly.
+the candidate at zero-based attempt `N - 1`. The 8,192 and 262,144 generators
+now succeed exactly. The one-million limit and 1,000,001 exhaustion boundary
+remain selected but unimplemented. Replay preserves the keyed normalized value
+and attempt exactly.
 
 The AHB plan-byte recipes use real reset operations and referenced semantic
 identifiers. The exact one-/four-/sixteen-MiB gate, qualification, limit, and
 first-complete-record rejection are now implemented. These are construction/
-boundary facts only. `.17.2.4.2` remains active for higher random and structural
-levels, final qualification, and cleanup; no scale capacity is supported until
-later measurement and promotion.
+boundary facts only. `.17.2.4.2` remains active for the one-million-attempt
+random limit, remaining structural levels, final qualification, and cleanup;
+no scale capacity is supported until later measurement and promotion.
