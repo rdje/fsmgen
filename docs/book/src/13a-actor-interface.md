@@ -69,7 +69,7 @@ The selected authoring shape is an actor-level `(clock-domains ...)` block:
 ```lisp
 (clock-domains
   (domain core (clock clk) :default)
-  (domain bus  (clock bus_clk)))
+  (domain io (clock bus_clk)))
 ```
 
 Existing `(clock clk)` stays the shorthand for one implicit actor domain named
@@ -95,11 +95,11 @@ actor into one ordinary scheduled `.fsm` per declared domain, using
 composition source. The top instantiates each domain module with `?fsmc` and
 owns only wiring plus explicit CDC child interfaces.
 
-For example, an actor named `clock_domain_event_crossing` with domains `bus`
-and `core` emits these review artifacts:
+For example, the file-backed `clock_domain_event_crossing` actor uses the
+portable domain names `source` and `core` and emits these review artifacts:
 
 ```text
-clock_domain_event_crossing__domain_bus.fsm
+clock_domain_event_crossing__domain_source.fsm
 clock_domain_event_crossing__domain_core.fsm
 clock_domain_event_crossing_top.fsm
 ```
@@ -118,7 +118,7 @@ channel:
 ```lisp
 (crossings
   (event rx_done
-    (from bus  rx_done_bus)
+    (from source rx_done_bus)
     (to   core rx_done_core)
     (ready rx_done_ready)))
 ```
@@ -171,10 +171,10 @@ run in different clock domains — is owned by an activation crossing:
 
 ```lisp
 (crossings
-  (activation worker (from core) (to bus)))
+  (activation worker (from core) (to worker)))
 ```
 
-`worker` names a declared transaction in the destination domain (`bus`); the
+`worker` names a declared transaction in the destination domain (`worker`); the
 calling transaction is in the source domain (`core`). The activation start/done
 handshake signals are compiler-internal, so the author declares only the
 crossing — not raw event pairs. One activation crossing auto-generates **two**
@@ -188,29 +188,29 @@ A complete actor:
 (actor cross_domain_activation
   (clock-domains
     (domain core (clock clk) (reset rst_n) :default)
-    (domain bus  (clock bus_clk) (reset bus_rst_n)))
+    (domain worker (clock bus_clk) (reset bus_rst_n)))
   (crossings
-    (activation worker (from core) (to bus)))
+    (activation worker (from core) (to worker)))
   (interface
     (input  start (domain core))
     (output done  (domain core))
-    (input  din    (width 8) (domain bus))
-    (output result (width 8) (domain bus))
-    (output worker_complete (domain bus)))
+    (input  din    (width 8) (domain worker))
+    (output result (width 8) (domain worker))
+    (output worker_complete (domain worker)))
   (transaction parent
     (domain core)
     (on start)
     (do worker)
     (complete done))
   (transaction worker
-    (domain bus)
+    (domain worker)
     (sample din as snap)
     (update result snap)
     (complete worker_complete)))
 ```
 
 This lowers to `cross_domain_activation__domain_core.fsm` (the caller),
-`cross_domain_activation__domain_bus.fsm` (`worker`), and
+`cross_domain_activation__domain_worker.fsm` (`worker`), and
 `cross_domain_activation_top.fsm`, which instantiates both domain modules and the
 two CDC children
 `cross_domain_activation__cdc_activation_worker_start` and
@@ -221,10 +221,10 @@ The handshake mirrors the event-crossing source idiom on both directions:
 
 - The caller (`core`) awaits `worker_start_ready` (the start CDC ready), drives a
   one-cycle `worker_start` request, then blocks on the `worker_done` pulse.
-- The start CDC synchronizes the request `core → bus` and emits a one-cycle
+- The start CDC synchronizes the request `core → worker` and emits a one-cycle
   `worker_start` pulse in the destination, which gates `worker`'s entry.
 - On completion, `worker` awaits `worker_done_ready`, drives a one-cycle
-  `worker_done` request, which the done CDC synchronizes `bus → core` and pulses
+  `worker_done` request, which the done CDC synchronizes `worker → core` and pulses
   back to release the caller.
 
 Because the request is one cycle and gated on the CDC `ready`, a held level
@@ -320,7 +320,7 @@ entry:
 ```lisp
 (clock-domains
   (domain core (clock clk)     (reset rst_n) :default)
-  (domain bus  (clock bus_clk) (reset (bus_rst_n async active_low))))
+  (domain io (clock bus_clk) (reset (bus_rst_n async active_low))))
 ```
 
 Each domain owns zero or one reset. A synchronous reset is sampled only on the

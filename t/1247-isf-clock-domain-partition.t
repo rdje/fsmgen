@@ -439,7 +439,7 @@ subtest 'multi-domain CLI HDL generation emits the generated top and CDC child' 
     is(join('', @{$stderr_buf || []}), '', 'multi-domain CLI HDL generation keeps stderr empty');
     ok(-f $out_path, 'multi-domain CLI HDL generation writes the requested HDL output');
     ok(-f File::Spec->catfile($outdir, 'clock_domain_event_crossing_top.fsm'), 'multi-domain CLI writes the generated top artifact');
-    ok(-f File::Spec->catfile($outdir, 'clock_domain_event_crossing__domain_bus.fsm'), 'multi-domain CLI writes the bus domain artifact');
+    ok(-f File::Spec->catfile($outdir, 'clock_domain_event_crossing__domain_source.fsm'), 'multi-domain CLI writes the source domain artifact');
     ok(-f File::Spec->catfile($outdir, 'clock_domain_event_crossing__domain_core.fsm'), 'multi-domain CLI writes the core domain artifact');
 
     my $hdl = read_file($out_path);
@@ -548,8 +548,8 @@ subtest 'clock-domain crossing fixture reports metadata and lowers supported dom
     is($report->{scheduled_fsm}, 'clock_domain_event_crossing_top.fsm', 'fixture report names the generated top');
     is_deeply(
         [map { $_->{name} } @{$report->{clock_domains}}],
-        [qw(bus core)],
-        'fixture report exposes bus and core domains',
+        [qw(source core)],
+        'fixture report exposes source and core domains',
     );
     is_deeply(
         [map { $_->{name} } @{$report->{crossings}}],
@@ -563,7 +563,7 @@ subtest 'clock-domain crossing fixture reports metadata and lowers supported dom
 
     my $lowered = $scheduler->lower($actor);
     my $dir = tempdir(CLEANUP => 1);
-    for my $basename (qw(clock_domain_event_crossing__domain_bus.fsm clock_domain_event_crossing__domain_core.fsm)) {
+    for my $basename (qw(clock_domain_event_crossing__domain_source.fsm clock_domain_event_crossing__domain_core.fsm)) {
         my $fsm_path = File::Spec->catfile($dir, $basename);
         write_file($fsm_path, $lowered->{files}{$basename});
         assert_direct_fsm_hdl_generation($fsm_path, "$basename reaches supported single-domain HDL generation");
@@ -579,8 +579,8 @@ subtest 'dual event-crossing fixture emits two CDC children and reports both dir
     is_deeply(
         sorted([keys %{$lowered->{files}}]),
         [qw(
-          clock_domain_dual_event_crossing__domain_bus.fsm
           clock_domain_dual_event_crossing__domain_core.fsm
+          clock_domain_dual_event_crossing__domain_source.fsm
           clock_domain_dual_event_crossing_top.fsm
         )],
         'dual event fixture emits one artifact per domain plus the generated top',
@@ -597,10 +597,10 @@ subtest 'dual event-crossing fixture emits two CDC children and reports both dir
         qr/\(\?rtl:core_ack_cdc clock_domain_dual_event_crossing__cdc_event_core_ack\)/,
         'generated top instantiates core_ack CDC child',
     );
-    like($top_fsm, qr{/bus\.req_seen_req/req_seen_cdc\.request/}, 'top wires bus-to-core request into req_seen CDC child');
+    like($top_fsm, qr{/source\.req_seen_req/req_seen_cdc\.request/}, 'top wires source-to-core request into req_seen CDC child');
     like($top_fsm, qr{/req_seen_cdc\.pulse/core\.req_seen_pulse/}, 'top wires req_seen destination pulse into the core domain');
-    like($top_fsm, qr{/core\.core_ack_req/core_ack_cdc\.request/}, 'top wires core-to-bus request into core_ack CDC child');
-    like($top_fsm, qr{/core_ack_cdc\.pulse/bus\.core_ack_pulse/}, 'top wires core_ack destination pulse into the bus domain');
+    like($top_fsm, qr{/core\.core_ack_req/core_ack_cdc\.request/}, 'top wires core-to-source request into core_ack CDC child');
+    like($top_fsm, qr{/core_ack_cdc\.pulse/source\.core_ack_pulse/}, 'top wires core_ack destination pulse into the source domain');
 
     my $req_seen_metadata_re = qr{
         \(\?rtlif:clock_domain_dual_event_crossing__cdc_event_req_seen
@@ -619,12 +619,12 @@ subtest 'dual event-crossing fixture emits two CDC children and reports both dir
     like(
         $top_fsm,
         $req_seen_metadata_re,
-        'req_seen CDC metadata records async active-low bus source reset and sync active-high core destination reset',
+        'req_seen CDC metadata records async active-low source reset and sync active-high core destination reset',
     );
     like(
         $top_fsm,
         $core_ack_metadata_re,
-        'core_ack CDC metadata records sync active-high core source reset and async active-low bus destination reset',
+        'core_ack CDC metadata records sync active-high core source reset and async active-low source destination reset',
     );
 
     my $report = decode_json($scheduler->report($actor));
@@ -635,12 +635,12 @@ subtest 'dual event-crossing fixture emits two CDC children and reports both dir
     );
     my %reported_domain = map { $_->{name} => $_ } @{$report->{clock_domains}};
     is_deeply(
-        $reported_domain{bus}{crossings},
+        $reported_domain{source}{crossings},
         [
             { event => 'req_seen', role => 'source',      signal => 'req_seen_req',   ready => 'req_seen_ready' },
             { event => 'core_ack', role => 'destination', signal => 'core_ack_pulse', ready => undef },
         ],
-        'bus-domain report includes source and destination crossing endpoints',
+        'source-domain report includes source and destination crossing endpoints',
     );
     is_deeply(
         $reported_domain{core}{crossings},
@@ -714,8 +714,8 @@ subtest 'no-reset event-crossing fixture emits reset-absent CDC metadata' => sub
     is_deeply(
         sorted([keys %{$lowered->{files}}]),
         [qw(
-          clock_domain_no_reset_event_crossing__domain_bus.fsm
           clock_domain_no_reset_event_crossing__domain_core.fsm
+          clock_domain_no_reset_event_crossing__domain_source.fsm
           clock_domain_no_reset_event_crossing_top.fsm
         )],
         'no-reset event fixture emits one artifact per domain plus the generated top',
@@ -749,9 +749,9 @@ subtest 'no-reset event-crossing fixture emits reset-absent CDC metadata' => sub
     );
     my %reported_domain = map { $_->{name} => $_ } @{$report->{clock_domains}};
     is_deeply(
-        $reported_domain{bus}{crossings},
+        $reported_domain{source}{crossings},
         [{ event => 'req_seen', role => 'source', signal => 'req_seen_req', ready => 'req_seen_ready' }],
-        'bus-domain report includes the source crossing endpoint',
+        'source-domain report includes the source crossing endpoint',
     );
     is_deeply(
         $reported_domain{core}{crossings},
@@ -790,7 +790,7 @@ subtest 'no-reset event-crossing fixture emits reset-absent CDC metadata' => sub
     unlike($hdl, qr/\binput\s+wire\s+(?:source_reset|dest_reset)\b/,
         'no-reset CDC child does not expose absent reset ports');
     like($hdl, qr/always_ff\s*@\(posedge\s+bus_clk\)\s+begin\s+(?!if\s*\()/s,
-        'no-reset bus domain emits clock-only sequential logic');
+        'no-reset source domain emits clock-only sequential logic');
     like($hdl, qr/always_ff\s*@\(posedge\s+core_clk\)\s+begin\s+(?!if\s*\()/s,
         'no-reset core domain emits clock-only sequential logic');
 };

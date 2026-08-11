@@ -37,8 +37,8 @@ subtest 'help output names the active bin/fsmgen entrypoint' => sub {
     );
     like(
         $output,
-        qr/default: <fsm_name>\.<ext> in current working directory/s,
-        'help output now describes the current-working-directory default output path honestly',
+        qr/default: \.artifacts\/<language>\/<fsm_name>\.<ext>/s,
+        'help output describes the repository-local language-specific default output path',
     );
 };
 

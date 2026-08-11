@@ -7,15 +7,13 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.2`; director-selected before
+- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.3`; director-selected before
   the otherwise-next HIAL/VIAL one-million-attempt slice.
-- current_state: `.1` proves pushed SHA `de9d50a5fb17074d29615ea866cd3cc6af503a3b`
-  passed Knowledge Map/mdBook, but regression `31367105225` failed t/1247,
-  t/1255, t/132, t/1437, and t/1438 before its six-hour cancellation. Its
-  1,103-file tail is unsigned; local t/1438 reproduces the explicit-`wire`
-  mismatch. Separate leaves own every failure family and hosted runtime.
-- next_action: repair the portable-identifier fixture and canonical help-output
-  expectation owned by `.2`.
+- current_state: `.1` audits pushed SHA `de9d50a5fb17074d29615ea866cd3cc6af503a3b`;
+  `.2` repairs its portable-identifier and CLI-help failures. Regression
+  `31367105225` still owns t/1255, t/1437, t/1438, hosted runtime, and an
+  unsigned 1,103-file tail through separate leaves.
+- next_action: restore the missing schedule-report golden-matrix owner in `.3`.
 - in_flight_uncommitted: none.
 - blockers: none.
 - push_state: decision `0062`; derive with `git rev-list --count @{upstream}..HEAD`.

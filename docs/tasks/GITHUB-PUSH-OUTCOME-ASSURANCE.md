@@ -56,11 +56,11 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (hosted result audit and recovery decomposition)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Repair the hosted CLI contract failures in t/1247 and t/132 while preserving portable identifiers and repository-relative output policy.`
   Acceptance: `Replace the t/1247 fixture's VHDL-reserved child-instance identifier without weakening portable validation, and align t/132 with the canonical repository-root-relative default output contract rather than a current-working-directory assumption; focused tests pass and no persisted project path depends on an absolute checkout path.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The pre-fix guarded t/1247/t/132 run reproduced both hosted failures: the file-backed multi-domain fixture generated ?fsmc:bus, which portable HDL validation rejected because bus is VHDL-reserved before the requested output could exist, and t/132 expected obsolete current-working-directory help text instead of the shipped .artifacts/<language>/<fsm_name>.<ext> contract. All three public event-crossing fixtures now use portable domain child name source while retaining their bus-facing clocks and signals; exact generated-artifact, report, wiring, test-description, and mdBook examples agree. t/132 now verifies the canonical repository-local language-specific output. The RAM-guarded t/1247/t/132/t/1463 regression reports All tests successful at Files=3, Tests=20. Every mdBook chapter test passes, the repository-local HTML build succeeds, and its exact ignored 88-file/18-MiB output is removed. The shipped_behavior authority records the exact 0-line/+93-byte book delta with no ceiling increase. No compiler, parser, lowering, generated-HDL, or output-placement behavior changed.`
+  Commit: `this commit (portable fixture and current CLI-help contract repair)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.3`
   Status: `pending`
@@ -116,11 +116,24 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 
 - None.
 
-## Acceptance Checklist (enforced for implementation changes)
+## Acceptance Checklist — `.2` (enforced)
 
-<!-- Each implementation leaf must replace these with fresh checked boxes and
-     box-scoped evidence in its staged code-bearing commit. -->
-
-- [ ] **ROOT CAUSE (WHY + WHERE)** — `pending per implementation leaf`
-- [ ] **ADDRESSED (verified)** — `pending per implementation leaf`
-- [ ] **NO REGRESSION** — `pending per implementation leaf`
+- [x] **ROOT CAUSE (WHY + WHERE)** — The pre-fix RAM-guarded reproduction
+  reports the fatal portable-child diagnostic at t/1247-isf-clock-domain-partition.t line 438:
+  the public fixture lowers
+  domain `bus` to `?fsmc:bus`, which HDL generation rejects because `bus` is
+  VHDL-reserved. The parallel stale help regex fails at
+  t/132-cli-help-wording.t line 38 because it still requires a
+  current-working-directory default while the CLI already advertises the
+  canonical `.artifacts/<language>/<fsm_name>.<ext>` path.
+- [x] **ADDRESSED (verified)** — The three file-backed event-crossing fixtures
+  and their exact t/1247/book expectations now use portable domain child name
+  `source` without renaming bus-facing signals or clocks; t/132 now checks the
+  shipped repository-local, language-specific help contract. The combined
+  focused and adjacent run passes all 20 assertions.
+- [x] **NO REGRESSION** — RAM-guarded t/1247, t/132, and adjacent CLI artifact
+  placement t/1463 report `All tests successful` at `Files=3, Tests=20`.
+  Every mdBook chapter test passes; its repository-local HTML build succeeds
+  and the exact ignored build output is removed before staging. Its maintained
+  reference authority records the exact 0-line/+93-byte delta without changing
+  a ceiling.

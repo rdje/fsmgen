@@ -49,11 +49,11 @@ For a reset-declared two-domain actor with one event crossing:
 ```text
 (actor clock_domain_event_crossing
   (clock-domains
-    (domain bus  (clock bus_clk)  (reset bus_rst_n) :default)
+    (domain source (clock bus_clk) (reset bus_rst_n) :default)
     (domain core (clock core_clk) (reset core_rst_n)))
   (crossings
     (event byte_ready
-      (from bus byte_ready_req)
+      (from source byte_ready_req)
       (to core byte_ready_pulse)
       (ready byte_ready_ready)))
   ...)
@@ -63,15 +63,15 @@ For a reset-declared two-domain actor with one event crossing:
 composition top:
 
 ```text
-clock_domain_event_crossing__domain_bus.fsm
+clock_domain_event_crossing__domain_source.fsm
 clock_domain_event_crossing__domain_core.fsm
 clock_domain_event_crossing_top.fsm
 ```
 
-The bus artifact is still a normal single-clock `.fsm`:
+The source artifact is still a normal single-clock `.fsm`:
 
 ```lisp
-(?fsm:clock_domain_event_crossing__domain_bus
+(?fsm:clock_domain_event_crossing__domain_source
   (+system
     (clock bus_clk)
     (sreset bus_rst_n))
@@ -99,18 +99,18 @@ The generated top owns the inter-domain wiring:
     bus_start
     core_seen>
   )
-  (?fsmc:bus clock_domain_event_crossing__domain_bus)
+  (?fsmc:source clock_domain_event_crossing__domain_source)
   (?fsmc:core clock_domain_event_crossing__domain_core)
   (?rtl:byte_ready_cdc clock_domain_event_crossing__cdc_event_byte_ready)
   (?wiring:domain_wiring
-    /bus_start/bus.bus_start/
+    /bus_start/source.bus_start/
     /core.core_seen/core_seen/
     /bus_clk/byte_ready_cdc.source_clk/
     /core_clk/byte_ready_cdc.dest_clk/
     /bus_rst_n/byte_ready_cdc.source_reset/
     /core_rst_n/byte_ready_cdc.dest_reset/
-    /bus.byte_ready_req/byte_ready_cdc.request/
-    /byte_ready_cdc.ready/bus.byte_ready_ready/
+    /source.byte_ready_req/byte_ready_cdc.request/
+    /byte_ready_cdc.ready/source.byte_ready_ready/
     /byte_ready_cdc.pulse/core.byte_ready_pulse/
   )
 )
