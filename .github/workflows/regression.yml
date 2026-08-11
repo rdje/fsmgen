@@ -11,8 +11,10 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  doctrines:
+    name: Doctrine enforcement
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
     - name: Check out repository
       uses: actions/checkout@v4
@@ -37,13 +39,147 @@ jobs:
         done < <(git log --format='%s' "$base"..HEAD)
         [ "$bad" -eq 0 ]
 
+  book:
+    name: mdBook build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+
+    - name: Set up mdBook
+      uses: peaceiris/actions-mdbook@v2
+
+    - name: Build user documentation
+      run: mdbook build docs/book
+
+  perl_files:
+    name: Perl files ${{ matrix.shard }}/16
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+
     - name: Set up Perl
       uses: shogo82148/actions-setup-perl@v1
       with:
         perl-version: '5.32'
 
-    - name: Set up mdBook
-      uses: peaceiris/actions-mdbook@v2
+    - name: Run full-suite file shard
+      run: ./bin/ci-regression full --no-book --hosted-file-shard "${{ matrix.shard }}/16"
 
-    - name: Run shared regression CI script
-      run: ./bin/ci-regression
+  perl_dynamic:
+    name: Perl dynamic case ${{ matrix.shard }}/68
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        shard:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          - 8
+          - 9
+          - 10
+          - 11
+          - 12
+          - 13
+          - 14
+          - 15
+          - 16
+          - 17
+          - 18
+          - 19
+          - 20
+          - 21
+          - 22
+          - 23
+          - 24
+          - 25
+          - 26
+          - 27
+          - 28
+          - 29
+          - 30
+          - 31
+          - 32
+          - 33
+          - 34
+          - 35
+          - 36
+          - 37
+          - 38
+          - 39
+          - 40
+          - 41
+          - 42
+          - 43
+          - 44
+          - 45
+          - 46
+          - 47
+          - 48
+          - 49
+          - 50
+          - 51
+          - 52
+          - 53
+          - 54
+          - 55
+          - 56
+          - 57
+          - 58
+          - 59
+          - 60
+          - 61
+          - 62
+          - 63
+          - 64
+          - 65
+          - 66
+          - 67
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+
+    - name: Set up Perl
+      uses: shogo82148/actions-setup-perl@v1
+      with:
+        perl-version: '5.32'
+
+    - name: Run dynamic transaction-ID case shard
+      run: ./bin/ci-regression full --no-book --hosted-dynamic-shard "${{ matrix.shard }}/68"
+
+  build:
+    name: build
+    if: ${{ always() }}
+    needs: [doctrines, book, perl_files, perl_dynamic]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - name: Require every CI family to succeed
+      env:
+        DOCTRINES_RESULT: ${{ needs.doctrines.result }}
+        BOOK_RESULT: ${{ needs.book.result }}
+        PERL_FILES_RESULT: ${{ needs.perl_files.result }}
+        PERL_DYNAMIC_RESULT: ${{ needs.perl_dynamic.result }}
+      run: |
+        printf 'doctrines=%s\n' "$DOCTRINES_RESULT"
+        printf 'book=%s\n' "$BOOK_RESULT"
+        printf 'perl-files=%s\n' "$PERL_FILES_RESULT"
+        printf 'perl-dynamic=%s\n' "$PERL_DYNAMIC_RESULT"
+        test "$DOCTRINES_RESULT" = success
+        test "$BOOK_RESULT" = success
+        test "$PERL_FILES_RESULT" = success
+        test "$PERL_DYNAMIC_RESULT" = success

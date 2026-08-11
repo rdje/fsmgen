@@ -12,6 +12,10 @@ cd "$REPO_ROOT"
 MODE="full"
 RUN_BOOK=1
 DRY_RUN=0
+HOSTED_FILE_SHARD=""
+HOSTED_DYNAMIC_SHARD=""
+
+HOSTED_DYNAMIC_TEST="t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t"
 
 QUICK_TESTS=(
   t/01-regression.t
@@ -32,7 +36,7 @@ unset IFS
 
 usage() {
   cat <<'USAGE'
-Usage: ./bin/ci-regression [quick|smoke|isf|full] [--no-book] [--dry-run]
+Usage: ./bin/ci-regression [quick|smoke|isf|full] [options]
 
 Modes:
   quick  Curated smoke set for fast turnaround across direct FSM,
@@ -43,10 +47,17 @@ Modes:
   full   Complete Perl regression suite. This is the default.
 
 Options:
-  --no-book  Skip mdBook build for this invocation.
-  --dry-run  Print selected steps without executing them.
-  --list     Print the concrete quick and ISF test lists.
-  --help     Show this help text.
+  --no-book                     Skip mdBook build for this invocation.
+  --dry-run                     Print selected steps without executing them.
+  --hosted-file-shard I/N       Run file shard I of N, excluding the separately
+                                sharded dynamic transaction-ID focused test.
+  --hosted-dynamic-shard I/N    Run case shard I of N from the dynamic
+                                transaction-ID focused test.
+  --list                        Print the concrete quick and ISF test lists.
+  --help                        Show this help text.
+
+Hosted shard options are full-mode CI plumbing. They are zero-based, mutually
+exclusive, require --no-book, and leave the default local full gate unchanged.
 USAGE
 }
 
@@ -87,6 +98,72 @@ require_test_files() {
   done
 }
 
+validate_shard_spec() {
+  local option="$1"
+  local spec="$2"
+  local index
+  local count
+
+  if [[ ! "$spec" =~ ^([0-9]+)/([1-9][0-9]*)$ ]]; then
+    printf 'ci-regression: %s requires zero-based I/N integers: %s\n' "$option" "$spec" >&2
+    exit 2
+  fi
+
+  index="${BASH_REMATCH[1]}"
+  count="${BASH_REMATCH[2]}"
+  if (( index >= count )); then
+    printf 'ci-regression: %s index %s is outside shard count %s\n' "$option" "$index" "$count" >&2
+    exit 2
+  fi
+}
+
+select_hosted_file_shard() {
+  local spec="$1"
+  local index="${spec%/*}"
+  local count="${spec#*/}"
+  local ordinary_index=0
+  local test_file
+  local -a full_tests=()
+  local -a selected_tests=()
+
+  require_tool git
+  while IFS= read -r test_file; do
+    full_tests+=("$test_file")
+  done < <(git ls-files 't/*.t' | LC_ALL=C sort)
+
+  require_test_files "${full_tests[@]}"
+  for test_file in "${full_tests[@]}"; do
+    if [[ "$test_file" == "$HOSTED_DYNAMIC_TEST" ]]; then
+      continue
+    fi
+    if (( ordinary_index % count == index )); then
+      selected_tests+=("$test_file")
+    fi
+    ((ordinary_index += 1))
+  done
+
+  if (( ${#selected_tests[@]} == 0 )); then
+    printf 'ci-regression: hosted file shard %s selected no tests\n' "$spec" >&2
+    exit 1
+  fi
+
+  run_step "Perl regression file shard $spec" prove -I perl "${selected_tests[@]}"
+}
+
+run_hosted_dynamic_shard() {
+  local spec="$1"
+  local index="${spec%/*}"
+  local count="${spec#*/}"
+
+  require_test_files "$HOSTED_DYNAMIC_TEST"
+  require_tool env
+  run_step "Perl dynamic transaction-ID case shard $spec" \
+    env \
+    "FSMGEN_DYNAMIC_CASE_SHARD_INDEX=$index" \
+    "FSMGEN_DYNAMIC_CASE_SHARD_COUNT=$count" \
+    prove -I perl "$HOSTED_DYNAMIC_TEST"
+}
+
 while (($#)); do
   case "$1" in
     quick|smoke|isf|full)
@@ -97,6 +174,28 @@ while (($#)); do
       ;;
     --dry-run)
       DRY_RUN=1
+      ;;
+    --hosted-file-shard)
+      if (($# < 2)); then
+        printf 'ci-regression: --hosted-file-shard requires I/N\n' >&2
+        exit 2
+      fi
+      HOSTED_FILE_SHARD="$2"
+      shift
+      ;;
+    --hosted-file-shard=*)
+      HOSTED_FILE_SHARD="${1#*=}"
+      ;;
+    --hosted-dynamic-shard)
+      if (($# < 2)); then
+        printf 'ci-regression: --hosted-dynamic-shard requires I/N\n' >&2
+        exit 2
+      fi
+      HOSTED_DYNAMIC_SHARD="$2"
+      shift
+      ;;
+    --hosted-dynamic-shard=*)
+      HOSTED_DYNAMIC_SHARD="${1#*=}"
       ;;
     --list)
       list_modes
@@ -115,6 +214,25 @@ while (($#)); do
   shift
 done
 
+if [[ -n "$HOSTED_FILE_SHARD" ]]; then
+  validate_shard_spec --hosted-file-shard "$HOSTED_FILE_SHARD"
+fi
+if [[ -n "$HOSTED_DYNAMIC_SHARD" ]]; then
+  validate_shard_spec --hosted-dynamic-shard "$HOSTED_DYNAMIC_SHARD"
+fi
+if [[ -n "$HOSTED_FILE_SHARD" && -n "$HOSTED_DYNAMIC_SHARD" ]]; then
+  printf 'ci-regression: hosted file and dynamic shards are mutually exclusive\n' >&2
+  exit 2
+fi
+if [[ -n "$HOSTED_FILE_SHARD$HOSTED_DYNAMIC_SHARD" && "$MODE" != "full" ]]; then
+  printf 'ci-regression: hosted shards require full mode\n' >&2
+  exit 2
+fi
+if [[ -n "$HOSTED_FILE_SHARD$HOSTED_DYNAMIC_SHARD" && "$RUN_BOOK" -ne 0 ]]; then
+  printf 'ci-regression: hosted shards require --no-book; the workflow builds the book separately\n' >&2
+  exit 2
+fi
+
 if (( ! DRY_RUN )); then
   require_tool prove
   if (( RUN_BOOK )); then
@@ -132,7 +250,13 @@ case "$MODE" in
     run_step "Perl ISF regression suite" prove -I perl "${ISF_TESTS[@]}"
     ;;
   full)
-    run_step "Perl regression suite" prove -I perl t
+    if [[ -n "$HOSTED_FILE_SHARD" ]]; then
+      select_hosted_file_shard "$HOSTED_FILE_SHARD"
+    elif [[ -n "$HOSTED_DYNAMIC_SHARD" ]]; then
+      run_hosted_dynamic_shard "$HOSTED_DYNAMIC_SHARD"
+    else
+      run_step "Perl regression suite" prove -I perl t
+    fi
     ;;
 esac
 

@@ -84,10 +84,22 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (accept equivalent RLAST net spelling)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6`
-  Status: `pending`
+  Status: `active`
   Goal: `Make the full Perl regression produce conclusive GitHub results within the hosted job limit without reducing coverage.`
-  Acceptance: `Measure the current suite and slow-test distribution; partition or otherwise bound hosted execution so every t/ test is covered exactly as intended, failures surface promptly, artifacts remain repository-local, and all required jobs reach terminal results within configured GitHub limits; do not mask remaining failures behind fail-fast or cancellation.`
-  Verification: `pending`
+  Children: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.1, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.1`
+  Status: `done`
+  Goal: `Implement and locally prove a closed hosted partition that isolates both file-level and in-file runtime outliers.`
+  Acceptance: `Measure the current suite and observed slow-test distribution; partition every tracked t/*.t file exactly once except an explicitly isolated in-file outlier; partition every canonical case of that outlier exactly once; keep local full regression unchanged; disable matrix fail-fast; bound every long job below GitHub's six-hour maximum; keep artifacts repository-local; preserve one required aggregate result.`
+  Verification: `Cancelled run 31367105225 yields 496 sequential suite-file completions before t/1438: t/1436 consumed 10,027 seconds, t/1437 consumed 6,561 seconds, and the next observed interval was 92 seconds. The current tracked inventory is 1,600 test files. Sixteen deterministic ordinary shards cover the 1,599 non-outlier files exactly once at 100 files for shards 0-14 and 99 for shard 15; the measured t/1436 and t/1437 outliers land separately in shards 14 and 15. Sixty-eight dynamic shards cover the exact 68-case t/1438 inventory one case per process; its four shared non-matrix checks run only on shard zero, while unsharded and explicit-filter behavior remain intact. Both matrices set fail-fast false and five-hour timeouts; doctrine and book jobs are independent, and the always-run build aggregate rejects any non-success family. Focused t/1183 proves both complete/disjoint unions, all 84 matrix coordinates, fail-closed arguments, unchanged local full selection, and aggregate wiring at Files=1/Tests=9 in 28 seconds. A real guarded hosted-style dynamic shard 0/68 passes at Files=1/Tests=6 in 9 seconds; the previously verified depth-3 case completed in 907 seconds, far below the new five-hour per-case ceiling. Decision 0063 owns the architecture, one exact 1108-to-1109 Knowledge-card ceiling authority, finite transition deltas, and the exact 0-file/+5-line/+373-byte mdBook authority. The focused containment/ceiling/reference suite passes at Files=3/Tests=30; live containment covers all 2,979 declared Markdown paths, Memory is 46 lines, and Knowledge Map reports 1,109 facts/5,764 questions/5,930 occurrences/121 shards. Bash/Perl syntax, workflow YAML loading, task integrity, all 53 mdBook chapter tests, and the repository-local 88-file/18,312-KiB build pass; the build output is removed exactly. No parser, generator, HDL, protocol, CLI-result, or local full-gate behavior changes.`
+  Commit: `this commit (closed hosted file/case regression partition)`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2`
+  Status: `pending`
+  Goal: `Qualify the new partition on GitHub for the exact next pushed revision and remediate every non-success.`
+  Acceptance: `At the next cadence-authorized or director-authorized push, prove the exact remote SHA; wait for all doctrine, book, 16 ordinary-file, 68 dynamic-case, and aggregate jobs to become terminal; record every URL and conclusion; repair and requalify any failure, timeout, cancellation, skipped required job, missing shard, or aggregate mismatch before marking .6 done.`
+  Verification: `Pending the next authorized push. Decision 0062 currently forbids an automatic early push below the 200-commit cadence, and the director requested outcome checking rather than an immediate push.`
   Commit: `pending`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.7`
@@ -105,16 +117,49 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 - `2026-08-11`: Split recovery by failure family so a simple SystemVerilog
   formatting expectation cannot conceal unrelated CLI, coverage-map, IAL2,
   and hosted-runtime defects.
+- `2026-08-11`: Preserve the ordinary local full gate, but host it as a closed
+  union of 16 deterministic file shards and 68 one-case dynamic outlier
+  shards. Disable fail-fast and retain an always-run aggregate so failures are
+  isolated without being cancelled or hidden.
 
 ## Open Questions
 
-- Which tests remained unexecuted when the hosted regression reached six
-  hours? Leaf `.6` must derive this from the ordered test inventory rather than
-  infer it from the last visible file.
+- None. The cancelled job began `t/1438` but did not complete it; 1,103
+  lexically later tracked test files were never started.
 
 ## Blockers
 
-- None.
+- `.6.2` must wait for the next cadence-authorized or director-authorized push;
+  the current branch is below decision `0062`'s 200-commit automatic cadence.
+
+## Acceptance Checklist — `.6.1` (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `.github/workflows/regression.yml` ran one
+  unbounded sequential `./bin/ci-regression` job. Hosted run `31367105225`
+  measured 10,027 seconds in `t/1436`, 6,561 seconds in `t/1437`, then entered
+  the 68-case `t/1438` until GitHub cancelled the job at six hours, concealing
+  1,103 later files. Its diagnostic stream also records
+  `# at t/1437-axi-ial2-manager-capacity-status-generator.t line 1254`. File-only
+  sharding would leave the in-file outlier intact.
+- [x] **ADDRESSED (verified)** — `bin/ci-regression` now exposes zero-based,
+  fail-closed hosted file/case shard plumbing while leaving its default full
+  command unchanged. The workflow schedules all 16 file coordinates and all
+  68 one-case dynamic coordinates with five-hour ceilings and fail-fast
+  disabled. Focused `t/1183` proves exact disjoint unions for 1,599 ordinary
+  files and 68 dynamic cases; a real guarded `0/68` invocation passes all six
+  top-level tests in nine seconds.
+- [x] **NO REGRESSION** — The measured `t/1436` and `t/1437` files land in
+  distinct ordinary shards, and the known slow depth-3 dynamic case previously
+  passed in 907 seconds, below the new 300-minute job ceiling. Bash/Perl syntax,
+  workflow YAML loading, the Files=3/Tests=30 containment/authority suite,
+  reports `All tests successful` at `Files=3, Tests=30`. Knowledge Map
+  generation/check/query, task integrity, bounded Memory, all 53 mdBook chapter
+  tests, and the repository-local mdBook build pass; its exact
+  88-file/18,312-KiB output is removed. Decision `0063` authorizes the one exact
+  Knowledge-card ceiling step and fresh book/transition deltas without changing
+  any unrelated ceiling. Product and local full-gate behavior remain unchanged.
+  Exact hosted terminal qualification is explicitly retained by `.6.2` for the
+  next authorized push rather than inferred locally.
 
 ## Acceptance Checklist — `.5` (enforced)
 

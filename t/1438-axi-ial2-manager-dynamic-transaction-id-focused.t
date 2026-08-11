@@ -630,6 +630,36 @@ my @DYNAMIC_CASES = (
     },
 );
 
+my $dynamic_case_shard_active =
+    exists($ENV{FSMGEN_DYNAMIC_CASE_SHARD_INDEX})
+    || exists($ENV{FSMGEN_DYNAMIC_CASE_SHARD_COUNT});
+my $dynamic_case_shard_index = 0;
+
+if ($dynamic_case_shard_active) {
+    die "FSMGEN_DYNAMIC_CASE_FILTER cannot be combined with dynamic case sharding\n"
+        if defined($ENV{FSMGEN_DYNAMIC_CASE_FILTER})
+            && length($ENV{FSMGEN_DYNAMIC_CASE_FILTER});
+    die "dynamic case sharding requires both FSMGEN_DYNAMIC_CASE_SHARD_INDEX and FSMGEN_DYNAMIC_CASE_SHARD_COUNT\n"
+        unless defined($ENV{FSMGEN_DYNAMIC_CASE_SHARD_INDEX})
+            && defined($ENV{FSMGEN_DYNAMIC_CASE_SHARD_COUNT});
+
+    $dynamic_case_shard_index = $ENV{FSMGEN_DYNAMIC_CASE_SHARD_INDEX};
+    my $dynamic_case_shard_count = $ENV{FSMGEN_DYNAMIC_CASE_SHARD_COUNT};
+    die "FSMGEN_DYNAMIC_CASE_SHARD_INDEX must be a zero-based integer\n"
+        unless $dynamic_case_shard_index =~ /\A(?:0|[1-9][0-9]*)\z/;
+    die "FSMGEN_DYNAMIC_CASE_SHARD_COUNT must be a positive integer\n"
+        unless $dynamic_case_shard_count =~ /\A[1-9][0-9]*\z/;
+    die "dynamic case shard index $dynamic_case_shard_index is outside shard count $dynamic_case_shard_count\n"
+        if $dynamic_case_shard_index >= $dynamic_case_shard_count;
+
+    my @selected_indices = grep {
+        $_ % $dynamic_case_shard_count == $dynamic_case_shard_index
+    } 0 .. $#DYNAMIC_CASES;
+    @DYNAMIC_CASES = @DYNAMIC_CASES[@selected_indices];
+    die "dynamic case shard $dynamic_case_shard_index/$dynamic_case_shard_count selected no cases\n"
+        unless @DYNAMIC_CASES;
+}
+
 if (defined($ENV{FSMGEN_DYNAMIC_CASE_FILTER}) && length($ENV{FSMGEN_DYNAMIC_CASE_FILTER})) {
     my $filter = $ENV{FSMGEN_DYNAMIC_CASE_FILTER};
     @DYNAMIC_CASES = grep {
@@ -641,6 +671,13 @@ if (defined($ENV{FSMGEN_DYNAMIC_CASE_FILTER}) && length($ENV{FSMGEN_DYNAMIC_CASE
         unless @DYNAMIC_CASES;
 }
 
+if ($ENV{FSMGEN_DYNAMIC_CASE_LIST_ONLY}) {
+    print "$_->{relpath}\n" for @DYNAMIC_CASES;
+    exit 0;
+}
+
+my $run_dynamic_shared_cases =
+    !$dynamic_case_shard_active || $dynamic_case_shard_index == 0;
 my $adapter = FSM::Adapter::IAL2::PPIF->new();
 my $base = parse_ppif('ppif/axi_manager_capacity_status.ppif');
 
@@ -694,7 +731,7 @@ subtest 'dynamic same-ID reject maps to two-dynamic mixed response-demux asserti
             axi0_r0_r1_read_dynamic_active_id_unique
         )],
     );
-};
+} if $run_dynamic_shared_cases;
 
 subtest 'dynamic same-ID reject maps to one-dynamic mixed response-demux static-ID exclusion assertions' => sub {
     my $relpath = 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux.ppif';
@@ -761,7 +798,7 @@ subtest 'dynamic same-ID reject maps to one-dynamic mixed response-demux static-
             axi0_r1_static_completion_active
         )],
     );
-};
+} if $run_dynamic_shared_cases;
 
 subtest 'dynamic same-ID reject maps to three-static mixed response-demux static-ID exclusion assertions' => sub {
     my $relpath = 'ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last.ppif';
@@ -853,7 +890,7 @@ subtest 'dynamic same-ID reject maps to three-static mixed response-demux static
             axi0_r3_static_completion_active
         )],
     );
-};
+} if $run_dynamic_shared_cases;
 
 subtest 'dynamic same-ID reject maps to single-active response-demux assertions' => sub {
     my $relpath = 'ppif/axi_manager_capacity_status_dynamic_read_response_demux.ppif';
@@ -897,7 +934,7 @@ subtest 'dynamic same-ID reject maps to single-active response-demux assertions'
             axi0_r0_dynamic_completion_active
         )],
     );
-};
+} if $run_dynamic_shared_cases;
 
 subtest 'bounded CLI JSON checks cover dynamic PPIF support accounting' => sub {
     plan skip_all => 'FSMGEN_DYNAMIC_SKIP_CLI_JSON requested by caller'

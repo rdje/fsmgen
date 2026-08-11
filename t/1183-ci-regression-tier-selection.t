@@ -8,6 +8,17 @@ use IPC::Cmd qw(run);
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my $ci = File::Spec->catfile($repo_root, 'bin', 'ci-regression');
+my $dynamic_test = File::Spec->catfile(
+    $repo_root,
+    't',
+    '1438-axi-ial2-manager-dynamic-transaction-id-focused.t',
+);
+my $workflow = File::Spec->catfile(
+    $repo_root,
+    '.github',
+    'workflows',
+    'regression.yml',
+);
 
 sub run_ci {
     my (@args) = @_;
@@ -29,6 +40,45 @@ sub slurp {
     my $text = do { local $/; <$fh> };
     close $fh or die "cannot close $path: $!";
     return $text;
+}
+
+sub run_dynamic_case_list {
+    my (%args) = @_;
+    local $ENV{FSMGEN_DYNAMIC_CASE_LIST_ONLY} = 1;
+    local $ENV{FSMGEN_DYNAMIC_CASE_SHARD_INDEX};
+    local $ENV{FSMGEN_DYNAMIC_CASE_SHARD_COUNT};
+    delete $ENV{FSMGEN_DYNAMIC_CASE_SHARD_INDEX};
+    delete $ENV{FSMGEN_DYNAMIC_CASE_SHARD_COUNT};
+    delete $ENV{FSMGEN_DYNAMIC_CASE_FILTER};
+
+    if (defined($args{index}) || defined($args{count})) {
+        $ENV{FSMGEN_DYNAMIC_CASE_SHARD_INDEX} = $args{index};
+        $ENV{FSMGEN_DYNAMIC_CASE_SHARD_COUNT} = $args{count};
+    }
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => [$^X, $dynamic_test],
+    );
+    return {
+        success => $success,
+        stdout  => join('', @{$stdout_buf || []}),
+        stderr  => join('', @{$stderr_buf || []}),
+        error   => $error_message,
+    };
+}
+
+sub tracked_perl_tests {
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['git', '-C', $repo_root, 'ls-files', 't/*.t'],
+    );
+    die "cannot enumerate tracked Perl tests: $error_message"
+        unless $success;
+    die 'tracked Perl test inventory wrote to stderr: '
+        . join('', @{$stderr_buf || []})
+        if @{$stderr_buf || []};
+
+    my $stdout = join('', @{$stdout_buf || []});
+    return sort grep { length } split /\n/, $stdout;
 }
 
 subtest 'list mode advertises concrete quick and ISF test tiers' => sub {
@@ -136,6 +186,126 @@ subtest 'dry-run modes select the expected command families' => sub {
     is($full->{stderr}, '', 'full dry-run keeps stderr clean');
     like($full->{stdout}, qr/==> Perl regression suite/, 'full dry-run selects full suite');
     like($full->{stdout}, qr/\bprove\s+-I\s+perl\s+t\b/, 'full dry-run preserves default prove command');
+};
+
+subtest 'hosted file shards form one exact disjoint full-suite inventory' => sub {
+    my $dynamic_relpath = 't/1438-axi-ial2-manager-dynamic-transaction-id-focused.t';
+    my @expected = grep { $_ ne $dynamic_relpath } tracked_perl_tests();
+    my %seen;
+
+    for my $index (0 .. 15) {
+        my $result = run_ci(
+            'full',
+            '--no-book',
+            "--hosted-file-shard=$index/16",
+            '--dry-run',
+        );
+        ok($result->{success}, "hosted file shard $index/16 dry-run succeeds");
+        is($result->{stderr}, '', "hosted file shard $index/16 keeps stderr clean");
+        like(
+            $result->{stdout},
+            qr/==> Perl regression file shard \Q$index\/16\E/,
+            "hosted file shard $index/16 identifies itself",
+        );
+        my @selected = $result->{stdout} =~ m{\b(t/[^\s]+\.t)\b}g;
+        ok(@selected, "hosted file shard $index/16 is non-empty");
+        for my $test_file (@selected) {
+            ok(!$seen{$test_file}++, "$test_file appears in only one hosted file shard");
+        }
+    }
+
+    is_deeply(
+        [sort keys %seen],
+        \@expected,
+        'sixteen hosted file shards cover every tracked Perl test exactly once except the dynamic focused outlier',
+    );
+    ok(!$seen{$dynamic_relpath}, 'ordinary file shards exclude the separately case-sharded dynamic focused test');
+};
+
+subtest 'hosted dynamic shards cover all canonical cases exactly once' => sub {
+    my $all = run_dynamic_case_list();
+    ok($all->{success}, 'unsharded dynamic case inventory succeeds');
+    is($all->{stderr}, '', 'unsharded dynamic case inventory keeps stderr clean');
+    my @all_cases = grep { length } split /\n/, $all->{stdout};
+    is(scalar(@all_cases), 68, 'dynamic focused test exposes the current 68-case canonical inventory');
+
+    my %seen;
+    for my $index (0 .. 67) {
+        my $dry_run = run_ci(
+            'full',
+            '--no-book',
+            "--hosted-dynamic-shard=$index/68",
+            '--dry-run',
+        );
+        ok($dry_run->{success}, "hosted dynamic shard $index/68 dry-run succeeds");
+        is($dry_run->{stderr}, '', "hosted dynamic shard $index/68 keeps stderr clean");
+        like(
+            $dry_run->{stdout},
+            qr/FSMGEN_DYNAMIC_CASE_SHARD_INDEX=\Q$index\E\s+FSMGEN_DYNAMIC_CASE_SHARD_COUNT=68/,
+            "hosted dynamic shard $index/68 passes its exact coordinates",
+        );
+
+        my $listed = run_dynamic_case_list(index => $index, count => 68);
+        ok($listed->{success}, "dynamic case shard $index/68 inventory succeeds");
+        is($listed->{stderr}, '', "dynamic case shard $index/68 inventory keeps stderr clean");
+        my @selected = grep { length } split /\n/, $listed->{stdout};
+        is(scalar(@selected), 1, "dynamic case shard $index/68 selects one case");
+        for my $case (@selected) {
+            ok(!$seen{$case}++, "$case appears in only one dynamic case shard");
+        }
+    }
+
+    is_deeply(
+        [sort keys %seen],
+        [sort @all_cases],
+        'sixty-eight dynamic shards cover all canonical cases exactly once',
+    );
+
+    my $dynamic_source = slurp($dynamic_test);
+    my @shared_guards = $dynamic_source =~ /\} if \$run_dynamic_shared_cases;/g;
+    is(scalar(@shared_guards), 4, 'the four non-matrix dynamic checks execute only in shard zero');
+};
+
+subtest 'hosted shard arguments fail closed' => sub {
+    my $outside = run_ci('full', '--no-book', '--hosted-file-shard=16/16', '--dry-run');
+    ok(!$outside->{success}, 'out-of-range file shard fails');
+    like($outside->{stderr}, qr/index 16 is outside shard count 16/, 'out-of-range diagnostic is exact');
+
+    my $book = run_ci('full', '--hosted-file-shard=0/16', '--dry-run');
+    ok(!$book->{success}, 'hosted shard without --no-book fails');
+    like($book->{stderr}, qr/hosted shards require --no-book/, 'book-separation diagnostic is exact');
+
+    my $mixed = run_ci(
+        'full',
+        '--no-book',
+        '--hosted-file-shard=0/16',
+        '--hosted-dynamic-shard=0/68',
+        '--dry-run',
+    );
+    ok(!$mixed->{success}, 'mixed hosted shard families fail');
+    like($mixed->{stderr}, qr/mutually exclusive/, 'mixed-family diagnostic is exact');
+};
+
+subtest 'hosted workflow runs every shard family to a terminal aggregate' => sub {
+    my $yaml = slurp($workflow);
+    my @non_fail_fast = $yaml =~ /fail-fast:\s+false/g;
+
+    is(scalar(@non_fail_fast), 2, 'both hosted matrices disable fail-fast cancellation');
+    like($yaml, qr/timeout-minutes:\s+300/, 'long-running shard jobs have a five-hour ceiling');
+    like(
+        $yaml,
+        qr/shard:\s+\[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15\]/,
+        'workflow schedules all sixteen ordinary file shards',
+    );
+    my ($dynamic_matrix) = $yaml =~ /perl_dynamic:.*?matrix:\s*\n\s+shard:\s*\n(.*?)\n\s+steps:/s;
+    my @dynamic_shards = ($dynamic_matrix || '') =~ /^\s+-\s+(\d+)\s*$/mg;
+    is_deeply(\@dynamic_shards, [0 .. 67], 'workflow schedules all sixty-eight dynamic case shards');
+    like($yaml, qr/if:\s+\$\{\{ always\(\) \}\}/, 'aggregate runs after success or failure');
+    like(
+        $yaml,
+        qr/needs:\s+\[doctrines, book, perl_files, perl_dynamic\]/,
+        'aggregate waits for every required CI family',
+    );
 };
 
 subtest 'unknown modes fail with usage' => sub {

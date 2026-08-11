@@ -50,7 +50,7 @@ validate with `scripts/check_task_tree_integrity.pl`.
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.28` done | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.17.2.4.2` 262,144-attempt qualification complete; one-million-attempt limit next | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 completeness` | `.844` terminal | [task](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
-| `GITHUB-PUSH-OUTCOME-ASSURANCE` | `active` | `hosted CI` | `.5` done; `.6` hosted runtime next | [task](docs/tasks/GITHUB-PUSH-OUTCOME-ASSURANCE.md) |
+| `GITHUB-PUSH-OUTCOME-ASSURANCE` | `active` | `hosted CI` | `.6.1` shard implementation done; `.7` policy next; `.6.2` qualifies the next authorized push | [task](docs/tasks/GITHUB-PUSH-OUTCOME-ASSURANCE.md) |
 
 ## Proposed Task Trees
 
