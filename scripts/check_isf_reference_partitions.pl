@@ -80,6 +80,12 @@ sub bounded_string {
         && $value !~ /[\r\n\0]/ && length($value) <= $limit;
 }
 
+sub bounded_rewrite_replacement {
+    my ($value, $limit) = @_;
+    return !ref($value) && defined($value) && $value ne ''
+        && $value !~ /[\r\0]/ && length($value) <= $limit;
+}
+
 sub positive_integer {
     my ($value) = @_;
     return !ref($value) && defined($value) && $value =~ /\A[1-9][0-9]*\z/;
@@ -375,7 +381,7 @@ for my $record (@{$records}) {
                 || !positive_integer($record->{sequence})
                 || !positive_integer($record->{occurrences})
                 || !bounded_string($record->{original}, 512)
-                || !bounded_string($record->{replacement}, 512)
+                || !bounded_rewrite_replacement($record->{replacement}, 512)
                 || !bounded_string($record->{rationale}, 512);
         my $rewrite_key = "$record->{source_id}:$record->{sequence}";
         die "isf-reference-partitions: duplicate rewrite original for $rewrite_key\n"

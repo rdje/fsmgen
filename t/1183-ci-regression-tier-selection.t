@@ -289,12 +289,28 @@ subtest 'hosted shard arguments fail closed' => sub {
 subtest 'hosted workflow runs every shard family to a terminal aggregate' => sub {
     my $yaml = slurp($workflow);
     my @non_fail_fast = $yaml =~ /fail-fast:\s+false/g;
+    my ($book_job) = $yaml =~ /\n  book:(.*?)\n  perl_files:/s;
     my ($file_job) = $yaml =~ /\n  perl_files:(.*?)\n  perl_dynamic:/s;
     my ($dynamic_job) = $yaml =~ /\n  perl_dynamic:(.*?)\n  build:/s;
 
     is(scalar(@non_fail_fast), 2, 'both hosted matrices disable fail-fast cancellation');
     like($yaml, qr/timeout-minutes:\s+300/, 'long-running shard jobs have a five-hour ceiling');
     like($file_job || '', qr/runs-on:\s+ubuntu-24\.04/, 'ordinary shards pin the Ubuntu Noble package base');
+    like(
+        $file_job || '',
+        qr/fetch-depth:\s+0/,
+        'ordinary shards fetch complete history for retained-object tests',
+    );
+    unlike(
+        $book_job || '',
+        qr/fetch-depth:\s+0/,
+        'mdBook job retains the default shallow checkout',
+    );
+    unlike(
+        $dynamic_job || '',
+        qr/fetch-depth:\s+0/,
+        'dynamic shards retain the default shallow checkout',
+    );
     like(
         $file_job || '',
         qr/FSMGEN_CI_VERILATOR_APT_VERSION:\s+'5\.020-1'/,

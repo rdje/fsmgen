@@ -155,11 +155,11 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `pending after blocking test failures`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Give every ordinary hosted shard the exact repository history required by history-backed doctrine tests.`
   Acceptance: `Prove the shallow-checkout mechanism from t1553/t1549/t1569 logs; fetch complete history for ordinary shards without widening dynamic or book jobs unnecessarily; lock the workflow contract and pass the three exact tests plus shard-selection coverage.`
-  Verification: `Jobs 93788675363, 93788675380, and 93788675477 cannot retrieve retained objects 322d81f, 329d7cf, and 44b5f15 under the ordinary jobs' default depth-one checkout; the doctrine job already succeeds with fetch-depth 0.`
-  Commit: `pending implementation`
+  Verification: `Jobs 93788675363, 93788675380, and 93788675477 cannot retrieve retained objects 322d81f, 329d7cf, and 44b5f15 under the ordinary jobs' default depth-one checkout; the doctrine job already succeeds with fetch-depth 0. The ordinary matrix now fetches complete history, while t1183 proves the book and dynamic jobs retain default shallow checkout. Full-history local execution then exposed a second masked t1569 failure: the activation-content registry did not declare either the 19 repository-local command transformations from .6.2.1 or the exact verification-output discovery paragraph from .6.2.2.2; ordinary doctrine checked structural partitions but not t1569's stronger activation-content equality. Five bounded rewrite records now reproduce both intentional downstream transformations from the exact archived sources, and the rewrite validator permits bounded LF-separated replacement text while continuing to reject CR/NUL. Ruby parses the workflow; t1183 passes at Files=1, Tests=9; t1549/t1553/t1569 pass at Files=3, Tests=56; exact activation equality reports 3 sources/11 parts. The downstream handoff files remain byte-identical in this slice, but their retained-source contract is now exact. No CLI, schema, generated HDL, mdBook, or public integration behavior changes.`
+  Commit: `this commit (fetch complete ordinary-shard history and restore exact retained-source transforms)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.6`
   Status: `pending`
@@ -252,6 +252,10 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 - `2026-08-11`: Treat parentheses around a single SystemVerilog identifier
   under unary `!` as optional test spelling, while requiring the exact factored
   intermediate either way. Production and RegressionCorpus stay unchanged.
+- `2026-08-11`: Fetch complete Git history only for ordinary hosted shards,
+  because retained-document tests consume exact objects. Keep book/dynamic jobs
+  shallow, and represent every intentional post-partition downstream edit as a
+  bounded exact-source rewrite, including bounded LF-separated insertions.
 
 - `2026-08-11`: Treat the cancelled regression as incomplete and failed
   signoff. Git transport, two green workflows, and an eventual cancellation do
@@ -305,6 +309,12 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Hosted job `93788675553` emits `A = !intermediate_and_B_C_1;` while t40 alone requires redundant parentheses; `git log -S'!(intermediate_and_B_C_1)' --oneline --all -- t perl` finds no production contract, and RegressionCorpus already requires the unparenthesized canonical form for all three negated n-ary families.
 - [x] **ADDRESSED (verified)** — t40 now accepts exactly `!intermediate_and_B_C_1` or `!(intermediate_and_B_C_1)` and still requires the same factored carrier plus exact AND, OR, and XOR assignments; the focused file passes.
 - [x] **NO REGRESSION** — The adjacent t35-t45 language-contract band plus t248 RegressionCorpus accounting reports `All tests successful` at `Files=12, Tests=7187`; the staged doctrine driver reports `[doctrine] all doctrine checks passed`. No product or public-document surface changed.
+
+## Acceptance Checklist — `.6.2.2.5` (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Jobs `93788675363`, `93788675380`, and `93788675477` run ordinary shards after the default depth-one checkout, so t1569/t1553/t1549 cannot retrieve exact retained objects `322d81f`, `329d7cf`, and `44b5f15`. `git log -S'fetch-depth: 0' --oneline -- .github/workflows/regression.yml` finds only the doctrine-job introduction at `70cd867e3`, proving the ordinary job never acquired that requirement. Once full history made those objects available locally, t1569 exposed a masked second cause: `.6.2.1` and `.6.2.2.2` intentionally changed maintained downstream parts without registering their exact archived-source transformations, while ordinary doctrine did not request t1569's stronger `--verify-activation-content` mode.
+- [x] **ADDRESSED (verified)** — Only `perl_files` now uses `fetch-depth: 0`; t1183 requires that setting and proves mdBook/dynamic remain shallow. Five exact, counted rewrite records reproduce the 19 repository-local output commands and verification-output discovery paragraph from the retained source objects. The validator now permits bounded LF-separated replacement text while continuing to forbid CR/NUL; direct activation equality reports `3 exact sources map contiguously to 11 bounded semantic parts with activation-content equality`.
+- [x] **NO REGRESSION** — Ruby reports `workflow YAML parses`; t1183 reports `All tests successful` at `Files=1, Tests=9`; t1549/t1553/t1569 report `All tests successful` at `Files=3, Tests=56`. The staged doctrine driver reports `[doctrine] all doctrine checks passed`. The book and dynamic jobs remain shallow, downstream handoff text is byte-identical in this slice, and CLI/schema/HDL/mdBook/public integration behavior is unchanged.
 
 ## Acceptance Checklist — `.6.2.1` (enforced)
 
