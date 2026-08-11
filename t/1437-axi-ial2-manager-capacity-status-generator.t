@@ -1251,7 +1251,7 @@ subtest 'mixed dynamic/static read burst-last same-ID issue-order queue read-dat
     like($isf, qr/\(rule axi0_r0_beat_count_init axi0_r0_request\s+\(axi0_r0_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\s+\(axi0_r0_read_beat_count_q 0\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data runtime burst-length initializes dynamic expected beats and count');
     like($isf, qr/\(rule axi0_r1_beat_count_init axi0_r1_request\s+\(axi0_r1_expected_beats_q \(\+ axi0_arlen\[4:0\] 5'd1\)\)\s+\(axi0_r1_read_beat_count_q 0\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data runtime burst-length initializes static expected beats and count');
     like($isf, qr/\(rule axi0_r1_read_beat_count \(& \(& axi0_read_complete [\s\S]*axi0_read_mixed_dynamic_static_same_id_issue_order_slot0_id_q[\s\S]*\) \(! axi0_r1_request\)\)\s+\(axi0_r1_read_beat_count_q \(\+ axi0_r1_read_beat_count_q 5'd1\)\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data runtime burst-length increments static counter on raw matched queue beat');
-    like($isf, qr/read_data_beat_count_checks[\s\S]*axi0_r1_expected_final_beat_has_rlast/, 'mixed dynamic/static read burst-last issue-order queue read-data runtime burst-length emits static final-beat RLAST assertion');
+    like($isf, qr/"axi0 r1 expected final read beat has RLAST"/, 'mixed dynamic/static read burst-last issue-order queue read-data runtime burst-length emits static final-beat RLAST assertion');
 
     assert_mixed_dynamic_static_read_same_id_issue_order_queue_report($result->{report}, 'generator report', burst_last => 1);
     assert_read_data_burst_length_report(
@@ -1286,7 +1286,7 @@ subtest 'mixed dynamic/static read burst-last same-ID issue-order queue read-dat
     like($isf, qr/\(output axi0_r1_beat_valid \(width 16\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat exposes static valid mask');
     like($isf, qr/\(output axi0_r1_read_beats \(width 5\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat exposes static length output');
     like($isf, qr/\(output axi0_r1_rresp \(width 2\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat exposes static scalar RRESP aggregate');
-    like($isf, qr/\(rule axi0_r1_read_data_output_init axi0_r1_request[\s\S]*\(axi0_r1_beat_valid 0\)[\s\S]*\(axi0_r1_read_beats 0\)[\s\S]*\(axi0_r1_rresp 0\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat initializes static bank outputs on request');
+    like($isf, qr/\(rule axi0_r1_read_data_output_init axi0_r1_request[\s\S]*\(axi0_r1_beat_rdata_0 32'd0\)[\s\S]*\(axi0_r1_rresp 2'd0\)[\s\S]*\(axi0_r1_beat_valid 16'b0\)[\s\S]*\(axi0_r1_read_beats 5'd0\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat initializes static bank outputs on request');
     like($isf, qr/\(rule axi0_r1_read_beat_15_capture [\s\S]*axi0_read_mixed_dynamic_static_same_id_issue_order_slot0_r1_q[\s\S]*\(axi0_r1_beat_rdata_15 axi0_rdata\)[\s\S]*\(axi0_r1_beat_rresp_15 axi0_rresp\)[\s\S]*\(axi0_r1_beat_valid 16'b1111111111111111\)[\s\S]*\(axi0_r1_read_beats 5'd16\)\)/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat captures static final lane from matched raw queue beats');
     like($isf, qr/\(rule axi0_r1_rresp_aggregate [\s\S]*axi0_r1_rresp[\s\S]*axi0_rresp/, 'mixed dynamic/static read burst-last issue-order queue read-data multi-beat emits static scalar RRESP aggregate update');
 
@@ -1410,8 +1410,8 @@ subtest 'dynamic read burst-last same-ID issue-order queue dequeues only on RLAS
     like($fsm, qr/\(-axi0_r0_response_demux\s+<\(\|/, 'scheduled .fsm lowers r0 dynamic burst-last queue response demux');
     like($fsm, qr/axi0_rlast/, 'scheduled .fsm carries RLAST through response demux and queue checks');
     my $hdl = hdl_for('axi0_capacity_status', $fsm);
-    like($hdl, qr/\binput\s+axi0_rlast\b/, 'SystemVerilog declares RLAST input');
-    like($hdl, qr/axi0_r0_complete\s*<=\s*\(/, 'SystemVerilog drives r0 completion pulse');
+    like($hdl, qr/\binput\s+(?:wire\s+)?axi0_rlast\b/, 'SystemVerilog declares RLAST input');
+    like($hdl, qr/axi0_r0_complete_pulse_delay_pipe\s*<=\s*axi0_r0_complete_1_en\s*;/, 'SystemVerilog drives r0 completion through the generated delay pipe');
     like($hdl, qr/axi0_read_dynamic_same_id_issue_order_slot1_id_q_next\s*=\s*axi0_arid\s*;/, 'SystemVerilog captures ARID into queue slot');
 };
 
@@ -1439,7 +1439,7 @@ subtest 'dynamic read burst-last depth-3 same-ID issue-order queue captures thir
     like($fsm, qr/axi0_rlast/, 'scheduled .fsm carries RLAST through depth-3 response demux and queue checks');
     like($fsm, qr/axi0_read_dynamic_same_id_issue_order_slot2_id_q/, 'scheduled .fsm carries slot2 ID state');
     my $hdl = hdl_for('axi0_capacity_status', $fsm);
-    like($hdl, qr/\binput\s+axi0_rlast\b/, 'SystemVerilog declares RLAST input');
+    like($hdl, qr/\binput\s+(?:wire\s+)?axi0_rlast\b/, 'SystemVerilog declares RLAST input');
     like($hdl, qr/\breg\s+\[3:0\]\s+axi0_read_dynamic_same_id_issue_order_slot2_id_q\b/, 'SystemVerilog declares slot2 captured ARID');
     like($hdl, qr/axi0_read_dynamic_same_id_issue_order_slot1_id_q_next\s*=\s*axi0_arid\s*;/, 'SystemVerilog recaptures ARID into a compacted queue slot');
 };
@@ -1563,7 +1563,7 @@ subtest 'dynamic read burst-last depth-3 same-ID issue-order queue read-data mul
     like($isf, qr/\(output axi0_r2_beat_valid \(width 16\)\)/, 'dynamic read burst-last depth-3 queue read-data multi-beat exposes r2 valid mask');
     like($isf, qr/\(output axi0_r2_read_beats \(width 5\)\)/, 'dynamic read burst-last depth-3 queue read-data multi-beat exposes r2 length output');
     like($isf, qr/\(output axi0_r2_rresp \(width 2\)\)/, 'dynamic read burst-last depth-3 queue read-data multi-beat exposes r2 scalar RRESP aggregate');
-    like($isf, qr/\(rule axi0_r2_read_data_output_init axi0_r2_request[\s\S]*\(axi0_r2_beat_valid 0\)[\s\S]*\(axi0_r2_read_beats 0\)[\s\S]*\(axi0_r2_rresp 0\)\)/, 'dynamic read burst-last depth-3 queue read-data multi-beat initializes r2 bank outputs on request');
+    like($isf, qr/\(rule axi0_r2_read_data_output_init axi0_r2_request[\s\S]*\(axi0_r2_beat_rdata_0 32'd0\)[\s\S]*\(axi0_r2_rresp 2'd0\)[\s\S]*\(axi0_r2_beat_valid 16'b0\)[\s\S]*\(axi0_r2_read_beats 5'd0\)\)/, 'dynamic read burst-last depth-3 queue read-data multi-beat initializes r2 bank outputs on request');
     like($isf, qr/\(rule axi0_r2_read_beat_15_capture [\s\S]*axi0_read_dynamic_same_id_issue_order_slot0_r2_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot1_r2_q[\s\S]*axi0_read_dynamic_same_id_issue_order_slot2_r2_q[\s\S]*\(axi0_r2_beat_rdata_15 axi0_rdata\)[\s\S]*\(axi0_r2_beat_rresp_15 axi0_rresp\)[\s\S]*\(axi0_r2_beat_valid 16'b1111111111111111\)[\s\S]*\(axi0_r2_read_beats 5'd16\)\)/, 'dynamic read burst-last depth-3 queue read-data multi-beat captures r2 final lane from matched raw read beats');
     like($isf, qr/\(rule axi0_r2_rresp_aggregate [\s\S]*axi0_r2_rresp[\s\S]*axi0_rresp/, 'dynamic read burst-last depth-3 queue read-data multi-beat emits r2 scalar RRESP aggregate update');
 

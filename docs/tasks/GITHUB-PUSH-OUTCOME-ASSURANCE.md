@@ -70,11 +70,11 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (complete real verification-bridge matrix ownership)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Reconcile all five failed t/1437 IAL2 generator subtests with current generated IAL1, IAL0, and SystemVerilog behavior.`
   Acceptance: `Root-cause the mixed runtime-ARLEN assertion, mixed and depth-3 multi-beat initialization expectations, and the two dynamic RLAST queue subtests; correct production behavior where the contract is violated and correct tests only where equivalent current lowering is valid; all five red subtests and the warranted IAL2 regression cluster pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The hosted failures were test drift, not production defects: the runtime assertion expected an internal assertion identifier although generated IAL1 exposes its quoted human message; the two output-bank checks expected unsized zeroes in stale order although the generator has always emitted width-correct RDATA/RRESP/valid-mask/read-count zeroes; generated SystemVerilog legally spells the exact RLAST input as input wire; and completion pulses use the canonical one-cycle delay pipe rather than an obsolete direct sequential assignment. Git history dates all five stale expectations to 2026-06-25/26, after the relevant assertion, typed-literal, port, and pulse-delay generator behavior. The repaired checks now require the exact emitted message, typed values and bank ordering, exact RLAST signal with an optional wire token, and the actual delay-pipe enable assignment. A temporary top-level selector was removed after each of the five exact formerly red cases independently reported All tests successful at Files=1, Tests=1 (7s, 10s, 7s, 400s, and 471s); nested IAL1, IAL0, report, and SystemVerilog assertions remained enabled. Monolithic attempts were safely stopped by the 88% host RAM cutoff, first amid unrelated pgen Rust LTO pressure and then from process-lifetime accumulation, so no incomplete run is claimed. The committed-form test is syntax-clean, and the RAM-guarded regression-corpus/capability-manifest pair reports All tests successful at Files=2, Tests=7096. Production and user-visible behavior are unchanged, so the already-accurate mdBook needs no edit.`
+  Commit: `this commit (align five stale IAL2 generator expectations)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.5`
   Status: `pending`
@@ -116,20 +116,23 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 
 - None.
 
-## Acceptance Checklist — `.3` (enforced)
+## Acceptance Checklist — `.4` (enforced)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Pre-fix guarded t/1255 reports the
-  missing-owner failure at t/1255-isf-schedule-report-golden-matrix.t line 47.
-  Test::More displays only the first array difference (`event_keys`), while an
-  exact public-contract versus `covers` census proves all eight advertised
-  verification-bridge key families had no matrix owner.
-- [x] **ADDRESSED (verified)** — A new matrix case derives generated IAL1 from
-  the tracked public AHB subordinate PPIF, proves in-process/CLI schedule-report
-  equality, and checks the exact bridge, protocol, fact, transaction, field,
-  source, event, and probe key sets. Focused t/1255 moves from RED to pass, and
-  the changed Perl test reports `syntax OK`.
-- [x] **NO REGRESSION** — The RAM-guarded public-contract, JSON, defensive-copy,
-  manifest, key-family, discovery, metadata, freeze, golden-matrix,
-  ordinary-null, and real AHB-bridge cluster reports `All tests successful` at
-  `Files=11, Tests=22`. Production and user-facing behavior are unchanged, so
-  the already-accurate mdBook needs no edit.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Hosted run `31367105225` emits its first
+  concrete Test::More diagnostic at t/1437-axi-ial2-manager-capacity-status-generator.t line 1254 and reports
+  the remaining stale expectations at lines 1289, 1413-1414, 1442, and 1566.
+  Their 2026-06-25/26 expectations
+  postdate the generator's canonical assertion-message, typed-literal,
+  explicit-net, and delayed-pulse behavior and therefore describe stale text
+  forms rather than contract violations.
+- [x] **ADDRESSED (verified)** — The five checks now require the exact emitted
+  assertion message, width-correct bank initialization values in generated
+  order, the exact RLAST port with equivalent optional `wire`, and the actual
+  completion delay-pipe assignment. The changed test is syntax-clean, and each
+  formerly red top-level case independently reports `All tests successful` at
+  `Files=1, Tests=1` with all nested assertions enabled.
+- [x] **NO REGRESSION** — The RAM-guarded regression-corpus and capability-
+  manifest pair reports `All tests successful` at `Files=2, Tests=7096`.
+  Monolithic attempts stopped safely at the 88% RAM cutoff and are not claimed
+  as passes. Production and user-facing behavior are unchanged, so the
+  already-accurate mdBook needs no edit.
