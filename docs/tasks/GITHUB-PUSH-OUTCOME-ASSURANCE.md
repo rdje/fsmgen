@@ -96,10 +96,25 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (closed hosted file/case regression partition)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2`
+  Status: `active`
+  Goal: `Prove downstream-consumer contracts are lockstep with the hosted-CI repairs, then qualify the new partition on GitHub for the exact next pushed revision and remediate every non-success.`
+  Acceptance: `Before any push, inventory and audit the canonical integration/handoff contracts used by downstream consumers such as SPECFORGE against every repair since the last pushed SHA; synchronize any real schema, API, artifact, report, diagnostic, capability, support, or compatibility drift with the codebase and mdBook, or record exact evidence that the repairs are private/test/workflow-only and the public contracts remain accurate. Then, at the next cadence-authorized or director-authorized push, prove the exact remote SHA; wait for all doctrine, book, 16 ordinary-file, 68 dynamic-case, and aggregate jobs to become terminal; record every URL and conclusion; repair and requalify any failure, timeout, cancellation, skipped required job, missing shard, or aggregate mismatch before marking .6 done.`
+  Verification: `Director clarification on 2026-08-11 defines handoff/contract as the downstream integration surfaces consumers such as SPECFORGE ingest, not merely continuity documents. Child .6.2.1 owns the pre-push contract audit and any required lockstep synchronization; .6.2.2 retains exact hosted qualification. Decision 0062 still forbids an automatic early push below the 200-commit cadence.`
+  Commit: `pending children`
+  Children: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.1, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.1`
+  Status: `active`
+  Goal: `Audit and synchronize the canonical downstream-consumer integration contracts before the repaired branch can be pushed.`
+  Acceptance: `Derive the canonical SPECFORGE/general-consumer handoff set from maintained docs, capability/support surfaces, tests, Knowledge Map, and history; classify every hosted-CI repair from the last pushed SHA through the current frontier by downstream-visible contract impact; compare the implementation, emitted schemas/reports/artifacts/diagnostics, public API/CLI, capability manifest, support accounting, contract docs, SPECFORGE response, and mdBook. Update every genuinely drifted surface in one lockstep slice, or record an exact no-drift matrix where behavior did not change. Do not turn private qualification or test/workflow behavior into a public promise, and do not push.`
+  Verification: `pending audit`
+  Commit: `pending`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2`
   Status: `pending`
-  Goal: `Qualify the new partition on GitHub for the exact next pushed revision and remediate every non-success.`
+  Goal: `Qualify the new hosted partition and exact repaired revision on GitHub.`
   Acceptance: `At the next cadence-authorized or director-authorized push, prove the exact remote SHA; wait for all doctrine, book, 16 ordinary-file, 68 dynamic-case, and aggregate jobs to become terminal; record every URL and conclusion; repair and requalify any failure, timeout, cancellation, skipped required job, missing shard, or aggregate mismatch before marking .6 done.`
-  Verification: `Pending the next authorized push. Decision 0062 currently forbids an automatic early push below the 200-commit cadence, and the director requested outcome checking rather than an immediate push.`
+  Verification: `Pending completion of .6.2.1 and the next authorized push.`
   Commit: `pending`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.7`
@@ -132,8 +147,8 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 
 ## Blockers
 
-- `.6.2` must wait for the next cadence-authorized or director-authorized push;
-  the current branch is below decision `0062`'s 200-commit automatic cadence.
+- `.6.2.2` must wait for the next cadence-authorized or director-authorized
+  push; `.6.2.1` is unblocked for the mandatory downstream-contract audit.
 
 ## Acceptance Checklist — `.7` (enforced)
 
