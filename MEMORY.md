@@ -7,14 +7,15 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`.
-- current_state: `.17.2.4.2` implements binding, topology, fiber, type, map,
-  checked-AHB 8,192-/262,144-attempt random/replay, and the complete
-  1-/4-/16-MiB plan ladder plus its first complete over-limit rejection. The
-  qualification candidate is `0x00f233516a996304` at zero-based attempt
-  262,143; generated/replayed decisions differ only in origin.
-- next_action: construct the exact 1,000,000-attempt random limit candidate and
-  prove deterministic generated/replayed decision equality.
+- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.2`; director-selected before
+  the otherwise-next HIAL/VIAL one-million-attempt slice.
+- current_state: `.1` proves pushed SHA `de9d50a5fb17074d29615ea866cd3cc6af503a3b`
+  passed Knowledge Map/mdBook, but regression `31367105225` failed t/1247,
+  t/1255, t/132, t/1437, and t/1438 before its six-hour cancellation. Its
+  1,103-file tail is unsigned; local t/1438 reproduces the explicit-`wire`
+  mismatch. Separate leaves own every failure family and hosted runtime.
+- next_action: repair the portable-identifier fixture and canonical help-output
+  expectation owned by `.2`.
 - in_flight_uncommitted: none.
 - blockers: none.
 - push_state: decision `0062`; derive with `git rev-list --count @{upstream}..HEAD`.
