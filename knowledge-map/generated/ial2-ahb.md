@@ -373,7 +373,7 @@
 - q="what comes after AHB subordinate source-reference audit?" · facts=[ial2-ahb-subordinate-source-reference-seed-evidence-audit](../../docs/knowledge/ial2-ahb-subordinate-source-reference-seed-evidence-audit.md)
 - q="what comes after the AHB interconnect substrate audit?" · facts=[ial2-ahb-interconnect-decode-generated-substrate-audit](../../docs/knowledge/ial2-ahb-interconnect-decode-generated-substrate-audit.md)
 - q="what comes after the AHB requester PPIF slice?" · facts=[ial2-ahb-profile-alias-readiness-audit](../../docs/knowledge/ial2-ahb-profile-alias-readiness-audit.md)
-- q="what composition child count should intent.ppif_ahb_interconnect report in check and semantic JSON?" · facts=[ial2-ahb-interconnect-decode-behavior](../../docs/knowledge/ial2-ahb-interconnect-decode-behavior.md)
+- q="what composition child count should generic and alias AHB interconnect report in check and semantic JSON?" · facts=[ial2-ahb-interconnect-decode-behavior](../../docs/knowledge/ial2-ahb-interconnect-decode-behavior.md)
 - q="what contract is still open for aggregate AHB BUSY-park propagation?" · facts=[ial2-ahb-aggregate-busy-park-propagation-readiness-audit](../../docs/knowledge/ial2-ahb-aggregate-busy-park-propagation-readiness-audit.md)
 - q="what contract is still open for requester-side AHB BUSY insertion?" · facts=[ial2-ahb-requester-busy-insertion-readiness-audit](../../docs/knowledge/ial2-ahb-requester-busy-insertion-readiness-audit.md)
 - q="what contract repairs AHB interconnect output selector overlaps?" · facts=[ial2-ahb-interconnect-default-decode-output-arbitration-contract-selection](../../docs/knowledge/ial2-ahb-interconnect-default-decode-output-arbitration-contract-selection.md)

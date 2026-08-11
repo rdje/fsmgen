@@ -6,7 +6,7 @@ See `MEMORY_ARCHITECTURE.md` for the four-layer system. Git preserves prior hist
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2`; consume the exact pushed-SHA regression tail after completed child repairs `.19` and `.20`.
+- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2`; consume the exact pushed-SHA regression tail after completed child repairs `.19`–`.21`.
 - current_state: authorized push `a51dcdad0a7e752e638abfe3ab414f7f3911889d` has exact remote equality and green Knowledge Map run `31529600931`.
   Publish mdBook run `31529600916` and regression mdBook job `93906174155`
   fail on the absent pinned-action entrypoint; committed `.19` repair `8dcab8c99`
@@ -14,10 +14,10 @@ See `MEMORY_ARCHITECTURE.md` for the four-layer system. Git preserves prior hist
   job `93906175431` independently fails because `intent.ppif_ahb_interconnect`
   emits the correct three-child composition while its pre-explicit-count corpus
   row lets t303 compare against `undef`; completed `.20` restores both exact
-  corpus counts and fail-closed top-root coverage. All local focused, AHB,
-  corpus-accounting, downstream/SPECFORGE, mdBook, locality, and Knowledge Map gates pass.
-- next_action: consume exact regression run `31529600915` to terminal, inspect every non-success, record its final matrix inventory, and request fresh authorization before any repair push.
-- in_flight_uncommitted: none; `.20` is locally qualified and included in the current revision, while the remote terminal watcher remains active.
+  corpus counts and fail-closed top-root coverage. Late job `93906175379` exposes
+  the identical missing count on matching alias `intent.ahb_profile_alias_interconnect`; completed `.21` restores both exact alias counts and makes the full gap census empty.
+- next_action: consume regression run `31529600915` to terminal, inspect every non-success, record final matrix inventory, and request fresh authorization before any repair push.
+- in_flight_uncommitted: none; `.21` is locally qualified and included in the current revision while the remote terminal watcher remains active.
 - in_flight_background: exact regression run `31529600915` remains active on GitHub.
 - blockers: none for local repair; a repair push will require authorization under `COMMIT.md`.
 - push_state: remote `a51dcdad0`; Knowledge Map success, both mdBook jobs failed by one setup-action packaging defect, regression tests remain active.

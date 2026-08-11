@@ -819,6 +819,8 @@ my @REGRESSION_CORPUS = (
         strict_supported => 1,
         expected_module_name => 'ahb_tb',
         expected_semantic_source_root_kind => 'top',
+        expected_check_composition_child_count => 3,
+        expected_semantic_composition_child_count => 3,
     },
     {
         id => 'intent.ahb_profile_alias_interconnect_byte_lane',
