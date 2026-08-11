@@ -629,7 +629,7 @@ subtest 'adapter rejects malformed APB completer PPIF shapes with targeted diagn
     my $bad_setup_admission = slurp(sample_apb_completer_back_to_back_ppif_path());
     $bad_setup_admission =~ s/\(setup-admission adjacent\)/(setup-admission idle-gap)/;
 
-    my $selected_adjacent_error = qr/selected setup-admission adjacent policy supports only the selected 32-bit no-sideband one-register, selected 32-bit sideband-aware one-register, selected 32-bit sideband-aware two-register no-policy, selected 32-bit sideband-aware two-register protection, selected sideband-aware data16 two-register no-policy, or selected sideband-aware data16 two-register protection completer families in this slice/;
+    my $selected_adjacent_error = qr/selected setup-admission adjacent policy supports only the selected 32-bit no-sideband one-register, selected 32-bit sideband-aware one-register, selected 32-bit sideband-aware two-register no-policy, selected 32-bit sideband-aware generalized no-policy reg0\.\.regN register-set, selected 32-bit sideband-aware two-register protection, selected 32-bit sideband-aware protected generalized reg0\.\.regN register-set, selected 32-bit sideband-aware protection status\/control peripheral, selected sideband-aware data16 two-register no-policy, selected sideband-aware data16 generalized no-policy reg0\.\.regN register-set, selected sideband-aware data16 two-register protection, selected sideband-aware data16 protected generalized reg0\.\.regN register-set, or selected sideband-aware data16 protection status\/control peripheral completer families in this slice/;
 
     my @cases = (
         ['apb completer profile mismatch', $profile_mismatch, qr/profile 'axi4' does not match \(apb-completer \.\.\.\); expected apb/],

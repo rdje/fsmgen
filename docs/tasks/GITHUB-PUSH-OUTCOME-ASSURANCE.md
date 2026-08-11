@@ -169,11 +169,11 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (provision exact hosted Icarus Verilog)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.7`
-  Status: `pending`
+  Status: `done`
   Goal: `Synchronize the APB selected-adjacent diagnostic oracle with every shipped completer family.`
   Acceptance: `Prove the current diagnostic expansion from production and history; update t1471's one shared exact diagnostic pattern to cover generalized and status/control families; pass focused and adjacent APB diagnostic tests without changing the parser or diagnostic.`
-  Verification: `Job 93788675417 and local t1471 fail six cases because the oracle predates generalized no-policy/protected and protection status/control completer families already named by the current targeted diagnostic.`
-  Commit: `pending implementation`
+  Verification: `Job 93788675417 and the pre-fix local t1471 fail six malformed selected-adjacent cases because the one shared oracle stops at the older two-register families. Production's exact diagnostic already includes 32-bit/data16 generalized no-policy register sets, protected generalized register sets, and protection status/control peripherals; git log -S traces the original diagnostic through .607/.622/.625/.628/.631 and later generalized/status expansions including 4457eb5cb and 192b50784. The shared regex now requires the current full ordered family list, escaping only literal reg0..regN dots and status/control slashes. Production parser and diagnostic are byte-unchanged. t1470/t1471/t1472 pass at Files=3, Tests=147 in 1,023 wall-clock seconds. This oracle-only correction changes no CLI, schema, generated IAL1/IAL0/HDL, mdBook, or downstream contract; existing public documents already describe the shipped generalized and status/control families.`
+  Commit: `this commit (synchronize the selected-adjacent APB diagnostic oracle)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.8`
   Status: `pending`
@@ -260,6 +260,10 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   `iverilog=12.0-2build2` for the already-selected native-Verilog runtime test.
   This CI dependency does not select Icarus as a public output provider or
   change the separately qualified backend contracts.
+- `2026-08-11`: Keep APB negative tests exact to the complete ordered
+  selected-adjacent family diagnostic. When already-shipped families widen
+  that diagnostic, synchronize the shared oracle without weakening it or
+  rewriting production merely to preserve stale prose.
 
 - `2026-08-11`: Treat the cancelled regression as incomplete and failed
   signoff. Git transport, two green workflows, and an eventual cancellation do
@@ -325,6 +329,12 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Hosted job `93788675610` reaches t1542's native-Verilog runtime path and fails because `iverilog` is absent. `git log -S'iverilog' --oneline -- .github/workflows/regression.yml` returns no commit, while the same pickaxe over t1542 locates its runtime requirement at `1dbff8fc6`: the ordinary shard selected the test but never provisioned its compiler.
 - [x] **ADDRESSED (verified)** — The ordinary job pins Ubuntu Noble `iverilog=12.0-2build2`, installs it beside the existing exact Verilator/Yosys packages, verifies all three dpkg revisions, and prints `iverilog -V`. t1183 locks the exact pin, installation order, three revision checks, and the dynamic job's tool-free boundary; Ruby reports `workflow YAML parses`.
 - [x] **NO REGRESSION** — t1183 reports `All tests successful` at `Files=1, Tests=9`; local Icarus 13.0 executes t1542's native-Verilog compile/runtime and reports `All tests successful` at `Files=1, Tests=7`. The staged doctrine driver reports `[doctrine] all doctrine checks passed`. Existing downstream contract text already selects the Icarus check and denies local tools public verification-output-provider status, so mdBook, handoff schemas, generated HDL, and public qualification are unchanged.
+
+## Acceptance Checklist — `.6.2.2.7` (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Hosted job `93788675417` and local t1471 reject six malformed selected-adjacent sources correctly but fail their diagnostic assertions because one shared regex ends at the older two-register families. `git log -S'selected setup-admission adjacent policy supports only' --oneline --all -- perl t` traces that oracle through `.607/.622/.625/.628/.631`, while later production expansions such as `4457eb5cb` and `192b50784` added generalized and status/control families without synchronizing this shared test line.
+- [x] **ADDRESSED (verified)** — t1471's single `$selected_adjacent_error` now requires the production diagnostic's complete ordered 32-bit/data16 no-policy, generalized, protected-generalized, and protection status/control family list. Literal `reg0..regN` dots and `status/control` slashes are escaped; no wildcard or alternate diagnostic is accepted, and production is unchanged.
+- [x] **NO REGRESSION** — The focused completer plus adjacent APB profile-alias/composition band reports `All tests successful` at `Files=3, Tests=147` in 1,023 wall-clock seconds. The staged doctrine driver reports `[doctrine] all doctrine checks passed`. The change is test-only; CLI/schema, generated IAL1/IAL0/HDL, mdBook, and downstream public integration contracts remain unchanged and already describe the live families.
 
 ## Acceptance Checklist — `.6.2.1` (enforced)
 
