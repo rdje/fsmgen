@@ -104,25 +104,25 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Children: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.1, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Audit and synchronize the canonical downstream-consumer integration contracts before the repaired branch can be pushed.`
   Acceptance: `Derive the canonical SPECFORGE/general-consumer handoff set from maintained docs, capability/support surfaces, tests, Knowledge Map, and history; classify every hosted-CI repair from the last pushed SHA through the current frontier by downstream-visible contract impact; compare the implementation, emitted schemas/reports/artifacts/diagnostics, public API/CLI, capability manifest, support accounting, contract docs, SPECFORGE response, and mdBook. Update every genuinely drifted surface in one lockstep slice, or record an exact no-drift matrix where behavior did not change. Do not turn private qualification or test/workflow behavior into a public promise, and do not push.`
-  Verification: `The audit classifies all 19 commits after upstream de9d50a5 through activation commit c053aad7: regression workflow/shard changes are internal CI infrastructure; t/1255, t/1437, and t/1438 are qualification-only corrections; the private VIAL scale helper is not a public API; t/1247's portable fixture rename is already synchronized in the relevant mdBook chapters; and t/132 repairs a stale test without changing shipped help. An exact archived-upstream/current comparison proves byte-identical CLI help (SHA-256 c6db5fd1...) and strict schedule JSON (4210c035...), plus identical capability manifest (3b3e514e...), check JSON (b0899cc8...), and semantic JSON (fab32eab...) after normalizing only documented revision/path provenance. README, the general and SPECFORGE handoff pages, ISF landing/public contracts, bridge/backend contracts, support accounting, and mdBook were otherwise accurate. Nineteen canonical ISF handoff commands nevertheless violated project-data locality by naming /tmp; they now use repository-relative .artifacts/ial1 or .artifacts/sv destinations. The focused downstream contract suite reports All tests successful at Files=7, Tests=41 in 26 seconds. All 53 mdBook chapter tests and the repository-local 88-file/18,336-KiB build pass; the exact build output is removed. Project-data locality passes, and regenerated Knowledge Map checks at 1,109 facts/5,765 questions/5,931 occurrences/121 shards. Audit child .6.2.1.1 retains the one unresolved public path-provenance decision before this leaf can close.`
-  Commit: `this commit (downstream contract audit and locality synchronization; path policy pending)`
+  Verification: `The audit classifies all 19 commits after upstream de9d50a5 through activation commit c053aad7: regression workflow/shard changes are internal CI infrastructure; t/1255, t/1437, and t/1438 are qualification-only corrections; the private VIAL scale helper is not a public API; t/1247's portable fixture rename is already synchronized in the relevant mdBook chapters; and t/132 repairs a stale test without changing shipped help. An exact archived-upstream/current comparison proves byte-identical CLI help (SHA-256 c6db5fd1...) and strict schedule JSON (4210c035...), plus identical capability manifest (3b3e514e...), check JSON (b0899cc8...), and semantic JSON (fab32eab...) after normalizing only documented revision/path provenance. README, the general and SPECFORGE handoff pages, ISF landing/public contracts, bridge/backend contracts, support accounting, and mdBook were otherwise accurate. Nineteen canonical ISF handoff commands nevertheless violated project-data locality by naming /tmp; they now use repository-relative .artifacts/ial1 or .artifacts/sv destinations. The focused downstream contract suite reports All tests successful at Files=7, Tests=41 in 26 seconds. All 53 mdBook chapter tests and the repository-local 88-file/18,336-KiB build pass; the exact build output is removed. Project-data locality passes, and regenerated Knowledge Map checks at 1,109 facts/5,765 questions/5,931 occurrences/121 shards. The director separated the unchanged source.resolved_path question into proposed tree DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT, so it no longer blocks this completed audit or the authorized repaired push.`
+  Commit: `aef4a3342 (downstream contract audit and locality synchronization)`
   Children: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.1.1`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.1.1`
-  Status: `active`
+  Status: `superseded`
   Goal: `Reconcile public source.resolved_path provenance with the repository-relative path doctrine without surprising downstream consumers.`
   Acceptance: `Select and document either an explicit narrow exemption for read-only ephemeral source provenance or a versioned/backward-compatible migration to a repository-relative representation. If migration is selected, synchronize implementation, schemas, diagnostics, capability/support surfaces, downstream integration contracts, SPECFORGE handoff, mdBook, and tests in one owned compatibility slice. Do not push while the public contract decision is unresolved.`
-  Verification: `Current ReportSourceContract, CheckDiagnostics, and NormalizedSemanticReport code emits absolute source.resolved_path; the public docs describe a resolved path, backend parity guidance explicitly normalizes it, and t/299/t/302/t/303/t/304 plus later PPIF/IAL2 tests require rel2abs or abs_path. Exact upstream/current comparison proves this behavior predates and is unchanged by the CI repair. Changing it silently would alter a deliberately tested downstream JSON contract, while retaining it without an exemption appears to conflict with the director's repository-relative path rule.`
-  Commit: `pending director decision and implementation`
+  Verification: `Current ReportSourceContract, CheckDiagnostics, and NormalizedSemanticReport code emits absolute source.resolved_path; the public docs describe a resolved path, backend parity guidance explicitly normalizes it, and t/299/t/302/t/303/t/304 plus later PPIF/IAL2 tests require rel2abs or abs_path. Exact upstream/current comparison proves this behavior predates and is unchanged by the CI repair. On 2026-08-11 the director authorized the repaired push and assigned this independent compatibility/policy work to proposed top-level tree DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT.`
+  Commit: `this commit (transfer provenance policy to independent proposed tree)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify the new hosted partition and exact repaired revision on GitHub.`
   Acceptance: `At the next cadence-authorized or director-authorized push, prove the exact remote SHA; wait for all doctrine, book, 16 ordinary-file, 68 dynamic-case, and aggregate jobs to become terminal; record every URL and conclusion; repair and requalify any failure, timeout, cancellation, skipped required job, missing shard, or aggregate mismatch before marking .6 done.`
-  Verification: `Pending completion of .6.2.1 and the next authorized push.`
+  Verification: `The director authorized an immediate early push on 2026-08-11 after .6.2.1 completed. Pending commit of the clean task handoff, exact transport, remote-SHA equality, complete required workflow/job inventory, and terminal hosted conclusions.`
   Commit: `pending`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.7`
@@ -151,20 +151,19 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   consumed by SPECFORGE and other downstreams. Audit those surfaces against
   code and emitted artifacts before every repaired push, not merely the
   repository's session-continuity documents.
+- `2026-08-11`: Director-authorize an immediate early repaired push and move
+  the unchanged absolute source-provenance compatibility question to proposed
+  tree `DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT`; it does not block `.6.2.2`.
 
 ## Open Questions
 
-- Should public JSON `source.resolved_path` migrate compatibly to a
-  repository-relative representation, or receive an explicit narrow exemption
-  as read-only ephemeral provenance? The current absolute contract is old,
-  intentional, and unchanged by the CI repair, so this requires director
-  judgment rather than a silent audit edit.
+- None for the repaired push. `DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT.1` owns
+  the independent migration-versus-exemption compatibility decision.
 
 ## Blockers
 
-- `.6.2.1.1` is blocked on the director's public path-provenance decision;
-  `.6.2.2` must also wait for that resolution and the next cadence-authorized
-  or director-authorized push.
+- None. `.6.2.2` is authorized to push and must remain active until every
+  required exact-SHA GitHub result is terminal success.
 
 ## Acceptance Checklist — `.6.2.1` (enforced)
 

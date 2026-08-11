@@ -7,18 +7,17 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.1.1`; downstream source-path provenance decision.
-- current_state: all 19 pre-audit commits are classified; exact upstream/current
-  probes show no CI-repair drift in public CLI/schema meaning;
-  19 stale downstream handoff commands now use repository-local `.artifacts`
-  destinations. The branch is 20 commits ahead after this commit and remains
-  below the 200-commit automatic push cadence.
-- next_action: director selects a compatible repository-relative migration or
-  a narrow explicit exemption for public JSON `source.resolved_path`; implement
-  that choice in code/contracts/book/tests before `.6.2.2` may push-qualify.
+- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2`; exact hosted push qualification.
+- current_state: observed CI failures are repaired and locally verified; the
+  downstream contract audit is complete. The provenance question is parked in
+  proposed tree `DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT`. The branch is 21
+  commits ahead after this handoff commit.
+- next_action: push the exact clean revision authorized by the director; prove
+  local/upstream/remote SHA equality, then consume every required GitHub
+  workflow and all 16 ordinary/68 dynamic shard results to terminal success.
 - in_flight_uncommitted: none after this commit.
-- blockers: `.6.2.1.1` requires the director's compatibility/policy judgment; no push is authorized meanwhile.
-- push_state: decision `0062`; derive with `git rev-list --count @{upstream}..HEAD`.
+- blockers: none before transport; any non-success hosted result reopens repair.
+- push_state: director-authorized early push on 2026-08-11; post-push exact-SHA qualification is mandatory.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not

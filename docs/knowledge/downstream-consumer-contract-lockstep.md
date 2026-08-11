@@ -41,6 +41,8 @@ provenance. Nineteen stale handoff commands were corrected from off-volume
 Public check/semantic JSON deliberately emits absolute `source.resolved_path`;
 code, docs, and tests agree, and the CI repair did not change it. That old
 consumer-visible contract conflicts with a literal reading of the newer
-repository-relative path doctrine. Active leaf
-`GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.1.1` therefore blocks push until the director
-selects a compatible relative-path migration or a narrow explicit exemption.
+repository-relative path doctrine. On 2026-08-11 the director authorized the
+repaired CI push and separated this independent compatibility decision into
+proposed tree `DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT`; its `.1` leaf must select
+a compatible relative-path migration or narrow explicit exemption before any
+field-semantic implementation change.

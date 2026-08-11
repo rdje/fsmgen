@@ -42,15 +42,14 @@ first.
 
 ## Active Task Trees
 
-Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
-validate with `scripts/check_task_tree_integrity.pl`.
+Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative; validate with `scripts/check_task_tree_integrity.pl`.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.28` done | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.17.2.4.2` scenario qualification/limit ladder complete; operations-per-scenario structural ladder next | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 completeness` | `.844` terminal | [task](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
-| `GITHUB-PUSH-OUTCOME-ASSURANCE` | `active` | `hosted CI` | `.6.2.1.1` path policy; `.6.2.2` push qualification | [task](docs/tasks/GITHUB-PUSH-OUTCOME-ASSURANCE.md) |
+| `GITHUB-PUSH-OUTCOME-ASSURANCE` | `active` | `hosted CI` | `.6.2.2` exact push qualification | [task](docs/tasks/GITHUB-PUSH-OUTCOME-ASSURANCE.md) |
 
 ## Proposed Task Trees
 
@@ -61,10 +60,11 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 | --- | --- | --- | --- | --- |
 | `MDBOOK-CROSS-LAYER-CURRENT-STATUS-TRUTH-REPAIR` | `proposed` | `cross-layer book truth` | `.1` repairs stale Chapter 11 status prose after an evidence audit | [task](docs/tasks/MDBOOK-CROSS-LAYER-CURRENT-STATUS-TRUTH-REPAIR.md) |
 | `NEXSIM-REQUIREMENTS-HEADING-NUMBERING-REPAIR` | `proposed` | `NEXSIM document integrity` | `.1` aligns lagging subsection numbers without semantic change | [task](docs/tasks/NEXSIM-REQUIREMENTS-HEADING-NUMBERING-REPAIR.md) |
+| `DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT` | `proposed` | `downstream paths` | `.1` contract choice | [task](docs/tasks/DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT.md) |
 | `MDBOOK-PARAGRAPH-SPACING` | `proposed` | `rendered readability` | `.5` audits rendered spacing before any formatting repair | [task](docs/tasks/MDBOOK-PARAGRAPH-SPACING.md) |
 | `XIAL-NATIVE-DEVELOPMENT-FRAMEWORK` | `proposed` | `HIAL/VIAL native framework` | `.1` defines the native xIAL framework and signoff boundary | [task](docs/tasks/XIAL-NATIVE-DEVELOPMENT-FRAMEWORK.md) |
 | `IASIM-EXECUTABLE-REFERENCE-SEMANTICS` | `proposed` | `HIAL/VIAL native semantics` | `.1/.8` select IASIM authority and NEXSIM checkpoints without runtime activation | [task](docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md) |
-| `CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-PRESENCE-MAP-SYNC` | `proposed` | `test integrity / capability-manifest discovery` | `.1` is pending after the current dirty VIAL slice: t370 proves the HEAD discovery list omits live verification-output guidance and JSON-safety keys; repair stays separate from bridge behavior | [docs/tasks/CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-PRESENCE-MAP-SYNC.md](docs/tasks/CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-PRESENCE-MAP-SYNC.md) |
+| `CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-PRESENCE-MAP-SYNC` | `proposed` | `manifest discovery` | `.1` repairs omitted verification-output discovery keys | [task](docs/tasks/CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-PRESENCE-MAP-SYNC.md) |
 | `IAL2-HOST-LANGUAGE-BUILDER-FRONTIER` | `proposed` | `IAL2 horizon exploration / authoring ergonomics` | remains proposed behind the selected source-facing HIR boundary; `.1` must not assume direct IAL emission before HIR selection | [docs/tasks/IAL2-HOST-LANGUAGE-BUILDER-FRONTIER.md](docs/tasks/IAL2-HOST-LANGUAGE-BUILDER-FRONTIER.md) |
 | `FSMGEN-END-TO-END-LARGE-DESIGN-SCALABILITY` | `proposed` | `performance/scalability / end-to-end design capacity` | `.841` selects the narrower source-facing HIR boundary first; `.1` still owns measurable big/really-big workload, correctness-oracle, resource-profile, budget, graceful-failure, and regression-gate selection before any capacity claim | [docs/tasks/FSMGEN-END-TO-END-LARGE-DESIGN-SCALABILITY.md](docs/tasks/FSMGEN-END-TO-END-LARGE-DESIGN-SCALABILITY.md) |
 | `SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON` | `proposed` | `Embedding And Public APIs / AI integration` | `SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON.1` select the smallest safe beyond-read-only MCP capability (write/generation tool, sampling, elicitation, roots, or service transport) and its trust/opt-in boundary before any implementation | [docs/tasks/SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON.md](docs/tasks/SEMANTIC-INTROSPECTION-MCP-WRITE-HORIZON.md) |
