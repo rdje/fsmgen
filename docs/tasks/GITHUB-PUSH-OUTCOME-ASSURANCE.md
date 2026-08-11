@@ -197,11 +197,11 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (synchronize direct DTE identity assertions)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.11`
-  Status: `pending`
+  Status: `done`
   Goal: `Refresh the bounded read-only MCP schema fixture to the current catalog-entry projection.`
   Acceptance: `Prove the live fsmgen_find_examples projection and public contract; replace only stale representative entry keys, retain all mutation/ambient-access exclusions, and pass the focused MCP snapshot plus adjacent MCP contract tests; audit downstream/mdBook impact explicitly.`
-  Verification: `Job 93788675536 and local t1445 show the current APB composition catalog entry has expected_module_name and no expected_hdl_pattern_count; the fixture has preserved the earlier representative keys since 2026-06-16.`
-  Commit: `pending implementation`
+  Verification: `Job 93788675536 and the pre-fix local t1445 show the current first composition example has expected_module_name and no expected_hdl_pattern_count. The fixture projection was introduced at a1cc9414a on 2026-06-16, when its representative composition entry carried expected_hdl_patterns; 17445d0c2 added the now-earlier APB composition catalog entry on 2026-06-27 with expected_module_name. The canonical sorted fixture now substitutes expected_module_name in its exact sorted position. The complete adjacent read-only MCP adapter/CLI/protocol/query/schema/framing/root/prompt/resource-change band passes at Files=9, Tests=27; the snapshot's separate mutation/ambient-path exclusions remain green. Production adapter, catalog, public payload, schemas, mdBook, and SPECFORGE handoff are byte-unchanged. Existing mdBook text documents catalog-backed example lookup without freezing one positional sample's exact entry fields, and the downstream handoff requires machine-readable contracts without duplicating this representative key list, so no public-document edit is required.`
+  Commit: `this commit (refresh the representative MCP example schema fixture)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.12`
   Status: `pending`
@@ -353,6 +353,12 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Hosted jobs `93788675417`/`93788675550` and the pre-fix local t48/t82 show five generated carrier-only assignments while the direct tests still require redundant `& 1'b1`. `git log -S'_simplify_binary_identity' --oneline --all -- perl/FSM/Synthesis/EnableGraph/ASTSupport.pm` identifies scalar identity simplification commit `425f03d1b`; `git show b775355f2` proves the later simplification-oracle sync changed these same state/standalone DTE patterns in `RegressionCorpus` but omitted t48/t82.
 - [x] **ADDRESSED (verified)** — t48 and t82 now require exact `route_en`, `expr_guard_en`, `idle_en`, and `active_en` carrier assignments at all five affected output/transition enables. The nontrivial `idle_next_state_active_en = idle_en & done` transition, top-level DTE guards, shared intermediate, factorization, and non-inlining assertions remain exact; no alternate redundant spelling is accepted and production is unchanged.
 - [x] **NO REGRESSION** — The direct DTE plus complete adjacent EnableGraph band reports `All tests successful` at `Files=11, Tests=39`; the broader corpus audit reports `All tests successful` at `Files=1, Tests=7092`. The staged doctrine driver reports `[doctrine] all doctrine checks passed`. Existing mdBook text already documents scalar true-identity simplification and its vector-width limit, while downstream ISF handoff text specifies semantic DTE gating independently of redundant HDL syntax; generated HDL, schemas, and public integration behavior are unchanged.
+
+## Acceptance Checklist — `.6.2.2.11` (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Hosted job `93788675536` and the pre-fix local t1445 differ at the bounded examples projection because the fixture introduced at `a1cc9414a` still describes its 2026-06-16 first matching composition entry. `git log -S'expected_hdl_patterns' -- perl/FSM/Support/RegressionCorpus.pm` plus line history identifies the catalog evolution: commit `17445d0c2` later inserted the APB composition entry earlier in the catalog with `expected_module_name` and no `expected_hdl_patterns`, so the positional snapshot's stale `expected_hdl_pattern_count` no longer describes the live representative.
+- [x] **ADDRESSED (verified)** — The canonical sorted fixture substitutes exactly `expected_module_name` in its correct sorted position after `expected_lane`; every other projected key, payload/envelope shape, mutation exclusion, ambient-root exclusion, adapter method, and production catalog value is unchanged. The focused schema snapshot passes.
+- [x] **NO REGRESSION** — The adjacent t1441-t1449 read-only MCP band reports `All tests successful` at `Files=9, Tests=27`. The production adapter, public response, schemas, and catalog are byte-unchanged. Existing mdBook text accurately documents catalog-backed example lookup without freezing a positional entry's exact field set, and the SPECFORGE handoff's machine-readable-contract requirement does not duplicate that fixture list, so downstream integration and mdBook remain in lockstep without text changes.
 
 ## Acceptance Checklist — `.6.2.1` (enforced)
 
