@@ -7,18 +7,18 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2`; repaired branch awaits fresh push authorization and exact hosted requalification.
-- current_state: exact push `a28e9adf46b7861ee728703662ad18b64f0325d0` has green Knowledge Map/book workflows; regression run `31494487181` is terminal at 69 success/15 failure/3 cancelled.
-  All 14 failed test jobs, the failed aggregate, and all 3 cancelled test jobs
-  map to completed repairs/qualification. The replacement workflow gives all
-  1,605 tests exact 16-ordinary/3-dedicated/48-corpus/68-dynamic ownership,
-  scopes dependencies precisely, disables matrix fail-fast, and requires all six families in one aggregate. Canonical downstream/SPECFORGE contracts,
-  retained sources, and official mdBook 0.5.4 test/build are lockstep and green; disposable artifacts are removed.
-- next_action: obtain fresh director authorization; then push the exact clean HEAD and consume every required exact-SHA GitHub workflow/job to terminal success per `COMMIT.md`.
-- in_flight_uncommitted: none after this commit.
-- in_flight_background: none; exact regression run `31494487181` is terminal.
-- blockers: the repaired early push requires fresh director authorization; the authorization used for `a28e9adf4` is consumed.
-- push_state: remote `a28e9adf4`; exact run completed/failure and no repaired push is authorized yet.
+- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.19`; commit locally qualified mdBook setup repair.
+- current_state: authorized push `a51dcdad0a7e752e638abfe3ab414f7f3911889d` has exact remote equality and green Knowledge Map run `31529600931`.
+  Publish mdBook run `31529600916` and regression mdBook job `93906174155`
+  fail before build: pinned action revision `a6f333f62` declares
+  `lib/index.js`, but its complete tree contains no `lib/`. Local `.19`
+  replaces it with the checksummed official repository-local mdBook 0.5.4
+  asset; focused, book, downstream/SPECFORGE, locality, and Knowledge Map gates pass.
+- next_action: pass staged doctrines, commit `.19` cleanly, then consume exact regression run `31529600915`; request fresh authorization before any repair push.
+- in_flight_uncommitted: completed `.19` workflow/test/guidance/fact/task slice awaits staged doctrine and commit.
+- in_flight_background: exact regression run `31529600915` remains active on GitHub.
+- blockers: none for local repair; a repair push will require authorization under `COMMIT.md`.
+- push_state: remote `a51dcdad0`; Knowledge Map success, both mdBook jobs failed by one setup-action packaging defect, regression tests remain active.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not

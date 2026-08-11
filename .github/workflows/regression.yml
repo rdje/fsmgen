@@ -47,13 +47,13 @@ jobs:
     - name: Check out repository
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-    - name: Set up mdBook
-      uses: peaceiris/actions-mdbook@a6f333f62c4b46ed5190d00cab3b7f9a6996274c # Node 24 main, 2026-05-11
-      with:
-        mdbook-version: '0.5.4'
+    - name: Install exact official mdBook
+      run: bash scripts/install_hosted_mdbook.sh
 
     - name: Build user documentation
-      run: mdbook build docs/book
+      run: |
+        .artifacts/cache/tools/mdbook/0.5.4/mdbook test docs/book
+        .artifacts/cache/tools/mdbook/0.5.4/mdbook build docs/book
 
   perl_files:
     name: Perl files ${{ matrix.shard }}/16

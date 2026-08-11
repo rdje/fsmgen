@@ -49,6 +49,11 @@ my $knowledge_map_workflow = File::Spec->catfile(
     'workflows',
     'knowledge-map-gate.yml',
 );
+my $mdbook_installer = File::Spec->catfile(
+    $repo_root,
+    'scripts',
+    'install_hosted_mdbook.sh',
+);
 
 sub run_ci {
     my (@args) = @_;
@@ -651,7 +656,7 @@ subtest 'hosted workflow runs every shard family to a terminal aggregate' => sub
     }
 };
 
-subtest 'hosted workflows pin the audited Node 24 action family' => sub {
+subtest 'hosted workflows pin audited actions and exact official mdBook' => sub {
     my %yaml = (
         regression    => slurp($workflow),
         pages         => slurp($pages_workflow),
@@ -661,7 +666,6 @@ subtest 'hosted workflows pin the audited Node 24 action family' => sub {
 
     my %pins = (
         'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' => 8,
-        'peaceiris/actions-mdbook@a6f333f62c4b46ed5190d00cab3b7f9a6996274c' => 2,
         'shogo82148/actions-setup-perl@53e33bb27be492a926eee378e8a5f7ff6618b061' => 4,
         'actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d' => 1,
         'actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9' => 1,
@@ -673,20 +677,51 @@ subtest 'hosted workflows pin the audited Node 24 action family' => sub {
     }
 
     my @uses = $all =~ /^\s*uses:\s+(\S+)/mg;
-    is(scalar(@uses), 17, 'all seventeen direct workflow action uses are inventoried');
+    is(scalar(@uses), 15, 'all fifteen direct workflow action uses are inventoried');
     for my $use (@uses) {
         like($use, qr/\A[^@\s]+\@[0-9a-f]{40}\z/, "$use is pinned to an immutable commit");
     }
     unlike($all, qr/^\s*uses:\s+\S+\@v[0-9]/m, 'no direct action use floats on a movable major tag');
     unlike($all, qr/ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION/, 'workflows do not enable an insecure Node fallback');
+    unlike($all, qr/peaceiris\/actions-mdbook/, 'workflows do not depend on the broken mdBook setup action');
 
     for my $owner (qw(regression pages)) {
         like(
             $yaml{$owner},
-            qr/peaceiris\/actions-mdbook\@a6f333f62c4b46ed5190d00cab3b7f9a6996274c.*?with:\s+mdbook-version:\s+'0\.5\.4'/s,
-            "$owner workflow pins mdBook 0.5.4 beneath the audited setup action",
+            qr/run:\s+bash scripts\/install_hosted_mdbook\.sh.*?\.artifacts\/cache\/tools\/mdbook\/0\.5\.4\/mdbook test docs\/book.*?\.artifacts\/cache\/tools\/mdbook\/0\.5\.4\/mdbook build docs\/book/s,
+            "$owner workflow installs, tests, and builds with exact repository-local mdBook 0.5.4",
         );
     }
+
+    my $installer = slurp($mdbook_installer);
+    like($installer, qr/mdbook_version='0\.5\.4'/, 'installer pins mdBook 0.5.4');
+    like(
+        $installer,
+        qr/asset_name="mdbook-v\$\{mdbook_version\}-x86_64-unknown-linux-gnu\.tar\.gz"/,
+        'installer selects the official Linux GNU release asset',
+    );
+    like($installer, qr/asset_size='4822940'/, 'installer pins the published archive size');
+    like(
+        $installer,
+        qr/asset_sha256='3f28de05dafca9d0f2eab99c662116b0e37b89b1d96a08f8f430b9eeae958cd7'/,
+        'installer pins the published archive SHA-256',
+    );
+    like(
+        $installer,
+        qr{https://github\.com/rust-lang/mdBook/releases/download/v\$\{mdbook_version\}/\$\{asset_name\}},
+        'installer downloads only from the official mdBook release owner',
+    );
+    like(
+        $installer,
+        qr/tool_root="\.artifacts\/cache\/tools\/mdbook\/\$\{mdbook_version\}"/,
+        'installer keeps the hosted tool beneath a repository-relative artifact root',
+    );
+    like($installer, qr/sha256sum --check --strict/, 'installer verifies SHA-256 before extraction');
+    like(
+        $installer,
+        qr/actual_version.*?mdbook v\$\{mdbook_version\}/s,
+        'installer fails closed unless the extracted binary reports the pinned version',
+    );
     like(
         $yaml{pages},
         qr/actions\/upload-pages-artifact\@fc324d3547104276b827a68afc52ff2a11cc49c9.*?path:\s+docs\/book\/book\s+include-hidden-files:\s+true/s,
