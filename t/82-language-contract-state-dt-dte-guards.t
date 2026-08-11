@@ -71,8 +71,8 @@ like(
 );
 like(
     $hdl,
-    qr/\bassign\s+idle_out_a_1_en\s*=\s*idle_en\s*&\s*1'b1\s*;/,
-    'state DT scalar DTE gates normal output enable boundary',
+    qr/\bassign\s+idle_out_a_1_en\s*=\s*idle_en\s*;/,
+    'state DT scalar DTE directly gates normal output enable boundary',
 );
 like(
     $hdl,
@@ -81,13 +81,13 @@ like(
 );
 like(
     $hdl,
-    qr/\bassign\s+active_out_b_1_en\s*=\s*active_en\s*&\s*1'b1\s*;/,
-    'state DT expression DTE gates normal output enable boundary',
+    qr/\bassign\s+active_out_b_1_en\s*=\s*active_en\s*;/,
+    'state DT expression DTE directly gates normal output enable boundary',
 );
 like(
     $hdl,
-    qr/\bassign\s+active_next_state_idle_en\s*=\s*active_en\s*&\s*1'b1\s*;/,
-    'state DT expression DTE also gates transition output enable boundary',
+    qr/\bassign\s+active_next_state_idle_en\s*=\s*active_en\s*;/,
+    'state DT expression DTE also directly gates transition output enable boundary',
 );
 
 my $shared_guard_module = parse_fsm_module(<<'FSM');

@@ -7,14 +7,14 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.10`; DTE identity assertions.
+- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.11`; MCP schema fixture.
 - current_state: exact push `a28e9adf46b7861ee728703662ad18b64f0325d0` has green Knowledge Map/book workflows.
   Regression run `31494487181` has 13 failed jobs and four running ordinary shards. Verilator/Yosys,
   manifest discovery, t40 spelling, ordinary complete-history checkout, and
-  hosted Icarus, APB/CLI fixtures, and the private-VIAL status audit are
-  locally repaired; every other observed family has an owning child. This
-  VIAL-audit slice will be ten commits ahead.
-- next_action: synchronize DTE identity-simplification assertions in .6.2.2.10 while consuming any new terminal results from the final four shards.
+  hosted Icarus, APB/CLI/VIAL audits, and the DTE identity assertions are
+  locally repaired; every other observed family has an owning child. This DTE
+  slice will be eleven commits ahead.
+- next_action: synchronize the read-only MCP schema fixture in .6.2.2.11 while consuming any new terminal results from the final four shards.
 - in_flight_uncommitted: none after this commit.
 - in_flight_background: exact regression run `31494487181` and watcher session `95229`; their terminal inventory must be consumed.
 - blockers: a new early repair push requires director authorization after fixes.

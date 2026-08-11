@@ -190,11 +190,11 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (recognize the qualified private VIAL VHDL status)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.10`
-  Status: `pending`
+  Status: `done`
   Goal: `Align standalone and state DTE output-enable assertions with canonical true-identity simplification.`
   Acceptance: `Require the exact DTE carrier and target enable while accepting the canonical direct carrier assignment in place of carrier & 1'b1; retain nontrivial transition/guard assertions; pass t48/t82 and adjacent EnableGraph coverage without changing generated HDL.`
-  Verification: `Jobs 93788675417 and 93788675550 plus local t48/t82 show exact assignments route_out_a_1_en = route_en, expr_guard_out_d_1_en = expr_guard_en, idle_out_a_1_en = idle_en, active_out_b_1_en = active_en, and active_next_state_idle_en = active_en after the established AST identity simplifier.`
-  Commit: `pending implementation`
+  Verification: `Jobs 93788675417 and 93788675550 plus the pre-fix local t48/t82 expose five direct assignments after the width-safe AST simplifier removes boolean & 1'b1. The simplifier shipped in 425f03d1b; git history shows b775355f2 later synchronized the same state/standalone DTE expectations in RegressionCorpus but omitted these direct tests. The five assertions now require the exact carrier-only assignments and clearer direct-gating labels, while idle_next_state_active_en = idle_en & done and all guard/factorization checks remain exact. The DTE/EnableGraph band passes at Files=11, Tests=39; corpus accounting passes at Files=1, Tests=7092. Production and generated HDL are byte-unchanged. The mdBook already documents the exact scalar identity rewrite and vector-width boundary, while the downstream ISF contract specifies semantic DTE gating without depending on redundant syntax, so no public-document edit is required.`
+  Commit: `this commit (synchronize direct DTE identity assertions)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.11`
   Status: `pending`
@@ -347,6 +347,12 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Hosted job `93788675417` and the pre-fix local t350 fail only the `FSM::Support::VIALVHDLEmissionContract` status assertion after 54 other support-contract modules pass. `git log -S'shipped_private_portable_and_osvvm_qualified_profiles' --oneline --all -- perl t docs/book docs/isf-spec` identifies `895ea33bd`: exact OSVVM 2026.05 plus GHDL 6.0.0 qualification deliberately advanced the private contract status, while t350's independent closed audit set remained stale.
 - [x] **ADDRESSED (verified)** — t350's closed `%allowed_status` set now admits exactly `shipped_private_portable_and_osvvm_qualified_profiles`. The canonical builder, embedded capability-manifest projection, schema version, private/public boundary, capabilities, limits, and nonclaims remain unchanged; no wildcard or weakened status policy is introduced.
 - [x] **NO REGRESSION** — The focused and adjacent capability/support-contract suite reports `All tests successful` at `Files=8, Tests=84`; t297 proves the capability manifest still embeds the exact canonical VIAL VHDL contract, and t350 validates all 55 contract builders. The staged doctrine driver reports `[doctrine] all doctrine checks passed`. Commit `895ea33bd` already synchronized the mdBook architecture chapters and durable VIAL handoff/audit with the live contract, so product, public integration, emitted-artifact, and documentation behavior is unchanged.
+
+## Acceptance Checklist — `.6.2.2.10` (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Hosted jobs `93788675417`/`93788675550` and the pre-fix local t48/t82 show five generated carrier-only assignments while the direct tests still require redundant `& 1'b1`. `git log -S'_simplify_binary_identity' --oneline --all -- perl/FSM/Synthesis/EnableGraph/ASTSupport.pm` identifies scalar identity simplification commit `425f03d1b`; `git show b775355f2` proves the later simplification-oracle sync changed these same state/standalone DTE patterns in `RegressionCorpus` but omitted t48/t82.
+- [x] **ADDRESSED (verified)** — t48 and t82 now require exact `route_en`, `expr_guard_en`, `idle_en`, and `active_en` carrier assignments at all five affected output/transition enables. The nontrivial `idle_next_state_active_en = idle_en & done` transition, top-level DTE guards, shared intermediate, factorization, and non-inlining assertions remain exact; no alternate redundant spelling is accepted and production is unchanged.
+- [x] **NO REGRESSION** — The direct DTE plus complete adjacent EnableGraph band reports `All tests successful` at `Files=11, Tests=39`; the broader corpus audit reports `All tests successful` at `Files=1, Tests=7092`. The staged doctrine driver reports `[doctrine] all doctrine checks passed`. Existing mdBook text already documents scalar true-identity simplification and its vector-width limit, while downstream ISF handoff text specifies semantic DTE gating independently of redundant HDL syntax; generated HDL, schemas, and public integration behavior are unchanged.
 
 ## Acceptance Checklist — `.6.2.1` (enforced)
 

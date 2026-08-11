@@ -169,8 +169,8 @@ FSM
     like($hdl, qr/\bassign\s+expr_guard_en\s*=\s*intermediate_and_req_ready_\d+\s*;/, 'expression standalone DT DTE emits through a backed intermediate');
     like($hdl, qr/\bassign\s+intermediate_and_req_ready_\d+\s*=\s*req\s*&\s*ready\s*;/, 'expression standalone DT DTE intermediate is assigned');
     like($hdl, qr/\bassign\s+plain_en\s*=\s*1'b1\s*;/, 'unguarded standalone DT defaults DTE to one');
-    like($hdl, qr/\bassign\s+route_out_a_1_en\s*=\s*route_en\s*&\s*1'b1\s*;/, 'truthy DTE gates the standalone DT output enable boundary');
-    like($hdl, qr/\bassign\s+expr_guard_out_d_1_en\s*=\s*expr_guard_en\s*&\s*1'b1\s*;/, 'expression DTE gates the standalone DT output enable boundary');
+    like($hdl, qr/\bassign\s+route_out_a_1_en\s*=\s*route_en\s*;/, 'truthy DTE directly gates the standalone DT output enable boundary');
+    like($hdl, qr/\bassign\s+expr_guard_out_d_1_en\s*=\s*expr_guard_en\s*;/, 'expression DTE directly gates the standalone DT output enable boundary');
 };
 
 done_testing();
