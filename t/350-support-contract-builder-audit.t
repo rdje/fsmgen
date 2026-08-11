@@ -25,6 +25,7 @@ my %allowed_status = map { $_ => 1 } qw(
     shipped_private_emission_foundation_and_review_gallery
     shipped_private_selected_matrix_and_review_workflow
     shipped_private_structurally_reviewed_unqualified_portable_profile
+    shipped_private_portable_and_osvvm_qualified_profiles
     shipped_public_source_tooling_and_atomic_planning
     shipped_public_verilator_execution_and_result
     shipped_public_verilator_execution_result_and_ahb_parity

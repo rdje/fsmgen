@@ -183,11 +183,11 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (restore the output-open failure fixture after parent preparation)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.9`
-  Status: `pending`
+  Status: `done`
   Goal: `Recognize the current qualified private VIAL VHDL contract status in the support-builder audit.`
   Acceptance: `Trace the status to its owning qualification slice; add only the current exact value to the closed audit set; pass all support-contract builders and relevant VIAL contract tests without changing a contract payload.`
-  Verification: `Job 93788675417 and local t350 reject shipped_private_portable_and_osvvm_qualified_profiles, introduced by HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.7 after the last audit-oracle sync.`
-  Commit: `pending implementation`
+  Verification: `Job 93788675417 and the pre-fix local t350 reject only FSM::Support::VIALVHDLEmissionContract: all 54 other contract modules pass, while the closed audit set lacks shipped_private_portable_and_osvvm_qualified_profiles. git log -S traces that exact value to 895ea33bd, whose .15.7 qualification changed the canonical private contract and simultaneously synchronized the two mdBook architecture chapters and durable VIAL task evidence. t350 now admits only that exact additional status. The focused and adjacent capability/support-contract band passes at Files=8, Tests=84; t297 separately proves that the capability manifest embeds the exact canonical VIAL VHDL contract. The contract payload, capability manifest, mdBook, VIAL handoff/audit, schemas, and generated artifacts are byte-unchanged by this oracle-only slice.`
+  Commit: `this commit (recognize the qualified private VIAL VHDL status)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.10`
   Status: `pending`
@@ -341,6 +341,12 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Hosted job `93788675417` and the pre-fix local t250 succeed unexpectedly because a missing output parent no longer represents an unwritable target. `git log -S'ensure_project_output_directory' --oneline --all -- bin/fsmgen t/250-cli-entrypoint-file-context.t` identifies `017153eac`: `bin/fsmgen` now deliberately prepares the repository-local parent immediately before opening the output file, while the older fixture still relies on missing-parent failure.
 - [x] **ADDRESSED (verified)** — t250 now creates the output path itself as a directory, allowing parent preparation to succeed before `open '>'` deterministically fails at the intended branch. The same source path, output path, underlying `Cannot write to output file:` diagnostic, and no-script-redie assertions remain exact; `!-f` correctly proves that no generated file exists while preserving the directory fixture. Production is unchanged.
 - [x] **NO REGRESSION** — The focused t250 run reports `All tests successful` at `Files=1, Tests=2`; the adjacent source/child/extension diagnostic plus project-local artifact-placement band reports `All tests successful` at `Files=11, Tests=28`. The staged doctrine driver reports `[doctrine] all doctrine checks passed`. Existing mdBook text already specifies missing repository-local output-parent creation, the ISF downstream handoff already selects repository-local output paths, and CLI/schema/HDL/public integration behavior is unchanged.
+
+## Acceptance Checklist — `.6.2.2.9` (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Hosted job `93788675417` and the pre-fix local t350 fail only the `FSM::Support::VIALVHDLEmissionContract` status assertion after 54 other support-contract modules pass. `git log -S'shipped_private_portable_and_osvvm_qualified_profiles' --oneline --all -- perl t docs/book docs/isf-spec` identifies `895ea33bd`: exact OSVVM 2026.05 plus GHDL 6.0.0 qualification deliberately advanced the private contract status, while t350's independent closed audit set remained stale.
+- [x] **ADDRESSED (verified)** — t350's closed `%allowed_status` set now admits exactly `shipped_private_portable_and_osvvm_qualified_profiles`. The canonical builder, embedded capability-manifest projection, schema version, private/public boundary, capabilities, limits, and nonclaims remain unchanged; no wildcard or weakened status policy is introduced.
+- [x] **NO REGRESSION** — The focused and adjacent capability/support-contract suite reports `All tests successful` at `Files=8, Tests=84`; t297 proves the capability manifest still embeds the exact canonical VIAL VHDL contract, and t350 validates all 55 contract builders. The staged doctrine driver reports `[doctrine] all doctrine checks passed`. Commit `895ea33bd` already synchronized the mdBook architecture chapters and durable VIAL handoff/audit with the live contract, so product, public integration, emitted-artifact, and documentation behavior is unchanged.
 
 ## Acceptance Checklist — `.6.2.1` (enforced)
 
