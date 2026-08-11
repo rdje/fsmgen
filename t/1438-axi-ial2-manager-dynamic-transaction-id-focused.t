@@ -1223,7 +1223,7 @@ sub assert_dynamic_behavior {
         like($isf, qr/read dynamic same-ID issue-order queue completion for r0 follows selected runtime-ID match/, 'dynamic read burst-last issue-order queue emits final selected-match assertion');
         assert_dynamic_read_burst_last_same_id_issue_order_queue_report($result->{report});
         my $hdl = hdl_for('axi0_capacity_status', $fsm);
-        like($hdl, qr/\binput\s+axi0_rlast\b/, 'SystemVerilog declares RLAST input');
+        like($hdl, qr/\binput\s+(?:wire\s+)?axi0_rlast\b/, 'SystemVerilog declares RLAST input');
         like($hdl, qr/\breg\s+\[3:0\]\s+axi0_read_dynamic_same_id_issue_order_slot0_id_q\b/, 'SystemVerilog declares slot0 captured ARID');
         like($hdl, qr/\breg\s+\[3:0\]\s+axi0_read_dynamic_same_id_issue_order_slot1_id_q\b/, 'SystemVerilog declares slot1 captured ARID');
         like($hdl, qr/axi0_read_dynamic_same_id_issue_order_slot1_id_q_next\s*=\s*axi0_arid\s*;/, 'SystemVerilog recaptures ARID into a queue slot');
@@ -1250,7 +1250,7 @@ sub assert_dynamic_behavior {
         like($isf, qr/read dynamic same-ID issue-order queue completion for r2 follows selected runtime-ID match/, 'dynamic read burst-last depth-3 issue-order queue emits r2 selected-match assertion');
         assert_dynamic_read_burst_last_depth3_same_id_issue_order_queue_report($result->{report});
         my $hdl = hdl_for('axi0_capacity_status', $fsm);
-        like($hdl, qr/\binput\s+axi0_rlast\b/, 'SystemVerilog declares RLAST input');
+        like($hdl, qr/\binput\s+(?:wire\s+)?axi0_rlast\b/, 'SystemVerilog declares RLAST input');
         like($hdl, qr/\breg\s+\[3:0\]\s+axi0_read_dynamic_same_id_issue_order_slot2_id_q\b/, 'SystemVerilog declares slot2 captured ARID');
         like($hdl, qr/axi0_read_dynamic_same_id_issue_order_slot1_id_q_next\s*=\s*axi0_arid\s*;/, 'SystemVerilog recaptures ARID into a compacted queue slot');
         return;

@@ -77,11 +77,11 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (align five stale IAL2 generator expectations)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Make the two observed t/1438 RLAST port checks accept semantically equivalent SystemVerilog net spelling.`
   Acceptance: `Both depth-2 and depth-3 dynamic RID/RLAST cases accept generated input ports with or without an explicit wire token, still require the exact axi0_rlast input, and pass the focused filtered test plus a broader neighboring contract check.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Hosted run 31367105225 and the local RED identify strict RLAST regexes at t/1438 lines 1226 and 1253: both required input axi0_rlast even though canonical generated SystemVerilog spells the same scalar input net as input wire axi0_rlast. Git blame traces the expectations to the original depth-2 and depth-3 queue tests on 2026-06-25; adjacent current HDL checks already permit the equivalent optional net token. The two repaired regexes still require the exact axi0_rlast input and accept only an optional wire token before it. The changed test is syntax-clean. Unique full-PPIF filters avoid the earlier broad substring collision: the exact depth-2 case reports All tests successful at Files=1, Tests=6 in 24s, the exact depth-3 case reports All tests successful at Files=1, Tests=6 in 907s, and the adjacent mixed dynamic/static RID/RLAST contract reports All tests successful at Files=1, Tests=6 in 23s. All runs were RAM-guarded. No generator, IAL1, IAL0, SystemVerilog, report, CLI, or user-visible behavior changed, so the already-accurate mdBook needs no edit.`
+  Commit: `this commit (accept equivalent RLAST net spelling)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6`
   Status: `pending`
@@ -116,23 +116,18 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 
 - None.
 
-## Acceptance Checklist — `.4` (enforced)
+## Acceptance Checklist — `.5` (enforced)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Hosted run `31367105225` emits its first
-  concrete Test::More diagnostic at t/1437-axi-ial2-manager-capacity-status-generator.t line 1254 and reports
-  the remaining stale expectations at lines 1289, 1413-1414, 1442, and 1566.
-  Their 2026-06-25/26 expectations
-  postdate the generator's canonical assertion-message, typed-literal,
-  explicit-net, and delayed-pulse behavior and therefore describe stale text
-  forms rather than contract violations.
-- [x] **ADDRESSED (verified)** — The five checks now require the exact emitted
-  assertion message, width-correct bank initialization values in generated
-  order, the exact RLAST port with equivalent optional `wire`, and the actual
-  completion delay-pipe assignment. The changed test is syntax-clean, and each
-  formerly red top-level case independently reports `All tests successful` at
-  `Files=1, Tests=1` with all nested assertions enabled.
-- [x] **NO REGRESSION** — The RAM-guarded regression-corpus and capability-
-  manifest pair reports `All tests successful` at `Files=2, Tests=7096`.
-  Monolithic attempts stopped safely at the 88% RAM cutoff and are not claimed
-  as passes. Production and user-facing behavior are unchanged, so the
+- [x] **ROOT CAUSE (WHY + WHERE)** — Hosted run `31367105225` emits the strict
+  depth-2 RLAST diagnostic at t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t line 1226 and the equivalent depth-3 diagnostic at line 1253. Both
+  2026-06-25 expectations reject canonical `input wire axi0_rlast` solely
+  because they omit the legal explicit net token.
+- [x] **ADDRESSED (verified)** — Both regexes now accept an optional `wire`
+  token while still requiring the exact scalar `axi0_rlast` input. The changed
+  test is syntax-clean; unique full-PPIF filters make the exact depth-2 and
+  depth-3 cases independently report `All tests successful` at
+  `Files=1, Tests=6`.
+- [x] **NO REGRESSION** — The separate adjacent mixed dynamic/static RID/RLAST
+  case reports `All tests successful` at `Files=1, Tests=6` under the RAM
+  guard. Production and user-facing behavior are unchanged, so the
   already-accurate mdBook needs no edit.
