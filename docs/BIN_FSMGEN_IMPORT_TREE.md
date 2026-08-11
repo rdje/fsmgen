@@ -11,8 +11,8 @@ Use it to keep one current, high-signal picture of:
 Refresh this document at the start of a later session whenever the effective entrypoint/import-tree architecture has moved enough that this note is no longer honest.
 
 Current baseline:
-- Reviewed on `2026-08-09`.
-- Startup bootstrap refreshed on `2026-08-09`; the live static trace includes
+- Reviewed on `2026-08-11`.
+- Startup bootstrap refreshed on `2026-08-11`; the live static trace includes
   the R14 `.isf` intent-scheduling path, the IAL2 `.ppif` and profile-alias
   protocol-intent pre-lowering path, the Valid-Ready, AXI manager plus bounded
   AXI initiator, APB, and AHB protocol-intent owners, the first-class
@@ -442,8 +442,8 @@ Current largest reachable files by line count (complete at `>= 1400` lines):
 - [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm): `2136`
 - [perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm](perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm): `1904`
 - [perl/FSM/VIAL/Backend/SVPortableVerilator.pm](perl/FSM/VIAL/Backend/SVPortableVerilator.pm): `1893`
-- [perl/FSM/VIAL/SemanticBuilder.pm](perl/FSM/VIAL/SemanticBuilder.pm): `1888`
-- [perl/FSM/VIAL/ExecutionBuilder.pm](perl/FSM/VIAL/ExecutionBuilder.pm): `1855`
+- [perl/FSM/VIAL/ExecutionBuilder.pm](perl/FSM/VIAL/ExecutionBuilder.pm): `1923`
+- [perl/FSM/VIAL/SemanticBuilder.pm](perl/FSM/VIAL/SemanticBuilder.pm): `1889`
 - [bin/fsmgen](bin/fsmgen): `1838`
 - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm): `1835`
 - [perl/FSM/Scheduler/ISF/ControlFlowEffects.pm](perl/FSM/Scheduler/ISF/ControlFlowEffects.pm): `1769`
