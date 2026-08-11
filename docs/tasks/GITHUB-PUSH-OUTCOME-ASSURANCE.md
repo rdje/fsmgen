@@ -141,11 +141,11 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (restore exact verification-output discovery metadata)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Make t40 accept the canonical semantically equivalent unary-not HDL spelling.`
   Acceptance: `Use history and generated HDL to prove whether parentheses are contractually required; if not, make the test accept only the exact factored intermediate with or without redundant parentheses while retaining all negated AND/OR/XOR checks; pass focused and adjacent language-expression tests.`
-  Verification: `Job 93788675553 emits A = !intermediate_and_B_C_1; while t40 requires A = !(intermediate_and_B_C_1); and fails solely on that formatting distinction.`
-  Commit: `pending implementation`
+  Verification: `Job 93788675553 emits A = !intermediate_and_B_C_1; while t40 required A = !(intermediate_and_B_C_1); and failed solely on that formatting distinction. Git history finds no production contract for the redundant-parenthesis form, and the canonical RegressionCorpus already requires unparenthesized !intermediate_and/or/xor spellings. The one changed assertion now accepts exactly either the parenthesized or unparenthesized named intermediate, without permitting a missing or mismatched parenthesis and without weakening the wire, AND, OR, or XOR assertions. t35-t45 plus t248 pass at Files=12, Tests=7,187. This test-only correction changes no parser, AST, HDL generation, CLI/schema, mdBook, or downstream handoff behavior.`
+  Commit: `this commit (accept equivalent unary-not intermediate spelling)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.4`
   Status: `pending`
@@ -172,6 +172,9 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   owner of the verification-output section's top-level discovery family.
   Adding the two already-live omitted names repairs additive discovery
   metadata; it does not widen the payload or require an artifact schema bump.
+- `2026-08-11`: Treat parentheses around a single SystemVerilog identifier
+  under unary `!` as optional test spelling, while requiring the exact factored
+  intermediate either way. Production and RegressionCorpus stay unchanged.
 
 - `2026-08-11`: Treat the cancelled regression as incomplete and failed
   signoff. Git transport, two green workflows, and an eventual cancellation do
@@ -219,6 +222,12 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'json_safe_when_embedded_in_public_manifest' -- perl t docs/book` locates the original verification-output contract introduction at `d867815f3`; the section spread the full contract, while two independent hand-copied discovery lists omitted `guidance` and `json_safe_when_embedded_in_public_manifest`.
 - [x] **ADDRESSED (verified)** — One canonical `verification_outputs_public_top_level_keys()` list now owns both projections and includes both live fields. t370 proves the section's self-advertisement plus grouped discovery for the direct builder, in-process manifest, `--capability-manifest`, and `--emit-capability-manifest`; all views are exact.
 - [x] **NO REGRESSION** — Adjacent capability discovery, contract, JSON-round-trip, and defensive-copy coverage reports `All tests successful` at `Files=13, Tests=42`; downstream public-interface and verification-output coverage reports `All tests successful` at `Files=6, Tests=35`. All mdBook chapters and the HTML build pass, the build is removed, project locality and ISF partition checks pass, and the staged doctrine driver reports `[doctrine] all doctrine checks passed`.
+
+## Acceptance Checklist — `.6.2.2.3` (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Hosted job `93788675553` emits `A = !intermediate_and_B_C_1;` while t40 alone requires redundant parentheses; `git log -S'!(intermediate_and_B_C_1)' --oneline --all -- t perl` finds no production contract, and RegressionCorpus already requires the unparenthesized canonical form for all three negated n-ary families.
+- [x] **ADDRESSED (verified)** — t40 now accepts exactly `!intermediate_and_B_C_1` or `!(intermediate_and_B_C_1)` and still requires the same factored carrier plus exact AND, OR, and XOR assignments; the focused file passes.
+- [x] **NO REGRESSION** — The adjacent t35-t45 language-contract band plus t248 RegressionCorpus accounting reports `All tests successful` at `Files=12, Tests=7187`; the staged doctrine driver reports `[doctrine] all doctrine checks passed`. No product or public-document surface changed.
 
 ## Acceptance Checklist — `.6.2.1` (enforced)
 

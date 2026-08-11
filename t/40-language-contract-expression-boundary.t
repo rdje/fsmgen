@@ -95,7 +95,11 @@ FSM
     like($hdl, qr/\bassign intermediate_and_B_C_1 = B & C; \/\/ Source: fsmgen_parsing\b/, 'negated and lowers through an ordinary bitwise-and AST');
     like($hdl, qr/\bassign intermediate_or_B_C_2 = B \| C; \/\/ Source: fsmgen_parsing\b/, 'negated or lowers through an ordinary bitwise-or AST');
     like($hdl, qr/\bassign intermediate_xor_B_C_3 = B \^ C; \/\/ Source: fsmgen_parsing\b/, 'xnor alias lowers through an ordinary bitwise-xor AST');
-    like($hdl, qr/A = !\(intermediate_and_B_C_1\);/, 'negated n-ary operators lower through unary not over the factored intermediate');
+    like(
+        $hdl,
+        qr/A = !(?:intermediate_and_B_C_1|\(intermediate_and_B_C_1\));/,
+        'negated n-ary operators lower through unary not over the factored intermediate',
+    );
 };
 
 subtest 'malformed active RHS operator arity is rejected explicitly' => sub {
