@@ -7,17 +7,18 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2`; exact hosted push qualification.
-- current_state: observed CI failures are repaired and locally verified; the
-  downstream contract audit is complete. The provenance question is parked in
-  proposed tree `DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT`. The branch is 21
-  commits ahead after this handoff commit.
-- next_action: push the exact clean revision authorized by the director; prove
-  local/upstream/remote SHA equality, then consume every required GitHub
-  workflow and all 16 ordinary/68 dynamic shard results to terminal success.
+- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.1`; hosted HDL-tool repair.
+- current_state: exact push `a28e9adf46b7861ee728703662ad18b64f0325d0`
+  has green Knowledge Map/book workflows. Regression run `31494487181` has one
+  failed ordinary shard with missing Verilator/Yosys plus t370/t40 drift; its
+  remaining 16-file/68-case matrix continues. This activation commit is one
+  commit ahead of the pushed revision.
+- next_action: reproduce and repair the missing hosted HDL tools under `.1` while consuming every remaining job; then close `.2` manifest and `.3` test
+  drift separately. `.4` tracks the nonblocking Node action-runtime warning.
 - in_flight_uncommitted: none after this commit.
-- blockers: none before transport; any non-success hosted result reopens repair.
-- push_state: director-authorized early push on 2026-08-11; post-push exact-SHA qualification is mandatory.
+- in_flight_background: exact regression run `31494487181` and watcher session `95229`; their terminal inventory must be consumed.
+- blockers: a new early repair push requires director authorization after fixes.
+- push_state: remote `a28e9adf4`; exact run has failed and remains in progress.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not

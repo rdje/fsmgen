@@ -122,8 +122,37 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Status: `active`
   Goal: `Qualify the new hosted partition and exact repaired revision on GitHub.`
   Acceptance: `At the next cadence-authorized or director-authorized push, prove the exact remote SHA; wait for all doctrine, book, 16 ordinary-file, 68 dynamic-case, and aggregate jobs to become terminal; record every URL and conclusion; repair and requalify any failure, timeout, cancellation, skipped required job, missing shard, or aggregate mismatch before marking .6 done.`
-  Verification: `The director authorized an immediate early push on 2026-08-11 after .6.2.1 completed. Pending commit of the clean task handoff, exact transport, remote-SHA equality, complete required workflow/job inventory, and terminal hosted conclusions.`
+  Verification: `Director-authorized push a28e9adf46b7861ee728703662ad18b64f0325d0 has exact local/upstream/remote equality. Knowledge Map run 31494487149 and Publish mdBook run 31494487147 are completed/success. Regression run 31494487181 instantiated exactly 16 ordinary and 68 dynamic shards plus doctrine/mdBook support jobs; fail-fast remains disabled. Completed job 93788675553 (Perl files 12/16) failed five test files: t1506/t1520/t1535 because the hosted image lacks Verilator/Yosys, t370 on the already-known two-key verification_outputs discovery drift, and t40 because its regex requires redundant parentheses absent from semantically equivalent current HDL. Remaining jobs continue collecting evidence.`
   Commit: `pending`
+  Children: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.1, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.2, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.3, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.4`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.1`
+  Status: `active`
+  Goal: `Provision the external HDL tools required by hosted ordinary shards.`
+  Acceptance: `Reproduce the t1506/t1520/t1535 missing-tool failures from job 93788675553; install deterministic Verilator and Yosys profiles before hosted shard execution without changing local full selection; prove the three exact tests and shard plumbing; update workflow guidance and mdBook only if the supported public tool contract changes.`
+  Verification: `GitHub job 93788675553 reports Missing external HDL validation tool(s): verilator, yosys; the same job then fails public verification/yosys_synthesis and three Verilator harness checks. The workflow currently sets up Perl only.`
+  Commit: `pending implementation`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.2`
+  Status: `pending`
+  Goal: `Restore exact verification_outputs discovery-map alignment exposed by hosted t370.`
+  Acceptance: `Transfer the pre-existing proposed audit into this active recovery leaf; prove whether guidance and json_safe_when_embedded_in_public_manifest belong in the grouped discovery map, synchronize every public manifest projection, and pass t370 plus adjacent contract/round-trip/defensive-copy tests without changing generated verification artifacts.`
+  Verification: `Job 93788675553 shows guidance at the first differing index where the discovery owner expects observation_entry_keys, in-process and through both CLI spellings. Prior proposed tree CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-PRESENCE-MAP-SYNC is superseded into this leaf to avoid duplicate ownership.`
+  Commit: `pending implementation`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.3`
+  Status: `pending`
+  Goal: `Make t40 accept the canonical semantically equivalent unary-not HDL spelling.`
+  Acceptance: `Use history and generated HDL to prove whether parentheses are contractually required; if not, make the test accept only the exact factored intermediate with or without redundant parentheses while retaining all negated AND/OR/XOR checks; pass focused and adjacent language-expression tests.`
+  Verification: `Job 93788675553 emits A = !intermediate_and_B_C_1; while t40 requires A = !(intermediate_and_B_C_1); and fails solely on that formatting distinction.`
+  Commit: `pending implementation`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.4`
+  Status: `pending`
+  Goal: `Remove the hosted Node 20 action-runtime deprecation before fallback removal becomes a CI outage.`
+  Acceptance: `Audit every action annotation and current upstream action runtime; upgrade affected pinned major versions or record a bounded incompatibility with authoritative evidence; prove checkout, mdBook, Knowledge Map, and regression workflows remain green without enabling the insecure Node fallback.`
+  Verification: `All exact-SHA workflows annotate that actions/checkout@v4, and mdBook also peaceiris/actions-mdbook@v2, target deprecated Node 20 and are currently forced onto Node 24 by GitHub.`
+  Commit: `pending after blocking test failures`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.7`
   Status: `done`
@@ -154,6 +183,9 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 - `2026-08-11`: Director-authorize an immediate early repaired push and move
   the unchanged absolute source-provenance compatibility question to proposed
   tree `DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT`; it does not block `.6.2.2`.
+- `2026-08-11`: Treat regression job 93788675553 as a real failed qualification
+  and preserve all five test files under explicit repair leaves while the
+  non-cancelling matrix continues to reveal the rest of the hosted result.
 
 ## Open Questions
 
@@ -162,8 +194,9 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 
 ## Blockers
 
-- None. `.6.2.2` is authorized to push and must remain active until every
-  required exact-SHA GitHub result is terminal success.
+- Local remediation is unblocked. After verified repairs, a new early repair
+  push still requires director authorization under decision `0062`; the
+  current authorization was consumed by push `a28e9adf4`.
 
 ## Acceptance Checklist — `.6.2.1` (enforced)
 

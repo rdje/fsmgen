@@ -3,10 +3,10 @@
 ## Metadata
 
 - Tree ID: `CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-PRESENCE-MAP-SYNC`
-- Status: `proposed`
+- Status: `superseded`
 - Roadmap lane: `test integrity / capability-manifest discovery`
 - Created: `2026-07-31`
-- Last updated: `2026-07-31`
+- Last updated: `2026-08-11`
 - Owner: repo-local workflow
 
 ## Goal
@@ -36,16 +36,16 @@ lock the alignment through the existing section-discovery audit.
 ## Task Tree
 
 - ID: `CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-PRESENCE-MAP-SYNC`
-  Status: `proposed`
+  Status: `superseded`
   Goal: `Restore exact verification-output section/discovery-map alignment without changing generated verification behavior.`
   Children: `CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-PRESENCE-MAP-SYNC.1`
 
 - ID: `CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-PRESENCE-MAP-SYNC.1`
-  Status: `pending`
+  Status: `superseded`
   Goal: `Audit and repair the stale verification_outputs presence-key family.`
   Acceptance: `On clean activation, prove the HEAD mismatch, select the canonical owner for guidance and json_safe_when_embedded_in_public_manifest, align the grouped map and all contract projections, and pass t370 plus adjacent exact-schema/round-trip/defensive-copy gates without changing verification artifacts or behavior.`
-  Verification: `Pending. Discovery evidence while HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.5 was dirty: t/370 fails because the live VerificationOutputsSection contains guidance and json_safe_when_embedded_in_public_manifest while capability_manifest_verification_outputs_keys() omits them. Both mismatched owners are byte-identical to HEAD and outside the HIAL/VIAL diff, proving a pre-existing contract drift rather than a bridge regression.`
-  Commit: `pending activation`
+  Verification: `Discovery evidence while HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.5 was dirty: t/370 fails because the live VerificationOutputsSection contains guidance and json_safe_when_embedded_in_public_manifest while capability_manifest_verification_outputs_keys() omits them. Hosted job 93788675553 independently reproduces the mismatch. Ownership transfers to active recovery leaf GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.2 so one tree owns the repair.`
+  Commit: `this commit (superseded into hosted recovery)`
 
 ## Decisions
 
@@ -54,7 +54,7 @@ lock the alignment through the existing section-discovery audit.
 
 ## Blockers
 
-- Clean activation is required after the current active task-tree slice commits.
+- Superseded by `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.2`.
 
 ## Acceptance Checklist (enforced for implementation changes)
 
