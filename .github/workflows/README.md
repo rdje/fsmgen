@@ -17,13 +17,14 @@ File shards partition every tracked `t/*.t` except the separately case-sharded
 cases run one per job, with four shared checks only in shard zero. `t/1183` locks
 both disjoint unions and all matrix coordinates so no tail is hidden.
 
-Ordinary shards pin `ubuntu-24.04`, `verilator=5.020-1`, and
-`yosys=0.33-5build2`; they verify both package revisions and print tool versions
-before lint, synthesis, and harness tests. They also fetch complete repository
-history because retained-document and doctrine tests verify exact historical
-objects. The dynamic test invokes neither tool, does not inspect repository
-history, and stays Perl-only with the default shallow checkout. These ephemeral
-OS dependencies are not project data and do not alter FSMGen's separately
+Ordinary shards pin `ubuntu-24.04`, `iverilog=12.0-2build2`,
+`verilator=5.020-1`, and `yosys=0.33-5build2`; they verify all three package
+revisions and print tool versions before compile/runtime, lint, synthesis, and
+harness tests. They also fetch complete repository history because
+retained-document and doctrine tests verify exact historical objects. The
+dynamic test invokes none of these tools, does not inspect repository history,
+and stays Perl-only with the default shallow checkout. These ephemeral OS
+dependencies are not project data and do not alter FSMGen's separately
 qualified public Verilator backend.
 
 Hosted jobs call `./bin/ci-regression full --no-book` with repository-owned

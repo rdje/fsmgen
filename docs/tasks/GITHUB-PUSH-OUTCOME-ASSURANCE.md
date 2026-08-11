@@ -162,11 +162,11 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (fetch complete ordinary-shard history and restore exact retained-source transforms)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.6`
-  Status: `pending`
+  Status: `done`
   Goal: `Provision the exact hosted Icarus Verilog revision required by t1542.`
   Acceptance: `Install and verify Ubuntu Noble iverilog=12.0-2build2 beside the already-pinned Verilator/Yosys packages only for ordinary shards; prove the workflow contract and t1542 without changing public backend qualification.`
-  Verification: `Job 93788675610 reaches t1542's native-Verilog compile and fails because iverilog is absent; Ubuntu's Noble package authority lists version 12.0-2build2.`
-  Commit: `pending implementation`
+  Verification: `Job 93788675610 reaches t1542's native-Verilog compile and fails because iverilog is absent. git log -S'iverilog' finds the runtime test introduction at 1dbff8fc6 but no regression-workflow installation. Ubuntu's Noble package authority, https://packages.ubuntu.com/noble/iverilog, currently lists version 12.0-2build2. Ordinary shards now pin that exact revision, install it beside Verilator/Yosys, verify all three dpkg revisions, and print the Icarus version before testing; dynamic shards remain tool-free. Ruby parses the workflow. t1183 passes at Files=1, Tests=9 and locks the exact package plus three package checks. Local installed Icarus 13.0 executes t1542's native-Verilog compile/runtime at Files=1, Tests=7; exact 12.0-2build2 remains subject to the repaired hosted requalification. Existing public contract text already requires installed Icarus for this check and separately says local HDL tools are not selected as public verification-output providers, so mdBook/downstream contracts and public qualification remain unchanged.`
+  Commit: `this commit (provision exact hosted Icarus Verilog)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.7`
   Status: `pending`
@@ -256,6 +256,10 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   because retained-document tests consume exact objects. Keep book/dynamic jobs
   shallow, and represent every intentional post-partition downstream edit as a
   bounded exact-source rewrite, including bounded LF-separated insertions.
+- `2026-08-11`: Pin ordinary hosted shards to Ubuntu Noble
+  `iverilog=12.0-2build2` for the already-selected native-Verilog runtime test.
+  This CI dependency does not select Icarus as a public output provider or
+  change the separately qualified backend contracts.
 
 - `2026-08-11`: Treat the cancelled regression as incomplete and failed
   signoff. Git transport, two green workflows, and an eventual cancellation do
@@ -315,6 +319,12 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Jobs `93788675363`, `93788675380`, and `93788675477` run ordinary shards after the default depth-one checkout, so t1569/t1553/t1549 cannot retrieve exact retained objects `322d81f`, `329d7cf`, and `44b5f15`. `git log -S'fetch-depth: 0' --oneline -- .github/workflows/regression.yml` finds only the doctrine-job introduction at `70cd867e3`, proving the ordinary job never acquired that requirement. Once full history made those objects available locally, t1569 exposed a masked second cause: `.6.2.1` and `.6.2.2.2` intentionally changed maintained downstream parts without registering their exact archived-source transformations, while ordinary doctrine did not request t1569's stronger `--verify-activation-content` mode.
 - [x] **ADDRESSED (verified)** — Only `perl_files` now uses `fetch-depth: 0`; t1183 requires that setting and proves mdBook/dynamic remain shallow. Five exact, counted rewrite records reproduce the 19 repository-local output commands and verification-output discovery paragraph from the retained source objects. The validator now permits bounded LF-separated replacement text while continuing to forbid CR/NUL; direct activation equality reports `3 exact sources map contiguously to 11 bounded semantic parts with activation-content equality`.
 - [x] **NO REGRESSION** — Ruby reports `workflow YAML parses`; t1183 reports `All tests successful` at `Files=1, Tests=9`; t1549/t1553/t1569 report `All tests successful` at `Files=3, Tests=56`. The staged doctrine driver reports `[doctrine] all doctrine checks passed`. The book and dynamic jobs remain shallow, downstream handoff text is byte-identical in this slice, and CLI/schema/HDL/mdBook/public integration behavior is unchanged.
+
+## Acceptance Checklist — `.6.2.2.6` (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Hosted job `93788675610` reaches t1542's native-Verilog runtime path and fails because `iverilog` is absent. `git log -S'iverilog' --oneline -- .github/workflows/regression.yml` returns no commit, while the same pickaxe over t1542 locates its runtime requirement at `1dbff8fc6`: the ordinary shard selected the test but never provisioned its compiler.
+- [x] **ADDRESSED (verified)** — The ordinary job pins Ubuntu Noble `iverilog=12.0-2build2`, installs it beside the existing exact Verilator/Yosys packages, verifies all three dpkg revisions, and prints `iverilog -V`. t1183 locks the exact pin, installation order, three revision checks, and the dynamic job's tool-free boundary; Ruby reports `workflow YAML parses`.
+- [x] **NO REGRESSION** — t1183 reports `All tests successful` at `Files=1, Tests=9`; local Icarus 13.0 executes t1542's native-Verilog compile/runtime and reports `All tests successful` at `Files=1, Tests=7`. The staged doctrine driver reports `[doctrine] all doctrine checks passed`. Existing downstream contract text already selects the Icarus check and denies local tools public verification-output-provider status, so mdBook, handoff schemas, generated HDL, and public qualification are unchanged.
 
 ## Acceptance Checklist — `.6.2.1` (enforced)
 

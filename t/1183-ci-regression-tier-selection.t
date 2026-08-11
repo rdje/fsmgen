@@ -313,6 +313,11 @@ subtest 'hosted workflow runs every shard family to a terminal aggregate' => sub
     );
     like(
         $file_job || '',
+        qr/FSMGEN_CI_IVERILOG_APT_VERSION:\s+'12\.0-2build2'/,
+        'ordinary shards pin the Icarus Verilog package revision',
+    );
+    like(
+        $file_job || '',
         qr/FSMGEN_CI_VERILATOR_APT_VERSION:\s+'5\.020-1'/,
         'ordinary shards pin the Verilator package revision',
     );
@@ -323,11 +328,11 @@ subtest 'hosted workflow runs every shard family to a terminal aggregate' => sub
     );
     like(
         $file_job || '',
-        qr/apt-get install --yes --no-install-recommends.*?verilator=.*?yosys=/s,
-        'ordinary shards install both external HDL validation tools',
+        qr/apt-get install --yes --no-install-recommends.*?iverilog=.*?verilator=.*?yosys=/s,
+        'ordinary shards install all external HDL validation tools',
     );
     my @package_revision_checks = ($file_job || '') =~ /dpkg-query --show --showformat=/g;
-    is(scalar(@package_revision_checks), 2, 'ordinary shards verify both installed package revisions');
+    is(scalar(@package_revision_checks), 3, 'ordinary shards verify all installed package revisions');
     unlike(
         $dynamic_job || '',
         qr/Install hosted HDL validation tools|apt-get install/,

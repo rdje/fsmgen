@@ -58,6 +58,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 300
     env:
+      FSMGEN_CI_IVERILOG_APT_VERSION: '12.0-2build2'
       FSMGEN_CI_VERILATOR_APT_VERSION: '5.020-1'
       FSMGEN_CI_YOSYS_APT_VERSION: '0.33-5build2'
     strategy:
@@ -79,12 +80,16 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install --yes --no-install-recommends \
+          "iverilog=${FSMGEN_CI_IVERILOG_APT_VERSION}" \
           "verilator=${FSMGEN_CI_VERILATOR_APT_VERSION}" \
           "yosys=${FSMGEN_CI_YOSYS_APT_VERSION}"
+        test "$(dpkg-query --show --showformat='${Version}' iverilog)" = \
+          "$FSMGEN_CI_IVERILOG_APT_VERSION"
         test "$(dpkg-query --show --showformat='${Version}' verilator)" = \
           "$FSMGEN_CI_VERILATOR_APT_VERSION"
         test "$(dpkg-query --show --showformat='${Version}' yosys)" = \
           "$FSMGEN_CI_YOSYS_APT_VERSION"
+        iverilog -V
         verilator --version
         yosys -V
 
