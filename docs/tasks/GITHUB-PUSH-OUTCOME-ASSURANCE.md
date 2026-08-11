@@ -124,7 +124,7 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Acceptance: `At the next cadence-authorized or director-authorized push, prove the exact remote SHA; wait for all doctrine, book, 16 ordinary-file, 68 dynamic-case, and aggregate jobs to become terminal; record every URL and conclusion; repair and requalify any failure, timeout, cancellation, skipped required job, missing shard, or aggregate mismatch before marking .6 done.`
   Verification: `Director-authorized push a28e9adf46b7861ee728703662ad18b64f0325d0 has exact local/upstream/remote equality. Knowledge Map run 31494487149 and Publish mdBook run 31494487147 are completed/success. Regression run 31494487181 instantiated exactly 16 ordinary and 68 dynamic shards plus doctrine/mdBook support jobs; fail-fast remains disabled. Completed job 93788675553 (Perl files 12/16) failed five test files: t1506/t1520/t1535 because the hosted image lacks Verilator/Yosys, t370 on the already-known two-key verification_outputs discovery drift, and t40 because its regex requires redundant parentheses absent from semantically equivalent current HDL. Remaining jobs continue collecting evidence.`
   Commit: `pending`
-  Children: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.1, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.2, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.3, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.4`
+  Children: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.1, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.2, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.3, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.4, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.5, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.6, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.7, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.8, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.9, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.10, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.11, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.12, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.13, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.14, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.15`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.1`
   Status: `done`
@@ -153,6 +153,83 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Acceptance: `Audit every action annotation and current upstream action runtime; upgrade affected pinned major versions or record a bounded incompatibility with authoritative evidence; prove checkout, mdBook, Knowledge Map, and regression workflows remain green without enabling the insecure Node fallback.`
   Verification: `All exact-SHA workflows annotate that actions/checkout@v4, and mdBook also peaceiris/actions-mdbook@v2, target deprecated Node 20 and are currently forced onto Node 24 by GitHub.`
   Commit: `pending after blocking test failures`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.5`
+  Status: `pending`
+  Goal: `Give every ordinary hosted shard the exact repository history required by history-backed doctrine tests.`
+  Acceptance: `Prove the shallow-checkout mechanism from t1553/t1549/t1569 logs; fetch complete history for ordinary shards without widening dynamic or book jobs unnecessarily; lock the workflow contract and pass the three exact tests plus shard-selection coverage.`
+  Verification: `Jobs 93788675363, 93788675380, and 93788675477 cannot retrieve retained objects 322d81f, 329d7cf, and 44b5f15 under the ordinary jobs' default depth-one checkout; the doctrine job already succeeds with fetch-depth 0.`
+  Commit: `pending implementation`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.6`
+  Status: `pending`
+  Goal: `Provision the exact hosted Icarus Verilog revision required by t1542.`
+  Acceptance: `Install and verify Ubuntu Noble iverilog=12.0-2build2 beside the already-pinned Verilator/Yosys packages only for ordinary shards; prove the workflow contract and t1542 without changing public backend qualification.`
+  Verification: `Job 93788675610 reaches t1542's native-Verilog compile and fails because iverilog is absent; Ubuntu's Noble package authority lists version 12.0-2build2.`
+  Commit: `pending implementation`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.7`
+  Status: `pending`
+  Goal: `Synchronize the APB selected-adjacent diagnostic oracle with every shipped completer family.`
+  Acceptance: `Prove the current diagnostic expansion from production and history; update t1471's one shared exact diagnostic pattern to cover generalized and status/control families; pass focused and adjacent APB diagnostic tests without changing the parser or diagnostic.`
+  Verification: `Job 93788675417 and local t1471 fail six cases because the oracle predates generalized no-policy/protected and protection status/control completer families already named by the current targeted diagnostic.`
+  Commit: `pending implementation`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.8`
+  Status: `pending`
+  Goal: `Keep the CLI output-open context test valid after repository-local parent-directory creation shipped.`
+  Acceptance: `Use a deterministic repository-local target that reaches the output-file open failure after parent preparation; retain source path, output path, underlying diagnostic, and no-script-redie assertions; pass t250 and adjacent CLI context coverage without changing CLI behavior.`
+  Verification: `Job 93788675417 and local t250 use a missing parent as an unwritable target, but PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.2 deliberately creates explicit output parents before opening the file.`
+  Commit: `pending implementation`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.9`
+  Status: `pending`
+  Goal: `Recognize the current qualified private VIAL VHDL contract status in the support-builder audit.`
+  Acceptance: `Trace the status to its owning qualification slice; add only the current exact value to the closed audit set; pass all support-contract builders and relevant VIAL contract tests without changing a contract payload.`
+  Verification: `Job 93788675417 and local t350 reject shipped_private_portable_and_osvvm_qualified_profiles, introduced by HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.7 after the last audit-oracle sync.`
+  Commit: `pending implementation`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.10`
+  Status: `pending`
+  Goal: `Align standalone and state DTE output-enable assertions with canonical true-identity simplification.`
+  Acceptance: `Require the exact DTE carrier and target enable while accepting the canonical direct carrier assignment in place of carrier & 1'b1; retain nontrivial transition/guard assertions; pass t48/t82 and adjacent EnableGraph coverage without changing generated HDL.`
+  Verification: `Jobs 93788675417 and 93788675550 plus local t48/t82 show exact assignments route_out_a_1_en = route_en, expr_guard_out_d_1_en = expr_guard_en, idle_out_a_1_en = idle_en, active_out_b_1_en = active_en, and active_next_state_idle_en = active_en after the established AST identity simplifier.`
+  Commit: `pending implementation`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.11`
+  Status: `pending`
+  Goal: `Refresh the bounded read-only MCP schema fixture to the current catalog-entry projection.`
+  Acceptance: `Prove the live fsmgen_find_examples projection and public contract; replace only stale representative entry keys, retain all mutation/ambient-access exclusions, and pass the focused MCP snapshot plus adjacent MCP contract tests; audit downstream/mdBook impact explicitly.`
+  Verification: `Job 93788675536 and local t1445 show the current APB composition catalog entry has expected_module_name and no expected_hdl_pattern_count; the fixture has preserved the earlier representative keys since 2026-06-16.`
+  Commit: `pending implementation`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.12`
+  Status: `pending`
+  Goal: `Align aggregate AHB byte-lane wiring assertions with the generated fabric instance name.`
+  Acceptance: `Trace the instance rename and require exact fabric-to-subordinate address plus subordinate-to-fabric response wiring across one/two-subordinate and SEQ/non-SEQ sources; pass t1484/t1488 and adjacent aggregate tests without changing generation.`
+  Verification: `Jobs 93788675536 and 93788675610 plus local t1484/t1488 show current ahb_tb.fsm uses fabric.HADDR_* and *.HRESP_* fabric.HRESP_*; the four stale assertions still name the pre-2c9c67499 interconnect instance.`
+  Commit: `pending implementation`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.13`
+  Status: `pending`
+  Goal: `Synchronize paired AHB BUSY residue assertions with generalized numeric count wording.`
+  Acceptance: `Update every stale exact-one/two/three paired-composition assertion to the exact numeric singular/plural wording emitted by the generalized 2..16 contract; retain count and deferred-bound checks; pass all affected generic and two-subordinate tests plus generalized coverage without changing reports.`
+  Verification: `Jobs 93788675536, 93788675610, and local t1513/t1531/t1533 expose stale prose; a complete census adds t1523/t1525, while exact-four and standalone requester tests already assert the current exactly N wording from 2f64611ca.`
+  Commit: `pending implementation`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.14`
+  Status: `pending`
+  Goal: `Align direct-VHDL reduction-condition assertions with the emitted valid condition syntax.`
+  Acceptance: `Require exact scalar and helper-based vector reduction semantics without redundant nested parentheses; retain helper declaration/collision and unsupported-source checks; pass t1543 plus adjacent direct-VHDL tests without changing emission.`
+  Verification: `Job 93788675622 and local t1543 show if (X = '1') then and if (fsmgen_direct_vhdl_reduce_or(X) = '1') then; the implementation slice 2879f22af introduced assertions that incorrectly require double parentheses.`
+  Commit: `pending implementation`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.15`
+  Status: `pending`
+  Goal: `Repair the failed dynamic depth-three multi-beat output-bank contract assertions.`
+  Acceptance: `Require width-correct zero initialization for valid/count/status outputs and prove the final r2 lane capture plus later valid/count actions without assuming rresp is the last rule action; preserve all report, IAL0, HDL, and CLI checks; pass exact dynamic shard 16 and relevant neighboring coverage without production changes.`
+  Verification: `Dynamic job 93788677145 fails four t1438 assertions: three expect unsized zeros instead of 16'b0/5'd0/2'd0, and one requires the rresp action to close the rule even though valid-mask and read-count actions follow it. Direct generated-IAL1 inspection proves every intended bank and final-lane action is present.`
+  Commit: `pending implementation`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.7`
   Status: `done`

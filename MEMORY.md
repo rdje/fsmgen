@@ -7,12 +7,12 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2`; exact hosted terminal inventory.
+- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.5`; hosted history checkout.
 - current_state: exact push `a28e9adf46b7861ee728703662ad18b64f0325d0`
   has green Knowledge Map/book workflows. Regression run `31494487181` has
-  multiple failed ordinary shards and continues; hosted tools, manifest
-  discovery, and t40 spelling are locally repaired. This slice will be four commits ahead.
-- next_action: consume the complete terminal failed-job inventory, add leaves for every remaining independent family, then repair one cause per commit.
+  has 13 failed jobs and four running ordinary shards. Verilator/Yosys,
+  manifest discovery, and t40 spelling are locally repaired; every other observed family now has an owning child. This inventory slice will be five commits ahead.
+- next_action: make ordinary shards fetch complete history in .6.2.2.5 while consuming any new terminal results from the final four shards.
 - in_flight_uncommitted: none after this commit.
 - in_flight_background: exact regression run `31494487181` and watcher session `95229`; their terminal inventory must be consumed.
 - blockers: a new early repair push requires director authorization after fixes.
