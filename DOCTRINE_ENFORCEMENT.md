@@ -93,7 +93,7 @@ Current registered checks:
 
 | Doctrine | Check | Proves |
 | --- | --- | --- |
-| `DOCTRINE-BOOTSTRAP` | `scripts/check_doctrine_bootstrap.sh` | Root doctrine/toolbox docs exist, bootstrap files point to them, and local hook/hosted CI call the doctrine driver. |
+| `DOCTRINE-BOOTSTRAP` | `scripts/check_doctrine_bootstrap.sh` | Root doctrine/toolbox/commit docs exist, bootstrap files point to them, the exact-SHA post-push result contract remains present, and local hook/hosted CI call the doctrine driver. |
 | `MEMORY-ARCH` | `scripts/check_memory_architecture.sh` | `MEMORY_ARCHITECTURE.md`, bounded `MEMORY.md`, bootstrap pointers, decision store, and task-tree index are present and compliant. |
 | `KNOWLEDGE-MAP` | `knowledge-map/scripts/check_knowledge_map.sh` | Fact cards are valid/bounded; the root and deterministic topic shards are fresh and complete; cached/direct queries agree. |
 | `DOC-PATHS` | `scripts/check_docs_relative_paths.sh` | Live docs and the Knowledge Map do not leak machine-local absolute home paths. |

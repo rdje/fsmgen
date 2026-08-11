@@ -13,6 +13,7 @@ ok() { printf '[doctrine-bootstrap] ok:   %s\n' "$1"; }
 
 required_docs=(
   README.md
+  COMMIT.md
   MEMORY_ARCHITECTURE.md
   LIVE_DOCUMENT_SIZE_CONTAINMENT.md
   DOCTRINE_ENFORCEMENT.md
@@ -49,6 +50,23 @@ for file in AGENTS.md COMMIT.md DOCTRINE_ENFORCEMENT.md TOOLBOX.md; do
     ok "${file} points at TASK_ACCEPTANCE.md"
   else
     note "${file} does not point at TASK_ACCEPTANCE.md"
+  fi
+done
+
+post_push_markers=(
+  '## Mandatory post-push GitHub qualification'
+  'git ls-remote'
+  'gh run list --commit <full-sha>'
+  'gh run watch <run-id> --compact'
+  'gh run view <run-id> --log-failed'
+  'Accept only `status=completed` and `conclusion=success`'
+  'does not silently authorize an early push'
+)
+for marker in "${post_push_markers[@]}"; do
+  if grep -Fq -- "${marker}" COMMIT.md; then
+    ok "COMMIT.md retains post-push contract marker: ${marker}"
+  else
+    note "COMMIT.md lacks post-push contract marker: ${marker}"
   fi
 done
 

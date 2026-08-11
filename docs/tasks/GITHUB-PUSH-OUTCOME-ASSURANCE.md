@@ -103,11 +103,11 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `pending`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.7`
-  Status: `pending`
+  Status: `done`
   Goal: `Codify mandatory post-push GitHub workflow verification and failure remediation in the authoritative commit workflow.`
   Acceptance: `COMMIT.md requires exact pushed-SHA/upstream verification, terminal inspection of every required GitHub workflow with URLs, continued waiting for queued/in-progress jobs, and diagnosis plus repair or explicit live blocking of every non-success; documentation and enforcement remain consistent with decision 0062 and no early push is introduced.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `COMMIT.md now distinguishes transport success from hosted success; requires the local HEAD, configured upstream, and git ls-remote branch SHA to agree; derives the expected push-workflow set rather than trusting only discovered runs; queries GitHub by the full pushed SHA; waits every queued/requested/waiting/pending/in-progress run to terminal; records every workflow name, URL, status, and conclusion; inspects required job/matrix inventories where an aggregate could conceal incomplete work; and accepts only completed/success. Every missing or non-success result now requires failed-log diagnosis plus task-tree-owned repair, authorized rerun, or an explicit live blocker with recoverable URLs. The policy explicitly preserves decision 0062: remediation does not authorize an early push. Local gh run list/watch/view help confirms the documented filters, JSON fields, terminal-status vocabulary, watch command, job inventory, and failed-log interface. Focused text assertions, task-tree integrity, bounded Memory, and the full staged doctrine gate pass; the thin .agents wrapper remains unchanged because it already delegates all policy to COMMIT.md. This governance-only slice changes no product, CI definition, test, or user-facing mdBook behavior.`
+  Commit: `this commit (mandatory exact-SHA post-push result qualification)`
 
 ## Decisions
 
@@ -121,6 +121,9 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   union of 16 deterministic file shards and 68 one-case dynamic outlier
   shards. Disable fail-fast and retain an always-run aggregate so failures are
   isolated without being cancelled or hidden.
+- `2026-08-11`: Treat transport success and hosted success as separate
+  evidence. Every pushed SHA must be followed to an exact, terminal workflow
+  inventory; remediation remains subject to the standing push cadence.
 
 ## Open Questions
 
@@ -131,6 +134,12 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 
 - `.6.2` must wait for the next cadence-authorized or director-authorized push;
   the current branch is below decision `0062`'s 200-commit automatic cadence.
+
+## Acceptance Checklist — `.7` (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Mandatory post-push GitHub qualification' --oneline -- COMMIT.md` returns no commit, and `git show HEAD:COMMIT.md | rg -n 'Push cadence|Required order of operations|gh run|post-push'` finds only the cadence heading and step 12's cadence reference. The authoritative workflow therefore ended after transport/ahead-count handling and neither required exact-SHA GitHub result consumption nor preserved such a rule mechanically.
+- [x] **ADDRESSED (verified)** — `scripts/check_doctrine_bootstrap.sh` now checks seven specific COMMIT.md markers covering remote-SHA proof, exact-commit run discovery, terminal waiting, failed-log diagnosis, success-only acceptance, and no implicit early push. The real policy passes; a temporary one-marker mutation fails with `COMMIT.md lacks post-push contract marker` and restoring the marker returns the checker to green. Local `gh run list/watch/view --help` confirms every documented command, filter, JSON field, status, job-inventory, and failed-log interface.
+- [x] **NO REGRESSION** — `scripts/check_doctrines.sh` reports `[doctrine] all doctrine checks passed`; task-tree integrity and bounded Memory also pass. Decision `0062`'s 200-commit threshold and explicit early-push exception are unchanged, the thin agent wrapper still delegates to COMMIT.md, and no product, CI definition, regression selection, generated artifact, or mdBook behavior changes.
 
 ## Acceptance Checklist — `.6.1` (enforced)
 

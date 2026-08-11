@@ -35,15 +35,54 @@ Ignoring it is not a style issue; it is a project-safety failure.
   with `git rev-list --count @{upstream}..HEAD`; do not maintain a handwritten
   shadow counter.
 - After the 200th committed slice has completed this workflow and the worktree
-  is clean, push the current branch to its configured upstream. A successful
-  push must leave the derived count at zero and starts the next 200-commit
-  interval.
+  is clean, push the current branch to its configured upstream. A
+  transport-successful push must leave the derived count at zero and start
+  the next 200-commit interval; it does not by itself prove hosted CI passed.
 - Before 200 commits, push only when the user explicitly directs an earlier
   push. A successful user-directed early push also starts a fresh 200-commit
   interval, but it does not change the standing cadence.
 - A failed or incomplete push does not reset the count. Preserve the local
   commits, diagnose the exact failure, and treat any unresolved remote state
   as in-flight continuity work.
+
+## Mandatory post-push GitHub qualification
+
+After every transport-successful push, including an explicitly requested early
+push, consume the GitHub result before treating the push follow-up as complete:
+
+1. Capture the pushed local `HEAD`, the configured upstream revision, and the
+   branch revision reported by `git ls-remote`. Require all three full SHAs to
+   match. A zero ahead count alone is not remote-revision proof.
+2. Derive the expected workflow set from the tracked workflow definitions for
+   that push event and branch; do not accept only the runs that happened to
+   appear. Query the exact pushed SHA with:
+
+   ```sh
+   gh run list --commit <full-sha> --event push --limit 100 \
+     --json databaseId,workflowName,status,conclusion,url,headSha
+   ```
+3. Poll until every expected workflow has appeared. Wait for every
+   `queued`, `requested`, `waiting`, `pending`, or `in_progress` run to become
+   terminal, using `gh run watch <run-id> --compact` where useful. A background
+   run whose result still needs to be consumed keeps the turn and workspace in
+   the `WAITING` continuity state.
+4. Re-query the exact SHA and record every expected workflow's name, run URL,
+   terminal status, and conclusion in the owning task-tree evidence. Inspect
+   required job/matrix results with `gh run view <run-id> --json jobs,url` when
+   a workflow-level result or aggregate could conceal an incomplete required
+   job. A missing expected workflow or job is a non-success, not an omission.
+5. Accept only `status=completed` and `conclusion=success`. For every other
+   conclusion, inspect `gh run view <run-id> --log-failed` plus the complete
+   job inventory, diagnose the exact cause, and create or update task-tree
+   ownership before repairing it. Commit a verified repair, rerun when already
+   authorized, or record an explicit live blocker with recoverable run/job URLs
+   and evidence. Never classify-and-move-on, and never call a cancelled,
+   skipped, timed-out, stale, startup-failed, action-required, or neutral
+   required result successful.
+6. Hosted failure remediation does not silently authorize an early push.
+   Follow the standing 200-commit cadence unless the user explicitly directs
+   an earlier repair push. Keep hosted requalification as an active task-tree
+   frontier until an authorized push proves the repaired exact SHA green.
 
 ## Files involved and precise role
 - `COMMIT.md`
@@ -130,7 +169,8 @@ Ignoring it is not a style issue; it is a project-safety failure.
 11. Verify final state:
    - `git --no-pager status --short`
 12. Derive the ahead-of-upstream commit count and apply the `Push cadence`
-    section above.
+    section above. If a push occurs, complete `Mandatory post-push GitHub
+    qualification` before closing its follow-up.
 13. The user-facing close-out should include the current live status from the
    task-trees (`docs/TASK_TREE.md` Active table + the owning `docs/tasks/*.md`
    frontier), since decision `0049` retires the former roadmap-status board.

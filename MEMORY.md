@@ -7,14 +7,15 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.7`; director-selected before
-  the otherwise-next HIAL/VIAL one-million-attempt slice.
+- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2`; hosted qualification is
+  cadence-blocked while PNT may resume the HIAL/VIAL one-million-attempt slice.
 - current_state: `.1` audits pushed SHA `de9d50a5fb17074d29615ea866cd3cc6af503a3b`;
   `.2-.5` repair every observed CLI, report-matrix, t/1437, and t/1438 failure.
   `.6.1` replaces the six-hour sequential gate with 16 exact file shards, 68
   one-case shards, independent doctrine/book jobs, and one required aggregate;
-  `.6.2` retains exact hosted qualification for the next authorized push.
-- next_action: codify mandatory exact-SHA post-push workflow verification and remediation in `COMMIT.md` under `.7`.
+  `.6.2` retains exact hosted qualification for the next authorized push; `.7`
+  makes exact-SHA terminal result verification mandatory after every push.
+- next_action: while `.6.2` awaits an authorized push, resume the roadmap-aligned HIAL/VIAL one-million-attempt qualification leaf.
 - in_flight_uncommitted: none.
 - blockers: none.
 - push_state: decision `0062`; derive with `git rev-list --count @{upstream}..HEAD`.
