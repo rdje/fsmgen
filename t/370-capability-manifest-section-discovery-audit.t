@@ -57,6 +57,32 @@ subtest 'top-level section presence-key discovery map matches the section builde
     }
 };
 
+subtest 'verification outputs advertises its exact own top-level payload' => sub {
+    my ($spec) = grep { $_->{section} eq 'verification_outputs' } @section_specs;
+    ok($spec, 'verification-output section builder is discoverable');
+
+    my @payloads = (
+        {
+            label => 'verification-output section builder',
+            payload => $spec->{builder}->(),
+        },
+        map {
+            {
+                label => "$_->{label} verification_outputs",
+                payload => $_->{manifest}{verification_outputs},
+            }
+        } @manifest_views,
+    );
+
+    for my $view (@payloads) {
+        is_deeply(
+            [sort @{$view->{payload}{public_top_level_presence_keys} || []}],
+            [sort keys %{$view->{payload} || {}}],
+            "$view->{label} keeps its own public top-level discovery list exact",
+        );
+    }
+};
+
 subtest 'live manifest views keep section discovery maps aligned with section payloads' => sub {
     for my $view (@manifest_views) {
         my $manifest = $view->{manifest};

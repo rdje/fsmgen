@@ -1081,6 +1081,13 @@ the artifact as a VHDL syntax/compile/PSL/simulation/formal/analyzer result or
 as scoreboard, coverage, reusable VIP, direct IAL2, schedule JSON, check JSON,
 or semantic JSON behavior.
 
+The capability manifest's `verification_outputs` discovery metadata is exact:
+both `manifest_contract.top_level_section_presence_key_map` and the section's
+own `public_top_level_presence_keys` include every live top-level field,
+including `guidance` and `json_safe_when_embedded_in_public_manifest`.
+Downstream consumers should use either advertised list rather than maintaining
+a payload-key exception.
+
 Direct `.ppif` verification-output generation is intentionally not selected
 for the current lane. IAL2 sources remain reviewable through generated `.isf`
 before generated `.fsm`; future protocol-specific checker, scoreboard,

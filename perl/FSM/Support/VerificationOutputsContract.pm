@@ -77,6 +77,8 @@ sub verification_outputs_public_top_level_keys {
             artifact_manifest
             validation
             section_contract
+            json_safe_when_embedded_in_public_manifest
+            guidance
         ),
     ];
 }

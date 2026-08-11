@@ -10,9 +10,9 @@ history; this file carries only the current bounded resume state.
 - active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2`; exact hosted terminal inventory.
 - current_state: exact push `a28e9adf46b7861ee728703662ad18b64f0325d0`
   has green Knowledge Map/book workflows. Regression run `31494487181` has
-  multiple failed ordinary shards and continues; pinned hosted Verilator/Yosys
-  provisioning is locally green. This slice will be two commits ahead.
-- next_action: consume the run's complete terminal failed-job inventory, own each independent family, then repair leaves without mixing causes.
+  multiple failed ordinary shards and continues; hosted tools and manifest
+  discovery are locally repaired. This slice will be three commits ahead.
+- next_action: consume the complete terminal failed-job inventory, add leaves for each independent family, then repair them one cause per commit.
 - in_flight_uncommitted: none after this commit.
 - in_flight_background: exact regression run `31494487181` and watcher session `95229`; their terminal inventory must be consumed.
 - blockers: a new early repair push requires director authorization after fixes.

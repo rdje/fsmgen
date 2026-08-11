@@ -22,6 +22,7 @@ top-level sections:
 - `backend_validation`
 - `embedding`
 - `language_surface`
+- `verification_outputs`
 - `documentation`
 
 That grouped map is the intended discovery surface for embedders.
@@ -36,6 +37,13 @@ The same manifest shell now also publishes a grouped
 `top_level_section_presence_key_map` so a downstream tool can discover the
 bounded key family for each public top-level section from one place instead of
 collecting those section-key lists field by field.
+
+For `verification_outputs`, that family is the exact live section payload:
+the target/artifact/validation discovery fields, `section_contract`,
+`guidance`, and `json_safe_when_embedded_in_public_manifest` are all present in
+both the grouped manifest map and the section's own
+`public_top_level_presence_keys`. Consumers do not need an undocumented
+payload-key exception.
 
 It now also publishes a grouped `presence_key_family_map` so a downstream tool
 can discover the manifest-owned legacy `*_presence_keys` field families from

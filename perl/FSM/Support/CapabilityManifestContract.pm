@@ -35,6 +35,7 @@ use FSM::Support::SupportAccountingContract qw(
 );
 use FSM::Support::VerificationOutputsContract qw(
     verification_outputs_contract_source
+    verification_outputs_public_top_level_keys
 );
 
 our @EXPORT_OK = qw(
@@ -310,28 +311,7 @@ sub capability_manifest_language_surface_keys {
 }
 
 sub capability_manifest_verification_outputs_keys {
-    return [
-        qw(
-            schema_version
-            status
-            contract_source
-            report_source
-            entrypoints
-            public_top_level_presence_keys
-            target_entry_keys
-            artifact_manifest_keys
-            artifact_entry_keys
-            observation_entry_keys
-            signal_entry_keys
-            source_keys
-            validation_keys
-            presence_key_family_map
-            targets
-            artifact_manifest
-            validation
-            section_contract
-        ),
-    ];
+    return verification_outputs_public_top_level_keys();
 }
 
 sub capability_manifest_documentation_keys {

@@ -134,11 +134,11 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (provision pinned hosted HDL validation tools)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Restore exact verification_outputs discovery-map alignment exposed by hosted t370.`
   Acceptance: `Transfer the pre-existing proposed audit into this active recovery leaf; prove whether guidance and json_safe_when_embedded_in_public_manifest belong in the grouped discovery map, synchronize every public manifest projection, and pass t370 plus adjacent contract/round-trip/defensive-copy tests without changing generated verification artifacts.`
-  Verification: `Job 93788675553 shows guidance at the first differing index where the discovery owner expects observation_entry_keys, in-process and through both CLI spellings. Prior proposed tree CAPABILITY-MANIFEST-VERIFICATION-OUTPUTS-PRESENCE-MAP-SYNC is superseded into this leaf to avoid duplicate ownership.`
-  Commit: `pending implementation`
+  Verification: `Job 93788675553 shows guidance at the first differing index where the discovery owner expects observation_entry_keys, in-process and through both CLI spellings. Commit d867815f3 introduced a VerificationOutputsSection that spreads the full contract, including guidance and json_safe_when_embedded_in_public_manifest, beside two hand-copied top-level discovery lists that omitted those keys. verification_outputs_public_top_level_keys() now includes both live fields and capability_manifest_verification_outputs_keys() delegates to it, leaving one canonical list. t370 additionally requires the section builder plus the in-process, CLI, and CLI-alias payloads to advertise their own exact keys. Thirteen adjacent manifest/discovery/round-trip/defensive-copy tests pass at Files=13, Tests=42; six ISF public-contract, guidance, live-book-path, UVM/VHDL verification-output, and relative-path tests pass at Files=6, Tests=35. The mdBook and downstream handoff now name the exact no-exception discovery rule. Every chapter tests, the HTML build succeeds and is removed, locality passes, and the 14-file ISF reference authority verifies the exact 14,564-line/880,624-byte baseline plus 7-line/405-byte delta without raising a ceiling. Generated verification artifacts, their version-1 manifests, CLI modes, schemas, and backend behavior are unchanged.`
+  Commit: `this commit (restore exact verification-output discovery metadata)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.3`
   Status: `pending`
@@ -168,6 +168,10 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   the ordinary suite's generic lint/synthesis/harness contract; they do not
   replace the exact Verilator 5.046 public VIAL backend qualification, whose
   exact-version tests remain independently guarded.
+- `2026-08-11`: Make `verification_outputs_public_top_level_keys()` the sole
+  owner of the verification-output section's top-level discovery family.
+  Adding the two already-live omitted names repairs additive discovery
+  metadata; it does not widen the payload or require an artifact schema bump.
 
 - `2026-08-11`: Treat the cancelled regression as incomplete and failed
   signoff. Git transport, two green workflows, and an eventual cancellation do
@@ -209,6 +213,12 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Hosted job `93788675553` reports `Missing external HDL validation tool(s): verilator, yosys`, then fails t1506/t1520/t1535 at their public verification and executable-harness assertions. `git log -S'apt-get install' -- .github/workflows/regression.yml` returns no commit: the ordinary shard job selected tool-requiring tests but its setup installed only Perl.
 - [x] **ADDRESSED (verified)** — The ordinary job now pins `ubuntu-24.04`, installs exact Noble packages `verilator=5.020-1` and `yosys=0.33-5build2`, checks both dpkg revisions, and emits both tool versions before executing its shard. t1183 locks those invariants and proves the unrelated dynamic job has no HDL-tool installation; Ruby reports `workflow YAML parses`.
 - [x] **NO REGRESSION** — Focused workflow plus exact hosted reproductions report `All tests successful` at `Files=4, Tests=20`; generic external validation separately reports `All tests successful` at `Files=1, Tests=8`, including `verilator_lint` and `yosys_synthesis`. Every mdBook chapter tests successfully, the HTML build completes, project-data locality reports OK, and the exact generated book is removed. The staged doctrine driver reports `[doctrine] all doctrine checks passed`.
+
+## Acceptance Checklist — `.6.2.2.2` (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'json_safe_when_embedded_in_public_manifest' -- perl t docs/book` locates the original verification-output contract introduction at `d867815f3`; the section spread the full contract, while two independent hand-copied discovery lists omitted `guidance` and `json_safe_when_embedded_in_public_manifest`.
+- [x] **ADDRESSED (verified)** — One canonical `verification_outputs_public_top_level_keys()` list now owns both projections and includes both live fields. t370 proves the section's self-advertisement plus grouped discovery for the direct builder, in-process manifest, `--capability-manifest`, and `--emit-capability-manifest`; all views are exact.
+- [x] **NO REGRESSION** — Adjacent capability discovery, contract, JSON-round-trip, and defensive-copy coverage reports `All tests successful` at `Files=13, Tests=42`; downstream public-interface and verification-output coverage reports `All tests successful` at `Files=6, Tests=35`. All mdBook chapters and the HTML build pass, the build is removed, project locality and ISF partition checks pass, and the staged doctrine driver reports `[doctrine] all doctrine checks passed`.
 
 ## Acceptance Checklist — `.6.2.1` (enforced)
 
