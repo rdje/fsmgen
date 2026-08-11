@@ -61,7 +61,7 @@ subtest 'adapter composes exact-three requester BUSY insertion with subordinate 
     is($requester->{transfer}{busy_beats}, 3, 'requester child transfer keeps exact-three cardinality');
     is($requester->{busy_insertion}{beats}, 3, 'requester child exposes numeric exact-three cardinality');
     my %requester_residue = map { $_->{id} => $_->{detail} } @{$requester->{unsupported_residue}};
-    like($requester_residue{ahb_requester_busy_insert_support}, qr/exact-three qualified requester HTRANS BUSY events/, 'requester child keeps exact-three BUSY-insertion residue');
+    like($requester_residue{ahb_requester_busy_insert_support}, qr/exactly 3 qualified requester HTRANS BUSY events/, 'requester child keeps numeric exact-three BUSY-insertion residue');
 
     my $subordinate = $report->{children}[2];
     is($subordinate->{transfer}{seq_policy}{mode}, 'hburst_in_word_progressive', 'subordinate child keeps HBURST SEQ progression');

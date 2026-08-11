@@ -211,11 +211,11 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (synchronize aggregate AHB fabric wiring assertions)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.13`
-  Status: `pending`
+  Status: `done`
   Goal: `Synchronize paired AHB BUSY residue assertions with generalized numeric count wording.`
   Acceptance: `Update every stale exact-one/two/three paired-composition assertion to the exact numeric singular/plural wording emitted by the generalized 2..16 contract; retain count and deferred-bound checks; pass all affected generic and two-subordinate tests plus generalized coverage without changing reports.`
-  Verification: `Jobs 93788675536, 93788675610, and local t1513/t1531/t1533 expose stale prose; a complete census adds t1523/t1525, while exact-four and standalone requester tests already assert the current exactly N wording from 2f64611ca.`
-  Commit: `pending implementation`
+  Verification: `Jobs 93788675536/93788675610 and the pre-fix local t1513/t1531/t1533 expose stale word-form residue prose; a complete census adds t1523/t1525. git log -S'qualified requester HTRANS BUSY' identifies 2f64611ca as the generalized-count change that replaced per-count wording with exactly N plus singular/plural grammar and updated exact-four/generalized tests, but omitted these five paired-composition oracles. Exact-one now requires exactly 1 ... event; exact-two/three require exactly 2/3 ... events, with numeric labels. The complete affected one/two-window band passes at Files=5, Tests=18 in 1,130 seconds; the RAM-guarded exact-four one/two-window plus generalized 2..16 qualification passes at Files=3, Tests=12 in 627 seconds. All five changed files are syntax-clean and a repository-wide census finds no stale one exact/exact-two/exact-three residue regex. Production reports, source schemas, generated HDL, and public behavior are byte-unchanged. Commit 2f64611ca already synchronized the generalized numeric report contract, exact singular/plural wording, mdBook, and AHB behavior/handoff documents; SPECFORGE consumes the unchanged public report surface, so no public-document edit is required.`
+  Commit: `this commit (synchronize numeric AHB BUSY residue assertions)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.14`
   Status: `pending`
@@ -365,6 +365,12 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Hosted jobs `93788675536`/`93788675610` and the pre-fix local t1484/t1488 show exact `fabric.HADDR_*` and `*.HRESP_* fabric.HRESP_*` generated wiring while eight assertions still name `interconnect`. `git log -S"'fabric'" -- perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm` identifies `2c9c67499`: the intentional HDL-safe instance rename updated production, t1478, behavior docs, and mdBook, but omitted the duplicated non-SEQ/SEQ byte-lane aggregate tests.
 - [x] **ADDRESSED (verified)** — All eight stale assertions now require `fabric`: one-subordinate local-address and response wiring plus both two-subordinate response wires in each of t1484 and t1488. A post-fix census finds no `interconnect.HADDR`/`interconnect.HRESP` spelling in those files; production and assertion meaning are otherwise unchanged.
 - [x] **NO REGRESSION** — Focused t1484/t1488 reports `All tests successful` at `Files=2, Tests=8`; adjacent t1478/t1480/t1485/t1489 reports `All tests successful` at `Files=4, Tests=16`; both changed files report `syntax OK`. Existing mdBook and AHB behavior text already name the exact HDL-safe `fabric` instance, and the SPECFORGE handoff carries no conflicting internal child-label promise, so generated behavior and downstream contracts remain lockstep.
+
+## Acceptance Checklist — `.6.2.2.13` (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Hosted jobs `93788675536`/`93788675610` and pre-fix local paired tests reject live residue that says `exactly N qualified requester HTRANS BUSY event(s)`. `git log -S'qualified requester HTRANS BUSY' -- perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm` identifies `2f64611ca`: generalized canonical counts 2..16 deliberately replaced per-count word forms with one numeric singular/plural template, synchronized exact-four/generalized oracles and public docs, but omitted exact-one t1513, exact-two t1523/t1525, and exact-three t1531/t1533.
+- [x] **ADDRESSED (verified)** — The five paired assertions now require exact numeric `exactly 1 ... event`, `exactly 2 ... events`, or `exactly 3 ... events` wording and identify their checks as numeric. Counts, child transfer/busy metadata, deferred bounds, parking, CLI/semantic/MCP/artifact, and assertion-enabled runtime checks remain unchanged; a repository-wide census finds no stale word-form residue regex.
+- [x] **NO REGRESSION** — All five affected files report `All tests successful` at `Files=5, Tests=18`; RAM-guarded exact-four and generalized 2..16 coverage reports `All tests successful` at `Files=3, Tests=12`; every changed file reports `syntax OK`. Production reports and generated HDL are byte-unchanged, while the original generalized-count commit already synchronized the public numeric grammar, mdBook, behavior contracts, and downstream-consumed report surface.
 
 ## Acceptance Checklist — `.6.2.1` (enforced)
 

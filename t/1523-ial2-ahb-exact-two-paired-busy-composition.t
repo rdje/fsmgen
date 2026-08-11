@@ -61,7 +61,7 @@ subtest 'adapter composes exact-two requester BUSY insertion with subordinate BU
     is($requester->{transfer}{busy_beats}, 2, 'requester child transfer keeps exact-two cardinality');
     is($requester->{busy_insertion}{beats}, 2, 'requester child exposes numeric exact-two cardinality');
     my %requester_residue = map { $_->{id} => $_->{detail} } @{$requester->{unsupported_residue}};
-    like($requester_residue{ahb_requester_busy_insert_support}, qr/exact-two qualified requester HTRANS BUSY events/, 'requester child keeps exact-two BUSY-insertion residue');
+    like($requester_residue{ahb_requester_busy_insert_support}, qr/exactly 2 qualified requester HTRANS BUSY events/, 'requester child keeps numeric exact-two BUSY-insertion residue');
 
     my $subordinate = $report->{children}[2];
     is($subordinate->{transfer}{seq_policy}{mode}, 'hburst_in_word_progressive', 'subordinate child keeps HBURST SEQ progression');

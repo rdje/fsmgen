@@ -74,7 +74,7 @@ subtest 'source is the exact selected two-subordinate exact-three paired BUSY tr
     like($broader, qr/with BUSY-in-burst parking/, 'broader residue reports shipped BUSY parking');
     unlike($broader, qr/BUSY-in-burst continuation/, 'broader residue no longer defers BUSY continuation');
     like(residue_detail($report, 'ahb_burst_seq_support_deferred'), qr/with BUSY-in-burst parking/, 'burst residue reports shipped BUSY parking');
-    like(residue_detail($requester, 'ahb_requester_busy_insert_support'), qr/exact-three qualified requester HTRANS BUSY events/, 'requester child keeps exact-three BUSY support residue');
+    like(residue_detail($requester, 'ahb_requester_busy_insert_support'), qr/exactly 3 qualified requester HTRANS BUSY events/, 'requester child keeps numeric exact-three BUSY support residue');
     ok(residue_id_occurs($report, 'ahb_aggregate_profile_alias_deferred'), 'generic source keeps aggregate alias residue');
     ok(!exists $report->{composition}{busy_flow}, 'report adds no duplicate top busy_flow summary');
 };
