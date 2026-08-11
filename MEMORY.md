@@ -7,16 +7,16 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2`; hosted qualification is
-  cadence-blocked while PNT may resume the HIAL/VIAL one-million-attempt slice.
-- current_state: `.1` audits pushed SHA `de9d50a5fb17074d29615ea866cd3cc6af503a3b`;
-  `.2-.5` repair every observed CLI, report-matrix, t/1437, and t/1438 failure.
-  `.6.1` replaces the six-hour sequential gate with 16 exact file shards, 68
-  one-case shards, independent doctrine/book jobs, and one required aggregate;
-  `.6.2` retains exact hosted qualification for the next authorized push; `.7`
-  makes exact-SHA terminal result verification mandatory after every push.
-- next_action: while `.6.2` awaits an authorized push, resume the roadmap-aligned HIAL/VIAL one-million-attempt qualification leaf.
-- in_flight_uncommitted: none.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`;
+  remaining canonical execution-graph structural levels.
+- current_state: canonical construction targets candidate `0xdd7997a868500a54`
+  at attempt 999,999 and `0xce7d67adbe54da82` at attempt 1,000,000. The real
+  public binder accepts the first and returns exact `VIAL_RANDOM_EXHAUSTED`
+  with no partial IR/plan for the second. The guarded 18-file/79-test impact
+  matrix passes; GitHub-assurance `.6.2` awaits the next authorized push.
+- next_action: implement the decision-0061 scenario ladder at 512
+  qualification, exact 4,096 limit, and adjacent 4,097 rejection.
+- in_flight_uncommitted: none after this commit.
 - blockers: none.
 - push_state: decision `0062`; derive with `git rev-list --count @{upstream}..HEAD`.
 

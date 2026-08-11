@@ -230,7 +230,7 @@ subtest 'random/replay evaluation freezes exact metrics and identities' => sub {
         'random/replay gate has no selected contract discrepancy');
 };
 
-subtest 'random/replay gate rejects mutation and unfinished levels' => sub {
+subtest 'random/replay gate rejects mutation and missing source' => sub {
     my $original = \&FSM::VIAL::ArchitectureScaleExecutionGraph::_build_replay_execution;
     my $tampered;
     {
@@ -270,17 +270,6 @@ subtest 'random/replay gate rejects mutation and unfinished levels' => sub {
     like($@, qr/checked-AHB reference text is required/,
         'missing-source rejection names checked-AHB authority');
 
-    my $unfinished = eval {
-        $class->construct({
-            primary_axis => 'random_attempts',
-            level => 'limit_v1',
-            reference_hial_text => $reference_hial,
-        });
-        1;
-    };
-    ok(!$unfinished, 'limit random level cannot enter the gate slice');
-    like($@, qr/execution-graph gate slice does not own the requested shape/,
-        'unfinished-level rejection names the bounded frontier');
 };
 
 done_testing();

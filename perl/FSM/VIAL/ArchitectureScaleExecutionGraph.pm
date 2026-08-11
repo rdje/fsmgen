@@ -8,6 +8,7 @@ use Carp qw(confess);
 use Digest::SHA qw(sha256_hex);
 use File::Basename qw(basename);
 use JSON::PP ();
+use Math::BigInt;
 use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
@@ -156,7 +157,8 @@ sub construct($class, @args) {
         && defined($level) && ($level eq 'qualification_candidate_v1'
             || $level eq 'limit_v1' || $level eq 'over_limit_v1');
     $owned_level = 1 if defined($axis) && $axis eq 'random_attempts'
-        && defined($level) && $level eq 'qualification_candidate_v1';
+        && defined($level) && ($level eq 'qualification_candidate_v1'
+            || $level eq 'limit_v1' || $level eq 'over_limit_v1');
     confess "execution-graph gate slice does not own the requested shape\n"
         unless defined($axis) && $owned_axis{$axis} && $owned_level;
     my $axis_contract = FSM::VIAL::ArchitectureScaleWorkload->catalog
@@ -241,8 +243,8 @@ sub evaluate($class, @args) {
     my $first = _build_execution($inputs);
     return _rejected_evaluation($construction, $first->{diagnostics})
         unless $first->{ok};
-    return _unexpected_over_limit_acceptance($construction, $inputs, $first)
-        if _expects_plan_byte_rejection($spec);
+    return _unexpected_rejection_acceptance($construction, $inputs, $first)
+        if _expects_selected_rejection($spec);
 
     my @oracle_errors;
     my $canonical = JSON::PP->new->canonical(1)->utf8(1);
@@ -775,25 +777,18 @@ sub _render_ahb_vial($axis, $requested_count, $plan_byte_recipe = undef) {
 }
 
 sub _random_target_candidate($attempt_count) {
-    confess "random-attempt gate requires an integer within the shipped attempt limit\n"
+    confess "random-attempt gate requires an integer within the selected attempt boundary\n"
         unless defined($attempt_count) && !ref($attempt_count)
             && $attempt_count =~ /\A[1-9][0-9]*\z/
-            && $attempt_count <= 1_000_000;
-    my $proposal_index = 0;
-    my $generated = FSM::VIAL::ExecutionRandom->generate({
-        width => 64,
-        seed => $RANDOM_SEED,
-        occurrence_id => $RANDOM_OCCURRENCE_ID,
-        low => 0,
-        high => $U64_MAX,
-        max_attempts => $attempt_count,
-        accept => sub($proposal) {
-            return $proposal_index++ == $attempt_count - 1;
-        },
-    });
-    confess "random-attempt target generation did not reach its exact proposal\n"
-        unless $generated && $generated->{attempt} == $attempt_count - 1;
-    return $generated->{value}->bstr;
+            && $attempt_count <= 1_000_001;
+    # The selected distribution spans the complete u64 domain, so the raw
+    # deterministic candidate is the proposal. Direct lookup keeps canonical
+    # source construction constant-time while the public binder still performs
+    # every accepted or exhausted attempt under test.
+    return FSM::VIAL::ExecutionRandom::_candidate(
+        64, Math::BigInt->new($RANDOM_SEED), $RANDOM_OCCURRENCE_ID,
+        $attempt_count - 1,
+    )->bstr;
 }
 
 sub _total_fiber_actions($requested_count) {
@@ -1629,7 +1624,7 @@ sub _input($relative_path, $role, $content) {
 sub _rejected_evaluation($construction, $diagnostics) {
     my $spec = $construction->{specification};
     my @oracle_errors = _rejection_oracle_errors($spec, $diagnostics);
-    my $expected = _expects_plan_byte_rejection($spec) && !@oracle_errors;
+    my $expected = _expects_selected_rejection($spec) && !@oracle_errors;
     return _evaluation({
         ok => $expected ? JSON::PP::true : JSON::PP::false,
         status => $expected ? 'expected_rejection' : 'oracle_failure',
@@ -1650,9 +1645,11 @@ sub _rejected_evaluation($construction, $diagnostics) {
     });
 }
 
-sub _expects_plan_byte_rejection($spec) {
-    return ($spec->{primary_axis} // '') eq 'serialized_plan_bytes'
-        && ($spec->{level} // '') eq 'over_limit_v1';
+sub _expects_selected_rejection($spec) {
+    return 0 unless ($spec->{level} // '') eq 'over_limit_v1';
+    return 1 if ($spec->{primary_axis} // '') eq 'serialized_plan_bytes';
+    return 1 if ($spec->{primary_axis} // '') eq 'random_attempts';
+    return 0;
 }
 
 sub _rejection_oracle_errors($spec, $diagnostics) {
@@ -1660,30 +1657,55 @@ sub _rejection_oracle_errors($spec, $diagnostics) {
         'VIAL_SCALE_EXECUTION_OUTCOME_ERROR',
         'execution construction was rejected before its declared authoritative outcome',
         '/observed_outcome',
-    )) unless _expects_plan_byte_rejection($spec);
+    )) unless _expects_selected_rejection($spec);
 
-    my $expected = [{
-        schema_version => 1,
-        severity => 'error',
-        code => 'VIAL_EXECUTION_LIMIT_ERROR',
-        phase => 'limit',
-        message => 'serialized_plan_bytes exceeds the limit 16777216',
-        semantic_path => '/plan',
-        source_location => undef,
-        bridge_fact_paths => [],
-        related => [],
-    }];
+    my $expected = _expected_rejection_diagnostics($spec);
     my $canonical = JSON::PP->new->canonical(1)->allow_nonref(1);
     return () if ref($diagnostics) eq 'ARRAY'
         && $canonical->encode($diagnostics) eq $canonical->encode($expected);
     return (_oracle_error(
         'VIAL_SCALE_EXECUTION_DIAGNOSTIC_ERROR',
-        'over-limit plan did not return the one exact authoritative byte-cap diagnostic',
+        'over-limit execution workload did not return its one exact authoritative diagnostic',
         '/diagnostics',
     ));
 }
 
-sub _unexpected_over_limit_acceptance($construction, $inputs, $built) {
+sub _expected_rejection_diagnostics($spec) {
+    if (($spec->{primary_axis} // '') eq 'serialized_plan_bytes') {
+        return [{
+            schema_version => 1,
+            severity => 'error',
+            code => 'VIAL_EXECUTION_LIMIT_ERROR',
+            phase => 'limit',
+            message => 'serialized_plan_bytes exceeds the limit 16777216',
+            semantic_path => '/plan',
+            source_location => undef,
+            bridge_fact_paths => [],
+            related => [],
+        }];
+    }
+    return [{
+        schema_version => 1,
+        severity => 'error',
+        code => 'VIAL_RANDOM_EXHAUSTED',
+        phase => 'random',
+        message => "random choice '$RANDOM_DECISION_ID' exhausted its attempt limit",
+        semantic_path => '/packages/0/fixtures/0/randomness/choices/0',
+        source_location => {
+            source_name => $VIAL_SOURCE,
+            start_line => 1,
+            start_column => 947,
+            start_byte => 946,
+            end_line => 1,
+            end_column => 1131,
+            end_byte_exclusive => 1131,
+        },
+        bridge_fact_paths => [],
+        related => [],
+    }];
+}
+
+sub _unexpected_rejection_acceptance($construction, $inputs, $built) {
     my $canonical = JSON::PP->new->canonical(1)->utf8(1);
     my $semantic = $inputs->{semantic_ir}->as_hashref;
     my $manifest = $inputs->{bridge_manifest}->as_hashref;
@@ -1706,7 +1728,7 @@ sub _unexpected_over_limit_acceptance($construction, $inputs, $built) {
         plan_sha256 => sha256_hex($plan_json),
         diagnostics => [_oracle_error(
             'VIAL_SCALE_EXECUTION_OUTCOME_ERROR',
-            'over-limit plan was accepted but the selected oracle requires rejection',
+            'over-limit execution workload was accepted but the selected oracle requires rejection',
             '/observed_outcome',
         )],
         contract_discrepancies => [],

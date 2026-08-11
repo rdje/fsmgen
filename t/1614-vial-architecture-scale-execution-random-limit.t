@@ -25,8 +25,8 @@ my $occurrence_id = join('/',
     0,
 );
 my %expected = (
-    attempts => 262_144,
-    accepted_attempt => 262_143,
+    attempts => 1_000_000,
+    accepted_attempt => 999_999,
     occurrences => 1,
     operations => 1,
     scenarios => 1,
@@ -37,36 +37,36 @@ my %expected = (
     execution_events => 6,
     execution_types => 8,
     hial_bytes => 1_326,
-    vial_bytes => 1_294,
+    vial_bytes => 1_300,
     bridge_bytes => 508_968,
     generated_plan_bytes => 34_297,
     replayed_plan_bytes => 34_296,
-    target_decimal => '68173369137783556',
-    target_hex => '00f233516a996304',
+    target_decimal => '15958953504124439124',
+    target_hex => 'dd7997a868500a54',
     workload_identity =>
-        'workload/f02196c7f68daa4bcdf5754e64db75f2f039338a780bdbc0d20c110ffb805d9c',
+        'workload/f8051fc0b55a7b38809f5a417a983c458b7486b4bb8dc769bb9c2e0dc63d6202',
     hial_sha256 =>
         '9a1d7a591d3ec9a3419b07f05bc83aefa2b213b2cae45f5332f9349ffa27056c',
     vial_sha256 =>
-        '0e096b3b9b720a80bc5b33a564fb80d56647a749c9d09206fc11118996cd1816',
+        'd07e960b95e53362864007debfa8f43206212afa489b3ae084f008feee7cc4d4',
     semantic_sha256 =>
-        'c3316e6a37a20a99ff7fcaa699f976632d75e51a7f2b17d9c32086adea79671d',
+        'e32efdeb0ccb81ceff12d66268b4cc64cf96b415faa2dfed1f0571cb46186daf',
     bridge_sha256 =>
         'a4565d40507f369799adaf199b57a6695b12022d068ff9902cec1bdec1a71aca',
     generated_plan_id =>
-        'plan/1f01b357206cb9b768172be41b415084b0ee49ef5494131dd50df74d195d185e',
+        'plan/02b9207cd9392ba8b0d9e52afe9912f026fc00412ace076ff0fc30a32868b614',
     generated_plan_sha256 =>
-        '7ced418b2ec66fad22b8dec8d347037202562e8f9c5234e165db56057df0ad69',
+        '5c4740ba19b104df999d38b8d153edc92645049a701e7e6b036ae10604f69ec6',
     replayed_plan_id =>
-        'plan/a6d4516c28989dccf67d0989d7a71d8e60cc6315451761947386d86a75123ba7',
+        'plan/90660802ee2bbbebdad84f79f66e1f5b6102befdb45de2f4c36f9a0d7f359f90',
     replayed_plan_sha256 =>
-        '3a5fbe358a93ff09d6ce7979de716d9389445bbf62d0e43f3bbbdae13814dce7',
+        '7cb429aacc89c181e611c9a7dabe69697567e26398eb381196927c1aefc586f5',
 );
 
 sub construction {
     return $class->construct({
         primary_axis => 'random_attempts',
-        level => 'qualification_candidate_v1',
+        level => 'limit_v1',
         reference_hial_text => $reference_hial,
     });
 }
@@ -81,15 +81,15 @@ my $evaluation = $first->{ok}
     ? $class->evaluate({construction => clone_json($first)})
     : undef;
 
-subtest 'qualification construction is canonical checked-AHB source' => sub {
-    ok($first->{ok}, 'qualification constructs through the workload contract');
+subtest 'million-attempt construction is canonical checked-AHB source' => sub {
+    ok($first->{ok}, 'limit construction satisfies the workload contract');
     diag($json->encode($first->{diagnostics})) unless $first->{ok};
     is($json->encode($second), $json->encode($first),
-        'independent qualification construction is byte-identical');
+        'independent limit construction is byte-identical');
     is($first->{specification}{requested_counts}{random_attempts},
-        $expected{attempts}, 'construction retains 262,144 attempts');
+        $expected{attempts}, 'construction retains exactly one million attempts');
     is($first->{workload_identity}, $expected{workload_identity},
-        'qualification construction identity is exact');
+        'limit construction identity is exact');
 
     my %input = map { $_->{role} => $_ } @{$first->{inputs}};
     is_deeply([sort keys %input], [qw(hial_source vial_source)],
@@ -100,25 +100,25 @@ subtest 'qualification construction is canonical checked-AHB source' => sub {
         'checked-AHB source identity is frozen');
     is($input{vial_source}{relative_path},
         'generated/vial-scale/execution_graph/vial_architecture_scale.vial',
-        'qualification reuses the canonical execution-scale source route');
+        'limit reuses the canonical execution-scale source route');
     is(bytes::length($input{vial_source}{content}), $expected{vial_bytes},
-        'generated qualification VIAL byte count is exact');
+        'generated limit VIAL byte count is exact');
     is(sha256_hex($input{vial_source}{content}), $expected{vial_sha256},
-        'generated qualification VIAL identity is frozen');
+        'generated limit VIAL identity is frozen');
     is(scalar(() = $input{vial_source}{content}
             =~ /\Q$expected{target_decimal}\E/g),
-        2, 'attempt-262,143 candidate occurs only in constraint and expectation');
+        2, 'attempt-999,999 candidate occurs only in constraint and expectation');
     like($input{vial_source}{content},
         qr{\(choice attempt_target \(u 64\).*\(uniform 0 18446744073709551615\).*\(constraints \(value_eq \(choice attempt_target\) \Q$expected{target_decimal}\E\)\)\)}s,
         'one full-range u64 equality constraint owns rejection sampling');
     like($input{vial_source}{content},
         qr{\(expect selected_random_attempt \(value_eq \(choice attempt_target\) \Q$expected{target_decimal}\E\)\)},
-        'one real check operation references the qualified choice');
+        'one real check operation references the limit choice');
 };
 
-subtest 'qualified generation and strict replay preserve the exact decision' => sub {
+subtest 'millionth generation and strict replay preserve the exact decision' => sub {
     ok($generated && $generated->{ok},
-        'qualified decision builds through the public binder');
+        'millionth decision builds through the public binder');
     diag($json->encode($generated->{diagnostics}))
         if $generated && !$generated->{ok};
     ok($replayed && $replayed->{ok},
@@ -135,7 +135,7 @@ subtest 'qualified generation and strict replay preserve the exact decision' => 
     is($decision->{occurrence_id}, $occurrence_id,
         'decision occurrence identity is exact');
     is($decision->{attempt}, $expected{accepted_attempt},
-        'decision accepts exactly at zero-based attempt 262,143');
+        'decision accepts exactly at zero-based attempt 999,999');
     is($decision->{value}{value_hex}, $expected{target_hex},
         'decision retains the exact 64-bit candidate');
     is($decision->{origin}, 'generated', 'generated origin is exact');
@@ -157,33 +157,33 @@ subtest 'qualified generation and strict replay preserve the exact decision' => 
         'replayed plan changes only origin and derived plan identity');
 
     is($ir->{operation_graph}{total_operation_count}, $expected{operations},
-        'qualification contains one genuine check operation');
+        'limit contains one genuine check operation');
     is($ir->{operation_graph}{total_fiber_count}, $expected{fibers},
-        'qualification contains one root fiber');
+        'limit contains one root fiber');
     is($ir->{operation_graph}{maximum_simultaneous_live_fibers},
-        $expected{live_fibers}, 'qualification isolates live width to one');
+        $expected{live_fibers}, 'limit isolates live width to one');
     is(scalar(@{$ir->{source_map}}), $expected{source_maps},
         'fixed, operation, and decision source maps are exact');
 
     my $generated_json = $json->encode($generated->{plan});
     my $replayed_json = $json->encode($replayed->{plan});
     is(bytes::length($generated_json), $expected{generated_plan_bytes},
-        'generated qualification plan byte count is exact');
+        'generated limit plan byte count is exact');
     is(sha256_hex($generated_json), $expected{generated_plan_sha256},
-        'generated qualification plan hash is exact');
+        'generated limit plan hash is exact');
     is($generated->{plan}{plan_id}, $expected{generated_plan_id},
-        'generated qualification plan identity is exact');
+        'generated limit plan identity is exact');
     is(bytes::length($replayed_json), $expected{replayed_plan_bytes},
-        'replayed qualification plan byte count is exact');
+        'replayed limit plan byte count is exact');
     is(sha256_hex($replayed_json), $expected{replayed_plan_sha256},
-        'replayed qualification plan hash is exact');
+        'replayed limit plan hash is exact');
     is($replayed->{plan}{plan_id}, $expected{replayed_plan_id},
-        'replayed qualification plan identity is exact');
+        'replayed limit plan identity is exact');
 };
 
-subtest 'qualification evaluation freezes metrics and identities' => sub {
+subtest 'million-attempt evaluation freezes metrics and identities' => sub {
     ok($evaluation && $evaluation->{ok},
-        'qualification passes every closed evaluation oracle');
+        'limit passes every closed evaluation oracle');
     diag($json->encode($evaluation->{diagnostics}))
         if $evaluation && !$evaluation->{ok};
     return unless $evaluation && $evaluation->{ok};
@@ -214,10 +214,10 @@ subtest 'qualification evaluation freezes metrics and identities' => sub {
     is($evaluation->{plan_sha256}, $expected{generated_plan_sha256},
         'generated plan identity is exact');
     is_deeply($evaluation->{contract_discrepancies}, [],
-        'qualification has no selected contract discrepancy');
+        'limit has no selected contract discrepancy');
 };
 
-subtest 'qualification rejects replay mutation and missing source' => sub {
+subtest 'million-attempt limit rejects replay/source mutation and missing source' => sub {
     my $tampered = {
         ok => JSON::PP::true,
         plan => clone_json($replayed->{plan}),
@@ -237,17 +237,24 @@ subtest 'qualification rejects replay mutation and missing source' => sub {
         'replay-attempt mutation emits the stable replay diagnostic once',
     );
 
+    my $forged = clone_json($first);
+    my ($vial) = grep { $_->{role} eq 'vial_source' } @{$forged->{inputs}};
+    $vial->{content} =~ s/\Q$expected{target_decimal}\E/0/;
+    my $accepted = eval { $class->build({construction => $forged}); 1 };
+    ok(!$accepted, 'post-identity random target mutation fails closed');
+    like($@, qr/construction is not canonical/,
+        'post-identity rejection names canonical regeneration');
+
     my $missing = eval {
         $class->construct({
             primary_axis => 'random_attempts',
-            level => 'qualification_candidate_v1',
+            level => 'limit_v1',
         });
         1;
     };
-    ok(!$missing, 'qualification requires the frozen checked-AHB source');
+    ok(!$missing, 'limit requires the frozen checked-AHB source');
     like($@, qr/checked-AHB reference text is required/,
         'missing-source rejection names checked-AHB authority');
-
 };
 
 done_testing();

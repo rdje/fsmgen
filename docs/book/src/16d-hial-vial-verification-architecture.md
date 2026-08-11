@@ -2488,8 +2488,8 @@ are exactly 34,295/34,294 canonical bytes. The execution graph contains one
 scenario, operation, and root/live fiber, eight normalized types, 22 bindings,
 and 19 maps: the 17 fixed checked-AHB maps plus one operation map and one
 decision map. Independent identities, public capability isolation, replay-
-attempt mutation, source mutation, missing checked source, and unfinished-level
-rejection are regression-locked.
+attempt mutation, source mutation, missing checked source, and level-specific
+admission are regression-locked.
 
 The random-attempt qualification reuses that exact route at 262,144 attempts.
 Its equality constraint selects decimal `68173369137783556`
@@ -2527,11 +2527,49 @@ die "unexpected random qualification\n"
         && $evaluation->{metrics}{random_occurrences} == 1;
 ```
 
-The graph remains isolated to one scenario, operation, occurrence, and
-root/live fiber, with eight types, 22 bindings, and 19 source maps. This is
-qualification-construction and replay evidence, not throughput, capacity, or
-support promotion. The one-million-attempt limit, final qualification, and any
-capacity claim remain unfinished.
+The exact limit uses the same isolated graph. Candidate
+`0xdd7997a868500a54` succeeds at zero-based attempt 999,999; generated and
+strict-replay plans are 34,297/34,296 bytes with IDs
+`plan/02b9207cd9392ba8b0d9e52afe9912f026fc00412ace076ff0fc30a32868b614`
+and
+`plan/90660802ee2bbbebdad84f79f66e1f5b6102befdb45de2f4c36f9a0d7f359f90`.
+The adjacent source targets candidate `0xce7d67adbe54da82` at attempt
+1,000,000. The unchanged public binder exhausts after its shipped million
+attempts and returns only `VIAL_RANDOM_EXHAUSTED` in phase `random`, with no
+partial ExecutionIR or plan. The evaluator accepts only that exact diagnostic
+as the selected over-limit result.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+open my $fh, '<:raw', 'ppif/ahb_lite_subordinate.ppif'
+    or die "cannot read checked AHB source: $!";
+local $/;
+my $checked_ahb = <$fh>;
+close $fh or die "cannot close checked AHB source: $!";
+
+for my $case (['limit_v1' => 1_000_000], ['over_limit_v1' => undef]) {
+    my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+        primary_axis => 'random_attempts',
+        level => $case->[0],
+        reference_hial_text => $checked_ahb,
+    });
+    my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+        construction => $workload,
+    });
+    die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+    if (defined $case->[1]) {
+        die "unexpected random limit\n"
+            unless $evaluation->{metrics}{random_attempts} == $case->[1];
+    } else {
+        die "unexpected random exhaustion\n"
+            unless $evaluation->{status} eq 'expected_rejection';
+    }
+}
+```
+
+These are deterministic construction and boundary facts, not throughput,
+capacity, final qualification, or support promotion.
 
 The first serialized-plan byte gate now reaches exactly one MiB through the
 same checked-AHB source and public binder. It authors 2,974 real reset actions,
