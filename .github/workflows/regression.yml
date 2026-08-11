@@ -98,6 +98,72 @@ jobs:
     - name: Run full-suite file shard
       run: ./bin/ci-regression full --no-book --hosted-file-shard "${{ matrix.shard }}/16"
 
+  perl_dedicated:
+    name: Perl dedicated ${{ matrix.shard }}/3
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    env:
+      FSMGEN_CI_VERILATOR_APT_VERSION: '5.020-1'
+      FSMGEN_CI_YOSYS_APT_VERSION: '0.33-5build2'
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2]
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+    - name: Set up Perl
+      uses: shogo82148/actions-setup-perl@53e33bb27be492a926eee378e8a5f7ff6618b061 # v1.43.1
+      with:
+        perl-version: '5.32'
+
+    - name: Install dedicated HDL validation tools
+      if: ${{ matrix.shard == 0 }}
+      run: |
+        sudo apt-get update
+        sudo apt-get install --yes --no-install-recommends \
+          "verilator=${FSMGEN_CI_VERILATOR_APT_VERSION}" \
+          "yosys=${FSMGEN_CI_YOSYS_APT_VERSION}"
+        test "$(dpkg-query --show --showformat='${Version}' verilator)" = \
+          "$FSMGEN_CI_VERILATOR_APT_VERSION"
+        test "$(dpkg-query --show --showformat='${Version}' yosys)" = \
+          "$FSMGEN_CI_YOSYS_APT_VERSION"
+        verilator --version
+        yosys -V
+
+    - name: Materialize exact OSVVM 2026.05
+      if: ${{ matrix.shard == 2 }}
+      run: |
+        mkdir -p .artifacts/cache/providers/osvvm/2026.05
+        git clone --recursive --branch 2026.05 --single-branch https://github.com/OSVVM/OsvvmLibraries.git .artifacts/cache/providers/osvvm/2026.05/source
+        test "$(git -C .artifacts/cache/providers/osvvm/2026.05/source rev-parse HEAD)" = \
+          2f7c391051dfb11890fa4bdbda9918d1db492250
+
+    - name: Run dedicated outlier/provider test
+      run: ./bin/ci-regression full --no-book --hosted-dedicated-shard "${{ matrix.shard }}/3"
+
+  perl_corpus:
+    name: Perl corpus ${{ matrix.test }} shard ${{ matrix.shard }}/16
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        test: [296, 301, 303]
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+    - name: Set up Perl
+      uses: shogo82148/actions-setup-perl@53e33bb27be492a926eee378e8a5f7ff6618b061 # v1.43.1
+      with:
+        perl-version: '5.32'
+
+    - name: Run supported-corpus entry shard
+      run: ./bin/ci-regression full --no-book --hosted-corpus-shard "${{ matrix.test }}:${{ matrix.shard }}/16"
+
   perl_dynamic:
     name: Perl dynamic case ${{ matrix.shard }}/68
     runs-on: ubuntu-latest
@@ -189,7 +255,7 @@ jobs:
   build:
     name: build
     if: ${{ always() }}
-    needs: [doctrines, book, perl_files, perl_dynamic]
+    needs: [doctrines, book, perl_files, perl_dedicated, perl_corpus, perl_dynamic]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -198,13 +264,19 @@ jobs:
         DOCTRINES_RESULT: ${{ needs.doctrines.result }}
         BOOK_RESULT: ${{ needs.book.result }}
         PERL_FILES_RESULT: ${{ needs.perl_files.result }}
+        PERL_DEDICATED_RESULT: ${{ needs.perl_dedicated.result }}
+        PERL_CORPUS_RESULT: ${{ needs.perl_corpus.result }}
         PERL_DYNAMIC_RESULT: ${{ needs.perl_dynamic.result }}
       run: |
         printf 'doctrines=%s\n' "$DOCTRINES_RESULT"
         printf 'book=%s\n' "$BOOK_RESULT"
         printf 'perl-files=%s\n' "$PERL_FILES_RESULT"
+        printf 'perl-dedicated=%s\n' "$PERL_DEDICATED_RESULT"
+        printf 'perl-corpus=%s\n' "$PERL_CORPUS_RESULT"
         printf 'perl-dynamic=%s\n' "$PERL_DYNAMIC_RESULT"
         test "$DOCTRINES_RESULT" = success
         test "$BOOK_RESULT" = success
         test "$PERL_FILES_RESULT" = success
+        test "$PERL_DEDICATED_RESULT" = success
+        test "$PERL_CORPUS_RESULT" = success
         test "$PERL_DYNAMIC_RESULT" = success

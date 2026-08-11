@@ -16,34 +16,51 @@ the 68-case `t/1438`; 1,103 lexically later test files never started. Merely
 splitting files would still leave all 68 expensive dynamic cases coupled in
 one job.
 
-The current checkout contains 1,600 tracked `t/*.t` files. The local full gate
+The repair checkout initially contained 1,600 tracked `t/*.t` files. The local full gate
 must remain one ordinary `prove -I perl t` invocation plus the mdBook build,
 while hosted execution needs bounded, independently visible results. A red
 matrix member must not cancel unrelated coverage, and branch protection must
 retain one stable aggregate result.
 
+The first 16+68 repair exposed the next runtime boundary in exact run
+`31494487181`: three ordinary jobs reached their five-hour ceilings inside
+monolithic `t/296`, `t/301`, and `t/303`; separately, `t/1598` required its
+repository-local recursive OSVVM provider, while measured `t/1436` and `t/1437`
+still consumed 10,027 and 6,561 seconds. The repaired checkout now contains
+1,605 tracked tests. File sharding alone cannot give these tests credible
+headroom or exact dependency ownership.
+
 ## Decision
 
-1. Host the 1,599 ordinary files as 16 deterministic round-robin shards after
-   excluding only
-   `t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t`. Shards 0-14
-   contain 100 files and shard 15 contains 99; the measured `t/1436` and
-   `t/1437` outliers land separately in shards 14 and 15.
-2. Host the excluded test as 68 case shards, one canonical dynamic case per
+1. Host the 1,598 ordinary files as 16 deterministic round-robin shards after
+   excluding exactly seven separately owned tests. Shards 0-13 contain 100
+   files and shards 14-15 contain 99.
+2. Host `t/1436`, `t/1437`, and provider-dependent `t/1598` as three fixed
+   dedicated coordinates. Only the `t/1436` coordinate installs its pinned
+   Verilator/Yosys pair. Only the `t/1598` coordinate recursively materializes
+   OSVVM 2026.05 at `.artifacts/cache/providers/osvvm/2026.05/source` and
+   verifies root commit `2f7c391051dfb11890fa4bdbda9918d1db492250`.
+3. Host each of monolithic `t/296`, `t/301`, and `t/303` as 16 deterministic
+   complete/disjoint entry shards. Their default unsharded local paths remain
+   complete and unchanged.
+4. Host `t/1438` as 68 case shards, one canonical dynamic case per
    process. Its adapter and CLI matrix work remains paired per case, while its
    four shared checks execute once on shard zero. Explicit local filtering and
    the unsharded test remain unchanged.
-3. Give both matrices `fail-fast: false` and a 300-minute per-job ceiling.
-   Run doctrine enforcement and the mdBook build independently. Preserve the
-   required `build` result as an always-run aggregate that succeeds only when
-   all four families succeed.
-4. Keep hosted options internal to `full` mode, require `--no-book`, reject
+5. Give all four Perl matrices `fail-fast: false` and a 300-minute per-job
+   ceiling. Run doctrine enforcement and the mdBook build independently.
+   Preserve the required `build` result as an always-run aggregate that
+   succeeds only when all six families succeed.
+6. Keep hosted options internal to `full` mode, require `--no-book`, reject
    malformed, empty, overlapping, or out-of-range selections, and derive the
    ordinary inventory from tracked repository-relative paths. The workflow
-   owns one separate repository-local book build.
-5. Do not infer hosted qualification from local structure. At the next push
+   owns one separate repository-local book build. Ordinary shards retain
+   complete main-repository history and pinned Icarus/Verilator/Yosys because
+   their remaining tests require those contracts; other matrices stay shallow
+   and dependency-minimal unless their exact coordinate says otherwise.
+7. Do not infer hosted qualification from local structure. At the next push
    authorized by decision `0062` or the director, `.6.2` must prove the exact
-   remote SHA, wait for all 87 jobs, record their URLs/conclusions, and repair
+   remote SHA, wait for all 138 jobs, record their URLs/conclusions, and repair
    every non-success before closing the parent.
 
 This decision authorizes the exact bounded documentation changes required to
@@ -54,26 +71,29 @@ make the design queryable and user-visible:
 - Dimension: `files`
 - Change: `1108 -> 1109`
 - Knowledge-card transition allowance from the immutable 1,105-card baseline:
-  at most four files, 429 aggregate lines, and 29,569 aggregate bytes; no
-  per-card or line-width transition allowance increases.
+  at most four files, 425 aggregate lines, and 30,031 aggregate bytes; the
+  maximum per-card line allowance ratchets from 35 to 33, and no line-width
+  transition allowance is added.
 - Focused-document transition allowance from its immutable baseline: at most
   two files, 2,687 aggregate lines, and 118,900 aggregate bytes; all other
   axes retain their current allowances.
 - Ancillary-document transition allowance from its immutable baseline: at
-  most three files, 233 aggregate lines, and 11,779 aggregate bytes; all other
+  most three files, 237 aggregate lines, and 12,104 aggregate bytes; all other
   axes retain their current allowances.
 - Maintained-reference authority:
-  `GITHUB-PUSH-OUTCOME-ASSURANCE.6.1-HOSTED-CI-BOOK-SYNC`, exact mdBook
-  baseline 53 files / 50,039 lines / 2,641,585 bytes plus delta 0 files / +5
-  lines / +373 bytes.
+  `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.18.2-HOSTED-CI-RUNTIME-BOOK-SYNC`, exact
+  mdBook baseline 53 files / 50,141 lines / 2,645,933 bytes plus delta 0 files /
+  +3 lines / +219 bytes.
 
 ## Consequences
 
-- Every hosted failure identifies one bounded file shard or one exact dynamic
-  case, and no red member hides later work through matrix cancellation.
-- The known 10,027-second file outlier and 907-second dynamic depth-3 case fit
-  below the five-hour ceiling with substantial margin; `.6.2` remains the
-  authority for actual hosted terminal qualification of the unmeasured tail.
+- Every hosted failure identifies one bounded ordinary file shard, dedicated
+  test, supported-corpus entry shard, or exact dynamic case, and no red member
+  hides later work through matrix cancellation.
+- The known 10,027-second and 6,561-second outliers run alone. Provider data is
+  present only where required, while each formerly monolithic corpus audit has
+  16 independently visible runtime bounds. `.6.2` remains the authority for
+  actual hosted terminal qualification of the repaired revision.
 - CI process count increases deliberately. Aggregate work is not reduced, but
   every shard remains independently visible and has its own configured
   runtime ceiling.

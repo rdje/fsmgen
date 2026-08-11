@@ -491,14 +491,17 @@ sets and `--no-book` only for a deliberately code-only turnaround check.
 GitHub Actions is active under `.github/workflows/`. The hosted regression
 workflow runs the same `./bin/ci-regression` entrypoint on pushes to `main`,
 pull requests targeting `main`, and manual runs. Hosted execution uses 16
-disjoint ordinary-file shards plus one isolated job for each of the 68 cases
-in the large dynamic transaction-ID focused test. Both matrices continue after
-individual failures, and a final required result succeeds only when every
-shard, doctrine enforcement, and the separate mdBook build succeed. The
-ordinary local `./bin/ci-regression` command remains unsharded and includes the
-book build. The GitHub Pages workflow builds this mdBook from `docs/book` and
-publishes the generated `docs/book/book` artifact when Pages is configured to
-use GitHub Actions.
+disjoint ordinary-file shards, three dedicated long/provider-dependent tests,
+16 entry shards for each of three supported-corpus audits, and one isolated job
+for each of the 68 cases in the large dynamic transaction-ID focused test. All
+four Perl matrices continue after individual failures. A final required result
+succeeds only when every shard, doctrine enforcement, and the separate mdBook
+build succeed. Only the provider-dependent coordinate materializes exact OSVVM
+2026.05 beneath the repository-local cache. The ordinary local
+`./bin/ci-regression` command remains unsharded and includes the book build. The
+GitHub Pages workflow builds this mdBook from `docs/book` and publishes the
+generated `docs/book/book` artifact when Pages is configured to use GitHub
+Actions.
 
 Hosted regression uses a minimal Perl setup. Ordinary runtime paths should not
 depend on undeclared local CPAN modules, and CLI report modes that are tested

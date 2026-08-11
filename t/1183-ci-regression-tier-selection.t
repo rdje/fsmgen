@@ -8,10 +8,15 @@ use IPC::Cmd qw(run);
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my $ci = File::Spec->catfile($repo_root, 'bin', 'ci-regression');
+my %dedicated_relpath = (
+    0 => 't/1436-ial2-ppif-parser-cli.t',
+    1 => 't/1437-axi-ial2-manager-capacity-status-generator.t',
+    2 => 't/1598-vial-vhdl-osvvm-emission.t',
+);
+my $dynamic_relpath = 't/1438-axi-ial2-manager-dynamic-transaction-id-focused.t';
 my $dynamic_test = File::Spec->catfile(
     $repo_root,
-    't',
-    '1438-axi-ial2-manager-dynamic-transaction-id-focused.t',
+    split(m{/}, $dynamic_relpath),
 );
 my %corpus_relpath = (
     296 => 't/296-regression-corpus-supported-behavior.t',
@@ -21,6 +26,11 @@ my %corpus_relpath = (
 my %corpus_test = map {
     $_ => File::Spec->catfile($repo_root, split m{/}, $corpus_relpath{$_})
 } keys %corpus_relpath;
+my %separately_hosted_relpath = map { $_ => 1 } (
+    values(%dedicated_relpath),
+    values(%corpus_relpath),
+    $dynamic_relpath,
+);
 my $workflow = File::Spec->catfile(
     $repo_root,
     '.github',
@@ -237,9 +247,20 @@ subtest 'dry-run modes select the expected command families' => sub {
 };
 
 subtest 'hosted file shards form one exact disjoint full-suite inventory' => sub {
-    my $dynamic_relpath = 't/1438-axi-ial2-manager-dynamic-transaction-id-focused.t';
-    my @expected = grep { $_ ne $dynamic_relpath } tracked_perl_tests();
+    my @tracked = tracked_perl_tests();
+    my @expected = grep { !$separately_hosted_relpath{$_} } @tracked;
     my %seen;
+
+    is(
+        scalar(keys %separately_hosted_relpath),
+        7,
+        'seven exact tests have non-ordinary hosted ownership',
+    );
+    is_deeply(
+        [sort(@expected, keys(%separately_hosted_relpath))],
+        \@tracked,
+        'ordinary and separately hosted file owners form the complete tracked test inventory',
+    );
 
     for my $index (0 .. 15) {
         my $result = run_ci(
@@ -265,9 +286,43 @@ subtest 'hosted file shards form one exact disjoint full-suite inventory' => sub
     is_deeply(
         [sort keys %seen],
         \@expected,
-        'sixteen hosted file shards cover every tracked Perl test exactly once except the dynamic focused outlier',
+        'sixteen hosted file shards cover every ordinary tracked Perl test exactly once',
     );
-    ok(!$seen{$dynamic_relpath}, 'ordinary file shards exclude the separately case-sharded dynamic focused test');
+    for my $test_file (sort keys %separately_hosted_relpath) {
+        ok(!$seen{$test_file}, "ordinary file shards exclude separately hosted $test_file");
+    }
+};
+
+subtest 'hosted dedicated shards select the three exact outlier/provider tests' => sub {
+    my @selected;
+    for my $index (0 .. 2) {
+        my $result = run_ci(
+            'full',
+            '--no-book',
+            "--hosted-dedicated-shard=$index/3",
+            '--dry-run',
+        );
+        ok($result->{success}, "hosted dedicated shard $index/3 dry-run succeeds");
+        is($result->{stderr}, '', "hosted dedicated shard $index/3 keeps stderr clean");
+        like(
+            $result->{stdout},
+            qr/==> Perl dedicated test \Q$index\/3\E/,
+            "hosted dedicated shard $index/3 identifies itself",
+        );
+        my @test_files = $result->{stdout} =~ m{\b(t/[^\s]+\.t)\b}g;
+        is_deeply(
+            \@test_files,
+            [$dedicated_relpath{$index}],
+            "hosted dedicated shard $index/3 selects its exact test",
+        );
+        push @selected, @test_files;
+    }
+
+    is_deeply(
+        [sort @selected],
+        [sort values %dedicated_relpath],
+        'dedicated coordinates cover all three outlier/provider tests exactly once',
+    );
 };
 
 subtest 'hosted dynamic shards cover all canonical cases exactly once' => sub {
@@ -393,6 +448,32 @@ subtest 'hosted shard arguments fail closed' => sub {
     ok(!$outside->{success}, 'out-of-range file shard fails');
     like($outside->{stderr}, qr/index 16 is outside shard count 16/, 'out-of-range diagnostic is exact');
 
+    my $dedicated_outside = run_ci(
+        'full',
+        '--no-book',
+        '--hosted-dedicated-shard=3/3',
+        '--dry-run',
+    );
+    ok(!$dedicated_outside->{success}, 'out-of-range dedicated shard fails');
+    like(
+        $dedicated_outside->{stderr},
+        qr/--hosted-dedicated-shard index 3 is outside shard count 3/,
+        'out-of-range dedicated diagnostic is exact',
+    );
+
+    my $dedicated_wrong_count = run_ci(
+        'full',
+        '--no-book',
+        '--hosted-dedicated-shard=0/4',
+        '--dry-run',
+    );
+    ok(!$dedicated_wrong_count->{success}, 'wrong dedicated shard count fails');
+    like(
+        $dedicated_wrong_count->{stderr},
+        qr/--hosted-dedicated-shard requires I\/3: 0\/4/,
+        'dedicated count diagnostic locks the exact closed coordinate set',
+    );
+
     my $corpus_outside = run_ci(
         'full',
         '--no-book',
@@ -438,10 +519,12 @@ subtest 'hosted workflow runs every shard family to a terminal aggregate' => sub
     my $yaml = slurp($workflow);
     my @non_fail_fast = $yaml =~ /fail-fast:\s+false/g;
     my ($book_job) = $yaml =~ /\n  book:(.*?)\n  perl_files:/s;
-    my ($file_job) = $yaml =~ /\n  perl_files:(.*?)\n  perl_dynamic:/s;
+    my ($file_job) = $yaml =~ /\n  perl_files:(.*?)\n  perl_dedicated:/s;
+    my ($dedicated_job) = $yaml =~ /\n  perl_dedicated:(.*?)\n  perl_corpus:/s;
+    my ($corpus_job) = $yaml =~ /\n  perl_corpus:(.*?)\n  perl_dynamic:/s;
     my ($dynamic_job) = $yaml =~ /\n  perl_dynamic:(.*?)\n  build:/s;
 
-    is(scalar(@non_fail_fast), 2, 'both hosted matrices disable fail-fast cancellation');
+    is(scalar(@non_fail_fast), 4, 'all four hosted Perl matrices disable fail-fast cancellation');
     like($yaml, qr/timeout-minutes:\s+300/, 'long-running shard jobs have a five-hour ceiling');
     like($file_job || '', qr/runs-on:\s+ubuntu-24\.04/, 'ordinary shards pin the Ubuntu Noble package base');
     like(
@@ -458,6 +541,16 @@ subtest 'hosted workflow runs every shard family to a terminal aggregate' => sub
         $dynamic_job || '',
         qr/fetch-depth:\s+0/,
         'dynamic shards retain the default shallow checkout',
+    );
+    unlike(
+        $dedicated_job || '',
+        qr/fetch-depth:\s+0/,
+        'dedicated shards retain the default shallow main checkout',
+    );
+    unlike(
+        $corpus_job || '',
+        qr/fetch-depth:\s+0/,
+        'corpus shards retain the default shallow checkout',
     );
     like(
         $file_job || '',
@@ -486,10 +579,60 @@ subtest 'hosted workflow runs every shard family to a terminal aggregate' => sub
         qr/Install hosted HDL validation tools|apt-get install/,
         'dynamic shards avoid unrelated HDL tool installation',
     );
+    unlike(
+        $corpus_job || '',
+        qr/Install hosted HDL validation tools|apt-get install|OsvvmLibraries/,
+        'corpus shards avoid unrelated HDL tools and provider materialization',
+    );
     like(
         $yaml,
         qr/shard:\s+\[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15\]/,
         'workflow schedules all sixteen ordinary file shards',
+    );
+    like(
+        $dedicated_job || '',
+        qr/runs-on:\s+ubuntu-24\.04/,
+        'dedicated shards use the pinned Noble package base',
+    );
+    like(
+        $dedicated_job || '',
+        qr/shard:\s+\[0, 1, 2\]/,
+        'workflow schedules all three exact dedicated coordinates',
+    );
+    like(
+        $dedicated_job || '',
+        qr/Install dedicated HDL validation tools.*?if:\s+\$\{\{ matrix\.shard == 0 \}\}.*?verilator=.*?yosys=/s,
+        'only dedicated t1436 installs its required pinned HDL tools',
+    );
+    like(
+        $dedicated_job || '',
+        qr/FSMGEN_CI_VERILATOR_APT_VERSION:\s+'5\.020-1'.*?FSMGEN_CI_YOSYS_APT_VERSION:\s+'0\.33-5build2'/s,
+        'dedicated t1436 retains exact Verilator and Yosys revisions',
+    );
+    like(
+        $dedicated_job || '',
+        qr/Materialize exact OSVVM 2026\.05.*?if:\s+\$\{\{ matrix\.shard == 2 \}\}.*?git clone --recursive --branch 2026\.05 --single-branch\s+https:\/\/github\.com\/OSVVM\/OsvvmLibraries\.git\s+\.artifacts\/cache\/providers\/osvvm\/2026\.05\/source/s,
+        'only dedicated t1598 materializes the exact repository-local OSVVM provider',
+    );
+    like(
+        $dedicated_job || '',
+        qr/2f7c391051dfb11890fa4bdbda9918d1db492250/,
+        'dedicated provider setup verifies the immutable OSVVM root commit',
+    );
+    like(
+        $corpus_job || '',
+        qr/test:\s+\[296, 301, 303\]/,
+        'workflow schedules all three supported-corpus tests',
+    );
+    like(
+        $corpus_job || '',
+        qr/shard:\s+\[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15\]/,
+        'workflow schedules all sixteen entry coordinates per corpus test',
+    );
+    like(
+        $corpus_job || '',
+        qr/--hosted-corpus-shard\s+"\$\{\{ matrix\.test \}\}:\$\{\{ matrix\.shard \}\}\/16"/,
+        'corpus matrix passes both exact dimensions to the CI driver',
     );
     my ($dynamic_matrix) = $yaml =~ /perl_dynamic:.*?matrix:\s*\n\s+shard:\s*\n(.*?)\n\s+steps:/s;
     my @dynamic_shards = ($dynamic_matrix || '') =~ /^\s+-\s+(\d+)\s*$/mg;
@@ -497,9 +640,15 @@ subtest 'hosted workflow runs every shard family to a terminal aggregate' => sub
     like($yaml, qr/if:\s+\$\{\{ always\(\) \}\}/, 'aggregate runs after success or failure');
     like(
         $yaml,
-        qr/needs:\s+\[doctrines, book, perl_files, perl_dynamic\]/,
+        qr/needs:\s+\[doctrines, book, perl_files, perl_dedicated, perl_corpus, perl_dynamic\]/,
         'aggregate waits for every required CI family',
     );
+    for my $result_name (qw(
+        DOCTRINES_RESULT BOOK_RESULT PERL_FILES_RESULT PERL_DEDICATED_RESULT
+        PERL_CORPUS_RESULT PERL_DYNAMIC_RESULT
+    )) {
+        like($yaml, qr/\Q$result_name\E:/, "aggregate consumes $result_name");
+    }
 };
 
 subtest 'hosted workflows pin the audited Node 24 action family' => sub {
@@ -511,9 +660,9 @@ subtest 'hosted workflows pin the audited Node 24 action family' => sub {
     my $all = join "\n", values %yaml;
 
     my %pins = (
-        'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' => 6,
+        'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' => 8,
         'peaceiris/actions-mdbook@a6f333f62c4b46ed5190d00cab3b7f9a6996274c' => 2,
-        'shogo82148/actions-setup-perl@53e33bb27be492a926eee378e8a5f7ff6618b061' => 2,
+        'shogo82148/actions-setup-perl@53e33bb27be492a926eee378e8a5f7ff6618b061' => 4,
         'actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d' => 1,
         'actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9' => 1,
         'actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128' => 1,
@@ -524,7 +673,7 @@ subtest 'hosted workflows pin the audited Node 24 action family' => sub {
     }
 
     my @uses = $all =~ /^\s*uses:\s+(\S+)/mg;
-    is(scalar(@uses), 13, 'all thirteen direct workflow action uses are inventoried');
+    is(scalar(@uses), 17, 'all seventeen direct workflow action uses are inventoried');
     for my $use (@uses) {
         like($use, qr/\A[^@\s]+\@[0-9a-f]{40}\z/, "$use is pinned to an immutable commit");
     }

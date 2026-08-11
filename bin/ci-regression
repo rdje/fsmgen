@@ -13,10 +13,18 @@ MODE="full"
 RUN_BOOK=1
 DRY_RUN=0
 HOSTED_FILE_SHARD=""
+HOSTED_DEDICATED_SHARD=""
 HOSTED_DYNAMIC_SHARD=""
 HOSTED_CORPUS_SHARD=""
 
+HOSTED_DEDICATED_COUNT=3
+HOSTED_DEDICATED_TEST_0="t/1436-ial2-ppif-parser-cli.t"
+HOSTED_DEDICATED_TEST_1="t/1437-axi-ial2-manager-capacity-status-generator.t"
+HOSTED_DEDICATED_TEST_2="t/1598-vial-vhdl-osvvm-emission.t"
 HOSTED_DYNAMIC_TEST="t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t"
+HOSTED_CORPUS_TEST_296="t/296-regression-corpus-supported-behavior.t"
+HOSTED_CORPUS_TEST_301="t/301-check-json-supported-corpus.t"
+HOSTED_CORPUS_TEST_303="t/303-normalized-semantic-json-supported-corpus.t"
 
 QUICK_TESTS=(
   t/01-regression.t
@@ -51,7 +59,8 @@ Options:
   --no-book                     Skip mdBook build for this invocation.
   --dry-run                     Print selected steps without executing them.
   --hosted-file-shard I/N       Run file shard I of N, excluding the separately
-                                sharded dynamic transaction-ID focused test.
+                                scheduled dedicated, corpus, and dynamic tests.
+  --hosted-dedicated-shard I/3  Run one exact long/provider-dependent test.
   --hosted-dynamic-shard I/N    Run case shard I of N from the dynamic
                                 transaction-ID focused test.
   --hosted-corpus-shard T:I/N   Run entry shard I of N from supported-corpus
@@ -137,13 +146,50 @@ validate_hosted_corpus_spec() {
 
 hosted_corpus_test_file() {
   case "$1" in
-    296) printf '%s\n' 't/296-regression-corpus-supported-behavior.t' ;;
-    301) printf '%s\n' 't/301-check-json-supported-corpus.t' ;;
-    303) printf '%s\n' 't/303-normalized-semantic-json-supported-corpus.t' ;;
+    296) printf '%s\n' "$HOSTED_CORPUS_TEST_296" ;;
+    301) printf '%s\n' "$HOSTED_CORPUS_TEST_301" ;;
+    303) printf '%s\n' "$HOSTED_CORPUS_TEST_303" ;;
     *)
       printf 'ci-regression: unknown hosted corpus test id: %s\n' "$1" >&2
       exit 2
       ;;
+  esac
+}
+
+validate_hosted_dedicated_spec() {
+  local spec="$1"
+  local count="${spec#*/}"
+
+  validate_shard_spec --hosted-dedicated-shard "$spec"
+  if (( count != HOSTED_DEDICATED_COUNT )); then
+    printf 'ci-regression: --hosted-dedicated-shard requires I/%s: %s\n' \
+      "$HOSTED_DEDICATED_COUNT" "$spec" >&2
+    exit 2
+  fi
+}
+
+hosted_dedicated_test_file() {
+  case "$1" in
+    0) printf '%s\n' "$HOSTED_DEDICATED_TEST_0" ;;
+    1) printf '%s\n' "$HOSTED_DEDICATED_TEST_1" ;;
+    2) printf '%s\n' "$HOSTED_DEDICATED_TEST_2" ;;
+    *)
+      printf 'ci-regression: unknown hosted dedicated test index: %s\n' "$1" >&2
+      exit 2
+      ;;
+  esac
+}
+
+is_separately_hosted_test() {
+  case "$1" in
+    "$HOSTED_DEDICATED_TEST_0"|\
+    "$HOSTED_DEDICATED_TEST_1"|\
+    "$HOSTED_DEDICATED_TEST_2"|\
+    "$HOSTED_DYNAMIC_TEST"|\
+    "$HOSTED_CORPUS_TEST_296"|\
+    "$HOSTED_CORPUS_TEST_301"|\
+    "$HOSTED_CORPUS_TEST_303") return 0 ;;
+    *) return 1 ;;
   esac
 }
 
@@ -163,7 +209,7 @@ select_hosted_file_shard() {
 
   require_test_files "${full_tests[@]}"
   for test_file in "${full_tests[@]}"; do
-    if [[ "$test_file" == "$HOSTED_DYNAMIC_TEST" ]]; then
+    if is_separately_hosted_test "$test_file"; then
       continue
     fi
     if (( ordinary_index % count == index )); then
@@ -178,6 +224,17 @@ select_hosted_file_shard() {
   fi
 
   run_step "Perl regression file shard $spec" prove -I perl "${selected_tests[@]}"
+}
+
+run_hosted_dedicated_shard() {
+  local spec="$1"
+  local index="${spec%/*}"
+  local test_file
+
+  test_file="$(hosted_dedicated_test_file "$index")"
+  require_test_files "$test_file"
+  run_step "Perl dedicated test $index/$HOSTED_DEDICATED_COUNT" \
+    prove -I perl "$test_file"
 }
 
 run_hosted_dynamic_shard() {
@@ -234,6 +291,17 @@ while (($#)); do
     --hosted-file-shard=*)
       HOSTED_FILE_SHARD="${1#*=}"
       ;;
+    --hosted-dedicated-shard)
+      if (($# < 2)); then
+        printf 'ci-regression: --hosted-dedicated-shard requires I/3\n' >&2
+        exit 2
+      fi
+      HOSTED_DEDICATED_SHARD="$2"
+      shift
+      ;;
+    --hosted-dedicated-shard=*)
+      HOSTED_DEDICATED_SHARD="${1#*=}"
+      ;;
     --hosted-dynamic-shard)
       if (($# < 2)); then
         printf 'ci-regression: --hosted-dynamic-shard requires I/N\n' >&2
@@ -276,6 +344,9 @@ done
 if [[ -n "$HOSTED_FILE_SHARD" ]]; then
   validate_shard_spec --hosted-file-shard "$HOSTED_FILE_SHARD"
 fi
+if [[ -n "$HOSTED_DEDICATED_SHARD" ]]; then
+  validate_hosted_dedicated_spec "$HOSTED_DEDICATED_SHARD"
+fi
 if [[ -n "$HOSTED_DYNAMIC_SHARD" ]]; then
   validate_shard_spec --hosted-dynamic-shard "$HOSTED_DYNAMIC_SHARD"
 fi
@@ -284,6 +355,9 @@ if [[ -n "$HOSTED_CORPUS_SHARD" ]]; then
 fi
 hosted_shard_family_count=0
 if [[ -n "$HOSTED_FILE_SHARD" ]]; then
+  ((hosted_shard_family_count += 1))
+fi
+if [[ -n "$HOSTED_DEDICATED_SHARD" ]]; then
   ((hosted_shard_family_count += 1))
 fi
 if [[ -n "$HOSTED_DYNAMIC_SHARD" ]]; then
@@ -324,6 +398,8 @@ case "$MODE" in
   full)
     if [[ -n "$HOSTED_FILE_SHARD" ]]; then
       select_hosted_file_shard "$HOSTED_FILE_SHARD"
+    elif [[ -n "$HOSTED_DEDICATED_SHARD" ]]; then
+      run_hosted_dedicated_shard "$HOSTED_DEDICATED_SHARD"
     elif [[ -n "$HOSTED_DYNAMIC_SHARD" ]]; then
       run_hosted_dynamic_shard "$HOSTED_DYNAMIC_SHARD"
     elif [[ -n "$HOSTED_CORPUS_SHARD" ]]; then
