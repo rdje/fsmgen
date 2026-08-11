@@ -14,6 +14,7 @@ RUN_BOOK=1
 DRY_RUN=0
 HOSTED_FILE_SHARD=""
 HOSTED_DYNAMIC_SHARD=""
+HOSTED_CORPUS_SHARD=""
 
 HOSTED_DYNAMIC_TEST="t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t"
 
@@ -53,6 +54,8 @@ Options:
                                 sharded dynamic transaction-ID focused test.
   --hosted-dynamic-shard I/N    Run case shard I of N from the dynamic
                                 transaction-ID focused test.
+  --hosted-corpus-shard T:I/N   Run entry shard I of N from supported-corpus
+                                test T, where T is 296, 301, or 303.
   --list                        Print the concrete quick and ISF test lists.
   --help                        Show this help text.
 
@@ -117,6 +120,33 @@ validate_shard_spec() {
   fi
 }
 
+validate_hosted_corpus_spec() {
+  local spec="$1"
+  local test_id
+  local shard_spec
+
+  if [[ ! "$spec" =~ ^(296|301|303):([0-9]+/[1-9][0-9]*)$ ]]; then
+    printf 'ci-regression: --hosted-corpus-shard requires T:I/N with T in 296,301,303: %s\n' "$spec" >&2
+    exit 2
+  fi
+
+  test_id="${BASH_REMATCH[1]}"
+  shard_spec="${BASH_REMATCH[2]}"
+  validate_shard_spec "--hosted-corpus-shard $test_id" "$shard_spec"
+}
+
+hosted_corpus_test_file() {
+  case "$1" in
+    296) printf '%s\n' 't/296-regression-corpus-supported-behavior.t' ;;
+    301) printf '%s\n' 't/301-check-json-supported-corpus.t' ;;
+    303) printf '%s\n' 't/303-normalized-semantic-json-supported-corpus.t' ;;
+    *)
+      printf 'ci-regression: unknown hosted corpus test id: %s\n' "$1" >&2
+      exit 2
+      ;;
+  esac
+}
+
 select_hosted_file_shard() {
   local spec="$1"
   local index="${spec%/*}"
@@ -164,6 +194,24 @@ run_hosted_dynamic_shard() {
     prove -I perl "$HOSTED_DYNAMIC_TEST"
 }
 
+run_hosted_corpus_shard() {
+  local spec="$1"
+  local test_id="${spec%%:*}"
+  local shard_spec="${spec#*:}"
+  local index="${shard_spec%/*}"
+  local count="${shard_spec#*/}"
+  local test_file
+
+  test_file="$(hosted_corpus_test_file "$test_id")"
+  require_test_files "$test_file"
+  require_tool env
+  run_step "Perl supported-corpus test $test_id entry shard $shard_spec" \
+    env \
+    "FSMGEN_HOSTED_CORPUS_SHARD_INDEX=$index" \
+    "FSMGEN_HOSTED_CORPUS_SHARD_COUNT=$count" \
+    prove -I perl "$test_file"
+}
+
 while (($#)); do
   case "$1" in
     quick|smoke|isf|full)
@@ -197,6 +245,17 @@ while (($#)); do
     --hosted-dynamic-shard=*)
       HOSTED_DYNAMIC_SHARD="${1#*=}"
       ;;
+    --hosted-corpus-shard)
+      if (($# < 2)); then
+        printf 'ci-regression: --hosted-corpus-shard requires T:I/N\n' >&2
+        exit 2
+      fi
+      HOSTED_CORPUS_SHARD="$2"
+      shift
+      ;;
+    --hosted-corpus-shard=*)
+      HOSTED_CORPUS_SHARD="${1#*=}"
+      ;;
     --list)
       list_modes
       exit 0
@@ -220,15 +279,28 @@ fi
 if [[ -n "$HOSTED_DYNAMIC_SHARD" ]]; then
   validate_shard_spec --hosted-dynamic-shard "$HOSTED_DYNAMIC_SHARD"
 fi
-if [[ -n "$HOSTED_FILE_SHARD" && -n "$HOSTED_DYNAMIC_SHARD" ]]; then
-  printf 'ci-regression: hosted file and dynamic shards are mutually exclusive\n' >&2
+if [[ -n "$HOSTED_CORPUS_SHARD" ]]; then
+  validate_hosted_corpus_spec "$HOSTED_CORPUS_SHARD"
+fi
+hosted_shard_family_count=0
+if [[ -n "$HOSTED_FILE_SHARD" ]]; then
+  ((hosted_shard_family_count += 1))
+fi
+if [[ -n "$HOSTED_DYNAMIC_SHARD" ]]; then
+  ((hosted_shard_family_count += 1))
+fi
+if [[ -n "$HOSTED_CORPUS_SHARD" ]]; then
+  ((hosted_shard_family_count += 1))
+fi
+if (( hosted_shard_family_count > 1 )); then
+  printf 'ci-regression: hosted shard families are mutually exclusive\n' >&2
   exit 2
 fi
-if [[ -n "$HOSTED_FILE_SHARD$HOSTED_DYNAMIC_SHARD" && "$MODE" != "full" ]]; then
+if (( hosted_shard_family_count > 0 )) && [[ "$MODE" != "full" ]]; then
   printf 'ci-regression: hosted shards require full mode\n' >&2
   exit 2
 fi
-if [[ -n "$HOSTED_FILE_SHARD$HOSTED_DYNAMIC_SHARD" && "$RUN_BOOK" -ne 0 ]]; then
+if (( hosted_shard_family_count > 0 )) && [[ "$RUN_BOOK" -ne 0 ]]; then
   printf 'ci-regression: hosted shards require --no-book; the workflow builds the book separately\n' >&2
   exit 2
 fi
@@ -254,6 +326,8 @@ case "$MODE" in
       select_hosted_file_shard "$HOSTED_FILE_SHARD"
     elif [[ -n "$HOSTED_DYNAMIC_SHARD" ]]; then
       run_hosted_dynamic_shard "$HOSTED_DYNAMIC_SHARD"
+    elif [[ -n "$HOSTED_CORPUS_SHARD" ]]; then
+      run_hosted_corpus_shard "$HOSTED_CORPUS_SHARD"
     else
       run_step "Perl regression suite" prove -I perl t
     fi

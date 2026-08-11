@@ -7,14 +7,12 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.18.1`; repair and case-shard the three monolithic supported-corpus audits.
-- current_state: exact push `a28e9adf46b7861ee728703662ad18b64f0325d0` has green Knowledge Map/book workflows; regression run `31494487181` has 14 failed jobs and three running ordinary shards.
-  All 13 observed failed-job families are locally repaired; direct actions are
-  Node-24-compatible; mdBook and downstream/SPECFORGE lockstep is green. The
-  exact run is terminal at 69 success/15 failure/3 cancelled; t296/t301/t303
-  were still running at the five-hour cancellations. Corpus repair/sharding,
-  dedicated outlier/provider jobs, and final contract lockstep remain before push.
-- next_action: implement and verify `.6.2.2.18.1` only.
+- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.18.2`; isolate hosted outliers/providers and schedule corpus matrices.
+- current_state: exact push `a28e9adf46b7861ee728703662ad18b64f0325d0` has green Knowledge Map/book workflows; regression run `31494487181` is terminal at 69 success/15 failure/3 cancelled.
+  All completed failure families are locally repaired; direct actions are Node-24-compatible; mdBook and downstream/SPECFORGE lockstep was green at the last audit. The formerly monolithic t296/t301/t303 audits are now
+  correct and deterministically case-shardable, with exact complete/disjoint
+  coverage and current-code representative coordinates green. Dedicated outlier/provider workflow jobs and final contract lockstep remain before push.
+- next_action: implement and verify `.6.2.2.18.2` only.
 - in_flight_uncommitted: none after this commit.
 - in_flight_background: none; exact regression run `31494487181` is terminal.
 - blockers: a new early repair push requires director authorization after fixes.

@@ -14,6 +14,10 @@ use lib File::Spec->catdir($FindBin::Bin, 'lib');
 use FSM::Pipeline::HDLGenerator;
 use FSM::Composition::Plan;
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
+use FSM::Test::HostedCorpusShard qw(
+    hosted_corpus_list_only
+    select_hosted_corpus_entries
+);
 use FSM::Test::ProjectDataLocality;
 use FSM::Test::T296Checkpoint;
 
@@ -29,6 +33,9 @@ my $checkpoint_contract_version = 'supported-smoke-matrix-v1';
 my @supported_entries = grep {
     $_->{classification} eq 'supported_smoke'
 } regression_corpus_entries();
+@supported_entries = @{select_hosted_corpus_entries(
+    entries => \@supported_entries,
+)};
 
 my @hdl_entries = grep {
     _supports_phase($_, 'hdl_generation')
@@ -49,6 +56,14 @@ my @strict_entries = grep {
 my @strict_pipeline_entries = grep {
     $_->{strict_supported}
 } @pipeline_hdl_entries;
+
+if (hosted_corpus_list_only()) {
+    print "pipeline-default:$_->{id}\n" for @pipeline_hdl_entries;
+    print "cli-default:$_->{id}\n" for @hdl_entries;
+    print "pipeline-strict:$_->{id}\n" for @strict_pipeline_entries;
+    print "cli-strict:$_->{id}\n" for @strict_entries;
+    exit 0;
+}
 
 if (defined $worker_surface) {
     _run_worker_acceptance();

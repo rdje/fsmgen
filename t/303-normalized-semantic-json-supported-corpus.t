@@ -10,8 +10,14 @@ use IPC::Cmd qw(run);
 use JSON::PP qw(decode_json);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
+use FSM::Test::HostedCorpusShard qw(
+    hosted_corpus_list_only
+    select_main_cli_corpus_entries
+    select_hosted_corpus_entries
+);
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my $tempdir = tempdir(CLEANUP => 1);
@@ -19,15 +25,28 @@ my $tempdir = tempdir(CLEANUP => 1);
 my @supported_entries = grep {
     $_->{classification} eq 'supported_smoke'
 } regression_corpus_entries();
+@supported_entries = @{select_main_cli_corpus_entries(
+    entries => \@supported_entries,
+    phase => 'semantic_json',
+)};
+@supported_entries = @{select_hosted_corpus_entries(
+    entries => \@supported_entries,
+)};
 
 my @strict_entries = grep {
     $_->{strict_supported}
 } @supported_entries;
 
-ok(@supported_entries, 'corpus has supported-smoke entries for semantic JSON coverage');
-ok(@strict_entries, 'corpus has strict-supported entries for strict semantic JSON coverage');
+if (hosted_corpus_list_only()) {
+    print "default:$_->{id}\n" for @supported_entries;
+    print "strict:$_->{id}\n" for @strict_entries;
+    exit 0;
+}
 
-subtest 'semantic JSON accepts every supported-smoke corpus entry in default mode' => sub {
+ok(@supported_entries, 'corpus has supported-smoke main-CLI sources for semantic JSON coverage');
+ok(@strict_entries, 'corpus has strict-supported main-CLI sources for strict semantic JSON coverage');
+
+subtest 'semantic JSON accepts every supported-smoke main-CLI source in default mode' => sub {
     for my $entry (@supported_entries) {
         assert_semantic_json_acceptance(
             $entry,
@@ -37,7 +56,7 @@ subtest 'semantic JSON accepts every supported-smoke corpus entry in default mod
     }
 };
 
-subtest 'semantic JSON accepts every strict-supported corpus entry in strict mode' => sub {
+subtest 'semantic JSON accepts every strict-supported main-CLI source in strict mode' => sub {
     for my $entry (@strict_entries) {
         assert_semantic_json_acceptance(
             $entry,
@@ -166,7 +185,7 @@ sub assert_semantic_json_acceptance {
             "$entry->{id} records expected aggregate child count through $args{owner}",
         );
     }
-    elsif ($entry->{source_kind} eq 'composition') {
+    elsif ($expected_root_kind eq 'top') {
         ok($semantic->{composition}, "$entry->{id} exposes composition metadata through $args{owner}");
         is(
             $semantic->{composition}{child_count},

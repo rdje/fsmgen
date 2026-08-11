@@ -13,6 +13,14 @@ my $dynamic_test = File::Spec->catfile(
     't',
     '1438-axi-ial2-manager-dynamic-transaction-id-focused.t',
 );
+my %corpus_relpath = (
+    296 => 't/296-regression-corpus-supported-behavior.t',
+    301 => 't/301-check-json-supported-corpus.t',
+    303 => 't/303-normalized-semantic-json-supported-corpus.t',
+);
+my %corpus_test = map {
+    $_ => File::Spec->catfile($repo_root, split m{/}, $corpus_relpath{$_})
+} keys %corpus_relpath;
 my $workflow = File::Spec->catfile(
     $repo_root,
     '.github',
@@ -70,6 +78,34 @@ sub run_dynamic_case_list {
 
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
         command => [$^X, $dynamic_test],
+    );
+    return {
+        success => $success,
+        stdout  => join('', @{$stdout_buf || []}),
+        stderr  => join('', @{$stderr_buf || []}),
+        error   => $error_message,
+    };
+}
+
+sub run_corpus_workload_list {
+    my (%args) = @_;
+    my $test_id = $args{test_id};
+    my $test_file = $corpus_test{$test_id}
+        or die "unknown corpus test id: $test_id";
+
+    local $ENV{FSMGEN_HOSTED_CORPUS_LIST_ONLY} = 1;
+    local $ENV{FSMGEN_HOSTED_CORPUS_SHARD_INDEX};
+    local $ENV{FSMGEN_HOSTED_CORPUS_SHARD_COUNT};
+    delete $ENV{FSMGEN_HOSTED_CORPUS_SHARD_INDEX};
+    delete $ENV{FSMGEN_HOSTED_CORPUS_SHARD_COUNT};
+
+    if (defined($args{index}) || defined($args{count})) {
+        $ENV{FSMGEN_HOSTED_CORPUS_SHARD_INDEX} = $args{index};
+        $ENV{FSMGEN_HOSTED_CORPUS_SHARD_COUNT} = $args{count};
+    }
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => [$^X, $test_file],
     );
     return {
         success => $success,
@@ -278,10 +314,110 @@ subtest 'hosted dynamic shards cover all canonical cases exactly once' => sub {
     is(scalar(@shared_guards), 4, 'the four non-matrix dynamic checks execute only in shard zero');
 };
 
+subtest 'hosted corpus shards cover every selected workload exactly once' => sub {
+    for my $test_id (sort keys %corpus_test) {
+        my $all = run_corpus_workload_list(test_id => $test_id);
+        ok($all->{success}, "unsharded corpus test $test_id workload inventory succeeds");
+        is($all->{stderr}, '', "unsharded corpus test $test_id workload inventory keeps stderr clean");
+        my @all_workloads = grep { length } split /\n/, $all->{stdout};
+        ok(@all_workloads, "corpus test $test_id exposes a non-empty workload inventory");
+        if ($test_id == 301 || $test_id == 303) {
+            unlike(
+                $all->{stdout},
+                qr/(?:^|:)feature\.vial_/m,
+                "corpus test $test_id excludes tool-specific VIAL sources from the main CLI",
+            );
+            my @observation_metadata = grep {
+                /verification_observation_metadata/
+            } @all_workloads;
+            is_deeply(
+                \@observation_metadata,
+                [
+                    'default:feature.isf_verification_observation_metadata',
+                    'strict:feature.isf_verification_observation_metadata',
+                ],
+                "corpus test $test_id selects the canonical duplicate-path ISF owner",
+            );
+        }
+
+        my %seen;
+        for my $index (0 .. 15) {
+            my $dry_run = run_ci(
+                'full',
+                '--no-book',
+                "--hosted-corpus-shard=$test_id:$index/16",
+                '--dry-run',
+            );
+            ok($dry_run->{success}, "hosted corpus test $test_id shard $index/16 dry-run succeeds");
+            is($dry_run->{stderr}, '', "hosted corpus test $test_id shard $index/16 keeps stderr clean");
+            like(
+                $dry_run->{stdout},
+                qr/Perl supported-corpus test \Q$test_id\E entry shard \Q$index\/16\E/,
+                "hosted corpus test $test_id shard $index/16 identifies itself",
+            );
+            like(
+                $dry_run->{stdout},
+                qr/FSMGEN_HOSTED_CORPUS_SHARD_INDEX=\Q$index\E\s+FSMGEN_HOSTED_CORPUS_SHARD_COUNT=16/,
+                "hosted corpus test $test_id shard $index/16 passes exact coordinates",
+            );
+            like(
+                $dry_run->{stdout},
+                qr/\Q$corpus_relpath{$test_id}\E/,
+                "hosted corpus test $test_id shard $index/16 selects its exact file",
+            );
+
+            my $listed = run_corpus_workload_list(
+                test_id => $test_id,
+                index => $index,
+                count => 16,
+            );
+            ok($listed->{success}, "corpus test $test_id shard $index/16 workload inventory succeeds");
+            is($listed->{stderr}, '', "corpus test $test_id shard $index/16 workload inventory keeps stderr clean");
+            my @selected = grep { length } split /\n/, $listed->{stdout};
+            ok(@selected, "corpus test $test_id shard $index/16 selects workloads");
+            for my $workload (@selected) {
+                ok(!$seen{$workload}++, "$test_id:$workload appears in only one hosted corpus shard");
+            }
+        }
+
+        is_deeply(
+            [sort keys %seen],
+            [sort @all_workloads],
+            "sixteen hosted shards cover corpus test $test_id workloads exactly once",
+        );
+    }
+};
+
 subtest 'hosted shard arguments fail closed' => sub {
     my $outside = run_ci('full', '--no-book', '--hosted-file-shard=16/16', '--dry-run');
     ok(!$outside->{success}, 'out-of-range file shard fails');
     like($outside->{stderr}, qr/index 16 is outside shard count 16/, 'out-of-range diagnostic is exact');
+
+    my $corpus_outside = run_ci(
+        'full',
+        '--no-book',
+        '--hosted-corpus-shard=301:16/16',
+        '--dry-run',
+    );
+    ok(!$corpus_outside->{success}, 'out-of-range corpus shard fails');
+    like(
+        $corpus_outside->{stderr},
+        qr/--hosted-corpus-shard 301 index 16 is outside shard count 16/,
+        'out-of-range corpus diagnostic is exact',
+    );
+
+    my $unknown_corpus = run_ci(
+        'full',
+        '--no-book',
+        '--hosted-corpus-shard=999:0/16',
+        '--dry-run',
+    );
+    ok(!$unknown_corpus->{success}, 'unknown corpus test id fails');
+    like(
+        $unknown_corpus->{stderr},
+        qr/requires T:I\/N with T in 296,301,303/,
+        'unknown corpus test diagnostic names the closed test set',
+    );
 
     my $book = run_ci('full', '--hosted-file-shard=0/16', '--dry-run');
     ok(!$book->{success}, 'hosted shard without --no-book fails');
@@ -291,7 +427,7 @@ subtest 'hosted shard arguments fail closed' => sub {
         'full',
         '--no-book',
         '--hosted-file-shard=0/16',
-        '--hosted-dynamic-shard=0/68',
+        '--hosted-corpus-shard=301:0/16',
         '--dry-run',
     );
     ok(!$mixed->{success}, 'mixed hosted shard families fail');
