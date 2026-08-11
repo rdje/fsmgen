@@ -39,11 +39,11 @@ subtest 'adapter parses selected one-subordinate AHB aggregate byte-lane PPIF sh
 
     my $top = $result->{generated_ial0}{files}{'ahb_tb.fsm'};
     like($top, qr/\(\?fsmc:regs ahb_lite_subordinate_byte_lane\)/, 'generated top instantiates the byte-lane subordinate child');
-    like($top, qr/\(interconnect\.HADDR_REGS regs\.HADDR_REGS\)/, 'generated top wires local address into byte-lane subordinate');
+    like($top, qr/\(fabric\.HADDR_REGS regs\.HADDR_REGS\)/, 'generated top wires local address into byte-lane subordinate');
     like($top, qr/\(requester\.HSIZE regs\.HSIZE\)/, 'generated top forwards HSIZE into byte-lane subordinate');
     like($top, qr/\(requester\.HWRITE regs\.HWRITE\)/, 'generated top forwards HWRITE into byte-lane subordinate');
     like($top, qr/\(requester\.HWDATA regs\.HWDATA\)/, 'generated top forwards HWDATA into byte-lane subordinate');
-    like($top, qr/\(regs\.HRESP_REGS interconnect\.HRESP_REGS\)/, 'generated top wires subordinate-owned response into interconnect');
+    like($top, qr/\(regs\.HRESP_REGS fabric\.HRESP_REGS\)/, 'generated top wires subordinate-owned response into interconnect');
 
     my $interconnect_fsm = $result->{generated_ial0}{files}{'ahb_interconnect.fsm'};
     like($interconnect_fsm, qr/\(= \(HADDR_REGS> HADDR\)\)/, 'generated interconnect keeps zero-base local address for byte-lane subordinate');
@@ -101,8 +101,8 @@ subtest 'adapter parses selected two-subordinate AHB aggregate byte-lane PPIF sh
     like($top, qr/\(\?fsmc:control ahb_control_subordinate_byte_lane\)/, 'generated top instantiates control byte-lane subordinate');
     like($top, qr/\(requester\.HSIZE status\.HSIZE\)/, 'generated top forwards HSIZE into status subordinate');
     like($top, qr/\(requester\.HSIZE control\.HSIZE\)/, 'generated top forwards HSIZE into control subordinate');
-    like($top, qr/\(status\.HRESP_STATUS interconnect\.HRESP_STATUS\)/, 'generated top wires status subordinate response into interconnect');
-    like($top, qr/\(control\.HRESP_CONTROL interconnect\.HRESP_CONTROL\)/, 'generated top wires control subordinate response into interconnect');
+    like($top, qr/\(status\.HRESP_STATUS fabric\.HRESP_STATUS\)/, 'generated top wires status subordinate response into interconnect');
+    like($top, qr/\(control\.HRESP_CONTROL fabric\.HRESP_CONTROL\)/, 'generated top wires control subordinate response into interconnect');
 
     my $interconnect_fsm = $result->{generated_ial0}{files}{'ahb_interconnect.fsm'};
     like($interconnect_fsm, qr/\(= \(HADDR_STATUS> HADDR\)\)/, 'generated interconnect emits zero-base status local address');

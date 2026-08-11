@@ -204,11 +204,11 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (refresh the representative MCP example schema fixture)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.12`
-  Status: `pending`
+  Status: `done`
   Goal: `Align aggregate AHB byte-lane wiring assertions with the generated fabric instance name.`
   Acceptance: `Trace the instance rename and require exact fabric-to-subordinate address plus subordinate-to-fabric response wiring across one/two-subordinate and SEQ/non-SEQ sources; pass t1484/t1488 and adjacent aggregate tests without changing generation.`
-  Verification: `Jobs 93788675536 and 93788675610 plus local t1484/t1488 show current ahb_tb.fsm uses fabric.HADDR_* and *.HRESP_* fabric.HRESP_*; the four stale assertions still name the pre-2c9c67499 interconnect instance.`
-  Commit: `pending implementation`
+  Verification: `Jobs 93788675536 and 93788675610 plus the pre-fix local t1484/t1488 show current ahb_tb.fsm uses fabric.HADDR_* and *.HRESP_* fabric.HRESP_*. git log -S"'fabric'" identifies 2c9c67499 as the deliberate HDL-safe interconnect-instance rename; that commit synchronized the base t1478 oracle and mdBook but missed eight duplicated byte-lane assertions: four non-SEQ and four SEQ, spanning one-subordinate local-address/response wiring and two-subordinate status/control responses. All eight now require the exact fabric instance. The focused t1484/t1488 pair passes at Files=2, Tests=8; the adjacent base one/two-subordinate and non-SEQ/SEQ profile-alias band passes at Files=4, Tests=16. Both changed files are syntax-clean and a post-fix census finds no pre-rename interconnect.HADDR/HRESP oracle in either. Production, generated IAL0/HDL, reports, schemas, and public behavior are byte-unchanged. The mdBook and AHB behavior contract already explicitly name the HDL-safe fabric instance, while the SPECFORGE handoff does not duplicate a conflicting internal child label, so no public-document edit is required.`
+  Commit: `this commit (synchronize aggregate AHB fabric wiring assertions)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.13`
   Status: `pending`
@@ -359,6 +359,12 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Hosted job `93788675536` and the pre-fix local t1445 differ at the bounded examples projection because the fixture introduced at `a1cc9414a` still describes its 2026-06-16 first matching composition entry. `git log -S'expected_hdl_patterns' -- perl/FSM/Support/RegressionCorpus.pm` plus line history identifies the catalog evolution: commit `17445d0c2` later inserted the APB composition entry earlier in the catalog with `expected_module_name` and no `expected_hdl_patterns`, so the positional snapshot's stale `expected_hdl_pattern_count` no longer describes the live representative.
 - [x] **ADDRESSED (verified)** — The canonical sorted fixture substitutes exactly `expected_module_name` in its correct sorted position after `expected_lane`; every other projected key, payload/envelope shape, mutation exclusion, ambient-root exclusion, adapter method, and production catalog value is unchanged. The focused schema snapshot passes.
 - [x] **NO REGRESSION** — The adjacent t1441-t1449 read-only MCP band reports `All tests successful` at `Files=9, Tests=27`. The production adapter, public response, schemas, and catalog are byte-unchanged. Existing mdBook text accurately documents catalog-backed example lookup without freezing a positional entry's exact field set, and the SPECFORGE handoff's machine-readable-contract requirement does not duplicate that fixture list, so downstream integration and mdBook remain in lockstep without text changes.
+
+## Acceptance Checklist — `.6.2.2.12` (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Hosted jobs `93788675536`/`93788675610` and the pre-fix local t1484/t1488 show exact `fabric.HADDR_*` and `*.HRESP_* fabric.HRESP_*` generated wiring while eight assertions still name `interconnect`. `git log -S"'fabric'" -- perl/FSM/IAL2/ProtocolIntent/AhbInterconnect.pm` identifies `2c9c67499`: the intentional HDL-safe instance rename updated production, t1478, behavior docs, and mdBook, but omitted the duplicated non-SEQ/SEQ byte-lane aggregate tests.
+- [x] **ADDRESSED (verified)** — All eight stale assertions now require `fabric`: one-subordinate local-address and response wiring plus both two-subordinate response wires in each of t1484 and t1488. A post-fix census finds no `interconnect.HADDR`/`interconnect.HRESP` spelling in those files; production and assertion meaning are otherwise unchanged.
+- [x] **NO REGRESSION** — Focused t1484/t1488 reports `All tests successful` at `Files=2, Tests=8`; adjacent t1478/t1480/t1485/t1489 reports `All tests successful` at `Files=4, Tests=16`; both changed files report `syntax OK`. Existing mdBook and AHB behavior text already name the exact HDL-safe `fabric` instance, and the SPECFORGE handoff carries no conflicting internal child-label promise, so generated behavior and downstream contracts remain lockstep.
 
 ## Acceptance Checklist — `.6.2.1` (enforced)
 
