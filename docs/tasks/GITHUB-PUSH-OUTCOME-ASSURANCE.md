@@ -218,11 +218,11 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (synchronize numeric AHB BUSY residue assertions)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.14`
-  Status: `pending`
+  Status: `done`
   Goal: `Align direct-VHDL reduction-condition assertions with the emitted valid condition syntax.`
   Acceptance: `Require exact scalar and helper-based vector reduction semantics without redundant nested parentheses; retain helper declaration/collision and unsupported-source checks; pass t1543 plus adjacent direct-VHDL tests without changing emission.`
-  Verification: `Job 93788675622 and local t1543 show if (X = '1') then and if (fsmgen_direct_vhdl_reduce_or(X) = '1') then; the implementation slice 2879f22af introduced assertions that incorrectly require double parentheses.`
-  Commit: `pending implementation`
+  Verification: `Job 93788675622 and the pre-fix local t1543 show exact valid conditions if (X = '1') then and if (fsmgen_direct_vhdl_reduce_or(X) = '1') then. git log -S'condition conversion receives declaration context' identifies 2879f22af as the reduction-lowering implementation slice that introduced both the backend behavior and assertions that instead require redundant ((X)) and ((helper(X))) nesting. The two assertions now require the emitted scalar and declaration-aware helper forms exactly. The focused file passes at Files=1, Tests=6; the adjacent direct backend, named-drive reduction, and generator-facade band passes at Files=4, Tests=173. Helper declaration/folding/collision, unsupported operand/source, scalar complement, and foreign-token exclusions remain covered. Production emission, reports, schemas, and artifacts are byte-unchanged. Existing direct-VHDL behavior, scope, and mdBook text already document the live reduction semantics without promising redundant condition parentheses; downstream consumers receive unchanged generated VHDL and no conflicting handoff contract, so no public-document edit is required.`
+  Commit: `this commit (synchronize direct-VHDL condition assertions)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.15`
   Status: `pending`
@@ -371,6 +371,12 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Hosted jobs `93788675536`/`93788675610` and pre-fix local paired tests reject live residue that says `exactly N qualified requester HTRANS BUSY event(s)`. `git log -S'qualified requester HTRANS BUSY' -- perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm` identifies `2f64611ca`: generalized canonical counts 2..16 deliberately replaced per-count word forms with one numeric singular/plural template, synchronized exact-four/generalized oracles and public docs, but omitted exact-one t1513, exact-two t1523/t1525, and exact-three t1531/t1533.
 - [x] **ADDRESSED (verified)** — The five paired assertions now require exact numeric `exactly 1 ... event`, `exactly 2 ... events`, or `exactly 3 ... events` wording and identify their checks as numeric. Counts, child transfer/busy metadata, deferred bounds, parking, CLI/semantic/MCP/artifact, and assertion-enabled runtime checks remain unchanged; a repository-wide census finds no stale word-form residue regex.
 - [x] **NO REGRESSION** — All five affected files report `All tests successful` at `Files=5, Tests=18`; RAM-guarded exact-four and generalized 2..16 coverage reports `All tests successful` at `Files=3, Tests=12`; every changed file reports `syntax OK`. Production reports and generated HDL are byte-unchanged, while the original generalized-count commit already synchronized the public numeric grammar, mdBook, behavior contracts, and downstream-consumed report surface.
+
+## Acceptance Checklist — `.6.2.2.14` (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Hosted job `93788675622` and the pre-fix local t1543 show valid `if (X = '1') then` and `if (fsmgen_direct_vhdl_reduce_or(X) = '1') then` output while two assertions alone require redundant nested parentheses. `git log -S'condition conversion receives declaration context' -- t/1543-direct-vhdl-reduction-expression-readiness.t` identifies `2879f22af` as the implementation slice that introduced both the declaration-aware condition lowering and those mismatched assertions.
+- [x] **ADDRESSED (verified)** — The scalar assertion now requires exactly `if (X = '1') then`; the vector assertion requires exactly `if (fsmgen_direct_vhdl_reduce_or(X) = '1') then`. Helper declaration/folding/collision, unsupported operand and public-source rejection, scalar complement behavior, and foreign-token exclusions remain exact; production is unchanged.
+- [x] **NO REGRESSION** — The focused test reports `All tests successful` at `Files=1, Tests=6`; the adjacent direct-backend, named-drive reduction, and generator-facade suite reports `All tests successful` at `Files=4, Tests=173`; the changed file reports `syntax OK`. Existing mdBook/direct-VHDL behavior text already describes the live semantics, and downstream consumers receive unchanged generated VHDL with no conflicting handoff promise, so code, book, and integration contracts remain lockstep.
 
 ## Acceptance Checklist — `.6.2.1` (enforced)
 

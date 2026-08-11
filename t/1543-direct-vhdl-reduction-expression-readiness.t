@@ -285,7 +285,7 @@ SV
     my $scalar_vhdl = $backend->convert_systemverilog_to_vhdl($scalar_systemverilog);
     like(
         $scalar_vhdl,
-        qr/if \(\(X\)\) = '1' then/,
+        qr/if \(X = '1'\) then/,
         'scalar reduction in a generated condition lowers with declaration context',
     );
     unlike(
@@ -299,7 +299,7 @@ SV
     my $vector_vhdl = $backend->convert_systemverilog_to_vhdl($vector_systemverilog);
     like(
         $vector_vhdl,
-        qr/if \(\(fsmgen_direct_vhdl_reduce_or\(X\)\)\) = '1' then/,
+        qr/if \(fsmgen_direct_vhdl_reduce_or\(X\) = '1'\) then/,
         'vector reduction in a generated condition uses the declaration-aware helper',
     );
     like(
