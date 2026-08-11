@@ -7,14 +7,13 @@ history; this file carries only the current bounded resume state.
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2`; final terminal inventory before repaired-push authorization.
-- current_state: exact push `a28e9adf46b7861ee728703662ad18b64f0325d0` has green Knowledge Map/book workflows.
-  Regression run `31494487181` has 14 failed jobs and three running ordinary shards. Verilator/Yosys,
-  manifest discovery, t40 spelling, ordinary complete-history checkout, and
-  hosted Icarus, APB/CLI/VIAL audits, DTE/MCP assertions, aggregate AHB,
-  direct VHDL, and the dynamic output banks are locally repaired across all 13
-  observed failed-job families; direct actions are immutably Node-24-compatible; consolidated mdBook and downstream/SPECFORGE lockstep is green.
-- next_action: consume the final three terminal shard results, then request fresh push authorization.
+- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.18`; final terminal inventory and ordinary-job runtime-headroom repair before repaired-push authorization.
+- current_state: exact push `a28e9adf46b7861ee728703662ad18b64f0325d0` has green Knowledge Map/book workflows; regression run `31494487181` has 14 failed jobs and three running ordinary shards.
+  All 13 observed failed-job families are locally repaired; direct actions are
+  Node-24-compatible; mdBook and downstream/SPECFORGE lockstep is green. The
+  three running shards are near the 300-minute ceiling despite suppressed
+  external-tool work, so terminal logs must drive a headroom repair before push.
+- next_action: consume the final three terminal shard results, restore ordinary-job runtime headroom, then request fresh push authorization.
 - in_flight_uncommitted: none after this commit.
 - in_flight_background: exact regression run `31494487181`; three ordinary shards remain running and must be consumed.
 - blockers: a new early repair push requires director authorization after fixes.
