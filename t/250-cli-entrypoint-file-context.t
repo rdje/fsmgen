@@ -32,8 +32,7 @@ subtest 'CLI missing-input failures keep requested-source context' => sub {
 subtest 'CLI output-open failures keep source-file and output-file context' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'good_cli_output_context.fsm');
-    my $missing_dir = File::Spec->catdir($tempdir, 'missing', 'nested');
-    my $output_path = File::Spec->catfile($missing_dir, 'good_cli_output_context.sv');
+    my $output_path = File::Spec->catdir($tempdir, 'good_cli_output_context.sv');
 
     write_file(
         $fsm_path,
@@ -53,13 +52,14 @@ subtest 'CLI output-open failures keep source-file and output-file context' => s
 )
 FSM
     );
+    mkdir $output_path or die "Cannot create output-path directory $output_path: $!";
 
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--quiet', '-o', $output_path, $fsm_path],
     );
 
-    ok(!$success, 'CLI rejects unwritable output path');
-    ok(!-e $output_path, 'CLI does not emit output when the output path cannot be opened');
+    ok(!$success, 'CLI rejects a directory as the output-file path');
+    ok(!-f $output_path, 'CLI does not emit a file when the output path cannot be opened');
 
     my $combined_output = join(
         '',

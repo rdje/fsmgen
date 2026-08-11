@@ -176,11 +176,11 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (synchronize the selected-adjacent APB diagnostic oracle)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.8`
-  Status: `pending`
+  Status: `done`
   Goal: `Keep the CLI output-open context test valid after repository-local parent-directory creation shipped.`
   Acceptance: `Use a deterministic repository-local target that reaches the output-file open failure after parent preparation; retain source path, output path, underlying diagnostic, and no-script-redie assertions; pass t250 and adjacent CLI context coverage without changing CLI behavior.`
-  Verification: `Job 93788675417 and local t250 use a missing parent as an unwritable target, but PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.2 deliberately creates explicit output parents before opening the file.`
-  Commit: `pending implementation`
+  Verification: `Job 93788675417 and the pre-fix local t250 use a missing parent as an unwritable target, but git log -S identifies 017153eac as the deliberate introduction of explicit repository-local output-parent creation before open. The fixture now creates its output path itself as a directory: parent preparation succeeds, open '>' deterministically reaches the real output-file error branch, and !-f distinguishes the absent generated file from the retained directory fixture. t250 passes at Files=1, Tests=2; the adjacent source/child/extension diagnostic and project-local artifact-placement band passes at Files=11, Tests=28. bin/fsmgen is byte-unchanged. The mdBook already states that FSMGen creates missing repository-local output parents, and the ISF downstream handoff already uses repository-local output paths, so public behavior and integration contracts require no text change.`
+  Commit: `this commit (restore the output-open failure fixture after parent preparation)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.9`
   Status: `pending`
@@ -335,6 +335,12 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Hosted job `93788675417` and local t1471 reject six malformed selected-adjacent sources correctly but fail their diagnostic assertions because one shared regex ends at the older two-register families. `git log -S'selected setup-admission adjacent policy supports only' --oneline --all -- perl t` traces that oracle through `.607/.622/.625/.628/.631`, while later production expansions such as `4457eb5cb` and `192b50784` added generalized and status/control families without synchronizing this shared test line.
 - [x] **ADDRESSED (verified)** — t1471's single `$selected_adjacent_error` now requires the production diagnostic's complete ordered 32-bit/data16 no-policy, generalized, protected-generalized, and protection status/control family list. Literal `reg0..regN` dots and `status/control` slashes are escaped; no wildcard or alternate diagnostic is accepted, and production is unchanged.
 - [x] **NO REGRESSION** — The focused completer plus adjacent APB profile-alias/composition band reports `All tests successful` at `Files=3, Tests=147` in 1,023 wall-clock seconds. The staged doctrine driver reports `[doctrine] all doctrine checks passed`. The change is test-only; CLI/schema, generated IAL1/IAL0/HDL, mdBook, and downstream public integration contracts remain unchanged and already describe the live families.
+
+## Acceptance Checklist — `.6.2.2.8` (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Hosted job `93788675417` and the pre-fix local t250 succeed unexpectedly because a missing output parent no longer represents an unwritable target. `git log -S'ensure_project_output_directory' --oneline --all -- bin/fsmgen t/250-cli-entrypoint-file-context.t` identifies `017153eac`: `bin/fsmgen` now deliberately prepares the repository-local parent immediately before opening the output file, while the older fixture still relies on missing-parent failure.
+- [x] **ADDRESSED (verified)** — t250 now creates the output path itself as a directory, allowing parent preparation to succeed before `open '>'` deterministically fails at the intended branch. The same source path, output path, underlying `Cannot write to output file:` diagnostic, and no-script-redie assertions remain exact; `!-f` correctly proves that no generated file exists while preserving the directory fixture. Production is unchanged.
+- [x] **NO REGRESSION** — The focused t250 run reports `All tests successful` at `Files=1, Tests=2`; the adjacent source/child/extension diagnostic plus project-local artifact-placement band reports `All tests successful` at `Files=11, Tests=28`. The staged doctrine driver reports `[doctrine] all doctrine checks passed`. Existing mdBook text already specifies missing repository-local output-parent creation, the ISF downstream handoff already selects repository-local output paths, and CLI/schema/HDL/public integration behavior is unchanged.
 
 ## Acceptance Checklist — `.6.2.1` (enforced)
 
