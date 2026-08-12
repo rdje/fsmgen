@@ -3,10 +3,10 @@
 ## Metadata
 
 - Tree ID: `GITHUB-PUSH-OUTCOME-ASSURANCE`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra/continuity / hosted-CI assurance`
 - Created: `2026-08-11`
-- Last updated: `2026-08-11`
+- Last updated: `2026-08-12`
 - Owner: repo-local workflow
 - Selected by: director request to audit the prior push and every future result
 
@@ -44,7 +44,7 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
 ## Task Tree
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE`
-  Status: `active`
+  Status: `done`
   Goal: `Recover the last pushed SHA's hosted-CI failures and make terminal GitHub result verification mandatory after every future push.`
   Children: `GITHUB-PUSH-OUTCOME-ASSURANCE.1, GITHUB-PUSH-OUTCOME-ASSURANCE.2, GITHUB-PUSH-OUTCOME-ASSURANCE.3, GITHUB-PUSH-OUTCOME-ASSURANCE.4, GITHUB-PUSH-OUTCOME-ASSURANCE.5, GITHUB-PUSH-OUTCOME-ASSURANCE.6, GITHUB-PUSH-OUTCOME-ASSURANCE.7`
 
@@ -84,7 +84,7 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (accept equivalent RLAST net spelling)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6`
-  Status: `active`
+  Status: `done`
   Goal: `Make the full Perl regression produce conclusive GitHub results within the hosted job limit without reducing coverage.`
   Children: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.1, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2`
 
@@ -96,11 +96,11 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (closed hosted file/case regression partition)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2`
-  Status: `active`
+  Status: `done`
   Goal: `Prove downstream-consumer contracts are lockstep with the hosted-CI repairs, then qualify the new partition on GitHub for the exact next pushed revision and remediate every non-success.`
   Acceptance: `Before any push, inventory and audit the canonical integration/handoff contracts used by downstream consumers such as SPECFORGE against every repair since the last pushed SHA; synchronize any real schema, API, artifact, report, diagnostic, capability, support, or compatibility drift with the codebase and mdBook, or record exact evidence that the repairs are private/test/workflow-only and the public contracts remain accurate. Then, at the next cadence-authorized or director-authorized push, prove the exact remote SHA; wait for doctrine, book, all 16 ordinary-file, 3 dedicated, 48 supported-corpus, 68 dynamic-case, and aggregate jobs to become terminal; record every URL and conclusion; repair and requalify any failure, timeout, cancellation, skipped required job, missing shard, or aggregate mismatch before marking .6 done.`
-  Verification: `Director clarification on 2026-08-11 defines handoff/contract as the downstream integration surfaces consumers such as SPECFORGE ingest, not merely continuity documents. Child .6.2.1 owns the pre-push contract audit and any required lockstep synchronization; .6.2.2 retains exact hosted qualification. Decision 0062 still forbids an automatic early push below the 200-commit cadence.`
-  Commit: `pending children`
+  Verification: `Director clarification on 2026-08-11 defines handoff/contract as the downstream integration surfaces consumers such as SPECFORGE ingest, not merely continuity documents. Child .6.2.1 completed the pre-push contract audit and repository-relative handoff-command synchronization; independently proposed DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT owns the unchanged source.resolved_path compatibility question. Child .6.2.2 repaired every hosted failure and proves authorized repaired SHA c0d8b668db2527108d1c23c20d184400c51efea6 terminal green across Knowledge Map, Publish mdBook build/deploy, and the complete 138-job regression. Decision 0062 still governs later push cadence.`
+  Commit: `completed children`
   Children: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.1, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.1`
@@ -119,12 +119,12 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Commit: `this commit (transfer provenance policy to independent proposed tree)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify the new hosted partition and exact repaired revision on GitHub.`
   Acceptance: `At the next cadence-authorized or director-authorized push, prove the exact remote SHA; wait for doctrine, book, all 16 ordinary-file, 3 dedicated, 48 supported-corpus, 68 dynamic-case, and aggregate jobs to become terminal; record every URL and conclusion; repair and requalify any failure, timeout, cancellation, skipped required job, missing shard, or aggregate mismatch before marking .6 done.`
-  Verification: `Director-authorized push a51dcdad0a7e752e638abfe3ab414f7f3911889d has exact local/upstream/remote equality. Knowledge Map run 31529600931 is completed/success. Publish mdBook run 31529600916 and regression mdBook job 93906174155 both fail before build because pinned peaceiris/actions-mdbook revision a6f333f62 declares lib/index.js but contains no lib directory; child .19 owns the deterministic setup repair. Corpus jobs 93906175431 and 93906175379 then exposed the original generic and matching alias AHB rows' missing three-child expectations; children .20/.21 own exhaustive metadata/test-contract repair. Terminal child .22 proves regression run 31529600915 has 138/138 terminal jobs: 134 success, those three independent failures, and one dependency aggregate failure; Knowledge Map succeeds, while the Publish mdBook failure and skipped deploy map to .19. Children .1-.18.3 retain the complete repair/evidence map for prior run 31494487181.`
-  Commit: `pending`
-  Children: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.1, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.2, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.3, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.4, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.5, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.6, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.7, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.8, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.9, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.10, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.11, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.12, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.13, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.14, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.15, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.16, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.17, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.18, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.19, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.20, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.21, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.22`
+  Verification: `Director-authorized push a51dcdad0a7e752e638abfe3ab414f7f3911889d has exact local/upstream/remote equality. Knowledge Map run 31529600931 is completed/success. Publish mdBook run 31529600916 and regression mdBook job 93906174155 both fail before build because pinned peaceiris/actions-mdbook revision a6f333f62 declares lib/index.js but contains no lib directory; child .19 owns the deterministic setup repair. Corpus jobs 93906175431 and 93906175379 then exposed the original generic and matching alias AHB rows' missing three-child expectations; children .20/.21 own exhaustive metadata/test-contract repair. Terminal child .22 proves regression run 31529600915 has 138/138 terminal jobs: 134 success, those three independent failures, and one dependency aggregate failure; Knowledge Map succeeds, while the Publish mdBook failure and skipped deploy map to .19. Children .1-.18.3 retain the complete repair/evidence map for prior run 31494487181. Child .23 proves the authorized repaired push at c0d8b668db2527108d1c23c20d184400c51efea6 is terminal green across every exact-SHA workflow and all 138 required regression jobs; task-tree, Knowledge Map, bounded-Memory, locality, diff, acceptance, and full staged doctrine gates pass for the durable closure.`
+  Commit: `completed children`
+  Children: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.1, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.2, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.3, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.4, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.5, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.6, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.7, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.8, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.9, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.10, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.11, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.12, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.13, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.14, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.15, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.16, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.17, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.18, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.19, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.20, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.21, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.22, GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.23`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.1`
   Status: `done`
@@ -301,6 +301,13 @@ incomplete 2026-08-10 signoff before the next normal-cadence push.
   Acceptance: `Record the complete terminal workflow and 138-job regression inventory for pushed SHA a51dcdad0a7e752e638abfe3ab414f7f3911889d; prove the final dedicated outlier passed; distinguish the three independent failures from the dependent aggregate failure; map each root cause to completed local repair .19, .20, or .21; reconfirm mdBook and downstream/SPECFORGE lockstep; update the task index and bounded resume pointer; pass task-tree, Knowledge Map, locality, and doctrine gates; commit without pushing and request fresh authorization for the repair push.`
   Verification: `All three exact-SHA workflows are terminal. Knowledge Map run 31529600931 is completed/success with job 93906174297. Publish mdBook run 31529600916 is completed/failure: build job 93906174788 has the .19 broken-action root cause and dependent deploy job 93906299739 is skipped. Regression run 31529600915 is completed/failure with the exact 138-job contract: doctrine 1, book 1, ordinary files 16, dedicated 3, corpus 48, dynamic 68, aggregate 1; 134 succeed, 4 fail, and none are skipped, cancelled, or otherwise incomplete. Independent failures are book job 93906174155 mapped to .19/8dcab8c99, t303 shard 14 job 93906175431 mapped to .20/e746fc4ba, and t303 shard 10 job 93906175379 mapped to .21/2dcd29942. Final dedicated job 93906174333 passes after 3h43m56s. Aggregate job 93960902638 has no independent defect: its log reports doctrines=success, book=failure, perl-files=success, perl-dedicated=success, perl-corpus=failure, perl-dynamic=success. The exact three-commit repair range changes workflow/install/test/corpus evidence only; it contains no bin/fsmgen, product implementation, docs/book, docs/isf-spec, downstream handoff, or SPECFORGE response path. Existing .19-.21 qualification proves official mdBook 0.5.4, all 53 chapters, 88-file build cleanup, downstream Files=7/Tests=51, capability/support Files=2/Tests=59, retained ISF 3/11, Knowledge Map, locality, and doctrines. No public contract drift exists; a fresh authorization is required before pushing the repaired HEAD.`
   Commit: `this commit (close terminal pushed-SHA failure inventory)`
+
+- ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.23`
+  Status: `done`
+  Goal: `Record terminal green qualification of the exact repaired push and close the hosted-CI repair frontier.`
+  Acceptance: `Prove local, upstream, and remote equality for repaired SHA c0d8b668db2527108d1c23c20d184400c51efea6; record every expected exact-SHA workflow URL and terminal success; prove the regression has exactly 138 successful jobs in the required 1 doctrine, 1 book, 16 ordinary, 3 dedicated, 48 corpus, 68 dynamic, and 1 aggregate families with zero failed, skipped, cancelled, missing, or otherwise incomplete jobs; explicitly prove repaired mdBook and t303 shard 10/16 and 14/16 jobs green; reconfirm no mdBook or downstream/SPECFORGE contract drift; update the task index and bounded resume pointer; pass task-tree, Knowledge Map, locality, and doctrine gates; commit without an unauthorized follow-up push.`
+  Verification: `Local HEAD, configured upstream, and origin/main all resolve exactly to c0d8b668db2527108d1c23c20d184400c51efea6. The exact push query returns only the three expected workflows, all completed/success at that SHA: knowledge-map-gate run 31571508694 (https://github.com/rdje/fsmgen/actions/runs/31571508694) has 1/1 successful job; Publish mdBook run 31571508795 (https://github.com/rdje/fsmgen/actions/runs/31571508795) has 2/2 successful jobs including build and deploy; Perl FSM Regression run 31571508709 (https://github.com/rdje/fsmgen/actions/runs/31571508709) has 138/138 successful jobs. The regression family inventory is exact: doctrine 1, mdBook 1, ordinary files 16, dedicated 3, corpus 48, dynamic 68, aggregate 1; there are zero failed, skipped, cancelled, missing, nonterminal, or other jobs. Repaired regression mdBook job 94034312605 succeeds; repaired t303 shard-10 job 94034313312 succeeds; repaired t303 shard-14 job 94034313372 succeeds; longest dedicated job 94034312719 succeeds; aggregate job 94079738211 succeeds. The repair changes were already classified and qualified in .19-.22: public product output, mdBook content, downstream ISF handoff, and SPECFORGE integration contracts remain lockstep and unchanged, while both hosted mdBook owners prove the checksummed official tool path. Knowledge Map remains unchanged at 1,109 facts/5,769 unique questions/5,935 occurrences/121 shards; the first doctrine attempt correctly rejected redundant one-off card growth at the owned transition allowance, that duplicate was removed, and query parity, task-tree integrity, bounded Memory at 44 lines, project-data locality, diff hygiene, staged acceptance, and full doctrines pass. No generated or background artifact remains.`
+  Commit: `this commit (close green repair push)`
 
 - ID: `GITHUB-PUSH-OUTCOME-ASSURANCE.7`
   Status: `done`
@@ -540,6 +547,12 @@ Repair suffixes below are children of `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2`.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Exact terminal GitHub metadata for pushed SHA `a51dcdad0a7e752e638abfe3ab414f7f3911889d` proves only three independent failures: the absent mdBook action entrypoint in jobs `93906174788`/`93906174155`, the original AHB row's missing count in job `93906175431`, and the alias row's missing count in job `93906175379`. Regression aggregate `93960902638` reports only the resulting `book=failure` and `perl-corpus=failure`; it is not a fourth mechanism.
 - [x] **ADDRESSED (verified)** — Completed repairs `.19`/`8dcab8c99`, `.20`/`e746fc4ba`, and `.21`/`2dcd29942` own the three mechanisms. The terminal regression inventory is exact and complete at 138 jobs: 134 success, 4 failure, 0 skipped/cancelled/other; final dedicated job `93906174333` succeeds after 3h43m56s. Knowledge Map run `31529600931` succeeds; Publish mdBook run `31529600916` has only the `.19` build failure and its dependent skipped deploy. No non-success is unowned.
 - [x] **NO REGRESSION** — The three-commit repair range contains no product implementation, mdBook, downstream ISF handoff, or SPECFORGE response path. Retained `.19`–`.21` evidence proves official mdBook 0.5.4 tests all 53 chapters and builds 88 files with exact cleanup; downstream contracts pass `Files=7, Tests=51`; adjacent capability/support passes `Files=2, Tests=59`; retained ISF sources reproduce `3/11`; Knowledge Map, locality, task-tree integrity, and full doctrines pass. Public code, book, and consumer contracts remain lockstep; hosted success is intentionally unclaimed until a freshly authorized repair push is terminal green.
+
+## Acceptance Checklist — `.6.2.2.23` (enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The prior exact-SHA terminal inventory in `.22` proved three independent hosted mechanisms: broken third-party mdBook action setup and missing three-child expectations for the generic and alias AHB t303 rows. Repairs `.19`–`.21` addressed them locally, but the task correctly remained open because no authorized repaired push had yet provided exact hosted proof.
+- [x] **ADDRESSED (verified)** — Local HEAD, configured upstream, and `origin/main` equal `c0d8b668db2527108d1c23c20d184400c51efea6`. Exact-SHA runs `31571508694`, `31571508795`, and `31571508709` are completed/success at 1/1, 2/2, and 138/138 jobs. Regression job `94034312605` proves mdBook setup/build green; jobs `94034313312` and `94034313372` prove both repaired t303 shards green; aggregate `94079738211` succeeds.
+- [x] **NO REGRESSION** — The regression inventory is exactly 1 doctrine + 1 book + 16 ordinary + 3 dedicated + 48 corpus + 68 dynamic + 1 aggregate, all successful with zero failed/skipped/cancelled/nonterminal/other jobs. Publish mdBook build/deploy and Knowledge Map also succeed. `.19`–`.22` prove no public product, mdBook-content, downstream ISF handoff, or SPECFORGE contract drift; this closure changes continuity/task evidence only. Knowledge Map remains 1,109 facts/5,769 questions/5,935 occurrences/121 shards after the containment gate correctly rejects and removes redundant card growth; task-tree integrity, bounded Memory, locality, diff hygiene, staged acceptance, and full doctrines pass.
 
 ## Acceptance Checklist — `.6.2.1` (enforced)
 

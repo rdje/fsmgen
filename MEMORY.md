@@ -6,19 +6,18 @@ See `MEMORY_ARCHITECTURE.md` for the four-layer system. Git preserves prior hist
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2`; `.22` closes the exact pushed-SHA inventory after completed repairs `.19`–`.21`.
-- current_state: pushed SHA `a51dcdad0a7e752e638abfe3ab414f7f3911889d`
-  is fully terminal. Knowledge Map run `31529600931` succeeds. Publish mdBook
-  run `31529600916` fails only on the `.19` broken-action mechanism and skips
-  dependent deploy. Regression run `31529600915` closes at 138 jobs: 134
-  success; three independent repaired failures; and their dependent aggregate
-  failure. Repairs `.19`/`8dcab8c99`, `.20`/`e746fc4ba`, and `.21`/`2dcd29942`
-  are locally qualified; dedicated job `93906174333` succeeds.
-- next_action: obtain fresh authorization, push the repaired current HEAD, prove exact remote equality, and consume every new exact-SHA workflow/job to terminal success.
-- in_flight_uncommitted: none; `.22` is locally qualified and included in the current revision.
-- in_flight_background: none.
-- blockers: none for local repair; a repair push will require authorization under `COMMIT.md`.
-- push_state: remote `a51dcdad0`; all workflows terminal, every failure locally repaired, fresh authorization required before the repair push.
+- active_work_unit: none selected; `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.23` closes the hosted-CI repair tree.
+- current_state: repaired pushed SHA `c0d8b668db2527108d1c23c20d184400c51efea6`
+  has exact local/upstream/remote equality. Knowledge Map run `31571508694`
+  succeeds 1/1; Publish mdBook run `31571508795` succeeds 2/2; regression run
+  `31571508709` succeeds 138/138 with exact family counts 1 doctrine, 1 book,
+  16 ordinary, 3 dedicated, 48 corpus, 68 dynamic, and 1 aggregate. Repaired
+  mdBook job `94034312605` and t303 jobs `94034313312`/`94034313372` all pass.
+- next_action: select the next eligible roadmap/task-tree PNT leaf; after every future push, apply COMMIT.md exact-SHA terminal qualification before declaring success.
+- in_flight_uncommitted: none; `.23` terminal evidence and closure are included in the current revision.
+- in_flight_background: none; the exact hosted run is terminal.
+- blockers: none.
+- push_state: remote `c0d8b668d`; all three expected exact-SHA workflows and all required jobs are terminal success. The local closure commit follows normal cadence and must not be pushed early without authorization.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not synthesis-bounded and target methodology stays compiler-private.
