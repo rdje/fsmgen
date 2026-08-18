@@ -450,8 +450,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement the selected canonical execution-graph generator and exact plan/replay oracles.`
   Acceptance: `Implement only after .17.2.4.1 commits cleanly; construct every reachable execution_graph_v1 axis through ordinary VIAL parsing, canonical bridge production, and the shipped binder; prove the selected exact or earliest-cap outcomes, structural topology and logical-time invariants, generated/replayed decision equality, immutable byte-equal reports and plan hashes, hostile-input rejection, deterministic reruns, and exact repository-local staging cleanup with default and RAM-guarded qualification tests plus synchronized user documentation.`
-  Verification: `ArchitectureScaleExecutionGraph now owns binding, topology, fiber, type, map, the complete 8,192-/262,144-/1,000,000-/1,000,001-attempt random ladder, the one-/four-/sixteen-MiB/over-limit plan ladder, the 512-/4,096-/4,097-scenario ladder, and the 8,192-operations-per-scenario qualification. The unchanged public binder concentrates 8,192 genuine drive-phase resets in one scenario_00000000 from a 115,716-byte generated source, holding selected scenarios, root fibers, and simultaneously live fibers at one while producing 8,209 uniquely mapped operations and a 2,955,783-byte plan below the independent 16-MiB cap. Exact source/SemanticIR/bridge/workload/plan identities, topology, deterministic reruns, mutation rejection, unowned-level closure, and public capability isolation are frozen. Focused t1619 passes at 1 file/4 tests in 10 seconds; the guarded 22-file/95-test execution impact matrix passes in 814 seconds. The leaf remains active for the remaining operation limit/over-limit, total-operation, total-fiber, live-fiber, binding/type/map higher levels, final qualification, and cleanup slices; no public capability/support, performance, or capacity claim changes.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2: qualify 8192 operations in one scenario`
+  Verification: `ArchitectureScaleExecutionGraph now owns binding, topology, fiber, type, map, the complete 8,192-/262,144-/1,000,000-/1,000,001-attempt random ladder, the one-/four-/sixteen-MiB/over-limit plan ladder, the 512-/4,096-/4,097-scenario ladder, and the complete 256-/8,192-/65,536-/65,537-operations-per-scenario ladder. The operation ladder is the first selected pair whose own nominal execution cap is never the authority. The 918,533-byte limit source parses into one complete 65,536-action scenario, and the unchanged public binder returns only serialized_plan_bytes exceeds the limit 16777216 at /plan; one further 14-byte reset record makes the ordinary parser return only scenario exceeds 65536 expanded actions at /packages/0/fixtures/0/scenarios/0. Neither leaves a partial ExecutionIR or plan, the semantic-owned rejection is now evaluated before any canonical bridge construction, and both evaluations record one VIAL_SCALE_LIMIT_INTERACTION discrepancy routed to .17.4. Exact source/SemanticIR/bridge/workload/plan identities, the exact one-record source delta, deterministic reruns, mutation rejection, unowned-level closure, and public capability isolation are frozen. Focused t1620/t1621 pass at 1 file/4 tests each in 89 and 44 seconds; the guarded 25-file/95-test execution/composition impact matrix passes in 960 seconds. The leaf remains active for the total-operation, total-fiber, live-fiber, binding/type/map higher levels, final qualification, and cleanup slices; the still-unowned direct-IAL1 route will need the same semantic-first stage order when its 1-MiB source cap becomes authoritative. No public capability/support, performance, or capacity claim changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2: close the operation limit ladder`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5`
   Status: `proposed`
@@ -654,10 +654,13 @@ shipped its canonical workloads. Completed `.17.2.4.1` selects decision `0061` a
 execution reachability matrix; active `.17.2.4.2` implements that generator one
 structural level at a time and now owns the binding, topology, fiber, type, and
 map gates, the complete random and serialized-plan ladders, the full scenario
-ladder, and the 8,192-operations-per-scenario qualification. Its remaining
-slices are the operation limit/over-limit pair, the higher total-operation,
-fiber, binding, type, and map levels, final qualification, and cleanup, after
-which proposed `.17.2.5` through `.17.2.7` and measurement `.17.3` follow.
+ladder, and the complete operations-per-scenario ladder. That operation ladder
+is the first selected pair whose own nominal cap never wins: the serialized-plan
+cap rejects 65,536 operations and the semantic expanded-action cap rejects
+65,537, each recorded as a `VIAL_SCALE_LIMIT_INTERACTION` discrepancy routed to
+`.17.4`. Its remaining slices are the higher total-operation, fiber, binding,
+type, and map levels, final qualification, and cleanup, after which proposed
+`.17.2.5` through `.17.2.7` and measurement `.17.3` follow.
 
 ## Decisions
 
@@ -1123,6 +1126,61 @@ which proposed `.17.2.5` through `.17.2.7` and measurement `.17.3` follow.
 | `2026-08-11` | `.17.2.4.2` one-million random limit/exhaustion | decision-0061 exact limit and adjacent first-unreachable candidates; caller-sealed level admission; ordinary checked-AHB VIAL/bridge/public-binder route; strict replay; exact exhaustion diagnostic and no-partial-output oracle; source/replay mutation negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; candidate `0xdd7997a868500a54` accepts at zero-based attempt 999,999 and candidate `0xce7d67adbe54da82` exhausts at attempt 1,000,000. Accepted generated/replayed plans are exactly 34,297/34,296 bytes with IDs `plan/02b9207cd9392ba8b0d9e52afe9912f026fc00412ace076ff0fc30a32868b614`/`plan/90660802ee2bbbebdad84f79f66e1f5b6102befdb45de2f4c36f9a0d7f359f90`; the adjacent failure returns only exact `VIAL_RANDOM_EXHAUSTED` and no partial ExecutionIR/plan. Focused t1614 passes at Files=1/Tests=4 in 252 seconds, t1615 at Files=1/Tests=4 in 251 seconds, compatibility t1608/t1613 at Files=2/Tests=8 in 71 seconds, and the uninterrupted guarded impact matrix at Files=18/Tests=79 in 784 seconds. No public binder, capability/support, performance, or capacity claim changes. |
 | `2026-08-11` | `.17.2.4.2` scenario qualification/limit/over-limit ladder | decision-0061 exact 512/4,096/4,097 scenarios; caller-sealed level admission; ordinary checked-AHB VIAL/bridge/public-binder route; one real reset/root fiber per scenario; exact source/workload/SemanticIR/bridge/plan identities and topology; stable first-excess diagnostic/no partial output; mutation/missing-source negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; qualification accepts 512 scenarios/operations/fibers, one live fiber, 529 maps, and a 496,709-byte plan with ID `plan/22aedcf295c44c0a1b411b557cb12c9e5476e19077e57e7efe60ec4d7dc1ebe7`. The exact limit accepts 4,096 scenarios/operations/fibers, one live fiber, 4,113 maps, and a 3,779,103-byte plan with ID `plan/036742cfb80ab0f04cf7a7c8d9be1de833f310f5fde98ca3be9e47d331294cfc`. The adjacent 4,097 source returns only `VIAL_EXECUTION_LIMIT_ERROR`, phase `limit`, message `selected_scenarios exceeds the limit 4096`, semantic path `/scenario_ids`, with no partial IR/plan. Focused t1616-t1618 passes at Files=3/Tests=12 in 20 seconds; the guarded impact matrix passes at Files=21/Tests=91 in 815 seconds. No public binder, capability/support, performance, or capacity claim changes. |
 | `2026-08-19` | `.17.2.4.2` 8,192-operations-per-scenario qualification | decision-0061 exact 8,192-operation single-scenario level; caller-sealed level admission; ordinary checked-AHB VIAL/bridge/public-binder route; operation-depth versus scenario/fiber isolation; unique global operation source-map closure; exact source/workload/SemanticIR/bridge/plan identities; sub-cap plan bytes; mutation/missing-source/unowned-level negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; the 115,716-byte generated source authors one `scenario_00000000` with 8,192 genuine resets and no random decision. The unchanged public binder returns 8,192 total operations, one selected scenario, one root fiber, one simultaneously live fiber, 8,209 source maps, 22 bindings, seven types, and a 2,955,783-byte plan with ID `plan/4c6733ea702479b4c603761d333d491f7a427e9eac24dc37238331aeb624f990`. Every `/operation_graph/operations/N` path occurs once and resolves to its own `/packages/0/fixtures/0/scenarios/0/actions/N` authored action. Focused t1619 passes at Files=1/Tests=4 in 10 seconds; the guarded impact matrix passes at Files=22/Tests=95 in 814 seconds. The unimplemented 65,536/65,537 operation levels still fail closed. No public binder, capability/support, performance, or capacity claim changes. |
+| `2026-08-19` | `.17.2.4.2` operation limit/over-limit ladder | decision-0061 exact 65,536/65,537 operation levels; caller-sealed level admission; ordinary checked-AHB VIAL/bridge/public-binder route; semantic-before-bridge stage order; exact source/workload identities and one-record source delta; stable authoritative diagnostics and no partial output; recorded limit-interaction discrepancies; mutation/missing-source/unowned-level negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; the 918,533-byte limit source parses into one complete 65,536-action scenario with the frozen `fb82ce2c…` SemanticIR and unchanged 508,968-byte AHB bridge, and the unchanged public binder returns only `VIAL_EXECUTION_LIMIT_ERROR`, phase `limit`, message `serialized_plan_bytes exceeds the limit 16777216`, at `/plan`. Adding exactly one further 14-byte ` (reset bus 1)` record makes the ordinary parser reject first with `VIAL_LIMIT_ERROR`, message `scenario exceeds 65536 expanded actions`, at `/packages/0/fixtures/0/scenarios/0`, and no bridge is built behind it. Both evaluations report `expected_rejection`, empty metrics, and one `VIAL_SCALE_LIMIT_INTERACTION` discrepancy routed to `.17.4`. Focused t1620 passes at Files=1/Tests=4 in 89 seconds and t1621 at Files=1/Tests=4 in 44 seconds; the guarded impact matrix passes at Files=25/Tests=95 in 960 seconds. No public binder, capability/support, performance, or capacity claim changes. |
+
+## Acceptance Checklist (enforced) — `.17.2.4.2` operation limit/over-limit ladder
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S"axis eq 'operations_per_scenario'"
+  --oneline -- perl/FSM/VIAL/ArchitectureScaleExecutionGraph.pm` returns only
+  topology commit `0f9d27611` and qualification commit `22387b468`, whose
+  caller-sealed constructor admitted `gate_candidate_v1` and
+  `qualification_candidate_v1` alone, so both higher levels raised
+  `execution-graph gate slice does not own the requested shape`. A RAM-guarded
+  probe then proved the exact authorities decision `0061` selects: 65,536
+  operations parse cleanly and `FSM::VIAL::ExecutionBuilder->build` returns
+  only `serialized_plan_bytes exceeds the limit 16777216` at `/plan`, while
+  `FSM::VIAL::Parser->check_source` rejects 65,537 first with `scenario exceeds
+  65536 expanded actions` at `/packages/0/fixtures/0/scenarios/0`. Because that
+  second authority is the semantic stage, `_canonical_ahb_inputs` was the other
+  locus: it built the canonical bridge before parsing, so a semantic rejection
+  would have surfaced from behind a later stage, and its `parse_source` entry
+  dies with a formatted string instead of returning a structured diagnostic.
+- [x] **ADDRESSED (verified)** — the constructor now admits `limit_v1` and
+  `over_limit_v1` for that axis; the AHB route parses the ordinary VIAL source
+  before any bridge construction and returns the parser's own structured
+  diagnostic; and the selected-rejection, expected-diagnostic, and new
+  `VIAL_SCALE_LIMIT_INTERACTION` discrepancy tables are keyed by axis and
+  level. Before: both levels died with the unowned-shape message. After:
+  `prove -Iperl t/1620-vial-architecture-scale-execution-operation-limit.t
+  t/1621-vial-architecture-scale-execution-operation-over-limit.t` reports
+  `All tests successful` and freezes the 918,533-/918,547-byte sources and
+  their exact 14-byte one-record delta, the accepted 65,536-action SemanticIR
+  `fb82ce2c…`, the unchanged `a4565d40…` bridge, both exact authoritative
+  diagnostics, absent partial ExecutionIR/plan, empty metrics, null SemanticIR
+  and bridge identities for the semantic rejection, and one discrepancy per
+  level naming `.17.4`. Mutation, missing checked-AHB source, and the
+  still-unowned `operations_total` limit fail closed.
+- [x] **NO REGRESSION** — all three changed Perl/test paths report `syntax OK`;
+  focused t1620 reports `All tests successful` at `Files=1, Tests=4` in 89
+  seconds and t1621 at `Files=1, Tests=4` in 44 seconds. The uninterrupted
+  RAM-guarded execution/composition impact matrix reports `All tests
+  successful` at `Files=25, Tests=95` in 960 seconds. The extracted new mdBook
+  example runs clean against the live modules in 31 seconds. All 52 mdBook
+  chapters test; the inspected repository-local render contains 88
+  files/18,360 KiB and seven references to the two new authoritative
+  diagnostics and the discrepancy code before exact removal.
+  `knowledge-map: OK` reports 1,109 facts/5,771 questions/5,937
+  occurrences/121 shards and resolves the new question to its canonical card,
+  and `[doctrine] all doctrine checks passed` closes the staged gate. The
+  `docs/knowledge/*.md` rollover-debt surface required compacting superseded
+  card chronology and three duplicated freeze sentences; it now ends at exactly
+  its owned 42,136-line allowance and 315 bytes below its byte allowance, with
+  no exact recorded fact removed.
+  Maintained-reference authority, task-tree integrity (936 nodes), relative
+  paths, live containment (2,980 paths), bounded Memory, diff hygiene, and
+  staged acceptance pass. No parser, SemanticIR, bridge,
+  public binder, backend, downstream contract, capability/support,
+  performance-budget, or capacity behavior changes.
 
 ## Acceptance Checklist (enforced) — `.17.2.4.2` 8,192-operations-per-scenario qualification
 

@@ -202,13 +202,13 @@ subtest 'qualification rejects source mutation and missing authority' => sub {
 
     my $unowned = eval {
         $class->construct({
-            primary_axis => 'operations_per_scenario',
-            level => 'limit_v1',
+            primary_axis => 'operations_total',
+            level => 'qualification_candidate_v1',
             reference_hial_text => $reference_hial,
         });
         1;
     };
-    ok(!$unowned, 'the unimplemented operation limit level stays unowned');
+    ok(!$unowned, 'the unimplemented total-operation level stays unowned');
     like($@, qr/does not own the requested shape/,
         'unowned level rejection names the generator slice boundary');
 };

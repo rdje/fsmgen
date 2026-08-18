@@ -20,7 +20,8 @@ answers:
   - "how does the VIAL execution limit produce an exact sixteen MiB semantic plan?"
   - "how does VIAL reject the first complete execution plan operation above sixteen MiB?"
   - "how does the VIAL execution qualification concentrate 8192 operations in one scenario?"
-date: 2026-08-11
+  - "which cap rejects 65536 and 65537 VIAL operations in one scenario?"
+date: 2026-08-19
 status: current
 tags: [vial, execution-ir, scale, binder, bridge, random, replay, plan, limits]
 evidence: >-
@@ -38,6 +39,7 @@ evidence: >-
   t/1614-vial-architecture-scale-execution-random-limit.t; t/1615-vial-architecture-scale-execution-random-over-limit.t;
   t/1616-vial-architecture-scale-execution-scenario-qualification.t; t/1617-vial-architecture-scale-execution-scenario-limit.t; t/1618-vial-architecture-scale-execution-scenario-over-limit.t;
   t/1619-vial-architecture-scale-execution-operation-qualification.t;
+  t/1620-vial-architecture-scale-execution-operation-limit.t; t/1621-vial-architecture-scale-execution-operation-over-limit.t;
   t/1609-vial-architecture-scale-execution-plan-bytes.t;
   t/1610-vial-architecture-scale-execution-plan-qualification.t;
   t/1611-vial-architecture-scale-execution-plan-limit.t;
@@ -55,6 +57,7 @@ reverify: >-
   t/1614-vial-architecture-scale-execution-random-limit.t t/1615-vial-architecture-scale-execution-random-over-limit.t
   t/1616-vial-architecture-scale-execution-scenario-qualification.t t/1617-vial-architecture-scale-execution-scenario-limit.t t/1618-vial-architecture-scale-execution-scenario-over-limit.t
   t/1619-vial-architecture-scale-execution-operation-qualification.t
+  t/1620-vial-architecture-scale-execution-operation-limit.t t/1621-vial-architecture-scale-execution-operation-over-limit.t
   t/1609-vial-architecture-scale-execution-plan-bytes.t
   t/1610-vial-architecture-scale-execution-plan-qualification.t
   t/1611-vial-architecture-scale-execution-plan-limit.t
@@ -71,16 +74,15 @@ bridge event family owns the 2,048-binding gate through a caller-sealed private
 binder admission. Public `ExecutionBuilder->build`, public planning, backends,
 support accounting, and the decision-`0060` nonclaims remain unchanged.
 
-The first `.17.2.4.2` slice constructs the binding gate from ordinary IAL1 and
-VIAL sources: 2,042 ordinal events plus the six unit/domain/endpoint/probe/
+The binding gate is built from ordinary IAL1 and VIAL sources: 2,042 ordinal events plus the six unit/domain/endpoint/probe/
 transaction/field records produce 2,048 bindings, one type/scenario/operation/
 fiber, 2,047 maps, and 2,656,823 serialized bytes. The private binder admits
 only the exact generator caller and exact qualification protocol metadata and
 labels the capability `qualification_only`/`private_nonportable`; the public
 binder and altered metadata return stable closed errors.
 
-The second slice uses the exact 1,326-byte checked AHB PPIF and the public
-binder for three gate candidates: 32 scenarios × one reset, one scenario × 256
+The exact 1,326-byte checked AHB PPIF and public binder drive three gate
+candidates: 32 scenarios × one reset, one scenario × 256
 resets, and 32 × 32 resets, whose canonical plans are 59,907, 121,163, and
 409,363 bytes with 49, 273, and 1,041 maps. All retain 22 bindings, seven
 types, one root fiber per scenario, and one simultaneously live fiber.
@@ -93,7 +95,7 @@ operation IDs unchanged, so every `/operation_graph/operations/N` path occurs
 exactly once. The corrected plan identity is propagated through byte-locked
 native-UVM, portable-VHDL, and OSVVM galleries and exact GHDL/OSVVM reports.
 
-The third slice implements both gate-level fiber axes. The 128-total-fiber gate
+Both gate-level fiber axes are implemented. The 128-total-fiber gate
 authors five sequential `all` parallels with 31/31/31/31/3 reset-bearing
 children, giving 128 total and 32 live fibers, 132 operations, 149 maps, and a
 79,987-byte plan. The live-width gate authors one depth-two `all` tree with two
@@ -102,8 +104,7 @@ maps, and a 43,811-byte plan. Parent/child closure, joins, successor chains,
 ranks, and phases are frozen; gate-level group width deliberately holds the
 non-primary live count to its own gate value.
 
-The fourth slice implements the 512-type gate through an ordinary non-annotated
-direct-IAL1 actor. Public inputs and VIAL endpoints use every exact unsigned
+The 512-type gate uses an ordinary non-annotated direct-IAL1 actor. Public inputs and VIAL endpoints use every exact unsigned
 four-state width from 1 through 512, so the unchanged binder materializes 512
 distinct shapes, each with one semantic ID, carrier type ID, and drive
 relation. Its 17,901-/63,780-byte HIAL/VIAL sources yield 514 bindings, 514
@@ -113,14 +114,14 @@ IAL1/IAL0 review route. Optional backend probe-name collection now preserves a
 null absent bridge annotation instead of autovivifying `{}`, keeping actor and
 scheduler reports byte-consistent.
 
-The fifth slice implements the 8,192-map gate: the domain, endpoint/probe
+The 8,192-map gate: the domain, endpoint/probe
 relations, six transaction fields, and six events fix 17 maps, and 8,175
 genuine resets complete the total. Every plan path is unique, operation map `N`
 resolves semantic action `N` and one ordered byte span, and the resets form one
 closed successor chain in one root fiber. Its VIAL source is 115,478 bytes, its
 unchanged bridge report 508,968 bytes, and its plan exactly 2,949,646 bytes.
 
-The sixth slice implements the 8,192-attempt gate over one referenced two-state
+The 8,192-attempt gate uses one referenced two-state
 u64 choice spanning the complete unsigned range, an equality constraint on
 deterministic candidate `0x7da2c124f3fb4c11` at zero-based attempt 8,191, and
 one check-phase expectation. Generated and replayed decisions share occurrence,
@@ -129,10 +130,12 @@ differing only in `origin`; their 34,295-/34,294-byte plans hold one scenario,
 operation, occurrence, and root/live fiber, eight types, 22 bindings, and 19
 maps.
 
-Every gate freezes exact source/SemanticIR/bridge/workload/plan identities and
-proves public checked-AHB capability isolation, independent reruns, replay and
-source mutation rejection, missing-source rejection, and unfinished-level
-closure.
+Every gate and ladder freezes exact source/SemanticIR/bridge/workload/plan
+identities, topology, spans, and hostile edges, and proves public checked-AHB
+capability isolation, independent reruns, replay and source mutation rejection,
+missing-source rejection, and unfinished-level closure. None of this
+construction evidence adds a public API, support, performance, or capacity
+claim.
 
 The plan ladder uses genuine reset actions and referenced HREADYOUT coverage,
 never opaque padding. Its 2,974-action gate is exactly 1,048,576 bytes with
@@ -147,11 +150,9 @@ and the 48,850-action limit is exactly 16,777,216 bytes with 48,867 maps and ID
 and SHA-256 `0fcf9649c03cf53745842ed4161d42ced9030df297a30a894b56e9ba3448b98e`.
 One additional complete reset parses normally but returns only
 `VIAL_EXECUTION_LIMIT_ERROR` / `serialized_plan_bytes exceeds the limit
-16777216` at `/plan`, with no partial ExecutionIR or plan. Exact identities,
-topology, spans, hostile edges, and public-capability isolation are frozen.
+16777216` at `/plan`, with no partial ExecutionIR or plan.
 
-These slices close the random ladder on the isolated full-range
-u64 equality route. Candidate `0x00f233516a996304` accepts at attempt 262,143;
+The random ladder closes on the isolated full-range u64 equality route. Candidate `0x00f233516a996304` accepts at attempt 262,143;
 its 34,297/34,296-byte generated/replayed plan IDs are
 `plan/1f01b357206cb9b768172be41b415084b0ee49ef5494131dd50df74d195d185e` and
 `plan/a6d4516c28989dccf67d0989d7a71d8e60cc6315451761947386d86a75123ba7`.
@@ -162,27 +163,33 @@ Replay changes only origin; the graph remains one occurrence/scenario/
 operation/root-live fiber, eight types, 22 bindings, and 19 maps. Candidate
 `0xce7d67adbe54da82` at attempt 1,000,000 returns exact
 `VIAL_RANDOM_EXHAUSTED` from the unchanged public binder with no partial IR or
-plan. Exact identities and hostile edges are frozen without a support,
-performance, or capacity claim.
+plan.
 
-The scenario ladder now accepts 512 scenarios into a 496,709-byte plan and
+The scenario ladder accepts 512 scenarios into a 496,709-byte plan and
 4,096 scenarios into a 3,779,103-byte plan; both contain one real reset and
 root fiber per scenario, one live fiber, and respectively 529/4,113 maps. The
 adjacent 4,097 source parses normally, then the unchanged public binder returns
 only `VIAL_EXECUTION_LIMIT_ERROR`, phase `limit`, message `selected_scenarios
-exceeds the limit 4096`, at `/scenario_ids`, with no partial IR or plan. This
-caller-sealed construction evidence adds no public API, support, performance,
-or capacity claim.
+exceeds the limit 4096`, at `/scenario_ids`, with no partial IR or plan.
 
-The operation-depth qualification then accepts 8,192 resets inside one
+The operation-depth qualification accepts 8,192 resets inside one
 `scenario_00000000` from a 115,716-byte generated source. The unchanged public
 binder keeps the scenario, root-fiber, and simultaneously live counts at one
 while total operations reach 8,192, producing 8,209 maps and a 2,955,783-byte
 plan below the 16-MiB cap. Every operation is a `drive`-phase reset whose
 unique global `/operation_graph/operations/N` path resolves to its own
 `/packages/0/fixtures/0/scenarios/0/actions/N` authored action, and the
-workload makes no random decision. The selected 65,536/65,537 operation levels
-remain unimplemented and still fail closed.
+workload makes no random decision.
+
+Its two higher levels are the first selected pair whose own nominal cap never
+wins. The 918,533-byte 65,536-operation source parses into one complete
+scenario, then the public binder returns only `serialized_plan_bytes exceeds
+the limit 16777216` at `/plan`; one further 14-byte ` (reset bus 1)` record is
+rejected first by the parser with `scenario exceeds 65536 expanded actions` at
+`/packages/0/fixtures/0/scenarios/0`. Neither leaves a partial ExecutionIR or
+plan, the semantic rejection precedes any bridge construction, and each
+evaluation reports `expected_rejection` plus one
+`VIAL_SCALE_LIMIT_INTERACTION` discrepancy routed to `.17.4`.
 
 The nominal execution limits are not all reachable. Scenarios and
 simultaneously live fibers reach their exact 4,096 and 16,384 limits. Operations
@@ -192,9 +199,6 @@ encounter earlier VIAL-source or bridge event/type caps. Each excess workload
 must report the first diagnostic in the canonical semantic → bridge → plan
 order; it may not forge a downstream object to reach a preferred number.
 
-The AHB plan-byte recipes use real reset operations and referenced semantic
-identifiers. The exact one-/four-/sixteen-MiB gate, qualification, limit, and
-first-complete-record rejection are now implemented. These are construction/
-boundary facts only. `.17.2.4.2` remains active for the remaining structural
-levels, final qualification, and cleanup;
-no scale capacity is supported until later measurement and promotion.
+`.17.2.4.2` remains active for the remaining structural levels, final
+qualification, and cleanup; these are construction/boundary facts only, and no
+scale capacity is supported until later measurement and promotion.

@@ -2377,6 +2377,8 @@ carrying the selected qualification count:
 | --- | --- | ---: | --- |
 | gate | 1 × 256 | 273 | 121,163 bytes; accepted |
 | qualification | 1 × 8,192 | 8,209 | 2,955,783 bytes; accepted |
+| limit | 1 × 65,536 | — | rejected by the 16-MiB plan cap |
+| over limit | 1 × 65,537 | — | rejected by the 65,536 expanded-action cap |
 
 The 115,716-byte qualification source authors one `scenario_00000000`
 containing 8,192 genuine one-cycle bus resets. The unchanged public binder
@@ -2386,9 +2388,7 @@ one. Each operation is a `drive`-phase reset that maps from its unique global
 `/operation_graph/operations/<index>` plan path back to its own authored
 `/packages/0/fixtures/0/scenarios/0/actions/<index>` action. The resulting
 2,955,783-byte plan stays below the independent 16-MiB plan cap, and the
-workload introduces no random decision. The selected 65,536-operation limit and
-65,537-operation excess levels remain owned by later slices and still fail
-closed as unimplemented generator shapes.
+workload introduces no random decision.
 
 ```perl
 use FSM::VIAL::ArchitectureScaleExecutionGraph;
@@ -2414,6 +2414,61 @@ die "unexpected operation depth\n"
     unless $evaluation->{metrics}{expanded_operations_per_scenario} == 8_192
         && $evaluation->{metrics}{selected_scenarios} == 1
         && $evaluation->{metrics}{simultaneous_live_fibers} == 1;
+```
+
+The two higher operation levels are the first selected pair whose own nominal
+execution cap is never the authority. Both generate normally, and both are
+rejected — but by different earlier owners, so neither number describes an
+exercised operation limit:
+
+- the 918,533-byte limit source parses into a complete 65,536-action scenario
+  and reaches the unchanged public binder, which returns only
+  `VIAL_EXECUTION_LIMIT_ERROR`, phase `limit`, message `serialized_plan_bytes
+  exceeds the limit 16777216`, at `/plan`; and
+- the 918,547-byte over-limit source adds exactly one further 14-byte
+  ` (reset bus 1)` record, so the ordinary VIAL parser rejects it first with
+  `VIAL_LIMIT_ERROR`, phase `limit`, message `scenario exceeds 65536 expanded
+  actions`, at `/packages/0/fixtures/0/scenarios/0`.
+
+Neither rejection produces a partial `VIALExecutionIR` or plan. Because the
+semantic stage owns the second rejection, no canonical HIAL bridge is built
+behind it and the evaluation claims no SemanticIR or bridge identity. Each
+evaluation classifies its outcome as `expected_rejection` and records one
+`VIAL_SCALE_LIMIT_INTERACTION` contract discrepancy naming the earlier
+authority, so the nominal 65,536-operation execution cap is never reported as
+proved:
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+open my $fh, '<:raw', 'ppif/ahb_lite_subordinate.ppif'
+    or die "cannot read checked AHB source: $!";
+local $/;
+my $checked_ahb = <$fh>;
+close $fh or die "cannot close checked AHB source: $!";
+
+for my $case (
+    ['limit_v1', 'serialized_plan_bytes exceeds the limit 16777216'],
+    ['over_limit_v1', 'scenario exceeds 65536 expanded actions'],
+) {
+    my ($level, $message) = @{$case};
+    my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+        primary_axis => 'operations_per_scenario',
+        level => $level,
+        reference_hial_text => $checked_ahb,
+    });
+    die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+
+    my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+        construction => $workload,
+    });
+    die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+    die "unexpected operation outcome\n"
+        unless $evaluation->{status} eq 'expected_rejection'
+            && $evaluation->{diagnostics}[0]{message} eq $message
+            && $evaluation->{contract_discrepancies}[0]{code}
+                eq 'VIAL_SCALE_LIMIT_INTERACTION';
+}
 ```
 
 The following slice implements both gate-level fiber axes through the same

@@ -45,6 +45,8 @@ my $RANDOM_OCCURRENCE_ID = join('/',
     $RANDOM_FIXTURE_ID, $RANDOM_SCENARIO_ID, $RANDOM_DECISION_ID, 0,
 );
 my $U64_MAX = '18446744073709551615';
+my $LIMIT_POLICY_REPAIR_OWNER =
+    'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4';
 # These compact stems and descriptive suffixes are referenced semantic names;
 # none is an unreferenced payload or serialized-plan padding field.
 my %PLAN_BYTE_RECIPES = (
@@ -163,7 +165,8 @@ sub construct($class, @args) {
         && defined($level) && ($level eq 'qualification_candidate_v1'
             || $level eq 'limit_v1' || $level eq 'over_limit_v1');
     $owned_level = 1 if defined($axis) && $axis eq 'operations_per_scenario'
-        && defined($level) && $level eq 'qualification_candidate_v1';
+        && defined($level) && ($level eq 'qualification_candidate_v1'
+            || $level eq 'limit_v1' || $level eq 'over_limit_v1');
     confess "execution-graph gate slice does not own the requested shape\n"
         unless defined($axis) && $owned_axis{$axis} && $owned_level;
     my $axis_contract = FSM::VIAL::ArchitectureScaleWorkload->catalog
@@ -386,6 +389,12 @@ sub _canonical_inputs($raw) {
 }
 
 sub _canonical_ahb_inputs($construction, $hial, $vial) {
+    # Decision 0061 evaluates the ordinary VIAL source and SemanticIR before the
+    # canonical HIAL bridge, so a semantic rejection is reported from its own
+    # authoritative stage instead of from behind later construction.
+    my ($semantic_ir, $semantic_diagnostics) = _canonical_semantic_ir($vial);
+    return {semantic_rejection => $semantic_diagnostics} unless $semantic_ir;
+
     my $ppif = FSM::Adapter::IAL2::PPIF->new()->parse_source(
         $hial->{content}, $hial->{relative_path},
     );
@@ -414,11 +423,6 @@ sub _canonical_ahb_inputs($construction, $hial, $vial) {
     confess "canonical checked-AHB bridge construction failed\n"
         unless $bridge->{ok};
 
-    my $semantic_ir = FSM::VIAL::Parser->parse_source({
-        text => $vial->{content},
-        source_name => $vial->{relative_path},
-        source_catalog => {},
-    });
     my $semantic = $semantic_ir->as_hashref;
     confess "checked-AHB execution gate must contain exactly one package and fixture\n"
         unless @{$semantic->{packages}} == 1
@@ -443,7 +447,29 @@ sub _canonical_ahb_inputs($construction, $hial, $vial) {
     };
 }
 
+sub _canonical_semantic_ir($vial) {
+    my $invocation = {
+        text => $vial->{content},
+        source_name => $vial->{relative_path},
+        source_catalog => {},
+    };
+    my $semantic_ir = eval { FSM::VIAL::Parser->parse_source($invocation) };
+    return ($semantic_ir, undef) if $semantic_ir;
+    # parse_source raises a formatted string; check_source is the ordinary
+    # public entry that returns the same deterministic structured diagnostic.
+    my $checked = FSM::VIAL::Parser->check_source($invocation);
+    confess "ordinary VIAL parsing failed without one structured diagnostic\n"
+        if $checked->{ok} || !@{$checked->{diagnostics} || []};
+    return (undef, $checked->{diagnostics});
+}
+
 sub _build_execution($inputs) {
+    return {
+        ok => 0,
+        diagnostics => _clone($inputs->{semantic_rejection}),
+        execution_ir => undef,
+        plan => undef,
+    } if $inputs->{semantic_rejection};
     return FSM::VIAL::ExecutionBuilder->build_architecture_scale_qualification(
         $inputs->{arguments},
     ) if $inputs->{private_qualification};
@@ -1646,16 +1672,46 @@ sub _rejected_evaluation($construction, $diagnostics) {
         bridge_manifest_sha256 => undef,
         plan_sha256 => undef,
         diagnostics => [@{_clone($diagnostics || [])}, @oracle_errors],
-        contract_discrepancies => [],
+        contract_discrepancies => _selected_discrepancies($spec),
     });
 }
 
 sub _expects_selected_rejection($spec) {
-    return 0 unless ($spec->{level} // '') eq 'over_limit_v1';
-    return 1 if ($spec->{primary_axis} // '') eq 'serialized_plan_bytes';
-    return 1 if ($spec->{primary_axis} // '') eq 'random_attempts';
-    return 1 if ($spec->{primary_axis} // '') eq 'scenarios';
+    my $axis = $spec->{primary_axis} // '';
+    my $level = $spec->{level} // '';
+    # The operation axis is the first selected level pair whose own nominal cap
+    # is never exercised: the serialized-plan cap wins at its limit and the
+    # semantic expanded-action cap wins one operation later.
+    return 1 if $axis eq 'operations_per_scenario'
+        && ($level eq 'limit_v1' || $level eq 'over_limit_v1');
+    return 0 unless $level eq 'over_limit_v1';
+    return 1 if $axis eq 'serialized_plan_bytes';
+    return 1 if $axis eq 'random_attempts';
+    return 1 if $axis eq 'scenarios';
     return 0;
+}
+
+sub _selected_discrepancies($spec) {
+    return [] unless ($spec->{primary_axis} // '') eq 'operations_per_scenario';
+    my $level = $spec->{level} // '';
+    return [_limit_interaction(
+        'the 16777216-byte serialized-plan cap precedes the selected'
+            . ' 65536-operation execution limit',
+    )] if $level eq 'limit_v1';
+    return [_limit_interaction(
+        'the 65536 expanded-action semantic cap precedes the selected'
+            . ' 65537-operation execution boundary',
+    )] if $level eq 'over_limit_v1';
+    return [];
+}
+
+sub _limit_interaction($message) {
+    return {
+        code => 'VIAL_SCALE_LIMIT_INTERACTION',
+        message => $message,
+        path => '/requested_counts/operations_per_scenario',
+        repair_owner => $LIMIT_POLICY_REPAIR_OWNER,
+    };
 }
 
 sub _rejection_oracle_errors($spec, $diagnostics) {
@@ -1677,7 +1733,10 @@ sub _rejection_oracle_errors($spec, $diagnostics) {
 }
 
 sub _expected_rejection_diagnostics($spec) {
-    if (($spec->{primary_axis} // '') eq 'serialized_plan_bytes') {
+    my $axis = $spec->{primary_axis} // '';
+    if ($axis eq 'serialized_plan_bytes'
+        || ($axis eq 'operations_per_scenario'
+            && ($spec->{level} // '') eq 'limit_v1')) {
         return [{
             schema_version => 1,
             severity => 'error',
@@ -1690,7 +1749,7 @@ sub _expected_rejection_diagnostics($spec) {
             related => [],
         }];
     }
-    if (($spec->{primary_axis} // '') eq 'scenarios') {
+    if ($axis eq 'scenarios') {
         return [{
             schema_version => 1,
             severity => 'error',
@@ -1701,6 +1760,26 @@ sub _expected_rejection_diagnostics($spec) {
             source_location => undef,
             bridge_fact_paths => [],
             related => [],
+        }];
+    }
+    if ($axis eq 'operations_per_scenario') {
+        return [{
+            schema_version => 1,
+            severity => 'error',
+            code => 'VIAL_LIMIT_ERROR',
+            phase => 'limit',
+            message => 'scenario exceeds 65536 expanded actions',
+            semantic_path => '/packages/0/fixtures/0/scenarios/0',
+            source_location => {
+                source_name => $VIAL_SOURCE,
+                start_line => 1,
+                start_column => 959,
+                start_byte => 958,
+                end_line => 1,
+                end_column => 918_541,
+                end_byte_exclusive => 918_541,
+            },
+            notes => [],
         }];
     }
     return [{

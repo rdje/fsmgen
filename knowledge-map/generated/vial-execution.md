@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-execution`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **34** uniquely owned question entries.
+> **2** facts · **35** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -36,6 +36,7 @@
 - q="what owns VIAL execution implementation next?" · facts=[vial-execution-ir-v1-contract](../../docs/knowledge/vial-execution-ir-v1-contract.md)
 - q="what random algorithm does VIAL use?" · facts=[vial-execution-ir-v1-contract](../../docs/knowledge/vial-execution-ir-v1-contract.md)
 - q="which VIAL execution scale axes reach their selected limits?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
+- q="which cap rejects 65536 and 65537 VIAL operations in one scenario?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="which cap wins for VIAL operations bindings types and source maps?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="why does VIAL execution scale need a private qualification binder?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="why must VIAL operation source maps use global indexes across scenarios?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
@@ -53,5 +54,5 @@ _VIAL execution v1 is deterministic logical time above backend methodology_
 
 _VIAL execution scale uses canonical routes and reports the earliest real cap_
 
-- **date:** 2026-08-11 · **status:** current
+- **date:** 2026-08-19 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-execution-scale-reachability.md`](../../docs/knowledge/vial-execution-scale-reachability.md)
