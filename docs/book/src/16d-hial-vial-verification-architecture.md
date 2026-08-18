@@ -2370,6 +2370,52 @@ for my $case (
 }
 ```
 
+The operation-depth ladder extends that same construction to a single scenario
+carrying the selected qualification count:
+
+| Level | Scenario × resets | Source maps | Plan result |
+| --- | --- | ---: | --- |
+| gate | 1 × 256 | 273 | 121,163 bytes; accepted |
+| qualification | 1 × 8,192 | 8,209 | 2,955,783 bytes; accepted |
+
+The 115,716-byte qualification source authors one `scenario_00000000`
+containing 8,192 genuine one-cycle bus resets. The unchanged public binder
+concentrates every one of them in that scenario, so operation depth rises while
+the root-fiber count and the maximum simultaneously live width both stay at
+one. Each operation is a `drive`-phase reset that maps from its unique global
+`/operation_graph/operations/<index>` plan path back to its own authored
+`/packages/0/fixtures/0/scenarios/0/actions/<index>` action. The resulting
+2,955,783-byte plan stays below the independent 16-MiB plan cap, and the
+workload introduces no random decision. The selected 65,536-operation limit and
+65,537-operation excess levels remain owned by later slices and still fail
+closed as unimplemented generator shapes.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+open my $fh, '<:raw', 'ppif/ahb_lite_subordinate.ppif'
+    or die "cannot read checked AHB source: $!";
+local $/;
+my $checked_ahb = <$fh>;
+close $fh or die "cannot close checked AHB source: $!";
+
+my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+    primary_axis => 'operations_per_scenario',
+    level => 'qualification_candidate_v1',
+    reference_hial_text => $checked_ahb,
+});
+die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+
+my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+    construction => $workload,
+});
+die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+die "unexpected operation depth\n"
+    unless $evaluation->{metrics}{expanded_operations_per_scenario} == 8_192
+        && $evaluation->{metrics}{selected_scenarios} == 1
+        && $evaluation->{metrics}{simultaneous_live_fibers} == 1;
+```
+
 The following slice implements both gate-level fiber axes through the same
 frozen checked-AHB route and unchanged public builder:
 

@@ -162,6 +162,8 @@ sub construct($class, @args) {
     $owned_level = 1 if defined($axis) && $axis eq 'scenarios'
         && defined($level) && ($level eq 'qualification_candidate_v1'
             || $level eq 'limit_v1' || $level eq 'over_limit_v1');
+    $owned_level = 1 if defined($axis) && $axis eq 'operations_per_scenario'
+        && defined($level) && $level eq 'qualification_candidate_v1';
     confess "execution-graph gate slice does not own the requested shape\n"
         unless defined($axis) && $owned_axis{$axis} && $owned_level;
     my $axis_contract = FSM::VIAL::ArchitectureScaleWorkload->catalog

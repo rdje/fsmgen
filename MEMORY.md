@@ -6,18 +6,18 @@ See `MEMORY_ARCHITECTURE.md` for the four-layer system. Git preserves prior hist
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: none selected; `GITHUB-PUSH-OUTCOME-ASSURANCE.6.2.2.23` closes the hosted-CI repair tree.
-- current_state: repaired pushed SHA `c0d8b668db2527108d1c23c20d184400c51efea6`
-  has exact local/upstream/remote equality. Knowledge Map run `31571508694`
-  succeeds 1/1; Publish mdBook run `31571508795` succeeds 2/2; regression run
-  `31571508709` succeeds 138/138 with exact family counts 1 doctrine, 1 book,
-  16 ordinary, 3 dedicated, 48 corpus, 68 dynamic, and 1 aggregate. Repaired
-  mdBook job `94034312605` and t303 jobs `94034313312`/`94034313372` all pass.
-- next_action: select the next eligible roadmap/task-tree PNT leaf; after every future push, apply COMMIT.md exact-SHA terminal qualification before declaring success.
-- in_flight_uncommitted: none; `.23` terminal evidence and closure are included in the current revision.
-- in_flight_background: none; the exact hosted run is terminal.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`;
+  remaining canonical execution-graph structural levels.
+- current_state: the caller-sealed operation-depth qualification now accepts
+  8,192 resets inside one `scenario_00000000` from a 115,716-byte generated
+  source, producing 8,209 unique global maps and a 2,955,783-byte plan below
+  the 16-MiB cap while scenario, root-fiber, and live counts stay at one.
+- next_action: implement the decision-0061 operation limit/over-limit ladder:
+  16-MiB plan cap at 65,536 and semantic expanded-action cap at 65,537.
+- in_flight_uncommitted: none after this commit.
+- in_flight_background: none.
 - blockers: none.
-- push_state: remote `c0d8b668d`; all three expected exact-SHA workflows and all required jobs are terminal success. The local closure commit follows normal cadence and must not be pushed early without authorization.
+- push_state: decision `0062` 200-commit cadence; derive the live count with `git rev-list --count @{upstream}..HEAD`. Apply COMMIT.md exact-SHA terminal qualification after any authorized push.
 
 ## Durable context
 - Decision `0034`: full power underneath, simpler intent above; VIAL is not synthesis-bounded and target methodology stays compiler-private.
