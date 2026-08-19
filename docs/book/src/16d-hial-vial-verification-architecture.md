@@ -2632,7 +2632,65 @@ for my $axis (qw(fibers_total simultaneously_live_fibers)) {
 }
 ```
 
-The fiber `limit_v1` and `over_limit_v1` levels stay unowned.
+The live-width axis then goes all the way to its own cap, and it is the first
+axis on this leaf that does:
+
+| Level | Live fibers | Plan result |
+| --- | ---: | --- |
+| limit | 16,384 | accepted; 6,553,464-byte plan |
+| over limit | 16,385 | rejected by the 16,384 live-fiber execution limit |
+
+This matters because the number reached is the axis's own. The 6,553,464-byte
+limit plan is well inside the independent 16-MiB bound, so nothing pre-empts the
+`simultaneous_live_fibers` cap of 16,384 declared in the execution contract — the
+workload reaches it, and the plan reports exactly 16,384 total fibers, 16,384
+simultaneously live fibers, 16,384 expanded operations, and 16,401 source maps.
+
+The boundary is one fiber wide and nothing else moves. The over-limit source
+adds exactly one 45-byte nested fiber record, 738,151 bytes become 738,196, and
+the ordinary parser still accepts it: the `SemanticIR` carries all 16,385
+expanded actions and the canonical checked-AHB bridge is built. Only the
+execution stage rejects, with exactly one `VIAL_EXECUTION_LIMIT_ERROR`, phase
+`limit`, message `simultaneous_live_fibers exceeds the limit 16384`, at
+`/operation_graph/maximum_simultaneous_live_fibers`, leaving no partial
+`VIALExecutionIR` and no partial plan. Because no earlier owner intervenes, this
+evaluation records **no** `VIAL_SCALE_LIMIT_INTERACTION` — unlike the operation
+and total-operation ladders, the reported cap needs no caveat.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+open my $fh, '<:raw', 'ppif/ahb_lite_subordinate.ppif'
+    or die "cannot read checked AHB source: $!";
+local $/;
+my $checked_ahb = <$fh>;
+close $fh or die "cannot close checked AHB source: $!";
+
+my %expected = (
+    limit_v1 => ['accepted', 16_384],
+    over_limit_v1 => ['expected_rejection', undef],
+);
+for my $level (sort keys %expected) {
+    my ($status, $live) = @{$expected{$level}};
+    my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+        primary_axis => 'simultaneously_live_fibers',
+        level => $level,
+        reference_hial_text => $checked_ahb,
+    });
+    die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+
+    my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+        construction => $workload,
+    });
+    die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+    die "unexpected live-fiber outcome\n"
+        unless $evaluation->{status} eq $status
+            && (!defined($live)
+                || $evaluation->{metrics}{simultaneous_live_fibers} == $live);
+}
+```
+
+The total-fiber `limit_v1` and `over_limit_v1` levels stay unowned.
 
 The execution-type gate uses a different canonical route because the frozen
 AHB actor exposes only seven distinct normalized types. It generates one

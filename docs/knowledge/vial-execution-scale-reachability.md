@@ -25,6 +25,9 @@ answers:
   - "does the VIAL total-operation axis have a qualified operating point?"
   - "do the VIAL fiber axes reach their qualification levels?"
   - "how does the VIAL fiber oracle check a level it was not written for?"
+  - "which VIAL execution axis actually reaches its own nominal cap?"
+  - "how is the exact 16384 simultaneously-live-fiber limit proved?"
+  - "what rejects 16385 simultaneously live fibers?"
 date: 2026-08-19
 status: current
 tags: [vial, execution-ir, scale, binder, bridge, random, replay, plan, limits]
@@ -46,6 +49,7 @@ evidence: >-
   t/1620-vial-architecture-scale-execution-operation-limit.t; t/1621-vial-architecture-scale-execution-operation-over-limit.t;
   t/1622-vial-architecture-scale-execution-total-operation-qualification.t;
   t/1623-vial-architecture-scale-execution-fiber-qualification.t;
+  t/1624-vial-architecture-scale-execution-live-fiber-limit.t;
   t/1609-vial-architecture-scale-execution-plan-bytes.t;
   t/1610-vial-architecture-scale-execution-plan-qualification.t;
   t/1611-vial-architecture-scale-execution-plan-limit.t;
@@ -226,8 +230,24 @@ successor chain, and parent/child closure. The oracle previously restated the
 gate's literals, so it rejected any level it had not been written for; deriving
 the expectation is what makes a new level as strictly checked as the gate.
 
+The live-width axis reaches its own cap, and it is the first on this leaf that
+does. `simultaneously_live_fibers` `limit_v1` is **accepted** at exactly 16,384
+total fibers, 16,384 simultaneously live, 16,384 expanded operations, and 16,401
+source maps over a 6,553,464-byte plan — well inside the 16-MiB bound, so
+nothing pre-empts the `simultaneous_live_fibers` cap of 16,384 that
+`FSM::Support::VIALExecutionContract` declares and
+`FSM::VIAL::ExecutionBuilder` enforces. The boundary is one fiber wide: the
+over-limit source adds exactly one 45-byte nested fiber record (738,151 ->
+738,196 bytes), the parser still accepts all 16,385 expanded actions and the
+checked-AHB bridge is still built, and only the execution stage rejects with one
+`VIAL_EXECUTION_LIMIT_ERROR`, `simultaneous_live_fibers exceeds the limit 16384`,
+at `/operation_graph/maximum_simultaneous_live_fibers`, leaving no partial IR or
+plan. Because no earlier owner intervenes, that evaluation records **no**
+`VIAL_SCALE_LIMIT_INTERACTION`; the reported cap needs no caveat.
+
 The nominal execution limits are not all reachable. Scenarios and
-simultaneously live fibers reach their exact 4,096 and 16,384 limits. Operations
+simultaneously live fibers reach their exact 4,096 and 16,384 limits, and both
+of those are now proved rather than predicted. Operations
 per scenario, total operations, total fibers, and source maps encounter the
 16-MiB serialized-plan cap at selected higher levels. Binding and type fanout
 encounter earlier VIAL-source or bridge event/type caps. Each excess workload

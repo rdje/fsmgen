@@ -172,6 +172,8 @@ sub construct($class, @args) {
     $owned_level = 1 if defined($axis)
         && ($axis eq 'fibers_total' || $axis eq 'simultaneously_live_fibers')
         && defined($level) && $level eq 'qualification_candidate_v1';
+    $owned_level = 1 if defined($axis) && $axis eq 'simultaneously_live_fibers'
+        && defined($level) && ($level eq 'limit_v1' || $level eq 'over_limit_v1');
     confess "execution-graph gate slice does not own the requested shape\n"
         unless defined($axis) && $owned_axis{$axis} && $owned_level;
     my $axis_contract = FSM::VIAL::ArchitectureScaleWorkload->catalog
@@ -1730,6 +1732,10 @@ sub _expects_selected_rejection($spec) {
     return 1 if $axis eq 'operations_total'
         && $level eq 'qualification_candidate_v1';
     return 0 unless $level eq 'over_limit_v1';
+    # The live-fiber axis is the first whose own nominal execution cap is the
+    # authority: its plan stays well inside the 16-MiB bound, so the 16,384
+    # simultaneous_live_fibers limit is what actually rejects one fiber more.
+    return 1 if $axis eq 'simultaneously_live_fibers';
     return 1 if $axis eq 'serialized_plan_bytes';
     return 1 if $axis eq 'random_attempts';
     return 1 if $axis eq 'scenarios';
@@ -1805,6 +1811,19 @@ sub _expected_rejection_diagnostics($spec) {
             phase => 'limit',
             message => 'serialized_plan_bytes exceeds the limit 16777216',
             semantic_path => '/plan',
+            source_location => undef,
+            bridge_fact_paths => [],
+            related => [],
+        }];
+    }
+    if ($axis eq 'simultaneously_live_fibers') {
+        return [{
+            schema_version => 1,
+            severity => 'error',
+            code => 'VIAL_EXECUTION_LIMIT_ERROR',
+            phase => 'limit',
+            message => 'simultaneous_live_fibers exceeds the limit 16384',
+            semantic_path => '/operation_graph/maximum_simultaneous_live_fibers',
             source_location => undef,
             bridge_fact_paths => [],
             related => [],
