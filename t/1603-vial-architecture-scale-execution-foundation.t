@@ -57,22 +57,46 @@ subtest 'binding-gate construction is closed, canonical, and exact' => sub {
     like($@, qr/unknown key 'extra'/,
         'unknown-key failure names the closed invocation boundary');
 
-    for my $case (
-        [
-            {primary_axis => 'scenarios', level => 'gate_candidate_v1'},
-            qr/checked-AHB reference text is required/,
-        ],
-        [
-            {primary_axis => 'bindings', level => 'qualification_candidate_v1'},
-            qr/execution-graph gate slice does not own the requested shape/,
-        ],
-    ) {
-        my ($bad, $failure) = @$case;
-        my $accepted = eval { $class->construct($bad); 1 };
-        ok(!$accepted, 'unfinished execution shapes cannot enter the foundation slice');
-        like($@, $failure,
-            'unfinished shape rejection names the bounded implementation frontier');
+    my $missing_source = eval {
+        $class->construct({primary_axis => 'scenarios', level => 'gate_candidate_v1'});
+        1;
+    };
+    ok(!$missing_source, 'a checked-AHB axis still requires its frozen source');
+    like($@, qr/checked-AHB reference text is required/,
+        'missing-source rejection names checked-AHB authority');
+
+    # The owned frontier is published by the generator, so this proves the
+    # boundary by deriving it from the catalog instead of restating a list that
+    # goes stale the moment the next level lands.
+    my %owned;
+    $owned{"$_->{primary_axis}/$_->{level}"} = 1
+        for @{$class->owned_shapes};
+    my $axes = FSM::VIAL::ArchitectureScaleWorkload->catalog
+        ->{families}{execution_graph_v1}{axes};
+    my @unowned;
+    for my $axis (sort keys %{$axes}) {
+        for my $level (sort keys %{$axes->{$axis}{levels}}) {
+            push @unowned, [$axis, $level] unless $owned{"$axis/$level"};
+        }
     }
+    cmp_ok(scalar(@unowned), '>', 0,
+        'the caller-sealed generator still has an unowned frontier');
+
+    my (@accepted, %reason);
+    for my $shape (@unowned) {
+        my ($axis, $level) = @{$shape};
+        if (eval { $class->construct({primary_axis => $axis, level => $level}); 1 }) {
+            push @accepted, "$axis/$level";
+            next;
+        }
+        $reason{"$axis/$level"} = $@;
+    }
+    is_deeply(\@accepted, [],
+        'every catalog shape outside the published owned frontier fails closed');
+    is_deeply(
+        [grep { $reason{$_} !~ /does not own the requested shape/ } sort keys %reason],
+        [],
+        'each unowned rejection names the caller-sealed generator boundary');
 
     my $forged = $json->decode($json->encode($first));
     $forged->{inputs}[0]{content} .= ' ';

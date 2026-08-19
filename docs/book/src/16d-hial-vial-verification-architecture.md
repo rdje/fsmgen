@@ -2957,6 +2957,57 @@ resource caps and graceful bounded failure, and which will decide whether the
 execution caps come down to what the stack reaches, the lower layers go up, or
 the layering is documented as deliberate.
 
+The binding ladder is the first axis authored under that rule. Its three levels
+above the gate generate 1,933,429, 3,866,741, and 3,866,800 direct-IAL1 bytes —
+one genuine `(event bridge_event_XXXXXXXX …)` record per binding above the fixed
+six — against a 1,114,112-byte envelope, and the generated source grows linearly
+because an event is a declaration with no repetition form. All three are
+therefore reported the same way:
+
+| Level | Bindings | Direct-IAL1 bytes | Outcome |
+| --- | ---: | ---: | --- |
+| gate | 2,048 | 120,949 | accepted; 2,656,823-byte plan |
+| qualification | 32,768 | 1,933,429 | `envelope_unconstructible` |
+| limit | 65,536 | 3,866,741 | `envelope_unconstructible` |
+| over limit | 65,537 | 3,866,800 | `envelope_unconstructible` |
+
+An `envelope_unconstructible` level returns the workload constructor's own exact
+`VIAL_SCALE_INPUT_ERROR`, `input 0 exceeds the bounded construction envelope`, at
+`/inputs/0/content`; retains no oversized source in its record; claims no
+workload, SemanticIR, bridge, or plan identity; and refuses to build. Its
+evaluation carries both required records — a `VIAL_SCALE_LIMIT_INTERACTION`
+saying in as many words that the decider is a fixture bound and not a product
+limit, and a `VIAL_SCALE_ROUTE_BOUNDARY` giving the measured alternative: the
+canonical route accepts 2,054 bindings and rejects 2,055 with
+`events count 2049 exceeds limit 2048` at `/events`, against the declared
+65,536-binding execution cap the level was selected from. Both route to `.17.4`.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+    primary_axis => 'bindings',
+    level => 'limit_v1',
+});
+my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+    construction => $workload,
+});
+die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+die "unexpected binding outcome\n"
+    unless $evaluation->{status} eq 'envelope_unconstructible'
+        && $evaluation->{observed_outcome} eq 'not_constructed'
+        && $evaluation->{contract_discrepancies}[1]{code}
+            eq 'VIAL_SCALE_ROUTE_BOUNDARY';
+```
+
+The 2,054/2,055 boundary itself builds two real canonical bridges, so it is
+opt-in evidence:
+
+```bash
+FSMGEN_VIAL_SCALE_EXACT=1 scripts/run_with_ram_guard.sh -- \
+  prove -Iperl t/1628-vial-architecture-scale-execution-binding-limits.t
+```
+
 The execution-type gate uses a different canonical route because the frozen
 AHB actor exposes only seven distinct normalized types. It generates one
 ordinary, non-annotated direct-IAL1 public input for each width from 1 through

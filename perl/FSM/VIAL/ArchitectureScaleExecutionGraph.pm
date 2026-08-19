@@ -138,6 +138,34 @@ my @EVALUATION_KEYS = qw(
     bridge_manifest_sha256 plan_sha256 diagnostics contract_discrepancies
 );
 
+# Decision 0072: these levels are owned but can never be constructed. Their
+# generated source crosses the workload's own bounded construction envelope
+# before any product stage runs, and unlike fibers and operations they have no
+# compact authoring form - `repeat` repeats actions, while events, types, and
+# endpoints are declarations with no repetition form in either public grammar.
+# A level like this must never be reported with the envelope alone, because the
+# envelope is a fixture bound; each axis therefore also carries the measured
+# boundary its canonical route really reaches.
+my $CONSTRUCTION_ENVELOPE_BYTES = 1_114_112;
+my %UNCONSTRUCTIBLE = (
+    bindings => {
+        levels => [qw(qualification_candidate_v1 limit_v1 over_limit_v1)],
+        envelope_input_index => 0,
+        declared_cap => 65_536,
+        route_boundary => {
+            accepted => 2_054,
+            rejected => 2_055,
+            cap => 'the 2048-event bridge-manifest cap',
+            path => '/events',
+        },
+    },
+);
+
+sub _unconstructible($axis, $level) {
+    return 0 unless defined($axis) && defined($level) && $UNCONSTRUCTIBLE{$axis};
+    return scalar(grep { $_ eq $level } @{$UNCONSTRUCTIBLE{$axis}{levels}});
+}
+
 sub construct($class, @args) {
     _exact_invocant($class, 'construct');
     confess __PACKAGE__ . "->construct expects one closed hash\n"
@@ -203,7 +231,7 @@ sub construct($class, @args) {
         ];
     }
 
-    return FSM::VIAL::ArchitectureScaleWorkload->construct({
+    my $workload = FSM::VIAL::ArchitectureScaleWorkload->construct({
         family => $FAMILY,
         level => $level,
         primary_axis => $axis,
@@ -211,6 +239,38 @@ sub construct($class, @args) {
         tool_profile => undef,
         inputs => $inputs,
     });
+    return $workload unless _unconstructible($axis, $level);
+
+    # The constructor rejects before it can produce a specification, so the
+    # generator supplies the one the caller asked for. Accepting such a level
+    # would mean the envelope moved, which must fail closed rather than quietly
+    # widen what this leaf claims.
+    confess "an unconstructible execution level was accepted by the workload contract\n"
+        if $workload->{ok};
+    my $expected = _envelope_diagnostic($axis);
+    my $canonical = JSON::PP->new->canonical(1)->allow_nonref(1);
+    confess "an unconstructible execution level did not return its exact envelope diagnostic\n"
+        unless $canonical->encode($workload->{diagnostics})
+            eq $canonical->encode([$expected]);
+    return {
+        %{$workload},
+        specification => {
+            family => $FAMILY,
+            level => $level,
+            primary_axis => $axis,
+            requested_counts => _clone($requested),
+        },
+    };
+}
+
+sub _envelope_diagnostic($axis) {
+    my $index = $UNCONSTRUCTIBLE{$axis}{envelope_input_index};
+    return {
+        code => 'VIAL_SCALE_INPUT_ERROR',
+        severity => 'error',
+        message => "input $index exceeds the bounded construction envelope",
+        path => "/inputs/$index/content",
+    };
 }
 
 # The owned frontier lives here alone. `construct` gates on it and
@@ -218,7 +278,8 @@ sub construct($class, @args) {
 # deriving it from the catalog rather than by restating a list that goes stale
 # the moment the next level lands.
 my %OWNED_LEVELS = (
-    bindings => [qw(gate_candidate_v1)],
+    bindings =>
+        [qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)],
     scenarios => [qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)],
     operations_per_scenario =>
         [qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)],
@@ -258,6 +319,8 @@ sub build($class, @args) {
     my $construction = _validated_construction($args[0]{construction});
     confess "preflight-dominated level is established without materialization\n"
         if _preflight_dominance($construction->{specification});
+    confess "unconstructible level has no admitted source to build\n"
+        if _unconstructible(@{$construction->{specification}}{qw(primary_axis level)});
     my $inputs = _canonical_inputs($construction);
     return _build_execution($inputs);
 }
@@ -270,6 +333,8 @@ sub evaluate($class, @args) {
     my $construction = _validated_construction($args[0]{construction});
     my $spec = $construction->{specification};
     return _preflight_evaluation($construction) if _preflight_dominance($spec);
+    return _unconstructible_evaluation($construction)
+        if _unconstructible(@{$spec}{qw(primary_axis level)});
     my $inputs = _canonical_inputs($construction);
     my $first = _build_execution($inputs);
     return _rejected_evaluation($construction, $first->{diagnostics})
@@ -549,8 +614,11 @@ sub _validated_construction($raw) {
     confess "construction must be one unblessed hash\n"
         unless ref($raw) eq 'HASH' && !blessed($raw);
     my $spec = $raw->{specification};
-    confess "construction must be successful and carry one specification hash\n"
-        unless $raw->{ok} && ref($spec) eq 'HASH' && !blessed($spec);
+    confess "construction must carry one specification hash\n"
+        unless ref($spec) eq 'HASH' && !blessed($spec);
+    confess "construction must be successful\n"
+        unless $raw->{ok}
+            || _unconstructible(@{$spec}{qw(primary_axis level)});
     my $invocation = {
         primary_axis => $spec->{primary_axis},
         level => $spec->{level},
@@ -558,10 +626,13 @@ sub _validated_construction($raw) {
     $invocation->{reference_hial_text} = _role_input($raw, 'hial_source')->{content}
         unless $spec->{primary_axis} eq 'bindings'
             || $spec->{primary_axis} eq 'execution_types';
+    delete $invocation->{reference_hial_text}
+        if _unconstructible(@{$spec}{qw(primary_axis level)})
+            && !defined $invocation->{reference_hial_text};
     my $rebuilt = __PACKAGE__->construct($invocation);
     my $canonical = JSON::PP->new->canonical(1)->allow_nonref(1);
     confess "construction is not canonical\n"
-        unless $rebuilt->{ok}
+        unless ($rebuilt->{ok} || _unconstructible(@{$spec}{qw(primary_axis level)}))
             && $canonical->encode($rebuilt) eq $canonical->encode($raw);
     return $rebuilt;
 }
@@ -1886,6 +1957,28 @@ sub _preflight_dominance($spec) {
     };
 }
 
+sub _unconstructible_evaluation($construction) {
+    my $spec = $construction->{specification};
+    return _evaluation({
+        ok => JSON::PP::true,
+        status => 'envelope_unconstructible',
+        schema => $EVALUATION_SCHEMA,
+        schema_version => 1,
+        workload_identity => undef,
+        family => $FAMILY,
+        level => $spec->{level},
+        primary_axis => $spec->{primary_axis},
+        requested_counts => _clone($spec->{requested_counts}),
+        observed_outcome => 'not_constructed',
+        metrics => {},
+        semantic_ir_sha256 => undef,
+        bridge_manifest_sha256 => undef,
+        plan_sha256 => undef,
+        diagnostics => _clone($construction->{diagnostics}),
+        contract_discrepancies => _selected_discrepancies($spec),
+    });
+}
+
 sub _preflight_evaluation($construction) {
     my $spec = $construction->{specification};
     return _evaluation({
@@ -1986,6 +2079,26 @@ sub _selected_discrepancies($spec) {
         ] if $level eq 'limit_v1';
         return [];
     }
+    if (_unconstructible($axis, $level)) {
+        my $contract = $UNCONSTRUCTIBLE{$axis};
+        my $boundary = $contract->{route_boundary};
+        return [
+            _limit_interaction(
+                $axis,
+                "the $CONSTRUCTION_ENVELOPE_BYTES-byte bounded construction"
+                    . ' envelope precedes every product cap at this level, so its'
+                    . ' earliest decider is a fixture bound and not a product limit',
+            ),
+            _route_boundary(
+                $axis,
+                "the canonical route accepts $boundary->{accepted} and rejects"
+                    . " $boundary->{rejected} at $boundary->{cap}, reported at"
+                    . " $boundary->{path}, against the declared"
+                    . " $contract->{declared_cap} execution cap this level was"
+                    . ' selected from',
+            ),
+        ];
+    }
     if ($axis eq 'execution_types') {
         return [_limit_interaction(
             $axis,
@@ -2013,6 +2126,15 @@ sub _selected_discrepancies($spec) {
 sub _limit_interaction($axis, $message) {
     return {
         code => 'VIAL_SCALE_LIMIT_INTERACTION',
+        message => $message,
+        path => '/requested_counts/' . $axis,
+        repair_owner => $LIMIT_POLICY_REPAIR_OWNER,
+    };
+}
+
+sub _route_boundary($axis, $message) {
+    return {
+        code => 'VIAL_SCALE_ROUTE_BOUNDARY',
         message => $message,
         path => '/requested_counts/' . $axis,
         repair_owner => $LIMIT_POLICY_REPAIR_OWNER,

@@ -11,6 +11,7 @@ use Test::More;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::VIAL::ArchitectureScaleExecutionGraph;
+use FSM::VIAL::ArchitectureScaleWorkload;
 
 my $class = 'FSM::VIAL::ArchitectureScaleExecutionGraph';
 my $json = JSON::PP->new->canonical(1)->utf8(1);
@@ -236,18 +237,38 @@ subtest 'fiber gates reject post-identity mutation and unfinished levels' => sub
     like($@, qr/construction is not canonical/,
         'post-identity rejection names canonical regeneration');
 
-    # Both fiber axes are now owned to their caps, so the nearest unfinished
-    # level moved to the binding fanout.
-    my $unfinished = eval {
-        $class->construct({
-            primary_axis => 'bindings',
-            level => 'qualification_candidate_v1',
-        });
-        1;
-    };
-    ok(!$unfinished, 'the unimplemented binding qualification cannot enter the gate slice');
-    like($@, qr/execution-graph gate slice does not own the requested shape/,
-        'unfinished-level rejection names the bounded frontier');
+    # The owned frontier is published by the generator, so this proves the
+    # boundary by deriving it from the catalog instead of restating a list that
+    # goes stale the moment the next level lands.
+    my %owned;
+    $owned{"$_->{primary_axis}/$_->{level}"} = 1
+        for @{$class->owned_shapes};
+    my $axes = FSM::VIAL::ArchitectureScaleWorkload->catalog
+        ->{families}{execution_graph_v1}{axes};
+    my @unowned;
+    for my $axis (sort keys %{$axes}) {
+        for my $level (sort keys %{$axes->{$axis}{levels}}) {
+            push @unowned, [$axis, $level] unless $owned{"$axis/$level"};
+        }
+    }
+    cmp_ok(scalar(@unowned), '>', 0,
+        'the caller-sealed generator still has an unowned frontier');
+
+    my (@accepted, %reason);
+    for my $shape (@unowned) {
+        my ($axis, $level) = @{$shape};
+        if (eval { $class->construct({primary_axis => $axis, level => $level}); 1 }) {
+            push @accepted, "$axis/$level";
+            next;
+        }
+        $reason{"$axis/$level"} = $@;
+    }
+    is_deeply(\@accepted, [],
+        'every catalog shape outside the published owned frontier fails closed');
+    is_deeply(
+        [grep { $reason{$_} !~ /does not own the requested shape/ } sort keys %reason],
+        [],
+        'each unowned rejection names the caller-sealed generator boundary');
 };
 
 done_testing();
