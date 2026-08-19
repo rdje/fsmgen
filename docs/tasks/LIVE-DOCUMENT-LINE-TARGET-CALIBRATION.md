@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra/continuity`
 - Created: `2026-08-19`
 - Last updated: `2026-08-19`
@@ -84,7 +84,7 @@ quality risk, not merely an inconvenience.
 ## Task Tree
 
 - ID: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION`
-  Status: `active`
+  Status: `done`
   Goal: `Decide and record whether the affected line health targets are calibrated to their surfaces' information role.`
   Children: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.1, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.2, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.4, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.5, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.6`
 
@@ -286,6 +286,14 @@ quality risk, not merely an inconvenience.
 - None.
 
 ## Changelog
+
+- `2026-08-19`: Tree closed. All six leaves are terminal, every governed bound is
+  derived, externally owned, or a recorded divergence, and decisions `0065`-`0071`
+  carry the rules. Two live containment obligations remain and are owned
+  elsewhere: `focused_documents` sits in `warning_debt` at 80.8% of its line
+  target and `ancillary_documents` in `rollover_debt` at 90.8% of `lines_total`,
+  both remediated by `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.12`, which is
+  itself blocked behind the director-deferred `.26`.
 
 - `2026-08-19`: Created after `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.4`
   and `.5` were each forced to work around a line milestone at trivial byte

@@ -48,7 +48,6 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 | --- | --- | --- | --- | --- |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.28` done | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.17.2.4.2` operations-per-scenario ladder complete; higher total-operation/fiber/binding/type/map levels next | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
-| `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION` | `active` | `infra/continuity` | `.3` done with all children; every leaf `.1`-`.6` terminal, tree ready to close | [task](docs/tasks/LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 completeness` | `.844` terminal | [task](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
 
 ## Proposed Task Trees
