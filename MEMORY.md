@@ -13,9 +13,9 @@ See `MEMORY_ARCHITECTURE.md` for the four-layer system. Git preserves prior hist
   rejects only at the 16-MiB plan cap; one further reset record is rejected
   first by the semantic 65,536 expanded-action cap. Both record one
   `VIAL_SCALE_LIMIT_INTERACTION` discrepancy routed to `.17.4`.
-- next_action: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.1` — zero fact-card
-  file/line headroom blocks the mandated Knowledge Map write path. Then resume
-  the decision-0061 total-operation ladder under its preflight rule.
+- next_action: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.2` — route both
+  fact-card growth procedures into TOOLBOX.md. Then resume the decision-0061
+  total-operation ladder under its preflight rule.
 - in_flight_uncommitted: none after this commit.
 - in_flight_background: none.
 - blockers: none.
