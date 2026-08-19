@@ -42,10 +42,16 @@ answers:
   - "why does the VIAL direct-IAL1 route parse its source before building its bridge?"
   - "how many execution types can the VIAL direct-IAL1 route actually reach?"
   - "does the VIAL execution-type axis have a qualified operating point?"
+  - "why are the remaining VIAL binding, type, and source-map levels unowned?"
+  - "how many bindings, execution types, and source maps can a VIAL route reach?"
+  - "why does VIAL not re-level an unreachable execution scale axis?"
+  - "what does an envelope_unconstructible VIAL scale evaluation mean?"
+  - "does the VIAL execution contract declare caps its bridge cannot reach?"
 date: 2026-08-19
 status: current
 tags: [vial, execution-ir, scale, binder, bridge, random, replay, plan, limits]
 evidence: >-
+  docs/decisions/0072-an-unreachable-declared-cap-is-a-result-not-a-level-to-rewrite.md;
   docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md;
   docs/decisions/0060-vial-bridge-scale-uses-a-qualification-only-direct-ial1-profile.md;
   perl/FSM/VIAL/ArchitectureScaleExecutionGraph.pm; perl/FSM/VIAL/ExecutionBuilder.pm;
@@ -285,73 +291,58 @@ purely through cap order: `ExecutionBuilder` counts fibers while building the
 operation graph and measures plan bytes only after serializing, so the
 over-limit level is also the cheaper of the two to run.
 
-The total-operation axis closes last, and it is the first whose two levels are
-proved by different *methods* rather than merely decided by different caps. Its
-literal 32-scenario recipe cannot author either: one record per operation needs
-14,003,075 source bytes at 1,000,000 operations against the 1,048,576-byte
-parser cap, so that form saturates at 74,656 operations, and 1,000,001 is not
-divisible by the fixed 32-scenario fanout at all. Both levels therefore use the
-ordinary `(repeat COUNT action)` form — 32 scenarios each holding one
-`(repeat 31249 (reset bus 1))`, expanding to 31,250 operations apiece — which
-puts 1,000,000 operations into 4,003 source bytes and parses in hundredths of a
-second. The over-limit level is the same recipe with its single remainder
-operation on the trailing scenario, so its scenarios expand to 31,250 actions
-each except one at 31,251.
+The total-operation ladder is the first whose two levels are proved by different
+*methods*. Neither can use the literal 32-scenario recipe — 1,000,000 literal
+resets need 14,003,075 source bytes against a 1,048,576-byte cap, so it saturates
+at 74,656, and 1,000,001 is not divisible by the fixed fanout — so both use the
+ordinary `repeat` form at 4,003 bytes: 32 scenarios of `(repeat 31249 (reset bus
+1))`, 31,250 operations each, with the remainder on the trailing scenario. An
+operation graph costs about 5.0 KiB resident per operation (436/1,442/2,692/3,977
+MiB at 65,536/262,144/524,288/786,432), so `over_limit_v1` is opt-in evidence at
+a measured 11 seconds and 5,216-MiB peak under
+`FSMGEN_VIAL_SCALE_EXACT=1 scripts/run_with_ram_guard.sh --process-max-rss-mb 6144`,
+rejecting at its own cap (`expanded_operations_total exceeds the limit 1000000`,
+`/operation_graph/operations`) with no discrepancy. `limit_v1` is never
+materialized: decision `0061` clause 8 makes it `preflight_dominated` /
+`not_materialized` against the 65,536-operation witness that already serializes
+21,511,563 bytes past the 16-MiB cap, recording one `VIAL_SCALE_LIMIT_INTERACTION`
+and one `VIAL_SCALE_PREFLIGHT_DOMINANCE` routed to `.17.4`; the raw builder
+refuses it rather than starting a roughly 32-GiB run. Everything cheap about both
+levels — literal saturation, compact expansion, source/workload/SemanticIR/bridge
+identities — is still proved by default. Full reasoning: decision `0061` clause 8
+and the mdBook chapter.
 
-Cost, measured rather than assumed, is what separates them. Building the
-operation graph costs about 5.0 KiB of resident state per operation — 436 MiB at
-65,536, 1,442 MiB at 262,144, 2,692 MiB at 524,288, and 3,977 MiB at 786,432 —
-so a million operation records need roughly 4.9 GiB before any cap is consulted,
-and serializing a plan costs several times that again. `over_limit_v1` is
-therefore run for real but only as opt-in evidence: it was measured at 11
-seconds and a 5,216-MiB peak descendant RSS, above the 4,096-MiB default cutoff
-decision `0056` selects, so it needs
-`FSMGEN_VIAL_SCALE_EXACT=1 scripts/run_with_ram_guard.sh --process-max-rss-mb 6144`.
-It is rejected by `expanded_operations_total exceeds the limit 1000000` at
-`/operation_graph/operations` and records **no** discrepancy, because that cap
-is the axis's own.
+The execution-type qualification level is the first whose authority moved because
+the *stage order* was corrected, not because a count changed. Decision `0061`
+clause 4 evaluates VIAL source and SemanticIR before the canonical bridge; the
+direct-IAL1 route did not, so a rejection could be reported from behind a later
+stage. Corrected, the 8,192-type level is rejected by the ordinary parser's own
+4,096-declaration package-section cap — `package section 'types' exceeds 4096
+declarations` at `/packages/0/types` — from a 1,023,293-byte source inside the
+1,048,576-byte source cap, so a declaration cap decides and not a byte cap. No
+bridge is built behind it, the evaluation claims no SemanticIR or bridge identity,
+and it records one `VIAL_SCALE_LIMIT_INTERACTION` routed to `.17.4`.
 
-`limit_v1` is not run at all, by selection rather than omission. Decision `0061`
-clause 8 says that once a smaller canonical witness proves monotonic 16-MiB plan
-dominance, a larger nominal limit must not be materialized merely to exhaust the
-host. The 65,536-operation qualification level is that witness — 21,511,563
-serialized bytes against a 16,777,216-byte cap — and a plan gains bytes with
-every further operation record, so no larger total-operation level can serialize
-smaller; materializing 1,000,000 would spend roughly 32 GiB of resident plan
-state to reach the same answer. The generator reports that level as
-`preflight_dominated` with observed outcome `not_materialized`, claims no
-SemanticIR, bridge, or plan identity for it, and records two separate facts: one
-`VIAL_SCALE_LIMIT_INTERACTION` naming the plan cap that would decide and one
-`VIAL_SCALE_PREFLIGHT_DOMINANCE` naming the witness that already decided it,
-both routed to `.17.4`. The raw builder refuses the level outright rather than
-starting a run the selected resource envelope cannot finish. Everything cheap
-about both levels is still proved by default: the literal saturation point, the
-compact recipe's exact per-scenario expansion, frozen source and workload
-identities, the unchanged checked-AHB bridge identity, and each level's exact
-SemanticIR identity and per-scenario action counts.
-
-The execution-type qualification level is the first whose authority moved
-because the *stage order* was corrected rather than because a count changed.
-Decision `0061` clause 4 declares the order ordinary VIAL source and SemanticIR,
-then canonical HIAL bridge, then execution plan; the checked-AHB route already
-followed it, but the direct-IAL1 route used by the binding and type axes built
-its bridge before parsing its VIAL source, so a rejection could be reported from
-behind a later stage. With the order corrected, the 8,192-type level is rejected
-by the ordinary parser's own 4,096-declaration package-section cap — exactly one
-`VIAL_LIMIT_ERROR`, `package section 'types' exceeds 4096 declarations`, at
-`/packages/0/types` — from a 1,023,293-byte source that is comfortably inside the
-1,048,576-byte parser source cap, so a declaration cap decides and not a byte
-cap. No bridge is built behind it, the evaluation claims neither SemanticIR nor
-bridge identity, and it records one `VIAL_SCALE_LIMIT_INTERACTION` routed to
-`.17.4`.
-
-The route's own boundary is lower still and is measured: building the canonical
-direct-IAL1 bridge over the same renderer accepts exactly **1,043 types** (1,043
-manifest types, 1,045 endpoints, manifest inside the cap) and rejects 1,044 with
-`HIAL_VIAL_BRIDGE_LIMIT_ERROR`, `serialized manifest exceeds 16777216 bytes`, at
-`/`. Neither the 4,096-type nor the 4,096-endpoint bridge cap bounds this axis —
-the serialized-manifest cap does, at roughly twice the 512-type gate — so the
-execution-type axis has **no nominal operating point above its gate**.
+The remaining `bindings`, `execution_types`, and `source_map_records` levels are
+where the selected contract and the measured stack disagree, and decision `0072`
+selects the treatment. They cannot use `repeat`, which repeats actions while
+events, types, and endpoints are declarations with no repetition form in either
+public grammar, so each crosses the workload's 1,114,112-byte construction
+envelope before any product stage (1,933,429 HIAL bytes at 32,768 bindings;
+2,413,815 at 65,536 types; 3,670,808 and 14,000,792 VIAL bytes at 262,144 and
+1,000,000 maps). The caps are unreachable through every shipped route:
+`VIALExecutionContract` declares 65,536 / 65,536 / 1,000,000 while
+`HIALVIALBridgeContract` declares `events` 2,048, `types` 4,096, `endpoints`
+4,096, and a 16,777,216-byte serialized manifest, with the plan carrying its own
+16,777,216-byte cap. Measured route boundaries are **2,054 bindings** (2,055
+rejects at `/events`), **1,043 execution types** (1,044 at `/`), and **46,294
+source-map records** (46,295 at `/plan`) — 32x, 63x, and 22x below the declared
+caps. Decision `0072` rewrites neither the levels nor the envelope and instead
+requires every unreachable level to report its declared cap, its earliest decider,
+and its measured route boundary, under `envelope_unconstructible` /
+`not_constructed` with paired `VIAL_SCALE_LIMIT_INTERACTION` and
+`VIAL_SCALE_ROUTE_BOUNDARY` records; `.17.4` owns the cross-layer cap
+inconsistency. Full reasoning and rejected alternatives: decision `0072`.
 
 The nominal execution limits are not all reachable. Scenarios, simultaneously
 live fibers, and total fibers reach their exact 4,096, 16,384, and 65,536
@@ -369,6 +360,7 @@ million records, so `source_map_records` `limit_v1`/`over_limit_v1` here and the
 owned by `.17.2.5` should expect the same preflight-or-opt-in treatment rather
 than a default gate.
 
-`.17.2.4.2` remains active for the binding and source-map levels, the two
-highest execution-type levels, final qualification, and cleanup; these are construction/boundary facts only, and no
+`.17.2.4.2` is blocked on decision `0072`'s implementation for the binding and
+source-map levels, the two highest execution-type levels, final qualification,
+and cleanup; these are construction/boundary facts only, and no
 scale capacity is supported until later measurement and promotion.

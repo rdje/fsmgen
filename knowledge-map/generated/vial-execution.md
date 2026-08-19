@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-execution`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **69** uniquely owned question entries.
+> **3** facts · **74** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -10,6 +10,7 @@
 - q="do the VIAL fiber axes reach their qualification levels?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="does VIAL check operation count before or after serializing the plan?" · facts=[vial-execution-scale-source-cap-representation](../../docs/knowledge/vial-execution-scale-source-cap-representation.md)
 - q="does VIAL reuse the Perl extension callback mechanism?" · facts=[vial-execution-ir-v1-contract](../../docs/knowledge/vial-execution-ir-v1-contract.md)
+- q="does the VIAL execution contract declare caps its bridge cannot reach?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="does the VIAL execution-type axis have a qualified operating point?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="does the VIAL total-operation axis have a qualified operating point?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="does the public VIAL binder accept the architecture scale bridge capability?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
@@ -35,6 +36,7 @@
 - q="how is the exact 65536 total-fiber limit authored and what rejects it?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="how is the one million random attempt boundary proved?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="how large is a compact repeat VIAL source for 65536 total fibers?" · facts=[vial-execution-scale-source-cap-representation](../../docs/knowledge/vial-execution-scale-source-cap-representation.md)
+- q="how many bindings, execution types, and source maps can a VIAL route reach?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="how many execution types can the VIAL direct-IAL1 route actually reach?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="how many literal VIAL fiber records fit in one source?" · facts=[vial-execution-scale-source-cap-representation](../../docs/knowledge/vial-execution-scale-source-cap-representation.md)
 - q="how many literal reset operations fit in a VIAL source?" · facts=[vial-execution-scale-source-cap-representation](../../docs/knowledge/vial-execution-scale-source-cap-representation.md)
@@ -45,6 +47,7 @@
 - q="serialized_plan_bytes exceeds the limit 16777216" · facts=[vial-execution-scale-source-cap-representation](../../docs/knowledge/vial-execution-scale-source-cap-representation.md)
 - q="source exceeds the 1048576-byte limit" · facts=[vial-execution-scale-source-cap-representation](../../docs/knowledge/vial-execution-scale-source-cap-representation.md)
 - q="what does a preflight_dominated VIAL scale evaluation mean?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
+- q="what does an envelope_unconstructible VIAL scale evaluation mean?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="what is VIALExecutionIR version 1?" · facts=[vial-execution-ir-v1-contract](../../docs/knowledge/vial-execution-ir-v1-contract.md)
 - q="what is a VIAL native extension manifest?" · facts=[vial-execution-ir-v1-contract](../../docs/knowledge/vial-execution-ir-v1-contract.md)
 - q="what is fsmgen.verification_result_manifest.v1?" · facts=[vial-execution-ir-v1-contract](../../docs/knowledge/vial-execution-ir-v1-contract.md)
@@ -65,9 +68,11 @@
 - q="which cap rejects 8192 VIAL execution types?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="which cap wins first for VIAL operations total 1000000?" · facts=[vial-execution-scale-source-cap-representation](../../docs/knowledge/vial-execution-scale-source-cap-representation.md)
 - q="which cap wins for VIAL operations bindings types and source maps?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
+- q="why are the remaining VIAL binding, type, and source-map levels unowned?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="why can a VIAL scale workload not author one million operations literally?" · facts=[vial-execution-scale-source-cap-representation](../../docs/knowledge/vial-execution-scale-source-cap-representation.md)
 - q="why do the VIAL total-fiber limit and over-limit levels have different authorities?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="why does VIAL execution scale need a private qualification binder?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
+- q="why does VIAL not re-level an unreachable execution scale axis?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="why does a VIAL scale level need an explicitly raised RAM-guard cutoff?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="why does the VIAL direct-IAL1 route parse its source before building its bridge?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="why does the VIAL total-fiber ladder switch from literal fibers to repeat?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)

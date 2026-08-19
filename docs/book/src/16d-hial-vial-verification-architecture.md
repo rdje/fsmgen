@@ -2902,8 +2902,60 @@ FSMGEN_VIAL_SCALE_EXACT=1 scripts/run_with_ram_guard.sh -- \
   prove -Iperl t/1627-vial-architecture-scale-execution-type-qualification.t
 ```
 
-The binding and source-map levels above their gates, and the two highest
-execution-type levels, stay unowned.
+The remaining binding, execution-type, and source-map levels are unowned for a
+reason worth stating, because it is the one place where the selected contract
+and the measured stack disagree.
+
+Those levels cannot be authored the way the fiber and operation ladders were
+rescued. `(repeat COUNT action)` repeats *actions*; events, types, and endpoints
+are *declarations*, and neither the public `.vial` nor the public `.isf` grammar
+has a declaration-repetition form. One record per unit is the only shape, so the
+generated source grows linearly and crosses the workload's own 1,114,112-byte
+bounded-construction envelope before any product stage runs — 1,933,429 HIAL
+bytes at 32,768 bindings, 2,413,815 at 65,536 execution types, 3,670,808 VIAL
+bytes at 262,144 source-map records, and 14,000,792 at a million.
+
+The deeper fact is that these caps are unreachable through any shipped route,
+not merely through a bigger source. The execution contract declares `bindings`
+65,536, `execution_types` 65,536, and `source_map_records` 1,000,000, while the
+bridge contract declares `events` 2,048, `types` 4,096, `endpoints` 4,096, and a
+16,777,216-byte serialized manifest, and the plan carries its own 16,777,216-byte
+cap. A lower cap in the layer below always wins. Each axis's genuine boundary is
+measured through the canonical route:
+
+| Axis | Declared execution cap | Measured route boundary | Cap that decides one past it |
+| --- | ---: | ---: | --- |
+| bindings | 65,536 | accepts 2,054 | bridge `events` 2,048, at `/events` |
+| execution types | 65,536 | accepts 1,043 | 16-MiB serialized manifest, at `/` |
+| source-map records | 1,000,000 | accepts 46,294 | 16-MiB serialized plan, at `/plan` |
+
+That is roughly 32x, 63x, and 22x below the declared caps.
+
+[Decision `0072`](../../decisions/0072-an-unreachable-declared-cap-is-a-result-not-a-level-to-rewrite.md)
+selects what to do about it, and the short version is: nothing is rewritten. The
+selected levels stay as they are, because they are the execution contract's own
+declared caps and "no shipped route reaches this cap" is a result worth keeping,
+not a level worth editing. The construction envelope stays as it is, because it
+is only the first obstacle — at 65,536 bindings the VIAL source is already
+1,442,356 bytes against the product's own 1,048,576-byte parser cap — so raising
+it would trade a fixture bound for a product bound and still not reach the
+declared cap.
+
+What changes is what a level *reports*. Every unreachable level must carry three
+numbers rather than one: the declared cap it was selected from, the earliest cap
+that actually decides with its exact diagnostic and path, and the axis's measured
+route boundary. A level whose earliest decider is the construction envelope must
+always carry the third, because the envelope is a property of the fixture and a
+fixture bound must never be read as a product limit. Such a level evaluates to
+`envelope_unconstructible` with observed outcome `not_constructed`, claims no
+stage identity, and records both a `VIAL_SCALE_LIMIT_INTERACTION` and a
+`VIAL_SCALE_ROUTE_BOUNDARY` routed to `.17.4` — the same shape
+`preflight_dominated` already uses for a level that is deliberately not run.
+
+The cap inconsistency itself belongs to `.17.4`, which owns explicit architecture
+resource caps and graceful bounded failure, and which will decide whether the
+execution caps come down to what the stack reaches, the lower layers go up, or
+the layering is documented as deliberate.
 
 The execution-type gate uses a different canonical route because the frozen
 AHB actor exposes only seven distinct normalized types. It generates one
