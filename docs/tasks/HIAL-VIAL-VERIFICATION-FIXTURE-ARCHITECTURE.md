@@ -1026,14 +1026,27 @@ proposed `.17.2.5` through `.17.2.7` and measurement `.17.3` follow.
   separate whole-product scale tree retains big/really-big qualification.
 - `.19` must convert decision `0034` into detailed implementable native-
   verification semantic-family leaves before the architecture closes.
-- `.17.2.4.2`'s remaining `operations_total` levels carry two measured costs.
+- `.17.2.4.2`'s remaining `operations_total` levels were carried forward with a
+  cost note that the total-fiber slice itself invalidated. That note said
   `limit_v1` of 1,000,000 needs a roughly 14-MB source parsed into a
-  1,000,000-action SemanticIR only to reach the same plan-cap rejection already
-  proved at 65,536, so it buys no new evidence for a very heavy parse and must
-  be weighed against the axes that are still reachable. `over_limit_v1` of
-  1,000,001 is not divisible by the renderer's fixed 32-scenario fanout, so
-  `_render_ahb_vial` confesses and that level needs a construction decision
-  before it can be owned at all.
+  1,000,000-action SemanticIR, and that `over_limit_v1` of 1,000,001 could not
+  be constructed because it is not divisible by the renderer's fixed
+  32-scenario fanout. Both costs belong to the *literal* recipe. The same
+  ordinary `repeat` form the total-fiber ladder now uses reaches exactly
+  1,000,000 expanded operations from a measured 4,003-byte source - 32
+  scenarios of `(repeat 31249 (reset bus 1))`, 31,250 expanded actions each,
+  well inside the 65,536 per-scenario cap - and parses in under a second.
+  1,000,001 is then an ordinary non-uniform distribution (31 scenarios of
+  31,250 plus one of 31,251), the same remainder technique
+  `_total_fiber_repeat_recipe` already implements. What remains genuinely
+  unmeasured is the *execution* cost: building a million operation records and
+  their source maps before `serialized_plan_bytes` can reject the plan. Note
+  also that `over_limit_v1` is not redundant: `_limit('expanded_operations_total',
+  ...)` runs at `ExecutionBuilder.pm:1016`, while the operation graph is built
+  and before the plan stage at line 280, so 1,000,001 should land on the axis's
+  own cap at `/operation_graph/operations` rather than on the plan cap - the
+  same authority split the total-fiber ladder proved. Measure the execution
+  cost under the RAM guard before deciding the order of the remaining levels.
 
 ## Blockers
 
