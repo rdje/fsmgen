@@ -1,7 +1,7 @@
 # Knowledge Map: `live-document`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **75** uniquely owned question entries.
+> **3** facts · **77** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -25,6 +25,7 @@
 - q="how are live-document currency contracts declared?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how are live-document sizes contained project-wide?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how are mechanically exact current-state fields contained?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="how big is MEMORY.md allowed to be?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="how do I add a knowledge map card or write a fact card?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 - q="how do I add a new knowledge fact card?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 - q="how do I fix a lines_each target that blocks an ordinary edit?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
@@ -54,7 +55,7 @@
 - q="surface knowledge_cards transition debt exceeded its owned allowance: files" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 - q="unauthorized enforcement-ceiling increase requires exactly one new authority record" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 - q="were 15727 IAL2 task lines lost during task-tree sealing?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
-- q="what caps MEMORY.md at 60 lines now that active_resume allows 75?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
+- q="what caps MEMORY.md now that active_resume allows 150 lines?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="what did PGEN and ANVIL find in the live-document review?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="what does max_growth mean in doctrine/live_document_size/surfaces.jsonl?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 - q="what does transition max_growth mean and who may change it?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
@@ -78,6 +79,7 @@
 - q="why are migration products not added as disjoint line counts?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="why does a live-document surface hit its line warning while byte pressure is tiny?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="why does the live-document registry use JSONL instead of TSV?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="why is MEMORY.md capped at 32768 bytes?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="why is docs/decisions/INDEX.md the largest member of the rationale surface?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="why must a surface declare warning_debt at 80 percent?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 

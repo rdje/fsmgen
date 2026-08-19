@@ -96,7 +96,9 @@ push, consume the GitHub result before treating the push follow-up as complete:
   - **Layer-A bounded resume pointer** (see `MEMORY_ARCHITECTURE.md`): current state +
     the single next action only.
   - **OVERWRITE** its "Current state" block when recording completed work — never append.
-    Keep it ≤ ~60 lines; this is mechanically capped by
+    Keep it ≤ 120 lines and ≤ 32,768 bytes (decision `0066`: line cap is the
+    layer-routing control, byte cap is single-call readability); this is
+    mechanically capped by
     `scripts/check_doctrines.sh` (pre-commit hook + CI). Rationale and the
     reconciliation of this workflow with the memory standard: `docs/decisions/0007`.
 - Former roadmap-status board
@@ -140,7 +142,7 @@ push, consume the GitHub result before treating the push follow-up as complete:
    2. A new `docs/decisions/NNNN-*.md` record (layer C) **iff** the slice produced a
       durable cross-cutting fact/decision/learning (and update `docs/decisions/INDEX.md`).
    3. `MEMORY.md` (layer A) — **overwrite** its "Current state" block to point at the new
-      latest commit / active leaf / next action; keep it ≤ ~60 lines.
+      latest commit / active leaf / next action; keep it ≤ 120 lines.
    4. `DEVELOPMENT_NOTES.md` — update only when the conditional rationale
       boundary above is met.
    - Decisions `0047`, `0048`, and `0049` retire the former changelog,

@@ -86,7 +86,7 @@ quality risk, not merely an inconvenience.
 - ID: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION`
   Status: `active`
   Goal: `Decide and record whether the affected line health targets are calibrated to their surfaces' information role.`
-  Children: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.1, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.2, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3`
+  Children: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.1, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.2, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.4`
 
 - ID: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.1`
   Status: `done`
@@ -109,6 +109,19 @@ quality risk, not merely an inconvenience.
   Verification: `pending`
   Commit: `pending`
 
+- ID: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.4`
+  Status: `done`
+  Goal: `Separate MEMORY.md's two size criteria and set each from its own authority, on director direction.`
+  Acceptance: `The director set 32,768 bytes as the maximum size allowed for MEMORY.md, with single-call readability as the criterion. Establish that byte maximum, and resolve the interaction it exposes: at ~75 bytes per line a 60-line file is ~4,500 bytes, so the byte ceiling was unreachable and raising it alone changes nothing. Do not derive the line cap from the byte maximum; ~440 lines is the blob MEMORY_ARCHITECTURE.md exists to prevent. Raise the line cap only as far as the layer-routing control justifies, keep the containment warning aligned to it, record the split in a paired decision record with authority rows, and restate both bounds where an author meets them. Pass scripts/check_doctrines.sh.`
+  Verification: `MEMORY.md's dimensions now answer different questions and neither is derived from the other. bytes_each/bytes_total 8,192 -> 32,768 is the director's single-call ingestion maximum and is deliberately non-binding: 120 lines of this file is about 9,000 bytes. MEMORY_POINTER_LINE_CAP 60 -> 120 in scripts/check_memory_architecture.sh is the real cap and remains the layer-routing control; lines_each/lines_total 75 -> 150 keeps the 80% containment warning exactly on it, preserving the alignment .2 established. MEMORY.md moves to 33.3% lines and 11.6% bytes, a 37.9% surface peak now carried by line_bytes_each, from 62.7% after .2 and 78.3% before it. Four enforcement-ceiling increases carry appended authority rows paired to new decision 0066, which supersedes point 5 of 0065 only. The neutral MEMORY_ARCHITECTURE.md keeps its ~50-line default and its MEMORY_POINTER_LINE_CAP knob, now with an explicit warning against deriving that knob from a reader-capability bound.`
+  Commit: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.4: separate the resume pointer's two size criteria`
+
+## Acceptance Checklist (enforced) — `.4`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'MEMORY_POINTER_LINE_CAP' --oneline -- scripts/check_memory_architecture.sh` identifies `70cd867e3`; source inspection shows the cap has always been a single line number carrying two unrelated jobs. `scripts/check_memory_architecture.sh:14` enforces it as the layer-routing control, while `doctrine/live_document_size/surfaces.jsonl` declared an 8,192-byte companion that no 60-line file can reach: `MEMORY.md` measured 3,515 bytes across 47 lines, so 60 lines is about 4,500 bytes and the byte dimension was structurally dead. Raising only the byte ceiling would therefore have been a measurable no-op, and deriving the line cap from it at that measured density yields ~440 lines — the unbounded layer-A blob `MEMORY_ARCHITECTURE.md` §1 and §12 name as the anti-pattern.
+- [x] **ADDRESSED (verified)** — `scripts/check_memory_architecture.sh` now reports `MEMORY.md is 50 lines (<= cap 120)` where it previously reported `<= cap 60`, and `scripts/check_live_document_size.sh` moves `active_resume` from `target peak 62.7%` to `37.9%` with `bytes_each` 8,192 -> 32,768 and `lines_each` 75 -> 150. The 80% containment warning lands on 120 lines, exactly the enforced cap, so containment still signals at its owning doctrine's boundary and never restates it more tightly. `scripts/check_live_document_ceiling_authority.pl` reports `all ceiling-change invariants hold (4 increase(s))`, proving each raise is paired to newly added `docs/decisions/0066-memory-pointer-size-is-two-externally-owned-criteria.md`.
+- [x] **NO REGRESSION** — staged `scripts/check_doctrines.sh` ends with `[doctrine] all doctrine checks passed`, and `prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t t/1560-live-document-ceiling-authority.t` reports `All tests successful` at `Files=3, Tests=35`; `knowledge-map: OK`, the task-tree graph, README landing contract, locality, derived-state, and complete Markdown coverage stay green, and no milestone percentage, ratchet, verifier, authority requirement, decision pairing, or debt baseline changed.
+
 ## Acceptance Checklist (enforced) — `.2`
 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'"lines_each":400' --oneline -- doctrine/live_document_size/surfaces.jsonl` identifies `18e2dcbc6`, where every surface received one `budgets` object holding a round line count beside an unrelated power-of-two byte count; `9bd081935` then copied that object into `health_targets` and `enforcement_ceilings` without re-deriving either dimension. Reading `git show 18e2dcbc6:doctrine/live_document_size/surfaces.jsonl` confirms the original pairs (`400`/`32768`, `60`/`8192`, `512`/`262144`) were never checked against the bytes per line their surfaces write, so `lines_each` became a second, tighter, undeclared cap on the same budget and the warning milestone fired on a dimension the content cannot exhaust.
@@ -126,6 +139,12 @@ quality risk, not merely an inconvenience.
   to create problems; where they obstruct, relax the involved rule, apply the
   proposal, and adjust incrementally until the right set is found for FSMGen.
   This authorizes `.2` to change the affected targets without a further ask.
+- `2026-08-19`: `.4` selects decision `0066` on director direction. `MEMORY.md`'s
+  two dimensions answer different questions — lines ask "is this still a
+  pointer?", bytes ask "can a resuming agent read it in one call?" — so neither
+  is derived from the other. The byte maximum is 32,768 as directed; the line
+  cap moved 60 -> 120 because the byte raise alone was a no-op, and stopped
+  there because ~440 lines would be the blob the standard prevents.
 - `2026-08-19`: `.2` selects decision `0065`. A surface's dimensions are one
   derivation: choose the dimension that expresses the surface's information
   role, then derive the others from the retained surface's measured bytes per
@@ -186,3 +205,8 @@ quality risk, not merely an inconvenience.
   published fact card `live-document-target-pair-calibration`. It also opened
   `.3`, because `enforced_rules` and `engineering_rationale` carry the same pair
   defect without live pressure and must not be left merely reported.
+- `2026-08-19`: `.4` set the resume pointer's byte maximum to 32,768 on director
+  direction, raised the enforced line cap 60 -> 120, aligned the containment
+  target at 150, and recorded the split in decision `0066`. It also corrected
+  the live statements in `MEMORY.md`, `COMMIT.md`, `MEMORY_ARCHITECTURE.md` §6,
+  and the fact card, without rewriting `0065` or `0007`.

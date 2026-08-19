@@ -7,7 +7,9 @@ answers:
   - "how do I fix a lines_each target that blocks an ordinary edit?"
   - "should I raise lines_each or lower bytes_each on a live-document surface?"
   - "how were the diagnostics, active_resume, and rationale targets derived?"
-  - "what caps MEMORY.md at 60 lines now that active_resume allows 75?"
+  - "how big is MEMORY.md allowed to be?"
+  - "what caps MEMORY.md now that active_resume allows 150 lines?"
+  - "why is MEMORY.md capped at 32768 bytes?"
   - "why is docs/decisions/INDEX.md the largest member of the rationale surface?"
 date: 2026-08-19
 status: current
@@ -30,16 +32,21 @@ Applied at `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.2`:
 | Surface | Reviewed dimension | Change |
 | --- | --- | --- |
 | `diagnostics` | bytes (32 KiB reading cost) | `lines_each` 400 -> 768 |
-| `active_resume` | lines (externally owned) | `lines_each` 60 -> 75 |
+| `active_resume` | two separate criteria | see below (revised by `0066`) |
 | `rationale` | lines (prose records) | `lines_each` 512 -> 640, `bytes_each` 262144 -> 65536 |
 
 Two exceptions are part of the rule:
 
-- **A dimension another doctrine owns.** `MEMORY.md` is still capped at 60
-  lines by `MEMORY_ARCHITECTURE.md` §6 and `MEMORY_POINTER_LINE_CAP`, enforced
-  by `scripts/check_memory_architecture.sh`. The containment target of 75 puts
-  the 80% warning exactly on that cap instead of silently tightening it to 48.
-  Do not read `surfaces.jsonl` as permission for a 75-line resume pointer.
+- **A dimension another doctrine owns.** Decision `0066` revised this surface:
+  `MEMORY.md`'s two dimensions answer different questions, so neither is derived
+  from the other. **Lines** answer "is this still a pointer?" — the cap is
+  `MEMORY_POINTER_LINE_CAP` = **120** in `scripts/check_memory_architecture.sh`,
+  and it is the layer-routing control; the containment target of 150 puts the
+  80% warning exactly on it. **Bytes** answer "can a resuming agent read it in
+  one call?" — the maximum is **32,768**, an outer safety bound that does not
+  bind, since 120 lines of this file is about 9,000 bytes. Never derive the line
+  cap from the byte maximum: at ~75 bytes/line that yields ~440 lines, which is
+  the blob `MEMORY_ARCHITECTURE.md` §1 exists to prevent.
 - **A collection with more than one member class.** `rationale` holds prose
   records at ~51 bytes/line and `docs/decisions/INDEX.md`, a dense table at
   ~285 bytes/line that is the surface's largest member by bytes and grows about

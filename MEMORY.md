@@ -1,4 +1,4 @@
-# MEMORY — resume pointer (layer A; overwrite-only, keep ≤ ~60 lines)
+# MEMORY — resume pointer (layer A; overwrite-only; ≤ 120 lines, ≤ 32,768 bytes)
 
 See `MEMORY_ARCHITECTURE.md` for the four-layer system. Git preserves prior history; this file carries only the current bounded resume state.
 
@@ -10,9 +10,12 @@ See `MEMORY_ARCHITECTURE.md` for the four-layer system. Git preserves prior hist
   `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2` canonical execution-graph levels.
 - current_state: `.2` re-derived three target pairs under decision `0065`: a surface's
   `lines_each`/`bytes_each` is one derivation, and a derived limit must not milestone first.
-  `diagnostics` 79.8% -> 46.5%, `active_resume` 78.3% -> 62.7%, `rationale` 78.9% -> 63.1%.
-  `MEMORY_ARCHITECTURE.md` plus `scripts/check_memory_architecture.sh` stay the sole authority
-  for the 60-line resume cap. The VIAL operations-per-scenario ladder remains complete, with one
+  `diagnostics` 79.8% -> 46.5%, `rationale` 78.9% -> 63.1%. `.4` then revised `active_resume`
+  under decision `0066` on director direction: this file's two dimensions answer different
+  questions, so neither is derived from the other. Lines ask "is this still a pointer?" —
+  `MEMORY_POINTER_LINE_CAP` is now 120 and remains the layer-routing control. Bytes ask "can a
+  resuming agent read it in one call?" — the maximum is 32,768 and does not bind. Now 31.3%
+  lines / 10.7% bytes. The VIAL operations-per-scenario ladder remains complete, with one
   `VIAL_SCALE_LIMIT_INTERACTION` discrepancy routed to `.17.4`.
 - next_action: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3` sweeps every remaining surface for the
   same pair defect (`enforced_rules`, `engineering_rationale` known). Then `.17.2.4.2` on the

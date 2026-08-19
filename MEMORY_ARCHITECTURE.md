@@ -138,7 +138,10 @@ structurally unnecessary for any fact logged once.
 
 - **Size cap** — keep it to roughly one screen (≤ ~50 lines). If it exceeds the cap,
   information is in the wrong layer; move it down to B or C. *(This cap is mechanically
-  enforced — §9.)*
+  enforced — §9.)* The number is the adopting project's knob (`MEMORY_POINTER_LINE_CAP`,
+  §9.1); an adopter may state a different criterion, but it must remain a layer-routing
+  control. Do not derive it from a reader-capability bound such as "fits in one read" —
+  that answers a different question and reintroduces the blob this layer exists to prevent.
 - **Overwrite, don't append** — it always describes *now*, never the journey.
 - **No history** — that's git (D) and the task-tree logs (B).
 - **Derive exact state instead of hand-writing it** — when a canonical system

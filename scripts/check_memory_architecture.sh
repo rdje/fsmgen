@@ -11,7 +11,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "${ROOT_DIR}"
 
 # ── Knobs (everything else is project-neutral) ──────────────────────────────
-MEMORY_POINTER_LINE_CAP="${MEMORY_POINTER_LINE_CAP:-60}"   # layer-A resume-pointer cap
+MEMORY_POINTER_LINE_CAP="${MEMORY_POINTER_LINE_CAP:-120}"  # layer-A resume-pointer cap
 TASKS_DIR="docs/tasks"                                      # task-trees (layer B)
 DECISIONS_DIR="docs/decisions"                              # decision records (layer C)
 BOOTSTRAP_FILES=("AGENTS.md" "CLAUDE.md")                   # tool-neutral entrypoints (E1)
