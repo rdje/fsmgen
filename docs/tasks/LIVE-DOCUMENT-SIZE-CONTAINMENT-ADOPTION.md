@@ -544,6 +544,18 @@ no routed destination becomes the next uninstrumented blob.
 
 ## Blockers
 
+- **Two live containment debts have a blocked remediation owner.**
+  `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.2` moved the `focused_documents` and
+  `ancillary_documents` transition allowances to this tree after finding both
+  named a `done` leaf of a tree absent from the active index. This tree is
+  therefore the live owner of `focused_documents` at 80.8% of its line target
+  (`warning_debt`) and `ancillary_documents` at 90.8% of `lines_total`
+  (`rollover_debt`), and the leaf that would remediate them, `.12`, is blocked
+  behind director-deferred `.26`. Consequence, recorded rather than worked
+  around: `ancillary_documents` stays closed to new members until its declared
+  rollover lands, because decision `0070` forbids widening a rollover-debt
+  allowance. Unblock condition: director selection on `.26`, or an explicitly
+  activated narrower leaf that performs only the `ancillary_documents` rollover.
 - None for completed `.28`. Pending `.12` still waits on director-deferred
   `.26`; no containment leaf is PNT-eligible, and derived-state work does not
   activate or pre-decide that inventory.
