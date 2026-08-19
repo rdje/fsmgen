@@ -86,7 +86,7 @@ quality risk, not merely an inconvenience.
 - ID: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION`
   Status: `active`
   Goal: `Decide and record whether the affected line health targets are calibrated to their surfaces' information role.`
-  Children: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.1, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.2, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.4`
+  Children: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.1, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.2, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.4, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.5`
 
 - ID: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.1`
   Status: `done`
@@ -116,6 +116,19 @@ quality risk, not merely an inconvenience.
   Verification: `MEMORY.md's dimensions now answer different questions and neither is derived from the other. bytes_each/bytes_total 8,192 -> 32,768 is the director's single-call ingestion maximum and is deliberately non-binding: 120 lines of this file is about 9,000 bytes. MEMORY_POINTER_LINE_CAP 60 -> 120 in scripts/check_memory_architecture.sh is the real cap and remains the layer-routing control; lines_each/lines_total 75 -> 150 keeps the 80% containment warning exactly on it, preserving the alignment .2 established. MEMORY.md moves to 33.3% lines and 11.6% bytes, a 37.9% surface peak now carried by line_bytes_each, from 62.7% after .2 and 78.3% before it. Four enforcement-ceiling increases carry appended authority rows paired to new decision 0066, which supersedes point 5 of 0065 only. The neutral MEMORY_ARCHITECTURE.md keeps its ~50-line default and its MEMORY_POINTER_LINE_CAP knob, now with an explicit warning against deriving that knob from a reader-capability bound.`
   Commit: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.4: separate the resume pointer's two size criteria`
 
+- ID: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.5`
+  Status: `done`
+  Goal: `Find and remove the reason MEMORY.md keeps filling, instead of moving its limits again.`
+  Acceptance: `.2 and .4 both treated recurring MEMORY.md pressure as a limit problem. Measure the file's actual composition instead. For any content that belongs to another layer, verify it against its authority per the containment duplicate rule, inspect that authority for divergence the copy concealed, repair the authority first if wrong, then remove the copy and leave the reader's question answerable. Install a mechanical control that fails on the offending write rather than many slices later, and prove it fails closed. Change no limit in this slice. Pass scripts/check_doctrines.sh.`
+  Verification: `The file was 46% misplaced content. A 23-line Durable context block summarised 14 cross-cutting decisions and 10 task leaves, and the current_state field spent 9 more lines restating decisions 0065 and 0066. All 14 decisions were verified present on disk with exactly one docs/decisions/INDEX.md row each, and all 10 leaves verified as real nodes in docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md, so nothing unique was lost. The audit also found one concealed drift: the copy attributed PNT autonomy to decision 0062 (push cadence) when the authority is 0003, which the removal restores. MEMORY.md is now 30 lines / 1,690 bytes, from 50 / 3,800, and 25% of its line cap. Decision 0067 records the incentive that produced the drift and adds MEMORY_POINTER_FIELD_LINE_CAP, capping each resume field at 5 lines in scripts/check_memory_architecture.sh. No limit changed in this slice.`
+  Commit: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.5: remove the layer-A bloat vector`
+
+## Acceptance Checklist (enforced) — `.5`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — measuring `MEMORY.md` rather than its limits found 23 of 50 lines in a `## Durable context` block plus a 9-line `current_state` field, both holding layer-B and layer-C content. `git log -S'## Durable context' --oneline -- MEMORY.md` traces the block's introduction, and the duplicate check is exact: all 14 cited decisions resolve to a file on disk with exactly one `docs/decisions/INDEX.md` row, and all 10 cited leaves resolve to real `- ID:` nodes in `docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. The mechanism is an incentive plus a missing control: `COMMIT.md` step 3.3 makes every slice overwrite this file, one summary line is cheaper than opening the right store, and the only guard was a whole-file count that fired at 60 — many slices after the drift began, which is why `.2` and `.4` both answered it by moving limits.
+- [x] **ADDRESSED (verified)** — `scripts/check_memory_architecture.sh` reports `MEMORY.md is 30 lines (<= cap 120)` and `MEMORY.md resume fields are each <= 5 lines`, against 50 lines and no field control before. The new `MEMORY_POINTER_FIELD_LINE_CAP` control is proved fail-closed, not merely present: running it at `MEMORY_POINTER_FIELD_LINE_CAP=2` emits `FAIL: MEMORY.md resume field(s) exceed 2 lines: next_action(3)` and exits `1`, while the shipped cap of 5 exits `0`. The concealed drift is repaired by removal — `0003` regains sole ownership of autonomous PNT from a copy that credited `0062`.
+- [x] **NO REGRESSION** — staged `scripts/check_doctrines.sh` ends with `[doctrine] all doctrine checks passed`, and `prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t t/1560-live-document-ceiling-authority.t` reports `All tests successful` at `Files=3, Tests=35`; `knowledge-map: OK`, the task-tree graph, README landing contract, locality, derived-state, and complete Markdown coverage stay green. No limit, milestone, ratchet, verifier, authority requirement, decision pairing, or debt baseline changed in this slice.
+
 ## Acceptance Checklist (enforced) — `.4`
 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'MEMORY_POINTER_LINE_CAP' --oneline -- scripts/check_memory_architecture.sh` identifies `70cd867e3`; source inspection shows the cap has always been a single line number carrying two unrelated jobs. `scripts/check_memory_architecture.sh:14` enforces it as the layer-routing control, while `doctrine/live_document_size/surfaces.jsonl` declared an 8,192-byte companion that no 60-line file can reach: `MEMORY.md` measured 3,515 bytes across 47 lines, so 60 lines is about 4,500 bytes and the byte dimension was structurally dead. Raising only the byte ceiling would therefore have been a measurable no-op, and deriving the line cap from it at that measured density yields ~440 lines — the unbounded layer-A blob `MEMORY_ARCHITECTURE.md` §1 and §12 name as the anti-pattern.
@@ -139,6 +152,13 @@ quality risk, not merely an inconvenience.
   to create problems; where they obstruct, relax the involved rule, apply the
   proposal, and adjust incrementally until the right set is found for FSMGen.
   This authorizes `.2` to change the affected targets without a further ask.
+- `2026-08-19`: `.5` selects decision `0067` after the director asked why a
+  pointer keeps growing at all. It should not, and it was not one: 46% of the
+  file was decision and lane summaries, all verified duplicates. The honest
+  answer is that no doctrine did this — successive slices did, because
+  `COMMIT.md` guarantees every slice has this file open and one summary line is
+  always cheaper than opening the right store. `.2` and `.4` both mistook the
+  symptom for the cause and moved limits; this leaf moves none.
 - `2026-08-19`: `.4` selects decision `0066` on director direction. `MEMORY.md`'s
   two dimensions answer different questions — lines ask "is this still a
   pointer?", bytes ask "can a resuming agent read it in one call?" — so neither
@@ -210,3 +230,8 @@ quality risk, not merely an inconvenience.
   target at 150, and recorded the split in decision `0066`. It also corrected
   the live statements in `MEMORY.md`, `COMMIT.md`, `MEMORY_ARCHITECTURE.md` §6,
   and the fact card, without rewriting `0065` or `0007`.
+- `2026-08-19`: `.5` removed the layer-A bloat vector. `MEMORY.md` went from 50
+  lines / 3,800 bytes to 30 / 1,690 with no limit change, and
+  `MEMORY_POINTER_FIELD_LINE_CAP` now fails a resume field that starts
+  narrating. Decision `0067` and fact card `memory-pointer-layer-a-content`
+  record the rule and the incentive that defeated the previous one.

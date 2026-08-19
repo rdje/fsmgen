@@ -12,6 +12,7 @@ cd "${ROOT_DIR}"
 
 # ── Knobs (everything else is project-neutral) ──────────────────────────────
 MEMORY_POINTER_LINE_CAP="${MEMORY_POINTER_LINE_CAP:-120}"  # layer-A resume-pointer cap
+MEMORY_POINTER_FIELD_LINE_CAP="${MEMORY_POINTER_FIELD_LINE_CAP:-5}"  # per-field cap (decision 0067)
 TASKS_DIR="docs/tasks"                                      # task-trees (layer B)
 DECISIONS_DIR="docs/decisions"                              # decision records (layer C)
 BOOTSTRAP_FILES=("AGENTS.md" "CLAUDE.md")                   # tool-neutral entrypoints (E1)
@@ -34,6 +35,24 @@ if [[ -f MEMORY.md ]]; then
   fi
 else
   note "MEMORY.md (the resume pointer) is missing"
+fi
+
+# 2b) Each resume field must stay state, not narration (decision 0067). A field that grows
+#     into a digest of decisions or completed lanes is the layer-A bloat vector; cap it.
+if [[ -f MEMORY.md ]]; then
+  oversized="$(awk -v cap="${MEMORY_POINTER_FIELD_LINE_CAP}" '
+    function flush() { if (field != "" && n > cap) printf "%s(%d) ", field, n }
+    /^## / { flush(); field = ""; n = 0; in_resume = ($0 == "## Resume"); next }
+    !in_resume { next }
+    /^- [A-Za-z_]+:/ { flush(); field = $2; sub(/:$/, "", field); n = 1; next }
+    field != "" && NF > 0 { n++ }
+    END { flush() }
+  ' MEMORY.md)"
+  if [[ -z "${oversized}" ]]; then
+    ok "MEMORY.md resume fields are each <= ${MEMORY_POINTER_FIELD_LINE_CAP} lines"
+  else
+    note "MEMORY.md resume field(s) exceed ${MEMORY_POINTER_FIELD_LINE_CAP} lines: ${oversized}— a field is state, not narration; route rationale to ${DECISIONS_DIR}/ and lane status to ${TASKS_DIR}/ (decision 0067)"
+  fi
 fi
 
 # 3) Tool-neutral bootstrap pointers must exist and route to the standard (E1).
