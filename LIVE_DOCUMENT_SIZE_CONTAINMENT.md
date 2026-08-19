@@ -156,6 +156,14 @@ milestone before the reviewed one. Two exceptions are recorded there: a
 dimension owned by another doctrine keeps that doctrine as its authority, and a
 collection holding more than one member class calibrates each dimension to the
 class that binds it.
+Decision `0069` swept every declared pair on that rule, so the audit is done
+and its result is the registry itself: a pair you find there is either derived
+or a divergence with a written reason. A multi-class collection derives its
+byte dimension from the densest member that can actually reach the line bound,
+not from the collection mean, because the mean would let a dense member fire
+first. When you add a surface, derive its pair the same way and check the
+result against current usage; a re-derivation that creates a new warning is
+not a calibration.
 <!-- LIVE-DOCUMENT-SIZE-CONTAINMENT-LOCAL-ADOPTION:END -->
 
 ---

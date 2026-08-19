@@ -1,7 +1,7 @@
 # Knowledge Map: `live-document`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **77** uniquely owned question entries.
+> **3** facts · **80** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -19,6 +19,7 @@
 - q="does the live-document doctrine inspect the staged resulting tree?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="does the project-wide checker cover README.md itself?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="does tracked-document coverage prove that documents are healthy?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="have all the live-document target pairs been checked, or only the ones that failed?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="how are adapter live-document verifiers proved reachable from CI?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how are health targets different from transition ceilings?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how are live-document collection indexes checked for completeness?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
@@ -36,6 +37,7 @@
 - q="how does maintained_reference bound reads and authorize product-sized mdBook or ISF_SPEC change without a fixed aggregate cap?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is a deliberately retained derived-state copy verified?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is a live-document enforcement ceiling increased?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
+- q="how is a multi-class collection's bytes_each derived?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="how is an enforcement ceiling increase authorized?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is archived document content proved retrievable?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is the ISF reference partitioned?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
@@ -77,6 +79,7 @@
 - q="which live-document families are migrated versus pinned or deferred?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="which tasks own the large roadmap, task, book, changelog, development notes, and knowledge map migrations?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="why are migration products not added as disjoint line counts?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="why did root_documents allow 12000 lines per root markdown file?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="why does a live-document surface hit its line warning while byte pressure is tiny?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="why does the live-document registry use JSONL instead of TSV?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="why is MEMORY.md capped at 32768 bytes?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)

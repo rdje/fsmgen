@@ -103,9 +103,24 @@ quality risk, not merely an inconvenience.
   Commit: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.2: re-derive three miscalibrated target pairs`
 
 - ID: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Sweep every remaining governed surface for the same target-pair defect and re-derive or explicitly retain each one.`
   Acceptance: `.2 fixed only the three surfaces under live pressure. Apply decision 0065's rule to every other surface in doctrine/live_document_size/surfaces.jsonl: divide bytes_each by lines_each, compare the implied bytes-per-line against the retained surface's measured value, and either re-derive the pair or record why the divergence is intended. enforced_rules (implies 109 against a measured 56, at 74.7%) and engineering_rationale (implies 131 against 61, at 13.4%) are the known instances; the sweep must be complete rather than limited to those two. Any increase needs its own paired decision record and authority row; lowering stays free. Change no milestone mechanism, ratchet, verifier, or authority requirement. Pass scripts/check_doctrines.sh. The same sweep must also report each surface's remaining headroom against its owned transition allowance, because that is the other way containment obstructs an ordinary write: focused_documents currently has 1 line and 287 bytes left against an allowance owned by GITHUB-PUSH-OUTCOME-ASSURANCE.6.1, and knowledge_cards sits at 79.98% of line_bytes_each, so one long line in a new card trips warning debt. Decision 0064 makes raising transition.max_growth a declared measurement rather than a ceiling increase, so the remediation is documented; the finding is that the audit is not. If the sweep ratchets active_resume down after decisions 0067 and 0068 shrank MEMORY.md to 14 lines, do it as a routine measurement: MEMORY.md sizing is closed and must not be resurfaced to the director as a question.`
+  Verification: `pending`
+  Commit: `pending`
+  Children: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.1, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.2`
+
+- ID: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.1`
+  Status: `done`
+  Goal: `Re-derive or explicitly retain the lines_each/bytes_each pair on every governed surface.`
+  Acceptance: `Apply decision 0065 rule 1 to the per-file pair on every measurable surface in doctrine/live_document_size/surfaces.jsonl: divide bytes_each by lines_each, compare the implied bytes-per-line against the retained surface binding member, and either re-derive the pair or record why the divergence is intended. The sweep must be complete rather than limited to the enforced_rules and engineering_rationale instances decision 0065 named. Choose the reviewed dimension from the surface information role, then derive the other; a derived limit must never reach its milestone before the reviewed one, and no re-derivation may create a new warning. Any increase needs its own paired decision record and authority row; lowering stays free. Change no milestone mechanism, ratchet, verifier, or authority requirement. Pass scripts/check_doctrines.sh.`
+  Verification: `The sweep covered all 19 surfaces that declare health targets, comparing each declared pair with its binding member's own bytes per line. Nine pairs were re-derived across 34 registry fields. Eight are lowerings and needed no authority: high_level_direction bytes_each 65536 -> 32768, active_index 196608 -> 81920, fact_index 131072 -> 45056, engineering_rationale 262144 -> 131072, shipped_behavior 524288 -> 409600, isf_reference 524288 -> 425984, rationale bytes_total 2097152 -> 655360, and root_documents lines_each 12000 -> 1200 with bytes_each 1048576 -> 81920, lines_total 30000 -> 8000, bytes_total 4194304 -> 524288. One is an increase: enforced_rules lines_each and lines_total 300 -> 576, derived from the reviewed 32768-byte mandatory-read budget it shares with diagnostics, moving DOCTRINE_ENFORCEMENT.md from a 74.7% line peak 16 lines short of its warning to a 51.2% peak carried by line_bytes_each. Both increases carry appended authority rows paired to new decision 0069. Nine surfaces were already one derivation (ratios 0.93 to 1.31) and are unchanged; active_resume and rationale's per-file pair remain the divergences 0066 and 0065 point 7 record. Two rules the sweep added: a multi-class collection derives bytes_each from the densest member that can reach the line bound rather than the collection mean, and a re-derivation that would create a new warning is not a calibration. No surface changed containment state and no new warning was created.`
+  Commit: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.1: derive every surface's target pair`
+
+- ID: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.2`
+  Status: `pending`
+  Goal: `Audit every surface remaining headroom against its owned transition allowance and own each shortfall.`
+  Acceptance: `Report each surface remaining headroom against its owned transition allowance, because that is the other way containment obstructs an ordinary write: focused_documents has about 1 line and 287 bytes left against an allowance owned by GITHUB-PUSH-OUTCOME-ASSURANCE.6.1, and knowledge_cards sits at 79.98% of line_bytes_each, so one long line in a new card trips warning debt. Decision 0064 makes raising transition.max_growth a declared measurement rather than a ceiling increase, so the remediation is documented; the finding is that the audit is not. Produce the complete audit and, for each surface at or near its allowance, either raise the declared measurement under 0064 or record the owner and unblock condition. If the audit ratchets active_resume down after decisions 0067 and 0068 shrank MEMORY.md to 14 lines, do it as a routine measurement: MEMORY.md sizing is closed and must not be resurfaced to the director as a question.`
   Verification: `pending`
   Commit: `pending`
 
@@ -130,6 +145,12 @@ quality risk, not merely an inconvenience.
   Verification: `The file was 46% misplaced content. A 23-line Durable context block summarised 14 cross-cutting decisions and 10 task leaves, and the current_state field spent 9 more lines restating decisions 0065 and 0066. All 14 decisions were verified present on disk with exactly one docs/decisions/INDEX.md row each, and all 10 leaves verified as real nodes in docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md, so nothing unique was lost. The audit also found one concealed drift: the copy attributed PNT autonomy to decision 0062 (push cadence) when the authority is 0003, which the removal restores. MEMORY.md is now 30 lines / 1,690 bytes, from 50 / 3,800, and 25% of its line cap. Decision 0067 records the incentive that produced the drift and adds MEMORY_POINTER_FIELD_LINE_CAP, capping each resume field at 5 lines in scripts/check_memory_architecture.sh. No limit changed in this slice.`
   Commit: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.5: remove the layer-A bloat vector`
 
+## Acceptance Checklist (enforced) — `.3.1`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'"lines_each":300' --oneline -- doctrine/live_document_size/surfaces.jsonl` returns the same single commit `18e2dcbc6` that `.2` traced for `lines_each:400`, which proves the defect is systemic rather than three unlucky surfaces. `git show 18e2dcbc6:doctrine/live_document_size/surfaces.jsonl` shows all sixteen surfaces declared there implying between 44.7 and 512.0 bytes per line, so no pair was ever checked against its own content and which surface reached a milestone first was decided by which round number happened to be tightest. Measuring the current tree against each binding member's own density reproduces the mechanism on eight further surfaces, worst at `fact_index` (implied 256.0 against a measured 84.2) and closest to obstruction at `enforced_rules` (109.2 against 56.3, 74.7% lines against 38.5% bytes, sixteen lines from its warning).
+- [x] **ADDRESSED (verified)** — `scripts/check_live_document_size.sh` moves `enforced_rules` from `target peak 74.7%` to `51.2%` with `lines_each` 300 -> 576 against an unchanged 32,768-byte reading budget, and reports the eight derived lowerings in place: `high_level_direction` `bytes_each` 65,536 -> 32,768, `active_index` 196,608 -> 81,920, `fact_index` 131,072 -> 45,056, `engineering_rationale` 262,144 -> 131,072, `shipped_behavior` 524,288 -> 409,600, `isf_reference` 524,288 -> 425,984, `rationale` `bytes_total` 2,097,152 -> 655,360, and `root_documents` 12,000/1,048,576/30,000/4,194,304 -> 1,200/81,920/8,000/524,288. The checker ends `all live-document size-containment invariants hold (22 surfaces)` and `scripts/check_live_document_ceiling_authority.pl` reports `all ceiling-change invariants hold (2 increase(s))`, proving both raises are paired to newly added `docs/decisions/0069-live-document-target-pairs-are-swept-not-fixed-under-pressure.md`. Every changed surface keeps its containment state and no re-derived value creates a new warning.
+- [x] **NO REGRESSION** — staged `scripts/check_doctrines.sh` ends with `[doctrine] all doctrine checks passed`, and `scripts/run_with_ram_guard.sh -- prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t t/1560-live-document-ceiling-authority.t` reports `All tests successful` at `Files=3, Tests=35`; `knowledge-map: OK` covers 1,121 facts across 128 bounded shards, and the task-tree graph, README landing contract, locality, derived-state, and complete Markdown coverage stay green. No milestone percentage, ratchet, verifier, authority requirement, decision pairing, or debt baseline changed, and no `transition.max_growth` allowance was touched — that half of `.3` is owned by `.3.2`.
+
 ## Acceptance Checklist (enforced) — `.5`
 
 - [x] **ROOT CAUSE (WHY + WHERE)** — measuring `MEMORY.md` rather than its limits found 23 of 50 lines in a `## Durable context` block plus a 9-line `current_state` field, both holding layer-B and layer-C content. `git log -S'## Durable context' --oneline -- MEMORY.md` traces the block's introduction, and the duplicate check is exact: all 14 cited decisions resolve to a file on disk with exactly one `docs/decisions/INDEX.md` row, and all 10 cited leaves resolve to real `- ID:` nodes in `docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. The mechanism is an incentive plus a missing control: `COMMIT.md` step 3.3 makes every slice overwrite this file, one summary line is cheaper than opening the right store, and the only guard was a whole-file count that fired at 60 — many slices after the drift began, which is why `.2` and `.4` both answered it by moving limits.
@@ -150,6 +171,18 @@ quality risk, not merely an inconvenience.
 
 ## Decisions
 
+- `2026-08-19`: `.3` split into `.3.1` and `.3.2`. The leaf carried two products
+  with different owners and remedies — a miscalibrated target pair is fixed in
+  `health_targets`, while a saturated `transition.max_growth` allowance is a
+  declared measurement under decision `0064` owned by other trees. Landing them
+  in one commit would have mixed the two.
+- `2026-08-19`: `.3.1` selects decision `0069`. The sweep is the unit of work,
+  not the surface under pressure: `git show 18e2dcbc6` shows every original pair
+  was two independently chosen numbers, so waiting for a milestone to fire
+  selects surfaces by which round number was tightest rather than by which
+  document is filling. Eight of the nine re-derivations are lowerings that
+  relieve nothing, which is the point — they remove a dimension that reported a
+  filling document as nearly empty.
 - `2026-08-19`: Proposed, not activated. Changing a health target is a reviewed
   act, and the honest first step is an audit of how these targets were derived
   rather than an immediate re-derivation. Recorded by the guarantor after the
@@ -247,6 +280,13 @@ quality risk, not merely an inconvenience.
   `MEMORY_POINTER_FIELD_LINE_CAP` now fails a resume field that starts
   narrating. Decision `0067` and fact card `memory-pointer-layer-a-content`
   record the rule and the incentive that defeated the previous one.
+- `2026-08-19`: `.3.1` swept all 19 surfaces that declare health targets and
+  re-derived nine target pairs across 34 registry fields — eight lowerings and
+  one authorized `enforced_rules` increase paired to new decision `0069`. It
+  added the sweep rule and the multi-class derivation rule to
+  `LIVE_DOCUMENT_SIZE_CONTAINMENT.md` and to fact card
+  `live-document-target-pair-calibration`, and left the transition-allowance
+  audit to `.3.2`.
 - `2026-08-19`: `.6` removed the `COMMIT.md` phrases that produced the drift and
   reduced `MEMORY.md` to 14 lines / 654 bytes — the active work unit, the single
   next action, the in-flight/blocker flags, and the required `HEAD` derivation.

@@ -11,10 +11,13 @@ answers:
   - "what caps MEMORY.md now that active_resume allows 150 lines?"
   - "why is MEMORY.md capped at 32768 bytes?"
   - "why is docs/decisions/INDEX.md the largest member of the rationale surface?"
+  - "have all the live-document target pairs been checked, or only the ones that failed?"
+  - "why did root_documents allow 12000 lines per root markdown file?"
+  - "how is a multi-class collection's bytes_each derived?"
 date: 2026-08-19
 status: current
 tags: [live-document-size, containment, doctrine, memory-architecture, decisions, toolbox]
-evidence: docs/decisions/0065-live-document-line-and-byte-targets-are-derived-as-a-pair.md; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/ceiling_increase_authorities.jsonl; LIVE_DOCUMENT_SIZE_CONTAINMENT.md; scripts/check_memory_architecture.sh; docs/tasks/LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.md
+evidence: docs/decisions/0069-live-document-target-pairs-are-swept-not-fixed-under-pressure.md; docs/decisions/0065-live-document-line-and-byte-targets-are-derived-as-a-pair.md; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/ceiling_increase_authorities.jsonl; LIVE_DOCUMENT_SIZE_CONTAINMENT.md; scripts/check_memory_architecture.sh; docs/tasks/LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.md
 reverify: scripts/check_live_document_size.sh 2>&1 | grep -E 'surface (diagnostics|active_resume|rationale):'
 ---
 
@@ -56,3 +59,34 @@ Lowering a target or ceiling is free. Raising an enforcement ceiling still
 needs a newly added decision record plus a matching appended
 `ceiling_increase_authority` row — see [[live-document-surface-growth-procedure]],
 [[live-document-size-containment]], and [[knowledge-card-sizing-and-partition]].
+
+`LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.1` and decision `0069` swept every
+declared pair rather than waiting for the next milestone to fire, because
+which surface fires first is decided by which round number happened to be
+tightest. All nineteen surfaces that declare health targets were measured; nine
+pairs were re-derived and the rest were already one derivation or a recorded
+divergence.
+
+| Surface | Reviewed dimension | Change |
+| --- | --- | --- |
+| `enforced_rules` | bytes (32 KiB mandatory read) | `lines_each` 300 -> 576 |
+| `high_level_direction` | lines | `bytes_each` 65536 -> 32768 |
+| `active_index` | lines | `bytes_each` 196608 -> 81920 |
+| `fact_index` | lines | `bytes_each` 131072 -> 45056 |
+| `engineering_rationale` | lines (ledger window) | `bytes_each` 262144 -> 131072 |
+| `shipped_behavior` | lines (per part) | `bytes_each` 524288 -> 409600 |
+| `isf_reference` | lines (per part) | `bytes_each` 524288 -> 425984 |
+| `root_documents` | lines | `lines_each` 12000 -> 1200, `bytes_each` -> 81920 |
+| `rationale` | lines (aggregate) | `bytes_total` 2097152 -> 655360 |
+
+Only `enforced_rules` rose, so only it needed authority; the other eight are
+lowerings that remove headroom the content could never reach. Two further
+rules come out of that sweep:
+
+- **A multi-class collection derives its byte dimension from the densest member
+  that can actually reach the line bound, not from the collection mean.**
+  `shipped_behavior` and `isf_reference` are derived from a 70.5 and a 73.6
+  bytes-per-line chapter, because the ~52 and ~60 means would let a dense
+  chapter fire on bytes before the reviewed line bound.
+- **A re-derivation that creates a new warning is not a calibration.** Check
+  each proposed value against current usage before writing it.
