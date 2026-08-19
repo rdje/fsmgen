@@ -2527,9 +2527,8 @@ die "unexpected total-operation outcome\n"
             eq '/requested_counts/operations_total';
 ```
 
-The total-operation `limit_v1` and `over_limit_v1` levels stay unowned by the
-caller-sealed generator, so requesting either fails closed rather than
-reporting an unmeasured capacity.
+The axis's two higher levels are covered further below; they are the first
+pair on this leaf whose costs, not whose caps, decide how they are proved.
 
 The following slice implements both gate-level fiber axes through the same
 frozen checked-AHB route and unchanged public builder:
@@ -2754,6 +2753,91 @@ for my $level (sort keys %expected_path) {
                 eq $expected_path{$level};
 }
 ```
+
+The total-operation axis closes last, and it is the first whose two levels are
+not proved the same way.
+
+Its literal 32-scenario recipe cannot author either level. One record per
+operation needs 14,003,075 source bytes at 1,000,000 operations against the
+parser's 1,048,576-byte cap — that form saturates at 74,656 operations — and
+1,000,001 is not divisible by the fixed 32-scenario fanout at all. Both levels
+therefore use the same ordinary `(repeat COUNT action)` form the total-fiber
+ladder uses: 32 scenarios, each one `(repeat 31249 (reset bus 1))`, expanding
+to 31,250 operations apiece. That is 4,003 source bytes instead of fourteen
+megabytes, and it parses in hundredths of a second. The over-limit level is the
+same recipe with its single remainder operation on the trailing scenario, so
+its 32 scenarios expand to 31,250 actions each except one at 31,251.
+
+| Level | Total operations | Source bytes | Decided by | How |
+| --- | ---: | ---: | --- | --- |
+| limit | 1,000,000 | 4,003 | 16-MiB serialized-plan cap at `/plan` | preflight |
+| over limit | 1,000,001 | 4,003 | 1,000,000 total-operation cap at `/operation_graph/operations` | measured run |
+
+The difference is cost, and it is measured rather than assumed. Building the
+operation graph costs about 5.0 KiB of resident state per operation, so a
+million operation records need roughly 4.9 GiB before any cap is consulted, and
+serializing a plan costs several times that again. Running the over-limit level
+to its rejection was measured at 11 seconds and a 5,216-MiB peak descendant RSS
+— above the 4,096-MiB default cutoff the scale contract selects, so it is
+opt-in, RAM-guarded evidence:
+
+```bash
+FSMGEN_VIAL_SCALE_EXACT=1 scripts/run_with_ram_guard.sh \
+  --process-max-rss-mb 6144 -- \
+  prove -Iperl t/1626-vial-architecture-scale-execution-total-operation-limit.t
+```
+
+The limit level is not run at all, and that is a selected outcome rather than a
+gap.
+[Decision `0061`](../../decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md)
+clause 8 says that once a smaller canonical witness proves monotonic 16-MiB
+plan dominance, a larger nominal limit must not be materialized merely to
+exhaust the host. The 65,536-operation qualification level is that witness: its
+serialized plan is 21,511,563 bytes against the 16,777,216-byte cap, and a plan
+gains bytes with every further operation record, so no larger total-operation
+level can serialize smaller. Materializing 1,000,000 would spend roughly 32 GiB
+of resident plan state to reach the same answer.
+
+The generator therefore reports that level as `preflight_dominated` with
+observed outcome `not_materialized`, claims no SemanticIR, bridge, or plan
+identity for it, and records two separate facts: one
+`VIAL_SCALE_LIMIT_INTERACTION` naming the plan cap that would decide, and one
+`VIAL_SCALE_PREFLIGHT_DOMINANCE` naming the witness that already decided it.
+Both are routed to `.17.4`. The raw builder refuses the level outright rather
+than starting a run the selected resource envelope cannot finish.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+open my $fh, '<:raw', 'ppif/ahb_lite_subordinate.ppif'
+    or die "cannot read checked AHB source: $!";
+local $/;
+my $checked_ahb = <$fh>;
+close $fh or die "cannot close checked AHB source: $!";
+
+my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+    primary_axis => 'operations_total',
+    level => 'limit_v1',
+    reference_hial_text => $checked_ahb,
+});
+die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+
+my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+    construction => $workload,
+});
+die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+die "unexpected total-operation limit outcome\n"
+    unless $evaluation->{status} eq 'preflight_dominated'
+        && $evaluation->{observed_outcome} eq 'not_materialized'
+        && $evaluation->{contract_discrepancies}[1]{code}
+            eq 'VIAL_SCALE_PREFLIGHT_DOMINANCE';
+```
+
+Everything cheap about both levels is still proved in the default test run: the
+literal recipe's exact saturation point, the compact recipe's exact per-scenario
+expansion, frozen source and workload identities, the unchanged checked-AHB
+bridge identity, and each level's exact SemanticIR identity and per-scenario
+action counts. Only the million-record execution graph is opt-in.
 
 The binding, execution-type, and source-map levels above their gates stay
 unowned.

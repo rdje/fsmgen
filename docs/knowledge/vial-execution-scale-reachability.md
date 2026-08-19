@@ -32,6 +32,12 @@ answers:
   - "why do the VIAL total-fiber limit and over-limit levels have different authorities?"
   - "why does the VIAL total-fiber ladder switch from literal fibers to repeat?"
   - "which VIAL execution level is cheaper to run, the limit or the over-limit?"
+  - "how are the VIAL total-operation limit and over-limit levels authored?"
+  - "why is the VIAL 1000000-operation limit level never materialized?"
+  - "what does a preflight_dominated VIAL scale evaluation mean?"
+  - "what rejects 1000001 total VIAL operations?"
+  - "how much memory does a million-operation VIAL execution graph need?"
+  - "why does a VIAL scale level need an explicitly raised RAM-guard cutoff?"
 date: 2026-08-19
 status: current
 tags: [vial, execution-ir, scale, binder, bridge, random, replay, plan, limits]
@@ -55,6 +61,7 @@ evidence: >-
   t/1623-vial-architecture-scale-execution-fiber-qualification.t;
   t/1624-vial-architecture-scale-execution-live-fiber-limit.t;
   t/1625-vial-architecture-scale-execution-total-fiber-limit.t;
+  t/1626-vial-architecture-scale-execution-total-operation-limit.t;
   t/1609-vial-architecture-scale-execution-plan-bytes.t;
   t/1610-vial-architecture-scale-execution-plan-qualification.t;
   t/1611-vial-architecture-scale-execution-plan-limit.t;
@@ -76,6 +83,7 @@ reverify: >-
   t/1623-vial-architecture-scale-execution-fiber-qualification.t
   t/1624-vial-architecture-scale-execution-live-fiber-limit.t
   t/1625-vial-architecture-scale-execution-total-fiber-limit.t
+  t/1626-vial-architecture-scale-execution-total-operation-limit.t
   t/1609-vial-architecture-scale-execution-plan-bytes.t
   t/1610-vial-architecture-scale-execution-plan-qualification.t
   t/1611-vial-architecture-scale-execution-plan-limit.t
@@ -220,7 +228,7 @@ limit, so the binder returns one `serialized_plan_bytes exceeds the limit
 `VIAL_SCALE_LIMIT_INTERACTION` at `/requested_counts/operations_total` routed
 to `.17.4`. The consequence is about the axis, not one level: the
 total-operation axis has **no nominal operating point above its 1,024-operation
-gate**, and its `limit_v1` and `over_limit_v1` levels stay unowned.
+gate**.
 
 Both fiber axes reach their qualification levels and stay orthogonal there.
 `simultaneously_live_fibers` at 1,024 keeps every fiber live at the same
@@ -271,6 +279,51 @@ purely through cap order: `ExecutionBuilder` counts fibers while building the
 operation graph and measures plan bytes only after serializing, so the
 over-limit level is also the cheaper of the two to run.
 
+The total-operation axis closes last, and it is the first whose two levels are
+proved by different *methods* rather than merely decided by different caps. Its
+literal 32-scenario recipe cannot author either: one record per operation needs
+14,003,075 source bytes at 1,000,000 operations against the 1,048,576-byte
+parser cap, so that form saturates at 74,656 operations, and 1,000,001 is not
+divisible by the fixed 32-scenario fanout at all. Both levels therefore use the
+ordinary `(repeat COUNT action)` form — 32 scenarios each holding one
+`(repeat 31249 (reset bus 1))`, expanding to 31,250 operations apiece — which
+puts 1,000,000 operations into 4,003 source bytes and parses in hundredths of a
+second. The over-limit level is the same recipe with its single remainder
+operation on the trailing scenario, so its scenarios expand to 31,250 actions
+each except one at 31,251.
+
+Cost, measured rather than assumed, is what separates them. Building the
+operation graph costs about 5.0 KiB of resident state per operation — 436 MiB at
+65,536, 1,442 MiB at 262,144, 2,692 MiB at 524,288, and 3,977 MiB at 786,432 —
+so a million operation records need roughly 4.9 GiB before any cap is consulted,
+and serializing a plan costs several times that again. `over_limit_v1` is
+therefore run for real but only as opt-in evidence: it was measured at 11
+seconds and a 5,216-MiB peak descendant RSS, above the 4,096-MiB default cutoff
+decision `0056` selects, so it needs
+`FSMGEN_VIAL_SCALE_EXACT=1 scripts/run_with_ram_guard.sh --process-max-rss-mb 6144`.
+It is rejected by `expanded_operations_total exceeds the limit 1000000` at
+`/operation_graph/operations` and records **no** discrepancy, because that cap
+is the axis's own.
+
+`limit_v1` is not run at all, by selection rather than omission. Decision `0061`
+clause 8 says that once a smaller canonical witness proves monotonic 16-MiB plan
+dominance, a larger nominal limit must not be materialized merely to exhaust the
+host. The 65,536-operation qualification level is that witness — 21,511,563
+serialized bytes against a 16,777,216-byte cap — and a plan gains bytes with
+every further operation record, so no larger total-operation level can serialize
+smaller; materializing 1,000,000 would spend roughly 32 GiB of resident plan
+state to reach the same answer. The generator reports that level as
+`preflight_dominated` with observed outcome `not_materialized`, claims no
+SemanticIR, bridge, or plan identity for it, and records two separate facts: one
+`VIAL_SCALE_LIMIT_INTERACTION` naming the plan cap that would decide and one
+`VIAL_SCALE_PREFLIGHT_DOMINANCE` naming the witness that already decided it,
+both routed to `.17.4`. The raw builder refuses the level outright rather than
+starting a run the selected resource envelope cannot finish. Everything cheap
+about both levels is still proved by default: the literal saturation point, the
+compact recipe's exact per-scenario expansion, frozen source and workload
+identities, the unchanged checked-AHB bridge identity, and each level's exact
+SemanticIR identity and per-scenario action counts.
+
 The nominal execution limits are not all reachable. Scenarios, simultaneously
 live fibers, and total fibers reach their exact 4,096, 16,384, and 65,536
 structural limits, and all three are now proved rather than predicted — though
@@ -280,6 +333,12 @@ operations, total fibers at their limit level, and source maps encounter the
 encounter earlier VIAL-source or bridge event/type caps. Each excess workload
 must report the first diagnostic in the canonical semantic → bridge → plan
 order; it may not forge a downstream object to reach a preferred number.
+
+The same 5.0-KiB-per-operation cost applies wherever a selected level asks for a
+million records, so `source_map_records` `limit_v1`/`over_limit_v1` here and the
+`checking_state_v1` `scoreboard_capacity` and `bins_and_cross_tuples` levels
+owned by `.17.2.5` should expect the same preflight-or-opt-in treatment rather
+than a default gate.
 
 `.17.2.4.2` remains active for the binding, type, and source-map levels, final
 qualification, and cleanup; these are construction/boundary facts only, and no

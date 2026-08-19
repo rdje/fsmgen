@@ -168,7 +168,8 @@ sub construct($class, @args) {
         && defined($level) && ($level eq 'qualification_candidate_v1'
             || $level eq 'limit_v1' || $level eq 'over_limit_v1');
     $owned_level = 1 if defined($axis) && $axis eq 'operations_total'
-        && defined($level) && $level eq 'qualification_candidate_v1';
+        && defined($level) && ($level eq 'qualification_candidate_v1'
+            || $level eq 'limit_v1' || $level eq 'over_limit_v1');
     $owned_level = 1 if defined($axis)
         && ($axis eq 'fibers_total' || $axis eq 'simultaneously_live_fibers')
         && defined($level) && ($level eq 'qualification_candidate_v1'
@@ -242,7 +243,10 @@ sub build($class, @args) {
     confess __PACKAGE__ . "->build expects one closed hash\n"
         unless @args == 1 && ref($args[0]) eq 'HASH' && !blessed($args[0]);
     _confess_exact_keys($args[0], \@EVALUATE_KEYS, 'execution build');
-    my $inputs = _canonical_inputs($args[0]{construction});
+    my $construction = _validated_construction($args[0]{construction});
+    confess "preflight-dominated level is established without materialization\n"
+        if _preflight_dominance($construction->{specification});
+    my $inputs = _canonical_inputs($construction);
     return _build_execution($inputs);
 }
 
@@ -253,6 +257,7 @@ sub evaluate($class, @args) {
     _confess_exact_keys($args[0], \@EVALUATE_KEYS, 'execution evaluation');
     my $construction = _validated_construction($args[0]{construction});
     my $spec = $construction->{specification};
+    return _preflight_evaluation($construction) if _preflight_dominance($spec);
     my $inputs = _canonical_inputs($construction);
     my $first = _build_execution($inputs);
     return _rejected_evaluation($construction, $first->{diagnostics})
@@ -671,7 +676,7 @@ sub _plan_byte_recipe($level, $requested) {
 
 sub _render_ahb_vial($axis, $level, $requested_count, $plan_byte_recipe = undef) {
     my ($scenario_count, $operations_per_scenario, $scenario_timeout_cycles,
-        @scenario_actions, @compact_scenarios);
+        $compact_steps, @scenario_actions, @compact_scenarios);
     my $randomness = '(randomness (seed 1701))';
     my $domain_name = 'bus';
     my $scenario_stem = '';
@@ -689,14 +694,22 @@ sub _render_ahb_vial($axis, $level, $requested_count, $plan_byte_recipe = undef)
         ($scenario_count, $operations_per_scenario) = (1, $requested_count);
     }
     elsif ($axis eq 'operations_total') {
-        $scenario_count = 32;
-        confess "total-operation gate is not divisible by its scenario fanout\n"
-            if $requested_count % $scenario_count;
-        $operations_per_scenario = int($requested_count / $scenario_count);
+        if ($level eq 'limit_v1' || $level eq 'over_limit_v1') {
+            @compact_scenarios = _total_operation_repeat_recipe($requested_count);
+            $compact_steps = \&_total_operation_repeat_steps;
+            $scenario_count = scalar(@compact_scenarios);
+        }
+        else {
+            $scenario_count = 32;
+            confess "total-operation gate is not divisible by its scenario fanout\n"
+                if $requested_count % $scenario_count;
+            $operations_per_scenario = int($requested_count / $scenario_count);
+        }
     }
     elsif ($axis eq 'fibers_total') {
         if ($level eq 'limit_v1' || $level eq 'over_limit_v1') {
             @compact_scenarios = _total_fiber_repeat_recipe($requested_count);
+            $compact_steps = \&_total_fiber_repeat_steps;
             $scenario_count = scalar(@compact_scenarios);
         }
         else {
@@ -768,7 +781,7 @@ sub _render_ahb_vial($axis, $level, $requested_count, $plan_byte_recipe = undef)
             ? $scenario_stem . $scenario_suffix
             : sprintf('scenario_%08d', $scenario_ordinal);
         my @steps = @compact_scenarios
-            ? _total_fiber_repeat_steps($compact_scenarios[$scenario_ordinal])
+            ? $compact_steps->($compact_scenarios[$scenario_ordinal])
             : @scenario_actions
                 ? @scenario_actions
                 : ("(reset $domain_name 1)") x $operations_per_scenario;
@@ -836,6 +849,46 @@ sub _random_target_candidate($attempt_count) {
         64, Math::BigInt->new($RANDOM_SEED), $RANDOM_OCCURRENCE_ID,
         $attempt_count - 1,
     )->bstr;
+}
+
+# The literal 32-scenario recipe cannot author either high total-operation
+# level. One record per operation needs 14,000,000 source bytes at 1,000,000
+# operations against the parser's 1,048,576-byte source cap, and 1,000,001 is
+# not divisible by the fixed fanout at all. `(repeat COUNT action)` is the
+# ordinary shipped form for exactly this situation - the same one the
+# total-fiber ladder uses - so both levels are authored compactly. Each
+# scenario contributes one `repeat` operation plus its expanded body, and any
+# remainder is spread one operation at a time over the trailing scenarios so no
+# scenario approaches the expanded-action cap. Shared with the oracle.
+sub _total_operation_repeat_recipe($requested_count) {
+    my $scenario_count = 32;
+    confess "compact total-operation recipe requires at least two operations per scenario\n"
+        unless defined($requested_count) && !ref($requested_count)
+            && $requested_count =~ /\A[1-9][0-9]*\z/
+            && $requested_count > $scenario_count * 2;
+
+    my $body = $requested_count - $scenario_count;
+    my $base = int($body / $scenario_count);
+    my $remainder = $body % $scenario_count;
+
+    my (@blocks, $total);
+    $total = 0;
+    for my $ordinal (0 .. $scenario_count - 1) {
+        my $repeat_count = $base
+            + ($ordinal >= $scenario_count - $remainder ? 1 : 0);
+        my $actions = 1 + $repeat_count;
+        confess "compact total-operation block exceeds the 65536 expanded-action cap\n"
+            if $actions > 65_536;
+        push @blocks, {repeat_count => $repeat_count, actions => $actions};
+        $total += $actions;
+    }
+    confess "compact total-operation recipe did not reach its exact operation count\n"
+        unless $total == $requested_count;
+    return @blocks;
+}
+
+sub _total_operation_repeat_steps($block) {
+    return (sprintf('(repeat %d (reset bus 1))', $block->{repeat_count}));
 }
 
 # The renderer and the oracle must agree on one recipe, so both read it here
@@ -1791,6 +1844,48 @@ sub _rejected_evaluation($construction, $diagnostics) {
     });
 }
 
+# Decision `0061` clause 8: once a smaller canonical witness proves monotonic
+# 16-MiB plan dominance, do not materialize a larger nominal limit merely to
+# exhaust the host. The 65,536-operation total qualification level is that
+# witness - its serialized plan is 21,511,563 bytes against the 16,777,216-byte
+# cap - and a plan gains bytes with every further operation record, so no larger
+# total-operation level can serialize smaller. Materializing 1,000,000 would
+# spend roughly 32 GiB of resident plan state to reach the same answer, far past
+# the 4,096-MiB descendant cutoff decision `0056` selects.
+sub _preflight_dominance($spec) {
+    my $axis = $spec->{primary_axis} // '';
+    my $level = $spec->{level} // '';
+    return undef unless $axis eq 'operations_total' && $level eq 'limit_v1';
+    return {
+        witness_level => 'qualification_candidate_v1',
+        witness_operations => 65_536,
+        witness_serialized_plan_bytes => 21_511_563,
+        cap_bytes => 16_777_216,
+    };
+}
+
+sub _preflight_evaluation($construction) {
+    my $spec = $construction->{specification};
+    return _evaluation({
+        ok => JSON::PP::true,
+        status => 'preflight_dominated',
+        schema => $EVALUATION_SCHEMA,
+        schema_version => 1,
+        workload_identity => $construction->{workload_identity},
+        family => $FAMILY,
+        level => $spec->{level},
+        primary_axis => $spec->{primary_axis},
+        requested_counts => _clone($spec->{requested_counts}),
+        observed_outcome => 'not_materialized',
+        metrics => {},
+        semantic_ir_sha256 => undef,
+        bridge_manifest_sha256 => undef,
+        plan_sha256 => undef,
+        diagnostics => [],
+        contract_discrepancies => _selected_discrepancies($spec),
+    });
+}
+
 sub _expects_selected_rejection($spec) {
     my $axis = $spec->{primary_axis} // '';
     my $level = $spec->{level} // '';
@@ -1816,6 +1911,10 @@ sub _expects_selected_rejection($spec) {
     # simultaneous_live_fibers limit is what actually rejects one fiber more.
     return 1 if $axis eq 'simultaneously_live_fibers';
     return 1 if $axis eq 'fibers_total';
+    # The total-operation over-limit level is decided by the axis own cap while
+    # the operation graph is built, one record before the plan stage the limit
+    # level never reaches.
+    return 1 if $axis eq 'operations_total';
     return 1 if $axis eq 'serialized_plan_bytes';
     return 1 if $axis eq 'random_attempts';
     return 1 if $axis eq 'scenarios';
@@ -1845,6 +1944,20 @@ sub _selected_discrepancies($spec) {
                 . ' 65536-operation total qualification level, so this axis'
                 . ' has no nominal operating point above its 1024-operation gate',
         )] if $level eq 'qualification_candidate_v1';
+        return [
+            _limit_interaction(
+                $axis,
+                'the 16777216-byte serialized-plan cap precedes the selected'
+                    . ' 1000000-operation total execution limit',
+            ),
+            _preflight_dominance_record(
+                $axis,
+                'the 65536-operation qualification level already serializes'
+                    . ' 21511563 bytes past that cap and a plan gains bytes with'
+                    . ' every further operation record, so this level is'
+                    . ' established by preflight and is never materialized',
+            ),
+        ] if $level eq 'limit_v1';
         return [];
     }
     if ($axis eq 'fibers_total') {
@@ -1863,6 +1976,15 @@ sub _selected_discrepancies($spec) {
 sub _limit_interaction($axis, $message) {
     return {
         code => 'VIAL_SCALE_LIMIT_INTERACTION',
+        message => $message,
+        path => '/requested_counts/' . $axis,
+        repair_owner => $LIMIT_POLICY_REPAIR_OWNER,
+    };
+}
+
+sub _preflight_dominance_record($axis, $message) {
+    return {
+        code => 'VIAL_SCALE_PREFLIGHT_DOMINANCE',
         message => $message,
         path => '/requested_counts/' . $axis,
         repair_owner => $LIMIT_POLICY_REPAIR_OWNER,
@@ -1903,6 +2025,19 @@ sub _expected_rejection_diagnostics($spec) {
             phase => 'limit',
             message => 'serialized_plan_bytes exceeds the limit 16777216',
             semantic_path => '/plan',
+            source_location => undef,
+            bridge_fact_paths => [],
+            related => [],
+        }];
+    }
+    if ($axis eq 'operations_total') {
+        return [{
+            schema_version => 1,
+            severity => 'error',
+            code => 'VIAL_EXECUTION_LIMIT_ERROR',
+            phase => 'limit',
+            message => 'expanded_operations_total exceeds the limit 1000000',
+            semantic_path => '/operation_graph/operations',
             source_location => undef,
             bridge_fact_paths => [],
             related => [],

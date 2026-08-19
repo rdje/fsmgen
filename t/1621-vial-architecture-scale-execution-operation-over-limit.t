@@ -181,13 +181,13 @@ subtest 'evaluation records the selected semantic dominance' => sub {
 
     my $unowned = eval {
         $class->construct({
-            primary_axis => 'operations_total',
-            level => 'limit_v1',
+            primary_axis => 'source_map_records',
+            level => 'qualification_candidate_v1',
             reference_hial_text => $reference_hial,
         });
         1;
     };
-    ok(!$unowned, 'the unimplemented total-operation level stays unowned');
+    ok(!$unowned, 'the unimplemented source-map qualification stays unowned');
     like($@, qr/does not own the requested shape/,
         'unowned level rejection names the generator slice boundary');
 };

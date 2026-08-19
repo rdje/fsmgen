@@ -166,19 +166,22 @@ subtest 'evaluation records an unreachable qualification level' => sub {
         'missing-source rejection names checked-AHB authority');
 };
 
-subtest 'higher total-operation levels stay unowned' => sub {
-    for my $level (qw(limit_v1 over_limit_v1)) {
+# The two higher total-operation levels are owned by their own slice and frozen
+# by t/1626; this file keeps proving where the generator still stops.
+subtest 'the still-unowned execution axes stay unowned' => sub {
+    for my $axis (qw(bindings execution_types source_map_records)) {
         my $owned = eval {
             $class->construct({
-                primary_axis => 'operations_total',
-                level => $level,
-                reference_hial_text => $reference_hial,
+                primary_axis => $axis,
+                level => 'qualification_candidate_v1',
+                ($axis eq 'source_map_records'
+                    ? (reference_hial_text => $reference_hial) : ()),
             });
             1;
         };
-        ok(!$owned, "total-operation $level remains unowned by this slice");
+        ok(!$owned, "$axis qualification remains unowned by this slice");
         like($@, qr/does not own the requested shape/,
-            "unowned $level rejection names the caller-sealed generator");
+            "unowned $axis qualification names the caller-sealed generator");
     }
 };
 
