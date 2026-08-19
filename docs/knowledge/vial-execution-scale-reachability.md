@@ -38,6 +38,10 @@ answers:
   - "what rejects 1000001 total VIAL operations?"
   - "how much memory does a million-operation VIAL execution graph need?"
   - "why does a VIAL scale level need an explicitly raised RAM-guard cutoff?"
+  - "which cap rejects 8192 VIAL execution types?"
+  - "why does the VIAL direct-IAL1 route parse its source before building its bridge?"
+  - "how many execution types can the VIAL direct-IAL1 route actually reach?"
+  - "does the VIAL execution-type axis have a qualified operating point?"
 date: 2026-08-19
 status: current
 tags: [vial, execution-ir, scale, binder, bridge, random, replay, plan, limits]
@@ -62,6 +66,7 @@ evidence: >-
   t/1624-vial-architecture-scale-execution-live-fiber-limit.t;
   t/1625-vial-architecture-scale-execution-total-fiber-limit.t;
   t/1626-vial-architecture-scale-execution-total-operation-limit.t;
+  t/1627-vial-architecture-scale-execution-type-qualification.t;
   t/1609-vial-architecture-scale-execution-plan-bytes.t;
   t/1610-vial-architecture-scale-execution-plan-qualification.t;
   t/1611-vial-architecture-scale-execution-plan-limit.t;
@@ -84,6 +89,7 @@ reverify: >-
   t/1624-vial-architecture-scale-execution-live-fiber-limit.t
   t/1625-vial-architecture-scale-execution-total-fiber-limit.t
   t/1626-vial-architecture-scale-execution-total-operation-limit.t
+  t/1627-vial-architecture-scale-execution-type-qualification.t
   t/1609-vial-architecture-scale-execution-plan-bytes.t
   t/1610-vial-architecture-scale-execution-plan-qualification.t
   t/1611-vial-architecture-scale-execution-plan-limit.t
@@ -324,6 +330,29 @@ compact recipe's exact per-scenario expansion, frozen source and workload
 identities, the unchanged checked-AHB bridge identity, and each level's exact
 SemanticIR identity and per-scenario action counts.
 
+The execution-type qualification level is the first whose authority moved
+because the *stage order* was corrected rather than because a count changed.
+Decision `0061` clause 4 declares the order ordinary VIAL source and SemanticIR,
+then canonical HIAL bridge, then execution plan; the checked-AHB route already
+followed it, but the direct-IAL1 route used by the binding and type axes built
+its bridge before parsing its VIAL source, so a rejection could be reported from
+behind a later stage. With the order corrected, the 8,192-type level is rejected
+by the ordinary parser's own 4,096-declaration package-section cap — exactly one
+`VIAL_LIMIT_ERROR`, `package section 'types' exceeds 4096 declarations`, at
+`/packages/0/types` — from a 1,023,293-byte source that is comfortably inside the
+1,048,576-byte parser source cap, so a declaration cap decides and not a byte
+cap. No bridge is built behind it, the evaluation claims neither SemanticIR nor
+bridge identity, and it records one `VIAL_SCALE_LIMIT_INTERACTION` routed to
+`.17.4`.
+
+The route's own boundary is lower still and is measured: building the canonical
+direct-IAL1 bridge over the same renderer accepts exactly **1,043 types** (1,043
+manifest types, 1,045 endpoints, manifest inside the cap) and rejects 1,044 with
+`HIAL_VIAL_BRIDGE_LIMIT_ERROR`, `serialized manifest exceeds 16777216 bytes`, at
+`/`. Neither the 4,096-type nor the 4,096-endpoint bridge cap bounds this axis —
+the serialized-manifest cap does, at roughly twice the 512-type gate — so the
+execution-type axis has **no nominal operating point above its gate**.
+
 The nominal execution limits are not all reachable. Scenarios, simultaneously
 live fibers, and total fibers reach their exact 4,096, 16,384, and 65,536
 structural limits, and all three are now proved rather than predicted — though
@@ -340,6 +369,6 @@ million records, so `source_map_records` `limit_v1`/`over_limit_v1` here and the
 owned by `.17.2.5` should expect the same preflight-or-opt-in treatment rather
 than a default gate.
 
-`.17.2.4.2` remains active for the binding, type, and source-map levels, final
-qualification, and cleanup; these are construction/boundary facts only, and no
+`.17.2.4.2` remains active for the binding and source-map levels, the two
+highest execution-type levels, final qualification, and cleanup; these are construction/boundary facts only, and no
 scale capacity is supported until later measurement and promotion.

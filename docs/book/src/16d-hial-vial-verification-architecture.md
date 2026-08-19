@@ -2839,8 +2839,71 @@ expansion, frozen source and workload identities, the unchanged checked-AHB
 bridge identity, and each level's exact SemanticIR identity and per-scenario
 action counts. Only the million-record execution graph is opt-in.
 
-The binding, execution-type, and source-map levels above their gates stay
-unowned.
+The execution-type qualification level closes next, and it is the first level
+whose authority moved because the *stage order* was corrected rather than
+because a count changed.
+
+Decision `0061` clause 4 declares the evaluation order as ordinary VIAL source
+and SemanticIR, then canonical HIAL bridge, then execution plan. The
+checked-AHB route already followed it; the direct-IAL1 route used by the
+binding and type axes built its bridge before parsing its VIAL source, so a
+rejection could be reported from behind a later stage. Correcting that order
+changed the answer for this level: the VIAL parser's own 4,096-declaration
+package-section cap decides, ahead of every bridge cap.
+
+| Level | Types | HIAL bytes | VIAL bytes | Decided by | Diagnostic path |
+| --- | ---: | ---: | ---: | --- | --- |
+| gate | 512 | 17,901 | 63,780 | accepted; 735,488-byte plan | — |
+| qualification | 8,192 | 293,894 | 1,023,293 | 4,096-declaration VIAL package-section cap | `/packages/0/types` |
+
+The 1,023,293-byte source is comfortably inside the 1,048,576-byte parser
+source cap, so what rejects is a declaration cap and not a byte cap: the
+ordinary parser returns exactly one `VIAL_LIMIT_ERROR`, phase `limit`, message
+`package section 'types' exceeds 4096 declarations`, at `/packages/0/types`.
+No bridge is built behind it, so the evaluation claims neither a SemanticIR nor
+a bridge identity, and it records one `VIAL_SCALE_LIMIT_INTERACTION` at
+`/requested_counts/execution_types` routed to `.17.4`.
+
+The route's own boundary is lower still, and it is measured rather than
+inferred. Building the canonical direct-IAL1 bridge over the same renderer
+accepts exactly **1,043 types** — 1,043 manifest types, 1,045 endpoints, and a
+manifest inside the 16,777,216-byte serialized bridge cap — while 1,044 returns
+`HIAL_VIAL_BRIDGE_LIMIT_ERROR`, `serialized manifest exceeds 16777216 bytes`,
+at `/`. So neither the 4,096-type nor the 4,096-endpoint bridge cap is what
+bounds this axis; the serialized-manifest cap is, at roughly twice the
+512-type gate. The execution-type axis therefore has **no nominal operating
+point above its gate**, and no type capacity beyond it is claimed as proved.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+    primary_axis => 'execution_types',
+    level => 'qualification_candidate_v1',
+});
+die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+
+my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+    construction => $workload,
+});
+die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+die "unexpected execution-type authority\n"
+    unless $evaluation->{status} eq 'expected_rejection'
+        && $evaluation->{diagnostics}[0]{semantic_path} eq '/packages/0/types'
+        && $evaluation->{contract_discrepancies}[0]{code}
+            eq 'VIAL_SCALE_LIMIT_INTERACTION';
+```
+
+The exact route boundary is opt-in evidence, because each probe builds a full
+canonical bridge:
+
+```bash
+FSMGEN_VIAL_SCALE_EXACT=1 scripts/run_with_ram_guard.sh -- \
+  prove -Iperl t/1627-vial-architecture-scale-execution-type-qualification.t
+```
+
+The binding and source-map levels above their gates, and the two highest
+execution-type levels, stay unowned.
 
 The execution-type gate uses a different canonical route because the frozen
 AHB actor exposes only seven distinct normalized types. It generates one

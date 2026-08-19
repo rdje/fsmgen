@@ -149,33 +149,8 @@ sub construct($class, @args) {
     );
 
     my ($axis, $level) = @{$raw}{qw(primary_axis level)};
-    my %owned_axis = map { $_ => 1 } qw(
-        bindings scenarios operations_per_scenario operations_total
-        fibers_total simultaneously_live_fibers execution_types
-        source_map_records random_attempts serialized_plan_bytes
-    );
-    my $owned_level = defined($level) && $level eq 'gate_candidate_v1';
-    $owned_level = 1 if defined($axis) && $axis eq 'serialized_plan_bytes'
-        && defined($level) && ($level eq 'qualification_candidate_v1'
-            || $level eq 'limit_v1' || $level eq 'over_limit_v1');
-    $owned_level = 1 if defined($axis) && $axis eq 'random_attempts'
-        && defined($level) && ($level eq 'qualification_candidate_v1'
-            || $level eq 'limit_v1' || $level eq 'over_limit_v1');
-    $owned_level = 1 if defined($axis) && $axis eq 'scenarios'
-        && defined($level) && ($level eq 'qualification_candidate_v1'
-            || $level eq 'limit_v1' || $level eq 'over_limit_v1');
-    $owned_level = 1 if defined($axis) && $axis eq 'operations_per_scenario'
-        && defined($level) && ($level eq 'qualification_candidate_v1'
-            || $level eq 'limit_v1' || $level eq 'over_limit_v1');
-    $owned_level = 1 if defined($axis) && $axis eq 'operations_total'
-        && defined($level) && ($level eq 'qualification_candidate_v1'
-            || $level eq 'limit_v1' || $level eq 'over_limit_v1');
-    $owned_level = 1 if defined($axis)
-        && ($axis eq 'fibers_total' || $axis eq 'simultaneously_live_fibers')
-        && defined($level) && ($level eq 'qualification_candidate_v1'
-            || $level eq 'limit_v1' || $level eq 'over_limit_v1');
     confess "execution-graph gate slice does not own the requested shape\n"
-        unless defined($axis) && $owned_axis{$axis} && $owned_level;
+        unless _owns($axis, $level);
     my $axis_contract = FSM::VIAL::ArchitectureScaleWorkload->catalog
         ->{families}{$FAMILY}{axes}{$axis};
     my $requested = $axis_contract->{levels}{$level};
@@ -236,6 +211,43 @@ sub construct($class, @args) {
         tool_profile => undef,
         inputs => $inputs,
     });
+}
+
+# The owned frontier lives here alone. `construct` gates on it and
+# `owned_shapes` publishes it, so a test proves the still-unowned boundary by
+# deriving it from the catalog rather than by restating a list that goes stale
+# the moment the next level lands.
+my %OWNED_LEVELS = (
+    bindings => [qw(gate_candidate_v1)],
+    scenarios => [qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)],
+    operations_per_scenario =>
+        [qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)],
+    operations_total =>
+        [qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)],
+    fibers_total =>
+        [qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)],
+    simultaneously_live_fibers =>
+        [qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)],
+    execution_types => [qw(gate_candidate_v1 qualification_candidate_v1)],
+    source_map_records => [qw(gate_candidate_v1)],
+    random_attempts =>
+        [qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)],
+    serialized_plan_bytes =>
+        [qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)],
+);
+
+sub _owns($axis, $level) {
+    return 0 unless defined($axis) && defined($level);
+    return 0 unless $OWNED_LEVELS{$axis};
+    return scalar(grep { $_ eq $level } @{$OWNED_LEVELS{$axis}});
+}
+
+sub owned_shapes($class) {
+    _exact_invocant($class, 'owned_shapes');
+    return [map {
+        my $axis = $_;
+        map { {primary_axis => $axis, level => $_} } @{$OWNED_LEVELS{$axis}}
+    } sort keys %OWNED_LEVELS];
 }
 
 sub build($class, @args) {
@@ -348,6 +360,15 @@ sub _canonical_inputs($raw) {
     my $axis = $construction->{specification}{primary_axis};
     return _canonical_ahb_inputs($construction, $hial, $vial)
         unless $axis eq 'bindings' || $axis eq 'execution_types';
+
+    # Decision 0061 clause 4 declares the stage order ordinary VIAL source and
+    # SemanticIR, then canonical HIAL bridge, then execution plan. The direct-
+    # IAL1 route follows it for the same reason the checked-AHB route does: a
+    # rejection must be reported from its own authoritative stage rather than
+    # from behind later construction.
+    my ($semantic_ir, $semantic_diagnostics) = _canonical_semantic_ir($vial);
+    return {semantic_rejection => $semantic_diagnostics} unless $semantic_ir;
+
     my $adapter = FSM::Adapter::ISF->new();
     my $actor = $adapter->parse_source($hial->{content}, basename($hial->{relative_path}));
     my $scheduler = FSM::Scheduler::ISF->new();
@@ -367,14 +388,9 @@ sub _canonical_inputs($raw) {
         generated_ial0 => _source_record($ial0_text, undef, $artifact_name),
         backend_names => _backend_names($actor),
     });
-    confess "canonical architecture-scale bridge construction failed\n"
+    return {bridge_rejection => _clone($bridge->{diagnostics})}
         unless $bridge->{ok};
 
-    my $semantic_ir = FSM::VIAL::Parser->parse_source({
-        text => $vial->{content},
-        source_name => $vial->{relative_path},
-        source_catalog => {},
-    });
     my $semantic = $semantic_ir->as_hashref;
     confess "direct-IAL1 execution gate must contain exactly one package and fixture\n"
         unless @{$semantic->{packages}} == 1
@@ -481,6 +497,12 @@ sub _build_execution($inputs) {
         execution_ir => undef,
         plan => undef,
     } if $inputs->{semantic_rejection};
+    return {
+        ok => 0,
+        diagnostics => _clone($inputs->{bridge_rejection}),
+        execution_ir => undef,
+        plan => undef,
+    } if $inputs->{bridge_rejection};
     return FSM::VIAL::ExecutionBuilder->build_architecture_scale_qualification(
         $inputs->{arguments},
     ) if $inputs->{private_qualification};
@@ -1899,6 +1921,10 @@ sub _expects_selected_rejection($spec) {
     # plan cap, so this axis has no nominal operating point above its gate.
     return 1 if $axis eq 'operations_total'
         && $level eq 'qualification_candidate_v1';
+    # The execution-type qualification level is the first selected level whose
+    # authority is a bridge-manifest cap rather than a parser or execution one.
+    return 1 if $axis eq 'execution_types'
+        && $level eq 'qualification_candidate_v1';
     # The total-fiber limit reaches its own structural cap and is then rejected
     # by the later serialized-plan cap; one fiber more is rejected by the
     # structural cap itself, because ExecutionBuilder counts fibers while
@@ -1958,6 +1984,17 @@ sub _selected_discrepancies($spec) {
                     . ' established by preflight and is never materialized',
             ),
         ] if $level eq 'limit_v1';
+        return [];
+    }
+    if ($axis eq 'execution_types') {
+        return [_limit_interaction(
+            $axis,
+            'the 4096-declaration VIAL package-section cap precedes the'
+                . ' selected 8192-type execution qualification level, and the'
+                . ' 16777216-byte serialized bridge-manifest cap bounds this'
+                . ' route at 1043 types, so this axis has no nominal operating'
+                . ' point above its 512-type gate',
+        )] if $level eq 'qualification_candidate_v1';
         return [];
     }
     if ($axis eq 'fibers_total') {
@@ -2028,6 +2065,26 @@ sub _expected_rejection_diagnostics($spec) {
             source_location => undef,
             bridge_fact_paths => [],
             related => [],
+        }];
+    }
+    if ($axis eq 'execution_types') {
+        return [{
+            schema_version => 1,
+            severity => 'error',
+            code => 'VIAL_LIMIT_ERROR',
+            phase => 'limit',
+            message => "package section 'types' exceeds 4096 declarations",
+            semantic_path => '/packages/0/types',
+            source_location => {
+                source_name => $VIAL_SOURCE,
+                start_line => 1,
+                start_column => 67,
+                start_byte => 66,
+                end_line => 1,
+                end_column => 302_070,
+                end_byte_exclusive => 302_070,
+            },
+            notes => [],
         }];
     }
     if ($axis eq 'operations_total') {
