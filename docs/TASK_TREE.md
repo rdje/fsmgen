@@ -57,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
+| `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION` | `proposed` | `infra/continuity` | `.1` audits how three surfaces' `lines_each` targets were derived before any change | [task](docs/tasks/LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.md) |
 | `MDBOOK-CROSS-LAYER-CURRENT-STATUS-TRUTH-REPAIR` | `proposed` | `cross-layer book truth` | `.1` repairs stale Chapter 11 status prose after an evidence audit | [task](docs/tasks/MDBOOK-CROSS-LAYER-CURRENT-STATUS-TRUTH-REPAIR.md) |
 | `NEXSIM-REQUIREMENTS-HEADING-NUMBERING-REPAIR` | `proposed` | `NEXSIM document integrity` | `.1` aligns lagging subsection numbers without semantic change | [task](docs/tasks/NEXSIM-REQUIREMENTS-HEADING-NUMBERING-REPAIR.md) |
 | `DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT` | `proposed` | `downstream paths` | `.1` contract choice | [task](docs/tasks/DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT.md) |
