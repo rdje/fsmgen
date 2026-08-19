@@ -1,0 +1,22 @@
+# Knowledge Map: `vial-architecture`
+
+> **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
+> **1** facts · **6** uniquely owned question entries.
+
+## Questions → facts
+
+- q="are VIAL scale gate and qualification candidates supported capacity?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="does VIAL architecture scale prove whole product big and really big designs?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="how are VIAL scale performance budgets selected?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="how will VIAL architecture scalability be proved?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="what are the VIAL scale workload families?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="which execution graph scale limits are reachable before earlier caps?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+
+## Facts
+
+### vial-architecture-scale-proof
+
+_VIAL architecture scale is proved by orthogonal families with stage-local oracles, not capacity claims_
+
+- **date:** 2026-08-10 · **status:** current
+- **source and verification:** [`docs/knowledge/vial-architecture-scale-proof.md`](../../docs/knowledge/vial-architecture-scale-proof.md)

@@ -53,7 +53,7 @@ only option, and no doctrine conflict exists.
 - ID: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION`
   Status: `active`
   Goal: `Keep the fact-card growth path correct and discoverable at a saturated allowance.`
-  Children: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.1, KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.2, KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.3, KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.4`
+  Children: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.1, KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.2, KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.3, KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.4, KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.5`
 
 - ID: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.1`
   Status: `done`
@@ -77,9 +77,16 @@ only option, and no doctrine conflict exists.
   Commit: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.3: make fact cards cheap to add and retrievable`
 
 - ID: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Split the one oversized card that pins the surface in rollover_debt.`
   Acceptance: `docs/knowledge/hial-vial-verification-fixture-architecture.md is 32,746 bytes of a 32,768-byte per-file bound and 422 of 512 lines, so it holds the surface at 99.9% target pressure and will reject its own next edit. Partition it into bounded single-topic cards without losing an answer or an exact recorded fact, prove answer-set equality before and after, and return the surface to normal so transition.max_growth stops binding. Pass the Knowledge Map gate and scripts/check_doctrines.sh.`
+  Verification: `The 32,746-byte monolith is partitioned into eight single-topic cards totalling 39,203 bytes over 681 lines, largest 10,054 bytes: the retained core hial-vial-verification-fixture-architecture (7,177 bytes) plus vial-native-uvm-emission-contract, vial-native-uvm-experimental-probe, vial-vhdl-portable-profile, vial-vhdl-osvvm-qualified-tier, iasim-executable-reference-semantics, xial-native-development-framework, and vial-architecture-scale-proof. Closure is proved mechanically, not by reading: the sorted 107-line answer set is byte-identical before and after at SHA-256 b3e7b040dc47ef86c8ce369943a54c371076d78b79960110f510797312697e0f with zero duplicates; all 1,091 distinct normalized body tokens of the source survive with zero lost; all 85 evidence/reverify paths survive with zero missing; and the Knowledge Map moved 1,111 -> 1,118 facts while unique questions stayed at 5,799 and answer occurrences at 5,965. The core card keeps its id and path, so the one external evidence reference from ial2-post-task-tree-integrity-next-owner-selection stays valid, and it routes to all seven topic cards through [[id]] links. Eight retrieval phrasings, one per card, each resolve to the intended card. The surface then falls from bytes_each 32,746 (99.9%) to 23,796 (72.6%) and lines_each 422 to 347, so state normal is declared with baseline and transition removed; scripts/check_live_document_size.sh returns exit 0 with zero ceiling increases. The newly established sizing fact was absent from seven Knowledge Map queries, so card knowledge-card-sizing-and-partition was written in the same slice, taking the map to 1,119 facts/5,809 questions/5,975 occurrences/127 shards.`
+  Commit: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.4: partition the surface-pinning fact card`
+
+- ID: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.5`
+  Status: `pending`
+  Goal: `Repair the containment prose that still calls every new collection file a ceiling increase.`
+  Acceptance: `LIVE_DOCUMENT_SIZE_CONTAINMENT.md's Growing a surface that is at its declared allowance procedure still states that a new file in a collection surface "is a real ceiling increase" requiring a paired decision record and authority row. Decision 0064 made that false for knowledge_cards, and .4 added eight card files with zero ceiling increases and no decision record while the guard passed. Restate the rule as conditional on the dimension actually being at its enforcement ceiling, keep the authority requirement and decision pairing intact for genuine increases, and keep the fact card live-document-surface-growth-procedure in agreement. Pass scripts/check_doctrines.sh.`
   Verification: `pending`
   Commit: `pending`
 
@@ -104,34 +111,46 @@ only option, and no doctrine conflict exists.
 
 - None.
 
-## Acceptance Checklist (enforced) — `.3` cheap-to-add retrieval surface
+## Acceptance Checklist (enforced) — `.4` partition of the surface-pinning card
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'"files":1109' --oneline --
-  doctrine/live_document_size/surfaces.jsonl` returns only `f206feaef`, and
-  `git log -S'"files":1536'` returns `3b71cb0b1`. The `knowledge_cards`
-  enforcement ceilings were pinned to the measured actual by an adoption census
-  while the surface's own reviewed health targets were 28% to 38% higher, so
-  every new card became a ceiling increase and the file dimension reached zero
-  headroom. `scripts/check_live_document_size.sh` reproduced it: copying one
-  card returned `surface knowledge_cards files is 1110 (> inclusive enforcement
-  ceiling 1109)`. Four Knowledge Map queries and a card-corpus search for
-  `ceiling_increase_authorit` and `max_growth` returned nothing, so the
-  procedure was recoverable only from JSONL registries and revision history.
-- [x] **ADDRESSED (verified)** — decision `0064` and three matching authority
-  rows raise the collection ceilings to the reviewed health targets while every
-  per-file bound stays unchanged. Before: adding a card failed the checker.
-  After: `docs/knowledge/live-document-surface-growth-procedure.md` is committed
-  as an ordinary card, `knowledge-map: OK` reports 1,110 facts/5,789
-  questions/5,955 occurrences/121 shards, and the six re-tested query phrasings
-  `fact card ceiling`, `add a knowledge map card`, `ceiling increase authority`,
-  `max_growth`, `declare warning_debt`, and `does adding a fact card need a
-  decision record` each resolve to the new card. Collection headroom is now 426
-  files, 23,349 lines, and 1,010,647 bytes.
-- [x] **NO REGRESSION** — `[doctrine] all doctrine checks passed` with
-  `live-doc-ceiling-authority: all ceiling-change invariants hold (3
-  increase(s))`, `knowledge-map: OK`, task-tree integrity, relative paths, live
-  containment, bounded Memory, and diff hygiene. No per-file bound, milestone,
-  ratchet, verifier, other surface, or product behavior changed.
+- [x] **ROOT CAUSE (WHY + WHERE)** — one multi-topic card, not the collection,
+  bound the surface. `git log -S'"state":"rollover_debt","surface_id":"knowledge_cards"'
+  --oneline -- doctrine/live_document_size/surfaces.jsonl` names `033c72f88`,
+  which is also the first of the card's 88 revisions to exceed 90% of its
+  32,768-byte per-file bound at 29,617 bytes: the monolith alone moved the whole
+  surface into `rollover_debt`. `git log -S'"bytes_each":4235' -- doctrine/live_document_size/surfaces.jsonl`
+  names `b82426c85`, the slice that raised `transition.max_growth.bytes_each` to
+  the measured 32,746 and pinned the surface at 99.9%. The locus is
+  `docs/knowledge/hial-vial-verification-fixture-architecture.md`, which had
+  accreted 107 answers across eight unrelated topics — HIAL/VIAL core, native
+  UVM, the UVM probe, portable VHDL, OSVVM, IASIM, xIAL, and scale — so every
+  unrelated topic edit had to fit inside the last 22 bytes of one file.
+- [x] **ADDRESSED (verified)** — the card is partitioned into eight
+  single-topic cards (39,203 bytes over 681 lines, largest 10,054) with the
+  original id and path retained as the core. Closure is mechanical: the sorted
+  107-line answer set is byte-identical before and after at SHA-256
+  `b3e7b040dc47ef86c8ce369943a54c371076d78b79960110f510797312697e0f` with zero
+  duplicates, all 1,091 distinct normalized body tokens survive with zero lost,
+  all 85 evidence/reverify paths survive with zero missing, and the map moved
+  1,111 -> 1,118 facts while unique questions held at 5,799 and occurrences at
+  5,965. Before: `bytes_each` 32,746 of 32,768 (99.9%), `rollover_debt`,
+  `transition debt exceeded its owned allowance`. After: `bytes_each` 23,796
+  (72.6%), `lines_each` 347, `target peak 80.0% ... (normal, migrated)` with
+  `baseline` and `transition` removed, and `scripts/check_live_document_size.sh`
+  exit 0. Seven Knowledge Map queries proved the per-card sizing fact absent, so
+  `docs/knowledge/knowledge-card-sizing-and-partition.md` was written in the same
+  slice; a probe card with an 820-byte line reproduced `card line width 820
+  exceeds 819` and was reverted exactly.
+- [x] **NO REGRESSION** — the staged tree is green end to end:
+  `[doctrine] all doctrine checks passed`, with
+  `knowledge-map: OK (1119 facts, 5809 unique questions, 5975 answer
+  occurrences, 127 bounded topic shards; query parity verified)`,
+  `live-doc-ceiling-authority: all ceiling-change invariants hold (0
+  increase(s))`, task-tree integrity, relative paths, live containment, bounded
+  Memory, README entry point, and diff hygiene. No per-file bound, health
+  target, enforcement ceiling, milestone, ratchet, verifier, other surface, or
+  product behavior changed; the only registry edit clears a debt state the
+  measurement no longer supports.
 
 ## Changelog
 
@@ -151,3 +170,16 @@ only option, and no doctrine conflict exists.
   same absent-fact retrieval gap that produced the wrong conclusion was left in
   place. `TOOLBOX.md` routing alone does not satisfy the `AGENTS.md` write-back
   rule.
+- `2026-08-19`: `.4` partitions the surface-pinning card. Raising the collection
+  ceilings in `.3` was necessary but not sufficient: the binding constraint was
+  a single 32,746-byte card against a 32,768-byte **per-file** bound, which no
+  collection ceiling can relieve. Topic partition is the structural repair, and
+  the retained id keeps existing links valid. Closure is proved by set and token
+  identity rather than by reading, so "no answer or exact fact was lost" is a
+  measurement rather than a claim.
+- `2026-08-19`: `.5` added. `.4` shipped eight new collection files with zero
+  ceiling increases and no decision record, which the guards accept and decision
+  `0064` intends, but `LIVE_DOCUMENT_SIZE_CONTAINMENT.md` still tells a reader
+  that any new collection file "is a real ceiling increase". Leaving prose that
+  contradicts what this tree's own commits do is drift, so the repair is owned
+  rather than noted.

@@ -1,0 +1,59 @@
+---
+id: vial-architecture-scale-proof
+title: VIAL architecture scale is proved by orthogonal families with stage-local oracles, not capacity claims
+answers:
+  - "how will VIAL architecture scalability be proved?"
+  - "what are the VIAL scale workload families?"
+  - "are VIAL scale gate and qualification candidates supported capacity?"
+  - "how are VIAL scale performance budgets selected?"
+  - "does VIAL architecture scale prove whole product big and really big designs?"
+  - "which execution graph scale limits are reachable before earlier caps?"
+date: 2026-08-10
+status: current
+tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
+evidence: >-
+  docs/decisions/0055-vial-scale-proof-uses-orthogonal-workloads-and-stage-local-oracles.md;
+  docs/decisions/0056-vial-scale-measurements-use-pinned-evidence-and-bounded-failure.md;
+  docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md;
+  docs/knowledge/vial-execution-scale-reachability.md;
+  docs/knowledge/vial-semantic-scale-catalog.md;
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
+  docs/book/src/16d-hial-vial-verification-architecture.md
+reverify: >-
+  rg -n 'semantic_catalog_v1|bridge_fanout_v1|execution_graph_v1|checking_state_v1|backend_emission_v1|runtime_stream_v1|big.*really_big'
+  docs/decisions/0055-vial-scale-proof-uses-orthogonal-workloads-and-stage-local-oracles.md
+  docs/book/src/16d-hial-vial-verification-architecture.md &&
+  rg -n '88%|4,096 MiB|pinned host|earliest authoritative cap|same-volume'
+  docs/decisions/0056-vial-scale-measurements-use-pinned-evidence-and-bounded-failure.md
+  docs/book/src/16d-hial-vial-verification-architecture.md
+---
+
+Decisions `0055` and `0056` select architecture-scale proof without claiming capacity.
+Six orthogonal families isolate source/SemanticIR, bridge fanout, execution
+graphs, checking state, backend emission, and runtime streams; one conservative
+balanced candidate checks interaction. Each axis has reference, gate-candidate,
+qualification-candidate, exact-limit, and over-limit levels. Every timing/RSS
+sample is invalid unless its stage-local semantic, identity, source-map,
+artifact, deterministic-rerun, result, failure, and cleanup oracles pass.
+Fixed 88%-host/4,096-MiB-descendant safety applies immediately; performance
+budgets derive immutably from clean pinned-host calibration and do not fail on
+unmatched hosts. Earliest-cap dominance is reported honestly. These candidates
+are not support, multi-unit/domain, mixed-language, native-UVM-runtime, full-
+language, whole-product `big`/`really_big`, synthesis, or general-parity claims.
+
+Completed `.17.7` removes `t/1569`'s stale focused-index count shadow by
+validating the authority's complete nonzero census instead. Completed `.17.6`
+aligns the public support snapshot with the Runner/normative 8-MiB compile and
+64-MiB runtime capture limits. Completed `.17.8` records that current authority.
+Decision `0057` and `.17.2.1` ship the bounded source-only foundation.
+Completed `.17.9` repairs cleanup. Completed `.17.2.2` now generates every
+semantic-catalog level through the canonical parser, repairs action-local ID
+scope, and records the repeat/action-cap interaction for `.17.4`; no capacity
+claim is made. `.17.2.3` completes bridge fanout. Decision `0061` and completed
+`.17.2.4.1` select the execution-graph routes, exact reachable/earlier-cap
+matrix, caller-sealed binding qualification, million-attempt construction, and
+exact 1/4/16-MiB plans; `.17.2.4.2` remains the implementation owner.
+
+Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
+[[vial-execution-scale-source-cap-representation]],
+[[hial-vial-verification-fixture-architecture]].

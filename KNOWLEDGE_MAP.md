@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1111** facts · **5799** unique questions · **5965** answer occurrences · **121** topic shards.
+> **1119** facts · **5809** unique questions · **5975** answer occurrences · **127** topic shards.
 
 Query first:
 
@@ -53,7 +53,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `generation-result` | 1 | 5 | [`generation-result.md`](knowledge-map/generated/generation-result.md) |
 | `generic-fifo` | 1 | 5 | [`generic-fifo.md`](knowledge-map/generated/generic-fifo.md) |
 | `hdl-validation` | 1 | 4 | [`hdl-validation.md`](knowledge-map/generated/hdl-validation.md) |
-| `hial-vial` | 2 | 118 | [`hial-vial.md`](knowledge-map/generated/hial-vial.md) |
+| `hial-vial` | 2 | 33 | [`hial-vial.md`](knowledge-map/generated/hial-vial.md) |
 | `hosted-perl` | 1 | 9 | [`hosted-perl.md`](knowledge-map/generated/hosted-perl.md) |
 | `ial-contracts` | 1 | 14 | [`ial-contracts.md`](knowledge-map/generated/ial-contracts.md) |
 | `ial0-ahb` | 3 | 14 | [`ial0-ahb.md`](knowledge-map/generated/ial0-ahb.md) |
@@ -88,6 +88,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `ial2-single` | 3 | 12 | [`ial2-single.md`](knowledge-map/generated/ial2-single.md) |
 | `ial2-three` | 23 | 105 | [`ial2-three.md`](knowledge-map/generated/ial2-three.md) |
 | `ial2-two` | 31 | 116 | [`ial2-two.md`](knowledge-map/generated/ial2-two.md) |
+| `iasim-executable` | 1 | 13 | [`iasim-executable.md`](knowledge-map/generated/iasim-executable.md) |
 | `isf-assert` | 2 | 13 | [`isf-assert.md`](knowledge-map/generated/isf-assert.md) |
 | `isf-atl` | 4 | 18 | [`isf-atl.md`](knowledge-map/generated/isf-atl.md) |
 | `isf-bounded` | 1 | 4 | [`isf-bounded.md`](knowledge-map/generated/isf-bounded.md) |
@@ -104,6 +105,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `isf-storage` | 1 | 4 | [`isf-storage.md`](knowledge-map/generated/isf-storage.md) |
 | `isf-verification` | 2 | 9 | [`isf-verification.md`](knowledge-map/generated/isf-verification.md) |
 | `isf-while` | 1 | 4 | [`isf-while.md`](knowledge-map/generated/isf-while.md) |
+| `knowledge-card` | 1 | 10 | [`knowledge-card.md`](knowledge-map/generated/knowledge-card.md) |
 | `live-document` | 2 | 68 | [`live-document.md`](knowledge-map/generated/live-document.md) |
 | `loop-early` | 1 | 5 | [`loop-early.md`](knowledge-map/generated/loop-early.md) |
 | `lte-digital` | 1 | 5 | [`lte-digital.md`](knowledge-map/generated/lte-digital.md) |
@@ -130,10 +132,14 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `vhdl-deferred` | 1 | 19 | [`vhdl-deferred.md`](knowledge-map/generated/vhdl-deferred.md) |
 | `vhdl-external` | 1 | 1 | [`vhdl-external.md`](knowledge-map/generated/vhdl-external.md) |
 | `vhdl-package` | 1 | 5 | [`vhdl-package.md`](knowledge-map/generated/vhdl-package.md) |
+| `vial-architecture` | 1 | 6 | [`vial-architecture.md`](knowledge-map/generated/vial-architecture.md) |
 | `vial-execution` | 3 | 45 | [`vial-execution.md`](knowledge-map/generated/vial-execution.md) |
 | `vial-expressive` | 1 | 13 | [`vial-expressive.md`](knowledge-map/generated/vial-expressive.md) |
 | `vial-hial` | 2 | 15 | [`vial-hial.md`](knowledge-map/generated/vial-hial.md) |
+| `vial-native` | 2 | 33 | [`vial-native.md`](knowledge-map/generated/vial-native.md) |
 | `vial-portable` | 1 | 12 | [`vial-portable.md`](knowledge-map/generated/vial-portable.md) |
 | `vial-public` | 1 | 11 | [`vial-public.md`](knowledge-map/generated/vial-public.md) |
 | `vial-semantic` | 1 | 5 | [`vial-semantic.md`](knowledge-map/generated/vial-semantic.md) |
 | `vial-source` | 1 | 18 | [`vial-source.md`](knowledge-map/generated/vial-source.md) |
+| `vial-vhdl` | 2 | 23 | [`vial-vhdl.md`](knowledge-map/generated/vial-vhdl.md) |
+| `xial-native` | 1 | 10 | [`xial-native.md`](knowledge-map/generated/xial-native.md) |

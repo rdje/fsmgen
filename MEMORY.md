@@ -8,14 +8,15 @@ See `MEMORY_ARCHITECTURE.md` for the four-layer system. Git preserves prior hist
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`;
   remaining canonical execution-graph structural levels.
-- current_state: the operations-per-scenario ladder is complete. 65,536
-  operations parse into one full scenario, then the unchanged public binder
-  rejects only at the 16-MiB plan cap; one further reset record is rejected
-  first by the semantic 65,536 expanded-action cap. Both record one
-  `VIAL_SCALE_LIMIT_INTERACTION` discrepancy routed to `.17.4`.
-- next_action: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.4` splits the
-  32,746-byte card pinning `knowledge_cards` at 99.9%. Then resume the
-  decision-0061 total-operation ladder under `[[vial-execution-scale-source-cap-representation]]`.
+- current_state: the operations-per-scenario ladder is complete. 65,536 operations
+  parse into one full scenario, then the unchanged public binder rejects only at
+  the 16-MiB plan cap; one further reset record is rejected first by the semantic
+  65,536 expanded-action cap, both recording one `VIAL_SCALE_LIMIT_INTERACTION`
+  discrepancy routed to `.17.4`. `.4` returned `knowledge_cards` to `normal` by
+  splitting the 32,746-byte HIAL/VIAL monolith into eight proved-equal topic cards.
+- next_action: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.5` restates the prose
+  calling every new collection file a ceiling increase, false since `0064`. Then
+  resume the decision-0061 ladder under `[[vial-execution-scale-source-cap-representation]]`.
 - in_flight_uncommitted: none after this commit.
 - in_flight_background: none.
 - blockers: none.
