@@ -1,7 +1,7 @@
 # Knowledge Map: `live-document`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **80** uniquely owned question entries.
+> **4** facts · **87** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -10,6 +10,7 @@
 - q="are declared live-document freshness verifiers actually executed?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="are external review evidence-map paths mechanically checked?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="are the common JSONL control-plane registries independently bounded?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="can I widen the allowance on a rollover_debt surface?" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="does FSMGen use a global newest-date or distinct-date staleness check?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="does a generated projection support deterministic shard collections?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="does adding a fact card need a decision record?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
@@ -32,6 +33,7 @@
 - q="how do I fix a lines_each target that blocks an ordinary edit?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="how do I grow a live-document surface that is at its declared allowance?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 - q="how do I query the Knowledge Map?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="how do I raise transition.max_growth without a ceiling increase?" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="how does a bounded rolling ledger preserve whole-entry history and exact reconstruction?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how does a live-document migration prove that no content was lost?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how does maintained_reference bound reads and authorize product-sized mdBook or ISF_SPEC change without a fixed aggregate cap?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
@@ -42,6 +44,7 @@
 - q="how is archived document content proved retrievable?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is the ISF reference partitioned?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is the Knowledge Map kept bounded?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="how much headroom does a live-document debt surface actually have?" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="how were the diagnostics, active_resume, and rationale targets derived?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="is immutable task evidence the same as mutable current derived state?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="is neutral live-document checker identity mechanically tested?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
@@ -51,6 +54,7 @@
 - q="may I delete knowledge cards or prose to fit a live-document budget?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 - q="should I raise lines_each or lower bytes_each on a live-document surface?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="should an obsolete live document be partitioned or retired?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="surface focused_documents transition debt exceeded its owned allowance" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="surface is at 80.0% and must declare warning_debt" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 - q="surface is at 81.7% and must declare warning_debt" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="surface knowledge_cards transition debt exceeded its owned allowance" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
@@ -78,9 +82,12 @@
 - q="which FSMGen live documents are retirement candidates?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="which live-document families are migrated versus pinned or deferred?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="which tasks own the large roadmap, task, book, changelog, development notes, and knowledge map migrations?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="who owns a live-document transition allowance?" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="why are migration products not added as disjoint line counts?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="why did raising the allowance to the actual not unblock the next write?" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="why did root_documents allow 12000 lines per root markdown file?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="why does a live-document surface hit its line warning while byte pressure is tiny?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
+- q="why does adding one file under docs/ fail the live-document checker?" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="why does the live-document registry use JSONL instead of TSV?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="why is MEMORY.md capped at 32768 bytes?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="why is docs/decisions/INDEX.md the largest member of the rationale surface?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
@@ -108,3 +115,10 @@ _A live-document surface's lines_each and bytes_each must imply the bytes per li
 
 - **date:** 2026-08-19 · **status:** current
 - **source and verification:** [`docs/knowledge/live-document-target-pair-calibration.md`](../../docs/knowledge/live-document-target-pair-calibration.md)
+
+### live-document-transition-allowance-headroom
+
+_A transition allowance is re-declared to the measured actual plus one ratchet step, and its owner must be live_
+
+- **date:** 2026-08-19 · **status:** current
+- **source and verification:** [`docs/knowledge/live-document-transition-allowance-headroom.md`](../../docs/knowledge/live-document-transition-allowance-headroom.md)

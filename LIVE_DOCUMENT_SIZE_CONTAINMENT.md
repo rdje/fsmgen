@@ -104,12 +104,19 @@ scripts/check_live_document_size.sh 2>&1 | grep 'surface <SURFACE-ID>:'
 Then choose by the dimension that is short.
 
 **Lines or bytes, still inside the enforcement ceiling.** Raise that surface's
-`transition.max_growth.lines_total` / `bytes_total` in
-`doctrine/live_document_size/surfaces.jsonl` to the new measured actual. This
-declares a measurement, not a ceiling increase, and
-`scripts/check_live_document_ceiling_authority.pl` still reports zero
-increases. Compacting superseded narration instead is legitimate, but it may
-only remove duplicated or superseded prose, never an exact recorded fact.
+`transition.max_growth` dimension in
+`doctrine/live_document_size/surfaces.jsonl` to the new measured actual **plus
+that surface's own `transition.ratchet_step` for the same dimension**, clamped
+so `baseline + growth` never exceeds the enforcement ceiling. Decision `0070`
+requires the extra step: raising only to the actual leaves zero headroom, so the
+next ordinary write fails the same gate and the declaration becomes a toll booth
+rather than a budget. This is still a declared measurement, not a ceiling
+increase, and `scripts/check_live_document_ceiling_authority.pl` still reports
+zero increases. Do not apply it to a `rollover_debt` surface: at rollover the
+remedy is the declared rollover, not more room. Compacting superseded narration
+instead is legitimate, but it may only remove duplicated or superseded prose,
+never an exact recorded fact. The named `transition.owner` must be a live node —
+an active tree, or a leaf that is not yet `done`.
 
 **A new file in a collection surface.** Read the `files` dimension before
 assuming a ceiling change. While `files` is below its enforcement ceiling this
