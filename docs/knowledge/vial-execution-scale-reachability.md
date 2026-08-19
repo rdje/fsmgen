@@ -21,6 +21,8 @@ answers:
   - "how does VIAL reject the first complete execution plan operation above sixteen MiB?"
   - "how does the VIAL execution qualification concentrate 8192 operations in one scenario?"
   - "which cap rejects 65536 and 65537 VIAL operations in one scenario?"
+  - "which cap rejects 65536 total VIAL operations across 32 scenarios?"
+  - "does the VIAL total-operation axis have a qualified operating point?"
 date: 2026-08-19
 status: current
 tags: [vial, execution-ir, scale, binder, bridge, random, replay, plan, limits]
@@ -40,6 +42,7 @@ evidence: >-
   t/1616-vial-architecture-scale-execution-scenario-qualification.t; t/1617-vial-architecture-scale-execution-scenario-limit.t; t/1618-vial-architecture-scale-execution-scenario-over-limit.t;
   t/1619-vial-architecture-scale-execution-operation-qualification.t;
   t/1620-vial-architecture-scale-execution-operation-limit.t; t/1621-vial-architecture-scale-execution-operation-over-limit.t;
+  t/1622-vial-architecture-scale-execution-total-operation-qualification.t;
   t/1609-vial-architecture-scale-execution-plan-bytes.t;
   t/1610-vial-architecture-scale-execution-plan-qualification.t;
   t/1611-vial-architecture-scale-execution-plan-limit.t;
@@ -190,6 +193,19 @@ rejected first by the parser with `scenario exceeds 65536 expanded actions` at
 plan, the semantic rejection precedes any bridge construction, and each
 evaluation reports `expected_rejection` plus one
 `VIAL_SCALE_LIMIT_INTERACTION` discrepancy routed to `.17.4`.
+
+The total-operation axis spreads the same work over a fixed fanout of 32
+scenarios, and it is the first axis whose *qualification* level is unreachable.
+Its 920,547-byte 65,536-operation source clears every stage before the plan:
+no scenario approaches the 65,536 expanded-action semantic cap, the parser
+returns 32 scenarios of exactly 2,048 expanded actions each, and the
+checked-AHB bridge identity is unchanged. Only the serialized plan crosses a
+limit, so the binder returns one `serialized_plan_bytes exceeds the limit
+16777216` at `/plan`. The evaluation reports `expected_rejection` and one
+`VIAL_SCALE_LIMIT_INTERACTION` at `/requested_counts/operations_total` routed
+to `.17.4`. The consequence is about the axis, not one level: the
+total-operation axis has **no nominal operating point above its 1,024-operation
+gate**, and its `limit_v1` and `over_limit_v1` levels stay unowned.
 
 The nominal execution limits are not all reachable. Scenarios and
 simultaneously live fibers reach their exact 4,096 and 16,384 limits. Operations

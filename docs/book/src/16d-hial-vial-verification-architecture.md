@@ -2471,6 +2471,66 @@ for my $case (
 }
 ```
 
+The total-operation axis spreads the same operations over a fixed fanout of 32
+scenarios instead of concentrating them in one, and its qualification level is
+the first selected level that no construction can reach:
+
+| Level | Scenarios x resets | Total operations | Plan result |
+| --- | --- | ---: | --- |
+| gate | 32 x 32 | 1,024 | accepted |
+| qualification | 32 x 2,048 | 65,536 | rejected by the 16-MiB plan cap |
+
+The 920,547-byte qualification source authors 32 scenarios of 2,048 genuine
+one-cycle bus resets each. Every ordinary stage before the plan accepts it: no
+scenario approaches the 65,536 expanded-action semantic cap, the parser
+produces a complete `SemanticIR` whose 32 scenarios each report exactly 2,048
+expanded actions, and the checked-AHB bridge identity is the same one every
+other execution workload uses. Only the serialized plan crosses a limit, so the
+unchanged public binder returns exactly one `VIAL_EXECUTION_LIMIT_ERROR`, phase
+`limit`, message `serialized_plan_bytes exceeds the limit 16777216`, at
+`/plan`, with no partial `VIALExecutionIR` and no partial plan.
+
+That result is reported, never rounded off. The evaluation classifies the
+outcome as `expected_rejection` and records one `VIAL_SCALE_LIMIT_INTERACTION`
+contract discrepancy at `/requested_counts/operations_total`, naming
+`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4` as the repair owner. Read it
+as a statement about the axis rather than about one level: with the plan cap
+authoritative well below the selected qualification count, the total-operation
+axis currently has **no nominal operating point above its 1,024-operation
+gate**, and no total-operation capacity beyond that gate is claimed as proved.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+open my $fh, '<:raw', 'ppif/ahb_lite_subordinate.ppif'
+    or die "cannot read checked AHB source: $!";
+local $/;
+my $checked_ahb = <$fh>;
+close $fh or die "cannot close checked AHB source: $!";
+
+my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+    primary_axis => 'operations_total',
+    level => 'qualification_candidate_v1',
+    reference_hial_text => $checked_ahb,
+});
+die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+
+my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+    construction => $workload,
+});
+die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+die "unexpected total-operation outcome\n"
+    unless $evaluation->{status} eq 'expected_rejection'
+        && $evaluation->{diagnostics}[0]{message}
+            eq 'serialized_plan_bytes exceeds the limit 16777216'
+        && $evaluation->{contract_discrepancies}[0]{path}
+            eq '/requested_counts/operations_total';
+```
+
+The total-operation `limit_v1` and `over_limit_v1` levels stay unowned by the
+caller-sealed generator, so requesting either fails closed rather than
+reporting an unmeasured capacity.
+
 The following slice implements both gate-level fiber axes through the same
 frozen checked-AHB route and unchanged public builder:
 

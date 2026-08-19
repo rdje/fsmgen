@@ -167,6 +167,8 @@ sub construct($class, @args) {
     $owned_level = 1 if defined($axis) && $axis eq 'operations_per_scenario'
         && defined($level) && ($level eq 'qualification_candidate_v1'
             || $level eq 'limit_v1' || $level eq 'over_limit_v1');
+    $owned_level = 1 if defined($axis) && $axis eq 'operations_total'
+        && defined($level) && $level eq 'qualification_candidate_v1';
     confess "execution-graph gate slice does not own the requested shape\n"
         unless defined($axis) && $owned_axis{$axis} && $owned_level;
     my $axis_contract = FSM::VIAL::ArchitectureScaleWorkload->catalog
@@ -1684,6 +1686,11 @@ sub _expects_selected_rejection($spec) {
     # semantic expanded-action cap wins one operation later.
     return 1 if $axis eq 'operations_per_scenario'
         && ($level eq 'limit_v1' || $level eq 'over_limit_v1');
+    # The total-operation axis is the first whose *qualification* level is
+    # unreachable: 65,536 total operations already serialize past the 16-MiB
+    # plan cap, so this axis has no nominal operating point above its gate.
+    return 1 if $axis eq 'operations_total'
+        && $level eq 'qualification_candidate_v1';
     return 0 unless $level eq 'over_limit_v1';
     return 1 if $axis eq 'serialized_plan_bytes';
     return 1 if $axis eq 'random_attempts';
@@ -1692,24 +1699,38 @@ sub _expects_selected_rejection($spec) {
 }
 
 sub _selected_discrepancies($spec) {
-    return [] unless ($spec->{primary_axis} // '') eq 'operations_per_scenario';
+    my $axis = $spec->{primary_axis} // '';
     my $level = $spec->{level} // '';
-    return [_limit_interaction(
-        'the 16777216-byte serialized-plan cap precedes the selected'
-            . ' 65536-operation execution limit',
-    )] if $level eq 'limit_v1';
-    return [_limit_interaction(
-        'the 65536 expanded-action semantic cap precedes the selected'
-            . ' 65537-operation execution boundary',
-    )] if $level eq 'over_limit_v1';
+    if ($axis eq 'operations_per_scenario') {
+        return [_limit_interaction(
+            $axis,
+            'the 16777216-byte serialized-plan cap precedes the selected'
+                . ' 65536-operation execution limit',
+        )] if $level eq 'limit_v1';
+        return [_limit_interaction(
+            $axis,
+            'the 65536 expanded-action semantic cap precedes the selected'
+                . ' 65537-operation execution boundary',
+        )] if $level eq 'over_limit_v1';
+        return [];
+    }
+    if ($axis eq 'operations_total') {
+        return [_limit_interaction(
+            $axis,
+            'the 16777216-byte serialized-plan cap precedes the selected'
+                . ' 65536-operation total qualification level, so this axis'
+                . ' has no nominal operating point above its 1024-operation gate',
+        )] if $level eq 'qualification_candidate_v1';
+        return [];
+    }
     return [];
 }
 
-sub _limit_interaction($message) {
+sub _limit_interaction($axis, $message) {
     return {
         code => 'VIAL_SCALE_LIMIT_INTERACTION',
         message => $message,
-        path => '/requested_counts/operations_per_scenario',
+        path => '/requested_counts/' . $axis,
         repair_owner => $LIMIT_POLICY_REPAIR_OWNER,
     };
 }
@@ -1736,7 +1757,9 @@ sub _expected_rejection_diagnostics($spec) {
     my $axis = $spec->{primary_axis} // '';
     if ($axis eq 'serialized_plan_bytes'
         || ($axis eq 'operations_per_scenario'
-            && ($spec->{level} // '') eq 'limit_v1')) {
+            && ($spec->{level} // '') eq 'limit_v1')
+        || ($axis eq 'operations_total'
+            && ($spec->{level} // '') eq 'qualification_candidate_v1')) {
         return [{
             schema_version => 1,
             severity => 'error',
