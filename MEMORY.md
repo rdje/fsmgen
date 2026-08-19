@@ -13,9 +13,9 @@ See `MEMORY_ARCHITECTURE.md` for the four-layer system. Git preserves prior hist
   rejects only at the 16-MiB plan cap; one further reset record is rejected
   first by the semantic 65,536 expanded-action cap. Both record one
   `VIAL_SCALE_LIMIT_INTERACTION` discrepancy routed to `.17.4`.
-- next_action: resume the decision-0061 total-operation ladder. A literal
-  1,000,000-reset source exceeds the 1-MiB VIAL source cap, so `.17.2.4.2`
-  must first select a representation and apply the decision-0061 preflight rule.
+- next_action: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.4` splits the
+  32,746-byte card pinning `knowledge_cards` at 99.9%. Then resume the
+  decision-0061 total-operation ladder under `[[vial-execution-scale-source-cap-representation]]`.
 - in_flight_uncommitted: none after this commit.
 - in_flight_background: none.
 - blockers: none.
