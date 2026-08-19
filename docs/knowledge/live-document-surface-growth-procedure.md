@@ -53,7 +53,11 @@ duplicated or superseded narration. Some surfaces sit just under their 80%
 warning milestone, so one added line trips `must declare warning_debt` — rewrite
 a line in place or route the content to the surface whose role owns it.
 
-For the enforced rule, read the registries and the two guards. The prose in
-`LIVE_DOCUMENT_SIZE_CONTAINMENT.md` is rationale plus the local procedure, and
-is stricter than the check; it does not by itself prohibit what the guards
-accept. Related: [[live-document-size-containment]].
+A collection ceiling cannot relieve a per-file bound. When one member is at its
+own `lines_each` / `bytes_each` / `line_bytes_each` limit, partition that member
+by topic instead of growing anything — see
+[[knowledge-card-sizing-and-partition]].
+
+For the enforced rule, read the registries and the two guards;
+`LIVE_DOCUMENT_SIZE_CONTAINMENT.md` carries the same rule as rationale plus the
+local procedure. Related: [[live-document-size-containment]].

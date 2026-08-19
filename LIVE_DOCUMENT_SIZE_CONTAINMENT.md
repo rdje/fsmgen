@@ -111,18 +111,32 @@ declares a measurement, not a ceiling increase, and
 increases. Compacting superseded narration instead is legitimate, but it may
 only remove duplicated or superseded prose, never an exact recorded fact.
 
-**A new file in a collection surface.** This is a real ceiling increase. In one
-commit, add the new `docs/decisions/NNNN-*.md` record the file serves, append
-one `ceiling_increase_authority` row to
+**A new file in a collection surface.** Read the `files` dimension before
+assuming a ceiling change. While `files` is below its enforcement ceiling this
+is an ordinary write; decision `0064` deliberately put `knowledge_cards` in
+that position so an ordinary fact card costs no decision record, authority row,
+or ceiling edit. It is a real ceiling increase only when `files` has actually
+reached the ceiling. In that case, in one commit, add the new
+`docs/decisions/NNNN-*.md` record the increase serves, append one
+`ceiling_increase_authority` row to
 `doctrine/live_document_size/ceiling_increase_authorities.jsonl` naming that
 decision path with its `dimension` and `previous`/`new`, and raise both
 `enforcement_ceilings` and `transition.max_growth` for that dimension. The
-guard requires the cited decision to be **added** in the same change, so a new
-durable fact card is admitted only alongside a new durable decision record.
+guard requires the cited decision to be **added** in the same change, so a
+ceiling increase is admitted only alongside a new durable decision record.
 That pairing is a deliberate anti-sprawl control; do not work around it.
 Decisions `0052`, `0059`, `0061`, and `0063` are worked `knowledge_cards`
 examples, each carrying `Ceiling authority`, `Surface`, `Dimension`, and
 `Change` metadata.
+
+**One file at its own per-file bound.** `lines_each`, `bytes_each`, and
+`line_bytes_each` are per-file, so no collection-ceiling change can relieve
+them and a single oversized member can hold the whole surface in debt. Partition
+that member by topic instead: keep the original path and identifier as the core
+part so existing links stay valid, give each part only the evidence it needs,
+and prove closure mechanically rather than by reading — an unchanged
+question/answer census plus an empty set diff of the retained keys. Bytes that
+stay in the live collection are not an archive event and need no descriptor.
 
 **A surface parked just under its warning milestone.** Some surfaces sit
 deliberately below 80% of their health target, so a single added line trips

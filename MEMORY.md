@@ -12,11 +12,10 @@ See `MEMORY_ARCHITECTURE.md` for the four-layer system. Git preserves prior hist
   parse into one full scenario, then the unchanged public binder rejects only at
   the 16-MiB plan cap; one further reset record is rejected first by the semantic
   65,536 expanded-action cap, both recording one `VIAL_SCALE_LIMIT_INTERACTION`
-  discrepancy routed to `.17.4`. `.4` returned `knowledge_cards` to `normal` by
-  splitting the 32,746-byte HIAL/VIAL monolith into eight proved-equal topic cards.
-- next_action: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.5` restates the prose
-  calling every new collection file a ceiling increase, false since `0064`. Then
-  resume the decision-0061 ladder under `[[vial-execution-scale-source-cap-representation]]`.
+  discrepancy routed to `.17.4`. `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION` is closed:
+  `knowledge_cards` is `normal` and growth/retrieval/sizing are three stated rules with three cards.
+- next_action: resume `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2` on the decision-0061
+  total-operation ladder under `[[vial-execution-scale-source-cap-representation]]`.
 - in_flight_uncommitted: none after this commit.
 - in_flight_background: none.
 - blockers: none.

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra/continuity`
 - Created: `2026-08-19`
 - Last updated: `2026-08-19`
@@ -51,7 +51,7 @@ only option, and no doctrine conflict exists.
 ## Task Tree
 
 - ID: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION`
-  Status: `active`
+  Status: `done`
   Goal: `Keep the fact-card growth path correct and discoverable at a saturated allowance.`
   Children: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.1, KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.2, KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.3, KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.4, KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.5`
 
@@ -84,11 +84,11 @@ only option, and no doctrine conflict exists.
   Commit: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.4: partition the surface-pinning fact card`
 
 - ID: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.5`
-  Status: `pending`
-  Goal: `Repair the containment prose that still calls every new collection file a ceiling increase.`
-  Acceptance: `LIVE_DOCUMENT_SIZE_CONTAINMENT.md's Growing a surface that is at its declared allowance procedure still states that a new file in a collection surface "is a real ceiling increase" requiring a paired decision record and authority row. Decision 0064 made that false for knowledge_cards, and .4 added eight card files with zero ceiling increases and no decision record while the guard passed. Restate the rule as conditional on the dimension actually being at its enforcement ceiling, keep the authority requirement and decision pairing intact for genuine increases, and keep the fact card live-document-surface-growth-procedure in agreement. Pass scripts/check_doctrines.sh.`
-  Verification: `pending`
-  Commit: `pending`
+  Status: `done`
+  Goal: `Repair the containment prose that still calls every new collection file a ceiling increase, and add the missing per-file-bound route.`
+  Acceptance: `LIVE_DOCUMENT_SIZE_CONTAINMENT.md's Growing a surface that is at its declared allowance procedure still states that a new file in a collection surface "is a real ceiling increase" requiring a paired decision record and authority row. Decision 0064 made that false for knowledge_cards, and .4 added eight card files with zero ceiling increases and no decision record while the guard passed. Restate the rule as conditional on the dimension actually being at its enforcement ceiling, keep the authority requirement and decision pairing intact for genuine increases, and keep TOOLBOX.md and the fact card live-document-surface-growth-procedure in agreement. The chooser is also incomplete: it offers no route for the case .4 actually hit, one member at its own per-file bound, which no collection ceiling can relieve; add that route. Pass scripts/check_doctrines.sh.`
+  Verification: `The new-file paragraph now reads the files dimension first and calls the write ordinary while files is below its enforcement ceiling, naming decision 0064 as the deliberate reason knowledge_cards sits there; the authority row, decision pairing, added-in-the-same-change guard rule, and the 0052/0059/0061/0063 worked examples are unchanged and now scoped to a genuine increase. A fourth route, One file at its own per-file bound, states that lines_each/bytes_each/line_bytes_each are per-file, that a single oversized member can hold the surface in debt, and that the repair is topic partition with the original path retained, mechanical closure proof, and no archive descriptor. TOOLBOX.md is corrected by rewriting its Knowledge Map row in place: the file stays at exactly 319 lines because the diagnostics surface remains parked at 79.8% and one added line would trip its 80% milestone. The live-document-surface-growth-procedure card drops the sentence that excused the contradiction as stricter prose and routes the per-file case to knowledge-card-sizing-and-partition. root_documents absorbs 15 lines at 479 lines_each against a 12,000 target. The full doctrine driver passes and knowledge-map: OK still reports 1,119 facts/5,809 questions/5,975 occurrences/127 shards, so the card edit changed no answer.`
+  Commit: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.5: correct the collection-file ceiling rule`
 
 ## Decisions
 
@@ -183,3 +183,11 @@ only option, and no doctrine conflict exists.
   that any new collection file "is a real ceiling increase". Leaving prose that
   contradicts what this tree's own commits do is drift, so the repair is owned
   rather than noted.
+- `2026-08-19`: Closed after `.5`. The tree's own history is its best evidence
+  for why the goal was stated as correctness and discoverability rather than
+  headroom: the activation premise was wrong (`.1`), the first close was
+  premature (`.2`), the ceilings were an adoption artifact (`.3`), the real
+  binding constraint was a per-file bound no ceiling could relieve (`.4`), and
+  the procedure prose then had to catch up with its own registries (`.5`).
+  Growth, retrieval, and sizing are now three separate stated rules with three
+  separate cards, each reachable in one query.
