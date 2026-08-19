@@ -9,6 +9,9 @@ answers:
   - "why did raising the allowance to the actual not unblock the next write?"
   - "who owns a live-document transition allowance?"
   - "can I widen the allowance on a rollover_debt surface?"
+  - "how long can a fact card line be?"
+  - "card line width exceeds 819"
+  - "why does a long reverify line fail even though knowledge_cards is normal?"
 date: 2026-08-19
 status: current
 evidence: docs/decisions/0070-transition-allowances-carry-one-declared-step-and-a-live-owner.md; docs/decisions/0064-live-document-growth-is-declared-measurement-with-paired-decisions.md; doctrine/live_document_size/surfaces.jsonl; LIVE_DOCUMENT_SIZE_CONTAINMENT.md; docs/tasks/LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.md
@@ -46,3 +49,12 @@ and no decision record or authority row is required. Raising the *ceiling* is
 the reviewed act that does need both — see
 [[live-document-surface-growth-procedure]] and
 [[live-document-target-pair-calibration]].
+
+A related bound lives outside containment entirely. Fact-card line width is
+capped at **819 bytes** by `KM_CARD_MAX_LINE_BYTES` in
+`knowledge-map/scripts/knowledge_map.pl`, which is why 107 of 1,122 cards sit
+between 800 and 819 bytes and none exceed it. The `knowledge_cards`
+`line_bytes_each` target of 1,024 exists to put containment's 80% warning at
+819.2 — on that owner's cap rather than tighter or looser than it. A long
+`reverify:` line therefore fails `check_knowledge_map.sh`, not the containment
+checker, and raising the containment target would not admit it.

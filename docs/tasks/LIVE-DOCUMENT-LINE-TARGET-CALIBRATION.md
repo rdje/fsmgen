@@ -103,11 +103,11 @@ quality risk, not merely an inconvenience.
   Commit: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.2: re-derive three miscalibrated target pairs`
 
 - ID: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3`
-  Status: `active`
+  Status: `done`
   Goal: `Sweep every remaining governed surface for the same target-pair defect and re-derive or explicitly retain each one.`
   Acceptance: `.2 fixed only the three surfaces under live pressure. Apply decision 0065's rule to every other surface in doctrine/live_document_size/surfaces.jsonl: divide bytes_each by lines_each, compare the implied bytes-per-line against the retained surface's measured value, and either re-derive the pair or record why the divergence is intended. enforced_rules (implies 109 against a measured 56, at 74.7%) and engineering_rationale (implies 131 against 61, at 13.4%) are the known instances; the sweep must be complete rather than limited to those two. Any increase needs its own paired decision record and authority row; lowering stays free. Change no milestone mechanism, ratchet, verifier, or authority requirement. Pass scripts/check_doctrines.sh. The same sweep must also report each surface's remaining headroom against its owned transition allowance, because that is the other way containment obstructs an ordinary write: focused_documents currently has 1 line and 287 bytes left against an allowance owned by GITHUB-PUSH-OUTCOME-ASSURANCE.6.1, and knowledge_cards sits at 79.98% of line_bytes_each, so one long line in a new card trips warning debt. Decision 0064 makes raising transition.max_growth a declared measurement rather than a ceiling increase, so the remediation is documented; the finding is that the audit is not. If the sweep ratchets active_resume down after decisions 0067 and 0068 shrank MEMORY.md to 14 lines, do it as a routine measurement: MEMORY.md sizing is closed and must not be resurfaced to the director as a question.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Delivered as three children because the leaf held three products. .3.1 swept all 19 surfaces that declare health targets and re-derived nine target pairs; .3.2 produced the transition-allowance and milestone headroom audit, re-declared focused_documents to actual plus one ratchet step, and repaired two allowances owned by completed leaves; .3.3 reopened the three files bounds that sat on their own member counts and refuted a fourth candidate by probe. Decisions 0069, 0070, and 0071 own the three rules. Every governed bound is now either derived from the retained surface, aligned to a cap another doctrine owns, or a divergence with a written reason.`
+  Commit: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.3: reopen the bounds pinned at their actual`
   Children: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.1, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.2, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.3`
 
 - ID: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.1`
@@ -125,11 +125,11 @@ quality risk, not merely an inconvenience.
   Commit: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.2: audit and re-declare transition allowances`
 
 - ID: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Reopen the surfaces whose bound is pinned at their current actual, so an ordinary new member stops being a ceremony.`
   Acceptance: `.3.2 proved that one ordinary docs/*.md file fails the files enforcement ceiling because that ceiling equals the current member count. The same pinning closes root_documents at 18 and ancillary_documents at 16, and knowledge_cards line_bytes_each sits at exactly 80.0% of a 1024 target against a retained cluster of 817-819-byte reverify lines. Apply decision 0064's precedent, which raised the knowledge_cards collection ceilings to the surface's own reviewed health targets so an ordinary fact card costs no ceremony: for each surface, either raise the enforcement ceiling to its reviewed health target, or - where the health target is itself pinned at the actual, as ancillary_documents files is - re-derive the target from the retained surface first and state the reviewed number. Every raise needs its paired decision record and authority row. Do not clear a debt state by moving a target: focused_documents must stay in warning_debt at 80.8% of its line target, and ancillary_documents' rollover must be answered by a reviewed target rather than erased. Change no milestone mechanism, ratchet, verifier, or authority requirement. Prove the fix by repeating .3.2's probe: one new file under each reopened collection must pass scripts/check_live_document_size.sh. Pass scripts/check_doctrines.sh.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Three of the four candidate bounds were genuinely pinned at their own measurement and are raised under new decision 0071 with one authority row each: focused_documents files ceiling 1007 -> 1280 and root_documents files ceiling 18 -> 24, both to their existing reviewed health targets under decision 0064's precedent, and ancillary_documents files target and ceiling 16 -> 32, re-derived first because the target was itself pinned at sixteen members while two of its ten glob patterns are per-artifact accumulators. focused_documents transition.max_growth.files also moves 2 -> 3 as a free declared measurement under 0070. The probe is the proof: with one new docs/*.md and one new root *.md present, scripts/check_live_document_size.sh exits 0 and reports all live-document size-containment invariants hold (22 surfaces), where the same probe failed three invariants at .3.2. The fourth candidate was refuted by that probe and is the more valuable result. knowledge_cards line_bytes_each looked pinned - 1024 against a widest retained card line of exactly 819, with 107 of 1122 cards in the top 20 bytes - but writing a 900-byte card line passed containment and failed knowledge-map/scripts/check_knowledge_map.sh instead. knowledge-map/scripts/knowledge_map.pl:27 holds the real authority, KM_CARD_MAX_LINE_BYTES = 819, so the 1024 target is a correct alignment placing the 80% warning at 819.2 rather than a pin. That raise was reverted, its authority row removed, and the external cap recorded in the fact card because no live document stated it. Both debt states are intact: focused_documents stays warning_debt at 80.8% and ancillary_documents stays rollover_debt at 90.8% of lines_total, which is also why its files raise is a calibration rather than a reopening.`
+  Commit: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3.3: reopen the bounds pinned at their actual`
 
 - ID: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.4`
   Status: `done`
@@ -151,6 +151,12 @@ quality risk, not merely an inconvenience.
   Acceptance: `.2 and .4 both treated recurring MEMORY.md pressure as a limit problem. Measure the file's actual composition instead. For any content that belongs to another layer, verify it against its authority per the containment duplicate rule, inspect that authority for divergence the copy concealed, repair the authority first if wrong, then remove the copy and leave the reader's question answerable. Install a mechanical control that fails on the offending write rather than many slices later, and prove it fails closed. Change no limit in this slice. Pass scripts/check_doctrines.sh.`
   Verification: `The file was 46% misplaced content. A 23-line Durable context block summarised 14 cross-cutting decisions and 10 task leaves, and the current_state field spent 9 more lines restating decisions 0065 and 0066. All 14 decisions were verified present on disk with exactly one docs/decisions/INDEX.md row each, and all 10 leaves verified as real nodes in docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md, so nothing unique was lost. The audit also found one concealed drift: the copy attributed PNT autonomy to decision 0062 (push cadence) when the authority is 0003, which the removal restores. MEMORY.md is now 30 lines / 1,690 bytes, from 50 / 3,800, and 25% of its line cap. Decision 0067 records the incentive that produced the drift and adds MEMORY_POINTER_FIELD_LINE_CAP, capping each resume field at 5 lines in scripts/check_memory_architecture.sh. No limit changed in this slice.`
   Commit: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.5: remove the layer-A bloat vector`
+
+## Acceptance Checklist (enforced) — `.3.3`
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'"files":1007' --oneline -- doctrine/live_document_size/surfaces.jsonl` shows the `focused_documents` ceiling was set to the member count of the day it was written, and the same shape holds at `root_documents` (18 against 18 members) and `ancillary_documents` (16 against 16, target and ceiling both). `live-document-size/scripts/check_live_document_size.pl:1225` enforces `actual > ceiling`, so a bound equal to the actual rejects the next member by construction — which is why `.3.2`'s probe failed three invariants for one ordinary `docs/*.md` file. The fourth candidate was refuted rather than confirmed: `knowledge_cards.line_bytes_each` at 1,024 against a retained maximum of exactly 819 looked like a milestone that had become an authoring cap, but writing a 900-byte card line passed containment and failed `knowledge-map/scripts/check_knowledge_map.sh`, and `knowledge-map/scripts/knowledge_map.pl:27` names the real owner, `KM_CARD_MAX_LINE_BYTES` = 819.
+- [x] **ADDRESSED (verified)** — with one new `docs/*.md` and one new root `*.md` present, `scripts/check_live_document_size.sh` exits `0` and reports `all live-document size-containment invariants hold (22 surfaces)`, against three invariant failures for the same probe at `.3.2`. `focused_documents` moves `files` `1007 -> 1280` (ceiling peak 100.0% -> 96.7% under probe), `root_documents` `18 -> 24` (79.2% under probe, still `normal`), and `ancillary_documents` `16 -> 32` on target and ceiling. `scripts/check_live_document_ceiling_authority.pl` reports `all ceiling-change invariants hold (3 increase(s))`, proving each raise is paired to newly added `docs/decisions/0071-a-containment-bound-pinned-at-its-actual-is-not-a-reviewed-bound.md` — three, not four, because the refuted `knowledge_cards` raise and its authority row were both withdrawn. `focused_documents` remains `warning_debt` at 80.8% and `ancillary_documents` remains `rollover_debt` at 90.8% of `lines_total`, so no debt state was cleared by moving a target.
+- [x] **NO REGRESSION** — staged `scripts/check_doctrines.sh` ends with `[doctrine] all doctrine checks passed`, and `scripts/run_with_ram_guard.sh -- prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t t/1560-live-document-ceiling-authority.t` reports `All tests successful` at `Files=3, Tests=35`; `knowledge-map: OK` covers 1,122 facts across 128 bounded shards, and the task-tree graph, README landing contract, locality, derived-state, and complete Markdown coverage stay green. No milestone percentage, ratchet step, verifier, authority requirement, decision pairing, or debt baseline changed, and every probe file plus its regenerated index was removed before staging.
 
 ## Acceptance Checklist (enforced) — `.3.2`
 
@@ -184,6 +190,14 @@ quality risk, not merely an inconvenience.
 
 ## Decisions
 
+- `2026-08-19`: `.3.3` selects decision `0071` and withdraws one of its own four
+  proposed raises. The `knowledge_cards` width bound satisfied every arithmetic
+  test for a pinned bound — target 1,024, retained maximum 819, 107 of 1,122
+  members in the top 20 bytes — and was still correct, because
+  `KM_CARD_MAX_LINE_BYTES` owns that dimension and containment was aligned to
+  it. Executing the write distinguished the two cases; the measurement could
+  not. The leaf's own acceptance already demanded that probe, which is the only
+  reason the error was caught before it landed.
 - `2026-08-19`: `.3.2` selects decision `0070` and opens `.3.3`. The audit found
   two independent causes, not one: an allowance re-declared to the actual leaves
   zero headroom by construction, and a bound pinned at the actual closes a
@@ -261,11 +275,11 @@ quality risk, not merely an inconvenience.
 
 ## Open Questions
 
-- `active_resume` is the one case where the tight line budget is deliberate:
-  `MEMORY_ARCHITECTURE.md` §6 and `MEMORY_POINTER_LINE_CAP` both fix the
-  resume pointer at one screen. `.2` must widen the reading rather than the
-  documented cap, or state plainly that the 80% milestone on a 60-line surface
-  is an effective 47-line cap and should be re-stated as such.
+- None. The `active_resume` question is closed: `.2` widened the reading rather
+  than the documented cap, and `.4` then split the pointer's two criteria under
+  decision `0066`. `.3.3` closed the related one it raised itself — whether
+  `knowledge_cards` line width was a pinned bound — by probing it and finding
+  `KM_CARD_MAX_LINE_BYTES` the real owner.
 
 ## Blockers
 
@@ -300,6 +314,10 @@ quality risk, not merely an inconvenience.
   `MEMORY_POINTER_FIELD_LINE_CAP` now fails a resume field that starts
   narrating. Decision `0067` and fact card `memory-pointer-layer-a-content`
   record the rule and the incentive that defeated the previous one.
+- `2026-08-19`: `.3.3` raised the three `files` bounds that sat on their own
+  member counts, proved the reopening with the `.3.2` probe now exiting `0`, and
+  recorded decision `0071` — including the refuted fourth candidate and the
+  previously undocumented `KM_CARD_MAX_LINE_BYTES` cap it exposed.
 - `2026-08-19`: `.3.2` produced the transition-allowance and milestone headroom
   audit, proved the `docs/*.md` block by probe, re-declared `focused_documents`
   to actual plus one ratchet step, repaired two allowances owned by completed

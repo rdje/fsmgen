@@ -1,7 +1,7 @@
 # Knowledge Map: `live-document`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **87** uniquely owned question entries.
+> **4** facts · **89** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -44,6 +44,7 @@
 - q="how is archived document content proved retrievable?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is the ISF reference partitioned?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is the Knowledge Map kept bounded?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="how long can a fact card line be?" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="how much headroom does a live-document debt surface actually have?" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="how were the diagnostics, active_resume, and rationale targets derived?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="is immutable task evidence the same as mutable current derived state?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
@@ -87,6 +88,7 @@
 - q="why did raising the allowance to the actual not unblock the next write?" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="why did root_documents allow 12000 lines per root markdown file?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="why does a live-document surface hit its line warning while byte pressure is tiny?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
+- q="why does a long reverify line fail even though knowledge_cards is normal?" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="why does adding one file under docs/ fail the live-document checker?" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="why does the live-document registry use JSONL instead of TSV?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="why is MEMORY.md capped at 32768 bytes?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)

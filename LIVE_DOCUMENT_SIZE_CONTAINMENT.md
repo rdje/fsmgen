@@ -145,6 +145,18 @@ and prove closure mechanically rather than by reading — an unchanged
 question/answer census plus an empty set diff of the retained keys. Bytes that
 stay in the live collection are not an archive event and need no descriptor.
 
+**A bound sitting exactly on the current actual.** Before treating a rejection
+as containment working, compare the bound with the measurement. A `files`
+ceiling equal to the member count, or a target equal to the actual, is a
+photograph of the day it was written rather than a reviewed steady state, and it
+rejects the next member by construction. Decision `0071` raises such a bound to
+the surface's reviewed health target, or re-derives the target first where the
+target is itself pinned. But do not move it on arithmetic alone: perform the
+write and read which checker rejects it. A bound may look pinned while it is
+correctly aligned to a cap another doctrine owns — `knowledge_cards`
+`line_bytes_each` is 1,024 so its 80% warning lands on the Knowledge Map's own
+`KM_CARD_MAX_LINE_BYTES` of 819, and moving it would admit nothing.
+
 **A surface parked just under its warning milestone.** Some surfaces sit
 deliberately below 80% of their health target, so a single added line trips
 `must declare warning_debt`. Prefer rewriting an existing line in place, or

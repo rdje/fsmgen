@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1122** facts · **5834** unique questions · **6000** answer occurrences · **128** topic shards.
+> **1122** facts · **5836** unique questions · **6003** answer occurrences · **128** topic shards.
 
 Query first:
 
@@ -106,7 +106,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `isf-verification` | 2 | 9 | [`isf-verification.md`](knowledge-map/generated/isf-verification.md) |
 | `isf-while` | 1 | 4 | [`isf-while.md`](knowledge-map/generated/isf-while.md) |
 | `knowledge-card` | 1 | 10 | [`knowledge-card.md`](knowledge-map/generated/knowledge-card.md) |
-| `live-document` | 4 | 87 | [`live-document.md`](knowledge-map/generated/live-document.md) |
+| `live-document` | 4 | 89 | [`live-document.md`](knowledge-map/generated/live-document.md) |
 | `loop-early` | 1 | 5 | [`loop-early.md`](knowledge-map/generated/loop-early.md) |
 | `lte-digital` | 1 | 5 | [`lte-digital.md`](knowledge-map/generated/lte-digital.md) |
 | `mdbook-test` | 1 | 5 | [`mdbook-test.md`](knowledge-map/generated/mdbook-test.md) |

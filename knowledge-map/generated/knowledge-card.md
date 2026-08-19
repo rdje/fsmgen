@@ -5,7 +5,7 @@
 
 ## Questions → facts
 
-- q="card line width exceeds 819" · facts=[knowledge-card-sizing-and-partition](../../docs/knowledge/knowledge-card-sizing-and-partition.md)
+- q="card line width exceeds 819" · facts=[knowledge-card-sizing-and-partition](../../docs/knowledge/knowledge-card-sizing-and-partition.md), [live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="does splitting a fact card break links to its id?" · facts=[knowledge-card-sizing-and-partition](../../docs/knowledge/knowledge-card-sizing-and-partition.md)
 - q="how big may one knowledge fact card be?" · facts=[knowledge-card-sizing-and-partition](../../docs/knowledge/knowledge-card-sizing-and-partition.md)
 - q="how do I partition an oversized fact card?" · facts=[knowledge-card-sizing-and-partition](../../docs/knowledge/knowledge-card-sizing-and-partition.md)
