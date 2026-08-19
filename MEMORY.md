@@ -14,8 +14,9 @@ See `MEMORY_ARCHITECTURE.md` for the four-layer system. Git preserves prior hist
   65,536 expanded-action cap, both recording one `VIAL_SCALE_LIMIT_INTERACTION`
   discrepancy routed to `.17.4`. `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION` is closed:
   `knowledge_cards` is `normal` and growth/retrieval/sizing are three stated rules with three cards.
-- next_action: resume `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2` on the decision-0061
-  total-operation ladder under `[[vial-execution-scale-source-cap-representation]]`.
+- next_action: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.2` (director-authorized) re-derives the three
+  miscalibrated `lines_each` targets. Then `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`
+  on the decision-0061 ladder under `[[vial-execution-scale-source-cap-representation]]`.
 - in_flight_uncommitted: none after this commit.
 - in_flight_background: none.
 - blockers: none.

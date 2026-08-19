@@ -48,6 +48,7 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 | --- | --- | --- | --- | --- |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.28` done | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.17.2.4.2` operations-per-scenario ladder complete; higher total-operation/fiber/binding/type/map levels next | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
+| `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION` | `active` | `infra/continuity` | `.1` done; `.2` re-derives three miscalibrated `lines_each` targets | [task](docs/tasks/LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 completeness` | `.844` terminal | [task](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
 
 ## Proposed Task Trees
@@ -57,7 +58,6 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
-| `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION` | `proposed` | `infra/continuity` | `.1` audits how three surfaces' `lines_each` targets were derived before any change | [task](docs/tasks/LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.md) |
 | `MDBOOK-CROSS-LAYER-CURRENT-STATUS-TRUTH-REPAIR` | `proposed` | `cross-layer book truth` | `.1` repairs stale Chapter 11 status prose after an evidence audit | [task](docs/tasks/MDBOOK-CROSS-LAYER-CURRENT-STATUS-TRUTH-REPAIR.md) |
 | `NEXSIM-REQUIREMENTS-HEADING-NUMBERING-REPAIR` | `proposed` | `NEXSIM document integrity` | `.1` aligns lagging subsection numbers without semantic change | [task](docs/tasks/NEXSIM-REQUIREMENTS-HEADING-NUMBERING-REPAIR.md) |
 | `DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT` | `proposed` | `downstream paths` | `.1` contract choice | [task](docs/tasks/DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT.md) |
