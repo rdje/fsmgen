@@ -90,6 +90,45 @@
   indexes keep their existing canonical-input freshness proofs; immutable
   task and decision measurements remain revision-bound evidence rather than
   current-state shadows.
+
+### Growing a surface that is at its declared allowance — FSMGen procedure
+
+A rejected edit on a saturated surface is a declaration step, not a blocked
+write path, and is never a reason to delete a recorded fact. Read the current
+actual, declared allowance, and enforcement ceiling instead of a copied number:
+
+```bash
+scripts/check_live_document_size.sh 2>&1 | grep 'surface <SURFACE-ID>:'
+```
+
+Then choose by the dimension that is short.
+
+**Lines or bytes, still inside the enforcement ceiling.** Raise that surface's
+`transition.max_growth.lines_total` / `bytes_total` in
+`doctrine/live_document_size/surfaces.jsonl` to the new measured actual. This
+declares a measurement, not a ceiling increase, and
+`scripts/check_live_document_ceiling_authority.pl` still reports zero
+increases. Compacting superseded narration instead is legitimate, but it may
+only remove duplicated or superseded prose, never an exact recorded fact.
+
+**A new file in a collection surface.** This is a real ceiling increase. In one
+commit, add the new `docs/decisions/NNNN-*.md` record the file serves, append
+one `ceiling_increase_authority` row to
+`doctrine/live_document_size/ceiling_increase_authorities.jsonl` naming that
+decision path with its `dimension` and `previous`/`new`, and raise both
+`enforcement_ceilings` and `transition.max_growth` for that dimension. The
+guard requires the cited decision to be **added** in the same change, so a new
+durable fact card is admitted only alongside a new durable decision record.
+That pairing is a deliberate anti-sprawl control; do not work around it.
+Decisions `0052`, `0059`, `0061`, and `0063` are worked `knowledge_cards`
+examples, each carrying `Ceiling authority`, `Surface`, `Dimension`, and
+`Change` metadata.
+
+**A surface parked just under its warning milestone.** Some surfaces sit
+deliberately below 80% of their health target, so a single added line trips
+`must declare warning_debt`. Prefer rewriting an existing line in place, or
+route the content to a surface whose role already owns it, rather than pushing
+a chooser or landing page into warning debt.
 <!-- LIVE-DOCUMENT-SIZE-CONTAINMENT-LOCAL-ADOPTION:END -->
 
 ---

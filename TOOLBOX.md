@@ -63,9 +63,9 @@ signature instead of pasting unrelated evidence or weakening the checklist.
 | Need a specific parser/generator regression | Focused `prove -Iperl t/<test>.t`. |
 | Need user-facing docs proof | `mdbook build docs/book`. |
 | Need docs path hygiene | `scripts/check_docs_relative_paths.sh`. |
-| Need live-document pressure, derived-state shadow/copy truth, maintained-reference aggregate authority, typed routes, index/evidence completeness, retention contracts, ceiling authority, or executed freshness/retrieval/currency truth | `scripts/check_live_document_size.sh`. |
+| Need live-document pressure, derived-state shadow/copy truth, maintained-reference aggregate authority, typed routes, index/evidence completeness, retention contracts, ceiling authority, or executed freshness/retrieval/currency truth | `scripts/check_live_document_size.sh`; if it rejects growth on a saturated surface, follow `Growing a surface that is at its declared allowance` in `LIVE_DOCUMENT_SIZE_CONTAINMENT.md` instead of deleting recorded content. |
 | Need README entry-point hygiene | `scripts/check_readme_entrypoint.sh`. |
-| Need an established fact or Knowledge Map sync | Query with `knowledge-map/scripts/query_knowledge_map.sh 'question words'` (`--no-cache` is direct); regenerate/check with the matching `gen_knowledge_map.sh` / `check_knowledge_map.sh` scripts. |
+| Need an established fact or Knowledge Map sync | Query with `knowledge-map/scripts/query_knowledge_map.sh 'question words'` (`--no-cache` is direct); regenerate/check with the matching `gen_knowledge_map.sh` / `check_knowledge_map.sh` scripts. A new card needs a paired new decision record and ceiling authority; see `LIVE_DOCUMENT_SIZE_CONTAINMENT.md`. |
 | Need doctrine/memory gate truth | `scripts/check_doctrines.sh`. |
 | Need authoritative active task-tree structure or sealed-history truth | `scripts/check_task_tree_integrity.pl`. |
 | Need code-slice evidence acceptance | Stage the intended slice, then run `scripts/check_task_acceptance.sh`. |

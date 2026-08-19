@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra/continuity`
 - Created: `2026-08-19`
 - Last updated: `2026-08-19`
@@ -51,7 +51,7 @@ only option, and no doctrine conflict exists.
 ## Task Tree
 
 - ID: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION`
-  Status: `active`
+  Status: `done`
   Goal: `Keep the fact-card growth path correct and discoverable at a saturated allowance.`
   Children: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.1, KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.2`
 
@@ -63,11 +63,11 @@ only option, and no doctrine conflict exists.
   Commit: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.1: correct the fact-card growth premise`
 
 - ID: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Make both growth routes discoverable in one step from the documents an agent reads.`
   Acceptance: `Add the two routes to TOOLBOX.md's chooser and the matching live-document section so a saturated knowledge_cards surface routes to its procedure without reading JSONL registries or git history. State the enforcement-ceiling headroom accessor rather than a copied number, per the derive-on-read contract. Change no ceiling, authority requirement, or decision pairing. Pass scripts/check_doctrines.sh.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `LIVE_DOCUMENT_SIZE_CONTAINMENT.md now carries an FSMGen-local Growing a surface that is at its declared allowance procedure covering the lines/bytes measurement route, the file route with its required paired decision record and ceiling_increase_authority row, and the parked-surface case. Its root_documents surface absorbs 39 lines against roughly 26,700 lines of headroom. TOOLBOX.md routes to it from both real entry points, the live-document row for a rejection and the Knowledge Map row for a card write, by rewriting existing rows in place: the file stays at exactly 319 lines because the diagnostics surface sits at 79.8% and one added line would trip its 80% warning milestone. That parked-surface hazard is now itself documented. scripts/check_live_document_size.sh and the full doctrine driver pass, with zero ceiling increases and no registry, ceiling, authority, or decision-pairing change.`
+  Commit: `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.2: route the surface growth procedure`
 
 ## Decisions
 
@@ -96,3 +96,5 @@ only option, and no doctrine conflict exists.
   `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`.
 - `2026-08-19`: Re-scoped from headroom restoration to procedure correctness
   and discoverability after `.1` disproved the activation premise.
+- `2026-08-19`: Closed after `.2` routed both procedures into the containment
+  contract and the toolbox chooser.
