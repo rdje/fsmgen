@@ -236,15 +236,16 @@ subtest 'fiber gates reject post-identity mutation and unfinished levels' => sub
     like($@, qr/construction is not canonical/,
         'post-identity rejection names canonical regeneration');
 
+    # Both fiber axes are now owned to their caps, so the nearest unfinished
+    # level moved to the binding fanout.
     my $unfinished = eval {
         $class->construct({
-            primary_axis => 'fibers_total',
-            level => 'limit_v1',
-            reference_hial_text => $reference_hial,
+            primary_axis => 'bindings',
+            level => 'qualification_candidate_v1',
         });
         1;
     };
-    ok(!$unfinished, 'the unimplemented fiber limit cannot enter the gate slice');
+    ok(!$unfinished, 'the unimplemented binding qualification cannot enter the gate slice');
     like($@, qr/execution-graph gate slice does not own the requested shape/,
         'unfinished-level rejection names the bounded frontier');
 };

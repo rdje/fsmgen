@@ -144,14 +144,15 @@ subtest 'the two fiber axes stay orthogonal at qualification scale' => sub {
         'sequential groups raise total fibers without raising live width');
 };
 
-subtest 'the still-unowned total-fiber levels stay unowned' => sub {
-    for my $axis (qw(fibers_total)) {
-        for my $level (qw(limit_v1 over_limit_v1)) {
+subtest 'the levels beyond both fiber axes stay unowned' => sub {
+    for my $axis (qw(bindings execution_types source_map_records)) {
+        for my $level (qw(qualification_candidate_v1 limit_v1 over_limit_v1)) {
             my $owned = eval {
                 $class->construct({
                     primary_axis => $axis,
                     level => $level,
-                    reference_hial_text => $reference_hial,
+                    ($axis eq 'source_map_records'
+                        ? (reference_hial_text => $reference_hial) : ()),
                 });
                 1;
             };

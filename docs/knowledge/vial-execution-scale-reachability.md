@@ -28,6 +28,10 @@ answers:
   - "which VIAL execution axis actually reaches its own nominal cap?"
   - "how is the exact 16384 simultaneously-live-fiber limit proved?"
   - "what rejects 16385 simultaneously live fibers?"
+  - "how is the exact 65536 total-fiber limit authored and what rejects it?"
+  - "why do the VIAL total-fiber limit and over-limit levels have different authorities?"
+  - "why does the VIAL total-fiber ladder switch from literal fibers to repeat?"
+  - "which VIAL execution level is cheaper to run, the limit or the over-limit?"
 date: 2026-08-19
 status: current
 tags: [vial, execution-ir, scale, binder, bridge, random, replay, plan, limits]
@@ -50,6 +54,7 @@ evidence: >-
   t/1622-vial-architecture-scale-execution-total-operation-qualification.t;
   t/1623-vial-architecture-scale-execution-fiber-qualification.t;
   t/1624-vial-architecture-scale-execution-live-fiber-limit.t;
+  t/1625-vial-architecture-scale-execution-total-fiber-limit.t;
   t/1609-vial-architecture-scale-execution-plan-bytes.t;
   t/1610-vial-architecture-scale-execution-plan-qualification.t;
   t/1611-vial-architecture-scale-execution-plan-limit.t;
@@ -68,6 +73,9 @@ reverify: >-
   t/1616-vial-architecture-scale-execution-scenario-qualification.t t/1617-vial-architecture-scale-execution-scenario-limit.t t/1618-vial-architecture-scale-execution-scenario-over-limit.t
   t/1619-vial-architecture-scale-execution-operation-qualification.t
   t/1620-vial-architecture-scale-execution-operation-limit.t t/1621-vial-architecture-scale-execution-operation-over-limit.t
+  t/1623-vial-architecture-scale-execution-fiber-qualification.t
+  t/1624-vial-architecture-scale-execution-live-fiber-limit.t
+  t/1625-vial-architecture-scale-execution-total-fiber-limit.t
   t/1609-vial-architecture-scale-execution-plan-bytes.t
   t/1610-vial-architecture-scale-execution-plan-qualification.t
   t/1611-vial-architecture-scale-execution-plan-limit.t
@@ -245,15 +253,34 @@ at `/operation_graph/maximum_simultaneous_live_fibers`, leaving no partial IR or
 plan. Because no earlier owner intervenes, that evaluation records **no**
 `VIAL_SCALE_LIMIT_INTERACTION`; the reported cap needs no caveat.
 
-The nominal execution limits are not all reachable. Scenarios and
-simultaneously live fibers reach their exact 4,096 and 16,384 limits, and both
-of those are now proved rather than predicted. Operations
-per scenario, total operations, total fibers, and source maps encounter the
+The total-fiber axis reaches its own 65,536 cap too, but a later cap decides
+the outcome, and the two levels do not share one authority. Its literal
+one-record-per-fiber recipe cannot author these levels at all: 65,536 fibers
+need 3,047,364 source bytes against a 1,048,576-byte parser cap, so that form
+saturates at 22,536 fibers. The two highest levels are therefore authored with
+the ordinary `(repeat COUNT action)` form — two scenarios each repeating one
+`parallel all` group of 31 fibers, group width still the live-fiber gate value —
+which puts 65,536 total fibers into a 3,199-byte source and 65,537 into 4,270.
+`limit_v1` clears the structural fiber check, so it does reach the nominal cap,
+and is then rejected by `serialized_plan_bytes exceeds the limit 16777216` at
+`/plan`; it records one `VIAL_SCALE_LIMIT_INTERACTION` routed to `.17.4`.
+`over_limit_v1` is rejected by `total_fibers exceeds the limit 65536` at
+`/operation_graph/fibers` and records **none**, because that cap is the axis's
+own. The boundary is one fiber wide and separates two different authorities
+purely through cap order: `ExecutionBuilder` counts fibers while building the
+operation graph and measures plan bytes only after serializing, so the
+over-limit level is also the cheaper of the two to run.
+
+The nominal execution limits are not all reachable. Scenarios, simultaneously
+live fibers, and total fibers reach their exact 4,096, 16,384, and 65,536
+structural limits, and all three are now proved rather than predicted — though
+only the first two also produce an accepted plan. Operations per scenario, total
+operations, total fibers at their limit level, and source maps encounter the
 16-MiB serialized-plan cap at selected higher levels. Binding and type fanout
 encounter earlier VIAL-source or bridge event/type caps. Each excess workload
 must report the first diagnostic in the canonical semantic → bridge → plan
 order; it may not forge a downstream object to reach a preferred number.
 
-`.17.2.4.2` remains active for the remaining structural levels, final
+`.17.2.4.2` remains active for the binding, type, and source-map levels, final
 qualification, and cleanup; these are construction/boundary facts only, and no
 scale capacity is supported until later measurement and promotion.

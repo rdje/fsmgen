@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-execution`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **52** uniquely owned question entries.
+> **3** facts · **59** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -30,7 +30,10 @@
 - q="how does the VIAL execution scale gate materialize 512 distinct types?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="how does the VIAL fiber oracle check a level it was not written for?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="how is the exact 16384 simultaneously-live-fiber limit proved?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
+- q="how is the exact 65536 total-fiber limit authored and what rejects it?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="how is the one million random attempt boundary proved?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
+- q="how large is a compact repeat VIAL source for 65536 total fibers?" · facts=[vial-execution-scale-source-cap-representation](../../docs/knowledge/vial-execution-scale-source-cap-representation.md)
+- q="how many literal VIAL fiber records fit in one source?" · facts=[vial-execution-scale-source-cap-representation](../../docs/knowledge/vial-execution-scale-source-cap-representation.md)
 - q="how many literal reset operations fit in a VIAL source?" · facts=[vial-execution-scale-source-cap-representation](../../docs/knowledge/vial-execution-scale-source-cap-representation.md)
 - q="how will VIAL execution graph scale workloads be generated?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="is VIAL execution implementation currently blocked?" · facts=[vial-execution-ir-v1-contract](../../docs/knowledge/vial-execution-ir-v1-contract.md)
@@ -48,13 +51,17 @@
 - q="what rejects 16385 simultaneously live fibers?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="when must a VIAL scale workload use repeat instead of a literal action list?" · facts=[vial-execution-scale-source-cap-representation](../../docs/knowledge/vial-execution-scale-source-cap-representation.md)
 - q="which VIAL execution axis actually reaches its own nominal cap?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
+- q="which VIAL execution level is cheaper to run, the limit or the over-limit?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="which VIAL execution scale axes reach their selected limits?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
+- q="which VIAL scale axes had to switch from a literal to a repeat recipe?" · facts=[vial-execution-scale-source-cap-representation](../../docs/knowledge/vial-execution-scale-source-cap-representation.md)
 - q="which cap rejects 65536 and 65537 VIAL operations in one scenario?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="which cap rejects 65536 total VIAL operations across 32 scenarios?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="which cap wins first for VIAL operations total 1000000?" · facts=[vial-execution-scale-source-cap-representation](../../docs/knowledge/vial-execution-scale-source-cap-representation.md)
 - q="which cap wins for VIAL operations bindings types and source maps?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="why can a VIAL scale workload not author one million operations literally?" · facts=[vial-execution-scale-source-cap-representation](../../docs/knowledge/vial-execution-scale-source-cap-representation.md)
+- q="why do the VIAL total-fiber limit and over-limit levels have different authorities?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="why does VIAL execution scale need a private qualification binder?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
+- q="why does the VIAL total-fiber ladder switch from literal fibers to repeat?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="why is the VIAL over-limit level cheaper to materialize than the limit level?" · facts=[vial-execution-scale-source-cap-representation](../../docs/knowledge/vial-execution-scale-source-cap-representation.md)
 - q="why must VIAL operation source maps use global indexes across scenarios?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 
@@ -76,7 +83,7 @@ _VIAL execution scale uses canonical routes and reports the earliest real cap_
 
 ### vial-execution-scale-source-cap-representation
 
-_VIAL operation-scale levels are bounded by the 1-MiB source cap and need repeat above ~74,900_
+_VIAL scale levels are bounded by the 1-MiB source cap and switch to repeat above their literal saturation point_
 
 - **date:** 2026-08-19 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-execution-scale-source-cap-representation.md`](../../docs/knowledge/vial-execution-scale-source-cap-representation.md)

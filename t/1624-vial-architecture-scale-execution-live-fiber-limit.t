@@ -195,18 +195,17 @@ subtest 'the live-fiber ladder still fails closed on mutation and unowned shapes
     like($@, qr/checked-AHB reference text is required/,
         'missing-source rejection names checked-AHB authority');
 
-    for my $level (qw(limit_v1 over_limit_v1)) {
+    for my $axis (qw(bindings execution_types)) {
         my $owned = eval {
             $class->construct({
-                primary_axis => 'fibers_total',
-                level => $level,
-                reference_hial_text => $reference_hial,
+                primary_axis => $axis,
+                level => 'qualification_candidate_v1',
             });
             1;
         };
-        ok(!$owned, "total-fiber $level remains unowned by this slice");
+        ok(!$owned, "$axis qualification remains unowned by this slice");
         like($@, qr/does not own the requested shape/,
-            "unowned total-fiber $level names the caller-sealed generator");
+            "unowned $axis qualification names the caller-sealed generator");
     }
 };
 

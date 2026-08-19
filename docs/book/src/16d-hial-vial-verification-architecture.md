@@ -2690,7 +2690,73 @@ for my $level (sort keys %expected) {
 }
 ```
 
-The total-fiber `limit_v1` and `over_limit_v1` levels stay unowned.
+The total-fiber axis closes too, but it closes differently, and reaching it
+required changing how the source is authored.
+
+The literal one-record-per-fiber recipe used at the gate and qualification
+levels cannot express these levels at all. A literal 65,536-fiber source needs
+3,047,364 bytes while the parser caps one VIAL source at 1,048,576, so that form
+saturates at 22,536 fibers — 22,537 already needs 1,048,590. `(repeat COUNT
+action)` is the ordinary shipped form for exactly this situation, so the two
+highest levels are authored compactly: two scenarios, each repeating one
+`parallel all` group of 31 fibers, plus one trailing group when the count does
+not divide evenly. Group width stays at the live-fiber gate value, so the two
+fiber axes remain orthogonal here as they are at the gate, and the limit source
+is 3,199 bytes rather than three megabytes.
+
+| Level | Total fibers | Source bytes | Rejected by | Diagnostic path |
+| --- | ---: | ---: | --- | --- |
+| limit | 65,536 | 3,199 | 16-MiB serialized-plan cap | `/plan` |
+| over limit | 65,537 | 4,270 | 65,536 total-fiber execution cap | `/operation_graph/fibers` |
+
+The boundary is one fiber wide, and it separates two *different* authorities.
+That follows from cap order rather than from the numbers: `ExecutionBuilder`
+counts fibers while it builds the operation graph and measures plan bytes only
+after serializing the plan. At 65,536 the structural check passes — the workload
+genuinely reaches the axis's own nominal cap — and the run continues to a plan
+that no longer fits in 16 MiB. At 65,537 the structural check fires first and no
+plan is ever built, which also makes the over-limit level the cheaper of the two
+to run. Neither leaves a partial `VIALExecutionIR` or plan, and the checked-AHB
+bridge identity is unchanged in both.
+
+Only the limit level records a `VIAL_SCALE_LIMIT_INTERACTION` routed to `.17.4`:
+its own cap was reached, but a later cap decided the outcome. The over-limit
+level records none, because the cap that rejected it is the axis's own.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+open my $fh, '<:raw', 'ppif/ahb_lite_subordinate.ppif'
+    or die "cannot read checked AHB source: $!";
+local $/;
+my $checked_ahb = <$fh>;
+close $fh or die "cannot close checked AHB source: $!";
+
+my %expected_path = (
+    limit_v1 => '/plan',
+    over_limit_v1 => '/operation_graph/fibers',
+);
+for my $level (sort keys %expected_path) {
+    my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+        primary_axis => 'fibers_total',
+        level => $level,
+        reference_hial_text => $checked_ahb,
+    });
+    die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+
+    my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+        construction => $workload,
+    });
+    die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+    die "unexpected total-fiber authority\n"
+        unless $evaluation->{status} eq 'expected_rejection'
+            && $evaluation->{diagnostics}[0]{semantic_path}
+                eq $expected_path{$level};
+}
+```
+
+The binding, execution-type, and source-map levels above their gates stay
+unowned.
 
 The execution-type gate uses a different canonical route because the frozen
 AHB actor exposes only seven distinct normalized types. It generates one

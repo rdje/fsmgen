@@ -171,9 +171,8 @@ sub construct($class, @args) {
         && defined($level) && $level eq 'qualification_candidate_v1';
     $owned_level = 1 if defined($axis)
         && ($axis eq 'fibers_total' || $axis eq 'simultaneously_live_fibers')
-        && defined($level) && $level eq 'qualification_candidate_v1';
-    $owned_level = 1 if defined($axis) && $axis eq 'simultaneously_live_fibers'
-        && defined($level) && ($level eq 'limit_v1' || $level eq 'over_limit_v1');
+        && defined($level) && ($level eq 'qualification_candidate_v1'
+            || $level eq 'limit_v1' || $level eq 'over_limit_v1');
     confess "execution-graph gate slice does not own the requested shape\n"
         unless defined($axis) && $owned_axis{$axis} && $owned_level;
     my $axis_contract = FSM::VIAL::ArchitectureScaleWorkload->catalog
@@ -222,7 +221,7 @@ sub construct($class, @args) {
                     : $VIAL_SOURCE,
                 'vial_source',
                 _render_ahb_vial(
-                    $axis, $requested->{$axis}, $plan_byte_recipe,
+                    $axis, $level, $requested->{$axis}, $plan_byte_recipe,
                 ),
             ),
         ];
@@ -670,9 +669,9 @@ sub _plan_byte_recipe($level, $requested) {
     return $recipe;
 }
 
-sub _render_ahb_vial($axis, $requested_count, $plan_byte_recipe = undef) {
+sub _render_ahb_vial($axis, $level, $requested_count, $plan_byte_recipe = undef) {
     my ($scenario_count, $operations_per_scenario, $scenario_timeout_cycles,
-        @scenario_actions);
+        @scenario_actions, @compact_scenarios);
     my $randomness = '(randomness (seed 1701))';
     my $domain_name = 'bus';
     my $scenario_stem = '';
@@ -696,8 +695,14 @@ sub _render_ahb_vial($axis, $requested_count, $plan_byte_recipe = undef) {
         $operations_per_scenario = int($requested_count / $scenario_count);
     }
     elsif ($axis eq 'fibers_total') {
-        $scenario_count = 1;
-        @scenario_actions = _total_fiber_actions($requested_count);
+        if ($level eq 'limit_v1' || $level eq 'over_limit_v1') {
+            @compact_scenarios = _total_fiber_repeat_recipe($requested_count);
+            $scenario_count = scalar(@compact_scenarios);
+        }
+        else {
+            $scenario_count = 1;
+            @scenario_actions = _total_fiber_actions($requested_count);
+        }
     }
     elsif ($axis eq 'simultaneously_live_fibers') {
         $scenario_count = 1;
@@ -762,14 +767,18 @@ sub _render_ahb_vial($axis, $requested_count, $plan_byte_recipe = undef) {
         my $name = $axis eq 'serialized_plan_bytes'
             ? $scenario_stem . $scenario_suffix
             : sprintf('scenario_%08d', $scenario_ordinal);
-        my @steps = @scenario_actions
-            ? @scenario_actions
-            : ("(reset $domain_name 1)") x $operations_per_scenario;
+        my @steps = @compact_scenarios
+            ? _total_fiber_repeat_steps($compact_scenarios[$scenario_ordinal])
+            : @scenario_actions
+                ? @scenario_actions
+                : ("(reset $domain_name 1)") x $operations_per_scenario;
         my $timeout_cycles = defined($scenario_timeout_cycles)
             ? $scenario_timeout_cycles
-            : @scenario_actions
-                ? $requested_count + 1
-                : $operations_per_scenario + 1;
+            : @compact_scenarios
+                ? $compact_scenarios[$scenario_ordinal]{actions} + 1
+                : @scenario_actions
+                    ? $requested_count + 1
+                    : $operations_per_scenario + 1;
         push @scenarios, join('',
             '(scenario ', $name,
             ' (timeout (cycles ', $domain_name, ' ', $timeout_cycles, '))',
@@ -849,6 +858,70 @@ sub _total_fiber_group_sizes($requested_count) {
         $remaining -= $group_size;
     }
     return @group_sizes;
+}
+
+# The literal one-record-per-fiber recipe above cannot author these levels at
+# all: 65,536 fibers need 3,047,364 source bytes and the product parser caps one
+# VIAL source at 1,048,576. `(repeat COUNT action)` is the ordinary shipped form
+# for exactly this situation, so the two highest total-fiber levels are authored
+# compactly. Group width stays at the live-fiber gate value, so the two fiber
+# axes remain orthogonal here as they are at the gate. Shared with the renderer.
+sub _total_fiber_repeat_recipe($requested_count) {
+    my $width = 31;
+    my $scenario_count = 2;
+    confess "compact total-fiber recipe requires more fibers than one full block\n"
+        unless defined($requested_count) && !ref($requested_count)
+            && $requested_count =~ /\A[1-9][0-9]*\z/
+            && $requested_count > $scenario_count * ($width + 1);
+
+    my $children = $requested_count - $scenario_count;
+    my $groups = int($children / $width);
+    my $remainder = $children % $width;
+    if ($remainder == 1) {
+        # A trailing parallel needs at least two fibers, so a single leftover
+        # child borrows one whole group rather than forming a singleton.
+        --$groups;
+        $remainder += $width;
+    }
+
+    my (@blocks, $assigned);
+    $assigned = 0;
+    for my $ordinal (0 .. $scenario_count - 1) {
+        my $share = int(($groups - $assigned) / ($scenario_count - $ordinal));
+        $assigned += $share;
+        push @blocks, {width => $width, groups => $share, remainder => 0};
+    }
+    $blocks[-1]{remainder} = $remainder;
+
+    my $total = 0;
+    for my $block (@blocks) {
+        $block->{actions} = 1 + $block->{groups} * (1 + $width)
+            + ($block->{remainder} ? 1 + $block->{remainder} : 0);
+        confess "compact total-fiber block exceeds the 65536 expanded-action cap\n"
+            if $block->{actions} > 65_536;
+        $block->{fibers} = 1 + $block->{groups} * $width + $block->{remainder};
+        $total += $block->{fibers};
+    }
+    confess "compact total-fiber recipe did not reach its exact fiber count\n"
+        unless $total == $requested_count;
+    return @blocks;
+}
+
+sub _total_fiber_repeat_steps($block) {
+    my @steps = (sprintf(
+        '(repeat %d (parallel all %s))',
+        $block->{groups},
+        join(' ', map {
+            sprintf('(fiber tf%08d (reset bus 1))', $_)
+        } 0 .. $block->{width} - 1),
+    ));
+    push @steps, sprintf(
+        '(parallel all %s)',
+        join(' ', map {
+            sprintf('(fiber tr%08d (reset bus 1))', $_)
+        } 0 .. $block->{remainder} - 1),
+    ) if $block->{remainder};
+    return @steps;
 }
 
 sub _total_fiber_actions($requested_count) {
@@ -1731,11 +1804,18 @@ sub _expects_selected_rejection($spec) {
     # plan cap, so this axis has no nominal operating point above its gate.
     return 1 if $axis eq 'operations_total'
         && $level eq 'qualification_candidate_v1';
+    # The total-fiber limit reaches its own structural cap and is then rejected
+    # by the later serialized-plan cap; one fiber more is rejected by the
+    # structural cap itself, because ExecutionBuilder counts fibers while
+    # building the operation graph and measures plan bytes only after
+    # serializing. The two levels therefore have different authorities.
+    return 1 if $axis eq 'fibers_total' && $level eq 'limit_v1';
     return 0 unless $level eq 'over_limit_v1';
     # The live-fiber axis is the first whose own nominal execution cap is the
     # authority: its plan stays well inside the 16-MiB bound, so the 16,384
     # simultaneous_live_fibers limit is what actually rejects one fiber more.
     return 1 if $axis eq 'simultaneously_live_fibers';
+    return 1 if $axis eq 'fibers_total';
     return 1 if $axis eq 'serialized_plan_bytes';
     return 1 if $axis eq 'random_attempts';
     return 1 if $axis eq 'scenarios';
@@ -1765,6 +1845,16 @@ sub _selected_discrepancies($spec) {
                 . ' 65536-operation total qualification level, so this axis'
                 . ' has no nominal operating point above its 1024-operation gate',
         )] if $level eq 'qualification_candidate_v1';
+        return [];
+    }
+    if ($axis eq 'fibers_total') {
+        return [_limit_interaction(
+            $axis,
+            'the 16777216-byte serialized-plan cap precedes the selected 65536'
+                . ' total-fiber execution limit, which the 1048576-byte VIAL'
+                . ' source cap already forbids authoring one fiber record at a'
+                . ' time above 22536 fibers',
+        )] if $level eq 'limit_v1';
         return [];
     }
     return [];
@@ -1800,6 +1890,8 @@ sub _rejection_oracle_errors($spec, $diagnostics) {
 sub _expected_rejection_diagnostics($spec) {
     my $axis = $spec->{primary_axis} // '';
     if ($axis eq 'serialized_plan_bytes'
+        || ($axis eq 'fibers_total'
+            && ($spec->{level} // '') eq 'limit_v1')
         || ($axis eq 'operations_per_scenario'
             && ($spec->{level} // '') eq 'limit_v1')
         || ($axis eq 'operations_total'
@@ -1811,6 +1903,19 @@ sub _expected_rejection_diagnostics($spec) {
             phase => 'limit',
             message => 'serialized_plan_bytes exceeds the limit 16777216',
             semantic_path => '/plan',
+            source_location => undef,
+            bridge_fact_paths => [],
+            related => [],
+        }];
+    }
+    if ($axis eq 'fibers_total') {
+        return [{
+            schema_version => 1,
+            severity => 'error',
+            code => 'VIAL_EXECUTION_LIMIT_ERROR',
+            phase => 'limit',
+            message => 'total_fibers exceeds the limit 65536',
+            semantic_path => '/operation_graph/fibers',
             source_location => undef,
             bridge_fact_paths => [],
             related => [],
