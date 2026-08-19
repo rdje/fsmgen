@@ -143,6 +143,19 @@ deliberately below 80% of their health target, so a single added line trips
 `must declare warning_debt`. Prefer rewriting an existing line in place, or
 route the content to a surface whose role already owns it, rather than pushing
 a chooser or landing page into warning debt.
+
+**Line and byte pressure that disagree.** Before treating a milestone as an
+honest signal, check whether the two dimensions can reach it together. Divide
+`bytes_each` by `lines_each` and compare that implied bytes-per-line against
+what the surface actually writes. A large divergence means one dimension will
+always fire first while the other reports the surface as nearly empty, and the
+milestone is measuring the wrong thing. Decision `0065` fixes such a pair by
+choosing the dimension that expresses the surface's role and deriving the other
+from the measured bytes per line; a derived limit must never reach its
+milestone before the reviewed one. Two exceptions are recorded there: a
+dimension owned by another doctrine keeps that doctrine as its authority, and a
+collection holding more than one member class calibrates each dimension to the
+class that binds it.
 <!-- LIVE-DOCUMENT-SIZE-CONTAINMENT-LOCAL-ADOPTION:END -->
 
 ---

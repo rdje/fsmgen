@@ -1,7 +1,7 @@
 # Knowledge Map: `live-document`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **68** uniquely owned question entries.
+> **3** facts · **75** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -27,6 +27,7 @@
 - q="how are mechanically exact current-state fields contained?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how do I add a knowledge map card or write a fact card?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 - q="how do I add a new knowledge fact card?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
+- q="how do I fix a lines_each target that blocks an ordinary edit?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="how do I grow a live-document surface that is at its declared allowance?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 - q="how do I query the Knowledge Map?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how does a bounded rolling ledger preserve whole-entry history and exact reconstruction?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
@@ -38,18 +39,22 @@
 - q="how is archived document content proved retrievable?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is the ISF reference partitioned?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how is the Knowledge Map kept bounded?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="how were the diagnostics, active_resume, and rationale targets derived?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="is immutable task evidence the same as mutable current derived state?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="is neutral live-document checker identity mechanically tested?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="is the live-document doctrine harness neutral?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="is the live-document doctrine project neutral?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="live document size check failed on a knowledge card edit" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 - q="may I delete knowledge cards or prose to fit a live-document budget?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
+- q="should I raise lines_each or lower bytes_each on a live-document surface?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="should an obsolete live document be partitioned or retired?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="surface is at 80.0% and must declare warning_debt" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
+- q="surface is at 81.7% and must declare warning_debt" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="surface knowledge_cards transition debt exceeded its owned allowance" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 - q="surface knowledge_cards transition debt exceeded its owned allowance: files" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 - q="unauthorized enforcement-ceiling increase requires exactly one new authority record" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 - q="were 15727 IAL2 task lines lost during task-tree sealing?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="what caps MEMORY.md at 60 lines now that active_resume allows 75?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="what did PGEN and ANVIL find in the live-document review?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="what does max_growth mean in doctrine/live_document_size/surfaces.jsonl?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 - q="what does transition max_growth mean and who may change it?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
@@ -71,7 +76,9 @@
 - q="which live-document families are migrated versus pinned or deferred?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="which tasks own the large roadmap, task, book, changelog, development notes, and knowledge map migrations?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="why are migration products not added as disjoint line counts?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="why does a live-document surface hit its line warning while byte pressure is tiny?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="why does the live-document registry use JSONL instead of TSV?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="why is docs/decisions/INDEX.md the largest member of the rationale surface?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="why must a surface declare warning_debt at 80 percent?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 
 ## Facts
@@ -89,3 +96,10 @@ _Live-document growth is a declared measurement; ceiling increases are reviewed_
 
 - **date:** 2026-08-19 · **status:** current
 - **source and verification:** [`docs/knowledge/live-document-surface-growth-procedure.md`](../../docs/knowledge/live-document-surface-growth-procedure.md)
+
+### live-document-target-pair-calibration
+
+_A live-document surface's lines_each and bytes_each must imply the bytes per line it actually writes_
+
+- **date:** 2026-08-19 · **status:** current
+- **source and verification:** [`docs/knowledge/live-document-target-pair-calibration.md`](../../docs/knowledge/live-document-target-pair-calibration.md)

@@ -6,17 +6,17 @@ See `MEMORY_ARCHITECTURE.md` for the four-layer system. Git preserves prior hist
 
 - repository_revision: derive the current commit and subject with
   `git log -1 --format='%H %s'`; do not store a shadow of `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`;
-  remaining canonical execution-graph structural levels.
-- current_state: the operations-per-scenario ladder is complete. 65,536 operations
-  parse into one full scenario, then the unchanged public binder rejects only at
-  the 16-MiB plan cap; one further reset record is rejected first by the semantic
-  65,536 expanded-action cap, both recording one `VIAL_SCALE_LIMIT_INTERACTION`
-  discrepancy routed to `.17.4`. `KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION` is closed:
-  `knowledge_cards` is `normal` and growth/retrieval/sizing are three stated rules with three cards.
-- next_action: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.2` (director-authorized) re-derives the three
-  miscalibrated `lines_each` targets. Then `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`
-  on the decision-0061 ladder under `[[vial-execution-scale-source-cap-representation]]`.
+- active_work_unit: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3`; then
+  `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2` canonical execution-graph levels.
+- current_state: `.2` re-derived three target pairs under decision `0065`: a surface's
+  `lines_each`/`bytes_each` is one derivation, and a derived limit must not milestone first.
+  `diagnostics` 79.8% -> 46.5%, `active_resume` 78.3% -> 62.7%, `rationale` 78.9% -> 63.1%.
+  `MEMORY_ARCHITECTURE.md` plus `scripts/check_memory_architecture.sh` stay the sole authority
+  for the 60-line resume cap. The VIAL operations-per-scenario ladder remains complete, with one
+  `VIAL_SCALE_LIMIT_INTERACTION` discrepancy routed to `.17.4`.
+- next_action: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3` sweeps every remaining surface for the
+  same pair defect (`enforced_rules`, `engineering_rationale` known). Then `.17.2.4.2` on the
+  decision-0061 ladder under `[[vial-execution-scale-source-cap-representation]]`.
 - in_flight_uncommitted: none after this commit.
 - in_flight_background: none.
 - blockers: none.
