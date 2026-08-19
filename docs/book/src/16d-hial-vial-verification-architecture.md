@@ -2577,7 +2577,62 @@ for my $axis (qw(fibers_total simultaneously_live_fibers)) {
 The fiber gates retain 22 checked-AHB bindings, seven normalized types, the
 public portable AHB capability, and exact `IAL2 -> IAL1 -> IAL0` review
 closure. They never admit the private binding-scale capability. Post-identity
-source mutation and unfinished qualification levels fail closed.
+source mutation and still-unowned higher levels fail closed.
+
+Both fiber axes reach their qualification levels, and both stay orthogonal
+there:
+
+| Primary axis | Requested | Total fibers | Maximum live | Operations | Source maps | Plan bytes |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| simultaneously live fibers | 1,024 | 1,024 | 1,024 | 1,024 | 1,041 | 432,528 |
+| fibers total | 8,192 | 8,192 | 32 | 8,456 | 8,473 | 3,222,659 |
+
+The live-width workload holds every one of its 1,024 fibers live at the same
+instant, so its total and live counts coincide. The total-fiber workload runs
+265 sequential `all` groups of at most 31 children, so it reaches 8,192 fibers
+while its live width stays at the separate gate value of 32 — the same
+orthogonality the gates prove, now two and six binary orders of magnitude
+higher. Both plans stay well below the independent 16-MiB cap, so unlike the
+total-operation axis these levels are genuinely reachable and are reported as
+`accepted` with no contract discrepancy.
+
+The oracle checks these levels exactly rather than loosely: it recomputes the
+bounded parallel-tree recipe from the same helper the renderer used and then
+requires the plan to match it — group sizes, reset count, operation count,
+maximum live width, root successor chain, and parent/child closure. Nothing in
+the check is a level's typed-in literal, so the next level is checked as
+strictly as the gate.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+open my $fh, '<:raw', 'ppif/ahb_lite_subordinate.ppif'
+    or die "cannot read checked AHB source: $!";
+local $/;
+my $checked_ahb = <$fh>;
+close $fh or die "cannot close checked AHB source: $!";
+
+my %expected_live = (fibers_total => 32, simultaneously_live_fibers => 1_024);
+for my $axis (qw(fibers_total simultaneously_live_fibers)) {
+    my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+        primary_axis => $axis,
+        level => 'qualification_candidate_v1',
+        reference_hial_text => $checked_ahb,
+    });
+    die $workload->{diagnostics}[0]{message} unless $workload->{ok};
+
+    my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+        construction => $workload,
+    });
+    die $evaluation->{diagnostics}[0]{message} unless $evaluation->{ok};
+    die "unexpected fiber qualification\n"
+        unless $evaluation->{status} eq 'accepted'
+            && $evaluation->{metrics}{simultaneous_live_fibers}
+                == $expected_live{$axis};
+}
+```
+
+The fiber `limit_v1` and `over_limit_v1` levels stay unowned.
 
 The execution-type gate uses a different canonical route because the frozen
 AHB actor exposes only seven distinct normalized types. It generates one

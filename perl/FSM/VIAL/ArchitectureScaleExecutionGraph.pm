@@ -169,6 +169,9 @@ sub construct($class, @args) {
             || $level eq 'limit_v1' || $level eq 'over_limit_v1');
     $owned_level = 1 if defined($axis) && $axis eq 'operations_total'
         && defined($level) && $level eq 'qualification_candidate_v1';
+    $owned_level = 1 if defined($axis)
+        && ($axis eq 'fibers_total' || $axis eq 'simultaneously_live_fibers')
+        && defined($level) && $level eq 'qualification_candidate_v1';
     confess "execution-graph gate slice does not own the requested shape\n"
         unless defined($axis) && $owned_axis{$axis} && $owned_level;
     my $axis_contract = FSM::VIAL::ArchitectureScaleWorkload->catalog
@@ -824,7 +827,9 @@ sub _random_target_candidate($attempt_count) {
     )->bstr;
 }
 
-sub _total_fiber_actions($requested_count) {
+# The renderer and the oracle must agree on one recipe, so both read it here
+# rather than restating a level's literals.
+sub _total_fiber_group_sizes($requested_count) {
     confess "total-fiber gate requires at least three fibers\n"
         unless defined($requested_count) && $requested_count >= 3;
     my $remaining = $requested_count - 1;
@@ -841,6 +846,11 @@ sub _total_fiber_actions($requested_count) {
         push @group_sizes, $group_size;
         $remaining -= $group_size;
     }
+    return @group_sizes;
+}
+
+sub _total_fiber_actions($requested_count) {
+    my @group_sizes = _total_fiber_group_sizes($requested_count);
 
     my @actions;
     for my $group_ordinal (0 .. $#group_sizes) {
@@ -855,7 +865,9 @@ sub _total_fiber_actions($requested_count) {
     return @actions;
 }
 
-sub _live_fiber_action($requested_count) {
+# One nested-child count per outer fiber; zero means that outer fiber carries a
+# plain reset instead of a nested parallel. Shared with the oracle.
+sub _live_fiber_nested_counts($requested_count) {
     confess "live-fiber gate requires at least four fibers\n"
         unless defined($requested_count) && $requested_count >= 4;
     my $descendant_count = $requested_count - 1;
@@ -865,11 +877,24 @@ sub _live_fiber_action($requested_count) {
         if $outer_count > 256;
 
     my $nested_remaining = $descendant_count - $outer_count;
-    my @outer_fibers;
+    my @nested_counts;
     for my $outer_ordinal (0 .. $outer_count - 1) {
         my $nested_count = $nested_remaining > 255 ? 255 : $nested_remaining;
         confess "live-fiber gate would require a singleton nested parallel\n"
             if $nested_count == 1;
+        push @nested_counts, $nested_count;
+        $nested_remaining -= $nested_count;
+    }
+    confess "live-fiber gate did not consume its exact descendant count\n"
+        if $nested_remaining;
+    return @nested_counts;
+}
+
+sub _live_fiber_action($requested_count) {
+    my @nested_counts = _live_fiber_nested_counts($requested_count);
+    my @outer_fibers;
+    for my $outer_ordinal (0 .. $#nested_counts) {
+        my $nested_count = $nested_counts[$outer_ordinal];
         my $action = '(reset bus 1)';
         if ($nested_count) {
             my @nested_fibers = map {
@@ -879,14 +904,11 @@ sub _live_fiber_action($requested_count) {
                 )
             } 0 .. $nested_count - 1;
             $action = '(parallel all ' . join(' ', @nested_fibers) . ')';
-            $nested_remaining -= $nested_count;
         }
         push @outer_fibers, sprintf(
             '(fiber live_outer_%08d %s)', $outer_ordinal, $action,
         );
     }
-    confess "live-fiber gate did not consume its exact descendant count\n"
-        if $nested_remaining;
     return '(parallel all ' . join(' ', @outer_fibers) . ')';
 }
 
@@ -1438,15 +1460,20 @@ sub _fiber_oracle_errors($ir, $axis, $requested) {
     $closed = 0 unless scalar(keys %child_root_count) == $requested - 1;
 
     if ($closed && $axis eq 'fibers_total') {
+        # Expectations come from the recipe the renderer used, so every level
+        # is checked exactly rather than only the one whose numbers were typed.
+        my @expected_groups = _total_fiber_group_sizes($requested);
+        my $expected_resets = $requested - 1;
+        my ($widest_group) = sort { $b <=> $a } @expected_groups;
         my @group_sizes = map {
             scalar(@{$_->{effects}[0]{child_root_operation_ids} || []})
         } @parallel;
         my @root_operations = @{$operations_by_fiber{$root->{fiber_id}} || []};
-        $closed = @parallel == 5
-            && @reset == 127
-            && @{$graph->{operations}} == 132
-            && $graph->{maximum_simultaneous_live_fibers} == 32
-            && join("\0", @group_sizes) eq join("\0", qw(31 31 31 31 3))
+        $closed = @parallel == scalar(@expected_groups)
+            && @reset == $expected_resets
+            && @{$graph->{operations}} == $expected_resets + scalar(@expected_groups)
+            && $graph->{maximum_simultaneous_live_fibers} == $widest_group + 1
+            && join("\0", @group_sizes) eq join("\0", @expected_groups)
             && @root_operations == @parallel
             && !scalar(grep {
                 defined($_->{parent_fiber_id})
@@ -1465,6 +1492,14 @@ sub _fiber_oracle_errors($ir, $axis, $requested) {
         }
     }
     elsif ($closed && $axis eq 'simultaneously_live_fibers') {
+        # Same rule: derive the whole expected tree from the renderer's recipe.
+        my @expected_nested = _live_fiber_nested_counts($requested);
+        my @nesting = grep { $_ } @expected_nested;
+        my $expected_nested_children = 0;
+        $expected_nested_children += $_ for @nesting;
+        my $expected_resets = $requested - 1 - scalar(@nesting);
+        my @expected_child_counts =
+            sort { $a <=> $b } (scalar(@expected_nested), @nesting);
         my @child_counts = sort { $a <=> $b } map {
             scalar(@{$_->{effects}[0]{child_root_operation_ids} || []})
         } @parallel;
@@ -1476,19 +1511,22 @@ sub _fiber_oracle_errors($ir, $axis, $requested) {
             scalar(@{$operations_by_fiber{$_->{fiber_id}} || []}) == 1
                 && ($operations_by_fiber{$_->{fiber_id}}[0]{kind} // '') eq 'parallel'
         } @root_children;
-        my @nested_children = @nested_parents == 1 ? grep {
-            defined($_->{parent_fiber_id})
-                && $_->{parent_fiber_id} eq $nested_parents[0]{fiber_id}
-        } values %fiber : ();
-        $closed = @parallel == 2
-            && @reset == 30
-            && @{$graph->{operations}} == 32
-            && $graph->{total_fiber_count} == 32
+        my @nested_children = grep {
+            my $entry = $_;
+            defined($entry->{parent_fiber_id}) && scalar(grep {
+                $_->{fiber_id} eq $entry->{parent_fiber_id}
+            } @nested_parents);
+        } values %fiber;
+        $closed = @parallel == scalar(@nesting) + 1
+            && @reset == $expected_resets
+            && @{$graph->{operations}} == $expected_resets + scalar(@nesting) + 1
+            && $graph->{total_fiber_count} == $requested
+            && $graph->{maximum_simultaneous_live_fibers} == $requested
             && @{$operations_by_fiber{$root->{fiber_id}} || []} == 1
-            && @root_children == 2
-            && @nested_parents == 1
-            && @nested_children == 29
-            && join("\0", @child_counts) eq join("\0", qw(2 29));
+            && @root_children == scalar(@expected_nested)
+            && @nested_parents == scalar(@nesting)
+            && @nested_children == $expected_nested_children
+            && join("\0", @child_counts) eq join("\0", @expected_child_counts);
     }
     else {
         $closed = 0;

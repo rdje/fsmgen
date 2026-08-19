@@ -23,6 +23,8 @@ answers:
   - "which cap rejects 65536 and 65537 VIAL operations in one scenario?"
   - "which cap rejects 65536 total VIAL operations across 32 scenarios?"
   - "does the VIAL total-operation axis have a qualified operating point?"
+  - "do the VIAL fiber axes reach their qualification levels?"
+  - "how does the VIAL fiber oracle check a level it was not written for?"
 date: 2026-08-19
 status: current
 tags: [vial, execution-ir, scale, binder, bridge, random, replay, plan, limits]
@@ -43,6 +45,7 @@ evidence: >-
   t/1619-vial-architecture-scale-execution-operation-qualification.t;
   t/1620-vial-architecture-scale-execution-operation-limit.t; t/1621-vial-architecture-scale-execution-operation-over-limit.t;
   t/1622-vial-architecture-scale-execution-total-operation-qualification.t;
+  t/1623-vial-architecture-scale-execution-fiber-qualification.t;
   t/1609-vial-architecture-scale-execution-plan-bytes.t;
   t/1610-vial-architecture-scale-execution-plan-qualification.t;
   t/1611-vial-architecture-scale-execution-plan-limit.t;
@@ -206,6 +209,22 @@ limit, so the binder returns one `serialized_plan_bytes exceeds the limit
 to `.17.4`. The consequence is about the axis, not one level: the
 total-operation axis has **no nominal operating point above its 1,024-operation
 gate**, and its `limit_v1` and `over_limit_v1` levels stay unowned.
+
+Both fiber axes reach their qualification levels and stay orthogonal there.
+`simultaneously_live_fibers` at 1,024 keeps every fiber live at the same
+instant, so total and live counts coincide at 1,024 over a 432,528-byte plan.
+`fibers_total` at 8,192 runs 265 sequential `all` groups of at most 31 children,
+so it reaches 8,192 fibers while its live width stays at the gate value of 32,
+over a 3,222,659-byte plan. Both stay well below the 16-MiB cap and report
+`accepted` with no discrepancy.
+
+Those levels are checked exactly, not loosely: the fiber oracle recomputes the
+bounded parallel-tree recipe from the same helper the renderer used
+(`_total_fiber_group_sizes`, `_live_fiber_nested_counts`) and requires the plan
+to match it — group sizes, reset and operation counts, maximum live width, root
+successor chain, and parent/child closure. The oracle previously restated the
+gate's literals, so it rejected any level it had not been written for; deriving
+the expectation is what makes a new level as strictly checked as the gate.
 
 The nominal execution limits are not all reachable. Scenarios and
 simultaneously live fibers reach their exact 4,096 and 16,384 limits. Operations

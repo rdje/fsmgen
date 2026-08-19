@@ -239,12 +239,12 @@ subtest 'fiber gates reject post-identity mutation and unfinished levels' => sub
     my $unfinished = eval {
         $class->construct({
             primary_axis => 'fibers_total',
-            level => 'qualification_candidate_v1',
+            level => 'limit_v1',
             reference_hial_text => $reference_hial,
         });
         1;
     };
-    ok(!$unfinished, 'qualification fiber level cannot enter the gate slice');
+    ok(!$unfinished, 'the unimplemented fiber limit cannot enter the gate slice');
     like($@, qr/execution-graph gate slice does not own the requested shape/,
         'unfinished-level rejection names the bounded frontier');
 };

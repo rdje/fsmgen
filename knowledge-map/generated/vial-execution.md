@@ -1,12 +1,13 @@
 # Knowledge Map: `vial-execution`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **47** uniquely owned question entries.
+> **3** facts · **49** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="are random values chosen separately by each VIAL backend?" · facts=[vial-execution-ir-v1-contract](../../docs/knowledge/vial-execution-ir-v1-contract.md)
 - q="do UVM phases and objections appear in VIALExecutionIR?" · facts=[vial-execution-ir-v1-contract](../../docs/knowledge/vial-execution-ir-v1-contract.md)
+- q="do the VIAL fiber axes reach their qualification levels?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="does VIAL check operation count before or after serializing the plan?" · facts=[vial-execution-scale-source-cap-representation](../../docs/knowledge/vial-execution-scale-source-cap-representation.md)
 - q="does VIAL reuse the Perl extension callback mechanism?" · facts=[vial-execution-ir-v1-contract](../../docs/knowledge/vial-execution-ir-v1-contract.md)
 - q="does the VIAL total-operation axis have a qualified operating point?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
@@ -27,6 +28,7 @@
 - q="how does the VIAL execution qualification produce an exact four MiB semantic plan?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="how does the VIAL execution qualification prove exactly 262144 random attempts and replay equality?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="how does the VIAL execution scale gate materialize 512 distinct types?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
+- q="how does the VIAL fiber oracle check a level it was not written for?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="how is the one million random attempt boundary proved?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
 - q="how many literal reset operations fit in a VIAL source?" · facts=[vial-execution-scale-source-cap-representation](../../docs/knowledge/vial-execution-scale-source-cap-representation.md)
 - q="how will VIAL execution graph scale workloads be generated?" · facts=[vial-execution-scale-reachability](../../docs/knowledge/vial-execution-scale-reachability.md)
