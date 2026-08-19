@@ -15,8 +15,11 @@ evidence: docs/decisions/0067-layer-a-carries-no-decision-or-lane-summaries.md; 
 reverify: sed -n '/^## Durable context/,$p' MEMORY.md
 ---
 
-Layer A carries **current state and the next action only**. It holds no one-line
-summaries of decisions and no lane or leaf completion status. Cross-cutting
+Layer A carries **the frontier pointer only**: active work unit, the single next
+action, in-flight/blocker flags, and the `HEAD` derivation its derived-state
+contract requires. Decision `0068` removed `current_state`, `push_state`, and the
+`Durable context` block outright. It holds no one-line summaries of decisions and
+no lane or leaf completion status. Cross-cutting
 rationale is `docs/decisions/INDEX.md` (layer C); lane status is the owning tree
 under `docs/tasks/` (layer B).
 
@@ -40,6 +43,11 @@ field that starts narrating fails on the write that does it. The drift is an
 incentive, not an accident: `COMMIT.md` makes every slice overwrite this file,
 so it is the one layer an agent always has open, and one summary line is always
 cheaper than opening the right store.
+
+Decision `0068` then removed the instruction itself. `COMMIT.md` had said to
+overwrite the block "when recording completed work" and to point it at "the new
+latest commit" — a step every slice executes, which is a stronger force than any
+written rule about restraint. `MEMORY.md` is now 14 lines / 654 bytes.
 
 The copy had also drifted: it attributed "PNT is autonomous" to decision `0062`
 (push cadence) when the authority is `0003`.

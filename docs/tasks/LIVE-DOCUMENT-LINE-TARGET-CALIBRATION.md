@@ -86,7 +86,7 @@ quality risk, not merely an inconvenience.
 - ID: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION`
   Status: `active`
   Goal: `Decide and record whether the affected line health targets are calibrated to their surfaces' information role.`
-  Children: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.1, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.2, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.4, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.5`
+  Children: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.1, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.2, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.4, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.5, LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.6`
 
 - ID: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.1`
   Status: `done`
@@ -105,7 +105,7 @@ quality risk, not merely an inconvenience.
 - ID: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.3`
   Status: `pending`
   Goal: `Sweep every remaining governed surface for the same target-pair defect and re-derive or explicitly retain each one.`
-  Acceptance: `.2 fixed only the three surfaces under live pressure. Apply decision 0065's rule to every other surface in doctrine/live_document_size/surfaces.jsonl: divide bytes_each by lines_each, compare the implied bytes-per-line against the retained surface's measured value, and either re-derive the pair or record why the divergence is intended. enforced_rules (implies 109 against a measured 56, at 74.7%) and engineering_rationale (implies 131 against 61, at 13.4%) are the known instances; the sweep must be complete rather than limited to those two. Any increase needs its own paired decision record and authority row; lowering stays free. Change no milestone mechanism, ratchet, verifier, or authority requirement. Pass scripts/check_doctrines.sh. The same sweep must also report each surface's remaining headroom against its owned transition allowance, because that is the other way containment obstructs an ordinary write: focused_documents currently has 1 line and 287 bytes left against an allowance owned by GITHUB-PUSH-OUTCOME-ASSURANCE.6.1, and knowledge_cards sits at 79.98% of line_bytes_each, so one long line in a new card trips warning debt. Decision 0064 makes raising transition.max_growth a declared measurement rather than a ceiling increase, so the remediation is documented; the finding is that the audit is not.`
+  Acceptance: `.2 fixed only the three surfaces under live pressure. Apply decision 0065's rule to every other surface in doctrine/live_document_size/surfaces.jsonl: divide bytes_each by lines_each, compare the implied bytes-per-line against the retained surface's measured value, and either re-derive the pair or record why the divergence is intended. enforced_rules (implies 109 against a measured 56, at 74.7%) and engineering_rationale (implies 131 against 61, at 13.4%) are the known instances; the sweep must be complete rather than limited to those two. Any increase needs its own paired decision record and authority row; lowering stays free. Change no milestone mechanism, ratchet, verifier, or authority requirement. Pass scripts/check_doctrines.sh. The same sweep must also report each surface's remaining headroom against its owned transition allowance, because that is the other way containment obstructs an ordinary write: focused_documents currently has 1 line and 287 bytes left against an allowance owned by GITHUB-PUSH-OUTCOME-ASSURANCE.6.1, and knowledge_cards sits at 79.98% of line_bytes_each, so one long line in a new card trips warning debt. Decision 0064 makes raising transition.max_growth a declared measurement rather than a ceiling increase, so the remediation is documented; the finding is that the audit is not. If the sweep ratchets active_resume down after decisions 0067 and 0068 shrank MEMORY.md to 14 lines, do it as a routine measurement: MEMORY.md sizing is closed and must not be resurfaced to the director as a question.`
   Verification: `pending`
   Commit: `pending`
 
@@ -115,6 +115,13 @@ quality risk, not merely an inconvenience.
   Acceptance: `The director set 32,768 bytes as the maximum size allowed for MEMORY.md, with single-call readability as the criterion. Establish that byte maximum, and resolve the interaction it exposes: at ~75 bytes per line a 60-line file is ~4,500 bytes, so the byte ceiling was unreachable and raising it alone changes nothing. Do not derive the line cap from the byte maximum; ~440 lines is the blob MEMORY_ARCHITECTURE.md exists to prevent. Raise the line cap only as far as the layer-routing control justifies, keep the containment warning aligned to it, record the split in a paired decision record with authority rows, and restate both bounds where an author meets them. Pass scripts/check_doctrines.sh.`
   Verification: `MEMORY.md's dimensions now answer different questions and neither is derived from the other. bytes_each/bytes_total 8,192 -> 32,768 is the director's single-call ingestion maximum and is deliberately non-binding: 120 lines of this file is about 9,000 bytes. MEMORY_POINTER_LINE_CAP 60 -> 120 in scripts/check_memory_architecture.sh is the real cap and remains the layer-routing control; lines_each/lines_total 75 -> 150 keeps the 80% containment warning exactly on it, preserving the alignment .2 established. MEMORY.md moves to 33.3% lines and 11.6% bytes, a 37.9% surface peak now carried by line_bytes_each, from 62.7% after .2 and 78.3% before it. Four enforcement-ceiling increases carry appended authority rows paired to new decision 0066, which supersedes point 5 of 0065 only. The neutral MEMORY_ARCHITECTURE.md keeps its ~50-line default and its MEMORY_POINTER_LINE_CAP knob, now with an explicit warning against deriving that knob from a reader-capability bound.`
   Commit: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.4: separate the resume pointer's two size criteria`
+
+- ID: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.6`
+  Status: `done`
+  Goal: `Remove the COMMIT.md instruction that grew MEMORY.md, and reduce the file to a frontier pointer and nothing else.`
+  Acceptance: `Director direction: MEMORY.md shall JUST be a pointer to the frontier and nothing else, and the part of COMMIT.md that causes it to grow for no objective reason must change. .5 removed the content and added a per-field control but left the instruction intact. Identify the exact workflow phrases that ask a slice to write non-pointer content, remove them, and reduce MEMORY.md to the active work unit, the single next action, and the in-flight/blocker flags. Preserve the active_resume_repository_head derive-on-read contract, which requires the HEAD derivation string to remain present and the commit itself to remain unstored. Change no limit. Pass scripts/check_doctrines.sh.`
+  Verification: `Three COMMIT.md phrases were the driver, each executed by every slice: OVERWRITE its Current state block when recording completed work, which literally asks for completed work in layer A; current state + the single next action only, broad enough to admit the nine-line narration .5 found; and point at the new latest commit, which also contradicts the derive-on-read contract in doctrine/live_document_size/derived_state_contracts.jsonl. All three are replaced with the direct prohibition. MEMORY.md drops the current_state, push_state, and Durable context blocks, each verified duplicate of the owning task tree, COMMIT.md's own Push cadence section with decision 0062, and docs/decisions/INDEX.md respectively. The file is now 14 lines / 654 bytes, from 50 / 3,800 at session start and 30 / 1,690 after .5 - 12% of its line cap. The derive-on-read contract still passes: the git log -1 derivation string remains and no commit is stored. Decision 0068 records the rule and the lesson that a workflow step running every slice outweighs a written rule about restraint. No limit changed.`
+  Commit: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.6: make MEMORY.md a frontier pointer only`
 
 - ID: `LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.5`
   Status: `done`
@@ -152,6 +159,11 @@ quality risk, not merely an inconvenience.
   to create problems; where they obstruct, relax the involved rule, apply the
   proposal, and adjust incrementally until the right set is found for FSMGen.
   This authorizes `.2` to change the affected targets without a further ask.
+- `2026-08-19`: `.6` selects decision `0068` on director correction. `.5` fixed the
+  symptom and left the cause: `COMMIT.md` told every slice to overwrite the block
+  "when recording completed work" and to point it at "the new latest commit". A
+  workflow step that runs on every slice outweighs a written rule about restraint,
+  so the step changed. `MEMORY.md` is now the frontier pointer and nothing else.
 - `2026-08-19`: `.5` selects decision `0067` after the director asked why a
   pointer keeps growing at all. It should not, and it was not one: 46% of the
   file was decision and lane summaries, all verified duplicates. The honest
@@ -235,3 +247,7 @@ quality risk, not merely an inconvenience.
   `MEMORY_POINTER_FIELD_LINE_CAP` now fails a resume field that starts
   narrating. Decision `0067` and fact card `memory-pointer-layer-a-content`
   record the rule and the incentive that defeated the previous one.
+- `2026-08-19`: `.6` removed the `COMMIT.md` phrases that produced the drift and
+  reduced `MEMORY.md` to 14 lines / 654 bytes — the active work unit, the single
+  next action, the in-flight/blocker flags, and the required `HEAD` derivation.
+  Decision `0068` records the rule and the lesson.

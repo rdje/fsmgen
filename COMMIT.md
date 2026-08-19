@@ -93,14 +93,18 @@ push, consume the GitHub result before treating the push follow-up as complete:
   - Must stay a thin wrapper that points back to `COMMIT.md`.
   - Must never define, extend, or contradict commit policy independently.
 - `MEMORY.md`
-  - **Layer-A bounded resume pointer** (see `MEMORY_ARCHITECTURE.md`): current state +
-    the single next action only.
-  - **OVERWRITE** its "Current state" block when recording completed work — never append.
-    Keep it ≤ 120 lines and ≤ 32,768 bytes (decision `0066`: line cap is the
-    layer-routing control, byte cap is single-call readability); this is
-    mechanically capped by
-    `scripts/check_doctrines.sh` (pre-commit hook + CI). Rationale and the
-    reconciliation of this workflow with the memory standard: `docs/decisions/0007`.
+  - **Layer-A pointer to the frontier** (see `MEMORY_ARCHITECTURE.md`): the active work
+    unit, the single next action, and the in-flight/blocker flags. Nothing else.
+  - **OVERWRITE** it — never append, and **never record here what this slice completed**.
+    What a slice finished is task-tree evidence (layer B); why it was chosen is a decision
+    record (layer C); when it happened is Git (layer D). Decision `0068` removed the
+    former "when recording completed work" instruction from this step, because that phrase
+    is what drove 46% of the file into decision and lane summaries one convenient line at
+    a time (decision `0067`).
+  - Do not write the latest commit here; it is derived on read. Bounds are ≤ 120 lines,
+    ≤ 32,768 bytes, and ≤ 5 lines per field, mechanically enforced by
+    `scripts/check_doctrines.sh` (pre-commit hook + CI). Rationale: decisions `0007`,
+    `0066`, `0067`, and `0068`.
 - Former roadmap-status board
   - **RETIRED** under decision `0049`. `ROADMAP_V2.md` owns direction, task
     trees own live status/evidence, bounded Memory owns resume state, and Git
@@ -141,8 +145,10 @@ push, consume the GitHub result before treating the push follow-up as complete:
       node status, current frontier, blocker, decision, validation/completion evidence.
    2. A new `docs/decisions/NNNN-*.md` record (layer C) **iff** the slice produced a
       durable cross-cutting fact/decision/learning (and update `docs/decisions/INDEX.md`).
-   3. `MEMORY.md` (layer A) — **overwrite** its "Current state" block to point at the new
-      latest commit / active leaf / next action; keep it ≤ 120 lines.
+   3. `MEMORY.md` (layer A) — **overwrite** the frontier pointer: active work unit, the
+      single next action, in-flight/blocker flags. Do not record what this slice
+      completed, do not summarise a decision or a lane, and do not write the latest
+      commit — it is derived on read (decisions `0067`, `0068`).
    4. `DEVELOPMENT_NOTES.md` — update only when the conditional rationale
       boundary above is met.
    - Decisions `0047`, `0048`, and `0049` retire the former changelog,
