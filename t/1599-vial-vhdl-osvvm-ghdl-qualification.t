@@ -52,8 +52,17 @@ subtest 'checked qualification report closes the exact combined profile' => sub 
         'OSVVM Common compile order is complete');
     is($report->{provider_compilation}{total_analyzed_source_count}, 61,
         'all selected provider sources were analyzed');
+    is(scalar(@{$report->{provider_compilation}{osvvm_source_order}}),
+        $report->{provider_compilation}{osvvm_analyzed_source_count},
+        'OSVVM core count is reconstructed from the published source order');
+    is(scalar(@{$report->{provider_compilation}{common_source_order}}),
+        $report->{provider_compilation}{common_analyzed_source_count},
+        'OSVVM Common count is reconstructed from the published source order');
     is(scalar(@{$report->{commands}{provider_analyze}}), 61,
         'every provider analysis command is closed in the report');
+    is(scalar(@{$report->{commands}{provider_analyze}}),
+        $report->{provider_compilation}{total_analyzed_source_count},
+        'combined source count is reconstructed from executed analysis commands');
     is($report->{execution}{adapter_analysis}, 'passed',
         'generated provider adapter analyzed');
     is($report->{execution}{generated_fixture_analysis}, 'passed',

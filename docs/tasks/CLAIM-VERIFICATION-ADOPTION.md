@@ -100,9 +100,9 @@ hidden behind repeated checks of the same kind.
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.2`
   Status: `active`
-  Goal: `Review and migrate the 71 current root-document claim candidates.`
+  Goal: `Review and migrate the 70 current root-document claim candidates.`
   Acceptance: `Every root-document candidate receives an exact gated disposition; current policy constants and historical/rationale measurements are distinguished, published claims gain three-leg evidence or owned gaps, and incidental structure is reclassified only with a reviewable reason.`
-  Verification: `After .5.2.1 repaired one stale README-policy sentence and regenerated the inventory, the root group partitions into 32 non-rationale policy/index/navigation candidates, 9 pre-bridge foundational rationale candidates, 18 bridge/execution rationale candidates, and 12 current checking-scale rationale candidates. Children .5.2.1-.5.2.4 own those disjoint sets; the parent closes only after their sum is 71 and root_documents becomes required-complete.`
+  Verification: `After .5.2.1 repaired one stale README-policy sentence and .5.2.2 removed unsupported precision from one UVM resource rationale, the regenerated root group partitions into 32 non-rationale policy/index/navigation candidates, 8 pre-bridge foundational rationale candidates, 18 bridge/execution rationale candidates, and 12 current checking-scale rationale candidates. Children .5.2.1-.5.2.4 own those disjoint sets; the parent closes only after their sum is 70 and root_documents becomes required-complete.`
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.2: partition root claim review`
   Children: `CLAIM-VERIFICATION-ADOPTION.5.2.1, CLAIM-VERIFICATION-ADOPTION.5.2.2, CLAIM-VERIFICATION-ADOPTION.5.2.3, CLAIM-VERIFICATION-ADOPTION.5.2.4`
 
@@ -114,11 +114,11 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.2.1: disposition non-rationale root claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.2.2`
-  Status: `active`
-  Goal: `Disposition the 9 foundational rationale candidates before the bridge-scale entries.`
+  Status: `done`
+  Goal: `Repair unsupported UVM resource precision and disposition the 8 remaining foundational rationale candidates before the bridge-scale entries.`
   Acceptance: `The rationale-ledger, book-partition, roadmap-archive, UVM-resource, and provider-profile measurements each name their exact producer, separating oracle, and durable watcher or an explicit live repair task; immutable historical context is not mistaken for current support.`
-  Verification: `DEVELOPMENT_NOTES.md lines below 188 identity/count; exact archive/book/provider commands and RED controls; disposition join; doctrine gate`
-  Commit: `pending`
+  Verification: `PASS — unsupported exact UVM peak removed while the checked low-optimization resource control remains; regenerated inventory 1,415 candidates / 668 governed constants; exact root join 40 disposed / 30 open with 18 derived gates and 22 reviewed non-claims; all 8 remaining foundational candidates close as 3 live gates plus 5 immutable historical measurements; OSVVM source-order reconstruction added; focused Files=6/Tests=30 plus inventory, disposition, docs, live-document, mdBook, and doctrine gates`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.2.2: disposition foundational rationale claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.2.3`
   Status: `pending`
@@ -211,11 +211,20 @@ hidden behind repeated checks of the same kind.
   one stale candidate, so the current frontier is 1,416 total / 71 root / 32
   non-rationale root candidates. Earlier `.4` and `.5.1` verification rows
   retain their then-current 1,417-candidate results as historical evidence.
+- `2026-08-20`: Leaf `.5.2.2` found that the experimental UVM rationale's
+  exact 4-GiB optimized-build peak had no tracked measurement producer. The
+  durable probe proves the selected guarded-envelope failure outcome and the
+  lower-memory `-O0` control, but not that discarded point estimate. Removing
+  the unsupported precision is the repair; the regenerated inventory has
+  1,415 candidates / 70 root candidates, with eight foundational candidates
+  retained and dispositioned. Historical book and roadmap measurements name
+  immutable Git producers and their preserved audits rather than posing as
+  current occupancy or support claims.
 
 ## Open Questions
 
-- None blocking. The `.5.2.2` foundational rationale review is the sole
-  active child after clean `.5.2.1` commit `1f0443b3a`.
+- None blocking. `.5.2.2` is complete; `.5.2.3` bridge/execution rationale
+  review is the next child to activate from the clean closure commit.
 
 ## Blockers
 
@@ -229,6 +238,9 @@ hidden behind repeated checks of the same kind.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'remain pinned to the adoption baseline' --oneline -- README_POLICY.md doctrine/live_document_size/surfaces.jsonl` identifies `9bd081935`, while pickaxes for the later 245-line / 9,931-byte registry values identify `3084d8c7b`: the policy sentence predated the downward ratchet and was never joined to the current control input; the unreviewed root candidates likewise had no disposition join.
 - [x] **ADDRESSED (verified)** — the policy and Knowledge Map now distinguish historical adoption baseline, reviewed health target, and registry-derived current ceiling; regenerated inventory reports `candidates=1416`; the canonical disposition report joins all `32` current non-rationale root candidates as `15` derived gates plus `17` reviewed non-claims and leaves only the `39` separately owned rationale candidates open.
 - [x] **NO REGRESSION** — the deliberately failing archive, ledger, task-tree, Knowledge Map width, RAM-trip, inventory, and disposition controls report `All tests successful` at `Files=8, Tests=88`; bootstrap, docs-relative paths, Memory, Knowledge Map parity, README/live-document/reference authority, mdBook test/build, and `git diff --check` pass; the ignored 19-MiB generated book directory was removed after verification.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S '4-GiB peak under optimized compilation' --oneline -- DEVELOPMENT_NOTES.md` identifies `adc88817e`, while the tracked probe/report search finds the exact `-O0` resource control but no producer for that peak measurement. The other foundational pickaxes identify immutable Chapter 14, roadmap, and provider-profile commits; their current candidate records likewise had no disposition join.
+- [x] **ADDRESSED (verified)** — the unsupported UVM point estimate is removed without weakening the checked guarded-envelope rationale; regenerated inventory reports `candidates=1415`; the root join reports `40/70` disposed and `30` open. All eight remaining foundational candidates close as three derived gates and five historical measurements whose reasons name exact Git producers, independent preserved audits or executable oracles, and durability watchers. The OSVVM oracle now reconstructs the core/Common counts from both ordered lists and executed analysis commands.
+- [x] **NO REGRESSION** — the RAM-guarded ledger, roadmap, UVM, OSVVM, inventory, and disposition collection reports `All tests successful` at `Files=6, Tests=30`; the exact OSVVM tuple reruns byte-identically and cleans its same-volume staging; inventory derives `668` governed constants after the eight new disposition records. Knowledge Map passes at 1,127 facts / 5,897 questions / 6,064 occurrences / 130 shards; live containment covers 3,022/3,022 paths with exact book authority; all 53 chapters test and the rendered 88-file/18,584-KiB book is inspected and removed. Docs, Memory, diff, staged acceptance, and doctrine gates pass.
 
 ## Verification Log
 
@@ -242,6 +254,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-20` | `.5.1` | disposition checker/report; `t/1638`; inventory/constant census; bootstrap; Knowledge Map; live-document/reference authority; RAM-guarded mdBook; doctrine gate | `PASS — five exact groups, four bounded outcomes, all 1,417 debt records visibly open; Files=1, Tests=9; 628 governed constants; all registered doctrines` |
 | `2026-08-20` | `.5.2` partition | committed inventory path/line aggregation; exact four-group sum; task integrity; docs paths; doctrine gate | `PASS — 33 + 9 + 18 + 12 = 72 with disjoint path/range ownership; .5.2.1 selected alone` |
 | `2026-08-20` | `.5.2.1` | stale-policy root cause; inventory/disposition joins; `t/1549`, `t/1554`, `t/1565`, `t/1566`, `t/1567`, `t/1595`, `t/1637`, `t/1638`; bootstrap; docs paths; Memory; Knowledge Map; README/live-document/reference authority; RAM-guarded mdBook; diff check | `PASS — current frontier 1,416; root 32 disposed / 39 open; 15 gates / 17 reviewed; 660 governed constants; Files=8/Tests=88; 53 book chapters tested and built` |
+| `2026-08-20` | `.5.2.2` | UVM producer audit and live repair; ledger/book/roadmap/provider evidence review; OSVVM source-order reconstruction; `t/1565`, `t/1566`, `t/1592`, `t/1599`, `t/1637`, `t/1638`; inventory/disposition joins; docs/Memory/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — current frontier 1,415; root 40 disposed / 30 open; 18 gates / 22 reviewed; all eight foundational candidates closed; 668 governed constants; Files=6/Tests=30; Knowledge Map 1,127/5,897/6,064/130; live paths 3,022/3,022; all 53 chapters; inspected/removed build 88 files/18,584 KiB; exact provider rerun and same-volume cleanup pass` |
 
 ## Commit Log
 
@@ -255,3 +268,4 @@ hidden behind repeated checks of the same kind.
 | `.5.1` | `CLAIM-VERIFICATION-ADOPTION.5.1: gate candidate review dispositions` | `Bounded outcome/group registries, exact inventory join, live owner and path checks, completion enforcement, RED controls, and durable retrieval route.` |
 | `.5.2` | `CLAIM-VERIFICATION-ADOPTION.5.2: partition root claim review` | `Activates four evidence-coherent children from the exact root candidate census; changes no claim, disposition, policy, product, or support behavior.` |
 | `.5.2.1` | `CLAIM-VERIFICATION-ADOPTION.5.2.1: disposition non-rationale root claims` | `Repairs stale README ceiling semantics and maps every current non-rationale root candidate to a live derived gate or an exact reviewed non-claim outcome.` |
+| `.5.2.2` | `CLAIM-VERIFICATION-ADOPTION.5.2.2: disposition foundational rationale claims` | `Removes unsupported UVM resource precision, strengthens the OSVVM source-count oracle, and maps the remaining foundational claims to live gates or immutable historical measurements.` |

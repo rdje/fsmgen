@@ -78,6 +78,14 @@ candidates are rationale-ledger measurements owned by the subsequent
 evidence-coherent review slices; derive exact counts with the report command
 above instead of copying them into this inventoried surface.
 
+The foundational rationale review separates live gates from immutable context.
+Ledger reconstruction, the complete roadmap archive, and qualified provider
+source ordering use executable producer, separating-oracle, and watcher chains.
+Book-partition and earlier roadmap-occupancy statements remain explicitly
+historical. Unsupported precision in an experimental host-resource observation
+was removed while retaining the checked guarded-envelope outcome and
+lower-memory compilation control.
+
 `MEMORY.md` is the bounded resume pointer and `TASK_TREE.md` indexes the live
 work frontier. `ROADMAP_V2.md` carries high-level direction.
 Decision 0049 retires the former roadmap-status board after its independent

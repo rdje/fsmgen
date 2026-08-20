@@ -125,10 +125,10 @@ workaround. `UVM_NO_DPI` and unsupported-feature blackboxing are explicit
 deviations and cannot become canonical source conditionals.
 
 Host compilation is also evidence-bounded. One build job and one Verilator
-thread did not prevent Clang's generated UVM class aggregate from crossing a
-4-GiB peak under optimized compilation. `-O0` is therefore part of the exact
-feasibility argv: runtime performance is irrelevant to the control, and the
-lower-memory build passes the repository guard. Transcript identity removes
+thread did not keep the initial optimized build inside the selected guarded
+host envelope. `-O0` is therefore part of the exact feasibility argv: runtime
+performance is irrelevant to the control, and the lower-memory build passes
+the repository guard. Transcript identity removes
 variable wall/resource measurements and hashes the control runtime's semantic
 marker/error/fatal/finish proof, so an independent rerun is byte-stable.
 

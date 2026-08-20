@@ -1,7 +1,7 @@
 # Knowledge Map: `claim-verification`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **18** uniquely owned question entries.
+> **3** facts · **19** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -23,6 +23,7 @@
 - q="where is the claim verification registry?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="where is the current-surface quantitative claim inventory?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)
 - q="which outcomes may close a claim inventory candidate?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
+- q="why was the experimental UVM resource peak removed from the rationale ledger?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 
 ## Facts
 

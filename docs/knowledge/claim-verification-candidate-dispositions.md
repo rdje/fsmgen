@@ -8,6 +8,7 @@ answers:
   - "how are stale claim candidate dispositions rejected?"
   - "how are reviewed incidental numerals recorded?"
   - "where are missing claim-evidence legs assigned to repair tasks?"
+  - "why was the experimental UVM resource peak removed from the rationale ledger?"
 date: 2026-08-20
 status: current
 tags: [claim-verification, dispositions, inventory, evidence]
@@ -30,3 +31,12 @@ gap. A group becomes required-complete only when its migration slice closes;
 the checker then rejects any remaining open candidate. The join detects stale
 or duplicate candidate IDs, but it does not turn the reviewer's classification
 or declared evidence into semantic truth.
+
+The foundational root review also demonstrates the repair rule. An exact
+experimental UVM peak had no tracked measurement producer, while the selected
+guarded-envelope outcome and lower-memory compilation control were preserved by
+the checked probe. The unsupported point estimate was removed instead of being
+reclassified as evidence. Immutable book-partition and roadmap-occupancy
+measurements remain historical dispositions whose reasons name their Git
+producer, preserved independent audit, and durability path; live ledger,
+complete-roadmap-archive, and provider-source-order claims use derived gates.
