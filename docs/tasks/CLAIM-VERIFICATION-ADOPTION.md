@@ -114,7 +114,7 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.2.1: disposition non-rationale root claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Disposition the 9 foundational rationale candidates before the bridge-scale entries.`
   Acceptance: `The rationale-ledger, book-partition, roadmap-archive, UVM-resource, and provider-profile measurements each name their exact producer, separating oracle, and durable watcher or an explicit live repair task; immutable historical context is not mistaken for current support.`
   Verification: `DEVELOPMENT_NOTES.md lines below 188 identity/count; exact archive/book/provider commands and RED controls; disposition join; doctrine gate`
@@ -214,8 +214,8 @@ hidden behind repeated checks of the same kind.
 
 ## Open Questions
 
-- None blocking. Activate `.5.2.2` from a clean boundary to review the nine
-  foundational rationale candidates.
+- None blocking. The `.5.2.2` foundational rationale review is the sole
+  active child after clean `.5.2.1` commit `1f0443b3a`.
 
 ## Blockers
 
