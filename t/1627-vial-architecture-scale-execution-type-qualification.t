@@ -212,6 +212,16 @@ subtest 'exact route-boundary proof is explicit and RAM-guarded' => sub {
     cmp_ok(bytes::length($json->encode($manifest)), '<=', $manifest_cap,
         'the accepted manifest is inside the serialized bridge cap');
 
+    # A bridge that accepts is not yet a route that accepts, so the boundary is
+    # carried through the public binder to a real plan.
+    my $planned = $class->_test_direct_ial1_route(1_043);
+    ok($planned->{ok}, 'the whole canonical route, not only its bridge, accepts 1,043 types');
+    diag($planned->{why}) unless $planned->{ok};
+    is($planned->{types}, 1_043, 'the accepted plan materializes every authored type');
+    is($planned->{bindings}, 1_045,
+        'the accepted plan binds one endpoint per type plus clock and reset');
+    is($planned->{plan_bytes}, 1_493_527, 'the accepted plan is exactly 1,493,527 bytes');
+
     my $rejected = $class->_test_direct_ial1_bridge(1_044);
     ok(!$rejected->{ok}, 'one further type crosses the serialized bridge cap');
     is($rejected->{diagnostics}[0]{code}, 'HIAL_VIAL_BRIDGE_LIMIT_ERROR',
@@ -271,4 +281,36 @@ sub _test_direct_ial1_bridge {
             $lowered->{files}{$artifact_name}, undef, $artifact_name),
         backend_names => _backend_names($actor),
     });
+}
+
+# A bridge-stage measurement cannot support a whole-route claim, so the boundary
+# is also carried through the public binder to a real plan.
+sub _test_direct_ial1_route {
+    my ($class, $type_count) = @_;
+    my $bridge = $class->_test_direct_ial1_bridge($type_count);
+    return {ok => 0, why => $bridge->{diagnostics}[0]{message}} unless $bridge->{ok};
+    my ($semantic_ir, $diagnostics) = _canonical_semantic_ir({
+        content => _render_type_vial($type_count),
+        relative_path => 'generated/vial-scale/execution_graph/vial_architecture_scale.vial',
+    });
+    return {ok => 0, why => $diagnostics->[0]{message}} unless $semantic_ir;
+    my $fixture = $semantic_ir->as_hashref->{packages}[0]{fixtures}[0];
+    my $built = FSM::VIAL::ExecutionBuilder->build({
+        semantic_ir => $semantic_ir,
+        bridge_manifest => $bridge->{manifest},
+        fixture_id => $fixture->{semantic_id},
+        scenario_ids => [map { $_->{semantic_id} } @{$fixture->{scenarios}}],
+        execution_profile => 'core_directed_single_clock_execution_v1',
+        replay_manifest => undef,
+        native_extension_catalog => [],
+    });
+    return {ok => 0, why => $built->{diagnostics}[0]{message}} unless $built->{ok};
+    my $ir = $built->{execution_ir}->as_hashref;
+    my $canonical = JSON::PP->new->canonical(1)->utf8(1);
+    return {
+        ok => 1,
+        types => scalar(@{$ir->{type_table}}),
+        bindings => $ir->{resource_summary}{bindings},
+        plan_bytes => bytes::length($canonical->encode($built->{plan})),
+    };
 }

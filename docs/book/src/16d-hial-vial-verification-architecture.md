@@ -2923,13 +2923,16 @@ bridge contract declares `events` 2,048, `types` 4,096, `endpoints` 4,096, and a
 cap. A lower cap in the layer below always wins. Each axis's genuine boundary is
 measured through the canonical route:
 
-| Axis | Declared execution cap | Measured route boundary | Cap that decides one past it |
-| --- | ---: | ---: | --- |
-| bindings | 65,536 | accepts 2,054 | bridge `events` 2,048, at `/events` |
-| execution types | 65,536 | accepts 1,043 | 16-MiB serialized manifest, at `/` |
-| source-map records | 1,000,000 | accepts 46,294 | 16-MiB serialized plan, at `/plan` |
+| Axis | Declared execution cap | Measured route boundary | Accepted plan | Cap that decides one past it |
+| --- | ---: | ---: | ---: | --- |
+| bindings | 65,536 | accepts 2,054 | 2,664,611 bytes | bridge `events` 2,048, at `/events` |
+| execution types | 65,536 | accepts 1,043 | 1,493,527 bytes | 16-MiB serialized manifest, at `/` |
+| source-map records | 1,000,000 | accepts 46,294 | 16,777,026 bytes | 16-MiB serialized plan, at `/plan` |
 
-That is roughly 32x, 63x, and 22x below the declared caps.
+That is roughly 32x, 63x, and 22x below the declared caps. Each boundary is a
+whole-route claim, not a stage one: the accepted count is carried through the
+ordinary semantic stage, the canonical bridge, *and* the public binder to a real
+plan, because a bridge that accepts is not yet a route that accepts.
 
 [Decision `0072`](../../decisions/0072-an-unreachable-declared-cap-is-a-result-not-a-level-to-rewrite.md)
 selects what to do about it, and the short version is: nothing is rewritten. The

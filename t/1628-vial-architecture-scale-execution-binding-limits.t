@@ -200,6 +200,21 @@ subtest 'exact route-boundary proof is explicit and RAM-guarded' => sub {
     cmp_ok(bytes::length($json->encode($manifest)), '<=', $manifest_cap,
         'the accepted manifest is inside the serialized bridge cap');
 
+    # A bridge that accepts is not yet a route that accepts. The scale binder is
+    # caller-sealed to the generator, so the plan stage is entered from inside
+    # that package - the same seal t/1603 proves a direct caller cannot pass.
+    my $planned = $class->_test_binding_route($boundary{accepted});
+    ok($planned->{ok},
+        "the whole canonical route, not only its bridge, accepts $boundary{accepted} bindings");
+    diag($planned->{why}) unless $planned->{ok};
+    is($planned->{bindings}, $boundary{accepted},
+        'the accepted plan materializes every requested binding');
+    is($planned->{events}, $boundary{events_cap},
+        'the accepted plan carries exactly the bridge event cap');
+    is($planned->{plan_bytes}, 2_664_611, 'the accepted plan is exactly 2,664,611 bytes');
+    cmp_ok($planned->{plan_bytes}, '<=', $manifest_cap,
+        'the accepted plan is inside the serialized-plan cap, so nothing later pre-empts');
+
     my $rejected = $class->_test_binding_bridge($boundary{rejected});
     ok(!$rejected->{ok}, 'one further binding crosses the bridge event cap');
     is($rejected->{diagnostics}[0]{code}, 'HIAL_VIAL_BRIDGE_LIMIT_ERROR',
@@ -253,4 +268,34 @@ sub _test_binding_bridge {
             $lowered->{files}{$artifact_name}, undef, $artifact_name),
         backend_names => _backend_names($actor),
     });
+}
+
+sub _test_binding_route {
+    my ($class, $bindings) = @_;
+    my $bridge = $class->_test_binding_bridge($bindings);
+    return {ok => 0, why => $bridge->{diagnostics}[0]{message}} unless $bridge->{ok};
+    my ($semantic_ir, $diagnostics) = _canonical_semantic_ir({
+        content => _render_vial($bindings - 6),
+        relative_path => 'generated/vial-scale/execution_graph/vial_architecture_scale.vial',
+    });
+    return {ok => 0, why => $diagnostics->[0]{message}} unless $semantic_ir;
+    my $fixture = $semantic_ir->as_hashref->{packages}[0]{fixtures}[0];
+    my $built = FSM::VIAL::ExecutionBuilder->build_architecture_scale_qualification({
+        semantic_ir => $semantic_ir,
+        bridge_manifest => $bridge->{manifest},
+        fixture_id => $fixture->{semantic_id},
+        scenario_ids => [map { $_->{semantic_id} } @{$fixture->{scenarios}}],
+        execution_profile => 'core_directed_single_clock_execution_v1',
+        replay_manifest => undef,
+        native_extension_catalog => [],
+    });
+    return {ok => 0, why => $built->{diagnostics}[0]{message}} unless $built->{ok};
+    my $ir = $built->{execution_ir}->as_hashref;
+    my $canonical = JSON::PP->new->canonical(1)->utf8(1);
+    return {
+        ok => 1,
+        bindings => $ir->{resource_summary}{bindings},
+        events => scalar(@{$ir->{bindings}{events}}),
+        plan_bytes => bytes::length($canonical->encode($built->{plan})),
+    };
 }

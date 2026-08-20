@@ -334,10 +334,12 @@ envelope before any product stage (1,933,429 HIAL bytes at 32,768 bindings;
 `VIALExecutionContract` declares 65,536 / 65,536 / 1,000,000 while
 `HIALVIALBridgeContract` declares `events` 2,048, `types` 4,096, `endpoints`
 4,096, and a 16,777,216-byte serialized manifest, with the plan carrying its own
-16,777,216-byte cap. Measured route boundaries are **2,054 bindings** (2,055
-rejects at `/events`), **1,043 execution types** (1,044 at `/`), and **46,294
-source-map records** (46,295 at `/plan`) — 32x, 63x, and 22x below the declared
-caps. Decision `0072` rewrites neither the levels nor the envelope and instead
+16,777,216-byte cap. Measured route boundaries, each carried through the
+semantic stage, the canonical bridge, and the public binder to a real accepted
+plan rather than proved at one stage, are **2,054 bindings** (2,664,611-byte
+plan; 2,055 rejects at `/events`), **1,043 execution types** (1,493,527-byte
+plan; 1,044 at `/`), and **46,294 source-map records** (16,777,026-byte plan;
+46,295 at `/plan`) — 32x, 63x, and 22x below the declared caps. Decision `0072` rewrites neither the levels nor the envelope and instead
 requires every unreachable level to report its declared cap, its earliest decider,
 and its measured route boundary, under `envelope_unconstructible` /
 `not_constructed` with paired `VIAL_SCALE_LIMIT_INTERACTION` and

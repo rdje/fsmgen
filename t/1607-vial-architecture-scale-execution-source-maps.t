@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 
+use bytes ();
 use Digest::SHA qw(sha256_hex);
 use File::Spec;
 use FindBin;
@@ -241,6 +242,34 @@ subtest 'source-map gate rejects mutation and unfinished levels' => sub {
         'unfinished-level rejection names the bounded frontier');
 };
 
+# Decision 0072 clause 3 requires every unreachable level to be reported beside
+# its axis's measured route boundary, and clause 5 requires that boundary to be
+# proved through the canonical route rather than trusted. This axis's selected
+# levels are all unconstructible, so the boundary is what the axis really has.
+subtest 'exact source-map route boundary is explicit and RAM-guarded' => sub {
+    plan skip_all => 'set FSMGEN_VIAL_SCALE_EXACT=1 under'
+        . ' scripts/run_with_ram_guard.sh for exact source-map boundary proof'
+        unless $ENV{FSMGEN_VIAL_SCALE_EXACT};
+
+    my $accepted = $class->_test_source_map_route($reference_hial, 46_294);
+    ok($accepted->{ok}, 'the canonical route accepts exactly 46,294 source-map records');
+    diag($accepted->{why}) unless $accepted->{ok};
+    is($accepted->{maps}, 46_294, 'the accepted plan carries every requested map');
+    is($accepted->{plan_bytes}, 16_777_026,
+        'the accepted plan is exactly 16,777,026 bytes');
+    cmp_ok($accepted->{plan_bytes}, '<=', 16_777_216,
+        'the accepted plan is inside the serialized-plan cap');
+
+    my $rejected = $class->_test_source_map_route($reference_hial, 46_295);
+    ok(!$rejected->{ok}, 'one further source-map record crosses the plan cap');
+    is($rejected->{why}, 'serialized_plan_bytes exceeds the limit 16777216',
+        'the serialized-plan cap is the route boundary for this axis');
+    is($rejected->{path}, '/plan', 'the boundary diagnostic names the plan');
+
+    cmp_ok(1_000_000 / $accepted->{maps}, '>', 21,
+        'the declared execution cap is more than twenty times the reachable boundary');
+};
+
 done_testing();
 
 sub repo_path {
@@ -255,4 +284,32 @@ sub slurp_raw {
     my $text = <$fh>;
     close $fh or die "Cannot close $path: $!";
     return $text;
+}
+
+package FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+# The route boundary lies far above every catalog level, so it is proved through
+# the same renderer, canonical checked-AHB inputs, and public binder the gate
+# uses rather than through a level the generator does not own.
+sub _test_source_map_route {
+    my ($class, $reference_hial, $requested) = @_;
+    my $vial = _render_ahb_vial('source_map_records', 'gate_candidate_v1', $requested);
+    my $inputs = _canonical_ahb_inputs(
+        {specification => {primary_axis => 'source_map_records'}},
+        {content => $reference_hial, relative_path => 'ppif/ahb_lite_subordinate.ppif'},
+        {content => $vial,
+            relative_path => 'generated/vial-scale/execution_graph/vial_architecture_scale.vial'},
+    );
+    return {ok => 0, why => $inputs->{semantic_rejection}[0]{message},
+        path => $inputs->{semantic_rejection}[0]{semantic_path}}
+        if $inputs->{semantic_rejection};
+    my $built = _build_execution($inputs);
+    return {ok => 0, why => $built->{diagnostics}[0]{message},
+        path => $built->{diagnostics}[0]{semantic_path}} unless $built->{ok};
+    my $canonical = JSON::PP->new->canonical(1)->utf8(1);
+    return {
+        ok => 1,
+        maps => scalar(@{$built->{execution_ir}->as_hashref->{source_map}}),
+        plan_bytes => bytes::length($canonical->encode($built->{plan})),
+    };
 }
