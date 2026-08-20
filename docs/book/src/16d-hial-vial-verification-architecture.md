@@ -3561,8 +3561,11 @@ and normalized reruns.
 Public runtime traces, `ResultProducer`, and the first portable SystemVerilog
 backend remain excluded as scale oracles: they project or implement a narrower
 profile and do not independently recompute the general state semantics above.
-Implementation remains separately proposed under `.17.2.5.2`; selection changes
-no runtime, public API, support, performance, or capacity claim.
+Implementation is now separately active under `.17.2.5.2`. Its first child
+owns only the caller-sealed construction/evaluation foundation; later children
+own model, scoreboard, coverage, fault, random/replay, and final qualification
+slices. Activation changes no runtime, public API, support, performance, or
+capacity claim.
 
 These are construction outcomes, not supported capacities. The exact 1/4/16-
 MiB plans contain 2,974/12,166/48,850 real reset operations plus bounded,
