@@ -135,10 +135,10 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.2.4: disposition checking scale claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.3`
-  Status: `active`
+  Status: `done`
   Goal: `Review and migrate the 268 general language, control, tooling, and reference-book candidates.`
   Acceptance: `Every shipped-behavior candidate outside the named protocol, IAL2-AHB, and HIAL/VIAL-verification clusters receives an exact gated disposition without weakening examples or turning syntax literals and navigation identifiers into claims.`
-  Verification: `The current general-book group partitions exactly into 35 core-language/tooling, 43 intent/actor/transaction, 68 control/data/composition/lowering, 71 support-matrix/backlog, and 51 blueprint/platform/reference candidates. Children .5.3.1-.5.3.5 own those disjoint path sets; the parent closes only after their sum is 268 and general_book becomes required-complete.`
+  Verification: `PASS — the five disjoint children close 35 + 43 + 68 + 71 + 51 = 268 candidates as 204 derived gates plus 64 reviewed outcomes; general_book is required-complete with zero open identities.`
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.3: partition general book claim review`
   Children: `CLAIM-VERIFICATION-ADOPTION.5.3.1, CLAIM-VERIFICATION-ADOPTION.5.3.2, CLAIM-VERIFICATION-ADOPTION.5.3.3, CLAIM-VERIFICATION-ADOPTION.5.3.4, CLAIM-VERIFICATION-ADOPTION.5.3.5`
 
@@ -171,14 +171,14 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.3.4: disposition support backlog claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.3.5`
-  Status: `active`
+  Status: `done`
   Goal: `Disposition the 51 implementation-blueprint, platform-intent, and reference-map candidates in Chapters 15, 16, and 90.`
   Acceptance: `Blueprint and platform claims join exact current producers and separating oracles while historical, navigation, policy, and migration references receive narrowly reviewable outcomes.`
-  Verification: `exact 51-candidate path-set join, blueprint/platform/reference evidence controls, inventory/disposition/mdBook/doctrine gates, general_book required-complete`
-  Commit: `pending`
+  Verification: `PASS — all 51 candidates close as 14 derived gates plus 37 reviewed policy, historical, structural, and navigation outcomes; activation-only occupancy is explicitly past-tense; the RAM-guarded exact collection reports Files=14/Tests=121; inventory/disposition, Knowledge Map, mdBook, containment, staged-acceptance, and doctrine gates pass; general_book is required-complete at 268/268.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.3.5: disposition blueprint reference claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Review and migrate the 557 protocol-profile and integration-book candidates.`
   Acceptance: `Every candidate in 14f, 14g, 14h, 14i, 14j, 14l, 16a, 16aa, and 16b is dispositioned against executable protocol/profile/integration producers and separating oracles, or carries an exact owned gap; repeated measurements share evidence only when they are demonstrably the same claim.`
   Verification: `protocol-group identity/count, focused profile/integration gates and deliberate mutations, zero open group candidates, mdBook/doctrine gates`
@@ -317,11 +317,22 @@ hidden behind repeated checks of the same kind.
   control. The Chapter 14 claim that 80 complete book fixtures lowered cleanly
   was stale; the ordinary audit reports 82, so the published count is repaired
   rather than waived as reviewed context.
+- `2026-08-20`: The blueprint/platform/reference review keeps the Rust parity
+  smoke and current bounded AHB map on their ordinary executable producers,
+  while archive, ledger, task-segment, evidence-map, ISF-partition, and roadmap
+  recovery retain separate negative controls. Five reference-map sentences
+  used present tense for immutable activation occupancy even though the live
+  task index, review front door, book summary, focused-document collection,
+  and roadmap had evolved. Their measurements remain exact but are now
+  explicitly historical. Declared caps, old-guide section labels, and chapter
+  coordinates remain reviewed inputs or navigation rather than current scale
+  claims.
 
 ## Open Questions
 
-- None blocking. `.5.3.5` is the sole active general-book child after the
-  support-matrix/non-protocol-backlog disposition closure.
+- None blocking. `.5.4` is active after the complete 268-candidate general-book
+  closure; its 557 protocol candidates require a disjoint path/evidence-family
+  partition before implementation.
 
 ## Blockers
 
@@ -365,6 +376,9 @@ hidden behind repeated checks of the same kind.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'Current state: 80' --oneline -- docs/book/src/14-feature-backlog.md` identifies `a25264fa3`: the hand-copied complete-example total was not updated when later runnable fixtures entered the ordinary audit. All 71 current candidates on the eight support-matrix/backlog paths also lacked disposition joins.
 - [x] **ADDRESSED (verified)** — all 71 identities close as 62 distinct three-leg derived gates plus nine reviewed test/recipe/task/language/example identifiers. Chapter 14 now copies the executable audit's 82 complete fixtures; SourceHIR byte identities, VHDL generic-map shapes, ATL/FIFO behavior, IAL2 pulse/read/RLAST/ARLEN boundaries, and VIAL profile/bridge/execution/parity measurements retain separate producer/oracle/watcher chains.
 - [x] **NO REGRESSION** — the RAM-guarded family collection reports `All tests successful` at `Files=30, Tests=590`, including the 82-complete/270-fragment book census, and the filtered dynamic-read/RLAST/raw-ARLEN collection reports `Files=1, Tests=6`. Inventory regenerates `1,415` candidates / `915` governed constants; disposition reports `287` closed overall and `217/268` in the general book. Knowledge Map reports `1,127` facts / `5,911` questions / `6,078` occurrences / `130` shards; live containment covers `3,022/3,022` paths with exact `51,078`-line / `2,698,576`-byte book authority. All 53 chapters test; the rendered 88-file/18,600-KiB book contains the repaired total and synchronized reference, is inspected, and is removed. Docs, Memory, diff, staged acceptance, and all 12 registered doctrines pass; the host-provided mdBook toolchain remains the only read-only off-volume dependency.
+- [x] **ROOT CAUSE (WHY + WHERE)** — exact `git log -S` pickaxes for `cross-tree index keeps only three active`, `The 79-line review`, `The mandatory read is 51 lines`, `generated index classifies all 1,005`, and `317-line live view` identify commits `7f05b41de`, `2bfb32c02`, `dc1c64afb`, `ea1b76dd5`, and `a20d38afc`. Those immutable activation measurements remained accurate but used present tense after their live surfaces evolved, and all 51 current candidates on Chapters 15, 16, and 90 still lacked disposition joins.
+- [x] **ADDRESSED (verified)** — all 51 identities close as 14 three-leg derived gates plus 37 reviewed policy, historical, structural, and navigation outcomes. The Rust smoke, current bounded AHB map, retired-history retrieval, rationale ledger, task segment/archive, evidence maps, ISF partition, and roadmap archive retain distinct evidence chains. Activation-only task-index, review-front, mdBook-summary, focused-collection, and roadmap occupancy is now explicitly past-tense without changing the exact 51-candidate census. The general-book registry is required-complete at `268/268` with zero open identities.
+- [x] **NO REGRESSION** — the RAM-guarded exact blueprint/platform/reference collection reports `All tests successful` at `Files=14, Tests=121`; it exercises Rust/Perl parity, AHB source and generalized-count truth, task reconstruction, README/live-document pressure, maintained-reference authority, retired histories, rationale reconstruction, roadmap recovery, focused-document/ISF partitions, and both claim registries. Inventory regenerates `1,415` candidates / `966` governed constants; disposition reports `338` closed overall as `248` gates / `90` reviewed and closes `general_book=268/268 required_complete=1`. Knowledge Map reports `1,127` facts / `5,914` questions / `6,081` occurrences / `130` shards; live containment covers `3,022/3,022` paths with exact `51,089`-line / `2,699,163`-byte book authority. All 53 chapters test; the rendered 88-file/18,604-KiB book contains the clarified activation context and synchronized review note, is inspected, and is removed. Docs, Memory, diff, staged acceptance, and all 12 registered doctrines pass; the host-provided mdBook toolchain remains the only read-only off-volume dependency.
 
 ## Verification Log
 
@@ -388,6 +402,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-20` | `.5.3.2` | static wait; entry/drive/sample/await/complete; repeat/control/data/loop timing; FIFO/APB composition; exact schedule ownership; inventory/disposition/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 43 candidates closed as 42 gates / 1 reviewed; general book 78/268; Files=36/Tests=602 exact focused run; all 53 chapters and all registered doctrines` |
 | `2026-08-20` | `.5.3.3` | loop/temporal/control/data/storage/composition/rule/lowering/type evidence; exhaustive ATL routes; inventory/disposition/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 68 candidates closed as 60 gates / 8 reviewed; general book 146/268; Files=54/Tests=603 exact focused run; 82 complete book fixtures and all registered doctrines` |
 | `2026-08-20` | `.5.3.4` | support matrix; book audit; SourceHIR; VHDL generic maps; ATL/FIFO; IAL2 pulse/read/RLAST/ARLEN; VIAL profile/bridge/execution/parity; inventory/disposition/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 71 candidates closed as 62 gates / 9 reviewed; general book 217/268; Files=30/Tests=590 plus filtered AXI Files=1/Tests=6; all registered doctrines` |
+| `2026-08-20` | `.5.3.5` | Rust parity smoke; current AHB map; retired histories; ledger; task migration/archive; evidence maps; ISF/reference partitions; roadmap recovery; inventory/disposition/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 51 candidates closed as 14 gates / 37 reviewed; general book 268/268 required-complete; Files=14/Tests=121 exact focused run; all registered doctrines` |
 
 ## Commit Log
 
@@ -411,3 +426,4 @@ hidden behind repeated checks of the same kind.
 | `.5.3.2` | `CLAIM-VERIFICATION-ADOPTION.5.3.2: disposition intent timing claims` | `Maps intent, actor, and transaction statements to exact evidence families; repairs repeat timing and drive-payload prose; gives injected states explicit transaction ownership in schedule reports.` |
 | `.5.3.3` | `CLAIM-VERIFICATION-ADOPTION.5.3.3: disposition control data claims` | `Maps control, temporal, data, generated-child composition, rule, lowering, and type statements to distinct executable evidence; repairs duplicated repeat and payload-width prose.` |
 | `.5.3.4` | `CLAIM-VERIFICATION-ADOPTION.5.3.4: disposition support backlog claims` | `Maps shipped support-matrix and non-protocol backlog statements to distinct executable evidence, preserves identifiers/examples as reviewed context, and repairs the stale complete-book fixture count.` |
+| `.5.3.5` | `CLAIM-VERIFICATION-ADOPTION.5.3.5: disposition blueprint reference claims` | `Maps current Rust, AHB, archive, ledger, task, evidence-map, ISF-partition, and roadmap claims to distinct gates; preserves policy/navigation/history context and clarifies activation-only occupancy.` |

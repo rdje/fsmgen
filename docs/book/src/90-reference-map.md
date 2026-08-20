@@ -138,6 +138,14 @@ identity, VHDL generic maps, ATL and FIFO lowering, IAL2 response boundaries,
 and VIAL profile evidence remain independently executable. The complete book-
 example total now follows the lowering audit instead of a stale hand copy.
 
+The implementation-blueprint, platform-intent, and reference review keeps the
+single Rust parity smoke and the current bounded AHB map on executable
+evidence. Chapter coordinates, declared policy caps, and immutable activation
+measurements remain explicit non-current context. Archive, ledger, task
+segment, evidence-map, ISF-partition, and roadmap recovery each retain their
+own checker; activation occupancy is now consistently written in the past
+tense rather than resembling current repository state.
+
 `MEMORY.md` is the bounded resume pointer and `TASK_TREE.md` indexes the live
 work frontier. `ROADMAP_V2.md` carries high-level direction.
 Decision 0049 retires the former roadmap-status board after its independent
@@ -213,10 +221,10 @@ measurements, thresholds, registries, checks, and retention contracts rather
 than copying FSMGen's local data.
 
 Decision 0042 and `.6` define optional sealed task-subtree segments and
-compact completed terminals. `.7` now applies the design: the live IAL2 file
-keeps its active root while one exact-source segment reconstructs all 844
-terminal children, and the cross-tree index keeps only three active plus eleven
-proposed rows while 540 unique terminal rows remain digest-proved query history.
+compact completed terminals. At the `.7` migration, the live IAL2 file kept its
+active root while one exact-source segment reconstructed all 844 terminal
+children, and the cross-tree index kept only three active plus eleven proposed
+rows while 540 unique terminal rows became digest-proved query history.
 
 `TASK_ACCEPTANCE.md` is the project-neutral evidence-backed code-slice
 standard. FSMGen's registered checker reads data-only staged-path and evidence
@@ -347,8 +355,9 @@ false partition arithmetic, identity/cardinality drift, and unproved residue
 fail closed. Every task-tree or generic archive `version_object` names a
 bounded retention contract with an owner, guarantee, and recovery action.
 Missing history diagnostics identify that action, while evidence that must not
-depend on history uses content-addressed repository files. The 79-line review
-front door has independent 100-line / 5-KiB caps and a typed route to the
+depend on history uses content-addressed repository files. At `.22` closure,
+the review front door was 79 lines. Its independent caps remain
+100 lines / 5 KiB, and its typed route leads to the
 SHA-256-frozen 1,311-line detailed packet.
 
 Decision `0045` and leaf `.23` now select `maintained_reference` for unique
@@ -383,8 +392,9 @@ read is capped at 64 lines and 4 KiB, and every chapter remains one direct link
 away. Activation commit `b88b37323` fixes the former 18,697-line Chapter 14
 source. Leaf `.8` maps all of it exactly once into thirteen direct pages by
 stable language/data, composition, actor, IAL2, verification, protocol, ISF,
-backend, validation, and API topics. The mandatory read is 51 lines, the
-largest new page is 2,726 lines / 192,166 bytes, examples remain executable,
+backend, validation, and API topics. At that activation the mandatory read was
+51 lines. The largest new page was
+2,726 lines / 192,166 bytes. Examples remain executable,
 and the former backend deep-link routes through the bounded landing page.
 
 The ISF reference is the second `maintained_reference`. Leaf `.13` preserves the
@@ -401,16 +411,17 @@ documents and 12 ancillary documents. The 6,254-line ISF specification and the
 independent 7,536-byte import-tree line are separate containment questions;
 activation records them without changing content, paths, indexes, or limits.
 The implementation retains `docs/BIN_FSMGEN_IMPORT_TREE.md` as the live
-runtime-spine architecture map while wrapping its pathological lines. A
-generated index classifies all 1,005 focused and 12 ancillary documents by
-audience, lifecycle, owner, and role; its checker rejects stale, missing,
+runtime-spine architecture map while wrapping its pathological lines. At that
+activation, a generated index classified all 1,005 focused and 12 ancillary
+documents by audience, lifecycle, owner, and role; its checker rejects stale, missing,
 duplicate, or unclassified membership.
 
 The roadmap has a different role: it is a bounded current-direction snapshot,
 not shipped-behavior reference or exact chronology. Clean commit `dc1c64afb`
 fixes the exact 10,451-line activation source. Leaf `.9` retains product
 objective, principles, `R8`–`R14` strategy, dependency policy, concise
-milestone outcomes, and `H1`–`H6` intent in a 317-line live view. The complete
+milestone outcomes, and `H1`–`H6` intent in a 317-line activation view. The
+complete
 source remains digest-checked through descriptor
 `roadmap-v2-pre-containment-2026-08-01`; active state routes to Memory and task
 trees, shipped behavior to this book, and exact chronology to Git.

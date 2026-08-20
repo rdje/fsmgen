@@ -23,6 +23,9 @@ answers:
   - "how are support matrix and non-protocol backlog claims verified?"
   - "what is the current complete book fixture count?"
   - "which backlog numerals are identifiers or example values?"
+  - "how are blueprint platform and reference-map claims verified?"
+  - "which reference-map measurements are historical activation context?"
+  - "when does a claim migration group become required complete?"
 date: 2026-08-20
 status: current
 tags: [claim-verification, dispositions, inventory, evidence]
@@ -39,6 +42,9 @@ evidence: >-
   t/1548-source-hir-phase-control.t;
   t/1594-vial-vhdl-portable-matrix-review.t;
   t/1599-vial-vhdl-osvvm-ghdl-qualification.t;
+  t/1518-ial2-ahb-mdbook-current-surface-truthfulness.t;
+  t/1549-task-tree-integrity-doctrine.t;
+  t/1569-focused-document-containment.t;
   docs/tasks/CLAIM-VERIFICATION-ADOPTION.md
 reverify: >-
   scripts/check_claim_verification_dispositions.pl --report && prove -Iperl
@@ -50,6 +56,9 @@ reverify: >-
   t/1548-source-hir-phase-control.t
   t/1594-vial-vhdl-portable-matrix-review.t
   t/1599-vial-vhdl-osvvm-ghdl-qualification.t
+  t/1518-ial2-ahb-mdbook-current-surface-truthfulness.t
+  t/1549-task-tree-integrity-doctrine.t
+  t/1569-focused-document-containment.t
 ---
 
 Every current inventory candidate path belongs to exactly one bounded migration
@@ -126,3 +135,13 @@ syntax-example numerals remain reviewed identifiers or example values rather
 than capability measurements. The executable book audit reports 82 complete
 fixtures lowering cleanly, so the stale hand-copied total in Chapter 14 is
 repaired and remains watched by that audit.
+
+The blueprint/platform/reference review closes 14 current behavior or recovery
+claims through Rust parity, AHB truth, retired-history, ledger, task-tree,
+evidence-map, ISF-partition, and roadmap gates. Thirty-seven chapter
+coordinates, policy inputs, old-guide section labels, and immutable activation
+measurements remain reviewed context. Activation-only occupancy is written in
+the past tense so it cannot be mistaken for current repository state. With all
+five general-book children closed, the group is required-complete at its exact
+inventory boundary and any reopened or stale identity fails the disposition
+checker.
