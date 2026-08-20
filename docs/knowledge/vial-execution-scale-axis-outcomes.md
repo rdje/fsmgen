@@ -45,7 +45,7 @@ evidence: >-
   docs/decisions/0072-an-unreachable-declared-cap-is-a-result-not-a-level-to-rewrite.md;
   docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md;
   perl/FSM/VIAL/ArchitectureScaleExecutionGraph.pm; perl/FSM/VIAL/ExecutionBuilder.pm;
-  perl/FSM/Support/VIALExecutionContract.pm;
+  perl/FSM/Support/VIALExecutionContract.pm; t/1607-vial-architecture-scale-execution-source-maps.t;
   t/1610-vial-architecture-scale-execution-plan-qualification.t;
   t/1613-vial-architecture-scale-execution-random-qualification.t;
   t/1614-vial-architecture-scale-execution-random-limit.t;
@@ -66,7 +66,8 @@ evidence: >-
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
-  prove -Iperl t/1610-vial-architecture-scale-execution-plan-qualification.t
+  prove -Iperl t/1607-vial-architecture-scale-execution-source-maps.t
+  t/1610-vial-architecture-scale-execution-plan-qualification.t
   t/1613-vial-architecture-scale-execution-random-qualification.t
   t/1614-vial-architecture-scale-execution-random-limit.t
   t/1615-vial-architecture-scale-execution-random-over-limit.t
@@ -100,6 +101,7 @@ cap reached before a later rejection is distinguished from an accepted plan.
 | total fibers | 8,192 / 65,536 / 65,537 | qualification accepts; limit reaches its cap then hits plan bytes; excess reaches its own cap |
 | execution types | 8,192 / 65,536 / 65,537 | qualification hits the parser's 4,096-declaration cap; limit/excess are envelope-unconstructible |
 | bindings | 32,768 / 65,536 / 65,537 | all three are envelope-unconstructible |
+| source maps | 262,144 / 1,000,000 / 1,000,001 | all three are envelope-unconstructible |
 
 The exact plan ladder contains 2,974 / 12,166 / 48,850 genuine resets and
 2,991 / 12,183 / 48,867 maps. The 512- and 4,096-scenario plans are 496,709 and
@@ -121,9 +123,9 @@ the exact constructor diagnostic, no retained source or stage identity, a
 refused raw build, and paired limit-interaction and route-boundary records. The
 measured whole-route boundaries are 2,054 bindings (2,055 rejects at `/events`),
 1,043 execution types (1,044 rejects at the serialized-manifest `/` cap), and
-46,294 source-map records (46,295 rejects at `/plan`). Binding and type limit
-records are implemented; source-map qualification/limit/excess remain the next
-owned implementation in `.17.2.4.2`. `.17.4` owns the cross-layer cap-policy
+46,294 source-map records (46,295 rejects at `/plan`). Binding, type, and
+source-map unconstructible records are implemented; final family qualification
+and cleanup remain in `.17.2.4.2`. `.17.4` owns the cross-layer cap-policy
 decision. Current status and user behavior live in
 `docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md` and
 `docs/book/src/16d-hial-vial-verification-architecture.md`.

@@ -170,6 +170,17 @@ my %UNCONSTRUCTIBLE = (
             path => '/',
         },
     },
+    source_map_records => {
+        levels => [qw(qualification_candidate_v1 limit_v1 over_limit_v1)],
+        envelope_input_index => 1,
+        declared_cap => 1_000_000,
+        route_boundary => {
+            accepted => 46_294,
+            rejected => 46_295,
+            cap => 'the 16777216-byte serialized plan cap',
+            path => '/plan',
+        },
+    },
 );
 
 sub _unconstructible($axis, $level) {
@@ -263,15 +274,7 @@ sub construct($class, @args) {
     confess "an unconstructible execution level did not return its exact envelope diagnostic\n"
         unless $canonical->encode($workload->{diagnostics})
             eq $canonical->encode([$expected]);
-    return {
-        %{$workload},
-        specification => {
-            family => $FAMILY,
-            level => $level,
-            primary_axis => $axis,
-            requested_counts => _clone($requested),
-        },
-    };
+    return _unconstructible_construction($workload, $axis, $level, $requested);
 }
 
 sub _envelope_diagnostic($axis) {
@@ -284,10 +287,21 @@ sub _envelope_diagnostic($axis) {
     };
 }
 
-# The owned frontier lives here alone. `construct` gates on it and
-# `owned_shapes` publishes it, so a test proves the still-unowned boundary by
-# deriving it from the catalog rather than by restating a list that goes stale
-# the moment the next level lands.
+sub _unconstructible_construction($workload, $axis, $level, $requested) {
+    return {
+        %{$workload},
+        specification => {
+            family => $FAMILY,
+            level => $level,
+            primary_axis => $axis,
+            requested_counts => _clone($requested),
+        },
+    };
+}
+
+# The owned catalog lives here alone. `construct` gates on it and
+# `owned_shapes` publishes it, so tests derive catalog coverage from this
+# declaration rather than restating a list that can drift when a level lands.
 my %OWNED_LEVELS = (
     bindings =>
         [qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)],
@@ -302,7 +316,8 @@ my %OWNED_LEVELS = (
         [qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)],
     execution_types =>
         [qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)],
-    source_map_records => [qw(gate_candidate_v1)],
+    source_map_records =>
+        [qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)],
     random_attempts =>
         [qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)],
     serialized_plan_bytes =>
@@ -635,6 +650,38 @@ sub _validated_construction($raw) {
         primary_axis => $spec->{primary_axis},
         level => $spec->{level},
     };
+    if (_unconstructible(@{$spec}{qw(primary_axis level)})
+            && $spec->{primary_axis} eq 'source_map_records') {
+        # The checked-AHB source is validated when `construct` is called, but
+        # an envelope rejection deliberately retains neither input. Re-form
+        # the exact generic workload failure with a minimal oversized second
+        # input so later validation neither retains the source nor depends on
+        # bytes that the result contract intentionally discarded.
+        my $requested = FSM::VIAL::ArchitectureScaleWorkload->catalog
+            ->{families}{$FAMILY}{axes}{$spec->{primary_axis}}
+            {levels}{$spec->{level}};
+        my $failure = FSM::VIAL::ArchitectureScaleWorkload->construct({
+            family => $FAMILY,
+            level => $spec->{level},
+            primary_axis => $spec->{primary_axis},
+            backend_profile => undef,
+            tool_profile => undef,
+            inputs => [
+                _input($REFERENCE_HIAL_SOURCE, 'hial_source', ''),
+                _input(
+                    $VIAL_SOURCE, 'vial_source',
+                    'x' x ($CONSTRUCTION_ENVELOPE_BYTES + 1),
+                ),
+            ],
+        });
+        my $rebuilt = _unconstructible_construction(
+            $failure, $spec->{primary_axis}, $spec->{level}, $requested,
+        );
+        my $canonical = JSON::PP->new->canonical(1)->allow_nonref(1);
+        confess "construction is not canonical\n"
+            unless $canonical->encode($rebuilt) eq $canonical->encode($raw);
+        return $rebuilt;
+    }
     $invocation->{reference_hial_text} = _role_input($raw, 'hial_source')->{content}
         unless $spec->{primary_axis} eq 'bindings'
             || $spec->{primary_axis} eq 'execution_types';

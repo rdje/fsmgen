@@ -284,3 +284,27 @@ silently mix answer sets. Parity checks now receive explicit replacement path
 sets for each family. Future partitioned families must add their own source
 identity, classifier, replacement paths, and routing checks rather than enter a
 catch-all group.
+
+## 2026-08-20: Source-free envelope rejections need canonical failure reconstruction
+
+An unconstructible source-map level validates the caller's checked-AHB text
+before the generic workload constructor rejects the oversized generated VIAL,
+but the rejection record intentionally retains neither input. Re-validating
+that record therefore cannot reconstruct from retained source as accepted
+checked-AHB levels do, and retaining the HIAL only for later validation would
+weaken the no-source rejection contract.
+
+The validator instead rebuilds the exact generic input-1 envelope failure from
+a minimal empty HIAL input and a deterministic one-byte-over-envelope VIAL
+input, merges the catalog-derived specification, and byte-compares that closed
+record with the caller's. The real checked-AHB source remains constructor-time
+authority; the durable rejection remains source-free; and later evaluation or
+build calls still reject any mutated diagnostic, requested count, or record
+shape without regenerating multi-megabyte source.
+
+The generator's owned-shape projection also remains distinct from the workload
+catalog. Closing the source-map ladder raises selected owned shapes from 37 to
+40; the catalog still has 65 shapes because 25 deliberately non-selected
+profiles remain fail-closed. Tests must derive and compare those sets, not
+equate “all selected levels are implemented” with “every catalog shape is
+owned.”

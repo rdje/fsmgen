@@ -51,11 +51,43 @@ my %expected = (
     plan_sha256 =>
         'f96e8e05ca7ad7d3fc3bb2a08994555ddd01e45d28a72149686305e6325b3cba',
 );
+my $envelope = 1_114_112;
+my $declared_cap = 1_000_000;
+my $repair_owner = 'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4';
+my %boundary = (accepted => 46_294, rejected => 46_295);
+my %unconstructible_level = (
+    qualification_candidate_v1 => {
+        maps => 262_144,
+        vial_bytes => 3_670_808,
+        vial_sha256 => 'd04102c39cb76357de1920e87aa47fb93ac45cbda3b89fecbf75792cf552e170',
+        resets => 262_127,
+    },
+    limit_v1 => {
+        maps => 1_000_000,
+        vial_bytes => 14_000_792,
+        vial_sha256 => '11fd8c309597be8c2636e2dc6bed7b5940d3022e6dbbece85ee501fc004d522c',
+        resets => 999_983,
+    },
+    over_limit_v1 => {
+        maps => 1_000_001,
+        vial_bytes => 14_000_806,
+        vial_sha256 => '164e5578993b1ab5ce78788dad179283f36e71e486dff7052c4c44d47f1f6d08',
+        resets => 999_984,
+    },
+);
+my $envelope_diagnostic = {
+    code => 'VIAL_SCALE_INPUT_ERROR',
+    severity => 'error',
+    message => 'input 1 exceeds the bounded construction envelope',
+    path => '/inputs/1/content',
+};
 
 sub construction {
+    my ($level) = @_;
+    $level //= 'gate_candidate_v1';
     return $class->construct({
         primary_axis => 'source_map_records',
-        level => 'gate_candidate_v1',
+        level => $level,
         reference_hial_text => $reference_hial,
     });
 }
@@ -209,7 +241,107 @@ subtest 'source-map evaluation freezes exact metrics and identities' => sub {
         'source-map gate has no selected contract discrepancy');
 };
 
-subtest 'source-map gate rejects mutation and unfinished levels' => sub {
+subtest 'every source-map level above the gate exceeds the envelope exactly' => sub {
+    for my $name (sort keys %unconstructible_level) {
+        my $case = $unconstructible_level{$name};
+        my $vial = $class->_test_render_source_map_vial($name, $case->{maps});
+        is(bytes::length($vial), $case->{vial_bytes},
+            "$name generates its exact VIAL byte count");
+        is(sha256_hex($vial), $case->{vial_sha256},
+            "$name generates its exact VIAL source identity");
+        cmp_ok(bytes::length($vial), '>', $envelope,
+            "$name VIAL source exceeds the bounded construction envelope");
+        is(scalar(() = $vial =~ /\(reset bus 1\)/g), $case->{resets},
+            "$name authors one genuine reset per requested map above the fixed 17");
+    }
+
+    is($unconstructible_level{over_limit_v1}{vial_bytes}
+            - $unconstructible_level{limit_v1}{vial_bytes}, 14,
+        'one further requested map adds exactly one genuine reset record');
+};
+
+subtest 'each higher source-map level reports its envelope rejection exactly' => sub {
+    for my $name (sort keys %unconstructible_level) {
+        my $case = $unconstructible_level{$name};
+        my $first = construction($name);
+        my $second = construction($name);
+        ok(!$first->{ok}, "$name construction is rejected");
+        is($json->encode($second), $json->encode($first),
+            "$name construction rejects identically on an independent run");
+        is_deeply($first->{diagnostics}, [$envelope_diagnostic],
+            "$name returns the one exact input-1 envelope diagnostic");
+        is($first->{specification}{requested_counts}{source_map_records},
+            $case->{maps}, "$name retains its exact requested map count");
+        is($first->{workload_identity}, undef,
+            "$name claims no workload identity for unadmitted source");
+        is_deeply($first->{inputs}, [],
+            "$name retains no oversized source in its returned record");
+    }
+};
+
+subtest 'higher source-map evaluation reports both decision-0072 records' => sub {
+    for my $name (sort keys %unconstructible_level) {
+        my $evaluation = $class->evaluate({construction => construction($name)});
+        ok($evaluation->{ok}, "$name evaluation satisfies every closed oracle");
+        diag($json->encode($evaluation->{diagnostics})) unless $evaluation->{ok};
+        is($evaluation->{status}, 'envelope_unconstructible',
+            "$name is unconstructible rather than product-rejected");
+        is($evaluation->{observed_outcome}, 'not_constructed',
+            "$name claims no observed product outcome");
+        is_deeply($evaluation->{metrics}, {}, "$name reports no measurement");
+        is_deeply(
+            [$evaluation->{semantic_ir_sha256},
+                $evaluation->{bridge_manifest_sha256},
+                $evaluation->{plan_sha256}, $evaluation->{workload_identity}],
+            [undef, undef, undef, undef],
+            "$name claims no stage identity",
+        );
+        is_deeply($evaluation->{diagnostics}, [$envelope_diagnostic],
+            "$name preserves the exact construction diagnostic");
+
+        my @codes = map { $_->{code} } @{$evaluation->{contract_discrepancies}};
+        is_deeply(\@codes,
+            ['VIAL_SCALE_LIMIT_INTERACTION', 'VIAL_SCALE_ROUTE_BOUNDARY'],
+            "$name records the fixture decider and whole-route boundary");
+        is_deeply([map { $_->{path} } @{$evaluation->{contract_discrepancies}}],
+            [('/requested_counts/source_map_records') x 2],
+            "$name names its own axis twice");
+        is_deeply(
+            [map { $_->{repair_owner} } @{$evaluation->{contract_discrepancies}}],
+            [($repair_owner) x 2], "$name routes both records to .17.4");
+        like($evaluation->{contract_discrepancies}[0]{message}, qr/\b$envelope\b/,
+            "$name names the fixture envelope that decides");
+        like($evaluation->{contract_discrepancies}[0]{message},
+            qr/fixture bound and not a product limit/,
+            "$name distinguishes the fixture bound from a product limit");
+        like($evaluation->{contract_discrepancies}[1]{message},
+            qr/accepts $boundary{accepted} and rejects $boundary{rejected}/,
+            "$name names the measured whole-route boundary");
+        like($evaluation->{contract_discrepancies}[1]{message},
+            qr/declared $declared_cap execution cap/,
+            "$name names the declared cap it was selected from");
+    }
+};
+
+subtest 'source-map ladder rejects build, mutation, and unknown levels' => sub {
+    my $built = eval {
+        $class->build({construction => construction('limit_v1')});
+        1;
+    };
+    ok(!$built, 'the raw builder refuses a level with no admitted source');
+    like($@, qr/unconstructible level has no admitted source to build/,
+        'the refusal names the absent source, not a product resource failure');
+
+    my $forged_high = clone_json(construction('limit_v1'));
+    $forged_high->{specification}{requested_counts}{source_map_records} = 8_192;
+    my $high_accepted = eval {
+        $class->evaluate({construction => $forged_high});
+        1;
+    };
+    ok(!$high_accepted, 'a forged unconstructible requested count fails closed');
+    like($@, qr/construction is not canonical/,
+        'unconstructible mutation rejection names canonical regeneration');
+
     my $forged = $json->decode($json->encode(construction()));
     my ($vial) = grep { $_->{role} eq 'vial_source' } @{$forged->{inputs}};
     $vial->{content} .= ' ';
@@ -229,17 +361,23 @@ subtest 'source-map gate rejects mutation and unfinished levels' => sub {
     like($@, qr/checked-AHB reference text is required/,
         'missing-source rejection names checked-AHB authority');
 
-    my $unfinished = eval {
+    my $unknown = eval {
         $class->construct({
             primary_axis => 'source_map_records',
-            level => 'qualification_candidate_v1',
+            level => 'future_candidate_v1',
             reference_hial_text => $reference_hial,
         });
         1;
     };
-    ok(!$unfinished, 'qualification map level cannot enter the gate slice');
+    ok(!$unknown, 'an unknown map level cannot enter the closed generator');
     like($@, qr/execution-graph gate slice does not own the requested shape/,
-        'unfinished-level rejection names the bounded frontier');
+        'unknown-level rejection names the caller-sealed boundary');
+
+    my @owned_map_levels = sort map { $_->{level} }
+        grep { $_->{primary_axis} eq 'source_map_records' } @{$class->owned_shapes};
+    is_deeply(\@owned_map_levels,
+        [sort qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)],
+        'the source-map ladder owns every catalog level');
 };
 
 # Decision 0072 clause 3 requires every unreachable level to be reported beside
@@ -286,11 +424,21 @@ sub slurp_raw {
     return $text;
 }
 
+sub clone_json {
+    my ($value) = @_;
+    return $json->decode($json->encode($value));
+}
+
 package FSM::VIAL::ArchitectureScaleExecutionGraph;
 
-# The route boundary lies far above every catalog level, so it is proved through
-# the same renderer, canonical checked-AHB inputs, and public binder the gate
-# uses rather than through a level the generator does not own.
+sub _test_render_source_map_vial {
+    my ($class, $level, $requested) = @_;
+    return _render_ahb_vial('source_map_records', $level, $requested);
+}
+
+# The route boundary lies between the gate and every higher catalog level, so it
+# is proved through the same renderer, canonical checked-AHB inputs, and public
+# binder rather than inferred from an unconstructible selected level.
 sub _test_source_map_route {
     my ($class, $reference_hial, $requested) = @_;
     my $vial = _render_ahb_vial('source_map_records', 'gate_candidate_v1', $requested);

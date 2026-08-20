@@ -2902,9 +2902,9 @@ FSMGEN_VIAL_SCALE_EXACT=1 scripts/run_with_ram_guard.sh -- \
   prove -Iperl t/1627-vial-architecture-scale-execution-type-qualification.t
 ```
 
-The remaining binding, execution-type, and source-map levels are unowned for a
-reason worth stating, because it is the one place where the selected contract
-and the measured stack disagree.
+The high binding, execution-type, and source-map levels require a distinct
+result shape, because this is the one place where the selected contract and the
+measured stack disagree.
 
 Those levels cannot be authored the way the fiber and operation ladders were
 rescued. `(repeat COUNT action)` repeats *actions*; events, types, and endpoints
@@ -3130,6 +3130,62 @@ SemanticIR, bridge, workload, and plan identities are regression-locked. The
 public AHB capability remains present, the private scale capability remains
 absent, and mutation, missing checked source, or an unfinished level fails
 closed.
+
+The three source-map levels above the gate now close under decision `0072` as
+well. They retain the checked-AHB source as input 0 and grow input 1 by adding
+one genuine reset for every requested map above the 17 fixed binding maps. The
+generated VIAL source crosses the 1,114,112-byte per-input envelope at every
+selected point:
+
+| Level | Source maps | Resets | VIAL bytes | Outcome |
+| --- | ---: | ---: | ---: | --- |
+| qualification | 262,144 | 262,127 | 3,670,808 | `envelope_unconstructible` |
+| limit | 1,000,000 | 999,983 | 14,000,792 | `envelope_unconstructible` |
+| over limit | 1,000,001 | 999,984 | 14,000,806 | `envelope_unconstructible` |
+
+Here the exact constructor diagnostic names input 1, not the fixed HIAL input:
+`VIAL_SCALE_INPUT_ERROR`, `input 1 exceeds the bounded construction envelope`,
+at `/inputs/1/content`. The rejected construction retains neither input and
+claims no workload or stage identity. Evaluation is
+`envelope_unconstructible` / `not_constructed`, the raw builder refuses it, and
+the paired decision-`0072` records state both the fixture-bound decider and the
+measured whole-route alternative: 46,294 maps accept in a 16,777,026-byte plan,
+while 46,295 rejects at the 16,777,216-byte serialized-plan cap at `/plan`,
+against the declared one-million-map execution cap.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+open my $fh, '<:raw', 'ppif/ahb_lite_subordinate.ppif'
+    or die "cannot read checked AHB source: $!";
+local $/;
+my $checked_ahb = <$fh>;
+close $fh or die "cannot close checked AHB source: $!";
+
+my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+    primary_axis => 'source_map_records',
+    level => 'limit_v1',
+    reference_hial_text => $checked_ahb,
+});
+my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+    construction => $workload,
+});
+die "unexpected source-map limit outcome\n"
+    unless $evaluation->{ok}
+        && $evaluation->{status} eq 'envelope_unconstructible'
+        && $evaluation->{observed_outcome} eq 'not_constructed'
+        && $evaluation->{diagnostics}[0]{path} eq '/inputs/1/content'
+        && $evaluation->{contract_discrepancies}[1]{code}
+            eq 'VIAL_SCALE_ROUTE_BOUNDARY';
+```
+
+The 46,294/46,295 whole-route boundary remains opt-in evidence because both
+probes build complete plans:
+
+```bash
+FSMGEN_VIAL_SCALE_EXACT=1 scripts/run_with_ram_guard.sh -- \
+  prove -Iperl t/1607-vial-architecture-scale-execution-source-maps.t
+```
 
 The random-attempt gate also uses the frozen checked-AHB route, but isolates the
 primary axis to one referenced two-state `u64` choice. Its uniform distribution
@@ -3429,7 +3485,7 @@ partial ExecutionIR or plan, and the scale evaluator accepts no looser or
 different diagnostic as the selected result. This is a boundary-conformance
 fact, not evidence that the project supports a 16-MiB production workload.
 
-The reachability audit selects these outcomes before generator implementation:
+The implemented ladder reports these selected outcomes:
 
 | Axis | Gate | Qualification | Limit | Over limit |
 | --- | --- | --- | --- | --- |
@@ -3439,9 +3495,9 @@ The reachability audit selects these outcomes before generator implementation:
 | operations total | `1,024` accepted | plan-byte cap wins at `65,536` | plan-byte cap wins at `1,000,000` | total-operation cap rejects `1,000,001` |
 | fibers total | `128` accepted | `8,192` accepted | plan-byte cap wins at `65,536` | total-fiber cap rejects `65,537` |
 | simultaneously live fibers | `32` accepted | `1,024` accepted | `16,384` accepted | live-fiber cap rejects `16,385` |
-| bindings | `2,048` accepted through the sealed event route | bridge event cap wins | VIAL source-byte cap wins | VIAL source-byte cap wins |
-| execution types | `512` accepted through plain IAL1 | bridge type cap wins | VIAL source-byte cap wins | VIAL source-byte cap wins |
-| source-map records | `8,192` accepted | plan-byte cap wins | plan-byte cap wins | source-map cap rejects `1,000,001` |
+| bindings | `2,048` accepted through the sealed event route | envelope rejects source before a product stage | envelope rejects source before a product stage | envelope rejects source before a product stage |
+| execution types | `512` accepted through plain IAL1 | parser declaration cap wins | envelope rejects source before a product stage | envelope rejects source before a product stage |
+| source-map records | `8,192` accepted | envelope rejects source before a product stage | envelope rejects source before a product stage | envelope rejects source before a product stage |
 | random attempts | `8,192` accepted | `262,144` accepted | `1,000,000` accepted | deterministic exhaustion rejects `1,000,001` |
 | serialized plan | exact 1 MiB | exact 4 MiB | exact 16 MiB | first additional complete operation is rejected |
 
