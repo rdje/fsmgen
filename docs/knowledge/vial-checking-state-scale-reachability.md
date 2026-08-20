@@ -31,10 +31,11 @@ evidence: >-
   t/1632-vial-architecture-scale-checking-coverage.t;
   t/1633-vial-architecture-scale-checking-faults.t;
   t/1634-vial-architecture-scale-checking-random-replay.t;
+  t/1635-vial-architecture-scale-checking-qualification.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
-  prove -Iperl t/1629-vial-architecture-scale-checking-foundation.t t/1630-vial-architecture-scale-checking-models.t t/1631-vial-architecture-scale-checking-scoreboards.t t/1632-vial-architecture-scale-checking-coverage.t t/1633-vial-architecture-scale-checking-faults.t t/1634-vial-architecture-scale-checking-random-replay.t &&
+  prove -Iperl t/1629-vial-architecture-scale-checking-foundation.t t/1630-vial-architecture-scale-checking-models.t t/1631-vial-architecture-scale-checking-scoreboards.t t/1632-vial-architecture-scale-checking-coverage.t t/1633-vial-architecture-scale-checking-faults.t t/1634-vial-architecture-scale-checking-random-replay.t t/1635-vial-architecture-scale-checking-qualification.t &&
   rg -n 'checking_state_v1|one_bound_event_occurrence_per_instance_v1|packed_complete_transaction_fifo_v1|one_sample_packed_static_domain_vector_v1|arm_apply_expire_restore_each_fault_v1|generate_replay_compare_each_keyed_boolean_v1|coverage_bins_and_cross_tuples|random_occurrences|serialized_plan_bytes|cross Cartesian product' docs/decisions/0073-checking-state-scale-uses-packed-state-oracles-and-static-cross-domains.md perl/FSM/VIAL/ArchitectureScaleCheckingState.pm perl/FSM/VIAL/SemanticBuilder.pm perl/FSM/VIAL/ExecutionBuilder.pm perl/FSM/Support/VIALExecutionContract.pm
 ---
 
@@ -173,5 +174,9 @@ The 65,536 level reports `preflight_dominated` / `not_materialized` with no
 stage identity or selected-count claim, while 65,537 reaches the exact
 `/randomness/decisions` count diagnostic. Opt-in RAM-guarded evidence accepts
 8,440 occurrences in a 16,775,415-byte plan and rejects adjacent 8,441. Default
-`t/1629`-`t/1634` and exact `t/1634` pass; final family qualification is active
-as a separate closure child.
+`t/1635` independently freezes the whole family as exactly 32 owned selected
+shapes plus eight rejected `reference_v1` records, byte-equal gate reports,
+hostile-caller rejection, explicit product nonclaims, and exact same-volume
+cleanup. Guarded default `t/1629`-`t/1635` passes at Files=7/Tests=36 in 166
+seconds; the complete exact `t/1630`-`t/1634` matrix passes at Files=5/Tests=27
+in 593 seconds under the 4,096-MiB guard.
