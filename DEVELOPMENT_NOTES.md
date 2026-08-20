@@ -328,3 +328,21 @@ compartments begin null under a versioned closed schema, and the foundation
 outcome is explicitly `accepted_not_axis_evaluated`. This lets later leaves
 populate an exact axis compartment without silently widening report v1 or
 equating the checked-AHB reference observations with a selected scale count.
+
+## 2026-08-20: Model-state source factorization must preserve the expanded oracle count
+
+A high scalar-state level cannot be represented by one enormous definition
+without needlessly spending the source envelope, while a compact declaration
+alone would not prove that every instantiated cell is exercised. The model
+scale renderer therefore factors 512, 32,768, and 65,536 cells across 32 model
+instances with 16, 1,024, or 2,048 state declarations per shared definition.
+The 65,537 adjacent excess adds one separate one-cell definition and instance,
+so it reaches the exact execution-resource boundary without changing any
+accepted recipe.
+
+The provider-free oracle expands the canonical ExecutionIR instance/definition
+pairs again rather than trusting renderer arithmetic. It validates every known
+u8 zero-to-one assignment, derives each bound event, commits and reads every
+expanded cell, and compares packed state with independently sized all-zero and
+all-one vectors. Source compactness therefore changes representation cost, not
+semantic proof strength.

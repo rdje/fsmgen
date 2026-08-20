@@ -10,6 +10,8 @@ answers:
   - "why does checking-state scale not use the portable SystemVerilog backend as its oracle?"
   - "does a VIAL cross enumerate explicit tuples or a static Cartesian bin domain?"
   - "what does preflight_dominated mean for checking-state random occurrences?"
+  - "how are VIAL model-instance scale levels executed and checked?"
+  - "how does VIAL prove every scalar model-state cell changes?"
 date: 2026-08-20
 status: current
 tags: [vial, checking-state, scale, scoreboard, coverage, faults, randomness]
@@ -23,10 +25,11 @@ evidence: >-
   perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/VIAL/Backend/ResultProducer.pm;
   perl/FSM/Support/VIALExecutionContract.pm;
   t/1629-vial-architecture-scale-checking-foundation.t;
+  t/1630-vial-architecture-scale-checking-models.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
-  prove -Iperl t/1629-vial-architecture-scale-checking-foundation.t && rg -n 'checking_state_v1|coverage_bins_and_cross_tuples|random_occurrences|serialized_plan_bytes|cross Cartesian product' docs/decisions/0073-checking-state-scale-uses-packed-state-oracles-and-static-cross-domains.md perl/FSM/VIAL/ArchitectureScaleCheckingState.pm perl/FSM/VIAL/SemanticBuilder.pm perl/FSM/VIAL/ExecutionBuilder.pm perl/FSM/Support/VIALExecutionContract.pm
+  prove -Iperl t/1629-vial-architecture-scale-checking-foundation.t t/1630-vial-architecture-scale-checking-models.t && rg -n 'checking_state_v1|one_bound_event_occurrence_per_instance_v1|coverage_bins_and_cross_tuples|random_occurrences|serialized_plan_bytes|cross Cartesian product' docs/decisions/0073-checking-state-scale-uses-packed-state-oracles-and-static-cross-domains.md perl/FSM/VIAL/ArchitectureScaleCheckingState.pm perl/FSM/VIAL/SemanticBuilder.pm perl/FSM/VIAL/ExecutionBuilder.pm perl/FSM/Support/VIALExecutionContract.pm
 ---
 
 Decision `0073` selects one outcome for every non-reference level before the
@@ -73,15 +76,16 @@ one sample hits the exact all-one vector because every authored bin matches.
 
 `TraceValidator`, `ResultProducer`, and the first portable SystemVerilog backend
 remain result/profile machinery, not general checking-state semantic oracles.
-The implemented foundation publishes zero owned shapes and rejects reference,
+The implemented model slice publishes exactly the eight non-reference shapes
+of the model-instance and scalar-state-cell axes. It rejects reference,
 non-owned, unknown-level, IR, trace, result, and support-metadata injection.
 Its same-package-only candidate route accepts just ordinary VIAL text plus the
 exact checked-AHB source, regenerates the workload defensively, and reaches
-canonical SemanticIR, bridge, ExecutionIR, and a 44,467-byte plan twice with
-frozen workload/evaluation/rerun identities. The closed evaluation reports
-`accepted_not_axis_evaluated`, has null evidence compartments for all five
-future oracle families, and explicitly denies any selected-count, capability,
-support, performance, capacity, backend, or runtime claim.
+canonical SemanticIR, bridge, ExecutionIR, and plan twice with content-addressed
+workload/evaluation/rerun identities. The frozen foundation witness still
+reports `accepted_not_axis_evaluated`; generated model shapes populate only the
+model compartment and explicitly deny every capability, support, performance,
+capacity, backend, or runtime claim.
 
 That foundation freezes the selected packed representations before an axis is
 owned: fixed-width model cells reject unknown state; scoreboard payload is a
@@ -90,7 +94,20 @@ complete transaction reconstruction; coverage is an LSB-first bit vector capped
 at 1,000,000 entries/125,000 bytes and requires independent byte equality.
 Canonical regeneration rejects construction/evaluation mutation, and common
 same-volume staging removes the exact content-addressed directory after both
-success and consumer failure. This infrastructure changes no product behavior,
-support state, performance budget, or capacity claim. Model-axis implementation
-is the next leaf under
-`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2`.
+success and consumer failure.
+
+The model-instance renderer reuses one one-byte counter definition at 32,
+1,024, and 4,096 instances. The scalar-cell renderer uses 32 instances of a
+16-, 1,024-, or 2,048-cell definition to reach 512, 32,768, or 65,536 cells;
+the adjacent excess adds one singleton definition and instance to reach exactly
+65,537 while its source remains inside the construction envelope. The oracle
+accepts only the canonical known u8 `0 + 1` rule, derives each instance's bound
+`accepted` event from ExecutionIR, synthesizes one occurrence per instance,
+then initializes, commits, and reads every cell. Packed initial and final bytes
+must equal independently derived all-zero and all-one vectors. Hostile
+known-mask mutation fails this oracle. The 4,097-instance and 65,537-cell routes each
+return exactly one `VIAL_EXECUTION_LIMIT_ERROR` at `/models` and no downstream
+identity. The complete high-count sweep passes under the repository RAM guard.
+This implementation changes no product behavior, support state, performance
+budget, or capacity claim. Scoreboard-axis implementation is the next proposed
+leaf under `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2`.

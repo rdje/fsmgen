@@ -50,9 +50,14 @@ sub candidate {
     });
 }
 
-subtest 'public ownership begins empty and every catalog boundary fails closed' => sub {
-    is_deeply($class->owned_shapes, [],
-        'foundation publishes no owned checking-state level');
+subtest 'public ownership advances only to the model ladders and other boundaries fail closed' => sub {
+    is_deeply($class->owned_shapes, [
+        map {
+            my $axis = $_;
+            map { {primary_axis => $axis, level => $_} }
+                qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)
+        } qw(model_instances scalar_model_state_cells)
+    ], 'model slice publishes exactly its two complete ladders');
 
     my $reference = eval {
         $class->construct({
@@ -66,17 +71,14 @@ subtest 'public ownership begins empty and every catalog boundary fails closed' 
     like($@, qr/reference_v1 remains a catalog record/,
         'reference rejection names the catalog-only boundary');
 
-    my $selected = eval {
-        $class->construct({
-            primary_axis => 'model_instances',
-            level => 'gate_candidate_v1',
-            reference_hial_text => $reference_hial,
-        });
-        1;
-    };
-    ok(!$selected, 'foundation does not prematurely own a selected level');
-    like($@, qr/foundation does not own any selected axis level/,
-        'selected rejection names the bounded implementation frontier');
+    my $selected = $class->construct({
+        primary_axis => 'model_instances',
+        level => 'gate_candidate_v1',
+        reference_hial_text => $reference_hial,
+    });
+    ok($selected->{ok}, 'model gate is now constructed by its owning child');
+    is($selected->{specification}{requested_counts}{model_instances}, 32,
+        'public construction retains the selected catalog count');
 
     my $unknown_axis = eval {
         $class->construct({
@@ -89,6 +91,18 @@ subtest 'public ownership begins empty and every catalog boundary fails closed' 
     ok(!$unknown_axis, 'unknown axis fails closed');
     like($@, qr/unknown checking-state primary axis/,
         'unknown-axis rejection is exact');
+
+    my $unowned = eval {
+        $class->construct({
+            primary_axis => 'scoreboard_instances',
+            level => 'gate_candidate_v1',
+            reference_hial_text => $reference_hial,
+        });
+        1;
+    };
+    ok(!$unowned, 'later checking-state axis remains unavailable');
+    like($@, qr/model slice does not own the requested shape/,
+        'unowned-axis rejection names the current bounded slice');
 
     my $unknown_level = eval {
         $class->construct({

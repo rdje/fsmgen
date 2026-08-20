@@ -3561,9 +3561,10 @@ and normalized reruns.
 Public runtime traces, `ResultProducer`, and the first portable SystemVerilog
 backend remain excluded as scale oracles: they project or implement a narrower
 profile and do not independently recompute the general state semantics above.
-Implementation is separately owned under `.17.2.5.2`. The completed foundation
-in `FSM::VIAL::ArchitectureScaleCheckingState` deliberately publishes no owned
-level yet:
+Implementation is separately owned under `.17.2.5.2`. Its first semantic slice
+in `FSM::VIAL::ArchitectureScaleCheckingState` publishes exactly eight owned
+levels: the four non-reference levels of the model-instance axis and the four
+of the scalar-model-state axis:
 
 ```perl
 use strict;
@@ -3572,19 +3573,55 @@ use lib 'perl';
 use FSM::VIAL::ArchitectureScaleCheckingState;
 
 my $owned = FSM::VIAL::ArchitectureScaleCheckingState->owned_shapes;
-die "foundation claimed an axis level\n" if @$owned;
-print "checking-state foundation is sealed\n";
+die "model ladder ownership changed\n" unless @$owned == 8;
+die "another axis landed early\n"
+    if grep { $_->{primary_axis} !~ /\A(?:model_instances|scalar_model_state_cells)\z/ }
+        @$owned;
+print "checking-state model ladders own 8 levels\n";
 ```
 
 `construct` rejects `reference_v1` because it remains a catalog record, rejects
-every selected level until its renderer lands, and rejects unknown axes,
-levels, keys, IR, trace, result, or support metadata. Internally, one
-same-package-only candidate boundary accepts just generated ordinary VIAL text
-and the exact 1,326-byte checked-AHB source. It regenerates the content-addressed
-workload before every build or evaluation, then produces SemanticIR, the
-IAL2-via-generated-and-reparsed-IAL1 bridge, ExecutionIR, and the target-neutral
-plan only through their canonical producers. Callers cannot inject any of those
-objects.
+every still-unowned selected axis, and rejects unknown axes, levels, keys, IR,
+trace, result, or support metadata. Internally, one same-package-only candidate
+boundary accepts just generated ordinary VIAL text and the exact 1,326-byte
+checked-AHB source. It regenerates the content-addressed workload before every
+build or evaluation, then produces SemanticIR, the IAL2-via-generated-and-
+reparsed-IAL1 bridge, ExecutionIR, and the target-neutral plan only through
+their canonical producers. Callers cannot inject any of those objects.
+
+The model-instance source reuses one known unsigned eight-bit counter with an
+initial value of zero and a rule that adds one on the checked AHB `accepted`
+event. It binds that same definition to 32, 1,024, or 4,096 distinctly named
+instances. The scalar-state source instead binds 32 instances to one definition
+containing 16, 1,024, or 2,048 cells. That factorization reaches exactly 512,
+32,768, or 65,536 cells without duplicating state declarations in source. The
+65,537 excess adds a separate one-cell definition and one instance.
+
+| Axis/level | Requested | Generated VIAL bytes | Outcome |
+| --- | ---: | ---: | --- |
+| model gate / qualification / limit | 32 / 1,024 / 4,096 | 6,753 / 173,409 / 689,505 | accepted and state-checked |
+| model excess | 4,097 | 689,673 | exact model-instance cap at `/models` |
+| scalar-cell gate / qualification / limit | 512 / 32,768 / 65,536 | 10,935 / 250,839 / 494,551 | accepted and state-checked |
+| scalar-cell excess | 65,537 | 495,108 | exact scalar-cell cap at `/models` |
+
+Every source stays below the 1,114,112-byte construction envelope. For an
+accepted level, the provider-free oracle reads the event binding and complete
+rule from canonical ExecutionIR, requires the exact known u8 `0 + 1` shape,
+and synthesizes one ordered `accepted` occurrence per instance. It initializes,
+commits, and reads every cell. Its packed initial bytes must equal an
+independently derived all-zero vector, and its packed final bytes must equal an
+independently derived all-one vector. For the 65,536-cell limit those SHA-256
+identities are `de2f2560…` and `916b1448…`; the report also carries exact first
+and last instance, state, trigger, count, and byte identities. Unknown-bit masks
+and post-identity source or report mutation fail closed.
+
+At 4,097 instances and 65,537 cells, canonical execution returns one complete
+`VIAL_EXECUTION_LIMIT_ERROR` only, with semantic path `/models`. The evaluation
+publishes the accepted SemanticIR and bridge identities but no ExecutionIR or
+plan identity and explicitly says the state oracle did not run. Independent
+route rejection must reproduce the diagnostic byte-for-byte. The default
+foundation/model suite passes at Files=2/Tests=11; the four high accepted levels
+pass their exact RAM-guarded sweep in 136 seconds.
 
 The frozen foundation route uses the checked AHB VIAL content as a deliberately
 non-axis-evaluated source witness. Its workload identity is
@@ -3597,8 +3634,9 @@ report says `accepted_not_axis_evaluated`, sets both `axis_oracle_executed` and
 `selected_count_claimed` false, and carries no axis evidence. Those observations
 therefore cannot be mistaken for the requested 32-model gate.
 
-The closed report reserves null `model`, `scoreboard`, `coverage`, `faults`, and
-`random_replay` evidence compartments for the later semantic leaves. Its packed
+The closed report reserves `scoreboard`, `coverage`, `faults`, and
+`random_replay` evidence compartments for later semantic leaves; model evidence
+is populated only for accepted model levels. Its packed
 contract fixes big-endian fixed-width model values with unknown-state rejection,
 a big-endian 32-bit FIFO payload capped at 1,000,000 entries/4,000,000 bytes with
 complete transaction reconstruction, and an LSB-first coverage vector capped at
@@ -3606,16 +3644,16 @@ complete transaction reconstruction, and an LSB-first coverage vector capped at
 claims qualification-only status and denies capability, support, performance,
 capacity, backend, runtime, and owned-level authority.
 
-Independent complete-route reruns must reproduce every stage digest and the
-`rerun/ceefc4f30…` identity. Both construction and evaluation mutations are
+Independent complete-route reruns must reproduce every stage digest; the frozen
+foundation keeps its `rerun/ceefc4f30…` identity, while each generated model
+level has its own content address. Construction and evaluation mutations are
 rejected by canonical regeneration. Success and injected consumer failure stage
 only below repository-derived `.artifacts/tmp/vial-scale/` on the repository
-volume and remove the exact content-addressed directory. The model-state leaf is
-now the only active implementation child; scoreboard, coverage, fault,
-random/replay, and final qualification remain separately owned later slices.
-The foundation changes no parser, SemanticIR, bridge, ExecutionIR, backend,
-runtime, public product API, capability, support, performance, or capacity
-behavior.
+volume and remove the exact content-addressed directory. Scoreboard, coverage,
+fault, random/replay, and final qualification remain separately owned later
+slices. These qualification fixtures change no parser, SemanticIR, bridge,
+ExecutionIR, backend, runtime, public product API, capability, support,
+performance, or capacity behavior.
 
 These are construction outcomes, not supported capacities. The exact 1/4/16-
 MiB plans contain 2,974/12,166/48,850 real reset operations plus bounded,
