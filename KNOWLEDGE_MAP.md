@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1123** facts · **5867** unique questions · **6034** answer occurrences · **128** topic shards.
+> **1124** facts · **5875** unique questions · **6042** answer occurrences · **129** topic shards.
 
 Query first:
 
@@ -134,6 +134,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `vhdl-external` | 1 | 1 | [`vhdl-external.md`](knowledge-map/generated/vhdl-external.md) |
 | `vhdl-package` | 1 | 5 | [`vhdl-package.md`](knowledge-map/generated/vhdl-package.md) |
 | `vial-architecture` | 1 | 6 | [`vial-architecture.md`](knowledge-map/generated/vial-architecture.md) |
+| `vial-checking` | 1 | 8 | [`vial-checking.md`](knowledge-map/generated/vial-checking.md) |
 | `vial-execution` | 4 | 76 | [`vial-execution.md`](knowledge-map/generated/vial-execution.md) |
 | `vial-expressive` | 1 | 13 | [`vial-expressive.md`](knowledge-map/generated/vial-expressive.md) |
 | `vial-hial` | 2 | 15 | [`vial-hial.md`](knowledge-map/generated/vial-hial.md) |

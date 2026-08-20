@@ -465,17 +465,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5`
   Status: `active`
   Goal: `Generate checking-state workloads with exact stateful-service semantic oracles.`
-  Acceptance: `Construct every checking_state_v1 axis with conservative execution topology; exercise rather than merely allocate models, scoreboard capacity, coverage, faults, and random decisions; prove final model state, scoreboard depth/drain, hit vectors, fault restoration, replay identity, normalized reruns, earliest-cap diagnostics, and cleanup without implicit Cartesian crosses.`
-  Verification: `Clean execution-graph predecessor 6250cabad closes all 40 selected execution shapes and the complete 29-file architecture family. The Knowledge Map has no checking-state reachability fact, while this tree's open question explicitly requires a selected proof method before the one-million scoreboard-capacity and bins-plus-cross-tuples levels may be authored. This activation therefore decomposes the work into read-only reachability selection .17.2.5.1 and separately proposed implementation .17.2.5.2. No parser, SemanticIR, bridge, ExecutionIR, checking service, result, backend, capability/support, performance, or capacity behavior changes.`
+  Acceptance: `Construct every checking_state_v1 axis with conservative execution topology; exercise rather than merely allocate models, scoreboard capacity, coverage, faults, and random decisions; prove final model state, scoreboard depth/drain, hit vectors, fault restoration, replay identity, normalized reruns, earliest-cap diagnostics, and cleanup without undeclared bins, crosses, or tuples outside an explicitly authored cross's static bin domain.`
+  Verification: `Clean execution-graph predecessor 6250cabad closes all 40 selected execution shapes and the complete 29-file architecture family. Completed selection child .17.2.5.1 and decision 0073 now choose accepted-or-earliest-cap outcomes for all eight axes, reconcile decision 0055's impossible tuple-list wording with the older shipped static-cross contract, and select a provider-free packed-state evaluator that can exercise one million scoreboard entries and one million coverage bits without a million-operation plan or JSON trace. Proposed implementation .17.2.5.2 remains separately owned and unactivated. No parser, SemanticIR, bridge, ExecutionIR, checking service, result, backend, capability/support, performance, or capacity behavior changes in selection.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5: activate checking-state generation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.1`
-  Status: `active`
+  Status: `done`
   Goal: `Select canonical reachability and an executable proof method for every checking-state axis before generator implementation.`
-  Acceptance: `Audit all eight checking_state_v1 axes and five levels against ordinary VIAL source construction, SemanticBuilder and ExecutionBuilder limits, execution-plan representation, stateful model/scoreboard/coverage/fault/random semantics, normalized result authority, construction envelopes, and repository RAM/time guards. Prove representative routes where inspection is insufficient; select exact accepted or earliest-cap outcomes and a bounded executable method for the two one-million-record levels that exercises semantic state rather than merely allocating declarations. Record the selection in a decision, Knowledge Map fact, mdBook, and task evidence without changing product behavior, creating implicit Cartesian crosses, or borrowing backend-runtime or support claims.`
-  Verification: `pending`
-  Commit: `pending implementation`
+  Acceptance: `Audit all eight checking_state_v1 axes and five levels against ordinary VIAL source construction, SemanticBuilder and ExecutionBuilder limits, execution-plan representation, stateful model/scoreboard/coverage/fault/random semantics, normalized result authority, construction envelopes, and repository RAM/time guards. Prove representative routes where inspection is insufficient; select exact accepted or earliest-cap outcomes and a bounded executable method for the two one-million-record levels that exercises semantic state rather than merely allocating declarations. Record the selection in a decision, Knowledge Map fact, mdBook, and task evidence without changing product behavior, admitting undeclared bins/crosses/tuples beyond an authored static cross domain, or borrowing backend-runtime or support claims.`
+  Verification: `Decision 0073 closes the complete eight-axis/five-level audit. Canonical RAM-guarded probes accept model instances through 4,096, scalar cells through 65,536, scoreboard instances through 4,096, capacity through 1,000,000, coverpoints through the 8,192 qualification, static coverage materialization through 1,000,000, faults through 4,096, and the 1,024 random gate; each adjacent reachable excess returns its exact semantic or execution-resource diagnostic. Coverpoint limit/excess sources are envelope-unconstructible and carry the separately measured 9,524/9,525 parser boundary. Compact random source parses at 32,768/65,536/65,537, while the plan route accepts 8,440 at 16,775,415 bytes and rejects 8,441 at the 16,777,216-byte cap; the full 32,768 route returns the same diagnostic, 65,536 is preflight-dominated by it, and 65,537 reaches its count cap. The selected provider-free evaluator consumes caller-sealed canonical IR, uses a 4,000,000-byte packed payload FIFO to enqueue/match/drain one million complete scoreboarding transactions, and byte-compares a 125,000-byte million-bit coverage vector. A 62,841-byte source proves exact million coverage via an authored 999-by-999 static cross plus one bin; 62,870 bytes reaches 1,000,001 and is rejected at /coverage. Decision 0073 refines 0055's impossible explicit-tuple-list sentence to the older shipped contract: an authored cross's complete static domain is the product of its explicitly authored point bins, and no backend may invent anything outside it. Trace/result/backend machinery remains excluded as a semantic oracle. The decision, fact card, mdBook, task/index, Memory, containment authority, and doctrine evidence agree; temporary probes were removed exactly.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.1: select packed checking-state proof`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2`
   Status: `proposed`
@@ -750,11 +750,23 @@ every prior answer key exactly once. Final RAM-guarded qualification passes all
 29 architecture-scale files / 135 tests in 1,114 seconds. `t/1603` freezes the
 completed selection as 40 owned shapes, 13 deliberately unselected reference
 profiles, and 12 deliberately unselected fixed-scalar profiles, all fail-
-closed. Active `.17.2.5.1` now selects checking-state reachability and a bounded
-executable proof method before proposed implementation `.17.2.5.2`; proposed
-`.17.2.6`/`.17.2.7` and measurement `.17.3` follow.
+closed. Completed `.17.2.5.1` and decision `0073` select every checking-state
+accepted-or-earliest-cap outcome plus the provider-free packed-state proof for
+the two one-million-state levels. Proposed `.17.2.5.2` is the next separate
+activation; proposed `.17.2.6`/`.17.2.7` and measurement `.17.3` follow.
 
 ## Decisions
+
+- `2026-08-20`: Accept decision `0073`. Keep every `checking_state_v1`
+  level, report its exact accepted-or-earliest-cap outcome, and use one
+  provider-free packed-state evaluator for canonical stateful semantics. A
+  one-million scoreboard stores four packed payload bytes per entry and drains
+  exactly; a one-million coverage vector stores one bit per static bin/tuple.
+  Refine decision `0055`'s impossible tuple-list wording to the older shipped
+  VIAL contract: an explicitly authored cross's static domain is the Cartesian
+  product of its explicitly authored point bins, and nothing outside that
+  domain may be invented. Keep all backend, runtime, support, performance, and
+  capacity nonclaims.
 
 - `2026-08-10`: Accept decisions `0058`/`0059`. Scope scenario-local handles
   and expectations under their named scenario, and scope fibers under both
@@ -1110,15 +1122,6 @@ executable proof method before proposed implementation `.17.2.5.2`; proposed
   separate whole-product scale tree retains big/really-big qualification.
 - `.19` must convert decision `0034` into detailed implementable native-
   verification semantic-family leaves before the architecture closes.
-- `.17.2.4.2` measured the million-record execution cost while closing the
-  total-operation ladder: an operation graph costs about 5.0 KiB of resident
-  state per operation (436 MiB at 65,536, 1,442 at 262,144, 2,692 at 524,288,
-  3,977 at 786,432), and serializing a plan costs several times that again.
-  Decision `0072` now keeps the source-map million-record levels out of that
-  multi-GiB route by reporting their earlier construction-envelope result.
-  `.17.2.5` must still select the proof method for its `checking_state_v1`
-  `scoreboard_capacity` and `bins_and_cross_tuples` million-record levels before
-  authoring them; do not put a multi-GiB construction into a default gate.
 - `.17.4` inherits an exact cross-layer defect from decision `0072`:
   `VIALExecutionContract` declares `bindings` 65,536, `execution_types` 65,536,
   and `source_map_records` 1,000,000 while `HIALVIALBridgeContract` declares
@@ -1149,6 +1152,7 @@ executable proof method before proposed implementation `.17.2.5.2`; proposed
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-20` | `.17.2.5.1` checking-state proof selection | source/semantic/execution/result/backend authority audit; exact guarded model/scoreboard/coverage/fault/random probes; coverpoint and random binary-search boundaries; decision `0073`; static-cross contract reconciliation; packed-state proof sizing; decision/index/card/book/task/Memory/containment continuity; exact temporary-probe and book-render cleanup; task, path, mdBook, Knowledge Map, live-document, diff, staged-acceptance, and doctrine gates | `passed`; all eight axes now have selected accepted-or-earliest-cap outcomes. Coverpoints accept 9,524 in 1,048,467 source bytes and reject 9,525 at the 1-MiB parser cap; random occurrences accept 8,440 in a 16,775,415-byte plan and reject 8,441 at the 16-MiB plan cap, while the full compact 32,768 route returns the same diagnostic. Static authored crosses accept exact 4,096 / 262,144 / 1,000,000 resources in 8,820 / 32,585 / 62,841 source bytes and reject 1,000,001 at /coverage. Decision `0073` selects the caller-sealed packed-state evaluator: a 4,000,000-byte million-entry FIFO and 125,000-byte million-bit vector exercise state without million-operation/record transport. Task integrity reports three trees/940 nodes, relative paths pass at Files=1/Tests=2, all 52 chapters test, the inspected 88-file/18,516-KiB render is removed exactly, Knowledge Map is current at 1,124 facts/5,875 questions/6,042 occurrences/129 shards, all 22 live-document surfaces pass, and staged doctrines pass. No product, backend, runtime, support, performance, or capacity behavior changes. |
 | `2026-08-20` | `.17.2.5` activation | clean execution-graph predecessor `6250cabad`; decisions `0055`/`0056`/`0057`; Knowledge Map absence check; task open-question and canonical checking-authority source census; task/index/Memory/book continuity; task-tree, relative-path, mdBook, containment, diff, and staged-doctrine gates | `passed`; `.17.2.5.1` alone is active to select reachability and an executable bounded proof method for all eight axes, especially the two one-million-record levels. `.17.2.5.2` remains proposed. Task integrity reports three trees/940 nodes, relative paths pass at Files=1/Tests=2, all 52 chapters test, the repository-local 88-file/18,500-KiB render is inspected and removed exactly, all 22 live-document surfaces pass, and staged doctrines pass. No parser, IR, checking-service, result, backend, capability/support, performance, or capacity behavior changes. |
 | `2026-08-20` | `.17.2.4/.17.2.4.2` final execution-graph qualification | complete default t/1600-t/1628 family under RAM guard; exact 40-owned/25-unselected selection partition; focused selection rerun; task/Memory/index/book/card continuity; exact artifact census and cleanup; syntax, Knowledge Map, mdBook, task, path, containment, staged-acceptance, and doctrine gates | `passed`; all 29 architecture-scale files / 135 tests pass in 1,114 seconds. The strengthened foundation oracle proves the completed generator owns exactly 40 selected shapes, while all 13 `reference_v1` profiles and all 12 non-reference profiles of the fixed fixture/unit/domain axes remain deliberately unselected and caller-seal rejected; its corrected focused rerun passes at `Files=1, Tests=3` in 13 seconds. `.17.2.4.2` and parent `.17.2.4` are done, with proposed `.17.2.5` next. No public capability, support, performance, or capacity claim changes. |
 | `2026-08-20` | `.17.2.4.2` unconstructible source-map ladder | owned-level history and decision `0072`; exact 262,144/1,000,000/1,000,001 map render sizes, identities, and reset counts; input-1 envelope authority; source-free canonical reconstruction; build/mutation/unknown-level negatives; selected-versus-catalog ownership distinction; default/opt-in/impacted guarded regression; book, Knowledge Map, rationale, task, containment, path, artifact, staged-acceptance, and doctrine gates | `passed`; all three levels now report `envelope_unconstructible` / `not_constructed` with the exact input-1 diagnostic, no retained source or stage identity, refused builds, and both decision-`0072` records carrying the measured 46,294/46,295 whole-route boundary against the declared one-million-map cap. Closing the axis raises selected owned shapes from 37 to 40 while the catalog's 25 deliberately non-selected profiles remain fail-closed. Focused default `t/1607` passes at `Files=1, Tests=8`, its opt-in route proof passes in 40 seconds, and the 13-file impacted matrix passes at `Files=13, Tests=68` in 304 seconds. The book example, all 52 chapters, exact repository-local render/removal, Knowledge Map, live containment, task/path/rationale, artifact census, staged acceptance, and doctrines pass. No public capability, support, performance, or capacity claim changes. |
@@ -1249,6 +1253,40 @@ executable proof method before proposed implementation `.17.2.5.2`; proposed
 | `2026-08-11` | `.17.2.4.2` scenario qualification/limit/over-limit ladder | decision-0061 exact 512/4,096/4,097 scenarios; caller-sealed level admission; ordinary checked-AHB VIAL/bridge/public-binder route; one real reset/root fiber per scenario; exact source/workload/SemanticIR/bridge/plan identities and topology; stable first-excess diagnostic/no partial output; mutation/missing-source negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; qualification accepts 512 scenarios/operations/fibers, one live fiber, 529 maps, and a 496,709-byte plan with ID `plan/22aedcf295c44c0a1b411b557cb12c9e5476e19077e57e7efe60ec4d7dc1ebe7`. The exact limit accepts 4,096 scenarios/operations/fibers, one live fiber, 4,113 maps, and a 3,779,103-byte plan with ID `plan/036742cfb80ab0f04cf7a7c8d9be1de833f310f5fde98ca3be9e47d331294cfc`. The adjacent 4,097 source returns only `VIAL_EXECUTION_LIMIT_ERROR`, phase `limit`, message `selected_scenarios exceeds the limit 4096`, semantic path `/scenario_ids`, with no partial IR/plan. Focused t1616-t1618 passes at Files=3/Tests=12 in 20 seconds; the guarded impact matrix passes at Files=21/Tests=91 in 815 seconds. No public binder, capability/support, performance, or capacity claim changes. |
 | `2026-08-19` | `.17.2.4.2` 8,192-operations-per-scenario qualification | decision-0061 exact 8,192-operation single-scenario level; caller-sealed level admission; ordinary checked-AHB VIAL/bridge/public-binder route; operation-depth versus scenario/fiber isolation; unique global operation source-map closure; exact source/workload/SemanticIR/bridge/plan identities; sub-cap plan bytes; mutation/missing-source/unowned-level negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; the 115,716-byte generated source authors one `scenario_00000000` with 8,192 genuine resets and no random decision. The unchanged public binder returns 8,192 total operations, one selected scenario, one root fiber, one simultaneously live fiber, 8,209 source maps, 22 bindings, seven types, and a 2,955,783-byte plan with ID `plan/4c6733ea702479b4c603761d333d491f7a427e9eac24dc37238331aeb624f990`. Every `/operation_graph/operations/N` path occurs once and resolves to its own `/packages/0/fixtures/0/scenarios/0/actions/N` authored action. Focused t1619 passes at Files=1/Tests=4 in 10 seconds; the guarded impact matrix passes at Files=22/Tests=95 in 814 seconds. The unimplemented 65,536/65,537 operation levels still fail closed. No public binder, capability/support, performance, or capacity claim changes. |
 | `2026-08-19` | `.17.2.4.2` operation limit/over-limit ladder | decision-0061 exact 65,536/65,537 operation levels; caller-sealed level admission; ordinary checked-AHB VIAL/bridge/public-binder route; semantic-before-bridge stage order; exact source/workload identities and one-record source delta; stable authoritative diagnostics and no partial output; recorded limit-interaction discrepancies; mutation/missing-source/unowned-level negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; the 918,533-byte limit source parses into one complete 65,536-action scenario with the frozen `fb82ce2c…` SemanticIR and unchanged 508,968-byte AHB bridge, and the unchanged public binder returns only `VIAL_EXECUTION_LIMIT_ERROR`, phase `limit`, message `serialized_plan_bytes exceeds the limit 16777216`, at `/plan`. Adding exactly one further 14-byte ` (reset bus 1)` record makes the ordinary parser reject first with `VIAL_LIMIT_ERROR`, message `scenario exceeds 65536 expanded actions`, at `/packages/0/fixtures/0/scenarios/0`, and no bridge is built behind it. Both evaluations report `expected_rejection`, empty metrics, and one `VIAL_SCALE_LIMIT_INTERACTION` discrepancy routed to `.17.4`. Focused t1620 passes at Files=1/Tests=4 in 89 seconds and t1621 at Files=1/Tests=4 in 44 seconds; the guarded impact matrix passes at Files=25/Tests=95 in 960 seconds. No public binder, capability/support, performance, or capacity claim changes. |
+
+## Acceptance Checklist (enforced) — `.17.2.5.1` checking-state proof selection
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Crosses enumerate only
+  explicitly declared tuples' --oneline --
+  docs/decisions/0055-vial-scale-proof-uses-orthogonal-workloads-and-stage-local-oracles.md`
+  names selection commit `0516f2c66`, whose checking-state prose requires
+  explicit tuple enumeration even though the older shipped VIAL grammar has no
+  tuple-list form and `SemanticBuilder`/`ExecutionBuilder` compute the static
+  product of an authored cross's explicitly authored point bins. Direct source,
+  plan, and limit probes also falsify the assumption that one general runtime
+  path can prove all eight axes: 65,536 coverpoints cross the source envelope,
+  32,768 compact random occurrences cross the plan cap, and result/backend
+  machinery validates or implements a narrower profile rather than recomputing
+  general state semantics.
+- [x] **ADDRESSED (verified)** — decision `0073` selects every level's exact
+  accepted-or-earliest-cap outcome and reconciles the stale tuple-list sentence
+  with the shipped static-cross contract. It selects one caller-sealed,
+  provider-free evaluator that exercises rather than allocates checking state:
+  a packed million-entry scoreboard reaches depth 1,000,000 and drains to zero,
+  while a million-bit coverage vector is byte-compared after one sample hits the
+  complete authored static domain. Decision/index, fact card, mdBook, task/index,
+  Memory, and maintained-reference authority carry the same contract and exact
+  9,524/9,525 coverpoint, 8,440/8,441 random-plan, and 1,000,000/1,000,001
+  coverage evidence. Temporary probes and the inspected render are absent.
+- [x] **NO REGRESSION** — docs relative-path audit reports `All tests
+  successful` at `Files=1, Tests=2`; all 52 mdBook chapters test and the
+  repository-local render contains 88 files / 18,516 KiB before exact removal;
+  `knowledge-map: OK` reports 1,124 facts / 5,875 questions / 6,042 answer
+  occurrences / 129 shards. Task integrity remains three trees/940 nodes; all
+  22 live-document surfaces and the exact maintained-reference delta pass; the
+  final staged driver reports `[doctrine] all doctrine checks passed`. No parser,
+  IR, checking service, result producer, backend, public API, support,
+  performance, or capacity behavior changes.
 
 ## Acceptance Checklist (enforced) — `.17.2.5` activation
 

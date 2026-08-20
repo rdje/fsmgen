@@ -3509,14 +3509,60 @@ plus the four non-reference levels of each fixed scalar axis
 (`selected_fixtures`, `selected_units`, and `selected_domains`). Every one fails
 closed at the caller seal; none is an unfinished generated level.
 
-Checking-state generation is now split at the same proof boundary. Active
-selection leaf `.17.2.5.1` must reconcile all eight declared axes with the
-canonical source, execution-plan, checking-service, normalized-result, and
-resource authorities before generator code is written. In particular, it must
-choose a bounded executable proof for the one-million scoreboard-capacity and
-bins-plus-explicit-cross-tuples levels; allocation alone is not semantic proof,
-and an implicit Cartesian cross is forbidden. Implementation remains separately
-proposed under `.17.2.5.2`, so activation changes no runtime or support claim.
+Checking-state reachability and proof are now selected by
+[decision `0073`](../../decisions/0073-checking-state-scale-uses-packed-state-oracles-and-static-cross-domains.md).
+The selection keeps every declared level and reports the earliest authority
+instead of rewriting a level around whatever happens to pass:
+
+| Axis | Accepted levels | First earlier-cap level |
+| --- | --- | --- |
+| model instances | 32 / 1,024 / 4,096 | 4,097 at `/models` |
+| scalar model-state cells | 512 / 32,768 / 65,536 | 65,537 at `/models` |
+| scoreboard instances | 32 / 1,024 / 4,096 | 4,097 at `/scoreboards` |
+| declared scoreboard capacity | 4,096 / 262,144 / 1,000,000 | 1,000,001 at the semantic capacity bound |
+| coverpoints | 256 / 8,192 | 65,536 is envelope-unconstructible |
+| bins plus static cross tuples | 4,096 / 262,144 / 1,000,000 | 1,000,001 at `/coverage` |
+| faults | 32 / 1,024 / 4,096 | 4,097 at `/faults` |
+| random occurrences | 1,024 | 32,768 and 65,536 hit plan bytes; 65,537 hits its count cap |
+
+The coverpoint route accepts 9,524 declarations in 1,048,467 source bytes and
+rejects 9,525 in 1,048,577 bytes at the 1-MiB parser cap. Its selected limit
+and excess sources cross the constructor envelope first, so they retain their
+declared values as `envelope_unconstructible` results and carry that measured
+product boundary separately. Compact random sources parse even at 65,537
+occurrences, but plan serialization accepts only 8,440 occurrences at
+16,775,415 bytes; 8,441 returns the exact 16-MiB `/plan` diagnostic. The full
+32,768 qualification returns the same result, so still larger plan-dominated
+levels can be bounded by that adjacent witness instead of materializing a plan
+known to fail.
+
+VIAL v1 has no tuple-list syntax. The source and execution contracts instead
+define an explicitly authored cross by its named points: the Cartesian product
+of those points' explicitly authored bins is the complete static tuple domain,
+and no backend may create a bin, cross, or tuple outside it. Decision `0073`
+refines the conflicting decision-`0055` wording to that already shipped
+contract; parser and IR behavior do not change. Two 999-bin Boolean points,
+their explicitly authored 998,001-tuple cross, and one independent bin make
+exactly 1,000,000 entries in a 62,841-byte source and a 27,626-byte plan. One
+sample hits the exact all-one vector because every authored bin matches. Adding
+one bin produces 1,000,001 and the exact `/coverage` resource rejection.
+
+Accepted levels must execute semantic state rather than merely allocate it.
+The selected provider-free qualification evaluator consumes only caller-sealed
+canonical SemanticIR and ExecutionIR. At the million-capacity scoreboard level,
+it stores the varying 32-bit payload of each complete normalized transaction in
+a 4,000,000-byte packed FIFO, reaches depth 1,000,000, compares every entry, and
+drains to zero. At the million-entry coverage level, it byte-compares a
+125,000-byte one-bit-per-static-entry hit vector. The same evaluator updates and
+reads every model cell, exercises every scoreboard instance, proves every fault
+activation and restoration, and compares generated/replayed random decisions
+and normalized reruns.
+
+Public runtime traces, `ResultProducer`, and the first portable SystemVerilog
+backend remain excluded as scale oracles: they project or implement a narrower
+profile and do not independently recompute the general state semantics above.
+Implementation remains separately proposed under `.17.2.5.2`; selection changes
+no runtime, public API, support, performance, or capacity claim.
 
 These are construction outcomes, not supported capacities. The exact 1/4/16-
 MiB plans contain 2,974/12,166/48,850 real reset operations plus bounded,
