@@ -135,10 +135,46 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.2.4: disposition checking scale claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Review and migrate the 268 general language, control, tooling, and reference-book candidates.`
   Acceptance: `Every shipped-behavior candidate outside the named protocol, IAL2-AHB, and HIAL/VIAL-verification clusters receives an exact gated disposition without weakening examples or turning syntax literals and navigation identifiers into claims.`
-  Verification: `general-book group identity/count, lowering-clean examples where touched, per-disposition RED controls, zero open group candidates, mdBook/doctrine gates`
+  Verification: `The current general-book group partitions exactly into 35 core-language/tooling, 43 intent/actor/transaction, 68 control/data/composition/lowering, 71 support-matrix/backlog, and 51 blueprint/platform/reference candidates. Children .5.3.1-.5.3.5 own those disjoint path sets; the parent closes only after their sum is 268 and general_book becomes required-complete.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.3: partition general book claim review`
+  Children: `CLAIM-VERIFICATION-ADOPTION.5.3.1, CLAIM-VERIFICATION-ADOPTION.5.3.2, CLAIM-VERIFICATION-ADOPTION.5.3.3, CLAIM-VERIFICATION-ADOPTION.5.3.4, CLAIM-VERIFICATION-ADOPTION.5.3.5`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.3.1`
+  Status: `active`
+  Goal: `Disposition the 35 core language, composition, diagnostics, extensions, and tooling candidates in Chapters 02-12.`
+  Acceptance: `Every candidate on the ten selected chapter paths joins its exact current grammar/runtime/tooling producer and a separating oracle, a reviewed syntax/navigation/example reason, or an explicit repair without overstating shipped behavior.`
+  Verification: `exact 35-candidate path-set join, focused language/tooling gates and mutations, lowering-clean touched examples, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.3.2`
+  Status: `pending`
+  Goal: `Disposition the 43 intent-scheduling, actor-interface, and transaction candidates in Chapters 13, 13a, and 13b.`
+  Acceptance: `Scheduling, actor, interface, and transaction measurements retain distinct current producers and falsification controls, while syntax literals and example data are reviewed only with exact reasons.`
+  Verification: `exact 43-candidate path-set join, focused intent/actor/transaction gates and mutations, lowering-clean touched examples, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.3.3`
+  Status: `pending`
+  Goal: `Disposition the 68 control-flow, data, composition, rules, lowering, and type candidates in Chapters 13d-13j.`
+  Acceptance: `Every selected semantic or lowering claim is tied to the exact parser/lowerer/runtime projection and a separating oracle, or receives an exact reviewed-incidental or owned-repair outcome.`
+  Verification: `exact 68-candidate path-set join, focused control/data/composition/lowering gates and mutations, lowering-clean touched examples, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.3.4`
+  Status: `pending`
+  Goal: `Disposition the 71 feature-matrix and non-protocol backlog candidates in Chapters 13k and 14-14k.`
+  Acceptance: `Current support claims join executable support-accounting producers and negative controls; backlog identifiers, priorities, and structural references remain explicitly distinct from shipped capability evidence.`
+  Verification: `exact 71-candidate path-set join, support-accounting and backlog identity controls, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.3.5`
+  Status: `pending`
+  Goal: `Disposition the 51 implementation-blueprint, platform-intent, and reference-map candidates in Chapters 15, 16, and 90.`
+  Acceptance: `Blueprint and platform claims join exact current producers and separating oracles while historical, navigation, policy, and migration references receive narrowly reviewable outcomes.`
+  Verification: `exact 51-candidate path-set join, blueprint/platform/reference evidence controls, inventory/disposition/mdBook/doctrine gates, general_book required-complete`
   Commit: `pending`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.4`
@@ -235,11 +271,17 @@ hidden behind repeated checks of the same kind.
   distinguishes semantic preflight, bridge materialization, plan rejection,
   and the adjacent semantic diagnostic. The exact guarded suite closes the
   root group without borrowing any one aggregate as proof of another.
+- `2026-08-20`: The general-book group is split by semantic and evidence
+  ownership rather than by equal candidate counts. Core language/tooling,
+  intent/actor/transactions, control/data/composition/lowering,
+  support-matrix/backlog, and blueprint/platform/reference form five disjoint
+  path sets. This keeps examples beside their owning behavior while preventing
+  the reference map from masking unrelated runtime claims.
 
 ## Open Questions
 
-- None blocking. `.5.3` is the next inactive child after the `.5.2.4`
-  implementation commit.
+- None blocking. `.5.3.1` is the sole active general-book child after clean
+  root-group closure commit `3dcd9c2f1`.
 
 ## Blockers
 
@@ -268,6 +310,9 @@ hidden behind repeated checks of the same kind.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'Model-state source factorization must preserve the expanded oracle count' --oneline -- DEVELOPMENT_NOTES.md` identifies `48e97f656` and the scoreboard pickaxe identifies `416c79473`, while the canonical disposition join left all 12 checking-scale rationale candidates open. The existing model regression checked aggregate cells but did not independently count the authored definition, instance, and declaration factorization that makes those totals meaningful.
 - [x] **ADDRESSED (verified)** — twelve candidate identities now join six distinct generated producer/oracle/watcher families. The model oracle counts shared definitions, instances, and declarations at gate, qualification, limit, and adjacent excess before exercising every cell; the exact guarded collection reports `All tests successful` at `Files=6, Tests=30`. The canonical report is `candidates=1415`, `disposed=70`, `gates=44`, `reviewed=26`, `root open=0`, with `root_documents required_complete=1`.
 - [x] **NO REGRESSION** — inventory regenerates `1,415` candidates and `698` governed constants; inventory/disposition RED suites report `All tests successful` at `Files=2, Tests=14`; Knowledge Map reports `1,127` facts / `5,901` questions / `6,068` occurrences / `130` shards; live containment covers `3,022/3,022` paths with exact book authority. All 53 chapters test, the rendered 88-file/18,588-KiB book contains the synchronized checking evidence and is removed, while docs, Memory, diff, staged acceptance, and all 12 doctrine gates pass.
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean commit `3dcd9c2f1` closes `.5.2.4`, leaving the existing 268-candidate `.5.3` leaf as the next dependency-ordered frontier; one unsliced review would mix thirty chapter paths across unrelated grammar, runtime, support-accounting, backlog, and historical/reference evidence families.
+- [x] **ADDRESSED (verified)** — the committed inventory is aggregated into five disjoint path-owned children: `.5.3.1=35/10 paths`, `.5.3.2=43/3`, `.5.3.3=68/6`, `.5.3.4=71/8`, and `.5.3.5=51/3`; their exact sum is `268` over all `30` general-book paths. `.5.3.1` alone is active, and no claim or disposition changes in this continuity slice.
+- [x] **NO REGRESSION** — task integrity, Memory, inventory/disposition joins, docs-relative paths, Knowledge Map, live-document authority, diff, staged acceptance exemption, and all 12 doctrine gates pass from clean predecessor `3dcd9c2f1`.
 
 ## Verification Log
 
@@ -286,6 +331,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-20` | `.5.2.3` | bridge differential calibration; exact bridge boundary; semantic parallel limit; scenario topology; total/live fibers; bound execution types; inventory/disposition joins; docs/Memory/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 18 candidates closed as 14 gates / 4 reviewed; root 58 disposed / 12 open; Files=5/Tests=34 exact focused run; 686 governed constants; all 53 chapters and all registered doctrines` |
 | `2026-08-20` | `.5.2.4` activation | clean `7cc733514` predecessor; exact 12-candidate line-range census; task/index/Memory continuity; task/inventory/disposition/docs/Knowledge Map/live-document/diff/staged-doctrine gates | `PASS — .5.2.4 alone active; no claim, disposition, evidence, product, capability, or support behavior changes` |
 | `2026-08-20` | `.5.2.4` | owned-shape partition; model source factorization and exact cells; scoreboard storage/order; coverage identity/order; fault lifecycle; random semantic/bridge/plan stages; inventory/disposition joins; docs/Memory/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 12 candidates closed as derived gates; root 70/70 required-complete with 44 gates / 26 reviewed; Files=6/Tests=30 exact focused run; 698 governed constants; all 53 chapters and all registered doctrines` |
+| `2026-08-20` | `.5.3` partition | committed-inventory path aggregation; exact five-child sum; task integrity; docs paths; inventory/disposition/Knowledge Map/live-document/diff/staged-doctrine gates | `PASS — 35 + 43 + 68 + 71 + 51 = 268 across 30 disjoint paths; .5.3.1 selected alone; no claim, disposition, product, capability, or support behavior changes` |
 
 ## Commit Log
 
@@ -304,3 +350,4 @@ hidden behind repeated checks of the same kind.
 | `.5.2.3` | `CLAIM-VERIFICATION-ADOPTION.5.2.3: disposition bridge execution claims` | `Maps bridge and execution measurements to distinct current evidence chains, preserves historical/structural references honestly, and strengthens source-map calibration with differential real builds.` |
 | `.5.2.4` activation | `CLAIM-VERIFICATION-ADOPTION.5.2.4: activate checking scale claim review` | `Activates the exact final checking-scale root range from the clean bridge/execution closure without changing claims or evidence.` |
 | `.5.2.4` | `CLAIM-VERIFICATION-ADOPTION.5.2.4: disposition checking scale claims` | `Maps all checking-scale measurements to independent generated evidence chains, strengthens model source-factorization checks, and makes the complete root group mandatory.` |
+| `.5.3` | `CLAIM-VERIFICATION-ADOPTION.5.3: partition general book claim review` | `Activates five semantic/evidence-coherent children from the exact 268-candidate general-book census; changes no claim, disposition, product, capability, or support behavior.` |
