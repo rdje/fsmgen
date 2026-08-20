@@ -127,5 +127,5 @@ bridge identities. Capacity 1,000,001 returns exactly one parser
 `VIAL_LIMIT_ERROR` at `/packages/0/scoreboards/0/capacity` and no stage
 identity. The default and complete RAM-guarded scoreboard sweeps pass. This
 implementation changes no product behavior, support state, performance budget,
-or capacity claim. Coverage-axis implementation is now the next proposed leaf
+or capacity claim. Coverage-axis implementation is now the active leaf
 under `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2`.
