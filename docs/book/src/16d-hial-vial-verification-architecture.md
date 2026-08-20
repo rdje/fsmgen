@@ -3649,7 +3649,7 @@ Independent complete-route reruns reproduce every stage digest; the foundation k
 `rerun/ceefc4f30…` identity and each generated level has its own content address. Canonical
 regeneration rejects construction/evaluation mutation. Success and consumer failure stage
 only below repository-derived `.artifacts/tmp/vial-scale/` and remove that exact directory.
-Focused `t/1632`/`t/1633`/`t/1634` prove guarded coverage, fault, and random/replay routes. The complete default checking family passes at Files=6/Tests=33, and exact `t/1634` passes at Files=1/Tests=4 under the 4,096-MiB RAM guard; final family qualification remains separate.
+Focused `t/1632`/`t/1633`/`t/1634` prove guarded coverage, fault, and random/replay routes. The complete default checking family passes at Files=6/Tests=33, and exact `t/1634` passes at Files=1/Tests=4 under the 4,096-MiB RAM guard; final family qualification is active separately.
 These fixtures change no parser, SemanticIR, bridge, ExecutionIR, backend,
 runtime, public product API, capability, support, performance, or capacity behavior.
 

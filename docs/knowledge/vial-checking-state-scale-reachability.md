@@ -173,5 +173,5 @@ The 65,536 level reports `preflight_dominated` / `not_materialized` with no
 stage identity or selected-count claim, while 65,537 reaches the exact
 `/randomness/decisions` count diagnostic. Opt-in RAM-guarded evidence accepts
 8,440 occurrences in a 16,775,415-byte plan and rejects adjacent 8,441. Default
-`t/1629`-`t/1634` and exact `t/1634` pass; final family qualification remains a
-separate proposed child.
+`t/1629`-`t/1634` and exact `t/1634` pass; final family qualification is active
+as a separate closure child.
