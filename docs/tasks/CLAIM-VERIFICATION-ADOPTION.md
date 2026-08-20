@@ -70,11 +70,11 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.2: install the authoritative claim standard`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement the bounded claim-record checker and register it as a doctrine.`
   Acceptance: `A data-only bounded registry and deterministic checker validate claim IDs, source paths, exact record markers, all three named legs or explicit gaps, tracked producers/watchers, and path locality; positive fixtures pass and mutations that remove or alias a leg demonstrably fail RED.`
-  Verification: `focused claim-verification fixtures plus doctrine gate`
-  Commit: `pending`
+  Verification: `PASS — bounded registry/checker; 8 positive, gap, and RED subtests; bootstrap/Knowledge Map/live-document gates; mdBook; doctrine gate`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.3: gate bounded three-leg claim records`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.4`
   Status: `pending`
@@ -121,9 +121,9 @@ hidden behind repeated checks of the same kind.
 
 ## Acceptance Checklist (enforced for implementation changes)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -SCLAIM_VERIFICATION.md --oneline -- scripts/check_doctrine_bootstrap.sh` returned no prior hit: the bootstrap required-doc and pointer checks had no claim-verification policy to require.
-- [x] **ADDRESSED (verified)** — `tail -n +26 CLAIM_VERIFICATION.md | sha256sum` reproduced `8f194574ec718749e90a402cf6e4dc6650e44f6185dd194853a54482eef68643`; `scripts/check_doctrine_bootstrap.sh` required the policy and verified every stable pointer surface; `scripts/check_readme_entrypoint.sh` kept README under both pinned ceilings.
-- [x] **NO REGRESSION** — `scripts/check_doctrines.sh` reported `[doctrine] all doctrine checks passed`; the RAM-guarded `mdbook build docs/book` completed and wrote the HTML book inside the repository.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'CLAIM-VERIFICATION|scripts/check_claim_verification.pl' --oneline -- scripts/check_doctrines.sh` and the corresponding registry-history search returned no hit: FSMGen had installed the written standard but had no executable claim-record doctrine, bounded registry, or structural RED controls.
+- [x] **ADDRESSED (verified)** — `scripts/check_claim_verification.pl` reported `records=1, published=0, fixtures=1`; `prove -Iperl -v t/1636-claim-verification-doctrine.t` reported `Files=1, Tests=8` after proving complete/owned-gap positives and removed, absent, aliased, unowned, absolute, untracked, and undeclared RED cases.
+- [x] **NO REGRESSION** — `scripts/check_doctrines.sh` reported `[doctrine] all doctrine checks passed`; `scripts/check_live_document_size.sh` covered `3020/3020` tracked documents and reproduced the exact maintained-reference delta; the RAM-guarded `mdbook build docs/book` completed inside the repository.
 
 ## Verification Log
 
@@ -131,6 +131,7 @@ hidden behind repeated checks of the same kind.
 | --- | --- | --- | --- |
 | `2026-08-20` | `.1` | `scripts/check_task_tree_integrity.pl`; `scripts/check_docs_relative_paths.sh`; `git diff --check` | `PASS — 4 active trees / 954 nodes; 1 docs-relative-path file / 2 tests; clean diff whitespace` |
 | `2026-08-20` | `.2` | neutral-body digest; bootstrap; README/live-document/reference authority; docs paths; RAM-guarded mdBook; doctrine gate | `PASS — authoritative body identity reproduced; discovery and bounded routes closed; book built` |
+| `2026-08-20` | `.3` | claim checker; `t/1636`; bootstrap; Knowledge Map; live-document/reference authority; RAM-guarded mdBook; doctrine gate | `PASS — one bounded conformance record; Files=1, Tests=8; deliberate missing/alias/path RED controls; all registered doctrines` |
 
 ## Commit Log
 
@@ -138,3 +139,4 @@ hidden behind repeated checks of the same kind.
 | --- | --- | --- |
 | `.1` | `CLAIM-VERIFICATION-ADOPTION.1: select three-leg claim evidence` | `Decision and executable adoption sequence only; no policy or product behavior change.` |
 | `.2` | `CLAIM-VERIFICATION-ADOPTION.2: install the authoritative claim standard` | `Project-owned standard plus bounded discovery and book reference; no product behavior change.` |
+| `.3` | `CLAIM-VERIFICATION-ADOPTION.3: gate bounded three-leg claim records` | `Bounded registry, exact record checker, positive/RED fixtures, doctrine registration, and durable retrieval card.` |

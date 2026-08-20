@@ -1,0 +1,10 @@
+# Claim-verification conformance fixture
+
+This file is checker input, not an FSMGen product or support claim.
+
+<!-- CLAIM-VERIFICATION:BEGIN claim-verification-conformance-v1 -->
+- Claim: The bounded claim-record checker accepts this complete conformance fixture.
+- Re-derive: Parse the bounded registry and reconstruct its exact marker block.
+- Falsify: Run independent mutations that remove or alias a required leg and require rejection.
+- Durability: Invoke the checker from the registered doctrine driver on every doctrine gate.
+<!-- CLAIM-VERIFICATION:END claim-verification-conformance-v1 -->

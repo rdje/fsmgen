@@ -13,10 +13,10 @@
 - Local scope: decision `0074` distinguishes actionable quantitative claims
   from incidental dates, versions, identifiers, HDL literals, examples, and
   transient command output.
-- Local enforcement: `CLAIM-VERIFICATION-ADOPTION.3` owns the bounded
-  claim-record checker and doctrine registration. Until that leaf lands,
-  this publication contract is normative but its new record shape is not
-  yet mechanically enforced.
+- Local enforcement: `scripts/check_claim_verification.pl` validates the
+  bounded registry, exact source markers, explicit legs or owned gaps, and
+  tracked local evidence paths. `scripts/check_doctrines.sh` runs it as the
+  registered `CLAIM-VERIFICATION` doctrine.
 - Provenance boundary: quantitative examples in the neutral body describe
   the template's reference deployment. They are retained source evidence,
   not current measurements or support claims about FSMGen.

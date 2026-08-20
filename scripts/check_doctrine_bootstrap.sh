@@ -97,6 +97,32 @@ else
   note "doctrine registry does not include LIVE-DOCUMENT-SIZE"
 fi
 
+if grep -q 'CLAIM-VERIFICATION|scripts/check_claim_verification.pl' scripts/check_doctrines.sh; then
+  ok "doctrine registry includes CLAIM-VERIFICATION"
+else
+  note "doctrine registry does not include CLAIM-VERIFICATION"
+fi
+
+claim_verification_files=(
+  doctrine/claim_verification/claims.jsonl
+  doctrine/claim_verification/fixtures/positive.txt
+  scripts/check_claim_verification.pl
+  t/1636-claim-verification-doctrine.t
+)
+for file in "${claim_verification_files[@]}"; do
+  if [[ -f "${file}" ]]; then
+    ok "${file} present"
+  else
+    note "${file} is missing"
+  fi
+done
+
+if [[ -x scripts/check_claim_verification.pl ]]; then
+  ok "scripts/check_claim_verification.pl executable"
+else
+  note "scripts/check_claim_verification.pl is not executable"
+fi
+
 live_document_files=(
   live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md
   live-document-size/scripts/check_live_document_size.pl

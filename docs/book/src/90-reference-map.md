@@ -58,8 +58,9 @@ These should stay precise and sometimes narrower than the book.
 re-derive it from its source, attempt to falsify it with a separating oracle,
 and keep a tracked producer plus a watcher that detects staleness. A missing
 leg is published explicitly rather than hidden behind repeated checks of the
-same kind. Decision `0074` owns FSMGen's local adoption and honest enforcement
-boundary.
+same kind. `scripts/check_claim_verification.pl` gates exact bounded records and
+tracked local paths; decision `0074` keeps semantic truth and oracle
+independence outside that structural gate's claims.
 
 `MEMORY.md` is the bounded resume pointer and `TASK_TREE.md` indexes the live
 work frontier. `ROADMAP_V2.md` carries high-level direction.
