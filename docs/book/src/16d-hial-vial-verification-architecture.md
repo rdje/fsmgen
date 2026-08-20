@@ -3501,6 +3501,14 @@ The implemented ladder reports these selected outcomes:
 | random attempts | `8,192` accepted | `262,144` accepted | `1,000,000` accepted | deterministic exhaustion rejects `1,000,001` |
 | serialized plan | exact 1 MiB | exact 4 MiB | exact 16 MiB | first additional complete operation is rejected |
 
+Final default qualification runs the complete architecture-scale family from
+`t/1600` through `t/1628` under the repository RAM guard: all 29 files and 135
+tests pass. The execution generator publishes 40 selected shapes. The 25
+catalog shapes outside that set are deliberate: all 13 `reference_v1` profiles
+plus the four non-reference levels of each fixed scalar axis
+(`selected_fixtures`, `selected_units`, and `selected_domains`). Every one fails
+closed at the caller seal; none is an unfinished generated level.
+
 These are construction outcomes, not supported capacities. The exact 1/4/16-
 MiB plans contain 2,974/12,166/48,850 real reset operations plus bounded,
 referenced scenario and endpoint identifiers that close the remaining byte

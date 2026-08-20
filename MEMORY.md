@@ -6,9 +6,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2`
-- next_action: finish `.17.2.4.2` family qualification and exact cleanup after
-  committing the completed source-map ladder.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4`
+- next_action: activate proposed `.17.2.5` for canonical checking-state workload
+  generation after the clean execution-graph family closure commit.
 - in_flight_uncommitted: none
 - in_flight_background: none
 - blockers: none.

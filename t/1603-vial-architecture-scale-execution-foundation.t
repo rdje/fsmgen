@@ -65,9 +65,10 @@ subtest 'binding-gate construction is closed, canonical, and exact' => sub {
     like($@, qr/checked-AHB reference text is required/,
         'missing-source rejection names checked-AHB authority');
 
-    # The owned frontier is published by the generator, so this proves the
-    # boundary by deriving it from the catalog instead of restating a list that
-    # goes stale the moment the next level lands.
+    # The selected set is published by the generator. The only catalog shapes
+    # outside it are the reference profiles and the three fixed scalar axes;
+    # freeze that distinction so a completed selection cannot be mistaken for
+    # an unfinished frontier or for ownership of all catalog records.
     my %owned;
     $owned{"$_->{primary_axis}/$_->{level}"} = 1
         for @{$class->owned_shapes};
@@ -79,8 +80,23 @@ subtest 'binding-gate construction is closed, canonical, and exact' => sub {
             push @unowned, [$axis, $level] unless $owned{"$axis/$level"};
         }
     }
-    cmp_ok(scalar(@unowned), '>', 0,
-        'the caller-sealed generator still has an unowned frontier');
+    my @expected_unowned = sort(
+        map("$_/reference_v1", sort keys %{$axes}),
+        map {
+            my $axis = $_;
+            map("$axis/$_", qw(
+                gate_candidate_v1 qualification_candidate_v1
+                limit_v1 over_limit_v1
+            ));
+        } qw(selected_domains selected_fixtures selected_units),
+    );
+    is_deeply(
+        [map { "$_->[0]/$_->[1]" } @unowned],
+        \@expected_unowned,
+        'only reference and fixed scalar-axis profiles remain unselected',
+    );
+    is(scalar(@{$class->owned_shapes}), 40,
+        'the generator publishes all 40 selected execution shapes');
 
     my (@accepted, %reason);
     for my $shape (@unowned) {
