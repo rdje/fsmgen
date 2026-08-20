@@ -266,3 +266,21 @@ read `verification_bridge.probes` without first checking that
 rejected the actor/report mismatch. Guarding the optional hash before probe
 collection keeps ordinary non-annotated IAL1 ordinary; it does not weaken the
 bridge identity check or introduce a private admission.
+
+## 2026-08-20: Knowledge-card partitions need family-explicit parity scopes
+
+A bounded fact card can be partitioned without losing retrieval semantics only
+when its complete source remains exactly recoverable and its answer keys are
+proved equal across the replacements. The VIAL execution-scale card therefore
+uses a commit-pinned version object plus deterministic route/gate and per-axis
+materializations. Current prose stays small; the complete earlier narrative is
+still byte-retrievable; and every old question resolves to exactly one new
+card.
+
+The existing history verifier had encoded its two original families by
+negative matching: IAL2 paths were one family and every non-IAL2 generated path
+was assumed to be VHDL. Adding VIAL exposed that assumption before it could
+silently mix answer sets. Parity checks now receive explicit replacement path
+sets for each family. Future partitioned families must add their own source
+identity, classifier, replacement paths, and routing checks rather than enter a
+catch-all group.

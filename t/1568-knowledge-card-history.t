@@ -55,11 +55,16 @@ subtest 'materialization is deterministic and current-card drift fails' => sub {
         '--current-root', $current, '--materialize');
     ok($materialized, 'exact activation sources materialize bounded partitions')
         or diag($materialize_output);
-    like($materialize_output, qr/materialized 11 bounded cards/,
+    like($materialize_output, qr/materialized 13 bounded cards/,
         'materialization reports the complete stable partition');
 
     my ($verified, $verify_output) = run_verifier('--current-root', $current);
     ok($verified, 'independently materialized cards verify') or diag($verify_output);
+
+    my $vial_outcomes = File::Spec->catfile(
+        $current, qw(docs knowledge vial-execution-scale-axis-outcomes.md));
+    like(slurp($vial_outcomes), qr/^id: vial-execution-scale-axis-outcomes$/m,
+        'materialization includes the stable VIAL axis-outcome partition');
 
     my $priority = File::Spec->catfile(
         $current, qw(docs knowledge ial2-feature-completeness-priority.md));

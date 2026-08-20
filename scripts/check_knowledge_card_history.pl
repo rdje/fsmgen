@@ -58,14 +58,23 @@ my @sources = (
         sha256 => '624ac722cfb501db3502cf1c4a5f385b52b9ee874cc8bd2a4669d587e26463f5',
         current_pointer => 'docs/knowledge/direct-vhdl-scaffold.md',
     },
+    {
+        descriptor_id => 'knowledge-vial-execution-scale-reachability-pre-partition-2026-08-20',
+        revision => '5514e692c',
+        path => 'docs/knowledge/vial-execution-scale-reachability.md',
+        lines => 383, bytes => 26_208, longest => 266,
+        sha256 => '44760f9a4fa3a6ea4c44def18b73eb7ec6cc1344e9b9bd4593663b2bb71ef04b',
+        current_pointer => 'docs/knowledge/vial-execution-scale-reachability.md',
+    },
 );
 
 my @problems;
 my %source_text;
 for my $source (@sources) {
-    my ($status, $text, $stderr) = run_git('show', "$activation:$source->{path}");
+    my $revision = source_revision($source);
+    my ($status, $text, $stderr) = run_git('show', "$revision:$source->{path}");
     if ($status != 0) {
-        push @problems, "cannot retrieve $activation:$source->{path}: $stderr";
+        push @problems, "cannot retrieve $revision:$source->{path}: $stderr";
         next;
     }
     $source_text{$source->{path}} = $text;
@@ -94,12 +103,13 @@ for my $source (@sources) {
         push @problems, "missing descriptor $source->{descriptor_id}";
         next;
     }
+    my $revision = source_revision($source);
     my %required = (
         surface_id => 'exact_history', former_path => $source->{path},
-        range_id => 'complete-activation-source', revision => $activation,
+        range_id => 'complete-activation-source', revision => $revision,
         lines => $source->{lines}, bytes => $source->{bytes},
         sha256 => $source->{sha256}, retrieval_kind => 'version_object',
-        retrieval_locator => "git show $activation:$source->{path}",
+        retrieval_locator => "git show $revision:$source->{path}",
         current_pointer => $source->{current_pointer},
         verifier => 'adapter:scripts/check_knowledge_card_history.pl',
         retention_contract => 'fsmgen_required_history',
@@ -126,18 +136,27 @@ for my $path (sort keys %{$expected}) {
     push @problems, "$path exceeds 819-byte lines" if $longest > 819;
 }
 
+my @ial2_paths = sort grep { /ial2-feature/ } keys %{$expected};
+my @vhdl_paths = sort grep {
+    /(?:direct-vhdl-scaffold|composition-vhdl-scaffold|vhdl-package-emission|vhdl-external-validation)\.md\z/
+} keys %{$expected};
+my @vial_paths = sort grep { /vial-execution-scale-(?:reachability|axis-outcomes)\.md\z/ }
+    keys %{$expected};
+
 my @old_ial2 = unique_answers(
     $source_text{$sources[0]{path}} // '',
     $source_text{$sources[1]{path}} // '',
 );
-my @new_ial2 = unique_answers(map { $expected->{$_} }
-    grep { /ial2-feature/ } sort keys %{$expected});
-compare_answer_sets('IAL2 priority/next-slice', \@old_ial2, \@new_ial2);
+my @new_ial2 = unique_answers(map { $expected->{$_} } @ial2_paths);
+compare_answer_sets('IAL2 priority/next-slice', \@old_ial2, \@new_ial2, \@ial2_paths);
 
 my @old_vhdl = unique_answers($source_text{$sources[2]{path}} // '');
-my @new_vhdl = unique_answers(map { $expected->{$_} }
-    grep { !/ial2-feature/ } sort keys %{$expected});
-compare_answer_sets('direct/composition VHDL', \@old_vhdl, \@new_vhdl);
+my @new_vhdl = unique_answers(map { $expected->{$_} } @vhdl_paths);
+compare_answer_sets('direct/composition VHDL', \@old_vhdl, \@new_vhdl, \@vhdl_paths);
+
+my @old_vial = unique_answers($source_text{$sources[3]{path}} // '');
+my @new_vial = unique_answers(map { $expected->{$_} } @vial_paths);
+compare_answer_sets('VIAL execution scale', \@old_vial, \@new_vial, \@vial_paths);
 
 my $next_card = read_current_regular(
     'docs/knowledge/ial2-feature-completeness-next-slice.md') // '';
@@ -145,6 +164,18 @@ push @problems, 'current next-slice card still claims stale .276 ownership'
     if $next_card =~ /next active .*\.276|next slice is .*\.276/i;
 push @problems, 'current next-slice card omits the active task-tree authority route'
     if index($next_card, 'docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md') < 0;
+
+for my $path (@vial_paths) {
+    my $card = read_current_regular($path) // '';
+    push @problems, "$path omits the active task-tree authority route"
+        if index($card, 'docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md') < 0;
+    push @problems, "$path omits the user-facing mdBook authority route"
+        if index($card, 'docs/book/src/16d-hial-vial-verification-architecture.md') < 0;
+    push @problems, "$path omits exact pre-partition retrieval"
+        if index($card, 'git show 5514e692c:docs/knowledge/vial-execution-scale-reachability.md') < 0;
+    push @problems, "$path retains stale blocked routing"
+        if $card =~ /\.17\.2\.4\.2`? is blocked/i;
+}
 
 if (@problems) {
     print STDERR "knowledge-card-history: $_\n" for @problems;
@@ -175,6 +206,14 @@ sub expected_cards {
         my $group = classify_vhdl_answer($answer);
         die "knowledge-card-history: unclassified VHDL answer: $answer\n" if !$group;
         push @{$vhdl_groups{$group}}, $answer;
+    }
+
+    my @vial_answers = unique_answers($sources_by_path->{$sources[3]{path}});
+    my %vial_groups = map { $_ => [] } qw(route outcomes);
+    for my $answer (@vial_answers) {
+        my $group = classify_vial_answer($answer);
+        die "knowledge-card-history: unclassified VIAL answer: $answer\n" if !$group;
+        push @{$vial_groups{$group}}, $answer;
     }
 
     my %cards;
@@ -297,6 +336,104 @@ BODY
                 . "`git show aadbd14a5:docs/knowledge/direct-vhdl-scaffold.md`.\n",
         );
     }
+
+    $cards{'docs/knowledge/vial-execution-scale-reachability.md'} = card(
+        id => 'vial-execution-scale-reachability',
+        title => 'VIAL execution scale gates use canonical caller-sealed routes',
+        answers => $vial_groups{route}, date => '2026-08-20', status => 'current',
+        tags => '[vial, execution-ir, scale, binder, bridge, gates, routing]',
+        evidence => 'docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md; perl/FSM/VIAL/ArchitectureScaleExecutionGraph.pm; t/1603-vial-architecture-scale-execution-foundation.t; t/1604-vial-architecture-scale-execution-topology.t; t/1605-vial-architecture-scale-execution-fibers.t; t/1606-vial-architecture-scale-execution-types.t; t/1607-vial-architecture-scale-execution-source-maps.t; t/1608-vial-architecture-scale-execution-random-replay.t; t/1609-vial-architecture-scale-execution-plan-bytes.t; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md',
+        reverify => 'prove -Iperl t/1603-vial-architecture-scale-execution-foundation.t t/1604-vial-architecture-scale-execution-topology.t t/1605-vial-architecture-scale-execution-fibers.t t/1606-vial-architecture-scale-execution-types.t t/1607-vial-architecture-scale-execution-source-maps.t t/1608-vial-architecture-scale-execution-random-replay.t t/1609-vial-architecture-scale-execution-plan-bytes.t',
+        body => <<'BODY',
+Decision `0061` assigns each `execution_graph_v1` gate to a shipped canonical
+route. Checked-AHB VIAL owns scenarios, operations, fibers, source maps,
+random/replay, and plan bytes. A plain direct-IAL1 actor owns execution types.
+The scale-only bridge event family owns the binding gate through a private,
+caller-sealed `qualification_only` / `private_nonportable` binder admission.
+The public binder rejects that scale capability and remains unchanged.
+
+| Gate axis | Exact gate | Canonical result |
+|---|---:|---|
+| bindings | 2,048 | 2,042 ordinal events plus six fixed records; 2,656,823-byte plan |
+| topology | 32 scenarios; 256 operations/scenario; 1,024 operations total | 59,907 / 121,163 / 409,363-byte plans |
+| fibers | 128 total; 32 live | orthogonal sequential-group and depth-two recipes |
+| execution types | 512 | widths 1–512; 735,488-byte plan |
+| source maps | 8,192 | 8,175 real resets plus 17 fixed maps; 2,949,646-byte plan |
+| random attempts | 8,192 | candidate accepted at zero-based attempt 8,191; replay differs only in origin |
+| serialized plan | 1,048,576 bytes | 2,974 real reset actions and 2,991 unique maps |
+
+Operation source-map paths use a global operation offset across scenarios;
+scenario-local ranks and operation IDs remain local. Fiber expectations are
+derived from the same bounded recipes as rendering, so every owned level is
+checked for exact group widths, topology, successor closure, counts, and spans
+rather than against gate-only literals.
+
+Every gate freezes source, workload, SemanticIR, bridge, and plan identities
+where those stages exist, plus mutation, missing-source, rerun, replay, caller-
+seal, and unfinished-level negatives. Current implementation status is owned by
+`docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`; user-facing
+behavior is owned by `docs/book/src/16d-hial-vial-verification-architecture.md`.
+No gate result is a public support, performance, or capacity claim.
+
+Exact pre-partition prose is recoverable with
+`git show 5514e692c:docs/knowledge/vial-execution-scale-reachability.md`.
+BODY
+    );
+    $cards{'docs/knowledge/vial-execution-scale-axis-outcomes.md'} = card(
+        id => 'vial-execution-scale-axis-outcomes',
+        title => 'VIAL execution scale reports each axis at its earliest real authority',
+        answers => $vial_groups{outcomes}, date => '2026-08-20', status => 'current',
+        tags => '[vial, execution-ir, scale, limits, qualification, reachability]',
+        evidence => 'docs/decisions/0072-an-unreachable-declared-cap-is-a-result-not-a-level-to-rewrite.md; docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md; perl/FSM/VIAL/ArchitectureScaleExecutionGraph.pm; perl/FSM/VIAL/ExecutionBuilder.pm; perl/FSM/Support/VIALExecutionContract.pm; t/1610-vial-architecture-scale-execution-plan-qualification.t; t/1613-vial-architecture-scale-execution-random-qualification.t; t/1614-vial-architecture-scale-execution-random-limit.t; t/1615-vial-architecture-scale-execution-random-over-limit.t; t/1616-vial-architecture-scale-execution-scenario-qualification.t; t/1617-vial-architecture-scale-execution-scenario-limit.t; t/1618-vial-architecture-scale-execution-scenario-over-limit.t; t/1619-vial-architecture-scale-execution-operation-qualification.t; t/1620-vial-architecture-scale-execution-operation-limit.t; t/1621-vial-architecture-scale-execution-operation-over-limit.t; t/1622-vial-architecture-scale-execution-total-operation-qualification.t; t/1623-vial-architecture-scale-execution-fiber-qualification.t; t/1624-vial-architecture-scale-execution-live-fiber-limit.t; t/1625-vial-architecture-scale-execution-total-fiber-limit.t; t/1626-vial-architecture-scale-execution-total-operation-limit.t; t/1627-vial-architecture-scale-execution-type-qualification.t; t/1628-vial-architecture-scale-execution-binding-limits.t; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md',
+        reverify => 'prove -Iperl t/1610-vial-architecture-scale-execution-plan-qualification.t t/1613-vial-architecture-scale-execution-random-qualification.t t/1614-vial-architecture-scale-execution-random-limit.t t/1615-vial-architecture-scale-execution-random-over-limit.t t/1616-vial-architecture-scale-execution-scenario-qualification.t t/1617-vial-architecture-scale-execution-scenario-limit.t t/1618-vial-architecture-scale-execution-scenario-over-limit.t t/1619-vial-architecture-scale-execution-operation-qualification.t t/1620-vial-architecture-scale-execution-operation-limit.t t/1621-vial-architecture-scale-execution-operation-over-limit.t t/1622-vial-architecture-scale-execution-total-operation-qualification.t t/1623-vial-architecture-scale-execution-fiber-qualification.t t/1624-vial-architecture-scale-execution-live-fiber-limit.t t/1625-vial-architecture-scale-execution-total-fiber-limit.t t/1626-vial-architecture-scale-execution-total-operation-limit.t t/1627-vial-architecture-scale-execution-type-qualification.t t/1628-vial-architecture-scale-execution-binding-limits.t',
+        body => <<'BODY',
+The ladder reports the first real authority in semantic → bridge → plan order.
+It never forges a downstream object to reach a preferred cap, and a structural
+cap reached before a later rejection is distinguished from an accepted plan.
+
+| Axis | Selected points | Result and first authority |
+|---|---|---|
+| plan bytes | 1 / 4 / 16 MiB, then one action more | exact accepted plans at all three sizes; the next action is rejected at `/plan` |
+| random attempts | 262,144 / 1,000,000 / 1,000,001 | exact candidates accept at attempts 262,143 and 999,999; the next returns `VIAL_RANDOM_EXHAUSTED` |
+| scenarios | 512 / 4,096 / 4,097 | 512 and 4,096 accept; 4,097 is rejected at `/scenario_ids` |
+| operations/scenario | 8,192 / 65,536 / 65,537 | 8,192 accepts; plan bytes reject 65,536; parser action count rejects 65,537 |
+| operations total | 65,536 / 1,000,000 / 1,000,001 | qualification hits plan bytes; limit is preflight-dominated; excess reaches its own cap |
+| live fibers | 1,024 / 16,384 / 16,385 | qualification and limit accept; excess reaches its own cap |
+| total fibers | 8,192 / 65,536 / 65,537 | qualification accepts; limit reaches its cap then hits plan bytes; excess reaches its own cap |
+| execution types | 8,192 / 65,536 / 65,537 | qualification hits the parser's 4,096-declaration cap; limit/excess are envelope-unconstructible |
+| bindings | 32,768 / 65,536 / 65,537 | all three are envelope-unconstructible |
+
+The exact plan ladder contains 2,974 / 12,166 / 48,850 genuine resets and
+2,991 / 12,183 / 48,867 maps. The 512- and 4,096-scenario plans are 496,709 and
+3,779,103 bytes. The 8,192-operation single-scenario plan is 2,955,783 bytes.
+Fiber qualification plans are 432,528 bytes at 1,024 live fibers and 3,222,659
+bytes at 8,192 total fibers; the 16,384-live limit plan is 6,553,464 bytes.
+
+Literal construction saturates before the largest fiber and operation levels,
+so those levels use the ordinary checked `repeat` form. The million-operation
+graph costs about 5.0 KiB resident per operation: measured descendant RSS was
+436 / 1,442 / 2,692 / 3,977 MiB at 65,536 / 262,144 / 524,288 / 786,432.
+Decision `0061` clause 8 therefore permits the 1,000,000-operation limit to be
+`preflight_dominated` / `not_materialized` by the smaller 65,536-operation plan
+witness; 1,000,001 is opt-in evidence at a 6,144-MiB descendant cutoff.
+
+Decision `0072` keeps declared levels even when no shipped route can construct
+them. Such a level is `envelope_unconstructible` / `not_constructed`: it carries
+the exact constructor diagnostic, no retained source or stage identity, a
+refused raw build, and paired limit-interaction and route-boundary records. The
+measured whole-route boundaries are 2,054 bindings (2,055 rejects at `/events`),
+1,043 execution types (1,044 rejects at the serialized-manifest `/` cap), and
+46,294 source-map records (46,295 rejects at `/plan`). Binding and type limit
+records are implemented; source-map qualification/limit/excess remain the next
+owned implementation in `.17.2.4.2`. `.17.4` owns the cross-layer cap-policy
+decision. Current status and user behavior live in
+`docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md` and
+`docs/book/src/16d-hial-vial-verification-architecture.md`.
+
+Exact pre-partition prose is recoverable with
+`git show 5514e692c:docs/knowledge/vial-execution-scale-reachability.md`.
+BODY
+    );
     return \%cards;
 }
 
@@ -340,6 +477,25 @@ sub classify_vhdl_answer {
     return 'package' if $answer =~ /package roots?|VHDL packages?|package declaration\/emission|\?pkg generate HDL/i;
     return 'composition' if $answer =~ /composition|generic maps?|generic actuals?|standalone-DT|generated-FSM children|external RTL|structural types?|record\/array declarations|VHDL records or arrays|list generic|record generic|package-backed generic|package constants/i;
     return 'direct';
+}
+
+sub classify_vial_answer {
+    my ($answer) = @_;
+    my %route = map { $_ => 1 } (
+        'how will VIAL execution graph scale workloads be generated?',
+        'why does VIAL execution scale need a private qualification binder?',
+        'does the public VIAL binder accept the architecture scale bridge capability?',
+        'why must VIAL operation source maps use global indexes across scenarios?',
+        'how do VIAL total-fiber and simultaneously-live-fiber gate workloads stay orthogonal?',
+        'how does the VIAL execution scale gate materialize 512 distinct types?',
+        'how does the VIAL execution gate produce exactly 8192 source maps?',
+        'how does the VIAL execution gate prove exactly 8192 random attempts and replay equality?',
+        'how does the VIAL execution gate produce an exact one MiB semantic plan?',
+        'how does the VIAL fiber oracle check a level it was not written for?',
+        'why does the VIAL direct-IAL1 route parse its source before building its bridge?',
+    );
+    return 'route' if $route{$answer};
+    return 'outcomes';
 }
 
 sub card {
@@ -398,16 +554,19 @@ sub extract_answers {
 }
 
 sub compare_answer_sets {
-    my ($label, $old, $new) = @_;
+    my ($label, $old, $new, $paths) = @_;
     my %old = map { $_ => 1 } @{$old};
     my %new = map { $_ => 1 } @{$new};
     push @problems, "$label answer lost: $_" for grep { !$new{$_} } sort keys %old;
     push @problems, "$label answer introduced: $_" for grep { !$old{$_} } sort keys %new;
     push @problems, "$label replacement duplicates answer: $_"
         for duplicate_values(map { extract_answers($_) }
-            map { $expected->{$_} } grep {
-                $label =~ /IAL2/ ? /ial2-feature/ : !/ial2-feature/
-            } sort keys %{$expected});
+            map { $expected->{$_} } @{$paths});
+}
+
+sub source_revision {
+    my ($source) = @_;
+    return $source->{revision} // $activation;
 }
 
 sub duplicate_values {
