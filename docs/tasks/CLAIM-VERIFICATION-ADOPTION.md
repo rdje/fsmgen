@@ -99,10 +99,39 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.1: gate candidate review dispositions`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Review and migrate the 72 root-document claim candidates.`
   Acceptance: `Every root-document candidate receives an exact gated disposition; current policy constants and historical/rationale measurements are distinguished, published claims gain three-leg evidence or owned gaps, and incidental structure is reclassified only with a reviewable reason.`
-  Verification: `root-group identity/count, per-disposition commands and RED controls, zero open root candidates, docs/live-document/doctrine gates`
+  Verification: `The committed inventory partitions the root group into 33 non-rationale policy/index/navigation candidates, 9 pre-bridge foundational rationale candidates, 18 bridge/execution rationale candidates, and 12 current checking-scale rationale candidates. Children .5.2.1-.5.2.4 own those disjoint sets; the parent closes only after their sum is 72 and root_documents becomes required-complete.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.2: partition root claim review`
+  Children: `CLAIM-VERIFICATION-ADOPTION.5.2.1, CLAIM-VERIFICATION-ADOPTION.5.2.2, CLAIM-VERIFICATION-ADOPTION.5.2.3, CLAIM-VERIFICATION-ADOPTION.5.2.4`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.2.1`
+  Status: `pending`
+  Goal: `Disposition the 33 non-rationale root policy, index, route, and structural candidates.`
+  Acceptance: `Every candidate outside DEVELOPMENT_NOTES.md is mapped to a real current policy/input gate, an exact archive or structural projection gate, a reviewed incidental identity/navigation reason, or a live owned repair without conflating declared policy with measured truth.`
+  Verification: `33-candidate identity; policy/input mutation and archive/projection RED controls; exact disposition join; docs/live-document/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.2.2`
+  Status: `pending`
+  Goal: `Disposition the 9 foundational rationale candidates before the bridge-scale entries.`
+  Acceptance: `The rationale-ledger, book-partition, roadmap-archive, UVM-resource, and provider-profile measurements each name their exact producer, separating oracle, and durable watcher or an explicit live repair task; immutable historical context is not mistaken for current support.`
+  Verification: `DEVELOPMENT_NOTES.md lines below 188 identity/count; exact archive/book/provider commands and RED controls; disposition join; doctrine gate`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.2.3`
+  Status: `pending`
+  Goal: `Disposition the 18 bridge and execution-scale rationale candidates.`
+  Acceptance: `The bridge-byte/source-map, scenario-map, total/live-fiber, and execution-type measurements join exact current producers and separating limit/mutation oracles or live repairs without borrowing one scale axis as proof of another.`
+  Verification: `DEVELOPMENT_NOTES.md lines 188..269 identity/count; bridge/execution gate reruns and adjacent/mutation RED controls; disposition join; doctrine gate`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.2.4`
+  Status: `pending`
+  Goal: `Disposition the 12 current checking-scale rationale candidates and close the root group.`
+  Acceptance: `The owned-shape, model, scoreboard, coverage, fault, and random-scale measurements join exact current producers and independent reconstruction/mutation oracles or live repairs; all 72 root candidates are dispositioned and root_documents becomes required-complete.`
+  Verification: `DEVELOPMENT_NOTES.md lines 270 onward identity/count; checking-scale and adjacent/mutation RED controls; zero-open root group; docs/live-document/doctrine gates`
   Commit: `pending`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.3`
@@ -170,10 +199,14 @@ hidden behind repeated checks of the same kind.
   owning slice has dispositioned every current candidate. The empty `.5.1`
   outcome registry therefore proves mechanism and reports debt; it does not
   misrepresent any of the 1,417 candidates as reviewed.
+- `2026-08-20`: Root review is split by evidence family, not file count. The
+  39 rationale-ledger candidates require three chronological semantic slices,
+  while the other eight root files plus the rationale index form one bounded
+  33-candidate policy/structure slice.
 
 ## Open Questions
 
-- None blocking. The `.5.2` root-document review is the sole next leaf.
+- None blocking. The `.5.2.1` non-rationale root review is the sole next leaf.
 
 ## Blockers
 
@@ -195,6 +228,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-20` | `.4` | claim inventory/report; `t/1637`; bootstrap; claim checker; live-document/reference authority; RAM-guarded mdBook; doctrine gate | `PASS — independent parity across 10,666 numeric lines; 1,417 owned candidates and 615 governed constants; Files=1, Tests=5; bounded canonical inventory` |
 | `2026-08-20` | `.5` partition | committed-inventory path/classification aggregation; exact five-group sum; task integrity; docs paths; doctrine gate | `PASS — 72 + 268 + 557 + 232 + 288 = 1,417 with disjoint path ownership; .5.1 selected alone` |
 | `2026-08-20` | `.5.1` | disposition checker/report; `t/1638`; inventory/constant census; bootstrap; Knowledge Map; live-document/reference authority; RAM-guarded mdBook; doctrine gate | `PASS — five exact groups, four bounded outcomes, all 1,417 debt records visibly open; Files=1, Tests=9; 628 governed constants; all registered doctrines` |
+| `2026-08-20` | `.5.2` partition | committed inventory path/line aggregation; exact four-group sum; task integrity; docs paths; doctrine gate | `PASS — 33 + 9 + 18 + 12 = 72 with disjoint path/range ownership; .5.2.1 selected alone` |
 
 ## Commit Log
 
@@ -206,3 +240,4 @@ hidden behind repeated checks of the same kind.
 | `.4` | `CLAIM-VERIFICATION-ADOPTION.4: inventory current claims and constants` | `Producer-derived current-surface census, conservative partitions, governed constants, exact migration ownership, and independent RED controls.` |
 | `.5` | `CLAIM-VERIFICATION-ADOPTION.5: partition claim migration frontier` | `Activates seven bounded children from the committed five-group candidate census; changes no claim, checker, product, or support behavior.` |
 | `.5.1` | `CLAIM-VERIFICATION-ADOPTION.5.1: gate candidate review dispositions` | `Bounded outcome/group registries, exact inventory join, live owner and path checks, completion enforcement, RED controls, and durable retrieval route.` |
+| `.5.2` | `CLAIM-VERIFICATION-ADOPTION.5.2: partition root claim review` | `Activates four evidence-coherent children from the exact root candidate census; changes no claim, disposition, policy, product, or support behavior.` |
