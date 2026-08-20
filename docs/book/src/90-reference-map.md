@@ -106,6 +106,16 @@ semantic preflight, bridge materialization, execution-plan rejection, and the
 adjacent semantic diagnostic. These exact boundary suites run through the
 ordinary generators and builders under the repository RAM guard.
 
+The first general-book review applies the same separation to core language and
+tooling prose. Parser boundaries, inferred widths, literal normalization,
+declarative state models, composition inference, expression factorization,
+hosted-test partitioning, target-language emission, and repeat lowering remain
+attached to their ordinary producers and focused behavior oracles. Syntax
+operands, boolean option values, protocol-version tokens, test bands, and linked
+test filenames remain reviewed non-claims. The LTE expected-failure count is
+also reconstructed from the active source entries independently of its catalog
+diagnostic.
+
 `MEMORY.md` is the bounded resume pointer and `TASK_TREE.md` indexes the live
 work frontier. `ROADMAP_V2.md` carries high-level direction.
 Decision 0049 retires the former roadmap-status board after its independent

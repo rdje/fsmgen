@@ -1190,6 +1190,34 @@ for my $required_id (qw(
     ok($by_id{$required_id}, "catalog keeps required entry $required_id");
 }
 
+{
+    my $lte_path = File::Spec->catfile($repo_root, 'fsm', 'lte_digital_rf.fsm');
+    open my $lte_fh, '<', $lte_path or die "cannot read $lte_path: $!";
+    my $lte_source = do { local $/; <$lte_fh> };
+    close $lte_fh or die "cannot close $lte_path: $!";
+
+    my ($iosocket_body) = $lte_source =~
+        /^\s*\(\?rtl:lte_dif_iosocket\s*\n(.*?)^\s*\)\s*$/ms;
+
+    my @iosocket_lines = defined($iosocket_body)
+        ? split(/\n/, $iosocket_body)
+        : ();
+    my @active_declarations = grep { /^\s*=/ } @iosocket_lines;
+    my @active_mappings = grep { /^\s*\// } @iosocket_lines;
+    is_deeply(
+        [scalar(@active_declarations), scalar(@active_mappings)],
+        [6, 30],
+        'LTE fixture retains six declarations and 30 mappings in the offending RTL child',
+    );
+
+    my @active_flat_references = (@active_declarations, @active_mappings);
+    is(
+        scalar(@active_flat_references),
+        36,
+        'LTE fixture independently contains 36 active flat references in the offending RTL child',
+    );
+}
+
 for my $entry (@entries) {
     ok(!$seen_ids{$entry->{id}}++, "catalog entry id '$entry->{id}' is unique");
     my $contract_key = join "\0", $entry->{relpath}, $entry->{classification}, $entry->{coverage};

@@ -143,14 +143,14 @@ hidden behind repeated checks of the same kind.
   Children: `CLAIM-VERIFICATION-ADOPTION.5.3.1, CLAIM-VERIFICATION-ADOPTION.5.3.2, CLAIM-VERIFICATION-ADOPTION.5.3.3, CLAIM-VERIFICATION-ADOPTION.5.3.4, CLAIM-VERIFICATION-ADOPTION.5.3.5`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.3.1`
-  Status: `active`
+  Status: `done`
   Goal: `Disposition the 35 core language, composition, diagnostics, extensions, and tooling candidates in Chapters 02-12.`
   Acceptance: `Every candidate on the ten selected chapter paths joins its exact current grammar/runtime/tooling producer and a separating oracle, a reviewed syntax/navigation/example reason, or an explicit repair without overstating shipped behavior.`
-  Verification: `exact 35-candidate path-set join, focused language/tooling gates and mutations, lowering-clean touched examples, inventory/disposition/mdBook/doctrine gates`
-  Commit: `pending`
+  Verification: `PASS — all 35 candidates close as 26 derived gates plus 9 reviewed syntax/example/identifier outcomes; the LTE corpus oracle independently counts 36 active child references; the RAM-guarded exact collection reports Files=22/Tests=7,487; inventory/disposition, Knowledge Map, mdBook, containment, staged-acceptance, and doctrine gates pass.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.3.1: disposition core language claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Disposition the 43 intent-scheduling, actor-interface, and transaction candidates in Chapters 13, 13a, and 13b.`
   Acceptance: `Scheduling, actor, interface, and transaction measurements retain distinct current producers and falsification controls, while syntax literals and example data are reviewed only with exact reasons.`
   Verification: `exact 43-candidate path-set join, focused intent/actor/transaction gates and mutations, lowering-clean touched examples, inventory/disposition/mdBook/doctrine gates`
@@ -277,11 +277,19 @@ hidden behind repeated checks of the same kind.
   support-matrix/backlog, and blueprint/platform/reference form five disjoint
   path sets. This keeps examples beside their owning behavior while preventing
   the reference map from masking unrelated runtime claims.
+- `2026-08-20`: Core-language claim evidence stays on the ordinary behavior
+  path: parser rejection boundaries, generated widths, literal normalization,
+  declarative state models, composition inference, factorization, hosted-test
+  partitioning, target-language emission, and repeat lowering each retain their
+  own producer and oracle. Syntax operands, boolean values, protocol versions,
+  test bands, and linked test filenames remain reviewed non-claims. The LTE
+  corpus count is reconstructed from active child entries independently of the
+  expected diagnostic pattern.
 
 ## Open Questions
 
-- None blocking. `.5.3.1` is the sole active general-book child after clean
-  root-group closure commit `3dcd9c2f1`.
+- None blocking. `.5.3.2` is the sole active general-book child after the
+  core-language/tooling disposition closure.
 
 ## Blockers
 
@@ -313,6 +321,9 @@ hidden behind repeated checks of the same kind.
 - [x] **ROOT CAUSE (WHY + WHERE)** — clean commit `3dcd9c2f1` closes `.5.2.4`, leaving the existing 268-candidate `.5.3` leaf as the next dependency-ordered frontier; one unsliced review would mix thirty chapter paths across unrelated grammar, runtime, support-accounting, backlog, and historical/reference evidence families.
 - [x] **ADDRESSED (verified)** — the committed inventory is aggregated into five disjoint path-owned children: `.5.3.1=35/10 paths`, `.5.3.2=43/3`, `.5.3.3=68/6`, `.5.3.4=71/8`, and `.5.3.5=51/3`; their exact sum is `268` over all `30` general-book paths. `.5.3.1` alone is active, and no claim or disposition changes in this continuity slice.
 - [x] **NO REGRESSION** — task integrity, Memory, inventory/disposition joins, docs-relative paths, Knowledge Map, live-document authority, diff, staged acceptance exemption, and all 12 doctrine gates pass from clean predecessor `3dcd9c2f1`.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S '36 flat RTL module references' --oneline -- docs/book/src/10-errors-strict-mode-and-troubleshooting.md` identifies `24ca8d74a`, while the committed inventory left all 35 candidates on the ten selected Chapters 02-12 paths without disposition joins. Most prose already described executable parser, lowering, emission, or CI-partition behavior, but the LTE expected-failure catalog repeated its `36` count without independently reconstructing that number from the offending source child.
+- [x] **ADDRESSED (verified)** — all 35 identities now close as 26 three-leg derived gates and nine reviewed syntax/example/identifier outcomes. `t/248-regression-corpus-accounting.t` separately extracts `lte_dif_iosocket` and counts six declarations plus 30 active mappings before accepting the catalog diagnostic. The RAM-guarded exact evidence run reports `All tests successful` at `Files=22, Tests=7487`.
+- [x] **NO REGRESSION** — the final RAM-guarded evidence rerun reports `All tests successful` at `Files=22, Tests=7487`. Inventory regenerates `1,415` candidates and `733` governed constants; the disposition join reports `105` closed overall, `35/268` in the general book, `70` gates, and `35` reviewed outcomes. Knowledge Map generation/check reports `1,127` facts / `5,902` questions / `6,069` occurrences / `130` shards; live containment covers `3,022/3,022` paths with exact `51,049`-line / `2,696,556`-byte book authority. All 53 chapters test, the rendered 88-file/18,592-KiB book contains the synchronized reference and is removed; the host-provided mdBook toolchain is the only read-only off-volume dependency. Docs, Memory, diff, staged acceptance, and all 12 doctrine gates pass.
 
 ## Verification Log
 
@@ -332,6 +343,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-20` | `.5.2.4` activation | clean `7cc733514` predecessor; exact 12-candidate line-range census; task/index/Memory continuity; task/inventory/disposition/docs/Knowledge Map/live-document/diff/staged-doctrine gates | `PASS — .5.2.4 alone active; no claim, disposition, evidence, product, capability, or support behavior changes` |
 | `2026-08-20` | `.5.2.4` | owned-shape partition; model source factorization and exact cells; scoreboard storage/order; coverage identity/order; fault lifecycle; random semantic/bridge/plan stages; inventory/disposition joins; docs/Memory/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 12 candidates closed as derived gates; root 70/70 required-complete with 44 gates / 26 reviewed; Files=6/Tests=30 exact focused run; 698 governed constants; all 53 chapters and all registered doctrines` |
 | `2026-08-20` | `.5.3` partition | committed-inventory path aggregation; exact five-child sum; task integrity; docs paths; inventory/disposition/Knowledge Map/live-document/diff/staged-doctrine gates | `PASS — 35 + 43 + 68 + 71 + 51 = 268 across 30 disjoint paths; .5.3.1 selected alone; no claim, disposition, product, capability, or support behavior changes` |
+| `2026-08-20` | `.5.3.1` | parser/width/literal/type/composition/factorization/CI/VHDL/ISF/APB evidence; independent LTE source count; inventory/disposition/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 35 candidates closed as 26 gates / 9 reviewed; general book 35/268; Files=22/Tests=7,487 exact focused run; all 53 chapters and all registered doctrines` |
 
 ## Commit Log
 
@@ -351,3 +363,4 @@ hidden behind repeated checks of the same kind.
 | `.5.2.4` activation | `CLAIM-VERIFICATION-ADOPTION.5.2.4: activate checking scale claim review` | `Activates the exact final checking-scale root range from the clean bridge/execution closure without changing claims or evidence.` |
 | `.5.2.4` | `CLAIM-VERIFICATION-ADOPTION.5.2.4: disposition checking scale claims` | `Maps all checking-scale measurements to independent generated evidence chains, strengthens model source-factorization checks, and makes the complete root group mandatory.` |
 | `.5.3` | `CLAIM-VERIFICATION-ADOPTION.5.3: partition general book claim review` | `Activates five semantic/evidence-coherent children from the exact 268-candidate general-book census; changes no claim, disposition, product, capability, or support behavior.` |
+| `.5.3.1` | `CLAIM-VERIFICATION-ADOPTION.5.3.1: disposition core language claims` | `Maps core grammar, inference, composition, tooling, extension, and lowering statements to ordinary evidence chains; preserves syntax and navigation numerals as non-claims; independently reconstructs the LTE diagnostic count.` |

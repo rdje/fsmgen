@@ -13,6 +13,7 @@ answers:
   - "why do total fibers live fibers and execution types use separate evidence?"
   - "how are checking-scale model scoreboard coverage and fault claims separated?"
   - "how does random replay distinguish semantic bridge and plan boundaries?"
+  - "how are core language and tooling book claims separated from syntax and navigation numerals?"
 date: 2026-08-20
 status: current
 tags: [claim-verification, dispositions, inventory, evidence]
@@ -61,3 +62,13 @@ order, and lifecycle identities with targeted mutations. The random-replay
 oracle distinguishes semantic preflight, bridge materialization, plan
 rejection, and the adjacent semantic diagnostic. Exact guarded runs close the
 root group, whose registry is now required-complete.
+
+The first general-book review keeps compact language examples from becoming
+accidental measurements. Grammar rejections, inferred widths, literal
+normalization, declarative state models, composition inference, expression
+factorization, hosted-test partitioning, target-language emission, and repeat
+lowering use their ordinary tracked producers and focused behavior oracles.
+Syntax operands, boolean option values, protocol-version tokens, test bands,
+and linked test filenames are reviewed as non-claims. The LTE expected-failure
+count has an additional source-derived control that counts the active child
+entries independently of the catalog's diagnostic pattern.
