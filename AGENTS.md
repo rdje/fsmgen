@@ -4,8 +4,8 @@ This is the tool-neutral entrypoint (the common `AGENTS.md` convention). Other
 harnesses' bootstrap files (`CLAUDE.md`, `.cursorrules`,
 `.github/copilot-instructions.md`, `GEMINI.md`, `.windsurfrules`) point back here.
 The system of record is **`README.md`** + **`MEMORY_ARCHITECTURE.md`** +
-**`LIVE_DOCUMENT_SIZE_CONTAINMENT.md`** + **`DOCTRINE_ENFORCEMENT.md`** +
-**`TOOLBOX.md`**.
+**`LIVE_DOCUMENT_SIZE_CONTAINMENT.md`** + **`CLAIM_VERIFICATION.md`** +
+**`DOCTRINE_ENFORCEMENT.md`** + **`TOOLBOX.md`**.
 
 ## On every session start / resume
 
@@ -13,9 +13,10 @@ The system of record is **`README.md`** + **`MEMORY_ARCHITECTURE.md`** +
 2. Read **`MEMORY_ARCHITECTURE.md`** — how memory + continuity work here (MANDATORY;
    it is enforced — see below).
 3. Read **`LIVE_DOCUMENT_SIZE_CONTAINMENT.md`**,
-   **`DOCTRINE_ENFORCEMENT.md`**, and **`TOOLBOX.md`** — how live documentation
-   stays bounded, how repository doctrines are mechanically checked, and which
-   FSMGEN tools to use first for issue diagnosis.
+   **`CLAIM_VERIFICATION.md`**, **`DOCTRINE_ENFORCEMENT.md`**, and
+   **`TOOLBOX.md`** — how live documentation stays bounded, how quantitative
+   claims are earned, how repository doctrines are mechanically checked, and
+   which FSMGEN tools to use first for issue diagnosis.
 4. Resume from **`MEMORY.md`** — the bounded resume pointer: latest commit, the active
    task-tree frontier, the single next action, any in-flight uncommitted work.
 5. Open the active **task-tree** under `docs/tasks/` (index: `docs/TASK_TREE.md`); its
@@ -37,6 +38,9 @@ The system of record is **`README.md`** + **`MEMORY_ARCHITECTURE.md`** +
 - **Every staged implementation slice must pass `TASK_ACCEPTANCE.md`** — add
   fresh checked ROOT CAUSE, ADDRESSED, and NO REGRESSION boxes to one owning
   task file, with box-scoped declared evidence, then run the staged-index gate.
+- **Every actionable quantitative claim must follow `CLAIM_VERIFICATION.md`** —
+  name distinct re-derivation, falsification, and durability legs; name a
+  missing leg explicitly instead of hiding it.
 - **Route every durable thing to a layer and commit before the turn ends** — task-trees
   (`docs/tasks/`, layer B) / decision records (`docs/decisions/`, layer C) / the bounded
   `MEMORY.md` pointer (layer A, overwrite-only, capped) / git history (layer D). Nothing

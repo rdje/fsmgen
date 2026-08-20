@@ -63,11 +63,11 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.1: select three-leg claim evidence`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Install the project-owned standard and wire stable discovery surfaces.`
   Acceptance: `The root standard has a fenced FSMGen adoption note; AGENTS, README, doctrine architecture, commit guidance, and the book reference map point to the canonical copy without duplicating its body; containment owns every new live path.`
-  Verification: `focused link/bootstrap/containment checks plus doctrine gate`
-  Commit: `pending`
+  Verification: `PASS — neutral-body SHA-256 identity; bootstrap syntax/invariants; README routing; live-document/reference authority; docs-relative-path tests; mdBook build; doctrine gate`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.2: install the authoritative claim standard`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.3`
   Status: `pending`
@@ -121,18 +121,20 @@ hidden behind repeated checks of the same kind.
 
 ## Acceptance Checklist (enforced for implementation changes)
 
-- [ ] **ROOT CAUSE (WHY + WHERE)** — `pending for the first implementation-bearing leaf .3`
-- [ ] **ADDRESSED (verified)** — `pending for the first implementation-bearing leaf .3`
-- [ ] **NO REGRESSION** — `pending for the first implementation-bearing leaf .3`
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -SCLAIM_VERIFICATION.md --oneline -- scripts/check_doctrine_bootstrap.sh` returned no prior hit: the bootstrap required-doc and pointer checks had no claim-verification policy to require.
+- [x] **ADDRESSED (verified)** — `tail -n +26 CLAIM_VERIFICATION.md | sha256sum` reproduced `8f194574ec718749e90a402cf6e4dc6650e44f6185dd194853a54482eef68643`; `scripts/check_doctrine_bootstrap.sh` required the policy and verified every stable pointer surface; `scripts/check_readme_entrypoint.sh` kept README under both pinned ceilings.
+- [x] **NO REGRESSION** — `scripts/check_doctrines.sh` reported `[doctrine] all doctrine checks passed`; the RAM-guarded `mdbook build docs/book` completed and wrote the HTML book inside the repository.
 
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-08-20` | `.1` | `scripts/check_task_tree_integrity.pl`; `scripts/check_docs_relative_paths.sh`; `git diff --check` | `PASS — 4 active trees / 954 nodes; 1 docs-relative-path file / 2 tests; clean diff whitespace` |
+| `2026-08-20` | `.2` | neutral-body digest; bootstrap; README/live-document/reference authority; docs paths; RAM-guarded mdBook; doctrine gate | `PASS — authoritative body identity reproduced; discovery and bounded routes closed; book built` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `.1` | `CLAIM-VERIFICATION-ADOPTION.1: select three-leg claim evidence` | `Decision and executable adoption sequence only; no policy or product behavior change.` |
+| `.2` | `CLAIM-VERIFICATION-ADOPTION.2: install the authoritative claim standard` | `Project-owned standard plus bounded discovery and book reference; no product behavior change.` |

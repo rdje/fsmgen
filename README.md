@@ -131,7 +131,7 @@ useful:
 | Typed extension boundary | [docs/EXTENSION_MODEL.md](docs/EXTENSION_MODEL.md) |
 | Supported sample corpus | [docs/REGRESSION_CORPUS.md](docs/REGRESSION_CORPUS.md) |
 | Live CLI import architecture | [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) |
-| Code-change acceptance discipline | [TASK_ACCEPTANCE.md](TASK_ACCEPTANCE.md) |
+| Change/claim evidence | [TASK_ACCEPTANCE.md](TASK_ACCEPTANCE.md), [CLAIM_VERIFICATION.md](CLAIM_VERIFICATION.md) |
 
 Complete generated classification: [focused/ancillary document index](docs/index/FOCUSED_DOCUMENTS.md).
 

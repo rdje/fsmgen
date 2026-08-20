@@ -44,6 +44,7 @@ Some docs are intentionally still focused references:
 - [../../../ROADMAP_V2.md](../../../ROADMAP_V2.md)
 - [../../../README_POLICY.md](../../../README_POLICY.md)
 - [../../../LIVE_DOCUMENT_SIZE_CONTAINMENT.md](../../../LIVE_DOCUMENT_SIZE_CONTAINMENT.md)
+- [../../../CLAIM_VERIFICATION.md](../../../CLAIM_VERIFICATION.md)
 - [Live-Document Containment Adoption](91-live-document-containment-adoption.md)
 - [../../LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md](../../LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md)
 - [../../audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.md](../../audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.md)
@@ -52,6 +53,13 @@ Some docs are intentionally still focused references:
 - [../../../COMMIT.md](../../../COMMIT.md)
 
 These should stay precise and sometimes narrower than the book.
+
+`CLAIM_VERIFICATION.md` defines what earns an actionable quantitative claim:
+re-derive it from its source, attempt to falsify it with a separating oracle,
+and keep a tracked producer plus a watcher that detects staleness. A missing
+leg is published explicitly rather than hidden behind repeated checks of the
+same kind. Decision `0074` owns FSMGen's local adoption and honest enforcement
+boundary.
 
 `MEMORY.md` is the bounded resume pointer and `TASK_TREE.md` indexes the live
 work frontier. `ROADMAP_V2.md` carries high-level direction.

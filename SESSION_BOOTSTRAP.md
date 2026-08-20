@@ -35,6 +35,7 @@ For a normal new session, the agent should:
 1. Read [README.md](README.md).
 2. Read [COMMIT.md](COMMIT.md) early and adopt it as a non-negotiable session rule.
 3. Read [MEMORY_ARCHITECTURE.md](MEMORY_ARCHITECTURE.md),
+   [CLAIM_VERIFICATION.md](CLAIM_VERIFICATION.md),
    [DOCTRINE_ENFORCEMENT.md](DOCTRINE_ENFORCEMENT.md),
    [TOOLBOX.md](TOOLBOX.md), and resume from [MEMORY.md](MEMORY.md).
 4. Read [docs/TASK_TREE.md](docs/TASK_TREE.md) and the active task files it

@@ -14,6 +14,9 @@ Ignoring it is not a style issue; it is a project-safety failure.
 - Every matching implementation change must satisfy `TASK_ACCEPTANCE.md` in
   the owning staged task file: fresh checked ROOT CAUSE, ADDRESSED, and NO
   REGRESSION boxes with the required box-scoped project-declared evidence.
+- Every actionable quantitative claim published by the slice must satisfy
+  `CLAIM_VERIFICATION.md`: name distinct re-derivation, falsification, and
+  durability legs, or state a missing leg explicitly.
 - Run this workflow after every completed task, slice, lane, or task-scoped activity without exception.
 - Do not let a long `pnt` streak, apparent momentum, or "just one more small thing" override this rule.
 - Do not expect the user to remind you. The workflow must be followed automatically.

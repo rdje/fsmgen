@@ -16,6 +16,7 @@ required_docs=(
   COMMIT.md
   MEMORY_ARCHITECTURE.md
   LIVE_DOCUMENT_SIZE_CONTAINMENT.md
+  CLAIM_VERIFICATION.md
   DOCTRINE_ENFORCEMENT.md
   TASK_ACCEPTANCE.md
   TOOLBOX.md
@@ -50,6 +51,14 @@ for file in AGENTS.md COMMIT.md DOCTRINE_ENFORCEMENT.md TOOLBOX.md; do
     ok "${file} points at TASK_ACCEPTANCE.md"
   else
     note "${file} does not point at TASK_ACCEPTANCE.md"
+  fi
+done
+
+for file in AGENTS.md COMMIT.md DOCTRINE_ENFORCEMENT.md TOOLBOX.md; do
+  if grep -q 'CLAIM_VERIFICATION.md' "${file}"; then
+    ok "${file} points at CLAIM_VERIFICATION.md"
+  else
+    note "${file} does not point at CLAIM_VERIFICATION.md"
   fi
 done
 

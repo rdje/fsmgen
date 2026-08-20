@@ -46,7 +46,7 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `CLAIM-VERIFICATION-ADOPTION` | `active` | `infra/evidence governance` | `.1` done; `.2` installs the locally authoritative standard and discovery routes | [task](docs/tasks/CLAIM-VERIFICATION-ADOPTION.md) |
+| `CLAIM-VERIFICATION-ADOPTION` | `active` | `infra/evidence governance` | `.2` done; `.3` implements and registers the bounded claim-record checker | [task](docs/tasks/CLAIM-VERIFICATION-ADOPTION.md) |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.28` done; proposed `.29` owns node-field narration accretion | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.17.2.5` done; proposed `.17.2.6` owns backend-emission generation next | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 completeness` | `.844` terminal | [task](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |

@@ -69,6 +69,7 @@ signature instead of pasting unrelated evidence or weakening the checklist.
 | Need doctrine/memory gate truth | `scripts/check_doctrines.sh`. |
 | Need authoritative active task-tree structure or sealed-history truth | `scripts/check_task_tree_integrity.pl`. |
 | Need code-slice evidence acceptance | Stage the intended slice, then run `scripts/check_task_acceptance.sh`. |
+| Need to publish an actionable quantitative claim | Use `CLAIM_VERIFICATION.md`: re-derive it, test a separating falsification oracle, and name the tracked producer/watcher or the missing durability leg. |
 | Need diff hygiene before commit | `git --no-pager diff --check` and `git status --short`. |
 | Need a downstream repro bundle | `./bin/fsmgen-issue-bundle --case PATH --issue-id ID -- [FSMGEN_OPTIONS...]`. |
 

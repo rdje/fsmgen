@@ -15,7 +15,7 @@ not enforced.
 
 ## Relationship To The Existing Systems
 
-Doctrine enforcement sits beside the three continuity systems already used by
+Doctrine enforcement sits beside the four continuity/evidence systems already used by
 FSMGEN:
 
 | System | Owns |
@@ -23,11 +23,21 @@ FSMGEN:
 | Task-trees | Per-work-unit ownership, frontier, acceptance, verification, and commit evidence. |
 | Memory architecture | Durable four-layer resume and decision memory. |
 | Knowledge Map | Question-to-fact retrieval over dated fact cards. |
+| Claim verification | Re-derivation, falsification, and durability evidence before an actionable quantitative claim is published. |
 | Doctrine enforcement | Registry-driven mechanical checks for rules that must not drift. |
 
 The existing memory and Knowledge Map gates are now doctrine checks registered
 under the general driver. This does not weaken their meaning; it gives them one
 shared enforcement entrypoint.
+
+`CLAIM_VERIFICATION.md` is the locally authoritative evidence standard selected
+by decision `0074`. It asks whether a quantitative claim is earned before a
+gate or reader acts on it; this doctrine asks whether the mechanically decidable
+parts of that standard execute. Adoption leaf
+`CLAIM-VERIFICATION-ADOPTION.3` owns the bounded claim-record checker and
+registry entry. Until that leaf lands, the written publication contract is
+normative but not yet mechanically enforced, and this document does not call it
+an active doctrine check.
 
 `LIVE_DOCUMENT_SIZE_CONTAINMENT.md` is the selected project-neutral,
 project-agnostic, and harness-neutral lifecycle doctrine for every live
