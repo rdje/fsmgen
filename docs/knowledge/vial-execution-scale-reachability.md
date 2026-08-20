@@ -356,6 +356,11 @@ measured alternative is 2,054 accepted and 2,055 rejected by `events count 2049
 exceeds limit 2048` at `/events`, proved opt-in because it builds two real
 canonical bridges.
 
+Type limit/over now use this result: 65,536/65,537 declarations produce
+2,413,815/2,413,852-byte HIAL and 8,246,830/8,246,956-byte VIAL. Both return exact
+envelope error with no source, identity, or build, paired with the measured
+1,043/1,044 boundary against declared 65,536 cap.
+
 The nominal execution limits are not all reachable. Scenarios, simultaneously
 live fibers, and total fibers reach their exact 4,096, 16,384, and 65,536
 structural limits, and all three are now proved rather than predicted — though

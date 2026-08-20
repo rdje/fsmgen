@@ -20,8 +20,11 @@ my $json = JSON::PP->new->canonical(1)->utf8(1);
 my $reference_hial = slurp_raw(repo_path('ppif/ahb_lite_subordinate.ppif'));
 my $vial_source =
     'generated/vial-scale/execution_graph/vial_architecture_scale.vial';
+my $envelope = 1_114_112;
 my $declaration_cap = 4_096;
 my $manifest_cap = 16_777_216;
+my $declared_cap = 65_536;
+my %boundary = (accepted => 1_043, rejected => 1_044);
 
 my %expected = (
     types => 8_192,
@@ -53,6 +56,24 @@ my $semantic_diagnostic = {
     notes => [],
 };
 my $repair_owner = 'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4';
+my %unconstructible_level = (
+    limit_v1 => {
+        types => 65_536,
+        hial_bytes => 2_413_815,
+        vial_bytes => 8_246_830,
+    },
+    over_limit_v1 => {
+        types => 65_537,
+        hial_bytes => 2_413_852,
+        vial_bytes => 8_246_956,
+    },
+);
+my $envelope_diagnostic = {
+    code => 'VIAL_SCALE_INPUT_ERROR',
+    severity => 'error',
+    message => 'input 0 exceeds the bounded construction envelope',
+    path => '/inputs/0/content',
+};
 
 sub construction {
     return $class->construct({
@@ -151,6 +172,106 @@ subtest 'evaluation records an unreachable qualification level' => sub {
         'the interaction names the manifest cap that bounds the route');
     like($discrepancy->{message}, qr/\b1043\b/,
         'the interaction names the measured route boundary');
+};
+
+subtest 'the two highest type levels exceed the construction envelope exactly' => sub {
+    for my $name (sort keys %unconstructible_level) {
+        my $case = $unconstructible_level{$name};
+        my ($hial, $vial) = $class->_test_render_type_sources($case->{types});
+        is(bytes::length($hial), $case->{hial_bytes},
+            "$name generates its exact direct-IAL1 byte count");
+        is(bytes::length($vial), $case->{vial_bytes},
+            "$name generates its exact VIAL byte count");
+        cmp_ok(bytes::length($hial), '>', $envelope,
+            "$name direct-IAL1 source exceeds the bounded construction envelope");
+        is(scalar(() = $hial =~ /\(input typed_[0-9]{8} /g), $case->{types},
+            "$name authors one genuine HIAL input per execution type");
+        is(scalar(() = $vial =~ /\(type width_[0-9]{8}_t /g), $case->{types},
+            "$name authors one genuine VIAL declaration per execution type");
+        is(scalar(() = $vial =~ /\(endpoint typed_[0-9]{8} /g), $case->{types},
+            "$name binds every authored type to one genuine endpoint");
+    }
+
+    # Types and endpoints are declarations. Neither public grammar has an
+    # action-style repetition form for them, so this linear source growth is
+    # the only shipped authoring shape rather than an avoidable fixture choice.
+    my ($small) = $class->_test_render_type_sources(512);
+    my ($large) = $class->_test_render_type_sources(1_024);
+    is(bytes::length($large) - bytes::length($small), 17_945,
+        'direct-IAL1 type source has exact linear growth and no compact declaration form');
+};
+
+subtest 'the two highest type levels retain their exact envelope rejection' => sub {
+    for my $name (sort keys %unconstructible_level) {
+        my $case = $unconstructible_level{$name};
+        my $first = $class->construct({
+            primary_axis => 'execution_types',
+            level => $name,
+        });
+        my $second = $class->construct({
+            primary_axis => 'execution_types',
+            level => $name,
+        });
+        ok(!$first->{ok}, "$name construction is rejected");
+        is($json->encode($second), $json->encode($first),
+            "$name construction rejects identically on an independent run");
+        is_deeply($first->{diagnostics}, [$envelope_diagnostic],
+            "$name returns the one exact bounded-envelope diagnostic");
+        is($first->{specification}{requested_counts}{execution_types},
+            $case->{types}, "$name retains its exact requested type count");
+        is($first->{workload_identity}, undef,
+            "$name claims no workload identity for unadmitted source");
+        is_deeply($first->{inputs}, [],
+            "$name retains no oversized source in its returned record");
+
+        my $evaluation = $class->evaluate({construction => $first});
+        ok($evaluation->{ok}, "$name evaluation satisfies every closed oracle");
+        is($evaluation->{status}, 'envelope_unconstructible',
+            "$name is reported as unconstructible, not as a product rejection");
+        is($evaluation->{observed_outcome}, 'not_constructed',
+            "$name never claims an observed product outcome");
+        is_deeply($evaluation->{metrics}, {}, "$name reports no measurement");
+        is_deeply(
+            [$evaluation->{semantic_ir_sha256},
+                $evaluation->{bridge_manifest_sha256},
+                $evaluation->{plan_sha256}, $evaluation->{workload_identity}],
+            [undef, undef, undef, undef],
+            "$name claims no stage identity",
+        );
+
+        my @codes = map { $_->{code} } @{$evaluation->{contract_discrepancies}};
+        is_deeply(\@codes,
+            ['VIAL_SCALE_LIMIT_INTERACTION', 'VIAL_SCALE_ROUTE_BOUNDARY'],
+            "$name records both the fixture decider and measured route boundary");
+        is_deeply([map { $_->{path} } @{$evaluation->{contract_discrepancies}}],
+            [('/requested_counts/execution_types') x 2],
+            "$name names its own axis twice");
+        is_deeply(
+            [map { $_->{repair_owner} } @{$evaluation->{contract_discrepancies}}],
+            [($repair_owner) x 2], "$name routes both records to .17.4");
+        like($evaluation->{contract_discrepancies}[0]{message}, qr/\b$envelope\b/,
+            "$name names the fixture envelope that decides");
+        like($evaluation->{contract_discrepancies}[0]{message},
+            qr/fixture bound and not a product limit/,
+            "$name distinguishes the fixture bound from a product limit");
+        like($evaluation->{contract_discrepancies}[1]{message},
+            qr/accepts $boundary{accepted} and rejects $boundary{rejected}/,
+            "$name names the measured whole-route boundary");
+        like($evaluation->{contract_discrepancies}[1]{message},
+            qr/declared $declared_cap execution cap/,
+            "$name names the declared cap it was selected from");
+    }
+
+    my $built = eval {
+        $class->build({construction => $class->construct({
+            primary_axis => 'execution_types',
+            level => 'limit_v1',
+        })});
+        1;
+    };
+    ok(!$built, 'the raw builder refuses a type level with no admitted source');
+    like($@, qr/unconstructible level has no admitted source to build/,
+        'the refusal names the absent source, not a product resource failure');
 };
 
 subtest 'the execution-type ladder still fails closed on mutation and unowned shapes' => sub {
@@ -255,6 +376,11 @@ sub clone_json {
 }
 
 package FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+sub _test_render_type_sources {
+    my ($class, $type_count) = @_;
+    return (_render_type_hial($type_count), _render_type_vial($type_count));
+}
 
 # The route boundary lies between two catalog levels, so it is proved through
 # the same renderer and canonical bridge the owned levels use rather than

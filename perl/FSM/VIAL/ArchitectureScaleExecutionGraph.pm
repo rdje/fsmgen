@@ -159,6 +159,17 @@ my %UNCONSTRUCTIBLE = (
             path => '/events',
         },
     },
+    execution_types => {
+        levels => [qw(limit_v1 over_limit_v1)],
+        envelope_input_index => 0,
+        declared_cap => 65_536,
+        route_boundary => {
+            accepted => 1_043,
+            rejected => 1_044,
+            cap => 'the 16777216-byte serialized bridge-manifest cap',
+            path => '/',
+        },
+    },
 );
 
 sub _unconstructible($axis, $level) {
@@ -289,7 +300,8 @@ my %OWNED_LEVELS = (
         [qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)],
     simultaneously_live_fibers =>
         [qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)],
-    execution_types => [qw(gate_candidate_v1 qualification_candidate_v1)],
+    execution_types =>
+        [qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)],
     source_map_records => [qw(gate_candidate_v1)],
     random_attempts =>
         [qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)],

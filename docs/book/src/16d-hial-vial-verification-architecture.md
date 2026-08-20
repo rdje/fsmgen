@@ -3047,6 +3047,47 @@ capability. Independent construction freezes the generated HIAL/VIAL,
 SemanticIR, bridge, and plan identities. A mutated source, caller-injected
 HIAL, or unfinished level fails closed.
 
+The two highest execution-type levels now close under decision `0072` without
+pretending that the fixture envelope is a product limit. Each type requires one
+real direct-IAL1 input, one real VIAL type declaration, and one bound endpoint;
+neither public grammar has a declaration-repetition form. The generated HIAL
+therefore crosses the workload's 1,114,112-byte per-input envelope first:
+
+| Level | Types | HIAL bytes | VIAL bytes | Outcome |
+| --- | ---: | ---: | ---: | --- |
+| limit | 65,536 | 2,413,815 | 8,246,830 | `envelope_unconstructible` |
+| over limit | 65,537 | 2,413,852 | 8,246,956 | `envelope_unconstructible` |
+
+Both constructions return only the exact `VIAL_SCALE_INPUT_ERROR`,
+`input 0 exceeds the bounded construction envelope`, at `/inputs/0/content`.
+They retain no oversized source, claim no workload, SemanticIR, bridge, or plan
+identity, and the raw builder refuses them. Evaluation reports observed outcome
+`not_constructed` and carries the two records decision `0072` requires: the
+fixture-bound `VIAL_SCALE_LIMIT_INTERACTION` and the measured
+`VIAL_SCALE_ROUTE_BOUNDARY`. The latter states that the whole canonical route
+accepts 1,043 types and rejects 1,044 at the 16-MiB serialized bridge-manifest
+cap, against the unchanged declared execution cap of 65,536.
+
+```perl
+use FSM::VIAL::ArchitectureScaleExecutionGraph;
+
+my $workload = FSM::VIAL::ArchitectureScaleExecutionGraph->construct({
+    primary_axis => 'execution_types',
+    level => 'limit_v1',
+});
+my $evaluation = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+    construction => $workload,
+});
+die "unexpected execution-type limit outcome\n"
+    unless $evaluation->{ok}
+        && $evaluation->{status} eq 'envelope_unconstructible'
+        && $evaluation->{observed_outcome} eq 'not_constructed'
+        && $evaluation->{contract_discrepancies}[1]{code}
+            eq 'VIAL_SCALE_ROUTE_BOUNDARY';
+```
+
+These are construction and reachability facts, not a supported capacity claim.
+
 The source-map gate returns to the frozen checked-AHB route. That binding has
 exactly 17 fixed maps: one domain, three public endpoint relations, one probe
 relation, six transaction-field relations, and six event bindings. The gate
