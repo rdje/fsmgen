@@ -3525,28 +3525,28 @@ instead of rewriting a level around whatever happens to pass:
 | faults | 32 / 1,024 / 4,096 | 4,097 at `/faults` |
 | random occurrences | 1,024 | 32,768 and 65,536 hit plan bytes; 65,537 hits its count cap |
 
-The coverpoint route accepts 9,524 declarations in 1,048,467 source bytes and
-rejects 9,525 at the parser cap; selected larger sources are recorded as
-`envelope_unconstructible`. Compact random source parses through 65,537, while
-the plan accepts 8,440 occurrences at 16,775,415 bytes and rejects 8,441.
+The implemented coverpoint renderer emits exactly 110 bytes per declaration plus
+827 fixed bytes. It accepts 9,524 declarations in 1,048,467 source bytes and rejects 9,525 at the parser cap; selected 65,536/65,537 sources report
+`envelope_unconstructible` with that product boundary recorded separately.
 
-VIAL v1 crosses use the Cartesian product of explicitly authored point bins;
-no backend may invent a bin or tuple. Two 999-bin Boolean points, their
-998,001-tuple cross, and one independent bin reach exactly 1,000,000 entries;
-one more bin returns the exact `/coverage` rejection.
+VIAL v1 crosses use only the Cartesian product of explicitly authored point
+bins. The compact recipe puts 999 matching bins on each of two points, authors
+their 998,001-tuple cross, and adds one independent bin: exactly
+1,000,000 entries in 62,841 bytes. One 29-byte bin more returns only the exact
+`/coverage` rejection at 62,870 bytes; no backend invents a bin or tuple.
 
-Accepted levels execute state through caller-sealed canonical SemanticIR and
-ExecutionIR. The provider-free evaluator uses a 4,000,000-byte payload FIFO for
-one million scoreboard entries and a 125,000-byte vector for one million
-coverage entries; it also updates every model cell, exercises every scoreboard
-instance, proves fault restoration, and compares random generation with replay.
+Accepted model, scoreboard, and coverage levels execute state through caller-
+sealed canonical SemanticIR and ExecutionIR. The provider-free evaluator uses
+a 4,000,000-byte FIFO for one million scoreboard entries and a 125,000-byte LSB-first vector for one million coverage entries. One coverage sample hits the
+entire authored domain; its vector digest is `ae450c20…`, and an independent
+ordered-domain reconstruction has digest `696d5310…`. Illegal, ignore, bit, and order mutations fail closed. Fault and random/replay checking remain separate.
 
 Public runtime traces, `ResultProducer`, and the first portable SystemVerilog
 backend remain excluded as scale oracles: they project or implement a narrower
 profile and do not independently recompute the general state semantics above.
-Implementation is separately owned under `.17.2.5.2`. Its completed model and
-scoreboard slices publish exactly sixteen owned levels: four non-reference
-levels on each model, scalar-state, scoreboard, and capacity axis:
+Implementation is separately owned under `.17.2.5.2`. Its completed model,
+scoreboard, and coverage slices publish exactly 24 owned levels: four non-
+reference levels on each of six axes:
 
 ```perl
 use strict;
@@ -3555,11 +3555,11 @@ use lib 'perl';
 use FSM::VIAL::ArchitectureScaleCheckingState;
 
 my $owned = FSM::VIAL::ArchitectureScaleCheckingState->owned_shapes;
-die "checking ladder ownership changed\n" unless @$owned == 16;
+die "checking ladder ownership changed\n" unless @$owned == 24;
 die "another axis landed early\n"
-    if grep { $_->{primary_axis} !~ /\A(?:model_instances|scalar_model_state_cells|scoreboard_instances|scoreboard_capacity)\z/ }
+    if grep { $_->{primary_axis} !~ /\A(?:bins_and_cross_tuples|coverpoints|model_instances|scalar_model_state_cells|scoreboard_instances|scoreboard_capacity)\z/ }
         @$owned;
-print "model and scoreboard ladders own 16 levels\n";
+print "model, scoreboard, and coverage ladders own 24 levels\n";
 ```
 
 `construct` rejects `reference_v1` because it remains a catalog record, rejects
@@ -3588,7 +3588,7 @@ containing 16, 1,024, or 2,048 cells. That factorization reaches exactly 512,
 | scoreboard instances | 32 / 1,024 / 4,096 | 6,404 / 168,100 / 668,836 | accepted and FIFO-checked; 4,097 rejects at `/scoreboards` in 668,999 bytes |
 | scoreboard capacity | 4,096 / 262,144 / 1,000,000 | 1,351 / 1,353 / 1,354 | accepted and FIFO-checked; 1,000,001 rejects at the semantic bound in 1,354 bytes |
 
-Every source stays below the 1,114,112-byte construction envelope. For an
+Every admitted model/scoreboard source stays below the construction envelope. For an
 accepted level, the provider-free oracle reads the event binding and complete
 rule from canonical ExecutionIR, requires the exact known u8 `0 + 1` shape,
 and synthesizes one ordered `accepted` occurrence per instance. It initializes,
@@ -3637,9 +3637,9 @@ report says `accepted_not_axis_evaluated`, sets both `axis_oracle_executed` and
 `selected_count_claimed` false, and carries no axis evidence. Those observations
 therefore cannot be mistaken for the requested 32-model gate.
 
-The closed report populates model or scoreboard evidence only for the
-corresponding accepted levels and reserves `coverage`, `faults`, and
-`random_replay` compartments for later semantic leaves. Its packed
+The closed report populates model, scoreboard, or coverage evidence only for
+the corresponding accepted levels and reserves `faults` and `random_replay`
+for later semantic leaves. Its packed
 contract fixes big-endian fixed-width model values with unknown-state rejection,
 a big-endian 32-bit FIFO payload capped at 1,000,000 entries/4,000,000 bytes with
 complete transaction reconstruction, and an LSB-first coverage vector capped at
@@ -3652,9 +3652,9 @@ foundation keeps its `rerun/ceefc4f30…` identity, while each generated model
 level has its own content address. Construction and evaluation mutations are
 rejected by canonical regeneration. Success and injected consumer failure stage
 only below repository-derived `.artifacts/tmp/vial-scale/` on the repository
-volume and remove the exact content-addressed directory. Coverage is the active
-next separately owned slice; fault, random/replay, and final qualification
-remain later. These fixtures change no parser, SemanticIR, bridge,
+volume and remove the exact content-addressed directory. Focused `t/1632`
+proves default and RAM-guarded coverage routes; fault is the next separately
+owned slice, followed by random/replay and final qualification. These fixtures change no parser, SemanticIR, bridge,
 ExecutionIR, backend, runtime, public product API, capability, support,
 performance, or capacity behavior.
 

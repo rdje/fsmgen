@@ -50,6 +50,7 @@ my @EVALUATION_KEYS = qw(
     workload_identity family level primary_axis requested_counts
     observed_outcome stage_identities metrics packed_state_contract
     outcome_contract oracle_evidence claims explicit_nonclaims diagnostics
+    contract_discrepancies
 );
 my @STAGE_IDENTITY_KEYS = qw(
     semantic_ir_sha256 bridge_manifest_sha256 execution_ir_sha256 plan_sha256
@@ -109,6 +110,39 @@ my @SCOREBOARD_EVIDENCE_KEYS = qw(
 );
 my $SCOREBOARD_EVIDENCE_SCHEMA =
     'fsmgen.vial_architecture_scale_scoreboard_oracle_evidence.v1';
+my @COVERAGE_EVIDENCE_KEYS = qw(
+    schema schema_version program axis coverpoints authored_bins
+    authored_crosses static_cross_tuples static_domain_entries sample_count
+    sampled_value_hex packed_vector_bytes packed_vector_sha256
+    expected_vector_sha256 static_domain_sha256 expected_static_domain_sha256
+    first_coverpoint_id last_coverpoint_id first_bin_id last_bin_id
+    first_cross_id last_cross_id normal_bin_hits cross_tuple_hits
+    illegal_bin_hits ignore_bin_hits hit_entries byte_equal_expected
+    static_domain_order_preserved all_authored_bins_matched
+    all_static_cross_tuples_hit illegal_match_rejected ignore_match_excluded
+    mutation_rejected order_mutation_rejected no_undeclared_domain_entries
+);
+my $COVERAGE_EVIDENCE_SCHEMA =
+    'fsmgen.vial_architecture_scale_coverage_oracle_evidence.v1';
+my @CONTRACT_DISCREPANCY_KEYS = qw(code message path repair_owner);
+my $CONSTRUCTION_ENVELOPE_BYTES = 1_114_112;
+my $LIMIT_POLICY_REPAIR_OWNER =
+    'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4';
+my %UNCONSTRUCTIBLE = (
+    coverpoints => {
+        levels => [qw(limit_v1 over_limit_v1)],
+        envelope_input_index => 1,
+        declared_cap => 65_536,
+        route_boundary => {
+            accepted => 9_524,
+            accepted_source_bytes => 1_048_467,
+            rejected => 9_525,
+            rejected_source_bytes => 1_048_577,
+            cap => 'the 1048576-byte VIAL parser cap',
+            path => '/',
+        },
+    },
+);
 
 my %OWNED_LEVELS = (
     model_instances => [qw(
@@ -121,6 +155,12 @@ my %OWNED_LEVELS = (
         gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1
     )],
     scoreboard_capacity => [qw(
+        gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1
+    )],
+    coverpoints => [qw(
+        gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1
+    )],
+    bins_and_cross_tuples => [qw(
         gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1
     )],
 );
@@ -195,6 +235,15 @@ sub _construct_candidate_internal(@args) {
             _input($VIAL_SOURCE, 'vial_source', $raw->{vial_source_text}),
         ],
     });
+    if (_unconstructible($axis, $level)) {
+        confess "an unconstructible checking-state level was accepted by the workload contract\n"
+            if $constructed->{ok};
+        my $canonical = JSON::PP->new->canonical(1)->allow_nonref(1);
+        confess "an unconstructible checking-state level did not return its exact envelope diagnostic\n"
+            unless $canonical->encode($constructed->{diagnostics})
+                eq $canonical->encode([_envelope_diagnostic($axis)]);
+        return _unconstructible_construction($constructed, $axis, $level);
+    }
     confess "checking-state candidate source did not fit the construction contract\n"
         unless $constructed->{ok};
     return $constructed;
@@ -205,7 +254,11 @@ sub build($class, @args) {
     confess __PACKAGE__ . "->build expects one closed hash\n"
         unless @args == 1 && ref($args[0]) eq 'HASH' && !blessed($args[0]);
     _confess_exact_keys($args[0], \@EVALUATE_KEYS, 'checking-state build');
-    my $inputs = _canonical_inputs($args[0]{construction});
+    my $construction = _validated_construction($args[0]{construction});
+    my $spec = $construction->{specification};
+    confess "unconstructible checking-state level has no admitted source to build\n"
+        if _unconstructible(@{$spec}{qw(primary_axis level)});
+    my $inputs = _canonical_inputs_from_construction($construction);
     return FSM::VIAL::ExecutionBuilder->build($inputs->{arguments});
 }
 
@@ -215,10 +268,17 @@ sub evaluate($class, @args) {
         unless @args == 1 && ref($args[0]) eq 'HASH' && !blessed($args[0]);
     _confess_exact_keys($args[0], \@EVALUATE_KEYS, 'checking-state evaluation');
     my $construction = _validated_construction($args[0]{construction});
+    my $construction_specification = $construction->{specification};
+    return _unconstructible_evaluation($construction)
+        if _unconstructible(
+            @{$construction_specification}{qw(primary_axis level)},
+        );
     my $generated_axis = _generated_axis_kind($construction);
     return _evaluate_model_axis($construction) if $generated_axis eq 'model';
     return _evaluate_scoreboard_axis($construction)
         if $generated_axis eq 'scoreboard';
+    return _evaluate_coverage_axis($construction)
+        if $generated_axis eq 'coverage';
 
     my $first_inputs = _canonical_inputs_from_construction($construction);
     my $first = FSM::VIAL::ExecutionBuilder->build($first_inputs->{arguments});
@@ -336,6 +396,7 @@ sub evaluate($class, @args) {
             axis_level_owned => JSON::PP::false,
         },
         explicit_nonclaims => _clone($specification->{explicit_nonclaims}),
+        contract_discrepancies => [],
         diagnostics => \@diagnostics,
     });
 }
@@ -354,6 +415,8 @@ sub _generated_axis_kind($construction) {
         || $axis eq 'scalar_model_state_cells';
     return 'scoreboard' if $axis eq 'scoreboard_instances'
         || $axis eq 'scoreboard_capacity';
+    return 'coverage' if $axis eq 'coverpoints'
+        || $axis eq 'bins_and_cross_tuples';
     confess "generated checking-state axis has no evaluator\n";
 }
 
@@ -441,6 +504,7 @@ sub _evaluate_model_axis($construction) {
             oracle_evidence => _oracle_evidence('none', undef),
             claims => _claims(JSON::PP::true),
             explicit_nonclaims => _clone($spec->{explicit_nonclaims}),
+            contract_discrepancies => [],
             diagnostics => [@{_clone($first_diagnostics)}, @diagnostics],
         });
     }
@@ -506,6 +570,7 @@ sub _evaluate_model_axis($construction) {
         oracle_evidence => _oracle_evidence('model', $model_evidence),
         claims => _claims(JSON::PP::true),
         explicit_nonclaims => _clone($spec->{explicit_nonclaims}),
+        contract_discrepancies => [],
         diagnostics => \@diagnostics,
     });
 }
@@ -601,6 +666,7 @@ sub _evaluate_scoreboard_axis($construction) {
             oracle_evidence => _oracle_evidence('none', undef),
             claims => _claims(JSON::PP::true),
             explicit_nonclaims => _clone($spec->{explicit_nonclaims}),
+            contract_discrepancies => [],
             diagnostics => [@{_clone($first_diagnostics)}, @diagnostics],
         });
     }
@@ -668,6 +734,160 @@ sub _evaluate_scoreboard_axis($construction) {
         ),
         claims => _claims(JSON::PP::true),
         explicit_nonclaims => _clone($spec->{explicit_nonclaims}),
+        contract_discrepancies => [],
+        diagnostics => \@diagnostics,
+    });
+}
+
+sub _evaluate_coverage_axis($construction) {
+    my $spec = $construction->{specification};
+    my ($axis, $level) = @{$spec}{qw(primary_axis level)};
+    my $canonical = JSON::PP->new->canonical(1)->utf8(1);
+    my $first_inputs = _canonical_inputs_from_construction($construction);
+    my $first = FSM::VIAL::ExecutionBuilder->build($first_inputs->{arguments});
+    my $second_inputs = _canonical_inputs_from_construction($construction);
+    my $second = FSM::VIAL::ExecutionBuilder->build($second_inputs->{arguments});
+    my $first_semantic = $first_inputs->{semantic_ir}->as_hashref;
+    my $second_semantic = $second_inputs->{semantic_ir}->as_hashref;
+    my $first_bridge = $first_inputs->{bridge_manifest}->as_hashref;
+    my $second_bridge = $second_inputs->{bridge_manifest}->as_hashref;
+    my @diagnostics;
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+        'independent canonical checking-state route changed SemanticIR',
+        '/stage_identities/semantic_ir_sha256',
+    ) unless $canonical->encode($second_semantic)
+        eq $canonical->encode($first_semantic);
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+        'independent canonical checking-state route changed the bridge manifest',
+        '/stage_identities/bridge_manifest_sha256',
+    ) unless $canonical->encode($second_bridge)
+        eq $canonical->encode($first_bridge);
+
+    my $semantic_sha = sha256_hex($canonical->encode($first_semantic));
+    my $bridge_sha = sha256_hex($canonical->encode($first_bridge));
+    if (!$first->{ok} || !$second->{ok}) {
+        my $first_diagnostics = $first->{diagnostics} || [];
+        my $second_diagnostics = $second->{diagnostics} || [];
+        push @diagnostics, _oracle_error(
+            'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+            'independent canonical checking-state rejection changed diagnostics',
+            '/diagnostics',
+        ) unless !$first->{ok} && !$second->{ok}
+            && $canonical->encode($second_diagnostics)
+                eq $canonical->encode($first_diagnostics);
+        my $expected = _expected_coverage_execution_rejection_diagnostic();
+        push @diagnostics, _oracle_error(
+            'VIAL_SCALE_CHECKING_OUTCOME_ERROR',
+            'checking-state coverage rejection did not match the selected adjacent excess',
+            '/diagnostics',
+        ) unless $axis eq 'bins_and_cross_tuples'
+            && $level eq 'over_limit_v1'
+            && $canonical->encode($first_diagnostics)
+                eq $canonical->encode([$expected]);
+        my $stage_identities = {
+            semantic_ir_sha256 => $semantic_sha,
+            bridge_manifest_sha256 => $bridge_sha,
+            execution_ir_sha256 => undef,
+            plan_sha256 => undef,
+        };
+        return _evaluation({
+            ok => @diagnostics ? JSON::PP::false : JSON::PP::true,
+            status => @diagnostics ? 'oracle_failure' : 'expected_rejection',
+            schema => $EVALUATION_SCHEMA,
+            schema_version => 1,
+            evaluation_identity => undef,
+            rerun_identity => _rerun_identity(
+                $construction->{workload_identity}, $stage_identities,
+                $first_diagnostics,
+            ),
+            workload_identity => $construction->{workload_identity},
+            family => $FAMILY,
+            level => $level,
+            primary_axis => $axis,
+            requested_counts => _clone($spec->{requested_counts}),
+            observed_outcome => 'rejected',
+            stage_identities => $stage_identities,
+            metrics => _semantic_coverage_metrics($first_semantic),
+            packed_state_contract => _packed_state_contract(),
+            outcome_contract => {
+                schema => $OUTCOME_SCHEMA,
+                schema_version => 1,
+                observed_outcome => 'rejected',
+                axis_oracle_executed => JSON::PP::false,
+                selected_count_claimed => JSON::PP::true,
+                canonical_stages_completed => [qw(semantic bridge)],
+            },
+            oracle_evidence => _oracle_evidence('none', undef),
+            claims => _claims(JSON::PP::true),
+            explicit_nonclaims => _clone($spec->{explicit_nonclaims}),
+            contract_discrepancies => [],
+            diagnostics => [@{_clone($first_diagnostics)}, @diagnostics],
+        });
+    }
+
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_OUTCOME_ERROR',
+        'checking-state adjacent coverage excess unexpectedly produced ExecutionIR',
+        '/observed_outcome',
+    ) if $level eq 'over_limit_v1';
+    my $first_execution = $first->{execution_ir}->as_hashref;
+    my $second_execution = $second->{execution_ir}->as_hashref;
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+        'independent canonical checking-state route changed ExecutionIR',
+        '/stage_identities/execution_ir_sha256',
+    ) unless $canonical->encode($second_execution)
+        eq $canonical->encode($first_execution);
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+        'independent canonical checking-state route changed the execution plan',
+        '/stage_identities/plan_sha256',
+    ) unless $canonical->encode($second->{plan})
+        eq $canonical->encode($first->{plan});
+
+    my ($coverage_evidence, $coverage_diagnostics) =
+        _evaluate_coverage_state($spec, $first_execution);
+    push @diagnostics, @$coverage_diagnostics;
+    my $stage_identities = {
+        semantic_ir_sha256 => $semantic_sha,
+        bridge_manifest_sha256 => $bridge_sha,
+        execution_ir_sha256 =>
+            sha256_hex($canonical->encode($first_execution)),
+        plan_sha256 => sha256_hex($canonical->encode($first->{plan})),
+    };
+    my $resources = $first_execution->{resource_summary};
+    return _evaluation({
+        ok => @diagnostics ? JSON::PP::false : JSON::PP::true,
+        status => @diagnostics ? 'oracle_failure' : 'accepted',
+        schema => $EVALUATION_SCHEMA,
+        schema_version => 1,
+        evaluation_identity => undef,
+        rerun_identity => _rerun_identity(
+            $construction->{workload_identity}, $stage_identities, [],
+        ),
+        workload_identity => $construction->{workload_identity},
+        family => $FAMILY,
+        level => $level,
+        primary_axis => $axis,
+        requested_counts => _clone($spec->{requested_counts}),
+        observed_outcome => 'accepted',
+        stage_identities => $stage_identities,
+        metrics => _execution_metrics($resources, $first->{plan}, $canonical),
+        packed_state_contract => _packed_state_contract(),
+        outcome_contract => {
+            schema => $OUTCOME_SCHEMA,
+            schema_version => 1,
+            observed_outcome => 'accepted',
+            axis_oracle_executed => JSON::PP::true,
+            selected_count_claimed => JSON::PP::true,
+            canonical_stages_completed => [qw(semantic bridge execution_ir plan)],
+        },
+        oracle_evidence => _oracle_evidence('coverage', $coverage_evidence),
+        claims => _claims(JSON::PP::true),
+        explicit_nonclaims => _clone($spec->{explicit_nonclaims}),
+        contract_discrepancies => [],
         diagnostics => \@diagnostics,
     });
 }
@@ -734,8 +954,92 @@ sub _evaluate_scoreboard_semantic_rejection($construction, $canonical) {
         oracle_evidence => _oracle_evidence('none', undef),
         claims => _claims(JSON::PP::true),
         explicit_nonclaims => _clone($spec->{explicit_nonclaims}),
+        contract_discrepancies => [],
         diagnostics => [@{_clone($reported)}, @diagnostics],
     });
+}
+
+sub _unconstructible_evaluation($construction) {
+    my $spec = $construction->{specification};
+    my ($axis, $level) = @{$spec}{qw(primary_axis level)};
+    my $stage_identities = {
+        semantic_ir_sha256 => undef,
+        bridge_manifest_sha256 => undef,
+        execution_ir_sha256 => undef,
+        plan_sha256 => undef,
+    };
+    my $reported = _clone($construction->{diagnostics});
+    return _evaluation({
+        ok => JSON::PP::true,
+        status => 'envelope_unconstructible',
+        schema => $EVALUATION_SCHEMA,
+        schema_version => 1,
+        evaluation_identity => undef,
+        rerun_identity => _rerun_identity(undef, $stage_identities, $reported),
+        workload_identity => undef,
+        family => $FAMILY,
+        level => $level,
+        primary_axis => $axis,
+        requested_counts => _clone($spec->{requested_counts}),
+        observed_outcome => 'not_constructed',
+        stage_identities => $stage_identities,
+        metrics => _zero_metrics(),
+        packed_state_contract => _packed_state_contract(),
+        outcome_contract => {
+            schema => $OUTCOME_SCHEMA,
+            schema_version => 1,
+            observed_outcome => 'not_constructed',
+            axis_oracle_executed => JSON::PP::false,
+            selected_count_claimed => JSON::PP::false,
+            canonical_stages_completed => [],
+        },
+        oracle_evidence => _oracle_evidence('none', undef),
+        claims => _claims(JSON::PP::true),
+        explicit_nonclaims => _clone($spec->{explicit_nonclaims}),
+        contract_discrepancies => _unconstructible_discrepancies($axis),
+        diagnostics => $reported,
+    });
+}
+
+sub _unconstructible_discrepancies($axis) {
+    my $contract = $UNCONSTRUCTIBLE{$axis};
+    my $boundary = $contract->{route_boundary};
+    return [
+        {
+            code => 'VIAL_SCALE_LIMIT_INTERACTION',
+            message => "the $CONSTRUCTION_ENVELOPE_BYTES-byte bounded construction"
+                . ' envelope precedes every product cap at this level, so its'
+                . ' earliest decider is a fixture bound and not a product limit',
+            path => "/requested_counts/$axis",
+            repair_owner => $LIMIT_POLICY_REPAIR_OWNER,
+        },
+        {
+            code => 'VIAL_SCALE_ROUTE_BOUNDARY',
+            message => "the canonical route accepts $boundary->{accepted} in"
+                . " $boundary->{accepted_source_bytes} source bytes and rejects"
+                . " $boundary->{rejected} in $boundary->{rejected_source_bytes}"
+                . " source bytes at $boundary->{cap}, reported at"
+                . " $boundary->{path}, against the declared"
+                . " $contract->{declared_cap} execution cap this level was"
+                . ' selected from',
+            path => "/requested_counts/$axis",
+            repair_owner => $LIMIT_POLICY_REPAIR_OWNER,
+        },
+    ];
+}
+
+sub _zero_metrics() {
+    return {
+        model_instances => 0,
+        scalar_model_state_cells => 0,
+        scoreboard_instances => 0,
+        scoreboard_declared_capacity => 0,
+        coverpoints => 0,
+        bins_and_cross_tuples => 0,
+        faults => 0,
+        random_occurrences => 0,
+        serialized_plan_bytes => 0,
+    };
 }
 
 sub validate_evaluation($class, @args) {
@@ -764,6 +1068,9 @@ sub with_staging($class, @args) {
         unless @args == 1 && ref($args[0]) eq 'HASH' && !blessed($args[0]);
     _confess_exact_keys($args[0], \@STAGING_KEYS, 'checking-state staging');
     my $construction = _validated_construction($args[0]{construction});
+    my $spec = $construction->{specification};
+    confess "unconstructible checking-state level has no admitted source to stage\n"
+        if _unconstructible(@{$spec}{qw(primary_axis level)});
     return FSM::VIAL::ArchitectureScaleWorkload->with_staging({
         repository_root => $args[0]{repository_root},
         construction => $construction,
@@ -781,6 +1088,11 @@ sub _owns($axis, $level) {
     return scalar(grep { $_ eq $level } @{$OWNED_LEVELS{$axis}});
 }
 
+sub _unconstructible($axis, $level) {
+    return 0 unless defined($axis) && defined($level) && $UNCONSTRUCTIBLE{$axis};
+    return scalar(grep { $_ eq $level } @{$UNCONSTRUCTIBLE{$axis}{levels}});
+}
+
 sub _render_axis_source($axis, $level, $requested_count) {
     return _render_model_source($axis, $level, $requested_count)
         if $axis eq 'model_instances'
@@ -788,6 +1100,9 @@ sub _render_axis_source($axis, $level, $requested_count) {
     return _render_scoreboard_source($axis, $level, $requested_count)
         if $axis eq 'scoreboard_instances'
             || $axis eq 'scoreboard_capacity';
+    return _render_coverage_source($axis, $level, $requested_count)
+        if $axis eq 'coverpoints'
+            || $axis eq 'bins_and_cross_tuples';
     confess "checking-state renderer does not own axis '$axis'\n";
 }
 
@@ -933,6 +1248,100 @@ sub _render_scoreboard_source($axis, $level, $requested_count) {
     );
 }
 
+# Decision 0073 deliberately keeps coverage declarations compact.  The
+# coverpoint ladder has one 110-byte declaration per point and 827 fixed bytes;
+# those equalities are the measured 9,524/9,525 parser boundary and must not
+# drift into an approximate fixture claim.  The static-domain ladder uses two
+# equal bin sets, their authored Cartesian cross, and one independent point.
+sub _render_coverage_source($axis, $level, $requested_count) {
+    confess "checking-state coverage renderer received an invalid requested count\n"
+        unless defined($requested_count) && !ref($requested_count)
+            && $requested_count =~ /\A[1-9][0-9]*\z/;
+
+    if ($axis eq 'coverpoints') {
+        my @coverpoints = map {
+            sprintf(
+                '(coverpoint cp%08d (sample bus) (expr (same (sample ready_out) #b1))'
+                    . ' (bins (bin hit normal (value true))))',
+                $_,
+            )
+        } 0 .. $requested_count - 1;
+        my $source = _coverage_source_shell(join('', @coverpoints), 349);
+        confess "checking-state coverpoint renderer changed its exact linear byte law\n"
+            unless bytes::length($source) == 827 + 110 * $requested_count;
+        return $source;
+    }
+
+    confess "checking-state coverage renderer does not own axis '$axis'\n"
+        unless $axis eq 'bins_and_cross_tuples';
+    my ($bins_per_cross_point, $independent_bins) =
+          $level eq 'gate_candidate_v1'          ? (63,  1)
+        : $level eq 'qualification_candidate_v1' ? (511, 1)
+        : $level eq 'limit_v1'                   ? (999, 1)
+        : $level eq 'over_limit_v1'              ? (999, 2)
+        : confess "checking-state static-domain renderer received an unknown level\n";
+    my $cross_tuples = $bins_per_cross_point * $bins_per_cross_point;
+    confess "checking-state static-domain recipe changed its requested count\n"
+        unless 2 * $bins_per_cross_point + $cross_tuples + $independent_bins
+            == $requested_count;
+
+    my $a_bins = join('', map {
+        sprintf('(bin a%03d normal (value #b1))', $_)
+    } 0 .. $bins_per_cross_point - 1);
+    my $b_bins = join('', map {
+        sprintf('(bin b%03d normal (value #b1))', $_)
+    } 0 .. $bins_per_cross_point - 1);
+    my $i_bins = join('', map {
+        sprintf('(bin i%03d normal (value #b1))', $_)
+    } 0 .. $independent_bins - 1);
+    my $coverage = join('',
+        '(coverpoint a (sample bus) (expr (sample ready_out)) (bins ',
+        $a_bins, '))',
+        '(coverpoint b (sample bus) (expr (sample ready_out)) (bins ',
+        $b_bins, '))',
+        '(coverpoint i (sample bus) (expr (sample ready_out)) (bins ',
+        $i_bins, '))',
+        '(cross x (points a b) (max_bins ', $cross_tuples, '))',
+    );
+    # The constant whitespace is part of the frozen compact-source recipe used
+    # by the selection measurements.  It leaves the semantic domain unchanged
+    # while making the recorded 62,841/62,870-byte witnesses reproducible.
+    my $source = _coverage_source_shell($coverage, 4_169);
+    if ($level eq 'limit_v1' || $level eq 'over_limit_v1') {
+        my $expected_bytes = $level eq 'limit_v1' ? 62_841 : 62_870;
+        confess "checking-state static-domain renderer changed its selected byte witness\n"
+            unless bytes::length($source) == $expected_bytes;
+    }
+    return $source;
+}
+
+sub _coverage_source_shell($coverage, $padding) {
+    return join('',
+        '(vial (version 1) (package architecture_scale_checking_state',
+        ' (imports)',
+        ' (types)',
+        ' (transactions)',
+        ' (models)',
+        ' (scoreboards)',
+        ' (fixtures (fixture checking_gate',
+        ' (dut dut',
+        ' (unit "unit/ahb_lite_subordinate")',
+        ' (domains (domain bus "domain/ahb_bus"))',
+        ' (endpoints',
+        ' (endpoint ready_out "endpoint/HREADYOUT" (logic 1) public_port))',
+        ' (transactions))',
+        ' (instances)',
+        ' (coverage ', $coverage, ')',
+        ' (faults)',
+        ' (randomness (seed 1701))',
+        ' (scenarios (scenario coverage_transition',
+        ' (timeout (cycles bus 2))',
+        ' (steps (reset bus 1))))))))',
+        ' ' x $padding,
+        "\n",
+    );
+}
+
 sub _model_definition($axis, $definition_ordinal, $cell_count) {
     my $definition = FSM::VIAL::ArchitectureScaleWorkload->stable_name({
         family => $FAMILY,
@@ -980,6 +1389,58 @@ sub _selected_contract($axis, $level) {
         unless defined($level) && !ref($level)
             && exists $family->{axes}{$axis}{levels}{$level};
     return $family->{axes}{$axis}{levels}{$level};
+}
+
+sub _envelope_diagnostic($axis) {
+    my $index = $UNCONSTRUCTIBLE{$axis}{envelope_input_index};
+    return {
+        code => 'VIAL_SCALE_INPUT_ERROR',
+        severity => 'error',
+        message => "input $index exceeds the bounded construction envelope",
+        path => "/inputs/$index/content",
+    };
+}
+
+sub _selected_specification($axis, $level) {
+    my $minimal = FSM::VIAL::ArchitectureScaleWorkload->construct({
+        family => $FAMILY,
+        level => $level,
+        primary_axis => $axis,
+        backend_profile => undef,
+        tool_profile => undef,
+        inputs => [
+            _input($REFERENCE_HIAL_SOURCE, 'hial_source', ''),
+            _input($VIAL_SOURCE, 'vial_source', ''),
+        ],
+    });
+    confess "checking-state selected specification could not be derived\n"
+        unless $minimal->{ok} && ref($minimal->{specification}) eq 'HASH';
+    return _clone($minimal->{specification});
+}
+
+sub _unconstructible_construction($failure, $axis, $level) {
+    return {
+        %{$failure},
+        specification => _selected_specification($axis, $level),
+    };
+}
+
+sub _generic_envelope_failure($axis, $level) {
+    my $failure = FSM::VIAL::ArchitectureScaleWorkload->construct({
+        family => $FAMILY,
+        level => $level,
+        primary_axis => $axis,
+        backend_profile => undef,
+        tool_profile => undef,
+        inputs => [
+            _input($REFERENCE_HIAL_SOURCE, 'hial_source', ''),
+            _input(
+                $VIAL_SOURCE, 'vial_source',
+                'x' x ($CONSTRUCTION_ENVELOPE_BYTES + 1),
+            ),
+        ],
+    });
+    return _unconstructible_construction($failure, $axis, $level);
 }
 
 sub _canonical_inputs($raw) {
@@ -1052,12 +1513,21 @@ sub _validated_construction($raw) {
     confess "construction must be one unblessed hash\n"
         unless ref($raw) eq 'HASH' && !blessed($raw);
     my $specification = $raw->{specification};
-    confess "construction must be successful and carry one specification hash\n"
-        unless $raw->{ok}
-            && ref($specification) eq 'HASH' && !blessed($specification);
+    confess "construction must carry one specification hash\n"
+        unless ref($specification) eq 'HASH' && !blessed($specification);
+    my ($axis, $level) = @{$specification}{qw(primary_axis level)};
+    confess "construction must be successful\n"
+        unless $raw->{ok} || _unconstructible($axis, $level);
+    if (_unconstructible($axis, $level)) {
+        my $rebuilt = _generic_envelope_failure($axis, $level);
+        my $canonical = JSON::PP->new->canonical(1)->allow_nonref(1);
+        confess "construction is not canonical\n"
+            unless $canonical->encode($rebuilt) eq $canonical->encode($raw);
+        return $rebuilt;
+    }
     my $rebuilt = _construct_candidate_internal({
-        primary_axis => $specification->{primary_axis},
-        level => $specification->{level},
+        primary_axis => $axis,
+        level => $level,
         reference_hial_text => _role_input($raw, 'hial_source')->{content},
         vial_source_text => _role_input($raw, 'vial_source')->{content},
     });
@@ -1173,6 +1643,24 @@ sub _scoreboard_recipe_metrics($spec) {
     };
 }
 
+sub _semantic_coverage_metrics($semantic) {
+    my $coverage = $semantic->{packages}[0]{fixtures}[0]{coverage};
+    my %bins_by_point = map {
+        $_->{semantic_id} => scalar(@{$_->{bins}})
+    } @{$coverage->{coverpoints}};
+    my $entries = 0;
+    $entries += scalar(@{$_->{bins}}) for @{$coverage->{coverpoints}};
+    for my $cross (@{$coverage->{crosses}}) {
+        my $product = 1;
+        $product *= $bins_by_point{$_} for @{$cross->{point_ids}};
+        $entries += $product;
+    }
+    my $metrics = _zero_metrics();
+    $metrics->{coverpoints} = scalar(@{$coverage->{coverpoints}});
+    $metrics->{bins_and_cross_tuples} = $entries;
+    return $metrics;
+}
+
 sub _oracle_evidence($oracle, $evidence) {
     return {
         schema => $ORACLE_EVIDENCE_SCHEMA,
@@ -1180,7 +1668,7 @@ sub _oracle_evidence($oracle, $evidence) {
         oracle => $oracle,
         model => $oracle eq 'model' ? _clone($evidence) : undef,
         scoreboard => $oracle eq 'scoreboard' ? _clone($evidence) : undef,
-        coverage => undef,
+        coverage => $oracle eq 'coverage' ? _clone($evidence) : undef,
         faults => undef,
         random_replay => undef,
     };
@@ -1236,6 +1724,20 @@ sub _expected_scoreboard_execution_rejection_diagnostic() {
         related => [],
         schema_version => 1,
         semantic_path => '/scoreboards',
+        severity => 'error',
+        source_location => undef,
+    };
+}
+
+sub _expected_coverage_execution_rejection_diagnostic() {
+    return {
+        bridge_fact_paths => [],
+        code => 'VIAL_EXECUTION_LIMIT_ERROR',
+        message => 'coverage_bins_and_cross_tuples exceeds the limit 1000000',
+        phase => 'limit',
+        related => [],
+        schema_version => 1,
+        semantic_path => '/coverage',
         severity => 'error',
         source_location => undef,
     };
@@ -1609,6 +2111,378 @@ sub _evaluate_scoreboard_state($spec, $execution) {
     return ($evidence, \@errors);
 }
 
+sub _evaluate_coverage_state($spec, $execution) {
+    my $axis = $spec->{primary_axis};
+    my $requested = $spec->{requested_counts}{$axis};
+    my $coverage = $execution->{coverage};
+    my (@errors, @coverpoint_ids, @bin_ids, @cross_ids);
+    my ($points, $crosses) = ref($coverage) eq 'HASH'
+        ? @{$coverage}{qw(coverpoints crosses)} : (undef, undef);
+    if (ref($points) ne 'ARRAY' || ref($crosses) ne 'ARRAY') {
+        push @errors, _oracle_error(
+            'VIAL_SCALE_CHECKING_COVERAGE_ERROR',
+            'coverage oracle requires canonical coverpoint and cross arrays',
+            '/coverage',
+        );
+        $points = [] unless ref($points) eq 'ARRAY';
+        $crosses = [] unless ref($crosses) eq 'ARRAY';
+    }
+
+    my $recipe = _coverage_recipe($axis, $spec->{level}, $requested);
+    my $structure_closed = @$points == @{$recipe->{points}}
+        && @$crosses == @{$recipe->{crosses}};
+    my %point_by_id;
+    my %seen_id;
+    my $all_bins_match = 1;
+    my $all_normal = 1;
+    for my $point_ordinal (0 .. $#$points) {
+        my $point = $points->[$point_ordinal];
+        my $expected = $recipe->{points}[$point_ordinal] || {};
+        my $point_id = $point->{semantic_id};
+        push @coverpoint_ids, $point_id;
+        $point_by_id{$point_id // ''} = $point;
+        ++$seen_id{$point_id // ''};
+        my $bins = ref($point->{bins}) eq 'ARRAY' ? $point->{bins} : [];
+        $structure_closed = 0 unless ($point->{name} // '')
+                eq ($expected->{name} // '')
+            && @$bins == @{$expected->{bin_names} || []}
+            && ($point->{domain_id} // '') =~ /::domain::bus\z/
+            && _coverage_expression_samples_one($axis, $point->{expression});
+        for my $bin_ordinal (0 .. $#$bins) {
+            my $bin = $bins->[$bin_ordinal];
+            my $expected_name = $expected->{bin_names}[$bin_ordinal];
+            my $bin_id = $bin->{semantic_id};
+            push @bin_ids, $bin_id;
+            ++$seen_id{$bin_id // ''};
+            $structure_closed = 0 unless ($bin->{name} // '')
+                    eq ($expected_name // '')
+                && ($bin->{classification} // '') eq 'normal';
+            $all_normal = 0 unless ($bin->{classification} // '') eq 'normal';
+            $all_bins_match = 0 unless _coverage_matcher_matches_one(
+                $bin->{matcher},
+            );
+        }
+    }
+
+    my $cross_tuple_count = 0;
+    for my $cross_ordinal (0 .. $#$crosses) {
+        my $cross = $crosses->[$cross_ordinal];
+        my $expected = $recipe->{crosses}[$cross_ordinal] || {};
+        my $cross_id = $cross->{semantic_id};
+        push @cross_ids, $cross_id;
+        ++$seen_id{$cross_id // ''};
+        my $point_ids = ref($cross->{point_ids}) eq 'ARRAY'
+            ? $cross->{point_ids} : [];
+        my @cross_points = map { $point_by_id{$_ // ''} } @$point_ids;
+        my @expected_point_ids = map {
+            _coverage_point_id($_)
+        } @{$expected->{point_names} || []};
+        my $product = 1;
+        for my $point (@cross_points) {
+            $product *= $point && ref($point->{bins}) eq 'ARRAY'
+                ? scalar(@{$point->{bins}}) : 0;
+        }
+        $cross_tuple_count += $product;
+        $structure_closed = 0 unless ($cross->{name} // '')
+                eq ($expected->{name} // '')
+            && join("\0", @$point_ids) eq join("\0", @expected_point_ids)
+            && ($cross->{max_bins} // 0) == $product
+            && $product == ($expected->{tuple_count} // -1);
+    }
+    $structure_closed = 0 if exists($seen_id{''})
+        || keys(%seen_id) != @coverpoint_ids + @bin_ids + @cross_ids;
+
+    my $static_entries = @bin_ids + $cross_tuple_count;
+    my $selected_count = $axis eq 'coverpoints'
+        ? scalar(@coverpoint_ids) : $static_entries;
+    my $resource_entries = $execution->{resource_summary}
+        {coverage_bins_and_cross_tuples};
+    my $resource_points = $execution->{resource_summary}{coverpoints};
+    push @errors, _oracle_error(
+        'VIAL_SCALE_CHECKING_COVERAGE_ERROR',
+        'coverage oracle did not reconstruct the exact authored static domain',
+        '/coverage',
+    ) unless $structure_closed && $all_normal && $all_bins_match;
+    push @errors, _oracle_error(
+        'VIAL_SCALE_CHECKING_COVERAGE_ERROR',
+        'coverage oracle did not reach the selected axis count',
+        "/requested_counts/$axis",
+    ) unless $selected_count == $requested
+        && ($resource_entries // -1) == $static_entries
+        && ($resource_points // -1) == @coverpoint_ids;
+
+    my $actual_vector = "\0" x int(($static_entries + 7) / 8);
+    my $actual_digest = Digest::SHA->new(256);
+    my $actual_index = 0;
+    for my $point (@$points) {
+        for my $bin (@{$point->{bins} || []}) {
+            _coverage_digest_add($actual_digest, $bin->{semantic_id} // '');
+            vec($actual_vector, $actual_index++, 1) = 1
+                if _coverage_matcher_matches_one($bin->{matcher})
+                    && ($bin->{classification} // '') eq 'normal';
+        }
+    }
+    for my $cross (@$crosses) {
+        my @cross_points = map { $point_by_id{$_ // ''} }
+            @{$cross->{point_ids} || []};
+        if (@cross_points == 2 && !grep { !defined($_) } @cross_points) {
+            for my $left (@{$cross_points[0]{bins}}) {
+                for my $right (@{$cross_points[1]{bins}}) {
+                    my $token = join("\0",
+                        $cross->{semantic_id} // '',
+                        $left->{semantic_id} // '',
+                        $right->{semantic_id} // '',
+                    );
+                    _coverage_digest_add($actual_digest, $token);
+                    vec($actual_vector, $actual_index++, 1) = 1
+                        if _coverage_matcher_matches_one($left->{matcher})
+                            && _coverage_matcher_matches_one($right->{matcher})
+                            && ($left->{classification} // '') eq 'normal'
+                            && ($right->{classification} // '') eq 'normal';
+                }
+            }
+        }
+    }
+
+    my $expected_digest = Digest::SHA->new(256);
+    my $order_mutation_digest = Digest::SHA->new(256);
+    my ($first_expected_token, $expected_index) = (undef, 0);
+    my $add_expected = sub ($token) {
+        _coverage_digest_add($expected_digest, $token);
+        if ($expected_index == 0) {
+            $first_expected_token = $token;
+        }
+        elsif ($expected_index == 1) {
+            _coverage_digest_add($order_mutation_digest, $token);
+            _coverage_digest_add(
+                $order_mutation_digest, $first_expected_token,
+            );
+        }
+        else {
+            _coverage_digest_add($order_mutation_digest, $token);
+        }
+        ++$expected_index;
+    };
+    for my $point (@{$recipe->{points}}) {
+        my $point_id = _coverage_point_id($point->{name});
+        for my $bin_name (@{$point->{bin_names}}) {
+            $add_expected->("$point_id\::bin\::$bin_name");
+        }
+    }
+    for my $cross (@{$recipe->{crosses}}) {
+        my $cross_id = _coverage_cross_id($cross->{name});
+        my ($left, $right) = @{$cross->{point_names}};
+        my ($left_recipe) = grep { $_->{name} eq $left }
+            @{$recipe->{points}};
+        my ($right_recipe) = grep { $_->{name} eq $right }
+            @{$recipe->{points}};
+        my $left_id = _coverage_point_id($left);
+        my $right_id = _coverage_point_id($right);
+        for my $left_bin (@{$left_recipe->{bin_names}}) {
+            for my $right_bin (@{$right_recipe->{bin_names}}) {
+                $add_expected->(join("\0", $cross_id,
+                    "$left_id\::bin\::$left_bin",
+                    "$right_id\::bin\::$right_bin",
+                ));
+            }
+        }
+    }
+    my $static_domain_sha = $actual_digest->hexdigest;
+    my $expected_domain_sha = $expected_digest->hexdigest;
+    my $order_mutation_sha = $order_mutation_digest->hexdigest;
+    my $expected_vector = _coverage_all_hit_vector($static_entries);
+    my $vector_equal = $actual_vector eq $expected_vector;
+    my $domain_ordered = $static_domain_sha eq $expected_domain_sha;
+    my $mutation = $actual_vector;
+    vec($mutation, 0, 1) = vec($mutation, 0, 1) ? 0 : 1
+        if $static_entries;
+    my $mutation_rejected = $mutation ne $expected_vector;
+    my $order_mutation_rejected = $order_mutation_sha ne $expected_domain_sha;
+    my $illegal_match_rejected =
+        _coverage_sample_outcome('illegal', 1) eq 'illegal';
+    my $ignore_match_excluded =
+        _coverage_sample_outcome('ignore', 1) eq 'ignored';
+    push @errors, _oracle_error(
+        'VIAL_SCALE_CHECKING_COVERAGE_ERROR',
+        'packed coverage vector differs from the independent all-hit vector',
+        '/oracle_evidence/coverage/packed_vector_sha256',
+    ) unless $actual_index == $static_entries && $vector_equal;
+    push @errors, _oracle_error(
+        'VIAL_SCALE_CHECKING_COVERAGE_ERROR',
+        'coverage static-domain order differs from the authored order',
+        '/oracle_evidence/coverage/static_domain_sha256',
+    ) unless $domain_ordered;
+    push @errors, _oracle_error(
+        'VIAL_SCALE_CHECKING_COVERAGE_ERROR',
+        'coverage negative checks did not reject illegal, ignore, bit, and order mutations',
+        '/oracle_evidence/coverage/mutation_rejected',
+    ) unless $illegal_match_rejected && $ignore_match_excluded
+        && $mutation_rejected && $order_mutation_rejected;
+
+    my $success = @errors ? 0 : 1;
+    my $evidence = {
+        schema => $COVERAGE_EVIDENCE_SCHEMA,
+        schema_version => 1,
+        program => 'one_sample_packed_static_domain_vector_v1',
+        axis => $axis,
+        coverpoints => scalar(@coverpoint_ids),
+        authored_bins => scalar(@bin_ids),
+        authored_crosses => scalar(@cross_ids),
+        static_cross_tuples => $cross_tuple_count,
+        static_domain_entries => $static_entries,
+        sample_count => 1,
+        sampled_value_hex => '1',
+        packed_vector_bytes => bytes::length($actual_vector),
+        packed_vector_sha256 => sha256_hex($actual_vector),
+        expected_vector_sha256 => sha256_hex($expected_vector),
+        static_domain_sha256 => $static_domain_sha,
+        expected_static_domain_sha256 => $expected_domain_sha,
+        first_coverpoint_id => $coverpoint_ids[0],
+        last_coverpoint_id => $coverpoint_ids[-1],
+        first_bin_id => $bin_ids[0],
+        last_bin_id => $bin_ids[-1],
+        first_cross_id => $cross_ids[0],
+        last_cross_id => $cross_ids[-1],
+        normal_bin_hits => scalar(@bin_ids),
+        cross_tuple_hits => $cross_tuple_count,
+        illegal_bin_hits => 0,
+        ignore_bin_hits => 0,
+        hit_entries => $actual_index,
+        byte_equal_expected => $success && $vector_equal
+            ? JSON::PP::true : JSON::PP::false,
+        static_domain_order_preserved => $success && $domain_ordered
+            ? JSON::PP::true : JSON::PP::false,
+        all_authored_bins_matched => $success && $all_bins_match
+            ? JSON::PP::true : JSON::PP::false,
+        all_static_cross_tuples_hit => $success
+                && $cross_tuple_count == $recipe->{static_cross_tuples}
+            ? JSON::PP::true : JSON::PP::false,
+        illegal_match_rejected => $success && $illegal_match_rejected
+            ? JSON::PP::true : JSON::PP::false,
+        ignore_match_excluded => $success && $ignore_match_excluded
+            ? JSON::PP::true : JSON::PP::false,
+        mutation_rejected => $success && $mutation_rejected
+            ? JSON::PP::true : JSON::PP::false,
+        order_mutation_rejected => $success && $order_mutation_rejected
+            ? JSON::PP::true : JSON::PP::false,
+        no_undeclared_domain_entries => $success && $structure_closed
+            ? JSON::PP::true : JSON::PP::false,
+    };
+    return ($evidence, \@errors);
+}
+
+sub _coverage_recipe($axis, $level, $requested) {
+    if ($axis eq 'coverpoints') {
+        my @points = map {
+            {name => sprintf('cp%08d', $_), bin_names => ['hit']}
+        } 0 .. $requested - 1;
+        return {
+            points => \@points,
+            crosses => [],
+            static_cross_tuples => 0,
+        };
+    }
+    my ($bins_per_point, $independent_bins) =
+          $level eq 'gate_candidate_v1'          ? (63,  1)
+        : $level eq 'qualification_candidate_v1' ? (511, 1)
+        : $level eq 'limit_v1'                   ? (999, 1)
+        : $level eq 'over_limit_v1'              ? (999, 2)
+        : confess "checking-state coverage recipe received an unknown level\n";
+    my $tuples = $bins_per_point * $bins_per_point;
+    return {
+        points => [
+            {name => 'a', bin_names => [map { sprintf('a%03d', $_) }
+                0 .. $bins_per_point - 1]},
+            {name => 'b', bin_names => [map { sprintf('b%03d', $_) }
+                0 .. $bins_per_point - 1]},
+            {name => 'i', bin_names => [map { sprintf('i%03d', $_) }
+                0 .. $independent_bins - 1]},
+        ],
+        crosses => [{
+            name => 'x', point_names => [qw(a b)], tuple_count => $tuples,
+        }],
+        static_cross_tuples => $tuples,
+    };
+}
+
+sub _coverage_expression_samples_one($axis, $expression) {
+    return 0 unless ref($expression) eq 'HASH';
+    if ($axis eq 'coverpoints') {
+        return 0 unless ($expression->{kind} // '') eq 'operator'
+            && ($expression->{op} // '') eq 'same'
+            && ref($expression->{operands}) eq 'ARRAY'
+            && @{$expression->{operands}} == 2;
+        return _coverage_sample_reference($expression->{operands}[0])
+            && _coverage_literal_is_one($expression->{operands}[1]);
+    }
+    return _coverage_sample_reference($expression);
+}
+
+sub _coverage_sample_reference($expression) {
+    return ref($expression) eq 'HASH'
+        && ($expression->{kind} // '') eq 'reference'
+        && ($expression->{op} // '') eq 'sample'
+        && ($expression->{semantic_id} // '') =~ /::endpoint::ready_out\z/
+        && ($expression->{binding_id} // '') =~ m{/endpoint/HREADYOUT\z};
+}
+
+sub _coverage_literal_is_one($literal) {
+    return 0 unless ref($literal) eq 'HASH'
+        && ($literal->{kind} // '') eq 'literal';
+    return _coverage_normalized_value_is_one($literal->{value});
+}
+
+sub _coverage_matcher_matches_one($matcher) {
+    return ref($matcher) eq 'HASH'
+        && ($matcher->{kind} // '') eq 'value'
+        && _coverage_normalized_value_is_one($matcher->{value});
+}
+
+sub _coverage_normalized_value_is_one($value) {
+    return 0 unless ref($value) eq 'HASH';
+    return ($value->{kind} // '') eq 'bool_value'
+        ? ($value->{value} // 0) == 1
+        : ($value->{kind} // '') eq 'logic_vector'
+            ? ($value->{width} // 0) == 1
+                && ($value->{value_bits} // '') eq '1'
+                && ($value->{known_mask} // '') eq '1'
+                && ($value->{z_mask} // '') eq '0'
+        : ($value->{kind} // '') eq 'scalar'
+            && ($value->{width} // 0) == 1
+            && ($value->{value_hex} // '') eq '1'
+            && ($value->{known_hex} // '') eq '1'
+            && ($value->{z_hex} // '') eq '0';
+}
+
+sub _coverage_sample_outcome($classification, $matches) {
+    return 'miss' unless $matches;
+    return 'illegal' if $classification eq 'illegal';
+    return 'ignored' if $classification eq 'ignore';
+    return 'hit' if $classification eq 'normal';
+    return 'invalid';
+}
+
+sub _coverage_all_hit_vector($entries) {
+    my $vector = chr(255) x int($entries / 8);
+    my $remaining = $entries % 8;
+    $vector .= chr((1 << $remaining) - 1) if $remaining;
+    return $vector;
+}
+
+sub _coverage_digest_add($digest, $token) {
+    $digest->add(pack('N', bytes::length($token)), $token);
+}
+
+sub _coverage_point_id($name) {
+    return "architecture_scale_checking_state::fixture::checking_gate"
+        . "::coverpoint::$name";
+}
+
+sub _coverage_cross_id($name) {
+    return "architecture_scale_checking_state::fixture::checking_gate"
+        . "::cross::$name";
+}
+
 sub _scoreboard_expected_transaction($payload) {
     return {
         address => 0,
@@ -1760,8 +2634,32 @@ sub _validate_evaluation_shape($raw) {
             if grep { defined($raw->{oracle_evidence}{$_}) }
                 qw(model coverage faults random_replay);
     }
+    elsif ($oracle eq 'coverage') {
+        _confess_exact_keys(
+            $raw->{oracle_evidence}{coverage}, \@COVERAGE_EVIDENCE_KEYS,
+            'checking-state coverage evidence',
+        );
+        confess "checking-state coverage-evidence schema is invalid\n"
+            unless ($raw->{oracle_evidence}{coverage}{schema} // '')
+                    eq $COVERAGE_EVIDENCE_SCHEMA
+                && ($raw->{oracle_evidence}{coverage}{schema_version} // 0) == 1;
+        confess "checking-state coverage oracle cannot carry another oracle family\n"
+            if grep { defined($raw->{oracle_evidence}{$_}) }
+                qw(model scoreboard faults random_replay);
+    }
     else {
         confess "checking-state oracle kind is invalid\n";
+    }
+    confess "checking-state contract discrepancies must be one array\n"
+        unless ref($raw->{contract_discrepancies}) eq 'ARRAY';
+    for my $record (@{$raw->{contract_discrepancies}}) {
+        _confess_exact_keys(
+            $record, \@CONTRACT_DISCREPANCY_KEYS,
+            'checking-state contract discrepancy',
+        );
+        confess "checking-state contract discrepancy code is invalid\n"
+            unless ($record->{code} // '') eq 'VIAL_SCALE_LIMIT_INTERACTION'
+                || ($record->{code} // '') eq 'VIAL_SCALE_ROUTE_BOUNDARY';
     }
     confess "checking-state nonclaim schema is invalid\n"
         unless ($raw->{claims}{schema} // '') eq $CLAIMS_SCHEMA
@@ -1799,6 +2697,11 @@ sub _evaluation($value) {
     my $canonical = JSON::PP->new->canonical(1)->utf8(1);
     my $identity_projection = _clone($value);
     $identity_projection->{evaluation_identity} = undef;
+    # This field was added when decision 0072 first became reachable in this
+    # family.  Empty records do not perturb identities already frozen by the
+    # earlier model and scoreboard leaves; nonempty records remain covered.
+    delete $identity_projection->{contract_discrepancies}
+        unless @{$identity_projection->{contract_discrepancies}};
     $value->{evaluation_identity} = 'checking-evaluation/'
         . sha256_hex($canonical->encode($identity_projection));
     _validate_evaluation_shape($value);

@@ -363,3 +363,19 @@ field is checked, and expected and actual queues drain in order. Thus the exact
 state cost is four bytes per entry while the semantic proof remains over
 complete transactions; mismatch, at-capacity enqueue, and byte corruption are
 separate negative obligations rather than inferred from a matching digest.
+
+## 2026-08-20: An all-hit vector needs a separate authored-order identity
+
+The selected coverage sample intentionally hits every authored bin and static
+cross tuple, so its packed vector is all ones. That vector proves exact domain
+cardinality and hit completeness, but it cannot by itself prove ordering: every
+permutation of an all-one vector has the same bytes and digest.
+
+The coverage oracle therefore streams a second identity over length-delimited
+bin IDs followed by authored cross-tuple ID combinations. One stream comes from
+canonical ExecutionIR; the independent stream comes from the selected source
+recipe. Their byte-equal digests prove order without retaining a million JSON
+identities, while a first-two-entry swap proves the comparison rejects order
+mutation. The million-entry bit state remains bounded at 125,000 bytes; the
+order proof closes a different semantic obligation rather than inflating that
+state representation.

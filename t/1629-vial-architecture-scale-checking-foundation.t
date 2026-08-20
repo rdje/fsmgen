@@ -50,17 +50,17 @@ sub candidate {
     });
 }
 
-subtest 'public ownership covers the active model and scoreboard ladders' => sub {
+subtest 'public ownership covers the active model, scoreboard, and coverage ladders' => sub {
     is_deeply($class->owned_shapes, [
         map {
             my $axis = $_;
             map { {primary_axis => $axis, level => $_} }
                 qw(gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1)
         } qw(
-            model_instances scalar_model_state_cells
+            bins_and_cross_tuples coverpoints model_instances scalar_model_state_cells
             scoreboard_capacity scoreboard_instances
         )
-    ], 'active checking-state slices publish exactly four complete ladders');
+    ], 'active checking-state slices publish exactly six complete ladders');
 
     my $reference = eval {
         $class->construct({
@@ -97,13 +97,13 @@ subtest 'public ownership covers the active model and scoreboard ladders' => sub
 
     my $unowned = eval {
         $class->construct({
-            primary_axis => 'coverpoints',
+            primary_axis => 'faults',
             level => 'gate_candidate_v1',
             reference_hial_text => $reference_hial,
         });
         1;
     };
-    ok(!$unowned, 'later coverage axis remains unavailable');
+    ok(!$unowned, 'later fault axis remains unavailable');
     like($@, qr/active slices do not own the requested shape/,
         'unowned-axis rejection names the current bounded ownership');
 

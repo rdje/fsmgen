@@ -27,10 +27,11 @@ evidence: >-
   t/1629-vial-architecture-scale-checking-foundation.t;
   t/1630-vial-architecture-scale-checking-models.t;
   t/1631-vial-architecture-scale-checking-scoreboards.t;
+  t/1632-vial-architecture-scale-checking-coverage.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
-  prove -Iperl t/1629-vial-architecture-scale-checking-foundation.t t/1630-vial-architecture-scale-checking-models.t t/1631-vial-architecture-scale-checking-scoreboards.t && rg -n 'checking_state_v1|one_bound_event_occurrence_per_instance_v1|packed_complete_transaction_fifo_v1|coverage_bins_and_cross_tuples|random_occurrences|serialized_plan_bytes|cross Cartesian product' docs/decisions/0073-checking-state-scale-uses-packed-state-oracles-and-static-cross-domains.md perl/FSM/VIAL/ArchitectureScaleCheckingState.pm perl/FSM/VIAL/SemanticBuilder.pm perl/FSM/VIAL/ExecutionBuilder.pm perl/FSM/Support/VIALExecutionContract.pm
+  prove -Iperl t/1629-vial-architecture-scale-checking-foundation.t t/1630-vial-architecture-scale-checking-models.t t/1631-vial-architecture-scale-checking-scoreboards.t t/1632-vial-architecture-scale-checking-coverage.t && rg -n 'checking_state_v1|one_bound_event_occurrence_per_instance_v1|packed_complete_transaction_fifo_v1|one_sample_packed_static_domain_vector_v1|coverage_bins_and_cross_tuples|random_occurrences|serialized_plan_bytes|cross Cartesian product' docs/decisions/0073-checking-state-scale-uses-packed-state-oracles-and-static-cross-domains.md perl/FSM/VIAL/ArchitectureScaleCheckingState.pm perl/FSM/VIAL/SemanticBuilder.pm perl/FSM/VIAL/ExecutionBuilder.pm perl/FSM/Support/VIALExecutionContract.pm
 ---
 
 Decision `0073` selects one outcome for every non-reference level before the
@@ -77,15 +78,15 @@ one sample hits the exact all-one vector because every authored bin matches.
 
 `TraceValidator`, `ResultProducer`, and the first portable SystemVerilog backend
 remain result/profile machinery, not general checking-state semantic oracles.
-The implemented model and scoreboard slices publish exactly sixteen
-non-reference shapes across their four axes. They reject reference,
+The implemented model, scoreboard, and coverage slices publish exactly 24
+non-reference shapes across their six axes. They reject reference,
 non-owned, unknown-level, IR, trace, result, and support-metadata injection.
 Its same-package-only candidate route accepts just ordinary VIAL text plus the
 exact checked-AHB source, regenerates the workload defensively, and reaches
 canonical SemanticIR, bridge, ExecutionIR, and plan twice with content-addressed
 workload/evaluation/rerun identities. The frozen foundation witness still
 reports `accepted_not_axis_evaluated`; generated accepted shapes populate only
-their model or scoreboard compartment and explicitly deny every capability,
+their model, scoreboard, or coverage compartment and explicitly deny every capability,
 support, performance, capacity, backend, or runtime claim.
 
 That foundation freezes the selected packed representations before an axis is
@@ -127,5 +128,19 @@ bridge identities. Capacity 1,000,001 returns exactly one parser
 `VIAL_LIMIT_ERROR` at `/packages/0/scoreboards/0/capacity` and no stage
 identity. The default and complete RAM-guarded scoreboard sweeps pass. This
 implementation changes no product behavior, support state, performance budget,
-or capacity claim. Coverage-axis implementation is now the active leaf
-under `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2`.
+or capacity claim.
+
+The coverage renderer owns all eight coverpoint/static-domain shapes. It emits
+exactly 110 bytes per coverpoint plus 827 fixed bytes, so the selected
+65,536/65,537 sources return source-free `envelope_unconstructible` results
+with the exact input-1 fixture diagnostic and separately retain the measured
+9,524/9,525 parser boundary. Reachable coverpoints and authored bin/cross
+domains traverse the canonical route twice. Their provider-free oracle sets one
+LSB-first bit per authored bin or static tuple, independently reconstructs both
+the all-hit bytes and authored order, and rejects illegal/ignore, bit, order,
+source, and report mutations. The million case is exactly 1,999 bins plus
+998,001 tuples in 62,841 source bytes and 125,000 vector bytes, with vector
+digest `ae450c2064c76df34378b11784d1d24bde068c9b94dab52cc41fcea3be558582`;
+one further 29-byte bin returns only `VIAL_EXECUTION_LIMIT_ERROR` at
+`/coverage`. Default and exact RAM-guarded `t/1632` pass. Fault checking is the
+next proposed implementation leaf.
