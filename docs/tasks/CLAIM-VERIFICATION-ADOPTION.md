@@ -84,10 +84,60 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.4: inventory current claims and constants`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Migrate or gate the inventoried claims in bounded, surface-owned slices.`
   Acceptance: `Each claim is re-derived, falsified by a separating oracle where available, and made durable, or it names its missing leg and a task-owned repair; repository-derived constants are derived or input-identity gated rather than hand-carried.`
-  Verification: `per-claim commands, observed RED controls, watcher/input mutation controls, and doctrine gate`
+  Verification: `The committed .4 inventory partitions 1,417 candidates exactly into 72 root-document, 268 general-book, 557 protocol/profile/integration, 232 IAL2-AHB, and 288 HIAL/VIAL-verification candidates. Child .5.1 first gates review dispositions; .5.2-.5.6 then consume those five disjoint groups; .5.7 proves zero open migration owners and rechecks the 615 doctrine constants.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5: partition claim migration frontier`
+  Children: `CLAIM-VERIFICATION-ADOPTION.5.1, CLAIM-VERIFICATION-ADOPTION.5.2, CLAIM-VERIFICATION-ADOPTION.5.3, CLAIM-VERIFICATION-ADOPTION.5.4, CLAIM-VERIFICATION-ADOPTION.5.5, CLAIM-VERIFICATION-ADOPTION.5.6, CLAIM-VERIFICATION-ADOPTION.5.7`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.1`
+  Status: `pending`
+  Goal: `Define and gate the bounded candidate-review disposition contract.`
+  Acceptance: `A canonical data-only registry keys dispositions to current inventory candidate IDs, permits only claim-record, derived-gate, reviewed-incidental, or explicitly owned-gap outcomes with outcome-specific evidence, rejects stale/duplicate/unknown candidates and fabricated path or marker identities, and leaves undisposed candidates visibly open.`
+  Verification: `positive bounded registry; stale-ID, duplicate, unknown-outcome, missing-evidence, and aliased-leg RED controls; inventory/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.2`
+  Status: `pending`
+  Goal: `Review and migrate the 72 root-document claim candidates.`
+  Acceptance: `Every root-document candidate receives an exact gated disposition; current policy constants and historical/rationale measurements are distinguished, published claims gain three-leg evidence or owned gaps, and incidental structure is reclassified only with a reviewable reason.`
+  Verification: `root-group identity/count, per-disposition commands and RED controls, zero open root candidates, docs/live-document/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.3`
+  Status: `pending`
+  Goal: `Review and migrate the 268 general language, control, tooling, and reference-book candidates.`
+  Acceptance: `Every shipped-behavior candidate outside the named protocol, IAL2-AHB, and HIAL/VIAL-verification clusters receives an exact gated disposition without weakening examples or turning syntax literals and navigation identifiers into claims.`
+  Verification: `general-book group identity/count, lowering-clean examples where touched, per-disposition RED controls, zero open group candidates, mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.4`
+  Status: `pending`
+  Goal: `Review and migrate the 557 protocol-profile and integration-book candidates.`
+  Acceptance: `Every candidate in 14f, 14g, 14h, 14i, 14j, 14l, 16a, 16aa, and 16b is dispositioned against executable protocol/profile/integration producers and separating oracles, or carries an exact owned gap; repeated measurements share evidence only when they are demonstrably the same claim.`
+  Verification: `protocol-group identity/count, focused profile/integration gates and deliberate mutations, zero open group candidates, mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.5`
+  Status: `pending`
+  Goal: `Review and migrate the 232 IAL2-AHB execution-scale book candidates.`
+  Acceptance: `Every 16c candidate is tied to its exact scale/gate producer and a separating excess or mutation oracle, reclassified as reviewed incidental, or assigned an explicit repair; historical observations are not promoted into current support claims.`
+  Verification: `16c group identity/count, scale producer reruns and adjacent-excess RED controls, zero open group candidates, mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.6`
+  Status: `pending`
+  Goal: `Review and migrate the 288 HIAL/VIAL verification-architecture book candidates.`
+  Acceptance: `Every 16d candidate is tied to exact architecture-scale, backend, runtime, result, or capability evidence with a separating oracle, reclassified with a reviewable incidental reason, or assigned an explicit repair without overstating provider or support coverage.`
+  Verification: `16d group identity/count, exact architecture/runtime producer and RED controls, zero open group candidates, mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.7`
+  Status: `pending`
+  Goal: `Reconcile all migrated claims and governed constants into a zero-open-owner inventory.`
+  Acceptance: `The regenerated inventory has no candidate still owned by CLAIM-VERIFICATION-ADOPTION.5, every claim/disposition identity is current and three-leg honest, all 615 originally inventoried numeric doctrine constants are still derived/watched or input-identity gated, and no migration artifact is off-volume or untracked.`
+  Verification: `complete disposition/inventory join, zero-open-owner assertion, constant census parity and watcher/input RED controls, mdBook/doctrine gates`
   Commit: `pending`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.6`
@@ -112,11 +162,14 @@ hidden behind repeated checks of the same kind.
 - `2026-08-20`: The inventory classifier has no incidental fallback. Numeric
   prose not proven to be structure, code/data, a watched generated projection,
   or an identifier remains actionable review debt owned by leaf `.5`.
+- `2026-08-20`: The committed inventory places 1,345 of 1,417 candidates in
+  the mdBook. Migration therefore uses one root-doc slice, one general-book
+  slice, and three evidence-coherent book clusters rather than one oversized
+  documentation rewrite; a separate first child installs disposition honesty.
 
 ## Open Questions
 
-- None blocking. Leaf `.5` must split its 1,417-candidate review/migration
-  frontier into governed surface-owned slices before changing a claim.
+- None blocking. The `.5.1` disposition contract is the sole next leaf.
 
 ## Blockers
 
@@ -136,6 +189,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-20` | `.2` | neutral-body digest; bootstrap; README/live-document/reference authority; docs paths; RAM-guarded mdBook; doctrine gate | `PASS — authoritative body identity reproduced; discovery and bounded routes closed; book built` |
 | `2026-08-20` | `.3` | claim checker; `t/1636`; bootstrap; Knowledge Map; live-document/reference authority; RAM-guarded mdBook; doctrine gate | `PASS — one bounded conformance record; Files=1, Tests=8; deliberate missing/alias/path RED controls; all registered doctrines` |
 | `2026-08-20` | `.4` | claim inventory/report; `t/1637`; bootstrap; claim checker; live-document/reference authority; RAM-guarded mdBook; doctrine gate | `PASS — independent parity across 10,666 numeric lines; 1,417 owned candidates and 615 governed constants; Files=1, Tests=5; bounded canonical inventory` |
+| `2026-08-20` | `.5` partition | committed-inventory path/classification aggregation; exact five-group sum; task integrity; docs paths; doctrine gate | `PASS — 72 + 268 + 557 + 232 + 288 = 1,417 with disjoint path ownership; .5.1 selected alone` |
 
 ## Commit Log
 
@@ -145,3 +199,4 @@ hidden behind repeated checks of the same kind.
 | `.2` | `CLAIM-VERIFICATION-ADOPTION.2: install the authoritative claim standard` | `Project-owned standard plus bounded discovery and book reference; no product behavior change.` |
 | `.3` | `CLAIM-VERIFICATION-ADOPTION.3: gate bounded three-leg claim records` | `Bounded registry, exact record checker, positive/RED fixtures, doctrine registration, and durable retrieval card.` |
 | `.4` | `CLAIM-VERIFICATION-ADOPTION.4: inventory current claims and constants` | `Producer-derived current-surface census, conservative partitions, governed constants, exact migration ownership, and independent RED controls.` |
+| `.5` | `CLAIM-VERIFICATION-ADOPTION.5: partition claim migration frontier` | `Activates seven bounded children from the committed five-group candidate census; changes no claim, checker, product, or support behavior.` |
