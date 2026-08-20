@@ -105,13 +105,17 @@ fi
 
 claim_verification_files=(
   doctrine/claim_verification/claims.jsonl
+  doctrine/claim_verification/disposition_groups.jsonl
+  doctrine/claim_verification/dispositions.jsonl
   doctrine/claim_verification/fixtures/positive.txt
   doctrine/claim_verification/inventory.jsonl
   doctrine/claim_verification/inventory_scope.json
   scripts/check_claim_verification.pl
+  scripts/check_claim_verification_dispositions.pl
   scripts/check_claim_verification_inventory.pl
   t/1636-claim-verification-doctrine.t
   t/1637-claim-verification-inventory.t
+  t/1638-claim-verification-dispositions.t
 )
 for file in "${claim_verification_files[@]}"; do
   if [[ -f "${file}" ]]; then
@@ -133,10 +137,22 @@ else
   note "scripts/check_claim_verification_inventory.pl is not executable"
 fi
 
+if [[ -x scripts/check_claim_verification_dispositions.pl ]]; then
+  ok "scripts/check_claim_verification_dispositions.pl executable"
+else
+  note "scripts/check_claim_verification_dispositions.pl is not executable"
+fi
+
 if grep -q 'CLAIM-INVENTORY|scripts/check_claim_verification_inventory.pl' scripts/check_doctrines.sh; then
   ok "doctrine registry includes CLAIM-INVENTORY"
 else
   note "doctrine registry does not include CLAIM-INVENTORY"
+fi
+
+if grep -q 'CLAIM-DISPOSITIONS|scripts/check_claim_verification_dispositions.pl' scripts/check_doctrines.sh; then
+  ok "doctrine registry includes CLAIM-DISPOSITIONS"
+else
+  note "doctrine registry does not include CLAIM-DISPOSITIONS"
 fi
 
 live_document_files=(

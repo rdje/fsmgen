@@ -92,11 +92,11 @@ hidden behind repeated checks of the same kind.
   Children: `CLAIM-VERIFICATION-ADOPTION.5.1, CLAIM-VERIFICATION-ADOPTION.5.2, CLAIM-VERIFICATION-ADOPTION.5.3, CLAIM-VERIFICATION-ADOPTION.5.4, CLAIM-VERIFICATION-ADOPTION.5.5, CLAIM-VERIFICATION-ADOPTION.5.6, CLAIM-VERIFICATION-ADOPTION.5.7`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Define and gate the bounded candidate-review disposition contract.`
-  Acceptance: `A canonical data-only registry keys dispositions to current inventory candidate IDs, permits only claim-record, derived-gate, reviewed-incidental, or explicitly owned-gap outcomes with outcome-specific evidence, rejects stale/duplicate/unknown candidates and fabricated path or marker identities, and leaves undisposed candidates visibly open.`
-  Verification: `positive bounded registry; stale-ID, duplicate, unknown-outcome, missing-evidence, and aliased-leg RED controls; inventory/doctrine gates`
-  Commit: `pending`
+  Acceptance: `The canonical bounded disposition and five-group registries join stable current candidate IDs to claim-record, derived-gate, reviewed-incidental, or explicitly owned-gap outcomes; outcome-specific evidence, tracked path locality, live gap owners, and group completion are gated while the deliberately empty first registry leaves all 1,417 candidates visibly open.`
+  Verification: `PASS — disposition report reproduces 72 + 268 + 557 + 232 + 288 open candidates; Files=1, Tests=9 prove all four outcomes plus stale, duplicate, unknown, missing, aliased, incomplete, fabricated-source, and closed-gap-owner RED controls; 628-constant inventory, bootstrap, Knowledge Map, live-document, mdBook, and doctrine gates`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.1: gate candidate review dispositions`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.2`
   Status: `pending`
@@ -166,10 +166,14 @@ hidden behind repeated checks of the same kind.
   the mdBook. Migration therefore uses one root-doc slice, one general-book
   slice, and three evidence-coherent book clusters rather than one oversized
   documentation rewrite; a separate first child installs disposition honesty.
+- `2026-08-20`: A migration group remains `required_complete=false` until its
+  owning slice has dispositioned every current candidate. The empty `.5.1`
+  outcome registry therefore proves mechanism and reports debt; it does not
+  misrepresent any of the 1,417 candidates as reviewed.
 
 ## Open Questions
 
-- None blocking. The `.5.1` disposition contract is the sole next leaf.
+- None blocking. The `.5.2` root-document review is the sole next leaf.
 
 ## Blockers
 
@@ -177,9 +181,9 @@ hidden behind repeated checks of the same kind.
 
 ## Acceptance Checklist (enforced for implementation changes)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'inventory_scope.json' --oneline d255b364f -- doctrine scripts t docs/book/src KNOWLEDGE_MAP.md` returned no match: the installed claim-record doctrine had no producer-derived current-surface inventory, independent census, or exact migration disposition for existing quantitative prose and control constants.
-- [x] **ADDRESSED (verified)** — `scripts/check_claim_verification_inventory.pl --report` reproduced `numeric_lines=10666`, `candidates=1417`, `quantified=655`, `conservative=762`, `constants=615`, `untracked_producers=0`, and `unwatched_candidates=1417`; `prove -Iperl -v t/1637-claim-verification-inventory.t` reported `Files=1, Tests=5` after proving census parity plus inventory-drift, conservative-classifier, untracked-producer, and structural-partition controls.
-- [x] **NO REGRESSION** — `prove -Iperl -v t/1637-claim-verification-inventory.t` reported `All tests successful` and `Files=1, Tests=5`; bootstrap, claim verification, and live-document containment passed with `3021/3021` declared document paths, the RAM-guarded mdBook build completed, and the driver reported `[doctrine] all doctrine checks passed` for all 11 registered doctrines.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'dispositions.jsonl' --oneline 979d5d416 -- doctrine scripts t docs/book/src KNOWLEDGE_MAP.md` returned no match: the complete inventory had no bounded join from a current candidate identity to a reviewed outcome and no enforced way for a completed migration group to reject residual open candidates.
+- [x] **ADDRESSED (verified)** — `scripts/check_claim_verification_dispositions.pl --report` reported `candidates=1417`, `disposed=0`, `open=1417`, and exact group totals `268/232/557/72/288`; `prove -Iperl -v t/1638-claim-verification-dispositions.t` exercised all four outcome shapes and nine positive/RED subtests for stale, duplicate, unknown, missing, aliased, incomplete, fabricated-source, and closed-gap-owner cases.
+- [x] **NO REGRESSION** — the focused disposition suite reported `All tests successful` and `Files=1, Tests=9`; claim inventory re-derived `628` governed constants without changing the `1,417` candidate frontier, Knowledge Map reported `1127` facts with query parity, live-document containment covered `3022/3022` paths, and the RAM-guarded mdBook plus all 12 registered doctrines pass.
 
 ## Verification Log
 
@@ -190,6 +194,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-20` | `.3` | claim checker; `t/1636`; bootstrap; Knowledge Map; live-document/reference authority; RAM-guarded mdBook; doctrine gate | `PASS — one bounded conformance record; Files=1, Tests=8; deliberate missing/alias/path RED controls; all registered doctrines` |
 | `2026-08-20` | `.4` | claim inventory/report; `t/1637`; bootstrap; claim checker; live-document/reference authority; RAM-guarded mdBook; doctrine gate | `PASS — independent parity across 10,666 numeric lines; 1,417 owned candidates and 615 governed constants; Files=1, Tests=5; bounded canonical inventory` |
 | `2026-08-20` | `.5` partition | committed-inventory path/classification aggregation; exact five-group sum; task integrity; docs paths; doctrine gate | `PASS — 72 + 268 + 557 + 232 + 288 = 1,417 with disjoint path ownership; .5.1 selected alone` |
+| `2026-08-20` | `.5.1` | disposition checker/report; `t/1638`; inventory/constant census; bootstrap; Knowledge Map; live-document/reference authority; RAM-guarded mdBook; doctrine gate | `PASS — five exact groups, four bounded outcomes, all 1,417 debt records visibly open; Files=1, Tests=9; 628 governed constants; all registered doctrines` |
 
 ## Commit Log
 
@@ -200,3 +205,4 @@ hidden behind repeated checks of the same kind.
 | `.3` | `CLAIM-VERIFICATION-ADOPTION.3: gate bounded three-leg claim records` | `Bounded registry, exact record checker, positive/RED fixtures, doctrine registration, and durable retrieval card.` |
 | `.4` | `CLAIM-VERIFICATION-ADOPTION.4: inventory current claims and constants` | `Producer-derived current-surface census, conservative partitions, governed constants, exact migration ownership, and independent RED controls.` |
 | `.5` | `CLAIM-VERIFICATION-ADOPTION.5: partition claim migration frontier` | `Activates seven bounded children from the committed five-group candidate census; changes no claim, checker, product, or support behavior.` |
+| `.5.1` | `CLAIM-VERIFICATION-ADOPTION.5.1: gate candidate review dispositions` | `Bounded outcome/group registries, exact inventory join, live owner and path checks, completion enforcement, RED controls, and durable retrieval route.` |

@@ -69,7 +69,7 @@ signature instead of pasting unrelated evidence or weakening the checklist.
 | Need doctrine/memory gate truth | `scripts/check_doctrines.sh`. |
 | Need authoritative active task-tree structure or sealed-history truth | `scripts/check_task_tree_integrity.pl`. |
 | Need code-slice evidence acceptance | Stage the intended slice, then run `scripts/check_task_acceptance.sh`. |
-| Need to publish or inventory an actionable quantitative claim | Use `CLAIM_VERIFICATION.md`; run `scripts/check_claim_verification_inventory.pl` for current-surface debt, then declare migrated exact records in `doctrine/claim_verification/claims.jsonl` and run `scripts/check_claim_verification.pl`. |
+| Need to publish, inventory, or disposition an actionable quantitative claim | Use `CLAIM_VERIFICATION.md`; run `scripts/check_claim_verification_inventory.pl` for current-surface debt, record reviewed outcomes in `doctrine/claim_verification/dispositions.jsonl`, and run `scripts/check_claim_verification_dispositions.pl`; published records remain in `claims.jsonl` and are gated by `scripts/check_claim_verification.pl`. |
 | Need diff hygiene before commit | `git --no-pager diff --check` and `git status --short`. |
 | Need a downstream repro bundle | `./bin/fsmgen-issue-bundle --case PATH --issue-id ID -- [FSMGEN_OPTIONS...]`. |
 

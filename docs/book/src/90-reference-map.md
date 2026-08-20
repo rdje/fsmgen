@@ -61,8 +61,13 @@ leg is published explicitly rather than hidden behind repeated checks of the
 same kind. `scripts/check_claim_verification.pl` gates exact bounded records and
 tracked local paths. The separately bounded current-surface inventory derives
 its scope from the live-document registry and sends every open candidate to a
-task owner. Decision `0074` keeps semantic truth and oracle independence
-outside those structural gates' claims.
+task owner. Its bounded disposition registry then joins each reviewed current
+candidate to a published claim record, a three-leg derived gate, a reviewed
+incidental reason, or an explicit owned gap; a completed source group cannot
+retain an open candidate. Run the five-group report with
+`scripts/check_claim_verification_dispositions.pl --report`. Decision `0074`
+keeps semantic truth and oracle independence outside those structural gates'
+claims.
 
 `MEMORY.md` is the bounded resume pointer and `TASK_TREE.md` indexes the live
 work frontier. `ROADMAP_V2.md` carries high-level direction.

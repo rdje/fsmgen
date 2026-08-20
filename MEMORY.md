@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `CLAIM-VERIFICATION-ADOPTION.5.1`; the 1,417-candidate
-  migration frontier is partitioned into five exact surface/topic groups.
-- next_action: define and gate the bounded candidate-review disposition
-  registry before applying any root-document claim dispositions.
-- in_flight_uncommitted: none after the `.5` partition-selection commit.
+- active_work_unit: `CLAIM-VERIFICATION-ADOPTION.5.2`; bounded disposition
+  outcomes and required-complete migration groups are doctrine-gated.
+- next_action: review all 72 root-document candidates, record exact outcomes,
+  and make the root_documents disposition group required-complete.
+- in_flight_uncommitted: none after the `.5.1` disposition-gate commit.
 - in_flight_background: none
 - blockers: none.

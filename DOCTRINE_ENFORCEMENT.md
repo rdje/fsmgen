@@ -112,6 +112,7 @@ Current registered checks:
 | `TASK-TREE-INTEGRITY` | `scripts/check_task_tree_integrity.pl` | Every active indexed tree has one live active root, unique valid nodes, exact direct-child enumeration, canonical statuses, valid ancestry/container state, and complete leaf evidence across the live list plus optional bounded exact-source sealed segments; compact terminals and completed-index manifests use named retention contracts, while migration manifests independently prove complete source, semantic nodes, working-set dimensions, and loss residue. |
 | `CLAIM-VERIFICATION` | `scripts/check_claim_verification.pl` | The bounded canonical JSONL registry and exact source records agree; each claim names distinct re-derive, falsify, and durability legs or task-owned gaps; all declared source, owner, producer, oracle, and watcher paths are tracked regular files inside the repository. |
 | `CLAIM-INVENTORY` | `scripts/check_claim_verification_inventory.pl` | Selected high-traffic live-document surfaces and doctrine constants re-derive to the exact bounded inventory; a separate Git census agrees on every numeric source line; incidental partitions and conservative actionable debt remain explicit; every open record names its migration owner. |
+| `CLAIM-DISPOSITIONS` | `scripts/check_claim_verification_dispositions.pl` | Candidate groups exactly partition every current inventory candidate path; each reviewed candidate joins its stable ID to a published claim record, three-leg derived gate, reviewed-incidental reason, or task-owned gap; required-complete groups cannot retain an open candidate. |
 | `TASK-ACCEPTANCE` | `scripts/check_task_acceptance.sh` | A staged implementation change has one staged owning task file with fresh checked ROOT CAUSE, ADDRESSED, and NO REGRESSION boxes plus box-scoped declared root/no-regression evidence (`TASK_ACCEPTANCE.md`, decision `0026`). |
 
 List the registry with:
@@ -172,6 +173,24 @@ prove stale inventory goes RED, unknown numeric prose remains owned, and an
 untracked referenced producer stays visible. The census record names these
 re-derive, falsify, and durability legs directly; this proves inventory
 plumbing and completeness under the declared grammar, not semantic truth.
+
+## Claim-Disposition Gate
+
+`doctrine/claim_verification/disposition_groups.jsonl` partitions every current
+candidate-bearing path into one migration group with one owning task. A group
+is initially open; its slice changes `required_complete` only after every
+current candidate in that group has a canonical outcome in
+`doctrine/claim_verification/dispositions.jsonl`.
+
+`scripts/check_claim_verification_dispositions.pl` joins those outcomes to the
+current candidate IDs. A `claim_record` must resolve to a published record on
+the same source path; a `derived_gate` carries distinct re-derive, falsify, and
+durability evidence; a `reviewed_incidental` uses a bounded reason class and a
+review explanation; and an `owned_gap` names its missing legs plus an existing
+repair task. Stale and duplicate candidates, unknown outcomes, missing or
+aliased evidence, fabricated source identity, and incomplete required groups
+fail closed under `t/1638-claim-verification-dispositions.t`. This gate proves
+the declared join and disposition shape, not the reviewer's semantic judgment.
 
 ## Task-Tree Integrity Gate
 

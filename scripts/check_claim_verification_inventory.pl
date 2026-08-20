@@ -464,6 +464,9 @@ sub constant_disposition {
     if ($path =~ m{\Adoctrine/task_tree/}) {
         $producer = ['scripts/check_task_tree_integrity.pl'];
         $oracle = ['t/1549-task-tree-integrity-doctrine.t'];
+    } elsif ($path =~ m{\Adoctrine/claim_verification/disposition}) {
+        $producer = ['scripts/check_claim_verification_dispositions.pl'];
+        $oracle = ['t/1638-claim-verification-dispositions.t'];
     } elsif ($path =~ m{\Adoctrine/claim_verification/}) {
         $producer = ['scripts/check_claim_verification.pl'];
         $oracle = ['t/1636-claim-verification-doctrine.t'];
