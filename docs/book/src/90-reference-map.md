@@ -131,6 +131,13 @@ examples rather than capability measurements. The lowering reference now
 matches check-first repeat behavior and separates request width, per-formal
 signal count, and target-derived payload width.
 
+The support-matrix and non-protocol backlog review separates current generated
+behavior from test filenames, recipe ordinals, task identifiers,
+implementation-language names, and illustrative literals. SourceHIR fixture
+identity, VHDL generic maps, ATL and FIFO lowering, IAL2 response boundaries,
+and VIAL profile evidence remain independently executable. The complete book-
+example total now follows the lowering audit instead of a stale hand copy.
+
 `MEMORY.md` is the bounded resume pointer and `TASK_TREE.md` indexes the live
 work frontier. `ROADMAP_V2.md` carries high-level direction.
 Decision 0049 retires the former roadmap-status board after its independent

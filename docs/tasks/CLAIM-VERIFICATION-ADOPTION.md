@@ -164,14 +164,14 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.3.3: disposition control data claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.3.4`
-  Status: `active`
+  Status: `done`
   Goal: `Disposition the 71 feature-matrix and non-protocol backlog candidates in Chapters 13k and 14-14k.`
   Acceptance: `Current support claims join executable support-accounting producers and negative controls; backlog identifiers, priorities, and structural references remain explicitly distinct from shipped capability evidence.`
-  Verification: `exact 71-candidate path-set join, support-accounting and backlog identity controls, inventory/disposition/mdBook/doctrine gates`
-  Commit: `pending`
+  Verification: `PASS — all 71 candidates close as 62 derived gates plus nine reviewed identifiers/example numerals; the stale book-audit count is repaired to 82 complete fixtures; RAM-guarded evidence reports Files=30/Tests=590 plus the filtered AXI Files=1/Tests=6; inventory/disposition, Knowledge Map, mdBook, containment, staged-acceptance, and doctrine gates pass.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.3.4: disposition support backlog claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.3.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Disposition the 51 implementation-blueprint, platform-intent, and reference-map candidates in Chapters 15, 16, and 90.`
   Acceptance: `Blueprint and platform claims join exact current producers and separating oracles while historical, navigation, policy, and migration references receive narrowly reviewable outcomes.`
   Verification: `exact 51-candidate path-set join, blueprint/platform/reference evidence controls, inventory/disposition/mdBook/doctrine gates, general_book required-complete`
@@ -308,11 +308,20 @@ hidden behind repeated checks of the same kind.
   expansion; it now states the check-first cost and separates one-bit request,
   per-formal signal count, and target-derived payload width without formatting
   those corrected claims out of the inventory.
+- `2026-08-20`: The support-matrix and non-protocol backlog review separates
+  current executable behavior from test filenames, cookbook ordinals, task
+  identifiers, implementation-language version names, and illustrative data.
+  ATL routes, FIFO widths, SourceHIR byte identities, VHDL generic maps, IAL2
+  pulse/read/RLAST/ARLEN boundaries, and VIAL review/qualification/bridge/
+  execution/parity counts each retain a distinct producer and negative
+  control. The Chapter 14 claim that 80 complete book fixtures lowered cleanly
+  was stale; the ordinary audit reports 82, so the published count is repaired
+  rather than waived as reviewed context.
 
 ## Open Questions
 
-- None blocking. `.5.3.4` is the sole active general-book child after the
-  control/data/composition/lowering disposition closure.
+- None blocking. `.5.3.5` is the sole active general-book child after the
+  support-matrix/non-protocol-backlog disposition closure.
 
 ## Blockers
 
@@ -353,6 +362,9 @@ hidden behind repeated checks of the same kind.
 - [x] **ROOT CAUSE (WHY + WHERE)** — both `git log -S 'body_cycles' --oneline -- docs/book/src/13h-lowering-reference.md` and the exact `{name}_{param}` implicit-signal pickaxe identify `423857034`: the cycle-reference expansion duplicated the stale repeat formula and left “1 per parameter” ambiguous between signal cardinality and payload width. All 68 current path-owned candidates also lacked disposition joins before this review.
 - [x] **ADDRESSED (verified)** — all 68 current identities close as 60 distinct three-leg derived gates plus seven instructional heading ordinals and one clamp-example threshold. Chapter 13h now states the exact check-first positive-repeat structure and separately declares one-bit request width, one payload signal per formal, and target-derived payload width. The inventory stays at 68 selected candidates after the rewrite, proving the corrected claims were not hidden by line formatting.
 - [x] **NO REGRESSION** — the RAM-guarded exact control/data/composition/lowering collection reports `All tests successful` at `Files=54, Tests=603`; it exercises loop edges/indexing, temporal bounds/anchors, control truthiness, width-clean data operations, storage/packing, exhaustive generated-child route reports/tops/HDL/RED cases, rule conflicts, lowering timing/signals, type packing, and both claim registries. The book audit reports 82 complete fixtures lowering cleanly and 270 non-actor fragments skipped. Inventory regenerates `1,415` candidates / `844` governed constants; disposition reports `216` closed overall and `146/268` in the general book. Knowledge Map reports `1,127` facts / `5,908` questions / `6,075` occurrences / `130` shards; live containment covers `3,022/3,022` paths with exact `51,071`-line / `2,698,124`-byte book authority. All 53 chapters test; the rendered 88-file/18,600-KiB book contains the corrected reference and is inspected and removed. Docs, Memory, diff, staged acceptance, and all 12 registered doctrines pass; the host-provided mdBook toolchain remains the only read-only off-volume dependency.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'Current state: 80' --oneline -- docs/book/src/14-feature-backlog.md` identifies `a25264fa3`: the hand-copied complete-example total was not updated when later runnable fixtures entered the ordinary audit. All 71 current candidates on the eight support-matrix/backlog paths also lacked disposition joins.
+- [x] **ADDRESSED (verified)** — all 71 identities close as 62 distinct three-leg derived gates plus nine reviewed test/recipe/task/language/example identifiers. Chapter 14 now copies the executable audit's 82 complete fixtures; SourceHIR byte identities, VHDL generic-map shapes, ATL/FIFO behavior, IAL2 pulse/read/RLAST/ARLEN boundaries, and VIAL profile/bridge/execution/parity measurements retain separate producer/oracle/watcher chains.
+- [x] **NO REGRESSION** — the RAM-guarded family collection reports `All tests successful` at `Files=30, Tests=590`, including the 82-complete/270-fragment book census, and the filtered dynamic-read/RLAST/raw-ARLEN collection reports `Files=1, Tests=6`. Inventory regenerates `1,415` candidates / `915` governed constants; disposition reports `287` closed overall and `217/268` in the general book. Knowledge Map reports `1,127` facts / `5,911` questions / `6,078` occurrences / `130` shards; live containment covers `3,022/3,022` paths with exact `51,078`-line / `2,698,576`-byte book authority. All 53 chapters test; the rendered 88-file/18,600-KiB book contains the repaired total and synchronized reference, is inspected, and is removed. Docs, Memory, diff, staged acceptance, and all 12 registered doctrines pass; the host-provided mdBook toolchain remains the only read-only off-volume dependency.
 
 ## Verification Log
 
@@ -375,6 +387,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-20` | `.5.3.1` | parser/width/literal/type/composition/factorization/CI/VHDL/ISF/APB evidence; independent LTE source count; inventory/disposition/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 35 candidates closed as 26 gates / 9 reviewed; general book 35/268; Files=22/Tests=7,487 exact focused run; all 53 chapters and all registered doctrines` |
 | `2026-08-20` | `.5.3.2` | static wait; entry/drive/sample/await/complete; repeat/control/data/loop timing; FIFO/APB composition; exact schedule ownership; inventory/disposition/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 43 candidates closed as 42 gates / 1 reviewed; general book 78/268; Files=36/Tests=602 exact focused run; all 53 chapters and all registered doctrines` |
 | `2026-08-20` | `.5.3.3` | loop/temporal/control/data/storage/composition/rule/lowering/type evidence; exhaustive ATL routes; inventory/disposition/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 68 candidates closed as 60 gates / 8 reviewed; general book 146/268; Files=54/Tests=603 exact focused run; 82 complete book fixtures and all registered doctrines` |
+| `2026-08-20` | `.5.3.4` | support matrix; book audit; SourceHIR; VHDL generic maps; ATL/FIFO; IAL2 pulse/read/RLAST/ARLEN; VIAL profile/bridge/execution/parity; inventory/disposition/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 71 candidates closed as 62 gates / 9 reviewed; general book 217/268; Files=30/Tests=590 plus filtered AXI Files=1/Tests=6; all registered doctrines` |
 
 ## Commit Log
 
@@ -397,3 +410,4 @@ hidden behind repeated checks of the same kind.
 | `.5.3.1` | `CLAIM-VERIFICATION-ADOPTION.5.3.1: disposition core language claims` | `Maps core grammar, inference, composition, tooling, extension, and lowering statements to ordinary evidence chains; preserves syntax and navigation numerals as non-claims; independently reconstructs the LTE diagnostic count.` |
 | `.5.3.2` | `CLAIM-VERIFICATION-ADOPTION.5.3.2: disposition intent timing claims` | `Maps intent, actor, and transaction statements to exact evidence families; repairs repeat timing and drive-payload prose; gives injected states explicit transaction ownership in schedule reports.` |
 | `.5.3.3` | `CLAIM-VERIFICATION-ADOPTION.5.3.3: disposition control data claims` | `Maps control, temporal, data, generated-child composition, rule, lowering, and type statements to distinct executable evidence; repairs duplicated repeat and payload-width prose.` |
+| `.5.3.4` | `CLAIM-VERIFICATION-ADOPTION.5.3.4: disposition support backlog claims` | `Maps shipped support-matrix and non-protocol backlog statements to distinct executable evidence, preserves identifiers/examples as reviewed context, and repairs the stale complete-book fixture count.` |

@@ -53,7 +53,7 @@ this chapter:
   plain-local-only island, nested `switch` / extra-loop deferrals, and
   generated-activation case splits remain migration cuts.
 - **Book example correctness build gate**: every `lisp`-tagged book
-  example must parse + lower (`t/1376`). Current state: 80
+  example must parse + lower (`t/1376`). Current state: 82
   complete fixtures lower cleanly.
 - **Cookbook ISF recipes**: `docs/book/src/12-cookbook.md` now
   carries recipes 9-13 covering basic actor, spawn, parameterized

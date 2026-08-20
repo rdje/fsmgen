@@ -20,6 +20,9 @@ answers:
   - "how are control data composition lowering and type claims verified?"
   - "how are generated child route width claims falsified?"
   - "which control chapter numerals are only instructional labels?"
+  - "how are support matrix and non-protocol backlog claims verified?"
+  - "what is the current complete book fixture count?"
+  - "which backlog numerals are identifiers or example values?"
 date: 2026-08-20
 status: current
 tags: [claim-verification, dispositions, inventory, evidence]
@@ -32,6 +35,10 @@ evidence: >-
   t/1330-isf-atl-resolved-child-fixture-coverage.t;
   t/1394-isf-for-loop.t;
   t/1418-isf-property-window-range.t;
+  t/1376-isf-book-example-lowering-audit.t;
+  t/1548-source-hir-phase-control.t;
+  t/1594-vial-vhdl-portable-matrix-review.t;
+  t/1599-vial-vhdl-osvvm-ghdl-qualification.t;
   docs/tasks/CLAIM-VERIFICATION-ADOPTION.md
 reverify: >-
   scripts/check_claim_verification_dispositions.pl --report && prove -Iperl
@@ -39,6 +46,10 @@ reverify: >-
   t/1639-isf-published-timing-claims.t
   t/1330-isf-atl-resolved-child-fixture-coverage.t
   t/1394-isf-for-loop.t t/1418-isf-property-window-range.t
+  t/1376-isf-book-example-lowering-audit.t
+  t/1548-source-hir-phase-control.t
+  t/1594-vial-vhdl-portable-matrix-review.t
+  t/1599-vial-vhdl-osvvm-ghdl-qualification.t
 ---
 
 Every current inventory candidate path belongs to exactly one bounded migration
@@ -107,3 +118,11 @@ reviewed instructional/example values. The lowering reference now repeats the
 correct check-first timing and distinguishes request width, per-formal signal
 count, and target-derived payload width; both remain explicit inventory claims
 rather than disappearing through prose reformatting.
+
+The support-matrix/non-protocol-backlog review closes 62 behavior candidates
+through distinct support, book-audit, SourceHIR, VHDL-generic, ATL/FIFO, IAL2,
+and VIAL evidence families. Nine test, recipe, task, language-generation, and
+syntax-example numerals remain reviewed identifiers or example values rather
+than capability measurements. The executable book audit reports 82 complete
+fixtures lowering cleanly, so the stale hand-copied total in Chapter 14 is
+repaired and remains watched by that audit.
