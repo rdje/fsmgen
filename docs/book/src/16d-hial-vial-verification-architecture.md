@@ -3654,7 +3654,7 @@ Independent complete-route reruns reproduce every stage digest; the foundation k
 `rerun/ceefc4f30…` identity and each generated level has its own content address. Canonical
 regeneration rejects construction/evaluation mutation. Success and consumer failure stage
 only below repository-derived `.artifacts/tmp/vial-scale/` and remove that exact directory.
-Focused `t/1632`/`t/1633` prove guarded coverage/fault routes; random/replay is next, then final
+Focused `t/1632`/`t/1633` prove guarded coverage/fault routes; random/replay is active, then final
 qualification. These fixtures change no parser, SemanticIR, bridge, ExecutionIR, backend,
 runtime, public product API, capability, support, performance, or capacity behavior.
 

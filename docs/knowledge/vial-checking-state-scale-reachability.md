@@ -158,4 +158,4 @@ without retaining a per-fault report array. Armed reinjection, active overlap,
 substitute mutation, declaration-order mutation, source mutation, and report
 mutation fail closed. Fault 4,097 returns exactly one
 `VIAL_EXECUTION_LIMIT_ERROR` at `/faults` and no execution/plan identity.
-Default and exact RAM-guarded `t/1633` pass. Random/replay activation is next.
+Default and exact RAM-guarded `t/1633` pass. Random/replay checking is active.
