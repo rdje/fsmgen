@@ -26,7 +26,9 @@ answers:
   - "how are blueprint platform and reference-map claims verified?"
   - "which reference-map measurements are historical activation context?"
   - "when does a claim migration group become required complete?"
-date: 2026-08-20
+  - "how are AXI manager queue depth lane and assertion counts verified?"
+  - "why are AXI selector probes host-memory percentages and report bytes reviewed history?"
+date: 2026-08-21
 status: current
 tags: [claim-verification, dispositions, inventory, evidence]
 evidence: >-
@@ -45,6 +47,9 @@ evidence: >-
   t/1518-ial2-ahb-mdbook-current-surface-truthfulness.t;
   t/1549-task-tree-integrity-doctrine.t;
   t/1569-focused-document-containment.t;
+  perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm;
+  t/1437-axi-ial2-manager-capacity-status-generator.t;
+  t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t;
   docs/tasks/CLAIM-VERIFICATION-ADOPTION.md
 reverify: >-
   scripts/check_claim_verification_dispositions.pl --report && prove -Iperl
@@ -59,6 +64,8 @@ reverify: >-
   t/1518-ial2-ahb-mdbook-current-surface-truthfulness.t
   t/1549-task-tree-integrity-doctrine.t
   t/1569-focused-document-containment.t
+  t/1437-axi-ial2-manager-capacity-status-generator.t
+  t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t
 ---
 
 Every current inventory candidate path belongs to exactly one bounded migration
@@ -145,3 +152,14 @@ the past tense so it cannot be mistaken for current repository state. With all
 five general-book children closed, the group is required-complete at its exact
 inventory boundary and any reopened or stale identity fails the disposition
 checker.
+
+The first protocol review separates executable AXI manager surfaces from the
+chronology that led to them. Twenty-eight current queue-depth, slot, rule,
+assertion, completion-demux, runtime-validation, and output-bank claims derive
+from the ordinary AXI capacity/status builder and bounded public PPIF fixtures;
+focused generator and dynamic-ID oracles distinguish head ordering, RLAST
+qualification, group-local depth, matched-beat capture, and per-transaction
+lane ownership. Thirty-seven selector boundaries, temporary helper counts,
+host-memory percentages, stopped-probe byte counts, and superseded local gates
+remain reviewed history whose reasons name their exact durable audit or
+selection record. They do not become current capability or resource promises.

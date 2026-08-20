@@ -1,11 +1,12 @@
 # Knowledge Map: `claim-verification`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **36** uniquely owned question entries.
+> **3** facts · **38** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="can the claim checker prove semantic truth or oracle independence?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
+- q="how are AXI manager queue depth lane and assertion counts verified?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are blueprint platform and reference-map claims verified?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are bridge source-map calibration claims independently reconstructed?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are checking-scale model scoreboard coverage and fault claims separated?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
@@ -38,6 +39,7 @@
 - q="which control chapter numerals are only instructional labels?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="which outcomes may close a claim inventory candidate?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="which reference-map measurements are historical activation context?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
+- q="why are AXI selector probes host-memory percentages and report bytes reviewed history?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="why do schedule reports carry explicit transaction ownership?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="why do total fibers live fibers and execution types use separate evidence?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="why was the experimental UVM resource peak removed from the rationale ledger?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
@@ -48,7 +50,7 @@
 
 _Candidate dispositions join current inventory identities to bounded outcomes_
 
-- **date:** 2026-08-20 · **status:** current
+- **date:** 2026-08-21 · **status:** current
 - **source and verification:** [`docs/knowledge/claim-verification-candidate-dispositions.md`](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 
 ### claim-verification-current-surface-inventory

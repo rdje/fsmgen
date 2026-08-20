@@ -186,14 +186,14 @@ hidden behind repeated checks of the same kind.
   Children: `CLAIM-VERIFICATION-ADOPTION.5.4.1, CLAIM-VERIFICATION-ADOPTION.5.4.2, CLAIM-VERIFICATION-ADOPTION.5.4.3, CLAIM-VERIFICATION-ADOPTION.5.4.4, CLAIM-VERIFICATION-ADOPTION.5.4.5, CLAIM-VERIFICATION-ADOPTION.5.4.6, CLAIM-VERIFICATION-ADOPTION.5.4.7, CLAIM-VERIFICATION-ADOPTION.5.4.8, CLAIM-VERIFICATION-ADOPTION.5.4.9, CLAIM-VERIFICATION-ADOPTION.5.4.10, CLAIM-VERIFICATION-ADOPTION.5.4.11, CLAIM-VERIFICATION-ADOPTION.5.4.12, CLAIM-VERIFICATION-ADOPTION.5.4.13, CLAIM-VERIFICATION-ADOPTION.5.4.14, CLAIM-VERIFICATION-ADOPTION.5.4.15, CLAIM-VERIFICATION-ADOPTION.5.4.16`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.4.1`
-  Status: `active`
+  Status: `done`
   Goal: `Disposition the 65 AXI-manager-core and dynamic-identity backlog candidates in Chapters 14f and 14g.`
   Acceptance: `Current generated AXI manager capacity, identity, demux, ordering, and output-bank statements join distinct executable evidence; selectors, historical checkpoints, and deferred-boundary numerals remain distinguishable from shipped behavior.`
-  Verification: `exact 31 + 34 path census, focused manager/dynamic-identity producers and mutations, inventory/disposition/mdBook/doctrine gates`
-  Commit: `pending`
+  Verification: `PASS — all 65 candidates close as 28 derived gates plus 37 reviewed selector, readiness, helper-probe, and resource-history outcomes; the RAM-guarded exact manager/dynamic-ID collection reports Files=2/Tests=121; inventory/disposition, Knowledge Map, mdBook, containment, staged-acceptance, and doctrine gates pass.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.4.1: disposition AXI manager claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.4.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Disposition the 11 foundational profile/APB candidates in Chapter 14h lines 1-850 and Chapter 16b.`
   Acceptance: `Profile-alias chronology, APB endpoint/completer/interconnect foundations, and the shipped APB example chapter retain current evidence without promoting task identifiers or mode-map navigation into capability proof.`
   Verification: `exact 7 + 4 range/path census, focused profile/APB foundation gates, inventory/disposition/mdBook/doctrine gates`
@@ -446,11 +446,21 @@ hidden behind repeated checks of the same kind.
   AXI chapters. Counts `65 + 11 + 35 + 46 + 37 + 28 + 40 + 49 + 27 + 35 +
   32 + 17 + 6 + 40 + 46 + 43` reproduce the whole group exactly. No child
   shares a current candidate identity, and `.5.4.1` alone is active.
+- `2026-08-21`: The first protocol review keeps AXI manager capability
+  evidence separate from the selection and resource history that produced it.
+  Current concrete and dynamic ID queues, depth-2/depth-3 storage, head
+  ordering, RLAST qualification, runtime beat validation, and multi-beat
+  output banks use distinct bounded PPIF producers and focused generator/
+  dynamic-ID oracles. Temporary helper counts, former local gates, selector
+  cardinalities, host-memory percentages, stopped probes, and report byte
+  sizes remain reviewed historical or structural context. The exact 65
+  identities close as 28 derived gates and 37 reviewed outcomes without
+  changing product or book behavior.
 
 ## Open Questions
 
-- None blocking. `.5.4.1` owns the first 65 AXI-manager-core and
-  dynamic-identity candidates after the exact 16-child protocol partition.
+- None blocking. `.5.4.2` owns the next 11 foundational profile/APB candidates
+  after the exact AXI-manager-core/dynamic-identity review closed 65 identities.
 
 ## Blockers
 
@@ -497,6 +507,9 @@ hidden behind repeated checks of the same kind.
 - [x] **ROOT CAUSE (WHY + WHERE)** — exact `git log -S` pickaxes for `cross-tree index keeps only three active`, `The 79-line review`, `The mandatory read is 51 lines`, `generated index classifies all 1,005`, and `317-line live view` identify commits `7f05b41de`, `2bfb32c02`, `dc1c64afb`, `ea1b76dd5`, and `a20d38afc`. Those immutable activation measurements remained accurate but used present tense after their live surfaces evolved, and all 51 current candidates on Chapters 15, 16, and 90 still lacked disposition joins.
 - [x] **ADDRESSED (verified)** — all 51 identities close as 14 three-leg derived gates plus 37 reviewed policy, historical, structural, and navigation outcomes. The Rust smoke, current bounded AHB map, retired-history retrieval, rationale ledger, task segment/archive, evidence maps, ISF partition, and roadmap archive retain distinct evidence chains. Activation-only task-index, review-front, mdBook-summary, focused-collection, and roadmap occupancy is now explicitly past-tense without changing the exact 51-candidate census. The general-book registry is required-complete at `268/268` with zero open identities.
 - [x] **NO REGRESSION** — the RAM-guarded exact blueprint/platform/reference collection reports `All tests successful` at `Files=14, Tests=121`; it exercises Rust/Perl parity, AHB source and generalized-count truth, task reconstruction, README/live-document pressure, maintained-reference authority, retired histories, rationale reconstruction, roadmap recovery, focused-document/ISF partitions, and both claim registries. Inventory regenerates `1,415` candidates / `966` governed constants; disposition reports `338` closed overall as `248` gates / `90` reviewed and closes `general_book=268/268 required_complete=1`. Knowledge Map reports `1,127` facts / `5,914` questions / `6,081` occurrences / `130` shards; live containment covers `3,022/3,022` paths with exact `51,089`-line / `2,699,163`-byte book authority. All 53 chapters test; the rendered 88-file/18,604-KiB book contains the clarified activation context and synchronized review note, is inspected, and is removed. Docs, Memory, diff, staged acceptance, and all 12 registered doctrines pass; the host-provided mdBook toolchain remains the only read-only off-volume dependency.
+- [x] **ROOT CAUSE (WHY + WHERE)** — cross-partition `git log -S` traces the queue-head read-data count to `81dc0834b`, the multiple depth-3 factorization to `f208c5c41`, and the 89.5-percent readiness checkpoint to `ded1dc51a`; `dc1c64afb` later moved all three into the focused Chapter 14 parts. The current inventory still treated 65 lines across 14f/14g uniformly as open debt even though they mix current generated behavior with immutable selector, helper-probe, and host-resource chronology.
+- [x] **ADDRESSED (verified)** — all 65 identities now join exactly 28 distinct three-leg derived gates plus 37 reviewed historical or structural outcomes. Concrete-ID and dynamic-ID queue families retain separate depth, ordering, RLAST, runtime-validation, and output-bank evidence; every reviewed outcome names its exact durable audit/selection record. The canonical join reports `candidates=1415`, `disposed=403`, `gates=276`, `reviewed=127`, and `protocol=65/557` with 492 open.
+- [x] **NO REGRESSION** — the RAM-guarded exact AXI manager/dynamic-ID collection reports `All tests successful` at `Files=2, Tests=121`; the disposition mutation suite separately reports `Files=1, Tests=9`. Inventory remains `1,415` candidates / `1,031` governed constants, and the join closes protocol `65/557` as `28` gates / `37` reviewed outcomes. Knowledge Map parity reports `1,127` facts / `5,916` questions / `6,083` occurrences / `130` shards; live containment covers `3,022/3,022` paths with unchanged `51,089`-line / `2,699,163`-byte book authority. All 53 chapters test; the inspected 88-file/18,604-KiB build is removed. Task, docs-relative-path, Memory, reference-authority, diff, and staged doctrine gates pass.
 
 ## Verification Log
 
@@ -522,6 +535,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-20` | `.5.3.4` | support matrix; book audit; SourceHIR; VHDL generic maps; ATL/FIFO; IAL2 pulse/read/RLAST/ARLEN; VIAL profile/bridge/execution/parity; inventory/disposition/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 71 candidates closed as 62 gates / 9 reviewed; general book 217/268; Files=30/Tests=590 plus filtered AXI Files=1/Tests=6; all registered doctrines` |
 | `2026-08-20` | `.5.3.5` | Rust parity smoke; current AHB map; retired histories; ledger; task migration/archive; evidence maps; ISF/reference partitions; roadmap recovery; inventory/disposition/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 51 candidates closed as 14 gates / 37 reviewed; general book 268/268 required-complete; Files=14/Tests=121 exact focused run; all registered doctrines` |
 | `2026-08-20` | `.5.4` partition | committed-inventory path/range aggregation; exact 16-child sum; task integrity; docs paths; inventory/disposition/Knowledge Map/live-document/diff/staged-doctrine gates | `PASS — 65 + 11 + 35 + 46 + 37 + 28 + 40 + 49 + 27 + 35 + 32 + 17 + 6 + 40 + 46 + 43 = 557; .5.4.1 selected alone; no claim, disposition, product, capability, or support behavior changes` |
+| `2026-08-21` | `.5.4.1` | exact AXI manager/dynamic-ID queue, ordering, RLAST, runtime-validation, and output-bank evidence; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 65 candidates closed as 28 gates / 37 reviewed; protocol 65/557; Files=2/Tests=121 exact focused run; 1,031 governed constants; all registered doctrines` |
 
 ## Commit Log
 
@@ -547,3 +561,4 @@ hidden behind repeated checks of the same kind.
 | `.5.3.4` | `CLAIM-VERIFICATION-ADOPTION.5.3.4: disposition support backlog claims` | `Maps shipped support-matrix and non-protocol backlog statements to distinct executable evidence, preserves identifiers/examples as reviewed context, and repairs the stale complete-book fixture count.` |
 | `.5.3.5` | `CLAIM-VERIFICATION-ADOPTION.5.3.5: disposition blueprint reference claims` | `Maps current Rust, AHB, archive, ledger, task, evidence-map, ISF-partition, and roadmap claims to distinct gates; preserves policy/navigation/history context and clarifies activation-only occupancy.` |
 | `.5.4` | `CLAIM-VERIFICATION-ADOPTION.5.4: partition protocol claim review` | `Activates 16 bounded path/range- and evidence-coherent children from the exact 557-candidate protocol census; changes no claim, disposition, product, capability, or support behavior.` |
+| `.5.4.1` | `CLAIM-VERIFICATION-ADOPTION.5.4.1: disposition AXI manager claims` | `Maps current concrete/dynamic AXI manager queue, ordering, validation, and output-bank statements to bounded executable evidence while preserving selector, readiness, helper-probe, and host-resource chronology as reviewed context.` |
