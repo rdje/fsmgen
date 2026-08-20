@@ -157,14 +157,14 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.3.2: disposition intent timing claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Disposition the 68 control-flow, data, composition, rules, lowering, and type candidates in Chapters 13d-13j.`
   Acceptance: `Every selected semantic or lowering claim is tied to the exact parser/lowerer/runtime projection and a separating oracle, or receives an exact reviewed-incidental or owned-repair outcome.`
-  Verification: `exact 68-candidate path-set join, focused control/data/composition/lowering gates and mutations, lowering-clean touched examples, inventory/disposition/mdBook/doctrine gates`
-  Commit: `pending`
+  Verification: `PASS — all 68 candidates close as 60 derived gates plus eight reviewed instructional/example numerals; the lowering reference now matches check-first repeat timing and target-derived drive payload widths; the RAM-guarded exact collection reports Files=54/Tests=603 with 82 complete book fixtures lowering cleanly; inventory/disposition, Knowledge Map, mdBook, containment, staged-acceptance, and doctrine gates pass.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.3.3: disposition control data claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.3.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Disposition the 71 feature-matrix and non-protocol backlog candidates in Chapters 13k and 14-14k.`
   Acceptance: `Current support claims join executable support-accounting producers and negative controls; backlog identifiers, priorities, and structural references remain explicitly distinct from shipped capability evidence.`
   Verification: `exact 71-candidate path-set join, support-accounting and backlog identity controls, inventory/disposition/mdBook/doctrine gates`
@@ -296,11 +296,23 @@ hidden behind repeated checks of the same kind.
   an owner. Forty-two candidates use distinct scheduling/runtime evidence
   families; the literal value in `(set fire 1)` remains one reviewed example
   numeral rather than a capability claim.
+- `2026-08-20`: Control/data/composition/lowering evidence remains partitioned
+  by semantic producer: loop exits and indexing, temporal windows and anchors,
+  control examples, expression widths and field sugar, shifts/banks/assembly,
+  generated-child ingress/egress/actor routes, rule pulses and disjointness,
+  lowering costs and implicit signals, and scalar/aggregate type packing each
+  retain their own separating oracle. The seven numbered verification-example
+  headings and the clamp threshold are instructional/example values, not
+  measurements. Chapter 13h repeated both the stale repeat-cost formula and an
+  ambiguous one-per-parameter signal note from the original cycle-reference
+  expansion; it now states the check-first cost and separates one-bit request,
+  per-formal signal count, and target-derived payload width without formatting
+  those corrected claims out of the inventory.
 
 ## Open Questions
 
-- None blocking. `.5.3.3` is the sole active general-book child after the
-  intent/actor/transaction disposition closure.
+- None blocking. `.5.3.4` is the sole active general-book child after the
+  control/data/composition/lowering disposition closure.
 
 ## Blockers
 
@@ -338,6 +350,9 @@ hidden behind repeated checks of the same kind.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'N × (body_cycles) + 2' --oneline -- docs/book/src/13b-transactions.md` identifies `423857034`, and the one-bit parameter-table pickaxe identifies `e2e5e7acf`: both prose claims predated an exact join to current lowering. The new focused oracle then exposed `Use of uninitialized value $tx_name ... Emitter/JSON.pm line 422`, because injected `main_max_chk` did not match the report's transaction-name heuristic.
 - [x] **ADDRESSED (verified)** — all 43 selected identities close as 42 distinct three-leg derived gates plus one reviewed example numeral. The book now states the check-first positive-repeat cost `N × (body + 1) + 2` and target-derived drive payload widths; `t/1639-isf-published-timing-claims.t` proves the exact 26-cycle two-drive/eight-repeat graph, rejects 18, distinguishes one-bit requests from one- and eight-bit payloads, exercises the published timing families, and requires exact `main` ownership for the injected latency state. Lowering stamps transaction ownership on every state, and JSON emission uses that field first and otherwise fails closed.
 - [x] **NO REGRESSION** — the RAM-guarded exact intent/actor/transaction collection reports `All tests successful` at `Files=36, Tests=602` over parser boundaries, state ordering, entry/drive/sample/await/complete behavior, repeat/control/data/loop timing, FIFO/APB composition, schedule reporting, and both claim registries. Inventory regenerates `1,415` candidates / `776` governed constants; the disposition join reports `148` closed overall and `78/268` in the general book. Knowledge Map reports `1,127` facts / `5,905` questions / `6,072` occurrences / `130` shards; live containment covers `3,022/3,022` paths with exact `51,059`-line / `2,697,391`-byte book authority. All 53 chapters test; the rendered 88-file/18,600-KiB book contains the corrected tables and reference, is inspected, and is removed. Docs, Memory, diff, staged acceptance, and all 12 registered doctrines pass; the host-provided mdBook toolchain remains the only read-only off-volume dependency.
+- [x] **ROOT CAUSE (WHY + WHERE)** — both `git log -S 'body_cycles' --oneline -- docs/book/src/13h-lowering-reference.md` and the exact `{name}_{param}` implicit-signal pickaxe identify `423857034`: the cycle-reference expansion duplicated the stale repeat formula and left “1 per parameter” ambiguous between signal cardinality and payload width. All 68 current path-owned candidates also lacked disposition joins before this review.
+- [x] **ADDRESSED (verified)** — all 68 current identities close as 60 distinct three-leg derived gates plus seven instructional heading ordinals and one clamp-example threshold. Chapter 13h now states the exact check-first positive-repeat structure and separately declares one-bit request width, one payload signal per formal, and target-derived payload width. The inventory stays at 68 selected candidates after the rewrite, proving the corrected claims were not hidden by line formatting.
+- [x] **NO REGRESSION** — the RAM-guarded exact control/data/composition/lowering collection reports `All tests successful` at `Files=54, Tests=603`; it exercises loop edges/indexing, temporal bounds/anchors, control truthiness, width-clean data operations, storage/packing, exhaustive generated-child route reports/tops/HDL/RED cases, rule conflicts, lowering timing/signals, type packing, and both claim registries. The book audit reports 82 complete fixtures lowering cleanly and 270 non-actor fragments skipped. Inventory regenerates `1,415` candidates / `844` governed constants; disposition reports `216` closed overall and `146/268` in the general book. Knowledge Map reports `1,127` facts / `5,908` questions / `6,075` occurrences / `130` shards; live containment covers `3,022/3,022` paths with exact `51,071`-line / `2,698,124`-byte book authority. All 53 chapters test; the rendered 88-file/18,600-KiB book contains the corrected reference and is inspected and removed. Docs, Memory, diff, staged acceptance, and all 12 registered doctrines pass; the host-provided mdBook toolchain remains the only read-only off-volume dependency.
 
 ## Verification Log
 
@@ -359,6 +374,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-20` | `.5.3` partition | committed-inventory path aggregation; exact five-child sum; task integrity; docs paths; inventory/disposition/Knowledge Map/live-document/diff/staged-doctrine gates | `PASS — 35 + 43 + 68 + 71 + 51 = 268 across 30 disjoint paths; .5.3.1 selected alone; no claim, disposition, product, capability, or support behavior changes` |
 | `2026-08-20` | `.5.3.1` | parser/width/literal/type/composition/factorization/CI/VHDL/ISF/APB evidence; independent LTE source count; inventory/disposition/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 35 candidates closed as 26 gates / 9 reviewed; general book 35/268; Files=22/Tests=7,487 exact focused run; all 53 chapters and all registered doctrines` |
 | `2026-08-20` | `.5.3.2` | static wait; entry/drive/sample/await/complete; repeat/control/data/loop timing; FIFO/APB composition; exact schedule ownership; inventory/disposition/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 43 candidates closed as 42 gates / 1 reviewed; general book 78/268; Files=36/Tests=602 exact focused run; all 53 chapters and all registered doctrines` |
+| `2026-08-20` | `.5.3.3` | loop/temporal/control/data/storage/composition/rule/lowering/type evidence; exhaustive ATL routes; inventory/disposition/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 68 candidates closed as 60 gates / 8 reviewed; general book 146/268; Files=54/Tests=603 exact focused run; 82 complete book fixtures and all registered doctrines` |
 
 ## Commit Log
 
@@ -380,3 +396,4 @@ hidden behind repeated checks of the same kind.
 | `.5.3` | `CLAIM-VERIFICATION-ADOPTION.5.3: partition general book claim review` | `Activates five semantic/evidence-coherent children from the exact 268-candidate general-book census; changes no claim, disposition, product, capability, or support behavior.` |
 | `.5.3.1` | `CLAIM-VERIFICATION-ADOPTION.5.3.1: disposition core language claims` | `Maps core grammar, inference, composition, tooling, extension, and lowering statements to ordinary evidence chains; preserves syntax and navigation numerals as non-claims; independently reconstructs the LTE diagnostic count.` |
 | `.5.3.2` | `CLAIM-VERIFICATION-ADOPTION.5.3.2: disposition intent timing claims` | `Maps intent, actor, and transaction statements to exact evidence families; repairs repeat timing and drive-payload prose; gives injected states explicit transaction ownership in schedule reports.` |
+| `.5.3.3` | `CLAIM-VERIFICATION-ADOPTION.5.3.3: disposition control data claims` | `Maps control, temporal, data, generated-child composition, rule, lowering, and type statements to distinct executable evidence; repairs duplicated repeat and payload-width prose.` |

@@ -123,6 +123,14 @@ and every check transition, while request and target-derived payload widths
 remain distinct. Lowered states carry exact transaction ownership so injected
 latency checks remain attributable in schedule reports.
 
+The control, data, composition, rule, lowering, and type review keeps loop and
+temporal edges, expression widths, storage packing, generated-child routes,
+rule conflicts, structural costs, and type packing on distinct executable
+evidence. Instructional ordinals and an example clamp threshold remain
+examples rather than capability measurements. The lowering reference now
+matches check-first repeat behavior and separates request width, per-formal
+signal count, and target-derived payload width.
+
 `MEMORY.md` is the bounded resume pointer and `TASK_TREE.md` indexes the live
 work frontier. `ROADMAP_V2.md` carries high-level direction.
 Decision 0049 retires the former roadmap-status board after its independent

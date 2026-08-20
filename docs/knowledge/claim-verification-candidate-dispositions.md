@@ -17,6 +17,9 @@ answers:
   - "how are intent actor and transaction timing claims verified?"
   - "what is the exact static repeat cycle formula?"
   - "why do schedule reports carry explicit transaction ownership?"
+  - "how are control data composition lowering and type claims verified?"
+  - "how are generated child route width claims falsified?"
+  - "which control chapter numerals are only instructional labels?"
 date: 2026-08-20
 status: current
 tags: [claim-verification, dispositions, inventory, evidence]
@@ -26,11 +29,16 @@ evidence: >-
   scripts/check_claim_verification_dispositions.pl;
   t/1638-claim-verification-dispositions.t;
   t/1639-isf-published-timing-claims.t;
+  t/1330-isf-atl-resolved-child-fixture-coverage.t;
+  t/1394-isf-for-loop.t;
+  t/1418-isf-property-window-range.t;
   docs/tasks/CLAIM-VERIFICATION-ADOPTION.md
 reverify: >-
   scripts/check_claim_verification_dispositions.pl --report && prove -Iperl
   t/1638-claim-verification-dispositions.t
   t/1639-isf-published-timing-claims.t
+  t/1330-isf-atl-resolved-child-fixture-coverage.t
+  t/1394-isf-for-loop.t t/1418-isf-property-window-range.t
 ---
 
 Every current inventory candidate path belongs to exactly one bounded migration
@@ -88,3 +96,14 @@ sample, await, complete, control, data, loop, and latency forms. Lowering also
 stamps every state with its exact transaction owner so injected latency states
 remain reportable; the JSON emitter uses that field first and fails closed
 when no legacy owner can be derived.
+
+The control/data/composition/lowering review closes 60 behavior candidates
+through distinct loop, temporal, control, width, storage, composition, rule,
+timing, and type evidence families. Generated-child route claims run through
+the exhaustive scalar/vector, ingress/egress, multi-route, report, generated-
+top, HDL, and RED matrix rather than sharing a copied width assertion. Seven
+numbered verification-example headings and the runnable clamp threshold are
+reviewed instructional/example values. The lowering reference now repeats the
+correct check-first timing and distinguishes request width, per-formal signal
+count, and target-derived payload width; both remain explicit inventory claims
+rather than disappearing through prose reformatting.

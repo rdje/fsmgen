@@ -335,7 +335,9 @@ The DT's `<-` assignment takes effect NEXT cycle (flopped).
 So `(drive scl 1)` → cycle N: assert start + wire value, cycle N+1: port changes.
 
 **Cycles**: 1 per call. **No automatic merging.**
-**Implicit signals**: `{name}_start` (1), `{name}_{param}` (1 per parameter).
+**Implicit signals**: `{name}_start` is 1 bit; exactly 1 `{name}_{param}`
+payload signal exists per formal, with width derived from its driven output
+(`1` bit only for a scalar output).
 
 ## `(sample port as name)` → D-Input Assignment
 
@@ -1148,7 +1150,9 @@ decrements the counter and, while it is still nonzero, loops back to the FIRST
 body state (not back to `repeat_init`). The continue edge renders as the
 reduction `|i2c_transfer_cnt` and the exit edge as `~|i2c_transfer_cnt`.
 
-**Timing**: `N × (body_cycles) + 2` (init + check). For `N=8` with 2 drives: `8×2+2=18` cycles.
+**Timing** for a positive static count: `N × (body_cycles + 1) + 2`; one init
+state, `N` body sequences, and `N + 1` check visits. For `N=8` with 2 drives:
+`8×(2+1)+2=26` cycles. Static zero counts are compile-time no-ops.
 **Implicit signals**: `{tx}_cnt` (inferred width). Decimal literal counts use
 the minimum width that can represent the loaded count. Declared positive actor
 constants and actor-local scalar parameter defaults use their resolved value
