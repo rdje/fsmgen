@@ -3509,6 +3509,15 @@ plus the four non-reference levels of each fixed scalar axis
 (`selected_fixtures`, `selected_units`, and `selected_domains`). Every one fails
 closed at the caller seal; none is an unfinished generated level.
 
+Checking-state generation is now split at the same proof boundary. Active
+selection leaf `.17.2.5.1` must reconcile all eight declared axes with the
+canonical source, execution-plan, checking-service, normalized-result, and
+resource authorities before generator code is written. In particular, it must
+choose a bounded executable proof for the one-million scoreboard-capacity and
+bins-plus-explicit-cross-tuples levels; allocation alone is not semantic proof,
+and an implicit Cartesian cross is forbidden. Implementation remains separately
+proposed under `.17.2.5.2`, so activation changes no runtime or support claim.
+
 These are construction outcomes, not supported capacities. The exact 1/4/16-
 MiB plans contain 2,974/12,166/48,850 real reset operations plus bounded,
 referenced scenario and endpoint identifiers that close the remaining byte

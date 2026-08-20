@@ -463,9 +463,24 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Blocked by: `none`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5`
-  Status: `proposed`
+  Status: `active`
   Goal: `Generate checking-state workloads with exact stateful-service semantic oracles.`
   Acceptance: `Construct every checking_state_v1 axis with conservative execution topology; exercise rather than merely allocate models, scoreboard capacity, coverage, faults, and random decisions; prove final model state, scoreboard depth/drain, hit vectors, fault restoration, replay identity, normalized reruns, earliest-cap diagnostics, and cleanup without implicit Cartesian crosses.`
+  Verification: `Clean execution-graph predecessor 6250cabad closes all 40 selected execution shapes and the complete 29-file architecture family. The Knowledge Map has no checking-state reachability fact, while this tree's open question explicitly requires a selected proof method before the one-million scoreboard-capacity and bins-plus-cross-tuples levels may be authored. This activation therefore decomposes the work into read-only reachability selection .17.2.5.1 and separately proposed implementation .17.2.5.2. No parser, SemanticIR, bridge, ExecutionIR, checking service, result, backend, capability/support, performance, or capacity behavior changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5: activate checking-state generation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.1`
+  Status: `active`
+  Goal: `Select canonical reachability and an executable proof method for every checking-state axis before generator implementation.`
+  Acceptance: `Audit all eight checking_state_v1 axes and five levels against ordinary VIAL source construction, SemanticBuilder and ExecutionBuilder limits, execution-plan representation, stateful model/scoreboard/coverage/fault/random semantics, normalized result authority, construction envelopes, and repository RAM/time guards. Prove representative routes where inspection is insufficient; select exact accepted or earliest-cap outcomes and a bounded executable method for the two one-million-record levels that exercises semantic state rather than merely allocating declarations. Record the selection in a decision, Knowledge Map fact, mdBook, and task evidence without changing product behavior, creating implicit Cartesian crosses, or borrowing backend-runtime or support claims.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2`
+  Status: `proposed`
+  Goal: `Implement the selected canonical checking-state generator and exact stateful-service oracles.`
+  Acceptance: `Implement only after .17.2.5.1 commits cleanly; construct every selected checking_state_v1 axis through ordinary VIAL parsing and canonical SemanticIR, bridge, and ExecutionIR producers; execute the selected bounded reference semantics; prove exact final model state, scoreboard maximum/final depth and drain, coverage hit vectors, fault activation/restoration, keyed decisions and replay, normalized reruns, earliest-cap diagnostics, hostile-input rejection, determinism, and repository-local cleanup with default and RAM-guarded qualification tests plus synchronized user documentation.`
   Verification: `pending`
   Commit: `pending activation`
 
@@ -735,8 +750,9 @@ every prior answer key exactly once. Final RAM-guarded qualification passes all
 29 architecture-scale files / 135 tests in 1,114 seconds. `t/1603` freezes the
 completed selection as 40 owned shapes, 13 deliberately unselected reference
 profiles, and 12 deliberately unselected fixed-scalar profiles, all fail-
-closed. Proposed `.17.2.5` checking-state generation comes next, followed by
-`.17.2.6`/`.17.2.7` and measurement `.17.3`.
+closed. Active `.17.2.5.1` now selects checking-state reachability and a bounded
+executable proof method before proposed implementation `.17.2.5.2`; proposed
+`.17.2.6`/`.17.2.7` and measurement `.17.3` follow.
 
 ## Decisions
 
@@ -1133,6 +1149,7 @@ closed. Proposed `.17.2.5` checking-state generation comes next, followed by
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-20` | `.17.2.5` activation | clean execution-graph predecessor `6250cabad`; decisions `0055`/`0056`/`0057`; Knowledge Map absence check; task open-question and canonical checking-authority source census; task/index/Memory/book continuity; task-tree, relative-path, mdBook, containment, diff, and staged-doctrine gates | `passed`; `.17.2.5.1` alone is active to select reachability and an executable bounded proof method for all eight axes, especially the two one-million-record levels. `.17.2.5.2` remains proposed. Task integrity reports three trees/940 nodes, relative paths pass at Files=1/Tests=2, all 52 chapters test, the repository-local 88-file/18,500-KiB render is inspected and removed exactly, all 22 live-document surfaces pass, and staged doctrines pass. No parser, IR, checking-service, result, backend, capability/support, performance, or capacity behavior changes. |
 | `2026-08-20` | `.17.2.4/.17.2.4.2` final execution-graph qualification | complete default t/1600-t/1628 family under RAM guard; exact 40-owned/25-unselected selection partition; focused selection rerun; task/Memory/index/book/card continuity; exact artifact census and cleanup; syntax, Knowledge Map, mdBook, task, path, containment, staged-acceptance, and doctrine gates | `passed`; all 29 architecture-scale files / 135 tests pass in 1,114 seconds. The strengthened foundation oracle proves the completed generator owns exactly 40 selected shapes, while all 13 `reference_v1` profiles and all 12 non-reference profiles of the fixed fixture/unit/domain axes remain deliberately unselected and caller-seal rejected; its corrected focused rerun passes at `Files=1, Tests=3` in 13 seconds. `.17.2.4.2` and parent `.17.2.4` are done, with proposed `.17.2.5` next. No public capability, support, performance, or capacity claim changes. |
 | `2026-08-20` | `.17.2.4.2` unconstructible source-map ladder | owned-level history and decision `0072`; exact 262,144/1,000,000/1,000,001 map render sizes, identities, and reset counts; input-1 envelope authority; source-free canonical reconstruction; build/mutation/unknown-level negatives; selected-versus-catalog ownership distinction; default/opt-in/impacted guarded regression; book, Knowledge Map, rationale, task, containment, path, artifact, staged-acceptance, and doctrine gates | `passed`; all three levels now report `envelope_unconstructible` / `not_constructed` with the exact input-1 diagnostic, no retained source or stage identity, refused builds, and both decision-`0072` records carrying the measured 46,294/46,295 whole-route boundary against the declared one-million-map cap. Closing the axis raises selected owned shapes from 37 to 40 while the catalog's 25 deliberately non-selected profiles remain fail-closed. Focused default `t/1607` passes at `Files=1, Tests=8`, its opt-in route proof passes in 40 seconds, and the 13-file impacted matrix passes at `Files=13, Tests=68` in 304 seconds. The book example, all 52 chapters, exact repository-local render/removal, Knowledge Map, live containment, task/path/rationale, artifact census, staged acceptance, and doctrines pass. No public capability, support, performance, or capacity claim changes. |
 | `2026-08-20` | `.17.2.4.2` Knowledge Map card partition | exact pre-partition Git identity; descriptor-backed reconstruction; stable route/gate versus per-axis seam; answer-set equality and duplicate rejection; family-explicit IAL2/VHDL/VIAL scoping; current task/book routing; focused verifier regression; Knowledge Map, containment, task, relative-path, mdBook, diff, staged-acceptance, and doctrine gates | `passed`; the exact 383-line / 26,208-byte / `44760f9a…` source at `5514e692c` deterministically reconstructs as a 70-line / 4,250-byte route-and-gate card with 11 questions and a 132-line / 8,973-byte axis-outcome card with 36. All 47 question keys survive exactly once, current task and book routes replace the stale blocked sentence, and the generic history verifier now gives IAL2, VHDL, and VIAL explicit replacement scopes. Focused `t/1568` passes at `Files=1, Tests=3`; Knowledge Map is current at 1,123 facts / 5,867 questions / 6,034 occurrences / 128 shards; all 52 book chapters test and the repository-local 88-file / 18,488-KiB render is removed exactly. No product or user-visible behavior, support, performance, or capacity claim changes. |
@@ -1232,6 +1249,26 @@ closed. Proposed `.17.2.5` checking-state generation comes next, followed by
 | `2026-08-11` | `.17.2.4.2` scenario qualification/limit/over-limit ladder | decision-0061 exact 512/4,096/4,097 scenarios; caller-sealed level admission; ordinary checked-AHB VIAL/bridge/public-binder route; one real reset/root fiber per scenario; exact source/workload/SemanticIR/bridge/plan identities and topology; stable first-excess diagnostic/no partial output; mutation/missing-source negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; qualification accepts 512 scenarios/operations/fibers, one live fiber, 529 maps, and a 496,709-byte plan with ID `plan/22aedcf295c44c0a1b411b557cb12c9e5476e19077e57e7efe60ec4d7dc1ebe7`. The exact limit accepts 4,096 scenarios/operations/fibers, one live fiber, 4,113 maps, and a 3,779,103-byte plan with ID `plan/036742cfb80ab0f04cf7a7c8d9be1de833f310f5fde98ca3be9e47d331294cfc`. The adjacent 4,097 source returns only `VIAL_EXECUTION_LIMIT_ERROR`, phase `limit`, message `selected_scenarios exceeds the limit 4096`, semantic path `/scenario_ids`, with no partial IR/plan. Focused t1616-t1618 passes at Files=3/Tests=12 in 20 seconds; the guarded impact matrix passes at Files=21/Tests=91 in 815 seconds. No public binder, capability/support, performance, or capacity claim changes. |
 | `2026-08-19` | `.17.2.4.2` 8,192-operations-per-scenario qualification | decision-0061 exact 8,192-operation single-scenario level; caller-sealed level admission; ordinary checked-AHB VIAL/bridge/public-binder route; operation-depth versus scenario/fiber isolation; unique global operation source-map closure; exact source/workload/SemanticIR/bridge/plan identities; sub-cap plan bytes; mutation/missing-source/unowned-level negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; the 115,716-byte generated source authors one `scenario_00000000` with 8,192 genuine resets and no random decision. The unchanged public binder returns 8,192 total operations, one selected scenario, one root fiber, one simultaneously live fiber, 8,209 source maps, 22 bindings, seven types, and a 2,955,783-byte plan with ID `plan/4c6733ea702479b4c603761d333d491f7a427e9eac24dc37238331aeb624f990`. Every `/operation_graph/operations/N` path occurs once and resolves to its own `/packages/0/fixtures/0/scenarios/0/actions/N` authored action. Focused t1619 passes at Files=1/Tests=4 in 10 seconds; the guarded impact matrix passes at Files=22/Tests=95 in 814 seconds. The unimplemented 65,536/65,537 operation levels still fail closed. No public binder, capability/support, performance, or capacity claim changes. |
 | `2026-08-19` | `.17.2.4.2` operation limit/over-limit ladder | decision-0061 exact 65,536/65,537 operation levels; caller-sealed level admission; ordinary checked-AHB VIAL/bridge/public-binder route; semantic-before-bridge stage order; exact source/workload identities and one-record source delta; stable authoritative diagnostics and no partial output; recorded limit-interaction discrepancies; mutation/missing-source/unowned-level negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; the 918,533-byte limit source parses into one complete 65,536-action scenario with the frozen `fb82ce2c…` SemanticIR and unchanged 508,968-byte AHB bridge, and the unchanged public binder returns only `VIAL_EXECUTION_LIMIT_ERROR`, phase `limit`, message `serialized_plan_bytes exceeds the limit 16777216`, at `/plan`. Adding exactly one further 14-byte ` (reset bus 1)` record makes the ordinary parser reject first with `VIAL_LIMIT_ERROR`, message `scenario exceeds 65536 expanded actions`, at `/packages/0/fixtures/0/scenarios/0`, and no bridge is built behind it. Both evaluations report `expected_rejection`, empty metrics, and one `VIAL_SCALE_LIMIT_INTERACTION` discrepancy routed to `.17.4`. Focused t1620 passes at Files=1/Tests=4 in 89 seconds and t1621 at Files=1/Tests=4 in 44 seconds; the guarded impact matrix passes at Files=25/Tests=95 in 960 seconds. No public binder, capability/support, performance, or capacity claim changes. |
+
+## Acceptance Checklist (enforced) — `.17.2.5` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the Knowledge Map query for
+  `checking_state_v1`, scoreboard capacity, coverage cross tuples, and model
+  state/fault restoration returns no canonical fact, while the task tree's
+  open question explicitly requires proof-method selection before either
+  one-million-record level is authored. `git log -S'checking_state_v1'
+  --oneline -- docs perl t` traces the contract to selection commit `0516f2c66`
+  and the workload catalog to foundation commit `063b990f3`, but finds no
+  checking generator; clean predecessor `6250cabad` closes execution only.
+- [x] **ADDRESSED (verified)** — `.17.2.5` now decomposes into active read-only
+  selection `.17.2.5.1` and proposed implementation `.17.2.5.2`. The task
+  index, bounded Memory pointer, mdBook, and maintained-reference authority all
+  name the same boundary; no implementation path changes.
+- [x] **NO REGRESSION** — `scripts/check_task_tree_integrity.pl` reports three
+  trees/940 nodes; relative-path regression reports `All tests successful` at
+  `Files=1, Tests=2`; all 52 mdBook chapters test; the inspected 88-file /
+  18,500-KiB repository-local render is removed exactly; all 22 live-document
+  surfaces, diff checks, and the final staged doctrine gate pass.
 
 ## Acceptance Checklist (enforced) — `.17.2.4/.17.2.4.2` final execution-graph qualification
 
