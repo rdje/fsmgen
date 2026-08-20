@@ -3535,16 +3535,11 @@ their 998,001-tuple cross, and adds one independent bin: exactly
 1,000,000 entries in 62,841 bytes. One 29-byte bin more returns only the exact
 `/coverage` rejection at 62,870 bytes; no backend invents a bin or tuple.
 
-Accepted model, scoreboard, coverage, and fault levels execute state through caller-sealed canonical SemanticIR and ExecutionIR. The provider-free evaluator uses a
-4,000,000-byte FIFO for one million scoreboard entries and a 125,000-byte LSB-first
-coverage vector. One sample hits the entire authored domain; its vector digest is
-`ae450c20…`, while ordered-domain digest `696d5310…` closes illegal, ignore, bit, and order mutations. Random/replay checking remains separate.
+Accepted model, scoreboard, coverage, fault, and random/replay levels execute state through caller-sealed canonical SemanticIR and ExecutionIR. The provider-free evaluator uses a 4,000,000-byte FIFO for one million scoreboard entries and a 125,000-byte LSB-first coverage vector.
+One sample hits the entire authored domain; its vector digest is `ae450c20…`, while ordered-domain digest `696d5310…` closes illegal, ignore, bit, and order mutations. The random gate independently generates and strictly replays every keyed Boolean value.
 
-Public runtime traces, `ResultProducer`, and the first portable SystemVerilog
-backend remain excluded as scale oracles: they project or implement a narrower
-profile and do not independently recompute the general state semantics above.
-Implementation is separately owned under `.17.2.5.2`. Its completed model, scoreboard,
-coverage, and fault slices publish 28 levels: four non-reference levels on each of seven axes:
+Public runtime traces, `ResultProducer`, and the first portable SystemVerilog backend remain excluded as scale oracles: they project or implement a narrower profile and do not independently recompute the general state semantics above.
+Implementation is separately owned under `.17.2.5.2`. Its completed model, scoreboard, coverage, fault, and random/replay slices publish 32 levels: four non-reference levels on each of eight axes:
 
 ```perl
 use strict;
@@ -3553,19 +3548,15 @@ use lib 'perl';
 use FSM::VIAL::ArchitectureScaleCheckingState;
 
 my $owned = FSM::VIAL::ArchitectureScaleCheckingState->owned_shapes;
-die "checking ladder ownership changed\n" unless @$owned == 28;
-die "another axis landed early\n"
-    if grep { $_->{primary_axis} !~ /\A(?:bins_and_cross_tuples|coverpoints|faults|model_instances|scalar_model_state_cells|scoreboard_instances|scoreboard_capacity)\z/ }
+die "checking ladder ownership changed\n" unless @$owned == 32;
+die "unexpected axis\n"
+    if grep { $_->{primary_axis} !~ /\A(?:bins_and_cross_tuples|coverpoints|faults|model_instances|random_occurrences|scalar_model_state_cells|scoreboard_instances|scoreboard_capacity)\z/ }
         @$owned;
-print "model, scoreboard, coverage, and fault ladders own 28 levels\n";
+print "all eight checking-state axes own 32 non-reference levels\n";
 ```
 
-`construct` rejects `reference_v1` because it remains a catalog record, every still-unowned
-selected axis, and unknown axes, levels, keys, IR, trace, result, or support metadata.
-Internally, one same-package-only candidate boundary accepts just generated ordinary VIAL
-text and the exact 1,326-byte checked-AHB source. It regenerates the content-addressed
-workload before every build or evaluation, then produces SemanticIR, the IAL2-via-generated-
-and-reparsed-IAL1 bridge, ExecutionIR, and plan only canonically. Callers cannot inject them.
+`construct` rejects `reference_v1` because it remains a catalog record, plus unknown axes, levels, keys, IR, trace, result, or support metadata.
+Internally, one same-package-only candidate boundary accepts just generated ordinary VIAL text and the exact 1,326-byte checked-AHB source. It regenerates the content-addressed workload before every build or evaluation, then produces SemanticIR, the IAL2-via-generated-and-reparsed-IAL1 bridge, ExecutionIR, and plan only canonically. Callers cannot inject them.
 
 The model-instance source reuses one known unsigned eight-bit counter with an
 initial value of zero and a rule that adds one on the checked AHB `accepted`
@@ -3584,6 +3575,7 @@ containing 16, 1,024, or 2,048 cells. That factorization reaches exactly 512,
 | scoreboard instances | 32 / 1,024 / 4,096 | 6,404 / 168,100 / 668,836 | accepted and FIFO-checked; 4,097 rejects at `/scoreboards` in 668,999 bytes |
 | scoreboard capacity | 4,096 / 262,144 / 1,000,000 | 1,351 / 1,353 / 1,354 | accepted and FIFO-checked; 1,000,001 rejects at the semantic bound in 1,354 bytes |
 | faults | 32 / 1,024 / 4,096 | 5,650 / 148,498 / 590,866 | accepted and lifecycle-checked; 4,097 rejects at `/faults` in 591,010 bytes |
+| random occurrences | 1,024 / 32,768 / 65,536 / 65,537 | 26,101 / 470,412 / 933,555 / 933,642 | generated/replayed gate; exact plan rejection; preflight-dominated; exact occurrence-cap rejection |
 
 Every admitted model/scoreboard source stays below the construction envelope. For an
 accepted level, the provider-free oracle reads the event binding and complete
@@ -3631,6 +3623,10 @@ length-delimited lifecycle records per fault, so 4,096 faults prove 16,384 trans
 digest `4042b666…` without a 4,096-entry report array. Armed reinjection, active overlap,
 substitute/order/source/report mutation fail closed. Fault 4,097 returns only `VIAL_EXECUTION_LIMIT_ERROR` at `/faults` and no execution/plan identity. Guarded default Files=5/Tests=29 and exact Files=1/Tests=5 pass.
 
+The random renderer reuses a bounded palette of 128 Boolean choices. Each referenced `(scenario, choice)` pair is one real occurrence, so the 1,024 gate contains eight scenarios and its canonical plan is exactly 2,073,805 bytes. The oracle generates all keyed values twice, creates and strictly replays the canonical manifest, and requires byte-equal origin-free decision sequences and plans. Keyed-value and order mutations fail closed.
+
+Higher selected levels preserve the earliest real authority. The full 32,768 route counts all occurrences in SemanticIR and returns only `VIAL_EXECUTION_LIMIT_ERROR` at `/plan`. The 65,536 level is explicitly `preflight_dominated` / `not_materialized`, publishes no stage identity, and does not claim the nominal occurrence count. The 65,537 route reaches only the exact `/randomness/decisions` diagnostic. Opt-in evidence accepts 8,440 occurrences at 16,775,415 plan bytes and rejects adjacent 8,441 at the 16,777,216-byte cap. These are exact checking outcomes, not supported-capacity or runtime-throughput claims.
+
 The frozen foundation route uses the checked AHB VIAL content as a deliberately
 non-axis-evaluated source witness. Its workload identity is
 `workload/7a125500c716e333ac8849ca5594849dc52e34380f0ba0ec416a2e12975247c7`;
@@ -3642,8 +3638,7 @@ report says `accepted_not_axis_evaluated`, sets both `axis_oracle_executed` and
 `selected_count_claimed` false, and carries no axis evidence. Those observations
 therefore cannot be mistaken for the requested 32-model gate.
 
-The closed report populates model, scoreboard, coverage, or fault evidence only for the
-corresponding accepted levels and reserves `random_replay` for its later semantic leaf. Its
+The closed report populates model, scoreboard, coverage, fault, or `random_replay` evidence only for the corresponding accepted level. Its
 packed contract fixes big-endian fixed-width model values with unknown-state rejection, a
 big-endian 32-bit FIFO payload capped at 1,000,000 entries/4,000,000 bytes with complete
 transaction reconstruction, and an LSB-first coverage vector capped at 1,000,000
@@ -3654,8 +3649,8 @@ Independent complete-route reruns reproduce every stage digest; the foundation k
 `rerun/ceefc4f30…` identity and each generated level has its own content address. Canonical
 regeneration rejects construction/evaluation mutation. Success and consumer failure stage
 only below repository-derived `.artifacts/tmp/vial-scale/` and remove that exact directory.
-Focused `t/1632`/`t/1633` prove guarded coverage/fault routes; random/replay is active, then final
-qualification. These fixtures change no parser, SemanticIR, bridge, ExecutionIR, backend,
+Focused `t/1632`/`t/1633`/`t/1634` prove guarded coverage, fault, and random/replay routes. The complete default checking family passes at Files=6/Tests=33, and exact `t/1634` passes at Files=1/Tests=4 under the 4,096-MiB RAM guard; final family qualification remains separate.
+These fixtures change no parser, SemanticIR, bridge, ExecutionIR, backend,
 runtime, public product API, capability, support, performance, or capacity behavior.
 
 These are construction outcomes, not supported capacities. The exact 1/4/16-

@@ -395,3 +395,22 @@ prevents the lifecycle digest from hiding reordered declarations, and explicit
 reinjection, overlap, substitute, and order mutations prove each comparison
 fails closed. The 4,096-fault limit thus proves 16,384 lifecycle transitions
 without turning the evaluation report into another execution trace.
+
+## 2026-08-20: Random scale counts references and separates proof from materialization
+
+A random occurrence is the semantic reference from one scenario to one choice,
+not the declaration of that choice. The scale renderer therefore reuses a
+bounded 128-choice Boolean palette across as many real scenario references as
+the selected count requires. Compact source is still ordinary VIAL, and the
+oracle derives each keyed decision from canonical ExecutionIR before comparing
+independent generation, strict replay, and their origin-free plan forms.
+
+The higher selected counts cannot honestly be treated alike. The 32,768 route
+materializes SemanticIR and the bridge before the plan-byte cap rejects it;
+65,536 is already dominated by that proved route boundary and is deliberately
+not materialized or counted; 65,537 must still traverse semantics because its
+random-occurrence diagnostic wins before plan serialization. Frozen
+target-neutral identity lengths and timeout metadata reproduce the exact
+decision-0073 gate and adjacent plan-byte witnesses, but do not add operations,
+caller-created plans, or opaque plan padding. This keeps the evidence exact
+while distinguishing semantic occurrence proof from resource materialization.

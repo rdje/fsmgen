@@ -140,6 +140,19 @@ my @FAULT_EVIDENCE_KEYS = qw(
 );
 my $FAULT_EVIDENCE_SCHEMA =
     'fsmgen.vial_architecture_scale_fault_oracle_evidence.v1';
+my @RANDOM_EVIDENCE_KEYS = qw(
+    schema schema_version program axis random_occurrences choice_declarations
+    scenario_count generated_decisions replayed_decisions
+    generated_sequence_sha256 rerun_sequence_sha256 replayed_sequence_sha256
+    normalized_generated_sequence_sha256 normalized_replayed_sequence_sha256
+    generated_plan_sha256 replayed_plan_sha256 replay_manifest_id
+    first_occurrence_id last_occurrence_id first_value_hex last_value_hex
+    key_order_preserved values_canonically_normalized generated_values_matched
+    replay_values_matched replay_identity_preserved normalized_plans_equal
+    mutation_rejected order_mutation_rejected
+);
+my $RANDOM_EVIDENCE_SCHEMA =
+    'fsmgen.vial_architecture_scale_random_replay_oracle_evidence.v1';
 my @CONTRACT_DISCREPANCY_KEYS = qw(code message path repair_owner);
 my $CONSTRUCTION_ENVELOPE_BYTES = 1_114_112;
 my $LIMIT_POLICY_REPAIR_OWNER =
@@ -180,6 +193,9 @@ my %OWNED_LEVELS = (
         gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1
     )],
     faults => [qw(
+        gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1
+    )],
+    random_occurrences => [qw(
         gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1
     )],
 );
@@ -275,6 +291,8 @@ sub build($class, @args) {
     _confess_exact_keys($args[0], \@EVALUATE_KEYS, 'checking-state build');
     my $construction = _validated_construction($args[0]{construction});
     my $spec = $construction->{specification};
+    confess "preflight-dominated checking-state level is not materialized\n"
+        if _random_preflight_dominance($spec);
     confess "unconstructible checking-state level has no admitted source to build\n"
         if _unconstructible(@{$spec}{qw(primary_axis level)});
     my $inputs = _canonical_inputs_from_construction($construction);
@@ -288,6 +306,8 @@ sub evaluate($class, @args) {
     _confess_exact_keys($args[0], \@EVALUATE_KEYS, 'checking-state evaluation');
     my $construction = _validated_construction($args[0]{construction});
     my $construction_specification = $construction->{specification};
+    return _random_preflight_evaluation($construction)
+        if _random_preflight_dominance($construction_specification);
     return _unconstructible_evaluation($construction)
         if _unconstructible(
             @{$construction_specification}{qw(primary_axis level)},
@@ -299,6 +319,7 @@ sub evaluate($class, @args) {
     return _evaluate_coverage_axis($construction)
         if $generated_axis eq 'coverage';
     return _evaluate_fault_axis($construction) if $generated_axis eq 'fault';
+    return _evaluate_random_axis($construction) if $generated_axis eq 'random';
 
     my $first_inputs = _canonical_inputs_from_construction($construction);
     my $first = FSM::VIAL::ExecutionBuilder->build($first_inputs->{arguments});
@@ -438,6 +459,7 @@ sub _generated_axis_kind($construction) {
     return 'coverage' if $axis eq 'coverpoints'
         || $axis eq 'bins_and_cross_tuples';
     return 'fault' if $axis eq 'faults';
+    return 'random' if $axis eq 'random_occurrences';
     confess "generated checking-state axis has no evaluator\n";
 }
 
@@ -1065,6 +1087,168 @@ sub _evaluate_fault_axis($construction) {
     });
 }
 
+sub _evaluate_random_axis($construction) {
+    my $spec = $construction->{specification};
+    my ($axis, $level) = @{$spec}{qw(primary_axis level)};
+    my $canonical = JSON::PP->new->canonical(1)->utf8(1);
+    my $first_inputs = _canonical_inputs_from_construction($construction);
+    my $first = FSM::VIAL::ExecutionBuilder->build($first_inputs->{arguments});
+    my $second_inputs = _canonical_inputs_from_construction($construction);
+    my $second = FSM::VIAL::ExecutionBuilder->build($second_inputs->{arguments});
+    my $first_semantic = $first_inputs->{semantic_ir}->as_hashref;
+    my $second_semantic = $second_inputs->{semantic_ir}->as_hashref;
+    my $first_bridge = $first_inputs->{bridge_manifest}->as_hashref;
+    my $second_bridge = $second_inputs->{bridge_manifest}->as_hashref;
+    my @diagnostics;
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+        'independent canonical random route changed SemanticIR',
+        '/stage_identities/semantic_ir_sha256',
+    ) unless $canonical->encode($second_semantic)
+        eq $canonical->encode($first_semantic);
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+        'independent canonical random route changed the bridge manifest',
+        '/stage_identities/bridge_manifest_sha256',
+    ) unless $canonical->encode($second_bridge)
+        eq $canonical->encode($first_bridge);
+
+    my $semantic_sha = sha256_hex($canonical->encode($first_semantic));
+    my $bridge_sha = sha256_hex($canonical->encode($first_bridge));
+    if (!$first->{ok} || !$second->{ok}) {
+        my $first_diagnostics = $first->{diagnostics} || [];
+        my $second_diagnostics = $second->{diagnostics} || [];
+        push @diagnostics, _oracle_error(
+            'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+            'independent canonical random rejection changed diagnostics',
+            '/diagnostics',
+        ) unless !$first->{ok} && !$second->{ok}
+            && $canonical->encode($second_diagnostics)
+                eq $canonical->encode($first_diagnostics);
+        my $expected = $level eq 'qualification_candidate_v1'
+            ? _expected_plan_rejection_diagnostic()
+            : _expected_random_rejection_diagnostic();
+        push @diagnostics, _oracle_error(
+            'VIAL_SCALE_CHECKING_OUTCOME_ERROR',
+            'checking-state random rejection did not match its selected earliest authority',
+            '/diagnostics',
+        ) unless ($level eq 'qualification_candidate_v1'
+                || $level eq 'over_limit_v1')
+            && $canonical->encode($first_diagnostics)
+                eq $canonical->encode([$expected]);
+        my $stage_identities = {
+            semantic_ir_sha256 => $semantic_sha,
+            bridge_manifest_sha256 => $bridge_sha,
+            execution_ir_sha256 => undef,
+            plan_sha256 => undef,
+        };
+        return _evaluation({
+            ok => @diagnostics ? JSON::PP::false : JSON::PP::true,
+            status => @diagnostics ? 'oracle_failure' : 'expected_rejection',
+            schema => $EVALUATION_SCHEMA,
+            schema_version => 1,
+            evaluation_identity => undef,
+            rerun_identity => _rerun_identity(
+                $construction->{workload_identity}, $stage_identities,
+                $first_diagnostics,
+            ),
+            workload_identity => $construction->{workload_identity},
+            family => $FAMILY,
+            level => $level,
+            primary_axis => $axis,
+            requested_counts => _clone($spec->{requested_counts}),
+            observed_outcome => 'rejected',
+            stage_identities => $stage_identities,
+            metrics => _semantic_random_metrics($first_semantic),
+            packed_state_contract => _packed_state_contract(),
+            outcome_contract => {
+                schema => $OUTCOME_SCHEMA,
+                schema_version => 1,
+                observed_outcome => 'rejected',
+                axis_oracle_executed => JSON::PP::false,
+                selected_count_claimed => JSON::PP::true,
+                canonical_stages_completed => [qw(semantic bridge)],
+            },
+            oracle_evidence => _oracle_evidence('none', undef),
+            claims => _claims(JSON::PP::true),
+            explicit_nonclaims => _clone($spec->{explicit_nonclaims}),
+            contract_discrepancies => _random_contract_discrepancies($spec),
+            diagnostics => [@{_clone($first_diagnostics)}, @diagnostics],
+        });
+    }
+
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_OUTCOME_ERROR',
+        'checking-state random non-gate unexpectedly produced a plan',
+        '/observed_outcome',
+    ) unless $level eq 'gate_candidate_v1';
+    my $first_execution = $first->{execution_ir}->as_hashref;
+    my $second_execution = $second->{execution_ir}->as_hashref;
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+        'independent canonical random route changed ExecutionIR',
+        '/stage_identities/execution_ir_sha256',
+    ) unless $canonical->encode($second_execution)
+        eq $canonical->encode($first_execution);
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+        'independent canonical random route changed the execution plan',
+        '/stage_identities/plan_sha256',
+    ) unless $canonical->encode($second->{plan})
+        eq $canonical->encode($first->{plan});
+
+    my $replay = _build_random_replay_execution($first_inputs, $first->{plan});
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_REPLAY_ERROR',
+        'strict random replay did not produce one accepted plan',
+        '/oracle_evidence/random_replay',
+    ) unless $replay->{execution}{ok};
+    my ($random_evidence, $random_diagnostics) = _evaluate_random_state(
+        $spec, $first_execution, $first->{plan}, $second->{plan},
+        $replay, $canonical,
+    );
+    push @diagnostics, @$random_diagnostics;
+    my $stage_identities = {
+        semantic_ir_sha256 => $semantic_sha,
+        bridge_manifest_sha256 => $bridge_sha,
+        execution_ir_sha256 => sha256_hex($canonical->encode($first_execution)),
+        plan_sha256 => sha256_hex($canonical->encode($first->{plan})),
+    };
+    my $resources = $first_execution->{resource_summary};
+    return _evaluation({
+        ok => @diagnostics ? JSON::PP::false : JSON::PP::true,
+        status => @diagnostics ? 'oracle_failure' : 'accepted',
+        schema => $EVALUATION_SCHEMA,
+        schema_version => 1,
+        evaluation_identity => undef,
+        rerun_identity => _rerun_identity(
+            $construction->{workload_identity}, $stage_identities, [],
+        ),
+        workload_identity => $construction->{workload_identity},
+        family => $FAMILY,
+        level => $level,
+        primary_axis => $axis,
+        requested_counts => _clone($spec->{requested_counts}),
+        observed_outcome => 'accepted',
+        stage_identities => $stage_identities,
+        metrics => _execution_metrics($resources, $first->{plan}, $canonical),
+        packed_state_contract => _packed_state_contract(),
+        outcome_contract => {
+            schema => $OUTCOME_SCHEMA,
+            schema_version => 1,
+            observed_outcome => 'accepted',
+            axis_oracle_executed => JSON::PP::true,
+            selected_count_claimed => JSON::PP::true,
+            canonical_stages_completed => [qw(semantic bridge execution_ir plan)],
+        },
+        oracle_evidence => _oracle_evidence('random_replay', $random_evidence),
+        claims => _claims(JSON::PP::true),
+        explicit_nonclaims => _clone($spec->{explicit_nonclaims}),
+        contract_discrepancies => [],
+        diagnostics => \@diagnostics,
+    });
+}
+
 sub _evaluate_scoreboard_semantic_rejection($construction, $canonical) {
     my $spec = $construction->{specification};
     my $vial = _role_input($construction, 'vial_source');
@@ -1174,6 +1358,75 @@ sub _unconstructible_evaluation($construction) {
     });
 }
 
+sub _random_preflight_evaluation($construction) {
+    my $spec = $construction->{specification};
+    my $stage_identities = {
+        semantic_ir_sha256 => undef,
+        bridge_manifest_sha256 => undef,
+        execution_ir_sha256 => undef,
+        plan_sha256 => undef,
+    };
+    return _evaluation({
+        ok => JSON::PP::true,
+        status => 'preflight_dominated',
+        schema => $EVALUATION_SCHEMA,
+        schema_version => 1,
+        evaluation_identity => undef,
+        rerun_identity => _rerun_identity(
+            $construction->{workload_identity}, $stage_identities, [],
+        ),
+        workload_identity => $construction->{workload_identity},
+        family => $FAMILY,
+        level => $spec->{level},
+        primary_axis => $spec->{primary_axis},
+        requested_counts => _clone($spec->{requested_counts}),
+        observed_outcome => 'not_materialized',
+        stage_identities => $stage_identities,
+        metrics => _zero_metrics(),
+        packed_state_contract => _packed_state_contract(),
+        outcome_contract => {
+            schema => $OUTCOME_SCHEMA,
+            schema_version => 1,
+            observed_outcome => 'not_materialized',
+            axis_oracle_executed => JSON::PP::false,
+            selected_count_claimed => JSON::PP::false,
+            canonical_stages_completed => [],
+        },
+        oracle_evidence => _oracle_evidence('none', undef),
+        claims => _claims(JSON::PP::true),
+        explicit_nonclaims => _clone($spec->{explicit_nonclaims}),
+        contract_discrepancies => _random_contract_discrepancies($spec),
+        diagnostics => [],
+    });
+}
+
+sub _random_contract_discrepancies($spec) {
+    my $level = $spec->{level} // '';
+    return [] unless ($spec->{primary_axis} // '') eq 'random_occurrences'
+        && ($level eq 'qualification_candidate_v1' || $level eq 'limit_v1');
+    my @records = (
+        {
+            code => 'VIAL_SCALE_LIMIT_INTERACTION',
+            message => 'the 16777216-byte serialized-plan cap precedes this selected random-occurrence level',
+            path => '/requested_counts/random_occurrences',
+            repair_owner => $LIMIT_POLICY_REPAIR_OWNER,
+        },
+        {
+            code => 'VIAL_SCALE_ROUTE_BOUNDARY',
+            message => 'the canonical compact route accepts 8440 occurrences in 16775415 bytes and rejects 8441 at the 16777216-byte plan cap',
+            path => '/requested_counts/random_occurrences',
+            repair_owner => $LIMIT_POLICY_REPAIR_OWNER,
+        },
+    );
+    push @records, {
+        code => 'VIAL_SCALE_PREFLIGHT_DOMINANCE',
+        message => 'the adjacent 8440/8441 route proves that the selected 65536-occurrence level cannot materialize below the plan cap',
+        path => '/requested_counts/random_occurrences',
+        repair_owner => $LIMIT_POLICY_REPAIR_OWNER,
+    } if $level eq 'limit_v1';
+    return \@records;
+}
+
 sub _unconstructible_discrepancies($axis) {
     my $contract = $UNCONSTRUCTIBLE{$axis};
     my $boundary = $contract->{route_boundary};
@@ -1266,6 +1519,12 @@ sub _unconstructible($axis, $level) {
     return scalar(grep { $_ eq $level } @{$UNCONSTRUCTIBLE{$axis}{levels}});
 }
 
+sub _random_preflight_dominance($spec) {
+    return ref($spec) eq 'HASH'
+        && ($spec->{primary_axis} // '') eq 'random_occurrences'
+        && ($spec->{level} // '') eq 'limit_v1';
+}
+
 sub _render_axis_source($axis, $level, $requested_count) {
     return _render_model_source($axis, $level, $requested_count)
         if $axis eq 'model_instances'
@@ -1278,6 +1537,8 @@ sub _render_axis_source($axis, $level, $requested_count) {
             || $axis eq 'bins_and_cross_tuples';
     return _render_fault_source($axis, $level, $requested_count)
         if $axis eq 'faults';
+    return _render_random_source($axis, $level, $requested_count)
+        if $axis eq 'random_occurrences';
     confess "checking-state renderer does not own axis '$axis'\n";
 }
 
@@ -1574,6 +1835,161 @@ sub _render_fault_source($axis, $level, $requested_count) {
         ' (steps (reset bus 1))))))))',
         "\n",
     );
+}
+
+# One random occurrence is selected for each referenced (scenario, choice)
+# pair.  A fixed 128-choice Boolean palette therefore keeps every selected
+# source inside the parser and workload envelopes without changing the public
+# language or relying on a private repetition form.  A final partial scenario
+# carries the exact remainder.  The gate and route identities/timeouts below
+# are the frozen decision-0073 byte witnesses: they affect only target-neutral
+# names and timeout metadata, while every occurrence remains a real uniform
+# Boolean decision on the same canonical builder route.
+sub _render_random_source($axis, $level, $requested_count) {
+    confess "checking-state random renderer does not own axis '$axis'\n"
+        unless $axis eq 'random_occurrences';
+    confess "checking-state random renderer received an invalid requested count\n"
+        unless defined($requested_count) && !ref($requested_count)
+            && $requested_count =~ /\A[1-9][0-9]*\z/;
+
+    my $choice_count = $requested_count < 128 ? $requested_count : 128;
+    my $gate_recipe = $requested_count == 1_024;
+    my $package_name = $gate_recipe
+        ? 'architecture_scale_checking_state'
+        : 'architecture_scale_randomness';
+    my $fixture_name = 'gate';
+    my @choice_names = map { 'c' . $_ } 0 .. $choice_count - 1;
+    my @choices = map {
+        my $name = $choice_names[$_];
+        my $decision_id = $gate_recipe
+            ? (($_ < 74 ? 'randx' : 'rand') . $_)
+            : (($_ < 40 ? 'ddd' : 'dd') . $_);
+        sprintf(
+            '(choice %s bool (decision_id "%s")'
+                . ' (distribution (uniform false true)) (constraints))',
+            $name, $decision_id,
+        )
+    } 0 .. $#choice_names;
+
+    my $full_scenarios = int($requested_count / $choice_count);
+    my $remainder = $requested_count % $choice_count;
+    my @widths = (($choice_count) x $full_scenarios);
+    push @widths, $remainder if $remainder;
+    my @scenarios;
+    for my $ordinal (0 .. $#widths) {
+        my @references = map { "(choice $choice_names[$_])" }
+            0 .. $widths[$ordinal] - 1;
+        my $property = @references == 1
+            ? $references[0]
+            : '(and ' . join(' ', @references) . ')';
+        my $timeout_cycles = $ordinal == 0
+            ? ($gate_recipe ? 1_000 : 100_000_000)
+            : 2;
+        push @scenarios, sprintf(
+            '(scenario s%d (timeout (cycles b %d))'
+                . ' (steps (expect e %s)))',
+            $ordinal, $timeout_cycles, $property,
+        );
+    }
+
+    my $source = join('',
+        '(vial (version 1) (package ', $package_name,
+        ' (imports)',
+        ' (types)',
+        ' (transactions)',
+        ' (models)',
+        ' (scoreboards)',
+        ' (fixtures (fixture ', $fixture_name,
+        ' (dut dut',
+        ' (unit "unit/ahb_lite_subordinate")',
+        ' (domains (domain b "domain/ahb_bus"))',
+        ' (endpoints',
+        ' (endpoint ready_out "endpoint/HREADYOUT" (logic 1) public_port))',
+        ' (transactions))',
+        ' (instances)',
+        ' (coverage)',
+        ' (faults)',
+        ' (randomness (seed 1701) ', join(' ', @choices), ')',
+        ' (scenarios ', join(' ', @scenarios), ')))))',
+        "\n",
+    );
+
+    my %selected_bytes = (
+        32_768 => 470_412,
+        65_536 => 933_555,
+        65_537 => 933_642,
+    );
+    if (my $exact = $selected_bytes{$requested_count}) {
+        confess "checking-state random renderer produced " . bytes::length($source)
+            . " bytes above its selected $exact-byte witness\n"
+            if bytes::length($source) > $exact;
+        substr($source, -1, 0, ' ' x ($exact - bytes::length($source)));
+        confess "checking-state random renderer changed its selected byte witness\n"
+            unless bytes::length($source) == $exact;
+    }
+    return $source;
+}
+
+sub _evaluate_random_route_boundary($reference_hial_text, $requested_count) {
+    _validate_reference_hial($reference_hial_text);
+    confess "random route boundary owns only 8440 and 8441 occurrences\n"
+        unless defined($requested_count)
+            && ($requested_count == 8_440 || $requested_count == 8_441);
+    my $source = _render_random_source(
+        'random_occurrences', 'route_boundary_v1', $requested_count,
+    );
+    my $construction = FSM::VIAL::ArchitectureScaleWorkload->construct({
+        family => $FAMILY,
+        level => 'qualification_candidate_v1',
+        primary_axis => 'random_occurrences',
+        backend_profile => undef,
+        tool_profile => undef,
+        inputs => [
+            _input(
+                $REFERENCE_HIAL_SOURCE, 'hial_source', $reference_hial_text,
+            ),
+            _input($VIAL_SOURCE, 'vial_source', $source),
+        ],
+    });
+    confess "random route-boundary source escaped the workload envelope\n"
+        unless $construction->{ok};
+    my $inputs = _canonical_inputs_from_construction($construction);
+    my $first = FSM::VIAL::ExecutionBuilder->build($inputs->{arguments});
+    my $second = FSM::VIAL::ExecutionBuilder->build($inputs->{arguments});
+    my $canonical = JSON::PP->new->canonical(1)->utf8(1);
+    my $expected_diagnostics = [_expected_plan_rejection_diagnostic()];
+    my $accepted = $requested_count == 8_440
+        && $first->{ok} && $second->{ok}
+        && bytes::length($canonical->encode($first->{plan})) == 16_775_415
+        && $canonical->encode($second->{plan})
+            eq $canonical->encode($first->{plan});
+    my $rejected = $requested_count == 8_441
+        && !$first->{ok} && !$second->{ok}
+        && $canonical->encode($first->{diagnostics})
+            eq $canonical->encode($expected_diagnostics)
+        && $canonical->encode($second->{diagnostics})
+            eq $canonical->encode($expected_diagnostics);
+    my $semantic = $inputs->{semantic_ir}->as_hashref;
+    my $bridge = $inputs->{bridge_manifest}->as_hashref;
+    my $execution = $first->{ok} ? $first->{execution_ir}->as_hashref : undef;
+    return {
+        ok => $accepted || $rejected ? JSON::PP::true : JSON::PP::false,
+        requested_count => 0 + $requested_count,
+        source_bytes => bytes::length($source),
+        observed_outcome => $first->{ok} ? 'accepted' : 'rejected',
+        serialized_plan_bytes => $first->{ok}
+            ? bytes::length($canonical->encode($first->{plan})) : 0,
+        semantic_ir_sha256 => sha256_hex($canonical->encode($semantic)),
+        bridge_manifest_sha256 => sha256_hex($canonical->encode($bridge)),
+        execution_ir_sha256 => $execution
+            ? sha256_hex($canonical->encode($execution)) : undef,
+        plan_sha256 => $first->{ok}
+            ? sha256_hex($canonical->encode($first->{plan})) : undef,
+        random_occurrences => $execution
+            ? 0 + $execution->{resource_summary}{random_occurrences}
+            : _semantic_random_metrics($semantic)->{random_occurrences},
+        diagnostics => _clone($first->{diagnostics} || []),
+    };
 }
 
 sub _model_definition($axis, $definition_ordinal, $cell_count) {
@@ -1902,6 +2318,223 @@ sub _semantic_fault_metrics($semantic) {
     return $metrics;
 }
 
+sub _semantic_random_metrics($semantic) {
+    my $fixture = $semantic->{packages}[0]{fixtures}[0];
+    my $occurrences = 0;
+    for my $scenario (@{$fixture->{scenarios} || []}) {
+        for my $choice (@{$fixture->{randomness}{choices} || []}) {
+            ++$occurrences if _contains_semantic_reference(
+                $scenario->{actions}, $choice->{semantic_id},
+            );
+        }
+    }
+    my $metrics = _zero_metrics();
+    $metrics->{random_occurrences} = $occurrences;
+    return $metrics;
+}
+
+sub _contains_semantic_reference($value, $semantic_id) {
+    return 0 unless defined $value;
+    if (ref($value) eq 'ARRAY') {
+        return scalar(grep { _contains_semantic_reference($_, $semantic_id) }
+            @$value) ? 1 : 0;
+    }
+    return 0 unless ref($value) eq 'HASH';
+    return 1 if ($value->{semantic_id} // '') eq $semantic_id
+        && ($value->{kind} // '') eq 'reference';
+    return scalar(grep {
+        _contains_semantic_reference($value->{$_}, $semantic_id)
+    } keys %$value) ? 1 : 0;
+}
+
+sub _build_random_replay_execution($inputs, $plan) {
+    my @decisions = @{$plan->{random_decisions} || []};
+    confess "checking-state random replay requires generated decisions\n"
+        unless @decisions;
+    my @decision_keys = qw(
+        occurrence_id declaration_semantic_id decision_id scenario_id algorithm
+        seed type_id distribution value attempt
+    );
+    my $replay = {
+        schema => 'fsmgen.vial_replay.v1',
+        schema_version => 1,
+        replay_id => undef,
+        semantic_ir_id => $plan->{semantic_identity}{semantic_ir_id},
+        bridge_manifest_id => $plan->{bridge_identity}{manifest_id},
+        fixture_id => $plan->{fixture}{fixture_id},
+        scenario_ids => _clone($plan->{fixture}{scenario_ids}),
+        algorithm => $decisions[0]{algorithm},
+        decisions => [map {
+            my $decision = $_;
+            +{map { $_ => _clone($decision->{$_}) } @decision_keys}
+        } @decisions],
+    };
+    my $identity_projection = _clone($replay);
+    delete $identity_projection->{replay_id};
+    my $canonical = JSON::PP->new->canonical(1)->utf8(1);
+    $replay->{replay_id} = 'replay/'
+        . sha256_hex($canonical->encode($identity_projection));
+    my %arguments = %{$inputs->{arguments}};
+    $arguments{scenario_ids} = _clone($inputs->{arguments}{scenario_ids});
+    $arguments{native_extension_catalog} = [];
+    $arguments{replay_manifest} = $replay;
+    return {
+        manifest => $replay,
+        execution => FSM::VIAL::ExecutionBuilder->build(\%arguments),
+    };
+}
+
+sub _evaluate_random_state(
+    $spec, $execution, $generated_plan, $rerun_plan, $replay, $canonical,
+) {
+    my $generated = $generated_plan->{random_decisions} || [];
+    my $rerun = $rerun_plan->{random_decisions} || [];
+    my $replayed_plan = $replay->{execution}{ok}
+        ? $replay->{execution}{plan} : {random_decisions => []};
+    my $replayed = $replayed_plan->{random_decisions} || [];
+    my $requested = $spec->{requested_counts}{random_occurrences};
+    my @expected_order = map {
+        @{$_->{plan_summary}{decision_occurrence_ids} || []}
+    } @{$execution->{scenarios} || []};
+    my @observed_order = map { $_->{occurrence_id} // '' } @$generated;
+    my $key_order_preserved = @expected_order == @$generated
+        && join("\0", @expected_order) eq join("\0", @observed_order);
+    my $values_normalized = @$generated == $requested
+        && !scalar(grep { !_random_decision_is_closed($_, 'generated') }
+            @$generated);
+    my $generated_values_matched = @$rerun == @$generated
+        && $canonical->encode($rerun) eq $canonical->encode($generated);
+
+    my $normalized_generated = _clone($generated);
+    my $normalized_replayed = _clone($replayed);
+    delete $_->{origin} for @$normalized_generated;
+    delete $_->{origin} for @$normalized_replayed;
+    my $replay_values_matched = @$replayed == @$generated
+        && !scalar(grep { !_random_decision_is_closed($_, 'replayed') }
+            @$replayed)
+        && $canonical->encode($normalized_replayed)
+            eq $canonical->encode($normalized_generated);
+
+    my $normalized_generated_plan = _clone($generated_plan);
+    my $normalized_replayed_plan = _clone($replayed_plan);
+    delete $normalized_generated_plan->{plan_id};
+    delete $normalized_replayed_plan->{plan_id};
+    $_->{origin} = 'replayed'
+        for @{$normalized_generated_plan->{random_decisions} || []};
+    my $normalized_plans_equal = $replay->{execution}{ok}
+        && $canonical->encode($normalized_replayed_plan)
+            eq $canonical->encode($normalized_generated_plan);
+    my $replay_identity_preserved = $replay->{execution}{ok}
+        && ($replay->{manifest}{replay_id} // '') =~ m{\Areplay/[0-9a-f]{64}\z}
+        && ($generated_plan->{plan_id} // '') =~ m{\Aplan/[0-9a-f]{64}\z}
+        && ($replayed_plan->{plan_id} // '') =~ m{\Aplan/[0-9a-f]{64}\z}
+        && ($generated_plan->{plan_id} // '') ne ($replayed_plan->{plan_id} // '');
+
+    my $mutated = _clone($normalized_replayed);
+    if (@$mutated) {
+        $mutated->[0]{value}{value_hex} =
+            ($mutated->[0]{value}{value_hex} // '') eq '0' ? '1' : '0';
+    }
+    my $mutation_rejected = @$mutated
+        && $canonical->encode($mutated)
+            ne $canonical->encode($normalized_generated);
+    my $reordered = _clone($generated);
+    @$reordered[0, 1] = @$reordered[1, 0] if @$reordered > 1;
+    my $order_mutation_rejected = @$reordered > 1
+        && join("\0", map { $_->{occurrence_id} // '' } @$reordered)
+            ne join("\0", @expected_order);
+
+    my %choice_ids = map { ($_->{declaration_semantic_id} // '') => 1 }
+        @$generated;
+    my @diagnostics;
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_RANDOM_ERROR',
+        'generated and replayed random decisions did not preserve exact keyed values, order, normalization, and plan identity',
+        '/oracle_evidence/random_replay',
+    ) unless @$generated == $requested
+        && @$rerun == $requested
+        && @$replayed == $requested
+        && $key_order_preserved
+        && $values_normalized
+        && $generated_values_matched
+        && $replay_values_matched
+        && $replay_identity_preserved
+        && $normalized_plans_equal
+        && $mutation_rejected
+        && $order_mutation_rejected;
+
+    my $first = @$generated ? $generated->[0] : {};
+    my $last = @$generated ? $generated->[-1] : {};
+    return ({
+        schema => $RANDOM_EVIDENCE_SCHEMA,
+        schema_version => 1,
+        program => 'generate_replay_compare_each_keyed_boolean_v1',
+        axis => 'random_occurrences',
+        random_occurrences => 0 + @$generated,
+        choice_declarations => scalar(keys %choice_ids),
+        scenario_count => scalar(@{$execution->{scenarios} || []}),
+        generated_decisions => 0 + @$generated,
+        replayed_decisions => 0 + @$replayed,
+        generated_sequence_sha256 => sha256_hex($canonical->encode($generated)),
+        rerun_sequence_sha256 => sha256_hex($canonical->encode($rerun)),
+        replayed_sequence_sha256 => sha256_hex($canonical->encode($replayed)),
+        normalized_generated_sequence_sha256 =>
+            sha256_hex($canonical->encode($normalized_generated)),
+        normalized_replayed_sequence_sha256 =>
+            sha256_hex($canonical->encode($normalized_replayed)),
+        generated_plan_sha256 => sha256_hex($canonical->encode($generated_plan)),
+        replayed_plan_sha256 => sha256_hex($canonical->encode($replayed_plan)),
+        replay_manifest_id => $replay->{manifest}{replay_id},
+        first_occurrence_id => $first->{occurrence_id},
+        last_occurrence_id => $last->{occurrence_id},
+        first_value_hex => $first->{value}{value_hex},
+        last_value_hex => $last->{value}{value_hex},
+        key_order_preserved => $key_order_preserved
+            ? JSON::PP::true : JSON::PP::false,
+        values_canonically_normalized => $values_normalized
+            ? JSON::PP::true : JSON::PP::false,
+        generated_values_matched => $generated_values_matched
+            ? JSON::PP::true : JSON::PP::false,
+        replay_values_matched => $replay_values_matched
+            ? JSON::PP::true : JSON::PP::false,
+        replay_identity_preserved => $replay_identity_preserved
+            ? JSON::PP::true : JSON::PP::false,
+        normalized_plans_equal => $normalized_plans_equal
+            ? JSON::PP::true : JSON::PP::false,
+        mutation_rejected => $mutation_rejected
+            ? JSON::PP::true : JSON::PP::false,
+        order_mutation_rejected => $order_mutation_rejected
+            ? JSON::PP::true : JSON::PP::false,
+    }, \@diagnostics);
+}
+
+sub _random_decision_is_closed($decision, $origin) {
+    return ref($decision) eq 'HASH'
+        && ($decision->{algorithm} // '') eq 'sha256_counter_rejection_v1'
+        && ($decision->{seed} // -1) == 1701
+        && ($decision->{origin} // '') eq $origin
+        && ($decision->{occurrence_id} // '') =~ m{\Adecision/.+/0\z}
+        && ($decision->{declaration_semantic_id} // '') =~ /::choice::c[0-9]+\z/
+        && ($decision->{scenario_id} // '') =~ /::scenario::s[0-9]+\z/
+        && ($decision->{decision_id} // '') =~ /\A(?:randx?|ddd?)?[0-9]+\z/
+        && ref($decision->{reference_operation_ids}) eq 'ARRAY'
+        && @{$decision->{reference_operation_ids}} == 1
+        && ($decision->{attempt} // -1) == 0
+        && ref($decision->{distribution}) eq 'HASH'
+        && ($decision->{distribution}{kind} // '') eq 'uniform'
+        && ($decision->{distribution}{low}{value_hex} // '') eq '0'
+        && ($decision->{distribution}{high}{value_hex} // '') eq '1'
+        && ref($decision->{value}) eq 'HASH'
+        && ($decision->{value}{kind} // '') eq 'scalar'
+        && ($decision->{value}{known_hex} // '') eq '1'
+        && ($decision->{value}{z_hex} // '') eq '0'
+        && ($decision->{value}{width} // 0) == 1
+        && !($decision->{value}{signed} // 1)
+        && ($decision->{value}{state_domain} // '') eq 'two_state'
+        && (($decision->{value}{value_hex} // '') eq '0'
+            || ($decision->{value}{value_hex} // '') eq '1');
+}
+
 sub _oracle_evidence($oracle, $evidence) {
     return {
         schema => $ORACLE_EVIDENCE_SCHEMA,
@@ -1911,7 +2544,7 @@ sub _oracle_evidence($oracle, $evidence) {
         scoreboard => $oracle eq 'scoreboard' ? _clone($evidence) : undef,
         coverage => $oracle eq 'coverage' ? _clone($evidence) : undef,
         faults => $oracle eq 'faults' ? _clone($evidence) : undef,
-        random_replay => undef,
+        random_replay => $oracle eq 'random_replay' ? _clone($evidence) : undef,
     };
 }
 
@@ -1993,6 +2626,34 @@ sub _expected_fault_execution_rejection_diagnostic() {
         related => [],
         schema_version => 1,
         semantic_path => '/faults',
+        severity => 'error',
+        source_location => undef,
+    };
+}
+
+sub _expected_plan_rejection_diagnostic() {
+    return {
+        bridge_fact_paths => [],
+        code => 'VIAL_EXECUTION_LIMIT_ERROR',
+        message => 'serialized_plan_bytes exceeds the limit 16777216',
+        phase => 'limit',
+        related => [],
+        schema_version => 1,
+        semantic_path => '/plan',
+        severity => 'error',
+        source_location => undef,
+    };
+}
+
+sub _expected_random_rejection_diagnostic() {
+    return {
+        bridge_fact_paths => [],
+        code => 'VIAL_EXECUTION_LIMIT_ERROR',
+        message => 'random_occurrences exceeds the limit 65536',
+        phase => 'limit',
+        related => [],
+        schema_version => 1,
+        semantic_path => '/randomness/decisions',
         severity => 'error',
         source_location => undef,
     };
@@ -3210,6 +3871,20 @@ sub _validate_evaluation_shape($raw) {
             if grep { defined($raw->{oracle_evidence}{$_}) }
                 qw(model scoreboard coverage random_replay);
     }
+    elsif ($oracle eq 'random_replay') {
+        _confess_exact_keys(
+            $raw->{oracle_evidence}{random_replay}, \@RANDOM_EVIDENCE_KEYS,
+            'checking-state random/replay evidence',
+        );
+        confess "checking-state random/replay-evidence schema is invalid\n"
+            unless ($raw->{oracle_evidence}{random_replay}{schema} // '')
+                    eq $RANDOM_EVIDENCE_SCHEMA
+                && ($raw->{oracle_evidence}{random_replay}{schema_version} // 0)
+                    == 1;
+        confess "checking-state random/replay oracle cannot carry another oracle family\n"
+            if grep { defined($raw->{oracle_evidence}{$_}) }
+                qw(model scoreboard coverage faults);
+    }
     else {
         confess "checking-state oracle kind is invalid\n";
     }
@@ -3222,7 +3897,8 @@ sub _validate_evaluation_shape($raw) {
         );
         confess "checking-state contract discrepancy code is invalid\n"
             unless ($record->{code} // '') eq 'VIAL_SCALE_LIMIT_INTERACTION'
-                || ($record->{code} // '') eq 'VIAL_SCALE_ROUTE_BOUNDARY';
+                || ($record->{code} // '') eq 'VIAL_SCALE_ROUTE_BOUNDARY'
+                || ($record->{code} // '') eq 'VIAL_SCALE_PREFLIGHT_DOMINANCE';
     }
     confess "checking-state nonclaim schema is invalid\n"
         unless ($raw->{claims}{schema} // '') eq $CLAIMS_SCHEMA

@@ -30,10 +30,12 @@ evidence: >-
   t/1631-vial-architecture-scale-checking-scoreboards.t;
   t/1632-vial-architecture-scale-checking-coverage.t;
   t/1633-vial-architecture-scale-checking-faults.t;
+  t/1634-vial-architecture-scale-checking-random-replay.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
-  prove -Iperl t/1629-vial-architecture-scale-checking-foundation.t t/1630-vial-architecture-scale-checking-models.t t/1631-vial-architecture-scale-checking-scoreboards.t t/1632-vial-architecture-scale-checking-coverage.t t/1633-vial-architecture-scale-checking-faults.t && rg -n 'checking_state_v1|one_bound_event_occurrence_per_instance_v1|packed_complete_transaction_fifo_v1|one_sample_packed_static_domain_vector_v1|arm_apply_expire_restore_each_fault_v1|coverage_bins_and_cross_tuples|random_occurrences|serialized_plan_bytes|cross Cartesian product' docs/decisions/0073-checking-state-scale-uses-packed-state-oracles-and-static-cross-domains.md perl/FSM/VIAL/ArchitectureScaleCheckingState.pm perl/FSM/VIAL/SemanticBuilder.pm perl/FSM/VIAL/ExecutionBuilder.pm perl/FSM/Support/VIALExecutionContract.pm
+  prove -Iperl t/1629-vial-architecture-scale-checking-foundation.t t/1630-vial-architecture-scale-checking-models.t t/1631-vial-architecture-scale-checking-scoreboards.t t/1632-vial-architecture-scale-checking-coverage.t t/1633-vial-architecture-scale-checking-faults.t t/1634-vial-architecture-scale-checking-random-replay.t &&
+  rg -n 'checking_state_v1|one_bound_event_occurrence_per_instance_v1|packed_complete_transaction_fifo_v1|one_sample_packed_static_domain_vector_v1|arm_apply_expire_restore_each_fault_v1|generate_replay_compare_each_keyed_boolean_v1|coverage_bins_and_cross_tuples|random_occurrences|serialized_plan_bytes|cross Cartesian product' docs/decisions/0073-checking-state-scale-uses-packed-state-oracles-and-static-cross-domains.md perl/FSM/VIAL/ArchitectureScaleCheckingState.pm perl/FSM/VIAL/SemanticBuilder.pm perl/FSM/VIAL/ExecutionBuilder.pm perl/FSM/Support/VIALExecutionContract.pm
 ---
 
 Decision `0073` selects one outcome for every non-reference level before the
@@ -80,15 +82,15 @@ one sample hits the exact all-one vector because every authored bin matches.
 
 `TraceValidator`, `ResultProducer`, and the first portable SystemVerilog backend
 remain result/profile machinery, not general checking-state semantic oracles.
-The implemented model, scoreboard, coverage, and fault slices publish exactly
-28 non-reference shapes across their seven axes. They reject reference,
+The implemented model, scoreboard, coverage, fault, and random/replay slices
+publish exactly 32 non-reference shapes across all eight axes. They reject reference,
 non-owned, unknown-level, IR, trace, result, and support-metadata injection.
 Its same-package-only candidate route accepts just ordinary VIAL text plus the
 exact checked-AHB source, regenerates the workload defensively, and reaches
 canonical SemanticIR, bridge, ExecutionIR, and plan twice with content-addressed
 workload/evaluation/rerun identities. The frozen foundation witness still
 reports `accepted_not_axis_evaluated`; generated accepted shapes populate only
-their model, scoreboard, coverage, or fault compartment and explicitly deny every capability,
+their model, scoreboard, coverage, fault, or random/replay compartment and explicitly deny every capability,
 support, performance, capacity, backend, or runtime claim.
 
 That foundation freezes the selected packed representations before an axis is
@@ -158,4 +160,18 @@ without retaining a per-fault report array. Armed reinjection, active overlap,
 substitute mutation, declaration-order mutation, source mutation, and report
 mutation fail closed. Fault 4,097 returns exactly one
 `VIAL_EXECUTION_LIMIT_ERROR` at `/faults` and no execution/plan identity.
-Default and exact RAM-guarded `t/1633` pass. Random/replay checking is active.
+Default and exact RAM-guarded `t/1633` pass.
+
+The random renderer uses a bounded palette of 128 Boolean choices and counts
+each referenced `(scenario, choice)` pair as one real occurrence. The 1,024
+gate therefore contains eight scenarios and produces an exact 2,073,805-byte
+plan. Independent generation reproduces every keyed value, strict replay uses
+the canonical manifest, and origin-free generated/replayed decision sequences
+and plans compare byte-equal; value and order mutations fail closed. The full
+32,768 semantic route returns only `VIAL_EXECUTION_LIMIT_ERROR` at `/plan`.
+The 65,536 level reports `preflight_dominated` / `not_materialized` with no
+stage identity or selected-count claim, while 65,537 reaches the exact
+`/randomness/decisions` count diagnostic. Opt-in RAM-guarded evidence accepts
+8,440 occurrences in a 16,775,415-byte plan and rejects adjacent 8,441. Default
+`t/1629`-`t/1634` and exact `t/1634` pass; final family qualification remains a
+separate proposed child.
