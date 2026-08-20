@@ -94,12 +94,33 @@ my @MODEL_EVIDENCE_KEYS = qw(
 );
 my $MODEL_EVIDENCE_SCHEMA =
     'fsmgen.vial_architecture_scale_model_oracle_evidence.v1';
+my @SCOREBOARD_EVIDENCE_KEYS = qw(
+    schema schema_version program axis scoreboard_instances
+    scoreboard_definitions declared_capacity transactions_enqueued
+    transactions_observed transactions_matched transactions_drained
+    fields_per_transaction complete_field_comparisons packed_payload_bytes
+    packed_payload_sha256 expected_payload_sha256 maximum_total_expected_depth
+    maximum_expected_depth maximum_actual_depth final_expected_depth
+    final_actual_depth pending_entries first_instance_id last_instance_id
+    first_transaction_identity last_transaction_identity first_payload_hex
+    last_payload_hex fifo_order_preserved complete_transactions_equal
+    all_instances_drained mismatch_rejected overflow_rejected
+    corruption_rejected
+);
+my $SCOREBOARD_EVIDENCE_SCHEMA =
+    'fsmgen.vial_architecture_scale_scoreboard_oracle_evidence.v1';
 
 my %OWNED_LEVELS = (
     model_instances => [qw(
         gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1
     )],
     scalar_model_state_cells => [qw(
+        gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1
+    )],
+    scoreboard_instances => [qw(
+        gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1
+    )],
+    scoreboard_capacity => [qw(
         gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1
     )],
 );
@@ -113,14 +134,14 @@ sub construct($class, @args) {
     my $requested = _selected_contract($axis, $level);
     confess "reference_v1 remains a catalog record and is not a generated checking-state shape\n"
         if $level eq 'reference_v1';
-    confess "checking-state model slice does not own the requested shape\n"
+    confess "checking-state active slices do not own the requested shape\n"
         unless _owns($axis, $level);
     _validate_reference_hial($args[0]{reference_hial_text});
     return __PACKAGE__->_construct_candidate({
         primary_axis => $axis,
         level => $level,
         reference_hial_text => $args[0]{reference_hial_text},
-        vial_source_text => _render_model_source(
+        vial_source_text => _render_axis_source(
             $axis, $level, $requested->{$axis},
         ),
     });
@@ -194,8 +215,10 @@ sub evaluate($class, @args) {
         unless @args == 1 && ref($args[0]) eq 'HASH' && !blessed($args[0]);
     _confess_exact_keys($args[0], \@EVALUATE_KEYS, 'checking-state evaluation');
     my $construction = _validated_construction($args[0]{construction});
-    return _evaluate_model_axis($construction)
-        if _is_generated_model_construction($construction);
+    my $generated_axis = _generated_axis_kind($construction);
+    return _evaluate_model_axis($construction) if $generated_axis eq 'model';
+    return _evaluate_scoreboard_axis($construction)
+        if $generated_axis eq 'scoreboard';
 
     my $first_inputs = _canonical_inputs_from_construction($construction);
     my $first = FSM::VIAL::ExecutionBuilder->build($first_inputs->{arguments});
@@ -317,17 +340,21 @@ sub evaluate($class, @args) {
     });
 }
 
-sub _is_generated_model_construction($construction) {
+sub _generated_axis_kind($construction) {
     my $vial = _role_input($construction, 'vial_source');
-    return 0 if sha256_hex($vial->{content}) eq $REFERENCE_VIAL_SHA256;
+    return '' if sha256_hex($vial->{content}) eq $REFERENCE_VIAL_SHA256;
     my $spec = $construction->{specification};
     my ($axis, $level) = @{$spec}{qw(primary_axis level)};
-    return 0 unless _owns($axis, $level);
+    return '' unless _owns($axis, $level);
     my $requested = _selected_contract($axis, $level);
-    my $expected = _render_model_source($axis, $level, $requested->{$axis});
-    confess "generated checking-state model source is not canonical\n"
+    my $expected = _render_axis_source($axis, $level, $requested->{$axis});
+    confess "generated checking-state source is not canonical\n"
         unless $vial->{content} eq $expected;
-    return 1;
+    return 'model' if $axis eq 'model_instances'
+        || $axis eq 'scalar_model_state_cells';
+    return 'scoreboard' if $axis eq 'scoreboard_instances'
+        || $axis eq 'scoreboard_capacity';
+    confess "generated checking-state axis has no evaluator\n";
 }
 
 sub _evaluate_model_axis($construction) {
@@ -483,6 +510,234 @@ sub _evaluate_model_axis($construction) {
     });
 }
 
+sub _evaluate_scoreboard_axis($construction) {
+    my $spec = $construction->{specification};
+    my ($axis, $level) = @{$spec}{qw(primary_axis level)};
+    my $canonical = JSON::PP->new->canonical(1)->utf8(1);
+
+    if ($axis eq 'scoreboard_capacity' && $level eq 'over_limit_v1') {
+        return _evaluate_scoreboard_semantic_rejection(
+            $construction, $canonical,
+        );
+    }
+
+    my $first_inputs = _canonical_inputs_from_construction($construction);
+    my $first = FSM::VIAL::ExecutionBuilder->build($first_inputs->{arguments});
+    my $second_inputs = _canonical_inputs_from_construction($construction);
+    my $second = FSM::VIAL::ExecutionBuilder->build($second_inputs->{arguments});
+    my $first_semantic = $first_inputs->{semantic_ir}->as_hashref;
+    my $second_semantic = $second_inputs->{semantic_ir}->as_hashref;
+    my $first_bridge = $first_inputs->{bridge_manifest}->as_hashref;
+    my $second_bridge = $second_inputs->{bridge_manifest}->as_hashref;
+    my @diagnostics;
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+        'independent canonical checking-state route changed SemanticIR',
+        '/stage_identities/semantic_ir_sha256',
+    ) unless $canonical->encode($second_semantic)
+        eq $canonical->encode($first_semantic);
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+        'independent canonical checking-state route changed the bridge manifest',
+        '/stage_identities/bridge_manifest_sha256',
+    ) unless $canonical->encode($second_bridge)
+        eq $canonical->encode($first_bridge);
+
+    my $semantic_sha = sha256_hex($canonical->encode($first_semantic));
+    my $bridge_sha = sha256_hex($canonical->encode($first_bridge));
+    if (!$first->{ok} || !$second->{ok}) {
+        my $first_diagnostics = $first->{diagnostics} || [];
+        my $second_diagnostics = $second->{diagnostics} || [];
+        push @diagnostics, _oracle_error(
+            'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+            'independent canonical checking-state rejection changed diagnostics',
+            '/diagnostics',
+        ) unless !$first->{ok} && !$second->{ok}
+            && $canonical->encode($second_diagnostics)
+                eq $canonical->encode($first_diagnostics);
+        my $expected = _expected_scoreboard_execution_rejection_diagnostic();
+        push @diagnostics, _oracle_error(
+            'VIAL_SCALE_CHECKING_OUTCOME_ERROR',
+            'checking-state scoreboard rejection did not match the selected adjacent excess',
+            '/diagnostics',
+        ) unless $axis eq 'scoreboard_instances'
+            && $level eq 'over_limit_v1'
+            && $canonical->encode($first_diagnostics)
+                eq $canonical->encode([$expected]);
+        my $stage_identities = {
+            semantic_ir_sha256 => $semantic_sha,
+            bridge_manifest_sha256 => $bridge_sha,
+            execution_ir_sha256 => undef,
+            plan_sha256 => undef,
+        };
+        my $rerun_identity = _rerun_identity(
+            $construction->{workload_identity}, $stage_identities,
+            $first_diagnostics,
+        );
+        return _evaluation({
+            ok => @diagnostics ? JSON::PP::false : JSON::PP::true,
+            status => @diagnostics ? 'oracle_failure' : 'expected_rejection',
+            schema => $EVALUATION_SCHEMA,
+            schema_version => 1,
+            evaluation_identity => undef,
+            rerun_identity => $rerun_identity,
+            workload_identity => $construction->{workload_identity},
+            family => $FAMILY,
+            level => $level,
+            primary_axis => $axis,
+            requested_counts => _clone($spec->{requested_counts}),
+            observed_outcome => 'rejected',
+            stage_identities => $stage_identities,
+            metrics => _semantic_scoreboard_metrics($first_semantic),
+            packed_state_contract => _packed_state_contract(),
+            outcome_contract => {
+                schema => $OUTCOME_SCHEMA,
+                schema_version => 1,
+                observed_outcome => 'rejected',
+                axis_oracle_executed => JSON::PP::false,
+                selected_count_claimed => JSON::PP::true,
+                canonical_stages_completed => [qw(semantic bridge)],
+            },
+            oracle_evidence => _oracle_evidence('none', undef),
+            claims => _claims(JSON::PP::true),
+            explicit_nonclaims => _clone($spec->{explicit_nonclaims}),
+            diagnostics => [@{_clone($first_diagnostics)}, @diagnostics],
+        });
+    }
+
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_OUTCOME_ERROR',
+        'checking-state adjacent excess unexpectedly produced ExecutionIR',
+        '/observed_outcome',
+    ) if $level eq 'over_limit_v1';
+    my $first_execution = $first->{execution_ir}->as_hashref;
+    my $second_execution = $second->{execution_ir}->as_hashref;
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+        'independent canonical checking-state route changed ExecutionIR',
+        '/stage_identities/execution_ir_sha256',
+    ) unless $canonical->encode($second_execution)
+        eq $canonical->encode($first_execution);
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+        'independent canonical checking-state route changed the execution plan',
+        '/stage_identities/plan_sha256',
+    ) unless $canonical->encode($second->{plan})
+        eq $canonical->encode($first->{plan});
+
+    my ($scoreboard_evidence, $scoreboard_diagnostics) =
+        _evaluate_scoreboard_state($spec, $first_execution);
+    push @diagnostics, @$scoreboard_diagnostics;
+    my $stage_identities = {
+        semantic_ir_sha256 => $semantic_sha,
+        bridge_manifest_sha256 => $bridge_sha,
+        execution_ir_sha256 =>
+            sha256_hex($canonical->encode($first_execution)),
+        plan_sha256 => sha256_hex($canonical->encode($first->{plan})),
+    };
+    my $rerun_identity = _rerun_identity(
+        $construction->{workload_identity}, $stage_identities, [],
+    );
+    my $resources = $first_execution->{resource_summary};
+    return _evaluation({
+        ok => @diagnostics ? JSON::PP::false : JSON::PP::true,
+        status => @diagnostics ? 'oracle_failure' : 'accepted',
+        schema => $EVALUATION_SCHEMA,
+        schema_version => 1,
+        evaluation_identity => undef,
+        rerun_identity => $rerun_identity,
+        workload_identity => $construction->{workload_identity},
+        family => $FAMILY,
+        level => $level,
+        primary_axis => $axis,
+        requested_counts => _clone($spec->{requested_counts}),
+        observed_outcome => 'accepted',
+        stage_identities => $stage_identities,
+        metrics => _execution_metrics($resources, $first->{plan}, $canonical),
+        packed_state_contract => _packed_state_contract(),
+        outcome_contract => {
+            schema => $OUTCOME_SCHEMA,
+            schema_version => 1,
+            observed_outcome => 'accepted',
+            axis_oracle_executed => JSON::PP::true,
+            selected_count_claimed => JSON::PP::true,
+            canonical_stages_completed => [qw(semantic bridge execution_ir plan)],
+        },
+        oracle_evidence => _oracle_evidence(
+            'scoreboard', $scoreboard_evidence,
+        ),
+        claims => _claims(JSON::PP::true),
+        explicit_nonclaims => _clone($spec->{explicit_nonclaims}),
+        diagnostics => \@diagnostics,
+    });
+}
+
+sub _evaluate_scoreboard_semantic_rejection($construction, $canonical) {
+    my $spec = $construction->{specification};
+    my $vial = _role_input($construction, 'vial_source');
+    my $check = sub {
+        return FSM::VIAL::Parser->check_source({
+            text => $vial->{content},
+            source_name => $vial->{relative_path},
+            source_catalog => {},
+        });
+    };
+    my $first = $check->();
+    my $second = $check->();
+    my @diagnostics;
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+        'independent canonical semantic rejection changed diagnostics',
+        '/diagnostics',
+    ) unless !$first->{ok} && !$second->{ok}
+        && $canonical->encode($second->{diagnostics})
+            eq $canonical->encode($first->{diagnostics});
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_OUTCOME_ERROR',
+        'checking-state capacity rejection did not match the semantic bound',
+        '/diagnostics',
+    ) unless _is_expected_scoreboard_semantic_rejection($first);
+    my $stage_identities = {
+        semantic_ir_sha256 => undef,
+        bridge_manifest_sha256 => undef,
+        execution_ir_sha256 => undef,
+        plan_sha256 => undef,
+    };
+    my $reported = $first->{diagnostics} || [];
+    my $rerun_identity = _rerun_identity(
+        $construction->{workload_identity}, $stage_identities, $reported,
+    );
+    return _evaluation({
+        ok => @diagnostics ? JSON::PP::false : JSON::PP::true,
+        status => @diagnostics ? 'oracle_failure' : 'expected_rejection',
+        schema => $EVALUATION_SCHEMA,
+        schema_version => 1,
+        evaluation_identity => undef,
+        rerun_identity => $rerun_identity,
+        workload_identity => $construction->{workload_identity},
+        family => $FAMILY,
+        level => $spec->{level},
+        primary_axis => $spec->{primary_axis},
+        requested_counts => _clone($spec->{requested_counts}),
+        observed_outcome => 'rejected',
+        stage_identities => $stage_identities,
+        metrics => _scoreboard_recipe_metrics($spec),
+        packed_state_contract => _packed_state_contract(),
+        outcome_contract => {
+            schema => $OUTCOME_SCHEMA,
+            schema_version => 1,
+            observed_outcome => 'rejected',
+            axis_oracle_executed => JSON::PP::false,
+            selected_count_claimed => JSON::PP::true,
+            canonical_stages_completed => [],
+        },
+        oracle_evidence => _oracle_evidence('none', undef),
+        claims => _claims(JSON::PP::true),
+        explicit_nonclaims => _clone($spec->{explicit_nonclaims}),
+        diagnostics => [@{_clone($reported)}, @diagnostics],
+    });
+}
+
 sub validate_evaluation($class, @args) {
     _exact_invocant($class, 'validate_evaluation');
     confess __PACKAGE__ . "->validate_evaluation expects one closed hash\n"
@@ -524,6 +779,16 @@ sub evaluation_keys($class) {
 sub _owns($axis, $level) {
     return 0 unless defined($axis) && defined($level) && $OWNED_LEVELS{$axis};
     return scalar(grep { $_ eq $level } @{$OWNED_LEVELS{$axis}});
+}
+
+sub _render_axis_source($axis, $level, $requested_count) {
+    return _render_model_source($axis, $level, $requested_count)
+        if $axis eq 'model_instances'
+            || $axis eq 'scalar_model_state_cells';
+    return _render_scoreboard_source($axis, $level, $requested_count)
+        if $axis eq 'scoreboard_instances'
+            || $axis eq 'scoreboard_capacity';
+    confess "checking-state renderer does not own axis '$axis'\n";
 }
 
 sub _render_model_source($axis, $level, $requested_count) {
@@ -594,6 +859,74 @@ sub _render_model_source($axis, $level, $requested_count) {
         ' (faults)',
         ' (randomness (seed 1701))',
         ' (scenarios (scenario model_transition',
+        ' (timeout (cycles bus 2))',
+        ' (steps (reset bus 1))))))))',
+        "\n",
+    );
+}
+
+sub _render_scoreboard_source($axis, $level, $requested_count) {
+    confess "checking-state scoreboard renderer received an invalid requested count\n"
+        unless defined($requested_count) && !ref($requested_count)
+            && $requested_count =~ /\A[1-9][0-9]*\z/;
+
+    my ($instance_count, $capacity) = $axis eq 'scoreboard_instances'
+        ? ($requested_count, 1)
+        : $axis eq 'scoreboard_capacity'
+            ? (1, $requested_count)
+            : confess "checking-state scoreboard renderer does not own axis '$axis'\n";
+    my $definition = FSM::VIAL::ArchitectureScaleWorkload->stable_name({
+        family => $FAMILY,
+        primary_axis => $axis . '_definition',
+        ordinal => 0,
+    });
+    my @instances;
+    for my $ordinal (0 .. $instance_count - 1) {
+        my $instance = FSM::VIAL::ArchitectureScaleWorkload->stable_name({
+            family => $FAMILY,
+            primary_axis => $axis,
+            ordinal => $ordinal,
+        });
+        push @instances,
+            "(scoreboard $instance $definition (actual write))";
+    }
+
+    return join('',
+        '(vial (version 1) (package architecture_scale_checking_state',
+        ' (imports)',
+        ' (types',
+        ' (enum htrans_t (logic 2) (idle #b00) (nonseq #b10))',
+        ' (type address_t (logic 32))',
+        ' (type data_t (logic 32)))',
+        ' (transactions (transaction ahb_write',
+        ' (fields',
+        ' (address (type address_t))',
+        ' (transfer (type htrans_t))',
+        ' (write bool)',
+        ' (size (logic 3))',
+        ' (data (type data_t))',
+        ' (wait_cycles (u 4)))',
+        ' (events requested accepted captured held completed error)))',
+        ' (models)',
+        ' (scoreboards (scoreboard ', $definition,
+        ' (transaction ahb_write)',
+        ' (policy in_order)',
+        ' (capacity ', $capacity, ')))',
+        ' (fixtures (fixture checking_gate',
+        ' (dut dut',
+        ' (unit "unit/ahb_lite_subordinate")',
+        ' (domains (domain bus "domain/ahb_bus"))',
+        ' (endpoints',
+        ' (endpoint ready_out "endpoint/HREADYOUT" (logic 1) public_port)',
+        ' (endpoint response "endpoint/HRESP" (logic 1) public_port)',
+        ' (endpoint read_data "endpoint/HRDATA" (logic 32) public_port)',
+        ' (endpoint stored_data "probe/reg_data_q" (logic 32) verification_probe))',
+        ' (transactions (transaction write "transaction/ahb_write" ahb_write)))',
+        ' (instances ', join(' ', @instances), ')',
+        ' (coverage)',
+        ' (faults)',
+        ' (randomness (seed 1701))',
+        ' (scenarios (scenario scoreboard_transition',
         ' (timeout (cycles bus 2))',
         ' (steps (reset bus 1))))))))',
         "\n",
@@ -800,13 +1133,53 @@ sub _semantic_model_metrics($semantic) {
     };
 }
 
-sub _oracle_evidence($oracle, $model) {
+sub _semantic_scoreboard_metrics($semantic) {
+    my $package = $semantic->{packages}[0];
+    my $fixture = $package->{fixtures}[0];
+    my %definition = map { $_->{semantic_id} => $_ } @{$package->{scoreboards}};
+    my $capacity = 0;
+    for my $instance (@{$fixture->{instances}{scoreboard_instances}}) {
+        my $scoreboard = $definition{$instance->{scoreboard_id}};
+        $capacity += $scoreboard->{capacity} if $scoreboard;
+    }
+    return {
+        model_instances => 0,
+        scalar_model_state_cells => 0,
+        scoreboard_instances =>
+            scalar(@{$fixture->{instances}{scoreboard_instances}}),
+        scoreboard_declared_capacity => $capacity,
+        coverpoints => 0,
+        bins_and_cross_tuples => 0,
+        faults => 0,
+        random_occurrences => 0,
+        serialized_plan_bytes => 0,
+    };
+}
+
+sub _scoreboard_recipe_metrics($spec) {
+    my $axis = $spec->{primary_axis};
+    my $requested = $spec->{requested_counts}{$axis};
+    return {
+        model_instances => 0,
+        scalar_model_state_cells => 0,
+        scoreboard_instances =>
+            $axis eq 'scoreboard_instances' ? $requested : 1,
+        scoreboard_declared_capacity => $requested,
+        coverpoints => 0,
+        bins_and_cross_tuples => 0,
+        faults => 0,
+        random_occurrences => 0,
+        serialized_plan_bytes => 0,
+    };
+}
+
+sub _oracle_evidence($oracle, $evidence) {
     return {
         schema => $ORACLE_EVIDENCE_SCHEMA,
         schema_version => 1,
         oracle => $oracle,
-        model => _clone($model),
-        scoreboard => undef,
+        model => $oracle eq 'model' ? _clone($evidence) : undef,
+        scoreboard => $oracle eq 'scoreboard' ? _clone($evidence) : undef,
         coverage => undef,
         faults => undef,
         random_replay => undef,
@@ -852,6 +1225,46 @@ sub _expected_model_rejection_diagnostic($axis) {
         severity => 'error',
         source_location => undef,
     };
+}
+
+sub _expected_scoreboard_execution_rejection_diagnostic() {
+    return {
+        bridge_fact_paths => [],
+        code => 'VIAL_EXECUTION_LIMIT_ERROR',
+        message => 'scoreboard_instances exceeds the limit 4096',
+        phase => 'limit',
+        related => [],
+        schema_version => 1,
+        semantic_path => '/scoreboards',
+        severity => 'error',
+        source_location => undef,
+    };
+}
+
+sub _is_expected_scoreboard_semantic_rejection($result) {
+    return 0 unless ref($result) eq 'HASH' && !$result->{ok}
+        && ref($result->{diagnostics}) eq 'ARRAY'
+        && @{$result->{diagnostics}} == 1;
+    my $diagnostic = $result->{diagnostics}[0];
+    return 0 unless ref($diagnostic) eq 'HASH';
+    my %expected_keys = map { $_ => 1 } qw(
+        schema_version severity code phase message semantic_path
+        source_location notes
+    );
+    return 0 unless keys(%$diagnostic) == keys(%expected_keys)
+        && !grep { !$expected_keys{$_} } keys %$diagnostic;
+    return ($diagnostic->{schema_version} // 0) == 1
+        && ($diagnostic->{severity} // '') eq 'error'
+        && ($diagnostic->{code} // '') eq 'VIAL_LIMIT_ERROR'
+        && ($diagnostic->{phase} // '') eq 'limit'
+        && ($diagnostic->{message} // '')
+            eq 'integer is outside the bounded range 1 through 1000000'
+        && ($diagnostic->{semantic_path} // '')
+            eq '/packages/0/scoreboards/0/capacity'
+        && ref($diagnostic->{source_location}) eq 'HASH'
+        && ($diagnostic->{source_location}{source_name} // '') eq $VIAL_SOURCE
+        && ref($diagnostic->{notes}) eq 'ARRAY'
+        && @{$diagnostic->{notes}} == 0;
 }
 
 sub _evaluate_model_state($spec, $execution) {
@@ -975,6 +1388,276 @@ sub _evaluate_model_state($spec, $execution) {
     return ($evidence, \@errors);
 }
 
+sub _evaluate_scoreboard_state($spec, $execution) {
+    my $axis = $spec->{primary_axis};
+    my $requested = $spec->{requested_counts}{$axis};
+    my $scoreboards = $execution->{scoreboards};
+    my $transactions = $execution->{transactions};
+    my (@errors, @instance_ids);
+    my %instance_ids;
+    my %definition_ids;
+    my $declared_capacity = 0;
+
+    if (ref($scoreboards) ne 'ARRAY' || ref($transactions) ne 'ARRAY') {
+        push @errors, _oracle_error(
+            'VIAL_SCALE_CHECKING_SCOREBOARD_ERROR',
+            'scoreboard oracle requires canonical scoreboard and transaction arrays',
+            '/scoreboards',
+        );
+        $scoreboards = [] unless ref($scoreboards) eq 'ARRAY';
+        $transactions = [] unless ref($transactions) eq 'ARRAY';
+    }
+    my %transaction = map {
+        (($_->{semantic_id} // '') => $_)
+    } grep { ref($_) eq 'HASH' } @$transactions;
+    my @expected_fields = qw(
+        address transfer write size data wait_cycles
+    );
+    for my $ordinal (0 .. $#$scoreboards) {
+        my $scoreboard = $scoreboards->[$ordinal];
+        my $definition = ref($scoreboard->{definition}) eq 'HASH'
+            ? $scoreboard->{definition} : {};
+        my $capacity = $definition->{capacity};
+        my $instance_id = $scoreboard->{instance_id};
+        push @instance_ids, $instance_id;
+        ++$instance_ids{$instance_id // ''};
+        $definition_ids{$scoreboard->{scoreboard_id} // ''} = 1;
+        $declared_capacity += $capacity
+            if defined($capacity) && !ref($capacity)
+                && $capacity =~ /\A[0-9]+\z/;
+        my $expected_capacity = $axis eq 'scoreboard_instances'
+            ? 1 : $requested;
+        push @errors, _oracle_error(
+            'VIAL_SCALE_CHECKING_SCOREBOARD_ERROR',
+            'scoreboard instance is not the exact selected in-order definition',
+            "/scoreboards/$ordinal/definition",
+        ) unless ($definition->{policy} // '') eq 'in_order'
+            && !defined($definition->{key})
+            && ($capacity // 0) == $expected_capacity
+            && ($scoreboard->{transaction_id} // '')
+                eq ($definition->{transaction_id} // '')
+            && ($scoreboard->{actual_id} // '')
+                =~ /::transaction_binding::write\z/;
+        my $transaction = $transaction{$scoreboard->{transaction_id} // ''};
+        my @fields = $transaction
+            && ref($transaction->{definition}) eq 'HASH'
+            && ref($transaction->{definition}{fields}) eq 'ARRAY'
+            ? map { $_->{name} // '' }
+                @{$transaction->{definition}{fields}}
+            : ();
+        push @errors, _oracle_error(
+            'VIAL_SCALE_CHECKING_SCOREBOARD_ERROR',
+            'scoreboard transaction does not contain the six selected fields in order',
+            "/scoreboards/$ordinal/transaction_id",
+        ) unless join("\0", @fields) eq join("\0", @expected_fields);
+    }
+
+    my $instance_count = scalar(@$scoreboards);
+    my $expected_instances = $axis eq 'scoreboard_instances' ? $requested : 1;
+    push @errors, _oracle_error(
+        'VIAL_SCALE_CHECKING_SCOREBOARD_ERROR',
+        'scoreboard oracle did not reach the selected instance count',
+        '/oracle_evidence/scoreboard/scoreboard_instances',
+    ) unless $instance_count == $expected_instances;
+    push @errors, _oracle_error(
+        'VIAL_SCALE_CHECKING_SCOREBOARD_ERROR',
+        'scoreboard instances must have distinct nonempty canonical identities',
+        '/oracle_evidence/scoreboard/scoreboard_instances',
+    ) unless keys(%instance_ids) == $instance_count
+        && !exists($instance_ids{''});
+    push @errors, _oracle_error(
+        'VIAL_SCALE_CHECKING_SCOREBOARD_ERROR',
+        'scoreboard oracle did not reach the selected total capacity',
+        '/oracle_evidence/scoreboard/declared_capacity',
+    ) unless $declared_capacity == $requested;
+    push @errors, _oracle_error(
+        'VIAL_SCALE_CHECKING_SCOREBOARD_ERROR',
+        'scoreboard ladder must reuse exactly one authored definition',
+        '/oracle_evidence/scoreboard/scoreboard_definitions',
+    ) unless keys(%definition_ids) == 1;
+
+    my $entry_count = $requested;
+    my $packed_payload = '';
+    for my $ordinal (0 .. $entry_count - 1) {
+        $packed_payload .= pack('N', $ordinal);
+    }
+    my $payload_bytes = bytes::length($packed_payload);
+    my $payload_sha = sha256_hex($packed_payload);
+    my $expected_digest = Digest::SHA->new(256);
+    my @expected_depths = $axis eq 'scoreboard_instances'
+        ? ((1) x $entry_count) : ($entry_count);
+    my @actual_depths = (0) x scalar(@expected_depths);
+    my ($expected_depth, $actual_depth, $maximum_actual_depth) =
+        ($entry_count, 0, 0);
+    my ($field_comparisons, $matched, $drained) = (0, 0, 0);
+    my $fifo_order_preserved = 1;
+    my $complete_transactions_equal = 1;
+    my ($first_identity, $last_identity);
+    for my $ordinal (0 .. $entry_count - 1) {
+        my $instance_ordinal = $axis eq 'scoreboard_instances' ? $ordinal : 0;
+        my $chunk = substr($packed_payload, $ordinal * 4, 4);
+        my $expected_chunk = pack('N', $ordinal);
+        $expected_digest->add($expected_chunk);
+        $fifo_order_preserved = 0 unless $chunk eq $expected_chunk;
+        my $payload = unpack('N', $chunk);
+        my $expected = _scoreboard_expected_transaction($payload);
+        my $actual = _scoreboard_actual_transaction($ordinal);
+        ++$actual_depths[$instance_ordinal];
+        ++$actual_depth;
+        $maximum_actual_depth = $actual_depths[$instance_ordinal]
+            if $actual_depths[$instance_ordinal] > $maximum_actual_depth;
+        my ($equal, $compared) =
+            _scoreboard_transactions_equal($expected, $actual);
+        $field_comparisons += $compared;
+        $complete_transactions_equal = 0 unless $equal;
+        ++$matched if $equal;
+        my $identity = _scoreboard_transaction_identity($expected);
+        $first_identity //= $identity;
+        $last_identity = $identity;
+        --$expected_depths[$instance_ordinal];
+        --$actual_depths[$instance_ordinal];
+        --$expected_depth;
+        --$actual_depth;
+        ++$drained;
+    }
+    my $expected_payload_sha = $expected_digest->hexdigest;
+    $fifo_order_preserved = 0 unless $payload_sha eq $expected_payload_sha;
+    $packed_payload = '';
+
+    my $mismatch_expected = _scoreboard_expected_transaction(0);
+    my $mismatch_actual = _scoreboard_actual_transaction(1);
+    my ($mismatch_equal) =
+        _scoreboard_transactions_equal($mismatch_expected, $mismatch_actual);
+    my $mismatch_rejected = !$mismatch_equal;
+    my $per_instance_capacity = $axis eq 'scoreboard_instances'
+        ? 1 : $requested;
+    my $overflow_rejected = !_scoreboard_enqueue_allowed(
+        $per_instance_capacity, $per_instance_capacity,
+    );
+    my $corrupt = pack('N', 0);
+    substr($corrupt, 3, 1, chr(ord(substr($corrupt, 3, 1)) ^ 1));
+    my $corruption_rejected = $corrupt ne pack('N', 0);
+    my $all_instance_queues_drained = !grep { $_ != 0 }
+        (@expected_depths, @actual_depths);
+    push @errors, _oracle_error(
+        'VIAL_SCALE_CHECKING_SCOREBOARD_ERROR',
+        'packed scoreboard FIFO did not preserve exact authored order',
+        '/oracle_evidence/scoreboard/packed_payload_sha256',
+    ) unless $fifo_order_preserved;
+    push @errors, _oracle_error(
+        'VIAL_SCALE_CHECKING_SCOREBOARD_ERROR',
+        'scoreboard did not compare every complete transaction field',
+        '/oracle_evidence/scoreboard/complete_field_comparisons',
+    ) unless $complete_transactions_equal
+        && $field_comparisons == $entry_count * @expected_fields;
+    push @errors, _oracle_error(
+        'VIAL_SCALE_CHECKING_SCOREBOARD_ERROR',
+        'scoreboard negative checks did not reject mismatch, overflow, and corruption',
+        '/oracle_evidence/scoreboard/mismatch_rejected',
+    ) unless $mismatch_rejected && $overflow_rejected && $corruption_rejected;
+    push @errors, _oracle_error(
+        'VIAL_SCALE_CHECKING_SCOREBOARD_ERROR',
+        'scoreboard queues did not drain to zero pending entries',
+        '/oracle_evidence/scoreboard/pending_entries',
+    ) unless $expected_depth == 0 && $actual_depth == 0
+        && $all_instance_queues_drained && $drained == $entry_count;
+
+    my $success = @errors ? 0 : 1;
+    my $evidence = {
+        schema => $SCOREBOARD_EVIDENCE_SCHEMA,
+        schema_version => 1,
+        program => 'packed_complete_transaction_fifo_v1',
+        axis => $axis,
+        scoreboard_instances => $instance_count,
+        scoreboard_definitions => scalar(keys %definition_ids),
+        declared_capacity => $declared_capacity,
+        transactions_enqueued => $entry_count,
+        transactions_observed => $entry_count,
+        transactions_matched => $matched,
+        transactions_drained => $drained,
+        fields_per_transaction => scalar(@expected_fields),
+        complete_field_comparisons => $field_comparisons,
+        packed_payload_bytes => $payload_bytes,
+        packed_payload_sha256 => $payload_sha,
+        expected_payload_sha256 => $expected_payload_sha,
+        maximum_total_expected_depth => $entry_count,
+        maximum_expected_depth => $per_instance_capacity,
+        maximum_actual_depth => $maximum_actual_depth,
+        final_expected_depth => $expected_depth,
+        final_actual_depth => $actual_depth,
+        pending_entries => $expected_depth + $actual_depth,
+        first_instance_id => $instance_ids[0],
+        last_instance_id => $instance_ids[-1],
+        first_transaction_identity => $first_identity,
+        last_transaction_identity => $last_identity,
+        first_payload_hex => sprintf('%08x', 0),
+        last_payload_hex => sprintf('%08x', $entry_count - 1),
+        fifo_order_preserved => $success && $fifo_order_preserved
+            ? JSON::PP::true : JSON::PP::false,
+        complete_transactions_equal => $success && $complete_transactions_equal
+            ? JSON::PP::true : JSON::PP::false,
+        all_instances_drained => $success && $expected_depth == 0
+            && $actual_depth == 0 && $all_instance_queues_drained
+            ? JSON::PP::true : JSON::PP::false,
+        mismatch_rejected => $success && $mismatch_rejected
+            ? JSON::PP::true : JSON::PP::false,
+        overflow_rejected => $success && $overflow_rejected
+            ? JSON::PP::true : JSON::PP::false,
+        corruption_rejected => $success && $corruption_rejected
+            ? JSON::PP::true : JSON::PP::false,
+    };
+    return ($evidence, \@errors);
+}
+
+sub _scoreboard_expected_transaction($payload) {
+    return {
+        address => 0,
+        transfer => 2,
+        write => 1,
+        size => 2,
+        data => $payload,
+        wait_cycles => 0,
+    };
+}
+
+sub _scoreboard_actual_transaction($payload) {
+    return {
+        address => 0,
+        transfer => 2,
+        write => 1,
+        size => 2,
+        data => $payload,
+        wait_cycles => 0,
+    };
+}
+
+sub _scoreboard_transactions_equal($expected, $actual) {
+    my @fields = qw(address transfer write size data wait_cycles);
+    return (0, 0) unless ref($expected) eq 'HASH'
+        && ref($actual) eq 'HASH'
+        && keys(%$expected) == @fields && keys(%$actual) == @fields;
+    my $compared = 0;
+    for my $field (@fields) {
+        ++$compared;
+        return (0, $compared)
+            unless exists($expected->{$field}) && exists($actual->{$field})
+                && $expected->{$field} == $actual->{$field};
+    }
+    return (1, $compared);
+}
+
+sub _scoreboard_transaction_identity($transaction) {
+    return 'scoreboard-transaction/' . sha256_hex(join("\0",
+        map { $transaction->{$_} }
+            qw(address transfer write size data wait_cycles),
+    ));
+}
+
+sub _scoreboard_enqueue_allowed($depth, $capacity) {
+    return defined($depth) && defined($capacity)
+        && $depth >= 0 && $capacity >= 1 && $depth < $capacity;
+}
+
 sub _is_increment_expression($expression, $state_id) {
     return 0 unless ref($expression) eq 'HASH'
         && ($expression->{kind} // '') eq 'operator'
@@ -1064,6 +1747,19 @@ sub _validate_evaluation_shape($raw) {
             if grep { defined($raw->{oracle_evidence}{$_}) }
                 qw(scoreboard coverage faults random_replay);
     }
+    elsif ($oracle eq 'scoreboard') {
+        _confess_exact_keys(
+            $raw->{oracle_evidence}{scoreboard}, \@SCOREBOARD_EVIDENCE_KEYS,
+            'checking-state scoreboard evidence',
+        );
+        confess "checking-state scoreboard-evidence schema is invalid\n"
+            unless ($raw->{oracle_evidence}{scoreboard}{schema} // '')
+                    eq $SCOREBOARD_EVIDENCE_SCHEMA
+                && ($raw->{oracle_evidence}{scoreboard}{schema_version} // 0) == 1;
+        confess "checking-state scoreboard oracle cannot carry another oracle family\n"
+            if grep { defined($raw->{oracle_evidence}{$_}) }
+                qw(model coverage faults random_replay);
+    }
     else {
         confess "checking-state oracle kind is invalid\n";
     }
@@ -1075,17 +1771,21 @@ sub _validate_evaluation_shape($raw) {
             =~ m{\Achecking-evaluation/[0-9a-f]{64}\z};
     confess "checking-state rerun identity is invalid\n"
         unless ($raw->{rerun_identity} // '') =~ m{\Arerun/[0-9a-f]{64}\z};
-    confess "checking-state evaluation contains an invalid source-stage identity\n"
-        if grep { ($raw->{stage_identities}{$_} // '') !~ /\A[0-9a-f]{64}\z/ }
-            qw(semantic_ir_sha256 bridge_manifest_sha256);
-    my @downstream = @{$raw->{stage_identities}}{
-        qw(execution_ir_sha256 plan_sha256)
+    my @stage = @{$raw->{stage_identities}}{
+        qw(semantic_ir_sha256 bridge_manifest_sha256 execution_ir_sha256 plan_sha256)
     };
-    confess "checking-state evaluation contains an invalid downstream-stage identity\n"
-        unless (!defined($downstream[0]) && !defined($downstream[1]))
-            || (defined($downstream[0]) && defined($downstream[1])
-                && $downstream[0] =~ /\A[0-9a-f]{64}\z/
-                && $downstream[1] =~ /\A[0-9a-f]{64}\z/);
+    my $no_stage = !grep { defined($_) } @stage;
+    my $semantic_and_bridge = defined($stage[0]) && defined($stage[1])
+        && $stage[0] =~ /\A[0-9a-f]{64}\z/
+        && $stage[1] =~ /\A[0-9a-f]{64}\z/;
+    my $no_downstream = !defined($stage[2]) && !defined($stage[3]);
+    my $complete_downstream = defined($stage[2]) && defined($stage[3])
+        && $stage[2] =~ /\A[0-9a-f]{64}\z/
+        && $stage[3] =~ /\A[0-9a-f]{64}\z/;
+    confess "checking-state evaluation contains an invalid stage-identity prefix\n"
+        unless $no_stage
+            || ($semantic_and_bridge
+                && ($no_downstream || $complete_downstream));
     return 1;
 }
 

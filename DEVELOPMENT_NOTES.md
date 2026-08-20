@@ -346,3 +346,20 @@ u8 zero-to-one assignment, derives each bound event, commits and reads every
 expanded cell, and compares packed state with independently sized all-zero and
 all-one vectors. Source compactness therefore changes representation cost, not
 semantic proof strength.
+
+## 2026-08-20: Scoreboard scale separates authored structure from varying FIFO state
+
+The scoreboard-instance ladder reuses one capacity-one definition across every
+instance, while the capacity ladder uses one definition and one instance. This
+keeps ordinary VIAL source proportional to authored topology and lets the
+one-million-capacity level remain a four-line semantic shape rather than a
+million-operation scenario. The provider-free oracle still derives definition,
+binding, policy, capacity, and complete transaction fields from canonical
+ExecutionIR, so compact source does not bypass the public producers.
+
+Only the varying unsigned 32-bit payload is stored in the qualification FIFO.
+The other five transaction fields are reconstructed at comparison time, every
+field is checked, and expected and actual queues drain in order. Thus the exact
+state cost is four bytes per entry while the semantic proof remains over
+complete transactions; mismatch, at-capacity enqueue, and byte corruption are
+separate negative obligations rather than inferred from a matching digest.

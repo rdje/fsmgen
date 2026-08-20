@@ -26,10 +26,11 @@ evidence: >-
   perl/FSM/Support/VIALExecutionContract.pm;
   t/1629-vial-architecture-scale-checking-foundation.t;
   t/1630-vial-architecture-scale-checking-models.t;
+  t/1631-vial-architecture-scale-checking-scoreboards.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
-  prove -Iperl t/1629-vial-architecture-scale-checking-foundation.t t/1630-vial-architecture-scale-checking-models.t && rg -n 'checking_state_v1|one_bound_event_occurrence_per_instance_v1|coverage_bins_and_cross_tuples|random_occurrences|serialized_plan_bytes|cross Cartesian product' docs/decisions/0073-checking-state-scale-uses-packed-state-oracles-and-static-cross-domains.md perl/FSM/VIAL/ArchitectureScaleCheckingState.pm perl/FSM/VIAL/SemanticBuilder.pm perl/FSM/VIAL/ExecutionBuilder.pm perl/FSM/Support/VIALExecutionContract.pm
+  prove -Iperl t/1629-vial-architecture-scale-checking-foundation.t t/1630-vial-architecture-scale-checking-models.t t/1631-vial-architecture-scale-checking-scoreboards.t && rg -n 'checking_state_v1|one_bound_event_occurrence_per_instance_v1|packed_complete_transaction_fifo_v1|coverage_bins_and_cross_tuples|random_occurrences|serialized_plan_bytes|cross Cartesian product' docs/decisions/0073-checking-state-scale-uses-packed-state-oracles-and-static-cross-domains.md perl/FSM/VIAL/ArchitectureScaleCheckingState.pm perl/FSM/VIAL/SemanticBuilder.pm perl/FSM/VIAL/ExecutionBuilder.pm perl/FSM/Support/VIALExecutionContract.pm
 ---
 
 Decision `0073` selects one outcome for every non-reference level before the
@@ -76,16 +77,16 @@ one sample hits the exact all-one vector because every authored bin matches.
 
 `TraceValidator`, `ResultProducer`, and the first portable SystemVerilog backend
 remain result/profile machinery, not general checking-state semantic oracles.
-The implemented model slice publishes exactly the eight non-reference shapes
-of the model-instance and scalar-state-cell axes. It rejects reference,
+The implemented model and scoreboard slices publish exactly sixteen
+non-reference shapes across their four axes. They reject reference,
 non-owned, unknown-level, IR, trace, result, and support-metadata injection.
 Its same-package-only candidate route accepts just ordinary VIAL text plus the
 exact checked-AHB source, regenerates the workload defensively, and reaches
 canonical SemanticIR, bridge, ExecutionIR, and plan twice with content-addressed
 workload/evaluation/rerun identities. The frozen foundation witness still
-reports `accepted_not_axis_evaluated`; generated model shapes populate only the
-model compartment and explicitly deny every capability, support, performance,
-capacity, backend, or runtime claim.
+reports `accepted_not_axis_evaluated`; generated accepted shapes populate only
+their model or scoreboard compartment and explicitly deny every capability,
+support, performance, capacity, backend, or runtime claim.
 
 That foundation freezes the selected packed representations before an axis is
 owned: fixed-width model cells reject unknown state; scoreboard payload is a
@@ -108,6 +109,23 @@ must equal independently derived all-zero and all-one vectors. Hostile
 known-mask mutation fails this oracle. The 4,097-instance and 65,537-cell routes each
 return exactly one `VIAL_EXECUTION_LIMIT_ERROR` at `/models` and no downstream
 identity. The complete high-count sweep passes under the repository RAM guard.
-This implementation changes no product behavior, support state, performance
-budget, or capacity claim. Scoreboard-axis implementation is now the active
-leaf under `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2`.
+
+The scoreboard-instance renderer reuses one capacity-one in-order definition
+at 32, 1,024, and 4,096 instances. The capacity renderer uses one definition
+and one instance at 4,096, 262,144, and 1,000,000 entries. The oracle stores
+only each entry's varying big-endian uint32 payload, reconstructs the other five
+fixed transaction fields, compares all six fields, preserves FIFO order, and
+drains expected and actual depth to zero. At one million entries it performs
+6,000,000 field comparisons over exactly 4,000,000 bytes with digest
+`a515ca39768fa0e597911d6564fa44f9163ecf81559ecc776c16f751f29b2b65`.
+Mismatch, at-capacity enqueue, packed-byte corruption, hostile in-order-policy
+mutation, source mutation, and report mutation all fail closed.
+
+The 4,097-instance route returns exactly one
+`VIAL_EXECUTION_LIMIT_ERROR` at `/scoreboards`, retaining only semantic and
+bridge identities. Capacity 1,000,001 returns exactly one parser
+`VIAL_LIMIT_ERROR` at `/packages/0/scoreboards/0/capacity` and no stage
+identity. The default and complete RAM-guarded scoreboard sweeps pass. This
+implementation changes no product behavior, support state, performance budget,
+or capacity claim. Coverage-axis implementation is now the next proposed leaf
+under `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2`.
