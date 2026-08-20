@@ -181,7 +181,120 @@ hidden behind repeated checks of the same kind.
   Status: `active`
   Goal: `Review and migrate the 557 protocol-profile and integration-book candidates.`
   Acceptance: `Every candidate in 14f, 14g, 14h, 14i, 14j, 14l, 16a, 16aa, and 16b is dispositioned against executable protocol/profile/integration producers and separating oracles, or carries an exact owned gap; repeated measurements share evidence only when they are demonstrably the same claim.`
-  Verification: `protocol-group identity/count, focused profile/integration gates and deliberate mutations, zero open group candidates, mdBook/doctrine gates`
+  Verification: `PASS — the committed protocol group partitions exactly into 16 evidence-coherent children whose disjoint path/range counts sum to 557; .5.4.1 alone is active.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.4: partition protocol claim review`
+  Children: `CLAIM-VERIFICATION-ADOPTION.5.4.1, CLAIM-VERIFICATION-ADOPTION.5.4.2, CLAIM-VERIFICATION-ADOPTION.5.4.3, CLAIM-VERIFICATION-ADOPTION.5.4.4, CLAIM-VERIFICATION-ADOPTION.5.4.5, CLAIM-VERIFICATION-ADOPTION.5.4.6, CLAIM-VERIFICATION-ADOPTION.5.4.7, CLAIM-VERIFICATION-ADOPTION.5.4.8, CLAIM-VERIFICATION-ADOPTION.5.4.9, CLAIM-VERIFICATION-ADOPTION.5.4.10, CLAIM-VERIFICATION-ADOPTION.5.4.11, CLAIM-VERIFICATION-ADOPTION.5.4.12, CLAIM-VERIFICATION-ADOPTION.5.4.13, CLAIM-VERIFICATION-ADOPTION.5.4.14, CLAIM-VERIFICATION-ADOPTION.5.4.15, CLAIM-VERIFICATION-ADOPTION.5.4.16`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.4.1`
+  Status: `active`
+  Goal: `Disposition the 65 AXI-manager-core and dynamic-identity backlog candidates in Chapters 14f and 14g.`
+  Acceptance: `Current generated AXI manager capacity, identity, demux, ordering, and output-bank statements join distinct executable evidence; selectors, historical checkpoints, and deferred-boundary numerals remain distinguishable from shipped behavior.`
+  Verification: `exact 31 + 34 path census, focused manager/dynamic-identity producers and mutations, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.4.2`
+  Status: `pending`
+  Goal: `Disposition the 11 foundational profile/APB candidates in Chapter 14h lines 1-850 and Chapter 16b.`
+  Acceptance: `Profile-alias chronology, APB endpoint/completer/interconnect foundations, and the shipped APB example chapter retain current evidence without promoting task identifiers or mode-map navigation into capability proof.`
+  Verification: `exact 7 + 4 range/path census, focused profile/APB foundation gates, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.4.3`
+  Status: `pending`
+  Goal: `Disposition the 35 APB width, sideband, status, and timing candidates in Chapter 14h lines 851-1199.`
+  Acceptance: `Data/strobe widths, protection/status fields, queue depth, and selected timing families join the exact APB generators and separating boundary cases.`
+  Verification: `exact range census, APB width/sideband/status/timing gates and mutations, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.4.4`
+  Status: `pending`
+  Goal: `Disposition the 46 APB multi-register, protection, and composition candidates in Chapter 14h lines 1200-1699.`
+  Acceptance: `Selected 16/32-bit multi-register, protected, queued, fixed-composition, and multi-peripheral measurements retain separate source-shape and runtime evidence.`
+  Verification: `exact range census, multi-register/protection/composition gates and mutations, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.4.5`
+  Status: `pending`
+  Goal: `Disposition the 37 generalized APB register-set candidates in Chapter 14h lines 1700-1999.`
+  Acceptance: `Generalized two-peripheral register-set widths, strides, windows, counts, and protection policies join exact generated artifacts and adjacent-boundary controls.`
+  Verification: `exact range census, generalized-register-set gates and excess controls, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.4.6`
+  Status: `pending`
+  Goal: `Disposition the 28 expanded APB register-bound candidates in Chapter 14h lines 2000-end.`
+  Acceptance: `Five- and six-register 16/32-bit protected and unprotected families keep explicit count/stride/width producers and fail-closed neighboring bounds.`
+  Verification: `exact range census, expanded-register-bound gates and adjacent excess controls, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.4.7`
+  Status: `pending`
+  Goal: `Disposition the 40 foundational AHB endpoint, interconnect, HBURST, and BUSY candidates in Chapter 14i lines 1-1070.`
+  Acceptance: `Endpoint and aggregate topologies, byte-lane/SEQ/BUSY policies, profile aliases, support counts, and runtime behavior retain distinct producer/oracle chains.`
+  Verification: `exact range census, foundational AHB endpoint/interconnect/HBURST/BUSY gates, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.4.8`
+  Status: `pending`
+  Goal: `Disposition the 49 AHB semantic-repair and exact-two/three requester-BUSY candidates in Chapter 14i lines 1071-1406.`
+  Acceptance: `Wrap progression, data-phase ownership, error timing, conditional BUSY insertion, exact count runtime, aliases, and integration surfaces join independent semantics and generated-HDL evidence.`
+  Verification: `exact range census, AHB semantic/runtime/alias gates and mutations, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.4.9`
+  Status: `pending`
+  Goal: `Disposition the 27 AHB arbitration and exact-three paired-composition candidates in Chapter 14i lines 1407-1661.`
+  Acceptance: `Default-decode arbitration repair and one-/two-subordinate exact-three paired compositions retain exact topology, artifact, support, and assertion-enabled runtime evidence.`
+  Verification: `exact range census, arbitration and exact-three paired gates, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.4.10`
+  Status: `pending`
+  Goal: `Disposition the 35 exact-four requester and paired-composition candidates in Chapter 14i lines 1662-1779.`
+  Acceptance: `Minimum counter widths, literal bounds, exact-four requester runtime, paired aggregate behavior, aliases, and support checkpoints join distinct generated evidence.`
+  Verification: `exact range census, exact-four requester/paired gates and boundary mutations, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.4.11`
+  Status: `pending`
+  Goal: `Disposition the 32 two-subordinate exact-four and generalized BUSY-range candidates in Chapter 14i lines 1780-1895.`
+  Acceptance: `Two-window exact-four runtime, aliases, generated artifact counts, support identity, and generalized literal 2..16 behavior retain separate runtime and fail-closed evidence.`
+  Verification: `exact range census, two-subordinate/generalized-BUSY gates and adjacent invalid controls, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.4.12`
+  Status: `pending`
+  Goal: `Disposition the 17 AHB integration and public-synchronization candidates in Chapter 14i lines 1896-end.`
+  Acceptance: `Post-AHB integration selections, ISF/book synchronization measurements, diagram migrations, task-ledger repairs, and Chapter 16c handoffs remain correctly classified as current gates or immutable history.`
+  Verification: `exact range census, integration/reference/task reconstruction gates, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.4.13`
+  Status: `pending`
+  Goal: `Disposition the 6 extended-AXI backlog candidates in Chapter 14j.`
+  Acceptance: `Mixed dynamic/static demux claims join exact generated behavior while selectors and bounded contract numerals remain narrowly classified.`
+  Verification: `exact path census, extended-AXI demux gates and mutations, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.4.14`
+  Status: `pending`
+  Goal: `Disposition the 40 backend, validation, and public-API backlog candidates in Chapter 14l.`
+  Acceptance: `VHDL/backend support, external validation, generation structure, semantic export, and embedding/API statements join their exact producers and negative controls without promoting roadmap residue.`
+  Verification: `exact path census, backend/validation/API gates and mutations, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.4.15`
+  Status: `pending`
+  Goal: `Disposition the 46 shipped AXI IAL2 example candidates in Chapter 16a.`
+  Acceptance: `Guided, initiator, more-control, raw, write/read, single/four-beat, and validation statements join executable example and lowering evidence; headings and syntax values remain non-claims where appropriate.`
+  Verification: `exact path census, AXI example lowering/runtime/validation gates, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.4.16`
+  Status: `pending`
+  Goal: `Disposition the 43 AXI manager capacity/status candidates in Chapter 16aa.`
+  Acceptance: `ID families, transaction events, auto/dynamic IDs, ordering, output capture/banks, raw ARLEN, and bounded progression claims retain exact generated/report/runtime evidence.`
+  Verification: `exact path census, capacity/status producer and mutation gates, inventory/disposition/mdBook/doctrine gates`
   Commit: `pending`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.5`
@@ -327,12 +440,17 @@ hidden behind repeated checks of the same kind.
   explicitly historical. Declared caps, old-guide section labels, and chapter
   coordinates remain reviewed inputs or navigation rather than current scale
   claims.
+- `2026-08-20`: The 557-candidate protocol group is partitioned by committed
+  path and semantic line range into 16 children: AXI manager/dynamic identity;
+  five APB phases; six AHB phases; extended AXI; backends/APIs; and two shipped
+  AXI chapters. Counts `65 + 11 + 35 + 46 + 37 + 28 + 40 + 49 + 27 + 35 +
+  32 + 17 + 6 + 40 + 46 + 43` reproduce the whole group exactly. No child
+  shares a current candidate identity, and `.5.4.1` alone is active.
 
 ## Open Questions
 
-- None blocking. `.5.4` is active after the complete 268-candidate general-book
-  closure; its 557 protocol candidates require a disjoint path/evidence-family
-  partition before implementation.
+- None blocking. `.5.4.1` owns the first 65 AXI-manager-core and
+  dynamic-identity candidates after the exact 16-child protocol partition.
 
 ## Blockers
 
@@ -403,6 +521,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-20` | `.5.3.3` | loop/temporal/control/data/storage/composition/rule/lowering/type evidence; exhaustive ATL routes; inventory/disposition/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 68 candidates closed as 60 gates / 8 reviewed; general book 146/268; Files=54/Tests=603 exact focused run; 82 complete book fixtures and all registered doctrines` |
 | `2026-08-20` | `.5.3.4` | support matrix; book audit; SourceHIR; VHDL generic maps; ATL/FIFO; IAL2 pulse/read/RLAST/ARLEN; VIAL profile/bridge/execution/parity; inventory/disposition/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 71 candidates closed as 62 gates / 9 reviewed; general book 217/268; Files=30/Tests=590 plus filtered AXI Files=1/Tests=6; all registered doctrines` |
 | `2026-08-20` | `.5.3.5` | Rust parity smoke; current AHB map; retired histories; ledger; task migration/archive; evidence maps; ISF/reference partitions; roadmap recovery; inventory/disposition/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 51 candidates closed as 14 gates / 37 reviewed; general book 268/268 required-complete; Files=14/Tests=121 exact focused run; all registered doctrines` |
+| `2026-08-20` | `.5.4` partition | committed-inventory path/range aggregation; exact 16-child sum; task integrity; docs paths; inventory/disposition/Knowledge Map/live-document/diff/staged-doctrine gates | `PASS — 65 + 11 + 35 + 46 + 37 + 28 + 40 + 49 + 27 + 35 + 32 + 17 + 6 + 40 + 46 + 43 = 557; .5.4.1 selected alone; no claim, disposition, product, capability, or support behavior changes` |
 
 ## Commit Log
 
@@ -427,3 +546,4 @@ hidden behind repeated checks of the same kind.
 | `.5.3.3` | `CLAIM-VERIFICATION-ADOPTION.5.3.3: disposition control data claims` | `Maps control, temporal, data, generated-child composition, rule, lowering, and type statements to distinct executable evidence; repairs duplicated repeat and payload-width prose.` |
 | `.5.3.4` | `CLAIM-VERIFICATION-ADOPTION.5.3.4: disposition support backlog claims` | `Maps shipped support-matrix and non-protocol backlog statements to distinct executable evidence, preserves identifiers/examples as reviewed context, and repairs the stale complete-book fixture count.` |
 | `.5.3.5` | `CLAIM-VERIFICATION-ADOPTION.5.3.5: disposition blueprint reference claims` | `Maps current Rust, AHB, archive, ledger, task, evidence-map, ISF-partition, and roadmap claims to distinct gates; preserves policy/navigation/history context and clarifies activation-only occupancy.` |
+| `.5.4` | `CLAIM-VERIFICATION-ADOPTION.5.4: partition protocol claim review` | `Activates 16 bounded path/range- and evidence-coherent children from the exact 557-candidate protocol census; changes no claim, disposition, product, capability, or support behavior.` |
