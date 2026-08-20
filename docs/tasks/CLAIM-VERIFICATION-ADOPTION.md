@@ -128,11 +128,11 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.2.3: disposition bridge execution claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.2.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Disposition the 12 current checking-scale rationale candidates and close the root group.`
-  Acceptance: `The owned-shape, model, scoreboard, coverage, fault, and random-scale measurements join exact current producers and independent reconstruction/mutation oracles or live repairs; all 71 current root candidates are dispositioned and root_documents becomes required-complete.`
-  Verification: `DEVELOPMENT_NOTES.md lines 270 onward identity/count; checking-scale and adjacent/mutation RED controls; zero-open root group; docs/live-document/doctrine gates`
-  Commit: `pending`
+  Acceptance: `The owned-shape, model, scoreboard, coverage, fault, and random-scale measurements join exact current producers and independent reconstruction/mutation oracles or live repairs; all 70 current root candidates are dispositioned and root_documents becomes required-complete.`
+  Verification: `Clean predecessor 7cc733514 closes all 18 bridge/execution candidates and fixes the remaining root frontier at 12 checking-scale candidates on DEVELOPMENT_NOTES.md lines 306..411. This continuity slice activates .5.2.4 alone without changing a disposition, claim, evidence producer, runtime behavior, capability, or support statement.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.2.4: activate checking scale claim review`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.3`
   Status: `pending`
@@ -230,8 +230,8 @@ hidden behind repeated checks of the same kind.
 
 ## Open Questions
 
-- None blocking. After `.5.2.3` commits cleanly, the next action is to activate
-  `.5.2.4` and disposition the final checking-scale root candidates.
+- None blocking. `.5.2.4` is the sole active child after clean bridge/execution
+  closure commit `7cc733514`.
 
 ## Blockers
 
@@ -254,6 +254,9 @@ hidden behind repeated checks of the same kind.
 - [x] **ROOT CAUSE (WHY + WHERE)** — the 18 bridge/execution candidates had no disposition joins, and the final-count checks in `t/1602-vial-architecture-scale-bridge-fanout.t` did not independently reconstruct the rationale's calibration premises. The failing tool output reported at t/1602-vial-architecture-scale-bridge-fanout.t line 193 and located a prefix-based probe that went RED at 26 versus 56 configuration maps and 251 versus 221 baseline maps because configuration semantics legitimately contribute maps outside `/configurations/`; copied path-family arithmetic was therefore not a separating proof.
 - [x] **ADDRESSED (verified)** — the bridge oracle now builds baseline, one-configuration, one-residue, and selected-gate workloads through the ordinary direct-IAL1 route and differentially proves the calibration. Fourteen candidate identities join distinct bridge, fiber, semantic-limit, or bound-type producer/oracle/watcher chains; four rejected or pre-repair observations carry exact reviewed reasons. The canonical report is `candidates=1415`, `disposed=58`, `gates=32`, `reviewed=26`, `root open=12`.
 - [x] **NO REGRESSION** — the RAM-guarded exact collection for `t/1550`, `t/1602`, `t/1604`, `t/1605`, and `t/1606` reports `All tests successful` at `Files=5, Tests=34`; inventory regenerates 1,415 candidates and 686 governed constants; disposition RED controls, docs, Memory, Knowledge Map, live containment, all 53 book chapters and rendered-book inspection/removal, staged acceptance, diff, and all 12 doctrine gates pass.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -1 --format='%H %s'` identifies clean implementation commit `7cc733514`; the canonical inventory retains exactly 12 undispositioned DEVELOPMENT_NOTES.md candidates on lines 306..411, so the final dependency-ordered root child is ready but inactive. Its acceptance text still carried the pre-repair 71-candidate root count even though `.5.2.2` removed one unsupported candidate and fixed the current root at 70.
+- [x] **ADDRESSED (verified)** — task/index/Memory ownership surfaces activate `.5.2.4` for the exact checking-scale range and its acceptance count now agrees with the current canonical root total. `.5.2.3` remains done, and no disposition, claim, evidence producer, product behavior, capability, or support statement changes in this selection slice.
+- [x] **NO REGRESSION** — task integrity, Memory, inventory/disposition joins, docs-relative paths, Knowledge Map, live-document authority, diff, staged acceptance exemption, and all 12 doctrine gates pass from clean predecessor `7cc733514`.
 
 ## Verification Log
 
@@ -270,6 +273,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-20` | `.5.2.2` | UVM producer audit and live repair; ledger/book/roadmap/provider evidence review; OSVVM source-order reconstruction; `t/1565`, `t/1566`, `t/1592`, `t/1599`, `t/1637`, `t/1638`; inventory/disposition joins; docs/Memory/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — current frontier 1,415; root 40 disposed / 30 open; 18 gates / 22 reviewed; all eight foundational candidates closed; 668 governed constants; Files=6/Tests=30; Knowledge Map 1,127/5,897/6,064/130; live paths 3,022/3,022; all 53 chapters; inspected/removed build 88 files/18,584 KiB; exact provider rerun and same-volume cleanup pass` |
 | `2026-08-20` | `.5.2.3` activation | clean `27921556d` predecessor; exact 18-candidate line-range census; task/index/Memory continuity; task/inventory/disposition/docs/Knowledge Map/live-document/diff/staged-doctrine gates | `PASS — .5.2.3 alone active; .5.2.4 pending; no claim, disposition, evidence, product, capability, or support behavior changes` |
 | `2026-08-20` | `.5.2.3` | bridge differential calibration; exact bridge boundary; semantic parallel limit; scenario topology; total/live fibers; bound execution types; inventory/disposition joins; docs/Memory/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 18 candidates closed as 14 gates / 4 reviewed; root 58 disposed / 12 open; Files=5/Tests=34 exact focused run; 686 governed constants; all 53 chapters and all registered doctrines` |
+| `2026-08-20` | `.5.2.4` activation | clean `7cc733514` predecessor; exact 12-candidate line-range census; task/index/Memory continuity; task/inventory/disposition/docs/Knowledge Map/live-document/diff/staged-doctrine gates | `PASS — .5.2.4 alone active; no claim, disposition, evidence, product, capability, or support behavior changes` |
 
 ## Commit Log
 
@@ -286,3 +290,4 @@ hidden behind repeated checks of the same kind.
 | `.5.2.2` | `CLAIM-VERIFICATION-ADOPTION.5.2.2: disposition foundational rationale claims` | `Removes unsupported UVM resource precision, strengthens the OSVVM source-count oracle, and maps the remaining foundational claims to live gates or immutable historical measurements.` |
 | `.5.2.3` activation | `CLAIM-VERIFICATION-ADOPTION.5.2.3: activate bridge execution claim review` | `Activates the exact bridge/execution rationale range from the clean foundational closure without changing claims or evidence.` |
 | `.5.2.3` | `CLAIM-VERIFICATION-ADOPTION.5.2.3: disposition bridge execution claims` | `Maps bridge and execution measurements to distinct current evidence chains, preserves historical/structural references honestly, and strengthens source-map calibration with differential real builds.` |
+| `.5.2.4` activation | `CLAIM-VERIFICATION-ADOPTION.5.2.4: activate checking scale claim review` | `Activates the exact final checking-scale root range from the clean bridge/execution closure without changing claims or evidence.` |
