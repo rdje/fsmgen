@@ -12,6 +12,7 @@ answers:
   - "what does preflight_dominated mean for checking-state random occurrences?"
   - "how are VIAL model-instance scale levels executed and checked?"
   - "how does VIAL prove every scalar model-state cell changes?"
+  - "how does VIAL prove fault activation, expiry, and restoration at scale?"
 date: 2026-08-20
 status: current
 tags: [vial, checking-state, scale, scoreboard, coverage, faults, randomness]
@@ -28,10 +29,11 @@ evidence: >-
   t/1630-vial-architecture-scale-checking-models.t;
   t/1631-vial-architecture-scale-checking-scoreboards.t;
   t/1632-vial-architecture-scale-checking-coverage.t;
+  t/1633-vial-architecture-scale-checking-faults.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
-  prove -Iperl t/1629-vial-architecture-scale-checking-foundation.t t/1630-vial-architecture-scale-checking-models.t t/1631-vial-architecture-scale-checking-scoreboards.t t/1632-vial-architecture-scale-checking-coverage.t && rg -n 'checking_state_v1|one_bound_event_occurrence_per_instance_v1|packed_complete_transaction_fifo_v1|one_sample_packed_static_domain_vector_v1|coverage_bins_and_cross_tuples|random_occurrences|serialized_plan_bytes|cross Cartesian product' docs/decisions/0073-checking-state-scale-uses-packed-state-oracles-and-static-cross-domains.md perl/FSM/VIAL/ArchitectureScaleCheckingState.pm perl/FSM/VIAL/SemanticBuilder.pm perl/FSM/VIAL/ExecutionBuilder.pm perl/FSM/Support/VIALExecutionContract.pm
+  prove -Iperl t/1629-vial-architecture-scale-checking-foundation.t t/1630-vial-architecture-scale-checking-models.t t/1631-vial-architecture-scale-checking-scoreboards.t t/1632-vial-architecture-scale-checking-coverage.t t/1633-vial-architecture-scale-checking-faults.t && rg -n 'checking_state_v1|one_bound_event_occurrence_per_instance_v1|packed_complete_transaction_fifo_v1|one_sample_packed_static_domain_vector_v1|arm_apply_expire_restore_each_fault_v1|coverage_bins_and_cross_tuples|random_occurrences|serialized_plan_bytes|cross Cartesian product' docs/decisions/0073-checking-state-scale-uses-packed-state-oracles-and-static-cross-domains.md perl/FSM/VIAL/ArchitectureScaleCheckingState.pm perl/FSM/VIAL/SemanticBuilder.pm perl/FSM/VIAL/ExecutionBuilder.pm perl/FSM/Support/VIALExecutionContract.pm
 ---
 
 Decision `0073` selects one outcome for every non-reference level before the
@@ -78,15 +80,15 @@ one sample hits the exact all-one vector because every authored bin matches.
 
 `TraceValidator`, `ResultProducer`, and the first portable SystemVerilog backend
 remain result/profile machinery, not general checking-state semantic oracles.
-The implemented model, scoreboard, and coverage slices publish exactly 24
-non-reference shapes across their six axes. They reject reference,
+The implemented model, scoreboard, coverage, and fault slices publish exactly
+28 non-reference shapes across their seven axes. They reject reference,
 non-owned, unknown-level, IR, trace, result, and support-metadata injection.
 Its same-package-only candidate route accepts just ordinary VIAL text plus the
 exact checked-AHB source, regenerates the workload defensively, and reaches
 canonical SemanticIR, bridge, ExecutionIR, and plan twice with content-addressed
 workload/evaluation/rerun identities. The frozen foundation witness still
 reports `accepted_not_axis_evaluated`; generated accepted shapes populate only
-their model, scoreboard, or coverage compartment and explicitly deny every capability,
+their model, scoreboard, coverage, or fault compartment and explicitly deny every capability,
 support, performance, capacity, backend, or runtime claim.
 
 That foundation freezes the selected packed representations before an axis is
@@ -142,5 +144,18 @@ source, and report mutations. The million case is exactly 1,999 bins plus
 998,001 tuples in 62,841 source bytes and 125,000 vector bytes, with vector
 digest `ae450c2064c76df34378b11784d1d24bde068c9b94dab52cc41fcea3be558582`;
 one further 29-byte bin returns only `VIAL_EXECUTION_LIMIT_ERROR` at
-`/coverage`. Default and exact RAM-guarded `t/1632` pass. Fault checking is the
-active implementation leaf.
+`/coverage`. Default and exact RAM-guarded `t/1632` pass.
+
+The fault renderer owns all four selected levels. Accepted 32/1,024/4,096
+sources bind every declaration to the checked AHB write transaction's `size`
+field, substitute known three-bit value `7` for original `2`, and retain the
+authored one-`bus`-interval lifetime. The provider-free oracle validates those
+facts from canonical ExecutionIR and streams arm, apply, expire, and restore
+records in stable declaration order into actual and independently reconstructed
+digests. At the 4,096 limit it proves exactly 16,384 transitions with digest
+`4042b666fd911ef3b7d39fe6abeb721c96ade2f322461f3845558ddf1e648dc9`
+without retaining a per-fault report array. Armed reinjection, active overlap,
+substitute mutation, declaration-order mutation, source mutation, and report
+mutation fail closed. Fault 4,097 returns exactly one
+`VIAL_EXECUTION_LIMIT_ERROR` at `/faults` and no execution/plan identity.
+Default and exact RAM-guarded `t/1633` pass. Random/replay activation is next.

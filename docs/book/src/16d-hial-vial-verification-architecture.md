@@ -3535,18 +3535,16 @@ their 998,001-tuple cross, and adds one independent bin: exactly
 1,000,000 entries in 62,841 bytes. One 29-byte bin more returns only the exact
 `/coverage` rejection at 62,870 bytes; no backend invents a bin or tuple.
 
-Accepted model, scoreboard, and coverage levels execute state through caller-
-sealed canonical SemanticIR and ExecutionIR. The provider-free evaluator uses
-a 4,000,000-byte FIFO for one million scoreboard entries and a 125,000-byte LSB-first vector for one million coverage entries. One coverage sample hits the
-entire authored domain; its vector digest is `ae450c20…`, and an independent
-ordered-domain reconstruction has digest `696d5310…`. Illegal, ignore, bit, and order mutations fail closed. Fault and random/replay checking remain separate.
+Accepted model, scoreboard, coverage, and fault levels execute state through caller-sealed canonical SemanticIR and ExecutionIR. The provider-free evaluator uses a
+4,000,000-byte FIFO for one million scoreboard entries and a 125,000-byte LSB-first
+coverage vector. One sample hits the entire authored domain; its vector digest is
+`ae450c20…`, while ordered-domain digest `696d5310…` closes illegal, ignore, bit, and order mutations. Random/replay checking remains separate.
 
 Public runtime traces, `ResultProducer`, and the first portable SystemVerilog
 backend remain excluded as scale oracles: they project or implement a narrower
 profile and do not independently recompute the general state semantics above.
-Implementation is separately owned under `.17.2.5.2`. Its completed model,
-scoreboard, and coverage slices publish exactly 24 owned levels: four non-
-reference levels on each of six axes:
+Implementation is separately owned under `.17.2.5.2`. Its completed model, scoreboard,
+coverage, and fault slices publish 28 levels: four non-reference levels on each of seven axes:
 
 ```perl
 use strict;
@@ -3555,21 +3553,19 @@ use lib 'perl';
 use FSM::VIAL::ArchitectureScaleCheckingState;
 
 my $owned = FSM::VIAL::ArchitectureScaleCheckingState->owned_shapes;
-die "checking ladder ownership changed\n" unless @$owned == 24;
+die "checking ladder ownership changed\n" unless @$owned == 28;
 die "another axis landed early\n"
-    if grep { $_->{primary_axis} !~ /\A(?:bins_and_cross_tuples|coverpoints|model_instances|scalar_model_state_cells|scoreboard_instances|scoreboard_capacity)\z/ }
+    if grep { $_->{primary_axis} !~ /\A(?:bins_and_cross_tuples|coverpoints|faults|model_instances|scalar_model_state_cells|scoreboard_instances|scoreboard_capacity)\z/ }
         @$owned;
-print "model, scoreboard, and coverage ladders own 24 levels\n";
+print "model, scoreboard, coverage, and fault ladders own 28 levels\n";
 ```
 
-`construct` rejects `reference_v1` because it remains a catalog record, rejects
-every still-unowned selected axis, and rejects unknown axes, levels, keys, IR,
-trace, result, or support metadata. Internally, one same-package-only candidate
-boundary accepts just generated ordinary VIAL text and the exact 1,326-byte
-checked-AHB source. It regenerates the content-addressed workload before every
-build or evaluation, then produces SemanticIR, the IAL2-via-generated-and-
-reparsed-IAL1 bridge, ExecutionIR, and the target-neutral plan only through
-their canonical producers. Callers cannot inject any of those objects.
+`construct` rejects `reference_v1` because it remains a catalog record, every still-unowned
+selected axis, and unknown axes, levels, keys, IR, trace, result, or support metadata.
+Internally, one same-package-only candidate boundary accepts just generated ordinary VIAL
+text and the exact 1,326-byte checked-AHB source. It regenerates the content-addressed
+workload before every build or evaluation, then produces SemanticIR, the IAL2-via-generated-
+and-reparsed-IAL1 bridge, ExecutionIR, and plan only canonically. Callers cannot inject them.
 
 The model-instance source reuses one known unsigned eight-bit counter with an
 initial value of zero and a rule that adds one on the checked AHB `accepted`
@@ -3587,6 +3583,7 @@ containing 16, 1,024, or 2,048 cells. That factorization reaches exactly 512,
 | scalar-cell excess | 65,537 | 495,108 | exact scalar-cell cap at `/models` |
 | scoreboard instances | 32 / 1,024 / 4,096 | 6,404 / 168,100 / 668,836 | accepted and FIFO-checked; 4,097 rejects at `/scoreboards` in 668,999 bytes |
 | scoreboard capacity | 4,096 / 262,144 / 1,000,000 | 1,351 / 1,353 / 1,354 | accepted and FIFO-checked; 1,000,001 rejects at the semantic bound in 1,354 bytes |
+| faults | 32 / 1,024 / 4,096 | 5,650 / 148,498 / 590,866 | accepted and lifecycle-checked; 4,097 rejects at `/faults` in 591,010 bytes |
 
 Every admitted model/scoreboard source stays below the construction envelope. For an
 accepted level, the provider-free oracle reads the event binding and complete
@@ -3626,6 +3623,14 @@ identity. Reruns reproduce both diagnostics; hostile policy/source/report
 mutations fail closed. Default Files=3/Tests=17 and the exact scoreboard sweep
 pass under the 4,096-MiB repository RAM guard.
 
+The fault source targets the checked AHB write transaction's three-bit `size` field. Each
+declaration substitutes known `7` for original `2` for one `bus` drive interval. The oracle
+validates every target and lifetime, then arms, applies, expires, and restores every fault in
+stable declaration order. Actual and independently reconstructed streams hash four
+length-delimited lifecycle records per fault, so 4,096 faults prove 16,384 transitions with
+digest `4042b666…` without a 4,096-entry report array. Armed reinjection, active overlap,
+substitute/order/source/report mutation fail closed. Fault 4,097 returns only `VIAL_EXECUTION_LIMIT_ERROR` at `/faults` and no execution/plan identity. Guarded default Files=5/Tests=29 and exact Files=1/Tests=5 pass.
+
 The frozen foundation route uses the checked AHB VIAL content as a deliberately
 non-axis-evaluated source witness. Its workload identity is
 `workload/7a125500c716e333ac8849ca5594849dc52e34380f0ba0ec416a2e12975247c7`;
@@ -3637,26 +3642,21 @@ report says `accepted_not_axis_evaluated`, sets both `axis_oracle_executed` and
 `selected_count_claimed` false, and carries no axis evidence. Those observations
 therefore cannot be mistaken for the requested 32-model gate.
 
-The closed report populates model, scoreboard, or coverage evidence only for
-the corresponding accepted levels and reserves `faults` and `random_replay`
-for later semantic leaves. Its packed
-contract fixes big-endian fixed-width model values with unknown-state rejection,
-a big-endian 32-bit FIFO payload capped at 1,000,000 entries/4,000,000 bytes with
-complete transaction reconstruction, and an LSB-first coverage vector capped at
-1,000,000 entries/125,000 bytes with independent byte equality. It explicitly
-claims qualification-only status and denies capability, support, performance,
-capacity, backend, runtime, and owned-level authority.
+The closed report populates model, scoreboard, coverage, or fault evidence only for the
+corresponding accepted levels and reserves `random_replay` for its later semantic leaf. Its
+packed contract fixes big-endian fixed-width model values with unknown-state rejection, a
+big-endian 32-bit FIFO payload capped at 1,000,000 entries/4,000,000 bytes with complete
+transaction reconstruction, and an LSB-first coverage vector capped at 1,000,000
+entries/125,000 bytes with independent byte equality. It claims qualification-only status
+and denies capability, support, performance, capacity, backend, runtime, and owned-level authority.
 
-Independent complete-route reruns must reproduce every stage digest; the frozen
-foundation keeps its `rerun/ceefc4f30…` identity, while each generated model
-level has its own content address. Construction and evaluation mutations are
-rejected by canonical regeneration. Success and injected consumer failure stage
-only below repository-derived `.artifacts/tmp/vial-scale/` on the repository
-volume and remove the exact content-addressed directory. Focused `t/1632`
-proves default and RAM-guarded coverage routes; fault is the active separately
-owned slice, followed by random/replay and final qualification. These fixtures change no parser, SemanticIR, bridge,
-ExecutionIR, backend, runtime, public product API, capability, support,
-performance, or capacity behavior.
+Independent complete-route reruns reproduce every stage digest; the foundation keeps its
+`rerun/ceefc4f30…` identity and each generated level has its own content address. Canonical
+regeneration rejects construction/evaluation mutation. Success and consumer failure stage
+only below repository-derived `.artifacts/tmp/vial-scale/` and remove that exact directory.
+Focused `t/1632`/`t/1633` prove guarded coverage/fault routes; random/replay is next, then final
+qualification. These fixtures change no parser, SemanticIR, bridge, ExecutionIR, backend,
+runtime, public product API, capability, support, performance, or capacity behavior.
 
 These are construction outcomes, not supported capacities. The exact 1/4/16-
 MiB plans contain 2,974/12,166/48,850 real reset operations plus bounded,

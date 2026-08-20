@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-checking`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **10** uniquely owned question entries.
+> **1** facts · **11** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -10,6 +10,7 @@
 - q="how does VIAL prove a scoreboard reaches and drains one million entries?" · facts=[vial-checking-state-scale-reachability](../../docs/knowledge/vial-checking-state-scale-reachability.md)
 - q="how does VIAL prove an exact one million entry coverage hit vector?" · facts=[vial-checking-state-scale-reachability](../../docs/knowledge/vial-checking-state-scale-reachability.md)
 - q="how does VIAL prove every scalar model-state cell changes?" · facts=[vial-checking-state-scale-reachability](../../docs/knowledge/vial-checking-state-scale-reachability.md)
+- q="how does VIAL prove fault activation, expiry, and restoration at scale?" · facts=[vial-checking-state-scale-reachability](../../docs/knowledge/vial-checking-state-scale-reachability.md)
 - q="what does preflight_dominated mean for checking-state random occurrences?" · facts=[vial-checking-state-scale-reachability](../../docs/knowledge/vial-checking-state-scale-reachability.md)
 - q="what is the VIAL checking-state coverpoint source boundary?" · facts=[vial-checking-state-scale-reachability](../../docs/knowledge/vial-checking-state-scale-reachability.md)
 - q="what is the VIAL checking-state random occurrence plan boundary?" · facts=[vial-checking-state-scale-reachability](../../docs/knowledge/vial-checking-state-scale-reachability.md)

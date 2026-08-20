@@ -379,3 +379,19 @@ identities, while a first-two-entry swap proves the comparison rejects order
 mutation. The million-entry bit state remains bounded at 125,000 bytes; the
 order proof closes a different semantic obligation rather than inflating that
 state representation.
+
+## 2026-08-20: Fault scale needs streamed lifecycle identity, not retained event records
+
+Fault qualification must prove four ordered state changes per declaration:
+arm, apply, expire, and restore. Retaining every transition as a report record
+would make the evidence shape scale with the selected limit and would duplicate
+canonical declaration data already present in ExecutionIR.
+
+The fault oracle therefore streams length-delimited transition tokens into one
+SHA-256 identity while independently reconstructing the same stream from the
+selected source recipe. It retains only the digest, exact transition count, and
+first-arm/last-restore endpoint witnesses. A separate declaration-order digest
+prevents the lifecycle digest from hiding reordered declarations, and explicit
+reinjection, overlap, substitute, and order mutations prove each comparison
+fails closed. The 4,096-fault limit thus proves 16,384 lifecycle transitions
+without turning the evaluation report into another execution trace.

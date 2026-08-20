@@ -124,6 +124,22 @@ my @COVERAGE_EVIDENCE_KEYS = qw(
 );
 my $COVERAGE_EVIDENCE_SCHEMA =
     'fsmgen.vial_architecture_scale_coverage_oracle_evidence.v1';
+my @FAULT_EVIDENCE_KEYS = qw(
+    schema schema_version program axis faults target_transaction_id
+    target_field_name duration_drive_intervals original_value_hex
+    substitute_value_hex faults_armed faults_applied faults_expired
+    faults_restored state_transition_records declaration_order_sha256
+    expected_declaration_order_sha256 transition_sha256
+    expected_transition_sha256 first_fault_id last_fault_id
+    first_arm_identity last_restore_identity target_identity_preserved
+    original_values_matched substituted_values_matched
+    restoration_values_matched stable_order_preserved all_faults_armed
+    all_faults_applied all_faults_expired all_faults_restored
+    reinjection_rejected overlap_rejected mutation_rejected
+    order_mutation_rejected
+);
+my $FAULT_EVIDENCE_SCHEMA =
+    'fsmgen.vial_architecture_scale_fault_oracle_evidence.v1';
 my @CONTRACT_DISCREPANCY_KEYS = qw(code message path repair_owner);
 my $CONSTRUCTION_ENVELOPE_BYTES = 1_114_112;
 my $LIMIT_POLICY_REPAIR_OWNER =
@@ -161,6 +177,9 @@ my %OWNED_LEVELS = (
         gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1
     )],
     bins_and_cross_tuples => [qw(
+        gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1
+    )],
+    faults => [qw(
         gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1
     )],
 );
@@ -279,6 +298,7 @@ sub evaluate($class, @args) {
         if $generated_axis eq 'scoreboard';
     return _evaluate_coverage_axis($construction)
         if $generated_axis eq 'coverage';
+    return _evaluate_fault_axis($construction) if $generated_axis eq 'fault';
 
     my $first_inputs = _canonical_inputs_from_construction($construction);
     my $first = FSM::VIAL::ExecutionBuilder->build($first_inputs->{arguments});
@@ -417,6 +437,7 @@ sub _generated_axis_kind($construction) {
         || $axis eq 'scoreboard_capacity';
     return 'coverage' if $axis eq 'coverpoints'
         || $axis eq 'bins_and_cross_tuples';
+    return 'fault' if $axis eq 'faults';
     confess "generated checking-state axis has no evaluator\n";
 }
 
@@ -892,6 +913,158 @@ sub _evaluate_coverage_axis($construction) {
     });
 }
 
+sub _evaluate_fault_axis($construction) {
+    my $spec = $construction->{specification};
+    my ($axis, $level) = @{$spec}{qw(primary_axis level)};
+    my $canonical = JSON::PP->new->canonical(1)->utf8(1);
+    my $first_inputs = _canonical_inputs_from_construction($construction);
+    my $first = FSM::VIAL::ExecutionBuilder->build($first_inputs->{arguments});
+    my $second_inputs = _canonical_inputs_from_construction($construction);
+    my $second = FSM::VIAL::ExecutionBuilder->build($second_inputs->{arguments});
+    my $first_semantic = $first_inputs->{semantic_ir}->as_hashref;
+    my $second_semantic = $second_inputs->{semantic_ir}->as_hashref;
+    my $first_bridge = $first_inputs->{bridge_manifest}->as_hashref;
+    my $second_bridge = $second_inputs->{bridge_manifest}->as_hashref;
+    my @diagnostics;
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+        'independent canonical checking-state route changed SemanticIR',
+        '/stage_identities/semantic_ir_sha256',
+    ) unless $canonical->encode($second_semantic)
+        eq $canonical->encode($first_semantic);
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+        'independent canonical checking-state route changed the bridge manifest',
+        '/stage_identities/bridge_manifest_sha256',
+    ) unless $canonical->encode($second_bridge)
+        eq $canonical->encode($first_bridge);
+
+    my $semantic_sha = sha256_hex($canonical->encode($first_semantic));
+    my $bridge_sha = sha256_hex($canonical->encode($first_bridge));
+    if (!$first->{ok} || !$second->{ok}) {
+        my $first_diagnostics = $first->{diagnostics} || [];
+        my $second_diagnostics = $second->{diagnostics} || [];
+        push @diagnostics, _oracle_error(
+            'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+            'independent canonical checking-state rejection changed diagnostics',
+            '/diagnostics',
+        ) unless !$first->{ok} && !$second->{ok}
+            && $canonical->encode($second_diagnostics)
+                eq $canonical->encode($first_diagnostics);
+        my $expected = _expected_fault_execution_rejection_diagnostic();
+        push @diagnostics, _oracle_error(
+            'VIAL_SCALE_CHECKING_OUTCOME_ERROR',
+            'checking-state fault rejection did not match the selected adjacent excess',
+            '/diagnostics',
+        ) unless $level eq 'over_limit_v1'
+            && $canonical->encode($first_diagnostics)
+                eq $canonical->encode([$expected]);
+        my $stage_identities = {
+            semantic_ir_sha256 => $semantic_sha,
+            bridge_manifest_sha256 => $bridge_sha,
+            execution_ir_sha256 => undef,
+            plan_sha256 => undef,
+        };
+        return _evaluation({
+            ok => @diagnostics ? JSON::PP::false : JSON::PP::true,
+            status => @diagnostics ? 'oracle_failure' : 'expected_rejection',
+            schema => $EVALUATION_SCHEMA,
+            schema_version => 1,
+            evaluation_identity => undef,
+            rerun_identity => _rerun_identity(
+                $construction->{workload_identity}, $stage_identities,
+                $first_diagnostics,
+            ),
+            workload_identity => $construction->{workload_identity},
+            family => $FAMILY,
+            level => $level,
+            primary_axis => $axis,
+            requested_counts => _clone($spec->{requested_counts}),
+            observed_outcome => 'rejected',
+            stage_identities => $stage_identities,
+            metrics => _semantic_fault_metrics($first_semantic),
+            packed_state_contract => _packed_state_contract(),
+            outcome_contract => {
+                schema => $OUTCOME_SCHEMA,
+                schema_version => 1,
+                observed_outcome => 'rejected',
+                axis_oracle_executed => JSON::PP::false,
+                selected_count_claimed => JSON::PP::true,
+                canonical_stages_completed => [qw(semantic bridge)],
+            },
+            oracle_evidence => _oracle_evidence('none', undef),
+            claims => _claims(JSON::PP::true),
+            explicit_nonclaims => _clone($spec->{explicit_nonclaims}),
+            contract_discrepancies => [],
+            diagnostics => [@{_clone($first_diagnostics)}, @diagnostics],
+        });
+    }
+
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_OUTCOME_ERROR',
+        'checking-state adjacent fault excess unexpectedly produced ExecutionIR',
+        '/observed_outcome',
+    ) if $level eq 'over_limit_v1';
+    my $first_execution = $first->{execution_ir}->as_hashref;
+    my $second_execution = $second->{execution_ir}->as_hashref;
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+        'independent canonical checking-state route changed ExecutionIR',
+        '/stage_identities/execution_ir_sha256',
+    ) unless $canonical->encode($second_execution)
+        eq $canonical->encode($first_execution);
+    push @diagnostics, _oracle_error(
+        'VIAL_SCALE_CHECKING_DETERMINISM_ERROR',
+        'independent canonical checking-state route changed the execution plan',
+        '/stage_identities/plan_sha256',
+    ) unless $canonical->encode($second->{plan})
+        eq $canonical->encode($first->{plan});
+
+    my ($fault_evidence, $fault_diagnostics) =
+        _evaluate_fault_state($spec, $first_execution);
+    push @diagnostics, @$fault_diagnostics;
+    my $stage_identities = {
+        semantic_ir_sha256 => $semantic_sha,
+        bridge_manifest_sha256 => $bridge_sha,
+        execution_ir_sha256 =>
+            sha256_hex($canonical->encode($first_execution)),
+        plan_sha256 => sha256_hex($canonical->encode($first->{plan})),
+    };
+    my $resources = $first_execution->{resource_summary};
+    return _evaluation({
+        ok => @diagnostics ? JSON::PP::false : JSON::PP::true,
+        status => @diagnostics ? 'oracle_failure' : 'accepted',
+        schema => $EVALUATION_SCHEMA,
+        schema_version => 1,
+        evaluation_identity => undef,
+        rerun_identity => _rerun_identity(
+            $construction->{workload_identity}, $stage_identities, [],
+        ),
+        workload_identity => $construction->{workload_identity},
+        family => $FAMILY,
+        level => $level,
+        primary_axis => $axis,
+        requested_counts => _clone($spec->{requested_counts}),
+        observed_outcome => 'accepted',
+        stage_identities => $stage_identities,
+        metrics => _execution_metrics($resources, $first->{plan}, $canonical),
+        packed_state_contract => _packed_state_contract(),
+        outcome_contract => {
+            schema => $OUTCOME_SCHEMA,
+            schema_version => 1,
+            observed_outcome => 'accepted',
+            axis_oracle_executed => JSON::PP::true,
+            selected_count_claimed => JSON::PP::true,
+            canonical_stages_completed => [qw(semantic bridge execution_ir plan)],
+        },
+        oracle_evidence => _oracle_evidence('faults', $fault_evidence),
+        claims => _claims(JSON::PP::true),
+        explicit_nonclaims => _clone($spec->{explicit_nonclaims}),
+        contract_discrepancies => [],
+        diagnostics => \@diagnostics,
+    });
+}
+
 sub _evaluate_scoreboard_semantic_rejection($construction, $canonical) {
     my $spec = $construction->{specification};
     my $vial = _role_input($construction, 'vial_source');
@@ -1103,6 +1276,8 @@ sub _render_axis_source($axis, $level, $requested_count) {
     return _render_coverage_source($axis, $level, $requested_count)
         if $axis eq 'coverpoints'
             || $axis eq 'bins_and_cross_tuples';
+    return _render_fault_source($axis, $level, $requested_count)
+        if $axis eq 'faults';
     confess "checking-state renderer does not own axis '$axis'\n";
 }
 
@@ -1338,6 +1513,65 @@ sub _coverage_source_shell($coverage, $padding) {
         ' (timeout (cycles bus 2))',
         ' (steps (reset bus 1))))))))',
         ' ' x $padding,
+        "\n",
+    );
+}
+
+sub _render_fault_source($axis, $level, $requested_count) {
+    confess "checking-state fault renderer does not own axis '$axis'\n"
+        unless $axis eq 'faults';
+    confess "checking-state fault renderer received an invalid requested count\n"
+        unless defined($requested_count) && !ref($requested_count)
+            && $requested_count =~ /\A[1-9][0-9]*\z/;
+    my @faults = map {
+        my $name = FSM::VIAL::ArchitectureScaleWorkload->stable_name({
+            family => $FAMILY,
+            primary_axis => $axis,
+            ordinal => $_,
+        });
+        join('',
+            '(fault ', $name,
+            ' (target (transaction write size))',
+            ' (action (substitute #b111))',
+            ' (duration (cycles bus 1)))',
+        );
+    } 0 .. $requested_count - 1;
+
+    return join('',
+        '(vial (version 1) (package architecture_scale_checking_state',
+        ' (imports)',
+        ' (types',
+        ' (enum htrans_t (logic 2) (idle #b00) (nonseq #b10))',
+        ' (type address_t (logic 32))',
+        ' (type data_t (logic 32)))',
+        ' (transactions (transaction ahb_write',
+        ' (fields',
+        ' (address (type address_t))',
+        ' (transfer (type htrans_t))',
+        ' (write bool)',
+        ' (size (logic 3))',
+        ' (data (type data_t))',
+        ' (wait_cycles (u 4)))',
+        ' (events requested accepted captured held completed error)))',
+        ' (models)',
+        ' (scoreboards)',
+        ' (fixtures (fixture checking_gate',
+        ' (dut dut',
+        ' (unit "unit/ahb_lite_subordinate")',
+        ' (domains (domain bus "domain/ahb_bus"))',
+        ' (endpoints',
+        ' (endpoint ready_out "endpoint/HREADYOUT" (logic 1) public_port)',
+        ' (endpoint response "endpoint/HRESP" (logic 1) public_port)',
+        ' (endpoint read_data "endpoint/HRDATA" (logic 32) public_port)',
+        ' (endpoint stored_data "probe/reg_data_q" (logic 32) verification_probe))',
+        ' (transactions (transaction write "transaction/ahb_write" ahb_write)))',
+        ' (instances)',
+        ' (coverage)',
+        ' (faults ', join(' ', @faults), ')',
+        ' (randomness (seed 1701))',
+        ' (scenarios (scenario fault_transition',
+        ' (timeout (cycles bus 2))',
+        ' (steps (reset bus 1))))))))',
         "\n",
     );
 }
@@ -1661,6 +1895,13 @@ sub _semantic_coverage_metrics($semantic) {
     return $metrics;
 }
 
+sub _semantic_fault_metrics($semantic) {
+    my $metrics = _zero_metrics();
+    my $faults = $semantic->{packages}[0]{fixtures}[0]{faults};
+    $metrics->{faults} = ref($faults) eq 'ARRAY' ? scalar(@$faults) : 0;
+    return $metrics;
+}
+
 sub _oracle_evidence($oracle, $evidence) {
     return {
         schema => $ORACLE_EVIDENCE_SCHEMA,
@@ -1669,7 +1910,7 @@ sub _oracle_evidence($oracle, $evidence) {
         model => $oracle eq 'model' ? _clone($evidence) : undef,
         scoreboard => $oracle eq 'scoreboard' ? _clone($evidence) : undef,
         coverage => $oracle eq 'coverage' ? _clone($evidence) : undef,
-        faults => undef,
+        faults => $oracle eq 'faults' ? _clone($evidence) : undef,
         random_replay => undef,
     };
 }
@@ -1738,6 +1979,20 @@ sub _expected_coverage_execution_rejection_diagnostic() {
         related => [],
         schema_version => 1,
         semantic_path => '/coverage',
+        severity => 'error',
+        source_location => undef,
+    };
+}
+
+sub _expected_fault_execution_rejection_diagnostic() {
+    return {
+        bridge_fact_paths => [],
+        code => 'VIAL_EXECUTION_LIMIT_ERROR',
+        message => 'faults exceeds the limit 4096',
+        phase => 'limit',
+        related => [],
+        schema_version => 1,
+        semantic_path => '/faults',
         severity => 'error',
         source_location => undef,
     };
@@ -2371,6 +2626,257 @@ sub _evaluate_coverage_state($spec, $execution) {
     return ($evidence, \@errors);
 }
 
+sub _evaluate_fault_state($spec, $execution) {
+    my $axis = $spec->{primary_axis};
+    my $requested = $spec->{requested_counts}{$axis};
+    my $faults = $execution->{faults};
+    my (@errors, @fault_ids);
+    if (ref($faults) ne 'ARRAY') {
+        push @errors, _oracle_error(
+            'VIAL_SCALE_CHECKING_FAULT_ERROR',
+            'fault oracle requires one canonical fault array',
+            '/faults',
+        );
+        $faults = [];
+    }
+
+    my $transaction_id =
+        'architecture_scale_checking_state::transaction::ahb_write';
+    my $domain_id =
+        'architecture_scale_checking_state::fixture::checking_gate::domain::bus';
+    my ($transaction) = grep {
+        ($_->{semantic_id} // '') eq $transaction_id
+    } @{ref($execution->{transactions}) eq 'ARRAY'
+        ? $execution->{transactions} : []};
+    my ($field) = $transaction && ref($transaction->{fields}) eq 'ARRAY'
+        ? grep { ($_->{name} // '') eq 'size' } @{$transaction->{fields}}
+        : ();
+    my $field_type_id = $field ? $field->{type_id} : undef;
+    my ($domain) = grep {
+        ($_->{semantic_id} // '') eq $domain_id
+    } @{ref($execution->{domains}) eq 'ARRAY' ? $execution->{domains} : []};
+
+    my $structure_closed = @$faults == $requested
+        && $transaction && $field && $domain;
+    my ($all_targets, $all_substitutes, $all_durations) = (1, 1, 1);
+    my ($all_originals, $all_applied_values, $all_restorations) = (1, 1, 1);
+    my (%seen_id, %seen_name);
+    my $actual_order = Digest::SHA->new(256);
+    my $actual_transitions = Digest::SHA->new(256);
+    my ($first_arm_identity, $last_restore_identity);
+    my ($armed, $applied, $expired, $restored) = (0, 0, 0, 0);
+    my ($reinjection_rejected, $overlap_rejected) = (1, 1);
+
+    for my $ordinal (0 .. $#$faults) {
+        my $fault = $faults->[$ordinal];
+        my $expected_name = FSM::VIAL::ArchitectureScaleWorkload->stable_name({
+            family => $FAMILY,
+            primary_axis => $axis,
+            ordinal => $ordinal,
+        });
+        my $expected_id = _fault_id($expected_name);
+        my $fault_id = $fault->{semantic_id};
+        push @fault_ids, $fault_id;
+        ++$seen_id{$fault_id // ''};
+        ++$seen_name{$fault->{name} // ''};
+        _checking_digest_add($actual_order, $fault_id // '');
+
+        my $target_ok = ($fault->{name} // '') eq $expected_name
+            && ($fault_id // '') eq $expected_id
+            && ($fault->{transaction_id} // '') eq $transaction_id
+            && ($fault->{field_name} // '') eq 'size'
+            && ($fault->{domain_id} // '') eq $domain_id;
+        my $substitute_hex = _fault_substitute_hex(
+            $fault->{substitute}, $field_type_id,
+        );
+        my $substitute_ok = defined($substitute_hex)
+            && $substitute_hex eq '7';
+        my $duration_ok = ($fault->{duration_cycles} // 0) == 1;
+        $all_targets = 0 unless $target_ok;
+        $all_substitutes = 0 unless $substitute_ok;
+        $all_durations = 0 unless $duration_ok;
+
+        my ($state, $original, $value) = ('inactive', '2', '2');
+        my @transition;
+        $all_originals = 0 unless $value eq $original;
+        if (_fault_arm_allowed($state)) {
+            $state = 'armed';
+            push @transition, _fault_transition_token(
+                $fault_id, $state, $transaction_id, 'size', '', '',
+            );
+            ++$armed;
+        }
+        else {
+            $all_originals = 0;
+        }
+        $reinjection_rejected = 0 if _fault_arm_allowed($state);
+        if ($state eq 'armed') {
+            $state = 'active';
+            $value = _fault_effective_value(
+                $original,
+                defined($substitute_hex) ? $substitute_hex : '',
+                1,
+            );
+            push @transition, _fault_transition_token(
+                $fault_id, 'applied', $transaction_id, 'size',
+                $original, $value,
+            );
+            ++$applied;
+        }
+        $all_applied_values = 0 unless $value eq '7';
+        $overlap_rejected = 0 if _fault_arm_allowed($state);
+        if ($state eq 'active') {
+            $state = 'expired';
+            push @transition, _fault_transition_token(
+                $fault_id, $state, $transaction_id, 'size', '', '',
+            );
+            ++$expired;
+        }
+        if ($state eq 'expired') {
+            $value = _fault_effective_value($original, '', 0);
+            $state = 'inactive';
+            push @transition, _fault_transition_token(
+                $fault_id, 'restored', $transaction_id, 'size',
+                $original, $value,
+            );
+            ++$restored;
+        }
+        $all_restorations = 0 unless $state eq 'inactive'
+            && $value eq $original;
+        _checking_digest_add($actual_transitions, $_) for @transition;
+        $first_arm_identity //= 'fault-transition/' . sha256_hex($transition[0]);
+        $last_restore_identity =
+            'fault-transition/' . sha256_hex($transition[-1]);
+    }
+    $structure_closed = 0 if exists($seen_id{''}) || exists($seen_name{''})
+        || keys(%seen_id) != @$faults || keys(%seen_name) != @$faults;
+    $structure_closed = 0 unless $all_targets && $all_substitutes
+        && $all_durations;
+
+    my $expected_order = Digest::SHA->new(256);
+    my $expected_transitions = Digest::SHA->new(256);
+    my $order_mutation = Digest::SHA->new(256);
+    my @expected_ids;
+    for my $ordinal (0 .. $requested - 1) {
+        my $name = FSM::VIAL::ArchitectureScaleWorkload->stable_name({
+            family => $FAMILY,
+            primary_axis => $axis,
+            ordinal => $ordinal,
+        });
+        my $fault_id = _fault_id($name);
+        push @expected_ids, $fault_id;
+        _checking_digest_add($expected_order, $fault_id);
+        _checking_digest_add($expected_transitions, $_) for (
+            _fault_transition_token(
+                $fault_id, 'armed', $transaction_id, 'size', '', '',
+            ),
+            _fault_transition_token(
+                $fault_id, 'applied', $transaction_id, 'size', '2', '7',
+            ),
+            _fault_transition_token(
+                $fault_id, 'expired', $transaction_id, 'size', '', '',
+            ),
+            _fault_transition_token(
+                $fault_id, 'restored', $transaction_id, 'size', '2', '2',
+            ),
+        );
+    }
+    my @mutated_order = @expected_ids;
+    @mutated_order[0, 1] = @mutated_order[1, 0]
+        if @mutated_order > 1;
+    _checking_digest_add($order_mutation, $_) for @mutated_order;
+
+    my $actual_order_sha = $actual_order->hexdigest;
+    my $expected_order_sha = $expected_order->hexdigest;
+    my $actual_transition_sha = $actual_transitions->hexdigest;
+    my $expected_transition_sha = $expected_transitions->hexdigest;
+    my $stable_order = $actual_order_sha eq $expected_order_sha;
+    my $transitions_equal = $actual_transition_sha eq $expected_transition_sha;
+    my $mutation_rejected =
+        _fault_effective_value('2', '7', 1) eq '7'
+        && _fault_effective_value('2', '6', 1) ne '7';
+    my $order_mutation_rejected =
+        $order_mutation->hexdigest ne $expected_order_sha;
+
+    push @errors, _oracle_error(
+        'VIAL_SCALE_CHECKING_FAULT_ERROR',
+        'fault oracle did not reconstruct the exact declared target, substitution, and lifetime',
+        '/faults',
+    ) unless $structure_closed;
+    push @errors, _oracle_error(
+        'VIAL_SCALE_CHECKING_FAULT_ERROR',
+        'fault oracle did not reach the selected axis count',
+        '/requested_counts/faults',
+    ) unless @$faults == $requested
+        && ($execution->{resource_summary}{faults} // -1) == $requested;
+    push @errors, _oracle_error(
+        'VIAL_SCALE_CHECKING_FAULT_ERROR',
+        'fault lifecycle transitions differ from the independent authored-order program',
+        '/oracle_evidence/faults/transition_sha256',
+    ) unless $stable_order && $transitions_equal;
+    push @errors, _oracle_error(
+        'VIAL_SCALE_CHECKING_FAULT_ERROR',
+        'fault negatives did not reject reinjection, active overlap, value mutation, and order mutation',
+        '/oracle_evidence/faults/mutation_rejected',
+    ) unless $reinjection_rejected && $overlap_rejected
+        && $mutation_rejected && $order_mutation_rejected;
+
+    my $success = @errors ? 0 : 1;
+    my $evidence = {
+        schema => $FAULT_EVIDENCE_SCHEMA,
+        schema_version => 1,
+        program => 'arm_apply_expire_restore_each_fault_v1',
+        axis => $axis,
+        faults => scalar(@$faults),
+        target_transaction_id => $transaction_id,
+        target_field_name => 'size',
+        duration_drive_intervals => 1,
+        original_value_hex => '2',
+        substitute_value_hex => '7',
+        faults_armed => $armed,
+        faults_applied => $applied,
+        faults_expired => $expired,
+        faults_restored => $restored,
+        state_transition_records => 4 * scalar(@$faults),
+        declaration_order_sha256 => $actual_order_sha,
+        expected_declaration_order_sha256 => $expected_order_sha,
+        transition_sha256 => $actual_transition_sha,
+        expected_transition_sha256 => $expected_transition_sha,
+        first_fault_id => $fault_ids[0],
+        last_fault_id => $fault_ids[-1],
+        first_arm_identity => $first_arm_identity,
+        last_restore_identity => $last_restore_identity,
+        target_identity_preserved => $success && $all_targets
+            ? JSON::PP::true : JSON::PP::false,
+        original_values_matched => $success && $all_originals
+            ? JSON::PP::true : JSON::PP::false,
+        substituted_values_matched => $success && $all_substitutes
+                && $all_applied_values
+            ? JSON::PP::true : JSON::PP::false,
+        restoration_values_matched => $success && $all_restorations
+            ? JSON::PP::true : JSON::PP::false,
+        stable_order_preserved => $success && $stable_order
+            ? JSON::PP::true : JSON::PP::false,
+        all_faults_armed => $success && $armed == $requested
+            ? JSON::PP::true : JSON::PP::false,
+        all_faults_applied => $success && $applied == $requested
+            ? JSON::PP::true : JSON::PP::false,
+        all_faults_expired => $success && $expired == $requested
+            ? JSON::PP::true : JSON::PP::false,
+        all_faults_restored => $success && $restored == $requested
+            ? JSON::PP::true : JSON::PP::false,
+        reinjection_rejected => $success && $reinjection_rejected
+            ? JSON::PP::true : JSON::PP::false,
+        overlap_rejected => $success && $overlap_rejected
+            ? JSON::PP::true : JSON::PP::false,
+        mutation_rejected => $success && $mutation_rejected
+            ? JSON::PP::true : JSON::PP::false,
+        order_mutation_rejected => $success && $order_mutation_rejected
+            ? JSON::PP::true : JSON::PP::false,
+    };
+    return ($evidence, \@errors);
+}
+
 sub _coverage_recipe($axis, $level, $requested) {
     if ($axis eq 'coverpoints') {
         my @points = map {
@@ -2481,6 +2987,50 @@ sub _coverage_point_id($name) {
 sub _coverage_cross_id($name) {
     return "architecture_scale_checking_state::fixture::checking_gate"
         . "::cross::$name";
+}
+
+sub _fault_id($name) {
+    return "architecture_scale_checking_state::fixture::checking_gate"
+        . "::fault::$name";
+}
+
+sub _fault_substitute_hex($expression, $field_type_id) {
+    return undef unless ref($expression) eq 'HASH'
+        && ($expression->{kind} // '') eq 'literal'
+        && defined($field_type_id)
+        && ($expression->{type_id} // '') eq $field_type_id
+        && ref($expression->{value}) eq 'HASH';
+    my $value = $expression->{value};
+    return undef unless ($value->{kind} // '') eq 'scalar'
+        && ($value->{state_domain} // '') eq 'four_state'
+        && ($value->{signed} // 1) == 0
+        && ($value->{width} // 0) == 3
+        && ($value->{type_id} // '') eq $field_type_id
+        && ($value->{known_hex} // '') eq '7'
+        && ($value->{z_hex} // '') eq '0'
+        && ($value->{value_hex} // '') =~ /\A[0-7]\z/;
+    return $value->{value_hex};
+}
+
+sub _fault_arm_allowed($state) {
+    return defined($state) && $state eq 'inactive';
+}
+
+sub _fault_effective_value($original, $substitute, $active) {
+    return $active ? $substitute : $original;
+}
+
+sub _fault_transition_token(
+    $fault_id, $status, $transaction_id, $field_name, $original, $substitute
+) {
+    return join("\0", map { defined($_) ? $_ : '' } (
+        $fault_id, $status, $transaction_id, $field_name,
+        $original, $substitute,
+    ));
+}
+
+sub _checking_digest_add($digest, $token) {
+    $digest->add(pack('N', bytes::length($token)), $token);
 }
 
 sub _scoreboard_expected_transaction($payload) {
@@ -2646,6 +3196,19 @@ sub _validate_evaluation_shape($raw) {
         confess "checking-state coverage oracle cannot carry another oracle family\n"
             if grep { defined($raw->{oracle_evidence}{$_}) }
                 qw(model scoreboard faults random_replay);
+    }
+    elsif ($oracle eq 'faults') {
+        _confess_exact_keys(
+            $raw->{oracle_evidence}{faults}, \@FAULT_EVIDENCE_KEYS,
+            'checking-state fault evidence',
+        );
+        confess "checking-state fault-evidence schema is invalid\n"
+            unless ($raw->{oracle_evidence}{faults}{schema} // '')
+                    eq $FAULT_EVIDENCE_SCHEMA
+                && ($raw->{oracle_evidence}{faults}{schema_version} // 0) == 1;
+        confess "checking-state fault oracle cannot carry another oracle family\n"
+            if grep { defined($raw->{oracle_evidence}{$_}) }
+                qw(model scoreboard coverage random_replay);
     }
     else {
         confess "checking-state oracle kind is invalid\n";
