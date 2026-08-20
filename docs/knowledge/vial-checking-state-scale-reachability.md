@@ -109,5 +109,5 @@ known-mask mutation fails this oracle. The 4,097-instance and 65,537-cell routes
 return exactly one `VIAL_EXECUTION_LIMIT_ERROR` at `/models` and no downstream
 identity. The complete high-count sweep passes under the repository RAM guard.
 This implementation changes no product behavior, support state, performance
-budget, or capacity claim. Scoreboard-axis implementation is the next proposed
+budget, or capacity claim. Scoreboard-axis implementation is now the active
 leaf under `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2`.

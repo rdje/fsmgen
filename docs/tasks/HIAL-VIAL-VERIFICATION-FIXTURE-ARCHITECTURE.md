@@ -481,7 +481,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement the selected canonical checking-state generator and exact stateful-service oracles.`
   Acceptance: `Implement only after .17.2.5.1 commits cleanly; construct every selected checking_state_v1 axis through ordinary VIAL parsing and canonical SemanticIR, bridge, and ExecutionIR producers; execute the selected bounded reference semantics; prove exact final model state, scoreboard maximum/final depth and drain, coverage hit vectors, fault activation/restoration, keyed decisions and replay, normalized reruns, earliest-cap diagnostics, hostile-input rejection, determinism, and repository-local cleanup with default and RAM-guarded qualification tests plus synchronized user documentation.`
-  Verification: `Clean selection predecessor a4e45b278 and decision 0073 close reachability and proof architecture before code. Foundation .1 supplies the caller-sealed source/construction/evaluation boundary with frozen canonical stage identities, closed packed/outcome/oracle-evidence schemas, defensive regeneration, and exact same-volume cleanup. Model child .2 now owns all eight selected model-instance/scalar-cell shapes and proves every accepted cell through exact packed transitions; it retains the checked-AHB foundation as accepted_not_axis_evaluated and keeps every capability/support/performance/capacity nonclaim explicit. Scoreboard child .3 is the next proposed activation; coverage, fault, random/replay, and final qualification siblings remain proposed.`
+  Verification: `Clean selection predecessor a4e45b278 and decision 0073 close reachability and proof architecture before code. Foundation .1 supplies the caller-sealed source/construction/evaluation boundary with frozen canonical stage identities, closed packed/outcome/oracle-evidence schemas, defensive regeneration, and exact same-volume cleanup. Model child .2 owns all eight selected model-instance/scalar-cell shapes and proves every accepted cell through exact packed transitions; it retains the checked-AHB foundation as accepted_not_axis_evaluated and keeps every capability/support/performance/capacity nonclaim explicit. Scoreboard child .3 alone is now active for its selected instance/capacity source and packed FIFO oracles; coverage, fault, random/replay, and final qualification siblings remain proposed.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2: activate checking-state implementation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2.7`
 
@@ -500,11 +500,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2.2: implement packed model checking ladders`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement scoreboard-instance and declared-capacity checking ladders.`
   Acceptance: `Exercise enqueue/match/drain on every selected scoreboard instance and the packed one-million-entry capacity program; prove exact complete-field comparison, maximum/final expected and actual depths, zero pending entries, mismatch/overflow/corruption rejection, semantic capacity excess, deterministic rerun, cleanup, and documentation without representing the million level as one million plan operations.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean model-ladder predecessor 48e97f656 owns and verifies all eight model shapes. This documentation-only transition activates .17.2.5.2.3 alone for the decision-0073 scoreboard-instance and declared-capacity source recipes, canonical-route outcomes, complete-transaction packed FIFO oracle, mismatch/overflow/corruption rejection, deterministic rerun, and same-volume cleanup. Coverage, fault, random/replay, and final qualification siblings remain proposed; no code, test, config, generated artifact, parser, IR, evaluator, backend, support, performance, capacity, or product behavior changes in activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2.3: activate scoreboard checking ladders`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2.4`
   Status: `proposed`
@@ -802,11 +802,11 @@ completed selection as 40 owned shapes, 13 deliberately unselected reference
 profiles, and 12 deliberately unselected fixed-scalar profiles, all fail-
 closed. Completed `.17.2.5.1` and decision `0073` select every checking-state
 accepted-or-earliest-cap outcome plus the provider-free packed-state proof for
-the two one-million-state levels. Active implementation parent `.17.2.5.2`
-now selects only caller-sealed construction/evaluation foundation child `.1`;
-model, scoreboard, coverage, fault, random/replay, and final qualification
-children `.2`-`.7` follow. Proposed `.17.2.6`/`.17.2.7` and measurement
-`.17.3` remain later.
+the two one-million-state levels. Active implementation parent `.17.2.5.2` now
+has its foundation and model children `.1`-`.2` complete and selects scoreboard
+child `.3` alone; coverage, fault, random/replay, and final qualification
+children `.4`-`.7` follow. Proposed `.17.2.6`/`.17.2.7` and measurement `.17.3`
+remain later.
 
 ## Decisions
 
@@ -1205,6 +1205,7 @@ children `.2`-`.7` follow. Proposed `.17.2.6`/`.17.2.7` and measurement
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-20` | `.17.2.5.2.3` scoreboard checking activation | clean model predecessor `48e97f656`; decision `0073`; existing Knowledge Map contract; task/index/Memory/book/fact/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, live-document, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.5.2.3` alone is active for scoreboard-instance and declared-capacity construction plus complete-transaction packed FIFO checking. Coverage, fault, random/replay, and final qualification siblings remain proposed. No code, test, config, generated artifact, parser, IR, evaluator, backend, support, performance, capacity, or product behavior changes. |
 | `2026-08-20` | `.17.2.5.2.2` packed model checking ladders | exact ordinary-VIAL model-instance/scalar-cell renderers; canonical Parser/checked-AHB bridge/public-ExecutionBuilder reruns; packed u8 state transition oracle; exact accepted-event triggers; all-cell initialization/update/read; 4,097/65,537 diagnostics; hostile-known-mask/source/evaluation mutations; same-volume success/failure cleanup; default and RAM-guarded exact qualification; book/fact/task/rationale/Memory/containment continuity; staged acceptance and doctrines | `passed`; all eight model shapes are owned. Accepted 32/1,024/4,096 model instances and 512/32,768/65,536 scalar cells traverse the complete canonical route and produce byte-equal independently derived all-zero/all-one state vectors after exactly one bound accepted-event occurrence per instance. The four high levels pass under the 4,096-MiB RAM guard in 136 seconds; 4,097 instances and 65,537 cells return exactly one `VIAL_EXECUTION_LIMIT_ERROR` at `/models` with no downstream identity. Default t/1629-t/1630 pass at Files=2/Tests=11 in 59 seconds. No product, backend, runtime, support, performance, or capacity claim changes; `.17.2.5.2.3` remains proposed next. |
 | `2026-08-20` | `.17.2.5.2.1` checking-state foundation | decision `0073`; zero-owned public boundary; same-package source-candidate seal; exact checked-AHB input; canonical Parser/bridge/public-ExecutionBuilder reruns; closed packed/outcome/oracle/nonclaim schemas; exact content identities; construction/evaluation/provider mutation negatives; same-volume success/failure cleanup; focused/shared regression; book/task/fact/rationale/Memory/containment continuity; staged acceptance and doctrines | `passed`; the foundation route independently reproduces workload `7a125500…`, evaluation `9b674600…`, rerun `ceefc4f3…`, SemanticIR `00dce649…`, bridge `a4565d40…`, ExecutionIR `5f04ca97…`, and 44,467-byte plan `1a3b97f4…` identities while explicitly reporting `accepted_not_axis_evaluated` with no owned level or axis evidence. Guarded shared-foundation regression passes at Files=3/Tests=16; relative paths pass at Files=1/Tests=2; all 52 book chapters test, the standalone example prints the sealed status, and the inspected repository-local 88-file/18,540-KiB render is removed exactly. Task integrity remains three trees/947 nodes; Knowledge Map remains 1,124 facts/5,875 questions/6,042 occurrences/129 shards; all live surfaces, exact rationale reconstruction, maintained-reference authority, CI inventory, staged acceptance, and doctrines pass. Model child `.17.2.5.2.2` alone is active next. No product or support claim changes. |
 | `2026-08-20` | `.17.2.5.2` checking-state implementation activation | clean selection predecessor `a4e45b278`; decision `0073` and canonical fact queries; foundation/model/scoreboard/coverage/fault/random/closure decomposition; task/index/Memory/book/containment continuity; task, path, mdBook, live-document, diff, staged-acceptance, and doctrine gates | `passed`; implementation is decomposed into seven bounded children and only caller-sealed construction/evaluation foundation `.17.2.5.2.1` is active. Task integrity reports three trees/947 nodes, relative paths pass at Files=1/Tests=2, all 52 chapters test, the inspected repository-local 88-file book render is removed exactly, all 22 live-document surfaces pass, and staged doctrines pass. No generator, parser, IR, evaluator, result, backend, capability/support, performance, or capacity behavior changes. |
@@ -1309,6 +1310,30 @@ children `.2`-`.7` follow. Proposed `.17.2.6`/`.17.2.7` and measurement
 | `2026-08-11` | `.17.2.4.2` scenario qualification/limit/over-limit ladder | decision-0061 exact 512/4,096/4,097 scenarios; caller-sealed level admission; ordinary checked-AHB VIAL/bridge/public-binder route; one real reset/root fiber per scenario; exact source/workload/SemanticIR/bridge/plan identities and topology; stable first-excess diagnostic/no partial output; mutation/missing-source negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; qualification accepts 512 scenarios/operations/fibers, one live fiber, 529 maps, and a 496,709-byte plan with ID `plan/22aedcf295c44c0a1b411b557cb12c9e5476e19077e57e7efe60ec4d7dc1ebe7`. The exact limit accepts 4,096 scenarios/operations/fibers, one live fiber, 4,113 maps, and a 3,779,103-byte plan with ID `plan/036742cfb80ab0f04cf7a7c8d9be1de833f310f5fde98ca3be9e47d331294cfc`. The adjacent 4,097 source returns only `VIAL_EXECUTION_LIMIT_ERROR`, phase `limit`, message `selected_scenarios exceeds the limit 4096`, semantic path `/scenario_ids`, with no partial IR/plan. Focused t1616-t1618 passes at Files=3/Tests=12 in 20 seconds; the guarded impact matrix passes at Files=21/Tests=91 in 815 seconds. No public binder, capability/support, performance, or capacity claim changes. |
 | `2026-08-19` | `.17.2.4.2` 8,192-operations-per-scenario qualification | decision-0061 exact 8,192-operation single-scenario level; caller-sealed level admission; ordinary checked-AHB VIAL/bridge/public-binder route; operation-depth versus scenario/fiber isolation; unique global operation source-map closure; exact source/workload/SemanticIR/bridge/plan identities; sub-cap plan bytes; mutation/missing-source/unowned-level negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; the 115,716-byte generated source authors one `scenario_00000000` with 8,192 genuine resets and no random decision. The unchanged public binder returns 8,192 total operations, one selected scenario, one root fiber, one simultaneously live fiber, 8,209 source maps, 22 bindings, seven types, and a 2,955,783-byte plan with ID `plan/4c6733ea702479b4c603761d333d491f7a427e9eac24dc37238331aeb624f990`. Every `/operation_graph/operations/N` path occurs once and resolves to its own `/packages/0/fixtures/0/scenarios/0/actions/N` authored action. Focused t1619 passes at Files=1/Tests=4 in 10 seconds; the guarded impact matrix passes at Files=22/Tests=95 in 814 seconds. The unimplemented 65,536/65,537 operation levels still fail closed. No public binder, capability/support, performance, or capacity claim changes. |
 | `2026-08-19` | `.17.2.4.2` operation limit/over-limit ladder | decision-0061 exact 65,536/65,537 operation levels; caller-sealed level admission; ordinary checked-AHB VIAL/bridge/public-binder route; semantic-before-bridge stage order; exact source/workload identities and one-record source delta; stable authoritative diagnostics and no partial output; recorded limit-interaction discrepancies; mutation/missing-source/unowned-level negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; the 918,533-byte limit source parses into one complete 65,536-action scenario with the frozen `fb82ce2c…` SemanticIR and unchanged 508,968-byte AHB bridge, and the unchanged public binder returns only `VIAL_EXECUTION_LIMIT_ERROR`, phase `limit`, message `serialized_plan_bytes exceeds the limit 16777216`, at `/plan`. Adding exactly one further 14-byte ` (reset bus 1)` record makes the ordinary parser reject first with `VIAL_LIMIT_ERROR`, message `scenario exceeds 65536 expanded actions`, at `/packages/0/fixtures/0/scenarios/0`, and no bridge is built behind it. Both evaluations report `expected_rejection`, empty metrics, and one `VIAL_SCALE_LIMIT_INTERACTION` discrepancy routed to `.17.4`. Focused t1620 passes at Files=1/Tests=4 in 89 seconds and t1621 at Files=1/Tests=4 in 44 seconds; the guarded impact matrix passes at Files=25/Tests=95 in 960 seconds. No public binder, capability/support, performance, or capacity claim changes. |
+
+## Acceptance Checklist (enforced) — `.17.2.5.2.3` scoreboard checking activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Scoreboard child .3 is the next
+  proposed activation' --oneline -- docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-
+  ARCHITECTURE.md` identifies clean predecessor `48e97f656`, whose completed
+  model ladder leaves scoreboard child `.17.2.5.2.3` proposed even though
+  decision `0073` already selects its exact canonical source outcomes and
+  bounded packed-state proof. The leaf cannot own implementation until a
+  separate clean continuity slice makes it the sole active frontier.
+- [x] **ADDRESSED (verified)** — `.17.2.5.2.3` alone is active for the selected
+  scoreboard-instance and declared-capacity source recipes, complete canonical
+  construction outcomes, complete-field packed FIFO enqueue/match/drain oracle,
+  negative cases, deterministic rerun, and repository-local cleanup. Task
+  index, bounded Memory, mdBook, and the existing Knowledge Map fact identify
+  the same frontier; every later checking-state sibling remains proposed.
+- [x] **NO REGRESSION** — task-tree integrity passes; `knowledge-map: OK`
+  reports 1,124 facts / 5,877 questions / 6,044 occurrences / 129 shards;
+  documentation-relative paths report `All tests successful` at `Files=1,
+  Tests=2`; all 52 mdBook chapter tests, exact
+  repository-local book render/removal, all live-document and maintained-
+  reference checks, staged task acceptance, and final doctrines pass. No code,
+  test, config, generated artifact, parser, IR, evaluator, backend, capability/
+  support, performance, capacity, or product behavior changes.
 
 ## Acceptance Checklist (enforced) — `.17.2.5.2.2` packed model checking ladders
 
