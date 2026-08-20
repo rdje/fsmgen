@@ -77,11 +77,11 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.3: gate bounded three-leg claim records`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Inventory existing actionable quantitative claims and derived constants on mandatory/current surfaces.`
-  Acceptance: `The sweep is producer-derived, partitions actionable claims from incidental numerals with reviewable reasons, identifies untracked producers and unwatched constants, and creates exact migration owners for every open leg without calling the inventory a truth proof.`
-  Verification: `independent census parity, deliberate classifier RED control, tracked inventory identity, and doctrine gate`
-  Commit: `pending`
+  Acceptance: `The producer-derived sweep covers 73 current Markdown sources and 615 numeric doctrine constants; it partitions 10,666 numeric lines into 1,417 actionable candidates and four explicit incidental classes, reports producer/watcher state, and assigns every open candidate to CLAIM-VERIFICATION-ADOPTION.5 without representing the inventory as truth proof.`
+  Verification: `PASS — independent git-grep census parity; canonical tracked inventory identity; Files=1, Tests=5 for drift, conservative-classifier, untracked-producer, and structural-partition RED controls; bootstrap/live-document gates`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.4: inventory current claims and constants`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5`
   Status: `pending`
@@ -109,11 +109,14 @@ hidden behind repeated checks of the same kind.
 - `2026-08-20`: Adoption precedes the recorded HIAL backend-emission frontier
   because the director explicitly requested this missing policy and the
   repository was clean, making the pivot handoff-safe.
+- `2026-08-20`: The inventory classifier has no incidental fallback. Numeric
+  prose not proven to be structure, code/data, a watched generated projection,
+  or an identifier remains actionable review debt owned by leaf `.5`.
 
 ## Open Questions
 
-- None blocking. The inventory leaf may split by governed surface after its
-  producer-derived census establishes honest slice boundaries.
+- None blocking. Leaf `.5` must split its 1,417-candidate review/migration
+  frontier into governed surface-owned slices before changing a claim.
 
 ## Blockers
 
@@ -121,9 +124,9 @@ hidden behind repeated checks of the same kind.
 
 ## Acceptance Checklist (enforced for implementation changes)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'CLAIM-VERIFICATION|scripts/check_claim_verification.pl' --oneline -- scripts/check_doctrines.sh` and the corresponding registry-history search returned no hit: FSMGen had installed the written standard but had no executable claim-record doctrine, bounded registry, or structural RED controls.
-- [x] **ADDRESSED (verified)** — `scripts/check_claim_verification.pl` reported `records=1, published=0, fixtures=1`; `prove -Iperl -v t/1636-claim-verification-doctrine.t` reported `Files=1, Tests=8` after proving complete/owned-gap positives and removed, absent, aliased, unowned, absolute, untracked, and undeclared RED cases.
-- [x] **NO REGRESSION** — `scripts/check_doctrines.sh` reported `[doctrine] all doctrine checks passed`; `scripts/check_live_document_size.sh` covered `3020/3020` tracked documents and reproduced the exact maintained-reference delta; the RAM-guarded `mdbook build docs/book` completed inside the repository.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'inventory_scope.json' --oneline d255b364f -- doctrine scripts t docs/book/src KNOWLEDGE_MAP.md` returned no match: the installed claim-record doctrine had no producer-derived current-surface inventory, independent census, or exact migration disposition for existing quantitative prose and control constants.
+- [x] **ADDRESSED (verified)** — `scripts/check_claim_verification_inventory.pl --report` reproduced `numeric_lines=10666`, `candidates=1417`, `quantified=655`, `conservative=762`, `constants=615`, `untracked_producers=0`, and `unwatched_candidates=1417`; `prove -Iperl -v t/1637-claim-verification-inventory.t` reported `Files=1, Tests=5` after proving census parity plus inventory-drift, conservative-classifier, untracked-producer, and structural-partition controls.
+- [x] **NO REGRESSION** — `prove -Iperl -v t/1637-claim-verification-inventory.t` reported `All tests successful` and `Files=1, Tests=5`; bootstrap, claim verification, and live-document containment passed with `3021/3021` declared document paths, the RAM-guarded mdBook build completed, and the driver reported `[doctrine] all doctrine checks passed` for all 11 registered doctrines.
 
 ## Verification Log
 
@@ -132,6 +135,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-20` | `.1` | `scripts/check_task_tree_integrity.pl`; `scripts/check_docs_relative_paths.sh`; `git diff --check` | `PASS — 4 active trees / 954 nodes; 1 docs-relative-path file / 2 tests; clean diff whitespace` |
 | `2026-08-20` | `.2` | neutral-body digest; bootstrap; README/live-document/reference authority; docs paths; RAM-guarded mdBook; doctrine gate | `PASS — authoritative body identity reproduced; discovery and bounded routes closed; book built` |
 | `2026-08-20` | `.3` | claim checker; `t/1636`; bootstrap; Knowledge Map; live-document/reference authority; RAM-guarded mdBook; doctrine gate | `PASS — one bounded conformance record; Files=1, Tests=8; deliberate missing/alias/path RED controls; all registered doctrines` |
+| `2026-08-20` | `.4` | claim inventory/report; `t/1637`; bootstrap; claim checker; live-document/reference authority; RAM-guarded mdBook; doctrine gate | `PASS — independent parity across 10,666 numeric lines; 1,417 owned candidates and 615 governed constants; Files=1, Tests=5; bounded canonical inventory` |
 
 ## Commit Log
 
@@ -140,3 +144,4 @@ hidden behind repeated checks of the same kind.
 | `.1` | `CLAIM-VERIFICATION-ADOPTION.1: select three-leg claim evidence` | `Decision and executable adoption sequence only; no policy or product behavior change.` |
 | `.2` | `CLAIM-VERIFICATION-ADOPTION.2: install the authoritative claim standard` | `Project-owned standard plus bounded discovery and book reference; no product behavior change.` |
 | `.3` | `CLAIM-VERIFICATION-ADOPTION.3: gate bounded three-leg claim records` | `Bounded registry, exact record checker, positive/RED fixtures, doctrine registration, and durable retrieval card.` |
+| `.4` | `CLAIM-VERIFICATION-ADOPTION.4: inventory current claims and constants` | `Producer-derived current-surface census, conservative partitions, governed constants, exact migration ownership, and independent RED controls.` |

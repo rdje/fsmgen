@@ -111,6 +111,7 @@ Current registered checks:
 | `PROJECT-DATA-LOCALITY` | `scripts/check_project_data_locality.sh` | Project-owned output, temporary, test, cache, log, dependency, and build paths stay repository-derived and same-volume (`docs/decisions/0022`). |
 | `TASK-TREE-INTEGRITY` | `scripts/check_task_tree_integrity.pl` | Every active indexed tree has one live active root, unique valid nodes, exact direct-child enumeration, canonical statuses, valid ancestry/container state, and complete leaf evidence across the live list plus optional bounded exact-source sealed segments; compact terminals and completed-index manifests use named retention contracts, while migration manifests independently prove complete source, semantic nodes, working-set dimensions, and loss residue. |
 | `CLAIM-VERIFICATION` | `scripts/check_claim_verification.pl` | The bounded canonical JSONL registry and exact source records agree; each claim names distinct re-derive, falsify, and durability legs or task-owned gaps; all declared source, owner, producer, oracle, and watcher paths are tracked regular files inside the repository. |
+| `CLAIM-INVENTORY` | `scripts/check_claim_verification_inventory.pl` | Selected high-traffic live-document surfaces and doctrine constants re-derive to the exact bounded inventory; a separate Git census agrees on every numeric source line; incidental partitions and conservative actionable debt remain explicit; every open record names its migration owner. |
 | `TASK-ACCEPTANCE` | `scripts/check_task_acceptance.sh` | A staged implementation change has one staged owning task file with fresh checked ROOT CAUSE, ADDRESSED, and NO REGRESSION boxes plus box-scoped declared root/no-regression evidence (`TASK_ACCEPTANCE.md`, decision `0026`). |
 
 List the registry with:
@@ -151,6 +152,26 @@ Documentation-only commits remain exempt when no configured implementation
 path is staged, but both registries are still validated. The gate checks
 evidence presence, freshness, and shape; the cited focused/broader commands
 remain the behavioral oracle.
+
+## Claim-Inventory Gate
+
+`doctrine/claim_verification/inventory_scope.json` selects source families by
+their existing live-document surface IDs, not by copying a path list out of
+the prose being audited. The same scope separately names doctrine JSONL
+families whose numeric leaves may be repository-derived or configured policy
+constants. Operational task/resume identifiers, imported adoption examples,
+code/data examples, and already-watched generated projections have explicit
+structural partitions; other quantified or ambiguous numeric prose fails into
+task-owned actionable debt, never an incidental default.
+
+`scripts/check_claim_verification_inventory.pl` derives the bounded canonical
+inventory and compares it byte-for-byte with the tracked JSONL. Its direct
+UTF-8 scanner must agree with a separate `git grep` numeric-line census.
+`t/1637-claim-verification-inventory.t` mutates source and classifier inputs to
+prove stale inventory goes RED, unknown numeric prose remains owned, and an
+untracked referenced producer stays visible. The census record names these
+re-derive, falsify, and durability legs directly; this proves inventory
+plumbing and completeness under the declared grammar, not semantic truth.
 
 ## Task-Tree Integrity Gate
 

@@ -20,6 +20,7 @@ DOCTRINES=(
   "PROJECT-DATA-LOCALITY|scripts/check_project_data_locality.sh|Project-owned data stays on repository-derived same-volume roots"
   "TASK-TREE-INTEGRITY|scripts/check_task_tree_integrity.pl|Active task-tree roots, live and sealed nodes, compact terminals, bounded completed-index archives, child references, statuses, and evidence stay structurally complete and retrievable"
   "CLAIM-VERIFICATION|scripts/check_claim_verification.pl|Bounded claim records name exact source markers, three non-aliased evidence legs or owned gaps, and tracked local producers, oracles, and watchers"
+  "CLAIM-INVENTORY|scripts/check_claim_verification_inventory.pl|Producer-derived current-surface claims and repository constants remain completely partitioned, independently censused, bounded, and task-owned"
   "TASK-ACCEPTANCE|scripts/check_task_acceptance.sh|Staged implementation changes carry fresh box-scoped task diagnosis and regression evidence"
 )
 
