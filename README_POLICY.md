@@ -8,9 +8,11 @@
 - Independence: the originating template is not an upstream. There is no
   automatic synchronization; later changes require deliberate local review.
 - Reviewed health targets: 275 lines and 12,288 bytes. The inclusive
-  enforcement ceilings remain pinned to the adoption baseline of 246 lines
-  and 9,952 bytes until the landing page shrinks; decision 0044 and containment
-  leaf `.18` distinguish health from quarantine without widening either axis.
+  enforcement ceilings began at the 246-line / 9,952-byte adoption baseline
+  and ratchet downward as the landing page shrinks; their current values are
+  derived from `doctrine/live_document_size/surfaces.jsonl`. Decision 0044 and
+  containment leaf `.18` distinguish health from quarantine without widening
+  either axis.
 - Routed destinations: the project-owned data-only registry at
   `doctrine/readme_entrypoint/routed_destinations.jsonl` maps every local
   README route into the project-wide surfaces declared by

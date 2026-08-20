@@ -69,6 +69,15 @@ retain an open candidate. Run the five-group report with
 keeps semantic truth and oracle independence outside those structural gates'
 claims.
 
+The first root-document review repaired stale README-policy wording that had
+described ratcheted enforcement ceilings as still pinned to their adoption
+baseline. Every current non-rationale root policy, index, navigation, and
+structural candidate now resolves to either a live derived gate or a reviewed
+policy, history, structure, or identifier disposition. The remaining root
+candidates are rationale-ledger measurements owned by the subsequent
+evidence-coherent review slices; derive exact counts with the report command
+above instead of copying them into this inventoried surface.
+
 `MEMORY.md` is the bounded resume pointer and `TASK_TREE.md` indexes the live
 work frontier. `ROADMAP_V2.md` carries high-level direction.
 Decision 0049 retires the former roadmap-status board after its independent

@@ -31,10 +31,19 @@ canonical navigation changes. Those four functions remain directly visible;
 dynamic detail, status, rationale, exhaustive inventories, and history stay in
 their canonical maintained layers.
 
-FSMGen enforces a maximum of 275 lines and 12,288 bytes, derived from its
-reviewed 246-line / 9,952-byte survivor, plus the existing per-leaf chronology
-guard through `scripts/check_readme_entrypoint.sh`. The doctrine driver runs
-that tree invariant on every commit and CI build, independent of changed paths.
+FSMGen's reviewed health targets are 275 lines and 12,288 bytes, derived from
+its 246-line / 9,952-byte adoption survivor. The inclusive enforcement ceilings
+ratchet downward with README shrinkage and are read from
+`doctrine/live_document_size/surfaces.jsonl`; the per-leaf chronology guard
+remains in `scripts/check_readme_entrypoint.sh`. The doctrine driver runs that
+tree invariant on every commit and CI build, independent of changed paths.
+
+The 2026-08-20 claim-inventory review found and repaired one stale distinction
+in the local adoption note: the 246-line / 9,952-byte survivor is historical
+baseline evidence, while the inclusive current ceilings ratchet downward from
+the live README measurement in the surface registry. Keeping the historical
+baseline and current ceiling as different facts prevents later shrinkage from
+making the policy sentence false.
 
 `README_POLICY.md` is the authoritative project-owned copy. Its reusable body
 is project- and harness-neutral; local authority is FSMGen maintainers plus the

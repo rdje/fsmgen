@@ -87,7 +87,7 @@ hidden behind repeated checks of the same kind.
   Status: `active`
   Goal: `Migrate or gate the inventoried claims in bounded, surface-owned slices.`
   Acceptance: `Each claim is re-derived, falsified by a separating oracle where available, and made durable, or it names its missing leg and a task-owned repair; repository-derived constants are derived or input-identity gated rather than hand-carried.`
-  Verification: `The committed .4 inventory partitions 1,417 candidates exactly into 72 root-document, 268 general-book, 557 protocol/profile/integration, 232 IAL2-AHB, and 288 HIAL/VIAL-verification candidates. Child .5.1 first gates review dispositions; .5.2-.5.6 then consume those five disjoint groups; .5.7 proves zero open migration owners and rechecks the 615 doctrine constants.`
+  Verification: `The current inventory partitions 1,416 candidates exactly into 71 root-document, 268 general-book, 557 protocol/profile/integration, 232 IAL2-AHB, and 288 HIAL/VIAL-verification candidates. Child .5.1 first gates review dispositions; .5.2-.5.6 then consume those five disjoint groups; .5.7 proves zero open migration owners and rechecks the governed doctrine constants.`
   Commit: `CLAIM-VERIFICATION-ADOPTION.5: partition claim migration frontier`
   Children: `CLAIM-VERIFICATION-ADOPTION.5.1, CLAIM-VERIFICATION-ADOPTION.5.2, CLAIM-VERIFICATION-ADOPTION.5.3, CLAIM-VERIFICATION-ADOPTION.5.4, CLAIM-VERIFICATION-ADOPTION.5.5, CLAIM-VERIFICATION-ADOPTION.5.6, CLAIM-VERIFICATION-ADOPTION.5.7`
 
@@ -100,18 +100,18 @@ hidden behind repeated checks of the same kind.
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.2`
   Status: `active`
-  Goal: `Review and migrate the 72 root-document claim candidates.`
+  Goal: `Review and migrate the 71 current root-document claim candidates.`
   Acceptance: `Every root-document candidate receives an exact gated disposition; current policy constants and historical/rationale measurements are distinguished, published claims gain three-leg evidence or owned gaps, and incidental structure is reclassified only with a reviewable reason.`
-  Verification: `The committed inventory partitions the root group into 33 non-rationale policy/index/navigation candidates, 9 pre-bridge foundational rationale candidates, 18 bridge/execution rationale candidates, and 12 current checking-scale rationale candidates. Children .5.2.1-.5.2.4 own those disjoint sets; the parent closes only after their sum is 72 and root_documents becomes required-complete.`
+  Verification: `After .5.2.1 repaired one stale README-policy sentence and regenerated the inventory, the root group partitions into 32 non-rationale policy/index/navigation candidates, 9 pre-bridge foundational rationale candidates, 18 bridge/execution rationale candidates, and 12 current checking-scale rationale candidates. Children .5.2.1-.5.2.4 own those disjoint sets; the parent closes only after their sum is 71 and root_documents becomes required-complete.`
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.2: partition root claim review`
   Children: `CLAIM-VERIFICATION-ADOPTION.5.2.1, CLAIM-VERIFICATION-ADOPTION.5.2.2, CLAIM-VERIFICATION-ADOPTION.5.2.3, CLAIM-VERIFICATION-ADOPTION.5.2.4`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.2.1`
-  Status: `pending`
-  Goal: `Disposition the 33 non-rationale root policy, index, route, and structural candidates.`
+  Status: `done`
+  Goal: `Disposition the 32 current non-rationale root policy, index, route, and structural candidates.`
   Acceptance: `Every candidate outside DEVELOPMENT_NOTES.md is mapped to a real current policy/input gate, an exact archive or structural projection gate, a reviewed incidental identity/navigation reason, or a live owned repair without conflating declared policy with measured truth.`
-  Verification: `33-candidate identity; policy/input mutation and archive/projection RED controls; exact disposition join; docs/live-document/doctrine gates`
-  Commit: `pending`
+  Verification: `PASS — stale README ceiling wording repaired; current inventory 1,416 candidates / 660 governed constants; exact root join 32 disposed / 39 open with 15 derived gates and 17 reviewed non-claims; archive, ledger, task, Knowledge Map, RAM, inventory, and disposition RED suites Files=8/Tests=88; bootstrap, docs paths, Memory, Knowledge Map, README/live-document/reference authority, mdBook test/build, and diff checks pass`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.2.1: disposition non-rationale root claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.2.2`
   Status: `pending`
@@ -130,7 +130,7 @@ hidden behind repeated checks of the same kind.
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.2.4`
   Status: `pending`
   Goal: `Disposition the 12 current checking-scale rationale candidates and close the root group.`
-  Acceptance: `The owned-shape, model, scoreboard, coverage, fault, and random-scale measurements join exact current producers and independent reconstruction/mutation oracles or live repairs; all 72 root candidates are dispositioned and root_documents becomes required-complete.`
+  Acceptance: `The owned-shape, model, scoreboard, coverage, fault, and random-scale measurements join exact current producers and independent reconstruction/mutation oracles or live repairs; all 71 current root candidates are dispositioned and root_documents becomes required-complete.`
   Verification: `DEVELOPMENT_NOTES.md lines 270 onward identity/count; checking-scale and adjacent/mutation RED controls; zero-open root group; docs/live-document/doctrine gates`
   Commit: `pending`
 
@@ -202,11 +202,20 @@ hidden behind repeated checks of the same kind.
 - `2026-08-20`: Root review is split by evidence family, not file count. The
   39 rationale-ledger candidates require three chronological semantic slices,
   while the other eight root files plus the rationale index form one bounded
-  33-candidate policy/structure slice.
+  policy/structure slice.
+- `2026-08-20`: Leaf `.5.2.1` found that `README_POLICY.md` still described
+  its inclusive ceilings as pinned to the 246-line / 9,952-byte adoption
+  survivor even though the governed values had correctly ratcheted to the
+  smaller current README. The repaired policy distinguishes historical
+  baseline, health target, and derived current ceiling; regeneration removes
+  one stale candidate, so the current frontier is 1,416 total / 71 root / 32
+  non-rationale root candidates. Earlier `.4` and `.5.1` verification rows
+  retain their then-current 1,417-candidate results as historical evidence.
 
 ## Open Questions
 
-- None blocking. The `.5.2.1` non-rationale root review is the sole next leaf.
+- None blocking. Activate `.5.2.2` from a clean boundary to review the nine
+  foundational rationale candidates.
 
 ## Blockers
 
@@ -217,6 +226,9 @@ hidden behind repeated checks of the same kind.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'dispositions.jsonl' --oneline 979d5d416 -- doctrine scripts t docs/book/src KNOWLEDGE_MAP.md` returned no match: the complete inventory had no bounded join from a current candidate identity to a reviewed outcome and no enforced way for a completed migration group to reject residual open candidates.
 - [x] **ADDRESSED (verified)** — `scripts/check_claim_verification_dispositions.pl --report` reported `candidates=1417`, `disposed=0`, `open=1417`, and exact group totals `268/232/557/72/288`; `prove -Iperl -v t/1638-claim-verification-dispositions.t` exercised all four outcome shapes and nine positive/RED subtests for stale, duplicate, unknown, missing, aliased, incomplete, fabricated-source, and closed-gap-owner cases.
 - [x] **NO REGRESSION** — the focused disposition suite reported `All tests successful` and `Files=1, Tests=9`; claim inventory re-derived `628` governed constants without changing the `1,417` candidate frontier, Knowledge Map reported `1127` facts with query parity, live-document containment covered `3022/3022` paths, and the RAM-guarded mdBook plus all 12 registered doctrines pass.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'remain pinned to the adoption baseline' --oneline -- README_POLICY.md doctrine/live_document_size/surfaces.jsonl` identifies `9bd081935`, while pickaxes for the later 245-line / 9,931-byte registry values identify `3084d8c7b`: the policy sentence predated the downward ratchet and was never joined to the current control input; the unreviewed root candidates likewise had no disposition join.
+- [x] **ADDRESSED (verified)** — the policy and Knowledge Map now distinguish historical adoption baseline, reviewed health target, and registry-derived current ceiling; regenerated inventory reports `candidates=1416`; the canonical disposition report joins all `32` current non-rationale root candidates as `15` derived gates plus `17` reviewed non-claims and leaves only the `39` separately owned rationale candidates open.
+- [x] **NO REGRESSION** — the deliberately failing archive, ledger, task-tree, Knowledge Map width, RAM-trip, inventory, and disposition controls report `All tests successful` at `Files=8, Tests=88`; bootstrap, docs-relative paths, Memory, Knowledge Map parity, README/live-document/reference authority, mdBook test/build, and `git diff --check` pass; the ignored 19-MiB generated book directory was removed after verification.
 
 ## Verification Log
 
@@ -229,6 +241,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-20` | `.5` partition | committed-inventory path/classification aggregation; exact five-group sum; task integrity; docs paths; doctrine gate | `PASS — 72 + 268 + 557 + 232 + 288 = 1,417 with disjoint path ownership; .5.1 selected alone` |
 | `2026-08-20` | `.5.1` | disposition checker/report; `t/1638`; inventory/constant census; bootstrap; Knowledge Map; live-document/reference authority; RAM-guarded mdBook; doctrine gate | `PASS — five exact groups, four bounded outcomes, all 1,417 debt records visibly open; Files=1, Tests=9; 628 governed constants; all registered doctrines` |
 | `2026-08-20` | `.5.2` partition | committed inventory path/line aggregation; exact four-group sum; task integrity; docs paths; doctrine gate | `PASS — 33 + 9 + 18 + 12 = 72 with disjoint path/range ownership; .5.2.1 selected alone` |
+| `2026-08-20` | `.5.2.1` | stale-policy root cause; inventory/disposition joins; `t/1549`, `t/1554`, `t/1565`, `t/1566`, `t/1567`, `t/1595`, `t/1637`, `t/1638`; bootstrap; docs paths; Memory; Knowledge Map; README/live-document/reference authority; RAM-guarded mdBook; diff check | `PASS — current frontier 1,416; root 32 disposed / 39 open; 15 gates / 17 reviewed; 660 governed constants; Files=8/Tests=88; 53 book chapters tested and built` |
 
 ## Commit Log
 
@@ -241,3 +254,4 @@ hidden behind repeated checks of the same kind.
 | `.5` | `CLAIM-VERIFICATION-ADOPTION.5: partition claim migration frontier` | `Activates seven bounded children from the committed five-group candidate census; changes no claim, checker, product, or support behavior.` |
 | `.5.1` | `CLAIM-VERIFICATION-ADOPTION.5.1: gate candidate review dispositions` | `Bounded outcome/group registries, exact inventory join, live owner and path checks, completion enforcement, RED controls, and durable retrieval route.` |
 | `.5.2` | `CLAIM-VERIFICATION-ADOPTION.5.2: partition root claim review` | `Activates four evidence-coherent children from the exact root candidate census; changes no claim, disposition, policy, product, or support behavior.` |
+| `.5.2.1` | `CLAIM-VERIFICATION-ADOPTION.5.2.1: disposition non-rationale root claims` | `Repairs stale README ceiling semantics and maps every current non-rationale root candidate to a live derived gate or an exact reviewed non-claim outcome.` |
