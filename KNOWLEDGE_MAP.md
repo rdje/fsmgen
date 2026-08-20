@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1127** facts · **5902** unique questions · **6069** answer occurrences · **130** topic shards.
+> **1127** facts · **5905** unique questions · **6072** answer occurrences · **130** topic shards.
 
 Query first:
 
@@ -31,7 +31,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `check-json` | 1 | 3 | [`check-json.md`](knowledge-map/generated/check-json.md) |
 | `ci-perl` | 1 | 16 | [`ci-perl.md`](knowledge-map/generated/ci-perl.md) |
 | `ci-ppif` | 1 | 5 | [`ci-ppif.md`](knowledge-map/generated/ci-ppif.md) |
-| `claim-verification` | 3 | 24 | [`claim-verification.md`](knowledge-map/generated/claim-verification.md) |
+| `claim-verification` | 3 | 27 | [`claim-verification.md`](knowledge-map/generated/claim-verification.md) |
 | `composition-plan` | 1 | 4 | [`composition-plan.md`](knowledge-map/generated/composition-plan.md) |
 | `composition-shared` | 1 | 5 | [`composition-shared.md`](knowledge-map/generated/composition-shared.md) |
 | `composition-vhdl` | 1 | 68 | [`composition-vhdl.md`](knowledge-map/generated/composition-vhdl.md) |

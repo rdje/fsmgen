@@ -116,6 +116,13 @@ test filenames remain reviewed non-claims. The LTE expected-failure count is
 also reconstructed from the active source entries independently of its catalog
 diagnostic.
 
+The intent, actor, and transaction review ties entry, drive, sample, await,
+completion, control, data, loop, and latency timing to their ordinary lowering
+and reporting paths. Published repeat timing now accounts for initialization
+and every check transition, while request and target-derived payload widths
+remain distinct. Lowered states carry exact transaction ownership so injected
+latency checks remain attributable in schedule reports.
+
 `MEMORY.md` is the bounded resume pointer and `TASK_TREE.md` indexes the live
 work frontier. `ROADMAP_V2.md` carries high-level direction.
 Decision 0049 retires the former roadmap-status board after its independent

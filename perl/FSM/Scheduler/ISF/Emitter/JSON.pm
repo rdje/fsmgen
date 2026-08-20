@@ -415,10 +415,15 @@ sub _transaction_summary($self, $ir) {
     my @txs;
     my %tx_states;
 
-    # Group states by transaction prefix
+    # Lowering assigns exact transaction ownership. The name fallback retains
+    # compatibility for callers that construct legacy IR directly, but it must
+    # never create an undefined/empty transaction record.
     for my $s (@{$ir->{states}}) {
-        my ($tx_name) = ($s->{name} =~ /^(\w+?)_(?:idle|drive|await|atl_trigger|atl_trigger_batch|done|repeat|sample|max_chk|when|switch|update|set|shift|asm|ext|extract|store|load|do|spawn|phase|stage|assert|cover|assume|wait|while|until)_/);
-        ($tx_name) = ($s->{name} =~ /^(\w+)_timeout$/) unless $tx_name;
+        my $tx_name = $s->{transaction};
+        ($tx_name) = ($s->{name} =~ /^(\w+?)_(?:idle|drive|await|atl_trigger|atl_trigger_batch|done|repeat|sample|max_chk|when|switch|update|set|shift|asm|ext|extract|store|load|do|spawn|phase|stage|assert|cover|assume|wait|while|until|exit_when|continue_when|timeout)(?:_|$)/)
+            unless defined($tx_name) && !ref($tx_name) && length($tx_name);
+        die "schedule report cannot derive transaction owner for state '$s->{name}'\n"
+            unless defined($tx_name) && !ref($tx_name) && length($tx_name);
         push @{$tx_states{$tx_name}}, $s->{name};
     }
 

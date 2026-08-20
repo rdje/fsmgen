@@ -150,14 +150,14 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.3.1: disposition core language claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Disposition the 43 intent-scheduling, actor-interface, and transaction candidates in Chapters 13, 13a, and 13b.`
   Acceptance: `Scheduling, actor, interface, and transaction measurements retain distinct current producers and falsification controls, while syntax literals and example data are reviewed only with exact reasons.`
-  Verification: `exact 43-candidate path-set join, focused intent/actor/transaction gates and mutations, lowering-clean touched examples, inventory/disposition/mdBook/doctrine gates`
-  Commit: `pending`
+  Verification: `PASS — all 43 candidates close as 42 derived gates plus one reviewed example numeral; published repeat timing and actor payload-width prose now match the lowerer; schedule JSON carries exact transaction ownership through injected latency states; the RAM-guarded exact collection reports Files=36/Tests=602; inventory/disposition, Knowledge Map, mdBook, containment, staged-acceptance, and doctrine gates pass.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.3.2: disposition intent timing claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Disposition the 68 control-flow, data, composition, rules, lowering, and type candidates in Chapters 13d-13j.`
   Acceptance: `Every selected semantic or lowering claim is tied to the exact parser/lowerer/runtime projection and a separating oracle, or receives an exact reviewed-incidental or owned-repair outcome.`
   Verification: `exact 68-candidate path-set join, focused control/data/composition/lowering gates and mutations, lowering-clean touched examples, inventory/disposition/mdBook/doctrine gates`
@@ -285,11 +285,22 @@ hidden behind repeated checks of the same kind.
   test bands, and linked test filenames remain reviewed non-claims. The LTE
   corpus count is reconstructed from active child entries independently of the
   expected diagnostic pattern.
+- `2026-08-20`: Intent/actor/transaction review found two published contract
+  errors and one report-ownership defect. Positive static repeat lowering is
+  check-first, so its exact cost is `N × (body + 1) + 2`, not the former
+  `N × body + 2`; drive-parameter payload width follows the driven target
+  rather than always being one bit. Latency injection also created a
+  `main_max_chk` state that the JSON report's name heuristic could not own.
+  Lowering now stamps every state with its exact transaction owner, and the
+  emitter fails closed if neither that field nor the legacy fallback can name
+  an owner. Forty-two candidates use distinct scheduling/runtime evidence
+  families; the literal value in `(set fire 1)` remains one reviewed example
+  numeral rather than a capability claim.
 
 ## Open Questions
 
-- None blocking. `.5.3.2` is the sole active general-book child after the
-  core-language/tooling disposition closure.
+- None blocking. `.5.3.3` is the sole active general-book child after the
+  intent/actor/transaction disposition closure.
 
 ## Blockers
 
@@ -324,6 +335,9 @@ hidden behind repeated checks of the same kind.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S '36 flat RTL module references' --oneline -- docs/book/src/10-errors-strict-mode-and-troubleshooting.md` identifies `24ca8d74a`, while the committed inventory left all 35 candidates on the ten selected Chapters 02-12 paths without disposition joins. Most prose already described executable parser, lowering, emission, or CI-partition behavior, but the LTE expected-failure catalog repeated its `36` count without independently reconstructing that number from the offending source child.
 - [x] **ADDRESSED (verified)** — all 35 identities now close as 26 three-leg derived gates and nine reviewed syntax/example/identifier outcomes. `t/248-regression-corpus-accounting.t` separately extracts `lte_dif_iosocket` and counts six declarations plus 30 active mappings before accepting the catalog diagnostic. The RAM-guarded exact evidence run reports `All tests successful` at `Files=22, Tests=7487`.
 - [x] **NO REGRESSION** — the final RAM-guarded evidence rerun reports `All tests successful` at `Files=22, Tests=7487`. Inventory regenerates `1,415` candidates and `733` governed constants; the disposition join reports `105` closed overall, `35/268` in the general book, `70` gates, and `35` reviewed outcomes. Knowledge Map generation/check reports `1,127` facts / `5,902` questions / `6,069` occurrences / `130` shards; live containment covers `3,022/3,022` paths with exact `51,049`-line / `2,696,556`-byte book authority. All 53 chapters test, the rendered 88-file/18,592-KiB book contains the synchronized reference and is removed; the host-provided mdBook toolchain is the only read-only off-volume dependency. Docs, Memory, diff, staged acceptance, and all 12 doctrine gates pass.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'N × (body_cycles) + 2' --oneline -- docs/book/src/13b-transactions.md` identifies `423857034`, and the one-bit parameter-table pickaxe identifies `e2e5e7acf`: both prose claims predated an exact join to current lowering. The new focused oracle then exposed `Use of uninitialized value $tx_name ... Emitter/JSON.pm line 422`, because injected `main_max_chk` did not match the report's transaction-name heuristic.
+- [x] **ADDRESSED (verified)** — all 43 selected identities close as 42 distinct three-leg derived gates plus one reviewed example numeral. The book now states the check-first positive-repeat cost `N × (body + 1) + 2` and target-derived drive payload widths; `t/1639-isf-published-timing-claims.t` proves the exact 26-cycle two-drive/eight-repeat graph, rejects 18, distinguishes one-bit requests from one- and eight-bit payloads, exercises the published timing families, and requires exact `main` ownership for the injected latency state. Lowering stamps transaction ownership on every state, and JSON emission uses that field first and otherwise fails closed.
+- [x] **NO REGRESSION** — the RAM-guarded exact intent/actor/transaction collection reports `All tests successful` at `Files=36, Tests=602` over parser boundaries, state ordering, entry/drive/sample/await/complete behavior, repeat/control/data/loop timing, FIFO/APB composition, schedule reporting, and both claim registries. Inventory regenerates `1,415` candidates / `776` governed constants; the disposition join reports `148` closed overall and `78/268` in the general book. Knowledge Map reports `1,127` facts / `5,905` questions / `6,072` occurrences / `130` shards; live containment covers `3,022/3,022` paths with exact `51,059`-line / `2,697,391`-byte book authority. All 53 chapters test; the rendered 88-file/18,600-KiB book contains the corrected tables and reference, is inspected, and is removed. Docs, Memory, diff, staged acceptance, and all 12 registered doctrines pass; the host-provided mdBook toolchain remains the only read-only off-volume dependency.
 
 ## Verification Log
 
@@ -344,6 +358,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-20` | `.5.2.4` | owned-shape partition; model source factorization and exact cells; scoreboard storage/order; coverage identity/order; fault lifecycle; random semantic/bridge/plan stages; inventory/disposition joins; docs/Memory/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 12 candidates closed as derived gates; root 70/70 required-complete with 44 gates / 26 reviewed; Files=6/Tests=30 exact focused run; 698 governed constants; all 53 chapters and all registered doctrines` |
 | `2026-08-20` | `.5.3` partition | committed-inventory path aggregation; exact five-child sum; task integrity; docs paths; inventory/disposition/Knowledge Map/live-document/diff/staged-doctrine gates | `PASS — 35 + 43 + 68 + 71 + 51 = 268 across 30 disjoint paths; .5.3.1 selected alone; no claim, disposition, product, capability, or support behavior changes` |
 | `2026-08-20` | `.5.3.1` | parser/width/literal/type/composition/factorization/CI/VHDL/ISF/APB evidence; independent LTE source count; inventory/disposition/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 35 candidates closed as 26 gates / 9 reviewed; general book 35/268; Files=22/Tests=7,487 exact focused run; all 53 chapters and all registered doctrines` |
+| `2026-08-20` | `.5.3.2` | static wait; entry/drive/sample/await/complete; repeat/control/data/loop timing; FIFO/APB composition; exact schedule ownership; inventory/disposition/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 43 candidates closed as 42 gates / 1 reviewed; general book 78/268; Files=36/Tests=602 exact focused run; all 53 chapters and all registered doctrines` |
 
 ## Commit Log
 
@@ -364,3 +379,4 @@ hidden behind repeated checks of the same kind.
 | `.5.2.4` | `CLAIM-VERIFICATION-ADOPTION.5.2.4: disposition checking scale claims` | `Maps all checking-scale measurements to independent generated evidence chains, strengthens model source-factorization checks, and makes the complete root group mandatory.` |
 | `.5.3` | `CLAIM-VERIFICATION-ADOPTION.5.3: partition general book claim review` | `Activates five semantic/evidence-coherent children from the exact 268-candidate general-book census; changes no claim, disposition, product, capability, or support behavior.` |
 | `.5.3.1` | `CLAIM-VERIFICATION-ADOPTION.5.3.1: disposition core language claims` | `Maps core grammar, inference, composition, tooling, extension, and lowering statements to ordinary evidence chains; preserves syntax and navigation numerals as non-claims; independently reconstructs the LTE diagnostic count.` |
+| `.5.3.2` | `CLAIM-VERIFICATION-ADOPTION.5.3.2: disposition intent timing claims` | `Maps intent, actor, and transaction statements to exact evidence families; repairs repeat timing and drive-payload prose; gives injected states explicit transaction ownership in schedule reports.` |

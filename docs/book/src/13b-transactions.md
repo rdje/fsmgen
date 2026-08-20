@@ -577,11 +577,14 @@ completion port rests low except for the generated one-cycle pulse.
 
 ## `(repeat N body...)` — Counter + Loop
 
-**Timing**: `N × (body_cycles) + 2` (init + check).
+**Timing** for a positive static count: `N × (body_cycles + 1) + 2`.
+The extra per-iteration cycle is the check/decrement state: the region visits
+one init state, `N` body sequences, and the check state `N + 1` times. Static
+zero counts are compile-time no-ops as described below.
 
 For `(repeat 8 (drive scl 1) (drive scl 0))`:
 - Body: 2 cycles per iteration (two drive calls)
-- Total: `8 × 2 + 2 = 18` cycles
+- Total: `8 × (2 + 1) + 2 = 26` cycles
 
 The form is exact: `(repeat count body...)`, with a scalar non-empty count and
 at least one body clause. Malformed missing or nested counts fail before
@@ -1971,9 +1974,9 @@ site. Procedures are documented in full, with many examples, in their own chapte
 | `(sample port as name)` | 0 | Piggybacks |
 | `(await port)` | 1 to N | Self-looping + watchdog |
 | `(complete port)` | 1 | Returns to idle |
-| `(repeat N body...)` | N×body+2 | Counter + init + check |
-| `(while cond body...)` | 1 + body×N + checks | Pre-test, zero-or-more |
-| `(until cond body...)` | body×N + checks | Body-first, one-or-more |
+| `(repeat N body...)` | N×(body+1)+2 | One init + N body visits + N+1 checks; static zero is removed |
+| `(while cond body...)` | 1 + N×(body+1) | One pre-test + N body visits + N back-edge checks |
+| `(until cond body...)` | N×(body+1) | N body visits + N post-tests; body-first |
 | `(when cond body...)` | 1 + body | Decision + inline body |
 | `(switch sig (v b)... (default b))` | 1 + body | Decision + inline branch |
 | `(set/update var expr)` | 1 | Flopped assignment |

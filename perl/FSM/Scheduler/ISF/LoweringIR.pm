@@ -197,6 +197,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         unshift @{$ir->{states}}, {
             name        => "${cname}_idle_0",
             kind        => 'entry',
+            transaction => $tx->{name},
             guard       => { port => 'start' },
             assignments => [],
             transitions => [],
@@ -5503,6 +5504,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef, $p
     _link_states(\@st, $tn);
     $ct{can_accept} = 1;
     for my $s (@st) { next unless $s->{kind} eq 'entry'; unshift @{$s->{assignments}}, { lhs => 'can_accept', rhs => 1, op => '=' }; }
+    $_->{transaction} = $tn for @st;
     return (\@st, \%ct, \@dt, \@doc, \@spc, \@contracts, { %{$widths || {}} }, \%storage_roles, \@bank_accesses, \%reset_values, \@asserts);
 }
 

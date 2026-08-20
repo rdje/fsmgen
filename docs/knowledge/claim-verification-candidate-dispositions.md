@@ -14,6 +14,9 @@ answers:
   - "how are checking-scale model scoreboard coverage and fault claims separated?"
   - "how does random replay distinguish semantic bridge and plan boundaries?"
   - "how are core language and tooling book claims separated from syntax and navigation numerals?"
+  - "how are intent actor and transaction timing claims verified?"
+  - "what is the exact static repeat cycle formula?"
+  - "why do schedule reports carry explicit transaction ownership?"
 date: 2026-08-20
 status: current
 tags: [claim-verification, dispositions, inventory, evidence]
@@ -22,10 +25,12 @@ evidence: >-
   doctrine/claim_verification/dispositions.jsonl;
   scripts/check_claim_verification_dispositions.pl;
   t/1638-claim-verification-dispositions.t;
+  t/1639-isf-published-timing-claims.t;
   docs/tasks/CLAIM-VERIFICATION-ADOPTION.md
 reverify: >-
   scripts/check_claim_verification_dispositions.pl --report && prove -Iperl
   t/1638-claim-verification-dispositions.t
+  t/1639-isf-published-timing-claims.t
 ---
 
 Every current inventory candidate path belongs to exactly one bounded migration
@@ -72,3 +77,14 @@ Syntax operands, boolean option values, protocol-version tokens, test bands,
 and linked test filenames are reviewed as non-claims. The LTE expected-failure
 count has an additional source-derived control that counts the active child
 entries independently of the catalog's diagnostic pattern.
+
+The intent/actor/transaction review closes 42 behavior candidates with exact
+derived gates and keeps the literal value in `(set fire 1)` as a reviewed
+example numeral. It repaired two overstated book claims: positive static
+repeat is check-first and costs `N × (body + 1) + 2`, while drive-parameter
+payload width follows the driven target and only a scalar payload is one bit.
+The focused timing oracle proves those distinctions across entry, drive,
+sample, await, complete, control, data, loop, and latency forms. Lowering also
+stamps every state with its exact transaction owner so injected latency states
+remain reportable; the JSON emitter uses that field first and fails closed
+when no legacy owner can be derived.
