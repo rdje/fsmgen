@@ -11,6 +11,8 @@ answers:
   - "why was the experimental UVM resource peak removed from the rationale ledger?"
   - "how are bridge source-map calibration claims independently reconstructed?"
   - "why do total fibers live fibers and execution types use separate evidence?"
+  - "how are checking-scale model scoreboard coverage and fault claims separated?"
+  - "how does random replay distinguish semantic bridge and plan boundaries?"
 date: 2026-08-20
 status: current
 tags: [claim-verification, dispositions, inventory, evidence]
@@ -50,3 +52,12 @@ suite runs. Scenario-map collision is retained as pre-repair history with a
 current uniqueness watcher. Total and live fibers use different generated tree
 shapes, while execution types require real bound endpoints; rejected wide-tree
 and unbound-alias examples are reviewed context rather than claim evidence.
+
+The final root review keeps the checking families separate as well. The
+foundation oracle derives owned and rejected catalog shapes. The model oracle
+counts authored definitions, instances, declarations, and exercised cells;
+scoreboard, coverage, and fault oracles independently reconstruct storage,
+order, and lifecycle identities with targeted mutations. The random-replay
+oracle distinguishes semantic preflight, bridge materialization, plan
+rejection, and the adjacent semantic diagnostic. Exact guarded runs close the
+root group, whose registry is now required-complete.

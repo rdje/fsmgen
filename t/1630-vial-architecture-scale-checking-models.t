@@ -71,6 +71,10 @@ subtest 'gate model programs author and exercise every selected cell' => sub {
     for my $axis (sort keys %expected) {
         my $constructed = construction($axis, 'gate_candidate_v1');
         ok($constructed->{ok}, "$axis gate constructs ordinary source");
+        check_scalar_source_factorization(
+            'scalar_model_state_cells/gate_candidate_v1',
+            $constructed, 32, 1, 16,
+        ) if $axis eq 'scalar_model_state_cells';
         my $evaluation = $class->evaluate({construction => $constructed});
         ok($evaluation->{ok}, "$axis gate passes the provider-free oracle");
         diag($json->encode($evaluation->{diagnostics})) unless $evaluation->{ok};
@@ -150,6 +154,10 @@ subtest 'adjacent model excesses return only the exact models diagnostic' => sub
     for my $axis (sort keys %selected) {
         my $constructed = construction($axis, 'over_limit_v1');
         ok($constructed->{ok}, "$axis adjacent excess remains valid source");
+        check_scalar_source_factorization(
+            'scalar_model_state_cells/over_limit_v1',
+            $constructed, 33, 2, 2_049,
+        ) if $axis eq 'scalar_model_state_cells';
         my $evaluation = $class->evaluate({construction => $constructed});
         ok($evaluation->{ok}, "$axis adjacent excess is the selected expected outcome");
         diag($json->encode($evaluation->{diagnostics})) unless $evaluation->{ok};
@@ -266,6 +274,16 @@ subtest 'qualification and limit levels are exact and RAM-guarded' => sub {
                 @{$constructed->{inputs}};
             cmp_ok(length($vial->{content}), '<=', 1_114_112,
                 "$axis/$level stays inside the construction envelope");
+            if ($axis eq 'scalar_model_state_cells') {
+                my %declared_cells = (
+                    qualification_candidate_v1 => 1_024,
+                    limit_v1 => 2_048,
+                );
+                check_scalar_source_factorization(
+                    "$axis/$level", $constructed, 32, 1,
+                    $declared_cells{$level},
+                );
+            }
             my $evaluation = $class->evaluate({construction => $constructed});
             ok($evaluation->{ok}, "$axis/$level passes its complete oracle");
             diag($json->encode($evaluation->{diagnostics}))
@@ -297,6 +315,21 @@ subtest 'qualification and limit levels are exact and RAM-guarded' => sub {
 };
 
 done_testing();
+
+sub check_scalar_source_factorization {
+    my ($label, $constructed, $instances, $definitions, $declared_cells) = @_;
+    my ($vial) = grep { $_->{role} eq 'vial_source' }
+        @{$constructed->{inputs}};
+    is(scalar(() = $vial->{content}
+            =~ /\(model [^()[:space:]]+ \(inputs \(tick event\)\)/g),
+        $definitions, "$label authors the exact shared-definition count");
+    is(scalar(() = $vial->{content}
+            =~ /\(model [^()[:space:]]+ [^()[:space:]]+ \(bind tick \(event write accepted\)/g),
+        $instances, "$label authors the exact model-instance count");
+    is(scalar(() = $vial->{content}
+            =~ /\([^()[:space:]]+ \(u 8\) 0\)/g),
+        $declared_cells, "$label authors the exact state declarations per definition set");
+}
 
 sub repo_path {
     my ($relative) = @_;

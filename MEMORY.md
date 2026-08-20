@@ -6,11 +6,11 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `CLAIM-VERIFICATION-ADOPTION.5.2.4`; clean commit
-  `7cc733514` closed the bridge/execution rationale review before activation.
-- next_action: map the 12 owned-shape, model, scoreboard, coverage, fault, and
-  random-scale candidates to exact current producers and RED controls.
-- in_flight_uncommitted: `.5.2.4` activation continuity only; no claim
-  disposition or implementation change yet.
+- active_work_unit: `CLAIM-VERIFICATION-ADOPTION.5.2.4`; implementation commit
+  pending after exact checking-scale evidence and root-group closure.
+- next_action: commit `.5.2.4`, then activate and partition `.5.3` from the
+  exact general-book candidate census.
+- in_flight_uncommitted: `.5.2.4` dispositions, strengthened model
+  factorization oracle, required-complete root group, and synchronized docs.
 - in_flight_background: none
 - blockers: none.

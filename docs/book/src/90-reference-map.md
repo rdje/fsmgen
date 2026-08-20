@@ -73,10 +73,10 @@ The first root-document review repaired stale README-policy wording that had
 described ratcheted enforcement ceilings as still pinned to their adoption
 baseline. Every current non-rationale root policy, index, navigation, and
 structural candidate now resolves to either a live derived gate or a reviewed
-policy, history, structure, or identifier disposition. The remaining root
-candidates are rationale-ledger measurements owned by the subsequent
-evidence-coherent review slices; derive exact counts with the report command
-above instead of copying them into this inventoried surface.
+policy, history, structure, or identifier disposition. The rationale-ledger
+measurements are likewise closed by the evidence-coherent reviews below;
+derive current counts with the report command above instead of copying them
+into this inventoried surface.
 
 The foundational rationale review separates live gates from immutable context.
 Ledger reconstruction, the complete roadmap archive, and qualified provider
@@ -95,6 +95,16 @@ live fibers use distinct generated tree shapes and mutation oracles, and an
 execution type counts only when a real public binding exercises its semantic
 shape. Rejected wide-tree and unbound-alias examples remain reviewed structural
 references rather than being promoted into evidence.
+
+The checking-scale review closes the root-document group without treating one
+large aggregate as proof of another. The foundation oracle derives the owned
+and rejected shape sets from the catalog. Model evidence separately checks
+authored definitions, instances, declarations, and exercised cells; scoreboard,
+coverage, and fault evidence reconstruct storage, order, and lifecycle
+identities with targeted mutations. Random-replay evidence distinguishes
+semantic preflight, bridge materialization, execution-plan rejection, and the
+adjacent semantic diagnostic. These exact boundary suites run through the
+ordinary generators and builders under the repository RAM guard.
 
 `MEMORY.md` is the bounded resume pointer and `TASK_TREE.md` indexes the live
 work frontier. `ROADMAP_V2.md` carries high-level direction.
