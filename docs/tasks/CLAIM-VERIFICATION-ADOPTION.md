@@ -193,14 +193,14 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.4.1: disposition AXI manager claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.4.2`
-  Status: `active`
+  Status: `done`
   Goal: `Disposition the 11 foundational profile/APB candidates in Chapter 14h lines 1-850 and Chapter 16b.`
   Acceptance: `Profile-alias chronology, APB endpoint/completer/interconnect foundations, and the shipped APB example chapter retain current evidence without promoting task identifiers or mode-map navigation into capability proof.`
-  Verification: `exact 7 + 4 range/path census, focused profile/APB foundation gates, inventory/disposition/mdBook/doctrine gates`
-  Commit: `pending`
+  Verification: `PASS — all 11 candidates close as six derived gates plus five reviewed contract-selection outcomes; the RAM-guarded exact APB completer/composition collection reports Files=2/Tests=133; inventory/disposition, Knowledge Map, mdBook, containment, staged-acceptance, and doctrine gates pass.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.4.2: disposition foundational APB claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.4.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Disposition the 35 APB width, sideband, status, and timing candidates in Chapter 14h lines 851-1199.`
   Acceptance: `Data/strobe widths, protection/status fields, queue depth, and selected timing families join the exact APB generators and separating boundary cases.`
   Verification: `exact range census, APB width/sideband/status/timing gates and mutations, inventory/disposition/mdBook/doctrine gates`
@@ -456,11 +456,21 @@ hidden behind repeated checks of the same kind.
   sizes remain reviewed historical or structural context. The exact 65
   identities close as 28 derived gates and 37 reviewed outcomes without
   changing product or book behavior.
+- `2026-08-21`: The foundational APB review separates shipped endpoint and
+  composition behavior from the public contracts that selected it. Base
+  completer storage, source-ordered multi-register decode, 16-bit data,
+  3-bit protection, 2-bit strobes, one-entry request queueing, overflow
+  rejection, and generated review artifacts use the ordinary requester,
+  completer, and composition producers plus focused endpoint/composition
+  oracles. Status width, address/data/reset constraints, and byte-lane widths
+  inside the preceding contract records remain reviewed structural inputs.
+  The exact 11 identities close as six derived gates and five reviewed
+  outcomes without changing product or book behavior.
 
 ## Open Questions
 
-- None blocking. `.5.4.2` owns the next 11 foundational profile/APB candidates
-  after the exact AXI-manager-core/dynamic-identity review closed 65 identities.
+- None blocking. `.5.4.3` owns the next 35 APB width, sideband, status, and
+  timing candidates on Chapter 14h lines 851-1199.
 
 ## Blockers
 
@@ -510,6 +520,9 @@ hidden behind repeated checks of the same kind.
 - [x] **ROOT CAUSE (WHY + WHERE)** — cross-partition `git log -S` traces the queue-head read-data count to `81dc0834b`, the multiple depth-3 factorization to `f208c5c41`, and the 89.5-percent readiness checkpoint to `ded1dc51a`; `dc1c64afb` later moved all three into the focused Chapter 14 parts. The current inventory still treated 65 lines across 14f/14g uniformly as open debt even though they mix current generated behavior with immutable selector, helper-probe, and host-resource chronology.
 - [x] **ADDRESSED (verified)** — all 65 identities now join exactly 28 distinct three-leg derived gates plus 37 reviewed historical or structural outcomes. Concrete-ID and dynamic-ID queue families retain separate depth, ordering, RLAST, runtime-validation, and output-bank evidence; every reviewed outcome names its exact durable audit/selection record. The canonical join reports `candidates=1415`, `disposed=403`, `gates=276`, `reviewed=127`, and `protocol=65/557` with 492 open.
 - [x] **NO REGRESSION** — the RAM-guarded exact AXI manager/dynamic-ID collection reports `All tests successful` at `Files=2, Tests=121`; the disposition mutation suite separately reports `Files=1, Tests=9`. Inventory remains `1,415` candidates / `1,031` governed constants, and the join closes protocol `65/557` as `28` gates / `37` reviewed outcomes. Knowledge Map parity reports `1,127` facts / `5,916` questions / `6,083` occurrences / `130` shards; live containment covers `3,022/3,022` paths with unchanged `51,089`-line / `2,699,163`-byte book authority. All 53 chapters test; the inspected 88-file/18,604-KiB build is removed. Task, docs-relative-path, Memory, reference-authority, diff, and staged doctrine gates pass.
+- [x] **ROOT CAUSE (WHY + WHERE)** — cross-partition `git log -S` traces the selected 2-bit requester status contract to `836e7c8fa`, the 32-bit/four-byte multi-register contract to `8c98e9bf7`, and the 3-bit/4-bit sideband contract to `240106916`; `dc1c64afb` later moved those records into focused Chapter 14h. The current inventory still left all 11 foundational 14h/16b identities open even though they mix six current generated behavior claims with five immutable contract inputs.
+- [x] **ADDRESSED (verified)** — all 11 identities now join exactly six three-leg derived gates plus five reviewed structural outcomes. Base completer, multi-register, data16/sideband, and queued-timing behavior retain separate producer/fixture/oracle chains; reviewed outcomes name their exact durable contract-selection records. The canonical join reports `candidates=1415`, `disposed=414`, `gates=282`, `reviewed=132`, and `protocol=76/557` with 481 open.
+- [x] **NO REGRESSION** — the RAM-guarded exact APB completer/composition collection reports `All tests successful` at `Files=2, Tests=133`; the disposition mutation suite separately reports `Files=1, Tests=9`. Inventory remains `1,415` candidates / `1,042` governed constants, and the join closes protocol `76/557` with the new slice at `6` gates / `5` reviewed outcomes. Knowledge Map parity reports `1,128` facts / `5,921` questions / `6,088` occurrences / `130` shards; live containment covers `3,023/3,023` paths with unchanged `51,089`-line / `2,699,163`-byte book authority. All 53 chapters test; the inspected 88-file/18,604-KiB build is removed. Task, docs-relative-path, Memory, reference-authority, diff, and staged doctrine gates pass.
 
 ## Verification Log
 
@@ -536,6 +549,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-20` | `.5.3.5` | Rust parity smoke; current AHB map; retired histories; ledger; task migration/archive; evidence maps; ISF/reference partitions; roadmap recovery; inventory/disposition/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — all 51 candidates closed as 14 gates / 37 reviewed; general book 268/268 required-complete; Files=14/Tests=121 exact focused run; all registered doctrines` |
 | `2026-08-20` | `.5.4` partition | committed-inventory path/range aggregation; exact 16-child sum; task integrity; docs paths; inventory/disposition/Knowledge Map/live-document/diff/staged-doctrine gates | `PASS — 65 + 11 + 35 + 46 + 37 + 28 + 40 + 49 + 27 + 35 + 32 + 17 + 6 + 40 + 46 + 43 = 557; .5.4.1 selected alone; no claim, disposition, product, capability, or support behavior changes` |
 | `2026-08-21` | `.5.4.1` | exact AXI manager/dynamic-ID queue, ordering, RLAST, runtime-validation, and output-bank evidence; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 65 candidates closed as 28 gates / 37 reviewed; protocol 65/557; Files=2/Tests=121 exact focused run; 1,031 governed constants; all registered doctrines` |
+| `2026-08-21` | `.5.4.2` | APB completer storage; multi-register decode; data16/sidebands; queue timing; composition artifacts; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 11 candidates closed as 6 gates / 5 reviewed; protocol 76/557; Files=2/Tests=133 exact focused run; 1,042 governed constants; all registered doctrines` |
 
 ## Commit Log
 
@@ -562,3 +576,4 @@ hidden behind repeated checks of the same kind.
 | `.5.3.5` | `CLAIM-VERIFICATION-ADOPTION.5.3.5: disposition blueprint reference claims` | `Maps current Rust, AHB, archive, ledger, task, evidence-map, ISF-partition, and roadmap claims to distinct gates; preserves policy/navigation/history context and clarifies activation-only occupancy.` |
 | `.5.4` | `CLAIM-VERIFICATION-ADOPTION.5.4: partition protocol claim review` | `Activates 16 bounded path/range- and evidence-coherent children from the exact 557-candidate protocol census; changes no claim, disposition, product, capability, or support behavior.` |
 | `.5.4.1` | `CLAIM-VERIFICATION-ADOPTION.5.4.1: disposition AXI manager claims` | `Maps current concrete/dynamic AXI manager queue, ordering, validation, and output-bank statements to bounded executable evidence while preserving selector, readiness, helper-probe, and host-resource chronology as reviewed context.` |
+| `.5.4.2` | `CLAIM-VERIFICATION-ADOPTION.5.4.2: disposition foundational APB claims` | `Maps current APB completer, multi-register, width/sideband, queued-timing, and composition statements to executable evidence while preserving status, register-shape, and byte-lane contract numerals as reviewed inputs.` |

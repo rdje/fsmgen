@@ -1,7 +1,7 @@
 # Knowledge Map: `ial2-apb`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **102** facts · **473** uniquely owned question entries.
+> **103** facts · **477** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -88,6 +88,7 @@
 - q="how are APB address-map windows specified?" · facts=[ial2-apb-multi-peripheral-interconnect-contract-selection](../../docs/knowledge/ial2-apb-multi-peripheral-interconnect-contract-selection.md)
 - q="how are APB multi-register reports shaped?" · facts=[ial2-apb-multi-register-decode-behavior](../../docs/knowledge/ial2-apb-multi-register-decode-behavior.md)
 - q="how are APB peripherals listed in the multi-peripheral contract?" · facts=[ial2-apb-multi-peripheral-interconnect-contract-selection](../../docs/knowledge/ial2-apb-multi-peripheral-interconnect-contract-selection.md)
+- q="how are foundational APB completer and multi-register claims verified?" · facts=[ial2-apb-foundational-claim-evidence](../../docs/knowledge/ial2-apb-foundational-claim-evidence.md)
 - q="how do denied APB PPROT policy accesses behave?" · facts=[ial2-apb-pprot-effects-contract-selection](../../docs/knowledge/ial2-apb-pprot-effects-contract-selection.md)
 - q="how does APB PSTRB write masking work?" · facts=[ial2-apb-sideband-strobe-behavior](../../docs/knowledge/ial2-apb-sideband-strobe-behavior.md)
 - q="how does APB access-policy behave?" · facts=[ial2-apb-pprot-effects-behavior](../../docs/knowledge/ial2-apb-pprot-effects-behavior.md)
@@ -347,6 +348,8 @@
 - q="what owns APB PPROT protection implementation?" · facts=[ial2-apb-pprot-effects-contract-selection](../../docs/knowledge/ial2-apb-pprot-effects-contract-selection.md)
 - q="what profile does .apb require?" · facts=[ial2-apb-profile-alias-behavior](../../docs/knowledge/ial2-apb-profile-alias-behavior.md)
 - q="what protected APB timing behavior should .628 implement?" · facts=[ial2-apb-protection-back-to-back-contract-selection](../../docs/knowledge/ial2-apb-protection-back-to-back-contract-selection.md)
+- q="what proves APB 16-bit data 3-bit protection and 2-bit strobe behavior?" · facts=[ial2-apb-foundational-claim-evidence](../../docs/knowledge/ial2-apb-foundational-claim-evidence.md)
+- q="what proves APB queue depth 1 and overflow reject behavior?" · facts=[ial2-apb-foundational-claim-evidence](../../docs/knowledge/ial2-apb-foundational-claim-evidence.md)
 - q="what public contract selected APB data16 protected five-register generalized cardinality?" · facts=[ial2-apb-data16-protection-generalized-multi-peripheral-multi-register-cardinality-contract-selection](../../docs/knowledge/ial2-apb-data16-protection-generalized-multi-peripheral-multi-register-cardinality-contract-selection.md)
 - q="what public contract selected APB protected five-register generalized cardinality?" · facts=[ial2-apb-protection-generalized-multi-peripheral-multi-register-cardinality-contract-selection](../../docs/knowledge/ial2-apb-protection-generalized-multi-peripheral-multi-register-cardinality-contract-selection.md)
 - q="what public sources will implement APB data16 five-register generalized cardinality?" · facts=[ial2-apb-data16-generalized-multi-peripheral-multi-register-cardinality-contract-selection](../../docs/knowledge/ial2-apb-data16-generalized-multi-peripheral-multi-register-cardinality-contract-selection.md)
@@ -452,6 +455,7 @@
 - q="which APB sideband multi-register back-to-back samples ship?" · facts=[ial2-apb-sideband-multi-register-back-to-back-behavior](../../docs/knowledge/ial2-apb-sideband-multi-register-back-to-back-behavior.md)
 - q="which APB six-register generalized no-policy public sources are selected?" · facts=[ial2-apb-generalized-multi-peripheral-multi-register-six-register-contract-selection](../../docs/knowledge/ial2-apb-generalized-multi-peripheral-multi-register-six-register-contract-selection.md)
 - q="which APB six-register generalized sources are supported?" · facts=[ial2-apb-generalized-multi-peripheral-multi-register-six-register-behavior](../../docs/knowledge/ial2-apb-generalized-multi-peripheral-multi-register-six-register-behavior.md)
+- q="which APB status register and sideband numerals are contract selections?" · facts=[ial2-apb-foundational-claim-evidence](../../docs/knowledge/ial2-apb-foundational-claim-evidence.md)
 - q="which APB status sample paths are selected?" · facts=[ial2-apb-requester-status-field-contract-selection](../../docs/knowledge/ial2-apb-requester-status-field-contract-selection.md)
 - q="which APB status samples are shipped?" · facts=[ial2-apb-requester-status-field-behavior](../../docs/knowledge/ial2-apb-requester-status-field-behavior.md)
 - q="which APB status/control protected-storage generalization contract was selected?" · facts=[ial2-apb-status-control-protected-storage-generalization-contract-selection](../../docs/knowledge/ial2-apb-status-control-protected-storage-generalization-contract-selection.md)
@@ -690,6 +694,13 @@ _APB data16-protection multi-peripheral multi-register contract selection is nex
 
 - **date:** 2026-06-28 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-apb-data16-protection-multi-peripheral-multi-register-back-to-back-readiness-audit.md`](../../docs/knowledge/ial2-apb-data16-protection-multi-peripheral-multi-register-back-to-back-readiness-audit.md)
+
+### ial2-apb-foundational-claim-evidence
+
+_Foundational APB claim evidence separates generated behavior from contract numerals_
+
+- **date:** 2026-08-21 · **status:** current
+- **source and verification:** [`docs/knowledge/ial2-apb-foundational-claim-evidence.md`](../../docs/knowledge/ial2-apb-foundational-claim-evidence.md)
 
 ### ial2-apb-generalized-multi-peripheral-multi-register-back-to-back-behavior
 

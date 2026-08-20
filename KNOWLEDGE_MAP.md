@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1127** facts · **5916** unique questions · **6083** answer occurrences · **130** topic shards.
+> **1128** facts · **5921** unique questions · **6088** answer occurrences · **130** topic shards.
 
 Query first:
 
@@ -31,7 +31,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `check-json` | 1 | 3 | [`check-json.md`](knowledge-map/generated/check-json.md) |
 | `ci-perl` | 1 | 16 | [`ci-perl.md`](knowledge-map/generated/ci-perl.md) |
 | `ci-ppif` | 1 | 5 | [`ci-ppif.md`](knowledge-map/generated/ci-ppif.md) |
-| `claim-verification` | 3 | 38 | [`claim-verification.md`](knowledge-map/generated/claim-verification.md) |
+| `claim-verification` | 3 | 39 | [`claim-verification.md`](knowledge-map/generated/claim-verification.md) |
 | `composition-plan` | 1 | 4 | [`composition-plan.md`](knowledge-map/generated/composition-plan.md) |
 | `composition-shared` | 1 | 5 | [`composition-shared.md`](knowledge-map/generated/composition-shared.md) |
 | `composition-vhdl` | 1 | 68 | [`composition-vhdl.md`](knowledge-map/generated/composition-vhdl.md) |
@@ -65,7 +65,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `ial1-verification` | 4 | 24 | [`ial1-verification.md`](knowledge-map/generated/ial1-verification.md) |
 | `ial1-vhdl` | 3 | 19 | [`ial1-vhdl.md`](knowledge-map/generated/ial1-vhdl.md) |
 | `ial2-ahb` | 147 | 782 | [`ial2-ahb.md`](knowledge-map/generated/ial2-ahb.md) |
-| `ial2-apb` | 102 | 473 | [`ial2-apb.md`](knowledge-map/generated/ial2-apb.md) |
+| `ial2-apb` | 103 | 477 | [`ial2-apb.md`](knowledge-map/generated/ial2-apb.md) |
 | `ial2-axi` | 216 | 1036 | [`ial2-axi.md`](knowledge-map/generated/ial2-axi.md) |
 | `ial2-broader` | 4 | 17 | [`ial2-broader.md`](knowledge-map/generated/ial2-broader.md) |
 | `ial2-common` | 1 | 4 | [`ial2-common.md`](knowledge-map/generated/ial2-common.md) |

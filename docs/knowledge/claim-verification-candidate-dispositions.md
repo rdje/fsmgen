@@ -28,6 +28,7 @@ answers:
   - "when does a claim migration group become required complete?"
   - "how are AXI manager queue depth lane and assertion counts verified?"
   - "why are AXI selector probes host-memory percentages and report bytes reviewed history?"
+  - "how are foundational APB behavior claims separated from contract-selection numerals?"
 date: 2026-08-21
 status: current
 tags: [claim-verification, dispositions, inventory, evidence]
@@ -50,6 +51,10 @@ evidence: >-
   perl/FSM/IAL2/ProtocolIntent/AxiManagerCapacityStatus.pm;
   t/1437-axi-ial2-manager-capacity-status-generator.t;
   t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t;
+  perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm;
+  perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm;
+  t/1471-ial2-apb-completer.t;
+  t/1472-ial2-apb-composition.t;
   docs/tasks/CLAIM-VERIFICATION-ADOPTION.md
 reverify: >-
   scripts/check_claim_verification_dispositions.pl --report && prove -Iperl
@@ -66,6 +71,8 @@ reverify: >-
   t/1569-focused-document-containment.t
   t/1437-axi-ial2-manager-capacity-status-generator.t
   t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t
+  t/1471-ial2-apb-completer.t
+  t/1472-ial2-apb-composition.t
 ---
 
 Every current inventory candidate path belongs to exactly one bounded migration
@@ -163,3 +170,12 @@ lane ownership. Thirty-seven selector boundaries, temporary helper counts,
 host-memory percentages, stopped-probe byte counts, and superseded local gates
 remain reviewed history whose reasons name their exact durable audit or
 selection record. They do not become current capability or resource promises.
+
+The foundational APB review closes six current completer, multi-register,
+data16, sideband, and queued-timing candidates through the ordinary requester,
+completer, and composition producers. Focused endpoint and composition oracles
+separate source order, address alignment, mapped access, byte-lane masking,
+end-to-end widths, one-entry queueing, overflow rejection, and generated
+review artifacts. Five status-width, multi-register, and sideband numerals
+remain reviewed inputs from their exact contract-selection records rather than
+being double-counted as independent runtime measurements.
