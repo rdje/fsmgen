@@ -121,11 +121,11 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.2.2: disposition foundational rationale claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Disposition the 18 bridge and execution-scale rationale candidates.`
   Acceptance: `The bridge-byte/source-map, scenario-map, total/live-fiber, and execution-type measurements join exact current producers and separating limit/mutation oracles or live repairs without borrowing one scale axis as proof of another.`
-  Verification: `DEVELOPMENT_NOTES.md lines 188..269 identity/count; bridge/execution gate reruns and adjacent/mutation RED controls; disposition join; doctrine gate`
-  Commit: `pending`
+  Verification: `Clean predecessor 27921556d closes the foundational child and fixes the regenerated inventory at 18 bridge/execution candidates on DEVELOPMENT_NOTES.md lines 188..269. This continuity slice activates .5.2.3 alone without changing a disposition, claim, producer, oracle, product behavior, or support status.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.2.3: activate bridge execution claim review`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.2.4`
   Status: `pending`
@@ -223,8 +223,8 @@ hidden behind repeated checks of the same kind.
 
 ## Open Questions
 
-- None blocking. `.5.2.2` is complete; `.5.2.3` bridge/execution rationale
-  review is the next child to activate from the clean closure commit.
+- None blocking. `.5.2.3` is the sole active child after clean foundational
+  closure commit `27921556d`.
 
 ## Blockers
 
@@ -241,6 +241,9 @@ hidden behind repeated checks of the same kind.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S '4-GiB peak under optimized compilation' --oneline -- DEVELOPMENT_NOTES.md` identifies `adc88817e`, while the tracked probe/report search finds the exact `-O0` resource control but no producer for that peak measurement. The other foundational pickaxes identify immutable Chapter 14, roadmap, and provider-profile commits; their current candidate records likewise had no disposition join.
 - [x] **ADDRESSED (verified)** — the unsupported UVM point estimate is removed without weakening the checked guarded-envelope rationale; regenerated inventory reports `candidates=1415`; the root join reports `40/70` disposed and `30` open. All eight remaining foundational candidates close as three derived gates and five historical measurements whose reasons name exact Git producers, independent preserved audits or executable oracles, and durability watchers. The OSVVM oracle now reconstructs the core/Common counts from both ordered lists and executed analysis commands.
 - [x] **NO REGRESSION** — the RAM-guarded ledger, roadmap, UVM, OSVVM, inventory, and disposition collection reports `All tests successful` at `Files=6, Tests=30`; the exact OSVVM tuple reruns byte-identically and cleans its same-volume staging; inventory derives `668` governed constants after the eight new disposition records. Knowledge Map passes at 1,127 facts / 5,897 questions / 6,064 occurrences / 130 shards; live containment covers 3,022/3,022 paths with exact book authority; all 53 chapters test and the rendered 88-file/18,584-KiB book is inspected and removed. Docs, Memory, diff, staged acceptance, and doctrine gates pass.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'CLAIM-VERIFICATION-ADOPTION.5.2.3' --oneline -- docs/tasks/CLAIM-VERIFICATION-ADOPTION.md docs/TASK_TREE.md MEMORY.md` identifies partition commit `3b2b1b95c`; clean commit `27921556d` closes `.5.2.2`, so the dependency-ordered bridge/execution review is the next inactive PNT frontier.
+- [x] **ADDRESSED (verified)** — ownership surfaces alone activate `.5.2.3` for the exact 18 current candidates on `DEVELOPMENT_NOTES.md` lines 188..269. `.5.2.4` remains pending, and no disposition, claim, evidence producer, runtime behavior, capability, or support statement changes in this selection slice.
+- [x] **NO REGRESSION** — task integrity, Memory, inventory/disposition joins, docs-relative paths, Knowledge Map, live-document authority, diff, staged acceptance, and all 12 doctrine gates pass from the clean closure predecessor.
 
 ## Verification Log
 
@@ -255,6 +258,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-20` | `.5.2` partition | committed inventory path/line aggregation; exact four-group sum; task integrity; docs paths; doctrine gate | `PASS — 33 + 9 + 18 + 12 = 72 with disjoint path/range ownership; .5.2.1 selected alone` |
 | `2026-08-20` | `.5.2.1` | stale-policy root cause; inventory/disposition joins; `t/1549`, `t/1554`, `t/1565`, `t/1566`, `t/1567`, `t/1595`, `t/1637`, `t/1638`; bootstrap; docs paths; Memory; Knowledge Map; README/live-document/reference authority; RAM-guarded mdBook; diff check | `PASS — current frontier 1,416; root 32 disposed / 39 open; 15 gates / 17 reviewed; 660 governed constants; Files=8/Tests=88; 53 book chapters tested and built` |
 | `2026-08-20` | `.5.2.2` | UVM producer audit and live repair; ledger/book/roadmap/provider evidence review; OSVVM source-order reconstruction; `t/1565`, `t/1566`, `t/1592`, `t/1599`, `t/1637`, `t/1638`; inventory/disposition joins; docs/Memory/Knowledge Map/live-document/mdBook/diff/staged-doctrine gates | `PASS — current frontier 1,415; root 40 disposed / 30 open; 18 gates / 22 reviewed; all eight foundational candidates closed; 668 governed constants; Files=6/Tests=30; Knowledge Map 1,127/5,897/6,064/130; live paths 3,022/3,022; all 53 chapters; inspected/removed build 88 files/18,584 KiB; exact provider rerun and same-volume cleanup pass` |
+| `2026-08-20` | `.5.2.3` activation | clean `27921556d` predecessor; exact 18-candidate line-range census; task/index/Memory continuity; task/inventory/disposition/docs/Knowledge Map/live-document/diff/staged-doctrine gates | `PASS — .5.2.3 alone active; .5.2.4 pending; no claim, disposition, evidence, product, capability, or support behavior changes` |
 
 ## Commit Log
 
@@ -269,3 +273,4 @@ hidden behind repeated checks of the same kind.
 | `.5.2` | `CLAIM-VERIFICATION-ADOPTION.5.2: partition root claim review` | `Activates four evidence-coherent children from the exact root candidate census; changes no claim, disposition, policy, product, or support behavior.` |
 | `.5.2.1` | `CLAIM-VERIFICATION-ADOPTION.5.2.1: disposition non-rationale root claims` | `Repairs stale README ceiling semantics and maps every current non-rationale root candidate to a live derived gate or an exact reviewed non-claim outcome.` |
 | `.5.2.2` | `CLAIM-VERIFICATION-ADOPTION.5.2.2: disposition foundational rationale claims` | `Removes unsupported UVM resource precision, strengthens the OSVVM source-count oracle, and maps the remaining foundational claims to live gates or immutable historical measurements.` |
+| `.5.2.3` activation | `CLAIM-VERIFICATION-ADOPTION.5.2.3: activate bridge execution claim review` | `Activates the exact bridge/execution rationale range from the clean foundational closure without changing claims or evidence.` |
