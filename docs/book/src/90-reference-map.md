@@ -86,6 +86,16 @@ historical. Unsupported precision in an experimental host-resource observation
 was removed while retaining the checked guarded-envelope outcome and
 lower-memory compilation control.
 
+The bridge and execution rationale review also keeps independently selected
+scale axes independent in the evidence. Bridge source-map calibration is
+reconstructed with differential real semantic builds, while exact boundary
+cases retain their ordinary builder outcome. The earlier scenario-map collision
+is historical context watched by the repaired global-map invariant. Total and
+live fibers use distinct generated tree shapes and mutation oracles, and an
+execution type counts only when a real public binding exercises its semantic
+shape. Rejected wide-tree and unbound-alias examples remain reviewed structural
+references rather than being promoted into evidence.
+
 `MEMORY.md` is the bounded resume pointer and `TASK_TREE.md` indexes the live
 work frontier. `ROADMAP_V2.md` carries high-level direction.
 Decision 0049 retires the former roadmap-status board after its independent

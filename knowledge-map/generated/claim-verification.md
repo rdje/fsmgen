@@ -1,11 +1,12 @@
 # Knowledge Map: `claim-verification`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **19** uniquely owned question entries.
+> **3** facts · **21** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="can the claim checker prove semantic truth or oracle independence?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
+- q="how are bridge source-map calibration claims independently reconstructed?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are claim re-derive falsify and durability legs checked?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="how are incidental numerals separated from actionable claim debt?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)
 - q="how are missing claim evidence legs owned?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
@@ -23,6 +24,7 @@
 - q="where is the claim verification registry?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="where is the current-surface quantitative claim inventory?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)
 - q="which outcomes may close a claim inventory candidate?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
+- q="why do total fibers live fibers and execution types use separate evidence?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="why was the experimental UVM resource peak removed from the rationale ledger?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 
 ## Facts

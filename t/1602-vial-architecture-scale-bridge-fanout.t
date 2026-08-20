@@ -172,6 +172,56 @@ subtest 'frozen AHB reference and every gate candidate pass reusable bridge orac
         'canonical parser retains every gate-scale bridge event');
 };
 
+subtest 'source-map calibration is reconstructed from semantic families' => sub {
+    my $prototype = construct('source_map_records', 'gate_candidate_v1');
+    my $report_for_shape = sub {
+        my ($configurations, $residues) = @_;
+        my $inputs = $json->decode($json->encode($prototype->{inputs}));
+        $inputs->[0]{content}
+            = FSM::VIAL::ArchitectureScaleBridgeFanout::_render_qualification_source({
+                configurations => $configurations,
+                type_count => 1,
+                endpoints => 4,
+                transactions => 1,
+                events => 1,
+                observations => 0,
+                probes => 1,
+                residues => $residues,
+                tuning_width => undef,
+            });
+        my $construction = $foundation->construct({
+            family => 'bridge_fanout_v1',
+            level => 'gate_candidate_v1',
+            primary_axis => 'source_map_records',
+            backend_profile => undef,
+            tool_profile => undef,
+            inputs => $inputs,
+        });
+        ok($construction->{ok}, 'calibration workload constructs through the shared foundation');
+        diag($json->encode($construction->{diagnostics})) unless $construction->{ok};
+        my $route = FSM::VIAL::ArchitectureScaleBridgeFanout::_route($construction);
+        my $built = $route->{method}->($route->{class}, $route->{arguments});
+        ok($built->{ok}, 'calibration workload builds through the selected direct-IAL1 route');
+        diag($json->encode($built->{diagnostics})) unless $built->{ok};
+        return $built->{report};
+    };
+
+    my $baseline = $report_for_shape->(0, 0);
+    my $one_configuration = $report_for_shape->(1, 0);
+    my $one_residue = $report_for_shape->(0, 1);
+    my $gate = $report_for_shape->(2, 1_583);
+    my $baseline_maps = scalar(@{$baseline->{source_map}});
+
+    is($baseline_maps, 221,
+        'non-scaling semantic families produce the exact source-map baseline');
+    is(scalar(@{$one_configuration->{source_map}}) - $baseline_maps, 28,
+        'one real configuration contributes exactly 28 source maps');
+    is(scalar(@{$one_residue->{source_map}}) - $baseline_maps, 5,
+        'one retained residue contributes exactly five source maps');
+    is(scalar(@{$gate->{source_map}}), 8_192,
+        'calibrated semantic increments reconstruct the exact gate');
+};
+
 subtest 'qualification profile is private, exact, and cannot bypass IAL1 review' => sub {
     my $construction = construct('selected_units', 'gate_candidate_v1');
     my $route = FSM::VIAL::ArchitectureScaleBridgeFanout::_route($construction);
