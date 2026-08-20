@@ -3653,7 +3653,7 @@ level has its own content address. Construction and evaluation mutations are
 rejected by canonical regeneration. Success and injected consumer failure stage
 only below repository-derived `.artifacts/tmp/vial-scale/` on the repository
 volume and remove the exact content-addressed directory. Focused `t/1632`
-proves default and RAM-guarded coverage routes; fault is the next separately
+proves default and RAM-guarded coverage routes; fault is the active separately
 owned slice, followed by random/replay and final qualification. These fixtures change no parser, SemanticIR, bridge,
 ExecutionIR, backend, runtime, public product API, capability, support,
 performance, or capacity behavior.

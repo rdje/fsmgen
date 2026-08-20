@@ -143,4 +143,4 @@ source, and report mutations. The million case is exactly 1,999 bins plus
 digest `ae450c2064c76df34378b11784d1d24bde068c9b94dab52cc41fcea3be558582`;
 one further 29-byte bin returns only `VIAL_EXECUTION_LIMIT_ERROR` at
 `/coverage`. Default and exact RAM-guarded `t/1632` pass. Fault checking is the
-next proposed implementation leaf.
+active implementation leaf.
