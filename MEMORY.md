@@ -6,9 +6,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2.1`
-- next_action: implement the caller-sealed checking-state construction and
-  provider-free evaluation foundation without owning an axis level yet.
-- in_flight_uncommitted: none after the `.17.2.5.2` activation commit.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2.2`
+- next_action: implement the model-instance and scalar-model-state checking
+  ladders through the sealed foundation and exercise every accepted state cell.
+- in_flight_uncommitted: none after the `.17.2.5.2.1` foundation commit.
 - in_flight_background: none
 - blockers: none.

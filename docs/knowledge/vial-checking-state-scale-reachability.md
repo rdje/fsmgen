@@ -19,12 +19,14 @@ evidence: >-
   docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md;
   docs/VIAL_EXECUTION_IR_V1_CONTRACT.md;
   perl/FSM/VIAL/SemanticBuilder.pm; perl/FSM/VIAL/ExecutionBuilder.pm;
+  perl/FSM/VIAL/ArchitectureScaleCheckingState.pm;
   perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/VIAL/Backend/ResultProducer.pm;
   perl/FSM/Support/VIALExecutionContract.pm;
+  t/1629-vial-architecture-scale-checking-foundation.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
-  rg -n 'checking_state_v1|coverage_bins_and_cross_tuples|random_occurrences|serialized_plan_bytes|cross Cartesian product' docs/decisions/0073-checking-state-scale-uses-packed-state-oracles-and-static-cross-domains.md perl/FSM/VIAL/SemanticBuilder.pm perl/FSM/VIAL/ExecutionBuilder.pm perl/FSM/Support/VIALExecutionContract.pm
+  prove -Iperl t/1629-vial-architecture-scale-checking-foundation.t && rg -n 'checking_state_v1|coverage_bins_and_cross_tuples|random_occurrences|serialized_plan_bytes|cross Cartesian product' docs/decisions/0073-checking-state-scale-uses-packed-state-oracles-and-static-cross-domains.md perl/FSM/VIAL/ArchitectureScaleCheckingState.pm perl/FSM/VIAL/SemanticBuilder.pm perl/FSM/VIAL/ExecutionBuilder.pm perl/FSM/Support/VIALExecutionContract.pm
 ---
 
 Decision `0073` selects one outcome for every non-reference level before the
@@ -71,6 +73,24 @@ one sample hits the exact all-one vector because every authored bin matches.
 
 `TraceValidator`, `ResultProducer`, and the first portable SystemVerilog backend
 remain result/profile machinery, not general checking-state semantic oracles.
-This selection changes no product behavior, support state, performance budget,
-or capacity claim. Implementation is owned separately by
+The implemented foundation publishes zero owned shapes and rejects reference,
+non-owned, unknown-level, IR, trace, result, and support-metadata injection.
+Its same-package-only candidate route accepts just ordinary VIAL text plus the
+exact checked-AHB source, regenerates the workload defensively, and reaches
+canonical SemanticIR, bridge, ExecutionIR, and a 44,467-byte plan twice with
+frozen workload/evaluation/rerun identities. The closed evaluation reports
+`accepted_not_axis_evaluated`, has null evidence compartments for all five
+future oracle families, and explicitly denies any selected-count, capability,
+support, performance, capacity, backend, or runtime claim.
+
+That foundation freezes the selected packed representations before an axis is
+owned: fixed-width model cells reject unknown state; scoreboard payload is a
+big-endian 32-bit FIFO capped at 1,000,000 entries/4,000,000 bytes and requires
+complete transaction reconstruction; coverage is an LSB-first bit vector capped
+at 1,000,000 entries/125,000 bytes and requires independent byte equality.
+Canonical regeneration rejects construction/evaluation mutation, and common
+same-volume staging removes the exact content-addressed directory after both
+success and consumer failure. This infrastructure changes no product behavior,
+support state, performance budget, or capacity claim. Model-axis implementation
+is the next leaf under
 `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2`.

@@ -308,3 +308,23 @@ catalog. Closing the source-map ladder raises selected owned shapes from 37 to
 profiles remain fail-closed. Tests must derive and compare those sets, not
 equate “all selected levels are implemented” with “every catalog shape is
 owned.”
+
+## 2026-08-20: A zero-owned scale foundation needs a sealed candidate seam
+
+Checking-state infrastructure must prove its canonical source-to-plan route
+before an axis renderer is trusted, but using a selected gate as the foundation
+would falsely publish ownership and using `reference_v1` would turn a catalog
+record into a generated scale shape. The module therefore publishes an empty
+owned-shape set and rejects both cases through its public constructor. A
+same-package-only candidate seam accepts only generated ordinary VIAL text and
+the exact checked-AHB source; later owned renderers can call it, while external
+callers cannot inject SemanticIR, bridge, ExecutionIR, trace, result, or support
+metadata. Defensive validation regenerates the candidate from its retained
+source bytes before any canonical producer runs.
+
+The foundation report also reserves the final top-level evidence shape before
+an oracle lands. Model, scoreboard, coverage, fault, and random/replay
+compartments begin null under a versioned closed schema, and the foundation
+outcome is explicitly `accepted_not_axis_evaluated`. This lets later leaves
+populate an exact axis compartment without silently widening report v1 or
+equating the checked-AHB reference observations with a selected scale count.

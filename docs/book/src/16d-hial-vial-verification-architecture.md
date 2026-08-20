@@ -3561,11 +3561,61 @@ and normalized reruns.
 Public runtime traces, `ResultProducer`, and the first portable SystemVerilog
 backend remain excluded as scale oracles: they project or implement a narrower
 profile and do not independently recompute the general state semantics above.
-Implementation is now separately active under `.17.2.5.2`. Its first child
-owns only the caller-sealed construction/evaluation foundation; later children
-own model, scoreboard, coverage, fault, random/replay, and final qualification
-slices. Activation changes no runtime, public API, support, performance, or
-capacity claim.
+Implementation is separately owned under `.17.2.5.2`. The completed foundation
+in `FSM::VIAL::ArchitectureScaleCheckingState` deliberately publishes no owned
+level yet:
+
+```perl
+use strict;
+use warnings;
+use lib 'perl';
+use FSM::VIAL::ArchitectureScaleCheckingState;
+
+my $owned = FSM::VIAL::ArchitectureScaleCheckingState->owned_shapes;
+die "foundation claimed an axis level\n" if @$owned;
+print "checking-state foundation is sealed\n";
+```
+
+`construct` rejects `reference_v1` because it remains a catalog record, rejects
+every selected level until its renderer lands, and rejects unknown axes,
+levels, keys, IR, trace, result, or support metadata. Internally, one
+same-package-only candidate boundary accepts just generated ordinary VIAL text
+and the exact 1,326-byte checked-AHB source. It regenerates the content-addressed
+workload before every build or evaluation, then produces SemanticIR, the
+IAL2-via-generated-and-reparsed-IAL1 bridge, ExecutionIR, and the target-neutral
+plan only through their canonical producers. Callers cannot inject any of those
+objects.
+
+The frozen foundation route uses the checked AHB VIAL content as a deliberately
+non-axis-evaluated source witness. Its workload identity is
+`workload/7a125500c716e333ac8849ca5594849dc52e34380f0ba0ec416a2e12975247c7`;
+its SemanticIR, bridge, ExecutionIR, and plan digests are respectively
+`00dce649…`, `a4565d40…`, `5f04ca97…`, and `1a3b97f4…`. The 44,467-byte plan
+observes two model instances/two scalar cells, one capacity-four scoreboard,
+one coverpoint/two static bins, one fault, and one keyed random occurrence. The
+report says `accepted_not_axis_evaluated`, sets both `axis_oracle_executed` and
+`selected_count_claimed` false, and carries no axis evidence. Those observations
+therefore cannot be mistaken for the requested 32-model gate.
+
+The closed report reserves null `model`, `scoreboard`, `coverage`, `faults`, and
+`random_replay` evidence compartments for the later semantic leaves. Its packed
+contract fixes big-endian fixed-width model values with unknown-state rejection,
+a big-endian 32-bit FIFO payload capped at 1,000,000 entries/4,000,000 bytes with
+complete transaction reconstruction, and an LSB-first coverage vector capped at
+1,000,000 entries/125,000 bytes with independent byte equality. It explicitly
+claims qualification-only status and denies capability, support, performance,
+capacity, backend, runtime, and owned-level authority.
+
+Independent complete-route reruns must reproduce every stage digest and the
+`rerun/ceefc4f30…` identity. Both construction and evaluation mutations are
+rejected by canonical regeneration. Success and injected consumer failure stage
+only below repository-derived `.artifacts/tmp/vial-scale/` on the repository
+volume and remove the exact content-addressed directory. The model-state leaf is
+now the only active implementation child; scoreboard, coverage, fault,
+random/replay, and final qualification remain separately owned later slices.
+The foundation changes no parser, SemanticIR, bridge, ExecutionIR, backend,
+runtime, public product API, capability, support, performance, or capacity
+behavior.
 
 These are construction outcomes, not supported capacities. The exact 1/4/16-
 MiB plans contain 2,974/12,166/48,850 real reset operations plus bounded,
