@@ -6,11 +6,11 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `CLAIM-VERIFICATION-ADOPTION.5.4.13`; the immediately
-  preceding slice closes all 17 AHB integration and public-synchronization candidates.
-- next_action: review the exact six candidates in Chapter 14j against mixed
-  dynamic/static extended-AXI demux behavior, selectors, and bounded contract
-  numerals.
+- active_work_unit: `CLAIM-VERIFICATION-ADOPTION.5.4.14`; the immediately
+  preceding slice closes all six extended-AXI backlog candidates.
+- next_action: review the exact 40 candidates in Chapter 14l against backend
+  support, external validation, generation structure, semantic export, and
+  embedding/public-API evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none
 - blockers: none.

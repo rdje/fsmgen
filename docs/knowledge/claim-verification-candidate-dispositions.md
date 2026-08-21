@@ -276,3 +276,12 @@ particular, 332 indexed tests, the 295-file/2,037-test regression, 36 book
 chapters, and 844 task nodes are not promoted into current totals; their exact
 commits remain the durable producers while present-day gates validate the
 underlying parser, book boundary, and task-tree invariants.
+
+The extended-AXI review closes four current mixed dynamic/static demux
+cardinality candidates through three exact evidence families. One dynamic plus
+two static transactions derive three request-guarded raw-ARLEN captures and
+3 x 16 = 48 RDATA/RRESP lanes with three masks, lengths, and aggregates; adding
+a third static transaction derives 4 x 16 = 64 lanes of each kind. The focused
+public-sample oracle checks the transaction factorization and the generated
+ISF, FSM, HDL, and reports. Two one-bit RLAST references remain narrowly
+reviewed selector-contract inputs rather than independent capability gates.

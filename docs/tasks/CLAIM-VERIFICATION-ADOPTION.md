@@ -270,14 +270,14 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.4.12: disposition AHB integration claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.4.13`
-  Status: `active`
+  Status: `done`
   Goal: `Disposition the 6 extended-AXI backlog candidates in Chapter 14j.`
   Acceptance: `Mixed dynamic/static demux claims join exact generated behavior while selectors and bounded contract numerals remain narrowly classified.`
-  Verification: `exact path census, extended-AXI demux gates and mutations, inventory/disposition/mdBook/doctrine gates`
-  Commit: `pending`
+  Verification: `PASS — all six candidates close as four derived gates plus two reviewed selector-contract inputs; three exact behavior families retain separate one-capture-per-transaction, three-transaction 48-lane, and four-transaction 64-lane evidence; the RAM-guarded generator/public-sample collection reports Files=2/Tests=121 and support/manifest accounting reports Files=2/Tests=7098; inventory/disposition, Knowledge Map, mdBook, containment, staged-acceptance, and doctrine gates pass.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.4.13: disposition extended AXI claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.4.14`
-  Status: `pending`
+  Status: `active`
   Goal: `Disposition the 40 backend, validation, and public-API backlog candidates in Chapter 14l.`
   Acceptance: `VHDL/backend support, external validation, generation structure, semantic export, and embedding/API statements join their exact producers and negative controls without promoting roadmap residue.`
   Verification: `exact path census, backend/validation/API gates and mutations, inventory/disposition/mdBook/doctrine gates`
@@ -573,6 +573,10 @@ hidden behind repeated checks of the same kind.
 - [x] **ADDRESSED (verified)** — all 17 identities now join exactly one three-leg derived gate plus 16 reviewed structural, navigation, or historical outcomes. The live Chapter 16c exact-one-through-four fixture catalog versus generic canonical `5..16` behavior retains lowerer, generated-candidate, assertion-enabled runtime, invalid-neighbor, and support-accounting proof. The canonical join reports `candidates=1415`, `disposed=760`, `gates=367`, `reviewed=393`, and `protocol=422/557` with 135 open.
 - [x] **NO REGRESSION** — the RAM-guarded current AHB profile-diagnostic/generalized-range collection reports `All tests successful` at `Files=2, Tests=9`; live support-accounting and capability-manifest oracles separately report `Files=2, Tests=7098`, and the disposition mutation suite reports `Files=1, Tests=9`. Inventory remains `1,415` candidates / `1,388` governed constants. Knowledge Map parity reports `1,138` facts / `5,971` questions / `6,138` occurrences / `130` shards; live containment covers the complete resulting tree with unchanged book authority. All 53 chapters test; the inspected 88-file/18,604-KiB build is removed. Task, docs-relative-path, Memory, reference-authority, diff, staged acceptance, and all 12 doctrine gates pass.
 
+- [x] **ROOT CAUSE (WHY + WHERE)** — pre-partition `git log -S` pickaxes trace the three-transaction raw-ARLEN shipment to `e8f556b88`, its 48-lane multi-beat extension to `e36a79af6`, the four-transaction 64-lane extension to `56f251e3e`, and the `.347`/`.50` selector contracts to `89069607a`/`c52053d90`. The inventory still left all six Chapter 14j identities open even though four state current generated cardinalities and two merely record one-bit last-signal contract inputs.
+- [x] **ADDRESSED (verified)** — all six identities now join exactly four three-leg derived gates plus two reviewed structural outcomes. One dynamic plus two static transactions derive one raw-ARLEN capture per transaction and 3 x 16 = 48 RDATA/RRESP lanes with three companion sets; adding a third static transaction derives 4 x 16 = 64 lanes of each kind. Distinct fixture/oracle chains check transaction membership, RID/RLAST guards, banks, masks, lengths, aggregates, reports, scheduled FSM, and HDL. The canonical join reports `candidates=1415`, `disposed=766`, `gates=371`, `reviewed=395`, and `protocol=428/557` with 129 open.
+- [x] **NO REGRESSION** — the RAM-guarded exact generator/public-sample collection reports `All tests successful` at `Files=2, Tests=121`; live support-accounting and capability-manifest oracles separately report `Files=2, Tests=7098`, and the disposition mutation suite reports `Files=1, Tests=9`. Inventory remains `1,415` candidates / `1,394` governed constants. Knowledge Map parity reports `1,139` facts / `5,976` questions / `6,143` occurrences / `131` shards; live containment covers the complete resulting tree with unchanged book authority. All 53 chapters test; the inspected 88-file/18,604-KiB build is removed. Task, docs-relative-path, Memory, reference-authority, diff, staged acceptance, and all 12 doctrine gates pass.
+
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
@@ -609,6 +613,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-21` | `.5.4.10` | AHB exact-four requester width/runtime; one-window paired artifacts/runtime; requester and paired profile aliases; current generalized-bound controls; support/manifest accounting; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 35 candidates closed as 5 gates / 30 reviewed; protocol 373/557; Files=4/Tests=17 exact focused run plus support Files=2/Tests=7098; 1,339 governed constants; all registered doctrines` |
 | `2026-08-21` | `.5.4.11` | AHB two-window exact-four topology/runtime and alias; live support identity; generalized 2..16 admission, widths, runtime, diagnostics, no-fixture rule, and adjacent invalid controls; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 32 candidates closed as 9 gates / 23 reviewed; protocol 405/557; Files=3/Tests=12 exact focused run plus support Files=2/Tests=7098; 1,371 governed constants; all registered doctrines` |
 | `2026-08-21` | `.5.4.12` | AHB integration/selector history; public-sync focused-index and regression checkpoints; four-fence book migration; assertion expectation; Chapter 16c exact-one-through-four versus 5..16 boundary; task-ledger reconstruction; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 17 candidates closed as 1 gate / 16 reviewed; protocol 422/557; Files=2/Tests=9 exact focused run plus support Files=2/Tests=7098; 1,388 governed constants; all registered doctrines` |
+| `2026-08-21` | `.5.4.13` | mixed dynamic/static raw-ARLEN capture; three-/four-transaction multi-beat banks; RID/RLAST guards; masks, lengths, and aggregates; selector-contract history; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 6 candidates closed as 4 gates / 2 reviewed; protocol 428/557; Files=2/Tests=121 exact focused run plus support Files=2/Tests=7098; 1,394 governed constants; all registered doctrines` |
 
 ## Commit Log
 
@@ -646,3 +651,4 @@ hidden behind repeated checks of the same kind.
 | `.5.4.10` | `CLAIM-VERIFICATION-ADOPTION.5.4.10: disposition AHB exact-four claims` | `Maps current exact-four requester width/runtime, one-window paired artifact/runtime, and paired-alias parity statements to distinct gates while preserving disposable probes, the historical 2..4 contract, projections, checkpoints, and removed-workspace measurements as reviewed chronology.` |
 | `.5.4.11` | `CLAIM-VERIFICATION-ADOPTION.5.4.11: disposition generalized AHB BUSY claims` | `Maps current two-window exact-four topology/runtime, alias parity, live support accounting, and generalized 2..16 range/runtime/no-fixture statements to distinct gates while preserving readiness, contract, projection, superseded 2..4 activation, shipment, and selector chronology.` |
 | `.5.4.12` | `CLAIM-VERIFICATION-ADOPTION.5.4.12: disposition AHB integration claims` | `Maps the current Chapter 16c exact-one-through-four catalog versus generic 5..16 statement to existing executable evidence while preserving selectors, public-sync totals, diagram migrations, assertion expectations, and task-ledger censuses as exact chronology.` |
+| `.5.4.13` | `CLAIM-VERIFICATION-ADOPTION.5.4.13: disposition extended AXI claims` | `Maps current mixed dynamic/static raw-ARLEN and three-/four-transaction multi-beat cardinalities to exact lowerer, fixture, report, FSM, and HDL evidence while preserving one-bit RLAST selector inputs as contract chronology.` |
