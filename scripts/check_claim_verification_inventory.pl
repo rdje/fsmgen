@@ -477,57 +477,65 @@ sub inventory_constants {
 
 sub walk_numeric_leaves {
     my ($path, $line, $pointer, $value, $records, $tracked) = @_;
+    visit_numeric_leaves($pointer, $value, sub {
+        my ($leaf_pointer, $leaf_value) = @_;
+        my ($classification, $reason, $legs, $producer, $oracle) =
+            constant_disposition($path, $leaf_pointer);
+        my @watchers = grep { $tracked->{$_} } ('scripts/check_doctrines.sh');
+        my @producer_paths = grep { $tracked->{$_} } @{$producer};
+        my @oracle_paths = grep { $tracked->{$_} } @{$oracle};
+        problem("repository constant has no tracked producer: $path$leaf_pointer")
+            if !@producer_paths;
+        problem("repository constant has no tracked falsification oracle: $path$leaf_pointer")
+            if !@oracle_paths;
+        problem("repository constant has no tracked doctrine watcher: $path$leaf_pointer")
+            if !@watchers;
+        push @{$records}, {
+            classification => $classification,
+            constant_id => constant_identity($path, $line, $leaf_pointer),
+            line => $line,
+            migration_owner => undef,
+            oracle_paths => \@oracle_paths,
+            path => $path,
+            producer_paths => \@producer_paths,
+            reason => $reason,
+            record_type => 'repository_constant',
+            schema_version => 1,
+            source_pointer => $leaf_pointer,
+            value => $leaf_value,
+            verification_legs => $legs,
+            watcher_paths => \@watchers,
+        };
+    });
+}
+
+sub visit_numeric_leaves {
+    my ($pointer, $value, $visit) = @_;
     if (ref($value) eq 'HASH') {
         for my $key (sort keys %{$value}) {
             my $escaped = $key;
             $escaped =~ s/~/~0/g;
             $escaped =~ s{/}{~1}g;
-            walk_numeric_leaves(
-                $path, $line, "$pointer/$escaped", $value->{$key}, $records, $tracked
-            );
+            visit_numeric_leaves("$pointer/$escaped", $value->{$key}, $visit);
         }
         return;
     }
     if (ref($value) eq 'ARRAY') {
         for my $index (0 .. $#{$value}) {
-            walk_numeric_leaves(
-                $path, $line, "$pointer/$index", $value->[$index], $records, $tracked
-            );
+            visit_numeric_leaves("$pointer/$index", $value->[$index], $visit);
         }
         return;
     }
     return if !defined($value) || ref($value)
         || string_value($value) !~ /\A-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?\z/;
-    my ($classification, $reason, $legs, $producer, $oracle) =
-        constant_disposition($path, $pointer);
-    my @watchers = grep { $tracked->{$_} } ('scripts/check_doctrines.sh');
-    my @producer_paths = grep { $tracked->{$_} } @{$producer};
-    my @oracle_paths = grep { $tracked->{$_} } @{$oracle};
-    problem("repository constant has no tracked producer: $path$pointer")
-        if !@producer_paths;
-    problem("repository constant has no tracked falsification oracle: $path$pointer")
-        if !@oracle_paths;
-    problem("repository constant has no tracked doctrine watcher: $path$pointer")
-        if !@watchers;
-    my $id = 'constant-' . substr(
+    $visit->($pointer, string_value($value));
+}
+
+sub constant_identity {
+    my ($path, $line, $pointer) = @_;
+    return 'constant-' . substr(
         sha256_hex(join("\0", $path, $line, $pointer)), 0, 24
     );
-    push @{$records}, {
-        classification => $classification,
-        constant_id => $id,
-        line => $line,
-        migration_owner => undef,
-        oracle_paths => \@oracle_paths,
-        path => $path,
-        producer_paths => \@producer_paths,
-        reason => $reason,
-        record_type => 'repository_constant',
-        schema_version => 1,
-        source_pointer => $pointer,
-        value => string_value($value),
-        verification_legs => $legs,
-        watcher_paths => \@watchers,
-    };
 }
 
 sub constant_disposition {
@@ -601,7 +609,8 @@ sub reconcile_constant_baseline {
         return {constant_records => 0, source_records => 0};
     }
     exact_keys(
-        $records[0], [qw(cohort_id record_type schema_version)],
+        $records[0],
+        [qw(cohort_id record_type schema_version source_revision)],
         'constant baseline line 1'
     );
     problem('constant baseline record_type must be constant_baseline')
@@ -609,8 +618,15 @@ sub reconcile_constant_baseline {
     problem('constant baseline cohort_id must name adoption leaf .4')
         if string_value($records[0]{cohort_id})
             ne 'CLAIM-VERIFICATION-ADOPTION.4';
-    problem('constant baseline schema_version must be 1')
-        if string_value($records[0]{schema_version}) ne '1';
+    problem('constant baseline schema_version must be 2')
+        if string_value($records[0]{schema_version}) ne '2';
+    my $source_revision = string_value($records[0]{source_revision});
+    problem('constant baseline source_revision must be a full commit identity')
+        if $source_revision !~ /\A[0-9a-f]{40}\z/;
+    my $source_revision_ok = $source_revision =~ /\A[0-9a-f]{40}\z/
+        && git_object_type($source_revision) eq 'commit';
+    problem('constant baseline source_revision is not an available commit')
+        if !$source_revision_ok;
 
     my %selected_path = map { $_ => 1 } @{$constant_paths};
     my %constants_by_path;
@@ -632,8 +648,8 @@ sub reconcile_constant_baseline {
         problem("$where record_type must be constant_baseline_source")
             if string_value($record->{record_type})
                 ne 'constant_baseline_source';
-        problem("$where schema_version must be 1")
-            if string_value($record->{schema_version}) ne '1';
+        problem("$where schema_version must be 2")
+            if string_value($record->{schema_version}) ne '2';
         my $path = string_value($record->{path});
         validate_local_path($path, "$where path");
         problem("$where path is not tracked: $path") if !$tracked->{$path};
@@ -650,14 +666,31 @@ sub reconcile_constant_baseline {
         my $expected_sha = string_value($record->{constant_ids_sha256});
         problem("$where has invalid constant_ids_sha256")
             if $expected_sha !~ /\A[0-9a-f]{64}\z/;
-        my @cohort = sort map { $_->{constant_id} } grep {
-            $_->{line} <= $through
-        } @{$constants_by_path{$path} // []};
-        problem("$where constant count drift: expected $expected_count, got "
-            . scalar(@cohort)) if @cohort != $expected_count;
+        my @cohort;
+        if ($source_revision_ok) {
+            my $historic = read_revision_relative(
+                $source_revision, $path, "$where source"
+            );
+            @cohort = original_constant_identities(
+                $path, $historic, $through, $where
+            ) if defined $historic;
+        }
+        problem("$where historical constant count drift: expected "
+            . "$expected_count, got " . scalar(@cohort))
+            if @cohort != $expected_count;
         my $actual_sha = sha256_hex(join("\n", @cohort));
-        problem("$where constant identity digest drift")
+        problem("$where historical constant identity digest drift")
             if $actual_sha ne $expected_sha;
+        my %current = map {
+            $_->{constant_id} => 1
+        } @{$constants_by_path{$path} // []};
+        my %seen_identity;
+        for my $identity (@cohort) {
+            problem("$where duplicates historical constant identity $identity")
+                if $seen_identity{$identity}++;
+            problem("$where original constant identity is missing: $identity")
+                if !$current{$identity};
+        }
         $constant_records += $expected_count;
     }
     problem('constant baseline declares no source records') if $#records < 1;
@@ -667,6 +700,69 @@ sub reconcile_constant_baseline {
         constant_records => $constant_records,
         source_records => scalar(@order),
     };
+}
+
+sub original_constant_identities {
+    my ($path, $raw, $through, $where) = @_;
+    return () if !defined $raw;
+    my @lines = split /\n/, $raw, -1;
+    pop @lines if @lines && $lines[-1] eq '';
+    if (@lines < $through) {
+        problem("$where source has fewer than $through lines");
+        return ();
+    }
+    my @identities;
+    for my $index (0 .. $through - 1) {
+        my $object = eval { $json->decode($lines[$index]) };
+        if ($@ || ref($object) ne 'HASH') {
+            problem("$where source line " . ($index + 1)
+                . ' is not a JSON object');
+            next;
+        }
+        visit_numeric_leaves('', $object, sub {
+            my ($pointer) = @_;
+            push @identities, constant_identity($path, $index + 1, $pointer);
+        });
+    }
+    return sort @identities;
+}
+
+sub git_object_type {
+    my ($revision) = @_;
+    return '' if $revision !~ /\A[0-9a-f]{40}\z/;
+    open my $git, '-|', 'git', '-C', $root, 'cat-file', '-t', $revision
+        or do {
+            problem('cannot execute git cat-file for constant baseline');
+            return '';
+        };
+    local $/;
+    my $type = <$git> // '';
+    if (!close $git) {
+        return '';
+    }
+    $type =~ s/\s+\z//;
+    return $type;
+}
+
+sub read_revision_relative {
+    my ($revision, $relative, $label) = @_;
+    return undef if !validate_local_path($relative, "$label path");
+    open my $git, '-|', 'git', '-C', $root, 'show', "$revision:$relative"
+        or do {
+            problem("cannot execute git show for $label: $relative");
+            return undef;
+        };
+    local $/;
+    my $raw = <$git>;
+    if (!close $git || !defined $raw) {
+        problem("cannot retrieve $label at $revision: $relative");
+        return undef;
+    }
+    if (length($raw) > 8_388_608) {
+        problem("$label exceeds 8388608 bytes");
+        return undef;
+    }
+    return $raw;
 }
 
 sub independent_numeric_census {

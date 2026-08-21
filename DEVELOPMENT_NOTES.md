@@ -450,3 +450,19 @@ retained handle is stale, a separately blessed object cannot forge authority,
 and mutation of one emitted result cannot contaminate the next. Standalone
 emission deliberately retains independent verification, keeping this reuse an
 explicit evaluation boundary rather than hidden ambient state.
+
+## 2026-08-21: A frozen identity cohort needs a frozen source domain
+
+The first constant-cohort closure stored a line boundary plus an identity
+digest for each source, then reconstructed membership from the current JSONL.
+That works only while historical lines never gain new nested numeric leaves.
+The live-document debt schema permits exactly that evolution, so the line
+boundary was a location bound rather than a stable membership authority.
+
+The corrected contract retains the compact boundary/count/digest records but
+derives their members from the exact claim-inventory adoption commit. Current
+JSONL is scanned separately: every historical identity must still exist, while
+new identities are allowed regardless of their record line. Values stay out of
+the frozen identity because their current producer and oracle are authoritative.
+This separates immutable cohort membership from the intentionally evolving
+current census without creating a copied list of values or a rebaseline path.

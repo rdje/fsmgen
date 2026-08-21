@@ -17,6 +17,10 @@
   bounded registry, exact source markers, explicit legs or owned gaps, and
   tracked local evidence paths. `scripts/check_doctrines.sh` runs it as the
   registered `CLAIM-VERIFICATION` doctrine.
+- Original-constant membership: the bounded baseline names the exact adoption
+  commit, then derives its identity set from that versioned source. Current
+  files must retain each original identity but never rediscover the frozen
+  cohort, so later nested fields remain legitimate current-only constants.
 - Provenance boundary: quantitative examples in the neutral body describe
   the template's reference deployment. They are retained source evidence,
   not current measurements or support claims about FSMGen.

@@ -30,5 +30,8 @@ are explicit; ambiguous prose remains owned debt. Regeneration consumes
 disposition IDs: closed candidates lose owners, unmatched candidates retain
 them, and the reciprocal gate rejects stale state. Numeric leaves are derived
 values or configured inputs, including schema identity. The original-cohort
-manifest keeps source boundaries, counts, and ID digests; the checker
-re-derives them and requires every current leaf's producer, oracle, and watcher.
+manifest names the exact adoption commit and keeps per-source boundaries,
+counts, and ID digests. The checker reconstructs membership from that versioned
+source, requires every original identity in the current census, permits later
+current-only identities anywhere in the JSONL tree, and retains every current
+leaf's producer, oracle, and watcher.

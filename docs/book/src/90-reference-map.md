@@ -72,10 +72,12 @@ claims.
 The regenerated inventory also consumes the canonical disposition identities:
 closed candidates carry no residual migration owner, while a new candidate
 remains visibly task-owned until it receives a disposition. A compact
-original-cohort manifest preserves constant identities as per-source digests
-and line boundaries rather than copying their values. Current derived
-constants retain re-derivation, falsification, and durability legs; configured
-policy values and schema versions retain explicit input-identity,
+original-cohort manifest names the exact adoption commit, then reconstructs
+per-source identity sets from that versioned source and checks their counts and
+digests. Current files must retain every original identity, but later numeric
+fields remain current-only even when nested on a historical JSONL line. Current
+derived constants retain re-derivation, falsification, and durability legs;
+configured policy values and schema versions retain explicit input-identity,
 falsification, and durability gates. Run the reconciliation report with
 `scripts/check_claim_verification_inventory.pl --report`.
 

@@ -4561,7 +4561,7 @@ measurement `.17.3` remain later.
   emitted bytes, runtime, public product API, support, performance, or capacity
   claim changes.
 
-## Finding queued after `.17.2.6.2.2` commits cleanly
+## Finding routed after `.17.2.6.2.2` committed cleanly
 
 The first synchronized fact-card wording raised `knowledge_cards` to 3,356,477
 bytes, 1,034 bytes beyond its 80% warning milestone while remaining below the
@@ -4572,6 +4572,7 @@ current nested pointer on a pre-existing JSONL line, so it cannot distinguish
 new debt fields from original constant identities. Compacting the two existing
 cards retains the provider fact at 3,355,316 bytes, 127 bytes below warning,
 and removes the immediate state change without widening a bound or deleting a
-fact. After this leaf is committed and the tree is clean, the live-document /
-claim-baseline interaction needs its own exact task-tree repair before the next
-ordinary card crosses the milestone.
+fact. Clean activation commit `aac2e265c` routes the defect to
+`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.30`; that leaf replaces current-line
+reconstruction with exact adoption-source membership before the next ordinary
+card crosses the milestone.

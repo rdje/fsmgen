@@ -277,11 +277,11 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `none`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.30`
-  Status: `active`
+  Status: `done`
   Goal: `Make the frozen original-constant cohort stable when post-baseline nested fields are added to pre-existing JSONL records.`
   Acceptance: `Reproduce the current through-line reconstruction defect with a focused RED control; select and implement an explicit baseline identity-membership contract that preserves every adoption-time constant ID while excluding legitimate post-baseline IDs on the same historical line; reject missing, duplicate, malformed, or drifted original identities; retain an independently derived current constant census; update portable doctrine, local data, tests, task evidence, and the Knowledge Map without weakening claim coverage or changing product behavior.`
-  Verification: `active; the .17.2.6.2.2 synchronization trial added a valid warning_debt object beneath the pre-existing knowledge_cards surface record and the current through-line algorithm reclassified eighteen new nested pointers as original constants, causing count and digest drift before the state was reverted.`
-  Commit: `pending`
+  Verification: `The focused RED proves a later nested numeric leaf on the original record was misclassified into the frozen cohort. Schema v2 names exact adoption commit f1dad5dc6; the checker derives and digest-checks historical identities there, requires that set in the independently regenerated current census, and admits later identities on any line. Missing identity, malformed revision, digest drift, and duplicate-source negatives fail closed; focused t1637 passes 13 subtests. The real knowledge_cards warning transition adds all eighteen formerly blocked numeric identities while the live report retains 615 original within 2,065 current constants.`
+  Commit: `this commit`
   Blocked by: `none`
 
 ## Decisions
@@ -308,6 +308,10 @@ no routed destination becomes the next uninstrumented blob.
   executed verifier. Immutable revision-bound evidence remains evidence;
   authored intent remains authored state. The neutral checker consumes only
   declared contracts and never guesses project fields from names or shapes.
+- `2026-08-21`: Decision 0076 replaces current-through-line cohort discovery
+  with membership derived from exact adoption commit `f1dad5dc6`. Current
+  constants remain independently derived; later nested fields never redefine
+  the frozen set, and missing historical identities still fail closed.
 - `2026-07-31`: Preserve directly browsable user reference in semantic shards,
   but move rarely read exact chronology out of the working set only after
   digest-verified version retrieval exists.
@@ -1117,3 +1121,35 @@ no routed destination becomes the next uninstrumented blob.
   repository. The exact 73-file/17,012-KiB output and its newly created empty
   parent were removed; the corrected repository-local build passed and was
   also removed, with residue checks for both paths.
+
+## Acceptance Checklist (enforced) — `.30` versioned original-constant cohort
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'my @cohort = sort map' --
+  scripts/check_claim_verification_inventory.pl` identifies commit `673f86372`:
+  the original cohort was rediscovered by selecting every current numeric leaf
+  through each historical line boundary. The focused RED added one legitimate
+  nested count to the original record and failed with `expected 2, got 3` plus
+  identity-digest drift. The OSVVM synchronization trial independently exposed
+  the same mechanism when a valid knowledge-card debt declaration contributed
+  eighteen new pointers beneath an original `surfaces.jsonl` record.
+- [x] **ADDRESSED (verified)** — baseline schema v2 names exact adoption commit
+  `f1dad5dc697a7743215af032c3c15f5cd618ec74`. The checker retrieves each
+  declared source there, derives path/line/pointer membership with the shared
+  numeric-leaf traversal, verifies per-source counts/digests, and requires
+  every historical identity within a separately regenerated current census.
+  Post-baseline identities may occur on any line. Missing identity, symbolic
+  revision, changed digest, and duplicate-source controls all go RED. The real
+  `knowledge_cards` transition now contributes eighteen current identities
+  without changing the 615-member original cohort or any ceiling.
+- [x] **NO REGRESSION** — Perl syntax is clean; the live-document and claim
+  doctrine cluster reports `All tests successful` at `Files=5, Tests=58` in
+  43 seconds. Inventory independently agrees at 10,683 numeric lines, 1,419
+  fully dispositioned candidates, 2,065 current constants, and 615 original
+  identities; the rationale ledger reconstructs 2,868 entries. All 22 live
+  surfaces pass with `knowledge_cards` honestly in owned warning debt, exact
+  mdBook aggregate authority, and zero ceiling increases. Knowledge Map parity
+  reports 1,150 facts/6,053 questions/6,220 occurrences/133 shards; task
+  integrity reports three trees/956 nodes. All 53 mdBook chapters test and the
+  inspected 88-file/18,624-KiB repository-local render is removed exactly.
+  Diff, staged acceptance, and the final `[doctrine] all doctrine checks passed`
+  result complete the commit without compiler, runtime, or product changes.

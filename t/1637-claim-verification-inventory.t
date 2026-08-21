@@ -118,8 +118,82 @@ subtest 'original constant identity drift fails closed' => sub {
     });
     my ($ok, $output) = run_checker($repo);
     ok(!$ok, 'missing original constant identity fails');
-    like($output, qr/constant (?:count|identity digest) drift/,
+    like($output, qr/original constant identity is missing/,
         'RED names the baseline cohort drift');
+};
+
+subtest 'post-baseline nested constants do not join the original cohort' => sub {
+    my $repo = make_fixture();
+    mutate_file($repo, 'doctrine/live_document_size/config.jsonl', sub {
+        my $json = JSON::PP->new->canonical(1)->utf8(1);
+        my $record = $json->decode($_[0]);
+        $record->{post_baseline} = {count => 3};
+        $_[0] = $json->encode($record) . "\n";
+    });
+    my ($ok, $output) = run_checker($repo, '--write', '--report');
+    ok($ok, 'a new nested constant on a historical line is current-only')
+        or diag($output);
+    return if !$ok;
+    my ($census) = grep {
+        $_->{record_type} eq 'census'
+    } @{read_inventory($repo)};
+    is($census->{constant_records}, 3,
+        'the independent current census includes the new constant');
+    is($census->{original_constant_records}, 2,
+        'the frozen original cohort excludes the new constant');
+};
+
+subtest 'original cohort requires one available full source revision' => sub {
+    my $repo = make_fixture();
+    mutate_file(
+        $repo, 'doctrine/claim_verification/original_constant_baseline.jsonl',
+        sub { $_[0] =~ s/"source_revision":"[0-9a-f]{40}"/
+            '"source_revision":"HEAD"'/e }
+    );
+    my ($ok, $output) = run_checker($repo);
+    ok(!$ok, 'a symbolic source revision fails closed');
+    like($output, qr/source_revision must be a full commit identity/,
+        'RED names the malformed historical authority');
+
+    $repo = make_fixture();
+    mutate_file(
+        $repo, 'doctrine/claim_verification/original_constant_baseline.jsonl',
+        sub { $_[0] =~ s/"source_revision":"[0-9a-f]{40}"/
+            '"source_revision":"' . ('f' x 40) . '"'/e }
+    );
+    ($ok, $output) = run_checker($repo);
+    ok(!$ok, 'an unavailable full source revision fails closed');
+    like($output, qr/source_revision is not an available commit/,
+        'RED names the missing historical authority');
+};
+
+subtest 'original cohort digest remains bound to the historical source' => sub {
+    my $repo = make_fixture();
+    mutate_file(
+        $repo, 'doctrine/claim_verification/original_constant_baseline.jsonl',
+        sub { $_[0] =~ s/("constant_ids_sha256":")([0-9a-f])/
+            $1 . ($2 eq '0' ? '1' : '0')/e }
+    );
+    my ($ok, $output) = run_checker($repo);
+    ok(!$ok, 'a changed original-cohort digest fails closed');
+    like($output, qr/historical constant identity digest drift/,
+        'RED names disagreement with the versioned source');
+};
+
+subtest 'original cohort rejects duplicate source membership' => sub {
+    my $repo = make_fixture();
+    mutate_file(
+        $repo, 'doctrine/claim_verification/original_constant_baseline.jsonl',
+        sub {
+            my @lines = grep { $_ ne '' } split /\n/, $_[0];
+            push @lines, $lines[1];
+            $_[0] = join("\n", @lines) . "\n";
+        }
+    );
+    my ($ok, $output) = run_checker($repo);
+    ok(!$ok, 'duplicate baseline source membership fails closed');
+    like($output, qr/duplicates path doctrine\/live_document_size\/config[.]jsonl/,
+        'RED names the duplicate historical source');
 };
 
 subtest 'configured policy and schema inputs retain falsification gates' => sub {
@@ -209,13 +283,14 @@ sub make_fixture {
         $json->encode({
             cohort_id => 'CLAIM-VERIFICATION-ADOPTION.4',
             record_type => 'constant_baseline',
-            schema_version => 1,
+            schema_version => 2,
+            source_revision => '0' x 40,
         }) . "\n" . $json->encode({
             constant_count => 2,
             constant_ids_sha256 => sha256_hex(join("\n", @baseline_ids)),
             path => 'doctrine/live_document_size/config.jsonl',
             record_type => 'constant_baseline_source',
-            schema_version => 1,
+            schema_version => 2,
             through_line => 1,
         }) . "\n",
     );
@@ -242,7 +317,21 @@ sub make_fixture {
     git_ok($repo, 'config', 'user.email', 'fixture@example.invalid');
     git_ok($repo, 'config', 'user.name', 'Fixture');
     git_ok($repo, 'add', '.');
-    git_ok($repo, 'commit', '-q', '-m', 'fixture sources');
+    git_ok(
+        $repo, 'commit', '-q', '-m',
+        'CLAIM-VERIFICATION-ADOPTION.4: fixture sources'
+    );
+    my $source_revision = git_output($repo, 'rev-parse', 'HEAD');
+    mutate_file(
+        $repo, 'doctrine/claim_verification/original_constant_baseline.jsonl',
+        sub { $_[0] =~ s/"source_revision":"0{40}"/
+            '"source_revision":"' . $source_revision . '"'/e }
+    );
+    git_ok(
+        $repo, 'add',
+        'doctrine/claim_verification/original_constant_baseline.jsonl'
+    );
+    git_ok($repo, 'commit', '-q', '-m', 'fixture baseline identity');
     run_checker_ok($repo, '--write');
     git_ok($repo, 'add', 'doctrine/claim_verification/inventory.jsonl');
     git_ok($repo, 'commit', '-q', '-m', 'fixture inventory');
@@ -318,4 +407,16 @@ sub git_ok {
     );
     die "git @args failed: " . join('', @{$stdout || []}, @{$stderr || []})
         if !$ok;
+}
+
+sub git_output {
+    my ($repo, @args) = @_;
+    my ($ok, undef, undef, $stdout, $stderr) = run(
+        command => ['git', '-C', $repo, @args]
+    );
+    die "git @args failed: " . join('', @{$stdout || []}, @{$stderr || []})
+        if !$ok;
+    my $output = join('', @{$stdout || []});
+    $output =~ s/\s+\z//;
+    return $output;
 }
