@@ -167,12 +167,18 @@ subtest 'canonical gate reaches 2048 bindings with deterministic target-neutral 
         'resource summary reaches the exact selected binding gate');
     is(scalar(@{$ir->{bindings}{events}}), 2_042,
         'all non-foundation bindings are ordinal event bindings');
+    is(scalar(@{$ir->{type_table}}), 1,
+        'binding isolation uses one genuine execution type');
+    is(scalar(@{$ir->{scenarios}}), 1,
+        'binding isolation uses one genuine scenario');
     is($ir->{operation_graph}{total_operation_count}, 1,
         'binding isolation uses one genuine reset operation');
     is($ir->{operation_graph}{total_fiber_count}, 1,
         'binding isolation uses one root fiber');
     is($ir->{operation_graph}{maximum_simultaneous_live_fibers}, 1,
         'binding isolation does not inflate live-fiber scale');
+    is(scalar(@{$ir->{source_map}}), 2_047,
+        'binding isolation retains the exact genuine source-map closure');
     my ($private_capability) = grep {
         $_->{capability_id}
             eq 'hial_vial.bridge_qualification.architecture_scale_v1'
@@ -195,8 +201,8 @@ subtest 'canonical gate reaches 2048 bindings with deterministic target-neutral 
         'evaluation independently records exact bindings');
     is($evaluation->{metrics}{execution_events}, 2_042,
         'evaluation independently records exact events');
-    cmp_ok($evaluation->{metrics}{serialized_plan_bytes}, '<=', 16_777_216,
-        'binding-gate plan remains within the canonical serialized-plan cap');
+    is($evaluation->{metrics}{serialized_plan_bytes}, 2_656_823,
+        'binding-gate plan has its exact canonical serialization below the 16-MiB cap');
     like($evaluation->{semantic_ir_sha256}, qr/\A[0-9a-f]{64}\z/,
         'semantic identity is a canonical digest');
     like($evaluation->{bridge_manifest_sha256}, qr/\A[0-9a-f]{64}\z/,
