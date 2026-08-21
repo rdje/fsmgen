@@ -30,6 +30,7 @@ answers:
   - "why are AXI selector probes host-memory percentages and report bytes reviewed history?"
   - "how are foundational APB behavior claims separated from contract-selection numerals?"
   - "how are APB width protection and back-to-back claims separated from readiness chronology?"
+  - "how are APB multi-register protection and composition claims separated by source family?"
 date: 2026-08-21
 status: current
 tags: [claim-verification, dispositions, inventory, evidence]
@@ -58,6 +59,7 @@ evidence: >-
   t/1470-ial2-apb-profile-alias.t;
   t/1471-ial2-apb-completer.t;
   t/1472-ial2-apb-composition.t;
+  docs/knowledge/ial2-apb-multi-register-protection-composition-claim-evidence.md;
   docs/tasks/CLAIM-VERIFICATION-ADOPTION.md
 reverify: >-
   scripts/check_claim_verification_dispositions.pl --report && prove -Iperl
@@ -191,3 +193,13 @@ interconnect gates. Twenty-two pre-data16 guard values, selected width/status/
 queue contracts, readiness scopes, and superseded 32-bit-only timing guards
 remain reviewed chronology. Their exact selection commits stay durable, while
 the later behavior has its own generated-artifact and negative-boundary proof.
+
+The multi-register/protection/composition review closes 17 current behavior
+candidates through nine family-specific gates. Fixed and multi-peripheral,
+16-bit and 32-bit, no-policy and protected, and status/control versus
+`reg0`/`reg1` shapes retain distinct public fixtures and falsification paths.
+Twenty-nine readiness, selector, and contract numerals remain reviewed
+chronology tied to their exact `.619` through `.652` Git records. The current
+behavior gates independently prove queueing, adjacent setup, register and
+window decode, byte masks, protection ownership, report residue, artifacts,
+and profile-alias parity.
