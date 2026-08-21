@@ -351,7 +351,78 @@ hidden behind repeated checks of the same kind.
   Status: `active`
   Goal: `Review and migrate the 288 HIAL/VIAL verification-architecture book candidates.`
   Acceptance: `Every 16d candidate is tied to exact architecture-scale, backend, runtime, result, or capability evidence with a separating oracle, reclassified with a reviewable incidental reason, or assigned an explicit repair without overstating provider or support coverage.`
-  Verification: `16d group identity/count, exact architecture/runtime producer and RED controls, zero open group candidates, mdBook/doctrine gates`
+  Verification: `PASS — the committed Chapter 16d group partitions exactly into ten evidence-coherent continuous line-range children whose disjoint counts sum to 288; .5.6.1 alone is active.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.6: partition verification architecture claim review`
+  Children: `CLAIM-VERIFICATION-ADOPTION.5.6.1, CLAIM-VERIFICATION-ADOPTION.5.6.2, CLAIM-VERIFICATION-ADOPTION.5.6.3, CLAIM-VERIFICATION-ADOPTION.5.6.4, CLAIM-VERIFICATION-ADOPTION.5.6.5, CLAIM-VERIFICATION-ADOPTION.5.6.6, CLAIM-VERIFICATION-ADOPTION.5.6.7, CLAIM-VERIFICATION-ADOPTION.5.6.8, CLAIM-VERIFICATION-ADOPTION.5.6.9, CLAIM-VERIFICATION-ADOPTION.5.6.10`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.6.1`
+  Status: `active`
+  Goal: `Disposition the 8 Chapter 16d foundation, type-binding, bridge, tooling, portable-SystemVerilog, and runtime-direction candidates on lines 1-931.`
+  Acceptance: `Current frontend, IR, bridge, manifest, public-tooling, planning, portable-SystemVerilog, and capability statements retain exact producer and negative-path evidence while proposed runtime direction and version identifiers remain chronology.`
+  Verification: `exact eight-candidate range, frontend/bridge/tooling/backend gates and negative controls, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.6.2`
+  Status: `pending`
+  Goal: `Disposition the 16 Chapter 16d portable-VHDL and OSVVM provider candidates on lines 932-1355.`
+  Acceptance: `Provider-free VHDL semantics, exact GHDL and OSVVM qualification, artifact graphs, trace/result identities, and migration boundaries join provider-specific evidence without promoting tool tuples or immutable checkpoints into general support.`
+  Verification: `exact 16-candidate range, VHDL/OSVVM producer and provider-qualified runtime gates, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.6.3`
+  Status: `pending`
+  Goal: `Disposition the 11 Chapter 16d native-UVM, experimental-probe, parity, and current-boundary candidates on lines 1356-1971.`
+  Acceptance: `Native UVM emission, SVA/lifecycle topology, tool-limited Verilator probe, handwritten AHB parity, and current capability boundaries retain distinct evidence without claiming complete UVM runtime, mixed-language execution, or general parity.`
+  Verification: `exact 11-candidate range, UVM emission/probe and parity gates with explicit nonclaims, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.6.4`
+  Status: `pending`
+  Goal: `Disposition the 22 Chapter 16d scale-foundation, semantic-catalog, and bridge-fanout candidates on lines 1972-2276.`
+  Acceptance: `Construction envelopes, deterministic identities, semantic catalog boundaries, bridge fanout, exact manifest bytes, source maps, and qualification-only admission retain stage-local gates and earliest-cap results without becoming capacity claims.`
+  Verification: `exact 22-candidate range, construction/semantic/bridge scale gates and adjacent excess controls, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.6.5`
+  Status: `pending`
+  Goal: `Disposition the 28 Chapter 16d execution-binding, topology, scenario, and operation candidates on lines 2277-2537.`
+  Acceptance: `Private binding admission, checked-AHB topology gates, exact scenario limits, per-scenario operations, total-operation qualification, plan bytes, and source-map identities retain their canonical routes and first-authority diagnostics.`
+  Verification: `exact 28-candidate range, binding/topology/scenario/operation gates and over-limit controls, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.6.6`
+  Status: `pending`
+  Goal: `Disposition the 47 Chapter 16d fiber and large total-operation candidates on lines 2538-2845.`
+  Acceptance: `Orthogonal total/live fiber gates, exact live and total limits, repeat-based construction, million-operation preflight dominance, resource observations, and raised-guard evidence remain separated by their earliest semantic, plan, or execution authority.`
+  Verification: `exact 47-candidate range, fiber/operation limit gates, preflight and adjacent excess controls, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.6.7`
+  Status: `pending`
+  Goal: `Disposition the 45 Chapter 16d execution-type, binding, and route-reachability candidates on lines 2846-3091.`
+  Acceptance: `Parser, bridge-manifest, construction-envelope, event, type, endpoint, binding, and plan caps report the first real route boundary; envelope-unconstructible levels retain diagnostics and no stage identity rather than being re-leveled or overstated.`
+  Verification: `exact 45-candidate range, type/binding route boundaries and unconstructible controls, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.6.8`
+  Status: `pending`
+  Goal: `Disposition the 28 Chapter 16d source-map and deterministic-randomness candidates on lines 3092-3315.`
+  Acceptance: `Exact real source-map cardinality, whole-route plan cap, keyed candidate occurrence, strict replay equality, million-attempt success, and adjacent exhaustion retain canonical sources and independent mutation oracles.`
+  Verification: `exact 28-candidate range, source-map and random/replay gates with adjacent boundaries, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.6.9`
+  Status: `pending`
+  Goal: `Disposition the 24 Chapter 16d exact-plan-byte and execution-scale summary candidates on lines 3316-3518.`
+  Acceptance: `Exact one/four/sixteen-MiB plan construction, genuine operation/map counts, first complete excess, suite accounting, selected-shape ownership, and capacity nonclaims retain exact identities and bounded failure evidence.`
+  Verification: `exact 24-candidate range, exact plan-byte gates, adjacent excess, selected-shape census, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.6.10`
+  Status: `pending`
+  Goal: `Disposition the 59 Chapter 16d checking-state and qualification-safety candidates on lines 3519-3696.`
+  Acceptance: `Models, cells, scoreboards, packed capacity, coverage, faults, random/replay, result digests, hostile-caller rejection, exact guarded suites, cleanup, resource ceilings, and nonclaims remain independently reproducible and fail closed at adjacent boundaries.`
+  Verification: `exact 59-candidate range, checking-state family gates and safety/nonclaim controls, inventory/disposition/mdBook/doctrine gates`
   Commit: `pending`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.7`
@@ -393,6 +464,13 @@ hidden behind repeated checks of the same kind.
   exact-four/generalized repair chronology, and current residue/boundary
   phases. The disjoint `6 + 37 + 34 + 71 + 62 + 22` ranges prevent one current
   runtime gate from laundering unrelated shipment-time accounting.
+- `2026-08-21`: The 288-candidate Chapter 16d group is partitioned by
+  architecture and evidence ownership: foundation/tooling, VHDL, native UVM
+  and parity, semantic/bridge scale, execution topology, fibers/operations,
+  type/binding reachability, source maps/randomness, exact plan bytes, and
+  checking state. The continuous `8 + 16 + 11 + 22 + 28 + 47 + 45 + 28 + 24
+  + 59` ranges keep provider qualifications, earliest-cap outcomes, resource
+  observations, and support nonclaims from validating one another.
 - `2026-08-20`: A migration group remains `required_complete=false` until its
   owning slice has dispositioned every current candidate. The empty `.5.1`
   outcome registry therefore proves mechanism and reports debt; it does not
@@ -528,8 +606,9 @@ hidden behind repeated checks of the same kind.
 
 ## Open Questions
 
-- None blocking. `.5.4.4` owns the next 46 APB multi-register, protection,
-  and composition candidates on Chapter 14h lines 1200-1699.
+- None blocking. `.5.6.1` owns the next eight HIAL/VIAL foundation, bridge,
+  tooling, portable-SystemVerilog, and runtime-direction candidates on Chapter
+  16d lines 1-931.
 
 ## Blockers
 
@@ -657,6 +736,9 @@ hidden behind repeated checks of the same kind.
 - [x] **ROOT CAUSE (WHY + WHERE)** — clean commit `54019bd0f` leaves the final 22 Chapter 16c residue/current-boundary/phase candidates open on lines 2641-3227. Exact `--emit-schedule-json` evidence, `git blame`, and the guarded aggregate, paired, truthfulness, phase, direct-seed, exact-three, and generalized-range suites separate four current boundary/runtime/repair statements from 18 exact-two/exact-three support milestones, readiness/contract values, superseded bounds, and test-path-only locators.
 - [x] **ADDRESSED (verified)** — all 22 identities now join exactly four three-leg derived gates plus 18 reviewed historical/structural outcomes. Independent gates retain canonical decimal `2..16` with above-16 and malformed rejection; exact-three `3 -> 2 -> 1 -> 0` through continuous and 32-clock stalls; generated two-acceptance/two-completion boundary-free active phases with final-ERROR active-versus-IDLE separation; and direct capacity-one Q-named four-state completion-edge retention. All six children close Chapter 16c as 55 gates plus 177 reviewed outcomes. The canonical join reports `candidates=1415`, `disposed=1127`, `gates=550`, `reviewed=577`, and required-complete `ial2_ahb=232/232` with zero open.
 - [x] **NO REGRESSION** — the RAM-guarded aggregate HBURST generic/profile, paired one-/two-window, current-book truthfulness, generated/direct phase, exact-three, and generalized-range collection reports `All tests successful` at `Files=9, Tests=36`; live support-accounting, capability-manifest, and disposition mutation oracles report `Files=3, Tests=7107`. Inventory remains `1,415` candidates / `1,755` governed constants. Knowledge Map parity reports `1,148` facts / `6,027` questions / `6,194` occurrences / `132` shards. All 53 mdBook chapters test; the inspected repository-local 88-file/18,604-KiB build is removed. Containment, task, docs-relative-path, Memory, reference-authority, diff, staged acceptance, and all 12 doctrine gates pass.
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean commit `042fea386` closes Chapter 16c required-complete at 232/232 and leaves the existing 288-candidate Chapter 16d group as the next dependency-ordered frontier. The 3,696-line chapter mixes frontend and bridge contracts, provider-specific backends, current/noncurrent runtime claims, stage-local scale gates, earlier-cap outcomes, measured resource observations, exact byte boundaries, packed checking state, and explicit support nonclaims; one unsliced review would alias unrelated authorities.
+- [x] **ADDRESSED (verified)** — committed-inventory line aggregation partitions Chapter 16d into ten continuous children: `.5.6.1=8` on lines 1-931, `.5.6.2=16` on 932-1355, `.5.6.3=11` on 1356-1971, `.5.6.4=22` on 1972-2276, `.5.6.5=28` on 2277-2537, `.5.6.6=47` on 2538-2845, `.5.6.7=45` on 2846-3091, `.5.6.8=28` on 3092-3315, `.5.6.9=24` on 3316-3518, and `.5.6.10=59` on 3519-3696. Their exact sum is 288 with zero unassigned candidates, `.5.6.1` alone is active, and no claim, disposition, evidence producer, product behavior, capability, support statement, or mdBook source changes in this partition slice.
+- [x] **NO REGRESSION** — task-tree integrity reports 1,002 valid nodes; inventory remains `1,415` candidates / `1,755` governed constants; the disposition join remains `1,127` closed and `288` intentionally open only in `verification_architecture`; docs-relative paths report `Files=1/Tests=2`; Knowledge Map parity reports `1,148` facts / `6,027` questions / `6,194` occurrences / `132` shards. Live containment retains the unchanged 53-chapter, 51,089-line / 2,699,163-byte mdBook authority. Memory, diff hygiene, reference authority, project-locality, task acceptance, and all 12 doctrine gates pass from clean predecessor `042fea386`.
 
 ## Verification Log
 
@@ -705,6 +787,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-21` | `.5.5.4` | direct Q-named repair chronology; exact-three one-/two-window generic/profile surfaces; exact-four requester and one-window paired runtime; readiness/contract/shipment separation; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 71 candidates closed as 6 gates / 65 reviewed; IAL2 AHB 148/232; Files=9/Tests=34 exact focused run plus support/disposition Files=3/Tests=7107; 1,671 governed constants; all registered doctrines` |
 | `2026-08-21` | `.5.5.5` | exact-four one-/two-window generic/profile behavior; live support identity; generalized 2..16 admission, widths, runtime, malformed/adjacent invalid controls, and no-fixture rule; exact-one qualified-event repair; exact-two preservation; time-local accounting; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 62 candidates closed as 15 gates / 47 reviewed; IAL2 AHB 210/232; Files=11/Tests=47 exact focused run plus support/disposition Files=3/Tests=7107; 1,733 governed constants; all registered doctrines` |
 | `2026-08-21` | `.5.5.6` | generalized residue boundary; exact-three public runtime; aggregate HBURST generic/profile preservation; current-book truthfulness; generated boundary-free phase pipeline; direct Q-named capacity-one retention; support milestones and locator separation; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 22 candidates closed as 4 gates / 18 reviewed; IAL2 AHB required-complete at 232/232 as 55 gates / 177 reviewed; Files=9/Tests=36 exact focused run plus support/disposition Files=3/Tests=7107; 1,755 governed constants; all registered doctrines` |
+| `2026-08-21` | `.5.6` partition | committed-inventory Chapter 16d line aggregation; exact ten-child sum; task integrity; docs paths; inventory/disposition/Knowledge Map/live-document/diff/doctrine gates | `PASS — 8 + 16 + 11 + 22 + 28 + 47 + 45 + 28 + 24 + 59 = 288 across one continuous chapter range with zero unassigned; .5.6.1 selected alone; no claim, disposition, product, capability, support, or mdBook behavior changes` |
 
 ## Commit Log
 
@@ -753,3 +836,4 @@ hidden behind repeated checks of the same kind.
 | `.5.5.4` | `CLAIM-VERIFICATION-ADOPTION.5.5.4: disposition direct exact-count AHB claims` | `Maps current two-window exact-three topology/runtime, exact-four requester surfaces, and one-window exact-four paired runtime to distinct gates while preserving direct repair locators, readiness and contract inputs, disposable candidates, projections, and shipment checkpoints as chronology.` |
 | `.5.5.5` | `CLAIM-VERIFICATION-ADOPTION.5.5.5: disposition generalized AHB claims` | `Maps current exact-four alias/two-window behavior, live support accounting, generalized 2..16 bounds/runtime, qualified-event repair, paired propagation, and exact-two preservation to distinct gates while preserving readiness, contract, projection, activation, unrelated-work checkpoint, and pre-repair chronology.` |
 | `.5.5.6` | `CLAIM-VERIFICATION-ADOPTION.5.5.6: close IAL2 AHB claim review` | `Maps current generalized residue, exact-three runtime, generated boundary-free phases, and direct Q-named retention to distinct gates; preserves old support totals, contract/readiness values, superseded bounds, and test locators; closes Chapter 16c required-complete at 232/232.` |
+| `.5.6` | `CLAIM-VERIFICATION-ADOPTION.5.6: partition verification architecture claim review` | `Activates ten evidence-coherent continuous Chapter 16d line-range children from the exact 288-candidate census without changing claims, dispositions, product behavior, capability, support accounting, or mdBook behavior.` |
