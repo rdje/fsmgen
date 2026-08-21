@@ -3,10 +3,10 @@
 ## Metadata
 
 - Tree ID: `CLAIM-VERIFICATION-ADOPTION`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra/evidence governance`
 - Created: `2026-08-20`
-- Last updated: `2026-08-20`
+- Last updated: `2026-08-21`
 - Owner: repo-local workflow
 
 ## Goal
@@ -51,7 +51,7 @@ hidden behind repeated checks of the same kind.
 ## Task Tree
 
 - ID: `CLAIM-VERIFICATION-ADOPTION`
-  Status: `active`
+  Status: `done`
   Goal: `Adopt and enforce dimensionally independent claim evidence.`
   Children: `CLAIM-VERIFICATION-ADOPTION.1, CLAIM-VERIFICATION-ADOPTION.2, CLAIM-VERIFICATION-ADOPTION.3, CLAIM-VERIFICATION-ADOPTION.4, CLAIM-VERIFICATION-ADOPTION.5, CLAIM-VERIFICATION-ADOPTION.6`
 
@@ -433,11 +433,11 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.7: reconcile migrated claims and constants`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.6`
-  Status: `active`
+  Status: `done`
   Goal: `Close adoption with a complete current-surface audit and recoverable handoff.`
   Acceptance: `The authoritative policy, discovery, registry, checker, migrated claims, explicit debt, task evidence, book, and resume pointer agree; no adoption artifact is off-volume, untracked, or reachable only from conversation.`
-  Verification: `focused adoption suite, full doctrine gate, clean tracked/untracked census, and task integrity`
-  Commit: `pending`
+  Verification: `PASS — the director-selected neutral policy body remains byte-identical at SHA-256 8f194574...; all 19 canonical adoption artifacts are tracked and repository-relative; Files=3/Tests=27 cover claim records, inventory, dispositions, and RED controls; all 1,415 candidates are dispositioned with zero gaps or owners, all 2,043 current constants and the original 615-constant cohort reconcile; task integrity and all 12 doctrines pass with a clean tracked/untracked census.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.6: close three-leg claim adoption`
 
 ## Decisions
 
@@ -636,8 +636,8 @@ hidden behind repeated checks of the same kind.
 
 ## Open Questions
 
-- None blocking. `.6` owns the complete current-surface adoption audit and
-  recoverable handoff.
+- None. The adoption tree is complete; decision `0074` returns PNT to the
+  paused HIAL backend-emission frontier after this closure commit is clean.
 
 ## Blockers
 
@@ -854,6 +854,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-21` | `.5.6.2` | recursive OSVVM graph and licences; advanced artifact graph; provider source order; combined runtime/result/parity/reports; portable four-state semantics; exact GHDL identity/runtime; portable metadata/review cardinalities; legacy migration; Decision chronology; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 16 candidates closed as 15 gates / 1 reviewed; verification architecture 24/288; Files=5/Tests=31 RAM-guarded exact run plus support/disposition Files=3/Tests=7107; 1,779 governed constants; all registered doctrines` |
 | `2026-08-21` | `.5.6.3` | Accellera methodology identity; native 32-bit model/SVA structure; source-map/static/matrix/workflow closure; tool-limited experimental probe; bounded handwritten-AHB parity; runtime/support nonclaims; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 11 candidates closed as 10 gates / 1 reviewed; verification architecture 35/288; Files=5/Tests=33 RAM-guarded exact run plus support/disposition Files=3/Tests=7107; 1,790 governed constants; all registered doctrines` |
 | `2026-08-21` | `.5.7` | original 615-constant identity reconciliation; current producer/oracle/watcher and input-identity gates; zero migration owners; complete disposition join; RED suites; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — 1,415/1,415 candidates closed, zero gaps/open owners; 615/615 original constants reconcile across 11 sources and all 2,043 current constants are gated; Files=2/Tests=19 focused RED suite; all registered doctrines` |
+| `2026-08-21` | `.6` | neutral-body identity; discovery and doctrine wiring; tracked/local artifact census; focused claim suites; inventory/disposition/debt closure; task/Memory/book alignment; doctrines | `PASS — SHA-256 8f194574... matches the selected template; 19 canonical adoption artifacts tracked; Files=3/Tests=27; 1,415 candidates and 2,043 constants reconcile with zero gaps/open owners; all 12 doctrines` |
 
 ## Commit Log
 
@@ -907,3 +908,4 @@ hidden behind repeated checks of the same kind.
 | `.5.6.2` | `CLAIM-VERIFICATION-ADOPTION.5.6.2: disposition VHDL provider claims` | `Maps provider-free VHDL semantics, recursive OSVVM identity, adapter structure, exact GHDL/provider execution, portable result/parity, review cardinalities, and legacy migration identity to distinct gates while preserving Decision 0043 as structural chronology.` |
 | `.5.6.3` | `CLAIM-VERIFICATION-ADOPTION.5.6.3: disposition native UVM parity claims` | `Maps exact native-UVM emission structure, review closure, the tool-limited experimental probe, and bounded handwritten-AHB parity to separate gates while preserving Decision 0050 as structural chronology and complete-UVM/runtime/general-parity nonclaims.` |
 | `.5.7` | `CLAIM-VERIFICATION-ADOPTION.5.7: reconcile migrated claims and constants` | `Clears closed candidate migration owners, preserves the original 615-constant cohort through compact source digests, gates schema input identities, and adds fail-closed reconciliation controls.` |
+| `.6` | `CLAIM-VERIFICATION-ADOPTION.6: close three-leg claim adoption` | `Audits authoritative policy identity, discovery, registries, gates, migrated claims, explicit debt, tracked locality, task evidence, book guidance, and recoverable handoff, then closes the adoption tree.` |

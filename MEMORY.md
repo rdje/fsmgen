@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `CLAIM-VERIFICATION-ADOPTION.6`; migration is closed at
-  zero open owners and the original constant cohort is identity-reconciled.
-- next_action: run the complete current-surface adoption audit and close the
-  authoritative policy, discovery, registry, task, book, and handoff surfaces.
+- active_work_unit: none; `CLAIM-VERIFICATION-ADOPTION.6` closes the complete
+  three-leg claim adoption from a clean, fully tracked state.
+- next_action: from the clean closure commit, activate the already proposed
+  `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6` backend-emission leaf.
 - in_flight_uncommitted: none.
 - in_flight_background: none
 - blockers: none.
