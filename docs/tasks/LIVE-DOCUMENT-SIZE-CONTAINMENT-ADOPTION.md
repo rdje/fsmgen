@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `infra/continuity / project-wide live-document lifecycle`
 - Created: `2026-07-31`
-- Last updated: `2026-08-09`
+- Last updated: `2026-08-21`
 - Owner: repo-local workflow
 - Selected by: `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.2`
 
@@ -51,7 +51,7 @@ no routed destination becomes the next uninstrumented blob.
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION`
   Status: `active`
   Goal: `Bound all live document families over durable, addressable storage.`
-  Children: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.12, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.26, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.27, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.28, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.29`
+  Children: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.2, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.3, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.4, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.5, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.6, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.7, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.8, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.9, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.11, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.12, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.14, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.15, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.16, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.17, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.18, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.19, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.20, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.21, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.22, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.23, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.24, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.25, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.26, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.27, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.28, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.29, LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.30`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.1`
   Status: `done`
@@ -274,6 +274,14 @@ no routed destination becomes the next uninstrumented blob.
   Acceptance: `A long-running leaf appends one slice of narration to its single-line node Verification field per commit, so that one line grows without bound while the per-slice Acceptance Checklist sections already hold the same evidence. On 2026-08-19 the HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2 field reached 7,837 bytes and drove the task_evidence line_bytes_each axis to 95.7% of its 8,192-byte ceiling; a manual compaction to 1,770 bytes returned the surface to 76.5%. The line ceiling detected the accretion but nothing prevents it from recurring on the next long leaf, and the current remedy depends on an author noticing. Select whether the node Verification field is contractually a bounded current-state field routed to the per-slice checklists, and if so add the deterministic check that proves it, without weakening task-tree integrity evidence requirements or removing any exact recorded fact. Not PNT-eligible until activated.`
   Verification: `pending`
   Commit: `pending activation`
+  Blocked by: `none`
+
+- ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.30`
+  Status: `active`
+  Goal: `Make the frozen original-constant cohort stable when post-baseline nested fields are added to pre-existing JSONL records.`
+  Acceptance: `Reproduce the current through-line reconstruction defect with a focused RED control; select and implement an explicit baseline identity-membership contract that preserves every adoption-time constant ID while excluding legitimate post-baseline IDs on the same historical line; reject missing, duplicate, malformed, or drifted original identities; retain an independently derived current constant census; update portable doctrine, local data, tests, task evidence, and the Knowledge Map without weakening claim coverage or changing product behavior.`
+  Verification: `active; the .17.2.6.2.2 synchronization trial added a valid warning_debt object beneath the pre-existing knowledge_cards surface record and the current through-line algorithm reclassified eighteen new nested pointers as original constants, causing count and digest drift before the state was reverted.`
+  Commit: `pending`
   Blocked by: `none`
 
 ## Decisions

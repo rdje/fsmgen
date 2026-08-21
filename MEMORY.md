@@ -6,9 +6,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2`
-- next_action: after the clean `.17.2.6.2.2` implementation commit, activate
-  `.17.2.6.2.3` for complete portable-to-OSVVM source-map translation.
+- active_work_unit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.30`
+- next_action: reproduce the through-line original-constant cohort defect in
+  `t/1637`, then implement exact adoption-time identity membership.
 - in_flight_uncommitted: none.
 - in_flight_background: none
 - blockers: none.
