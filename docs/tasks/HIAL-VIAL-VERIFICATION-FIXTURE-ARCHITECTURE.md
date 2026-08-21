@@ -643,9 +643,31 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.6: activate backend-emission family closure`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7`
-  Status: `proposed`
+  Status: `active`
   Goal: `Integrate runtime-stream construction and the balanced portable workload, then close deterministic generation proof.`
   Acceptance: `Construct runtime_stream_v1 inputs and semantic/result expectations without executing external tools; compose balanced_portable_v1 only after every orthogonal gate candidate passes; prove exact interaction counts, path-independent identities, deterministic inputs/stage reports, complete oracle applicability, nonclaims, same-volume cleanup, and a unified provider-free construction gate ready for .17.3 measurement.`
+  Verification: `Clean backend-emission closure commit 86faa137d completes `.17.2.6` before this pivot. Decisions 0055/0056 and the existing workload catalog already freeze three runtime-eligible backend/tool profiles, five runtime levels, one conservative balanced gate shape, stage-local oracles, fixed guards, locality, cleanup, and explicit nonclaims, but no canonical provider-free runtime/balanced stage constructor exists. The parent is decomposed into runtime-stream construction .1, balanced portable composition .2, and unified family qualification .3; child .1 alone is active. Activation changes no code, test, config, generator, trace, result, external-tool execution, runtime, public API, capability/support, performance, capacity, or product behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7: activate runtime-balanced integration`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.1`
+  Status: `active`
+  Goal: `Implement caller-sealed provider-free runtime-stream construction and exact expected trace/result oracles.`
+  Acceptance: `Consume the existing runtime_stream_v1 catalog for portable SystemVerilog, portable VHDL, and OSVVM across all five levels; derive canonical backend inputs only through completed structural generators; build deterministic compile/run/trace/result expectations without invoking an external tool; freeze reference, 10,000-record gate, 100,000-record qualification, and earliest-authority limit/over-limit specifications without claiming either structural boundary was reached; prove exact profile/tool/limit authority, identities, stage applicability, defensive reports, nonclaims, repository-volume success/failure cleanup, and focused RED-to-GREEN evidence.`
+  Verification: `Clean parent-activation slice owns this implementation next. No source, test, config, generator, trace, result, external tool, runtime, API, capability/support, performance, capacity, or product behavior changes in activation.`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2`
+  Status: `proposed`
+  Goal: `Compose the exact balanced portable workload from completed orthogonal gate constructions.`
+  Acceptance: `Consume fresh successful gate-construction reports for every orthogonal family, then generate balanced_portable_v1 only through canonical VIAL/HIAL, SemanticIR, bridge, ExecutionIR, and portable-SystemVerilog emission routes; prove every decision-0055 interaction count, path-independent identities, byte-equal reruns, complete oracle applicability, mutation rejection, nonclaims, and exact same-volume cleanup without external execution or a capacity claim.`
+  Verification: `pending`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.3`
+  Status: `proposed`
+  Goal: `Qualify runtime-stream and balanced construction as one unified provider-free measurement gate.`
+  Acceptance: `Freeze the complete runtime-profile/level and balanced ownership partition, independently reproduce construction reports, prove authority/oracle/nonclaim applicability, hostile-caller and mutation rejection, same-volume success/failure cleanup, focused/default/guarded compatibility, CI inventory, and synchronized durable truth; then close .17.2.7 and parent .17.2 before .17.3 measurement activation.`
   Verification: `pending`
   Commit: `pending activation`
 
@@ -917,10 +939,18 @@ support authority and qualifies the repaired family. Completed generator
 `.17.2.6.3` includes shared foundation `.1`, portable-SV `.2`, portable-VHDL
 `.3`, OSVVM `.4`, native-UVM `.5`, and family closure `.6`; all six children
 are complete and freeze the exact thirteen-emitted/seven-rejected profile
-partition. Runtime/balanced integration `.17.2.7`, and
-measurement `.17.3` remain later.
+partition. Runtime/balanced parent `.17.2.7` is active as runtime-stream
+construction `.1`, proposed balanced composition `.2`, and proposed unified
+qualification `.3`; `.1` alone is active. Measurement `.17.3` remains later.
 
 ## Decisions
+
+- `2026-08-22`: Activate runtime-stream/balanced integration `.17.2.7` after
+  clean backend-emission closure commit `86faa137d`. Decompose provider-free
+  construction into runtime-stream `.1`, balanced portable `.2`, and unified
+  qualification `.3`; activate `.1` alone. Consume decisions `0055`/`0056`
+  and existing catalog authorities without executing an external tool or
+  claiming a trace boundary, runtime result, performance, support, or capacity.
 
 - `2026-08-22`: Complete backend-emission family closure `.17.2.6.3.6` and
   close generator parent `.17.2.6.3` plus structural-generation parent
@@ -1443,6 +1473,7 @@ measurement `.17.3` remain later.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-22` | `.17.2.7` runtime-stream/balanced activation and decomposition | clean backend-emission predecessor `86faa137d`; complete decisions `0055`/`0056`; current workload catalog/runtime-profile census; three-child task decomposition; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.7` is active as runtime-stream construction `.1`, balanced portable composition `.2`, and unified provider-free qualification `.3`; `.1` alone is active. Activation changes no code, test, config, generator, trace, result, external-tool execution, runtime, API, capability/support, performance, capacity, or product behavior. |
 | `2026-08-22` | `.17.2.6.3.6` family-closure implementation | missing-test RED witness; complete four-profile/five-level catalog derivation; exact thirteen-emitted/seven-rejected partition; repeated construction; representative reference/adjacent evaluation per profile; authority/oracle/metric/diagnostic/content/nonclaim closure; direct-helper, construction, report, and support-claim mutation rejection; same-volume success/rejection/consumer-failure cleanup; syntax; focused, CI-inventory, guarded eleven-file impacted matrix, and native-UVM gallery checks; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; t/1650 passes Files=1/Tests=4 in 119 seconds, CI inventory passes Files=1/Tests=12, and the 4,096-MiB guarded t/1640-t/1650 matrix passes Files=11/Tests=98 in 600 seconds. All twenty outcomes are structurally qualified as thirteen emitted graphs and seven atomic rejections; `.17.2.6.3.6`, `.17.2.6.3`, and `.17.2.6` are done. No external runtime, family-level product report, public API, capability/support, performance, capacity, or product claim changes; `.17.2.7` remains proposed next. |
 | `2026-08-22` | `.17.2.6.3.6` family-closure activation | clean native-UVM predecessor `d8dd1ce82`; decision `0075`; exact 13-emitted/7-rejected partition; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.6.3.6` alone is active to qualify all twenty profile-level outcomes and close `.17.2.6.3` plus `.17.2.6`. No implementation, family report, or product behavior changes. |
 | `2026-08-22` | `.17.2.6.3.5` native-UVM route implementation | RED zero-ownership/public-rejection witness; decision `0075`; caller-sealed shared construction and NativeUVM evaluator; ordinary Parser/PlanBuilder routes; exact artifact/source/map/check/mapping/workflow/identifier/manifest/diagnostic oracles; direct T=128/changed-T=21 falsification; defensive mutation; success/rejection/failure cleanup; syntax; native compatibility/gallery; focused, CI-inventory, and 4,096-MiB guarded ten-file impacted suite; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; five native-UVM profile outcomes join the fifteen portable/OSVVM shapes, but only T=21 emits: 16 artifacts/10 sources/138,345 bytes/75 maps/14 checks/25 mappings/seven review stages/five closure checks, with six intentional operation associations. Every non-reference level rejects the adjacent T=22 witness atomically; later levels are preflight-dominated/not-constructed. The guarded impacted collection passes Files=10/Tests=94 in 467 seconds. Reports and staging are defensive and residue-free. No external runtime, public API, capability/support, performance, capacity, or product claim changes; `.3.6` remains proposed for clean activation next. |
@@ -5290,3 +5321,32 @@ raising an enforcement ceiling.
   surfaces, one exact 0-line/+493-byte book authority, the line-neutral
   45,455-line Knowledge-card surface, zero ceiling increases, diff checks, and
   zero generated-book/scale-stage residue pass.
+
+## Acceptance Checklist (enforced) — `.17.2.7` runtime/balanced activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Integrate runtime-stream
+  construction and the balanced portable workload' --oneline --
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md` identifies
+  deterministic-generation activation commit `49b6e1ba4`, where `.17.2.7`
+  remained proposed behind the five orthogonal construction families. Clean
+  commit `86faa137d` now completes backend emission, so runtime/balanced work
+  needs a separately active owner before RED controls or implementation.
+- [x] **ADDRESSED (verified)** — `.17.2.7` is active as three explicit slices:
+  provider-free runtime-stream construction `.1`, balanced portable composition
+  `.2`, and unified construction qualification `.3`; `.1` alone is active.
+  Decisions `0055`/`0056`, the current catalog, task index, bounded Memory,
+  Knowledge card, and mdBook name the same scope and preserve earliest-cap,
+  stage-oracle, locality, cleanup, and nonclaim boundaries. Activation changes
+  no code, test, config, generator, trace, result, external-tool execution,
+  runtime, API, capability/support, performance, capacity, or product behavior.
+- [x] **NO REGRESSION** — task-tree integrity reports three trees/965 nodes;
+  relative paths report `All tests successful` at `Files=1, Tests=2`; Knowledge
+  Map parity retains 1,150 facts/6,056 questions/6,223 occurrences/133 shards;
+  and claim inventory/disposition closes all 1,426 candidates plus 2,072
+  current/615 original constants with 837 derived gates/589 reviewed records/
+  zero gaps. All 53 mdBook chapters test; the inspected repository-local render
+  contains 88 files/18,949,002 bytes and the exact active-child statement before
+  removal. All 22 live-document surfaces, one exact 0-line/+15-byte book
+  authority, the compacted 45,455-line/3,363,673-byte Knowledge-card surface,
+  zero ceiling increases, diff checks, staged docs-only acceptance, and zero
+  generated-book/scale-stage residue pass.

@@ -99,7 +99,7 @@ graph: sixteen artifacts, ten SystemVerilog sources/138,345 bytes, 75 structural
 associations, fourteen passing checks, 25 selected mappings, seven review stages, and five review-closure checks. Its four
 non-reference levels all execute the adjacent T=22 negotiation rejection; the three levels beyond the gate are explicitly
 preflight-dominated/not-constructed. Independent T=128 and changed-same-count T=21 witnesses reject before artifacts. Family
-closure `.17.2.6.3.6` independently qualifies the exact 13-emitted/7-rejected partition; no runtime, support, or capacity claim follows.
+closure `.17.2.6.3.6` freezes 13/7 outcomes; runtime child `.17.2.7.1` alone is active without runtime/support/capacity claims.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
