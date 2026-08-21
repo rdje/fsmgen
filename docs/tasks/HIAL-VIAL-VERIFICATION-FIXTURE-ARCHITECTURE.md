@@ -535,10 +535,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2.7: qualify complete checking-state family`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6`
-  Status: `active`
+  Status: `done`
   Goal: `Generate backend-emission workloads through each negotiated canonical emitter with structural artifact oracles.`
   Acceptance: `Consume proved execution graphs for portable SystemVerilog, portable VHDL, OSVVM, and native-UVM emission profiles; prove exact inventory/order/relative paths, source identity and map closure, stable generated identifiers, static checks, byte-equal reruns, earliest-cap diagnostics, atomic no-artifact-before-negotiation behavior, and cleanup without external runtime qualification.`
-  Verification: `Decision 0075 closes read-only selection .1 with one checked-AHB anchored operation recipe and profile-local outcomes. Portable SV accepts T=21/1,024/4,096/6,319 and rejects 6,320 at the 16-MiB source cap. Portable VHDL and OSVVM select T=21/128/512/29,508 and adjacent portable-foundation rejection at 29,509, subject to separately owned validator, provider, and source-map repairs. Native UVM accepts only its T=21 selected gallery; T=22 is the adjacent unsupported shape and must fail negotiation before artifact creation. Five repair slices under proposed .2 precede generator .3; no behavior changes in selection.`
+  Verification: `Decision 0075 selected one checked-AHB anchored operation recipe and profile-local outcomes. Repair parent .2 and generator parent .3 are complete. The terminal family watcher derives all twenty catalog outcomes independently, freezes exactly thirteen emitted graphs and seven atomic rejections, reevaluates one reference plus one adjacent rejection per profile, and preserves every authority, oracle, defensive-report, nonclaim, and same-volume cleanup boundary. CI inventory passes Files=1/Tests=12; the 4,096-MiB guarded t/1640-t/1650 matrix passes Files=11/Tests=98 in 600 seconds; and the native-UVM gallery remains exact at nine source snapshots, two review evidence files, 75 map entries, fourteen static checks, and five review-closure checks. No external runtime, public API, capability/support, performance, capacity, or product claim changes.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6: activate backend-emission generation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3`
 
@@ -593,10 +593,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.5: align backend-emission authorities`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the selected canonical backend-emission generator and exact structural artifact oracles.`
   Acceptance: `Implement only after .17.2.6.1 and .17.2.6.2 commit cleanly; decompose per shared foundation and backend when required. Consume only caller-sealed proved execution graphs and canonical backend inputs; prove every selected profile/level's exact negotiation outcome, artifact inventory/order/relative paths, source identities and complete map closure, generated identifiers, structural checks, byte-equal reruns, earliest-cap rejection with no partial graph, defensive reports, repository-local staging and exact cleanup. Execute no external runtime and publish no support, performance, or capacity claim.`
-  Verification: `Clean repair-family predecessor 2d7b3b27e permits implementation activation. The generator is decomposed into one caller-sealed shared construction/evaluation/staging foundation, four ordered profile ladders, and final exact family qualification. Foundation .1 and all four profile children .2-.5 are complete; family closure .6 alone is active. The completed children own all twenty selected profile-level outcomes, partitioned into thirteen emitted graphs and seven atomic rejections, through structural qualification only. Closure activation adds no family report, emitter invocation, external runtime, or product capability/support/performance/capacity claim.`
+  Verification: `The caller-sealed shared foundation, four ordered profile ladders, and terminal family qualification are complete. New t/1650 independently constructs the full four-profile/five-level catalog twice, proves the exact thirteen-emitted/seven-rejected partition, reevaluates one reference and adjacent rejection per profile, freezes applicability and profile-specific structural evidence, and rejects direct-helper bypass, construction/report mutation, support-claim forgery, and staging residue. The guarded t/1640-t/1650 generator/repair matrix passes Files=11/Tests=98 in 600 seconds. This is deterministic structural qualification only: no external runtime, family-level product report, public API, capability/support, performance, or capacity claim is added.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3: activate backend-emission generator`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.6`
 
@@ -636,10 +636,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.5: qualify native UVM emission route`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.6`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify the complete backend-emission profile family and close deterministic structural generation.`
   Acceptance: `Freeze the exact selected/reference/rejected profile-level partition, independent byte-equal reports, authority/oracle applicability, hostile caller and mutation rejection, same-volume success/failure cleanup, complete default plus guarded high-count matrices, repaired-emitter compatibility, CI inventory, synchronized durable truth, and unchanged runtime, API, capability/support, performance, and capacity claims; then close .17.2.6.3 and parent .17.2.6.`
-  Verification: `Clean native-UVM implementation commit d8dd1ce82 completes the final profile child and permits only family qualification .6 to activate. This continuity slice changes no generator, emitter, validator, artifact, runtime, API, capability/support, performance, capacity, or product behavior.`
+  Verification: `The missing-family-watcher RED run failed before t/1650 existed. The completed test derives the four profiles and five catalog levels without a shadow family API, constructs all twenty outcomes twice, and freezes exactly thirteen emitted graphs plus seven atomic rejections. It reevaluates portable-SV reference/over, portable-VHDL reference/over, OSVVM reference/over, and native-UVM reference/gate; freezes each applicable oracle, structural metrics, diagnostics, content identity, byte-equal rerun, and nonclaims; rejects direct profile-helper access, injected or mutated reports, construction mutation, and support-claim forgery; and proves repository-volume staging cleanup after success, rejection, and consumer failure. Syntax passes; focused t/1650 passes Files=1/Tests=4 in 119 seconds; CI inventory passes Files=1/Tests=12; the guarded t/1640-t/1650 impacted matrix passes Files=11/Tests=98 in 600 seconds; and the native-UVM gallery check remains exact. No generator/emitter behavior, external runtime, family-level product report, public API, capability/support, performance, capacity, or product claim changes.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.6: activate backend-emission family closure`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7`
@@ -913,15 +913,23 @@ repair parent `.17.2.6.2` closes its five ordered leaves: `.17.2.6.2.1` through
 validation and source-map anchoring, callback-scoped sealed OSVVM provider
 verification, complete wrapper map translation, and fail-closed native-UVM
 selected-shape negotiation; `.17.2.6.2.5` aligns one closed exact catalog and
-support authority and qualifies the repaired family. Active generator
-`.17.2.6.3` is decomposed into shared foundation `.1`, portable-SV `.2`,
-portable-VHDL `.3`, OSVVM `.4`, native-UVM `.5`, and family closure `.6`;
-foundation `.1` and all four profile children `.2`-`.5` are complete; family
-closure `.6` alone is active. Runtime/balanced
-integration `.17.2.7`, and
+support authority and qualifies the repaired family. Completed generator
+`.17.2.6.3` includes shared foundation `.1`, portable-SV `.2`, portable-VHDL
+`.3`, OSVVM `.4`, native-UVM `.5`, and family closure `.6`; all six children
+are complete and freeze the exact thirteen-emitted/seven-rejected profile
+partition. Runtime/balanced integration `.17.2.7`, and
 measurement `.17.3` remain later.
 
 ## Decisions
+
+- `2026-08-22`: Complete backend-emission family closure `.17.2.6.3.6` and
+  close generator parent `.17.2.6.3` plus structural-generation parent
+  `.17.2.6`. Derive all twenty catalog outcomes without a shadow family API,
+  independently reconstruct one reference and adjacent rejection per profile,
+  freeze the exact thirteen-emitted/seven-rejected partition, authority/oracle
+  applicability, defensive evidence, nonclaims, and same-volume cleanup, then
+  retain runtime-stream/balanced integration `.17.2.7` as the next proposed
+  slice. Add no external runtime or product claim.
 
 - `2026-08-22`: Activate backend-emission family closure `.17.2.6.3.6` after
   clean native-UVM implementation commit `d8dd1ce82`. Qualify the exact twenty-
@@ -1435,6 +1443,7 @@ measurement `.17.3` remain later.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-22` | `.17.2.6.3.6` family-closure implementation | missing-test RED witness; complete four-profile/five-level catalog derivation; exact thirteen-emitted/seven-rejected partition; repeated construction; representative reference/adjacent evaluation per profile; authority/oracle/metric/diagnostic/content/nonclaim closure; direct-helper, construction, report, and support-claim mutation rejection; same-volume success/rejection/consumer-failure cleanup; syntax; focused, CI-inventory, guarded eleven-file impacted matrix, and native-UVM gallery checks; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; t/1650 passes Files=1/Tests=4 in 119 seconds, CI inventory passes Files=1/Tests=12, and the 4,096-MiB guarded t/1640-t/1650 matrix passes Files=11/Tests=98 in 600 seconds. All twenty outcomes are structurally qualified as thirteen emitted graphs and seven atomic rejections; `.17.2.6.3.6`, `.17.2.6.3`, and `.17.2.6` are done. No external runtime, family-level product report, public API, capability/support, performance, capacity, or product claim changes; `.17.2.7` remains proposed next. |
 | `2026-08-22` | `.17.2.6.3.6` family-closure activation | clean native-UVM predecessor `d8dd1ce82`; decision `0075`; exact 13-emitted/7-rejected partition; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.6.3.6` alone is active to qualify all twenty profile-level outcomes and close `.17.2.6.3` plus `.17.2.6`. No implementation, family report, or product behavior changes. |
 | `2026-08-22` | `.17.2.6.3.5` native-UVM route implementation | RED zero-ownership/public-rejection witness; decision `0075`; caller-sealed shared construction and NativeUVM evaluator; ordinary Parser/PlanBuilder routes; exact artifact/source/map/check/mapping/workflow/identifier/manifest/diagnostic oracles; direct T=128/changed-T=21 falsification; defensive mutation; success/rejection/failure cleanup; syntax; native compatibility/gallery; focused, CI-inventory, and 4,096-MiB guarded ten-file impacted suite; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; five native-UVM profile outcomes join the fifteen portable/OSVVM shapes, but only T=21 emits: 16 artifacts/10 sources/138,345 bytes/75 maps/14 checks/25 mappings/seven review stages/five closure checks, with six intentional operation associations. Every non-reference level rejects the adjacent T=22 witness atomically; later levels are preflight-dominated/not-constructed. The guarded impacted collection passes Files=10/Tests=94 in 467 seconds. Reports and staging are defensive and residue-free. No external runtime, public API, capability/support, performance, capacity, or product claim changes; `.3.6` remains proposed for clean activation next. |
 | `2026-08-22` | `.17.2.6.3.5` native-UVM route activation | clean OSVVM predecessor `b8969b525`; decision `0075`; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.6.3.5` alone is active to own exact T=21 review emission plus T=22/larger/changed-same-count pre-artifact rejection through the sealed foundation. Family closure remains proposed. No implementation or product behavior changes. |
@@ -5241,3 +5250,43 @@ raising an enforcement ceiling.
   line-neutral 45,455-line Knowledge-card surface, and zero ceiling increases
   pass. Diff, staged acceptance, the final doctrine gate, generated-book
   removal, and zero scale-stage children complete the activation workflow.
+
+## Acceptance Checklist (enforced) — `.17.2.6.3.6` family-closure implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Qualify the complete backend-
+  emission profile family' --oneline --
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md` identifies
+  decomposition commit `6b08d8146`, while activation commit `b3b97871a` left
+  the terminal leaf intentionally without a canonical family watcher. The
+  honest first `prove -Iperl
+  t/1650-vial-architecture-scale-backend-emission-family-qualification.t`
+  RED run reported `Cannot detect source` because that test did not exist.
+- [x] **ADDRESSED (verified)** — new t/1650 derives the four profiles and five
+  catalog levels directly from closed authorities, constructs every outcome
+  twice, and freezes the exact thirteen-emitted/seven-rejected partition. It
+  independently evaluates one reference and adjacent rejection per profile,
+  checks applicability plus profile-specific artifact/source/map/check/
+  diagnostic evidence, byte-equal identities, and structural-only nonclaims,
+  rejects direct helper access, construction/report/support-claim mutation,
+  and proves repository-volume cleanup after success, rejection, and consumer
+  failure. The leaf, generator parent, and backend-emission parent are done;
+  task index, bounded Memory, Knowledge card, mdBook, claim dispositions, and
+  size authority all select proposed `.17.2.7` next. No generator/emitter,
+  external runtime, family-level product API/report, capability/support,
+  performance, capacity, or product behavior changes.
+- [x] **NO REGRESSION** — t/1650 reports `syntax OK`; its guarded focused run
+  reports `All tests successful` at `Files=1, Tests=4` in 119 seconds. CI
+  inventory reports `Files=1, Tests=12`; the 4,096-MiB guarded t/1640-t/1650
+  repair/generator matrix reports `Files=11, Tests=98` in 600 seconds; and the
+  native-UVM gallery remains exact at nine source snapshots/two evidence files/
+  75 maps/14 static checks/five closure checks. Task-tree integrity remains
+  three trees/962 nodes; relative paths pass at `Files=1, Tests=2`; project
+  data locality passes; and Knowledge Map parity retains 1,150 facts/6,056
+  questions/6,223 occurrences/133 shards. Claim inventory/disposition closes
+  all 1,426 candidates and 2,072 current/615 original constants with 837
+  derived gates/589 reviewed records/zero gaps. All 53 mdBook chapters test;
+  the inspected repository-local render contains 88 files/18,948,892 bytes and
+  the exact closure paragraph before exact removal. All 22 live-document
+  surfaces, one exact 0-line/+493-byte book authority, the line-neutral
+  45,455-line Knowledge-card surface, zero ceiling increases, diff checks, and
+  zero generated-book/scale-stage residue pass.

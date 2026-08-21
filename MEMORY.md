@@ -6,9 +6,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3`
-- next_action: implement `.17.2.6.3.6` with a RED family-partition witness,
-  qualify all 20 outcomes, then close `.17.2.6.3` and parent `.17.2.6`.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7`
+- next_action: after the clean `.17.2.6.3.6` commit, activate `.17.2.7` for
+  runtime-stream construction and balanced portable integration.
 - in_flight_uncommitted: none.
 - in_flight_background: none
 - blockers: none.
