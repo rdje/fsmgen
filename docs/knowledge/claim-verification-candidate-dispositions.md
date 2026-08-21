@@ -285,3 +285,12 @@ a third static transaction derives 4 x 16 = 64 lanes of each kind. The focused
 public-sample oracle checks the transaction factorization and the generated
 ISF, FSM, HDL, and reports. Two one-bit RLAST references remain narrowly
 reviewed selector-contract inputs rather than independent capability gates.
+
+The backend/validation/API review closes 39 current behavior candidates through
+four executable evidence families: bounded VHDL generic maps, direct VHDL
+typed ports/literals/arithmetic, explicit optional ABC mapping, and MCP
+non-object envelope rejection. The VHDL oracles cover both direct and facade
+entry paths plus wrong-cast, syntax-residue, unsupported-aggregate, and
+fail-closed neighbors; ABC remains opt-in/default-off and non-object MCP input
+returns `-32600` before dispatch. The one-bit `.50 -> .51` RLAST selector value
+remains reviewed contract chronology rather than a separate capability gate.
