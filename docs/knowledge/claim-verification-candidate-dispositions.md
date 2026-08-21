@@ -31,6 +31,7 @@ answers:
   - "how are foundational APB behavior claims separated from contract-selection numerals?"
   - "how are APB width protection and back-to-back claims separated from readiness chronology?"
   - "how are APB multi-register protection and composition claims separated by source family?"
+  - "how are APB generalized register-set claims separated by width stride count and policy?"
 date: 2026-08-21
 status: current
 tags: [claim-verification, dispositions, inventory, evidence]
@@ -60,6 +61,7 @@ evidence: >-
   t/1471-ial2-apb-completer.t;
   t/1472-ial2-apb-composition.t;
   docs/knowledge/ial2-apb-multi-register-protection-composition-claim-evidence.md;
+  docs/knowledge/ial2-apb-generalized-register-set-claim-evidence.md;
   docs/tasks/CLAIM-VERIFICATION-ADOPTION.md
 reverify: >-
   scripts/check_claim_verification_dispositions.pl --report && prove -Iperl
@@ -203,3 +205,11 @@ chronology tied to their exact `.619` through `.652` Git records. The current
 behavior gates independently prove queueing, adjacent setup, register and
 window decode, byte masks, protection ownership, report residue, artifacts,
 and profile-alias parity.
+
+The generalized register-set review closes 14 current behavior candidates
+through six distinct 16/32-bit, no-policy/protected, two-to-four-register, and
+two-to-five-register family gates. Twenty-three section-heading, readiness,
+selector, contract, and superseded-guard numerals remain reviewed context.
+Exact too-few, mismatched, adjacent-excess-count, address, policy, artifact,
+and profile-alias controls keep register cardinality separate from stride,
+window, data width, and protection semantics.

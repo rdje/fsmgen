@@ -1,7 +1,7 @@
 # Knowledge Map: `ial2-apb`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **105** facts · **485** uniquely owned question entries.
+> **106** facts · **489** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -90,9 +90,11 @@
 - q="how are APB address-map windows specified?" · facts=[ial2-apb-multi-peripheral-interconnect-contract-selection](../../docs/knowledge/ial2-apb-multi-peripheral-interconnect-contract-selection.md)
 - q="how are APB data16 and remaining-width claims verified?" · facts=[ial2-apb-width-sideband-timing-claim-evidence](../../docs/knowledge/ial2-apb-width-sideband-timing-claim-evidence.md)
 - q="how are APB depth-1 back-to-back and sideband queue claims verified?" · facts=[ial2-apb-width-sideband-timing-claim-evidence](../../docs/knowledge/ial2-apb-width-sideband-timing-claim-evidence.md)
+- q="how are APB generalized register-set claims verified?" · facts=[ial2-apb-generalized-register-set-claim-evidence](../../docs/knowledge/ial2-apb-generalized-register-set-claim-evidence.md)
 - q="how are APB multi-register protection and composition claims verified?" · facts=[ial2-apb-multi-register-protection-composition-claim-evidence](../../docs/knowledge/ial2-apb-multi-register-protection-composition-claim-evidence.md)
 - q="how are APB multi-register reports shaped?" · facts=[ial2-apb-multi-register-decode-behavior](../../docs/knowledge/ial2-apb-multi-register-decode-behavior.md)
 - q="how are APB peripherals listed in the multi-peripheral contract?" · facts=[ial2-apb-multi-peripheral-interconnect-contract-selection](../../docs/knowledge/ial2-apb-multi-peripheral-interconnect-contract-selection.md)
+- q="how are APB register count and adjacent excess boundaries proved?" · facts=[ial2-apb-generalized-register-set-claim-evidence](../../docs/knowledge/ial2-apb-generalized-register-set-claim-evidence.md)
 - q="how are foundational APB completer and multi-register claims verified?" · facts=[ial2-apb-foundational-claim-evidence](../../docs/knowledge/ial2-apb-foundational-claim-evidence.md)
 - q="how do denied APB PPROT policy accesses behave?" · facts=[ial2-apb-pprot-effects-contract-selection](../../docs/knowledge/ial2-apb-pprot-effects-contract-selection.md)
 - q="how does APB PSTRB write masking work?" · facts=[ial2-apb-sideband-strobe-behavior](../../docs/knowledge/ial2-apb-sideband-strobe-behavior.md)
@@ -468,9 +470,11 @@
 - q="which Chapter 14h APB claims are current generated behavior rather than selection history?" · facts=[ial2-apb-multi-register-protection-composition-claim-evidence](../../docs/knowledge/ial2-apb-multi-register-protection-composition-claim-evidence.md)
 - q="which IAL2 APB owners are reachable from bin/fsmgen?" · facts=[ial2-apb-public-surface-import-tree-sync](../../docs/knowledge/ial2-apb-public-surface-import-tree-sync.md)
 - q="which files are selected for APB data16 back-to-back?" · facts=[ial2-apb-data16-back-to-back-contract-selection](../../docs/knowledge/ial2-apb-data16-back-to-back-contract-selection.md)
+- q="which generalized APB two-peripheral measurements are current behavior?" · facts=[ial2-apb-generalized-register-set-claim-evidence](../../docs/knowledge/ial2-apb-generalized-register-set-claim-evidence.md)
 - q="which task owns APB data16 PPROT contract selection?" · facts=[ial2-apb-data16-pprot-effects-readiness-audit](../../docs/knowledge/ial2-apb-data16-pprot-effects-readiness-audit.md)
 - q="who enforces APB PPROT policies in composition?" · facts=[ial2-apb-pprot-effects-behavior](../../docs/knowledge/ial2-apb-pprot-effects-behavior.md)
 - q="why are APB readiness and contract numerals reviewed instead of derived twice?" · facts=[ial2-apb-multi-register-protection-composition-claim-evidence](../../docs/knowledge/ial2-apb-multi-register-protection-composition-claim-evidence.md)
+- q="why are generalized APB headings and contract numerals reviewed separately?" · facts=[ial2-apb-generalized-register-set-claim-evidence](../../docs/knowledge/ial2-apb-generalized-register-set-claim-evidence.md)
 - q="why can't APB AHB and AXI share interconnect decode logic?" · facts=[ial2-apb-multi-peripheral-interconnect-readiness-audit](../../docs/knowledge/ial2-apb-multi-peripheral-interconnect-readiness-audit.md)
 - q="why does .615 implement sideband completer and fixed composition together?" · facts=[ial2-apb-sideband-composition-back-to-back-contract-selection](../../docs/knowledge/ial2-apb-sideband-composition-back-to-back-contract-selection.md)
 - q="why does APB completer need an IAL1 prerequisite?" · facts=[ial2-apb-completer-generated-ial1-substrate-audit](../../docs/knowledge/ial2-apb-completer-generated-ial1-substrate-audit.md)
@@ -779,6 +783,13 @@ _APB generalized multi-peripheral multi-register timing readiness audited_
 
 - **date:** 2026-06-28 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-apb-generalized-multi-peripheral-multi-register-timing-readiness-audit.md`](../../docs/knowledge/ial2-apb-generalized-multi-peripheral-multi-register-timing-readiness-audit.md)
+
+### ial2-apb-generalized-register-set-claim-evidence
+
+_APB generalized register-set claims retain width, stride, count, and policy evidence_
+
+- **date:** 2026-08-21 · **status:** current
+- **source and verification:** [`docs/knowledge/ial2-apb-generalized-register-set-claim-evidence.md`](../../docs/knowledge/ial2-apb-generalized-register-set-claim-evidence.md)
 
 ### ial2-apb-interconnect-composition-contract-selection
 
