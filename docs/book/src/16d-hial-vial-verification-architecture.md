@@ -3502,7 +3502,7 @@ The implemented ladder reports these selected outcomes:
 | serialized plan | exact 1 MiB | exact 4 MiB | exact 16 MiB | first additional complete operation is rejected |
 
 Final default qualification runs the complete architecture-scale family from
-`t/1600` through `t/1628` under the repository RAM guard: all 29 files and 135
+`t/1600` through `t/1628` under the repository RAM guard: all 29 files and 136
 tests pass. The execution generator publishes 40 selected shapes. The 25
 catalog shapes outside that set are deliberate: all 13 `reference_v1` profiles
 plus the four non-reference levels of each fixed scalar axis

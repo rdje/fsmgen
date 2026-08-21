@@ -125,7 +125,7 @@ measured whole-route boundaries are 2,054 bindings (2,055 rejects at `/events`),
 1,043 execution types (1,044 rejects at the serialized-manifest `/` cap), and
 46,294 source-map records (46,295 rejects at `/plan`). Binding, type, and
 source-map unconstructible records are implemented. Final qualification passes
-all 29 architecture-scale files / 135 tests; 40 selected execution shapes are
+all 29 architecture-scale files / 136 tests; 40 selected execution shapes are
 owned, while 13 reference profiles and 12 fixed-scalar profiles remain
 deliberately unselected and fail closed. `.17.2.4` is complete and `.17.2.5`
 is next. `.17.4` owns the cross-layer cap-policy decision. Current status and
