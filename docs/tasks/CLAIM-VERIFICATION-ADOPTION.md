@@ -301,7 +301,50 @@ hidden behind repeated checks of the same kind.
   Status: `active`
   Goal: `Review and migrate the 232 IAL2-AHB execution-scale book candidates.`
   Acceptance: `Every 16c candidate is tied to its exact scale/gate producer and a separating excess or mutation oracle, reclassified as reviewed incidental, or assigned an explicit repair; historical observations are not promoted into current support claims.`
-  Verification: `16c group identity/count, scale producer reruns and adjacent-excess RED controls, zero open group candidates, mdBook/doctrine gates`
+  Verification: `PASS — the committed Chapter 16c group partitions exactly into six evidence-coherent line-range children whose disjoint counts sum to 232; .5.5.1 alone is active.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.5: partition IAL2 AHB claim review`
+  Children: `CLAIM-VERIFICATION-ADOPTION.5.5.1, CLAIM-VERIFICATION-ADOPTION.5.5.2, CLAIM-VERIFICATION-ADOPTION.5.5.3, CLAIM-VERIFICATION-ADOPTION.5.5.4, CLAIM-VERIFICATION-ADOPTION.5.5.5, CLAIM-VERIFICATION-ADOPTION.5.5.6`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.5.1`
+  Status: `active`
+  Goal: `Disposition the 6 Chapter 16c guided-mode, byte-lane, and HBURST candidates on lines 1-1176.`
+  Acceptance: `Mode-map and guided endpoint/interconnect claims retain exact lane, in-word progression, and bounded HBURST evidence without promoting syntax examples into independent capabilities.`
+  Verification: `exact six-candidate range, endpoint/interconnect lane and burst gates, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.5.2`
+  Status: `pending`
+  Goal: `Disposition the 37 Chapter 16c requester-shape and exact-one-through-four BUSY candidates on lines 1177-1656.`
+  Acceptance: `Requester widths, source clauses, qualified BUSY retirement, exact count bounds, aliases, reports, artifacts, and runtime statements retain count-specific evidence or exact chronology.`
+  Verification: `exact 37-candidate range, requester count/runtime/alias gates and invalid-neighbor controls, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.5.3`
+  Status: `pending`
+  Goal: `Disposition the 34 Chapter 16c paired-BUSY and subordinate candidates on lines 1657-2037.`
+  Acceptance: `One-/two-window paired ownership, subordinate storage/phase behavior, aliases, diagnostics, and exact-one-through-four runtimes join their distinct aggregate evidence.`
+  Verification: `exact 34-candidate range, paired/subordinate runtime and alias gates, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.5.4`
+  Status: `pending`
+  Goal: `Disposition the 71 Chapter 16c direct-seed and exact-count progression candidates on lines 2038-2400.`
+  Acceptance: `Direct subordinate/requester seeds, arbitration/phase repairs, exact-count generic/alias progression, artifacts, semantics, MCP, runtime, and shipment checkpoints remain distinguishable.`
+  Verification: `exact 71-candidate range, direct-seed and exact-count evidence/chronology, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.5.5`
+  Status: `pending`
+  Goal: `Disposition the 62 Chapter 16c exact-four, two-window, generalized-range, and repair candidates on lines 2401-2640.`
+  Acceptance: `Exact-four paired/two-window behavior, generalized 2..16 bounds, adjacent-invalid controls, qualified-event repair, and time-local accounting retain separate current and historical outcomes.`
+  Verification: `exact 62-candidate range, exact-four/generalized/repair gates and adjacent controls, inventory/disposition/mdBook/doctrine gates`
+  Commit: `pending`
+
+- ID: `CLAIM-VERIFICATION-ADOPTION.5.5.6`
+  Status: `pending`
+  Goal: `Disposition the 22 Chapter 16c residue, current-boundary, and boundary-free phase candidates on lines 2641-3227.`
+  Acceptance: `Current support/residue, bounded-count, runtime, aggregate, and direct-phase statements join live gates while shipment snapshots and selector chronology remain explicitly historical.`
+  Verification: `exact 22-candidate range, current residue/support/runtime/phase gates, inventory/disposition/mdBook/doctrine gates`
   Commit: `pending`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.6`
@@ -344,6 +387,12 @@ hidden behind repeated checks of the same kind.
   the mdBook. Migration therefore uses one root-doc slice, one general-book
   slice, and three evidence-coherent book clusters rather than one oversized
   documentation rewrite; a separate first child installs disposition honesty.
+- `2026-08-21`: The 232-candidate Chapter 16c group is partitioned by its
+  shipped-reference structure and evidence ownership: guided modes, requester
+  exact counts, paired/subordinate behavior, direct-seed/count progression,
+  exact-four/generalized repair chronology, and current residue/boundary
+  phases. The disjoint `6 + 37 + 34 + 71 + 62 + 22` ranges prevent one current
+  runtime gate from laundering unrelated shipment-time accounting.
 - `2026-08-20`: A migration group remains `required_complete=false` until its
   owning slice has dispositioned every current candidate. The empty `.5.1`
   outcome registry therefore proves mechanism and reports debt; it does not
@@ -587,6 +636,9 @@ hidden behind repeated checks of the same kind.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` pickaxes trace the Chapter 16aa foundation/source census to `7074d3234`, concrete multi-group and mixed queue cardinalities to `a97e02ca8`, and read-data/output-bank totals to `da50f9dfc`. The inventory still left all 43 chapter identities open even though each describes current tracked source, generated report, or bounded composition behavior; no candidate-specific card joined the chapter to those already-shipped producers and watchers.
 - [x] **ADDRESSED (verified)** — all 43 identities now join derived gates across eight separate census, foundation, concrete multi-group, mixed runtime-ID queue, population-bound, read-data-scope, output-bank, and composite-bank evidence families. Fourteen current public report runs plus an independent clause scan reproduce `44/44/46/72/142/44`, both multi-group metric vectors, mixed `6/18/15/2/2`, scope `4/2`, `4/2`, and `70/42`, both composite `48/48/48/12` results, and the `140/139/138/17/78/130/79/48` overlapping source census. The canonical join reports `candidates=1415`, `disposed=895`, `gates=495`, `reviewed=400`, and protocol `557/557` with zero open and `required_complete=1`.
 - [x] **NO REGRESSION** — the exact manager/dynamic-ID watcher baseline at unchanged-product commit `eb9e6a2d2` reports `All tests successful` at `Files=2, Tests=121`; `git diff --name-only eb9e6a2d2..HEAD` proves only claim documentation/registries changed afterward, while this slice freshly re-derived the public reports. Live support-accounting and capability-manifest oracles report `Files=2, Tests=7098`, and the disposition mutation suite reports `Files=1, Tests=9`. Inventory remains `1,415` candidates / `1,523` governed constants. Knowledge Map parity reports `1,142` facts / `5,993` questions / `6,160` occurrences / `132` shards; staged live containment covers `3,039/3,039` paths with unchanged `51,089`-line / `2,699,163`-byte book authority. All 53 chapters test; the inspected 88-file/18,604-KiB build is removed. Task, docs-relative-path, Memory, reference-authority, diff, staged acceptance, and all 12 doctrine gates pass.
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean commit `5b4ebac13` closes the 557-candidate protocol group, leaving the existing 232-candidate `.5.5` leaf as the next dependency-ordered frontier. The single Chapter 16c source mixes current guided behavior and runtime with exact-count evolution, direct-seed repairs, aliases, projections, and shipment-time support checkpoints; treating all 232 candidates as one slice would alias unrelated evidence and create an unsafe review unit.
+- [x] **ADDRESSED (verified)** — committed-inventory line aggregation partitions Chapter 16c into six disjoint children: `.5.5.1=6` on lines 1-1176, `.5.5.2=37` on 1177-1656, `.5.5.3=34` on 1657-2037, `.5.5.4=71` on 2038-2400, `.5.5.5=62` on 2401-2640, and `.5.5.6=22` on 2641-3227. Their exact sum is 232, `.5.5.1` alone is active, and no claim, disposition, evidence producer, product behavior, capability, or support statement changes in this partition slice.
+- [x] **NO REGRESSION** — task-tree integrity, Memory, the unchanged `1,415`-candidate / `1,523`-constant inventory, the disposition join with `ial2_ahb=0/232` intentionally open, docs-relative paths, Knowledge Map parity, live-document authority, diff hygiene, staged acceptance, and all 12 doctrine gates pass from clean predecessor `5b4ebac13`.
 
 ## Verification Log
 
@@ -628,6 +680,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-21` | `.5.4.14` | VHDL generic-map families; direct typed ports, literals, and arithmetic; optional ABC validation; MCP non-object envelopes; selector-contract history; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 40 candidates closed as 39 gates / 1 reviewed; protocol 468/557; Files=4/Tests=167 exact focused run plus support Files=2/Tests=7098; 1,434 governed constants; all registered doctrines` |
 | `2026-08-21` | `.5.4.15` | guided/initiator catalog; AXI AW/W/B/AR/R primitives; single/fixed-four write/read compositions; manager-family count; shipment accounting; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 46 candidates closed as 42 gates / 4 reviewed; protocol 514/557; Files=12/Tests=49 exact focused run plus support Files=2/Tests=7098; 1,480 governed constants; all registered doctrines` |
 | `2026-08-21` | `.5.4.16` | exact manager source/clause census; foundation strict signal totals; concrete multi-group and mixed runtime-ID queues; scalar/multi-beat read-data banks; depth-3 concrete/dynamic compositions; support/manifest accounting; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 43 candidates closed as derived gates across eight evidence families; protocol 557/557 required-complete; current direct reports reproduce every published total; unchanged-product exact AXI baseline eb9e6a2d2 reports Files=2/Tests=121; support Files=2/Tests=7098; 1,523 governed constants; all registered doctrines` |
+| `2026-08-21` | `.5.5` partition | committed-inventory Chapter 16c line aggregation; exact six-child sum; task integrity; docs paths; inventory/disposition/Knowledge Map/live-document/diff/staged-doctrine gates | `PASS — 6 + 37 + 34 + 71 + 62 + 22 = 232 across one disjoint chapter range; .5.5.1 selected alone; no claim, disposition, product, capability, or support behavior changes` |
 
 ## Commit Log
 
@@ -669,3 +722,4 @@ hidden behind repeated checks of the same kind.
 | `.5.4.14` | `CLAIM-VERIFICATION-ADOPTION.5.4.14: disposition backend API claims` | `Maps current VHDL generic-map and typed-lowering, optional ABC validation, and MCP non-object behavior to four executable evidence families while preserving one-bit RLAST selector chronology as a reviewed structural reference.` |
 | `.5.4.15` | `CLAIM-VERIFICATION-ADOPTION.5.4.15: disposition AXI example claims` | `Maps current AXI channel, single/fixed-four composition, catalog, and manager-family statements to 13 source-specific evidence families while preserving three shipment-time support snapshots as historical accounting.` |
 | `.5.4.16` | `CLAIM-VERIFICATION-ADOPTION.5.4.16: disposition AXI manager reference claims` | `Maps all current Chapter 16aa census, foundation, concrete/mixed queue, read-data, and bounded-composition cardinalities to eight independently reproduced executable evidence families and closes protocol review at 557/557.` |
+| `.5.5` | `CLAIM-VERIFICATION-ADOPTION.5.5: partition IAL2 AHB claim review` | `Activates six evidence-coherent Chapter 16c line-range children from the exact 232-candidate census without changing claims, dispositions, product behavior, capability, or support accounting.` |
