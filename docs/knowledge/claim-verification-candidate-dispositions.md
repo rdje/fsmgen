@@ -258,3 +258,12 @@ measurements remain reviewed chronology. The original exact-four `2..4`
 selection is explicitly time-local; current normalization owns `2..16`, and
 the selected two-window runtime after the range boundary remains separately
 owned.
+
+The AHB two-window exact-four/generalized-range review closes nine current
+numeric candidates through separate generic topology/runtime, alias parity,
+live support-accounting, and generalized `2..16` evidence families.
+Twenty-three readiness, contract, projection, superseded-activation, shipment,
+and selector-checkpoint measurements remain reviewed chronology. Exact
+5/8/16 widths and seven all-assertion runtimes, fail-closed neighboring forms,
+no count-specific fixture, and the final 332/373/56 split 28/28 boundary are
+independently watched.
