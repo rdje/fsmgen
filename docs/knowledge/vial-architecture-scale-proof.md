@@ -63,8 +63,8 @@ six-source portable foundation from one fixed adapter and provider, names the
 portable-only 16-MiB authority, and records native UVM's one-million-map cap
 beside its exact 21-operation/75-map/14-check/25-mapping selection. Unknown,
 missing, obsolete, or contradictory fields fail closed; the guarded repair
-family passes 18 files/7,248 tests. Canonical generator `.17.2.6.3` remains
-next. No support, performance, or capacity claim is made.
+family passes 18 files/7,248 tests. Active canonical generator `.17.2.6.3`
+starts with caller-sealed foundation `.1`. No support, performance, or capacity claim is made.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

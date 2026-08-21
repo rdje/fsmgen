@@ -593,11 +593,54 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.5: align backend-emission authorities`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the selected canonical backend-emission generator and exact structural artifact oracles.`
   Acceptance: `Implement only after .17.2.6.1 and .17.2.6.2 commit cleanly; decompose per shared foundation and backend when required. Consume only caller-sealed proved execution graphs and canonical backend inputs; prove every selected profile/level's exact negotiation outcome, artifact inventory/order/relative paths, source identities and complete map closure, generated identifiers, structural checks, byte-equal reruns, earliest-cap rejection with no partial graph, defensive reports, repository-local staging and exact cleanup. Execute no external runtime and publish no support, performance, or capacity claim.`
+  Verification: `Clean repair-family predecessor 2d7b3b27e permits implementation activation. The generator is decomposed into one caller-sealed shared construction/evaluation/staging foundation, four ordered profile ladders, and final exact family qualification. Only foundation .1 is active; no generator, emitter, artifact, runtime, API, capability/support, performance, or capacity behavior changes in this continuity slice.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3: activate backend-emission generator`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.6`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.1`
+  Status: `active`
+  Goal: `Implement the caller-sealed backend-emission construction, evaluation-report, and repository-local staging foundation.`
+  Acceptance: `Add one immutable backend-emission generator boundary that derives only selected catalog specifications, consumes exact checked-AHB inputs and caller-sealed canonical ExecutionIR, owns no backend shape yet, and validates content-addressed construction/evaluation reports defensively. Define closed outcome, artifact-oracle, and nonclaim schemas; deterministic rerun identity; repository-local staging cleanup after success and consumer failure; reference/non-owned/profile/source/report/caller-seal mutation negatives; and no external runtime or product claim.`
   Verification: `pending`
-  Commit: `pending activation`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.2`
+  Status: `proposed`
+  Goal: `Implement the portable-SystemVerilog backend-emission ladder and exact structural oracles.`
+  Acceptance: `Own selected T=21/1,024/4,096/6,319 portable-SystemVerilog routes and adjacent T=6,320 rejection through the shared foundation; prove exact ordered inventory, relative paths, three source identities, complete maps, generated identifiers, byte-equal reruns, 16-MiB earliest-cap atomicity, defensive evidence, and exact cleanup without external runtime or product claims.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.3`
+  Status: `proposed`
+  Goal: `Implement the portable-VHDL backend-emission ladder and exact structural oracles.`
+  Acceptance: `Own selected T=21/128/512/29,508 portable-VHDL routes and adjacent T=29,509 rejection through the shared foundation; prove exact ordered seventeen-artifact/six-source inventory, identities, 59-through-29,546 complete maps, twenty structural checks, generated identifiers, byte-equal reruns, earliest-cap atomicity, defensive evidence, and exact cleanup without external runtime or product claims.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.4`
+  Status: `proposed`
+  Goal: `Implement the OSVVM-qualified backend-emission ladder and exact structural oracles.`
+  Acceptance: `Own selected T=21/128/512/29,508 OSVVM routes and adjacent portable-foundation T=29,509 rejection through the shared foundation and one callback-scoped exact provider evaluation; prove six byte-identical portable sources plus one fixed adapter, sixteen ordered artifacts, translated complete maps, structural checks, provider/source identity, byte-equal reruns, earliest-cap atomicity, defensive evidence, and exact cleanup without external runtime or product claims.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.5`
+  Status: `proposed`
+  Goal: `Implement the native-UVM selected backend-emission route and fail-closed structural oracles.`
+  Acceptance: `Own only the exact selected T=21 native-UVM review shape through the shared foundation; prove sixteen ordered artifacts, ten source identities, 75 complete maps, fourteen checks, 25 selected mappings, generated identifiers, byte-equal reruns, T=22/larger/changed-same-count pre-artifact rejection, defensive evidence, and exact cleanup without executing native UVM or publishing product claims.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.6`
+  Status: `proposed`
+  Goal: `Qualify the complete backend-emission profile family and close deterministic structural generation.`
+  Acceptance: `Freeze the exact selected/reference/rejected profile-level partition, independent byte-equal reports, authority/oracle applicability, hostile caller and mutation rejection, same-volume success/failure cleanup, complete default plus guarded high-count matrices, repaired-emitter compatibility, CI inventory, synchronized durable truth, and unchanged runtime, API, capability/support, performance, and capacity claims; then close .17.2.6.3 and parent .17.2.6.`
+  Verification: `pending`
+  Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7`
   Status: `proposed`
@@ -870,12 +913,19 @@ repair parent `.17.2.6.2` closes its five ordered leaves: `.17.2.6.2.1` through
 validation and source-map anchoring, callback-scoped sealed OSVVM provider
 verification, complete wrapper map translation, and fail-closed native-UVM
 selected-shape negotiation; `.17.2.6.2.5` aligns one closed exact catalog and
-support authority and qualifies the repaired family. Generator `.17.2.6.3` is
-the next clean activation; runtime/balanced
+support authority and qualifies the repaired family. Active generator
+`.17.2.6.3` is decomposed into shared foundation `.1`, portable-SV `.2`,
+portable-VHDL `.3`, OSVVM `.4`, native-UVM `.5`, and family closure `.6`;
+only foundation `.1` is active. Runtime/balanced
 integration `.17.2.7`, and
 measurement `.17.3` remain later.
 
 ## Decisions
+
+- `2026-08-21`: Activate `.17.2.6.3` after clean repair-family commit
+  `2d7b3b27e`. Decompose implementation into one caller-sealed foundation,
+  four profile-local ladders, and one exact family-qualification closure. Keep
+  only foundation `.1` active and leave all emitter/product behavior unchanged.
 
 - `2026-08-21`: Complete `.17.2.6.2.5` and repair parent `.17.2.6.2`.
   Keep every backend-emission structural authority in one closed defensive
@@ -1322,6 +1372,7 @@ measurement `.17.3` remain later.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-21` | `.17.2.6.3` backend-emission generator activation/decomposition | clean repair-family predecessor `2d7b3b27e`; decision `0075`; common workload/ExecutionIR and four repaired profile authority census; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, live-document, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.6.3` is active as a six-child container and only caller-sealed foundation `.1` is active. Four profile ladders and final family closure remain proposed. No code, test, config, artifact, generator, emitter, runtime, API, capability/support, performance, capacity, or product behavior changes. |
 | `2026-08-21` | `.17.2.6.2.5` exact authority alignment and repair-family qualification | six-field RED drift witness; one closed four-profile authority source; defensive clone; unknown/missing/obsolete/contradictory negatives; catalog and VHDL/native-UVM discovery projections; exact OSVVM source/cap/map/check partition; exact native-UVM caps/selected matrix; syntax/focused/capability/family/CI inventory reruns; task/index/Memory/decision/book/fact/rationale continuity; repository doctrine gates | `passed`; catalog and discovery consume one exact authority set, t/1644 passes Files=1/Tests=3, focused catalog/capability regression passes Files=4/Tests=7,108, and the 4,096-MiB guarded complete repair collection passes Files=18/Tests=7,248 in 124 seconds. No staging residue or runtime/API/support/performance/capacity claim change remains; `.17.2.6.2` is done and `.17.2.6.3` is next after the clean commit. |
 | `2026-08-21` | `.17.2.6.2.5` catalog/support alignment activation | clean predecessor `9c92b27f9`; decision `0075`; current catalog/support/emitter authority census; task/index/Memory continuity; task-tree, relative-path, mdBook, containment, claim, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.6.2.5` alone is active to reconcile exact repaired OSVVM source/cap/map authorities and native-UVM cap/selected-matrix authority, reject unknown or contradictory catalog fields, and qualify the five-repair family. No implementation, artifact, runtime, API, support, performance, or capacity behavior changes. |
 | `2026-08-21` | `.17.2.6.2.4` native-UVM selected-shape negotiation | genuine parser/PlanBuilder T=21/22/128 and changed-T=21 witnesses; RED fixed-output loss; exact operation/scenario/fiber/resource/expectation predicate; stable diagnostic and no-output boundary; byte-equal reference rerun; identifier and nonclaim preservation; native-UVM focused regression plus CI inventory; task/index/Memory/decision/book/fact/rationale continuity; repository doctrine gates | `passed`; only the exact selected T=21 shape emits 16 artifacts/10 SystemVerilog sources/138,345 source bytes/75 maps/14 checks. T=22, T=128, and changed T=21 return one VIAL_UVM_BACKEND_UNSUPPORTED diagnostic at /negotiation with no operation identity or graph. Focused plus complete native-UVM emission/review and CI-inventory tests pass at Files=7/Tests=54; runtime/result/support claims remain unchanged. `.2.5` is next after the clean commit. |
@@ -4772,3 +4823,31 @@ raising an enforcement ceiling.
   The book authority records zero line growth/-81 bytes with no ceiling
   increase. Diff, staged acceptance, the final doctrine gate, and exact cleanup
   complete the commit workflow.
+
+## Acceptance Checklist (enforced) — `.17.2.6.3` generator activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Implement the selected
+  canonical backend-emission generator' --oneline --
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md` identifies
+  decomposition commit `63655fee2`, where `.17.2.6.3` remained one proposed
+  implementation node until route selection and five prerequisite repairs
+  completed. Clean predecessor `2d7b3b27e` now closes those prerequisites, but
+  the node still combines caller sealing, shared reports/staging, four distinct
+  profile ladders, high-count proof, family qualification, docs, and closure.
+- [x] **ADDRESSED (verified)** — `.17.2.6.3` is active only as a container and
+  decomposes into six exact children: caller-sealed foundation `.1`, portable
+  SystemVerilog `.2`, portable VHDL `.3`, OSVVM `.4`, native UVM `.5`, and final
+  family qualification `.6`. Only `.1` is active; every behavior-bearing
+  profile sibling remains proposed. Task index, bounded Memory, Knowledge card,
+  and mdBook name the same frontier. No code, test, config, artifact, generator,
+  emitter, runtime, API, capability/support, performance, or capacity behavior
+  changes.
+- [x] **NO REGRESSION** — task-tree integrity reports three trees/962 nodes;
+  relative paths pass at `Files=1, Tests=2`; Knowledge Map parity retains 1,150
+  facts/6,056 questions/6,223 occurrences/133 shards. All 53 mdBook chapters
+  test, and the inspected repository-local render contains 88 files/18,914,431
+  bytes before exact removal. The claim inventory/disposition join is current
+  with zero open owners. Live-document authority records zero book-line growth
+  and +83 bytes with no ceiling increase. Diff, staged acceptance, the final
+  doctrine gate, zero artifact residue, and the docs-only implementation
+  exemption complete the activation commit.
