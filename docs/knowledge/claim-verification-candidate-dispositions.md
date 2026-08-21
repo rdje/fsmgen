@@ -294,3 +294,12 @@ entry paths plus wrong-cast, syntax-residue, unsupported-aggregate, and
 fail-closed neighbors; ABC remains opt-in/default-off and non-object MCP input
 returns `-32600` before dispatch. The one-bit `.50 -> .51` RLAST selector value
 remains reviewed contract chronology rather than a separate capability gate.
+
+The Chapter 16a AXI example review closes 42 current behavior candidates
+through 13 source-specific evidence families. Six AW/W/B/AR/R channel
+primitives and five bounded write/read compositions retain separate public,
+report, fail-closed, artifact, HDL, and runtime oracles; the current 140-source
+manager-family cross-reference is independently derived from tracked fixtures
+and support accounting. Four fragments containing the time-local `304/345`,
+`306/347`, and `308/349` shipment totals remain reviewed history, not current
+corpus measurements.

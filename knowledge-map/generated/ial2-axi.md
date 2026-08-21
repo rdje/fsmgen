@@ -1,7 +1,7 @@
 # Knowledge Map: `ial2-axi`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **216** facts · **1036** uniquely owned question entries.
+> **217** facts · **1041** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -210,6 +210,8 @@
 - q="how are WDATA WSTRB and WLAST represented in the first W driver?" · facts=[ial2-axi-w-driver-contract-selection](../../docs/knowledge/ial2-axi-w-driver-contract-selection.md)
 - q="how are independent AW and W completion orders joined?" · facts=[ial2-axi-aw-w-request-composition-first-slice](../../docs/knowledge/ial2-axi-aw-w-request-composition-first-slice.md)
 - q="how are misaligned AXI write commands rejected?" · facts=[ial2-axi-aw-w-request-composition-readiness-audit](../../docs/knowledge/ial2-axi-aw-w-request-composition-readiness-audit.md)
+- q="how are single-beat and fixed-four AXI compositions distinguished?" · facts=[ial2-axi-example-claim-evidence](../../docs/knowledge/ial2-axi-example-claim-evidence.md)
+- q="how are the Chapter 16a AXI IAL2 example claims verified?" · facts=[ial2-axi-example-claim-evidence](../../docs/knowledge/ial2-axi-example-claim-evidence.md)
 - q="how do I run the AXI manager capacity/status .ppif sample?" · facts=[ial2-axi-manager-capacity-status-ppif-first-slice](../../docs/knowledge/ial2-axi-manager-capacity-status-ppif-first-slice.md)
 - q="how do I use AXI manager id-families in PPIF?" · facts=[ial2-axi-manager-id-family-first-slice](../../docs/knowledge/ial2-axi-manager-id-family-first-slice.md)
 - q="how do I use axi w burst4 driver ppif?" · facts=[ial2-axi-w-burst4-driver-behavior](../../docs/knowledge/ial2-axi-w-burst4-driver-behavior.md)
@@ -233,6 +235,7 @@
 - q="how is AXI scalar RRESP aggregation reported?" · facts=[ial2-axi-manager-rresp-aggregation-metadata-first-slice](../../docs/knowledge/ial2-axi-manager-rresp-aggregation-metadata-first-slice.md)
 - q="how is an AXI fixed-four read kept within 4 KiB?" · facts=[ial2-axi-read-burst4-transaction-composition-readiness-audit](../../docs/knowledge/ial2-axi-read-burst4-transaction-composition-readiness-audit.md)
 - q="how is the AXI write burst4 4-KiB boundary checked?" · facts=[ial2-axi-write-burst4-request-composition-behavior](../../docs/knowledge/ial2-axi-write-burst4-request-composition-behavior.md)
+- q="how is the current 140-source AXI manager family count derived?" · facts=[ial2-axi-example-claim-evidence](../../docs/knowledge/ial2-axi-example-claim-evidence.md)
 - q="how is the fixed-four AXI write 4-KiB boundary checked?" · facts=[ial2-axi-write-burst4-request-composition-readiness-audit](../../docs/knowledge/ial2-axi-write-burst4-request-composition-readiness-audit.md)
 - q="how many AXI PPIF sources are shipped?" · facts=[ial2-axi-manager-capacity-status-ppif-first-slice](../../docs/knowledge/ial2-axi-manager-capacity-status-ppif-first-slice.md)
 - q="how many AXI manager capacity status PPIF sources are shipped?" · facts=[ial2-axi-manager-capacity-status-ppif-first-slice](../../docs/knowledge/ial2-axi-manager-capacity-status-ppif-first-slice.md)
@@ -987,10 +990,12 @@
 - q="which schedule will the AXI AR driver use?" · facts=[ial2-axi-ar-driver-readiness-audit](../../docs/knowledge/ial2-axi-ar-driver-readiness-audit.md)
 - q="which test owns AXI AR driver implementation proof?" · facts=[ial2-axi-ar-driver-contract-selection](../../docs/knowledge/ial2-axi-ar-driver-contract-selection.md)
 - q="which test owns AXI R beat acceptor implementation proof?" · facts=[ial2-axi-r-beat-acceptor-contract-selection](../../docs/knowledge/ial2-axi-r-beat-acceptor-contract-selection.md)
+- q="which tests prove the AXI AW W B AR and R public examples?" · facts=[ial2-axi-example-claim-evidence](../../docs/knowledge/ial2-axi-example-claim-evidence.md)
 - q="which tests should cover the first capacity/status generator?" · facts=[ial2-axi-manager-capacity-status-readiness](../../docs/knowledge/ial2-axi-manager-capacity-status-readiness.md)
 - q="why are deeper queue-head groups an audit first?" · facts=[ial2-axi-manager-post-read-single-beat-multi-group-queue-head-read-data-next-slice](../../docs/knowledge/ial2-axi-manager-post-read-single-beat-multi-group-queue-head-read-data-next-slice.md)
 - q="why are multiple or mixed depth-3 queue-head groups next?" · facts=[ial2-axi-manager-post-write-depth3-next-slice](../../docs/knowledge/ial2-axi-manager-post-write-depth3-next-slice.md)
 - q="why are multiple queue-head groups next?" · facts=[ial2-axi-manager-post-queue-head-multi-beat-next-slice-selection](../../docs/knowledge/ial2-axi-manager-post-queue-head-multi-beat-next-slice-selection.md)
+- q="why are the 304 306 308 protocol fixture totals historical?" · facts=[ial2-axi-example-claim-evidence](../../docs/knowledge/ial2-axi-example-claim-evidence.md)
 - q="why audit read-data over read single-beat multi-group queue-head groups first?" · facts=[ial2-axi-manager-post-read-single-beat-multi-group-queue-head-response-demux-next-slice-selection](../../docs/knowledge/ial2-axi-manager-post-read-single-beat-multi-group-queue-head-response-demux-next-slice-selection.md)
 - q="why can axi_aw_driver produce two AW handshakes?" · facts=[ial2-axi-aw-driver-double-handshake](../../docs/knowledge/ial2-axi-aw-driver-double-handshake.md)
 - q="why did AXI IAL2 pivot from the response side to the initiator side?" · facts=[ial2-axi-manager-initiator-pivot](../../docs/knowledge/ial2-axi-manager-initiator-pivot.md)
@@ -1127,6 +1132,13 @@ _The explicitly armed bounded AXI B response acceptor is ready for contract sele
 
 - **date:** 2026-07-23 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-axi-b-response-acceptor-readiness-audit.md`](../../docs/knowledge/ial2-axi-b-response-acceptor-readiness-audit.md)
+
+### ial2-axi-example-claim-evidence
+
+_Chapter 16a AXI examples retain source-specific public and runtime evidence_
+
+- **date:** 2026-08-21 · **status:** current
+- **source and verification:** [`docs/knowledge/ial2-axi-example-claim-evidence.md`](../../docs/knowledge/ial2-axi-example-claim-evidence.md)
 
 ### ial2-axi-full-read-transaction-composition-contract-selection
 

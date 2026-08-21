@@ -284,14 +284,14 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.4.14: disposition backend API claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.4.15`
-  Status: `active`
+  Status: `done`
   Goal: `Disposition the 46 shipped AXI IAL2 example candidates in Chapter 16a.`
   Acceptance: `Guided, initiator, more-control, raw, write/read, single/four-beat, and validation statements join executable example and lowering evidence; headings and syntax values remain non-claims where appropriate.`
-  Verification: `exact path census, AXI example lowering/runtime/validation gates, inventory/disposition/mdBook/doctrine gates`
-  Commit: `pending`
+  Verification: `PASS — all 46 candidates close as 42 derived gates plus four reviewed shipment-accounting fragments; six AXI channel primitives, five bounded compositions, the current initiator catalog, and the live 140-source manager cross-reference retain 13 separate producer/oracle chains; the RAM-guarded exact collection reports Files=12/Tests=49; inventory/disposition, Knowledge Map, mdBook, containment, staged-acceptance, and doctrine gates pass.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.4.15: disposition AXI example claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.4.16`
-  Status: `pending`
+  Status: `active`
   Goal: `Disposition the 43 AXI manager capacity/status candidates in Chapter 16aa.`
   Acceptance: `ID families, transaction events, auto/dynamic IDs, ordering, output capture/banks, raw ARLEN, and bounded progression claims retain exact generated/report/runtime evidence.`
   Verification: `exact path census, capacity/status producer and mutation gates, inventory/disposition/mdBook/doctrine gates`
@@ -581,6 +581,10 @@ hidden behind repeated checks of the same kind.
 - [x] **ADDRESSED (verified)** — all 40 identities now join exactly 39 three-leg derived gates plus one reviewed structural outcome. Bounded generic maps, direct typed ports/literals/arithmetic, optional default-off ABC validation, and pre-dispatch MCP non-object rejection retain four separate producer/oracle chains. The canonical join reports `candidates=1415`, `disposed=806`, `gates=410`, `reviewed=396`, and `protocol=468/557` with 89 open.
 - [x] **NO REGRESSION** — the RAM-guarded VHDL facade/direct, ABC-contract, and MCP-envelope collection reports `All tests successful` at `Files=4, Tests=167`; live support-accounting and capability-manifest oracles separately report `Files=2, Tests=7098`, and the disposition mutation suite reports `Files=1, Tests=9`. Inventory remains `1,415` candidates / `1,434` governed constants. Knowledge Map parity reports `1,140` facts / `5,981` questions / `6,148` occurrences / `132` shards; staged live containment covers `3,037/3,037` paths with unchanged `51,089`-line / `2,699,163`-byte book authority. All 53 chapters test; the inspected 88-file/18,604-KiB build is removed. Task, docs-relative-path, Memory, reference-authority, diff, staged acceptance, and all 12 doctrine gates pass.
 
+- [x] **ROOT CAUSE (WHY + WHERE)** — pre-split `git log -S` pickaxes trace exact-one AW restoration to `aaef04d83`, fixed-four W shipment to `6806ab9d6`, full-write response retirement to `f8838824d`, fixed-four read composition to `0e31c1f93`, and the three time-local support checkpoints to `25068673c`, `0e31c1f93`, and `d5cadf49b`. The inventory still left all 46 Chapter 16a identities open even though 42 state current behavior and four contain shipment-time corpus totals or a test locator.
+- [x] **ADDRESSED (verified)** — all 46 identities now join exactly 42 three-leg derived gates plus four reviewed historical outcomes. Six channel primitives, five bounded compositions, the complete current initiator catalog, and the live 140-source manager cross-reference retain 13 separate producer/oracle chains. The canonical join reports `candidates=1415`, `disposed=852`, `gates=452`, `reviewed=400`, and `protocol=514/557` with 43 open.
+- [x] **NO REGRESSION** — the RAM-guarded exact guided/initiator channel and composition collection reports `All tests successful` at `Files=12, Tests=49`; live support-accounting and capability-manifest oracles separately report `Files=2, Tests=7098`, and the disposition mutation suite reports `Files=1, Tests=9`. Inventory remains `1,415` candidates / `1,480` governed constants. Knowledge Map parity reports `1,141` facts / `5,986` questions / `6,153` occurrences / `132` shards; staged live containment covers `3,038/3,038` paths with unchanged `51,089`-line / `2,699,163`-byte book authority. All 53 chapters test; the inspected 88-file/18,604-KiB build is removed. Task, docs-relative-path, Memory, reference-authority, diff, staged acceptance, and all 12 doctrine gates pass.
+
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
@@ -619,6 +623,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-21` | `.5.4.12` | AHB integration/selector history; public-sync focused-index and regression checkpoints; four-fence book migration; assertion expectation; Chapter 16c exact-one-through-four versus 5..16 boundary; task-ledger reconstruction; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 17 candidates closed as 1 gate / 16 reviewed; protocol 422/557; Files=2/Tests=9 exact focused run plus support Files=2/Tests=7098; 1,388 governed constants; all registered doctrines` |
 | `2026-08-21` | `.5.4.13` | mixed dynamic/static raw-ARLEN capture; three-/four-transaction multi-beat banks; RID/RLAST guards; masks, lengths, and aggregates; selector-contract history; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 6 candidates closed as 4 gates / 2 reviewed; protocol 428/557; Files=2/Tests=121 exact focused run plus support Files=2/Tests=7098; 1,394 governed constants; all registered doctrines` |
 | `2026-08-21` | `.5.4.14` | VHDL generic-map families; direct typed ports, literals, and arithmetic; optional ABC validation; MCP non-object envelopes; selector-contract history; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 40 candidates closed as 39 gates / 1 reviewed; protocol 468/557; Files=4/Tests=167 exact focused run plus support Files=2/Tests=7098; 1,434 governed constants; all registered doctrines` |
+| `2026-08-21` | `.5.4.15` | guided/initiator catalog; AXI AW/W/B/AR/R primitives; single/fixed-four write/read compositions; manager-family count; shipment accounting; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 46 candidates closed as 42 gates / 4 reviewed; protocol 514/557; Files=12/Tests=49 exact focused run plus support Files=2/Tests=7098; 1,480 governed constants; all registered doctrines` |
 
 ## Commit Log
 
@@ -658,3 +663,4 @@ hidden behind repeated checks of the same kind.
 | `.5.4.12` | `CLAIM-VERIFICATION-ADOPTION.5.4.12: disposition AHB integration claims` | `Maps the current Chapter 16c exact-one-through-four catalog versus generic 5..16 statement to existing executable evidence while preserving selectors, public-sync totals, diagram migrations, assertion expectations, and task-ledger censuses as exact chronology.` |
 | `.5.4.13` | `CLAIM-VERIFICATION-ADOPTION.5.4.13: disposition extended AXI claims` | `Maps current mixed dynamic/static raw-ARLEN and three-/four-transaction multi-beat cardinalities to exact lowerer, fixture, report, FSM, and HDL evidence while preserving one-bit RLAST selector inputs as contract chronology.` |
 | `.5.4.14` | `CLAIM-VERIFICATION-ADOPTION.5.4.14: disposition backend API claims` | `Maps current VHDL generic-map and typed-lowering, optional ABC validation, and MCP non-object behavior to four executable evidence families while preserving one-bit RLAST selector chronology as a reviewed structural reference.` |
+| `.5.4.15` | `CLAIM-VERIFICATION-ADOPTION.5.4.15: disposition AXI example claims` | `Maps current AXI channel, single/fixed-four composition, catalog, and manager-family statements to 13 source-specific evidence families while preserving three shipment-time support snapshots as historical accounting.` |

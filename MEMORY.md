@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `CLAIM-VERIFICATION-ADOPTION.5.4.15`; the immediately
-  preceding slice closes all 40 backend, validation, and public-API candidates.
-- next_action: review the exact 46 candidates in Chapter 16a against the shipped
-  AXI IAL2 examples, lowering, runtime, and validation evidence.
+- active_work_unit: `CLAIM-VERIFICATION-ADOPTION.5.4.16`; the immediately
+  preceding slice closes all 46 shipped AXI IAL2 example candidates.
+- next_action: review the exact 43 candidates in Chapter 16aa against AXI
+  manager capacity/status generation, reports, runtime, and support evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none
 - blockers: none.
