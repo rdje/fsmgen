@@ -228,14 +228,14 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.4.6: disposition expanded APB bounds`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.4.7`
-  Status: `active`
+  Status: `done`
   Goal: `Disposition the 40 foundational AHB endpoint, interconnect, HBURST, and BUSY candidates in Chapter 14i lines 1-1070.`
   Acceptance: `Endpoint and aggregate topologies, byte-lane/SEQ/BUSY policies, profile aliases, support counts, and runtime behavior retain distinct producer/oracle chains.`
-  Verification: `exact range census, foundational AHB endpoint/interconnect/HBURST/BUSY gates, inventory/disposition/mdBook/doctrine gates`
-  Commit: `pending`
+  Verification: `PASS — all 40 candidates close as seven derived gates plus 33 reviewed contract, time-local support, and test/decision-identifier outcomes; five current evidence families retain separate one-window decode, aggregate byte-lane alias topology, one-word HBURST, and generic/alias BUSY-park producer/oracle chains; the RAM-guarded exact AHB collection reports Files=13/Tests=57 and support/manifest accounting reports Files=2/Tests=7098; inventory/disposition, Knowledge Map, mdBook, containment, staged-acceptance, and doctrine gates pass.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.4.7: disposition foundational AHB claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.4.8`
-  Status: `pending`
+  Status: `active`
   Goal: `Disposition the 49 AHB semantic-repair and exact-two/three requester-BUSY candidates in Chapter 14i lines 1071-1406.`
   Acceptance: `Wrap progression, data-phase ownership, error timing, conditional BUSY insertion, exact count runtime, aliases, and integration surfaces join independent semantics and generated-HDL evidence.`
   Verification: `exact range census, AHB semantic/runtime/alias gates and mutations, inventory/disposition/mdBook/doctrine gates`
@@ -549,6 +549,10 @@ hidden behind repeated checks of the same kind.
 - [x] **ADDRESSED (verified)** — all 28 identities now join exactly nine three-leg derived gates plus 19 reviewed navigation, structural, or historical outcomes. Five separate remaining data16/protected five-register and 16/32-bit no-policy six-register families retain exact public fixtures, `reg3/reg4/reg5` artifacts, and mismatch, wrong-width/stride/policy, excess-six, excess-seven, and protected-six falsification paths. The canonical join reports `candidates=1415`, `disposed=560`, `gates=335`, `reviewed=225`, and `protocol=222/557` with 335 open; all 157 Chapter 14h APB candidates are closed.
 - [x] **NO REGRESSION** — the RAM-guarded exact APB alias/composition collection reports `All tests successful` at `Files=2, Tests=115`; the disposition mutation suite separately reports `Files=1, Tests=9`. Inventory remains `1,415` candidates / `1,188` governed constants, and the new slice closes as `9` gates / `19` reviewed outcomes. Knowledge Map parity reports `1,132` facts / `5,941` questions / `6,108` occurrences / `130` shards; live containment covers the complete resulting tree with unchanged book authority. All 53 chapters test; the inspected 88-file/18,604-KiB build is removed. Task, docs-relative-path, Memory, reference-authority, diff, staged acceptance, and all 12 doctrine gates pass.
 
+- [x] **ROOT CAUSE (WHY + WHERE)** — exact `git log -S` pickaxes trace the base-zero size-four interconnect to `ab4838dd5`, the one-word HBURST endpoint to `3fb1cf7f4`, and generic/alias aggregate BUSY-park child counts to `43c48ecea` / `6cf029b33`. The inventory still left all 40 Chapter 14i lines 1-1070 identities open even though seven state current behavior and 33 are immutable contract inputs, time-local support milestones, or test/decision identifiers.
+- [x] **ADDRESSED (verified)** — all 40 identities now join exactly seven three-leg derived gates plus 33 reviewed structural, historical, or navigation outcomes. Five separate one-window interconnect, aggregate byte-lane alias, HBURST endpoint, generic aggregate BUSY-park, and aggregate BUSY-park alias families retain exact source, child-count, report, artifact, policy, response, and profile-parity evidence. The canonical join reports `candidates=1415`, `disposed=600`, `gates=342`, `reviewed=258`, and `protocol=262/557` with 295 open; the exact foundational 14i range is closed.
+- [x] **NO REGRESSION** — the RAM-guarded exact AHB endpoint/interconnect/HBURST/BUSY/requester/paired/alias collection reports `All tests successful` at `Files=13, Tests=57`; live support-accounting and capability-manifest oracles separately report `Files=2, Tests=7098`, and the disposition mutation suite reports `Files=1, Tests=9`. Inventory remains `1,415` candidates / `1,228` governed constants. Knowledge Map parity reports `1,133` facts / `5,946` questions / `6,113` occurrences / `130` shards; live containment covers the complete resulting tree with unchanged book authority. All 53 chapters test; the inspected 88-file/18,604-KiB build is removed. Task, docs-relative-path, Memory, reference-authority, diff, staged acceptance, and all 12 doctrine gates pass.
+
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
@@ -579,6 +583,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-21` | `.5.4.4` | APB fixed/multi-peripheral multi-register; 16/32-bit no-policy/protected source shapes; queued composition; register/window decode; report residue; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 46 candidates closed as 17 gates / 29 reviewed; protocol 157/557; Files=3/Tests=147 exact focused run; 1,123 governed constants; all registered doctrines` |
 | `2026-08-21` | `.5.4.5` | APB generalized 16/32-bit no-policy/protected register sets; two-to-four and two-to-five counts; stride/window/policy matrices; adjacent excess controls; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 37 candidates closed as 14 gates / 23 reviewed; protocol 194/557; Files=2/Tests=115 exact focused run; 1,160 governed constants; all registered doctrines` |
 | `2026-08-21` | `.5.4.6` | APB data16/protected five-register and 16/32-bit no-policy six-register bounds; reg3/reg4/reg5 artifacts; excess-six/seven and protected-six controls; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 28 candidates closed as 9 gates / 19 reviewed; protocol 222/557; all 157 Chapter 14h APB candidates closed; Files=2/Tests=115 exact focused run; 1,188 governed constants; all registered doctrines` |
+| `2026-08-21` | `.5.4.7` | AHB one-window decode; aggregate byte-lane aliases; one-word HBURST; endpoint/aggregate BUSY parking; requester and paired runtime; profile aliases; support/manifest accounting; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 40 candidates closed as 7 gates / 33 reviewed; protocol 262/557; Files=13/Tests=57 exact focused run plus support Files=2/Tests=7098; 1,228 governed constants; all registered doctrines` |
 
 ## Commit Log
 
@@ -610,3 +615,4 @@ hidden behind repeated checks of the same kind.
 | `.5.4.4` | `CLAIM-VERIFICATION-ADOPTION.5.4.4: disposition APB composition claims` | `Maps current APB fixed/multi-peripheral multi-register, queued, protected, register/window, and report-residue statements to nine family-specific gates while preserving readiness, selector, and contract chronology as reviewed context.` |
 | `.5.4.5` | `CLAIM-VERIFICATION-ADOPTION.5.4.5: disposition generalized APB claims` | `Maps current generalized APB width, stride, window, register-count, policy-matrix, artifact, and boundary statements to six family-specific gates while preserving section headings and readiness/selection chronology as reviewed context.` |
 | `.5.4.6` | `CLAIM-VERIFICATION-ADOPTION.5.4.6: disposition expanded APB bounds` | `Maps the remaining data16/protected five-register and 16/32-bit no-policy six-register statements to five family-specific gates while preserving headings and readiness/selection chronology and retaining protected-six deferral.` |
+| `.5.4.7` | `CLAIM-VERIFICATION-ADOPTION.5.4.7: disposition foundational AHB claims` | `Maps current interconnect, byte-lane alias, HBURST, and aggregate BUSY-park statements to five family-specific gates while preserving contract inputs, support milestones, and test/decision identifiers as reviewed chronology.` |

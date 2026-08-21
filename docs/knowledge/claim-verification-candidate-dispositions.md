@@ -223,3 +223,11 @@ and prior-guard numerals remain reviewed context. Exact `reg3/reg4/reg5`
 artifact checks plus excess-six, excess-seven, mismatch, width, stride,
 policy, and protected-six RED controls preserve the selected bounds and the
 remaining deferral honestly.
+
+The foundational AHB review closes seven current static-decode, aggregate
+byte-lane topology, HBURST in-word, and generic/alias BUSY-park candidates
+through five evidence families. Thirty-three contract inputs, time-local
+support totals, and test/decision identifiers remain reviewed chronology.
+Exact one-/two-subordinate child counts, burst/address/control rejection,
+`parks_on` versus `clears_on`, artifact/report identity, and profile-alias
+parity keep the current behavior separate from its historical milestones.
