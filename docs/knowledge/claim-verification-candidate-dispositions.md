@@ -35,6 +35,7 @@ answers:
   - "how are APB five-register and six-register bounds separated from selection history?"
   - "how are AHB requester shape and exact-one-through-four BUSY claims verified?"
   - "how are paired AHB BUSY phase-pipeline and subordinate-shape claims verified?"
+  - "how are direct-seed and exact-count AHB progression claims separated from shipment chronology?"
 date: 2026-08-21
 status: current
 tags: [claim-verification, dispositions, inventory, evidence]
@@ -68,6 +69,7 @@ evidence: >-
   docs/knowledge/ial2-apb-expanded-register-bound-claim-evidence.md;
   docs/knowledge/ial2-ahb-requester-claim-evidence.md;
   docs/knowledge/ial2-ahb-paired-subordinate-claim-evidence.md;
+  docs/knowledge/ial2-ahb-direct-exact-count-claim-evidence.md;
   docs/tasks/CLAIM-VERIFICATION-ADOPTION.md
 reverify: >-
   scripts/check_claim_verification_dispositions.pl --report && prove -Iperl
@@ -345,3 +347,12 @@ reviewed chronology. Separate controls retain parking versus non-parking
 report truth, exact generic/alias topology, status/control non-interference,
 five fixed-wrap modes, two-acceptance/two-completion phase ownership, and
 fail-closed subordinate storage/width neighbors.
+
+The direct-seed/exact-count Chapter 16c review closes six current two-window
+exact-three, exact-four requester, and one-window exact-four paired candidates
+through three feature-specific gates. Sixty-five direct repair/test locators,
+readiness and contract inputs, disposable candidate measurements, projections,
+and shipment checkpoints remain reviewed chronology. One guarded nine-file
+run retains the direct Q-named repair and exact-three/exact-four generic,
+profile, requester, and paired surfaces at `Files=9, Tests=34`; projected
+323/364/47 through 329/370/53 totals remain explicitly time-local.

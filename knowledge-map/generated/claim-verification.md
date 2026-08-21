@@ -1,7 +1,7 @@
 # Knowledge Map: `claim-verification`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **45** uniquely owned question entries.
+> **3** facts · **46** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -18,6 +18,7 @@
 - q="how are claim re-derive falsify and durability legs checked?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="how are control data composition lowering and type claims verified?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are core language and tooling book claims separated from syntax and navigation numerals?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
+- q="how are direct-seed and exact-count AHB progression claims separated from shipment chronology?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are foundational APB behavior claims separated from contract-selection numerals?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are generated child route width claims falsified?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are incidental numerals separated from actionable claim debt?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)
