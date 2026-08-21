@@ -572,11 +572,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.2: seal OSVVM provider evaluation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Translate complete portable-VHDL source maps into the OSVVM wrapper graph.`
   Acceptance: `Add RED evidence for the six coarse whole-file placeholders, preserve every detailed portable source-map entry under its OSVVM artifact identity, retain the seven exact adapter maps, and prove complete ordered closure, byte-identical source reuse, mutation rejection, deterministic rerun, and unchanged structural checks.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean completed provider-evaluation and containment-repair commits 189cec95e and aa99aad50 leave this leaf as the ordered repair-family frontier. This activation owns only complete portable-to-OSVVM source-map translation; implementation, generated artifacts, validation evidence, runtime, API, capability/support, performance, and capacity claims remain unchanged until a later implementation commit.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.3: activate OSVVM source-map translation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.4`
   Status: `proposed`
@@ -4573,6 +4573,29 @@ new debt fields from original constant identities. Compacting the two existing
 cards retains the provider fact at 3,355,316 bytes, 127 bytes below warning,
 and removes the immediate state change without widening a bound or deleting a
 fact. Clean activation commit `aac2e265c` routes the defect to
-`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.30`; that leaf replaces current-line
-reconstruction with exact adoption-source membership before the next ordinary
-card crosses the milestone.
+`LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.30`; completed repair `aa99aad50`
+reconstructs the 615-member original cohort from its exact adoption commit and
+lets the real 18-field warning-debt declaration remain current-only without
+raising an enforcement ceiling.
+
+## Acceptance Checklist (enforced) — `.17.2.6.2.3` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log
+  -L 515,555:perl/FSM/VIAL/Backend/VHDLOSVVM2026_05.pm --oneline --no-patch`
+  identifies origin commit `4f350f29c`: `_source_map` emits seven exact adapter
+  mappings but collapses each of the six reused portable sources to one
+  whole-file entry. Completed provider-evaluation repair `189cec95e` and
+  containment repair `aa99aad50` leave translation as the ordered clean
+  repair-family frontier.
+- [x] **ADDRESSED (verified)** — `.17.2.6.2.3` alone is active for complete
+  portable-to-OSVVM map translation. This continuity slice changes no emitter,
+  generated artifact, validator, runtime, public API, capability/support,
+  performance, or capacity behavior; `.17.2.6.2.4` and `.17.2.6.2.5` remain
+  proposed.
+- [x] **NO REGRESSION** — relative-path audit reports `All tests successful` at
+  `Files=1, Tests=2`; task integrity reports three trees/956 nodes; Knowledge
+  Map parity reports 1,150 facts/6,053 questions/6,220 occurrences/133 shards;
+  claim inventory closes all 1,419 candidates with 2,065 current and 615
+  original constants; maintained references report zero changed; and all 53
+  mdBook chapters test. Diff, staged acceptance, and the final `[doctrine] all
+  doctrine checks passed` result complete the activation commit.
