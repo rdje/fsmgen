@@ -5,6 +5,10 @@ use warnings;
 use Exporter 'import';
 use JSON::PP ();
 
+use FSM::VIAL::BackendEmissionAuthority qw(
+    backend_emission_profile_authorities
+);
+
 our @EXPORT_OK = qw(
     build_vial_vhdl_emission_contract
     vial_vhdl_emission_contract_keys
@@ -28,6 +32,9 @@ sub vial_vhdl_emission_contract_keys {
 }
 
 sub build_vial_vhdl_emission_contract {
+    my $authorities = backend_emission_profile_authorities();
+    my $portable = $authorities->{vhdl_portable_ghdl};
+    my $osvvm = $authorities->{vhdl_osvvm_qualified};
     return {
         schema_version => 1,
         status => 'shipped_private_portable_and_osvvm_qualified_profiles',
@@ -193,11 +200,11 @@ sub build_vial_vhdl_emission_contract {
         limits => {
             selected_units => 1,
             selected_domains => 1,
-            generated_vhdl_sources => 6,
-            generated_source_bytes => 16_777_216,
-            total_artifacts => 17,
-            source_map_entries => 59,
-            static_validation_checks => 20,
+            generated_vhdl_sources => $portable->{generated_source_artifacts},
+            generated_source_bytes => $portable->{generated_source_bytes},
+            total_artifacts => $portable->{total_artifacts},
+            source_map_entries => $portable->{reference_source_map_entries},
+            static_validation_checks => $portable->{static_validation_checks},
             selected_mappings => 24,
             emitted_mappings => 20,
             unsupported_mappings => 4,
@@ -215,9 +222,23 @@ sub build_vial_vhdl_emission_contract {
             osvvm_licence_files => 14,
             osvvm_notice_files => 0,
             osvvm_advanced_mappings => 7,
-            osvvm_generated_vhdl_sources => 7,
-            osvvm_source_map_entries => 13,
-            osvvm_static_validation_checks => 12,
+            osvvm_portable_foundation_source_artifacts =>
+                $osvvm->{portable_foundation_source_artifacts},
+            osvvm_wrapper_adapter_source_artifacts =>
+                $osvvm->{wrapper_adapter_source_artifacts},
+            osvvm_total_source_artifacts => $osvvm->{total_source_artifacts},
+            osvvm_total_artifacts => $osvvm->{total_artifacts},
+            osvvm_portable_foundation_source_bytes =>
+                $osvvm->{portable_foundation_source_bytes},
+            osvvm_wrapper_adapter_source_bytes =>
+                $osvvm->{wrapper_adapter_source_bytes},
+            osvvm_wrapper_adapter_source_map_entries =>
+                $osvvm->{wrapper_adapter_source_map_entries},
+            osvvm_source_map_entries => $osvvm->{reference_source_map_entries},
+            osvvm_static_validation_checks =>
+                $osvvm->{wrapper_static_validation_checks},
+            osvvm_portable_foundation_static_validation_checks =>
+                $osvvm->{portable_foundation_static_validation_checks},
             osvvm_provider_analyzed_sources => 61,
             osvvm_runtime_probed_mappings => 6,
             osvvm_analysis_only_mappings => 1,

@@ -15,6 +15,9 @@ use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
+use FSM::VIAL::BackendEmissionAuthority qw(
+    backend_emission_profile_authorities
+);
 use FSM::VIAL::ExecutionRandom;
 
 my $SPEC_SCHEMA = 'fsmgen.vial_architecture_scale_workload.v1';
@@ -569,6 +572,7 @@ sub _remove_empty_created_directories($created) {
 }
 
 sub _catalog_data() {
+    my $backend_authorities = backend_emission_profile_authorities();
     my $anchor = {
         profile => 'checked_ahb_reference_v1',
         vial_source => 'vial/ahb_subordinate_base_output_arbitration.vial',
@@ -597,12 +601,7 @@ sub _catalog_data() {
         sv_portable_verilator => {
             tool_profile => 'verilator_5_046',
             runtime_eligible => JSON::PP::true,
-            structural_authority => {
-                backend_artifacts_base => 3,
-                dut_artifacts_per_selected_unit => 1,
-                generated_bytes => 16_777_216,
-                source_map_entries => 1_000_000,
-            },
+            structural_authority => $backend_authorities->{sv_portable_verilator},
             runtime_limits => {
                 compile_transcript_bytes => 8_388_608,
                 run_transcript_bytes => 67_108_864,
@@ -613,12 +612,7 @@ sub _catalog_data() {
         vhdl_portable_ghdl => {
             tool_profile => 'ghdl_6_0_0_llvm_jit',
             runtime_eligible => JSON::PP::true,
-            structural_authority => {
-                generated_sources => 6,
-                total_artifacts => 17,
-                generated_bytes => 16_777_216,
-                reference_source_map_entries => 59,
-            },
+            structural_authority => $backend_authorities->{vhdl_portable_ghdl},
             runtime_limits => {
                 compile_transcript_bytes => 8_388_608,
                 run_transcript_bytes => 67_108_864,
@@ -629,12 +623,7 @@ sub _catalog_data() {
         vhdl_osvvm_qualified => {
             tool_profile => 'osvvm_2026_05_ghdl_6_0_0_llvm_jit',
             runtime_eligible => JSON::PP::true,
-            structural_authority => {
-                portable_generated_sources => 6,
-                generated_provider_sources => 7,
-                generated_bytes => 16_777_216,
-                provider_materialization => 'external_exact_osvvm_2026_05',
-            },
+            structural_authority => $backend_authorities->{vhdl_osvvm_qualified},
             runtime_limits => {
                 compile_transcript_bytes => 8_388_608,
                 run_transcript_bytes => 67_108_864,
@@ -645,12 +634,8 @@ sub _catalog_data() {
         'sv_uvm_emit.accellera_2020_3_1' => {
             tool_profile => undef,
             runtime_eligible => JSON::PP::false,
-            structural_authority => {
-                generated_sources => 10,
-                total_artifacts => 16,
-                generated_bytes => 16_777_216,
-                execution_status => 'emission_and_static_review_only',
-            },
+            structural_authority =>
+                $backend_authorities->{'sv_uvm_emit.accellera_2020_3_1'},
             runtime_limits => {},
         },
     };

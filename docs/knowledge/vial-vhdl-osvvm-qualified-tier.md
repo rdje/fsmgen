@@ -18,11 +18,12 @@ evidence: >-
   perl/FSM/VIAL/Backend/VHDLOSVVM2026_05.pm;
   perl/FSM/VIAL/Backend/VHDLOSVVMStaticValidator.pm;
   perl/FSM/VIAL/Backend/VHDLOSVVMGHDLQualification.pm;
+  perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/Support/VIALVHDLEmissionContract.pm;
   scripts/refresh_vial_vhdl_osvvm_gallery.pl;
   scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl;
   t/1598-vial-vhdl-osvvm-emission.t;
   t/1599-vial-vhdl-osvvm-ghdl-qualification.t;
-  t/1642-vial-vhdl-osvvm-provider-evaluation.t;
+  t/1642-vial-vhdl-osvvm-provider-evaluation.t; t/1644-vial-backend-emission-authority-alignment.t;
   vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json;
   vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/README.md;
   vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/evidence/provider-materialization.json;
@@ -34,7 +35,8 @@ evidence: >-
 reverify: >-
   prove -Iperl t/1598-vial-vhdl-osvvm-emission.t
   t/1599-vial-vhdl-osvvm-ghdl-qualification.t
-  t/1642-vial-vhdl-osvvm-provider-evaluation.t &&
+  t/1642-vial-vhdl-osvvm-provider-evaluation.t
+  t/1644-vial-backend-emission-authority-alignment.t &&
   perl scripts/refresh_vial_vhdl_osvvm_gallery.pl --check &&
   perl scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl --check
 ---
@@ -58,6 +60,13 @@ result digest behind an opaque capability. Matching emissions receive defensive
 copies; mismatched, forged, stale, or failure-retained handles return no
 artifacts. Standalone emission still verifies independently and remains
 byte-identical, so reuse changes neither qualification nor semantic authority.
+
+Catalog and capability discovery now consume one closed shared authority. It
+separates six portable sources, one fixed 4,351-byte wrapper adapter, seven
+total sources, and provider materialization; the 16-MiB boundary applies only
+to the portable six-source foundation. Reference discovery reports 16 total
+artifacts, 66 maps, twelve wrapper checks, and twenty prerequisite portable
+checks. Unknown, missing, stale, or contradictory fields fail closed.
 
 Related: [[vial-vhdl-portable-profile]],
 [[hial-vial-verification-fixture-architecture]].

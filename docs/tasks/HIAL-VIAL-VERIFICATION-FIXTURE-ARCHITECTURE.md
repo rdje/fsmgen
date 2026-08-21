@@ -550,10 +550,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.1: select backend-emission scale routes`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2`
-  Status: `active`
+  Status: `done`
   Goal: `Repair the selected backend-emission catalog and contract authorities before generator code consumes them.`
   Acceptance: `Implement only after .17.2.6.1 commits cleanly. On activation, decompose five children in this order: linear portable-VHDL validation and accepted-boundary proof; sealed reusable OSVVM provider verification; translated OSVVM source-map closure; native-UVM closed selected-matrix negotiation; then exact catalog/support authority alignment and repair-family qualification. Each child adds RED controls and exact reruns. Align decision, catalog, emitters/validators/manifests, support contracts, tests, Knowledge Map, and mdBook; fail closed on unknown or contradictory authority fields; and close the repair family before .17.2.6.3 activates. Change no runtime path, public API, capability/support, performance, or capacity claim beyond decision 0075's explicitly selected behavior repairs.`
-  Verification: `Clean selection predecessor 0a3a2a05f activates this repair parent and decomposes decision 0075's five defects without changing implementation. Children .1 through .4 are complete: portable VHDL uses one-pass metadata/source-line indexes through its exact accepted boundary; OSVVM reuses one defensive exact provider result only inside a source-bound callback evaluation; the wrapper validates then translates every portable source-map entry; and native UVM admits only its exact selected 21-operation review shape. Family qualification .5 is active after clean implementation predecessor 9c92b27f9.`
+  Verification: `All five ordered repairs are complete. Portable VHDL uses one-pass metadata/source-line indexes through its exact accepted boundary; OSVVM reuses one defensive exact provider result only inside a source-bound callback evaluation; the wrapper validates then translates every portable source-map entry; native UVM admits only its exact selected 21-operation review shape; and one closed authority source now aligns the workload catalog with VHDL/native-UVM discovery. The 4,096-MiB guarded repair-family collection passes Files=18/Tests=7,248 in 124 seconds with exact cleanup and unchanged runtime/support/performance/capacity nonclaims. Generator `.17.2.6.3` may activate only after the clean `.5` commit.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2: activate backend-emission repairs`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.5`
 
@@ -586,11 +586,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.4: close native-UVM shape negotiation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.5`
-  Status: `active`
+  Status: `done`
   Goal: `Align exact backend-emission catalog/support authorities and qualify the repair family.`
   Acceptance: `Correct OSVVM source inventory and portable-foundation cap semantics, record native UVM's enforced source-map cap and exact selected matrix, fail closed on unknown or contradictory authority fields, and qualify all repaired profiles with focused plus guarded family reruns, synchronized Knowledge Map/mdBook/task truth, exact repository-local cleanup, and no new runtime, API, capability/support, performance, or capacity claim.`
-  Verification: `Clean native-UVM predecessor 9c92b27f9 activates this final repair leaf without changing catalog, support, emitter, validator, gallery, runtime, public API, performance, or capacity behavior. Implementation must reconcile decision 0075's exact repaired authorities before the generator can consume them, then close the full five-leaf repair family.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.5: activate catalog/support alignment`
+  Verification: `The focused RED oracle first fails all four incomplete or ambiguous catalog authorities plus the stale OSVVM and incomplete native-UVM discovery projections. BackendEmissionAuthority now owns one exact defensively cloned four-profile set: portable SV names 3 source/8 total artifacts; portable VHDL names 6/17 plus 59 reference maps/20 checks; OSVVM separates six portable sources, one 4,351-byte adapter, seven total sources, 16 total artifacts, portable-only 16-MiB authority, 66 reference maps, and 12+20 checks; native UVM records 10/16 artifacts, 16-MiB/one-million-map enforced caps, and its exact 21-operation/75-map/14-check/25-mapping selection. Unknown, missing, obsolete, or contradictory fields fail closed. Focused catalog/capability regression passes Files=4/Tests=7,108; the guarded repaired-emitter family plus CI inventory passes Files=18/Tests=7,248 in 124 seconds with no residue. Runtime, API, support classification, performance, and capacity claims remain unchanged.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.5: align backend-emission authorities`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3`
   Status: `proposed`
@@ -864,18 +864,24 @@ closed, default t/1629-t/1635 passes at Files=7/Tests=36, and the complete exact
 matrix passes at Files=5/Tests=27 under the repository RAM guard. Completed
 backend-emission selection `.17.2.6.1` and decision `0075` now own the exact
 portable operation ladders, native-UVM adjacent negotiation boundary,
-profile-local structural oracles, and four diagnosed behavior defects. Active
-repair parent `.17.2.6.2` decomposes those defects into five ordered leaves;
-completed `.17.2.6.2.1` through `.17.2.6.2.4` now provide linear portable-VHDL
+profile-local structural oracles, and four diagnosed behavior defects. Completed
+repair parent `.17.2.6.2` closes its five ordered leaves: `.17.2.6.2.1` through
+`.17.2.6.2.4` provide linear portable-VHDL
 validation and source-map anchoring, callback-scoped sealed OSVVM provider
 verification, complete wrapper map translation, and fail-closed native-UVM
-selected-shape negotiation. Final catalog/support alignment `.17.2.6.2.5` is
-active for exact authority reconciliation and repair-family qualification.
-Generator `.17.2.6.3`, runtime/balanced
+selected-shape negotiation; `.17.2.6.2.5` aligns one closed exact catalog and
+support authority and qualifies the repaired family. Generator `.17.2.6.3` is
+the next clean activation; runtime/balanced
 integration `.17.2.7`, and
 measurement `.17.3` remain later.
 
 ## Decisions
+
+- `2026-08-21`: Complete `.17.2.6.2.5` and repair parent `.17.2.6.2`.
+  Keep every backend-emission structural authority in one closed defensive
+  source and project it into workload construction plus VHDL/native-UVM
+  discovery. Reject unknown, missing, obsolete, or contradictory fields;
+  activate generator `.17.2.6.3` only after this family commits cleanly.
 
 - `2026-08-21`: Activate `.17.2.6.2.5` after clean native-UVM repair
   `9c92b27f9`. Reconcile the exact repaired OSVVM and native-UVM authorities,
@@ -1316,6 +1322,7 @@ measurement `.17.3` remain later.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-21` | `.17.2.6.2.5` exact authority alignment and repair-family qualification | six-field RED drift witness; one closed four-profile authority source; defensive clone; unknown/missing/obsolete/contradictory negatives; catalog and VHDL/native-UVM discovery projections; exact OSVVM source/cap/map/check partition; exact native-UVM caps/selected matrix; syntax/focused/capability/family/CI inventory reruns; task/index/Memory/decision/book/fact/rationale continuity; repository doctrine gates | `passed`; catalog and discovery consume one exact authority set, t/1644 passes Files=1/Tests=3, focused catalog/capability regression passes Files=4/Tests=7,108, and the 4,096-MiB guarded complete repair collection passes Files=18/Tests=7,248 in 124 seconds. No staging residue or runtime/API/support/performance/capacity claim change remains; `.17.2.6.2` is done and `.17.2.6.3` is next after the clean commit. |
 | `2026-08-21` | `.17.2.6.2.5` catalog/support alignment activation | clean predecessor `9c92b27f9`; decision `0075`; current catalog/support/emitter authority census; task/index/Memory continuity; task-tree, relative-path, mdBook, containment, claim, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.6.2.5` alone is active to reconcile exact repaired OSVVM source/cap/map authorities and native-UVM cap/selected-matrix authority, reject unknown or contradictory catalog fields, and qualify the five-repair family. No implementation, artifact, runtime, API, support, performance, or capacity behavior changes. |
 | `2026-08-21` | `.17.2.6.2.4` native-UVM selected-shape negotiation | genuine parser/PlanBuilder T=21/22/128 and changed-T=21 witnesses; RED fixed-output loss; exact operation/scenario/fiber/resource/expectation predicate; stable diagnostic and no-output boundary; byte-equal reference rerun; identifier and nonclaim preservation; native-UVM focused regression plus CI inventory; task/index/Memory/decision/book/fact/rationale continuity; repository doctrine gates | `passed`; only the exact selected T=21 shape emits 16 artifacts/10 SystemVerilog sources/138,345 source bytes/75 maps/14 checks. T=22, T=128, and changed T=21 return one VIAL_UVM_BACKEND_UNSUPPORTED diagnostic at /negotiation with no operation identity or graph. Focused plus complete native-UVM emission/review and CI-inventory tests pass at Files=7/Tests=54; runtime/result/support claims remain unchanged. `.2.5` is next after the clean commit. |
 | `2026-08-21` | `.17.2.6.2.2` sealed OSVVM provider evaluation | missing-boundary RED; origin/source audit; exact mocked verification count; source/evidence identity seal; defensive clone; mismatch/forgery/stale/callback-failure negatives; real recursive provider rerun; standalone/gallery/qualification compatibility; task/index/Memory/decision/book/fact/rationale continuity; focused and repository doctrine gates | `passed`; one evaluation verifies the exact provider root once and emits twice byte-identically. Mismatched, forged, and stale capabilities return only VIAL_OSVVM_PROVIDER_EVALUATION_ERROR with no artifacts; callback and invalid-result failures delete the capability, mutation of one result cannot affect the next, and standalone emission still verifies independently. The guarded exact collection passes at Files=3/Tests=48; strengthened t/1642 passes Files=1/Tests=46. A subsequent combined rerun is honestly invalidated when unrelated pgen compilation raises host occupancy to 88.2% against the fixed 88% cutoff; no FSMGen residue remains. No generated bytes, provider qualification, runtime, support, performance, or capacity claim changes; `.2.3` is next after the clean commit. |
@@ -4729,3 +4736,39 @@ raising an enforcement ceiling.
   all 53 mdBook chapters test. Live-document, maintained-reference, and ceiling
   authorities pass with no changed reference and zero ceiling increases. Diff,
   staged acceptance, and the final doctrine gate complete the activation commit.
+
+## Acceptance Checklist (enforced) — `.17.2.6.2.5` authority alignment
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'generated_provider_sources'
+  --oneline -- perl/FSM/VIAL/ArchitectureScaleWorkload.pm` and `git log
+  -S'backend_artifacts_base' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleWorkload.pm` locate foundation commit
+  `063b990f3`: the workload catalog independently encoded incomplete and
+  ambiguous profile facts while support discovery retained a stale thirteen-map
+  OSVVM view and no native-UVM selected-matrix detail. The initial focused RED
+  run failed both top-level subtests and all six authority comparisons.
+- [x] **ADDRESSED (verified)** — `BackendEmissionAuthority` owns one exact,
+  closed, defensively cloned four-profile set. Workload construction and
+  VHDL/native-UVM discovery consume it directly. Portable SV names three source
+  and eight total artifacts; OSVVM separates six portable sources, one fixed
+  adapter, seven total sources, provider identity, portable-only byte authority,
+  66 maps, and 12+20 checks; native UVM records its enforced byte/map caps and
+  exact 21-operation/75-map/14-check/25-mapping selection. Executable negatives
+  reject obsolete, unknown, missing, or contradictory fields.
+- [x] **NO REGRESSION** — syntax passes for all four changed/new modules and
+  t/1644; its exact GREEN oracle passes at `Files=1, Tests=3`. Foundational
+  workload, regression-corpus, capability-manifest, and authority regression
+  passes at `Files=4, Tests=7,108`. The 4,096-MiB guarded portable-SV,
+  portable-VHDL, OSVVM, native-UVM, repair-watcher, support, and CI-inventory
+  collection passes at `Files=18, Tests=7,248` in 124 seconds. No staging
+  residue remains, and runtime, public API, support classification, performance,
+  and capacity claims are unchanged. Task integrity reports three trees/956
+  nodes; relative paths pass at `Files=1, Tests=2`; Knowledge Map parity reports
+  1,150 facts/6,056 questions/6,223 occurrences/133 shards. Claim verification
+  closes all 1,426 candidates and 2,072 current/615 original constants with two
+  explicit unrelated gaps and zero open owners. All 53 mdBook chapters test;
+  the inspected repository-local build contains 88 files/18,913,828 bytes and
+  is removed exactly. Rationale reconstruction retains 28 current entries.
+  The book authority records zero line growth/-81 bytes with no ceiling
+  increase. Diff, staged acceptance, the final doctrine gate, and exact cleanup
+  complete the commit workflow.

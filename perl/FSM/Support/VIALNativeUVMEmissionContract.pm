@@ -5,6 +5,10 @@ use warnings;
 use Exporter 'import';
 use JSON::PP ();
 
+use FSM::VIAL::BackendEmissionAuthority qw(
+    backend_emission_profile_authorities
+);
+
 our @EXPORT_OK = qw(
     build_vial_native_uvm_emission_contract
     vial_native_uvm_emission_contract_keys
@@ -28,6 +32,8 @@ sub vial_native_uvm_emission_contract_keys {
 }
 
 sub build_vial_native_uvm_emission_contract {
+    my $authorities = backend_emission_profile_authorities();
+    my $native = $authorities->{'sv_uvm_emit.accellera_2020_3_1'};
     return {
         schema_version => 1,
         status => 'shipped_private_selected_matrix_and_review_workflow',
@@ -114,10 +120,16 @@ sub build_vial_native_uvm_emission_contract {
         limits => {
             selected_units => 1,
             selected_domains => 1,
-            generated_source_artifacts => 10,
-            generated_source_bytes => 16_777_216,
-            total_artifacts => 16,
-            source_map_entries => 1_000_000,
+            generated_source_artifacts => $native->{generated_source_artifacts},
+            generated_source_bytes => $native->{generated_source_bytes},
+            total_artifacts => $native->{total_artifacts},
+            source_map_entries => $native->{source_map_entries},
+            selected_operation_count => $native->{selected_operation_count},
+            selected_source_map_entries => $native->{selected_source_map_entries},
+            selected_static_validation_checks =>
+                $native->{selected_static_validation_checks},
+            selected_mapping_matrix_entries =>
+                $native->{selected_mapping_matrix_entries},
             identifier_bytes => 255,
         },
         fixture => 'vial/ahb_subordinate_base_output_arbitration.vial',

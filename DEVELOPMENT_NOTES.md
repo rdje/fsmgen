@@ -500,3 +500,21 @@ predicate and one unsatisfied reason keep all unsupported shapes on the same
 pre-render failure path. This is intentionally a semantic support boundary,
 not a byte-capacity boundary; broadening the renderer later must broaden the
 predicate and its evidence together.
+
+## 2026-08-21: Backend scale facts need one closed structural authority
+
+The backend-emission workload catalog and capability discovery describe the
+same private emitter graphs but previously repeated their facts independently.
+That allowed three different kinds of ambiguity: a source count could be
+mistaken for a total artifact count, a wrapper's total bytes could be mistaken
+for its portable foundation's enforced cap, and a large enforced cap could be
+published without the much smaller selected shape that makes it unreachable.
+
+`BackendEmissionAuthority` now owns one exact profile-local projection and
+returns only defensive copies after closed-field validation. Workload
+construction and support discovery consume that projection rather than
+parallel literals. The schema deliberately distinguishes caps from selected
+reference counts and separates OSVVM's portable sources, wrapper adapter, and
+provider identity. A future authority change must therefore update one source
+and its executable re-derivation; an unknown, missing, obsolete, or
+contradictory field stops before generator work can consume it.

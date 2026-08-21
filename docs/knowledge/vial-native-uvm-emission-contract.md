@@ -36,7 +36,7 @@ evidence: >-
   docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md;
   perl/FSM/VIAL/Backend/SVUVMAccellera2020_3_1.pm;
   perl/FSM/VIAL/Backend/SVUVMStaticValidator.pm;
-  perl/FSM/VIAL/Backend/SVUVMReviewClosure.pm;
+  perl/FSM/VIAL/Backend/SVUVMReviewClosure.pm; perl/FSM/VIAL/BackendEmissionAuthority.pm;
   perl/FSM/Support/VIALNativeUVMEmissionContract.pm;
   scripts/refresh_vial_native_uvm_gallery.pl;
   t/1560-vial-native-uvm-emitter-substrate.t;
@@ -44,7 +44,7 @@ evidence: >-
   t/1580-vial-native-uvm-stimulus-services.t;
   t/1590-vial-native-uvm-checking-results.t;
   t/1591-vial-native-uvm-matrix-review.t;
-  t/1643-vial-native-uvm-selected-shape-negotiation.t;
+  t/1643-vial-native-uvm-selected-shape-negotiation.t; t/1644-vial-backend-emission-authority-alignment.t;
   vial/review_gallery/sv_uvm_emit.accellera_2020_3_1/ahb_base_output_foundation/README.md;
   vial/review_gallery/sv_uvm_emit.accellera_2020_3_1/ahb_base_output_foundation/selected-mapping-matrix.json;
   vial/review_gallery/sv_uvm_emit.accellera_2020_3_1/ahb_base_output_foundation/review-workflow.json;
@@ -60,7 +60,8 @@ reverify: >-
   t/1580-vial-native-uvm-stimulus-services.t
   t/1590-vial-native-uvm-checking-results.t
   t/1591-vial-native-uvm-matrix-review.t
-  t/1643-vial-native-uvm-selected-shape-negotiation.t &&
+  t/1643-vial-native-uvm-selected-shape-negotiation.t
+  t/1644-vial-backend-emission-authority-alignment.t &&
   perl scripts/refresh_vial_native_uvm_gallery.pl --check
 ---
 
@@ -173,6 +174,12 @@ an operation identity, manifest, source map, artifact, or staging residue can
 exist. The accepted graph remains ten SystemVerilog sources, 138,345 source
 bytes, 75 maps, and 14 structural checks. This is an honest selected-gallery
 boundary, not a native-UVM scale, runtime, result, or support claim.
+
+Catalog and capability discovery consume the same closed authority: ten source
+artifacts, sixteen total artifacts, the enforced 16-MiB source and one-million-
+entry map caps, and the selected 21-operation/75-map/14-check/25-mapping
+matrix. Defensive validation rejects unknown, missing, stale, or contradictory
+fields; these structural limits add no native-UVM runtime or support claim.
 
 Related: [[hial-vial-verification-fixture-architecture]],
 [[vial-native-uvm-experimental-probe]], [[semantic-introspection-mcp-frontier]].

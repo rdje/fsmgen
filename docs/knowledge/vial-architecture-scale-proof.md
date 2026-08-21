@@ -19,6 +19,9 @@ evidence: >-
   docs/decisions/0056-vial-scale-measurements-use-pinned-evidence-and-bounded-failure.md;
   docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md;
   docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md;
+  perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/VIAL/ArchitectureScaleWorkload.pm;
+  perl/FSM/Support/VIALVHDLEmissionContract.pm; perl/FSM/Support/VIALNativeUVMEmissionContract.pm;
+  t/1644-vial-backend-emission-authority-alignment.t;
   docs/knowledge/vial-execution-scale-reachability.md;
   docs/knowledge/vial-semantic-scale-catalog.md;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
@@ -30,8 +33,9 @@ reverify: >-
   rg -n '88%|4,096 MiB|pinned host|earliest authoritative cap|same-volume'
   docs/decisions/0056-vial-scale-measurements-use-pinned-evidence-and-bounded-failure.md
   docs/book/src/16d-hial-vial-verification-architecture.md &&
-  rg -n 'T=6,319|T=29,508|T=22|Durability gap'
-  docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md
+  rg -n 'T=6,319|T=29,508|T=22|Durability'
+  docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md &&
+  prove -Iperl t/1644-vial-backend-emission-authority-alignment.t
 ---
 
 Decisions `0055` and `0056` select architecture-scale proof without claiming capacity.
@@ -51,11 +55,16 @@ Completed `.17.2.1`-`.17.2.5` cover source through checking-state families.
 Decision `0075` selects checked-AHB backend routes: portable SV accepts
 `T=6,319` and rejects `6,320`; portable VHDL/OSVVM select `29,508/29,509`;
 native UVM owns reference `T=21` and must reject unsupported `T=22`.
-`.17.2.6.2.1` now indexes VHDL metadata and source lines once per source; its
-guarded watcher accepts `T=29,508` twice at 16,776,739 bytes/29,546 maps and
-retains atomic `29,509` rejection. `.17.2.6.2.2` seals exact OSVVM provider
-reuse; active `.17.2.6` still owns OSVVM maps, native-UVM negotiation, catalog,
-and generator durability. No support, performance, or capacity claim is made.
+Completed repair parent `.17.2.6.2` supplies linear VHDL validation, sealed
+OSVVM provider reuse, 66-entry wrapper map closure, and exact native-UVM
+selected-shape negotiation. One closed `BackendEmissionAuthority` source now
+feeds the workload catalog and VHDL/native-UVM discovery. It separates OSVVM's
+six-source portable foundation from one fixed adapter and provider, names the
+portable-only 16-MiB authority, and records native UVM's one-million-map cap
+beside its exact 21-operation/75-map/14-check/25-mapping selection. Unknown,
+missing, obsolete, or contradictory fields fail closed; the guarded repair
+family passes 18 files/7,248 tests. Canonical generator `.17.2.6.3` remains
+next. No support, performance, or capacity claim is made.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
