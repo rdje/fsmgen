@@ -1,7 +1,7 @@
 # Knowledge Map: `ial2-apb`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **103** facts · **477** uniquely owned question entries.
+> **104** facts · **481** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -85,7 +85,10 @@
 - q="does fixed APB composition propagate sideband multi-register back-to-back timing?" · facts=[ial2-apb-sideband-multi-register-back-to-back-behavior](../../docs/knowledge/ial2-apb-sideband-multi-register-back-to-back-behavior.md)
 - q="does the APB interconnect lower into a generated IAL1 artifact?" · facts=[ial2-apb-multi-peripheral-interconnect-contract-selection](../../docs/knowledge/ial2-apb-multi-peripheral-interconnect-contract-selection.md)
 - q="does the first generated APB composition expose busy?" · facts=[ial2-apb-interconnect-composition-contract-selection](../../docs/knowledge/ial2-apb-interconnect-composition-contract-selection.md)
+- q="how are APB 32-bit and data16 protection claims verified?" · facts=[ial2-apb-width-sideband-timing-claim-evidence](../../docs/knowledge/ial2-apb-width-sideband-timing-claim-evidence.md)
 - q="how are APB address-map windows specified?" · facts=[ial2-apb-multi-peripheral-interconnect-contract-selection](../../docs/knowledge/ial2-apb-multi-peripheral-interconnect-contract-selection.md)
+- q="how are APB data16 and remaining-width claims verified?" · facts=[ial2-apb-width-sideband-timing-claim-evidence](../../docs/knowledge/ial2-apb-width-sideband-timing-claim-evidence.md)
+- q="how are APB depth-1 back-to-back and sideband queue claims verified?" · facts=[ial2-apb-width-sideband-timing-claim-evidence](../../docs/knowledge/ial2-apb-width-sideband-timing-claim-evidence.md)
 - q="how are APB multi-register reports shaped?" · facts=[ial2-apb-multi-register-decode-behavior](../../docs/knowledge/ial2-apb-multi-register-decode-behavior.md)
 - q="how are APB peripherals listed in the multi-peripheral contract?" · facts=[ial2-apb-multi-peripheral-interconnect-contract-selection](../../docs/knowledge/ial2-apb-multi-peripheral-interconnect-contract-selection.md)
 - q="how are foundational APB completer and multi-register claims verified?" · facts=[ial2-apb-foundational-claim-evidence](../../docs/knowledge/ial2-apb-foundational-claim-evidence.md)
@@ -459,6 +462,7 @@
 - q="which APB status sample paths are selected?" · facts=[ial2-apb-requester-status-field-contract-selection](../../docs/knowledge/ial2-apb-requester-status-field-contract-selection.md)
 - q="which APB status samples are shipped?" · facts=[ial2-apb-requester-status-field-behavior](../../docs/knowledge/ial2-apb-requester-status-field-behavior.md)
 - q="which APB status/control protected-storage generalization contract was selected?" · facts=[ial2-apb-status-control-protected-storage-generalization-contract-selection](../../docs/knowledge/ial2-apb-status-control-protected-storage-generalization-contract-selection.md)
+- q="which APB width and timing numerals are historical readiness or contract selections?" · facts=[ial2-apb-width-sideband-timing-claim-evidence](../../docs/knowledge/ial2-apb-width-sideband-timing-claim-evidence.md)
 - q="which IAL2 APB owners are reachable from bin/fsmgen?" · facts=[ial2-apb-public-surface-import-tree-sync](../../docs/knowledge/ial2-apb-public-surface-import-tree-sync.md)
 - q="which files are selected for APB data16 back-to-back?" · facts=[ial2-apb-data16-back-to-back-contract-selection](../../docs/knowledge/ial2-apb-data16-back-to-back-contract-selection.md)
 - q="which task owns APB data16 PPROT contract selection?" · facts=[ial2-apb-data16-pprot-effects-readiness-audit](../../docs/knowledge/ial2-apb-data16-pprot-effects-readiness-audit.md)
@@ -1205,3 +1209,10 @@ _APB IAL2 tri-mode mdBook coverage_
 
 - **date:** 2026-06-29 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-apb-trimode-mdbook-coverage.md`](../../docs/knowledge/ial2-apb-trimode-mdbook-coverage.md)
+
+### ial2-apb-width-sideband-timing-claim-evidence
+
+_APB width sideband protection and timing claims retain separate current and historical evidence_
+
+- **date:** 2026-08-21 · **status:** current
+- **source and verification:** [`docs/knowledge/ial2-apb-width-sideband-timing-claim-evidence.md`](../../docs/knowledge/ial2-apb-width-sideband-timing-claim-evidence.md)

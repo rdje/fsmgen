@@ -29,6 +29,7 @@ answers:
   - "how are AXI manager queue depth lane and assertion counts verified?"
   - "why are AXI selector probes host-memory percentages and report bytes reviewed history?"
   - "how are foundational APB behavior claims separated from contract-selection numerals?"
+  - "how are APB width protection and back-to-back claims separated from readiness chronology?"
 date: 2026-08-21
 status: current
 tags: [claim-verification, dispositions, inventory, evidence]
@@ -53,6 +54,8 @@ evidence: >-
   t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t;
   perl/FSM/IAL2/ProtocolIntent/ApbCompleter.pm;
   perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm;
+  perl/FSM/IAL2/ProtocolIntent/ApbRequesterTransfer.pm;
+  t/1470-ial2-apb-profile-alias.t;
   t/1471-ial2-apb-completer.t;
   t/1472-ial2-apb-composition.t;
   docs/tasks/CLAIM-VERIFICATION-ADOPTION.md
@@ -71,6 +74,7 @@ reverify: >-
   t/1569-focused-document-containment.t
   t/1437-axi-ial2-manager-capacity-status-generator.t
   t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t
+  t/1470-ial2-apb-profile-alias.t
   t/1471-ial2-apb-completer.t
   t/1472-ial2-apb-composition.t
 ---
@@ -179,3 +183,11 @@ end-to-end widths, one-entry queueing, overflow rejection, and generated
 review artifacts. Five status-width, multi-register, and sideband numerals
 remain reviewed inputs from their exact contract-selection records rather than
 being double-counted as independent runtime measurements.
+
+The next APB review closes 13 current data16, remaining-width, protection,
+queued-timing, queued-sideband, and two-peripheral propagation statements
+through the ordinary requester, completer, composition, alias, endpoint, and
+interconnect gates. Twenty-two pre-data16 guard values, selected width/status/
+queue contracts, readiness scopes, and superseded 32-bit-only timing guards
+remain reviewed chronology. Their exact selection commits stay durable, while
+the later behavior has its own generated-artifact and negative-boundary proof.

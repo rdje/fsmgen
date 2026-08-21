@@ -1,11 +1,12 @@
 # Knowledge Map: `claim-verification`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **39** uniquely owned question entries.
+> **3** facts · **40** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="can the claim checker prove semantic truth or oracle independence?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
+- q="how are APB width protection and back-to-back claims separated from readiness chronology?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are AXI manager queue depth lane and assertion counts verified?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are blueprint platform and reference-map claims verified?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are bridge source-map calibration claims independently reconstructed?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
