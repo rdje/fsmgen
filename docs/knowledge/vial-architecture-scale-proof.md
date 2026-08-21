@@ -66,13 +66,16 @@ six-source portable foundation from one fixed adapter and provider, names the
 portable-only 16-MiB authority, and records native UVM's one-million-map cap
 beside its exact 21-operation/75-map/14-check/25-mapping selection. Unknown,
 missing, obsolete, or contradictory fields fail closed; the guarded repair
-family passes 18 files/7,248 tests. Completed caller-sealed foundation `.17.2.6.3.1`
-owns no backend shape: it admits only the exact checked-AHB pair through a private
-qualification constructor, regenerates SemanticIR, bridge, canonical ExecutionIR,
-backend inputs, and plan twice through ordinary producers, freezes a closed
-content-addressed nonclaim report, and cleans success/failure staging below the
-repository-local scale root. Portable-SystemVerilog ladder `.2` is now active
-only as a clean implementation owner; no profile shape is owned yet.
+family passes 18 files/7,248 tests. Completed caller-sealed foundation
+`.17.2.6.3.1` retains its private profile-neutral qualification mode. Completed
+portable-SystemVerilog ladder `.2` now owns exactly T=21/1,024/4,096/6,319
+acceptance and T=6,320 rejection. It rebuilds ordinary canonical routes twice,
+freezes the ordered eight-artifact/three-source identities and
+54/1,057/4,129/6,352 complete maps, validates exact operation-ID and manifest
+closure, and rejects the first 16-MiB excess with no partial graph. Reports
+remain defensive and content-addressed; success, expected rejection, and
+consumer failure leave no repository-local scale-stage residue. Portable VHDL
+`.3` is the next proposed activation.
 No support, performance, or capacity claim is made.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],

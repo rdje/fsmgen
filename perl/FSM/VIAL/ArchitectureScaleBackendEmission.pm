@@ -12,6 +12,7 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
 use FSM::VIAL::ArchitectureScaleWorkload;
+use FSM::VIAL::ArchitectureScaleBackendEmission::PortableSV;
 use FSM::VIAL::Parser;
 use FSM::VIAL::PlanBuilder;
 
@@ -34,6 +35,9 @@ my $ORACLE_SCHEMA =
     'fsmgen.vial_architecture_scale_backend_emission_artifact_oracle.v1';
 my $CLAIMS_SCHEMA =
     'fsmgen.vial_architecture_scale_backend_emission_claims.v1';
+my $PORTABLE_SV_CLASS =
+    'FSM::VIAL::ArchitectureScaleBackendEmission::PortableSV';
+my $PORTABLE_SV_PROFILE = $PORTABLE_SV_CLASS->profile;
 
 my @PROFILES = qw(
     sv_portable_verilator
@@ -48,9 +52,8 @@ my @LEVELS = qw(
 my %PROFILE = map { $_ => 1 } @PROFILES;
 my %LEVEL = map { $_ => 1 } @LEVELS;
 
-# This foundation deliberately owns no profile-level shape. Each child slice
-# adds its own closed evaluator before it may publish ownership here.
 my %OWNED_LEVELS = map { $_ => [] } @PROFILES;
+$OWNED_LEVELS{$PORTABLE_SV_PROFILE} = $PORTABLE_SV_CLASS->owned_levels;
 
 my @CONSTRUCT_KEYS = qw(
     backend_profile level reference_hial_text reference_vial_text
@@ -125,8 +128,9 @@ sub _construct_candidate_internal($raw) {
         unless caller eq __PACKAGE__;
     _confess_exact_keys($raw, \@CONSTRUCT_KEYS, 'backend-emission candidate');
     _validate_selection($raw->{backend_profile}, $raw->{level});
-    confess "backend-emission foundation accepts reference_v1 only\n"
-        unless $raw->{level} eq 'reference_v1';
+    confess "backend-emission foundation accepts reference_v1 only outside an owned profile ladder\n"
+        unless $raw->{level} eq 'reference_v1'
+            || _owns($raw->{backend_profile}, $raw->{level});
     _validate_reference_source(
         $raw->{reference_hial_text}, $HIAL_BYTES, $HIAL_SHA256,
         'checked-AHB HIAL',
@@ -198,7 +202,38 @@ sub with_staging($class, @args) {
     });
 }
 
-sub _evaluate_validated($construction) {
+sub _evaluate_foundation_candidate($class, @args) {
+    confess "foundation candidate evaluation is private\n"
+        unless caller eq __PACKAGE__;
+    _exact_invocant($class, '_evaluate_foundation_candidate');
+    confess __PACKAGE__
+        . "->_evaluate_foundation_candidate expects one closed hash\n"
+        unless @args == 1 && ref($args[0]) eq 'HASH' && !blessed($args[0]);
+    _confess_exact_keys($args[0], \@BUILD_KEYS,
+        'backend-emission foundation candidate evaluation');
+    my $construction = _validated_construction($args[0]{construction});
+    return _evaluate_validated($construction, 1);
+}
+
+sub _validate_foundation_candidate($class, @args) {
+    confess "foundation candidate validation is private\n"
+        unless caller eq __PACKAGE__;
+    _exact_invocant($class, '_validate_foundation_candidate');
+    confess __PACKAGE__
+        . "->_validate_foundation_candidate expects one closed hash\n"
+        unless @args == 1 && ref($args[0]) eq 'HASH' && !blessed($args[0]);
+    _confess_exact_keys($args[0], \@VALIDATE_KEYS,
+        'backend-emission foundation candidate validation');
+    my $construction = _validated_construction($args[0]{construction});
+    _validate_evaluation_shape($args[0]{evaluation});
+    my $rebuilt = _evaluate_validated($construction, 1);
+    confess "evaluation is not canonical\n"
+        unless _canonical_json($args[0]{evaluation})
+            eq _canonical_json($rebuilt);
+    return _clone($rebuilt);
+}
+
+sub _evaluate_validated($construction, $foundation_only = 0) {
     my $first = _canonical_route_from_construction($construction);
     my $second = _canonical_route_from_construction($construction);
     confess "canonical backend-emission foundation route was rejected\n"
@@ -244,6 +279,18 @@ sub _evaluate_validated($construction) {
                 sha256_hex(_canonical_json($second_projection->{plan})),
         },
     }));
+    if (!$foundation_only
+            && $construction->{specification}{backend_profile}
+            eq $PORTABLE_SV_PROFILE
+            && _owns(
+                $construction->{specification}{backend_profile},
+                $construction->{specification}{level},
+            )) {
+        return _evaluate_portable_sv(
+            $construction, $first, $second, $first_projection,
+            $stage_identities, $rerun_identity, \@diagnostics,
+        );
+    }
     my $execution = $first_projection->{execution_ir};
     my $report = {
         ok => @diagnostics ? JSON::PP::false : JSON::PP::true,
@@ -319,12 +366,106 @@ sub _evaluate_validated($construction) {
     return _clone($report);
 }
 
+sub _evaluate_portable_sv(
+    $construction, $first_route, $second_route, $first_projection,
+    $stage_identities, $rerun_identity, $route_diagnostics,
+) {
+    my $level = $construction->{specification}{level};
+    my $profile_evaluation = $PORTABLE_SV_CLASS->evaluate({
+        construction => $construction,
+        first_route => $first_route,
+        second_route => $second_route,
+    });
+    my @diagnostics = @$route_diagnostics;
+    push @diagnostics, @{$profile_evaluation->{diagnostics}};
+    my $rejected = $profile_evaluation->{rejected};
+    my $observed_outcome = $profile_evaluation->{observed_outcome};
+    my $execution = $first_projection->{execution_ir};
+    my $report = {
+        ok => @diagnostics ? JSON::PP::false : JSON::PP::true,
+        status => @diagnostics ? 'profile_oracle_failure' : 'profile_validated',
+        schema => $EVALUATION_SCHEMA,
+        schema_version => 1,
+        evaluation_identity => undef,
+        rerun_identity => $rerun_identity,
+        workload_identity => $construction->{workload_identity},
+        family => $FAMILY,
+        level => $level,
+        primary_axis => $PRIMARY_AXIS,
+        backend_profile => $PORTABLE_SV_PROFILE,
+        requested_counts =>
+            _clone($construction->{specification}{requested_counts}),
+        observed_outcome => $observed_outcome,
+        stage_identities => _clone($stage_identities),
+        route_metrics => {
+            scenarios => scalar(@{$execution->{scenarios}}),
+            operations_total =>
+                0 + $execution->{operation_graph}{total_operation_count},
+            fibers_total =>
+                0 + $execution->{operation_graph}{total_fiber_count},
+            simultaneously_live_fibers =>
+                0 + $execution->{operation_graph}
+                    {maximum_simultaneous_live_fibers},
+            source_map_entries => scalar(@{$execution->{source_map}}),
+            serialized_plan_bytes =>
+                bytes::length(_canonical_json($first_projection->{plan})),
+            backend_input_artifacts =>
+                _backend_input_artifact_count(
+                    $first_projection->{backend_inputs}),
+        },
+        outcome_contract => {
+            schema => $OUTCOME_SCHEMA,
+            schema_version => 1,
+            observed_outcome => $observed_outcome,
+            backend_negotiation_executed => JSON::PP::true,
+            artifacts_emitted =>
+                $rejected ? JSON::PP::false : JSON::PP::true,
+            backend_shape_owned => JSON::PP::true,
+            canonical_stages_completed =>
+                [qw(semantic bridge backend_inputs execution_ir plan emit)],
+        },
+        artifact_oracle => {
+            schema => $ORACLE_SCHEMA,
+            schema_version => 1,
+            oracle => 'portable_sv_artifact_graph_v1',
+            portable_sv => $profile_evaluation->{oracle},
+            portable_vhdl => undef,
+            osvvm => undef,
+            native_uvm => undef,
+        },
+        claims => {
+            schema => $CLAIMS_SCHEMA,
+            schema_version => 1,
+            qualification_only => JSON::PP::true,
+            backend_shape_owned => JSON::PP::true,
+            artifact_graph_claimed =>
+                $rejected ? JSON::PP::false : JSON::PP::true,
+            capability_claimed => JSON::PP::false,
+            support_claimed => JSON::PP::false,
+            performance_claimed => JSON::PP::false,
+            capacity_claimed => JSON::PP::false,
+            external_runtime_executed => JSON::PP::false,
+        },
+        explicit_nonclaims =>
+            _clone($construction->{specification}{explicit_nonclaims}),
+        diagnostics => \@diagnostics,
+    };
+    my $identity_projection = _clone($report);
+    delete $identity_projection->{evaluation_identity};
+    $report->{evaluation_identity} = 'backend-emission-evaluation/'
+        . sha256_hex(_canonical_json($identity_projection));
+    return _clone($report);
+}
+
 sub _canonical_route_from_construction($construction) {
     my $hial = _role_input($construction, 'hial_source');
     my $vial = _role_input($construction, 'vial_source');
+    my ($vial_source_name, $vial_text) = _canonical_vial_source(
+        $construction, $vial,
+    );
     my $semantic_ir = FSM::VIAL::Parser->parse_source({
-        text => $vial->{content},
-        source_name => $vial->{relative_path},
+        text => $vial_text,
+        source_name => $vial_source_name,
         source_catalog => {},
     });
     my $built = FSM::VIAL::PlanBuilder->build({
@@ -349,6 +490,17 @@ sub _canonical_route_from_construction($construction) {
         plan => $built->{plan},
         diagnostics => _clone($built->{diagnostics}),
     };
+}
+
+sub _canonical_vial_source($construction, $vial) {
+    my $spec = $construction->{specification};
+    return ($vial->{relative_path}, $vial->{content})
+        unless $spec->{backend_profile} eq $PORTABLE_SV_PROFILE;
+    return @{$PORTABLE_SV_CLASS->canonical_vial_source({
+        level => $spec->{level},
+        reference_relative_path => $vial->{relative_path},
+        reference_text => $vial->{content},
+    })};
 }
 
 sub _route_projection($route) {
@@ -391,6 +543,11 @@ sub _validate_evaluation_shape($evaluation) {
         'backend-emission outcome contract');
     _confess_exact_keys($evaluation->{artifact_oracle}, \@ORACLE_KEYS,
         'backend-emission artifact oracle');
+    _confess_exact_keys(
+        $evaluation->{artifact_oracle}{portable_sv},
+        $PORTABLE_SV_CLASS->oracle_keys,
+        'portable-SystemVerilog artifact oracle',
+    ) if defined $evaluation->{artifact_oracle}{portable_sv};
     _confess_exact_keys($evaluation->{claims}, \@CLAIM_KEYS,
         'backend-emission claims');
     confess "backend-emission evaluation diagnostics must be an array\n"

@@ -43,9 +43,25 @@ sub candidate {
     });
 }
 
-subtest 'foundation owns no profile shape and public admission fails closed' => sub {
-    is_deeply($class->owned_shapes, [],
-        'foundation publishes zero profile-level ownership');
+sub foundation_evaluation {
+    my ($construction) = @_;
+    return FSM::VIAL::ArchitectureScaleBackendEmission::_test_evaluate_foundation_candidate(
+        {construction => $construction},
+    );
+}
+
+sub validate_foundation_evaluation {
+    my ($construction, $evaluation) = @_;
+    return FSM::VIAL::ArchitectureScaleBackendEmission::_test_validate_foundation_candidate({
+            construction => $construction,
+            evaluation => $evaluation,
+        });
+}
+
+subtest 'foundation admits only shapes owned by completed child slices' => sub {
+    is_deeply($class->owned_shapes, [map {{
+        backend_profile => 'sv_portable_verilator', level => $_,
+    }} @levels], 'the completed portable-SV child owns exactly five shapes');
 
     my @accepted;
     for my $profile (@profiles) {
@@ -64,7 +80,9 @@ subtest 'foundation owns no profile shape and public admission fails closed' => 
                 "$profile/$level names the zero-owned boundary") unless $ok;
         }
     }
-    is_deeply(\@accepted, [], 'all twenty catalog shapes remain unowned');
+    is_deeply(\@accepted, [map {
+        "sv_portable_verilator/$_"
+    } @levels], 'only the five completed portable-SV shapes are admitted');
 
     my $unknown_profile = eval {
         $class->construct({
@@ -219,7 +237,7 @@ subtest 'canonical producers yield deterministic caller-sealed ExecutionIR' => s
     is($built->{plan}{schema}, 'fsmgen.vial_plan.v1',
         'build returns the target-neutral plan projection');
 
-    my $evaluation = $class->evaluate({construction => $construction});
+    my $evaluation = foundation_evaluation($construction);
     ok($evaluation->{ok}, 'independent complete-route rerun is byte-deterministic');
     diag($json->encode($evaluation->{diagnostics})) unless $evaluation->{ok};
     is_deeply([sort keys %$evaluation], [sort @{$class->evaluation_keys}],
@@ -310,11 +328,10 @@ subtest 'canonical producers yield deterministic caller-sealed ExecutionIR' => s
 
 subtest 'construction and evaluation mutation are rejected defensively' => sub {
     my $construction = candidate();
-    my $evaluation = $class->evaluate({construction => $construction});
-    my $validated = $class->validate_evaluation({
-        construction => $construction,
-        evaluation => $evaluation,
-    });
+    my $evaluation = foundation_evaluation($construction);
+    my $validated = validate_foundation_evaluation(
+        $construction, $evaluation,
+    );
     is($json->encode($validated), $json->encode($evaluation),
         'canonical evaluation validates byte-for-byte');
 
@@ -339,10 +356,9 @@ subtest 'construction and evaluation mutation are rejected defensively' => sub {
     my $mutated_evaluation = clone($evaluation);
     $mutated_evaluation->{route_metrics}{operations_total}++;
     my $evaluation_mutation = eval {
-        $class->validate_evaluation({
-            construction => $construction,
-            evaluation => $mutated_evaluation,
-        });
+        validate_foundation_evaluation(
+            $construction, $mutated_evaluation,
+        );
         1;
     };
     ok(!$evaluation_mutation, 'post-identity evaluation mutation fails closed');
@@ -352,10 +368,9 @@ subtest 'construction and evaluation mutation are rejected defensively' => sub {
     my $unknown_projection = clone($evaluation);
     $unknown_projection->{backend_result} = {};
     my $unknown = eval {
-        $class->validate_evaluation({
-            construction => $construction,
-            evaluation => $unknown_projection,
-        });
+        validate_foundation_evaluation(
+            $construction, $unknown_projection,
+        );
         1;
     };
     ok(!$unknown, 'backend result cannot enter the foundation projection');
@@ -363,7 +378,7 @@ subtest 'construction and evaluation mutation are rejected defensively' => sub {
         'evaluation schema identifies unknown provider data');
 
     $evaluation->{route_metrics}{operations_total} = 999;
-    my $fresh = $class->evaluate({construction => candidate()});
+    my $fresh = foundation_evaluation(candidate());
     is($fresh->{route_metrics}{operations_total}, 21,
         'returned evaluation shares no mutable storage with reruns');
 };
@@ -435,4 +450,14 @@ package FSM::VIAL::ArchitectureScaleBackendEmission;
 sub _test_construct_candidate {
     my ($args) = @_;
     return __PACKAGE__->_construct_candidate($args);
+}
+
+sub _test_evaluate_foundation_candidate {
+    my ($args) = @_;
+    return __PACKAGE__->_evaluate_foundation_candidate($args);
+}
+
+sub _test_validate_foundation_candidate {
+    my ($args) = @_;
+    return __PACKAGE__->_validate_foundation_candidate($args);
 }
