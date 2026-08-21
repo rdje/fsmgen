@@ -33,6 +33,7 @@ answers:
   - "how are APB multi-register protection and composition claims separated by source family?"
   - "how are APB generalized register-set claims separated by width stride count and policy?"
   - "how are APB five-register and six-register bounds separated from selection history?"
+  - "how are AHB requester shape and exact-one-through-four BUSY claims verified?"
 date: 2026-08-21
 status: current
 tags: [claim-verification, dispositions, inventory, evidence]
@@ -64,6 +65,7 @@ evidence: >-
   docs/knowledge/ial2-apb-multi-register-protection-composition-claim-evidence.md;
   docs/knowledge/ial2-apb-generalized-register-set-claim-evidence.md;
   docs/knowledge/ial2-apb-expanded-register-bound-claim-evidence.md;
+  docs/knowledge/ial2-ahb-requester-claim-evidence.md;
   docs/tasks/CLAIM-VERIFICATION-ADOPTION.md
 reverify: >-
   scripts/check_claim_verification_dispositions.pl --report && prove -Iperl
@@ -321,3 +323,14 @@ ranges, byte/halfword `SEQ` inside one 32-bit word, and four-beat byte-only
 completion-edge phase retention, generalized `2..16` counts, lane-order and
 crossing controls, non-lane0 `INCR4`, and lane-3-to-lane-0 `WRAP4` keep the
 current claims falsifiable.
+
+The requester/count Chapter 16c review closes 17 current width, bounded
+completion, exact-one-through-four BUSY, paired-artifact, and live-support
+candidates through eight count-specific evidence families. Twenty test
+locators, shipment checkpoints, and proposed-contract references remain
+reviewed structure or history. Separate qualified-event and 32-clock stall
+oracles distinguish BUSY presentations from four completed data beats;
+counter traces distinguish exact two, three, and four, while neighboring
+invalid forms retain the generalized `2..16` boundary. Current support
+accounting is independently rederived as 332 protocol fixtures, 373
+supported-plus-strict fixtures, and 56 AHB paths split 28/28.
