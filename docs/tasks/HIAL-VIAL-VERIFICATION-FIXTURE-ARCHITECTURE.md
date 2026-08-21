@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
-- Last updated: `2026-08-20`
+- Last updated: `2026-08-21`
 - Owner: repo-local workflow
 
 ## Goal
@@ -535,11 +535,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.5.2.7: qualify complete checking-state family`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6`
-  Status: `proposed`
+  Status: `active`
   Goal: `Generate backend-emission workloads through each negotiated canonical emitter with structural artifact oracles.`
   Acceptance: `Consume proved execution graphs for portable SystemVerilog, portable VHDL, OSVVM, and native-UVM emission profiles; prove exact inventory/order/relative paths, source identity and map closure, stable generated identifiers, static checks, byte-equal reruns, earliest-cap diagnostics, atomic no-artifact-before-negotiation behavior, and cleanup without external runtime qualification.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean claim-verification adoption closure 0fd653bf0 restores the decision-0074 HIAL frontier with zero open claim debt. Decision 0055 and the shared workload catalog name backend_emission_v1, while the canonical portable-SystemVerilog, portable-VHDL, OSVVM, and native-UVM emitters already expose different artifact graphs, negotiation boundaries, validators, and qualification states. This activation owns a read-only audit of those authorities before implementation is decomposed; it changes no generator, emitter, runtime, public API, capability/support, performance, or capacity behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6: activate backend-emission generation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7`
   Status: `proposed`
@@ -803,8 +803,9 @@ profiles, and 12 deliberately unselected fixed-scalar profiles, all fail-
 closed. Completed `.17.2.5` implements and qualifies every checking-state axis:
 32 selected non-reference shapes are owned, the eight reference profiles fail
 closed, default t/1629-t/1635 passes at Files=7/Tests=36, and the complete exact
-matrix passes at Files=5/Tests=27 under the repository RAM guard. Proposed
-backend-emission `.17.2.6`, runtime/balanced integration `.17.2.7`, and
+matrix passes at Files=5/Tests=27 under the repository RAM guard. Active
+backend-emission `.17.2.6` now audits the four canonical emitter/oracle
+boundaries before implementation; runtime/balanced integration `.17.2.7` and
 measurement `.17.3` remain later.
 
 ## Decisions
@@ -1204,6 +1205,7 @@ measurement `.17.3` remain later.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-21` | `.17.2.6` backend-emission generation activation | clean claim-adoption closure `0fd653bf0`; decision `0074` resume direction; decisions `0055`/`0056`; workload catalog and four canonical emitter/profile authority census; Knowledge Map absence check; task/index/Memory/book continuity; task-tree, relative-path, mdBook, maintained-reference, claim-inventory, containment, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.6` alone is active and first owns a read-only reconciliation of portable-SystemVerilog, portable-VHDL, OSVVM, and native-UVM input, negotiation, artifact, source-map, structural-check, limit, atomicity, and cleanup authorities before implementation decomposition. Task integrity reports three trees/947 nodes, relative paths pass at Files=1/Tests=2, all 53 mdBook chapters test, the inspected repository-local render contains 88 files/18,604 KiB and is removed exactly, all 22 live-document surfaces accept the exact 0-file/+5-line/+348-byte book authority with no ceiling increase, the refreshed inventory reconciles 10,678 numeric lines/1,415 candidates/2,043 constants/the original 615 constants with zero owners, and all 12 doctrines pass. No generator, emitter, runtime, public API, capability/support, performance, or capacity behavior changes. |
 | `2026-08-20` | `.17.2.5.2.7` complete checking-state family qualification | exact eight-axis/five-level catalog partition; 32 selected owned/eight references rejected; independent byte-equal construction/evaluation reports; exact oracle/count selection; defensive validation; hostile source/report/runtime-evidence rejection; same-volume success/failure cleanup; complete default and opt-in high-count matrices under the 4,096-MiB guard; CI inventory, book/fact/task/Memory/containment continuity; staged acceptance and doctrines | `passed`; t/1635 closes the whole-family ownership and nonclaim proof. Guarded default t/1629-t/1635 reports `All tests successful` at `Files=7, Tests=36` in 166 seconds. Complete opt-in t/1630-t/1634 reports `All tests successful` at `Files=5, Tests=27` in 593 seconds, including 65,536 cells, one-million-entry scoreboard/coverage state, 4,096 faults, and 8,440/8,441 random-plan evidence. `.17.2.5.2.7`, `.17.2.5.2`, and `.17.2.5` are done; `.17.2.6` remains proposed next. No product, backend, runtime, public API, support, performance, or capacity claim changes. |
 | `2026-08-20` | `.17.2.5.2.7` final checking-state qualification activation | clean random/replay predecessor `0f383a824`; completed 32-shape ownership; decision `0073`; canonical checking-state contract and Knowledge Map fact; exact partition/default/high-count/route/report/hostile-caller/cleanup/nonclaim closure selection; task/index/Memory/book/fact/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, live-document, diff, and doctrine gates | `passed`; `.17.2.5.2.7` alone is active for final checking-state family qualification and parent closure. No code, test, config, generated artifact, parser, IR, evaluator, backend, support, performance, capacity, or product behavior changes. |
 | `2026-08-20` | `.17.2.5.2.6` random/replay checking ladder | compact ordinary-VIAL 128-choice renderer; canonical Parser/checked-AHB bridge/public-ExecutionBuilder reruns; independent generation plus strict replay; exact keyed-value/order and normalized-plan equality; 32,768 plan-cap, 65,536 preflight-dominated, 65,537 count-cap, and 8,440/8,441 adjacent-boundary outcomes; replay/source/report mutation; same-volume success/failure cleanup; default and RAM-guarded exact regression; book/fact/task/rationale/Memory/containment continuity; staged acceptance and doctrines | `passed`; all four random-occurrence shapes and therefore all 32 non-reference checking-state shapes are owned. The 1,024 gate contains eight scenarios and 1,024 real Boolean occurrences in an exact 2,073,805-byte plan; strict replay differs only by origin. The full 32,768 route returns only `/plan`; 65,536 makes no materialization/count claim; 65,537 returns only `/randomness/decisions`; 8,440 accepts at 16,775,415 plan bytes and 8,441 rejects. Default t/1629-t/1634 passes at Files=6/Tests=33 in 127 seconds; exact t/1634 passes at Files=1/Tests=4 in 467 seconds under the 4,096-MiB guard. No product, backend, runtime, public API, support, performance, or capacity claim changes; final qualification `.17.2.5.2.7` remains proposed next. |
@@ -1318,6 +1320,32 @@ measurement `.17.3` remain later.
 | `2026-08-11` | `.17.2.4.2` scenario qualification/limit/over-limit ladder | decision-0061 exact 512/4,096/4,097 scenarios; caller-sealed level admission; ordinary checked-AHB VIAL/bridge/public-binder route; one real reset/root fiber per scenario; exact source/workload/SemanticIR/bridge/plan identities and topology; stable first-excess diagnostic/no partial output; mutation/missing-source negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; qualification accepts 512 scenarios/operations/fibers, one live fiber, 529 maps, and a 496,709-byte plan with ID `plan/22aedcf295c44c0a1b411b557cb12c9e5476e19077e57e7efe60ec4d7dc1ebe7`. The exact limit accepts 4,096 scenarios/operations/fibers, one live fiber, 4,113 maps, and a 3,779,103-byte plan with ID `plan/036742cfb80ab0f04cf7a7c8d9be1de833f310f5fde98ca3be9e47d331294cfc`. The adjacent 4,097 source returns only `VIAL_EXECUTION_LIMIT_ERROR`, phase `limit`, message `selected_scenarios exceeds the limit 4096`, semantic path `/scenario_ids`, with no partial IR/plan. Focused t1616-t1618 passes at Files=3/Tests=12 in 20 seconds; the guarded impact matrix passes at Files=21/Tests=91 in 815 seconds. No public binder, capability/support, performance, or capacity claim changes. |
 | `2026-08-19` | `.17.2.4.2` 8,192-operations-per-scenario qualification | decision-0061 exact 8,192-operation single-scenario level; caller-sealed level admission; ordinary checked-AHB VIAL/bridge/public-binder route; operation-depth versus scenario/fiber isolation; unique global operation source-map closure; exact source/workload/SemanticIR/bridge/plan identities; sub-cap plan bytes; mutation/missing-source/unowned-level negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; the 115,716-byte generated source authors one `scenario_00000000` with 8,192 genuine resets and no random decision. The unchanged public binder returns 8,192 total operations, one selected scenario, one root fiber, one simultaneously live fiber, 8,209 source maps, 22 bindings, seven types, and a 2,955,783-byte plan with ID `plan/4c6733ea702479b4c603761d333d491f7a427e9eac24dc37238331aeb624f990`. Every `/operation_graph/operations/N` path occurs once and resolves to its own `/packages/0/fixtures/0/scenarios/0/actions/N` authored action. Focused t1619 passes at Files=1/Tests=4 in 10 seconds; the guarded impact matrix passes at Files=22/Tests=95 in 814 seconds. The unimplemented 65,536/65,537 operation levels still fail closed. No public binder, capability/support, performance, or capacity claim changes. |
 | `2026-08-19` | `.17.2.4.2` operation limit/over-limit ladder | decision-0061 exact 65,536/65,537 operation levels; caller-sealed level admission; ordinary checked-AHB VIAL/bridge/public-binder route; semantic-before-bridge stage order; exact source/workload identities and one-record source delta; stable authoritative diagnostics and no partial output; recorded limit-interaction discrepancies; mutation/missing-source/unowned-level negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; the 918,533-byte limit source parses into one complete 65,536-action scenario with the frozen `fb82ce2c…` SemanticIR and unchanged 508,968-byte AHB bridge, and the unchanged public binder returns only `VIAL_EXECUTION_LIMIT_ERROR`, phase `limit`, message `serialized_plan_bytes exceeds the limit 16777216`, at `/plan`. Adding exactly one further 14-byte ` (reset bus 1)` record makes the ordinary parser reject first with `VIAL_LIMIT_ERROR`, message `scenario exceeds 65536 expanded actions`, at `/packages/0/fixtures/0/scenarios/0`, and no bridge is built behind it. Both evaluations report `expected_rejection`, empty metrics, and one `VIAL_SCALE_LIMIT_INTERACTION` discrepancy routed to `.17.4`. Focused t1620 passes at Files=1/Tests=4 in 89 seconds and t1621 at Files=1/Tests=4 in 44 seconds; the guarded impact matrix passes at Files=25/Tests=95 in 960 seconds. No public binder, capability/support, performance, or capacity claim changes. |
+
+## Acceptance Checklist (enforced) — `.17.2.6` backend-emission generation activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the Knowledge Map query for the
+  backend-emission scale leaf returns no canonical fact. The command
+  `git log -S'backend_emission_v1' --oneline -- docs perl t` traces the selected family
+  to decision commit `0516f2c66` and its catalog to foundation commit
+  `063b990f3`, but finds no scale emitter generator. The four negotiated
+  canonical profiles already differ in input shape, artifact graph, source-map
+  and static-validator contracts, provider negotiation, and qualification
+  state, so writing one implementation before reconciling them would conflate
+  four independent authorities.
+- [x] **ADDRESSED (verified)** — `.17.2.6` is active and owns the read-only
+  four-emitter authority audit before implementation decomposition. The active
+  index, bounded Memory pointer, task frontier, and mdBook name the same next
+  action and unchanged-behavior boundary. The book growth is exactly authorized
+  at zero files, five lines, and 348 bytes without increasing a ceiling.
+- [x] **NO REGRESSION** — task integrity reports three trees/947 nodes;
+  relative-path regression reports `All tests successful` at Files=1/Tests=2;
+  all 53 mdBook chapters test, and the inspected 88-file/18,604-KiB
+  repository-local render is removed exactly. Claim inventory reconciles
+  10,678 numeric lines, 1,415 candidates, 2,043 constants, and the original 615
+  constants with zero owners. All 22 live-document surfaces,
+  maintained-reference authority, staged task acceptance, diff checks, and
+  `[doctrine] all doctrine checks passed`. No generator, emitter, runtime, public API,
+  capability/support, performance, or capacity behavior changes.
 
 ## Acceptance Checklist (enforced) — `.17.2.5.2.7` complete checking-state family qualification
 

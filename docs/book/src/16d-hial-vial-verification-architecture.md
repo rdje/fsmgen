@@ -3653,6 +3653,11 @@ Focused `t/1635` freezes exactly 32 selected shapes and eight rejected reference
 These fixtures change no parser, SemanticIR, bridge, ExecutionIR, backend,
 runtime, public product API, capability, support, performance, or capacity behavior.
 
+Backend-emission generation is now active under `.17.2.6`. Its first action is a
+read-only audit of the portable-SystemVerilog, portable-VHDL, OSVVM, and native-UVM
+canonical boundaries: negotiation, artifact graph, source maps, checks, limits, atomicity,
+and cleanup. Implementation follows reconciliation; activation changes no output or claim.
+
 These are construction outcomes, not supported capacities. The exact 1/4/16-
 MiB plans contain 2,974/12,166/48,850 real reset operations plus bounded,
 referenced scenario and endpoint identifiers that close the remaining byte
