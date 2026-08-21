@@ -363,14 +363,14 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.6.1: disposition foundational VIAL claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.6.2`
-  Status: `active`
+  Status: `done`
   Goal: `Disposition the 16 Chapter 16d portable-VHDL and OSVVM provider candidates on lines 932-1355.`
   Acceptance: `Provider-free VHDL semantics, exact GHDL and OSVVM qualification, artifact graphs, trace/result identities, and migration boundaries join provider-specific evidence without promoting tool tuples or immutable checkpoints into general support.`
-  Verification: `exact 16-candidate range, VHDL/OSVVM producer and provider-qualified runtime gates, inventory/disposition/mdBook/doctrine gates`
-  Commit: `pending`
+  Verification: `PASS — all 16 candidates close as 15 derived gates plus one reviewed structural outcome across recursive OSVVM identity/licensing, the advanced artifact graph, provider source order, combined runtime/result/parity, portable four-state semantics, exact GHDL identity/runtime, portable metadata/review cardinalities, and legacy migration identity; the RAM-guarded exact collection reports Files=5/Tests=31, support/disposition gates report Files=3/Tests=7107, and inventory/disposition, Knowledge Map, mdBook, containment, staged-acceptance, and doctrine gates pass.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.6.2: disposition VHDL provider claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.6.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Disposition the 11 Chapter 16d native-UVM, experimental-probe, parity, and current-boundary candidates on lines 1356-1971.`
   Acceptance: `Native UVM emission, SVA/lifecycle topology, tool-limited Verilator probe, handwritten AHB parity, and current capability boundaries retain distinct evidence without claiming complete UVM runtime, mixed-language execution, or general parity.`
   Verification: `exact 11-candidate range, UVM emission/probe and parity gates with explicit nonclaims, inventory/disposition/mdBook/doctrine gates`
@@ -481,6 +481,16 @@ hidden behind repeated checks of the same kind.
   chronology rather than current capability. The exact eight identities close
   as six derived gates and two reviewed outcomes without changing product or
   book behavior.
+- `2026-08-21`: The VHDL provider review separates provider-free semantics,
+  provider materialization, adapter structure, and executed qualification.
+  Recursive OSVVM repositories and licence/notice facts, the 16-artifact
+  advanced graph, 44-plus-17 provider source order, 42-record result/parity
+  evidence, exact GHDL archive identity, portable operation/scenario/fiber/
+  model metadata, the six-source/59-map/24-row review graph, four-state
+  normalization, and legacy migration identity use 15 distinct current gates.
+  Decision `0043` remains architecture-selection chronology rather than a
+  second capability promise. The exact 16 identities close as 15 derived
+  gates and one reviewed outcome without changing product or book behavior.
 - `2026-08-20`: A migration group remains `required_complete=false` until its
   owning slice has dispositioned every current candidate. The empty `.5.1`
   outcome registry therefore proves mechanism and reports debt; it does not
@@ -616,8 +626,8 @@ hidden behind repeated checks of the same kind.
 
 ## Open Questions
 
-- None blocking. `.5.6.2` owns the next 16 portable-VHDL and OSVVM provider
-  candidates on Chapter 16d lines 932-1355.
+- None blocking. `.5.6.3` owns the next 11 native-UVM, experimental-probe,
+  parity, and current-boundary candidates on Chapter 16d lines 1356-1971.
 
 ## Blockers
 
@@ -751,6 +761,9 @@ hidden behind repeated checks of the same kind.
 - [x] **ROOT CAUSE (WHY + WHERE)** — clean partition commit `5cf3aa15a` leaves eight Chapter 16d foundation/tooling candidates open on lines 1-931. Exact `git log -S` pickaxes trace the 4,986-byte/123-line source identity to `be9c74163`, directional binding to `2a1b3cefc`, the closed 27-key manifest to `51434a2ae`, and 21-operation/four-total-fiber execution to `44dbecd1a`; `git blame` traces the remaining tooling, backend, and IASIM statements to three durable shipment or proposal commits. The exact source, bridge, execution, tooling, portable-backend, and semantic-scale suites reproduce six current statements. The remaining two numerals identify public-tooling leaf chronology and an unshipped IASIM proposal, not current capability.
 - [x] **ADDRESSED (verified)** — all eight identities now join exactly six three-leg derived gates plus two reviewed structural outcomes. Separate evidence chains retain canonical source bytes/lines/SHA-256 with an altered-anchor control; directional known-value injection with reverse-sample rejection; verified bridge source identity; the closed 27-key manifest with null scalar transaction type; exact 21-operation/four-total-fiber/three-live-fiber execution; and selected Verilator 5.046 profile data with emission/run separation. The canonical join reports `candidates=1415`, `disposed=1135`, `gates=556`, `reviewed=579`, and `verification_architecture=8/288` with 280 open.
 - [x] **NO REGRESSION** — the RAM-guarded exact frontend/bridge/execution/tooling/portable-backend collection reports `All tests successful` at `Files=7, Tests=50`; the semantic-scale source-identity oracle reports `Files=1, Tests=4`; support, capability, and disposition oracles report `Files=3, Tests=7107`. Inventory remains `1,415` candidates / `1,763` governed constants. Knowledge Map parity reports `1,149` facts / `6,036` questions / `6,203` occurrences / `133` shards; the mdBook, containment, task, docs-relative-path, Memory, reference-authority, diff, staged acceptance, and all registered doctrine gates pass.
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean commit `e22f601b5` leaves 16 Chapter 16d VHDL/provider candidates open on lines 932-1355. Exact `git log -S` pickaxes trace recursive OSVVM materialization to `4f350f29c`, the 16-artifact graph and combined qualification to `895ea33bd`, the 37,155,806-byte GHDL archive to `a0e7149d5`, portable metadata to `ab8b1af24`, review cardinalities to `0074b369e`, and Decision `0043` chronology to `ab3e73b72`. The guarded provider-free/OSVVM suites reproduce 15 current statements; the remaining version-selection line is structural chronology.
+- [x] **ADDRESSED (verified)** — all 16 identities now join exactly 15 three-leg derived gates plus one reviewed structural outcome. Separate evidence chains retain recursive provider and licence/notice identity; the advanced 16-artifact graph; 44-plus-17 source order; 42-record trace, result, nineteen-path parity, and four reports; exact GHDL archive/tool identity and runtime; portable four-state/metadata/review counts; and the 976-byte legacy migration proof. The canonical join reports `candidates=1415`, `disposed=1151`, `gates=571`, `reviewed=580`, and `verification_architecture=24/288` with 264 open.
+- [x] **NO REGRESSION** — the RAM-guarded exact portable semantics/review/GHDL and OSVVM emission/qualification collection reports `All tests successful` at `Files=5, Tests=31`, including installed exact-tuple reruns and same-volume cleanup; support, capability, and disposition oracles report `Files=3, Tests=7107`. Inventory remains `1,415` candidates / `1,779` governed constants. Knowledge Map parity reports `1,150` facts / `6,047` questions / `6,214` occurrences / `133` shards; the mdBook, containment, task, docs-relative-path, Memory, reference-authority, diff, staged acceptance, and all registered doctrine gates pass.
 
 ## Verification Log
 
@@ -801,6 +814,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-21` | `.5.5.6` | generalized residue boundary; exact-three public runtime; aggregate HBURST generic/profile preservation; current-book truthfulness; generated boundary-free phase pipeline; direct Q-named capacity-one retention; support milestones and locator separation; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 22 candidates closed as 4 gates / 18 reviewed; IAL2 AHB required-complete at 232/232 as 55 gates / 177 reviewed; Files=9/Tests=36 exact focused run plus support/disposition Files=3/Tests=7107; 1,755 governed constants; all registered doctrines` |
 | `2026-08-21` | `.5.6` partition | committed-inventory Chapter 16d line aggregation; exact ten-child sum; task integrity; docs paths; inventory/disposition/Knowledge Map/live-document/diff/doctrine gates | `PASS — 8 + 16 + 11 + 22 + 28 + 47 + 45 + 28 + 24 + 59 = 288 across one continuous chapter range with zero unassigned; .5.6.1 selected alone; no claim, disposition, product, capability, support, or mdBook behavior changes` |
 | `2026-08-21` | `.5.6.1` | canonical source identity; directional type binding; bridge source identity and closed manifest; checked-AHB execution counts; public-tooling chronology; portable-Verilator profile; IASIM proposal; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 8 candidates closed as 6 gates / 2 reviewed; verification architecture 8/288; Files=7/Tests=50 RAM-guarded exact run plus semantic scale Files=1/Tests=4 and support/disposition Files=3/Tests=7107; 1,763 governed constants; all registered doctrines` |
+| `2026-08-21` | `.5.6.2` | recursive OSVVM graph and licences; advanced artifact graph; provider source order; combined runtime/result/parity/reports; portable four-state semantics; exact GHDL identity/runtime; portable metadata/review cardinalities; legacy migration; Decision chronology; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 16 candidates closed as 15 gates / 1 reviewed; verification architecture 24/288; Files=5/Tests=31 RAM-guarded exact run plus support/disposition Files=3/Tests=7107; 1,779 governed constants; all registered doctrines` |
 
 ## Commit Log
 
@@ -851,3 +865,4 @@ hidden behind repeated checks of the same kind.
 | `.5.5.6` | `CLAIM-VERIFICATION-ADOPTION.5.5.6: close IAL2 AHB claim review` | `Maps current generalized residue, exact-three runtime, generated boundary-free phases, and direct Q-named retention to distinct gates; preserves old support totals, contract/readiness values, superseded bounds, and test locators; closes Chapter 16c required-complete at 232/232.` |
 | `.5.6` | `CLAIM-VERIFICATION-ADOPTION.5.6: partition verification architecture claim review` | `Activates ten evidence-coherent continuous Chapter 16d line-range children from the exact 288-candidate census without changing claims, dispositions, product behavior, capability, support accounting, or mdBook behavior.` |
 | `.5.6.1` | `CLAIM-VERIFICATION-ADOPTION.5.6.1: disposition foundational VIAL claims` | `Maps canonical source identity, directional binding, bridge identity/manifest, checked-AHB execution counts, and portable-Verilator profile data to distinct gates while preserving public-tooling leaf numbers and the IASIM Perl 5 proposal as structural chronology.` |
+| `.5.6.2` | `CLAIM-VERIFICATION-ADOPTION.5.6.2: disposition VHDL provider claims` | `Maps provider-free VHDL semantics, recursive OSVVM identity, adapter structure, exact GHDL/provider execution, portable result/parity, review cardinalities, and legacy migration identity to distinct gates while preserving Decision 0043 as structural chronology.` |
