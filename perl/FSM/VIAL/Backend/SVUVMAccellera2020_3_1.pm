@@ -473,6 +473,7 @@ sub _negotiate($execution, $bridge, $backend_inputs) {
         structured_diagnostic_result_collection_v1
         selected_mapping_matrix_v1
         deterministic_review_workflow_v1
+        selected_reference_operation_shape_v1
     );
     push @unsatisfied, 'execution schema must be fsmgen.vial_execution_ir.v1'
         unless ($execution->{schema} // '') eq 'fsmgen.vial_execution_ir.v1';
@@ -532,6 +533,9 @@ sub _negotiate($execution, $bridge, $backend_inputs) {
     }
     push @unsatisfied, 'native extensions are deferred beyond the first UVM foundation'
         if ref($execution->{native_extensions}) ne 'ARRAY' || @{$execution->{native_extensions} || []};
+    push @unsatisfied,
+        'native UVM selected review matrix requires the exact 21-operation reference shape'
+        unless _is_selected_reference_operation_shape($execution);
 
     my $inputs_ok = eval {
         _require_exact_keys($backend_inputs, [qw(dut_systemverilog dut_vhdl)], 'backend inputs');
@@ -577,6 +581,62 @@ sub _negotiate($execution, $bridge, $backend_inputs) {
             'library-dependent and executable gates are deliberately outside ordinary emission',
         ],
     };
+}
+
+sub _is_selected_reference_operation_shape($execution) {
+    return 0 unless ref($execution->{operation_graph}) eq 'HASH';
+    my $graph = $execution->{operation_graph};
+    return 0 unless ref($graph->{operations}) eq 'ARRAY'
+        && @{$graph->{operations}} == 21
+        && ($graph->{total_operation_count} // -1) == 21
+        && ($graph->{total_fiber_count} // -1) == 4
+        && ($graph->{maximum_simultaneous_live_fibers} // -1) == 3
+        && ref($execution->{resource_summary}) eq 'HASH'
+        && ($execution->{resource_summary}{expanded_operations_total} // -1) == 21
+        && ref($execution->{scenarios}) eq 'ARRAY'
+        && @{$execution->{scenarios}} == 2;
+
+    my @expected_kinds = qw(
+        reset scoreboard_expect start parallel await await
+        expect expect expect expect expect scoreboard_check
+        reset inject start await expect expect expect expect expect
+    );
+    my @actual_kinds = map {
+        ref($_) eq 'HASH' ? ($_->{kind} // '') : ''
+    } @{$graph->{operations}};
+    return 0 unless join("\0", @actual_kinds) eq join("\0", @expected_kinds);
+
+    my @scenario_operation_counts = map {
+        ref($_) eq 'HASH' && ref($_->{operation_ids}) eq 'ARRAY'
+            ? scalar(@{$_->{operation_ids}}) : -1
+    } @{$execution->{scenarios}};
+    return 0 unless join("\0", @scenario_operation_counts) eq join("\0", 12, 9);
+
+    my @expected_expectations = qw(
+        success::expectation::accepted_once
+        success::expectation::completed_once
+        success::expectation::response_ok
+        success::expectation::read_zero
+        success::expectation::storage_written
+        unsupported_size::expectation::accepted_once
+        unsupported_size::expectation::two_error_cycles
+        unsupported_size::expectation::response_returns_ok
+        unsupported_size::expectation::read_zero
+        unsupported_size::expectation::storage_unchanged
+    );
+    my @actual_expectations;
+    for my $operation (@{$graph->{operations}}) {
+        next unless ($operation->{kind} // '') eq 'expect';
+        return 0 unless ref($operation->{effects}) eq 'ARRAY'
+            && @{$operation->{effects}} == 1
+            && ref($operation->{effects}[0]) eq 'HASH'
+            && ($operation->{effects}[0]{kind} // '') eq 'record_expectation';
+        my $target = $operation->{effects}[0]{target_id} // '';
+        my ($suffix) = $target =~ /::scenario::([^:]+::expectation::[^:]+)\z/;
+        return 0 unless defined $suffix;
+        push @actual_expectations, $suffix;
+    }
+    return join("\0", @actual_expectations) eq join("\0", @expected_expectations);
 }
 
 sub _render_types_package($relpath) {

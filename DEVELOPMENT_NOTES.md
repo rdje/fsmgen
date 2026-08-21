@@ -483,3 +483,20 @@ Each accepted entry keeps its semantic payload and order while its generated
 path and path-derived identity move into the wrapper namespace. The seven
 adapter-native entries stay first. This makes source reuse compositional:
 wrapping changes artifact identity, not the granularity of source truth.
+
+## 2026-08-21: A fixed review renderer needs closed shape negotiation
+
+The native-UVM emitter intentionally implements one selected review gallery,
+not general ExecutionIR breadth. A negotiation that checked only the presence
+of one start, transaction, decision, and probe could accept additional public
+expectations even though the fixed renderer did not emit them. The artifact
+bytes and detailed mappings therefore looked successful while authored intent
+had disappeared.
+
+The backend now admits the whole selected operation shape as one capability:
+the 21-operation sequence, its 12/9 scenario partition, four/three fiber
+bounds, matching resource total, and the ten ordered expectation roles. One
+predicate and one unsatisfied reason keep all unsupported shapes on the same
+pre-render failure path. This is intentionally a semantic support boundary,
+not a byte-capacity boundary; broadening the renderer later must broaden the
+predicate and its evidence together.

@@ -1378,9 +1378,9 @@ fixture, and top SystemVerilog sources; a complete source map; the exact
 methodology profile; a structural validation report; the selected mapping
 matrix; the review workflow; and the backend manifest.
 
-The private emitter and validator are discoverable through the capability
-manifest. Public `fsmgen vial run` deliberately remains the separately
-qualified portable-Verilator path.
+The private emitter and validator are discoverable through the capability manifest. Native emission admits only the selected review shape: 21 operations split 12/9 across two scenarios, four total and three simultaneously live fibers, and ten ordered expectation roles.
+A T=22 or larger plan fails before graph construction as `{"code":"VIAL_UVM_BACKEND_UNSUPPORTED","message":"native UVM foundation negotiation rejected one or more requirements","path":"/negotiation"}` with the unsatisfied reason `native UVM selected review matrix requires the exact 21-operation reference shape`; a different same-count expectation set fails identically, preventing authored intent from disappearing behind fixed generated UVM.
+This is an unsupported-shape boundary, not a capacity claim. Public `fsmgen vial run` deliberately remains the separately qualified portable-Verilator path.
 
 The [checked review gallery](../../../vial/review_gallery/sv_uvm_emit.accellera_2020_3_1/ahb_base_output_foundation/README.md)
 contains byte-identical copies of all nine UVM-facing sources. Its interface

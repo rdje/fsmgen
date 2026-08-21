@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-native`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **33** uniquely owned question entries.
+> **2** facts · **35** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -14,6 +14,7 @@
 - q="did Verilator parse the complete generated VIAL UVM fixture?" · facts=[vial-native-uvm-experimental-probe](../../docs/knowledge/vial-native-uvm-experimental-probe.md)
 - q="does NEXSIM semantic introspection define VIAL meaning?" · facts=[vial-native-uvm-emission-contract](../../docs/knowledge/vial-native-uvm-emission-contract.md)
 - q="does generated native UVM rerandomize portable VIAL decisions?" · facts=[vial-native-uvm-emission-contract](../../docs/knowledge/vial-native-uvm-emission-contract.md)
+- q="does native UVM emission accept more than 21 operations?" · facts=[vial-native-uvm-emission-contract](../../docs/knowledge/vial-native-uvm-emission-contract.md)
 - q="does native UVM result collection mean a result was produced?" · facts=[vial-native-uvm-emission-contract](../../docs/knowledge/vial-native-uvm-emission-contract.md)
 - q="does the native UVM experimental probe advertise product support?" · facts=[vial-native-uvm-experimental-probe](../../docs/knowledge/vial-native-uvm-experimental-probe.md)
 - q="has the native VIAL UVM gallery been parsed or compiled?" · facts=[vial-native-uvm-emission-contract](../../docs/knowledge/vial-native-uvm-emission-contract.md)
@@ -32,6 +33,7 @@
 - q="what native UVM coverage model scoreboard and fault structures has FSMGen emitted?" · facts=[vial-native-uvm-emission-contract](../../docs/knowledge/vial-native-uvm-emission-contract.md)
 - q="what native UVM foundation has FSMGen emitted?" · facts=[vial-native-uvm-emission-contract](../../docs/knowledge/vial-native-uvm-emission-contract.md)
 - q="what native UVM generator defect did the experimental probe find?" · facts=[vial-native-uvm-experimental-probe](../../docs/knowledge/vial-native-uvm-experimental-probe.md)
+- q="what native UVM operation shape does backend negotiation accept?" · facts=[vial-native-uvm-emission-contract](../../docs/knowledge/vial-native-uvm-emission-contract.md)
 - q="what native UVM stimulus and service structures has FSMGen emitted?" · facts=[vial-native-uvm-emission-contract](../../docs/knowledge/vial-native-uvm-emission-contract.md)
 - q="what native UVM topology lifecycle and notification structures has FSMGen emitted?" · facts=[vial-native-uvm-emission-contract](../../docs/knowledge/vial-native-uvm-emission-contract.md)
 - q="where is the native UVM review gallery?" · facts=[vial-native-uvm-emission-contract](../../docs/knowledge/vial-native-uvm-emission-contract.md)
@@ -45,7 +47,7 @@
 
 _Native VIAL UVM is simulator-neutral Accellera 2020-3.1 emission, not runtime support_
 
-- **date:** 2026-08-10 · **status:** current
+- **date:** 2026-08-21 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-native-uvm-emission-contract.md`](../../docs/knowledge/vial-native-uvm-emission-contract.md)
 
 ### vial-native-uvm-experimental-probe

@@ -7,8 +7,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2`
-- next_action: implement `.17.2.6.2.4` with a T=22 expectation-loss RED control,
-  exact T=21 admission, and fail-closed unsupported-shape negotiation.
+- next_action: after the clean `.17.2.6.2.4` implementation commit, activate
+  `.17.2.6.2.5` for exact catalog/support alignment and repair-family qualification.
 - in_flight_uncommitted: none.
 - in_flight_background: none
 - blockers: none.
