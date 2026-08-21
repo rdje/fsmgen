@@ -47,16 +47,15 @@ unmatched hosts. Earliest-cap dominance is reported honestly. These candidates
 are not support, multi-unit/domain, mixed-language, native-UVM-runtime, full-
 language, whole-product `big`/`really_big`, synthesis, or general-parity claims.
 
-Completed `.17.2.1`-`.17.2.5` implement source, semantic, bridge, execution,
-and checking-state families. Decision `0075` selects checked-AHB anchored
-backend routes: portable SV accepts `T=6,319` at 16,776,830 source bytes and
-rejects `6,320`; portable VHDL/OSVVM select `T=29,508` and reject `29,509` in
-the portable foundation; native UVM accepts only reference `T=21` and must
-reject adjacent unsupported `T=22`. Active `.17.2.6` owns VHDL-validator,
-OSVVM-provider/map, native-UVM-negotiation, catalog, and generator repairs.
-These figures were freshly re-derived and falsified for selection, but the
-tracked executable producer/watcher is an explicit durability gap until those
-repairs close. No capacity claim is made.
+Completed `.17.2.1`-`.17.2.5` cover source through checking-state families.
+Decision `0075` selects checked-AHB backend routes: portable SV accepts
+`T=6,319` and rejects `6,320`; portable VHDL/OSVVM select `29,508/29,509`;
+native UVM owns reference `T=21` and must reject unsupported `T=22`.
+`.17.2.6.2.1` now indexes VHDL metadata and source lines once per source; its
+guarded watcher accepts `T=29,508` twice at 16,776,739 bytes/29,546 maps and
+retains atomic `29,509` rejection. Active `.17.2.6` still owns OSVVM provider/
+map, native-UVM negotiation, catalog, and canonical generator durability. No
+support, performance, or capacity claim is made.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

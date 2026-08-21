@@ -6,9 +6,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.1`
-- next_action: implement the RED-controlled linear portable-VHDL metadata
-  validator, then prove accepted `T=29,508` and rejected `T=29,509`.
-- in_flight_uncommitted: `.17.2.6.2` activation/decomposition documentation.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2`
+- next_action: after the clean `.17.2.6.2.1` implementation commit, activate
+  `.17.2.6.2.2` for sealed reusable OSVVM provider verification.
+- in_flight_uncommitted: none.
 - in_flight_background: none
 - blockers: none.

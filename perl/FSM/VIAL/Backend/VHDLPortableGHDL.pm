@@ -2084,7 +2084,9 @@ sub _render_fixture(%arg) {
 sub _source_map_entries(%arg) {
     my $execution = $arg{execution};
     my $bridge = $arg{bridge};
-    my %artifact = map { $_->{relpath} => $_ } @{$arg{source_artifacts}};
+    my %line_index = map {
+        $_->{relpath} => _source_line_index($_->{content})
+    } @{$arg{source_artifacts}};
     my @spec = (
         [$arg{types_rel}, 'fsmgen_vial_types_pkg', 'typed_value_and_phase_foundation',
             ['/types'], [map { $_->{type_id} } @{$bridge->{types}}], ['/types'], []],
@@ -2112,11 +2114,11 @@ sub _source_map_entries(%arg) {
                 ['/probes', '/backend_bindings'], []];
     }
 
-    my $metadata_text = $artifact{$arg{metadata_rel}}{content};
     for my $index (0 .. $#{$execution->{operation_graph}{operations}}) {
         my $operation = $execution->{operation_graph}{operations}[$index];
         my $tag = sprintf('%02d', $index);
-        my $start = _find_line($metadata_text, qr/^  -- VIAL operation \Q$tag\E:/m);
+        my $start = _indexed_source_line(
+            $line_index{$arg{metadata_rel}}, 'operation', $tag);
         push @spec, {
             relpath => $arg{metadata_rel},
             symbol => "VIAL_OPERATION_${tag}_ID",
@@ -2132,7 +2134,8 @@ sub _source_map_entries(%arg) {
     for my $index (0 .. $#{$execution->{scenarios}}) {
         my $scenario = $execution->{scenarios}[$index];
         my $tag = sprintf('%02d', $index);
-        my $start = _find_line($metadata_text, qr/^  -- VIAL scenario \Q$tag\E:/m);
+        my $start = _indexed_source_line(
+            $line_index{$arg{metadata_rel}}, 'scenario', $tag);
         push @spec, {
             relpath => $arg{metadata_rel},
             symbol => "VIAL_SCENARIO_${tag}_ID",
@@ -2148,7 +2151,8 @@ sub _source_map_entries(%arg) {
     my @fiber = map { @{$_->{fibers}} } @{$execution->{scenarios}};
     for my $index (0 .. $#fiber) {
         my $tag = sprintf('%02d', $index);
-        my $start = _find_line($metadata_text, qr/^  -- VIAL fiber \Q$tag\E:/m);
+        my $start = _indexed_source_line(
+            $line_index{$arg{metadata_rel}}, 'fiber', $tag);
         push @spec, {
             relpath => $arg{metadata_rel},
             symbol => "VIAL_FIBER_${tag}_ID",
@@ -2164,7 +2168,8 @@ sub _source_map_entries(%arg) {
     for my $index (0 .. $#{$execution->{models}}) {
         my $model = $execution->{models}[$index];
         my $tag = sprintf('%02d', $index);
-        my $start = _find_line($metadata_text, qr/^  -- VIAL model \Q$tag\E:/m);
+        my $start = _indexed_source_line(
+            $line_index{$arg{metadata_rel}}, 'model', $tag);
         push @spec, {
             relpath => $arg{metadata_rel},
             symbol => "VIAL_MODEL_${tag}_INSTANCE_ID",
@@ -2178,13 +2183,13 @@ sub _source_map_entries(%arg) {
         };
     }
 
-    my $top_text = $artifact{$arg{top_rel}}{content};
     my %execution_endpoint = map { $_->{endpoint_id} => $_ }
         @{$execution->{bindings}{endpoints}};
     for my $index (0 .. $#{$bridge->{endpoints}}) {
         my $endpoint = $bridge->{endpoints}[$index];
         my $name = _backend_name($bridge, $endpoint->{endpoint_id}, 'port');
-        my $line = _find_line($top_text, qr/^  signal \Q$name\E\s*:/mi);
+        my $line = _indexed_source_line(
+            $line_index{$arg{top_rel}}, 'signal', lc($name));
         push @spec, {
             relpath => $arg{top_rel},
             symbol => $name,
@@ -2198,9 +2203,10 @@ sub _source_map_entries(%arg) {
             locations => [$execution_endpoint{$endpoint->{endpoint_id}}{source_location}],
         };
     }
-    my $scheduler_start = _find_line($top_text, qr/^  vial_scheduler\s*:\s*process\b/mi);
-    my $scheduler_end = _find_line($top_text,
-        qr/^  end process vial_scheduler;/mi);
+    my $scheduler_start = _indexed_source_line(
+        $line_index{$arg{top_rel}}, 'scheduler', 'start');
+    my $scheduler_end = _indexed_source_line(
+        $line_index{$arg{top_rel}}, 'scheduler', 'end');
     push @spec, {
         relpath => $arg{top_rel},
         symbol => 'vial_scheduler',
@@ -2214,32 +2220,26 @@ sub _source_map_entries(%arg) {
     };
     my @checking_region = (
         ['vial_scoreboard_enqueue_expected', 'bounded_scoreboard_queue',
-            qr/^    procedure vial_scoreboard_enqueue_expected is$/m,
             ['/scoreboards'], [map { $_->{instance_id} } @{$execution->{scoreboards}}]],
         ['vial_scoreboard_compare', 'scoreboard_comparison',
-            qr/^    procedure vial_scoreboard_compare\(/m,
             ['/scoreboards'], [map { $_->{instance_id} } @{$execution->{scoreboards}}]],
         ['vial_coverage', 'portable_coverage_counters',
-            qr/^    variable vial_coverage\s*:/m,
             ['/coverage'], [map { $_->{semantic_id} } @{$execution->{coverage}{coverpoints}}]],
         ['vial_fault', 'bounded_substitution_fault',
-            qr/^    variable vial_fault\s*:/m,
             ['/faults'], [map { $_->{semantic_id} } @{$execution->{faults}}]],
         ['vial_record_diagnostic', 'procedural_checks_and_diagnostics',
-            qr/^    procedure vial_record_diagnostic\(/m,
             ['/operation_graph/operations'], [map { $_->{operation_id} }
                 grep { $_->{kind} eq 'expect' } @{$execution->{operation_graph}{operations}}]],
         ['vial_emit_trace', 'closed_trace_projection',
-            qr/^    procedure vial_emit_trace\(/m,
             ['/fixture', '/scenarios'], [$execution->{fixture}{fixture_id}]],
         ['vial_close_trace_and_project_result', 'normalized_result_projection',
-            qr/^    procedure vial_close_trace_and_project_result is$/m,
             ['/fixture', '/scenarios', '/scoreboards', '/coverage', '/faults'],
             [$execution->{fixture}{fixture_id}]],
     );
     for my $region (@checking_region) {
-        my ($symbol, $role, $pattern, $plan, $semantic) = @$region;
-        my $line = _find_line($top_text, $pattern);
+        my ($symbol, $role, $plan, $semantic) = @$region;
+        my $line = _indexed_source_line(
+            $line_index{$arg{top_rel}}, 'checking', $symbol);
         push @spec, {
             relpath => $arg{top_rel},
             symbol => $symbol,
@@ -2255,7 +2255,8 @@ sub _source_map_entries(%arg) {
     for my $index (0 .. $#{$execution->{models}}) {
         my $model = $execution->{models}[$index];
         my $tag = sprintf('%02d', $index);
-        my $line = _find_line($top_text, qr/^      -- VIAL model update \Q$tag\E:/m);
+        my $line = _indexed_source_line(
+            $line_index{$arg{top_rel}}, 'model_update', $tag);
         push @spec, {
             relpath => $arg{top_rel},
             symbol => "vial_model_${tag}_count",
@@ -2269,11 +2270,10 @@ sub _source_map_entries(%arg) {
         };
     }
     if (defined($arg{probe_rel})) {
-        my $probe_text = $artifact{$arg{probe_rel}}{content};
         for my $index (0 .. $#{$bridge->{probes}}) {
             my $probe = $bridge->{probes}[$index];
-            my $line = _find_line($probe_text,
-                qr/^  -- VIAL declared probe \Q$probe->{probe_id}\E maps to /m);
+            my $line = _indexed_source_line(
+                $line_index{$arg{probe_rel}}, 'probe', $probe->{probe_id});
             push @spec, {
                 relpath => $arg{probe_rel},
                 symbol => 'vial_probe_' . _vhdl_slug($probe->{name}),
@@ -2301,8 +2301,8 @@ sub _source_map_entries(%arg) {
         else {
             ($relpath, $symbol, $role, $plan, $semantic, $facts, $locations) = @$spec;
         }
-        my $text = $artifact{$relpath}{content};
-        my $lines = _line_count($text);
+        my $source_index = $line_index{$relpath};
+        my $lines = $source_index->{line_count};
         $start //= 1;
         $end //= $lines;
         push @entry, {
@@ -2313,7 +2313,7 @@ sub _source_map_entries(%arg) {
             generated_start_line => $start,
             generated_end_line => $end,
             generated_start_column => 1,
-            generated_end_column => _line_column($text, $end),
+            generated_end_column => _indexed_line_end_column($source_index, $end),
             generated_symbol => $symbol,
             role => $role,
             plan_paths => _clone($plan),
@@ -2635,26 +2635,79 @@ sub _hex_bit($hex, $bit) {
     return ($digit >> ($bit % 4)) & 1;
 }
 
-sub _find_line($text, $pattern) {
+sub _source_line_index($text) {
     my @line = split /\n/, $text, -1;
-    my @found;
-    for my $index (0 .. $#line) {
-        push @found, $index + 1 if $line[$index] =~ $pattern;
+    my $line_count = scalar(@line);
+    $line_count-- if $line_count && $line[-1] eq '';
+    my $index = {
+        anchors => {},
+        end_columns => [undef],
+        line_count => $line_count,
+    };
+    for my $offset ($line_count ? (0 .. $line_count - 1) : ()) {
+        my $line = $line[$offset];
+        my $number = $offset + 1;
+        $index->{end_columns}[$number] = bytes::length($line) + 1;
+        _record_source_line($index, 'operation', $1, $number)
+            if $line =~ /^  -- VIAL operation ([0-9]+):/;
+        _record_source_line($index, 'scenario', $1, $number)
+            if $line =~ /^  -- VIAL scenario ([0-9]+):/;
+        _record_source_line($index, 'fiber', $1, $number)
+            if $line =~ /^  -- VIAL fiber ([0-9]+):/;
+        _record_source_line($index, 'model', $1, $number)
+            if $line =~ /^  -- VIAL model ([0-9]+):/;
+        _record_source_line($index, 'signal', lc($1), $number)
+            if $line =~ /^  signal ([a-z][a-z0-9_]*)\s*:/i;
+        _record_source_line($index, 'scheduler', 'start', $number)
+            if $line =~ /^  vial_scheduler\s*:\s*process\b/i;
+        _record_source_line($index, 'scheduler', 'end', $number)
+            if $line =~ /^  end process vial_scheduler;/i;
+        _record_source_line($index, 'checking',
+            'vial_scoreboard_enqueue_expected', $number)
+            if $line =~ /^    procedure vial_scoreboard_enqueue_expected is$/;
+        _record_source_line($index, 'checking',
+            'vial_scoreboard_compare', $number)
+            if $line =~ /^    procedure vial_scoreboard_compare\(/;
+        _record_source_line($index, 'checking', 'vial_coverage', $number)
+            if $line =~ /^    variable vial_coverage\s*:/;
+        _record_source_line($index, 'checking', 'vial_fault', $number)
+            if $line =~ /^    variable vial_fault\s*:/;
+        _record_source_line($index, 'checking',
+            'vial_record_diagnostic', $number)
+            if $line =~ /^    procedure vial_record_diagnostic\(/;
+        _record_source_line($index, 'checking', 'vial_emit_trace', $number)
+            if $line =~ /^    procedure vial_emit_trace\(/;
+        _record_source_line($index, 'checking',
+            'vial_close_trace_and_project_result', $number)
+            if $line =~ /^    procedure vial_close_trace_and_project_result is$/;
+        _record_source_line($index, 'model_update', $1, $number)
+            if $line =~ /^      -- VIAL model update ([0-9]+):/;
+        _record_source_line($index, 'probe', $1, $number)
+            if $line =~ /^  -- VIAL declared probe (\S+) maps to /;
     }
-    _throw('VIAL_VHDL_BACKEND_SOURCE_MAP_ERROR',
-        'generated source-map anchor does not occur exactly once', '/source_map')
-        unless @found == 1;
-    return $found[0];
+    return $index;
 }
 
-sub _line_column($text, $line_number) {
-    my @line = split /\n/, $text, -1;
+sub _record_source_line($index, $family, $name, $number) {
+    push @{$index->{anchors}{$family}{$name}}, $number;
+}
+
+sub _indexed_source_line($index, $family, $name) {
+    my $found = $index->{anchors}{$family}{$name};
+    _throw('VIAL_VHDL_BACKEND_SOURCE_MAP_ERROR',
+        'generated source-map anchor does not occur exactly once', '/source_map')
+        unless ref($found) eq 'ARRAY' && @{$found} == 1;
+    return $found->[0];
+}
+
+sub _indexed_line_end_column($index, $line_number) {
     _throw('VIAL_VHDL_BACKEND_SOURCE_MAP_ERROR',
         'generated source-map line is outside the artifact', '/source_map')
         unless defined($line_number) && !ref($line_number)
             && $line_number =~ /\A[0-9]+\z/
-            && $line_number >= 1 && $line_number < @line;
-    return bytes::length($line[$line_number - 1]) + 1;
+            && $line_number >= 1 && $line_number <= $index->{line_count}
+            && defined($index->{end_columns}[$line_number]);
+    return $index->{end_columns}[$line_number];
 }
 
 sub _vhdl_slug($value) {
@@ -2694,16 +2747,6 @@ sub _vhdl_string($value) {
 sub _vhdl_textio_write($target, $value, $indent = '      ') {
     return $indent . "write($target, string'(\""
         . _vhdl_string($value) . '"));';
-}
-
-sub _line_count($text) {
-    return scalar(() = $text =~ /\n/g);
-}
-
-sub _last_line_column($text) {
-    my @line = split /\n/, $text, -1;
-    my $last = @line > 1 ? $line[-2] : $line[0];
-    return bytes::length($last) + 1;
 }
 
 sub _json_text($value) {

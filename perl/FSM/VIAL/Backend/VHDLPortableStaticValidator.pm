@@ -134,6 +134,7 @@ sub _validate($raw) {
         $role => (ref($by_role{$role}) eq 'ARRAY' && @{$by_role{$role}} == 1
             ? $by_role{$role}[0]{content} : '')
     } @REQUIRED_SOURCE_ROLES;
+    my $metadata_index = _metadata_index($text{vhdl_fixture_metadata});
     my @required_shape = (
         [vhdl_types_package => qr/\bpackage\s+fsmgen_vial_types_pkg\s+is\b/i,
             'types package'],
@@ -198,7 +199,7 @@ sub _validate($raw) {
 
     my @process_label = $text{vhdl_fixture_top}
         =~ /^\s*([a-z][a-z0-9_]*)\s*:\s*process\b/gmi;
-    my $inactive = _string_constant($text{vhdl_fixture_metadata}, 'VIAL_INACTIVE_EDGE');
+    my $inactive = _indexed_value($metadata_index, 'string', 'VIAL_INACTIVE_EDGE');
     my $scheduler_ok = @process_label == 2
         && join(',', sort @process_label) eq 'vial_clock_generator,vial_scheduler'
         && _count_matches($text{vhdl_fixture_top}, qr/^\s*vial_scheduler\s*:\s*process\b/mi) == 1
@@ -206,7 +207,7 @@ sub _validate($raw) {
         && _count_matches($text{vhdl_fixture_top}, qr/\bwait\s+until\s+(?:rising_edge|falling_edge)\s*\(/mi) == 1
         && defined($inactive)
         && $text{vhdl_fixture_top} =~ /\bwait\s+until\s+\Q$inactive\E_edge\s*\(/i
-        && _natural_constant($text{vhdl_fixture_metadata}, 'VIAL_SCHEDULER_COUNT') == 1
+        && _indexed_value($metadata_index, 'natural', 'VIAL_SCHEDULER_COUNT') == 1
         && $text{vhdl_fixture_top} !~ /\b(?:wait\s+for\s+0\s+ns|after|transport|postponed)\b/i
         && $text{vhdl_fixture_top} !~ /\bprocess\s*\(\s*all\s*\)/i;
     _diagnose(\@diagnostics, 'VIAL_VHDL_STATIC_SCHEDULER_AUTHORITY_ERROR',
@@ -227,35 +228,39 @@ sub _validate($raw) {
         '/roles/vhdl_fixture_top') unless $phase_ok;
     _record_check(\@checks, 'stable_sample_react_check_drive_order', $phase_ok);
 
-    my $operation_count = _natural_constant($text{vhdl_fixture_metadata}, 'VIAL_OPERATION_COUNT');
-    my $scenario_count = _natural_constant($text{vhdl_fixture_metadata}, 'VIAL_SCENARIO_COUNT');
-    my $fiber_count = _natural_constant($text{vhdl_fixture_metadata}, 'VIAL_FIBER_COUNT');
-    my $model_count = _natural_constant($text{vhdl_fixture_metadata}, 'VIAL_MODEL_COUNT');
+    my $operation_count = _indexed_value(
+        $metadata_index, 'natural', 'VIAL_OPERATION_COUNT');
+    my $scenario_count = _indexed_value(
+        $metadata_index, 'natural', 'VIAL_SCENARIO_COUNT');
+    my $fiber_count = _indexed_value(
+        $metadata_index, 'natural', 'VIAL_FIBER_COUNT');
+    my $model_count = _indexed_value(
+        $metadata_index, 'natural', 'VIAL_MODEL_COUNT');
     my $metadata_ok = defined($operation_count) && $operation_count >= 1
         && $operation_count <= 65_536
         && defined($scenario_count) && $scenario_count >= 1 && $scenario_count <= 1_024
         && defined($fiber_count) && $fiber_count >= 1 && $fiber_count <= 4_096
         && defined($model_count) && $model_count >= 0 && $model_count <= 4_096
-        && _count_matches($text{vhdl_fixture_metadata}, qr/^\s*constant\s+VIAL_OPERATION_[0-9]+_ID\s*:/mi) == $operation_count
-        && _count_matches($text{vhdl_fixture_metadata}, qr/^\s*constant\s+VIAL_OPERATION_[0-9]+_KIND\s*:/mi) == $operation_count
-        && _count_matches($text{vhdl_fixture_metadata}, qr/^\s*constant\s+VIAL_OPERATION_[0-9]+_STATIC_RANK\s*:/mi) == $operation_count
-        && _count_matches($text{vhdl_fixture_metadata}, qr/^\s*constant\s+VIAL_OPERATION_[0-9]+_FIBER_ID\s*:/mi) == $operation_count
-        && _count_matches($text{vhdl_fixture_metadata}, qr/^\s*constant\s+VIAL_SCENARIO_[0-9]+_ID\s*:/mi) == $scenario_count
-        && _count_matches($text{vhdl_fixture_metadata}, qr/^\s*constant\s+VIAL_FIBER_[0-9]+_ID\s*:/mi) == $fiber_count
+        && $metadata_index->{counts}{operation_id} == $operation_count
+        && $metadata_index->{counts}{operation_kind} == $operation_count
+        && $metadata_index->{counts}{operation_rank} == $operation_count
+        && $metadata_index->{counts}{operation_fiber_id} == $operation_count
+        && $metadata_index->{counts}{scenario_id} == $scenario_count
+        && $metadata_index->{counts}{fiber_id} == $fiber_count
         && _count_matches($text{vhdl_fixture_top}, qr/^\s*variable\s+vial_fiber_[0-9]+_status\s*:/mi) == $fiber_count;
     if ($metadata_ok) {
         for my $index (0 .. $operation_count - 1) {
             my $tag = sprintf('%02d', $index);
-            my ($comment_kind, $comment_rank) = $text{vhdl_fixture_metadata}
-                =~ /^\s*-- VIAL operation \Q$tag\E:\s+([a-z_]+)\s+at static rank ([0-9]+)\s*$/mi;
-            my ($constant_kind) = $text{vhdl_fixture_metadata}
-                =~ /^\s*constant\s+VIAL_OPERATION_\Q$tag\E_KIND\s*:\s*string\s*:=\s*"([a-z_]+)"\s*;/mi;
-            my ($constant_rank) = $text{vhdl_fixture_metadata}
-                =~ /^\s*constant\s+VIAL_OPERATION_\Q$tag\E_STATIC_RANK\s*:\s*natural\s*:=\s*([0-9]+)\s*;/mi;
-            if (!defined($comment_kind) || !defined($comment_rank)
+            my $comment = _indexed_value(
+                $metadata_index, 'operation_comment', $tag);
+            my $constant_kind = _indexed_value(
+                $metadata_index, 'operation_kind', $tag);
+            my $constant_rank = _indexed_value(
+                $metadata_index, 'operation_rank', $tag);
+            if (ref($comment) ne 'ARRAY' || @{$comment} != 2
                     || !defined($constant_kind) || !defined($constant_rank)
-                    || $comment_kind ne $constant_kind
-                    || $comment_rank != $constant_rank) {
+                    || $comment->[0] ne $constant_kind
+                    || $comment->[1] != $constant_rank) {
                 $metadata_ok = 0;
                 last;
             }
@@ -267,8 +272,8 @@ sub _validate($raw) {
     _record_check(\@checks, 'complete_rank_scenario_and_fiber_metadata', $metadata_ok);
 
     my $model_ok = defined($model_count)
-        && _count_matches($text{vhdl_fixture_metadata}, qr/^\s*constant\s+VIAL_MODEL_[0-9]+_INSTANCE_ID\s*:/mi) == $model_count
-        && _count_matches($text{vhdl_fixture_metadata}, qr/^\s*constant\s+VIAL_MODEL_[0-9]+_TRIGGER_EVENT_ID\s*:/mi) == $model_count
+        && $metadata_index->{counts}{model_instance_id} == $model_count
+        && $metadata_index->{counts}{model_trigger_event_id} == $model_count
         && _count_matches($text{vhdl_fixture_top}, qr/^\s*variable\s+vial_model_[0-9]+_count\s*:/mi) == $model_count
         && _count_matches($text{vhdl_fixture_top}, qr/^\s*-- VIAL model update [0-9]+:/mi) == $model_count
         && $text{vhdl_fixture_top}
@@ -409,16 +414,71 @@ sub _count_matches($text, $pattern) {
     return scalar(() = $text =~ /$pattern/g);
 }
 
-sub _natural_constant($text, $name) {
-    my @value = $text =~ /^\s*constant\s+\Q$name\E\s*:\s*natural\s*:=\s*([0-9]+)\s*;/gmi;
-    return undef unless @value == 1;
-    return 0 + $value[0];
+sub _metadata_index($text) {
+    my $index = {
+        natural => {},
+        string => {},
+        operation_comment => {},
+        operation_kind => {},
+        operation_rank => {},
+        counts => {
+            operation_id => 0,
+            operation_kind => 0,
+            operation_rank => 0,
+            operation_fiber_id => 0,
+            scenario_id => 0,
+            fiber_id => 0,
+            model_instance_id => 0,
+            model_trigger_event_id => 0,
+        },
+    };
+    my @line = split /\n/, $text, -1;
+    for my $line (@line) {
+        if ($line =~ /^\s*-- VIAL operation ([0-9]+):\s+([a-z_]+)\s+at static rank ([0-9]+)\s*$/i) {
+            push @{$index->{operation_comment}{$1}}, [$2, 0 + $3];
+        }
+        if ($line =~ /^\s*constant\s+([A-Z][A-Z0-9_]*)\s*:\s*string\s*:=\s*"([^"]*)"\s*;/i) {
+            my ($name, $value) = (uc($1), $2);
+            push @{$index->{string}{$name}}, $value;
+            if ($name =~ /^VIAL_OPERATION_([0-9]+)_ID$/) {
+                $index->{counts}{operation_id}++;
+            }
+            elsif ($name =~ /^VIAL_OPERATION_([0-9]+)_KIND$/) {
+                $index->{counts}{operation_kind}++;
+                push @{$index->{operation_kind}{$1}}, $value;
+            }
+            elsif ($name =~ /^VIAL_OPERATION_([0-9]+)_FIBER_ID$/) {
+                $index->{counts}{operation_fiber_id}++;
+            }
+            elsif ($name =~ /^VIAL_SCENARIO_[0-9]+_ID$/) {
+                $index->{counts}{scenario_id}++;
+            }
+            elsif ($name =~ /^VIAL_FIBER_[0-9]+_ID$/) {
+                $index->{counts}{fiber_id}++;
+            }
+            elsif ($name =~ /^VIAL_MODEL_[0-9]+_INSTANCE_ID$/) {
+                $index->{counts}{model_instance_id}++;
+            }
+            elsif ($name =~ /^VIAL_MODEL_[0-9]+_TRIGGER_EVENT_ID$/) {
+                $index->{counts}{model_trigger_event_id}++;
+            }
+        }
+        elsif ($line =~ /^\s*constant\s+([A-Z][A-Z0-9_]*)\s*:\s*natural\s*:=\s*([0-9]+)\s*;/i) {
+            my ($name, $value) = (uc($1), 0 + $2);
+            push @{$index->{natural}{$name}}, $value;
+            if ($name =~ /^VIAL_OPERATION_([0-9]+)_STATIC_RANK$/) {
+                $index->{counts}{operation_rank}++;
+                push @{$index->{operation_rank}{$1}}, $value;
+            }
+        }
+    }
+    return $index;
 }
 
-sub _string_constant($text, $name) {
-    my @value = $text =~ /^\s*constant\s+\Q$name\E\s*:\s*string\s*:=\s*"([^"]*)"\s*;/gmi;
-    return undef unless @value == 1;
-    return $value[0];
+sub _indexed_value($index, $family, $name) {
+    my $values = $index->{$family}{$name};
+    return undef unless ref($values) eq 'ARRAY' && @{$values} == 1;
+    return $values->[0];
 }
 
 sub _diagnose($diagnostics, $code, $message, $path) {
