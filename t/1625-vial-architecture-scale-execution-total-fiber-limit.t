@@ -78,16 +78,24 @@ sub construction {
 }
 
 subtest 'the literal one-record recipe cannot author either level' => sub {
-    for my $requested ($limit{fibers}, $over{fibers}) {
-        my $literal = $class->_test_render_literal($requested);
-        cmp_ok(bytes::length($literal), '>', $source_cap,
-            "a literal $requested-fiber source exceeds the VIAL source cap");
-    }
+    my $literal_limit = $class->_test_render_literal($limit{fibers});
+    is(bytes::length($literal_limit), 3_047_364,
+        'the literal 65,536-fiber source is exactly 3,047,364 bytes');
+    cmp_ok(bytes::length($literal_limit), '>', $source_cap,
+        'the literal 65,536-fiber source exceeds the VIAL source cap');
+
+    my $literal_over = $class->_test_render_literal($over{fibers});
+    cmp_ok(bytes::length($literal_over), '>', $source_cap,
+        'the literal 65,537-fiber source exceeds the VIAL source cap');
 
     my $largest = 22_536;
-    cmp_ok(bytes::length($class->_test_render_literal($largest)), '<=',
+    my $largest_source = $class->_test_render_literal($largest);
+    my $first_excess_source = $class->_test_render_literal($largest + 1);
+    cmp_ok(bytes::length($largest_source), '<=',
         $source_cap, 'the literal recipe still fits at 22,536 fibers');
-    cmp_ok(bytes::length($class->_test_render_literal($largest + 1)), '>',
+    is(bytes::length($first_excess_source), 1_048_590,
+        'the first excess literal source is exactly 1,048,590 bytes');
+    cmp_ok(bytes::length($first_excess_source), '>',
         $source_cap, 'one further literal fiber record crosses the cap');
 };
 

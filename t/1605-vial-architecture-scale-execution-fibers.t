@@ -184,6 +184,10 @@ subtest 'fiber evaluations freeze exact identities and complete source maps' => 
         my $construction = construction($axis);
         my $built = $class->build({construction => $construction});
         my $ir = $built->{execution_ir}->as_hashref;
+        is($ir->{resource_summary}{bindings}, 22,
+            "$axis retains the exact checked-AHB binding count");
+        is(scalar(@{$ir->{type_table}}), 7,
+            "$axis retains the exact normalized execution-type count");
         my %operation_map_count;
         for my $record (@{$ir->{source_map}}) {
             $operation_map_count{$1}++
