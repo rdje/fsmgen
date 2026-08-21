@@ -1,11 +1,12 @@
 # Knowledge Map: `vial-checking`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **11** uniquely owned question entries.
+> **1** facts · **12** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="does a VIAL cross enumerate explicit tuples or a static Cartesian bin domain?" · facts=[vial-checking-state-scale-reachability](../../docs/knowledge/vial-checking-state-scale-reachability.md)
+- q="how are VIAL Runner capture limits and nonzero tool exits kept fail closed?" · facts=[vial-checking-state-scale-reachability](../../docs/knowledge/vial-checking-state-scale-reachability.md)
 - q="how are VIAL model-instance scale levels executed and checked?" · facts=[vial-checking-state-scale-reachability](../../docs/knowledge/vial-checking-state-scale-reachability.md)
 - q="how does VIAL prove a scoreboard reaches and drains one million entries?" · facts=[vial-checking-state-scale-reachability](../../docs/knowledge/vial-checking-state-scale-reachability.md)
 - q="how does VIAL prove an exact one million entry coverage hit vector?" · facts=[vial-checking-state-scale-reachability](../../docs/knowledge/vial-checking-state-scale-reachability.md)

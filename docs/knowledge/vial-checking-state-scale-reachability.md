@@ -13,6 +13,7 @@ answers:
   - "how are VIAL model-instance scale levels executed and checked?"
   - "how does VIAL prove every scalar model-state cell changes?"
   - "how does VIAL prove fault activation, expiry, and restoration at scale?"
+  - "how are VIAL Runner capture limits and nonzero tool exits kept fail closed?"
 date: 2026-08-20
 status: current
 tags: [vial, checking-state, scale, scoreboard, coverage, faults, randomness]
@@ -32,10 +33,12 @@ evidence: >-
   t/1633-vial-architecture-scale-checking-faults.t;
   t/1634-vial-architecture-scale-checking-random-replay.t;
   t/1635-vial-architecture-scale-checking-qualification.t;
+  perl/FSM/VIAL/Backend/Runner.pm;
+  t/1640-vial-runner-capture-limits.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
-  prove -Iperl t/1629-vial-architecture-scale-checking-foundation.t t/1630-vial-architecture-scale-checking-models.t t/1631-vial-architecture-scale-checking-scoreboards.t t/1632-vial-architecture-scale-checking-coverage.t t/1633-vial-architecture-scale-checking-faults.t t/1634-vial-architecture-scale-checking-random-replay.t t/1635-vial-architecture-scale-checking-qualification.t &&
+  prove -Iperl t/1629-vial-architecture-scale-checking-foundation.t t/1630-vial-architecture-scale-checking-models.t t/1631-vial-architecture-scale-checking-scoreboards.t t/1632-vial-architecture-scale-checking-coverage.t t/1633-vial-architecture-scale-checking-faults.t t/1634-vial-architecture-scale-checking-random-replay.t t/1635-vial-architecture-scale-checking-qualification.t t/1640-vial-runner-capture-limits.t &&
   rg -n 'checking_state_v1|one_bound_event_occurrence_per_instance_v1|packed_complete_transaction_fifo_v1|one_sample_packed_static_domain_vector_v1|arm_apply_expire_restore_each_fault_v1|generate_replay_compare_each_keyed_boolean_v1|coverage_bins_and_cross_tuples|random_occurrences|serialized_plan_bytes|cross Cartesian product' docs/decisions/0073-checking-state-scale-uses-packed-state-oracles-and-static-cross-domains.md perl/FSM/VIAL/ArchitectureScaleCheckingState.pm perl/FSM/VIAL/SemanticBuilder.pm perl/FSM/VIAL/ExecutionBuilder.pm perl/FSM/Support/VIALExecutionContract.pm
 ---
 
@@ -180,3 +183,7 @@ hostile-caller rejection, explicit product nonclaims, and exact same-volume
 cleanup. Guarded default `t/1629`-`t/1635` passes at Files=7/Tests=36 in 166
 seconds; the complete exact `t/1630`-`t/1634` matrix passes at Files=5/Tests=27
 in 593 seconds under the 4,096-MiB guard.
+
+Focused `t/1640` now proves Runner's aggregate exact/one-over capture boundary
+and that successful capture infrastructure cannot accept a nonzero tool exit;
+public contract and integration tests retain the shipped ceiling values.

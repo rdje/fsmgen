@@ -87,7 +87,7 @@ sub _run($raw) {
 
     my $version = _capture_process($repo_root, ['verilator', '--version'], 10, 65_536);
     _throw('VIAL_RUN_TOOL_ERROR', 'Verilator version query failed', '/tool_profile')
-        unless $version->{ok} && $version->{exit_code} == 0;
+        unless _process_succeeded($version);
     my $version_output = $version->{output};
     $version_output =~ s/[\r\n]+\z//;
     _throw('VIAL_RUN_TOOL_ERROR', 'installed Verilator identity does not match the qualified 5.046 profile', '/tool_profile')
@@ -112,7 +112,7 @@ sub _run($raw) {
             if $compile_process->{timed_out};
         _throw('VIAL_RUN_LIMIT_EXCEEDED', 'Verilator compile output exceeded 8 MiB', '/compile')
             if $compile_process->{output_limited};
-        unless ($compile_process->{ok} && $compile_process->{exit_code} == 0
+        unless (_process_succeeded($compile_process)
                 && index($compile_process->{output}, '%Error:') < 0) {
             _throw(
                 'VIAL_RUN_COMPILE_ERROR',
@@ -131,7 +131,7 @@ sub _run($raw) {
         _throw('VIAL_RUN_LIMIT_EXCEEDED', 'generated VIAL runtime output exceeded 64 MiB', '/run')
             if $run_process->{output_limited};
         _throw('VIAL_RUN_RUNTIME_ERROR', 'generated VIAL runtime exited nonzero', '/run')
-            unless $run_process->{ok} && $run_process->{exit_code} == 0;
+            unless _process_succeeded($run_process);
 
         my ($trace_text, $trace_jsonl, $ordinary_lines) = _extract_trace($run_process->{output});
         my $trace = FSM::VIAL::Backend::TraceValidator->validate({
@@ -412,6 +412,10 @@ sub _capture_process($cwd, $argv, $timeout, $limit) {
         timed_out => $timed_out ? JSON::PP::true : JSON::PP::false,
         output_limited => $limited ? JSON::PP::true : JSON::PP::false,
     };
+}
+
+sub _process_succeeded($process) {
+    return $process->{ok} && $process->{exit_code} == 0;
 }
 
 sub _terminate_process($pid, $process_group) {
