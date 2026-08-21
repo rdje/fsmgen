@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 
+use bytes ();
 use File::Spec;
 use FindBin;
 use JSON::PP ();
@@ -78,6 +79,8 @@ subtest 'checked-AHB topology constructions are closed and byte-deterministic' =
         my ($hial) = grep { $_->{role} eq 'hial_source' } @{$first->{inputs}};
         is($hial->{relative_path}, 'ppif/ahb_lite_subordinate.ppif',
             "$axis retains the frozen checked-AHB source identity");
+        is(bytes::length($hial->{content}), 1_326,
+            "$axis retains the exact checked-AHB source byte count");
         is($hial->{content}, $reference_hial,
             "$axis retains every frozen checked-AHB source byte");
     }
@@ -113,6 +116,10 @@ subtest 'scenario and operation gates preserve exact topology and global maps' =
         ok($built->{ok}, "$axis builds through the public checked-AHB binder");
         diag($json->encode($built->{diagnostics})) unless $built->{ok};
         my $ir = $built->{execution_ir}->as_hashref;
+        is($ir->{resource_summary}{bindings}, 22,
+            "$axis retains the exact checked-AHB binding count");
+        is(scalar(@{$ir->{type_table}}), 7,
+            "$axis retains the exact normalized execution-type count");
         is(scalar(@{$ir->{scenarios}}), $expected{$axis}{scenarios},
             "$axis has the isolated scenario count");
         is($ir->{operation_graph}{total_operation_count},
