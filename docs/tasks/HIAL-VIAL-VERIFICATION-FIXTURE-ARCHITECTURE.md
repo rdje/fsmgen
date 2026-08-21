@@ -596,16 +596,16 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement the selected canonical backend-emission generator and exact structural artifact oracles.`
   Acceptance: `Implement only after .17.2.6.1 and .17.2.6.2 commit cleanly; decompose per shared foundation and backend when required. Consume only caller-sealed proved execution graphs and canonical backend inputs; prove every selected profile/level's exact negotiation outcome, artifact inventory/order/relative paths, source identities and complete map closure, generated identifiers, structural checks, byte-equal reruns, earliest-cap rejection with no partial graph, defensive reports, repository-local staging and exact cleanup. Execute no external runtime and publish no support, performance, or capacity claim.`
-  Verification: `Clean repair-family predecessor 2d7b3b27e permits implementation activation. The generator is decomposed into one caller-sealed shared construction/evaluation/staging foundation, four ordered profile ladders, and final exact family qualification. Only foundation .1 is active; no generator, emitter, artifact, runtime, API, capability/support, performance, or capacity behavior changes in this continuity slice.`
+  Verification: `Clean repair-family predecessor 2d7b3b27e permits implementation activation. The generator is decomposed into one caller-sealed shared construction/evaluation/staging foundation, four ordered profile ladders, and final exact family qualification. Foundation .1 is complete; portable-SystemVerilog ladder .2 remains proposed pending its own clean activation. No profile shape, generator artifact, emitter behavior, runtime, API, capability/support, performance, or capacity claim changes in .1.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3: activate backend-emission generator`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.6`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.1`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the caller-sealed backend-emission construction, evaluation-report, and repository-local staging foundation.`
   Acceptance: `Add one immutable backend-emission generator boundary that derives only selected catalog specifications, consumes exact checked-AHB inputs and caller-sealed canonical ExecutionIR, owns no backend shape yet, and validates content-addressed construction/evaluation reports defensively. Define closed outcome, artifact-oracle, and nonclaim schemas; deterministic rerun identity; repository-local staging cleanup after success and consumer failure; reference/non-owned/profile/source/report/caller-seal mutation negatives; and no external runtime or product claim.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `ArchitectureScaleBackendEmission accepts only the frozen 1,326-byte PPIF and 4,986-byte VIAL reference pair through a same-package qualification constructor, then independently reruns ordinary Parser and PlanBuilder production. Public construction owns zero of twenty catalog shapes and rejects caller-created ExecutionIR, unknown profiles/levels, external private-constructor calls, source mutations, construction mutations, evaluation mutations, and unknown report/provider fields. The closed report freezes workload b739891c…, evaluation e7d9a4e1…, rerun 172c0419…, all five canonical stage digests, two scenarios/21 operations/four fibers/three live fibers/39 maps, a 44,101-byte plan, and two backend inputs while explicitly denying negotiation, emission, runtime, artifact-graph, support, performance, and capacity claims. Success and intentional consumer failure stage only below .artifacts/tmp/vial-scale and remove the exact content-addressed directory. Focused foundation/workload/authority regression passes Files=3/Tests=15.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.1: seal backend-emission foundation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.2`
   Status: `proposed`
@@ -916,7 +916,8 @@ selected-shape negotiation; `.17.2.6.2.5` aligns one closed exact catalog and
 support authority and qualifies the repaired family. Active generator
 `.17.2.6.3` is decomposed into shared foundation `.1`, portable-SV `.2`,
 portable-VHDL `.3`, OSVVM `.4`, native-UVM `.5`, and family closure `.6`;
-only foundation `.1` is active. Runtime/balanced
+foundation `.1` is complete and proposed portable-SV `.2` is next for a
+separate clean activation. Runtime/balanced
 integration `.17.2.7`, and
 measurement `.17.3` remain later.
 
@@ -1372,6 +1373,7 @@ measurement `.17.3` remain later.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-21` | `.17.2.6.3.1` caller-sealed backend-emission foundation | missing-module RED; exact checked-AHB source pair; same-package qualification seal; public zero-owned catalog boundary; ordinary Parser/PlanBuilder double rerun; closed stage/outcome/oracle/claim reports; exact content identities and route metrics; construction/evaluation/provider mutation negatives; success/failure same-volume staging cleanup; focused shared-workload/authority regression; task/index/Memory/book/fact/claim/containment continuity; staged acceptance and doctrines | `passed`; no public profile shape is owned and no emitter or runtime executes. The foundation freezes workload `b739891c…`, evaluation `e7d9a4e1…`, rerun `172c0419…`, five stage digests, two scenarios/21 operations/four fibers/three simultaneous fibers/39 maps, a 44,101-byte plan, and two backend inputs. Focused regression passes Files=3/Tests=15 with exact staging cleanup; task integrity remains three trees/962 nodes, Knowledge Map remains 1,150 facts/6,056 questions/6,223 occurrences/133 shards, and all 1,426 claim candidates close. All 53 book chapters test; the inspected 88-file/18,918,049-byte render is removed exactly. Portable-SV `.17.2.6.3.2` remains proposed for separate activation. No API, artifact-graph, capability/support, performance, or capacity claim changes. |
 | `2026-08-21` | `.17.2.6.3` backend-emission generator activation/decomposition | clean repair-family predecessor `2d7b3b27e`; decision `0075`; common workload/ExecutionIR and four repaired profile authority census; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, live-document, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.6.3` is active as a six-child container and only caller-sealed foundation `.1` is active. Four profile ladders and final family closure remain proposed. No code, test, config, artifact, generator, emitter, runtime, API, capability/support, performance, capacity, or product behavior changes. |
 | `2026-08-21` | `.17.2.6.2.5` exact authority alignment and repair-family qualification | six-field RED drift witness; one closed four-profile authority source; defensive clone; unknown/missing/obsolete/contradictory negatives; catalog and VHDL/native-UVM discovery projections; exact OSVVM source/cap/map/check partition; exact native-UVM caps/selected matrix; syntax/focused/capability/family/CI inventory reruns; task/index/Memory/decision/book/fact/rationale continuity; repository doctrine gates | `passed`; catalog and discovery consume one exact authority set, t/1644 passes Files=1/Tests=3, focused catalog/capability regression passes Files=4/Tests=7,108, and the 4,096-MiB guarded complete repair collection passes Files=18/Tests=7,248 in 124 seconds. No staging residue or runtime/API/support/performance/capacity claim change remains; `.17.2.6.2` is done and `.17.2.6.3` is next after the clean commit. |
 | `2026-08-21` | `.17.2.6.2.5` catalog/support alignment activation | clean predecessor `9c92b27f9`; decision `0075`; current catalog/support/emitter authority census; task/index/Memory continuity; task-tree, relative-path, mdBook, containment, claim, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.6.2.5` alone is active to reconcile exact repaired OSVVM source/cap/map authorities and native-UVM cap/selected-matrix authority, reject unknown or contradictory catalog fields, and qualify the five-repair family. No implementation, artifact, runtime, API, support, performance, or capacity behavior changes. |
@@ -4851,3 +4853,35 @@ raising an enforcement ceiling.
   and +83 bytes with no ceiling increase. Diff, staged acceptance, the final
   doctrine gate, zero artifact residue, and the docs-only implementation
   exemption complete the activation commit.
+
+## Acceptance Checklist (enforced) — `.17.2.6.3.1` backend-emission foundation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the focused RED command `prove -Iperl
+  t/1645-vial-architecture-scale-backend-emission-foundation.t` stopped with
+  `Can't locate FSM/VIAL/ArchitectureScaleBackendEmission.pm at t/1645-vial-architecture-scale-backend-emission-foundation.t line 14`, then
+  reported `No subtests run`: the selected profile ladders had no shared
+  caller-sealed construction/evaluation/staging producer at all.
+- [x] **ADDRESSED (verified)** — `ArchitectureScaleBackendEmission` now keeps
+  public ownership empty while its same-package qualification path admits only
+  the exact checked-AHB pair. It regenerates the complete Parser/PlanBuilder
+  route twice, freezes five stage digests plus closed outcome/oracle/claim
+  projections, validates construction and evaluation by canonical
+  regeneration, refuses injected ExecutionIR/provider data, and delegates
+  success/failure staging to the repository-volume workload boundary. Focused
+  negatives prove all twenty public shapes, caller seals, source identities,
+  mutations, unknown fields, and exact cleanup fail closed.
+- [x] **NO REGRESSION** — syntax reports
+  `perl/FSM/VIAL/ArchitectureScaleBackendEmission.pm syntax OK`; the shared
+  workload, backend-authority, and foundation collection reports `All tests
+  successful` at `Files=3, Tests=15`. The exact foundation watcher freezes the
+  21-operation canonical route, five stage identities, workload/evaluation/
+  rerun content addresses, 44,101 plan bytes, two backend inputs, zero public
+  ownership, zero emitted artifacts, and no repository-local stage residue.
+  Task integrity reports three trees/962 nodes; `knowledge-map: OK` retains
+  1,150 facts/6,056 questions/6,223 occurrences/133 shards; claim disposition
+  closes 1,426/1,426 candidates with zero open owners. All 53 mdBook chapters
+  test, and the inspected 88-file/18,918,049-byte repository-local render
+  contains the new reproducible contract before exact removal. All 22 live
+  document surfaces, one changed maintained reference, and zero ceiling
+  increases pass; `[doctrine] all doctrine checks passed` closes the staged
+  commit candidate.

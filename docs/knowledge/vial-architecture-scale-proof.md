@@ -20,8 +20,10 @@ evidence: >-
   docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md;
   docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md;
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/VIAL/ArchitectureScaleWorkload.pm;
+  perl/FSM/VIAL/ArchitectureScaleBackendEmission.pm;
   perl/FSM/Support/VIALVHDLEmissionContract.pm; perl/FSM/Support/VIALNativeUVMEmissionContract.pm;
   t/1644-vial-backend-emission-authority-alignment.t;
+  t/1645-vial-architecture-scale-backend-emission-foundation.t;
   docs/knowledge/vial-execution-scale-reachability.md;
   docs/knowledge/vial-semantic-scale-catalog.md;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
@@ -36,6 +38,7 @@ reverify: >-
   rg -n 'T=6,319|T=29,508|T=22|Durability'
   docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md &&
   prove -Iperl t/1644-vial-backend-emission-authority-alignment.t
+  t/1645-vial-architecture-scale-backend-emission-foundation.t
 ---
 
 Decisions `0055` and `0056` select architecture-scale proof without claiming capacity.
@@ -63,8 +66,13 @@ six-source portable foundation from one fixed adapter and provider, names the
 portable-only 16-MiB authority, and records native UVM's one-million-map cap
 beside its exact 21-operation/75-map/14-check/25-mapping selection. Unknown,
 missing, obsolete, or contradictory fields fail closed; the guarded repair
-family passes 18 files/7,248 tests. Active canonical generator `.17.2.6.3`
-starts with caller-sealed foundation `.1`. No support, performance, or capacity claim is made.
+family passes 18 files/7,248 tests. Completed caller-sealed foundation `.17.2.6.3.1`
+owns no backend shape: it admits only the exact checked-AHB pair through a private
+qualification constructor, regenerates SemanticIR, bridge, canonical ExecutionIR,
+backend inputs, and plan twice through ordinary producers, freezes a closed
+content-addressed nonclaim report, and cleans success/failure staging below the
+repository-local scale root. Portable-SystemVerilog ladder `.2` is next but is
+not active yet. No support, performance, or capacity claim is made.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

@@ -7,8 +7,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3`
-- next_action: implement `.17.2.6.3.1` caller-sealed backend-emission
-  construction, evaluation-report, and repository-local staging foundation.
+- next_action: activate `.17.2.6.3.2` portable-SystemVerilog backend-emission
+  ladder after clean `.17.2.6.3.1` foundation commit.
 - in_flight_uncommitted: none.
 - in_flight_background: none
 - blockers: none.
