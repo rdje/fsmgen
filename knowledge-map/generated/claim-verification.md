@@ -1,7 +1,7 @@
 # Knowledge Map: `claim-verification`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **44** uniquely owned question entries.
+> **3** facts · **45** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -23,6 +23,7 @@
 - q="how are incidental numerals separated from actionable claim debt?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)
 - q="how are intent actor and transaction timing claims verified?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are missing claim evidence legs owned?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
+- q="how are paired AHB BUSY phase-pipeline and subordinate-shape claims verified?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are reviewed incidental numerals recorded?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are stale claim candidate dispositions rejected?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are support matrix and non-protocol backlog claims verified?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)

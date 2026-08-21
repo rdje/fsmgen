@@ -1,7 +1,7 @@
 # Knowledge Map: `ial2-ahb`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **155** facts · **822** uniquely owned question entries.
+> **156** facts · **827** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -199,6 +199,7 @@
 - q="how are AHB little-endian byte lane bit ranges verified?" · facts=[ial2-ahb-guided-mode-claim-evidence](../../docs/knowledge/ial2-ahb-guided-mode-claim-evidence.md)
 - q="how are AHB phase-pipeline and direct-seed repairs regression tested?" · facts=[ial2-ahb-semantic-exact-two-three-claim-evidence](../../docs/knowledge/ial2-ahb-semantic-exact-two-three-claim-evidence.md)
 - q="how are AHB requester signal-width claims verified?" · facts=[ial2-ahb-requester-claim-evidence](../../docs/knowledge/ial2-ahb-requester-claim-evidence.md)
+- q="how are AHB subordinate storage and width claims falsified?" · facts=[ial2-ahb-paired-subordinate-claim-evidence](../../docs/knowledge/ial2-ahb-paired-subordinate-claim-evidence.md)
 - q="how are Chapter 14i AHB integration and public synchronization claims verified?" · facts=[ial2-ahb-integration-public-sync-claim-evidence](../../docs/knowledge/ial2-ahb-integration-public-sync-claim-evidence.md)
 - q="how are Chapter 14i arbitration and exact-three paired claims verified?" · facts=[ial2-ahb-arbitration-exact-three-paired-claim-evidence](../../docs/knowledge/ial2-ahb-arbitration-exact-three-paired-claim-evidence.md)
 - q="how are Chapter 14i exact-four requester and paired claims verified?" · facts=[ial2-ahb-exact-four-requester-paired-claim-evidence](../../docs/knowledge/ial2-ahb-exact-four-requester-paired-claim-evidence.md)
@@ -207,7 +208,9 @@
 - q="how are current AHB support totals verified?" · facts=[ial2-ahb-two-window-exact-four-generalized-range-claim-evidence](../../docs/knowledge/ial2-ahb-two-window-exact-four-generalized-range-claim-evidence.md)
 - q="how are exact one through four AHB BUSY insertions verified?" · facts=[ial2-ahb-requester-claim-evidence](../../docs/knowledge/ial2-ahb-requester-claim-evidence.md)
 - q="how are exact-one two and three BUSY runtimes separated?" · facts=[ial2-ahb-semantic-exact-two-three-claim-evidence](../../docs/knowledge/ial2-ahb-semantic-exact-two-three-claim-evidence.md)
+- q="how are fixed-wrap repairs separated from pre-repair AHB measurements?" · facts=[ial2-ahb-paired-subordinate-claim-evidence](../../docs/knowledge/ial2-ahb-paired-subordinate-claim-evidence.md)
 - q="how are one-window exact-three paired artifacts verified?" · facts=[ial2-ahb-arbitration-exact-three-paired-claim-evidence](../../docs/knowledge/ial2-ahb-arbitration-exact-three-paired-claim-evidence.md)
+- q="how are paired AHB BUSY and subordinate claims verified?" · facts=[ial2-ahb-paired-subordinate-claim-evidence](../../docs/knowledge/ial2-ahb-paired-subordinate-claim-evidence.md)
 - q="how are the AHB INCR4 and WRAP4 starting-lane rules verified?" · facts=[ial2-ahb-guided-mode-claim-evidence](../../docs/knowledge/ial2-ahb-guided-mode-claim-evidence.md)
 - q="how are the aggregate BUSY-park .ahb aliases support-accounted?" · facts=[ial2-ahb-aggregate-busy-park-propagation-alias-contract-selection](../../docs/knowledge/ial2-ahb-aggregate-busy-park-propagation-alias-contract-selection.md), [ial2-ahb-aggregate-busy-park-propagation-profile-alias-behavior](../../docs/knowledge/ial2-ahb-aggregate-busy-park-propagation-profile-alias-behavior.md)
 - q="how are the first six Chapter 16c AHB claims verified?" · facts=[ial2-ahb-guided-mode-claim-evidence](../../docs/knowledge/ial2-ahb-guided-mode-claim-evidence.md)
@@ -241,6 +244,7 @@
 - q="how does two-window exact-four appear in semantic JSON and MCP?" · facts=[ial2-ahb-two-subordinate-exact-four-paired-busy-composition-behavior](../../docs/knowledge/ial2-ahb-two-subordinate-exact-four-paired-busy-composition-behavior.md)
 - q="how is AHB HBURST SEQ profile alias support-accounted?" · facts=[ial2-ahb-hburst-length-wrap-seq-profile-alias-behavior](../../docs/knowledge/ial2-ahb-hburst-length-wrap-seq-profile-alias-behavior.md)
 - q="how is AHB byte-lane SEQ profile alias support-accounted?" · facts=[ial2-ahb-byte-lane-seq-profile-alias-behavior](../../docs/knowledge/ial2-ahb-byte-lane-seq-profile-alias-behavior.md)
+- q="how is AHB completion-edge phase recapture verified?" · facts=[ial2-ahb-paired-subordinate-claim-evidence](../../docs/knowledge/ial2-ahb-paired-subordinate-claim-evidence.md)
 - q="how is a drifting BUSY-then-SEQ resume fail-closed?" · facts=[ial2-ahb-subordinate-busy-park-contract-selection](../../docs/knowledge/ial2-ahb-subordinate-busy-park-contract-selection.md)
 - q="how is aggregate HBURST SEQ propagation reported?" · facts=[ial2-ahb-aggregate-hburst-seq-behavior](../../docs/knowledge/ial2-ahb-aggregate-hburst-seq-behavior.md)
 - q="how is aggregate byte-lane SEQ propagation reported?" · facts=[ial2-ahb-aggregate-byte-lane-seq-behavior](../../docs/knowledge/ial2-ahb-aggregate-byte-lane-seq-behavior.md)
@@ -775,6 +779,7 @@
 - q="which test proves the two-subordinate exact-three alias?" · facts=[ial2-ahb-two-subordinate-exact-three-paired-busy-composition-profile-alias-behavior](../../docs/knowledge/ial2-ahb-two-subordinate-exact-three-paired-busy-composition-profile-alias-behavior.md)
 - q="which test proves the two-subordinate exact-two alias?" · facts=[ial2-ahb-two-subordinate-exact-two-paired-busy-composition-profile-alias-behavior](../../docs/knowledge/ial2-ahb-two-subordinate-exact-two-paired-busy-composition-profile-alias-behavior.md)
 - q="which test proves two-subordinate paired AHB BUSY alias parity?" · facts=[ial2-ahb-two-subordinate-paired-busy-composition-profile-alias-behavior](../../docs/knowledge/ial2-ahb-two-subordinate-paired-busy-composition-profile-alias-behavior.md)
+- q="which two-window AHB BUSY counts are current versus historical?" · facts=[ial2-ahb-paired-subordinate-claim-evidence](../../docs/knowledge/ial2-ahb-paired-subordinate-claim-evidence.md)
 - q="why are early AHB support totals historical measurements?" · facts=[ial2-ahb-foundational-claim-evidence](../../docs/knowledge/ial2-ahb-foundational-claim-evidence.md)
 - q="why are old AHB support totals not current accounting?" · facts=[ial2-ahb-arbitration-exact-three-paired-claim-evidence](../../docs/knowledge/ial2-ahb-arbitration-exact-three-paired-claim-evidence.md)
 - q="why can't .704 select the AHB subordinate seed contract?" · facts=[ial2-ahb-subordinate-source-reference-seed-evidence-audit](../../docs/knowledge/ial2-ahb-subordinate-source-reference-seed-evidence-audit.md)
@@ -1354,6 +1359,13 @@ _One paired AHB requester-BUSY/subordinate-park aggregate is implementation-read
 
 - **date:** 2026-07-23 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-ahb-paired-busy-composition-readiness-audit.md`](../../docs/knowledge/ial2-ahb-paired-busy-composition-readiness-audit.md)
+
+### ial2-ahb-paired-subordinate-claim-evidence
+
+_AHB paired BUSY, phase-pipeline, and subordinate-shape claims retain distinct evidence_
+
+- **date:** 2026-08-21 · **status:** current
+- **source and verification:** [`docs/knowledge/ial2-ahb-paired-subordinate-claim-evidence.md`](../../docs/knowledge/ial2-ahb-paired-subordinate-claim-evidence.md)
 
 ### ial2-ahb-pipelined-active-transfer-contract-selection
 

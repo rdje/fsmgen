@@ -34,6 +34,7 @@ answers:
   - "how are APB generalized register-set claims separated by width stride count and policy?"
   - "how are APB five-register and six-register bounds separated from selection history?"
   - "how are AHB requester shape and exact-one-through-four BUSY claims verified?"
+  - "how are paired AHB BUSY phase-pipeline and subordinate-shape claims verified?"
 date: 2026-08-21
 status: current
 tags: [claim-verification, dispositions, inventory, evidence]
@@ -66,6 +67,7 @@ evidence: >-
   docs/knowledge/ial2-apb-generalized-register-set-claim-evidence.md;
   docs/knowledge/ial2-apb-expanded-register-bound-claim-evidence.md;
   docs/knowledge/ial2-ahb-requester-claim-evidence.md;
+  docs/knowledge/ial2-ahb-paired-subordinate-claim-evidence.md;
   docs/tasks/CLAIM-VERIFICATION-ADOPTION.md
 reverify: >-
   scripts/check_claim_verification_dispositions.pl --report && prove -Iperl
@@ -334,3 +336,12 @@ counter traces distinguish exact two, three, and four, while neighboring
 invalid forms retain the generalized `2..16` boundary. Current support
 accounting is independently rederived as 332 protocol fixtures, 373
 supported-plus-strict fixtures, and 56 AHB paths split 28/28.
+
+The paired/subordinate Chapter 16c review closes seven current two-window
+topology/runtime, fixed-wrap, atomic phase-recapture, and subordinate storage/
+width candidates through distinct gates. Twenty-seven test/task locators,
+readiness and contract values, shipment totals, and pre-repair failures remain
+reviewed chronology. Separate controls retain parking versus non-parking
+report truth, exact generic/alias topology, status/control non-interference,
+five fixed-wrap modes, two-acceptance/two-completion phase ownership, and
+fail-closed subordinate storage/width neighbors.
