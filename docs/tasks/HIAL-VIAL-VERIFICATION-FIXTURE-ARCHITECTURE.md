@@ -553,7 +553,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Repair the selected backend-emission catalog and contract authorities before generator code consumes them.`
   Acceptance: `Implement only after .17.2.6.1 commits cleanly. On activation, decompose five children in this order: linear portable-VHDL validation and accepted-boundary proof; sealed reusable OSVVM provider verification; translated OSVVM source-map closure; native-UVM closed selected-matrix negotiation; then exact catalog/support authority alignment and repair-family qualification. Each child adds RED controls and exact reruns. Align decision, catalog, emitters/validators/manifests, support contracts, tests, Knowledge Map, and mdBook; fail closed on unknown or contradictory authority fields; and close the repair family before .17.2.6.3 activates. Change no runtime path, public API, capability/support, performance, or capacity claim beyond decision 0075's explicitly selected behavior repairs.`
-  Verification: `Clean selection predecessor 0a3a2a05f activates this repair parent and decomposes decision 0075's five defects without changing implementation. Children .1 through .3 are complete: portable VHDL uses one-pass metadata/source-line indexes through its exact accepted boundary; OSVVM reuses one defensive exact provider result only inside a source-bound callback evaluation; and the wrapper validates then translates every portable source-map entry instead of substituting whole-file placeholders. Native-UVM negotiation and family qualification remain ordered proposed siblings; .4 is next after the clean .3 commit.`
+  Verification: `Clean selection predecessor 0a3a2a05f activates this repair parent and decomposes decision 0075's five defects without changing implementation. Children .1 through .3 are complete: portable VHDL uses one-pass metadata/source-line indexes through its exact accepted boundary; OSVVM reuses one defensive exact provider result only inside a source-bound callback evaluation; and the wrapper validates then translates every portable source-map entry instead of substituting whole-file placeholders. Child .4 is active for closed native-UVM selected-matrix negotiation; family qualification .5 remains proposed.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2: activate backend-emission repairs`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.5`
 
@@ -579,11 +579,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.3: activate OSVVM source-map translation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Close native-UVM negotiation over the selected review matrix.`
   Acceptance: `Add RED evidence for silent T=22 expectation loss, make negotiation admit only the exact selected T=21 reference shape, reject T=22 and every unsupported larger shape before artifact creation with one stable diagnostic, and preserve the selected ten-source/fourteen-check/75-map gallery, deterministic rerun, identifier safety, and native-runtime/support nonclaims.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean completed OSVVM source-map predecessor 14ad19924 leaves this ordered repair leaf unblocked. This activation owns only closed native-UVM negotiation over the exact selected T=21 review shape and adjacent T=22 rejection; implementation, generated artifacts, validation, gallery, runtime, public API, capability/support, performance, and capacity behavior remain unchanged until the implementation commit. Final catalog/support alignment .17.2.6.2.5 remains proposed.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.4: activate native-UVM negotiation repair`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.5`
   Status: `proposed`
@@ -4635,3 +4635,24 @@ raising an enforcement ceiling.
   closure and fail-closed contract before exact removal. The final staged
   acceptance and `[doctrine] all doctrine checks passed` result complete the
   commit workflow.
+
+## Acceptance Checklist (enforced) — `.17.2.6.2.4` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'silent T=22 expectation loss'
+  --oneline -- docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`
+  locates repair-parent activation `829fa2c74`, where `.17.2.6.2.4` was
+  deliberately proposed behind the first three repairs. Clean implementation
+  commit `14ad19924` completes that predecessor chain, so native-UVM negotiation
+  now needs one active owner before its RED control or implementation changes.
+- [x] **ADDRESSED (verified)** — `.17.2.6.2.4` alone is active for exact T=21
+  admission and fail-closed adjacent T=22/larger negotiation. `.17.2.6.2.5`
+  remains proposed, and this continuity slice changes no emitter, validator,
+  generated artifact, gallery, runtime, public API, capability/support,
+  performance, or capacity behavior.
+- [x] **NO REGRESSION** — relative-path verification reports `All tests
+  successful` at `Files=1, Tests=2`; task integrity reports three trees/956
+  nodes; `knowledge-map: OK` reports 1,150 facts/6,054 questions/6,221
+  occurrences/133 shards; all 53 mdBook chapters test; live-document and
+  maintained-reference checks report no changed reference, and ceiling
+  authority reports zero increases. Diff, final staged acceptance, and
+  `[doctrine] all doctrine checks passed` complete the activation commit.
