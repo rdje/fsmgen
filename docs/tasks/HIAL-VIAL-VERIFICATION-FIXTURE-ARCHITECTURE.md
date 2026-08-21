@@ -596,7 +596,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement the selected canonical backend-emission generator and exact structural artifact oracles.`
   Acceptance: `Implement only after .17.2.6.1 and .17.2.6.2 commit cleanly; decompose per shared foundation and backend when required. Consume only caller-sealed proved execution graphs and canonical backend inputs; prove every selected profile/level's exact negotiation outcome, artifact inventory/order/relative paths, source identities and complete map closure, generated identifiers, structural checks, byte-equal reruns, earliest-cap rejection with no partial graph, defensive reports, repository-local staging and exact cleanup. Execute no external runtime and publish no support, performance, or capacity claim.`
-  Verification: `Clean repair-family predecessor 2d7b3b27e permits implementation activation. The generator is decomposed into one caller-sealed shared construction/evaluation/staging foundation, four ordered profile ladders, and final exact family qualification. Foundation .1, portable-SystemVerilog ladder .2, and portable-VHDL ladder .3 are complete; OSVVM .4 is active. The two completed profile children own exactly ten selected shapes through structural qualification only; the activation adds no OSVVM profile shape, emitter invocation, external runtime, or product capability/support/performance/capacity claim.`
+  Verification: `Clean repair-family predecessor 2d7b3b27e permits implementation activation. The generator is decomposed into one caller-sealed shared construction/evaluation/staging foundation, four ordered profile ladders, and final exact family qualification. Foundation .1 and all four profile children .2-.5 are complete; family closure .6 alone is active. The completed children own all twenty selected profile-level outcomes, partitioned into thirteen emitted graphs and seven atomic rejections, through structural qualification only. Closure activation adds no family report, emitter invocation, external runtime, or product capability/support/performance/capacity claim.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3: activate backend-emission generator`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.6`
 
@@ -636,11 +636,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.5: qualify native UVM emission route`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.6`
-  Status: `proposed`
+  Status: `active`
   Goal: `Qualify the complete backend-emission profile family and close deterministic structural generation.`
   Acceptance: `Freeze the exact selected/reference/rejected profile-level partition, independent byte-equal reports, authority/oracle applicability, hostile caller and mutation rejection, same-volume success/failure cleanup, complete default plus guarded high-count matrices, repaired-emitter compatibility, CI inventory, synchronized durable truth, and unchanged runtime, API, capability/support, performance, and capacity claims; then close .17.2.6.3 and parent .17.2.6.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Clean native-UVM implementation commit d8dd1ce82 completes the final profile child and permits only family qualification .6 to activate. This continuity slice changes no generator, emitter, validator, artifact, runtime, API, capability/support, performance, capacity, or product behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.6: activate backend-emission family closure`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7`
   Status: `proposed`
@@ -916,13 +916,20 @@ selected-shape negotiation; `.17.2.6.2.5` aligns one closed exact catalog and
 support authority and qualifies the repaired family. Active generator
 `.17.2.6.3` is decomposed into shared foundation `.1`, portable-SV `.2`,
 portable-VHDL `.3`, OSVVM `.4`, native-UVM `.5`, and family closure `.6`;
-foundation `.1`, portable-SV `.2`, portable-VHDL `.3`, and OSVVM `.4` are
-complete; native-UVM `.5` is complete and family closure `.6` is proposed
-next. Runtime/balanced
+foundation `.1` and all four profile children `.2`-`.5` are complete; family
+closure `.6` alone is active. Runtime/balanced
 integration `.17.2.7`, and
 measurement `.17.3` remain later.
 
 ## Decisions
+
+- `2026-08-22`: Activate backend-emission family closure `.17.2.6.3.6` after
+  clean native-UVM implementation commit `d8dd1ce82`. Qualify the exact twenty-
+  outcome family partition, family-wide authority/oracle applicability,
+  defensive reports and cleanup, default/high-count matrices, emitter
+  compatibility, and CI inventory before closing `.17.2.6.3` and `.17.2.6`.
+  Activation adds no family report, runtime, API, capability/support,
+  performance, capacity, or product claim.
 
 - `2026-08-22`: Complete native-UVM route `.17.2.6.3.5` behind the shared
   foundation. Own five profile-level outcomes but construct artifacts only for
@@ -1428,6 +1435,7 @@ measurement `.17.3` remain later.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-22` | `.17.2.6.3.6` family-closure activation | clean native-UVM predecessor `d8dd1ce82`; decision `0075`; exact 13-emitted/7-rejected partition; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.6.3.6` alone is active to qualify all twenty profile-level outcomes and close `.17.2.6.3` plus `.17.2.6`. No implementation, family report, or product behavior changes. |
 | `2026-08-22` | `.17.2.6.3.5` native-UVM route implementation | RED zero-ownership/public-rejection witness; decision `0075`; caller-sealed shared construction and NativeUVM evaluator; ordinary Parser/PlanBuilder routes; exact artifact/source/map/check/mapping/workflow/identifier/manifest/diagnostic oracles; direct T=128/changed-T=21 falsification; defensive mutation; success/rejection/failure cleanup; syntax; native compatibility/gallery; focused, CI-inventory, and 4,096-MiB guarded ten-file impacted suite; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; five native-UVM profile outcomes join the fifteen portable/OSVVM shapes, but only T=21 emits: 16 artifacts/10 sources/138,345 bytes/75 maps/14 checks/25 mappings/seven review stages/five closure checks, with six intentional operation associations. Every non-reference level rejects the adjacent T=22 witness atomically; later levels are preflight-dominated/not-constructed. The guarded impacted collection passes Files=10/Tests=94 in 467 seconds. Reports and staging are defensive and residue-free. No external runtime, public API, capability/support, performance, capacity, or product claim changes; `.3.6` remains proposed for clean activation next. |
 | `2026-08-22` | `.17.2.6.3.5` native-UVM route activation | clean OSVVM predecessor `b8969b525`; decision `0075`; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.6.3.5` alone is active to own exact T=21 review emission plus T=22/larger/changed-same-count pre-artifact rejection through the sealed foundation. Family closure remains proposed. No implementation or product behavior changes. |
 | `2026-08-21` | `.17.2.6.3.4` OSVVM ladder implementation | RED zero-ownership/public-rejection witness; decision `0075`; caller-sealed shared construction and OSVVM evaluator; one callback-scoped exact provider verification with two defensive emissions; ordinary Parser/PlanBuilder routes; exact artifact/source/map/check/mapping/provider/semantic-preservation/identifier/manifest/diagnostic oracles; defensive mutation; success/rejection/failure cleanup; syntax; focused and 4,096-MiB guarded nine-file impacted suite; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; exactly five OSVVM shapes join the ten portable shapes. T=21/128/512/29,508 emit 16 artifacts/7 sources at 120,911/179,280/391,248/16,781,090 bytes with 66/173/557/29,553 complete maps, twelve wrapper checks, and twenty portable prerequisite checks; T=29,509 rejects atomically at `/portable_foundation`. The guarded impacted collection passes Files=9/Tests=86 in 439 seconds. Reports and staging are defensive and residue-free. No external runtime, public API, capability/support, performance, capacity, or product claim changes; `.3.5` remains proposed for clean activation next. |
@@ -5205,3 +5213,31 @@ raising an enforcement ceiling.
   doctrine gate, and exact artifact cleanup complete the workflow. Family
   closure remains proposed; no external runtime, public API, capability/
   support, performance, capacity, or product claim changes.
+
+## Acceptance Checklist (enforced) — `.17.2.6.3.6` family-closure activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Qualify the complete backend-
+  emission profile family' --oneline --
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md` identifies
+  decomposition commit `6b08d8146`, where `.17.2.6.3.6` remained proposed
+  behind the four profile children. Clean commit `d8dd1ce82` completes the
+  native-UVM predecessor, so family qualification requires its own active
+  owner before RED controls or implementation.
+- [x] **ADDRESSED (verified)** — `.17.2.6.3.6` alone is active to freeze the
+  exact 13-emitted/7-rejected family partition, run default and guarded
+  high-count matrices, retain authority/oracle/nonclaim/cleanup closure, and
+  close `.17.2.6.3` plus `.17.2.6`. Task index, bounded Memory, Knowledge cards,
+  and mdBook name the same frontier, while no code, test, config, generator,
+  emitter, validator, artifact, runtime, API, capability/support, performance,
+  capacity, family-report, or product behavior changes.
+- [x] **NO REGRESSION** — task-tree integrity reports three trees/962 nodes;
+  relative paths pass at `Files=1, Tests=2`; and Knowledge Map parity retains
+  1,150 facts/6,056 questions/6,223 occurrences/133 shards. Claim inventory/
+  dispositions close all 1,426 candidates and 2,072 current/615 original
+  constants with zero open owners. All 53 mdBook chapters test, and the
+  inspected repository-local render contains 88 files/18,945,813 bytes and
+  both exact active-family/no-family-report statements before removal. All 22
+  live-document surfaces, one exact 0-line/+132-byte book authority, the
+  line-neutral 45,455-line Knowledge-card surface, and zero ceiling increases
+  pass. Diff, staged acceptance, the final doctrine gate, generated-book
+  removal, and zero scale-stage children complete the activation workflow.

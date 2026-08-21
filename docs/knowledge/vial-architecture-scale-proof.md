@@ -98,8 +98,8 @@ Completed native-UVM generator leaf `.17.2.6.3.5` owns five public route outcome
 graph: sixteen artifacts, ten SystemVerilog sources/138,345 bytes, 75 structural maps with six intentional operation
 associations, fourteen passing checks, 25 selected mappings, seven review stages, and five review-closure checks. Its four
 non-reference levels all execute the adjacent T=22 negotiation rejection; the three levels beyond the gate are explicitly
-preflight-dominated/not-constructed. Independent T=128 and changed-same-count T=21 witnesses reject before artifacts. No
-support, performance, parse, compile, runtime, result, manual-review, or capacity claim is made.
+preflight-dominated/not-constructed. Independent T=128 and changed-same-count T=21 witnesses reject before artifacts. Family
+closure `.17.2.6.3.6` alone is active to qualify the 13-emitted/7-rejected partition; no product claim or family report exists.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

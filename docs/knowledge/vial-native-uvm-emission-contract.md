@@ -185,8 +185,8 @@ consumes that authority through the caller-sealed architecture-scale foundation.
 ten-source/138,345-byte/75-map/14-check/25-mapping selected review graph twice; six operation identities are intentionally
 associated by those structural maps. Every non-reference public level reuses the adjacent T=22 negotiation witness, with
 later levels reported as preflight-dominated and not constructed; independent T=128 and changed-same-count T=21 shapes also
-reject before artifacts. Parse, compile, runtime, result, manual review, support, performance, and capacity remain false.
-These structural limits add no native-UVM runtime or support claim.
+reject before artifacts. Family closure `.17.2.6.3.6` alone is active; activation adds no report. Parse, compile, runtime,
+result, manual review, support, performance, capacity, and native-UVM execution remain false.
 
 Related: [[hial-vial-verification-fixture-architecture]],
 [[vial-native-uvm-experimental-probe]], [[semantic-introspection-mcp-frontier]].
