@@ -93,9 +93,25 @@ subtest 'provider graph, gitlinks, licences, notices, and missing metadata are e
     ok(!$unknown->{ok}, 'unknown materialization input fails closed');
 };
 
-my $emission = emit_backend();
-ok($emission->{ok}, 'exact OSVVM adapter/gallery emission succeeds');
-diag($json->encode($emission->{diagnostics})) unless $emission->{ok};
+my $emission;
+subtest 'sealed evaluation reuses the exact provider for deterministic emission' => sub {
+    my $first;
+    $emission = FSM::VIAL::Backend::VHDLOSVVM2026_05
+        ->with_provider_evaluation({
+            dependency_root => $dependency_root,
+            consumer => sub {
+                my ($evaluation) = @_;
+                $first = $evaluation->emit(backend_args());
+                return $evaluation->emit(backend_args());
+            },
+        });
+    ok($first->{ok}, 'first exact-provider emission succeeds');
+    diag($json->encode($first->{diagnostics})) unless $first->{ok};
+    ok($emission->{ok}, 'reused exact-provider emission succeeds');
+    diag($json->encode($emission->{diagnostics})) unless $emission->{ok};
+    is($json->encode($emission), $json->encode($first),
+        'evaluation-local rerun remains byte-identical');
+};
 
 subtest 'advanced negotiation and profile claims are exact and bounded' => sub {
     is_deeply(
@@ -370,10 +386,6 @@ sub backend_args {
         dependency_root => $dependency_root,
         advanced_requirements => [@requirements],
     };
-}
-
-sub emit_backend {
-    return FSM::VIAL::Backend::VHDLOSVVM2026_05->emit(backend_args());
 }
 
 sub artifact {

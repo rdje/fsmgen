@@ -11,7 +11,7 @@ answers:
   - "what exact workloads prove VIAL backend emission scale?"
   - "where are the VIAL portable backend source byte boundaries?"
   - "why does native UVM reject the portable backend scale ladder?"
-date: 2026-08-10
+date: 2026-08-21
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
 evidence: >-
@@ -53,9 +53,9 @@ Decision `0075` selects checked-AHB backend routes: portable SV accepts
 native UVM owns reference `T=21` and must reject unsupported `T=22`.
 `.17.2.6.2.1` now indexes VHDL metadata and source lines once per source; its
 guarded watcher accepts `T=29,508` twice at 16,776,739 bytes/29,546 maps and
-retains atomic `29,509` rejection. Active `.17.2.6` still owns OSVVM provider/
-map, native-UVM negotiation, catalog, and canonical generator durability. No
-support, performance, or capacity claim is made.
+retains atomic `29,509` rejection. `.17.2.6.2.2` seals exact OSVVM provider
+reuse; active `.17.2.6` still owns OSVVM maps, native-UVM negotiation, catalog,
+and generator durability. No support, performance, or capacity claim is made.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

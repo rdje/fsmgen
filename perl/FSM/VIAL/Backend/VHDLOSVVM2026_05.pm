@@ -7,7 +7,7 @@ use bytes ();
 use Carp qw(confess);
 use Digest::SHA qw(sha256_hex);
 use JSON::PP ();
-use Scalar::Util qw(blessed);
+use Scalar::Util qw(blessed refaddr reftype);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
@@ -35,6 +35,11 @@ my @RESULT_KEYS = qw(
     provider_materialization mapping_matrix semantic_preservation source_map
     static_validation backend_manifest artifacts diagnostics
 );
+# The registry is deliberately lexical.  Its strong token reference prevents
+# address reuse during a callback, and deletion after the callback makes every
+# retained object stale without exposing verified provider evidence to callers.
+my %PROVIDER_EVALUATIONS;
+my $NEXT_PROVIDER_EVALUATION_ID = 0;
 
 sub result_keys($class) {
     _exact_class($class, 'result_keys');
@@ -48,14 +53,113 @@ sub emit($class, @args) {
     return _failure('VIAL_OSVVM_BACKEND_INVOCATION_ERROR',
         'emit expects one closed argument hash', '/')
         unless @args == 1 && ref($args[0]) eq 'HASH' && !blessed($args[0]);
-    my $result = eval { _emit($args[0]) };
+    return _run_emit($args[0]);
+}
+
+sub with_provider_evaluation($class, @args) {
+    return _failure('VIAL_OSVVM_PROVIDER_EVALUATION_ERROR',
+        'with_provider_evaluation requires the exact backend class invocant',
+        '/provider_evaluation')
+        unless defined($class) && !ref($class) && $class eq __PACKAGE__;
+    return _failure('VIAL_OSVVM_PROVIDER_EVALUATION_ERROR',
+        'with_provider_evaluation expects one closed argument hash',
+        '/provider_evaluation')
+        unless @args == 1 && ref($args[0]) eq 'HASH' && !blessed($args[0]);
+    my $result = eval { _with_provider_evaluation($args[0]) };
+    return $result if defined $result;
+    my $error = $@ || 'unknown OSVVM provider-evaluation error';
+    $error =~ s/\s+\z//;
+    return _failure('VIAL_OSVVM_PROVIDER_EVALUATION_ERROR', $error,
+        '/provider_evaluation');
+}
+
+sub _with_provider_evaluation($raw) {
+    _require_keys($raw, [qw(dependency_root consumer)]);
+    confess "provider evaluation requires the exact repository-local OSVVM 2026.05 root\n"
+        unless defined($raw->{dependency_root}) && !ref($raw->{dependency_root})
+            && $raw->{dependency_root} eq $DEPENDENCY_ROOT;
+    confess "provider evaluation consumer must be one callback\n"
+        unless ref($raw->{consumer}) eq 'CODE';
+
+    my $provider = FSM::VIAL::Backend::OSVVM2026_05Materialization->verify({
+        dependency_root => $raw->{dependency_root},
+    });
+    return _failure('VIAL_OSVVM_PROVIDER_MATERIALIZATION_ERROR',
+        $provider->{diagnostics}[0]{message}, '/dependency_root')
+        unless $provider->{ok};
+    my $protected_provider = _clone_json($provider);
+    my $provider_identity = _provider_identity(
+        $raw->{dependency_root}, $protected_provider);
+    my $token_id = ++$NEXT_PROVIDER_EVALUATION_ID;
+    my $evaluation = bless \$token_id,
+        'FSM::VIAL::Backend::VHDLOSVVM2026_05::ProviderEvaluation';
+    my $address = refaddr($evaluation);
+    $PROVIDER_EVALUATIONS{$address} = {
+        token => $evaluation,
+        token_id => $token_id,
+        dependency_root => $raw->{dependency_root},
+        provider => $protected_provider,
+        provider_identity => $provider_identity,
+    };
+
+    my $result = eval { $raw->{consumer}->($evaluation) };
+    my $error = $@;
+    delete $PROVIDER_EVALUATIONS{$address};
+    if ($error ne '') {
+        $error =~ s/\s+\z//;
+        return _failure('VIAL_OSVVM_PROVIDER_EVALUATION_ERROR', $error,
+            '/provider_evaluation');
+    }
+    return _failure('VIAL_OSVVM_PROVIDER_EVALUATION_ERROR',
+        'provider evaluation consumer must return one closed backend result',
+        '/provider_evaluation')
+        unless ref($result) eq 'HASH' && !blessed($result)
+            && join("\0", sort keys %$result)
+                eq join("\0", sort @RESULT_KEYS);
+    return $result;
+}
+
+sub _provider_evaluation_emit($evaluation, @args) {
+    return _failure('VIAL_OSVVM_PROVIDER_EVALUATION_ERROR',
+        'provider evaluation is stale or forged', '/provider_evaluation')
+        unless blessed($evaluation)
+            && blessed($evaluation) eq
+                'FSM::VIAL::Backend::VHDLOSVVM2026_05::ProviderEvaluation'
+            && (reftype($evaluation) // '') eq 'SCALAR';
+    my $address = refaddr($evaluation);
+    my $context = $PROVIDER_EVALUATIONS{$address};
+    return _failure('VIAL_OSVVM_PROVIDER_EVALUATION_ERROR',
+        'provider evaluation is stale or forged', '/provider_evaluation')
+        unless defined($context)
+            && refaddr($context->{token}) == $address
+            && ${$evaluation} eq $context->{token_id};
+    return _failure('VIAL_OSVVM_PROVIDER_EVALUATION_ERROR',
+        'provider evaluation emit expects one closed argument hash',
+        '/provider_evaluation')
+        unless @args == 1 && ref($args[0]) eq 'HASH' && !blessed($args[0]);
+    my $raw = $args[0];
+    return _failure('VIAL_OSVVM_PROVIDER_EVALUATION_ERROR',
+        'provider source identity does not match the sealed evaluation',
+        '/provider_evaluation')
+        unless defined($raw->{dependency_root}) && !ref($raw->{dependency_root})
+            && $raw->{dependency_root} eq $context->{dependency_root};
+    return _failure('VIAL_OSVVM_PROVIDER_EVALUATION_ERROR',
+        'provider evaluation evidence identity drifted',
+        '/provider_evaluation')
+        unless _provider_identity($context->{dependency_root},
+                $context->{provider}) eq $context->{provider_identity};
+    return _run_emit($raw, _clone_json($context->{provider}));
+}
+
+sub _run_emit($raw, $verified_provider = undef) {
+    my $result = eval { _emit($raw, $verified_provider) };
     return $result if defined $result;
     my $error = $@ || 'unknown OSVVM backend error';
     $error =~ s/\s+\z//;
     return _failure('VIAL_OSVVM_BACKEND_HOST_ERROR', $error, '/');
 }
 
-sub _emit($raw) {
+sub _emit($raw, $verified_provider = undef) {
     _require_keys($raw, [qw(
         execution_ir bridge_manifest backend_inputs artifact_root
         backend_profile dependency_root advanced_requirements
@@ -72,9 +176,11 @@ sub _emit($raw) {
     confess "advanced_requirements must contain seven unique sorted exact requirements\n"
         unless join("\0", @requirements) eq join("\0", @REQUIREMENT_IDS);
 
-    my $provider = FSM::VIAL::Backend::OSVVM2026_05Materialization->verify({
-        dependency_root => $raw->{dependency_root},
-    });
+    my $provider = defined($verified_provider)
+        ? $verified_provider
+        : FSM::VIAL::Backend::OSVVM2026_05Materialization->verify({
+            dependency_root => $raw->{dependency_root},
+        });
     return _failure('VIAL_OSVVM_PROVIDER_MATERIALIZATION_ERROR',
         $provider->{diagnostics}[0]{message}, '/dependency_root')
         unless $provider->{ok};
@@ -660,6 +766,17 @@ sub _json_text($value) {
     return $PRETTY_JSON->encode($value);
 }
 
+sub _clone_json($value) {
+    return $JSON->decode($JSON->encode($value));
+}
+
+sub _provider_identity($dependency_root, $provider) {
+    return sha256_hex($JSON->encode({
+        dependency_root => $dependency_root,
+        provider => $provider,
+    }));
+}
+
 sub _require_keys($value, $expected) {
     confess "backend invocation key set is not closed\n"
         unless join("\0", sort keys %$value) eq join("\0", sort @$expected);
@@ -688,6 +805,21 @@ sub _failure($code, $message, $path) {
 sub _exact_class($class, $method) {
     confess __PACKAGE__ . "->$method requires the exact class invocant\n"
         unless defined($class) && !ref($class) && $class eq __PACKAGE__;
+}
+
+1;
+
+package FSM::VIAL::Backend::VHDLOSVVM2026_05::ProviderEvaluation;
+
+use v5.20;
+use strict;
+use warnings;
+use feature qw(signatures);
+no warnings 'experimental::signatures';
+
+sub emit($evaluation, @args) {
+    return FSM::VIAL::Backend::VHDLOSVVM2026_05::_provider_evaluation_emit(
+        $evaluation, @args);
 }
 
 1;

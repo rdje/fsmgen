@@ -431,3 +431,22 @@ watcher policy. Schema versions are configured input identities under that
 policy, not exempt incidental leaves. Candidate migration ownership is likewise
 derived from the current disposition join, so closed work cannot retain a
 stale owner and genuinely new work cannot appear ownerless.
+
+## 2026-08-21: Provider preflight reuse is a scoped capability, not a cache
+
+Exact OSVVM verification walks a recursive provider graph and is immutable for
+one synchronous backend evaluation, but a process-global cache would make
+filesystem drift, test isolation, and caller-supplied evidence difficult to
+reason about. The advanced VHDL backend therefore verifies at evaluation entry
+and registers one opaque scalar capability only for the duration of a callback.
+The lexical registry holds the verified result, dependency root, canonical
+identity digest, and the original token; callers receive none of that evidence.
+
+Each accepted local emission receives a fresh defensive clone. The root must
+match, the token identity must still be registered, and the protected evidence
+digest must remain exact. Registry deletion happens before either a successful
+callback result or a sanitized callback failure is returned. Consequently a
+retained handle is stale, a separately blessed object cannot forge authority,
+and mutation of one emitted result cannot contaminate the next. Standalone
+emission deliberately retains independent verification, keeping this reuse an
+explicit evaluation boundary rather than hidden ambient state.

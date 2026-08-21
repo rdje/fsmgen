@@ -21,5 +21,5 @@
 
 _VIAL architecture scale is proved by orthogonal families with stage-local oracles, not capacity claims_
 
-- **date:** 2026-08-10 · **status:** current
+- **date:** 2026-08-21 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-architecture-scale-proof.md`](../../docs/knowledge/vial-architecture-scale-proof.md)
