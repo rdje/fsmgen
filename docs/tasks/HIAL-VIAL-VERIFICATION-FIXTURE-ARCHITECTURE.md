@@ -538,21 +538,21 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Generate backend-emission workloads through each negotiated canonical emitter with structural artifact oracles.`
   Acceptance: `Consume proved execution graphs for portable SystemVerilog, portable VHDL, OSVVM, and native-UVM emission profiles; prove exact inventory/order/relative paths, source identity and map closure, stable generated identifiers, static checks, byte-equal reruns, earliest-cap diagnostics, atomic no-artifact-before-negotiation behavior, and cleanup without external runtime qualification.`
-  Verification: `Clean activation 63655fee2 owns the audit. The common profile axis names gate and qualification only by upstream_workload_level, but execution_graph_v1 has ten independent axes, so it does not select one canonical ExecutionIR. Executable reference emission proves four different authorities: portable SV 8 artifacts/3 sources/54 maps/no separate static report, portable VHDL 17/6/59/20, OSVVM 16/7/13/12, and native UVM 16/10/75/14. The catalog also calls OSVVM's six portable sources plus one adapter seven generated provider sources and omits native UVM's enforced one-million-source-map cap. The work is therefore decomposed into read-only selection .17.2.6.1, separately proposed authority repair .17.2.6.2, and separately proposed generator/oracle implementation .17.2.6.3. Only .1 is active; no generator, emitter, runtime, public API, capability/support, performance, or capacity behavior changes.`
+  Verification: `Decision 0075 closes read-only selection .1 with one checked-AHB anchored operation recipe and profile-local outcomes. Portable SV accepts T=21/1,024/4,096/6,319 and rejects 6,320 at the 16-MiB source cap. Portable VHDL and OSVVM select T=21/128/512/29,508 and adjacent portable-foundation rejection at 29,509, subject to separately owned validator, provider, and source-map repairs. Native UVM accepts only its T=21 selected gallery; T=22 is the adjacent unsupported shape and must fail negotiation before artifact creation. Five repair slices under proposed .2 precede generator .3; no behavior changes in selection.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6: activate backend-emission generation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.1`
-  Status: `active`
+  Status: `done`
   Goal: `Select exact upstream execution shapes, structural axes, reachability, and stage-local oracles for every backend-emission profile.`
   Acceptance: `Audit decisions 0055/0056, the common workload catalog, all proved execution-graph shapes, the portable-SystemVerilog, portable-VHDL, OSVVM, and native-UVM emitters and validators, their focused tests/galleries, publication boundaries, and current Knowledge Map/book truth. Execute the reference graph and representative scale routes where inspection is insufficient. For each backend and level, select the exact canonical upstream axis/level or profile-specific recipe, emitted-source/artifact/map/static-check authority, generated-byte meaning, limit and first representable excess, negotiation/provider prerequisites, deterministic identity, atomicity/cleanup proof, and nonclaims. Reconcile ambiguous or false existing authorities in a decision and route every code/config repair to .17.2.6.2 and implementation to .17.2.6.3 without changing behavior in selection.`
-  Verification: `pending`
-  Commit: `pending implementation`
+  Verification: `Decision 0075 selects the checked-AHB anchored response-expectation operation total T as the exact portable recipe and freezes every accepted or earliest-authority outcome. Fresh canonical probes measure portable SV at T=21/1,024/4,096/6,319 as 164,093/2,803,325/10,910,333/16,776,830 source bytes and 54/1,057/4,129/6,352 maps; T=6,320 rejects atomically. Portable VHDL measures T=21/128/512 at 116,560/174,929/386,897 bytes, 59/166/550 maps, and twenty checks. Unchanged renderer evidence gives adjacent T=29,508/29,509 sizes 16,776,739/16,777,307; actual excess rejection is already exact, while the accepted proof waits on the diagnosed per-operation whole-metadata-scan repair. OSVVM adds one fixed 4,351-byte adapter to six portable sources; its selected complete maps translate every portable entry plus seven adapter entries instead of the defective current six coarse placeholders plus seven adapter entries. Native UVM T=22 proves silent shape loss: fixed 138,345-byte sources contain no added expectation although one coarse map association does, so T=22 becomes the adjacent negotiation rejection and higher levels are preflight-dominated. Exact 128/129 source-identifier probes produce generated maxima 131/142/142/154 under the separate 255-byte backend limit. Four behavior defects and catalog drift are routed as five required .2 repair slices; .3 remains blocked. Focused pre-selection emitters pass Files=4/Tests=30, probes are pure, and no product behavior changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.1: select backend-emission scale routes`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2`
   Status: `proposed`
   Goal: `Repair the selected backend-emission catalog and contract authorities before generator code consumes them.`
-  Acceptance: `Implement only after .17.2.6.1 commits cleanly. Add RED coverage for every selected drift; replace the OSVVM generated-provider-source mislabel with the selected portable/adapter truth; expose every selected enforced structural cap including native-UVM source maps; align decision, catalog, validators/manifests, tests, Knowledge Map, and mdBook; and fail closed on unknown or contradictory authority fields. Change no emitter output, runtime path, public API, capability/support, performance, or capacity claim unless the selection explicitly proves a behavior repair is required.`
+  Acceptance: `Implement only after .17.2.6.1 commits cleanly. On activation, decompose five children in this order: linear portable-VHDL validation and accepted-boundary proof; sealed reusable OSVVM provider verification; translated OSVVM source-map closure; native-UVM closed selected-matrix negotiation; then exact catalog/support authority alignment and repair-family qualification. Each child adds RED controls and exact reruns. Align decision, catalog, emitters/validators/manifests, support contracts, tests, Knowledge Map, and mdBook; fail closed on unknown or contradictory authority fields; and close the repair family before .17.2.6.3 activates. Change no runtime path, public API, capability/support, performance, or capacity claim beyond decision 0075's explicitly selected behavior repairs.`
   Verification: `pending`
   Commit: `pending activation`
 
@@ -825,12 +825,25 @@ profiles, and 12 deliberately unselected fixed-scalar profiles, all fail-
 closed. Completed `.17.2.5` implements and qualifies every checking-state axis:
 32 selected non-reference shapes are owned, the eight reference profiles fail
 closed, default t/1629-t/1635 passes at Files=7/Tests=36, and the complete exact
-matrix passes at Files=5/Tests=27 under the repository RAM guard. Active
-backend-emission selection `.17.2.6.1` now reconciles the four canonical
-emitter/oracle authorities before separately owned repair and implementation;
-runtime/balanced integration `.17.2.7` and measurement `.17.3` remain later.
+matrix passes at Files=5/Tests=27 under the repository RAM guard. Completed
+backend-emission selection `.17.2.6.1` and decision `0075` now own the exact
+portable operation ladders, native-UVM adjacent negotiation boundary,
+profile-local structural oracles, and four diagnosed behavior defects. Proposed
+repair parent `.17.2.6.2` is the next separate activation; it will decompose
+the five ordered slices and select linear portable-VHDL validation plus
+accepted-boundary proof first. Generator `.17.2.6.3`, runtime/balanced
+integration `.17.2.7`, and
+measurement `.17.3` remain later.
 
 ## Decisions
+
+- `2026-08-21`: Accept decision `0075`. Use the checked-AHB anchored
+  response-expectation operation total as the profile-specific portable scale
+  recipe; retain the earliest source, portable-foundation, or negotiation
+  authority; and keep native UVM at its explicitly selected review matrix.
+  Repair VHDL validator complexity, reusable sealed OSVVM provider preflight,
+  OSVVM translated source-map closure, native-UVM fail-closed negotiation, and
+  exact catalog/support authority before generator implementation.
 
 - `2026-08-20`: Accept decision `0073`. Keep every `checking_state_v1`
   level, report its exact accepted-or-earliest-cap outcome, and use one
@@ -1227,6 +1240,7 @@ runtime/balanced integration `.17.2.7` and measurement `.17.3` remain later.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-21` | `.17.2.6.1` backend-emission route selection | decisions `0055`/`0056`/`0072`; common catalog and all execution shapes; four emitters/validators/support contracts/focused tests/gallery/publication boundaries; canonical anchored reference/candidate/adjacent probes; private unchanged VHDL renderer boundary calculation; 128/129 identifier edge; OSVVM adapter/map/provider source inspection; native-UVM T=21/22 and 48,274/48,275 falsification; Knowledge Map/book/task/Memory/containment continuity; task-tree, relative-path, mdBook, claim, diff, acceptance, and doctrine gates | `passed`; decision `0075` selects exact profile-local outcomes. Portable SV accepts T=21/1,024/4,096/6,319 and rejects 6,320. Portable VHDL and OSVVM select T=21/128/512/29,508 plus adjacent portable-foundation rejection at 29,509. Native UVM selects reference and adjacent T=22 negotiation rejection, with larger levels preflight-dominated. Generated identifiers remain 131/142/142/154 bytes at the 128-byte source edge; 129 rejects. Four behavior defects and exact catalog drift are durably routed to five required `.17.2.6.2` repair slices before generator `.3`; no behavior changes. |
 | `2026-08-21` | `.17.2.6` decomposition | clean activation `63655fee2`; decisions `0055`/`0056`; Knowledge Map and current book/task audit; catalog/profile-axis history; four canonical emitter/validator source census; exact reference emission probe; guarded focused emitter matrix; task/index/Memory continuity; task-tree, relative-path, diff, and doctrine gates | `passed`; `.17.2.6` decomposes into active read-only selection `.17.2.6.1`, proposed catalog/contract repair `.17.2.6.2`, and proposed generator/oracle implementation `.17.2.6.3`. Reference emission returns portable SV 8 artifacts/3 sources/164,093 source bytes/54 maps/0 separate static checks, portable VHDL 17/6/116,558/59/20, OSVVM 16/7/120,909/13/12, and native UVM 16/10/138,345/75/14. Guarded focused emission passes at Files=4/Tests=30. History roots the under-specified profile axis and catalog drift in foundation commit `063b990f3`; exact numbered-source inspection rejects the false duplicate-key hypothesis. No product behavior changes. |
 | `2026-08-21` | `.17.2.6` backend-emission generation activation | clean claim-adoption closure `0fd653bf0`; decision `0074` resume direction; decisions `0055`/`0056`; workload catalog and four canonical emitter/profile authority census; Knowledge Map absence check; task/index/Memory/book continuity; task-tree, relative-path, mdBook, maintained-reference, claim-inventory, containment, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.6` alone is active and first owns a read-only reconciliation of portable-SystemVerilog, portable-VHDL, OSVVM, and native-UVM input, negotiation, artifact, source-map, structural-check, limit, atomicity, and cleanup authorities before implementation decomposition. Task integrity reports three trees/947 nodes, relative paths pass at Files=1/Tests=2, all 53 mdBook chapters test, the inspected repository-local render contains 88 files/18,604 KiB and is removed exactly, all 22 live-document surfaces accept the exact 0-file/+5-line/+348-byte book authority with no ceiling increase, the refreshed inventory reconciles 10,678 numeric lines/1,415 candidates/2,043 constants/the original 615 constants with zero owners, and all 12 doctrines pass. No generator, emitter, runtime, public API, capability/support, performance, or capacity behavior changes. |
 | `2026-08-20` | `.17.2.5.2.7` complete checking-state family qualification | exact eight-axis/five-level catalog partition; 32 selected owned/eight references rejected; independent byte-equal construction/evaluation reports; exact oracle/count selection; defensive validation; hostile source/report/runtime-evidence rejection; same-volume success/failure cleanup; complete default and opt-in high-count matrices under the 4,096-MiB guard; CI inventory, book/fact/task/Memory/containment continuity; staged acceptance and doctrines | `passed`; t/1635 closes the whole-family ownership and nonclaim proof. Guarded default t/1629-t/1635 reports `All tests successful` at `Files=7, Tests=36` in 166 seconds. Complete opt-in t/1630-t/1634 reports `All tests successful` at `Files=5, Tests=27` in 593 seconds, including 65,536 cells, one-million-entry scoreboard/coverage state, 4,096 faults, and 8,440/8,441 random-plan evidence. `.17.2.5.2.7`, `.17.2.5.2`, and `.17.2.5` are done; `.17.2.6` remains proposed next. No product, backend, runtime, public API, support, performance, or capacity claim changes. |
@@ -1344,13 +1358,48 @@ runtime/balanced integration `.17.2.7` and measurement `.17.3` remain later.
 | `2026-08-19` | `.17.2.4.2` 8,192-operations-per-scenario qualification | decision-0061 exact 8,192-operation single-scenario level; caller-sealed level admission; ordinary checked-AHB VIAL/bridge/public-binder route; operation-depth versus scenario/fiber isolation; unique global operation source-map closure; exact source/workload/SemanticIR/bridge/plan identities; sub-cap plan bytes; mutation/missing-source/unowned-level negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; the 115,716-byte generated source authors one `scenario_00000000` with 8,192 genuine resets and no random decision. The unchanged public binder returns 8,192 total operations, one selected scenario, one root fiber, one simultaneously live fiber, 8,209 source maps, 22 bindings, seven types, and a 2,955,783-byte plan with ID `plan/4c6733ea702479b4c603761d333d491f7a427e9eac24dc37238331aeb624f990`. Every `/operation_graph/operations/N` path occurs once and resolves to its own `/packages/0/fixtures/0/scenarios/0/actions/N` authored action. Focused t1619 passes at Files=1/Tests=4 in 10 seconds; the guarded impact matrix passes at Files=22/Tests=95 in 814 seconds. The unimplemented 65,536/65,537 operation levels still fail closed. No public binder, capability/support, performance, or capacity claim changes. |
 | `2026-08-19` | `.17.2.4.2` operation limit/over-limit ladder | decision-0061 exact 65,536/65,537 operation levels; caller-sealed level admission; ordinary checked-AHB VIAL/bridge/public-binder route; semantic-before-bridge stage order; exact source/workload identities and one-record source delta; stable authoritative diagnostics and no partial output; recorded limit-interaction discrepancies; mutation/missing-source/unowned-level negatives; focused and guarded regression; task/book/fact/Memory/live/staged-doctrine gates | `passed`; the 918,533-byte limit source parses into one complete 65,536-action scenario with the frozen `fb82ce2c…` SemanticIR and unchanged 508,968-byte AHB bridge, and the unchanged public binder returns only `VIAL_EXECUTION_LIMIT_ERROR`, phase `limit`, message `serialized_plan_bytes exceeds the limit 16777216`, at `/plan`. Adding exactly one further 14-byte ` (reset bus 1)` record makes the ordinary parser reject first with `VIAL_LIMIT_ERROR`, message `scenario exceeds 65536 expanded actions`, at `/packages/0/fixtures/0/scenarios/0`, and no bridge is built behind it. Both evaluations report `expected_rejection`, empty metrics, and one `VIAL_SCALE_LIMIT_INTERACTION` discrepancy routed to `.17.4`. Focused t1620 passes at Files=1/Tests=4 in 89 seconds and t1621 at Files=1/Tests=4 in 44 seconds; the guarded impact matrix passes at Files=25/Tests=95 in 960 seconds. No public binder, capability/support, performance, or capacity claim changes. |
 
+## Acceptance Checklist (enforced) — `.17.2.6.1` backend-emission route selection
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'upstream_workload_level'
+  --oneline -- perl/FSM/VIAL/ArchitectureScaleWorkload.pm` roots the
+  under-specified selector; fresh canonical probes plus exact source inspection
+  disprove its one-string route. Portable SV reaches its
+  source cap at `T=6,319/6,320`; portable VHDL has four full metadata scans per
+  operation and cannot validate its renderer-proved `29,508` boundary in the
+  selected ceiling; OSVVM replaces detailed portable maps with six whole-file
+  placeholders and repeats full provider verification; native UVM accepts
+  `T=22` while omitting the added expectation from generated evaluation. The
+  existing catalog additionally mislabels OSVVM sources and omits native UVM's
+  enforced map cap.
+- [x] **ADDRESSED (verified)** — decision `0075` selects every accepted or
+  earliest-authority outcome, the exact anchored upstream recipe, structural
+  inventory/map/check/identifier oracles, atomicity/staging boundary, and
+  nonclaims. Proposed `.17.2.6.2` durably owns five ordered repair slices before
+  generator `.3`; the updated canonical architecture-scale fact,
+  mdBook, task frontier, decision index, and Memory agree. Selection changes no
+  emitter, validator, runtime, public API, support, performance, or capacity
+  behavior.
+- [x] **NO REGRESSION** — the selected doctrine tests report `All tests
+  successful` at `Files=9, Tests=104`; `knowledge-map: OK` reports 1,150
+  facts/6,052 questions/6,219 occurrences/133 shards; task integrity reports
+  three trees/950 nodes; the claim-disposition join closes all 1,419 candidates
+  with four explicit durability gaps owned by active `.17.2.6`; all 53 mdBook
+  chapters test; selected relative-path, task, live-size,
+  maintained-reference, Knowledge Map, and claim-doctrine tests pass. All 22
+  live-document surfaces pass with zero ceiling increases: Chapter 16d stays at
+  its existing 3,701-line allowance with exact 0-line/+2,044-byte book growth,
+  and the existing canonical card is rewritten in place so the collection
+  remains below its 80% warning threshold without changing a ceiling. Final
+  diff, staged acceptance, doctrine, and artifact
+  residue checks are recorded by the commit workflow.
+
 ## Acceptance Checklist (enforced) — `.17.2.6` backend-emission decomposition
 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'upstream_workload_level'
   --oneline -- perl/FSM/VIAL/ArchitectureScaleWorkload.pm` and `git log
   -S'generated_provider_sources' --oneline -- perl/FSM/VIAL/ArchitectureScaleWorkload.pm`
   both identify foundation commit `063b990f3`. Exact source and executable
-  probes show that one level-only selector cannot identify one of ten proved
+  probes show that one level-only selector cannot identify one of thirteen proved
   execution axes, while the four emitters have distinct graph/map/check
   authorities and the OSVVM/native-UVM catalog fields are incomplete or false.
 - [x] **ADDRESSED (verified)** — `.17.2.6` now contains active read-only

@@ -8,6 +8,9 @@ answers:
   - "how are VIAL scale performance budgets selected?"
   - "does VIAL architecture scale prove whole product big and really big designs?"
   - "which execution graph scale limits are reachable before earlier caps?"
+  - "what exact workloads prove VIAL backend emission scale?"
+  - "where are the VIAL portable backend source byte boundaries?"
+  - "why does native UVM reject the portable backend scale ladder?"
 date: 2026-08-10
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -15,6 +18,7 @@ evidence: >-
   docs/decisions/0055-vial-scale-proof-uses-orthogonal-workloads-and-stage-local-oracles.md;
   docs/decisions/0056-vial-scale-measurements-use-pinned-evidence-and-bounded-failure.md;
   docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md;
+  docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md;
   docs/knowledge/vial-execution-scale-reachability.md;
   docs/knowledge/vial-semantic-scale-catalog.md;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
@@ -25,7 +29,9 @@ reverify: >-
   docs/book/src/16d-hial-vial-verification-architecture.md &&
   rg -n '88%|4,096 MiB|pinned host|earliest authoritative cap|same-volume'
   docs/decisions/0056-vial-scale-measurements-use-pinned-evidence-and-bounded-failure.md
-  docs/book/src/16d-hial-vial-verification-architecture.md
+  docs/book/src/16d-hial-vial-verification-architecture.md &&
+  rg -n 'T=6,319|T=29,508|T=22|Durability gap'
+  docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md
 ---
 
 Decisions `0055` and `0056` select architecture-scale proof without claiming capacity.
@@ -41,18 +47,16 @@ unmatched hosts. Earliest-cap dominance is reported honestly. These candidates
 are not support, multi-unit/domain, mixed-language, native-UVM-runtime, full-
 language, whole-product `big`/`really_big`, synthesis, or general-parity claims.
 
-Completed `.17.7` removes `t/1569`'s stale focused-index count shadow by
-validating the authority's complete nonzero census instead. Completed `.17.6`
-aligns the public support snapshot with the Runner/normative 8-MiB compile and
-64-MiB runtime capture limits. Completed `.17.8` records that current authority.
-Decision `0057` and `.17.2.1` ship the bounded source-only foundation.
-Completed `.17.9` repairs cleanup. Completed `.17.2.2` now generates every
-semantic-catalog level through the canonical parser, repairs action-local ID
-scope, and records the repeat/action-cap interaction for `.17.4`; no capacity
-claim is made. `.17.2.3` completes bridge fanout. Decision `0061` and completed
-`.17.2.4.1` select the execution-graph routes, exact reachable/earlier-cap
-matrix, caller-sealed binding qualification, million-attempt construction, and
-exact 1/4/16-MiB plans; `.17.2.4.2` remains the implementation owner.
+Completed `.17.2.1`-`.17.2.5` implement source, semantic, bridge, execution,
+and checking-state families. Decision `0075` selects checked-AHB anchored
+backend routes: portable SV accepts `T=6,319` at 16,776,830 source bytes and
+rejects `6,320`; portable VHDL/OSVVM select `T=29,508` and reject `29,509` in
+the portable foundation; native UVM accepts only reference `T=21` and must
+reject adjacent unsupported `T=22`. Active `.17.2.6` owns VHDL-validator,
+OSVVM-provider/map, native-UVM-negotiation, catalog, and generator repairs.
+These figures were freshly re-derived and falsified for selection, but the
+tracked executable producer/watcher is an explicit durability gap until those
+repairs close. No capacity claim is made.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
