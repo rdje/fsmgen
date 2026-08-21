@@ -14,6 +14,7 @@ no warnings 'experimental::signatures';
 use FSM::VIAL::ArchitectureScaleWorkload;
 use FSM::VIAL::ArchitectureScaleBackendEmission::PortableSV;
 use FSM::VIAL::ArchitectureScaleBackendEmission::PortableVHDL;
+use FSM::VIAL::ArchitectureScaleBackendEmission::OSVVM;
 use FSM::VIAL::Parser;
 use FSM::VIAL::PlanBuilder;
 
@@ -42,6 +43,9 @@ my $PORTABLE_SV_PROFILE = $PORTABLE_SV_CLASS->profile;
 my $PORTABLE_VHDL_CLASS =
     'FSM::VIAL::ArchitectureScaleBackendEmission::PortableVHDL';
 my $PORTABLE_VHDL_PROFILE = $PORTABLE_VHDL_CLASS->profile;
+my $OSVVM_CLASS =
+    'FSM::VIAL::ArchitectureScaleBackendEmission::OSVVM';
+my $OSVVM_PROFILE = $OSVVM_CLASS->profile;
 
 my @PROFILES = qw(
     sv_portable_verilator
@@ -59,6 +63,7 @@ my %LEVEL = map { $_ => 1 } @LEVELS;
 my %OWNED_LEVELS = map { $_ => [] } @PROFILES;
 $OWNED_LEVELS{$PORTABLE_SV_PROFILE} = $PORTABLE_SV_CLASS->owned_levels;
 $OWNED_LEVELS{$PORTABLE_VHDL_PROFILE} = $PORTABLE_VHDL_CLASS->owned_levels;
+$OWNED_LEVELS{$OSVVM_PROFILE} = $OSVVM_CLASS->owned_levels;
 
 my @CONSTRUCT_KEYS = qw(
     backend_profile level reference_hial_text reference_vial_text
@@ -312,6 +317,18 @@ sub _evaluate_validated($construction, $foundation_only = 0) {
             $stage_identities, $rerun_identity, \@diagnostics,
         );
     }
+    if (!$foundation_only
+            && $construction->{specification}{backend_profile}
+            eq $OSVVM_PROFILE
+            && _owns(
+                $construction->{specification}{backend_profile},
+                $construction->{specification}{level},
+            )) {
+        return _evaluate_osvvm(
+            $construction, $first, $second, $first_projection,
+            $stage_identities, $rerun_identity, \@diagnostics,
+        );
+    }
     my $execution = $first_projection->{execution_ir};
     my $report = {
         ok => @diagnostics ? JSON::PP::false : JSON::PP::true,
@@ -408,6 +425,18 @@ sub _evaluate_portable_vhdl(
         $stage_identities, $rerun_identity, $route_diagnostics,
         $PORTABLE_VHDL_CLASS, $PORTABLE_VHDL_PROFILE,
         'portable_vhdl', 'portable_vhdl_artifact_graph_v1',
+    );
+}
+
+sub _evaluate_osvvm(
+    $construction, $first_route, $second_route, $first_projection,
+    $stage_identities, $rerun_identity, $route_diagnostics,
+) {
+    return _evaluate_owned_profile(
+        $construction, $first_route, $second_route, $first_projection,
+        $stage_identities, $rerun_identity, $route_diagnostics,
+        $OSVVM_CLASS, $OSVVM_PROFILE,
+        'osvvm', 'vhdl_osvvm_qualified_artifact_graph_v1',
     );
 }
 
@@ -544,6 +573,7 @@ sub _canonical_vial_source($construction, $vial) {
     for my $profile_class (
         [$PORTABLE_SV_PROFILE, $PORTABLE_SV_CLASS],
         [$PORTABLE_VHDL_PROFILE, $PORTABLE_VHDL_CLASS],
+        [$OSVVM_PROFILE, $OSVVM_CLASS],
     ) {
         next unless $spec->{backend_profile} eq $profile_class->[0];
         return @{$profile_class->[1]->canonical_vial_source({
@@ -605,6 +635,11 @@ sub _validate_evaluation_shape($evaluation) {
         $PORTABLE_VHDL_CLASS->oracle_keys,
         'portable-VHDL artifact oracle',
     ) if defined $evaluation->{artifact_oracle}{portable_vhdl};
+    _confess_exact_keys(
+        $evaluation->{artifact_oracle}{osvvm},
+        $OSVVM_CLASS->oracle_keys,
+        'OSVVM-qualified artifact oracle',
+    ) if defined $evaluation->{artifact_oracle}{osvvm};
     _confess_exact_keys($evaluation->{claims}, \@CLAIM_KEYS,
         'backend-emission claims');
     confess "backend-emission evaluation diagnostics must be an array\n"

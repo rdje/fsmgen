@@ -18,12 +18,14 @@ evidence: >-
   perl/FSM/VIAL/Backend/VHDLOSVVM2026_05.pm;
   perl/FSM/VIAL/Backend/VHDLOSVVMStaticValidator.pm;
   perl/FSM/VIAL/Backend/VHDLOSVVMGHDLQualification.pm;
+  perl/FSM/VIAL/ArchitectureScaleBackendEmission/OSVVM.pm;
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/Support/VIALVHDLEmissionContract.pm;
   scripts/refresh_vial_vhdl_osvvm_gallery.pl;
   scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl;
   t/1598-vial-vhdl-osvvm-emission.t;
   t/1599-vial-vhdl-osvvm-ghdl-qualification.t;
   t/1642-vial-vhdl-osvvm-provider-evaluation.t; t/1644-vial-backend-emission-authority-alignment.t;
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t;
   vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json;
   vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/README.md;
   vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/evidence/provider-materialization.json;
@@ -36,7 +38,8 @@ reverify: >-
   prove -Iperl t/1598-vial-vhdl-osvvm-emission.t
   t/1599-vial-vhdl-osvvm-ghdl-qualification.t
   t/1642-vial-vhdl-osvvm-provider-evaluation.t
-  t/1644-vial-backend-emission-authority-alignment.t &&
+  t/1644-vial-backend-emission-authority-alignment.t
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t &&
   perl scripts/refresh_vial_vhdl_osvvm_gallery.pl --check &&
   perl scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl --check
 ---
@@ -67,6 +70,17 @@ total sources, and provider materialization; the 16-MiB boundary applies only
 to the portable six-source foundation. Reference discovery reports 16 total
 artifacts, 66 maps, twelve wrapper checks, and twenty prerequisite portable
 checks. Unknown, missing, stale, or contradictory fields fail closed.
+
+The caller-sealed architecture-scale profile owns T=21/128/512/29,508 plus
+adjacent portable-foundation T=29,509 rejection. One provider verification is
+reused only inside its callback for two defensive emissions. Accepted source
+totals are 120,911/179,280/391,248/16,781,090 bytes with
+66/173/557/29,553 complete maps; every wrapper map, provider/source identity,
+mapping status, semantic guard, and evidence encoding is checked before the
+content-addressed report is accepted. The adjacent excess publishes no
+partial provider evidence or graph. This generator proof executes no external
+compiler or runtime and adds no product support, performance, or capacity
+claim.
 
 Related: [[vial-vhdl-portable-profile]],
 [[hial-vial-verification-fixture-architecture]].

@@ -22,10 +22,12 @@ evidence: >-
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/VIAL/ArchitectureScaleWorkload.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission/PortableVHDL.pm;
+  perl/FSM/VIAL/ArchitectureScaleBackendEmission/OSVVM.pm;
   perl/FSM/Support/VIALVHDLEmissionContract.pm; perl/FSM/Support/VIALNativeUVMEmissionContract.pm;
   t/1644-vial-backend-emission-authority-alignment.t;
   t/1645-vial-architecture-scale-backend-emission-foundation.t;
   t/1647-vial-architecture-scale-backend-emission-portable-vhdl.t;
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t;
   docs/knowledge/vial-execution-scale-reachability.md;
   docs/knowledge/vial-semantic-scale-catalog.md;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
@@ -41,6 +43,7 @@ reverify: >-
   docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md &&
   prove -Iperl t/1644-vial-backend-emission-authority-alignment.t
   t/1645-vial-architecture-scale-backend-emission-foundation.t
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t
 ---
 
 Decisions `0055` and `0056` select architecture-scale proof without claiming capacity.
@@ -83,8 +86,14 @@ PlanBuilder routes twice, freezes all seventeen artifact paths and six source
 identities, validates 59/166/550/29,546 complete maps and all twenty static
 checks, and proves atomic rejection with no partial graph. The selected ladder
 observes a stable 37-byte generated-identifier maximum below the separate
-255-byte limit. OSVVM `.4` is active only as the clean implementation owner and
-owns no additional profile shape yet.
+255-byte limit. Completed OSVVM ladder `.4` owns the same five T levels through
+one callback-scoped provider verification and two defensive emissions. Its
+accepted levels freeze sixteen artifacts, the fixed adapter plus six
+byte-identical portable sources at 120,911/179,280/391,248/16,781,090 total
+source bytes, 66/173/557/29,553 complete adapter-first translated maps, seven
+advanced mappings, six semantic guards, twelve wrapper checks, and twenty
+portable prerequisite checks. The adjacent level returns only the wrapper's
+portable-foundation diagnostic with no partial provider or artifact evidence.
 No support, performance, or capacity claim is made.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],

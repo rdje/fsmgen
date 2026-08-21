@@ -79,8 +79,8 @@ subtest 'portable-SystemVerilog owns exactly its selected five-level ladder' => 
         reference_v1 gate_candidate_v1 qualification_candidate_v1
         limit_v1 over_limit_v1
     )], 'the exact portable-SystemVerilog ladder is publicly owned');
-    is(scalar(@$owned), 10,
-        'the shared registry also retains the five activated VHDL shapes');
+    is(scalar(@$owned), 15,
+        'the shared registry also retains ten activated VHDL shapes');
     my $profile_class =
         'FSM::VIAL::ArchitectureScaleBackendEmission::PortableSV';
     my $direct = eval { $profile_class->evaluate({}); 1 };

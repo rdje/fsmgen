@@ -66,7 +66,10 @@ subtest 'foundation admits only shapes owned by completed child slices' => sub {
         map({{
             backend_profile => 'vhdl_portable_ghdl', level => $_,
         }} @levels),
-    ], 'the two completed portable children own exactly ten shapes');
+        map({{
+            backend_profile => 'vhdl_osvvm_qualified', level => $_,
+        }} @levels),
+    ], 'the three completed children own exactly fifteen shapes');
 
     my @accepted;
     for my $profile (@profiles) {
@@ -88,7 +91,8 @@ subtest 'foundation admits only shapes owned by completed child slices' => sub {
     is_deeply(\@accepted, [
         map({"sv_portable_verilator/$_"} @levels),
         map({"vhdl_portable_ghdl/$_"} @levels),
-    ], 'only the ten completed portable profile shapes are admitted');
+        map({"vhdl_osvvm_qualified/$_"} @levels),
+    ], 'only the fifteen completed profile shapes are admitted');
 
     my $unknown_profile = eval {
         $class->construct({

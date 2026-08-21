@@ -47,7 +47,7 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.30` done; proposed `.29` owns node-field narration accretion | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
-| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | generator `.17.2.6.3` active; foundation `.1`, portable-SV `.2`, and portable-VHDL `.3` done; OSVVM `.17.2.6.3.4` active | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
+| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | generator `.17.2.6.3` active; foundation `.1`, portable-SV `.2`, portable-VHDL `.3`, and OSVVM `.4` done; native UVM `.17.2.6.3.5` proposed next | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 completeness` | `.844` terminal | [task](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
 
 ## Proposed Task Trees
