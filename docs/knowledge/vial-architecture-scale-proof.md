@@ -94,7 +94,10 @@ source bytes, 66/173/557/29,553 complete adapter-first translated maps, seven
 advanced mappings, six semantic guards, twelve wrapper checks, and twenty
 portable prerequisite checks. The adjacent level returns only the wrapper's
 portable-foundation diagnostic with no partial provider or artifact evidence.
-No support, performance, or capacity claim is made.
+Native-UVM generator leaf `.17.2.6.3.5` alone is active next to own only the
+selected T=21 review graph and fail closed before artifacts for T=22, larger,
+or changed same-count shapes. No support, performance, runtime, result, or
+capacity claim is made.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

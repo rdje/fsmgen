@@ -3650,8 +3650,8 @@ Independent complete-route reruns reproduce every stage digest; the foundation k
 regeneration rejects construction/evaluation mutation. Success and consumer failure stage
 only below repository-derived `.artifacts/tmp/vial-scale/` and remove that exact directory.
 Focused `t/1635` freezes exactly 32 selected shapes and eight rejected references, byte-equal gate reports, hostile-caller rejection, nonclaims, and cleanup. Guarded default `t/1629`-`t/1635` passes at Files=7/Tests=36 in 166 seconds; the complete exact `t/1630`-`t/1634` matrix passes at Files=5/Tests=27 in 593 seconds under the 4,096-MiB RAM guard.
-These fixtures change no parser, SemanticIR, bridge, ExecutionIR, backend,
-runtime, public product API, capability, support, performance, or capacity behavior.
+The native-UVM generator route alone is active; family closure remains proposed.
+These fixtures change no parser, SemanticIR, bridge, ExecutionIR, backend, runtime, public product API, capability, support, performance, or capacity behavior.
 
 Backend-emission selection is complete under decision `0075`. Portable profiles start from the checked AHB reference, repeat its real response expectation before `scoreboard_check`, and use expanded operation total `T` as a profile-local axis through ordinary parsing, the checked-AHB bridge, public `PlanBuilder`, and canonical ExecutionIR. Portable SV selects `T=21/1,024/4,096/6,319`: eight artifacts/three sources, with the limit at 16,776,830 source bytes/6,352 maps; `6,320` rejects at `/artifacts`.
 Portable VHDL selects `T=21/128/512/29,508`: seventeen artifacts/six sources/twenty checks, with the limit at 16,776,739 source bytes/29,546 maps; `29,509` renders 16,777,307 bytes and rejects. OSVVM uses the same ladder, copies those six sources byte-for-byte, and adds one fixed 4,351-byte adapter: its selected limit totals 16,781,090 wrapper-source bytes/29,553 maps, while `29,509` rejects in the portable foundation. Native UVM remains a selected review profile: `T=21` emits sixteen artifacts/ten sources/75 maps/fourteen checks; `T=22` is the first unsupported shape and must reject negotiation, so larger levels are not constructed.

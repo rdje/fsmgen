@@ -179,7 +179,10 @@ Catalog and capability discovery consume the same closed authority: ten source
 artifacts, sixteen total artifacts, the enforced 16-MiB source and one-million-
 entry map caps, and the selected 21-operation/75-map/14-check/25-mapping
 matrix. Defensive validation rejects unknown, missing, stale, or contradictory
-fields; these structural limits add no native-UVM runtime or support claim.
+fields. Generator leaf `.17.2.6.3.5` alone is active to consume that selected
+review route through the caller-sealed architecture-scale foundation and retain
+the adjacent fail-closed boundary; activation changes no emitter or product
+behavior. These structural limits add no native-UVM runtime or support claim.
 
 Related: [[hial-vial-verification-fixture-architecture]],
 [[vial-native-uvm-experimental-probe]], [[semantic-introspection-mcp-frontier]].

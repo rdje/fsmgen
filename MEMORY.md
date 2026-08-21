@@ -7,8 +7,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3`
-- next_action: after the clean `.17.2.6.3.4` implementation commit, activate
-  `.17.2.6.3.5` for the native-UVM selected route and fail-closed oracles.
+- next_action: implement `.17.2.6.3.5` with a RED zero-ownership witness, then
+  own native-UVM T=21 and prove T=22/larger/changed-shape pre-artifact rejection.
 - in_flight_uncommitted: none.
 - in_flight_background: none
 - blockers: none.
