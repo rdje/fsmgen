@@ -37,6 +37,7 @@ evidence: >-
   perl/FSM/VIAL/Backend/SVUVMAccellera2020_3_1.pm;
   perl/FSM/VIAL/Backend/SVUVMStaticValidator.pm;
   perl/FSM/VIAL/Backend/SVUVMReviewClosure.pm; perl/FSM/VIAL/BackendEmissionAuthority.pm;
+  perl/FSM/VIAL/ArchitectureScaleBackendEmission/NativeUVM.pm;
   perl/FSM/Support/VIALNativeUVMEmissionContract.pm;
   scripts/refresh_vial_native_uvm_gallery.pl;
   t/1560-vial-native-uvm-emitter-substrate.t;
@@ -45,6 +46,7 @@ evidence: >-
   t/1590-vial-native-uvm-checking-results.t;
   t/1591-vial-native-uvm-matrix-review.t;
   t/1643-vial-native-uvm-selected-shape-negotiation.t; t/1644-vial-backend-emission-authority-alignment.t;
+  t/1649-vial-architecture-scale-backend-emission-native-uvm.t;
   vial/review_gallery/sv_uvm_emit.accellera_2020_3_1/ahb_base_output_foundation/README.md;
   vial/review_gallery/sv_uvm_emit.accellera_2020_3_1/ahb_base_output_foundation/selected-mapping-matrix.json;
   vial/review_gallery/sv_uvm_emit.accellera_2020_3_1/ahb_base_output_foundation/review-workflow.json;
@@ -61,7 +63,8 @@ reverify: >-
   t/1590-vial-native-uvm-checking-results.t
   t/1591-vial-native-uvm-matrix-review.t
   t/1643-vial-native-uvm-selected-shape-negotiation.t
-  t/1644-vial-backend-emission-authority-alignment.t &&
+  t/1644-vial-backend-emission-authority-alignment.t
+  t/1649-vial-architecture-scale-backend-emission-native-uvm.t &&
   perl scripts/refresh_vial_native_uvm_gallery.pl --check
 ---
 
@@ -175,14 +178,15 @@ exist. The accepted graph remains ten SystemVerilog sources, 138,345 source
 bytes, 75 maps, and 14 structural checks. This is an honest selected-gallery
 boundary, not a native-UVM scale, runtime, result, or support claim.
 
-Catalog and capability discovery consume the same closed authority: ten source
-artifacts, sixteen total artifacts, the enforced 16-MiB source and one-million-
-entry map caps, and the selected 21-operation/75-map/14-check/25-mapping
-matrix. Defensive validation rejects unknown, missing, stale, or contradictory
-fields. Generator leaf `.17.2.6.3.5` alone is active to consume that selected
-review route through the caller-sealed architecture-scale foundation and retain
-the adjacent fail-closed boundary; activation changes no emitter or product
-behavior. These structural limits add no native-UVM runtime or support claim.
+Catalog and capability discovery consume the same closed authority: ten source artifacts, sixteen total artifacts, the
+enforced 16-MiB source and one-million-entry map caps, and the selected 21-operation/75-map/14-check/25-mapping matrix.
+Defensive validation rejects unknown, missing, stale, or contradictory fields. Completed generator leaf `.17.2.6.3.5`
+consumes that authority through the caller-sealed architecture-scale foundation. T=21 reproduces the exact sixteen-artifact/
+ten-source/138,345-byte/75-map/14-check/25-mapping selected review graph twice; six operation identities are intentionally
+associated by those structural maps. Every non-reference public level reuses the adjacent T=22 negotiation witness, with
+later levels reported as preflight-dominated and not constructed; independent T=128 and changed-same-count T=21 shapes also
+reject before artifacts. Parse, compile, runtime, result, manual review, support, performance, and capacity remain false.
+These structural limits add no native-UVM runtime or support claim.
 
 Related: [[hial-vial-verification-fixture-architecture]],
 [[vial-native-uvm-experimental-probe]], [[semantic-introspection-mcp-frontier]].

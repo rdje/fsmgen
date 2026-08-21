@@ -111,9 +111,12 @@ subtest 'portable-VHDL owns exactly the second selected five-level ladder' => su
         map({{backend_profile => 'vhdl_osvvm_qualified', level => $_}}
             qw(reference_v1 gate_candidate_v1 qualification_candidate_v1
                 limit_v1 over_limit_v1)),
+        map({{backend_profile => 'sv_uvm_emit.accellera_2020_3_1', level => $_}}
+            qw(reference_v1 gate_candidate_v1 qualification_candidate_v1
+                limit_v1 over_limit_v1)),
     );
     is_deeply($class->owned_shapes, \@expected_shapes,
-        'shared foundation owns only the three completed ladders');
+        'shared foundation owns only the four completed partitions');
     my $profile_class =
         'FSM::VIAL::ArchitectureScaleBackendEmission::PortableVHDL';
     my $direct = eval { $profile_class->evaluate({}); 1 };

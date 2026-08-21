@@ -99,9 +99,12 @@ subtest 'OSVVM owns exactly the third selected five-level ladder' => sub {
     my @expected_shapes = map {
         my $profile = $_;
         map {{backend_profile => $profile, level => $_}} @levels
-    } qw(sv_portable_verilator vhdl_portable_ghdl vhdl_osvvm_qualified);
+    } qw(
+        sv_portable_verilator vhdl_portable_ghdl vhdl_osvvm_qualified
+        sv_uvm_emit.accellera_2020_3_1
+    );
     is_deeply($class->owned_shapes, \@expected_shapes,
-        'shared foundation owns only the three completed profile ladders');
+        'shared foundation owns only the four completed profile partitions');
     my $profile_class =
         'FSM::VIAL::ArchitectureScaleBackendEmission::OSVVM';
     my $direct = eval { $profile_class->evaluate({}); 1 };

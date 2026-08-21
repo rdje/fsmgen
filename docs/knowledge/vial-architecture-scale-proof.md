@@ -94,10 +94,12 @@ source bytes, 66/173/557/29,553 complete adapter-first translated maps, seven
 advanced mappings, six semantic guards, twelve wrapper checks, and twenty
 portable prerequisite checks. The adjacent level returns only the wrapper's
 portable-foundation diagnostic with no partial provider or artifact evidence.
-Native-UVM generator leaf `.17.2.6.3.5` alone is active next to own only the
-selected T=21 review graph and fail closed before artifacts for T=22, larger,
-or changed same-count shapes. No support, performance, runtime, result, or
-capacity claim is made.
+Completed native-UVM generator leaf `.17.2.6.3.5` owns five public route outcomes but emits only the selected T=21 review
+graph: sixteen artifacts, ten SystemVerilog sources/138,345 bytes, 75 structural maps with six intentional operation
+associations, fourteen passing checks, 25 selected mappings, seven review stages, and five review-closure checks. Its four
+non-reference levels all execute the adjacent T=22 negotiation rejection; the three levels beyond the gate are explicitly
+preflight-dominated/not-constructed. Independent T=128 and changed-same-count T=21 witnesses reject before artifacts. No
+support, performance, parse, compile, runtime, result, manual-review, or capacity claim is made.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

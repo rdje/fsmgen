@@ -69,7 +69,10 @@ subtest 'foundation admits only shapes owned by completed child slices' => sub {
         map({{
             backend_profile => 'vhdl_osvvm_qualified', level => $_,
         }} @levels),
-    ], 'the three completed children own exactly fifteen shapes');
+        map({{
+            backend_profile => 'sv_uvm_emit.accellera_2020_3_1', level => $_,
+        }} @levels),
+    ], 'the four completed children own exactly twenty shapes');
 
     my @accepted;
     for my $profile (@profiles) {
@@ -92,7 +95,8 @@ subtest 'foundation admits only shapes owned by completed child slices' => sub {
         map({"sv_portable_verilator/$_"} @levels),
         map({"vhdl_portable_ghdl/$_"} @levels),
         map({"vhdl_osvvm_qualified/$_"} @levels),
-    ], 'only the fifteen completed profile shapes are admitted');
+        map({"sv_uvm_emit.accellera_2020_3_1/$_"} @levels),
+    ], 'only the twenty completed profile shapes are admitted');
 
     my $unknown_profile = eval {
         $class->construct({

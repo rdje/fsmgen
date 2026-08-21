@@ -629,11 +629,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.4: qualify OSVVM emission ladder`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.5`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the native-UVM selected backend-emission route and fail-closed structural oracles.`
   Acceptance: `Own only the exact selected T=21 native-UVM review shape through the shared foundation; prove sixteen ordered artifacts, ten source identities, 75 complete maps, fourteen checks, 25 selected mappings, generated identifiers, byte-equal reruns, T=22/larger/changed-same-count pre-artifact rejection, defensive evidence, and exact cleanup without executing native UVM or publishing product claims.`
-  Verification: `Clean OSVVM implementation commit b8969b525 completes the preceding profile ladder and permits only native-UVM .5 to activate. This continuity slice changes no generator, emitter, validator, artifact, runtime, API, capability/support, performance, capacity, or product behavior.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.5: activate native UVM emission route`
+  Verification: `A RED control first found native-UVM ownership absent at index 15 and public reference construction rejected. The completed caller-sealed NativeUVM child now owns five public route outcomes while emitting only the exact selected T=21 review graph. Reference emission is independently byte-equal and freezes sixteen ordered artifacts, ten SystemVerilog sources/138,345 bytes, 75 bounded structural maps with six intentional operation associations, fourteen passing static checks, 25 selected mappings, seven review stages/five closure checks, ten source identities, a 49-byte selected generated-symbol maximum below 255, evidence/manifest closure, and unchanged parse/compile/runtime/result/manual-review nonclaims. Gate and all three later non-reference levels execute the same adjacent T=22 negotiation rejection with no partial graph; later levels are explicitly preflight-dominated/not-constructed. Independent T=128 and changed-same-count T=21 witnesses reject identically. Canonical-report mutation and success/rejection/consumer-failure staging fail closed and clean exactly. Native compatibility passes Files=7/Tests=45; the focused implementation passes Files=1/Tests=8; CI inventory passes Files=1/Tests=12; and the 4,096-MiB guarded repaired/generator family passes Files=10/Tests=94 in 467 seconds. No external runtime, public API, capability/support, performance, capacity, or product claim changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.5: qualify native UVM emission route`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.6`
   Status: `proposed`
@@ -917,11 +917,22 @@ support authority and qualifies the repaired family. Active generator
 `.17.2.6.3` is decomposed into shared foundation `.1`, portable-SV `.2`,
 portable-VHDL `.3`, OSVVM `.4`, native-UVM `.5`, and family closure `.6`;
 foundation `.1`, portable-SV `.2`, portable-VHDL `.3`, and OSVVM `.4` are
-complete; native-UVM `.5` alone is active. Runtime/balanced
+complete; native-UVM `.5` is complete and family closure `.6` is proposed
+next. Runtime/balanced
 integration `.17.2.7`, and
 measurement `.17.3` remain later.
 
 ## Decisions
+
+- `2026-08-22`: Complete native-UVM route `.17.2.6.3.5` behind the shared
+  foundation. Own five profile-level outcomes but construct artifacts only for
+  the exact T=21 selected review graph; reuse the adjacent T=22 negotiation
+  witness for every non-reference level and label later levels preflight-
+  dominated/not-constructed. Freeze exact artifacts, source identities, maps,
+  intentional operation associations, checks, mappings, workflow, byte-equal
+  reruns, rejection atomicity, defensive evidence, cleanup, and every compile,
+  runtime, result, support, performance, capacity, and scale nonclaim. Keep
+  family closure proposed until a clean successor activation.
 
 - `2026-08-22`: Activate native-UVM route `.17.2.6.3.5` after clean OSVVM
   implementation commit `b8969b525`. Own only the exact T=21 selected review
@@ -1417,6 +1428,7 @@ measurement `.17.3` remain later.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-22` | `.17.2.6.3.5` native-UVM route implementation | RED zero-ownership/public-rejection witness; decision `0075`; caller-sealed shared construction and NativeUVM evaluator; ordinary Parser/PlanBuilder routes; exact artifact/source/map/check/mapping/workflow/identifier/manifest/diagnostic oracles; direct T=128/changed-T=21 falsification; defensive mutation; success/rejection/failure cleanup; syntax; native compatibility/gallery; focused, CI-inventory, and 4,096-MiB guarded ten-file impacted suite; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; five native-UVM profile outcomes join the fifteen portable/OSVVM shapes, but only T=21 emits: 16 artifacts/10 sources/138,345 bytes/75 maps/14 checks/25 mappings/seven review stages/five closure checks, with six intentional operation associations. Every non-reference level rejects the adjacent T=22 witness atomically; later levels are preflight-dominated/not-constructed. The guarded impacted collection passes Files=10/Tests=94 in 467 seconds. Reports and staging are defensive and residue-free. No external runtime, public API, capability/support, performance, capacity, or product claim changes; `.3.6` remains proposed for clean activation next. |
 | `2026-08-22` | `.17.2.6.3.5` native-UVM route activation | clean OSVVM predecessor `b8969b525`; decision `0075`; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.6.3.5` alone is active to own exact T=21 review emission plus T=22/larger/changed-same-count pre-artifact rejection through the sealed foundation. Family closure remains proposed. No implementation or product behavior changes. |
 | `2026-08-21` | `.17.2.6.3.4` OSVVM ladder implementation | RED zero-ownership/public-rejection witness; decision `0075`; caller-sealed shared construction and OSVVM evaluator; one callback-scoped exact provider verification with two defensive emissions; ordinary Parser/PlanBuilder routes; exact artifact/source/map/check/mapping/provider/semantic-preservation/identifier/manifest/diagnostic oracles; defensive mutation; success/rejection/failure cleanup; syntax; focused and 4,096-MiB guarded nine-file impacted suite; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; exactly five OSVVM shapes join the ten portable shapes. T=21/128/512/29,508 emit 16 artifacts/7 sources at 120,911/179,280/391,248/16,781,090 bytes with 66/173/557/29,553 complete maps, twelve wrapper checks, and twenty portable prerequisite checks; T=29,509 rejects atomically at `/portable_foundation`. The guarded impacted collection passes Files=9/Tests=86 in 439 seconds. Reports and staging are defensive and residue-free. No external runtime, public API, capability/support, performance, capacity, or product claim changes; `.3.5` remains proposed for clean activation next. |
 | `2026-08-21` | `.17.2.6.3.4` OSVVM ladder activation | clean portable-VHDL predecessor `7199de481`; decision `0075`; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.6.3.4` alone is active to own T=21/128/512/29,508 acceptance plus adjacent portable-foundation T=29,509 rejection through the sealed foundation and callback-scoped exact provider evaluation. Native UVM and family closure remain proposed. No implementation or product behavior changes. |
@@ -5152,3 +5164,44 @@ raising an enforcement ceiling.
   zero ceiling increases pass. Diff, staged acceptance, the final doctrine
   gate, generated-book removal, and zero scale-stage children complete the
   activation workflow.
+
+## Acceptance Checklist (enforced) — `.17.2.6.3.5` native-UVM implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Implement the native-UVM
+  selected backend-emission route' --oneline --
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md` identifies
+  decomposition commit `6b08d8146`; the first focused RED run then reported
+  `$got->[15] = Does not exist` and public construction rejected because the
+  central registry contained only the three earlier profile children.
+- [x] **ADDRESSED (verified)** — the caller-sealed NativeUVM child owns five
+  route outcomes and emits only exact selected T=21 through ordinary Parser,
+  PlanBuilder, and the existing native emitter twice. Its closed oracle freezes
+  sixteen artifacts, ten source identities/138,345 bytes, 75 bounded maps with
+  six intentional operation associations, fourteen passing checks, 25
+  mappings, seven review stages/five closure checks, a 49-byte selected symbol
+  maximum below 255, evidence/manifest encoding, byte-equal reruns, and false
+  parse/compile/runtime/result/manual-review/product claims. Every non-reference
+  level validates the adjacent T=22 negotiation rejection without partial
+  evidence; later levels are preflight-dominated/not-constructed. Direct T=128
+  and changed-same-count T=21 witnesses reject identically. Canonical-report
+  mutation and all staging paths fail closed and clean exactly.
+- [x] **NO REGRESSION** — both changed/new modules and all affected tests
+  report `syntax OK`. Focused native-UVM generation passes at `Files=1,
+  Tests=8` in 38 seconds; shared foundation plus native UVM pass at `Files=2,
+  Tests=13` in 57 seconds. Existing emitter/negotiation/authority compatibility
+  passes at `Files=7, Tests=45`, the gallery remains exact at nine source/two
+  evidence snapshots/75 maps/14 static checks/five closure checks, and CI
+  inventory passes at `Files=1, Tests=12`. The final 4,096-MiB guarded repaired
+  backend/generator collection passes at `Files=10, Tests=94` in 467 seconds.
+  Task-tree integrity remains three trees/962 nodes; relative paths pass at
+  `Files=1, Tests=2`; and Knowledge Map parity retains 1,150 facts/6,056
+  questions/6,223 occurrences/133 shards. Claim inventory/disposition closes
+  all 1,426 candidates and 2,072 current/615 original constants with zero open
+  owners. All 53 mdBook chapters test; the inspected repository-local render
+  contains 88 files/18,944,914 bytes and the exact completed native-UVM
+  paragraph before removal. All 22 live-document surfaces, one exact
+  0-line/+670-byte book authority, the compacted 45,455-line Knowledge-card
+  surface, and zero ceiling increases pass. Diff, staged acceptance, the final
+  doctrine gate, and exact artifact cleanup complete the workflow. Family
+  closure remains proposed; no external runtime, public API, capability/
+  support, performance, capacity, or product claim changes.
