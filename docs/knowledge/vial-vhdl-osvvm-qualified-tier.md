@@ -7,11 +7,13 @@ answers:
   - "where is the OSVVM VHDL adapter gallery?"
   - "has OSVVM 2026.05 plus GHDL 6.0.0 been qualified?"
   - "how is exact OSVVM provider verification reused safely?"
+  - "how are portable VHDL source maps preserved in the OSVVM wrapper?"
 date: 2026-08-21
 status: current
 tags: [hial, vial, vhdl, osvvm, ghdl, review-gallery, verification]
 evidence: >-
   docs/decisions/0051-vial-vhdl-uses-a-provider-free-core-and-osvvm-qualified-tier.md;
+  docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md;
   perl/FSM/VIAL/Backend/OSVVM2026_05Materialization.pm;
   perl/FSM/VIAL/Backend/VHDLOSVVM2026_05.pm;
   perl/FSM/VIAL/Backend/VHDLOSVVMStaticValidator.pm;
@@ -40,8 +42,11 @@ reverify: >-
 Decision `0051` keeps OSVVM a separately qualified advanced provider, never the
 portable semantic core. Its exact 2026.05 graph locks 14 repositories, 13
 gitlinks, 14 Apache-2.0 licence files, zero notices, clean identities, and the
-Documentation repository's explicit metadata absence. Seven mappings add 13
-maps, 12 checks, and six guards beside unchanged portable semantics.
+Documentation repository's explicit metadata absence. Seven adapter mappings
+precede all 59 portable entries translated to wrapper paths and identities, so
+the exact graph has 66 maps, 12 checks, and six guards beside unchanged
+portable semantics. Schema, artifact-digest, identity, span, or coverage drift
+fails before the wrapper publishes an artifact graph.
 
 The GHDL 6.0.0 tuple compiles 61 provider sources, analyzes seven generated
 sources plus its probe, and double-runs both tops. Portable trace, result, and

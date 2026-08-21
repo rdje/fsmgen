@@ -14,6 +14,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::VIAL::Backend::OSVVM2026_05Materialization;
 use FSM::VIAL::Backend::VHDLOSVVM2026_05;
 use FSM::VIAL::Backend::VHDLOSVVMStaticValidator;
+use FSM::VIAL::Backend::VHDLPortableGHDL;
 use FSM::VIAL::Parser;
 use FSM::VIAL::PlanBuilder;
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
@@ -134,7 +135,7 @@ subtest 'advanced negotiation and profile claims are exact and bounded' => sub {
     my $manifest = $emission->{backend_manifest};
     is($manifest->{schema}, 'fsmgen.vial_backend.vhdl_osvvm.v1',
         'advanced backend schema is exact');
-    is($manifest->{emitter_revision}, 2, 'advanced emitter revision is exact');
+    is($manifest->{emitter_revision}, 3, 'advanced emitter revision is exact');
     is($manifest->{profile_state}{materialization},
         'complete_recursive_verified', 'profile records complete provider graph');
     is($manifest->{profile_state}{qualification},
@@ -234,13 +235,89 @@ subtest 'adapter maps seven provider families without changing portable semantic
         'adapter exposes the exact MIT address-bus transaction type');
 };
 
+subtest 'source map translates every portable entry into the wrapper graph' => sub {
+    my $portable_args = backend_args();
+    delete @{$portable_args}{qw(dependency_root advanced_requirements)};
+    $portable_args->{backend_profile} = 'vhdl_portable_ghdl';
+    my $portable = FSM::VIAL::Backend::VHDLPortableGHDL->emit($portable_args);
+    ok($portable->{ok}, 'independent portable foundation emission succeeds');
+    diag($json->encode($portable->{diagnostics})) unless $portable->{ok};
+    return unless $portable->{ok};
+
+    my %wrapper_path = map {
+        $_->{portable_relpath} => $_->{advanced_relpath}
+    } @{$emission->{semantic_preservation}{portable_sources}};
+    is(scalar(keys %wrapper_path), 6,
+        'semantic-preservation evidence closes all six path translations');
+
+    my @adapter_entry = grep {
+        $_->{source_map_id} =~ /\Aosvvm-map-/
+    } @{$emission->{source_map}{entries}};
+    is_deeply(
+        [map { $_->{source_map_id} } @adapter_entry],
+        [map { $_->{source_map_id} } @{$emission->{mapping_matrix}{mappings}}],
+        'all seven adapter entries retain exact mapping-matrix order',
+    );
+
+    my @translated = grep {
+        $_->{source_map_id} !~ /\Aosvvm-map-/
+    } @{$emission->{source_map}{entries}};
+    is(scalar(@translated), scalar(@{$portable->{source_map}{entries}}),
+        'wrapper contains every detailed portable source-map entry');
+    is(scalar(@adapter_entry) + scalar(@translated), 66,
+        'reference wrapper map closes at seven adapter plus 59 portable entries');
+
+    for my $index (0 .. $#{$portable->{source_map}{entries}}) {
+        my $expected = clone($portable->{source_map}{entries}[$index]);
+        my $portable_relpath = $expected->{generated_relpath};
+        ok(exists($wrapper_path{$portable_relpath}),
+            "portable entry $index names one translated source artifact");
+        next unless exists $wrapper_path{$portable_relpath};
+        $expected->{generated_relpath} = $wrapper_path{$portable_relpath};
+        $expected->{source_map_id} = 'source-map/' . sha256_hex($json->encode({
+            relpath => $expected->{generated_relpath},
+            symbol => $expected->{generated_symbol},
+            role => $expected->{role},
+        }));
+        is_deeply($translated[$index], $expected,
+            "portable entry $index is translated without semantic loss");
+    }
+};
+
+subtest 'portable source-map mutation fails before wrapper publication' => sub {
+    my $portable_emit = \&FSM::VIAL::Backend::VHDLPortableGHDL::emit;
+    my $mutated = FSM::VIAL::Backend::VHDLOSVVM2026_05
+        ->with_provider_evaluation({
+            dependency_root => $dependency_root,
+            consumer => sub {
+                my ($evaluation) = @_;
+                no warnings 'redefine';
+                local *FSM::VIAL::Backend::VHDLPortableGHDL::emit = sub {
+                    my $result = $portable_emit->(@_);
+                    $result = clone($result);
+                    $result->{source_map}{entries}[0]{source_map_id} .= '-drift';
+                    return $result;
+                };
+                return $evaluation->emit(backend_args());
+            },
+        });
+    ok(!$mutated->{ok}, 'mutated portable source-map identity fails closed');
+    is($mutated->{diagnostics}[0]{code},
+        'VIAL_OSVVM_SOURCE_MAP_TRANSLATION_ERROR',
+        'mutation has the exact translation diagnostic family');
+    is($mutated->{diagnostics}[0]{path}, '/portable_foundation/source_map',
+        'mutation identifies the portable source-map boundary');
+    is_deeply($mutated->{artifacts}, [],
+        'mutation publishes no partial wrapper artifact graph');
+};
+
 subtest 'artifact graph, source map, static checks, and gallery bytes are exact' => sub {
     is(scalar(@{$emission->{artifacts}}), 16,
         'advanced graph contains seven VHDL and nine evidence artifacts');
     is(scalar(grep { $_->{language} eq 'vhdl' } @{$emission->{artifacts}}), 7,
         'advanced graph contains six portable sources plus one adapter');
-    is(scalar(@{$emission->{source_map}{entries}}), 13,
-        'source map covers seven mappings and six portable sources');
+    is(scalar(@{$emission->{source_map}{entries}}), 66,
+        'source map covers seven mappings and 59 translated portable entries');
     is(scalar(@{$emission->{static_validation}{checks}}), 12,
         'static validator records twelve exact checks');
     is($emission->{static_validation}{status}, 'passed_structural_only',
@@ -265,7 +342,7 @@ subtest 'artifact graph, source map, static checks, and gallery bytes are exact'
     close $check_fh;
     is($? >> 8, 0, 'non-mutating OSVVM gallery check succeeds');
     is($check_output,
-        "OSVVM 2026.05 VHDL gallery current: 7 VHDL sources; 9 evidence artifacts; 7 advanced mappings; 13 source-map entries; 12 static checks\n",
+        "OSVVM 2026.05 VHDL gallery current: 7 VHDL sources; 9 evidence artifacts; 7 advanced mappings; 66 source-map entries; 12 static checks\n",
         'gallery check reports the exact closed graph');
 
     is(artifact('provider_materialization')->{content},

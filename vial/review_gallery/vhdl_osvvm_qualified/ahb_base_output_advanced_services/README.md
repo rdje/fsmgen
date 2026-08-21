@@ -22,12 +22,12 @@ No notice file exists in the release, and the exact pinned `Documentation`
 repository contains no tracked licence or notice file; the evidence infers no
 licence coverage for that repository.
 
-Seven exact adapter mappings cover isolated native randomization,
-supplementary coverage, scoreboarding and reporting, component coordination,
-provider memory, and an OSVVM Common address-bus transaction type. The six
-portable VHDL sources remain byte-identical. OSVVM cannot rerandomize portable
-decisions, move phase barriers, redefine comparison or coverage meaning,
-change the closed trace, or replace the normalized result.
+Seven adapter maps cover provider services and precede all 59
+portable maps translated to wrapper paths and identities. The 66-entry graph
+preserves semantic payloads and line/column spans; schema, digest, identity,
+bound, or coverage drift returns no graph. The six portable VHDL sources remain
+byte-identical, and OSVVM cannot change portable decisions, phase barriers,
+comparison/coverage meaning, the closed trace, or the normalized result.
 
 The checked `.15.7` qualification now proves the exact combined OSVVM 2026.05
 plus GHDL 6.0.0 LLVM-JIT profile for this bounded fixture. It compiles the 44

@@ -1,12 +1,12 @@
 {
    "artifacts" : [
       {
-         "byte_length" : 12843,
+         "byte_length" : 76829,
          "kind" : "source_map",
          "language" : "json",
          "relpath" : "backends/vhdl_osvvm_qualified/backend-source-map.json",
          "role" : "backend_source_map",
-         "sha256" : "23a5de1b0d4fe9c5018345c611ceb200fa44cca0cf6e1198b56a2e45a6ee7ee1",
+         "sha256" : "cf0e85eeb42755833bc32417b60e7e54564ec505cbcd3f6ef82b05ac92be88df",
          "source_ids" : [
             "plan/e236297c8b434a9b374d1800112841e00327bdbd5d8d9130440bd20681fbed6e"
          ]
@@ -189,17 +189,17 @@
       "provider_materialization" : "passed_exact_recursive_identity",
       "result" : "produced_normalized_pass",
       "runtime" : "passed_bounded_fixture_and_provider_probe",
-      "source_map" : "passed_adapter_mapping_scope",
+      "source_map" : "passed_seven_adapter_and_complete_portable_translation",
       "static_validation" : "passed_structural_only",
       "supplementary_provider_reports" : "passed_four_deterministic_osvvm_reports",
       "trace" : "passed_closed_forty_two_records"
    },
    "cleanup" : {
-      "staging_identity" : ".artifacts/tmp/vial/op-21ced977fc83b3cb608e7e5456331da052a724e3f9ed9d1602132f4a4378b4f8",
+      "staging_identity" : ".artifacts/tmp/vial/op-37b0ea01ea66870bca21986185b100a3c3432c8d684e0e1bc266cde015ca29b2",
       "state" : "not_created"
    },
    "diagnostics" : [],
-   "emitter_revision" : 2,
+   "emitter_revision" : 3,
    "execution_profile" : "core_directed_single_clock_execution_v1",
    "fixture_id" : "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration",
    "generated_top" : "base_output_arbitration_tb",
@@ -267,10 +267,10 @@
    "schema" : "fsmgen.vial_backend.vhdl_osvvm.v1",
    "schema_version" : 1,
    "source_map" : {
-      "entry_count" : 13,
+      "entry_count" : 66,
       "relpath" : "backends/vhdl_osvvm_qualified/backend-source-map.json",
       "schema" : "fsmgen.vial_vhdl_osvvm_source_map.v1",
-      "sha256" : "23a5de1b0d4fe9c5018345c611ceb200fa44cca0cf6e1198b56a2e45a6ee7ee1"
+      "sha256" : "cf0e85eeb42755833bc32417b60e7e54564ec505cbcd3f6ef82b05ac92be88df"
    },
    "source_order" : {
       "generated_sources" : [

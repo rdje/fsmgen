@@ -64,8 +64,9 @@ The OSVVM evidence remains factored by authority:
   zero notice files, and the pinned Documentation repository's explicit
   absence without inferring coverage;
 - deterministic adapter emission produces 16 artifacts: seven VHDL sources
-  and nine evidence artifacts, with seven provider mappings, 13 source-map
-  entries, 12 static checks, and six semantic-preservation guards; and
+  and nine evidence artifacts, with seven provider mappings followed by all
+  59 translated portable entries for 66 source-map entries, 12 static checks,
+  and six semantic-preservation guards; and
 - exact combined qualification reconstructs and executes 44 OSVVM core plus
   17 compatible Common sources, yielding 61 provider analysis commands. It
   double-runs the fixture and provider probe, preserves a closed 42-record
@@ -89,8 +90,9 @@ The provider-free evidence is separately bounded:
   bytes plus its package/manifest digests, proves it is unconsumed, and keeps
   the HIAL successor byte-identical to the private handoff.
 
-The guarded five-file exact collection passes at `Files=5, Tests=31`,
-including installed provider/tool reruns and same-volume cleanup. The
+The guarded exact OSVVM collection passes at `Files=3, Tests=60`, including
+translated-map mutation rejection, installed provider/tool reruns, sealed
+provider reuse, and same-volume cleanup. The
 support/disposition collection passes at `Files=3, Tests=7107`. The current
 registry therefore closes 24 of 288 verification-architecture candidates:
 21 gates and three reviewed outcomes across `.5.6.1` and `.5.6.2`.

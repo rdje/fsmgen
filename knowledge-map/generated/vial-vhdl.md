@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-vhdl`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **35** uniquely owned question entries.
+> **3** facts · **36** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -17,6 +17,7 @@
 - q="how are declared HIAL probes accessed from portable VHDL?" · facts=[vial-vhdl-portable-profile](../../docs/knowledge/vial-vhdl-portable-profile.md)
 - q="how are portable VHDL operation scenario fiber and model counts verified?" · facts=[vial-vhdl-provider-claim-evidence](../../docs/knowledge/vial-vhdl-provider-claim-evidence.md)
 - q="how are portable VHDL review defects tracked?" · facts=[vial-vhdl-portable-profile](../../docs/knowledge/vial-vhdl-portable-profile.md)
+- q="how are portable VHDL source maps preserved in the OSVVM wrapper?" · facts=[vial-vhdl-osvvm-qualified-tier](../../docs/knowledge/vial-vhdl-osvvm-qualified-tier.md)
 - q="how are six VHDL sources 59 source maps and 24 mappings verified?" · facts=[vial-vhdl-provider-claim-evidence](../../docs/knowledge/vial-vhdl-provider-claim-evidence.md)
 - q="how are the 42-record VHDL trace and 19 parity paths verified?" · facts=[vial-vhdl-provider-claim-evidence](../../docs/knowledge/vial-vhdl-provider-claim-evidence.md)
 - q="how are the Chapter 16d portable VHDL and OSVVM claims verified?" · facts=[vial-vhdl-provider-claim-evidence](../../docs/knowledge/vial-vhdl-provider-claim-evidence.md)

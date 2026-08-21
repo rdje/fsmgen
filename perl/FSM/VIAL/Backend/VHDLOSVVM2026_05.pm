@@ -17,6 +17,7 @@ use FSM::VIAL::Backend::VHDLPortableGHDL;
 
 my $BACKEND_PROFILE = 'vhdl_osvvm_qualified';
 my $BACKEND_SCHEMA = 'fsmgen.vial_backend.vhdl_osvvm.v1';
+my $EMITTER_REVISION = 3;
 my $BASE = 'backends/vhdl_osvvm_qualified';
 my $DEPENDENCY_ROOT = '.artifacts/cache/providers/osvvm/2026.05/source';
 my $QUALIFICATION_REPORT =
@@ -259,10 +260,18 @@ sub _emit($raw, $verified_provider = undef) {
     };
 
     my $mapping_matrix = _mapping_matrix($adapter_text);
+    my $translated = _translate_portable_source_map(
+        portable => $portable,
+        portable_sources => \@preserved,
+    );
+    return _failure('VIAL_OSVVM_SOURCE_MAP_TRANSLATION_ERROR',
+        $translated->{diagnostic}, '/portable_foundation/source_map')
+        unless $translated->{ok};
     my $source_map = _source_map(
         plan_id => $portable->{plan_id},
         source_artifacts => \@source_artifacts,
         mapping_matrix => $mapping_matrix,
+        portable_entries => $translated->{entries},
     );
     my $static = FSM::VIAL::Backend::VHDLOSVVMStaticValidator->validate({
         artifacts => \@source_artifacts,
@@ -345,6 +354,7 @@ sub _emit($raw, $verified_provider = undef) {
     my $operation_id = 'op-' . sha256_hex($JSON->encode({
         action => 'emit_osvvm_2026_05_adapter_gallery',
         artifact_root => $raw->{artifact_root},
+        emitter_revision => $EMITTER_REVISION,
         plan_id => $portable->{plan_id},
         provider_commit => $provider->{manifest}{root_commit},
         requirements => \@requirements,
@@ -358,7 +368,7 @@ sub _emit($raw, $verified_provider = undef) {
         plan_id => $portable->{plan_id},
         fixture_id => $portable->{backend_manifest}{fixture_id},
         generated_top => $portable->{generated_top},
-        emitter_revision => 2,
+        emitter_revision => $EMITTER_REVISION,
         execution_profile => $portable->{backend_manifest}{execution_profile},
         standard_profile => {
             language => 'VHDL',
@@ -388,7 +398,7 @@ sub _emit($raw, $verified_provider = undef) {
             advanced_mapping_matrix => 'passed_seven_exact_mappings',
             portable_semantic_preservation => 'passed_six_byte_identical_sources',
             static_validation => 'passed_structural_only',
-            source_map => 'passed_adapter_mapping_scope',
+            source_map => 'passed_seven_adapter_and_complete_portable_translation',
             provider_compilation => 'passed_sixty_one_ordered_sources',
             analysis => 'passed_adapter_and_generated_fixture',
             elaboration => 'passed_fixture_and_provider_probe',
@@ -530,22 +540,7 @@ sub _source_map(%args) {
             ],
         }
     } @{$args{mapping_matrix}{mappings}};
-    for my $artifact (sort { $a->{role} cmp $b->{role} }
-        grep { $_->{role} =~ /\Aportable_/ } @{$args{source_artifacts}}) {
-        push @entries, {
-            source_map_id => 'portable-' . $artifact->{sha256},
-            generated_relpath => $artifact->{relpath},
-            generated_start_line => 1,
-            generated_end_line => scalar(() = $artifact->{content} =~ /\n/g),
-            generated_symbol => $artifact->{role},
-            role => $artifact->{role},
-            plan_paths => ['/portable_foundation'],
-            semantic_paths => ['/semantic_preservation/portable_sources'],
-            source_locations => [
-                'FSM::VIAL::Backend::VHDLPortableGHDL',
-            ],
-        };
-    }
+    push @entries, map { _clone_json($_) } @{$args{portable_entries}};
     return {
         schema => 'fsmgen.vial_vhdl_osvvm_source_map.v1',
         schema_version => 1,
@@ -554,6 +549,171 @@ sub _source_map(%args) {
             sort { $a->{relpath} cmp $b->{relpath} } @{$args{source_artifacts}}],
         entries => \@entries,
     };
+}
+
+sub _translate_portable_source_map(%args) {
+    my $portable = $args{portable};
+    my $preserved = $args{portable_sources};
+    return _translation_failure('portable emission result is absent')
+        unless ref($portable) eq 'HASH' && !blessed($portable);
+    return _translation_failure('portable source translation set is absent')
+        unless ref($preserved) eq 'ARRAY';
+    my $source_map = $portable->{source_map};
+    return _translation_failure('portable source map is absent')
+        unless ref($source_map) eq 'HASH' && !blessed($source_map);
+    return _translation_failure('portable source-map key set is not closed')
+        unless _keys_match($source_map,
+            FSM::VIAL::Backend::VHDLPortableGHDL->source_map_keys);
+    return _translation_failure('portable source-map identity is inconsistent')
+        unless ($source_map->{schema} // '')
+                eq 'fsmgen.vial_vhdl_backend_source_map.v1'
+            && ($source_map->{schema_version} // '') eq '1'
+            && ($source_map->{plan_id} // '') eq ($portable->{plan_id} // '');
+    return _translation_failure('portable source-map collections are absent')
+        unless ref($source_map->{artifacts}) eq 'ARRAY'
+            && ref($source_map->{entries}) eq 'ARRAY';
+
+    return _translation_failure('portable artifact collection is absent')
+        unless ref($portable->{artifacts}) eq 'ARRAY';
+    my %portable_artifact;
+    for my $artifact (grep {
+        ref($_) eq 'HASH' && (($_->{language} // '') eq 'vhdl')
+    } @{$portable->{artifacts}}) {
+        return _translation_failure('portable source artifact is malformed')
+            unless ref($artifact) eq 'HASH' && !blessed($artifact)
+                && defined($artifact->{relpath}) && !ref($artifact->{relpath})
+                && defined($artifact->{content}) && !ref($artifact->{content})
+                && defined($artifact->{kind}) && !ref($artifact->{kind})
+                && defined($artifact->{role}) && !ref($artifact->{role});
+        return _translation_failure('portable source artifact path is duplicated')
+            if exists $portable_artifact{$artifact->{relpath}};
+        $portable_artifact{$artifact->{relpath}} = $artifact;
+    }
+    return _translation_failure('portable source artifact census is not six')
+        unless keys(%portable_artifact) == 6;
+
+    my (%wrapper_path, %wrapper_seen);
+    for my $translation (@{$preserved}) {
+        return _translation_failure('portable source translation is malformed')
+            unless ref($translation) eq 'HASH' && !blessed($translation)
+                && defined($translation->{portable_relpath})
+                && !ref($translation->{portable_relpath})
+                && defined($translation->{advanced_relpath})
+                && !ref($translation->{advanced_relpath});
+        my $portable_relpath = $translation->{portable_relpath};
+        my $advanced_relpath = $translation->{advanced_relpath};
+        return _translation_failure('portable source translation is duplicated')
+            if exists($wrapper_path{$portable_relpath})
+                || $wrapper_seen{$advanced_relpath}++;
+        return _translation_failure('portable source translation is unbound')
+            unless exists $portable_artifact{$portable_relpath};
+        $wrapper_path{$portable_relpath} = $advanced_relpath;
+    }
+    return _translation_failure('portable source translation is incomplete')
+        unless keys(%wrapper_path) == 6;
+
+    my @expected_artifact = map {
+        my $artifact = $portable_artifact{$_};
+        +{
+            relpath => $artifact->{relpath},
+            kind => $artifact->{kind},
+            role => $artifact->{role},
+            sha256 => sha256_hex($artifact->{content}),
+            bytes => bytes::length($artifact->{content}),
+        }
+    } sort keys %portable_artifact;
+    return _translation_failure('portable source-map artifact closure drifted')
+        unless $JSON->encode($source_map->{artifacts})
+            eq $JSON->encode(\@expected_artifact);
+
+    my %source_shape = map {
+        $_ => _source_shape($portable_artifact{$_}{content})
+    } keys %portable_artifact;
+    my $entry_keys =
+        FSM::VIAL::Backend::VHDLPortableGHDL->source_map_entry_keys;
+    my (%source_seen, @translated);
+    for my $entry (@{$source_map->{entries}}) {
+        return _translation_failure('portable source-map entry is malformed')
+            unless ref($entry) eq 'HASH' && !blessed($entry)
+                && _keys_match($entry, $entry_keys);
+        my $relpath = $entry->{generated_relpath};
+        return _translation_failure('portable source-map entry is unbound')
+            unless defined($relpath) && !ref($relpath)
+                && exists($wrapper_path{$relpath});
+        for my $key (qw(generated_symbol role)) {
+            return _translation_failure(
+                "portable source-map entry $key is malformed")
+                unless defined($entry->{$key}) && !ref($entry->{$key})
+                    && length($entry->{$key});
+        }
+        for my $key (qw(
+            generated_start_line generated_end_line
+            generated_start_column generated_end_column
+        )) {
+            return _translation_failure(
+                "portable source-map entry $key is malformed")
+                unless defined($entry->{$key}) && !ref($entry->{$key})
+                    && $entry->{$key} =~ /\A[0-9]+\z/ && $entry->{$key} >= 1;
+        }
+        return _translation_failure('portable source-map span is reversed')
+            if $entry->{generated_end_line} < $entry->{generated_start_line};
+        my $shape = $source_shape{$relpath};
+        return _translation_failure('portable source-map span is outside its artifact')
+            unless $entry->{generated_start_line} <= $shape->{line_count}
+                && $entry->{generated_end_line} <= $shape->{line_count}
+                && $entry->{generated_start_column} == 1
+                && $entry->{generated_end_column}
+                    == $shape->{end_columns}[$entry->{generated_end_line}];
+        for my $key (qw(
+            plan_paths semantic_paths bridge_fact_paths source_locations
+        )) {
+            return _translation_failure(
+                "portable source-map entry $key is malformed")
+                unless ref($entry->{$key}) eq 'ARRAY';
+        }
+        my $expected_id = 'source-map/' . sha256_hex($JSON->encode({
+            relpath => $relpath,
+            symbol => $entry->{generated_symbol},
+            role => $entry->{role},
+        }));
+        return _translation_failure('portable source-map identity drifted')
+            unless ($entry->{source_map_id} // '') eq $expected_id
+                && !$source_seen{$expected_id}++;
+
+        my $translated = _clone_json($entry);
+        $translated->{generated_relpath} = $wrapper_path{$relpath};
+        $translated->{source_map_id} = 'source-map/' . sha256_hex($JSON->encode({
+            relpath => $translated->{generated_relpath},
+            symbol => $translated->{generated_symbol},
+            role => $translated->{role},
+        }));
+        push @translated, $translated;
+    }
+    return _translation_failure('portable source-map entry set is empty')
+        unless @translated;
+    my %covered = map { $_->{generated_relpath} => 1 } @translated;
+    return _translation_failure('portable source-map artifact coverage is incomplete')
+        unless keys(%covered) == 6
+            && !(grep { !$covered{$_} } values %wrapper_path);
+    return {ok => JSON::PP::true, entries => \@translated, diagnostic => undef};
+}
+
+sub _source_shape($content) {
+    my @line = split /\n/, $content, -1;
+    pop @line if @line && $line[-1] eq '';
+    return {
+        line_count => scalar(@line),
+        end_columns => [undef, map { bytes::length($_) + 1 } @line],
+    };
+}
+
+sub _translation_failure($diagnostic) {
+    return {ok => JSON::PP::false, entries => [], diagnostic => $diagnostic};
+}
+
+sub _keys_match($value, $expected) {
+    return 0 unless ref($value) eq 'HASH' && !blessed($value);
+    return join("\0", sort keys %{$value}) eq join("\0", sort @{$expected});
 }
 
 sub _render_adapter() {

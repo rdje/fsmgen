@@ -114,13 +114,16 @@ execution, timed `0/1/X/Z`, one closed 42-record trace, a passing normalized
 result, deterministic reruns, and nineteen applicable portable-SV parity paths
 pass. Completed `.15.6` now installs and recursively verifies exact OSVVM
 2026.05, then emits its isolated seven-service adapter beside six
-byte-identical portable sources. Completed `.15.7` qualifies the combined
+byte-identical portable sources. The wrapper now preserves all 59 detailed
+portable mappings under their wrapper artifact paths and identities after its
+seven unchanged adapter mappings, for 66 ordered entries rather than six
+whole-file placeholders. Completed `.15.7` qualifies the combined
 exact provider/tool tuple: 61 provider sources compile in selected order, the
-adapter and fixture analyze, both fixture and provider probe execute twice,
-the unchanged trace/result retains nineteen portable parity paths, and four
-OSVVM reports repeat byte-identically. Complete VHDL breadth, PSL, general
-OSVVM breadth, UVVM, another simulator, mixed-language behavior, general
-parity, and scale remain unclaimed.
+and fixture analyze, both fixture and provider probe execute twice, the
+unchanged trace/result retains nineteen portable parity paths, and four OSVVM
+reports repeat byte-identically. Complete VHDL breadth, PSL, general OSVVM
+breadth, UVVM, another simulator, mixed-language behavior, general parity, and
+scale remain unclaimed.
 
 Inspect or byte-check the six VHDL sources and eleven evidence artifacts with:
 

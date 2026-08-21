@@ -553,7 +553,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Repair the selected backend-emission catalog and contract authorities before generator code consumes them.`
   Acceptance: `Implement only after .17.2.6.1 commits cleanly. On activation, decompose five children in this order: linear portable-VHDL validation and accepted-boundary proof; sealed reusable OSVVM provider verification; translated OSVVM source-map closure; native-UVM closed selected-matrix negotiation; then exact catalog/support authority alignment and repair-family qualification. Each child adds RED controls and exact reruns. Align decision, catalog, emitters/validators/manifests, support contracts, tests, Knowledge Map, and mdBook; fail closed on unknown or contradictory authority fields; and close the repair family before .17.2.6.3 activates. Change no runtime path, public API, capability/support, performance, or capacity claim beyond decision 0075's explicitly selected behavior repairs.`
-  Verification: `Clean selection predecessor 0a3a2a05f activates this repair parent and decomposes decision 0075's five defects without changing implementation. Children .1 and .2 are complete: portable VHDL uses one-pass metadata/source-line indexes through its exact accepted boundary, and OSVVM can reuse one defensive exact provider result only inside a source-bound callback evaluation whose stale or forged handles fail closed. Map translation, native-UVM negotiation, and family qualification remain ordered proposed siblings; .3 is next after the clean .2 commit.`
+  Verification: `Clean selection predecessor 0a3a2a05f activates this repair parent and decomposes decision 0075's five defects without changing implementation. Children .1 through .3 are complete: portable VHDL uses one-pass metadata/source-line indexes through its exact accepted boundary; OSVVM reuses one defensive exact provider result only inside a source-bound callback evaluation; and the wrapper validates then translates every portable source-map entry instead of substituting whole-file placeholders. Native-UVM negotiation and family qualification remain ordered proposed siblings; .4 is next after the clean .3 commit.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2: activate backend-emission repairs`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.5`
 
@@ -572,10 +572,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.2: seal OSVVM provider evaluation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Translate complete portable-VHDL source maps into the OSVVM wrapper graph.`
   Acceptance: `Add RED evidence for the six coarse whole-file placeholders, preserve every detailed portable source-map entry under its OSVVM artifact identity, retain the seven exact adapter maps, and prove complete ordered closure, byte-identical source reuse, mutation rejection, deterministic rerun, and unchanged structural checks.`
-  Verification: `Clean completed provider-evaluation and containment-repair commits 189cec95e and aa99aad50 leave this leaf as the ordered repair-family frontier. This activation owns only complete portable-to-OSVVM source-map translation; implementation, generated artifacts, validation evidence, runtime, API, capability/support, performance, and capacity claims remain unchanged until a later implementation commit.`
+  Verification: `The RED comparison first found six coarse wrapper placeholders against 59 independently emitted portable entries, for defective 13-entry rather than selected 66-entry closure. Revision 3 validates the portable map's closed schema, six source artifacts and digests, every path-derived identity, exact line/column span, unique membership, and complete coverage before translating each entry's path and identity; the seven adapter entries remain first and unchanged. Identity mutation returns only VIAL_OSVVM_SOURCE_MAP_TRANSLATION_ERROR at /portable_foundation/source_map with no artifacts. The regenerated 16-artifact gallery reports seven sources, nine evidence artifacts, seven mappings, 66 maps, and twelve checks. Focused emission passes Files=1/Tests=11; the 4,096-MiB guarded exact OSVVM/GHDL/provider-evaluation collection passes Files=3/Tests=60 in 38 seconds with unchanged compiled VHDL, trace, result, parity, provider reports, and exact cleanup. Runtime, public API, capability/support classification, performance, and capacity claims do not change.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.3: activate OSVVM source-map translation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2.4`
@@ -4599,3 +4599,39 @@ raising an enforcement ceiling.
   original constants; maintained references report zero changed; and all 53
   mdBook chapters test. Diff, staged acceptance, and the final `[doctrine] all
   doctrine checks passed` result complete the activation commit.
+
+## Acceptance Checklist (enforced) — `.17.2.6.2.3` OSVVM source-map closure
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'portable-' --oneline --
+  perl/FSM/VIAL/Backend/VHDLOSVVM2026_05.pm` returns origin commit
+  `4f350f29c`: the wrapper added one whole-file map per
+  portable VHDL source instead of translating the detailed portable graph. The
+  focused independent-comparison RED run found six portable wrapper entries
+  against 59 foundation entries and thirteen total entries against the required
+  66, then failed at `Files=1, Tests=10`.
+- [x] **ADDRESSED (verified)** — emitter revision 3 validates the portable
+  source-map schema, exact key sets, plan identity, six-artifact digest/byte
+  closure, unique one-to-one path translation, every entry identity and bound,
+  positive artifact-bounded spans, evidence arrays, nonempty content, and full
+  six-source coverage before publishing anything. It then preserves every
+  portable payload/span in order, substitutes the wrapper path, recomputes the
+  path-derived identity, and appends all 59 translated entries after the seven
+  unchanged adapter entries. A corrupted portable identity returns exact
+  `VIAL_OSVVM_SOURCE_MAP_TRANSLATION_ERROR` at
+  `/portable_foundation/source_map` with no artifacts.
+- [x] **NO REGRESSION** — syntax passes; focused emission reports `All tests
+  successful` at `Files=1, Tests=11`. The guarded t/1598+t/1599+t/1642
+  collection also reports `All tests successful` at `Files=3, Tests=60` in 38
+  seconds, including fresh exact OSVVM 2026.05/GHDL 6.0.0
+  qualification and same-volume cleanup. The gallery check reports seven VHDL
+  sources, nine evidence artifacts, seven advanced mappings, 66 source-map
+  entries, and twelve checks. Knowledge Map parity reports 1,150 facts/6,054
+  questions/6,221 occurrences/133 shards; claim verification joins all 1,423
+  candidates with 2,069 current and 615 original constants; task integrity
+  reports three trees/956 nodes; relative paths, rationale reconstruction,
+  live-document containment, maintained-reference authority, zero ceiling
+  increases, and diff checks pass. All 53 mdBook chapters test, and the
+  inspected 88-file/18,906,350-byte repository-local build contains the 59+7
+  closure and fail-closed contract before exact removal. The final staged
+  acceptance and `[doctrine] all doctrine checks passed` result complete the
+  commit workflow.

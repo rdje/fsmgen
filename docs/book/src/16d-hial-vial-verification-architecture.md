@@ -1000,9 +1000,9 @@ backends/vhdl_osvvm_qualified/
 
 Seven mappings cover `RandomPkg`, `CoveragePkg`, `ScoreboardGenericPkg`,
 `AlertLogPkg`, `TbUtilPkg`, `MemoryPkg`, and
-`osvvm_common.AddressBusTransactionPkg`. Thirteen source-map entries, twelve
-structural checks, and six unchanged-semantic guards keep portable replay,
-phase order, comparison/coverage meaning, trace, and normalized results in
+`osvvm_common.AddressBusTransactionPkg`. Seven adapter entries precede all 59 detailed
+portable entries translated to wrapper paths and identities. This 66-entry closure
+preserves replay, phase order, comparison/coverage meaning, trace, and normalized results through twelve structural checks and six guards; a malformed map leaves no graph in
 authority. Check the exact 16-artifact graph with:
 
 ```text

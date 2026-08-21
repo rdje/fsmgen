@@ -466,3 +466,20 @@ new identities are allowed regardless of their record line. Values stay out of
 the frozen identity because their current producer and oracle are authoritative.
 This separates immutable cohort membership from the intentionally evolving
 current census without creating a copied list of values or a rebaseline path.
+
+## 2026-08-21: Wrapper source maps translate identity instead of replacing detail
+
+An additive backend wrapper owns new generated artifact paths without owning a
+new, coarser account of the reused source semantics. Replacing each reused file
+with one whole-file map discards the portable emitter's operation, scenario,
+fiber, model, endpoint, scheduler, checking, and probe correlations even when
+the file bytes themselves remain exact.
+
+The OSVVM wrapper now treats the portable source map as evidence that must be
+validated before it can be translated. Its closed schema, six artifact refs and
+digests, path-derived map identities, line/column bounds, unique entries, and
+complete source coverage must agree with the byte-identical portable sources.
+Each accepted entry keeps its semantic payload and order while its generated
+path and path-derived identity move into the wrapper namespace. The seven
+adapter-native entries stay first. This makes source reuse compositional:
+wrapping changes artifact identity, not the granularity of source truth.
