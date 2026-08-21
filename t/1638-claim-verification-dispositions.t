@@ -81,6 +81,15 @@ subtest 'required groups cannot hide an undisposed candidate' => sub {
         'incomplete group');
 };
 
+subtest 'disposed candidates cannot retain a migration owner' => sub {
+    my $repo = make_fixture();
+    mutate_jsonl($repo, 'doctrine/claim_verification/inventory.jsonl', sub {
+        $_[0][1]{migration_owner} = 'CLAIM-VERIFICATION-ADOPTION.5';
+    });
+    fails_like($repo, qr/disposed candidate .* retains migration_owner/,
+        'stale migration owner');
+};
+
 subtest 'claim-record source identity must match the candidate path' => sub {
     my $repo = make_fixture();
     mutate_jsonl($repo, 'doctrine/claim_verification/claims.jsonl', sub {
@@ -126,7 +135,7 @@ sub make_fixture {
         map {
             {
                 candidate_id => $_,
-                migration_owner => 'CLAIM-VERIFICATION-ADOPTION.5',
+                migration_owner => undef,
                 path => 'docs/book/src/page.md',
                 record_type => 'published_candidate',
             }

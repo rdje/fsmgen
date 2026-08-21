@@ -69,6 +69,16 @@ retain an open candidate. Run the five-group report with
 keeps semantic truth and oracle independence outside those structural gates'
 claims.
 
+The regenerated inventory also consumes the canonical disposition identities:
+closed candidates carry no residual migration owner, while a new candidate
+remains visibly task-owned until it receives a disposition. A compact
+original-cohort manifest preserves constant identities as per-source digests
+and line boundaries rather than copying their values. Current derived
+constants retain re-derivation, falsification, and durability legs; configured
+policy values and schema versions retain explicit input-identity,
+falsification, and durability gates. Run the reconciliation report with
+`scripts/check_claim_verification_inventory.pl --report`.
+
 The first root-document review repaired stale README-policy wording that had
 described ratcheted enforcement ceilings as still pinned to their adoption
 baseline. Every current non-rationale root policy, index, navigation, and

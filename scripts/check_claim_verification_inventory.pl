@@ -34,16 +34,28 @@ my %tracked = tracked_paths($root);
 my $scope = read_scope($scope_relative);
 my $inventory_relative = $inventory_arg // string_value($scope->{inventory_path});
 validate_local_path($inventory_relative, 'inventory path');
+my $disposition_relative = string_value($scope->{disposition_path});
+validate_local_path($disposition_relative, 'disposition path');
+my $baseline_relative = string_value($scope->{constant_baseline_path});
+validate_local_path($baseline_relative, 'constant baseline path');
 
 my ($markdown_paths, $constant_paths) = expand_scope($scope, \%tracked);
 my ($published, $partitions, $numeric_lines, $census_rows) =
     inventory_markdown($scope, $markdown_paths, \%tracked);
+my $disposed_ids = read_disposition_ids($disposition_relative, \%tracked);
+my $open_migration_owners = reconcile_migration_owners(
+    $published, $disposed_ids
+);
 my $independent = independent_numeric_census($markdown_paths, $scope);
 compare_census($census_rows, $independent);
 my $constants = inventory_constants($constant_paths, \%tracked);
+my $baseline = reconcile_constant_baseline(
+    $baseline_relative, $constants, $constant_paths, \%tracked
+);
 my $expected = render_inventory(
     $scope, $markdown_paths, $constant_paths, $published, $constants,
-    $partitions, $numeric_lines, $census_rows
+    $partitions, $numeric_lines, $census_rows, $open_migration_owners,
+    $baseline
 );
 
 if (@problems) {
@@ -74,7 +86,9 @@ my $unwatched = grep { $_->{watcher_status} eq 'missing' } @{$published};
 print "claim-inventory: current-surface census and independent census agree "
     . "(numeric_lines=$numeric_lines, candidates=" . scalar(@{$published})
     . ", quantified=$quantified, conservative=$conservative, constants="
-    . scalar(@{$constants}) . ", untracked_producers=$untracked, "
+    . scalar(@{$constants}) . ", original_constants="
+    . $baseline->{constant_records} . ", open_migration_owners="
+    . $open_migration_owners . ", untracked_producers=$untracked, "
     . "unwatched_candidates=$unwatched)\n";
 if ($report) {
     for my $name (sort keys %{$partitions}) {
@@ -113,9 +127,10 @@ sub read_scope {
     }
     exact_keys(
         $scope,
-        [qw(constant_globs derived_projection_paths excluded_operational_paths
-            inventory_path local_adoption_paths portable_policy_paths
-            record_type schema_version surface_ids surface_registry)],
+        [qw(constant_baseline_path constant_globs derived_projection_paths
+            disposition_path excluded_operational_paths inventory_path
+            local_adoption_paths portable_policy_paths record_type
+            schema_version surface_ids surface_registry)],
         'inventory scope'
     );
     problem('inventory scope is not canonical JSON')
@@ -131,7 +146,66 @@ sub read_scope {
     }
     validate_local_path($scope->{surface_registry}, 'surface registry path');
     validate_local_path($scope->{inventory_path}, 'declared inventory path');
+    validate_local_path(
+        $scope->{disposition_path}, 'declared disposition path'
+    );
+    validate_local_path(
+        $scope->{constant_baseline_path}, 'declared constant baseline path'
+    );
     return $scope;
+}
+
+sub read_disposition_ids {
+    my ($relative, $tracked) = @_;
+    problem("disposition registry is not tracked: $relative")
+        if !$tracked->{$relative};
+    my $raw = read_relative($relative, 'disposition registry');
+    return {} if !defined $raw;
+    problem('disposition registry must end with exactly one newline')
+        if $raw eq '' || $raw !~ /\n\z/ || $raw =~ /\n\n\z/;
+    my @lines = split /\n/, $raw, -1;
+    pop @lines if @lines && $lines[-1] eq '';
+    my %ids;
+    for my $index (0 .. $#lines) {
+        my $record = eval { $json->decode($lines[$index]) };
+        my $where = "$relative line " . ($index + 1);
+        if ($@ || ref($record) ne 'HASH') {
+            problem("$where is not a JSON object");
+            next;
+        }
+        problem("$where is not canonical JSON")
+            if $json->encode($record) ne $lines[$index];
+        if ($index == 0) {
+            problem("$where record_type must be registry")
+                if string_value($record->{record_type}) ne 'registry';
+            next;
+        }
+        problem("$where record_type must be disposition")
+            if string_value($record->{record_type}) ne 'disposition';
+        my $id = string_value($record->{candidate_id});
+        problem("$where has invalid candidate_id")
+            if $id !~ /\Apublished-[0-9a-f]{24}\z/;
+        problem("$where duplicates candidate_id $id") if $ids{$id}++;
+    }
+    return \%ids;
+}
+
+sub reconcile_migration_owners {
+    my ($published, $disposed) = @_;
+    my %current = map { $_->{candidate_id} => 1 } @{$published};
+    for my $id (sort keys %{$disposed}) {
+        problem("disposition registry names stale candidate_id $id")
+            if !$current{$id};
+    }
+    my $open = 0;
+    for my $candidate (@{$published}) {
+        if ($disposed->{$candidate->{candidate_id}}) {
+            $candidate->{migration_owner} = undef;
+        } else {
+            ++$open;
+        }
+    }
+    return $open;
 }
 
 sub expand_scope {
@@ -429,14 +503,12 @@ sub walk_numeric_leaves {
     my @watchers = grep { $tracked->{$_} } ('scripts/check_doctrines.sh');
     my @producer_paths = grep { $tracked->{$_} } @{$producer};
     my @oracle_paths = grep { $tracked->{$_} } @{$oracle};
-    if ($classification ne 'incidental_schema_identifier') {
-        problem("repository constant has no tracked producer: $path$pointer")
-            if !@producer_paths;
-        problem("repository constant has no tracked falsification oracle: $path$pointer")
-            if !@oracle_paths;
-        problem("repository constant has no tracked doctrine watcher: $path$pointer")
-            if !@watchers;
-    }
+    problem("repository constant has no tracked producer: $path$pointer")
+        if !@producer_paths;
+    problem("repository constant has no tracked falsification oracle: $path$pointer")
+        if !@oracle_paths;
+    problem("repository constant has no tracked doctrine watcher: $path$pointer")
+        if !@watchers;
     my $id = 'constant-' . substr(
         sha256_hex(join("\0", $path, $line, $pointer)), 0, 24
     );
@@ -476,9 +548,9 @@ sub constant_disposition {
     }
     if ($pointer =~ m{/schema_version\z}) {
         return (
-            'incidental_schema_identifier', 'schema_identifier',
-            {durability => 'not_applicable', falsify => 'not_applicable',
-             rederive => 'not_applicable'}, $producer, $oracle
+            'configured_input_identity', 'schema_identity_input',
+            {durability => 'available', falsify => 'available',
+             rederive => 'not_applicable_policy_input'}, $producer, $oracle
         );
     }
     if ($pointer =~ m{/(?:baseline|delta|lines|bytes|files|count|entries|nodes|terminal_rows|unique_tree_ids)(?:/|\z)}) {
@@ -493,6 +565,108 @@ sub constant_disposition {
         {durability => 'available', falsify => 'available',
          rederive => 'not_applicable_policy_input'}, $producer, $oracle
     );
+}
+
+sub reconcile_constant_baseline {
+    my ($relative, $constants, $constant_paths, $tracked) = @_;
+    problem("constant baseline is not tracked: $relative")
+        if !$tracked->{$relative};
+    my $raw = read_relative($relative, 'constant baseline');
+    return {constant_records => 0, source_records => 0}
+        if !defined $raw;
+    problem('constant baseline exceeds 65536 bytes')
+        if length($raw) > 65_536;
+    problem('constant baseline must end with exactly one newline')
+        if $raw eq '' || $raw !~ /\n\z/ || $raw =~ /\n\n\z/;
+    my @lines = split /\n/, $raw, -1;
+    pop @lines if @lines && $lines[-1] eq '';
+    my @records;
+    for my $index (0 .. $#lines) {
+        problem('constant baseline line ' . ($index + 1)
+            . ' exceeds 4096 bytes') if length($lines[$index]) > 4096;
+        my $record = eval { $json->decode($lines[$index]) };
+        if ($@ || ref($record) ne 'HASH') {
+            problem('constant baseline line ' . ($index + 1)
+                . ' is not a JSON object');
+            push @records, undef;
+            next;
+        }
+        problem('constant baseline line ' . ($index + 1)
+            . ' is not canonical JSON')
+            if $json->encode($record) ne $lines[$index];
+        push @records, $record;
+    }
+    if (!@records || ref($records[0]) ne 'HASH') {
+        problem('constant baseline must begin with metadata');
+        return {constant_records => 0, source_records => 0};
+    }
+    exact_keys(
+        $records[0], [qw(cohort_id record_type schema_version)],
+        'constant baseline line 1'
+    );
+    problem('constant baseline record_type must be constant_baseline')
+        if string_value($records[0]{record_type}) ne 'constant_baseline';
+    problem('constant baseline cohort_id must name adoption leaf .4')
+        if string_value($records[0]{cohort_id})
+            ne 'CLAIM-VERIFICATION-ADOPTION.4';
+    problem('constant baseline schema_version must be 1')
+        if string_value($records[0]{schema_version}) ne '1';
+
+    my %selected_path = map { $_ => 1 } @{$constant_paths};
+    my %constants_by_path;
+    for my $constant (@{$constants}) {
+        push @{$constants_by_path{$constant->{path}}}, $constant;
+    }
+    my (%seen_path, @order);
+    my $constant_records = 0;
+    for my $index (1 .. $#records) {
+        my $record = $records[$index];
+        next if ref($record) ne 'HASH';
+        my $where = 'constant baseline line ' . ($index + 1);
+        exact_keys(
+            $record,
+            [qw(constant_count constant_ids_sha256 path record_type
+                schema_version through_line)],
+            $where
+        );
+        problem("$where record_type must be constant_baseline_source")
+            if string_value($record->{record_type})
+                ne 'constant_baseline_source';
+        problem("$where schema_version must be 1")
+            if string_value($record->{schema_version}) ne '1';
+        my $path = string_value($record->{path});
+        validate_local_path($path, "$where path");
+        problem("$where path is not tracked: $path") if !$tracked->{$path};
+        problem("$where path is outside the current constant scope: $path")
+            if !$selected_path{$path};
+        problem("$where duplicates path $path") if $seen_path{$path}++;
+        push @order, $path;
+        my $through = positive_integer_value(
+            $record->{through_line}, "$where through_line"
+        );
+        my $expected_count = positive_integer_value(
+            $record->{constant_count}, "$where constant_count"
+        );
+        my $expected_sha = string_value($record->{constant_ids_sha256});
+        problem("$where has invalid constant_ids_sha256")
+            if $expected_sha !~ /\A[0-9a-f]{64}\z/;
+        my @cohort = sort map { $_->{constant_id} } grep {
+            $_->{line} <= $through
+        } @{$constants_by_path{$path} // []};
+        problem("$where constant count drift: expected $expected_count, got "
+            . scalar(@cohort)) if @cohort != $expected_count;
+        my $actual_sha = sha256_hex(join("\n", @cohort));
+        problem("$where constant identity digest drift")
+            if $actual_sha ne $expected_sha;
+        $constant_records += $expected_count;
+    }
+    problem('constant baseline declares no source records') if $#records < 1;
+    problem('constant baseline source records must be ordered by path')
+        if join("\0", @order) ne join("\0", sort @order);
+    return {
+        constant_records => $constant_records,
+        source_records => scalar(@order),
+    };
 }
 
 sub independent_numeric_census {
@@ -530,7 +704,8 @@ sub compare_census {
 
 sub render_inventory {
     my ($scope, $markdown, $constants_paths, $published, $constants,
-        $partitions, $numeric_lines, $census_rows) = @_;
+        $partitions, $numeric_lines, $census_rows, $open_migration_owners,
+        $baseline) = @_;
     my $metadata = {
         max_bytes => 8_388_608,
         max_record_bytes => 4096,
@@ -539,6 +714,8 @@ sub render_inventory {
         schema_version => 1,
     };
     for my $path (
+        string_value($scope->{constant_baseline_path}),
+        string_value($scope->{disposition_path}),
         'doctrine/claim_verification/inventory_scope.json',
         'scripts/check_claim_verification_inventory.pl',
         'scripts/check_doctrines.sh',
@@ -557,8 +734,11 @@ sub render_inventory {
         ),
         incidental_partitions => $partitions,
         markdown_source_paths => scalar(@{$markdown}),
+        migration_open_candidates => $open_migration_owners,
         numeric_census_sha256 => sha256_hex(join("\n", sort @{$census_rows})),
         numeric_lines => $numeric_lines,
+        original_constant_records => $baseline->{constant_records},
+        original_constant_source_paths => $baseline->{source_records},
         record_type => 'census',
         schema_version => 1,
         scope_paths_sha256 => sha256_hex(join("\n", @{$markdown}, @{$constants_paths})),
@@ -722,6 +902,16 @@ sub validate_string_array {
     my @sorted = sort @{$value};
     problem("$where must be sorted")
         if join("\0", @{$value}) ne join("\0", @sorted);
+}
+
+sub positive_integer_value {
+    my ($value, $where) = @_;
+    my $text = string_value($value);
+    if ($text !~ /\A[1-9][0-9]*\z/) {
+        problem("$where must be a positive integer");
+        return 0;
+    }
+    return 0 + $text;
 }
 
 sub exact_keys {

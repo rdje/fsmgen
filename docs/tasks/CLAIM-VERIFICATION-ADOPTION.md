@@ -84,7 +84,7 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.4: inventory current claims and constants`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5`
-  Status: `active`
+  Status: `done`
   Goal: `Migrate or gate the inventoried claims in bounded, surface-owned slices.`
   Acceptance: `Each claim is re-derived, falsified by a separating oracle where available, and made durable, or it names its missing leg and a task-owned repair; repository-derived constants are derived or input-identity gated rather than hand-carried.`
   Verification: `The current inventory partitions 1,415 candidates exactly into 70 root-document, 268 general-book, 557 protocol/profile/integration, 232 IAL2-AHB, and 288 HIAL/VIAL-verification candidates. Child .5.1 first gates review dispositions; .5.2-.5.6 then consume those five disjoint groups; .5.7 proves zero open migration owners and rechecks the governed doctrine constants.`
@@ -426,14 +426,14 @@ hidden behind repeated checks of the same kind.
   Commit: `CLAIM-VERIFICATION-ADOPTION.5.6.10: close verification architecture claims`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.5.7`
-  Status: `active`
+  Status: `done`
   Goal: `Reconcile all migrated claims and governed constants into a zero-open-owner inventory.`
   Acceptance: `The regenerated inventory has no candidate still owned by CLAIM-VERIFICATION-ADOPTION.5, every claim/disposition identity is current and three-leg honest, all 615 originally inventoried numeric doctrine constants are still derived/watched or input-identity gated, and no migration artifact is off-volume or untracked.`
-  Verification: `complete disposition/inventory join, zero-open-owner assertion, constant census parity and watcher/input RED controls, mdBook/doctrine gates`
-  Commit: `pending`
+  Verification: `PASS — regenerated inventory joins all 1,415 current candidates to dispositions and records zero migration owners; a compact 11-source identity manifest reconciles all 615 original constants while all 2,043 current constants retain producer, oracle, and watcher paths; schema identifiers are explicit input identities; Files=2/Tests=19 prove drift, input-oracle, watcher, and stale-owner RED controls.`
+  Commit: `CLAIM-VERIFICATION-ADOPTION.5.7: reconcile migrated claims and constants`
 
 - ID: `CLAIM-VERIFICATION-ADOPTION.6`
-  Status: `pending`
+  Status: `active`
   Goal: `Close adoption with a complete current-surface audit and recoverable handoff.`
   Acceptance: `The authoritative policy, discovery, registry, checker, migrated claims, explicit debt, task evidence, book, and resume pointer agree; no adoption artifact is off-volume, untracked, or reachable only from conversation.`
   Verification: `focused adoption suite, full doctrine gate, clean tracked/untracked census, and task integrity`
@@ -636,9 +636,8 @@ hidden behind repeated checks of the same kind.
 
 ## Open Questions
 
-- None blocking. `.5.6.4` owns the next 22 scale-foundation,
-  semantic-catalog, and bridge-fanout candidates on Chapter 16d lines
-  1972-2276.
+- None blocking. `.6` owns the complete current-surface adoption audit and
+  recoverable handoff.
 
 ## Blockers
 
@@ -799,6 +798,9 @@ hidden behind repeated checks of the same kind.
 - [x] **ROOT CAUSE (WHY + WHERE)** — clean commit `f118388fa` leaves the final 59 Chapter 16d checking-state and qualification-safety candidates open on lines 3519-3696. `git log -S` history and complete source/test review reproduce the model, scoreboard, coverage, fault, random/replay, foundation, exact-plan, RAM-guard, and public Runner values. The initial focused capture oracle deliberately failed `at t/1640-vial-runner-capture-limits.t line 59`, exposing that private capture `{ok}` means infrastructure completion while product success additionally requires exit zero; the existing callers made that distinction inline, but no separating test protected it.
 - [x] **ADDRESSED (verified)** — all 59 identities now join exactly 56 three-leg derived gates plus three reviewed historical guarded-suite measurements. The checking families retain independent packed-state, order, lifecycle, replay, hostile-caller, adjacent-boundary, canonical-rerun, nonclaim, and same-volume cleanup evidence. Runner now centralizes its unchanged success rule in `_process_succeeded`; focused `t/1640` proves an exact aggregate stdout/stderr limit succeeds, one byte beyond fails as output exhaustion, and a normally captured exit 23 cannot be accepted. The canonical join reports `candidates=1415`, `disposed=1415`, `gates=826`, `reviewed=589`, and required-complete `verification_architecture=288/288` with zero open.
 - [x] **NO REGRESSION** — the default checking matrix reports `All tests successful` at `Files=7, Tests=36`; the opt-in exact matrix reports `Files=5, Tests=27`; and the RAM-guard, live Runner integration, capability manifest, disposition RED suite, and new capture oracle report `Files=5, Tests=25`. Runner syntax reports `syntax OK`. Inventory regenerates at `1,415` candidates / `2,043` governed constants with zero untracked producers. The disposition join is complete with no gap or open identity. Knowledge Map parity reports `1,150` facts / `6,048` questions / `6,215` occurrences / `133` shards; compact routing keeps the 3,354,980-byte canonical-card aggregate below its warning boundary. All 53 mdBook chapters test; the repository-local 88-file/18,604-KiB build is removed with no residue. Containment, task, docs-relative-path, Memory, reference-authority, diff, staged acceptance, and all 12 registered doctrine gates pass.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'incidental_schema_identifier' --oneline -- scripts/check_claim_verification_inventory.pl` traces the `.4` implementation to `f1dad5dc6`: it recorded 615 numeric doctrine constants, but the current checker only re-derived today's expanding census and carried every candidate's migration owner even after the disposition registry closed it. It also exempted `schema_version` leaves from falsification and durability, so neither the original cohort identity nor the claimed zero-owner terminal state had a direct fail-closed proof.
+- [x] **ADDRESSED (verified)** — `original_constant_baseline.jsonl` compactly commits the original 615 IDs as 11 per-source line-boundary counts and digests; the inventory checker recomputes those identities from current sources, requires producer/oracle/watcher paths for every current constant, treats schema versions as configured input identities, and clears ownership only for exact current disposition IDs. The disposition checker reciprocally rejects a disposed candidate that retains an owner and an open candidate whose owner is absent. The live reports reproduce `1,415/1,415`, `open=0`, `open_migration_owners=0`, and `original_constants=615` across all 2,043 current constants.
+- [x] **NO REGRESSION** — `prove -Iperl -v t/1637-claim-verification-inventory.t t/1638-claim-verification-dispositions.t` reports `All tests successful` at `Files=2, Tests=19`; new RED controls remove an original identity, input oracle, doctrine watcher, or cleared owner and fail exactly. Inventory/disposition, Knowledge Map, mdBook, containment, task, docs-relative-path, Memory, diff, staged acceptance, and all registered doctrine gates pass; all temporary reconciliation inputs remain repository-local and are removed after use.
 
 ## Verification Log
 
@@ -851,6 +853,7 @@ hidden behind repeated checks of the same kind.
 | `2026-08-21` | `.5.6.1` | canonical source identity; directional type binding; bridge source identity and closed manifest; checked-AHB execution counts; public-tooling chronology; portable-Verilator profile; IASIM proposal; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 8 candidates closed as 6 gates / 2 reviewed; verification architecture 8/288; Files=7/Tests=50 RAM-guarded exact run plus semantic scale Files=1/Tests=4 and support/disposition Files=3/Tests=7107; 1,763 governed constants; all registered doctrines` |
 | `2026-08-21` | `.5.6.2` | recursive OSVVM graph and licences; advanced artifact graph; provider source order; combined runtime/result/parity/reports; portable four-state semantics; exact GHDL identity/runtime; portable metadata/review cardinalities; legacy migration; Decision chronology; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 16 candidates closed as 15 gates / 1 reviewed; verification architecture 24/288; Files=5/Tests=31 RAM-guarded exact run plus support/disposition Files=3/Tests=7107; 1,779 governed constants; all registered doctrines` |
 | `2026-08-21` | `.5.6.3` | Accellera methodology identity; native 32-bit model/SVA structure; source-map/static/matrix/workflow closure; tool-limited experimental probe; bounded handwritten-AHB parity; runtime/support nonclaims; inventory/disposition; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — all 11 candidates closed as 10 gates / 1 reviewed; verification architecture 35/288; Files=5/Tests=33 RAM-guarded exact run plus support/disposition Files=3/Tests=7107; 1,790 governed constants; all registered doctrines` |
+| `2026-08-21` | `.5.7` | original 615-constant identity reconciliation; current producer/oracle/watcher and input-identity gates; zero migration owners; complete disposition join; RED suites; Knowledge Map; mdBook; containment; staged acceptance; doctrines | `PASS — 1,415/1,415 candidates closed, zero gaps/open owners; 615/615 original constants reconcile across 11 sources and all 2,043 current constants are gated; Files=2/Tests=19 focused RED suite; all registered doctrines` |
 
 ## Commit Log
 
@@ -903,3 +906,4 @@ hidden behind repeated checks of the same kind.
 | `.5.6.1` | `CLAIM-VERIFICATION-ADOPTION.5.6.1: disposition foundational VIAL claims` | `Maps canonical source identity, directional binding, bridge identity/manifest, checked-AHB execution counts, and portable-Verilator profile data to distinct gates while preserving public-tooling leaf numbers and the IASIM Perl 5 proposal as structural chronology.` |
 | `.5.6.2` | `CLAIM-VERIFICATION-ADOPTION.5.6.2: disposition VHDL provider claims` | `Maps provider-free VHDL semantics, recursive OSVVM identity, adapter structure, exact GHDL/provider execution, portable result/parity, review cardinalities, and legacy migration identity to distinct gates while preserving Decision 0043 as structural chronology.` |
 | `.5.6.3` | `CLAIM-VERIFICATION-ADOPTION.5.6.3: disposition native UVM parity claims` | `Maps exact native-UVM emission structure, review closure, the tool-limited experimental probe, and bounded handwritten-AHB parity to separate gates while preserving Decision 0050 as structural chronology and complete-UVM/runtime/general-parity nonclaims.` |
+| `.5.7` | `CLAIM-VERIFICATION-ADOPTION.5.7: reconcile migrated claims and constants` | `Clears closed candidate migration owners, preserves the original 615-constant cohort through compact source digests, gates schema input identities, and adds fail-closed reconciliation controls.` |

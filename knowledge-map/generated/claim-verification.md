@@ -1,7 +1,7 @@
 # Knowledge Map: `claim-verification`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **46** uniquely owned question entries.
+> **3** facts · **47** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -33,6 +33,7 @@
 - q="how does random replay distinguish semantic bridge and plan boundaries?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how is claim verification mechanically enforced?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="how is the claim inventory source set derived?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)
+- q="how is the original doctrine constant cohort preserved?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)
 - q="what checker rejects aliased claim verification legs?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="what independently checks claim inventory completeness?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)
 - q="what is the current complete book fixture count?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)

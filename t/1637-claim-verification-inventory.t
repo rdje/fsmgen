@@ -4,6 +4,7 @@ use warnings;
 
 use Test::More;
 use Cwd qw(abs_path);
+use Digest::SHA qw(sha256_hex);
 use File::Basename qw(dirname);
 use File::Path qw(make_path);
 use File::Spec;
@@ -30,6 +31,8 @@ subtest 'derived inventory and independent census agree' => sub {
         'quantified prose is inventoried as actionable');
     ok(grep(($_->{record_type} // '') eq 'repository_constant', @{$records}),
         'numeric control-plane leaves are inventoried');
+    like($output, qr/original_constants=2, open_migration_owners=1/,
+        'baseline cohort and open-owner counts are explicit');
 };
 
 subtest 'source mutation makes the tracked inventory RED' => sub {
@@ -82,6 +85,73 @@ subtest 'operational identifiers and fenced examples are partitioned' => sub {
         'fenced numeric example is explicitly partitioned');
 };
 
+subtest 'completed dispositions clear candidate migration ownership' => sub {
+    my $repo = make_fixture();
+    my $records = read_inventory($repo);
+    my ($candidate) = grep {
+        $_->{record_type} eq 'published_candidate'
+    } @{$records};
+    is($candidate->{migration_owner}, 'CLAIM-VERIFICATION-ADOPTION.5',
+        'undisposed candidate retains the migration owner');
+    my $json = JSON::PP->new->canonical(1)->utf8(1);
+    write_file(
+        $repo, 'doctrine/claim_verification/dispositions.jsonl',
+        $json->encode({record_type => 'registry', schema_version => 1}) . "\n"
+            . $json->encode({
+                candidate_id => $candidate->{candidate_id},
+                record_type => 'disposition',
+            }) . "\n",
+    );
+    run_checker_ok($repo, '--write');
+    $records = read_inventory($repo);
+    ($candidate) = grep {
+        $_->{record_type} eq 'published_candidate'
+    } @{$records};
+    ok(!defined($candidate->{migration_owner}),
+        'disposed candidate has no residual migration owner');
+};
+
+subtest 'original constant identity drift fails closed' => sub {
+    my $repo = make_fixture();
+    mutate_file($repo, 'doctrine/live_document_size/config.jsonl', sub {
+        $_[0] =~ s/,"schema_version":1//;
+    });
+    my ($ok, $output) = run_checker($repo);
+    ok(!$ok, 'missing original constant identity fails');
+    like($output, qr/constant (?:count|identity digest) drift/,
+        'RED names the baseline cohort drift');
+};
+
+subtest 'configured policy and schema inputs retain falsification gates' => sub {
+    my $repo = make_fixture();
+    my @constants = grep {
+        $_->{record_type} eq 'repository_constant'
+    } @{read_inventory($repo)};
+    is_deeply(
+        [sort map { $_->{classification} } @constants],
+        [qw(configured_input_identity configured_policy_constant)],
+        'policy and schema leaves have explicit input identities',
+    );
+    ok(!(grep {
+        $_->{verification_legs}{falsify} ne 'available'
+            || $_->{verification_legs}{durability} ne 'available'
+    } @constants), 'every configured input has falsification and durability');
+    git_ok($repo, 'rm', '-q', 't/1554-live-document-size-doctrine.t');
+    my ($ok, $output) = run_checker($repo);
+    ok(!$ok, 'removing the input falsification oracle fails');
+    like($output, qr/no tracked falsification oracle/,
+        'RED names the missing input oracle');
+};
+
+subtest 'governed constants require a tracked doctrine watcher' => sub {
+    my $repo = make_fixture();
+    git_ok($repo, 'rm', '-q', 'scripts/check_doctrines.sh');
+    my ($ok, $output) = run_checker($repo);
+    ok(!$ok, 'removing the doctrine watcher fails');
+    like($output, qr/no tracked doctrine watcher/,
+        'RED names the missing durability watcher');
+};
+
 done_testing();
 
 sub make_fixture {
@@ -126,10 +196,38 @@ sub make_fixture {
         }) . "\n",
     );
     write_file(
+        $repo, 'doctrine/claim_verification/dispositions.jsonl',
+        $json->encode({record_type => 'registry', schema_version => 1}) . "\n",
+    );
+    my @baseline_ids = sort map {
+        'constant-' . substr(sha256_hex(join(
+            "\0", 'doctrine/live_document_size/config.jsonl', 1, $_
+        )), 0, 24)
+    } qw(/max_records /schema_version);
+    write_file(
+        $repo, 'doctrine/claim_verification/original_constant_baseline.jsonl',
+        $json->encode({
+            cohort_id => 'CLAIM-VERIFICATION-ADOPTION.4',
+            record_type => 'constant_baseline',
+            schema_version => 1,
+        }) . "\n" . $json->encode({
+            constant_count => 2,
+            constant_ids_sha256 => sha256_hex(join("\n", @baseline_ids)),
+            path => 'doctrine/live_document_size/config.jsonl',
+            record_type => 'constant_baseline_source',
+            schema_version => 1,
+            through_line => 1,
+        }) . "\n",
+    );
+    write_file(
         $repo, 'doctrine/claim_verification/inventory_scope.json',
         $json->encode({
-            constant_globs => ['doctrine/live_document_size/*.jsonl'],
+            constant_baseline_path =>
+                'doctrine/claim_verification/original_constant_baseline.jsonl',
+            constant_globs => ['doctrine/live_document_size/config.jsonl'],
             derived_projection_paths => [],
+            disposition_path =>
+                'doctrine/claim_verification/dispositions.jsonl',
             excluded_operational_paths => ['MEMORY.md'],
             inventory_path => 'doctrine/claim_verification/inventory.jsonl',
             local_adoption_paths => [],

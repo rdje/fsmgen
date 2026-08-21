@@ -60,9 +60,10 @@ for my $index (1 .. $#{$inventory_records}) {
     my $path = validate_tracked_path($record->{path}, "$where path");
     problem("$where candidate path must be Markdown")
         if defined($path) && $path !~ /[.]md\z/;
-    problem("$where has unexpected migration_owner")
-        if text($record->{migration_owner}) ne 'CLAIM-VERIFICATION-ADOPTION.5';
-    $candidates{$id} = {path => $path} if $id ne '';
+    $candidates{$id} = {
+        migration_owner => text($record->{migration_owner}),
+        path => $path,
+    } if $id ne '';
 }
 problem("$inventory contains no published candidates") if !keys %candidates;
 
@@ -207,6 +208,17 @@ for my $index (1 .. $#{$disposition_records}) {
 }
 problem("$dispositions records must be ordered by candidate_id")
     if join("\0", @disposition_order) ne join("\0", sort @disposition_order);
+
+for my $id (sort keys %candidates) {
+    my $owner = $candidates{$id}{migration_owner};
+    if ($seen_disposition{$id}) {
+        problem("disposed candidate $id retains migration_owner $owner")
+            if $owner ne '';
+    } else {
+        problem("open candidate $id has no migration owner")
+            if $owner ne 'CLAIM-VERIFICATION-ADOPTION.5';
+    }
+}
 
 for my $group (sort keys %group_by_id) {
     my $total = $group_candidates{$group} // 0;

@@ -414,3 +414,20 @@ target-neutral identity lengths and timeout metadata reproduce the exact
 decision-0073 gate and adjacent plan-byte witnesses, but do not add operations,
 caller-created plans, or opaque plan padding. This keeps the evidence exact
 while distinguishing semantic occurrence proof from resource materialization.
+
+## Claim migration closure uses source-cohort identity digests
+
+The original doctrine-constant cohort must remain recoverable without freezing
+values that are supposed to be re-derived as the repository evolves. A copied
+list of every value would create a second hand-maintained authority, while a
+single aggregate digest would not identify which source lost an entry.
+
+The closure contract therefore records one bounded identity digest per
+original source, together with its last original record boundary and constant
+count. Identity is the source path, record line, and structured pointer; the
+value is deliberately excluded. Current generation must reproduce every
+original identity and then apply today's producer, falsification oracle, and
+watcher policy. Schema versions are configured input identities under that
+policy, not exempt incidental leaves. Candidate migration ownership is likewise
+derived from the current disposition join, so closed work cannot retain a
+stale owner and genuinely new work cannot appear ownerless.
