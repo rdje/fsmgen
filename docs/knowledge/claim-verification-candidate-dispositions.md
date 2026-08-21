@@ -240,3 +240,12 @@ chronology. The original exact-three `2..3` normalizer bound is explicitly
 time-local; current generalized behavior owns `2..16`. Phase-pipeline and
 direct-seed repairs remain in the exact no-regression collection even when the
 candidate numeral is only an audit result or test locator.
+
+The AHB arbitration/exact-three paired review closes two current numeric
+candidates through distinct one-window artifact/semantic and two-window
+assertion-enabled runtime gates. Twenty-five arbitration-audit observations,
+contract inputs, decision identifiers, projected totals, and shipment-time
+support checkpoints remain reviewed chronology. Interconnect, generated
+endpoint, and direct-seed arbitration repairs stay in the exact no-regression
+collection, while generic/profile exact-three sources retain separate parity
+and runtime proof.
