@@ -267,3 +267,12 @@ and selector-checkpoint measurements remain reviewed chronology. Exact
 5/8/16 widths and seven all-assertion runtimes, fail-closed neighboring forms,
 no count-specific fixture, and the final 332/373/56 split 28/28 boundary are
 independently watched.
+
+The AHB integration/public-sync review closes one current Chapter 16c catalog-
+versus-range candidate through the existing generalized `2..16` gate. Sixteen
+selector/task identifiers, public-sync suite snapshots, diagram locations,
+and pre-/post-repair task-ledger censuses remain immutable chronology. In
+particular, 332 indexed tests, the 295-file/2,037-test regression, 36 book
+chapters, and 844 task nodes are not promoted into current totals; their exact
+commits remain the durable producers while present-day gates validate the
+underlying parser, book boundary, and task-tree invariants.

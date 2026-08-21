@@ -1,7 +1,7 @@
 # Knowledge Map: `ial2-ahb`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **152** facts · **807** uniquely owned question entries.
+> **153** facts · **812** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -15,6 +15,8 @@
 - q="are matching AHB aggregate byte-lane SEQ .ahb aliases shipped?" · facts=[ial2-ahb-aggregate-byte-lane-seq-profile-alias-behavior](../../docs/knowledge/ial2-ahb-aggregate-byte-lane-seq-profile-alias-behavior.md)
 - q="are paired AHB BUSY .ppif and .ahb separate generators?" · facts=[ial2-ahb-paired-busy-composition-profile-alias-behavior](../../docs/knowledge/ial2-ahb-paired-busy-composition-profile-alias-behavior.md)
 - q="are paired AHB selector assertions enabled?" · facts=[ial2-ahb-requester-single-busy-event-cardinality-repair](../../docs/knowledge/ial2-ahb-requester-single-busy-event-cardinality-repair.md)
+- q="are the 332 focused tests and 295-file ISF regression current totals?" · facts=[ial2-ahb-integration-public-sync-claim-evidence](../../docs/knowledge/ial2-ahb-integration-public-sync-claim-evidence.md)
+- q="are the 36 mdBook chapters and 844 task-tree nodes current totals?" · facts=[ial2-ahb-integration-public-sync-claim-evidence](../../docs/knowledge/ial2-ahb-integration-public-sync-claim-evidence.md)
 - q="are the two-subordinate paired AHB BUSY .ppif and .ahb separate generators?" · facts=[ial2-ahb-two-subordinate-paired-busy-composition-profile-alias-behavior](../../docs/knowledge/ial2-ahb-two-subordinate-paired-busy-composition-profile-alias-behavior.md)
 - q="can MCP semantically introspect the exact-four AHB requester alias?" · facts=[ial2-ahb-requester-exact-four-busy-event-profile-alias-behavior](../../docs/knowledge/ial2-ahb-requester-exact-four-busy-event-profile-alias-behavior.md)
 - q="can MCP semantically introspect the exact-three AHB requester alias?" · facts=[ial2-ahb-requester-exact-three-busy-event-profile-alias-behavior](../../docs/knowledge/ial2-ahb-requester-exact-three-busy-event-profile-alias-behavior.md)
@@ -194,6 +196,7 @@
 - q="does two-window exact-three paired BUSY support semantic JSON and MCP?" · facts=[ial2-ahb-two-subordinate-exact-three-paired-busy-composition-behavior](../../docs/knowledge/ial2-ahb-two-subordinate-exact-three-paired-busy-composition-behavior.md)
 - q="how are AHB child counts three and four verified?" · facts=[ial2-ahb-foundational-claim-evidence](../../docs/knowledge/ial2-ahb-foundational-claim-evidence.md)
 - q="how are AHB phase-pipeline and direct-seed repairs regression tested?" · facts=[ial2-ahb-semantic-exact-two-three-claim-evidence](../../docs/knowledge/ial2-ahb-semantic-exact-two-three-claim-evidence.md)
+- q="how are Chapter 14i AHB integration and public synchronization claims verified?" · facts=[ial2-ahb-integration-public-sync-claim-evidence](../../docs/knowledge/ial2-ahb-integration-public-sync-claim-evidence.md)
 - q="how are Chapter 14i arbitration and exact-three paired claims verified?" · facts=[ial2-ahb-arbitration-exact-three-paired-claim-evidence](../../docs/knowledge/ial2-ahb-arbitration-exact-three-paired-claim-evidence.md)
 - q="how are Chapter 14i exact-four requester and paired claims verified?" · facts=[ial2-ahb-exact-four-requester-paired-claim-evidence](../../docs/knowledge/ial2-ahb-exact-four-requester-paired-claim-evidence.md)
 - q="how are Chapter 14i semantic-repair and exact-two/three claims verified?" · facts=[ial2-ahb-semantic-exact-two-three-claim-evidence](../../docs/knowledge/ial2-ahb-semantic-exact-two-three-claim-evidence.md)
@@ -241,6 +244,7 @@
 - q="how is the AHB burst context held across an HTRANS=BUSY beat?" · facts=[ial2-ahb-subordinate-busy-park-behavior](../../docs/knowledge/ial2-ahb-subordinate-busy-park-behavior.md)
 - q="how is the AHB byte-lane .ahb alias support-accounted?" · facts=[ial2-ahb-byte-lane-profile-alias-behavior](../../docs/knowledge/ial2-ahb-byte-lane-profile-alias-behavior.md)
 - q="how is the AHB subordinate .ahb alias support-accounted?" · facts=[ial2-ahb-subordinate-profile-alias-behavior](../../docs/knowledge/ial2-ahb-subordinate-profile-alias-behavior.md)
+- q="how is the Chapter 16c AHB exact-one-through-four versus 5 through 16 boundary verified?" · facts=[ial2-ahb-integration-public-sync-claim-evidence](../../docs/knowledge/ial2-ahb-integration-public-sync-claim-evidence.md)
 - q="how is the canonical AHB busy-beats range 2 through 16 verified?" · facts=[ial2-ahb-two-window-exact-four-generalized-range-claim-evidence](../../docs/knowledge/ial2-ahb-two-window-exact-four-generalized-range-claim-evidence.md)
 - q="how is the minimum exact-four BUSY counter width verified?" · facts=[ial2-ahb-exact-four-requester-paired-claim-evidence](../../docs/knowledge/ial2-ahb-exact-four-requester-paired-claim-evidence.md)
 - q="how is the two-window exact-four runtime tuple verified?" · facts=[ial2-ahb-two-window-exact-four-generalized-range-claim-evidence](../../docs/knowledge/ial2-ahb-two-window-exact-four-generalized-range-claim-evidence.md)
@@ -714,6 +718,7 @@
 - q="which AHB wrap and BUSY numeric lines are current behavior?" · facts=[ial2-ahb-semantic-exact-two-three-claim-evidence](../../docs/knowledge/ial2-ahb-semantic-exact-two-three-claim-evidence.md)
 - q="which BUSY counts were simulated in the generalized range audit?" · facts=[ial2-ahb-requester-generalized-busy-count-range-readiness-audit](../../docs/knowledge/ial2-ahb-requester-generalized-busy-count-range-readiness-audit.md)
 - q="which BUSY-count tests now use repository-local temporary storage?" · facts=[ial2-ahb-requester-generalized-busy-count-range-behavior](../../docs/knowledge/ial2-ahb-requester-generalized-busy-count-range-behavior.md)
+- q="which Chapter 14i integration measurements are historical?" · facts=[ial2-ahb-integration-public-sync-claim-evidence](../../docs/knowledge/ial2-ahb-integration-public-sync-claim-evidence.md)
 - q="which HBURST modes are selected for first AHB subordinate SEQ support?" · facts=[ial2-ahb-hburst-length-wrap-seq-contract-selection](../../docs/knowledge/ial2-ahb-hburst-length-wrap-seq-contract-selection.md)
 - q="which IAL2 aliases remain unsupported after .ahb shipped?" · facts=[ial2-ahb-profile-alias-behavior](../../docs/knowledge/ial2-ahb-profile-alias-behavior.md)
 - q="which IAL2 profile-alias suffixes are currently supported?" · facts=[ial2-ahb-profile-alias-behavior](../../docs/knowledge/ial2-ahb-profile-alias-behavior.md), [ial2-post-apb-profile-alias-public-surface-sync](../../docs/knowledge/ial2-post-apb-profile-alias-public-surface-sync.md)
@@ -1199,6 +1204,13 @@ _AHB HBURST length/wrap SEQ readiness selects endpoint contract_
 
 - **date:** 2026-06-30 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-ahb-hburst-length-wrap-seq-readiness-audit.md`](../../docs/knowledge/ial2-ahb-hburst-length-wrap-seq-readiness-audit.md)
+
+### ial2-ahb-integration-public-sync-claim-evidence
+
+_AHB integration and public-sync claims separate current book truth from immutable checkpoints_
+
+- **date:** 2026-08-21 · **status:** current
+- **source and verification:** [`docs/knowledge/ial2-ahb-integration-public-sync-claim-evidence.md`](../../docs/knowledge/ial2-ahb-integration-public-sync-claim-evidence.md)
 
 ### ial2-ahb-interconnect-decode-behavior
 
