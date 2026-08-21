@@ -249,3 +249,12 @@ support checkpoints remain reviewed chronology. Interconnect, generated
 endpoint, and direct-seed arbitration repairs stay in the exact no-regression
 collection, while generic/profile exact-three sources retain separate parity
 and runtime proof.
+
+The AHB exact-four requester/paired review closes five current numeric
+candidates through distinct requester width/runtime, one-window paired
+artifact/runtime, and paired-alias parity evidence families. Thirty disposable
+probe, readiness, contract, projection, checkpoint, and removed-workspace
+measurements remain reviewed chronology. The original exact-four `2..4`
+selection is explicitly time-local; current normalization owns `2..16`, and
+the selected two-window runtime after the range boundary remains separately
+owned.
