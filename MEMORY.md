@@ -7,8 +7,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3`
-- next_action: after the clean `.17.2.6.3.3` implementation commit, activate
-  `.17.2.6.3.4` for the OSVVM-qualified backend-emission ladder.
+- next_action: implement `.17.2.6.3.4` OSVVM-qualified backend-emission ladder
+  and exact structural artifact oracles through the sealed foundation.
 - in_flight_uncommitted: none.
 - in_flight_background: none
 - blockers: none.

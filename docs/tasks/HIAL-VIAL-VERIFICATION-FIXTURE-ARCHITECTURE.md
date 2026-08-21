@@ -596,7 +596,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement the selected canonical backend-emission generator and exact structural artifact oracles.`
   Acceptance: `Implement only after .17.2.6.1 and .17.2.6.2 commit cleanly; decompose per shared foundation and backend when required. Consume only caller-sealed proved execution graphs and canonical backend inputs; prove every selected profile/level's exact negotiation outcome, artifact inventory/order/relative paths, source identities and complete map closure, generated identifiers, structural checks, byte-equal reruns, earliest-cap rejection with no partial graph, defensive reports, repository-local staging and exact cleanup. Execute no external runtime and publish no support, performance, or capacity claim.`
-  Verification: `Clean repair-family predecessor 2d7b3b27e permits implementation activation. The generator is decomposed into one caller-sealed shared construction/evaluation/staging foundation, four ordered profile ladders, and final exact family qualification. Foundation .1, portable-SystemVerilog ladder .2, and portable-VHDL ladder .3 are complete; OSVVM .4 is the next proposed activation after the clean .3 commit. The two completed profile children own exactly ten selected shapes through structural qualification only; no external runtime or product capability/support/performance/capacity claim is added.`
+  Verification: `Clean repair-family predecessor 2d7b3b27e permits implementation activation. The generator is decomposed into one caller-sealed shared construction/evaluation/staging foundation, four ordered profile ladders, and final exact family qualification. Foundation .1, portable-SystemVerilog ladder .2, and portable-VHDL ladder .3 are complete; OSVVM .4 is active. The two completed profile children own exactly ten selected shapes through structural qualification only; the activation adds no OSVVM profile shape, emitter invocation, external runtime, or product capability/support/performance/capacity claim.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3: activate backend-emission generator`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.6`
 
@@ -622,11 +622,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.3: qualify portable VHDL emission ladder`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the OSVVM-qualified backend-emission ladder and exact structural oracles.`
   Acceptance: `Own selected T=21/128/512/29,508 OSVVM routes and adjacent portable-foundation T=29,509 rejection through the shared foundation and one callback-scoped exact provider evaluation; prove six byte-identical portable sources plus one fixed adapter, sixteen ordered artifacts, translated complete maps, structural checks, provider/source identity, byte-equal reruns, earliest-cap atomicity, defensive evidence, and exact cleanup without external runtime or product claims.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Clean portable-VHDL implementation commit 7199de481 closes the preceding profile ladder and permits only OSVVM .4 to activate. This continuity slice changes no generator, emitter, validator, provider materialization, artifact, runtime, API, capability/support, performance, capacity, or product behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.4: activate OSVVM emission ladder`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.5`
   Status: `proposed`
@@ -917,12 +917,17 @@ support authority and qualifies the repaired family. Active generator
 `.17.2.6.3` is decomposed into shared foundation `.1`, portable-SV `.2`,
 portable-VHDL `.3`, OSVVM `.4`, native-UVM `.5`, and family closure `.6`;
 foundation `.1`, portable-SV `.2`, and portable-VHDL `.3` are complete;
-OSVVM `.4` is next for separate activation after the clean `.3` commit.
-Runtime/balanced
+OSVVM `.4` alone is active. Runtime/balanced
 integration `.17.2.7`, and
 measurement `.17.3` remain later.
 
 ## Decisions
+
+- `2026-08-21`: Activate OSVVM ladder `.17.2.6.3.4` after clean portable-VHDL
+  implementation commit `7199de481`. Keep native UVM and family closure
+  proposed and change no generator, emitter, validator, provider, artifact,
+  runtime, API, capability/support, performance, or capacity behavior in the
+  activation slice.
 
 - `2026-08-21`: Complete portable-VHDL ladder `.17.2.6.3.3` with a
   caller-sealed profile module behind the shared foundation. Own exactly all
@@ -1398,6 +1403,7 @@ measurement `.17.3` remain later.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-21` | `.17.2.6.3.4` OSVVM ladder activation | clean portable-VHDL predecessor `7199de481`; decision `0075`; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.6.3.4` alone is active to own T=21/128/512/29,508 acceptance plus adjacent portable-foundation T=29,509 rejection through the sealed foundation and callback-scoped exact provider evaluation. Native UVM and family closure remain proposed. No implementation or product behavior changes. |
 | `2026-08-21` | `.17.2.6.3.3` portable-VHDL ladder implementation | RED zero-ownership/public-rejection witness; decision `0075`; caller-sealed shared construction and profile evaluator; ordinary Parser/PlanBuilder routes; exact artifact/source/map/check/identifier/manifest/diagnostic oracles; independent byte-equal reruns; defensive mutation; success/rejection/failure cleanup; syntax; guarded workload/authority/foundation/direct-emitter/portable-SV/portable-VHDL suite; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; exactly five portable-VHDL shapes join the five portable-SV shapes. T=21/128/512/29,508 emit 17 artifacts/6 sources at 116,560/174,929/386,897/16,776,739 bytes with 59/166/550/29,546 complete maps and twenty passing checks; T=29,509 rejects atomically at `/artifacts`. Reports and staging are defensive and residue-free. No external runtime, public API, capability/support, performance, capacity, or product claim changes; `.3.4` remains proposed for clean activation next. |
 | `2026-08-21` | `.17.2.6.3.3` portable-VHDL ladder activation | clean portable-SystemVerilog predecessor `5d309b0eb`; decision `0075`; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.6.3.3` alone is active to own T=21/128/512/29,508 acceptance plus adjacent T=29,509 earliest-cap rejection through the sealed foundation. OSVVM, native UVM, and family closure remain proposed. No implementation or product behavior changes. |
 | `2026-08-21` | `.17.2.6.3.2` portable-SystemVerilog ladder implementation | RED zero-ownership/public-rejection witness; decision `0075`; caller-sealed shared construction and profile evaluator; ordinary Parser/PlanBuilder routes; exact artifact/source/map/identifier/manifest/diagnostic oracles; independent byte-equal reruns; defensive mutation; success/rejection/failure cleanup; syntax; focused workload/authority/foundation/direct-emitter/profile suite; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; exactly five portable-SV shapes are owned. T=21/1,024/4,096/6,319 emit 8 artifacts/3 sources at 164,093/2,803,325/10,910,333/16,776,830 bytes with 54/1,057/4,129/6,352 complete maps; T=6,320 rejects atomically at `/artifacts`. Reports and staging are defensive and residue-free. No external runtime, public API, capability/support, performance, capacity, or product claim changes; `.3.3` remains proposed for clean activation next. |
@@ -5028,3 +5034,32 @@ raising an enforcement ceiling.
   All 22 live-document surfaces, one exact 0-line/+955-byte book authority,
   and zero ceiling increases pass. Diff, staged acceptance, the final doctrine
   gate, and exact artifact cleanup complete the workflow.
+
+## Acceptance Checklist (enforced) — `.17.2.6.3.4` OSVVM activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Implement the OSVVM-qualified
+  backend-emission ladder' --oneline --
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md` identifies
+  decomposition commit `6b08d8146`, where `.17.2.6.3.4` remained proposed
+  behind the portable-VHDL profile ladder. Clean commit `7199de481` now
+  completes that predecessor, so OSVVM requires its own active owner before
+  RED controls or implementation.
+- [x] **ADDRESSED (verified)** — `.17.2.6.3.4` alone is active for exact OSVVM
+  T=21/128/512/29,508 acceptance and adjacent portable-foundation T=29,509
+  rejection through the sealed foundation and one callback-scoped exact
+  provider evaluation. Native UVM and family closure remain proposed. Task
+  index, bounded Memory, Knowledge card, and mdBook name the same frontier,
+  while no code, test, config, generator, emitter, validator, provider,
+  artifact, runtime, API, capability/support, performance, capacity, or
+  product behavior changes.
+- [x] **NO REGRESSION** — task-tree integrity reports three trees/962 nodes;
+  relative paths pass at `Files=1, Tests=2`; Knowledge Map parity retains
+  1,150 facts/6,056 questions/6,223 occurrences/133 shards. Claim inventory
+  and dispositions close all 1,426 candidates and 2,072 current/615 original
+  constants with zero open owners. All 53 mdBook chapters test, and the
+  inspected repository-local render contains 88 files/18,931,234 bytes and
+  the exact active zero-owned OSVVM frontier before removal. All 22 live-
+  document surfaces, one exact 0-line/+63-byte book authority, and zero
+  ceiling increases pass. Diff, staged acceptance, the final doctrine gate,
+  generated-book removal, and zero scale-stage children complete the
+  activation workflow.

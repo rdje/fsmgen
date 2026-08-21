@@ -83,8 +83,8 @@ PlanBuilder routes twice, freezes all seventeen artifact paths and six source
 identities, validates 59/166/550/29,546 complete maps and all twenty static
 checks, and proves atomic rejection with no partial graph. The selected ladder
 observes a stable 37-byte generated-identifier maximum below the separate
-255-byte limit. OSVVM `.4` is the next proposed activation after the clean
-portable-VHDL commit.
+255-byte limit. OSVVM `.4` is active only as the clean implementation owner and
+owns no additional profile shape yet.
 No support, performance, or capacity claim is made.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
