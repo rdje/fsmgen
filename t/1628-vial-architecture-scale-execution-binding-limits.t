@@ -17,6 +17,7 @@ use FSM::VIAL::ArchitectureScaleWorkload;
 my $class = 'FSM::VIAL::ArchitectureScaleExecutionGraph';
 my $json = JSON::PP->new->canonical(1)->utf8(1);
 my $envelope = 1_114_112;
+my $source_cap = 1_048_576;
 my $manifest_cap = 16_777_216;
 my $repair_owner = 'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4';
 
@@ -51,6 +52,9 @@ subtest 'no binding level above the gate fits the bounded construction envelope'
             "$name generates its exact VIAL byte count");
         cmp_ok(bytes::length($hial), '>', $envelope,
             "$name direct-IAL1 source exceeds the bounded construction envelope");
+        cmp_ok(bytes::length($vial), '>', $source_cap,
+            'the 65,536-binding VIAL source also exceeds the product parser cap')
+            if $name eq 'limit_v1';
         is(scalar(() = $hial =~ /\(event bridge_event_[0-9]{8} /g),
             $case->{bindings} - 6,
             "$name authors one genuine event record per binding above the fixed six");
