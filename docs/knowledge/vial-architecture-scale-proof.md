@@ -21,9 +21,11 @@ evidence: >-
   docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md;
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/VIAL/ArchitectureScaleWorkload.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission.pm;
+  perl/FSM/VIAL/ArchitectureScaleBackendEmission/PortableVHDL.pm;
   perl/FSM/Support/VIALVHDLEmissionContract.pm; perl/FSM/Support/VIALNativeUVMEmissionContract.pm;
   t/1644-vial-backend-emission-authority-alignment.t;
   t/1645-vial-architecture-scale-backend-emission-foundation.t;
+  t/1647-vial-architecture-scale-backend-emission-portable-vhdl.t;
   docs/knowledge/vial-execution-scale-reachability.md;
   docs/knowledge/vial-semantic-scale-catalog.md;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
@@ -74,9 +76,15 @@ freezes the ordered eight-artifact/three-source identities and
 54/1,057/4,129/6,352 complete maps, validates exact operation-ID and manifest
 closure, and rejects the first 16-MiB excess with no partial graph. Reports
 remain defensive and content-addressed; success, expected rejection, and
-consumer failure leave no repository-local scale-stage residue. Portable VHDL
-`.3` is now active only as the clean implementation owner and owns no profile
-shape yet.
+consumer failure leave no repository-local scale-stage residue. Completed
+portable-VHDL ladder `.3` owns exactly T=21/128/512/29,508 acceptance and
+T=29,509 rejection. Its caller-sealed child emits the ordinary Parser/
+PlanBuilder routes twice, freezes all seventeen artifact paths and six source
+identities, validates 59/166/550/29,546 complete maps and all twenty static
+checks, and proves atomic rejection with no partial graph. The selected ladder
+observes a stable 37-byte generated-identifier maximum below the separate
+255-byte limit. OSVVM `.4` is the next proposed activation after the clean
+portable-VHDL commit.
 No support, performance, or capacity claim is made.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],

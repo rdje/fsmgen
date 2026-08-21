@@ -13,6 +13,7 @@ no warnings 'experimental::signatures';
 
 use FSM::VIAL::ArchitectureScaleWorkload;
 use FSM::VIAL::ArchitectureScaleBackendEmission::PortableSV;
+use FSM::VIAL::ArchitectureScaleBackendEmission::PortableVHDL;
 use FSM::VIAL::Parser;
 use FSM::VIAL::PlanBuilder;
 
@@ -38,6 +39,9 @@ my $CLAIMS_SCHEMA =
 my $PORTABLE_SV_CLASS =
     'FSM::VIAL::ArchitectureScaleBackendEmission::PortableSV';
 my $PORTABLE_SV_PROFILE = $PORTABLE_SV_CLASS->profile;
+my $PORTABLE_VHDL_CLASS =
+    'FSM::VIAL::ArchitectureScaleBackendEmission::PortableVHDL';
+my $PORTABLE_VHDL_PROFILE = $PORTABLE_VHDL_CLASS->profile;
 
 my @PROFILES = qw(
     sv_portable_verilator
@@ -54,6 +58,7 @@ my %LEVEL = map { $_ => 1 } @LEVELS;
 
 my %OWNED_LEVELS = map { $_ => [] } @PROFILES;
 $OWNED_LEVELS{$PORTABLE_SV_PROFILE} = $PORTABLE_SV_CLASS->owned_levels;
+$OWNED_LEVELS{$PORTABLE_VHDL_PROFILE} = $PORTABLE_VHDL_CLASS->owned_levels;
 
 my @CONSTRUCT_KEYS = qw(
     backend_profile level reference_hial_text reference_vial_text
@@ -234,8 +239,12 @@ sub _validate_foundation_candidate($class, @args) {
 }
 
 sub _evaluate_validated($construction, $foundation_only = 0) {
-    my $first = _canonical_route_from_construction($construction);
-    my $second = _canonical_route_from_construction($construction);
+    my $first = _canonical_route_from_construction(
+        $construction, $foundation_only,
+    );
+    my $second = _canonical_route_from_construction(
+        $construction, $foundation_only,
+    );
     confess "canonical backend-emission foundation route was rejected\n"
         unless $first->{ok} && $second->{ok};
 
@@ -287,6 +296,18 @@ sub _evaluate_validated($construction, $foundation_only = 0) {
                 $construction->{specification}{level},
             )) {
         return _evaluate_portable_sv(
+            $construction, $first, $second, $first_projection,
+            $stage_identities, $rerun_identity, \@diagnostics,
+        );
+    }
+    if (!$foundation_only
+            && $construction->{specification}{backend_profile}
+            eq $PORTABLE_VHDL_PROFILE
+            && _owns(
+                $construction->{specification}{backend_profile},
+                $construction->{specification}{level},
+            )) {
+        return _evaluate_portable_vhdl(
             $construction, $first, $second, $first_projection,
             $stage_identities, $rerun_identity, \@diagnostics,
         );
@@ -370,8 +391,33 @@ sub _evaluate_portable_sv(
     $construction, $first_route, $second_route, $first_projection,
     $stage_identities, $rerun_identity, $route_diagnostics,
 ) {
+    return _evaluate_owned_profile(
+        $construction, $first_route, $second_route, $first_projection,
+        $stage_identities, $rerun_identity, $route_diagnostics,
+        $PORTABLE_SV_CLASS, $PORTABLE_SV_PROFILE,
+        'portable_sv', 'portable_sv_artifact_graph_v1',
+    );
+}
+
+sub _evaluate_portable_vhdl(
+    $construction, $first_route, $second_route, $first_projection,
+    $stage_identities, $rerun_identity, $route_diagnostics,
+) {
+    return _evaluate_owned_profile(
+        $construction, $first_route, $second_route, $first_projection,
+        $stage_identities, $rerun_identity, $route_diagnostics,
+        $PORTABLE_VHDL_CLASS, $PORTABLE_VHDL_PROFILE,
+        'portable_vhdl', 'portable_vhdl_artifact_graph_v1',
+    );
+}
+
+sub _evaluate_owned_profile(
+    $construction, $first_route, $second_route, $first_projection,
+    $stage_identities, $rerun_identity, $route_diagnostics,
+    $profile_class, $profile, $oracle_slot, $oracle_name,
+) {
     my $level = $construction->{specification}{level};
-    my $profile_evaluation = $PORTABLE_SV_CLASS->evaluate({
+    my $profile_evaluation = $profile_class->evaluate({
         construction => $construction,
         first_route => $first_route,
         second_route => $second_route,
@@ -392,7 +438,7 @@ sub _evaluate_portable_sv(
         family => $FAMILY,
         level => $level,
         primary_axis => $PRIMARY_AXIS,
-        backend_profile => $PORTABLE_SV_PROFILE,
+        backend_profile => $profile,
         requested_counts =>
             _clone($construction->{specification}{requested_counts}),
         observed_outcome => $observed_outcome,
@@ -427,8 +473,8 @@ sub _evaluate_portable_sv(
         artifact_oracle => {
             schema => $ORACLE_SCHEMA,
             schema_version => 1,
-            oracle => 'portable_sv_artifact_graph_v1',
-            portable_sv => $profile_evaluation->{oracle},
+            oracle => $oracle_name,
+            portable_sv => undef,
             portable_vhdl => undef,
             osvvm => undef,
             native_uvm => undef,
@@ -450,6 +496,7 @@ sub _evaluate_portable_sv(
             _clone($construction->{specification}{explicit_nonclaims}),
         diagnostics => \@diagnostics,
     };
+    $report->{artifact_oracle}{$oracle_slot} = $profile_evaluation->{oracle};
     my $identity_projection = _clone($report);
     delete $identity_projection->{evaluation_identity};
     $report->{evaluation_identity} = 'backend-emission-evaluation/'
@@ -457,12 +504,12 @@ sub _evaluate_portable_sv(
     return _clone($report);
 }
 
-sub _canonical_route_from_construction($construction) {
+sub _canonical_route_from_construction($construction, $foundation_only = 0) {
     my $hial = _role_input($construction, 'hial_source');
     my $vial = _role_input($construction, 'vial_source');
-    my ($vial_source_name, $vial_text) = _canonical_vial_source(
-        $construction, $vial,
-    );
+    my ($vial_source_name, $vial_text) = $foundation_only
+        ? ($vial->{relative_path}, $vial->{content})
+        : _canonical_vial_source($construction, $vial);
     my $semantic_ir = FSM::VIAL::Parser->parse_source({
         text => $vial_text,
         source_name => $vial_source_name,
@@ -494,13 +541,18 @@ sub _canonical_route_from_construction($construction) {
 
 sub _canonical_vial_source($construction, $vial) {
     my $spec = $construction->{specification};
-    return ($vial->{relative_path}, $vial->{content})
-        unless $spec->{backend_profile} eq $PORTABLE_SV_PROFILE;
-    return @{$PORTABLE_SV_CLASS->canonical_vial_source({
-        level => $spec->{level},
-        reference_relative_path => $vial->{relative_path},
-        reference_text => $vial->{content},
-    })};
+    for my $profile_class (
+        [$PORTABLE_SV_PROFILE, $PORTABLE_SV_CLASS],
+        [$PORTABLE_VHDL_PROFILE, $PORTABLE_VHDL_CLASS],
+    ) {
+        next unless $spec->{backend_profile} eq $profile_class->[0];
+        return @{$profile_class->[1]->canonical_vial_source({
+            level => $spec->{level},
+            reference_relative_path => $vial->{relative_path},
+            reference_text => $vial->{content},
+        })};
+    }
+    return ($vial->{relative_path}, $vial->{content});
 }
 
 sub _route_projection($route) {
@@ -548,6 +600,11 @@ sub _validate_evaluation_shape($evaluation) {
         $PORTABLE_SV_CLASS->oracle_keys,
         'portable-SystemVerilog artifact oracle',
     ) if defined $evaluation->{artifact_oracle}{portable_sv};
+    _confess_exact_keys(
+        $evaluation->{artifact_oracle}{portable_vhdl},
+        $PORTABLE_VHDL_CLASS->oracle_keys,
+        'portable-VHDL artifact oracle',
+    ) if defined $evaluation->{artifact_oracle}{portable_vhdl};
     _confess_exact_keys($evaluation->{claims}, \@CLAIM_KEYS,
         'backend-emission claims');
     confess "backend-emission evaluation diagnostics must be an array\n"

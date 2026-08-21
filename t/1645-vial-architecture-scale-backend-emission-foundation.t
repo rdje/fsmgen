@@ -59,9 +59,14 @@ sub validate_foundation_evaluation {
 }
 
 subtest 'foundation admits only shapes owned by completed child slices' => sub {
-    is_deeply($class->owned_shapes, [map {{
-        backend_profile => 'sv_portable_verilator', level => $_,
-    }} @levels], 'the completed portable-SV child owns exactly five shapes');
+    is_deeply($class->owned_shapes, [
+        map({{
+            backend_profile => 'sv_portable_verilator', level => $_,
+        }} @levels),
+        map({{
+            backend_profile => 'vhdl_portable_ghdl', level => $_,
+        }} @levels),
+    ], 'the two completed portable children own exactly ten shapes');
 
     my @accepted;
     for my $profile (@profiles) {
@@ -80,9 +85,10 @@ subtest 'foundation admits only shapes owned by completed child slices' => sub {
                 "$profile/$level names the zero-owned boundary") unless $ok;
         }
     }
-    is_deeply(\@accepted, [map {
-        "sv_portable_verilator/$_"
-    } @levels], 'only the five completed portable-SV shapes are admitted');
+    is_deeply(\@accepted, [
+        map({"sv_portable_verilator/$_"} @levels),
+        map({"vhdl_portable_ghdl/$_"} @levels),
+    ], 'only the ten completed portable profile shapes are admitted');
 
     my $unknown_profile = eval {
         $class->construct({
