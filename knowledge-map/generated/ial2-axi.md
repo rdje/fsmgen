@@ -1,7 +1,7 @@
 # Knowledge Map: `ial2-axi`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **217** facts · **1041** uniquely owned question entries.
+> **218** facts · **1048** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -210,8 +210,13 @@
 - q="how are WDATA WSTRB and WLAST represented in the first W driver?" · facts=[ial2-axi-w-driver-contract-selection](../../docs/knowledge/ial2-axi-w-driver-contract-selection.md)
 - q="how are independent AW and W completion orders joined?" · facts=[ial2-axi-aw-w-request-composition-first-slice](../../docs/knowledge/ial2-axi-aw-w-request-composition-first-slice.md)
 - q="how are misaligned AXI write commands rejected?" · facts=[ial2-axi-aw-w-request-composition-readiness-audit](../../docs/knowledge/ial2-axi-aw-w-request-composition-readiness-audit.md)
+- q="how are mixed dynamic static AXI queue counts verified?" · facts=[ial2-axi-manager-capacity-status-claim-evidence](../../docs/knowledge/ial2-axi-manager-capacity-status-claim-evidence.md)
 - q="how are single-beat and fixed-four AXI compositions distinguished?" · facts=[ial2-axi-example-claim-evidence](../../docs/knowledge/ial2-axi-example-claim-evidence.md)
+- q="how are the 140 AXI manager capacity status sources counted?" · facts=[ial2-axi-manager-capacity-status-claim-evidence](../../docs/knowledge/ial2-axi-manager-capacity-status-claim-evidence.md)
+- q="how are the 70-output and 42-rule AXI read-data counts derived?" · facts=[ial2-axi-manager-capacity-status-claim-evidence](../../docs/knowledge/ial2-axi-manager-capacity-status-claim-evidence.md)
 - q="how are the Chapter 16a AXI IAL2 example claims verified?" · facts=[ial2-axi-example-claim-evidence](../../docs/knowledge/ial2-axi-example-claim-evidence.md)
+- q="how are the Chapter 16aa AXI manager capacity status claims verified?" · facts=[ial2-axi-manager-capacity-status-claim-evidence](../../docs/knowledge/ial2-axi-manager-capacity-status-claim-evidence.md)
+- q="how are the concrete multi-group AXI queue counts verified?" · facts=[ial2-axi-manager-capacity-status-claim-evidence](../../docs/knowledge/ial2-axi-manager-capacity-status-claim-evidence.md)
 - q="how do I run the AXI manager capacity/status .ppif sample?" · facts=[ial2-axi-manager-capacity-status-ppif-first-slice](../../docs/knowledge/ial2-axi-manager-capacity-status-ppif-first-slice.md)
 - q="how do I use AXI manager id-families in PPIF?" · facts=[ial2-axi-manager-id-family-first-slice](../../docs/knowledge/ial2-axi-manager-id-family-first-slice.md)
 - q="how do I use axi w burst4 driver ppif?" · facts=[ial2-axi-w-burst4-driver-behavior](../../docs/knowledge/ial2-axi-w-burst4-driver-behavior.md)
@@ -959,6 +964,7 @@
 - q="when does the AXI write burst4 request done pulse occur?" · facts=[ial2-axi-write-burst4-request-composition-behavior](../../docs/knowledge/ial2-axi-write-burst4-request-composition-behavior.md)
 - q="when does the bounded AXI full-read composition arm R?" · facts=[ial2-axi-full-read-transaction-composition-readiness-audit](../../docs/knowledge/ial2-axi-full-read-transaction-composition-readiness-audit.md)
 - q="when should the bounded AXI full-write composition arm B?" · facts=[ial2-axi-full-write-transaction-composition-readiness-audit](../../docs/knowledge/ial2-axi-full-write-transaction-composition-readiness-audit.md)
+- q="where do the 44 46 72 and 142 AXI manager signal counts come from?" · facts=[ial2-axi-manager-capacity-status-claim-evidence](../../docs/knowledge/ial2-axi-manager-capacity-status-claim-evidence.md)
 - q="where is the AXI AW W valid ready bundle documented?" · facts=[ial2-axi-trimode-mdbook-coverage](../../docs/knowledge/ial2-axi-trimode-mdbook-coverage.md)
 - q="where is the AXI IAL2 mdBook chapter?" · facts=[ial2-axi-trimode-mdbook-coverage](../../docs/knowledge/ial2-axi-trimode-mdbook-coverage.md)
 - q="where is the AXI manager capacity status family documented?" · facts=[ial2-axi-manager-capacity-status-ppif-first-slice](../../docs/knowledge/ial2-axi-manager-capacity-status-ppif-first-slice.md)
@@ -1003,6 +1009,7 @@
 - q="why did multi-group scalar runtime validation wait for a later owner?" · facts=[ial2-axi-manager-post-multi-group-queue-head-last-beat-read-data-next-slice-selection](../../docs/knowledge/ial2-axi-manager-post-multi-group-queue-head-last-beat-read-data-next-slice-selection.md)
 - q="why did response demux need an IAL1 rule-pulse prerequisite?" · facts=[ial2-axi-manager-write-response-demux-behavior-readiness-audit](../../docs/knowledge/ial2-axi-manager-write-response-demux-behavior-readiness-audit.md)
 - q="why did the multi-group raw-ARLEN and runtime-validation variants need later owners?" · facts=[ial2-axi-manager-multi-group-queue-head-last-beat-read-data-readiness-audit](../../docs/knowledge/ial2-axi-manager-multi-group-queue-head-last-beat-read-data-readiness-audit.md)
+- q="why do depth-3 AXI read-data examples have 48 lanes and 12 assertions?" · facts=[ial2-axi-manager-capacity-status-claim-evidence](../../docs/knowledge/ial2-axi-manager-capacity-status-claim-evidence.md)
 - q="why does depth-3 queue-head need shared queue-state generalization?" · facts=[ial2-axi-manager-deeper-queue-head-groups-readiness-audit](../../docs/knowledge/ial2-axi-manager-deeper-queue-head-groups-readiness-audit.md)
 - q="why does response demux need a public contract first?" · facts=[ial2-axi-manager-response-demux-readiness-audit](../../docs/knowledge/ial2-axi-manager-response-demux-readiness-audit.md)
 - q="why is AXI AW W composition selected after the B acceptor?" · facts=[ial2-axi-manager-post-b-next-increment](../../docs/knowledge/ial2-axi-manager-post-b-next-increment.md)
@@ -1293,6 +1300,13 @@ _AXI burst residue is aligned for the covered generated multi-beat output bank_
 
 - **date:** 2026-06-14 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-axi-manager-burst-residue-alignment-first-slice.md`](../../docs/knowledge/ial2-axi-manager-burst-residue-alignment-first-slice.md)
+
+### ial2-axi-manager-capacity-status-claim-evidence
+
+_AXI manager capacity/status claims derive through eight executable families_
+
+- **date:** 2026-08-21 · **status:** current
+- **source and verification:** [`docs/knowledge/ial2-axi-manager-capacity-status-claim-evidence.md`](../../docs/knowledge/ial2-axi-manager-capacity-status-claim-evidence.md)
 
 ### ial2-axi-manager-capacity-status-generator-first-slice
 

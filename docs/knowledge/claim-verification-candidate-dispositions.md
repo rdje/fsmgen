@@ -303,3 +303,12 @@ manager-family cross-reference is independently derived from tracked fixtures
 and support accounting. Four fragments containing the time-local `304/345`,
 `306/347`, and `308/349` shipment totals remain reviewed history, not current
 corpus measurements.
+
+The Chapter 16aa AXI manager review closes all 43 current candidates through
+eight executable evidence families. Independent source scans reproduce the
+140-source overlapping clause census; strict checks reproduce the six
+foundation signal totals; exact schedule reports derive concrete multi-group
+and mixed runtime-ID queue cardinalities; and scope/transaction/beat
+factorization derives scalar, 70-output, 32-lane, and 48-lane read-data
+results. The protocol group is consequently complete at `557/557` with no
+open candidates.

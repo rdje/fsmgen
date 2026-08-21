@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1141** facts · **5986** unique questions · **6153** answer occurrences · **132** topic shards.
+> **1142** facts · **5993** unique questions · **6160** answer occurrences · **132** topic shards.
 
 Query first:
 
@@ -66,7 +66,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `ial1-vhdl` | 3 | 19 | [`ial1-vhdl.md`](knowledge-map/generated/ial1-vhdl.md) |
 | `ial2-ahb` | 153 | 812 | [`ial2-ahb.md`](knowledge-map/generated/ial2-ahb.md) |
 | `ial2-apb` | 107 | 493 | [`ial2-apb.md`](knowledge-map/generated/ial2-apb.md) |
-| `ial2-axi` | 217 | 1041 | [`ial2-axi.md`](knowledge-map/generated/ial2-axi.md) |
+| `ial2-axi` | 218 | 1048 | [`ial2-axi.md`](knowledge-map/generated/ial2-axi.md) |
 | `ial2-broader` | 4 | 17 | [`ial2-broader.md`](knowledge-map/generated/ial2-broader.md) |
 | `ial2-common` | 1 | 4 | [`ial2-common.md`](knowledge-map/generated/ial2-common.md) |
 | `ial2-counted` | 3 | 15 | [`ial2-counted.md`](knowledge-map/generated/ial2-counted.md) |
