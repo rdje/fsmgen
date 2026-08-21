@@ -1,7 +1,7 @@
 # Knowledge Map: `ial2-ahb`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **158** facts · **837** uniquely owned question entries.
+> **159** facts · **843** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -207,6 +207,7 @@
 - q="how are Chapter 14i semantic-repair and exact-two/three claims verified?" · facts=[ial2-ahb-semantic-exact-two-three-claim-evidence](../../docs/knowledge/ial2-ahb-semantic-exact-two-three-claim-evidence.md)
 - q="how are Chapter 14i two-window exact-four and generalized BUSY claims verified?" · facts=[ial2-ahb-two-window-exact-four-generalized-range-claim-evidence](../../docs/knowledge/ial2-ahb-two-window-exact-four-generalized-range-claim-evidence.md)
 - q="how are Chapter 16c exact-four and generalized BUSY claims verified?" · facts=[ial2-ahb-exact-four-generalized-repair-claim-evidence](../../docs/knowledge/ial2-ahb-exact-four-generalized-repair-claim-evidence.md)
+- q="how are boundary-free generated AHB address phases verified?" · facts=[ial2-ahb-current-boundary-phase-claim-evidence](../../docs/knowledge/ial2-ahb-current-boundary-phase-claim-evidence.md)
 - q="how are current AHB support totals verified?" · facts=[ial2-ahb-two-window-exact-four-generalized-range-claim-evidence](../../docs/knowledge/ial2-ahb-two-window-exact-four-generalized-range-claim-evidence.md)
 - q="how are direct AHB seed and exact-count progression claims verified?" · facts=[ial2-ahb-direct-exact-count-claim-evidence](../../docs/knowledge/ial2-ahb-direct-exact-count-claim-evidence.md)
 - q="how are exact one through four AHB BUSY insertions verified?" · facts=[ial2-ahb-requester-claim-evidence](../../docs/knowledge/ial2-ahb-requester-claim-evidence.md)
@@ -216,6 +217,7 @@
 - q="how are paired AHB BUSY and subordinate claims verified?" · facts=[ial2-ahb-paired-subordinate-claim-evidence](../../docs/knowledge/ial2-ahb-paired-subordinate-claim-evidence.md)
 - q="how are the AHB INCR4 and WRAP4 starting-lane rules verified?" · facts=[ial2-ahb-guided-mode-claim-evidence](../../docs/knowledge/ial2-ahb-guided-mode-claim-evidence.md)
 - q="how are the aggregate BUSY-park .ahb aliases support-accounted?" · facts=[ial2-ahb-aggregate-busy-park-propagation-alias-contract-selection](../../docs/knowledge/ial2-ahb-aggregate-busy-park-propagation-alias-contract-selection.md), [ial2-ahb-aggregate-busy-park-propagation-profile-alias-behavior](../../docs/knowledge/ial2-ahb-aggregate-busy-park-propagation-profile-alias-behavior.md)
+- q="how are the final Chapter 16c AHB claims verified?" · facts=[ial2-ahb-current-boundary-phase-claim-evidence](../../docs/knowledge/ial2-ahb-current-boundary-phase-claim-evidence.md)
 - q="how are the first six Chapter 16c AHB claims verified?" · facts=[ial2-ahb-guided-mode-claim-evidence](../../docs/knowledge/ial2-ahb-guided-mode-claim-evidence.md)
 - q="how are the foundational Chapter 14i AHB claims verified?" · facts=[ial2-ahb-foundational-claim-evidence](../../docs/knowledge/ial2-ahb-foundational-claim-evidence.md)
 - q="how can generated HDL prove AHB BUSY insertion and parking end to end?" · facts=[ial2-ahb-paired-busy-composition-readiness-audit](../../docs/knowledge/ial2-ahb-paired-busy-composition-readiness-audit.md)
@@ -252,7 +254,9 @@
 - q="how is aggregate HBURST SEQ propagation reported?" · facts=[ial2-ahb-aggregate-hburst-seq-behavior](../../docs/knowledge/ial2-ahb-aggregate-hburst-seq-behavior.md)
 - q="how is aggregate byte-lane SEQ propagation reported?" · facts=[ial2-ahb-aggregate-byte-lane-seq-behavior](../../docs/knowledge/ial2-ahb-aggregate-byte-lane-seq-behavior.md)
 - q="how is aggregate byte-lane propagation reported?" · facts=[ial2-ahb-aggregate-byte-lane-propagation-behavior](../../docs/knowledge/ial2-ahb-aggregate-byte-lane-propagation-behavior.md)
+- q="how is direct AHB Q-named completion-edge retention verified?" · facts=[ial2-ahb-current-boundary-phase-claim-evidence](../../docs/knowledge/ial2-ahb-current-boundary-phase-claim-evidence.md)
 - q="how is exact-four paired AHB runtime verified?" · facts=[ial2-ahb-exact-four-requester-paired-claim-evidence](../../docs/knowledge/ial2-ahb-exact-four-requester-paired-claim-evidence.md)
+- q="how is exact-three AHB requester runtime verified?" · facts=[ial2-ahb-current-boundary-phase-claim-evidence](../../docs/knowledge/ial2-ahb-current-boundary-phase-claim-evidence.md)
 - q="how is one-word HBURST WRAP4 INCR4 behavior verified?" · facts=[ial2-ahb-foundational-claim-evidence](../../docs/knowledge/ial2-ahb-foundational-claim-evidence.md)
 - q="how is single qualified BUSY-event repair verified?" · facts=[ial2-ahb-exact-four-generalized-repair-claim-evidence](../../docs/knowledge/ial2-ahb-exact-four-generalized-repair-claim-evidence.md)
 - q="how is the 32-bit in-word AHB SEQ boundary verified?" · facts=[ial2-ahb-guided-mode-claim-evidence](../../docs/knowledge/ial2-ahb-guided-mode-claim-evidence.md)
@@ -263,6 +267,7 @@
 - q="how is the Chapter 16c AHB exact-one-through-four versus 5 through 16 boundary verified?" · facts=[ial2-ahb-integration-public-sync-claim-evidence](../../docs/knowledge/ial2-ahb-integration-public-sync-claim-evidence.md)
 - q="how is the Chapter 16c raw mode map verified?" · facts=[ial2-ahb-guided-mode-claim-evidence](../../docs/knowledge/ial2-ahb-guided-mode-claim-evidence.md)
 - q="how is the canonical AHB busy-beats range 2 through 16 verified?" · facts=[ial2-ahb-two-window-exact-four-generalized-range-claim-evidence](../../docs/knowledge/ial2-ahb-two-window-exact-four-generalized-range-claim-evidence.md)
+- q="how is the current AHB generalized BUSY residue verified?" · facts=[ial2-ahb-current-boundary-phase-claim-evidence](../../docs/knowledge/ial2-ahb-current-boundary-phase-claim-evidence.md)
 - q="how is the minimum exact-four BUSY counter width verified?" · facts=[ial2-ahb-exact-four-requester-paired-claim-evidence](../../docs/knowledge/ial2-ahb-exact-four-requester-paired-claim-evidence.md)
 - q="how is the two-window exact-four runtime tuple verified?" · facts=[ial2-ahb-two-window-exact-four-generalized-range-claim-evidence](../../docs/knowledge/ial2-ahb-two-window-exact-four-generalized-range-claim-evidence.md)
 - q="how is two-window exact-four AHB runtime verified?" · facts=[ial2-ahb-exact-four-generalized-repair-claim-evidence](../../docs/knowledge/ial2-ahb-exact-four-generalized-repair-claim-evidence.md)
@@ -344,6 +349,7 @@
 - q="is the AHB interconnect generated substrate ready?" · facts=[ial2-ahb-interconnect-decode-generated-substrate-audit](../../docs/knowledge/ial2-ahb-interconnect-decode-generated-substrate-audit.md)
 - q="is the AHB phase-recapture repair a general outstanding queue?" · facts=[ial2-ahb-pipelined-active-transfer-contract-selection](../../docs/knowledge/ial2-ahb-pipelined-active-transfer-contract-selection.md)
 - q="is the AHB requester WRAP progression defect runtime proven?" · facts=[ial2-ahb-requester-wrap-progression-runtime-audit](../../docs/knowledge/ial2-ahb-requester-wrap-progression-runtime-audit.md)
+- q="is the Chapter 16c claim-verification group complete?" · facts=[ial2-ahb-current-boundary-phase-claim-evidence](../../docs/knowledge/ial2-ahb-current-boundary-phase-claim-evidence.md)
 - q="is the direct AHB subordinate completion-edge defect repaired now?" · facts=[ial2-ahb-direct-subordinate-completion-capture-substrate-audit](../../docs/knowledge/ial2-ahb-direct-subordinate-completion-capture-substrate-audit.md)
 - q="is the exact-four AHB requester alias a separate generator?" · facts=[ial2-ahb-requester-exact-four-busy-event-profile-alias-behavior](../../docs/knowledge/ial2-ahb-requester-exact-four-busy-event-profile-alias-behavior.md)
 - q="is the exact-three AHB requester alias a separate generator?" · facts=[ial2-ahb-requester-exact-three-busy-event-profile-alias-behavior](../../docs/knowledge/ial2-ahb-requester-exact-three-busy-event-profile-alias-behavior.md)
@@ -1068,6 +1074,13 @@ _AHB mdBook coverage documents bounded PPIF, .ahb alias, interconnect, and direc
 
 - **date:** 2026-06-30 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-ahb-current-boundary-mdbook-coverage.md`](../../docs/knowledge/ial2-ahb-current-boundary-mdbook-coverage.md)
+
+### ial2-ahb-current-boundary-phase-claim-evidence
+
+_AHB current-boundary and phase-pipeline claims close the Chapter 16c review_
+
+- **date:** 2026-08-21 · **status:** current
+- **source and verification:** [`docs/knowledge/ial2-ahb-current-boundary-phase-claim-evidence.md`](../../docs/knowledge/ial2-ahb-current-boundary-phase-claim-evidence.md)
 
 ### ial2-ahb-current-surface-alias-truthfulness-repair
 
