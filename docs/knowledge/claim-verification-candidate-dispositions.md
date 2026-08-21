@@ -312,3 +312,12 @@ and mixed runtime-ID queue cardinalities; and scope/transaction/beat
 factorization derives scalar, 70-output, 32-lane, and 48-lane read-data
 results. The protocol group is consequently complete at `557/557` with no
 open candidates.
+
+The first Chapter 16c AHB review closes six current guided-mode and endpoint
+candidates through four executable evidence families. Separate oracles retain
+the composite raw/full-control boundary, all four little-endian byte-lane bit
+ranges, byte/halfword `SEQ` inside one 32-bit word, and four-beat byte-only
+`INCR4`/`WRAP4`. Exact-one clause absence, one-hot paired ownership,
+completion-edge phase retention, generalized `2..16` counts, lane-order and
+crossing controls, non-lane0 `INCR4`, and lane-3-to-lane-0 `WRAP4` keep the
+current claims falsifiable.

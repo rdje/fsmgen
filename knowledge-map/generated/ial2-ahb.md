@@ -1,7 +1,7 @@
 # Knowledge Map: `ial2-ahb`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **153** facts · **812** uniquely owned question entries.
+> **154** facts · **817** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -195,6 +195,7 @@
 - q="does two-window exact-three BUSY work through normalized semantic JSON and MCP?" · facts=[ial2-ahb-two-subordinate-exact-three-paired-busy-composition-readiness-audit](../../docs/knowledge/ial2-ahb-two-subordinate-exact-three-paired-busy-composition-readiness-audit.md)
 - q="does two-window exact-three paired BUSY support semantic JSON and MCP?" · facts=[ial2-ahb-two-subordinate-exact-three-paired-busy-composition-behavior](../../docs/knowledge/ial2-ahb-two-subordinate-exact-three-paired-busy-composition-behavior.md)
 - q="how are AHB child counts three and four verified?" · facts=[ial2-ahb-foundational-claim-evidence](../../docs/knowledge/ial2-ahb-foundational-claim-evidence.md)
+- q="how are AHB little-endian byte lane bit ranges verified?" · facts=[ial2-ahb-guided-mode-claim-evidence](../../docs/knowledge/ial2-ahb-guided-mode-claim-evidence.md)
 - q="how are AHB phase-pipeline and direct-seed repairs regression tested?" · facts=[ial2-ahb-semantic-exact-two-three-claim-evidence](../../docs/knowledge/ial2-ahb-semantic-exact-two-three-claim-evidence.md)
 - q="how are Chapter 14i AHB integration and public synchronization claims verified?" · facts=[ial2-ahb-integration-public-sync-claim-evidence](../../docs/knowledge/ial2-ahb-integration-public-sync-claim-evidence.md)
 - q="how are Chapter 14i arbitration and exact-three paired claims verified?" · facts=[ial2-ahb-arbitration-exact-three-paired-claim-evidence](../../docs/knowledge/ial2-ahb-arbitration-exact-three-paired-claim-evidence.md)
@@ -204,7 +205,9 @@
 - q="how are current AHB support totals verified?" · facts=[ial2-ahb-two-window-exact-four-generalized-range-claim-evidence](../../docs/knowledge/ial2-ahb-two-window-exact-four-generalized-range-claim-evidence.md)
 - q="how are exact-one two and three BUSY runtimes separated?" · facts=[ial2-ahb-semantic-exact-two-three-claim-evidence](../../docs/knowledge/ial2-ahb-semantic-exact-two-three-claim-evidence.md)
 - q="how are one-window exact-three paired artifacts verified?" · facts=[ial2-ahb-arbitration-exact-three-paired-claim-evidence](../../docs/knowledge/ial2-ahb-arbitration-exact-three-paired-claim-evidence.md)
+- q="how are the AHB INCR4 and WRAP4 starting-lane rules verified?" · facts=[ial2-ahb-guided-mode-claim-evidence](../../docs/knowledge/ial2-ahb-guided-mode-claim-evidence.md)
 - q="how are the aggregate BUSY-park .ahb aliases support-accounted?" · facts=[ial2-ahb-aggregate-busy-park-propagation-alias-contract-selection](../../docs/knowledge/ial2-ahb-aggregate-busy-park-propagation-alias-contract-selection.md), [ial2-ahb-aggregate-busy-park-propagation-profile-alias-behavior](../../docs/knowledge/ial2-ahb-aggregate-busy-park-propagation-profile-alias-behavior.md)
+- q="how are the first six Chapter 16c AHB claims verified?" · facts=[ial2-ahb-guided-mode-claim-evidence](../../docs/knowledge/ial2-ahb-guided-mode-claim-evidence.md)
 - q="how are the foundational Chapter 14i AHB claims verified?" · facts=[ial2-ahb-foundational-claim-evidence](../../docs/knowledge/ial2-ahb-foundational-claim-evidence.md)
 - q="how can generated HDL prove AHB BUSY insertion and parking end to end?" · facts=[ial2-ahb-paired-busy-composition-readiness-audit](../../docs/knowledge/ial2-ahb-paired-busy-composition-readiness-audit.md)
 - q="how can the future two-subordinate paired AHB BUSY runtime proof cover both windows?" · facts=[ial2-ahb-two-subordinate-paired-busy-readiness-audit](../../docs/knowledge/ial2-ahb-two-subordinate-paired-busy-readiness-audit.md)
@@ -241,10 +244,12 @@
 - q="how is aggregate byte-lane propagation reported?" · facts=[ial2-ahb-aggregate-byte-lane-propagation-behavior](../../docs/knowledge/ial2-ahb-aggregate-byte-lane-propagation-behavior.md)
 - q="how is exact-four paired AHB runtime verified?" · facts=[ial2-ahb-exact-four-requester-paired-claim-evidence](../../docs/knowledge/ial2-ahb-exact-four-requester-paired-claim-evidence.md)
 - q="how is one-word HBURST WRAP4 INCR4 behavior verified?" · facts=[ial2-ahb-foundational-claim-evidence](../../docs/knowledge/ial2-ahb-foundational-claim-evidence.md)
+- q="how is the 32-bit in-word AHB SEQ boundary verified?" · facts=[ial2-ahb-guided-mode-claim-evidence](../../docs/knowledge/ial2-ahb-guided-mode-claim-evidence.md)
 - q="how is the AHB burst context held across an HTRANS=BUSY beat?" · facts=[ial2-ahb-subordinate-busy-park-behavior](../../docs/knowledge/ial2-ahb-subordinate-busy-park-behavior.md)
 - q="how is the AHB byte-lane .ahb alias support-accounted?" · facts=[ial2-ahb-byte-lane-profile-alias-behavior](../../docs/knowledge/ial2-ahb-byte-lane-profile-alias-behavior.md)
 - q="how is the AHB subordinate .ahb alias support-accounted?" · facts=[ial2-ahb-subordinate-profile-alias-behavior](../../docs/knowledge/ial2-ahb-subordinate-profile-alias-behavior.md)
 - q="how is the Chapter 16c AHB exact-one-through-four versus 5 through 16 boundary verified?" · facts=[ial2-ahb-integration-public-sync-claim-evidence](../../docs/knowledge/ial2-ahb-integration-public-sync-claim-evidence.md)
+- q="how is the Chapter 16c raw mode map verified?" · facts=[ial2-ahb-guided-mode-claim-evidence](../../docs/knowledge/ial2-ahb-guided-mode-claim-evidence.md)
 - q="how is the canonical AHB busy-beats range 2 through 16 verified?" · facts=[ial2-ahb-two-window-exact-four-generalized-range-claim-evidence](../../docs/knowledge/ial2-ahb-two-window-exact-four-generalized-range-claim-evidence.md)
 - q="how is the minimum exact-four BUSY counter width verified?" · facts=[ial2-ahb-exact-four-requester-paired-claim-evidence](../../docs/knowledge/ial2-ahb-exact-four-requester-paired-claim-evidence.md)
 - q="how is the two-window exact-four runtime tuple verified?" · facts=[ial2-ahb-two-window-exact-four-generalized-range-claim-evidence](../../docs/knowledge/ial2-ahb-two-window-exact-four-generalized-range-claim-evidence.md)
@@ -1176,6 +1181,13 @@ _Foundational AHB numeric claims retain topology, HBURST, and BUSY evidence_
 
 - **date:** 2026-08-21 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-ahb-foundational-claim-evidence.md`](../../docs/knowledge/ial2-ahb-foundational-claim-evidence.md)
+
+### ial2-ahb-guided-mode-claim-evidence
+
+_Chapter 16c guided AHB mode and byte-lane claims retain four evidence gates_
+
+- **date:** 2026-08-21 · **status:** current
+- **source and verification:** [`docs/knowledge/ial2-ahb-guided-mode-claim-evidence.md`](../../docs/knowledge/ial2-ahb-guided-mode-claim-evidence.md)
 
 ### ial2-ahb-hburst-length-wrap-seq-behavior
 
