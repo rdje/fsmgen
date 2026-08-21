@@ -32,6 +32,7 @@ answers:
   - "how are APB width protection and back-to-back claims separated from readiness chronology?"
   - "how are APB multi-register protection and composition claims separated by source family?"
   - "how are APB generalized register-set claims separated by width stride count and policy?"
+  - "how are APB five-register and six-register bounds separated from selection history?"
 date: 2026-08-21
 status: current
 tags: [claim-verification, dispositions, inventory, evidence]
@@ -62,6 +63,7 @@ evidence: >-
   t/1472-ial2-apb-composition.t;
   docs/knowledge/ial2-apb-multi-register-protection-composition-claim-evidence.md;
   docs/knowledge/ial2-apb-generalized-register-set-claim-evidence.md;
+  docs/knowledge/ial2-apb-expanded-register-bound-claim-evidence.md;
   docs/tasks/CLAIM-VERIFICATION-ADOPTION.md
 reverify: >-
   scripts/check_claim_verification_dispositions.pl --report && prove -Iperl
@@ -213,3 +215,11 @@ selector, contract, and superseded-guard numerals remain reviewed context.
 Exact too-few, mismatched, adjacent-excess-count, address, policy, artifact,
 and profile-alias controls keep register cardinality separate from stride,
 window, data width, and protection semantics.
+
+The expanded register-bound review closes nine current behavior candidates
+through five remaining data16/protected five-register and 16/32-bit no-policy
+six-register family gates. Nineteen heading, readiness, selector, contract,
+and prior-guard numerals remain reviewed context. Exact `reg3/reg4/reg5`
+artifact checks plus excess-six, excess-seven, mismatch, width, stride,
+policy, and protected-six RED controls preserve the selected bounds and the
+remaining deferral honestly.

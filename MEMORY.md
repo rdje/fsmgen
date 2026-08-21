@@ -6,11 +6,12 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `CLAIM-VERIFICATION-ADOPTION.5.4.6`; the immediately
-  preceding slice closes all 37 generalized APB register-set candidates.
-- next_action: review the exact 28 candidates on Chapter 14h lines 2000-end
-  against five- and six-register 16/32-bit protected and unprotected count,
-  stride, width, generated-artifact, and adjacent-excess-bound evidence.
+- active_work_unit: `CLAIM-VERIFICATION-ADOPTION.5.4.7`; the immediately
+  preceding slice closes all 28 expanded APB register-bound candidates and
+  completes the Chapter 14h APB review.
+- next_action: review the exact 40 candidates on Chapter 14i lines 1-1070
+  against foundational AHB endpoint, interconnect, HBURST, BUSY, byte-lane,
+  profile-alias, support, generated-artifact, and runtime evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none
 - blockers: none.

@@ -1,11 +1,12 @@
 # Knowledge Map: `claim-verification`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **42** uniquely owned question entries.
+> **3** facts · **43** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="can the claim checker prove semantic truth or oracle independence?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
+- q="how are APB five-register and six-register bounds separated from selection history?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are APB generalized register-set claims separated by width stride count and policy?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are APB multi-register protection and composition claims separated by source family?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are APB width protection and back-to-back claims separated from readiness chronology?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)

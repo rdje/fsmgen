@@ -1,7 +1,7 @@
 # Knowledge Map: `ial2-apb`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **106** facts · **489** uniquely owned question entries.
+> **107** facts · **493** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -90,6 +90,8 @@
 - q="how are APB address-map windows specified?" · facts=[ial2-apb-multi-peripheral-interconnect-contract-selection](../../docs/knowledge/ial2-apb-multi-peripheral-interconnect-contract-selection.md)
 - q="how are APB data16 and remaining-width claims verified?" · facts=[ial2-apb-width-sideband-timing-claim-evidence](../../docs/knowledge/ial2-apb-width-sideband-timing-claim-evidence.md)
 - q="how are APB depth-1 back-to-back and sideband queue claims verified?" · facts=[ial2-apb-width-sideband-timing-claim-evidence](../../docs/knowledge/ial2-apb-width-sideband-timing-claim-evidence.md)
+- q="how are APB excess-six and excess-seven controls retained?" · facts=[ial2-apb-expanded-register-bound-claim-evidence](../../docs/knowledge/ial2-apb-expanded-register-bound-claim-evidence.md)
+- q="how are APB five-register and six-register claims verified?" · facts=[ial2-apb-expanded-register-bound-claim-evidence](../../docs/knowledge/ial2-apb-expanded-register-bound-claim-evidence.md)
 - q="how are APB generalized register-set claims verified?" · facts=[ial2-apb-generalized-register-set-claim-evidence](../../docs/knowledge/ial2-apb-generalized-register-set-claim-evidence.md)
 - q="how are APB multi-register protection and composition claims verified?" · facts=[ial2-apb-multi-register-protection-composition-claim-evidence](../../docs/knowledge/ial2-apb-multi-register-protection-composition-claim-evidence.md)
 - q="how are APB multi-register reports shaped?" · facts=[ial2-apb-multi-register-decode-behavior](../../docs/knowledge/ial2-apb-multi-register-decode-behavior.md)
@@ -469,8 +471,10 @@
 - q="which APB width and timing numerals are historical readiness or contract selections?" · facts=[ial2-apb-width-sideband-timing-claim-evidence](../../docs/knowledge/ial2-apb-width-sideband-timing-claim-evidence.md)
 - q="which Chapter 14h APB claims are current generated behavior rather than selection history?" · facts=[ial2-apb-multi-register-protection-composition-claim-evidence](../../docs/knowledge/ial2-apb-multi-register-protection-composition-claim-evidence.md)
 - q="which IAL2 APB owners are reachable from bin/fsmgen?" · facts=[ial2-apb-public-surface-import-tree-sync](../../docs/knowledge/ial2-apb-public-surface-import-tree-sync.md)
+- q="which expanded APB generalized register bounds are currently supported?" · facts=[ial2-apb-expanded-register-bound-claim-evidence](../../docs/knowledge/ial2-apb-expanded-register-bound-claim-evidence.md)
 - q="which files are selected for APB data16 back-to-back?" · facts=[ial2-apb-data16-back-to-back-contract-selection](../../docs/knowledge/ial2-apb-data16-back-to-back-contract-selection.md)
 - q="which generalized APB two-peripheral measurements are current behavior?" · facts=[ial2-apb-generalized-register-set-claim-evidence](../../docs/knowledge/ial2-apb-generalized-register-set-claim-evidence.md)
+- q="which protected APB six-register families remain deferred?" · facts=[ial2-apb-expanded-register-bound-claim-evidence](../../docs/knowledge/ial2-apb-expanded-register-bound-claim-evidence.md)
 - q="which task owns APB data16 PPROT contract selection?" · facts=[ial2-apb-data16-pprot-effects-readiness-audit](../../docs/knowledge/ial2-apb-data16-pprot-effects-readiness-audit.md)
 - q="who enforces APB PPROT policies in composition?" · facts=[ial2-apb-pprot-effects-behavior](../../docs/knowledge/ial2-apb-pprot-effects-behavior.md)
 - q="why are APB readiness and contract numerals reviewed instead of derived twice?" · facts=[ial2-apb-multi-register-protection-composition-claim-evidence](../../docs/knowledge/ial2-apb-multi-register-protection-composition-claim-evidence.md)
@@ -706,6 +710,13 @@ _APB data16-protection multi-peripheral multi-register contract selection is nex
 
 - **date:** 2026-06-28 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-apb-data16-protection-multi-peripheral-multi-register-back-to-back-readiness-audit.md`](../../docs/knowledge/ial2-apb-data16-protection-multi-peripheral-multi-register-back-to-back-readiness-audit.md)
+
+### ial2-apb-expanded-register-bound-claim-evidence
+
+_APB expanded register-bound claims retain five/six-register boundary evidence_
+
+- **date:** 2026-08-21 · **status:** current
+- **source and verification:** [`docs/knowledge/ial2-apb-expanded-register-bound-claim-evidence.md`](../../docs/knowledge/ial2-apb-expanded-register-bound-claim-evidence.md)
 
 ### ial2-apb-foundational-claim-evidence
 
