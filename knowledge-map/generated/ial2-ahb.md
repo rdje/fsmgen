@@ -1,7 +1,7 @@
 # Knowledge Map: `ial2-ahb`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **148** facts · **787** uniquely owned question entries.
+> **149** facts · **792** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -193,6 +193,9 @@
 - q="does two-window exact-three BUSY work through normalized semantic JSON and MCP?" · facts=[ial2-ahb-two-subordinate-exact-three-paired-busy-composition-readiness-audit](../../docs/knowledge/ial2-ahb-two-subordinate-exact-three-paired-busy-composition-readiness-audit.md)
 - q="does two-window exact-three paired BUSY support semantic JSON and MCP?" · facts=[ial2-ahb-two-subordinate-exact-three-paired-busy-composition-behavior](../../docs/knowledge/ial2-ahb-two-subordinate-exact-three-paired-busy-composition-behavior.md)
 - q="how are AHB child counts three and four verified?" · facts=[ial2-ahb-foundational-claim-evidence](../../docs/knowledge/ial2-ahb-foundational-claim-evidence.md)
+- q="how are AHB phase-pipeline and direct-seed repairs regression tested?" · facts=[ial2-ahb-semantic-exact-two-three-claim-evidence](../../docs/knowledge/ial2-ahb-semantic-exact-two-three-claim-evidence.md)
+- q="how are Chapter 14i semantic-repair and exact-two/three claims verified?" · facts=[ial2-ahb-semantic-exact-two-three-claim-evidence](../../docs/knowledge/ial2-ahb-semantic-exact-two-three-claim-evidence.md)
+- q="how are exact-one two and three BUSY runtimes separated?" · facts=[ial2-ahb-semantic-exact-two-three-claim-evidence](../../docs/knowledge/ial2-ahb-semantic-exact-two-three-claim-evidence.md)
 - q="how are the aggregate BUSY-park .ahb aliases support-accounted?" · facts=[ial2-ahb-aggregate-busy-park-propagation-alias-contract-selection](../../docs/knowledge/ial2-ahb-aggregate-busy-park-propagation-alias-contract-selection.md), [ial2-ahb-aggregate-busy-park-propagation-profile-alias-behavior](../../docs/knowledge/ial2-ahb-aggregate-busy-park-propagation-profile-alias-behavior.md)
 - q="how are the foundational Chapter 14i AHB claims verified?" · facts=[ial2-ahb-foundational-claim-evidence](../../docs/knowledge/ial2-ahb-foundational-claim-evidence.md)
 - q="how can generated HDL prove AHB BUSY insertion and parking end to end?" · facts=[ial2-ahb-paired-busy-composition-readiness-audit](../../docs/knowledge/ial2-ahb-paired-busy-composition-readiness-audit.md)
@@ -696,6 +699,7 @@
 - q="which AHB source supports HBURST WRAP4 INCR4 SEQ?" · facts=[ial2-ahb-hburst-length-wrap-seq-behavior](../../docs/knowledge/ial2-ahb-hburst-length-wrap-seq-behavior.md)
 - q="which AHB source supports byte-lane SEQ?" · facts=[ial2-ahb-byte-lane-seq-behavior](../../docs/knowledge/ial2-ahb-byte-lane-seq-behavior.md)
 - q="which AHB subordinate selectors overlap on the first captured phase?" · facts=[ial2-ahb-subordinate-default-phase-output-arbitration-gap](../../docs/knowledge/ial2-ahb-subordinate-default-phase-output-arbitration-gap.md)
+- q="which AHB wrap and BUSY numeric lines are current behavior?" · facts=[ial2-ahb-semantic-exact-two-three-claim-evidence](../../docs/knowledge/ial2-ahb-semantic-exact-two-three-claim-evidence.md)
 - q="which BUSY counts were simulated in the generalized range audit?" · facts=[ial2-ahb-requester-generalized-busy-count-range-readiness-audit](../../docs/knowledge/ial2-ahb-requester-generalized-busy-count-range-readiness-audit.md)
 - q="which BUSY-count tests now use repository-local temporary storage?" · facts=[ial2-ahb-requester-generalized-busy-count-range-behavior](../../docs/knowledge/ial2-ahb-requester-generalized-busy-count-range-behavior.md)
 - q="which HBURST modes are selected for first AHB subordinate SEQ support?" · facts=[ial2-ahb-hburst-length-wrap-seq-contract-selection](../../docs/knowledge/ial2-ahb-hburst-length-wrap-seq-contract-selection.md)
@@ -765,6 +769,7 @@
 - q="why is HADDR_REGS reported as a selector multi value conflict?" · facts=[ial2-ahb-interconnect-default-decode-output-arbitration-gap](../../docs/knowledge/ial2-ahb-interconnect-default-decode-output-arbitration-gap.md)
 - q="why is subordinate SEQ contract selection needed before implementation?" · facts=[ial2-ahb-burst-seq-readiness-audit](../../docs/knowledge/ial2-ahb-burst-seq-readiness-audit.md)
 - q="why is the .5 direct AHB internal contract superseded?" · facts=[ial2-ahb-direct-subordinate-pipelined-active-transfer-contract-selection](../../docs/knowledge/ial2-ahb-direct-subordinate-pipelined-active-transfer-contract-selection.md)
+- q="why is the old exact-three 2 through 3 bound historical?" · facts=[ial2-ahb-semantic-exact-two-three-claim-evidence](../../docs/knowledge/ial2-ahb-semantic-exact-two-three-claim-evidence.md)
 - q="why is the two-subordinate exact-two AHB source name topology-first?" · facts=[ial2-ahb-two-subordinate-exact-two-paired-busy-composition-contract-selection](../../docs/knowledge/ial2-ahb-two-subordinate-exact-two-paired-busy-composition-contract-selection.md)
 - q="why must AHB BUSY residue be repaired before the two-subordinate paired source?" · facts=[ial2-ahb-two-subordinate-paired-busy-readiness-audit](../../docs/knowledge/ial2-ahb-two-subordinate-paired-busy-readiness-audit.md)
 - q="why not implement AHB interconnect directly?" · facts=[ial2-ahb-interconnect-decode-readiness-audit](../../docs/knowledge/ial2-ahb-interconnect-decode-readiness-audit.md)
@@ -1550,6 +1555,13 @@ _Historical audit proved the pre-repair AHB requester WRAP boundary skip_
 
 - **date:** 2026-07-23 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-ahb-requester-wrap-progression-runtime-audit.md`](../../docs/knowledge/ial2-ahb-requester-wrap-progression-runtime-audit.md)
+
+### ial2-ahb-semantic-exact-two-three-claim-evidence
+
+_AHB semantic repairs and exact-two/three claims retain distinct evidence_
+
+- **date:** 2026-08-21 · **status:** current
+- **source and verification:** [`docs/knowledge/ial2-ahb-semantic-exact-two-three-claim-evidence.md`](../../docs/knowledge/ial2-ahb-semantic-exact-two-three-claim-evidence.md)
 
 ### ial2-ahb-source-shape-readiness-audit
 

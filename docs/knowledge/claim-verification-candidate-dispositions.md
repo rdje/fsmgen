@@ -231,3 +231,12 @@ support totals, and test/decision identifiers remain reviewed chronology.
 Exact one-/two-subordinate child counts, burst/address/control rejection,
 `parks_on` versus `clears_on`, artifact/report identity, and profile-alias
 parity keep the current behavior separate from its historical milestones.
+
+The AHB semantic/exact-two/three review closes eight current wrap, qualified
+single-BUSY, paired single-BUSY, exact-two, exact-three, and exact-three-alias
+candidates through six evidence families. Forty-one audit observations,
+contract targets, identifiers, and shipment checkpoints remain reviewed
+chronology. The original exact-three `2..3` normalizer bound is explicitly
+time-local; current generalized behavior owns `2..16`. Phase-pipeline and
+direct-seed repairs remain in the exact no-regression collection even when the
+candidate numeral is only an audit result or test locator.
