@@ -75,7 +75,8 @@ freezes the ordered eight-artifact/three-source identities and
 closure, and rejects the first 16-MiB excess with no partial graph. Reports
 remain defensive and content-addressed; success, expected rejection, and
 consumer failure leave no repository-local scale-stage residue. Portable VHDL
-`.3` is the next proposed activation.
+`.3` is now active only as the clean implementation owner and owns no profile
+shape yet.
 No support, performance, or capacity claim is made.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
