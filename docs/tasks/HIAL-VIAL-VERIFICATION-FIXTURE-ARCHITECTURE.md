@@ -596,7 +596,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement the selected canonical backend-emission generator and exact structural artifact oracles.`
   Acceptance: `Implement only after .17.2.6.1 and .17.2.6.2 commit cleanly; decompose per shared foundation and backend when required. Consume only caller-sealed proved execution graphs and canonical backend inputs; prove every selected profile/level's exact negotiation outcome, artifact inventory/order/relative paths, source identities and complete map closure, generated identifiers, structural checks, byte-equal reruns, earliest-cap rejection with no partial graph, defensive reports, repository-local staging and exact cleanup. Execute no external runtime and publish no support, performance, or capacity claim.`
-  Verification: `Clean repair-family predecessor 2d7b3b27e permits implementation activation. The generator is decomposed into one caller-sealed shared construction/evaluation/staging foundation, four ordered profile ladders, and final exact family qualification. Foundation .1 is complete; portable-SystemVerilog ladder .2 remains proposed pending its own clean activation. No profile shape, generator artifact, emitter behavior, runtime, API, capability/support, performance, or capacity claim changes in .1.`
+  Verification: `Clean repair-family predecessor 2d7b3b27e permits implementation activation. The generator is decomposed into one caller-sealed shared construction/evaluation/staging foundation, four ordered profile ladders, and final exact family qualification. Foundation .1 is complete and portable-SystemVerilog ladder .2 is active. No portable-SystemVerilog profile shape, generator artifact, emitter behavior, runtime, API, capability/support, performance, or capacity claim changes in the activation slice.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3: activate backend-emission generator`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.6`
 
@@ -608,11 +608,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.1: seal backend-emission foundation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the portable-SystemVerilog backend-emission ladder and exact structural oracles.`
   Acceptance: `Own selected T=21/1,024/4,096/6,319 portable-SystemVerilog routes and adjacent T=6,320 rejection through the shared foundation; prove exact ordered inventory, relative paths, three source identities, complete maps, generated identifiers, byte-equal reruns, 16-MiB earliest-cap atomicity, defensive evidence, and exact cleanup without external runtime or product claims.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Clean foundation commit 8e9553a3b closes caller-sealed construction/evaluation/staging and permits only the portable-SystemVerilog ladder to activate. This continuity slice changes no generator, emitter, validator, artifact, runtime, API, capability/support, performance, capacity, or product behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.2: activate portable SV emission ladder`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3.3`
   Status: `proposed`
@@ -916,12 +916,17 @@ selected-shape negotiation; `.17.2.6.2.5` aligns one closed exact catalog and
 support authority and qualifies the repaired family. Active generator
 `.17.2.6.3` is decomposed into shared foundation `.1`, portable-SV `.2`,
 portable-VHDL `.3`, OSVVM `.4`, native-UVM `.5`, and family closure `.6`;
-foundation `.1` is complete and proposed portable-SV `.2` is next for a
-separate clean activation. Runtime/balanced
+foundation `.1` is complete and portable-SV `.2` alone is active. Runtime/balanced
 integration `.17.2.7`, and
 measurement `.17.3` remain later.
 
 ## Decisions
+
+- `2026-08-21`: Activate portable-SystemVerilog ladder `.17.2.6.3.2` after
+  clean caller-sealed foundation commit `8e9553a3b`. Keep all other profile
+  ladders proposed and change no generator, emitter, artifact, runtime, API,
+  capability/support, performance, or capacity behavior in the activation
+  slice.
 
 - `2026-08-21`: Activate `.17.2.6.3` after clean repair-family commit
   `2d7b3b27e`. Decompose implementation into one caller-sealed foundation,
@@ -1373,6 +1378,7 @@ measurement `.17.3` remain later.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-21` | `.17.2.6.3.2` portable-SystemVerilog ladder activation | clean foundation predecessor `8e9553a3b`; decision `0075`; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.6.3.2` alone is active to own T=21/1,024/4,096/6,319 acceptance plus adjacent T=6,320 earliest-cap rejection through the sealed foundation. Portable VHDL, OSVVM, native UVM, and family closure remain proposed. No implementation or product behavior changes. |
 | `2026-08-21` | `.17.2.6.3.1` caller-sealed backend-emission foundation | missing-module RED; exact checked-AHB source pair; same-package qualification seal; public zero-owned catalog boundary; ordinary Parser/PlanBuilder double rerun; closed stage/outcome/oracle/claim reports; exact content identities and route metrics; construction/evaluation/provider mutation negatives; success/failure same-volume staging cleanup; focused shared-workload/authority regression; task/index/Memory/book/fact/claim/containment continuity; staged acceptance and doctrines | `passed`; no public profile shape is owned and no emitter or runtime executes. The foundation freezes workload `b739891c…`, evaluation `e7d9a4e1…`, rerun `172c0419…`, five stage digests, two scenarios/21 operations/four fibers/three simultaneous fibers/39 maps, a 44,101-byte plan, and two backend inputs. Focused regression passes Files=3/Tests=15 with exact staging cleanup; task integrity remains three trees/962 nodes, Knowledge Map remains 1,150 facts/6,056 questions/6,223 occurrences/133 shards, and all 1,426 claim candidates close. All 53 book chapters test; the inspected 88-file/18,918,049-byte render is removed exactly. Portable-SV `.17.2.6.3.2` remains proposed for separate activation. No API, artifact-graph, capability/support, performance, or capacity claim changes. |
 | `2026-08-21` | `.17.2.6.3` backend-emission generator activation/decomposition | clean repair-family predecessor `2d7b3b27e`; decision `0075`; common workload/ExecutionIR and four repaired profile authority census; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, live-document, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.6.3` is active as a six-child container and only caller-sealed foundation `.1` is active. Four profile ladders and final family closure remain proposed. No code, test, config, artifact, generator, emitter, runtime, API, capability/support, performance, capacity, or product behavior changes. |
 | `2026-08-21` | `.17.2.6.2.5` exact authority alignment and repair-family qualification | six-field RED drift witness; one closed four-profile authority source; defensive clone; unknown/missing/obsolete/contradictory negatives; catalog and VHDL/native-UVM discovery projections; exact OSVVM source/cap/map/check partition; exact native-UVM caps/selected matrix; syntax/focused/capability/family/CI inventory reruns; task/index/Memory/decision/book/fact/rationale continuity; repository doctrine gates | `passed`; catalog and discovery consume one exact authority set, t/1644 passes Files=1/Tests=3, focused catalog/capability regression passes Files=4/Tests=7,108, and the 4,096-MiB guarded complete repair collection passes Files=18/Tests=7,248 in 124 seconds. No staging residue or runtime/API/support/performance/capacity claim change remains; `.17.2.6.2` is done and `.17.2.6.3` is next after the clean commit. |
@@ -4885,3 +4891,9 @@ raising an enforcement ceiling.
   document surfaces, one changed maintained reference, and zero ceiling
   increases pass; `[doctrine] all doctrine checks passed` closes the staged
   commit candidate.
+
+## Acceptance Checklist (enforced) — `.17.2.6.3.2` portable-SV activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Implement the portable-SystemVerilog backend-emission ladder' --oneline -- docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md` identifies decomposition commit `6b08d8146`, where `.17.2.6.3.2` remained proposed behind the caller-sealed foundation. Clean commit `8e9553a3b` now completes that predecessor, so the profile ladder requires its own active owner before RED controls or implementation.
+- [x] **ADDRESSED (verified)** — `.17.2.6.3.2` alone is active for exact portable-SystemVerilog T=21/1,024/4,096/6,319 acceptance and adjacent T=6,320 earliest-cap rejection. Portable VHDL, OSVVM, native UVM, and family closure remain proposed, and this continuity slice changes no code, test, config, generator, emitter, artifact, runtime, API, capability/support, performance, capacity, or product behavior.
+- [x] **NO REGRESSION** — relative-path verification reports `All tests successful` at `Files=1, Tests=2`; task integrity reports three trees/962 nodes; `knowledge-map: OK` retains 1,150 facts/6,056 questions/6,223 occurrences/133 shards. Claim inventory/disposition closes all 1,426 candidates with zero open owners. All 53 mdBook chapters test, and the inspected 88-file/18,918,353-byte repository-local render names the active but zero-owned portable-SV frontier before exact removal. All 22 live-document surfaces, one changed maintained reference, zero ceiling increases, diff, and staged acceptance pass; `[doctrine] all doctrine checks passed` closes the activation commit candidate.

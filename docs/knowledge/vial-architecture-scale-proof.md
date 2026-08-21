@@ -71,8 +71,9 @@ owns no backend shape: it admits only the exact checked-AHB pair through a priva
 qualification constructor, regenerates SemanticIR, bridge, canonical ExecutionIR,
 backend inputs, and plan twice through ordinary producers, freezes a closed
 content-addressed nonclaim report, and cleans success/failure staging below the
-repository-local scale root. Portable-SystemVerilog ladder `.2` is next but is
-not active yet. No support, performance, or capacity claim is made.
+repository-local scale root. Portable-SystemVerilog ladder `.2` is now active
+only as a clean implementation owner; no profile shape is owned yet.
+No support, performance, or capacity claim is made.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
