@@ -20,6 +20,10 @@ my $SCHEMA = 'fsmgen.hial_vial_bridge_manifest.v1';
 my $PROFILE = 'core_single_unit_v1';
 my $ARCHITECTURE_SCALE_CAPABILITY =
     'hial_vial.bridge_qualification.architecture_scale_v1';
+my $BALANCED_PORTABLE_CAPABILITY =
+    'hial_vial.bridge_qualification.balanced_portable_v2';
+my $BALANCED_PORTABLE_CALLER =
+    'FSM::VIAL::ArchitectureScaleBalancedPortable';
 
 my %LIMIT = %{build_hial_vial_bridge_contract()->{limits}};
 
@@ -65,6 +69,25 @@ sub build_ial2_via_ial1($class, @args) {
     return _invoke($class, 'build_ial2_via_ial1', 'IAL2', @args);
 }
 
+sub build_balanced_portable_qualification($class, @args) {
+    my $caller = caller;
+    return _failure_result(
+        code => 'HIAL_VIAL_BRIDGE_INVOCATION_ERROR',
+        category => 'invocation',
+        message => 'balanced-portable qualification bridging is private to '
+            . $BALANCED_PORTABLE_CALLER,
+        path => '/',
+    ) unless defined($class) && !ref($class) && $class eq __PACKAGE__
+        && defined($caller) && $caller eq $BALANCED_PORTABLE_CALLER;
+    return _failure_result(
+        code => 'HIAL_VIAL_BRIDGE_INVOCATION_ERROR',
+        category => 'invocation',
+        message => 'balanced-portable qualification bridging expects exactly one validated route hash reference',
+        path => '/',
+    ) unless @args == 1 && ref($args[0]) eq 'HASH';
+    return _evaluate_route('IAL1', $args[0], 1);
+}
+
 sub _invoke($class, $method, $layer, @args) {
     return _failure_result(
         code => 'HIAL_VIAL_BRIDGE_INVOCATION_ERROR',
@@ -79,7 +102,11 @@ sub _invoke($class, $method, $layer, @args) {
         path => '/',
     ) unless @args == 1 && ref($args[0]) eq 'HASH';
 
-    my $result = eval { _build_route($layer, $args[0]) };
+    return _evaluate_route($layer, $args[0], 0);
+}
+
+sub _evaluate_route($layer, $raw, $balanced_portable) {
+    my $result = eval { _build_route($layer, $raw, $balanced_portable) };
     return $result if $result;
     my $error = $@;
     if (blessed($error) && $error->isa('FSM::HIAL::VIALBridge::Builder::Failure')) {
@@ -93,7 +120,7 @@ sub _invoke($class, $method, $layer, @args) {
     );
 }
 
-sub _build_route($layer, $raw) {
+sub _build_route($layer, $raw, $balanced_portable = 0) {
     for my $forbidden (qw(ppif_ast ppif_report)) {
         _throw(
             'HIAL_VIAL_BRIDGE_ROUTE_ERROR',
@@ -154,7 +181,10 @@ sub _build_route($layer, $raw) {
 
     _validate_actor_and_report($actor, $schedule_report, $layer);
     my ($sources, $artifacts, $route) = _build_review_route($layer, \@source_specs);
-    my $model = _build_semantic_model($actor, $layer, $backend_names, $sources, $artifacts);
+    my $model = _build_semantic_model(
+        $actor, $layer, $backend_names, $sources, $artifacts,
+        $balanced_portable,
+    );
 
     my $unit_id = $model->{units}[0]{unit_id};
     my $authored_identity = $authored->{repository_path};
@@ -164,13 +194,14 @@ sub _build_route($layer, $raw) {
         $authored_identity,
         $authored->{content_sha256},
         $unit_id,
+        ($balanced_portable ? 'balanced_portable_v2' : ()),
     ));
 
     my %manifest = (
         schema => $SCHEMA,
         schema_version => 1,
         profile => $PROFILE,
-        manifest_id => "bridge/$manifest_hash",
+        manifest_id => $balanced_portable ? undef : "bridge/$manifest_hash",
         producer => {
             name => 'FSMGen',
             contract_source => 'FSM::HIAL::VIALBridge::Manifest',
@@ -191,6 +222,12 @@ sub _build_route($layer, $raw) {
     $manifest{source_map} = _build_source_map(\%manifest, $layer, $sources, $artifacts);
     _validate_limits(\%manifest);
     _validate_unique_semantic_ids(\%manifest);
+    if ($balanced_portable) {
+        my $identity_data = _clone_plain(\%manifest, '/');
+        delete $identity_data->{manifest_id};
+        $manifest{manifest_id} = 'bridge/'
+            . sha256_hex(JSON::PP->new->canonical->encode($identity_data));
+    }
     my $encoded = JSON::PP->new->canonical->encode(\%manifest);
     _throw('HIAL_VIAL_BRIDGE_LIMIT_ERROR', 'limit', 'serialized manifest exceeds 16777216 bytes', '/')
     if bytes::length($encoded) > $LIMIT{serialized_manifest_bytes};
@@ -431,12 +468,21 @@ sub _build_review_route($layer, $specs) {
     );
 }
 
-sub _build_semantic_model($actor, $layer, $backend_names, $sources, $artifacts) {
+sub _build_semantic_model($actor, $layer, $backend_names, $sources, $artifacts,
+    $balanced_portable = 0) {
     my $unit_name = $actor->{actor_name};
     my $unit_id = "unit/$unit_name";
     my $bridge = ref($actor->{verification_bridge}) eq 'HASH' ? $actor->{verification_bridge} : undef;
+    _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation',
+        'balanced-portable qualification requires its exact revision-2 verification bridge',
+        '/actor/verification_bridge')
+        if $balanced_portable
+            && (!$bridge || !_is_architecture_scale_protocol($bridge));
     my $bridge_kind = $bridge && _is_architecture_scale_protocol($bridge)
-        ? 'architecture_scale' : $bridge ? 'ahb' : 'plain';
+        ? ($balanced_portable
+            ? 'architecture_scale_balanced_portable'
+            : 'architecture_scale')
+        : $bridge ? 'ahb' : 'plain';
     my $domain_name = $bridge ? $bridge->{domain} : 'default';
     my $domain_id = "domain/$domain_name";
     my (%types_by_key, @types, @endpoints);
@@ -493,6 +539,11 @@ sub _build_semantic_model($actor, $layer, $backend_names, $sources, $artifacts) 
                 $bridge, \%endpoint_by_name, $actor, $layer,
             );
         }
+        elsif ($bridge_kind eq 'architecture_scale_balanced_portable') {
+            _validate_balanced_portable_bridge(
+                $bridge, \%endpoint_by_name, $actor, $layer,
+            );
+        }
         else {
             _validate_ahb_bridge($bridge, \%endpoint_by_name, $actor);
         }
@@ -505,9 +556,12 @@ sub _build_semantic_model($actor, $layer, $backend_names, $sources, $artifacts) 
         @protocols = @{$semantics->{protocols}};
         @probes = @{$semantics->{probes}};
         @residue = @{$semantics->{unsupported_residue}};
-        if ($bridge_kind eq 'architecture_scale') {
+        if ($bridge_kind eq 'architecture_scale'
+                || $bridge_kind eq 'architecture_scale_balanced_portable') {
             my $plain = _build_plain_transactions(
                 $actor, $unit_id, \%endpoint_by_name, \%types_by_key, \@types,
+                $bridge_kind eq 'architecture_scale_balanced_portable'
+                    ? 'single_active' : 'declaration_order',
             );
             push @transactions, @{$plain->{transactions}};
             push @events, @{$plain->{events}};
@@ -539,7 +593,9 @@ sub _build_semantic_model($actor, $layer, $backend_names, $sources, $artifacts) 
         (@observations ? 'hial_vial.bridge_observation.passive_monitor' : ()),
         (@protocols ? ($bridge_kind eq 'architecture_scale'
             ? $ARCHITECTURE_SCALE_CAPABILITY
-            : 'hial_vial.bridge_protocol.ahb_subordinate_v1') : ()),
+            : $bridge_kind eq 'architecture_scale_balanced_portable'
+                ? $BALANCED_PORTABLE_CAPABILITY
+                : 'hial_vial.bridge_protocol.ahb_subordinate_v1') : ()),
         (@probes ? 'hial_vial.bridge_probe.equivalent_adapter_required' : ()),
     );
 
@@ -704,7 +760,8 @@ sub _build_observations($actor, $unit_id, $domain_id, $endpoint_by_name) {
     return @out;
 }
 
-sub _build_plain_transactions($actor, $unit_id, $endpoint_by_name, $types_by_key, $types) {
+sub _build_plain_transactions($actor, $unit_id, $endpoint_by_name,
+    $types_by_key, $types, $correlation = 'declaration_order') {
     my (@transactions, @events);
     for my $transaction (@{$actor->{transactions} || []}) {
         my (@fields, @event_ids);
@@ -748,7 +805,7 @@ sub _build_plain_transactions($actor, $unit_id, $endpoint_by_name, $types_by_key
             type_id => undef,
             protocol_id => undef,
             ordering => 'in_order',
-            correlation => 'declaration_order',
+            correlation => $correlation,
             fields => \@fields,
             event_ids => \@event_ids,
         };
@@ -884,6 +941,175 @@ sub _validate_architecture_scale_bridge($bridge, $endpoint_by_name, $actor, $lay
         _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation', 'architecture-scale input endpoint family is not closed and ordinal', "/actor/interface/inputs/$index")
             unless ($inputs[$index]{name} // '') eq $expected
                 && ($inputs[$index]{width} // 0) == 1;
+    }
+}
+
+sub _validate_balanced_portable_bridge($bridge, $endpoint_by_name, $actor, $layer) {
+    _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation',
+        'balanced-portable qualification is accepted only through the direct IAL1 route',
+        '/actor/verification_bridge/protocol')
+        unless $layer eq 'IAL1';
+
+    my $protocol = ref($bridge->{protocol}) eq 'HASH'
+        ? $bridge->{protocol} : {};
+    my @facts = ref($protocol->{facts}) eq 'ARRAY'
+        ? @{$protocol->{facts}} : ();
+    _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation',
+        'balanced-portable protocol metadata must match the closed revision-2 profile',
+        '/actor/verification_bridge/protocol')
+        unless ($protocol->{name} // '') eq 'architecture_scale_probe'
+            && ($protocol->{profile} // '') eq 'balanced_portable'
+            && ($protocol->{revision} // '') eq '2'
+            && ($protocol->{role} // '') eq 'verification'
+            && @facts == 2
+            && ($facts[0]{name} // '') eq 'scale_evidence_only'
+            && ($facts[0]{value} // '') eq 'true'
+            && ($facts[1]{name} // '') eq 'qualified_emitter'
+            && ($facts[1]{value} // '') eq 'sv_portable_verilator'
+            && ($bridge->{domain} // '') eq 'balanced';
+    _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation',
+        'balanced-portable actor identity and clock/reset contract are not exact',
+        '/actor')
+        unless ($actor->{actor_name} // '')
+                eq 'vial_architecture_scale_balanced_portable'
+            && ($actor->{clock} // '') eq 'clk'
+            && ($actor->{reset}{name} // '') eq 'rst_n'
+            && ($actor->{reset}{kind} // '') eq 'async'
+            && ($actor->{reset}{polarity} // '') eq 'active_low';
+    _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation',
+        'balanced-portable actor admits no parameters, observations, output ports, or residues',
+        '/actor')
+        if @{$actor->{params} || []}
+            || @{$actor->{verification_observations} || []}
+            || @{($actor->{interface} || {})->{outputs} || []}
+            || @{$bridge->{residues} || []};
+
+    my @inputs = @{($actor->{interface} || {})->{inputs} || []};
+    _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation',
+        'balanced-portable interface requires exactly 126 closed ordinal one-bit inputs',
+        '/actor/interface/inputs')
+        unless @inputs == 126;
+    for my $index (0 .. 125) {
+        my $expected = sprintf('endpoint_%08d', $index);
+        my $endpoint = $endpoint_by_name->{$expected};
+        _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation',
+            'balanced-portable input endpoint family is not closed, ordinal, and one-bit',
+            "/actor/interface/inputs/$index")
+            unless ($inputs[$index]{name} // '') eq $expected
+                && ($inputs[$index]{width} // 0) == 1
+                && !$inputs[$index]{signed}
+                && ref($endpoint) eq 'HASH'
+                && ($endpoint->{direction} // '') eq 'input'
+                && ($endpoint->{role} // '') eq 'data'
+                && ($endpoint->{type_id} // '') eq _logic_type_id(1, 0);
+    }
+
+    my @storage = @{$actor->{storage} || []};
+    my @probes = @{$bridge->{probes} || []};
+    _throw('HIAL_VIAL_BRIDGE_ACCESS_ERROR', 'access',
+        'balanced-portable bridge requires exactly 32 closed storage-backed probes',
+        '/actor/verification_bridge/probes')
+        unless @storage == 32 && @probes == 32;
+    for my $index (0 .. 31) {
+        my $expected = sprintf('probe_%08d', $index);
+        my $probe = $probes[$index];
+        my $store = $storage[$index];
+        my @signals = @{$store->{signals} || []};
+        _throw('HIAL_VIAL_BRIDGE_ACCESS_ERROR', 'access',
+            'balanced-portable probe family is not closed, ordinal, read-only, and storage-backed',
+            "/actor/verification_bridge/probes/$index")
+            unless ($probe->{name} // '') eq $expected
+                && ($probe->{access} // '') eq 'read_only'
+                && ref($probe->{source}) eq 'HASH'
+                && ($probe->{source}{kind} // '') eq 'storage'
+                && ($probe->{source}{name} // '') eq $expected
+                && ($probe->{source}{direction} // '') eq 'sample'
+                && ($probe->{source}{width} // 0) == 1
+                && !$probe->{source}{signed}
+                && ($store->{kind} // '') eq 'var'
+                && ($store->{name} // '') eq $expected
+                && ($store->{width} // 0) == 1
+                && @signals == 1
+                && ($signals[0]{name} // '') eq $expected
+                && ($signals[0]{width} // 0) == 1;
+    }
+
+    my $transaction = ref($bridge->{transaction}) eq 'HASH'
+        ? $bridge->{transaction} : {};
+    my @fields = ref($transaction->{fields}) eq 'ARRAY'
+        ? @{$transaction->{fields}} : ();
+    my @events = ref($transaction->{events}) eq 'ARRAY'
+        ? @{$transaction->{events}} : ();
+    _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation',
+        'balanced-portable bridge anchor requires exactly 109 endpoint-backed fields',
+        '/actor/verification_bridge/transaction/fields')
+        unless ref($transaction) eq 'HASH'
+            && ($transaction->{name} // '') eq 'transaction_00000000'
+            && @fields == 109;
+    for my $index (0 .. 108) {
+        my $expected = sprintf('endpoint_%08d', $index);
+        my $field = $fields[$index];
+        _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation',
+            'balanced-portable bridge field family is not closed, ordinal, and endpoint-backed',
+            "/actor/verification_bridge/transaction/fields/$index")
+            unless ($field->{name} // '') eq $expected
+                && ($field->{direction} // '') eq 'drive'
+                && ($field->{phase_role} // '') eq 'unspecified'
+                && ref($field->{source}) eq 'HASH'
+                && ($field->{source}{kind} // '') eq 'endpoint'
+                && ($field->{source}{name} // '') eq $expected
+                && ($field->{source}{direction} // '') eq 'input'
+                && ($field->{source}{width} // 0) == 1
+                && !$field->{source}{signed};
+    }
+    _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation',
+        'balanced-portable bridge anchor requires exactly 113 closed ordinal events',
+        '/actor/verification_bridge/transaction/events')
+        unless @events == 113;
+    for my $index (0 .. 112) {
+        my $expected = sprintf('bridge_event_%08d', $index);
+        my $event = $events[$index];
+        _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation',
+            'balanced-portable bridge event family is not closed and ordinal',
+            "/actor/verification_bridge/transaction/events/$index")
+            unless ($event->{name} // '') eq $expected
+                && ($event->{kind} // '') eq 'predicate'
+                && ($event->{phase} // '') eq 'sample'
+                && !ref($event->{expression})
+                && ($event->{expression} // '') eq 'endpoint_00000000';
+    }
+
+    my @transactions = @{$actor->{transactions} || []};
+    _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation',
+        'balanced-portable actor requires exactly fifteen ordinary transaction aliases',
+        '/actor/transactions')
+        unless @transactions == 15;
+    for my $position (0 .. 14) {
+        my $ordinal = $position + 1;
+        my $expected = sprintf('transaction_%08d', $ordinal);
+        my $ordinary = $transactions[$position];
+        my @ports = @{($ordinary->{ports} || {})->{inputs} || []};
+        my @outputs = @{($ordinary->{ports} || {})->{outputs} || []};
+        my @clauses = @{$ordinary->{clauses} || []};
+        _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation',
+            'balanced-portable ordinary transaction family is not closed and ordinal',
+            "/actor/transactions/$position")
+            unless ($ordinary->{name} // '') eq $expected
+                && @ports == 109 && !@outputs
+                && @clauses == 1
+                && ref($clauses[0]) eq 'ARRAY'
+                && @{$clauses[0]} == 2
+                && ($clauses[0][0] // '') eq 'on'
+                && ($clauses[0][1] // '') eq 'endpoint_00000000';
+        for my $index (0 .. 108) {
+            my $endpoint = sprintf('endpoint_%08d', $index);
+            _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation',
+                'balanced-portable ordinary transaction field family is not exact',
+                "/actor/transactions/$position/ports/inputs/$index")
+                unless ($ports[$index]{name} // '') eq $endpoint
+                    && ($ports[$index]{width} // 0) == 1
+                    && !$ports[$index]{signed};
+        }
     }
 }
 
@@ -1076,6 +1302,12 @@ sub _build_bridge_semantics($bridge, $actor, $unit_id, $domain_id, $endpoint_by_
                 owner => undef,
                 required_capability => $ARCHITECTURE_SCALE_CAPABILITY,
             }
+            : $bridge_kind eq 'architecture_scale_balanced_portable'
+                ? {
+                    detail => "Balanced-portable qualification retained record $id.",
+                    owner => undef,
+                    required_capability => $BALANCED_PORTABLE_CAPABILITY,
+                }
             : $AHB_RESIDUE{$id};
         _throw('HIAL_VIAL_BRIDGE_ANNOTATION_ERROR', 'annotation', "unknown bridge residue '$id'", '/actor/verification_bridge/residues')
             unless $definition;

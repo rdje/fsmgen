@@ -32,7 +32,7 @@ evidence: >-
   t/1644-vial-backend-emission-authority-alignment.t;
   t/1645-vial-architecture-scale-backend-emission-foundation.t;
   t/1647-vial-architecture-scale-backend-emission-portable-vhdl.t;
-  t/1648-vial-architecture-scale-backend-emission-osvvm.t; t/1650-vial-architecture-scale-backend-emission-family-qualification.t; t/1651-vial-architecture-scale-runtime-stream-construction.t;
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t; t/1650-vial-architecture-scale-backend-emission-family-qualification.t; t/1651-vial-architecture-scale-runtime-stream-construction.t; t/1652-vial-balanced-portable-bridge-admission.t;
   docs/knowledge/vial-execution-scale-reachability.md;
   docs/knowledge/vial-semantic-scale-catalog.md;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
@@ -46,13 +46,13 @@ reverify: >-
   docs/book/src/16d-hial-vial-verification-architecture.md &&
   rg -n 'T=6,319|T=29,508|T=22|Durability'
   docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md &&
-  rg -n '@expected_fields|@expected_events|private_nonportable|architecture_scale_probe|binding_count|SUPPORTED_CAPABILITY'
+  rg -n 'balanced_portable_v2|private_nonportable|architecture_scale_probe|binding_count|SUPPORTED_CAPABILITY'
   perl/FSM/HIAL/VIALBridge/Builder.pm perl/FSM/VIAL/ExecutionBuilder.pm
   perl/FSM/VIAL/Backend/SVPortableVerilator.pm
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md &&
   prove -Iperl t/1644-vial-backend-emission-authority-alignment.t
   t/1645-vial-architecture-scale-backend-emission-foundation.t
-  t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t t/1652-vial-balanced-portable-bridge-admission.t
 ---
 
 Decisions `0055` and `0056` select architecture-scale proof without claiming capacity.
@@ -85,13 +85,19 @@ profile keeps `architecture_scale_probe` but uses exact profile
 `balanced_portable`, revision `2`, facts `scale_evidence_only=true` and
 `qualified_emitter=sv_portable_verilator`, plus capability
 `hial_vial.bridge_qualification.balanced_portable_v2`. Separate bridge and
-execution entrypoints are caller-sealed to the balanced composer; portable SV
-must independently negotiate the exact bridge/ExecutionIR shape rather than
-trusting the capability name. The binding equation remains one unit/domain,
+execution entrypoints are implemented and caller-sealed to the balanced
+composer. The bridge emits a full-payload content identity; execution admission
+independently validates the exact manifest shape and resulting no-padding
+binding graph. Public callers, profile/field near misses, mutated facts, and a
+forged identity fail closed, while public AHB and private revision 1 retain
+their existing behavior. Portable SV must still independently negotiate the
+exact bridge/ExecutionIR shape rather than trusting the capability name. The
+binding equation remains one unit/domain,
 126 data endpoints, 32 probes, 16 aliases, 1,744 fields, and 128 events: 2,048
 bindings, with 109 fields per alias. Public planning, AHB, revision 1, other
 backends, runtime, support, performance, and capacity remain unchanged and
-unclaimed while `.17.2.7.2.2`-`.4` implement and qualify the route.
+unclaimed. Canonical composition `.17.2.7.2.3` and emitter qualification
+`.17.2.7.2.4` remain.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

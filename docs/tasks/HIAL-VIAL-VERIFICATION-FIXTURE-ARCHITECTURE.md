@@ -661,7 +661,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Compose the exact balanced portable workload from completed orthogonal gate constructions.`
   Acceptance: `Consume fresh successful gate-construction reports for every orthogonal family, then generate balanced_portable_v1 only through canonical VIAL/HIAL, SemanticIR, bridge, ExecutionIR, and portable-SystemVerilog emission routes; prove every decision-0055 interaction count, path-independent identities, byte-equal reruns, complete oracle applicability, mutation rejection, nonclaims, and exact same-volume cleanup without external execution or a capacity claim.`
-  Verification: `Clean provider-free runtime predecessor 3c1f0b411 and activation commit 33d4e48b3 own this leaf. The honest first focused run reports that t/1652 does not exist. Blocker audit f350553e1 proves the ordinary portable AHB bridge is fixed to one six-field/six-event transaction and architecture_scale_probe revision 1 is fixed to one field plus qualification_only/private_nonportable execution admission. The director authorized the recommended long-term route on 2026-08-22 with explicit SOTA/signoff/production-grade quality requirements. Decision 0077 therefore preserves both existing contracts and selects a distinct caller-sealed revision-2 balanced qualification profile, a separately caller-sealed execution admission, and exact portable-SystemVerilog negotiation; it adds no public protocol, planner, capability, runtime, support, performance, or capacity claim. Implementation is decomposed into the bridge/binder boundary .2.2, canonical balanced composition .2.3, and portable-emission/closure .2.4.`
+  Verification: `Clean provider-free runtime predecessor 3c1f0b411 and activation commit 33d4e48b3 own this leaf. The honest first focused run reports that t/1652 does not exist. Blocker audit f350553e1 proves the ordinary portable AHB bridge is fixed to one six-field/six-event transaction and architecture_scale_probe revision 1 is fixed to one field plus qualification_only/private_nonportable execution admission. The director authorized the recommended long-term route on 2026-08-22 with explicit SOTA/signoff/production-grade quality requirements. Decision 0077 therefore preserves both existing contracts and selects a distinct caller-sealed revision-2 balanced qualification profile, a separately caller-sealed execution admission, and exact portable-SystemVerilog negotiation. Child .2.2 now implements and regression-locks both private boundaries; canonical source composition .2.3 remains proposed next, followed by portable-emission closure .2.4. No public protocol, planner, capability, runtime, support, performance, or capacity claim is added.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2: select balanced portable bridge v2`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2.4`
 
@@ -673,10 +673,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2.1: select balanced portable bridge v2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the caller-sealed revision-2 HIAL bridge and ExecutionIR admission boundary.`
   Acceptance: `Add one exact direct-IAL1 bridge producer and one exact execution admission for the balanced profile; prove parsed/scheduled/lowered route closure, exact 128-endpoint/16-transaction/109-field/128-event/32-probe shape, 2,048-binding arithmetic, capability classification, public-route rejection, hostile mutation rejection, deterministic reports, and unchanged revision-1/AHB behavior.`
-  Verification: `pending`
+  Verification: `The honest RED watcher failed because build_balanced_portable_qualification did not exist. The completed private bridge now admits only the exact direct-IAL1 balanced_portable/revision-2 actor and constructs a content-addressed manifest with 128 endpoints, sixteen single-active transactions carrying 109 endpoint-backed fields each, 128 events, 32 storage-backed probes, the dedicated qualification capability, and no residue. Independent private ExecutionBuilder admission validates the complete bridge identity/shape before binding and then validates one domain, 126 data endpoints, 32 probes, sixteen transactions, all 1,744 fields, 128 events, zero event-input/adapter-state padding, and exactly 2,048 bindings. Public callers, missing or substituted protocol metadata, one-field near misses, mutated bridge facts, and forged manifest identity fail closed; independent reconstruction is byte-equal. Syntax passes for both modules and t/1652; the guarded eight-file bridge/execution/backend regression passes Files=8/Tests=41, and the strengthened focused rerun passes Files=1/Tests=3. Existing AHB, revision-1 scale, and portable-emission paths remain green and unchanged; canonical composition .2.3 remains proposed next.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2.2: implement balanced bridge admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2.3`
@@ -969,10 +969,18 @@ support authority and qualifies the repaired family. Completed generator
 `.3`, OSVVM `.4`, native-UVM `.5`, and family closure `.6`; all six children
 are complete and freeze the exact thirteen-emitted/seven-rejected profile
 partition. Runtime/balanced parent `.17.2.7` is active: runtime-stream
-construction `.1` is complete, balanced composition `.2` alone is active, and
-unified qualification `.3` remains proposed. Measurement `.17.3` remains later.
+construction `.1` is complete; balanced composition `.2` has its revision-2
+contract and bridge/binder boundary complete, with canonical composition `.2.3`
+proposed next; and unified qualification `.3` remains proposed. Measurement
+`.17.3` remains later.
 
 ## Decisions
+
+- `2026-08-22`: Complete balanced bridge/binder child `.17.2.7.2.2` without
+  activating `.2.3` in the dirty implementation tree. Keep revision 2 private,
+  direct-IAL1, content-addressed, exact-shape, and independently revalidated at
+  ExecutionIR admission; preserve public AHB, revision 1, portable emission,
+  support, runtime, performance, and capacity behavior.
 
 - `2026-08-22`: Activate balanced portable composition `.17.2.7.2` after clean
   provider-free runtime commit `3c1f0b411`. Consume the exact decision-`0055`
@@ -1508,6 +1516,7 @@ unified qualification `.3` remains proposed. Measurement `.17.3` remains later.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-22` | `.17.2.7.2.2` balanced bridge/binder implementation | missing-method RED witness; decision `0077`; exact caller-sealed direct-IAL1 bridge and ExecutionIR admission; full-payload content identity; exact endpoint/transaction/field/event/probe/binding shape; byte-equal rerun; public/missing-profile/substituted-profile/near-field/mutated-fact/forged-identity rejection; syntax; guarded focused and impacted compatibility; CI inventory; task/index/Memory/book/fact/claim/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, diff, staged-acceptance, and doctrine gates | `passed`; bridge and execution admission derive 128 bridge endpoints, 16 single-active aliases with 109 fields each, 128 events, 32 probes, and exactly 2,048 genuine bindings without padding. The focused watcher passes Files=1/Tests=3, the guarded eight-file impacted set passes Files=8/Tests=41 in 137 seconds, and the dedicated revision-1 bridge watcher passes Files=1/Tests=6. The 53-file/51,109-line book grows by 182 bytes without a ceiling increase and renders as 88 files/18,970,177 bytes before exact removal. Public AHB, revision 1, portable emission, runtime, support, performance, and capacity behavior remain unchanged; `.17.2.7.2.3` remains proposed next. |
 | `2026-08-22` | `.17.2.7.2` balanced portable composition activation | clean runtime-construction predecessor `3c1f0b411`; decisions `0055`/`0056`; exact catalog interaction profile and completed six-family constructor census; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.7.2` alone is active to consume six fresh orthogonal gate reports and compose the one catalog-owned portable-SystemVerilog interaction shape through canonical routes. Activation changes no code, test, config, workload bytes, generator, emitter, external execution, runtime, API, support, performance, capacity, or product behavior. |
 | `2026-08-22` | `.17.2.7.1` provider-free runtime-stream construction | missing-module RED witness; exact three-profile/five-level catalog ownership; frozen checked-AHB sources; double canonical SemanticIR/bridge/ExecutionIR/backend-input/plan route; content-addressed handoff and reports; profile/tool/schema/command/timeout/transcript authority; exact reference, 10,000/100,000, and earliest-cap specifications; no provider/tool/runtime/trace/result/reached-boundary claims; hostile invocant/source/tool/construction/report/support mutation rejection; same-volume success/failure cleanup; syntax; focused and guarded impacted compatibility; task/index/Memory/book/fact/claim/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, diff, staged-acceptance, and doctrine gates | `passed`; t/1651 passes Files=1/Tests=4 in 62 seconds and the guarded six-file impacted set passes Files=6/Tests=35 in 242 seconds. All fifteen reports are deterministic and provider-free; the 53-file/51,109-line book grows by 2,353 bytes without a ceiling increase and renders as 88 files/18,964,191 bytes before exact removal. No product API, external runtime, support, performance, capacity, or reached-boundary claim changes; `.17.2.7.2` remains proposed next. |
 | `2026-08-22` | `.17.2.7` runtime-stream/balanced activation and decomposition | clean backend-emission predecessor `86faa137d`; complete decisions `0055`/`0056`; current workload catalog/runtime-profile census; three-child task decomposition; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.7` is active as runtime-stream construction `.1`, balanced portable composition `.2`, and unified provider-free qualification `.3`; `.1` alone is active. Activation changes no code, test, config, generator, trace, result, external-tool execution, runtime, API, capability/support, performance, capacity, or product behavior. |
@@ -5526,3 +5535,38 @@ raising an enforcement ceiling.
   lines/2,711,880 bytes with a 0-line/+187-byte delta and no ceiling increase.
   Diff, staged acceptance, final doctrines, and zero generated-book residue
   close the docs-only slice; production behavior remains unchanged.
+
+## Acceptance Checklist (enforced) — `.17.2.7.2.2` balanced bridge/binder implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the honest first `prove -Iperl
+  t/1652-vial-balanced-portable-bridge-admission.t` run failed with `Can't
+  locate object method "build_balanced_portable_qualification" via package
+  "FSM::HIAL::VIALBridge::Builder"`. `git log -S'_validate_ahb_bridge'` and
+  `git log -S'_validate_architecture_scale_bridge'` locate the two intentionally
+  narrower existing contracts, so decision `0077`'s selected route had no
+  producer or execution admission rather than a hidden reusable implementation.
+- [x] **ADDRESSED (verified)** — the HIAL bridge has one composer-caller-sealed
+  direct-IAL1 revision-2 entrypoint that validates the complete scheduled actor,
+  constructs only the exact balanced shape, and content-addresses the canonical
+  full manifest payload. ExecutionBuilder has a separate composer-caller-sealed
+  entrypoint that independently validates route, protocol, facts, capabilities,
+  structure, and content identity before binding, then validates every binding
+  family and the exact no-padding total. New t/1652 reconstructs the route twice
+  and rejects public invocation, public fallback, missing/substituted metadata,
+  a 108-field alias, a mutated fact, and a forged identity. Canonical source
+  composition and emitter negotiation remain separately owned by `.2.3`/`.2.4`.
+- [x] **NO REGRESSION** — all three changed Perl files report `syntax OK`; the
+  strengthened t/1652 run reports `All tests successful` at Files=1/Tests=3,
+  the guarded bridge/execution/backend set reports Files=8/Tests=41 in 137
+  seconds, and the dedicated revision-1 bridge watcher reports Files=1/Tests=6.
+  CI-inventory plus claim inventory/disposition watchers pass at Files=3/
+  Tests=35; the governed census closes 1,431 candidates and 2,077 current/615
+  original constants as 842 derived gates/589 reviewed records/zero gaps. All
+  53 book chapters test; its repository-local 88-file/18,970,177-byte render
+  contains the exact boundary and is removed. The maintained book is 53 files/
+  51,109 lines/2,712,062 bytes under a fresh 0-line/+182-byte authority with no
+  ceiling increase. Task integrity remains three trees/969 nodes; relative paths
+  pass Files=1/Tests=2; Knowledge Map parity retains 1,150 facts/6,058 questions/
+  6,225 occurrences/133 shards; all 22 live-document surfaces, diff checks, and
+  zero generated-book residue pass. Public AHB, revision 1, portable emission,
+  runtime, support, performance, and capacity behavior remain unchanged.

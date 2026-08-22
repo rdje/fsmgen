@@ -23,6 +23,10 @@ my $PROFILE = 'core_directed_single_clock_execution_v1';
 my $RANDOM_ALGORITHM = 'sha256_counter_rejection_v1';
 my $ARCHITECTURE_SCALE_CAPABILITY =
     'hial_vial.bridge_qualification.architecture_scale_v1';
+my $BALANCED_PORTABLE_CAPABILITY =
+    'hial_vial.bridge_qualification.balanced_portable_v2';
+my $BALANCED_PORTABLE_CALLER =
+    'FSM::VIAL::ArchitectureScaleBalancedPortable';
 my %LIMIT = %{build_vial_execution_contract()->{limits}};
 
 my @EXECUTION_CAPABILITIES = qw(
@@ -105,7 +109,7 @@ sub build_architecture_scale_qualification($class, @args) {
         semantic_path => '/',
     ) unless @args == 1 && ref($args[0]) eq 'HASH' && !blessed($args[0]);
 
-    my $result = eval { _build($args[0], 1) };
+    my $result = eval { _build($args[0], 'architecture_scale_v1') };
     return $result if $result;
     my $error = $@;
     return _failure_result(%$error)
@@ -118,7 +122,37 @@ sub build_architecture_scale_qualification($class, @args) {
     );
 }
 
-sub _build($raw, $architecture_scale_qualification = 0) {
+sub build_balanced_portable_qualification($class, @args) {
+    my $caller = caller;
+    return _failure_result(
+        code => 'VIAL_EXECUTION_INVOCATION_ERROR',
+        phase => 'invocation',
+        message => 'balanced-portable qualification binding is private to '
+            . $BALANCED_PORTABLE_CALLER,
+        semantic_path => '/',
+    ) unless defined($class) && !ref($class) && $class eq __PACKAGE__
+        && defined($caller) && $caller eq $BALANCED_PORTABLE_CALLER;
+    return _failure_result(
+        code => 'VIAL_EXECUTION_INVOCATION_ERROR',
+        phase => 'invocation',
+        message => 'balanced-portable qualification binding expects exactly one closed argument hash',
+        semantic_path => '/',
+    ) unless @args == 1 && ref($args[0]) eq 'HASH' && !blessed($args[0]);
+
+    my $result = eval { _build($args[0], 'balanced_portable_v2') };
+    return $result if $result;
+    my $error = $@;
+    return _failure_result(%$error)
+        if blessed($error) && $error->isa('FSM::VIAL::ExecutionBuilder::Failure');
+    return _failure_result(
+        code => 'VIAL_EXECUTION_INTERNAL_ERROR',
+        phase => 'internal',
+        message => 'internal VIAL execution construction failure',
+        semantic_path => '/',
+    );
+}
+
+sub _build($raw, $qualification_profile = undef) {
     my %allowed = map { $_ => 1 } qw(
         semantic_ir bridge_manifest fixture_id scenario_ids execution_profile
         replay_manifest native_extension_catalog
@@ -167,7 +201,7 @@ sub _build($raw, $architecture_scale_qualification = 0) {
 
     my $semantic = $raw->{semantic_ir}->as_hashref;
     my $bridge = $raw->{bridge_manifest}->as_hashref;
-    _validate_input_profiles($semantic, $bridge, $architecture_scale_qualification);
+    _validate_input_profiles($semantic, $bridge, $qualification_profile);
 
     my ($package, $fixture) = _find_fixture($semantic, $raw->{fixture_id});
     my @selected_scenarios = _select_scenarios($fixture, $raw->{scenario_ids});
@@ -209,6 +243,8 @@ sub _build($raw, $architecture_scale_qualification = 0) {
     };
     _index_bridge($ctx);
     my $bindings = _bind_fixture($ctx);
+    _validate_balanced_portable_bindings($bindings)
+        if ($qualification_profile // '') eq 'balanced_portable_v2';
     _index_scenario_handle_bindings($ctx);
     my ($operation_graph, $scenario_records) = _build_operations($ctx);
     my $randomness = _build_randomness(
@@ -229,7 +265,7 @@ sub _build($raw, $architecture_scale_qualification = 0) {
     _limit('faults', scalar(@{$fixture->{faults}}), '/faults');
 
     my $capability_ledger = _capability_ledger(
-        $semantic, $bridge, $architecture_scale_qualification,
+        $semantic, $bridge, $qualification_profile,
     );
     my $resource_summary = _resource_summary(
         $ctx, $bindings, $models, $scoreboards, $coverage, $faults,
@@ -286,7 +322,7 @@ sub _build($raw, $architecture_scale_qualification = 0) {
     };
 }
 
-sub _validate_input_profiles($semantic, $bridge, $architecture_scale_qualification) {
+sub _validate_input_profiles($semantic, $bridge, $qualification_profile) {
     _throw('VIAL_CAPABILITY_ERROR', 'capability', 'SemanticIR schema/profile is unsupported', '/semantic_ir')
         unless $semantic->{schema_version} == 1
             && $semantic->{language} eq 'vial'
@@ -301,11 +337,18 @@ sub _validate_input_profiles($semantic, $bridge, $architecture_scale_qualificati
         '/bridge_manifest/review_route')
         unless ($bridge->{review_route}{authored_layer} // '') =~ /\A(?:IAL0|IAL1|IAL2)\z/
             && !$bridge->{review_route}{direct_ial2_to_verification};
-    _validate_architecture_scale_qualification($bridge)
-        if $architecture_scale_qualification;
+    _validate_architecture_scale_qualification($bridge, $qualification_profile)
+        if defined $qualification_profile;
 }
 
-sub _validate_architecture_scale_qualification($bridge) {
+sub _validate_architecture_scale_qualification($bridge, $qualification_profile) {
+    _throw('VIAL_CAPABILITY_ERROR', 'capability',
+        'unknown private execution qualification profile',
+        '/bridge_manifest/protocols')
+        unless ($qualification_profile // '') =~
+            /\A(?:architecture_scale_v1|balanced_portable_v2)\z/;
+    return _validate_balanced_portable_qualification($bridge)
+        if $qualification_profile eq 'balanced_portable_v2';
     my @protocols = @{$bridge->{protocols} || []};
     my $protocol = @protocols == 1 ? $protocols[0] : {};
     my @facts = @{$protocol->{facts} || []};
@@ -329,6 +372,203 @@ sub _validate_architecture_scale_qualification($bridge) {
             && ($facts[0]{value} // '') eq 'true'
             && $capability{$ARCHITECTURE_SCALE_CAPABILITY}
             && !$capability{'hial_vial.bridge_protocol.ahb_subordinate_v1'};
+}
+
+sub _validate_balanced_portable_qualification($bridge) {
+    my @protocols = @{$bridge->{protocols} || []};
+    my $protocol = @protocols == 1 ? $protocols[0] : {};
+    my %facts = map { ($_->{name} // '') => ($_->{value} // '') }
+        @{$protocol->{facts} || []};
+    my %capability = map { $_ => 1 }
+        @{$bridge->{required_capabilities} || []};
+    my @expected_capabilities = sort qw(
+        hial_vial.bridge_manifest.v1
+        hial_vial.bridge_probe.equivalent_adapter_required
+        hial_vial.bridge_profile.core_single_unit_v1
+        hial_vial.bridge_qualification.balanced_portable_v2
+        hial_vial.bridge_source.ial1
+    );
+    my @layers = map { $_->{layer} // '' }
+        @{$bridge->{review_route}{stages} || []};
+    _throw('VIAL_CAPABILITY_ERROR', 'capability',
+        'balanced-portable qualification requires the exact private direct-IAL1 revision-2 protocol profile',
+        '/bridge_manifest/protocols')
+        unless ($bridge->{review_route}{authored_layer} // '') eq 'IAL1'
+            && !$bridge->{review_route}{direct_ial2_to_verification}
+            && join("\0", @layers) eq join("\0", qw(IAL1 IAL0))
+            && ($protocol->{protocol_id} // '')
+                eq 'protocol/architecture_scale_probe'
+            && ($protocol->{name} // '') eq 'architecture_scale_probe'
+            && ($protocol->{profile} // '') eq 'balanced_portable'
+            && ($protocol->{revision} // '') eq '2'
+            && ($protocol->{role} // '') eq 'verification'
+            && keys(%facts) == 2
+            && ($facts{scale_evidence_only} // '') eq 'true'
+            && ($facts{qualified_emitter} // '')
+                eq 'sv_portable_verilator'
+            && join("\0", @{$bridge->{required_capabilities} || []})
+                eq join("\0", @expected_capabilities)
+            && $capability{$BALANCED_PORTABLE_CAPABILITY}
+            && !$capability{$ARCHITECTURE_SCALE_CAPABILITY}
+            && !$capability{'hial_vial.bridge_protocol.ahb_subordinate_v1'};
+
+    _throw('VIAL_CAPABILITY_ERROR', 'capability',
+        'balanced-portable bridge manifest does not retain its exact closed structural shape',
+        '/bridge_manifest')
+        unless @{$bridge->{units} || []} == 1
+            && @{$bridge->{sources} || []} == 2
+            && @{$bridge->{review_artifacts} || []} == 2
+            && @{$bridge->{domains} || []} == 1
+            && @{$bridge->{configurations} || []} == 0
+            && @{$bridge->{types} || []} == 1
+            && @{$bridge->{endpoints} || []} == 128
+            && @{$bridge->{transactions} || []} == 16
+            && @{$bridge->{events} || []} == 128
+            && @{$bridge->{protocols} || []} == 1
+            && @{$bridge->{observations} || []} == 0
+            && @{$bridge->{probes} || []} == 32
+            && @{$bridge->{backend_bindings} || []} == 322
+            && @{$bridge->{unsupported_residue} || []} == 0;
+
+    my $unit = $bridge->{units}[0];
+    my $domain = $bridge->{domains}[0];
+    my $type = $bridge->{types}[0];
+    _throw('VIAL_CAPABILITY_ERROR', 'capability',
+        'balanced-portable unit, domain, or carrier type identity changed',
+        '/bridge_manifest')
+        unless ($unit->{unit_id} // '')
+                eq 'unit/vial_architecture_scale_balanced_portable'
+            && ($unit->{name} // '')
+                eq 'vial_architecture_scale_balanced_portable'
+            && ($domain->{domain_id} // '') eq 'domain/balanced'
+            && ($domain->{unit_id} // '') eq $unit->{unit_id}
+            && ($domain->{clock_endpoint_id} // '') eq 'endpoint/clk'
+            && ($domain->{reset_endpoint_id} // '') eq 'endpoint/rst_n'
+            && ($domain->{active_edge} // '') eq 'rising'
+            && ($domain->{reset_kind} // '') eq 'async'
+            && ($domain->{reset_polarity} // '') eq 'active_low'
+            && ($type->{type_id} // '') eq 'type/logic_u1'
+            && ($type->{kind} // '') eq 'logic'
+            && ($type->{state_domain} // '') eq 'four_state'
+            && ($type->{width} // 0) == 1
+            && !$type->{signed};
+
+    my %endpoint = map { ($_->{endpoint_id} // '') => $_ }
+        @{$bridge->{endpoints}};
+    for my $special (
+        ['endpoint/clk', 'clk', 'clock'],
+        ['endpoint/rst_n', 'rst_n', 'reset'],
+    ) {
+        my ($id, $name, $role) = @$special;
+        my $record = $endpoint{$id};
+        _throw('VIAL_CAPABILITY_ERROR', 'capability',
+            'balanced-portable clock/reset endpoint contract changed',
+            '/bridge_manifest/endpoints')
+            unless ref($record) eq 'HASH'
+                && ($record->{name} // '') eq $name
+                && ($record->{unit_id} // '') eq $unit->{unit_id}
+                && ($record->{direction} // '') eq 'input'
+                && ($record->{type_id} // '') eq 'type/logic_u1'
+                && ($record->{role} // '') eq $role
+                && ($record->{access} // '') eq 'public_port'
+                && ($record->{domain_id} // '') eq 'domain/balanced';
+    }
+    for my $index (0 .. 125) {
+        my $name = sprintf('endpoint_%08d', $index);
+        my $record = $endpoint{"endpoint/$name"};
+        _throw('VIAL_CAPABILITY_ERROR', 'capability',
+            'balanced-portable data endpoint family changed',
+            '/bridge_manifest/endpoints')
+            unless ref($record) eq 'HASH'
+                && ($record->{name} // '') eq $name
+                && ($record->{unit_id} // '') eq $unit->{unit_id}
+                && ($record->{direction} // '') eq 'input'
+                && ($record->{type_id} // '') eq 'type/logic_u1'
+                && ($record->{role} // '') eq 'data'
+                && ($record->{access} // '') eq 'public_port'
+                && ($record->{domain_id} // '') eq 'domain/balanced';
+    }
+
+    my %transaction = map { ($_->{transaction_id} // '') => $_ }
+        @{$bridge->{transactions}};
+    my %event = map { ($_->{event_id} // '') => $_ } @{$bridge->{events}};
+    for my $index (0 .. 15) {
+        my $name = sprintf('transaction_%08d', $index);
+        my $record = $transaction{"transaction/$name"};
+        my $event_count = $index == 0 ? 113 : 1;
+        _throw('VIAL_CAPABILITY_ERROR', 'capability',
+            'balanced-portable transaction family changed',
+            '/bridge_manifest/transactions')
+            unless ref($record) eq 'HASH'
+                && ($record->{name} // '') eq $name
+                && ($record->{unit_id} // '') eq $unit->{unit_id}
+                && ($record->{ordering} // '') eq 'in_order'
+                && ($record->{correlation} // '') eq 'single_active'
+                && @{$record->{fields} || []} == 109
+                && @{$record->{event_ids} || []} == $event_count
+                && ($index == 0
+                    ? ($record->{protocol_id} // '')
+                        eq 'protocol/architecture_scale_probe'
+                    : !defined($record->{protocol_id}));
+        for my $field_index (0 .. 108) {
+            my $endpoint_name = sprintf('endpoint_%08d', $field_index);
+            my $field = $record->{fields}[$field_index];
+            _throw('VIAL_CAPABILITY_ERROR', 'capability',
+                'balanced-portable transaction field family changed',
+                '/bridge_manifest/transactions')
+                unless ($field->{name} // '') eq $endpoint_name
+                    && ($field->{type_id} // '') eq 'type/logic_u1'
+                    && ($field->{endpoint_id} // '')
+                        eq "endpoint/$endpoint_name"
+                    && ($field->{direction} // '') eq 'drive'
+                    && ($field->{phase_role} // '') eq 'unspecified';
+        }
+        for my $event_index (0 .. $event_count - 1) {
+            my $event_name = $index == 0
+                ? sprintf('bridge_event_%08d', $event_index) : 'on';
+            my $event_id = "event/$name/$event_name";
+            my $event_record = $event{$event_id};
+            _throw('VIAL_CAPABILITY_ERROR', 'capability',
+                'balanced-portable event family changed',
+                '/bridge_manifest/events')
+                unless ref($event_record) eq 'HASH'
+                    && ($event_record->{transaction_id} // '')
+                        eq "transaction/$name"
+                    && ($event_record->{name} // '') eq $event_name
+                    && ($event_record->{kind} // '') eq 'predicate'
+                    && ($event_record->{phase} // '') eq 'sample'
+                    && join("\0", @{$event_record->{required_endpoint_ids} || []})
+                        eq 'endpoint/endpoint_00000000'
+                    && !@{$event_record->{required_probe_ids} || []};
+        }
+    }
+
+    my %probe = map { ($_->{probe_id} // '') => $_ }
+        @{$bridge->{probes}};
+    for my $index (0 .. 31) {
+        my $name = sprintf('probe_%08d', $index);
+        my $record = $probe{"probe/$name"};
+        _throw('VIAL_CAPABILITY_ERROR', 'capability',
+            'balanced-portable probe family changed',
+            '/bridge_manifest/probes')
+            unless ref($record) eq 'HASH'
+                && ($record->{name} // '') eq $name
+                && ($record->{unit_id} // '') eq $unit->{unit_id}
+                && ($record->{type_id} // '') eq 'type/logic_u1'
+                && ($record->{access} // '') eq 'verification_probe'
+                && ($record->{domain_id} // '') eq 'domain/balanced'
+                && ($record->{adapter_requirement} // '')
+                    eq 'equivalent_adapter_required';
+    }
+
+    my $identity_data = _clone($bridge);
+    my $observed_id = delete $identity_data->{manifest_id};
+    my $expected_id = 'bridge/' . sha256_hex(_canonical_json($identity_data));
+    _throw('VIAL_CAPABILITY_ERROR', 'capability',
+        'balanced-portable bridge manifest content identity changed',
+        '/bridge_manifest/manifest_id')
+        unless defined($observed_id) && !ref($observed_id)
+            && $observed_id eq $expected_id;
 }
 
 sub _find_fixture($semantic, $fixture_id) {
@@ -454,6 +694,106 @@ sub _bind_fixture($ctx) {
     $binding_count += scalar(@{$_->{adapter_state_binding_ids}}) for @{$bindings->{events}};
     _limit('bindings', $binding_count, '/bindings');
     return $bindings;
+}
+
+sub _validate_balanced_portable_bindings($bindings) {
+    my $binding_count = 1 + @{$bindings->{domains} || []}
+        + @{$bindings->{endpoints} || []}
+        + @{$bindings->{probes} || []}
+        + @{$bindings->{transactions} || []}
+        + @{$bindings->{events} || []};
+    $binding_count += scalar(@{$_->{fields} || []})
+        for @{$bindings->{transactions} || []};
+    $binding_count += scalar(@{$_->{event_input_bindings} || []})
+        for @{$bindings->{transactions} || []};
+    $binding_count += scalar(@{$_->{adapter_state_binding_ids} || []})
+        for @{$bindings->{events} || []};
+    _throw('VIAL_CAPABILITY_ERROR', 'capability',
+        'balanced-portable execution admission requires the exact no-padding 2048-binding shape',
+        '/bindings')
+        unless @{$bindings->{domains} || []} == 1
+            && @{$bindings->{endpoints} || []} == 126
+            && @{$bindings->{probes} || []} == 32
+            && @{$bindings->{transactions} || []} == 16
+            && @{$bindings->{events} || []} == 128
+            && $binding_count == 2_048;
+
+    my %endpoint = map { ($_->{endpoint_id} // '') => $_ }
+        @{$bindings->{endpoints}};
+    for my $index (0 .. 125) {
+        my $id = sprintf('endpoint/endpoint_%08d', $index);
+        my $record = $endpoint{$id};
+        _throw('VIAL_CAPABILITY_ERROR', 'capability',
+            'balanced-portable execution endpoint binding family changed',
+            '/bindings/endpoints')
+            unless ref($record) eq 'HASH'
+                && ($record->{carrier_direction} // '') eq 'input'
+                && ($record->{access} // '') eq 'public_port'
+                && @{$record->{relations} || []} == 1
+                && ($record->{relations}[0]{direction} // '') eq 'drive';
+    }
+
+    my %probe = map { ($_->{probe_id} // '') => $_ }
+        @{$bindings->{probes}};
+    for my $index (0 .. 31) {
+        my $id = sprintf('probe/probe_%08d', $index);
+        my $record = $probe{$id};
+        _throw('VIAL_CAPABILITY_ERROR', 'capability',
+            'balanced-portable execution probe binding family changed',
+            '/bindings/probes')
+            unless ref($record) eq 'HASH'
+                && ($record->{access} // '') eq 'verification_probe'
+                && ($record->{adapter_requirement} // '')
+                    eq 'equivalent_adapter_required'
+                && @{$record->{relations} || []} == 1
+                && ($record->{relations}[0]{direction} // '') eq 'sample';
+    }
+
+    my %transaction = map { ($_->{transaction_id} // '') => $_ }
+        @{$bindings->{transactions}};
+    my %event = map { ($_->{event_id} // '') => $_ }
+        @{$bindings->{events}};
+    for my $index (0 .. 15) {
+        my $name = sprintf('transaction_%08d', $index);
+        my $record = $transaction{"transaction/$name"};
+        my $event_count = $index == 0 ? 113 : 1;
+        _throw('VIAL_CAPABILITY_ERROR', 'capability',
+            'balanced-portable execution transaction binding family changed',
+            '/bindings/transactions')
+            unless ref($record) eq 'HASH'
+                && ($record->{correlation} // '') eq 'single_active'
+                && @{$record->{fields} || []} == 109
+                && @{$record->{event_input_bindings} || []} == 0
+                && @{$record->{event_binding_ids} || []} == $event_count;
+        for my $field_index (0 .. 108) {
+            my $endpoint_name = sprintf('endpoint_%08d', $field_index);
+            my $field = $record->{fields}[$field_index];
+            _throw('VIAL_CAPABILITY_ERROR', 'capability',
+                'balanced-portable execution field binding family changed',
+                '/bindings/transactions')
+                unless ($field->{name} // '') eq $endpoint_name
+                    && ($field->{endpoint_id} // '')
+                        eq "endpoint/$endpoint_name"
+                    && ($field->{direction} // '') eq 'drive'
+                    && ($field->{phase_role} // '') eq 'unspecified';
+        }
+        for my $event_index (0 .. $event_count - 1) {
+            my $event_name = $index == 0
+                ? sprintf('bridge_event_%08d', $event_index) : 'on';
+            my $event_id = "event/$name/$event_name";
+            my $event_record = $event{$event_id};
+            _throw('VIAL_CAPABILITY_ERROR', 'capability',
+                'balanced-portable execution event binding family changed',
+                '/bindings/events')
+                unless ref($event_record) eq 'HASH'
+                    && ($event_record->{transaction_binding_id} // '')
+                        eq $record->{binding_id}
+                    && ($event_record->{name} // '') eq $event_name
+                    && ($event_record->{kind} // '') eq 'predicate'
+                    && ($event_record->{phase} // '') eq 'sample'
+                    && !@{$event_record->{adapter_state_binding_ids} || []};
+        }
+    }
 }
 
 sub _bind_endpoint($ctx, $bindings, $semantic, $unit) {
@@ -1718,7 +2058,7 @@ sub _execution_value_type($ctx, $node) {
     return $entry->{semantic_type};
 }
 
-sub _capability_ledger($semantic, $bridge, $architecture_scale_qualification) {
+sub _capability_ledger($semantic, $bridge, $qualification_profile) {
     my %known = map { $_ => 1 } (
         @{$semantic->{required_capabilities}}, @{$bridge->{required_capabilities}},
         @EXECUTION_CAPABILITIES,
@@ -1744,7 +2084,10 @@ sub _capability_ledger($semantic, $bridge, $architecture_scale_qualification) {
             hial_vial.bridge_source.ial1
             hial_vial.bridge_source.ial2_via_generated_ial1
         ),
-        ($architecture_scale_qualification ? $ARCHITECTURE_SCALE_CAPABILITY : ()),
+        (($qualification_profile // '') eq 'architecture_scale_v1'
+            ? $ARCHITECTURE_SCALE_CAPABILITY : ()),
+        (($qualification_profile // '') eq 'balanced_portable_v2'
+            ? $BALANCED_PORTABLE_CAPABILITY : ()),
         @EXECUTION_CAPABILITIES,
     );
     for my $capability (sort keys %known) {
@@ -1755,12 +2098,16 @@ sub _capability_ledger($semantic, $bridge, $architecture_scale_qualification) {
     return [map {
         my $adapter = $_ eq 'hial_vial.bridge_probe.equivalent_adapter_required';
         my $scale_qualification = $_ eq $ARCHITECTURE_SCALE_CAPABILITY;
+        my $balanced_portable = $_ eq $BALANCED_PORTABLE_CAPABILITY;
         {
             capability_id => $_,
             origins => [sort(_ordered_unique(@{$origin{$_} || []}))],
-            classification => $scale_qualification ? 'qualification_only'
+            classification => ($scale_qualification || $balanced_portable)
+                ? 'qualification_only'
                 : $adapter ? 'required_from_backend' : 'satisfied_by_execution_profile',
             portable_class => $scale_qualification ? 'private_nonportable'
+                : $balanced_portable
+                    ? 'portable_with_exact_emitter_qualification'
                 : $adapter ? 'portable_with_equivalent_adapter' : 'portable',
             evidence_ids => [sort(_ordered_unique(@{$origin{$_} || []}))],
         }
