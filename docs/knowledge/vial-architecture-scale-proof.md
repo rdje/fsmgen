@@ -96,8 +96,8 @@ binding equation remains one unit/domain,
 126 data endpoints, 32 probes, 16 aliases, 1,744 fields, and 128 events: 2,048
 bindings, with 109 fields per alias. Public planning, AHB, revision 1, other
 backends, runtime, support, performance, and capacity remain unchanged and
-unclaimed. Canonical composition `.17.2.7.2.3` and emitter qualification
-`.17.2.7.2.4` remain.
+unclaimed. Canonical composition `.17.2.7.2.3` is active; emitter qualification
+`.17.2.7.2.4` remains proposed.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
