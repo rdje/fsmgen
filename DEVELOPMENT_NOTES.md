@@ -548,3 +548,20 @@ and replay equality are independent outcomes rather than trust in a cached
 route. Portable emission remains another caller-sealed negotiation boundary;
 composition success alone cannot promote the profile into emitter or product
 support.
+
+## 2026-08-22: Balanced emission qualification is full-shape admission
+
+The portable-SystemVerilog backend does not treat the revision-2 capability as
+an allow-list token. Its private qualification entrypoint independently checks
+the bridge manifest, ExecutionIR resources and relations, known values,
+operations, and canonical backend inputs before rendering. The public emitter
+continues to reject the profile, which makes accidental product exposure a
+separate, evidenced decision rather than a side effect of scale work.
+
+The structural oracle owns the complete artifact graph and verifies operation
+and binding source-map coverage, identifiers, identities, byte-equal reruns,
+atomic failure, and repository-volume cleanup. It deliberately ends before an
+external compiler or runtime. During implementation, explicit
+`sort(_unique(...))` calls replaced ambiguous Perl `sort SUBNAME LIST` parsing;
+canonical evidence ordering must be syntactically unambiguous at every sealed
+boundary.

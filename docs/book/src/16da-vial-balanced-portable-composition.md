@@ -72,6 +72,48 @@ Count equality alone is insufficient. The evaluator also verifies:
 - 1,024 unique `sha256_counter_rejection_v1` occurrences, 32 per scenario,
   with normalized generated/replayed plan equality.
 
+## Qualified portable-SystemVerilog boundary
+
+`FSM::VIAL::ArchitectureScaleBalancedPortableEmission` is the sole owner of
+balanced structural emission. `evaluate` accepts only the canonical
+construction. It freshly reruns the six-family composition, derives backend
+inputs through `PlanBuilder`, and asks the portable-SystemVerilog backend to
+admit the complete revision-2 bridge, ExecutionIR, and input projection. A
+capability string by itself is never sufficient.
+
+The backend qualification entrypoint is caller-sealed and distinct from public
+`emit`. The latter continues to reject this private profile. Before rendering,
+the sealed path independently checks the exact protocol facts, one unit and
+domain, 128 endpoints, 32 probes, 16 transactions and their 1,744 fields, 128
+events, 2,048 bindings, relations, known values, all 1,024 operations, and the
+canonical backend inputs. Fifteen exact negotiated requirements must all be
+satisfied; approximation and native-only fallbacks are empty.
+
+One successful evaluation freezes this structural artifact graph:
+
+| Evidence | Exact value |
+| --- | ---: |
+| total artifacts / SystemVerilog sources | 8 / 3 |
+| source bytes | 503,279 |
+| source-map entries | 3,605 |
+| mapped operation IDs | 1,024 |
+| mapped binding IDs | 2,048 |
+
+The three generated sources are the runtime package, the balanced DUT, and its
+qualification testbench. The other five artifacts are the backend manifest,
+source-map index, compile and run command descriptions, and tool-profile
+evidence. Every artifact uses a repository-relative logical path and an
+in-memory byte identity. Independent route and emission reruns must be byte
+equal, every generated identifier must be legal and within the frozen limit,
+and manifest/map/artifact references must close over exactly this graph.
+
+Public bypass, unsealed calls, changed bridge facts, changed ExecutionIR
+resources, changed backend-input bytes, report mutation, and construction
+mutation all fail before a partial graph can escape. `with_staging` provides
+the same repository-volume success/failure cleanup contract as composition.
+This is deliberately stronger than label admission while remaining narrower
+than product support.
+
 ## Repository-root example
 
 Run this diagnostic from the repository root. It supplies no intermediate
@@ -82,6 +124,7 @@ qualification watcher:
 use strict;
 use warnings;
 use FSM::VIAL::ArchitectureScaleBalancedPortable;
+use FSM::VIAL::ArchitectureScaleBalancedPortableEmission;
 
 sub read_raw {
     my ($path) = @_;
@@ -98,18 +141,26 @@ my $construction = $class->construct({
 });
 my $report = $class->evaluate({construction => $construction});
 die "balanced composition rejected\n" unless $report->{ok};
+my $emission = 'FSM::VIAL::ArchitectureScaleBalancedPortableEmission'
+    ->evaluate({construction => $construction});
+die "balanced structural emission rejected\n" unless $emission->{ok};
 
 printf "endpoints=%d transactions=%d fields/transaction=%d bindings=%d\n",
     $report->{metrics}{endpoints},
     $report->{metrics}{transactions},
     $report->{metrics}{fields_per_transaction}[0],
     $report->{metrics}{bindings};
+printf "artifacts=%d sources=%d maps=%d\n",
+    $emission->{artifact_oracle}{artifact_count},
+    $emission->{artifact_oracle}{source_artifact_count},
+    $emission->{artifact_oracle}{source_map_entries};
 ```
 
 Run it as `perl -Iperl example.pl` if saved as `example.pl`. The output is:
 
 ```text
 endpoints=128 transactions=16 fields/transaction=109 bindings=2048
+artifacts=8 sources=3 maps=3605
 ```
 
 `validate_report` does not merely check the report's shape or digest. It
@@ -119,17 +170,16 @@ seal fail. `with_staging` delegates to the repository-local scale staging
 contract, verifies same-volume placement, sanitizes consumer failures, and
 removes the exact staging tree after success or failure.
 
-Focused `t/1653-vial-balanced-portable-composition.t` is the durability and
-falsification watcher. It rejects source/report mutation, gate injection,
-private-route borrowing, and machine-local residue. The guarded nine-file
-family matrix independently re-derives the six prerequisites and complete
-composition together.
+Focused `t/1653-vial-balanced-portable-composition.t` owns composition
+durability and falsification. Focused
+`t/1654-vial-balanced-portable-emission.t` owns exact negotiation, structural
+artifacts, map closure, mutation/public-bypass rejection, defensive report
+regeneration, and cleanup. Impacted matrices independently retain the six
+prerequisites and existing public/revision-1 behavior.
 
 ## Deliberate nonclaims
 
-This slice ends at target-neutral plan construction. Portable-SystemVerilog
-emission qualification is active via `.17.2.7.2.4`, which must negotiate the
-complete revision-2 bridge and ExecutionIR shape rather than trusting a
-capability label. No external compiler or runtime executes here. Public
-planning, other backends, support, performance, capacity, and reached-boundary
-claims remain unchanged.
+This profile ends at deterministic portable-SystemVerilog structural emission.
+No external compiler or runtime executes, no trace is materialized, and no
+result is produced. Public planning and emission, other backends, support,
+performance, capacity, and reached-boundary claims remain unchanged.

@@ -22,6 +22,9 @@ use FSM::Scheduler::ISF;
 use FSM::VIAL::ExecutionBuilder;
 use FSM::VIAL::SemanticIR;
 
+my $BALANCED_PORTABLE_CALLER =
+    'FSM::VIAL::ArchitectureScaleBalancedPortable';
+
 sub build($class, @args) {
     return _failure('VIAL_TOOL_INVOCATION_ERROR', 'build requires the exact PlanBuilder class invocant', '/')
         unless defined($class) && !ref($class) && $class eq __PACKAGE__;
@@ -35,6 +38,43 @@ sub build($class, @args) {
         _sanitize_exception($@),
         '/',
     );
+}
+
+sub _build_balanced_portable_backend_inputs($class, @args) {
+    my $caller = caller;
+    confess "balanced-portable backend-input construction is caller-sealed\n"
+        unless defined($class) && !ref($class) && $class eq __PACKAGE__
+            && $caller eq $BALANCED_PORTABLE_CALLER;
+    confess __PACKAGE__
+        . "->_build_balanced_portable_backend_inputs expects one closed hash\n"
+        unless @args == 1 && ref($args[0]) eq 'HASH'
+            && !blessed($args[0]);
+    _require_exact_keys(
+        $args[0], [qw(hial_source)],
+        'balanced-portable backend-input construction',
+    );
+    my $source = $args[0]{hial_source};
+    confess "balanced-portable HIAL source must be one closed source hash\n"
+        unless ref($source) eq 'HASH' && !blessed($source);
+    _require_exact_keys(
+        $source, [qw(format source_id text)],
+        'balanced-portable HIAL source',
+    );
+    confess "balanced-portable HIAL format must be 'isf'\n"
+        unless defined($source->{format}) && !ref($source->{format})
+            && $source->{format} eq 'isf';
+    confess "balanced-portable HIAL source id must be repository-relative .isf\n"
+        unless defined($source->{source_id}) && !ref($source->{source_id})
+            && $source->{source_id} =~ /\.isf\z/i
+            && $source->{source_id} !~ m{(?:\A/|\A~|\A[A-Za-z]:|://|\\|\x00)}
+            && !grep { $_ eq '' || $_ eq '.' || $_ eq '..' }
+                split(m{/}, $source->{source_id}, -1);
+    confess "balanced-portable HIAL text must be a scalar\n"
+        unless defined($source->{text}) && !ref($source->{text});
+
+    my $prepared = _prepare_ial1_source_route($source);
+    my $generated = _generate_ial1_route_outputs($prepared);
+    return _clone($generated);
 }
 
 sub _build($raw) {
@@ -160,31 +200,63 @@ sub _build_ial0_route($source) {
 }
 
 sub _build_ial1_route($source) {
+    my $prepared = _prepare_ial1_source_route($source);
+    my $bridge = FSM::HIAL::VIALBridge::Builder->build_ial1({
+        profile => 'core_single_unit_v1',
+        authored_source => $prepared->{authored_source},
+        actor => $prepared->{actor},
+        schedule_report => $prepared->{schedule_report},
+        generated_ial0 => $prepared->{generated_ial0},
+        backend_names => $prepared->{backend_names},
+    });
+    my $generated = _generate_ial1_route_outputs($prepared);
+    return {
+        bridge_result => $bridge,
+        review_artifacts => $generated->{review_artifacts},
+        backend_inputs => $generated->{backend_inputs},
+    };
+}
+
+sub _prepare_ial1_source_route($source) {
     my $adapter = FSM::Adapter::ISF->new();
     my $scheduler = FSM::Scheduler::ISF->new();
     my $actor = $adapter->parse_source($source->{text}, basename($source->{source_id}));
     my $schedule = JSON::PP->new->decode($scheduler->report($actor));
     my $lowered = $scheduler->lower($actor);
     my ($entry_name, $entry_text) = _generated_ial0_entry($actor, $lowered->{files});
-    my $bridge = FSM::HIAL::VIALBridge::Builder->build_ial1({
-        profile => 'core_single_unit_v1',
-        authored_source => _source_record($source->{text}, $source->{source_id}),
+    return {
+        source_id => $source->{source_id},
+        authored_source => _source_record(
+            $source->{text}, $source->{source_id}),
         actor => $actor,
         schedule_report => $schedule,
-        generated_ial0 => _source_record($entry_text, undef, $entry_name),
+        generated_ial0 => _source_record(
+            $entry_text, undef, $entry_name),
         backend_names => _backend_names_from_actor($actor),
-    });
+        generated_files => _clone($lowered->{files}),
+        entry_name => $entry_name,
+        entry_text => $entry_text,
+    };
+}
+
+sub _generate_ial1_route_outputs($prepared) {
     return {
-        bridge_result => $bridge,
-        review_artifacts => _review_ial0_artifacts($lowered->{files}, $source->{source_id}),
+        review_artifacts => _review_ial0_artifacts(
+            $prepared->{generated_files}, $prepared->{source_id}),
         backend_inputs => {
             dut_systemverilog => [_systemverilog_artifact(
-                _generate_ial0_hdl($entry_text, $entry_name, 'systemverilog'),
-                $source->{source_id},
+                _generate_ial0_hdl(
+                    $prepared->{entry_text}, $prepared->{entry_name},
+                    'systemverilog',
+                ),
+                $prepared->{source_id},
             )],
             dut_vhdl => [_vhdl_artifact(
-                _generate_ial0_hdl($entry_text, $entry_name, 'vhdl'),
-                $source->{source_id},
+                _generate_ial0_hdl(
+                    $prepared->{entry_text}, $prepared->{entry_name},
+                    'vhdl',
+                ),
+                $prepared->{source_id},
             )],
         },
     };

@@ -658,10 +658,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.1: construct provider-free runtime streams`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2`
-  Status: `active`
+  Status: `done`
   Goal: `Compose the exact balanced portable workload from completed orthogonal gate constructions.`
   Acceptance: `Consume fresh successful gate-construction reports for every orthogonal family, then generate balanced_portable_v1 only through canonical VIAL/HIAL, SemanticIR, bridge, ExecutionIR, and portable-SystemVerilog emission routes; prove every decision-0055 interaction count, path-independent identities, byte-equal reruns, complete oracle applicability, mutation rejection, nonclaims, and exact same-volume cleanup without external execution or a capacity claim.`
-  Verification: `Clean provider-free runtime predecessor 3c1f0b411 and activation commit 33d4e48b3 own this leaf. The honest first focused run reports that t/1652 does not exist. Blocker audit f350553e1 proves the ordinary portable AHB bridge is fixed to one six-field/six-event transaction and architecture_scale_probe revision 1 is fixed to one field plus qualification_only/private_nonportable execution admission. The director authorized the recommended long-term route on 2026-08-22 with explicit SOTA/signoff/production-grade quality requirements. Decision 0077 therefore preserves both existing contracts and selects a distinct caller-sealed revision-2 balanced qualification profile, a separately caller-sealed execution admission, and exact portable-SystemVerilog negotiation. Children .2.2 and .2.3 implement the private bridge/binder boundaries and canonical six-family source-to-plan composition; portable-emission closure .2.4 alone is now active. No public protocol, planner, capability, runtime, support, performance, or capacity claim is added.`
+  Verification: `Clean provider-free runtime predecessor 3c1f0b411 and activation commit 33d4e48b3 own this leaf. The honest first focused run reports that t/1652 does not exist. Blocker audit f350553e1 proves the ordinary portable AHB bridge is fixed to one six-field/six-event transaction and architecture_scale_probe revision 1 is fixed to one field plus qualification_only/private_nonportable execution admission. The director authorized the recommended long-term route on 2026-08-22 with explicit SOTA/signoff/production-grade quality requirements. Decision 0077 therefore preserves both existing contracts and selects a distinct caller-sealed revision-2 balanced qualification profile, separately caller-sealed execution and emitter admissions, and exact portable-SystemVerilog negotiation. Children .2.2-.2.4 implement the bridge/binder boundaries, canonical six-family source-to-plan composition, and deterministic structural emission. The final qualifier admits only complete canonical bridge, ExecutionIR, and backend-input evidence; emits eight artifacts/three sources/503,279 source bytes/3,605 maps; maps all 1,024 operations and 2,048 bindings; rejects public bypass and hostile mutations atomically; and cleans repository-volume staging on success and failure. No external compile/runtime, public protocol/planner/capability/support, performance, or capacity claim is added; unified qualification .3 remains proposed next.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2: select balanced portable bridge v2`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2.4`
 
@@ -687,11 +687,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2.3: compose canonical balanced workload`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2.4`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify balanced portable-SystemVerilog emission and close the balanced profile.`
   Acceptance: `Admit only the exact revision-2 capability through emitter-specific negotiation; prove complete deterministic artifact/source-map/operation/binding coverage, legal identifiers, atomic failure, mutation rejection, cleanup, and explicit no-runtime/no-support/no-performance/no-capacity claims; then close .17.2.7.2.`
-  Verification: `Clean canonical-composition commit d2305a59a proves all six fresh prerequisite gates and the complete revision-2 source-to-plan identity before this pivot. Decision 0077 admits only the exact balanced_portable/revision-2 bridge and ExecutionIR shape to sv_portable_verilator; label-only capability checks, public bridge widening, runtime execution, and support/performance/capacity claims remain forbidden. This continuity-only slice activates .2.4 alone so its honest RED watcher and implementation have an exact owner.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2.4: activate balanced portable emission`
+  Verification: `Clean canonical-composition commit d2305a59a proves all six fresh prerequisite gates and the complete revision-2 source-to-plan identity before this pivot. The honest RED run failed because FSM::VIAL::ArchitectureScaleBalancedPortableEmission did not exist. The completed qualifier freshly regenerates all six gates, canonical source-to-plan evidence, backend inputs, and two independent emissions. Its backend-only caller seal independently validates the exact bridge manifest, ExecutionIR, backend inputs, relation/value/operation shape, and fifteen negotiated requirements before constructing anything. The exact oracle freezes eight artifacts, three SystemVerilog sources, 503,279 source bytes, 3,605 source maps, every one of 1,024 operation IDs and 2,048 binding IDs, legal identifiers, content identities, and byte-equal reruns. Public bypass, unsealed calls, changed resource counts, changed bridge facts, changed backend input, mutated reports/constructions/invocants, and consumer failures reject without partial artifacts or staging residue. Syntax passes; guarded t/1654 passes Files=1/Tests=4 in 535 seconds; the guarded public-planning/portable-SV/revision-1/revision-2/composer matrix passes Files=5/Tests=26 in 403 seconds. External compilation/runtime/trace/result production, public API/support, performance, capacity, and reached-boundary claims remain false; .2 and .2.4 are closed and unified qualification .3 is proposed next.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2.4: qualify balanced portable emission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.3`
   Status: `proposed`
@@ -969,13 +969,22 @@ support authority and qualifies the repaired family. Completed generator
 `.3`, OSVVM `.4`, native-UVM `.5`, and family closure `.6`; all six children
 are complete and freeze the exact thirteen-emitted/seven-rejected profile
 partition. Runtime/balanced parent `.17.2.7` is active: runtime-stream
-construction `.1` is complete; balanced composition `.2` has its revision-2
-contract, bridge/binder boundary, and canonical composition `.2.3` complete,
-with portable emission `.2.4` now active; unified qualification `.3` remains
-proposed. Measurement
+construction `.1` and balanced composition `.2` are complete. The latter owns
+its revision-2 contract, bridge/binder boundary, canonical composition, and
+portable structural emission; unified qualification `.3` remains proposed
+next. Measurement
 `.17.3` remains later.
 
 ## Decisions
+
+- `2026-08-22`: Complete balanced portable-SystemVerilog emission child
+  `.17.2.7.2.4` and parent `.17.2.7.2` without activating `.3` in the dirty
+  implementation tree. Keep the route private and caller-sealed at composition,
+  backend-input, and emitter boundaries; require exact full-shape negotiation,
+  complete operation/binding source-map coverage, content-addressed byte-equal
+  reruns, atomic mutation rejection, and exact repository-volume cleanup. The
+  qualification ends at structural artifacts and adds no compile, runtime,
+  trace, result, support, performance, capacity, or reached-boundary claim.
 
 - `2026-08-22`: Activate balanced portable-SystemVerilog emission child
   `.17.2.7.2.4` only after clean canonical-composition commit `d2305a59a`.
@@ -1539,6 +1548,7 @@ proposed. Measurement
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-22` | `.17.2.7.2.4` balanced portable-emission implementation | missing-module RED witness; fresh six-family composition; caller-sealed canonical bridge/ExecutionIR/backend-input route; exact fifteen-requirement backend negotiation; deterministic eight-artifact/three-source graph; complete operation and binding source maps; legal identifiers; stage/artifact/report identities; byte-equal rerun; public/unsealed/mutated evidence rejection; repository-volume success/failure cleanup; syntax; guarded focused and impacted compatibility; task/index/Memory/book/fact/rationale/claim/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, diff, staged acceptance, and doctrine gates | `passed`; the qualifier freezes 503,279 source bytes and 3,605 maps covering all 1,024 operations and 2,048 bindings. Final focused t/1654 passes Files=1/Tests=4 in 535 seconds and the guarded five-file public/revision-1/revision-2/composer compatibility matrix passes Files=5/Tests=26 in 403 seconds. Public emission rejects the private profile atomically; compilation, runtime, trace, result, support, performance, capacity, and reached-boundary claims remain false. `.17.2.7.2` is done and `.17.2.7.3` is proposed next. |
 | `2026-08-22` | `.17.2.7.2.4` balanced portable-emission activation | clean canonical-composition predecessor `d2305a59a`; decision `0077`; exact revision-2 bridge/ExecutionIR identity boundary; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged docs-only acceptance, and doctrine gates | `passed`; `.17.2.7.2.4` alone is active to add exact portable-SystemVerilog emitter negotiation and structural emission proof. Activation changes no source, test, emitter, artifact, external execution, runtime, public API, capability/support, performance, capacity, or product behavior. |
 | `2026-08-22` | `.17.2.7.2.3` canonical balanced composition implementation | missing-module RED witness; closed caller-sealed composer; six freshly evaluated substantive family gates; ordinary repository-relative HIAL/VIAL; canonical Parser/revision-2 bridge/ExecutionBuilder/plan reruns and keyed replay; complete decision-0055 vector; stage/report identities; logical-time/fiber/checking/random oracles; hostile construction/report/private-seam rejection; same-volume success/failure cleanup; syntax; guarded focused and nine-file impacted matrix; task/index/Memory/book/fact/rationale/claim/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, diff, staged acceptance, and doctrine gates | `passed`; the composer derives the exact 1-unit/1-domain, 128-endpoint, 16-transaction, 1,744-field, 128-event, 32-probe, 32-scenario, 1,024-operation, 128-fiber/32-live, 2,048-binding, 512-type, 32-model/512-cell, 32-scoreboard/4,096-capacity, 256-coverpoint/4,096-bin, 32-fault, and 1,024-random-occurrence interaction shape. Final focused t/1653 passes Files=1/Tests=4 in 282 seconds and the guarded nine-file impacted matrix passes Files=9/Tests=38 in 551 seconds. Portable emission, external execution, runtime, public API, support, performance, capacity, and reached-boundary claims remain unchanged; `.17.2.7.2.4` is proposed next. |
 | `2026-08-22` | `.17.2.7.2.3` canonical balanced composition activation | clean bridge/binder predecessor `4b11043ff`; decisions `0055`/`0077`; completed six-family constructor and exact revision-2 admission boundaries; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged docs-only acceptance, and doctrine gates | `passed`; `.17.2.7.2.3` alone is active to compose ordinary canonical HIAL/VIAL from fresh orthogonal gate evidence and prove the complete interaction vector. Activation changes no source fixture, composer, parser, bridge, ExecutionIR, emitter, artifact, external execution, runtime, API, capability/support, performance, capacity, or product behavior. |
@@ -5703,3 +5713,42 @@ raising an enforcement ceiling.
   and final doctrines close below. No source, test, parser, bridge, binder,
   emitter, artifact, external runtime, public API, capability/support,
   performance, capacity, reached-boundary, or product behavior changes.
+
+## Acceptance Checklist (enforced) — `.17.2.7.2.4` balanced emission implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the honest focused RED command
+  `prove -Iperl t/1654-vial-balanced-portable-emission.t` failed with
+  `Can't locate FSM/VIAL/ArchitectureScaleBalancedPortableEmission.pm at t/1654-vial-balanced-portable-emission.t line 14`,
+  proving that the authorized exact emitter qualifier did not exist. During GREEN, Perl's
+  `sort SUBNAME LIST` grammar also exposed ambiguous `sort _unique(...)` calls
+  in `SVPortableVerilator.pm`; parenthesized `sort(_unique(...))` now makes the
+  intended canonical ordering explicit and keeps undefined evidence fail-closed.
+- [x] **ADDRESSED (verified)** — the new closed qualifier freshly evaluates the
+  six-family composer, reconstructs bridge/ExecutionIR/backend inputs through
+  caller-sealed routes, and invokes a backend-only revision-2 emitter admission.
+  Independent validation covers every exact protocol fact, resource, relation,
+  known value, operation, backend input, and negotiated requirement before
+  artifact construction. The oracle freezes eight artifacts, three sources,
+  503,279 source bytes, 3,605 source maps, all 1,024 operation IDs and 2,048
+  binding IDs, legal identifiers, content identities, byte-equal reruns, public
+  bypass rejection, atomic hostile-mutation failure, and exact same-volume
+  success/failure cleanup. It explicitly leaves compile, runtime, trace,
+  result, support, performance, capacity, and reached-boundary claims false.
+- [x] **NO REGRESSION** — all changed modules and the watcher pass syntax. The
+  final 4,096-MiB guarded focused watcher reports `Files=1, Tests=4` in 535
+  seconds; the guarded public planning, portable-SV, revision-1 scale,
+  revision-2 admission, and composer compatibility set reports `Files=5,
+  Tests=26` in 403 seconds. CI inventory passes at `Files=1, Tests=7094`; the
+  relative-path/claim suite passes at `Files=4, Tests=33`; task integrity stays
+  at three trees/969 nodes; and Knowledge Map parity retains 1,150 facts/6,058
+  questions/6,225 occurrences/133 shards. The inventory closes 1,459 candidates
+  plus 2,105 current/615 original constants as 870 derived gates/589 reviewed
+  records/zero gaps. All 54 mdBook chapters test; its inspected repository-local
+  render contains 89 files/19,064,111 bytes and is removed exactly. The focused
+  chapter is 185 lines/8,612 bytes, and the maintained-book delta is 0 files/
+  +50 lines/+2,757 bytes with no ceiling increase. The rationale ledger
+  reconstructs 2,873 entries; all 22 live-document surfaces/3,052 paths pass;
+  locality and generated-residue censuses are clean. Staged acceptance and
+  final doctrines close below. No existing public emitter, planning, bridge,
+  revision-1 scale, backend-support, external-runtime, performance, capacity,
+  or product behavior is widened.

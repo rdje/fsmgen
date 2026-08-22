@@ -24,6 +24,7 @@ use FSM::VIAL::ArchitectureScaleSemanticCatalog;
 use FSM::VIAL::ArchitectureScaleWorkload;
 use FSM::VIAL::ExecutionBuilder;
 use FSM::VIAL::Parser;
+use FSM::VIAL::PlanBuilder;
 
 my $SCHEMA = 'fsmgen.vial_architecture_scale_balanced_portable_construction.v1';
 my $REPORT_SCHEMA =
@@ -43,6 +44,8 @@ my $REFERENCE_HIAL_SHA256 =
 my $REFERENCE_VIAL_BYTES = 4_986;
 my $REFERENCE_VIAL_SHA256 =
     '2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd';
+my $EMISSION_QUALIFIER =
+    'FSM::VIAL::ArchitectureScaleBalancedPortableEmission';
 my @CONSTRUCT_KEYS = qw(reference_hial_text reference_vial_text);
 my @CONSTRUCTION_KEYS = qw(
     ok status schema schema_version workload reference_sources diagnostics
@@ -130,6 +133,60 @@ sub with_staging($class, @args) {
         repository_root => $args[0]{repository_root},
         consumer => $args[0]{consumer},
     });
+}
+
+sub _build_emission_route($class, @args) {
+    my $caller = caller;
+    confess "balanced-portable emission route is caller-sealed\n"
+        unless defined($class) && !ref($class) && $class eq __PACKAGE__
+            && $caller eq $EMISSION_QUALIFIER;
+    confess __PACKAGE__ . "->_build_emission_route expects one closed hash\n"
+        unless @args == 1 && ref($args[0]) eq 'HASH'
+            && !blessed($args[0]);
+    _confess_exact_keys(
+        $args[0], [qw(construction)],
+        'balanced-portable emission route',
+    );
+    my $construction = _validated_construction($args[0]{construction});
+    my $route = _canonical_route($construction->{workload});
+    return $route unless $route->{ok};
+
+    my $hial = _role_input($construction->{workload}, 'hial_source');
+    my $generated = eval {
+        FSM::VIAL::PlanBuilder->_build_balanced_portable_backend_inputs({
+            hial_source => {
+                source_id => $hial->{relative_path},
+                text => $hial->{content},
+                format => 'isf',
+            },
+        });
+    };
+    return {
+        ok => JSON::PP::false,
+        status => 'backend_input_rejected',
+        semantic_ir => $route->{semantic_ir},
+        bridge_manifest => $route->{bridge_manifest},
+        execution_ir => $route->{execution_ir},
+        backend_inputs => undef,
+        review_artifacts => [],
+        plan => $route->{plan},
+        diagnostics => [_diagnostic(
+            'VIAL_SCALE_BALANCED_BACKEND_INPUT_ERROR',
+            'canonical balanced HIAL backend-input production failed',
+            '/backend_inputs',
+        )],
+    } unless defined $generated;
+    return {
+        ok => JSON::PP::true,
+        status => 'canonical_emission_route_constructed',
+        semantic_ir => $route->{semantic_ir},
+        bridge_manifest => $route->{bridge_manifest},
+        execution_ir => $route->{execution_ir},
+        backend_inputs => _clone($generated->{backend_inputs}),
+        review_artifacts => _clone($generated->{review_artifacts}),
+        plan => $route->{plan},
+        diagnostics => [],
+    };
 }
 
 sub _construct($raw) {

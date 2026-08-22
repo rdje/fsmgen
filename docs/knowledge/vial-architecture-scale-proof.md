@@ -81,27 +81,23 @@ checks, content-addressed reruns, atomic rejection, and cleanup. Runtime
 execution or runtime/capacity claims. Exact historical counts remain in the
 task evidence and decisions `0075`/`0055`, not duplicated here.
 
-Decision `0077` resolves the balanced `.17.2.7.2` blocker without widening the
-portable AHB or revision-1 scale contracts. The selected private direct-IAL1
-profile keeps `architecture_scale_probe` but uses exact profile
-`balanced_portable`, revision `2`, facts `scale_evidence_only=true` and
-`qualified_emitter=sv_portable_verilator`, plus capability
-`hial_vial.bridge_qualification.balanced_portable_v2`. Separate bridge and
-execution entrypoints are implemented and caller-sealed to the balanced
-composer. The bridge emits a full-payload content identity; execution admission
-independently validates the exact manifest shape and resulting no-padding
-binding graph. Public callers, profile/field near misses, mutated facts, and a
-forged identity fail closed, while public AHB and private revision 1 retain
-their existing behavior. Portable SV must still independently negotiate the
-exact bridge/ExecutionIR shape rather than trusting the capability name. The
-binding equation remains one unit/domain,
-126 data endpoints, 32 probes, 16 aliases, 1,744 fields, and 128 events: 2,048
-bindings, with 109 fields per alias. Public planning, AHB, revision 1, other
-backends, runtime, support, performance, and capacity remain unchanged and
-unclaimed. Completed `.17.2.7.2.3` regenerates source, runs six fresh gates,
-rebuilds stages twice plus replay, derives the vector and
-semantics, and rejects injected evidence. Focused t/1653 re-derives and
-falsifies it; emitter child `.17.2.7.2.4` is active.
+Decision `0077` resolves balanced `.17.2.7.2` without widening portable AHB or
+revision-1 scale. The private direct-IAL1 `architecture_scale_probe` profile is
+`balanced_portable` revision `2`, with exact facts and capability
+`hial_vial.bridge_qualification.balanced_portable_v2`. Caller-sealed bridge,
+execution, backend-input, and portable-SV entrypoints independently validate
+full identities and shapes; public callers, near misses, mutation, and forged
+identity fail closed. The real binding equation remains one unit/domain, 126
+data endpoints, 32 probes, 16 aliases, 1,744 fields, and 128 events: 2,048
+bindings, 109 fields per alias. Completed `.2.3` regenerates source, runs six
+fresh gates, rebuilds stages twice plus replay, derives all semantics, and
+rejects injected evidence. Completed `.2.4` then negotiates fifteen exact
+requirements and emits a byte-equal eight-artifact/three-source graph: 503,279
+source bytes and 3,605 maps cover all 1,024 operations and 2,048 bindings.
+Public bypass and hostile evidence reject atomically; repository-volume staging
+is residue-free. Public planning/AHB/revision 1/other backends and compile,
+runtime, trace, result, support, performance, and capacity claims stay unchanged
+and unclaimed. Focused t/1653 and t/1654 re-derive and falsify the boundaries.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

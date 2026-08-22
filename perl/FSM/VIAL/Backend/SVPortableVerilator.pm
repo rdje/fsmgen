@@ -18,6 +18,10 @@ my $SOURCE_MAP_SCHEMA = 'fsmgen.vial_backend_source_map.v1';
 my $TRACE_SCHEMA = 'fsmgen.vial_sv_runtime_trace.v1';
 my $BASE = 'backends/sv_portable_verilator';
 my $JSON = JSON::PP->new->canonical(1);
+my $BALANCED_PORTABLE_CAPABILITY =
+    'hial_vial.bridge_qualification.balanced_portable_v2';
+my $BALANCED_PORTABLE_CALLER =
+    'FSM::VIAL::ArchitectureScaleBalancedPortableEmission';
 
 my @RESULT_KEYS = qw(
     ok status backend_profile plan_id generated_top operation_id negotiation
@@ -98,7 +102,32 @@ sub emit($class, @args) {
     return _failure('VIAL_BACKEND_HOST_ERROR', _sanitize_exception($error), '/');
 }
 
-sub _emit($raw) {
+sub emit_balanced_portable_qualification($class, @args) {
+    my $caller = caller;
+    return _failure(
+        'VIAL_BACKEND_INVOCATION_ERROR',
+        'balanced-portable emission is caller-sealed',
+        '/',
+    ) unless defined($class) && !ref($class) && $class eq __PACKAGE__
+        && $caller eq $BALANCED_PORTABLE_CALLER;
+    return _failure(
+        'VIAL_BACKEND_INVOCATION_ERROR',
+        'balanced-portable emission expects one closed argument hash',
+        '/',
+    ) unless @args == 1 && ref($args[0]) eq 'HASH'
+        && !blessed($args[0]);
+    my $result = eval { _emit($args[0], 'balanced_portable_v2') };
+    return $result if defined $result;
+    my $error = $@;
+    return _failure($error->{code}, $error->{message}, $error->{path})
+        if blessed($error)
+            && $error->isa('FSM::VIAL::Backend::SVPortableVerilator::Failure');
+    return _failure(
+        'VIAL_BACKEND_HOST_ERROR', _sanitize_exception($error), '/',
+    );
+}
+
+sub _emit($raw, $qualification_profile = undef) {
     _require_exact_keys($raw, [qw(
         execution_ir bridge_manifest backend_inputs artifact_root backend_profile
     )], 'backend emission');
@@ -118,7 +147,10 @@ sub _emit($raw) {
 
     my $execution = $raw->{execution_ir}->as_hashref;
     my $bridge = $raw->{bridge_manifest}->as_hashref;
-    my $negotiation = _negotiate($execution, $bridge, $raw->{backend_inputs});
+    my $negotiation = _negotiate(
+        $execution, $bridge, $raw->{backend_inputs},
+        $qualification_profile,
+    );
     if (@{$negotiation->{unsatisfied}} || @{$negotiation->{native_only}}) {
         return _failure(
             'VIAL_BACKEND_UNSUPPORTED',
@@ -146,13 +178,22 @@ sub _emit($raw) {
     my $work_rel = ".artifacts/tmp/vial/$operation_id/work/$BACKEND_PROFILE";
     my $input_rel = "$work_rel/input";
     my $runtime = _render_runtime_package();
-    my ($tb, $map_specs) = _render_fixture(
-        execution => $execution,
-        bridge => $bridge,
-        module_name => $module_name,
-        generated_top => $top,
-        generated_relpath => $tb_rel,
-    );
+    my ($tb, $map_specs) = ($qualification_profile // '')
+            eq 'balanced_portable_v2'
+        ? _render_balanced_portable_fixture(
+            execution => $execution,
+            bridge => $bridge,
+            module_name => $module_name,
+            generated_top => $top,
+            generated_relpath => $tb_rel,
+        )
+        : _render_fixture(
+            execution => $execution,
+            bridge => $bridge,
+            module_name => $module_name,
+            generated_top => $top,
+            generated_relpath => $tb_rel,
+        );
     my $dut = $raw->{backend_inputs}{dut_systemverilog}[0]{text};
 
     my @source_artifacts = (
@@ -236,6 +277,33 @@ sub _emit($raw) {
     );
     my @referenced = sort { $a->{relpath} cmp $b->{relpath} }
         map { _artifact_ref($_) } (@source_artifacts, @support_artifacts);
+    my $balanced_portable = ($qualification_profile // '')
+        eq 'balanced_portable_v2';
+    my $capability_evidence = {
+        negotiation => _clone($negotiation),
+        emission => 'passed',
+        compile => 'not_run',
+        runtime => 'not_run',
+        result => 'not_produced',
+        parity => 'not_evaluated',
+        four_state_observation => JSON::PP::false,
+        known_value_trace_only => $balanced_portable
+            ? JSON::PP::false : JSON::PP::true,
+        probe_adapters => _probe_adapters($execution, $bridge, $source_map),
+    };
+    $capability_evidence->{balanced_portable_revision_2_structural_qualification}
+        = JSON::PP::true if $balanced_portable;
+    my $limitations = $balanced_portable
+        ? [
+            'balanced portable revision-2 qualification-only structural emission; runtime behavior is not claimed',
+            'emission is implemented; compile, runtime, trace, result, and parity gates have not run',
+            'one exact unit/domain, no native extension, and declared probe adapters only',
+        ]
+        : [
+            'known-value trace observation only; complete four-state observation is not claimed',
+            'emission is implemented; compile, runtime, result, and parity gates have not run',
+            'one unit, one clock domain, no native extension, and declared probe adapters only',
+        ];
     my $manifest = {
         schema => $BACKEND_SCHEMA,
         schema_version => 1,
@@ -249,22 +317,8 @@ sub _emit($raw) {
             sha256 => sha256_hex(_json_text($tool_profile)),
             selection_status => 'selected_not_executed',
         },
-        capability_evidence => {
-            negotiation => _clone($negotiation),
-            emission => 'passed',
-            compile => 'not_run',
-            runtime => 'not_run',
-            result => 'not_produced',
-            parity => 'not_evaluated',
-            four_state_observation => JSON::PP::false,
-            known_value_trace_only => JSON::PP::true,
-            probe_adapters => _probe_adapters($execution, $bridge, $source_map),
-        },
-        limitations => [
-            'known-value trace observation only; complete four-state observation is not claimed',
-            'emission is implemented; compile, runtime, result, and parity gates have not run',
-            'one unit, one clock domain, no native extension, and declared probe adapters only',
-        ],
+        capability_evidence => $capability_evidence,
+        limitations => $limitations,
         artifacts => \@referenced,
         commands => {
             compile => _command_ref("$BASE/commands/compile-command.json", $compile),
@@ -312,14 +366,21 @@ sub _emit($raw) {
             line_prefix => "FSMGEN_VIAL_TRACE_V1\t",
             maximum_records => 8_000_002,
             maximum_bytes => 67_108_864,
-            validation_status => 'validator_shipped_no_runtime_trace',
+            validation_status => $balanced_portable
+                ? 'not_run_structural_qualification_only'
+                : 'validator_shipped_no_runtime_trace',
         },
         artifacts => \@artifacts,
         diagnostics => [],
     });
 }
 
-sub _negotiate($execution, $bridge, $backend_inputs) {
+sub _negotiate(
+    $execution, $bridge, $backend_inputs, $qualification_profile = undef,
+) {
+    return _negotiate_balanced_portable(
+        $execution, $bridge, $backend_inputs,
+    ) if ($qualification_profile // '') eq 'balanced_portable_v2';
     my (@required, @satisfied, @unsatisfied, @native_only, @limitations);
     push @unsatisfied, 'execution schema must be fsmgen.vial_execution_ir.v1'
         unless ($execution->{schema} // '') eq 'fsmgen.vial_execution_ir.v1';
@@ -394,9 +455,443 @@ sub _negotiate($execution, $bridge, $backend_inputs) {
     return {
         required => [sort @required],
         satisfied => [sort @satisfied],
-        unsatisfied => [sort _unique(@unsatisfied)],
-        native_only => [sort _unique(@native_only)],
+        unsatisfied => [sort(_unique(@unsatisfied))],
+        native_only => [sort(_unique(@native_only))],
         limitations => \@limitations,
+    };
+}
+
+sub _negotiate_balanced_portable($execution, $bridge, $backend_inputs) {
+    my @required = map { $_->{capability_id} // '' }
+        @{$execution->{capability_ledger} || []};
+    my @unsatisfied = _balanced_portable_shape_errors(
+        $execution, $bridge, $backend_inputs,
+    );
+    for my $relation (_relations($execution)) {
+        push @unsatisfied, "relation:$relation->{relation_id}"
+            unless $SUPPORTED_RELATION{$relation->{kind} // ''};
+        push @unsatisfied, "width:$relation->{relation_id}"
+            unless defined($relation->{width}) && !ref($relation->{width})
+                && $relation->{width} =~ /\A[0-9]+\z/
+                && $relation->{width} >= 1 && $relation->{width} <= 65_536;
+    }
+    for my $operation (@{$execution->{operation_graph}{operations} || []}) {
+        push @unsatisfied, "operation:$operation->{kind}"
+            unless $SUPPORTED_OPERATION{$operation->{kind} // ''};
+    }
+    _walk_values($execution, sub ($value, $path) {
+        return unless ref($value) eq 'HASH'
+            && ($value->{kind} // '') eq 'scalar'
+            && exists($value->{value_hex}) && exists($value->{known_hex})
+            && exists($value->{z_hex});
+        my $width = $value->{width};
+        if (!defined($width) || ref($width)
+                || $width !~ /\A[0-9]+\z/
+                || $width < 1 || $width > 65_536) {
+            push @unsatisfied, "scalar-width:$path";
+            return;
+        }
+        push @unsatisfied, "unknown-value:$path"
+            unless _fully_known_scalar($value);
+    });
+    my @satisfied = @unsatisfied ? () : sort @required;
+    return {
+        required => [sort @required],
+        satisfied => \@satisfied,
+        unsatisfied => [sort(_unique(@unsatisfied))],
+        native_only => [],
+        limitations => [qw(
+            qualification_only_structural_emission
+            balanced_portable_revision_2_exact_shape
+            known_value_runtime_not_claimed
+            compile_runtime_trace_result_not_run
+            single_unit_single_domain
+            no_native_extensions
+        )],
+    };
+}
+
+sub _balanced_portable_shape_errors($execution, $bridge, $backend_inputs) {
+    my @error;
+    my $reject = sub ($condition, $message) {
+        push @error, $message unless $condition;
+    };
+
+    $reject->(
+        ($execution->{schema} // '') eq 'fsmgen.vial_execution_ir.v1'
+            && ($execution->{schema_version} // 0) == 1
+            && ($execution->{profile} // '')
+                eq 'core_directed_single_clock_execution_v1',
+        'balanced:execution-envelope',
+    );
+    $reject->(
+        ($bridge->{schema} // '')
+                eq 'fsmgen.hial_vial_bridge_manifest.v1'
+            && ($bridge->{schema_version} // 0) == 1
+            && ($bridge->{profile} // '') eq 'core_single_unit_v1',
+        'balanced:bridge-envelope',
+    );
+    my $bridge_identity = _clone($bridge);
+    my $manifest_id = delete $bridge_identity->{manifest_id};
+    $reject->(
+        defined($manifest_id) && !ref($manifest_id)
+            && $manifest_id eq 'bridge/'
+                . sha256_hex(_canonical_json($bridge_identity)),
+        'balanced:bridge-identity',
+    );
+    $reject->(
+        ref($execution->{bridge_identity}) eq 'HASH'
+            && ($execution->{bridge_identity}{manifest_id} // '')
+                eq ($bridge->{manifest_id} // '')
+            && ($execution->{bridge_identity}{schema} // '')
+                eq ($bridge->{schema} // '')
+            && ($execution->{bridge_identity}{schema_version} // 0)
+                == ($bridge->{schema_version} // -1)
+            && ($execution->{bridge_identity}{profile} // '')
+                eq ($bridge->{profile} // ''),
+        'balanced:execution-bridge-identity',
+    );
+
+    my @expected_capability = sort qw(
+        hial_vial.bridge_manifest.v1
+        hial_vial.bridge_probe.equivalent_adapter_required
+        hial_vial.bridge_profile.core_single_unit_v1
+        hial_vial.bridge_qualification.balanced_portable_v2
+        hial_vial.bridge_source.ial1
+    );
+    $reject->(
+        _canonical_json([sort @{$bridge->{required_capabilities} || []}])
+            eq _canonical_json(\@expected_capability),
+        'balanced:bridge-capabilities',
+    );
+    my @ledger_spec = (
+        ['hial_vial.bridge_manifest.v1', 'bridge_manifest',
+            'satisfied_by_execution_profile', 'portable'],
+        ['hial_vial.bridge_probe.equivalent_adapter_required',
+            'bridge_manifest', 'required_from_backend',
+            'portable_with_equivalent_adapter'],
+        ['hial_vial.bridge_profile.core_single_unit_v1', 'bridge_manifest',
+            'satisfied_by_execution_profile', 'portable'],
+        [$BALANCED_PORTABLE_CAPABILITY, 'bridge_manifest',
+            'qualification_only',
+            'portable_with_exact_emitter_qualification'],
+        ['hial_vial.bridge_source.ial1', 'bridge_manifest',
+            'satisfied_by_execution_profile', 'portable'],
+        ['vial.binding.directional_representation.v1', 'execution_profile',
+            'satisfied_by_execution_profile', 'portable'],
+        ['vial.execution_ir.v1', 'execution_profile',
+            'satisfied_by_execution_profile', 'portable'],
+        ['vial.execution_profile.core_directed_single_clock_execution_v1',
+            'execution_profile', 'satisfied_by_execution_profile', 'portable'],
+        ['vial.logical_time.drive_sample_react_check_v1', 'execution_profile',
+            'satisfied_by_execution_profile', 'portable'],
+        ['vial.plan.v1', 'execution_profile',
+            'satisfied_by_execution_profile', 'portable'],
+        ['vial.profile.core_directed_single_clock_v1', 'semantic_ir',
+            'satisfied_by_execution_profile', 'portable'],
+        ['vial.random.sha256_counter_rejection_v1', 'execution_profile',
+            'satisfied_by_execution_profile', 'portable'],
+        ['vial.replay.v1', 'execution_profile',
+            'satisfied_by_execution_profile', 'portable'],
+        ['vial.semantic_ir.v1', 'semantic_ir',
+            'satisfied_by_execution_profile', 'portable'],
+        ['vial.source.v1', 'semantic_ir',
+            'satisfied_by_execution_profile', 'portable'],
+    );
+    my @expected_ledger = map {
+        _balanced_capability_entry(@$_)
+    } @ledger_spec;
+    @expected_ledger = sort {
+        $a->{capability_id} cmp $b->{capability_id}
+    } @expected_ledger;
+    $reject->(
+        _canonical_json($execution->{capability_ledger} || [])
+            eq _canonical_json(\@expected_ledger),
+        'balanced:capability-ledger',
+    );
+
+    my @protocol = @{$bridge->{protocols} || []};
+    my $protocol = @protocol == 1 ? $protocol[0] : {};
+    my @facts = sort { ($a->{name} // '') cmp ($b->{name} // '') }
+        @{$protocol->{facts} || []};
+    $reject->(
+        @protocol == 1
+            && ($protocol->{protocol_id} // '')
+                eq 'protocol/architecture_scale_probe'
+            && ($protocol->{name} // '') eq 'architecture_scale_probe'
+            && ($protocol->{profile} // '') eq 'balanced_portable'
+            && ($protocol->{revision} // '') eq '2'
+            && ($protocol->{role} // '') eq 'verification'
+            && ($protocol->{unit_id} // '')
+                eq 'unit/vial_architecture_scale_balanced_portable'
+            && _canonical_json(\@facts) eq _canonical_json([
+                {name => 'qualified_emitter', value => $BACKEND_PROFILE},
+                {name => 'scale_evidence_only', value => 'true'},
+            ]),
+        'balanced:protocol',
+    );
+    my @route_layer = map { $_->{layer} // '' }
+        @{$bridge->{review_route}{stages} || []};
+    $reject->(
+        ($bridge->{review_route}{authored_layer} // '') eq 'IAL1'
+            && !$bridge->{review_route}{direct_ial2_to_verification}
+            && _canonical_json(\@route_layer)
+                eq _canonical_json([qw(IAL1 IAL0)]),
+        'balanced:review-route',
+    );
+
+    my @unit = @{$bridge->{units} || []};
+    my @domain = @{$bridge->{domains} || []};
+    $reject->(
+        @unit == 1
+            && ($unit[0]{unit_id} // '')
+                eq 'unit/vial_architecture_scale_balanced_portable'
+            && ($unit[0]{name} // '')
+                eq 'vial_architecture_scale_balanced_portable',
+        'balanced:unit',
+    );
+    $reject->(
+        @domain == 1
+            && ($domain[0]{domain_id} // '') eq 'domain/balanced'
+            && ($domain[0]{unit_id} // '')
+                eq 'unit/vial_architecture_scale_balanced_portable'
+            && ($domain[0]{clock_endpoint_id} // '') eq 'endpoint/clk'
+            && ($domain[0]{reset_endpoint_id} // '') eq 'endpoint/rst_n'
+            && ($domain[0]{active_edge} // '') eq 'rising'
+            && ($domain[0]{reset_polarity} // '') eq 'active_low',
+        'balanced:domain',
+    );
+
+    my @expected_endpoint = (
+        ['clk', 'clock'],
+        (map { [sprintf('endpoint_%08d', $_), 'data'] } 0 .. 125),
+        ['rst_n', 'reset'],
+    );
+    my @endpoint = @{$bridge->{endpoints} || []};
+    my $endpoints_exact = @endpoint == @expected_endpoint;
+    if ($endpoints_exact) {
+        for my $index (0 .. $#expected_endpoint) {
+            my ($name, $role) = @{$expected_endpoint[$index]};
+            my $item = $endpoint[$index];
+            $endpoints_exact = 0, last
+                unless ($item->{endpoint_id} // '') eq "endpoint/$name"
+                    && ($item->{name} // '') eq $name
+                    && ($item->{role} // '') eq $role
+                    && ($item->{direction} // '') eq 'input'
+                    && ($item->{type_id} // '') eq 'type/logic_u1'
+                    && ($item->{unit_id} // '')
+                        eq 'unit/vial_architecture_scale_balanced_portable'
+                    && ($item->{domain_id} // '') eq 'domain/balanced';
+        }
+    }
+    $reject->($endpoints_exact, 'balanced:endpoints');
+
+    my @probe = @{$bridge->{probes} || []};
+    my $probes_exact = @probe == 32;
+    if ($probes_exact) {
+        for my $index (0 .. 31) {
+            my $name = sprintf('probe_%08d', $index);
+            my $item = $probe[$index];
+            $probes_exact = 0, last
+                unless ($item->{probe_id} // '') eq "probe/$name"
+                    && ($item->{name} // '') eq $name
+                    && ($item->{type_id} // '') eq 'type/logic_u1'
+                    && ($item->{adapter_requirement} // '')
+                        eq 'equivalent_adapter_required'
+                    && ($item->{access} // '') eq 'verification_probe';
+        }
+    }
+    $reject->($probes_exact, 'balanced:probes');
+
+    my @transaction = @{$bridge->{transactions} || []};
+    my $transactions_exact = @transaction == 16;
+    if ($transactions_exact) {
+        for my $tx_index (0 .. 15) {
+            my $name = sprintf('transaction_%08d', $tx_index);
+            my $item = $transaction[$tx_index];
+            $transactions_exact = 0, last
+                unless ($item->{transaction_id} // '') eq "transaction/$name"
+                    && ($item->{name} // '') eq $name
+                    && @{$item->{fields} || []} == 109;
+            for my $field_index (0 .. 108) {
+                my $endpoint = sprintf('endpoint_%08d', $field_index);
+                my $field = $item->{fields}[$field_index];
+                $transactions_exact = 0, last
+                    unless ($field->{name} // '') eq $endpoint
+                        && ($field->{endpoint_id} // '') eq "endpoint/$endpoint"
+                        && ($field->{type_id} // '') eq 'type/logic_u1'
+                        && ($field->{direction} // '') eq 'drive'
+                        && ($field->{phase_role} // '') eq 'unspecified';
+            }
+            last unless $transactions_exact;
+        }
+    }
+    $reject->($transactions_exact, 'balanced:transactions');
+
+    my @event = @{$bridge->{events} || []};
+    my $events_exact = @event == 128;
+    if ($events_exact) {
+        my @actual_ids = sort map { $_->{event_id} // '' } @event;
+        my @expected_ids = sort(
+            (map {
+                'event/transaction_00000000/'
+                    . sprintf('bridge_event_%08d', $_)
+            } 0 .. 112),
+            (map {
+                sprintf('event/transaction_%08d/on', $_)
+            } 1 .. 15),
+        );
+        $events_exact = 0 unless _canonical_json(\@actual_ids)
+            eq _canonical_json(\@expected_ids);
+        my %transaction_id = map { ($_->{transaction_id} // '') => 1 }
+            @transaction;
+        for my $item (@event) {
+            my $name = $item->{name} // '';
+            my $transaction_id = $item->{transaction_id} // '';
+            $events_exact = 0, last
+                unless $transaction_id
+                        =~ /\Atransaction\/transaction_[0-9]{8}\z/
+                    && $transaction_id{$transaction_id}
+                    && ($item->{event_id} // '')
+                        eq "event/" . substr($transaction_id, 12) . "/$name"
+                    && ($item->{kind} // '') eq 'predicate'
+                    && ($item->{phase} // '') eq 'sample';
+        }
+    }
+    $reject->($events_exact, 'balanced:events');
+
+    my %sv_binding = map {
+        ($_->{target_language} // '') eq 'systemverilog'
+            ? (($_->{semantic_id} // '') => $_) : ()
+    } @{$bridge->{backend_bindings} || []};
+    my $backend_exact = @{$bridge->{backend_bindings} || []} == 322
+        && keys(%sv_binding) == 161;
+    if ($backend_exact) {
+        for my $item (@endpoint) {
+            my $binding = $sv_binding{$item->{endpoint_id}};
+            $backend_exact = 0, last
+                unless $binding
+                    && ($binding->{target_kind} // '') eq 'port'
+                    && ($binding->{target_name} // '') eq $item->{name}
+                    && ($binding->{status} // '') eq 'declared';
+        }
+    }
+    if ($backend_exact) {
+        for my $item (@probe) {
+            my $binding = $sv_binding{$item->{probe_id}};
+            $backend_exact = 0, last
+                unless $binding
+                    && ($binding->{target_kind} // '') eq 'probe_adapter'
+                    && ($binding->{target_name} // '') eq $item->{name}
+                    && ($binding->{status} // '') eq 'adapter_required';
+        }
+    }
+    my $unit_binding = $sv_binding{
+        'unit/vial_architecture_scale_balanced_portable'};
+    $backend_exact = 0 unless $unit_binding
+        && ($unit_binding->{target_kind} // '') eq 'module'
+        && ($unit_binding->{target_name} // '')
+            eq 'vial_architecture_scale_balanced_portable'
+        && ($unit_binding->{status} // '') eq 'declared';
+    $reject->($backend_exact, 'balanced:backend-bindings');
+
+    my $resources = $execution->{resource_summary} || {};
+    my %expected_resource = (
+        selected_units => 1,
+        selected_domains => 1,
+        selected_fixtures => 1,
+        selected_scenarios => 32,
+        expanded_operations_total => 1_024,
+        total_fibers => 128,
+        simultaneous_live_fibers => 32,
+        bindings => 2_048,
+        execution_types => 512,
+        model_instances => 32,
+        scalar_state_cells => 512,
+        scoreboard_instances => 32,
+        scoreboard_declared_capacity => 4_096,
+        coverpoints => 256,
+        coverage_bins_and_cross_tuples => 4_096,
+        faults => 32,
+        random_occurrences => 1_024,
+        native_extensions => 0,
+        native_artifacts => 0,
+        native_identity_bytes => 0,
+        source_map_records => 4_079,
+    );
+    $reject->(
+        !scalar(grep {
+            !defined($resources->{$_}) || ref($resources->{$_})
+                || $resources->{$_} != $expected_resource{$_}
+        } sort keys %expected_resource),
+        'balanced:resource-summary',
+    );
+    my $bindings = $execution->{bindings} || {};
+    my $execution_field_count = 0;
+    $execution_field_count += @{$_->{fields} || []}
+        for @{$bindings->{transactions} || []};
+    $reject->(
+        @{$bindings->{domains} || []} == 1
+            && @{$bindings->{endpoints} || []} == 126
+            && @{$bindings->{probes} || []} == 32
+            && @{$bindings->{transactions} || []} == 16
+            && $execution_field_count == 1_744
+            && @{$execution->{events} || []} == 128
+            && @{$execution->{type_table} || []} == 512
+            && @{$execution->{models} || []} == 32
+            && @{$execution->{scoreboards} || []} == 32
+            && @{$execution->{coverage}{coverpoints} || []} == 256
+            && @{$execution->{faults} || []} == 32
+            && @{$execution->{scenarios} || []} == 32
+            && @{$execution->{operation_graph}{operations} || []} == 1_024
+            && @{$execution->{randomness}{decisions} || []} == 1_024
+            && @{$execution->{native_extensions} || []} == 0,
+        'balanced:execution-shape',
+    );
+
+    my @backend_keys = sort keys %{$backend_inputs || {}};
+    my $inputs_exact = ref($backend_inputs) eq 'HASH'
+        && !blessed($backend_inputs)
+        && _canonical_json(\@backend_keys)
+            eq _canonical_json([qw(dut_systemverilog dut_vhdl)]);
+    my $dut = $inputs_exact ? $backend_inputs->{dut_systemverilog} : undef;
+    $inputs_exact &&= ref($dut) eq 'ARRAY' && @$dut == 1
+        && ref($dut->[0]) eq 'HASH' && !blessed($dut->[0]);
+    if ($inputs_exact) {
+        my $input = $dut->[0];
+        my @keys = sort keys %$input;
+        $inputs_exact = _canonical_json(\@keys) eq _canonical_json([sort qw(
+            artifact_name byte_length content_sha256 module_name source_id
+            text unit_id
+        )])
+            && ($input->{unit_id} // '')
+                eq 'unit/vial_architecture_scale_balanced_portable'
+            && ($input->{module_name} // '')
+                eq 'vial_architecture_scale_balanced_portable'
+            && ($input->{artifact_name} // '')
+                eq 'vial_architecture_scale_balanced_portable.sv'
+            && ($input->{source_id} // '')
+                eq 'generated/vial-scale/balanced-portable/'
+                    . 'vial_architecture_scale_balanced_portable.isf'
+            && defined($input->{text}) && !ref($input->{text})
+            && ($input->{byte_length} // -1) == bytes::length($input->{text})
+            && ($input->{content_sha256} // '') eq sha256_hex($input->{text})
+            && $input->{text} =~
+                /\bmodule\s+vial_architecture_scale_balanced_portable\b/;
+    }
+    $reject->($inputs_exact, 'balanced:backend-inputs');
+    return @error;
+}
+
+sub _balanced_capability_entry(
+    $capability_id, $origin, $classification, $portable_class,
+) {
+    return {
+        capability_id => $capability_id,
+        origins => [$origin],
+        classification => $classification,
+        portable_class => $portable_class,
+        evidence_ids => [$origin],
     };
 }
 
@@ -428,6 +923,264 @@ package fsmgen_vial_runtime_pkg;
   endfunction
 endpackage
 SV
+}
+
+sub _render_balanced_portable_fixture(%arg) {
+    my $execution = $arg{execution};
+    my $bridge = $arg{bridge};
+    my $top = $arg{generated_top};
+    my $relpath = $arg{generated_relpath};
+    my %type = map { $_->{type_id} => $_ } @{$bridge->{types}};
+    my %backend = map {
+        ($_->{target_language} // '') eq 'systemverilog'
+            ? (($_->{semantic_id} // '') => $_) : ()
+    } @{$bridge->{backend_bindings}};
+    my %execution_endpoint = map {
+        ($_->{endpoint_id} // '') => $_
+    } @{$execution->{bindings}{endpoints} || []};
+    my @line;
+    my @spec;
+    my $push = sub (@text) { push @line, @text };
+
+    $push->('// Balanced portable revision-2 qualification-only structural emission.');
+    $push->("// Generated from $execution->{plan_id}; runtime behavior is not claimed.");
+    $push->("module $top;");
+    $push->('  timeunit 1ns;');
+    $push->('  timeprecision 1ps;');
+    $push->('  import fsmgen_vial_runtime_pkg::*;');
+    $push->('');
+
+    for my $index (0 .. $#{$bridge->{endpoints}}) {
+        my $endpoint = $bridge->{endpoints}[$index];
+        my $width = $type{$endpoint->{type_id}}{width};
+        my $name = $backend{$endpoint->{endpoint_id}}{target_name};
+        my $start = @line + 1;
+        $push->('  logic '
+            . ($width > 1 ? '[' . ($width - 1) . ':0] ' : '')
+            . "$name;");
+        my @semantic = ($endpoint->{endpoint_id});
+        push @semantic, $execution_endpoint{$endpoint->{endpoint_id}}{binding_id}
+            if $execution_endpoint{$endpoint->{endpoint_id}};
+        push @spec, _map_spec(
+            relpath => $relpath,
+            start => $start,
+            end => $start,
+            symbol => $name,
+            role => 'balanced_endpoint_binding',
+            plan_paths => ["/bindings/endpoints/$index"],
+            semantic_paths => \@semantic,
+            bridge_paths => ["/endpoints/$index"],
+            locations => [],
+        );
+    }
+    $push->('');
+
+    my @ports = map {
+        my $name = $backend{$_->{endpoint_id}}{target_name};
+        "    .$name($name)"
+    } @{$bridge->{endpoints}};
+    my $dut_start = @line + 1;
+    $push->("  $arg{module_name} dut (");
+    for my $index (0 .. $#ports) {
+        $push->($ports[$index] . ($index == $#ports ? '' : ','));
+    }
+    $push->('  );');
+    push @spec, _map_spec(
+        relpath => $relpath,
+        start => $dut_start,
+        end => scalar(@line),
+        symbol => 'dut',
+        role => 'balanced_unit_binding',
+        plan_paths => ['/bindings/unit'],
+        semantic_paths => [
+            $bridge->{units}[0]{unit_id},
+            $execution->{bindings}{unit}{binding_id},
+        ],
+        bridge_paths => ['/units/0'],
+        locations => [$execution->{bindings}{unit}{source_location}],
+    );
+    $push->('');
+
+    for my $index (0 .. $#{$bridge->{probes}}) {
+        my $probe = $bridge->{probes}[$index];
+        my $binding = $backend{$probe->{probe_id}};
+        my $execution_binding = $execution->{bindings}{probes}[$index];
+        my $width = $type{$probe->{type_id}}{width};
+        my $symbol = 'vial_probe_' . _sv_slug($probe->{name});
+        my $start = @line + 1;
+        $push->('  wire '
+            . ($width > 1 ? '[' . ($width - 1) . ':0] ' : '')
+            . "$symbol = dut.$binding->{target_name};");
+        push @spec, _map_spec(
+            relpath => $relpath,
+            start => $start,
+            end => $start,
+            symbol => $symbol,
+            role => 'generated_probe_adapter',
+            plan_paths => ["/bindings/probes/$index"],
+            semantic_paths => [
+                $probe->{probe_id}, $execution_binding->{binding_id},
+            ],
+            bridge_paths => ["/probes/$index", '/backend_bindings'],
+            locations => [$execution_binding->{source_location}],
+        );
+    }
+    $push->('');
+
+    my $domain = $execution->{bindings}{domains}[0];
+    my $domain_symbol = 'vial_balanced_domain';
+    my $domain_start = @line + 1;
+    $push->('  localparam string ' . $domain_symbol . ' = "'
+        . _sv_string($domain->{binding_id}) . '";');
+    push @spec, _map_spec(
+        relpath => $relpath,
+        start => $domain_start,
+        end => $domain_start,
+        symbol => $domain_symbol,
+        role => 'balanced_domain_binding',
+        plan_paths => ['/bindings/domains/0'],
+        semantic_paths => [$domain->{domain_id}, $domain->{binding_id}],
+        bridge_paths => ['/domains/0'],
+        locations => [$domain->{source_location}],
+    );
+
+    for my $tx_index (0 .. $#{$execution->{bindings}{transactions}}) {
+        my $transaction = $execution->{bindings}{transactions}[$tx_index];
+        my $tx_symbol = sprintf('vial_transaction_binding_%08d', $tx_index);
+        my $tx_start = @line + 1;
+        $push->('  localparam string ' . $tx_symbol . ' = "'
+            . _sv_string($transaction->{binding_id}) . '";');
+        push @spec, _map_spec(
+            relpath => $relpath,
+            start => $tx_start,
+            end => $tx_start,
+            symbol => $tx_symbol,
+            role => 'balanced_transaction_binding',
+            plan_paths => ["/bindings/transactions/$tx_index"],
+            semantic_paths => [
+                $transaction->{transaction_id}, $transaction->{binding_id},
+            ],
+            bridge_paths => ["/transactions/$tx_index"],
+            locations => [$transaction->{source_location}],
+        );
+        for my $field_index (0 .. $#{$transaction->{fields}}) {
+            my $field = $transaction->{fields}[$field_index];
+            my $field_symbol = sprintf(
+                'vial_transaction_field_%08d_%08d',
+                $tx_index, $field_index,
+            );
+            my $field_start = @line + 1;
+            $push->('  localparam string ' . $field_symbol . ' = "'
+                . _sv_string($field->{binding_id}) . '";');
+            push @spec, _map_spec(
+                relpath => $relpath,
+                start => $field_start,
+                end => $field_start,
+                symbol => $field_symbol,
+                role => 'balanced_transaction_field_binding',
+                plan_paths => [
+                    "/bindings/transactions/$tx_index/fields/$field_index",
+                ],
+                semantic_paths => [
+                    $field->{semantic_id}, $field->{binding_id},
+                ],
+                bridge_paths => [
+                    "/transactions/$tx_index/fields/$field_index",
+                ],
+                locations => [$field->{source_location}],
+            );
+        }
+    }
+
+    for my $event_index (0 .. $#{$execution->{events}}) {
+        my $event = $execution->{events}[$event_index];
+        my $symbol = sprintf('vial_event_binding_%08d', $event_index);
+        my $start = @line + 1;
+        $push->('  localparam string ' . $symbol . ' = "'
+            . _sv_string($event->{binding_id}) . '";');
+        push @spec, _map_spec(
+            relpath => $relpath,
+            start => $start,
+            end => $start,
+            symbol => $symbol,
+            role => 'balanced_event_binding',
+            plan_paths => ["/events/$event_index"],
+            semantic_paths => [
+                $event->{event_id}, $event->{binding_id},
+            ],
+            bridge_paths => ["/events/$event_index"],
+            locations => [$event->{source_location}],
+        );
+    }
+    $push->('');
+
+    for my $index (0 .. $#{$execution->{operation_graph}{operations}}) {
+        my $operation = $execution->{operation_graph}{operations}[$index];
+        my $symbol = _operation_symbol($operation);
+        my $start = @line + 1;
+        $push->("  task automatic $symbol;");
+        $push->('    // Qualification-only structural operation: '
+            . $operation->{kind});
+        $push->('  endtask');
+        push @spec, _map_spec(
+            relpath => $relpath,
+            start => $start,
+            end => scalar(@line),
+            symbol => $symbol,
+            role => "operation_$operation->{kind}",
+            plan_paths => ["/operation_graph/operations/$index"],
+            semantic_paths => [
+                $operation->{operation_id}, $operation->{fiber_id},
+            ],
+            bridge_paths => [],
+            locations => [$operation->{source_location}],
+        );
+    }
+    $push->('');
+
+    for my $index (0 .. $#{$execution->{scenarios}}) {
+        my $scenario = $execution->{scenarios}[$index];
+        my $symbol = 'vial_scenario_' . _sv_slug($scenario->{name});
+        my $start = @line + 1;
+        $push->("  task automatic $symbol;");
+        $push->('    // Qualification-only structural scenario.');
+        $push->('  endtask');
+        push @spec, _map_spec(
+            relpath => $relpath,
+            start => $start,
+            end => scalar(@line),
+            symbol => $symbol,
+            role => 'balanced_scenario',
+            plan_paths => ["/scenarios/$index"],
+            semantic_paths => [$scenario->{scenario_id}],
+            bridge_paths => [],
+            locations => [$scenario->{source_location}],
+        );
+    }
+    $push->('');
+
+    my $initial_start = @line + 1;
+    $push->('  initial begin');
+    for my $endpoint (@{$bridge->{endpoints}}) {
+        my $name = $backend{$endpoint->{endpoint_id}}{target_name};
+        $push->("    $name = '0;");
+    }
+    $push->('    #1;');
+    $push->('    $finish;');
+    $push->('  end');
+    push @spec, _map_spec(
+        relpath => $relpath,
+        start => $initial_start,
+        end => scalar(@line),
+        symbol => 'initial',
+        role => 'balanced_structural_scheduler',
+        plan_paths => ['/fixture', '/scenarios'],
+        semantic_paths => [$execution->{fixture}{fixture_id}],
+        bridge_paths => [],
+        locations => [$execution->{fixture}{source_location}],
+    );
+    $push->('endmodule');
+    return (join("\n", @line) . "\n", \@spec);
 }
 
 sub _render_fixture(%arg) {
@@ -1825,7 +2578,9 @@ sub _safe_relpath($value) {
 
 sub _unique(@items) {
     my %seen;
-    return grep { !$seen{$_}++ } @items;
+    return grep { !$seen{$_}++ } map {
+        defined($_) ? $_ : 'undefined:negotiation-requirement'
+    } @items;
 }
 
 sub _require_exact_keys($value, $keys, $label) {
