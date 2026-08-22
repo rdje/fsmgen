@@ -20,6 +20,7 @@ answers:
   - "which VIAL scale families are measured first?"
   - "what does semantic and bridge scale measurement claim?"
   - "how does semantic bridge measurement preserve semantic paths without allowing host paths?"
+  - "how is the semantic bridge scale matrix resumed and published?"
 date: 2026-08-22
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -35,6 +36,8 @@ evidence: >-
   perl/FSM/VIAL/ArchitectureScaleRuntimeBalancedQualification.pm;
   perl/FSM/VIAL/ArchitectureScaleMeasurement.pm;
   perl/FSM/VIAL/ArchitectureScaleSemanticBridgeMeasurement.pm;
+  perl/FSM/VIAL/ArchitectureScaleSemanticBridgeMeasurementMatrix.pm;
+  scripts/run_vial_semantic_bridge_measurement_matrix.pl;
   perl/FSM/VIAL/ArchitectureScaleSemanticCatalog.pm;
   perl/FSM/VIAL/ArchitectureScaleBridgeFanout.pm;
   perl/FSM/HIAL/VIALBridge/Builder.pm; perl/FSM/VIAL/ExecutionBuilder.pm;
@@ -74,7 +77,7 @@ reverify: >-
   t/1602-vial-architecture-scale-bridge-fanout.t
   t/1644-vial-backend-emission-authority-alignment.t
   t/1645-vial-architecture-scale-backend-emission-foundation.t
-  t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t t/1652-vial-balanced-portable-bridge-admission.t t/1653-vial-balanced-portable-composition.t t/1654-vial-balanced-portable-emission.t t/1655-vial-architecture-scale-runtime-balanced-qualification.t t/1656-vial-architecture-scale-measurement-foundation.t t/1657-vial-architecture-scale-semantic-bridge-measurement.t
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t t/1652-vial-balanced-portable-bridge-admission.t t/1653-vial-balanced-portable-composition.t t/1654-vial-balanced-portable-emission.t t/1655-vial-architecture-scale-runtime-balanced-qualification.t t/1656-vial-architecture-scale-measurement-foundation.t t/1657-vial-architecture-scale-semantic-bridge-measurement.t t/1658-vial-architecture-scale-semantic-bridge-measurement-matrix.t
 ---
 
 Decisions `0055` and `0056` select architecture-scale proof without claiming capacity.
@@ -153,8 +156,14 @@ regenerates both forms. The adapter retains validation plus exactly three gate
 or five qualification ordinals only after the family oracle accepts, and
 records an authoritative family rejection as validated-but-not-measured. It
 executes no provider, compiler, simulator, or external verification tool and
-makes no performance-budget, support, capacity, or reached-boundary claim. The
-complete selected semantic/bridge profile matrix remains active before
+makes no performance-budget, support, capacity, or reached-boundary claim. A
+resumable matrix publisher now freezes the exact four-level inventory across
+fourteen semantic and thirteen bridge axes. It admits only a clean Git
+revision below the real guard; publishes each complete profile set atomically
+with every raw record; resumes only byte-valid same-revision evidence; rejects
+collisions and ambiguous crash staging; and seals family/full manifests only
+after exact child censuses share one Git/host/tool/guard identity. The runner
+is implemented, but the clean guarded 108-profile capture remains active before
 `.17.3.2` can close.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],

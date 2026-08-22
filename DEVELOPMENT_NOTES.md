@@ -623,3 +623,20 @@ and changes no value or other key. Independent report validation regenerates
 the family evaluation, the projection, and the original artifact census. This
 keeps family authority byte-exact while preserving the generic measurement
 schema's stronger host-path boundary.
+
+## 2026-08-22: Long scale matrices publish complete profiles before completion claims
+
+A multi-hour matrix cannot make its only durable transition at the final
+profile. A process or machine interruption would otherwise discard already
+validated raw records, encourage an unsafe rerun over partial output, or tempt
+an operator to describe incomplete evidence as a completed matrix.
+
+The semantic/bridge runner therefore gives each canonical profile set its own
+immutable atomic publication. A retry independently reloads the whole report,
+re-proves the family adapter, and accepts it only at the same clean Git and
+common host/tool/guard identity. Existing different bytes collide, and
+ambiguous crash staging remains visible instead of being guessed safe to
+delete. Family manifests are withheld until every owned profile validates;
+the complete manifest is withheld until both family manifests share the same
+identity. This makes interruption recovery cheap without weakening raw-sample,
+earliest-cap, or no-partial-completion truth.

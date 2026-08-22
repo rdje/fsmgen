@@ -3842,6 +3842,31 @@ stage with a stable diagnostic, no partial publication, and no residue. Host
 exhaustion, signal 137, or an external-tool crash is never accepted as the
 product's limit behavior.
 
+The complete-matrix runner owns an immutable four-level inventory across all fourteen
+semantic and thirteen bridge axes: 108 sets, never a caller list. Accepted
+gate/qualification sets retain three/five samples; limits and earlier dominant
+rejections retain correctness without timing. The checked reference is their
+construction anchor, not a separate measurement. Long work resumes only at a complete-profile boundary.
+Each set atomically publishes validation, every raw record/exclusion, identities, oracles, and cleanup
+to `.artifacts/qualification/vial-scale/v1/<profile-id>/measurement-set.json`.
+
+A retry revalidates immutable bytes at the same clean Git and common host/tool/guard
+identity. Byte-equal output is unchanged, different bytes collide, and ambiguous
+crash staging fails closed. Completed profiles survive interruption without
+claiming completion. Exact child censuses alone publish family `matrix.json`
+files and `semantic-bridge-complete-matrix-v1/complete-matrix.json`; manifests
+retain dominance/content identities while profile files remain raw authority.
+
+The root-derived operator has no root override; capture requires a clean tree and the real guard, while inventory and validation are non-measuring:
+```bash
+scripts/run_vial_semantic_bridge_measurement_matrix.pl --inventory
+scripts/run_with_ram_guard.sh -- scripts/run_vial_semantic_bridge_measurement_matrix.pl
+scripts/run_vial_semantic_bridge_measurement_matrix.pl --validate
+```
+
+The publisher is implemented, but `.17.3.2` remains active until the guarded command seals all 108 sets
+and both family/full manifests. No completed-matrix or reached-boundary claim is made before then.
+
 The public support snapshot and normative contract report the portable-SV
 Runner's enforced 8-MiB compile and 64-MiB runtime capture limits. Those are
 bounded transcript-capture controls, not scale qualification or evidence that
@@ -3850,6 +3875,6 @@ the selected AHB fixture approaches either limit.
 Even a later passing architecture profile will not substitute for the
 separately owned whole-product `big`/`really_big` qualification, mixed-language
 scale, native-UVM runtime scale, synthesis scale, or general backend parity.
-The adapter implementation is complete, but `.17.3.2` remains active until the
-complete selected semantic and bridge profile matrix and its limit/over-limit
-dominance evidence are retained.
+The adapter and resumable publisher implementations are complete, but
+`.17.3.2` remains active until the complete selected semantic and bridge
+profile matrix and its limit/over-limit dominance evidence are retained.
