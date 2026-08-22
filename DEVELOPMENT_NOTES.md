@@ -518,3 +518,21 @@ reference counts and separates OSVVM's portable sources, wrapper adapter, and
 provider identity. A future authority change must therefore update one source
 and its executable re-derivation; an unknown, missing, obsolete, or
 contradictory field stops before generator work can consume it.
+
+## 2026-08-22: Balanced portability is a qualified route, not a widened scale bypass
+
+The balanced workload needs a bridge shape that neither the fixed AHB contract
+nor the private-nonportable revision-1 scale contract can express. Relaxing
+either validator would erase an already-qualified boundary, while adding the
+private capability to a backend allow-list would confuse availability with
+semantic qualification.
+
+Decision `0077` therefore adds a distinct revision-2 direct-IAL1 profile behind
+three independent controls: exact bridge construction, exact execution
+admission, and backend-specific portable-SystemVerilog negotiation. The profile
+must carry 16 transaction aliases with 109 real endpoint-backed fields each;
+the resulting 1,744 fields combine with the other selected resources to derive
+2,048 bindings with no padding. Existing public builders and support discovery
+remain unaware of the private route. This design keeps scale infrastructure
+useful for interaction proof without promoting it into a product protocol or
+general portability promise.

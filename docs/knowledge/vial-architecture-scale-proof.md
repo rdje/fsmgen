@@ -12,7 +12,7 @@ answers:
   - "where are the VIAL portable backend source byte boundaries?"
   - "why does native UVM reject the portable backend scale ladder?"
   - "how are VIAL runtime-stream measurement inputs constructed without tools?"
-  - "why is balanced portable composition blocked?"
+  - "how was the balanced portable bridge blocker resolved?"
 date: 2026-08-22
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -21,6 +21,7 @@ evidence: >-
   docs/decisions/0056-vial-scale-measurements-use-pinned-evidence-and-bounded-failure.md;
   docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md;
   docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md;
+  docs/decisions/0077-vial-balanced-portable-uses-a-caller-sealed-revision-2-qualification-bridge.md;
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/VIAL/ArchitectureScaleWorkload.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission.pm; perl/FSM/VIAL/ArchitectureScaleRuntimeStream.pm;
   perl/FSM/HIAL/VIALBridge/Builder.pm; perl/FSM/VIAL/ExecutionBuilder.pm;
@@ -78,16 +79,19 @@ checks, content-addressed reruns, atomic rejection, and cleanup. Runtime
 execution or runtime/capacity claims. Exact historical counts remain in the
 task evidence and decisions `0075`/`0055`, not duplicated here.
 
-Balanced `.17.2.7.2` is blocked before source authoring. The portable AHB
-bridge is closed to one six-field/six-event transaction. The scalable direct-
-IAL1 bridge is closed to one field and its caller-sealed ExecutionIR capability
-is `qualification_only`/`private_nonportable`, so the portable-SV emitter
-rejects it. The selected 2,048-binding shape needs 1,744 field bindings after
-one unit/domain, 126 data endpoints, 32 probes, 16 transaction aliases, and 128
-events: exactly 109 fields per alias. Unblock by selecting a distinct sealed
-revision-2 balanced qualification profile with explicit emitter qualification,
-or by revising decision `0055`'s portable/count contract. No protocol or
-capability behavior changed during the audit.
+Decision `0077` resolves the balanced `.17.2.7.2` blocker without widening the
+portable AHB or revision-1 scale contracts. The selected private direct-IAL1
+profile keeps `architecture_scale_probe` but uses exact profile
+`balanced_portable`, revision `2`, facts `scale_evidence_only=true` and
+`qualified_emitter=sv_portable_verilator`, plus capability
+`hial_vial.bridge_qualification.balanced_portable_v2`. Separate bridge and
+execution entrypoints are caller-sealed to the balanced composer; portable SV
+must independently negotiate the exact bridge/ExecutionIR shape rather than
+trusting the capability name. The binding equation remains one unit/domain,
+126 data endpoints, 32 probes, 16 aliases, 1,744 fields, and 128 events: 2,048
+bindings, with 109 fields per alias. Public planning, AHB, revision 1, other
+backends, runtime, support, performance, and capacity remain unchanged and
+unclaimed while `.17.2.7.2.2`-`.4` implement and qualify the route.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
