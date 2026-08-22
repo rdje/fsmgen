@@ -17,6 +17,8 @@ answers:
   - "how does VIAL architecture scale measurement work?"
   - "where are VIAL scale measurement artifacts staged and published?"
   - "does the VIAL measurement foundation execute external tools?"
+  - "which VIAL scale families are measured first?"
+  - "what does semantic and bridge scale measurement claim?"
 date: 2026-08-22
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -31,6 +33,8 @@ evidence: >-
   perl/FSM/VIAL/ArchitectureScaleBalancedPortable.pm;
   perl/FSM/VIAL/ArchitectureScaleRuntimeBalancedQualification.pm;
   perl/FSM/VIAL/ArchitectureScaleMeasurement.pm;
+  perl/FSM/VIAL/ArchitectureScaleSemanticCatalog.pm;
+  perl/FSM/VIAL/ArchitectureScaleBridgeFanout.pm;
   perl/FSM/HIAL/VIALBridge/Builder.pm; perl/FSM/VIAL/ExecutionBuilder.pm;
   perl/FSM/VIAL/Backend/SVPortableVerilator.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission/PortableVHDL.pm;
@@ -39,6 +43,8 @@ evidence: >-
   t/1644-vial-backend-emission-authority-alignment.t;
   t/1645-vial-architecture-scale-backend-emission-foundation.t;
   t/1647-vial-architecture-scale-backend-emission-portable-vhdl.t;
+  t/1601-vial-architecture-scale-semantic-catalog.t;
+  t/1602-vial-architecture-scale-bridge-fanout.t;
   t/1648-vial-architecture-scale-backend-emission-osvvm.t; t/1650-vial-architecture-scale-backend-emission-family-qualification.t; t/1651-vial-architecture-scale-runtime-stream-construction.t; t/1652-vial-balanced-portable-bridge-admission.t; t/1653-vial-balanced-portable-composition.t; t/1654-vial-balanced-portable-emission.t; t/1655-vial-architecture-scale-runtime-balanced-qualification.t; t/1656-vial-architecture-scale-measurement-foundation.t;
   docs/knowledge/vial-execution-scale-reachability.md;
   docs/knowledge/vial-semantic-scale-catalog.md;
@@ -60,7 +66,9 @@ reverify: >-
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md &&
   rg -n 'vial_architecture_scale_measurement|SAMPLER_INTERVAL_NS|STAGING_BASE|PUBLICATION_BASE|measured runs require'
   perl/FSM/VIAL/ArchitectureScaleMeasurement.pm &&
-  prove -Iperl t/1644-vial-backend-emission-authority-alignment.t
+  prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t
+  t/1602-vial-architecture-scale-bridge-fanout.t
+  t/1644-vial-backend-emission-authority-alignment.t
   t/1645-vial-architecture-scale-backend-emission-foundation.t
   t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t t/1652-vial-balanced-portable-bridge-admission.t t/1653-vial-balanced-portable-composition.t t/1654-vial-balanced-portable-emission.t t/1655-vial-architecture-scale-runtime-balanced-qualification.t t/1656-vial-architecture-scale-measurement-foundation.t
 ---
@@ -129,8 +137,14 @@ semantic identities exclude volatile measurements. t/1656 re-derives the
 record and lifecycle and falsifies forged paths, timeouts, reports, guard
 admission, ordinals, stage order, external classification, unreported output,
 publication collision, and publication failure. Semantic/bridge family
-measurement remains proposed under `.17.3.2`; performance budgets, support,
-capacity, and reached-boundary claims remain later-owned.
+measurement is active under `.17.3.2`. It alone may adapt the completed
+canonical family constructors to the common controller and retain validation
+plus three gate or five qualification ordinals. It must re-prove the family
+oracle in every sampled run, separate FSMGen-owned construct/parse/bridge
+stages, retain earliest-cap and cleanup truth, and mark later stages
+inapplicable. It executes no provider, compiler, simulator, or external
+verification tool and makes no performance-budget, support, capacity, or
+reached-boundary claim; those remain later-owned.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

@@ -704,7 +704,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Measure portable backend generation, compile, execution, result, and artifact scaling.`
   Acceptance: `Run the selected workload profiles under active RAM/time controls for every applicable qualified backend, collect normalized wall/CPU/descendant-RSS/artifact/compile/run/result evidence, prove deterministic reruns and semantic outcomes, and distinguish tool cost from architecture cost without generalizing beyond measured profiles.`
-  Verification: `Clean unified provider-free qualification commit 490c35cc5 closes deterministic generation before any measured process or tool execution. Decision 0056 freezes the measurement schema, stage boundaries, raw-sample contract, repetitions, 250-ms sampling interval, exact host/tool identities, smaller-of timeouts, 88%-host/4,096-MiB descendant guard, repository-volume staging/publication, exclusion policy, budget formulas, and nonclaims. Completed foundation .1 implements the closed record, validation-before-measurement controller, fork-isolated stage workers, process-tree sampler, effective timeout enforcement, active-guard evidence handoff, defensive validation, and same-volume publication/cleanup without external verification-tool execution. Family measurement, external-tool execution, balanced measurement, calibration closure, cap repair, and promotion remain separately owned.`
+  Verification: `Clean unified provider-free qualification commit 490c35cc5 closes deterministic generation before any measured process or tool execution. Decision 0056 freezes the measurement schema, stage boundaries, raw-sample contract, repetitions, 250-ms sampling interval, exact host/tool identities, smaller-of timeouts, 88%-host/4,096-MiB descendant guard, repository-volume staging/publication, exclusion policy, budget formulas, and nonclaims. Completed foundation .1 implements the closed record, validation-before-measurement controller, fork-isolated stage workers, process-tree sampler, effective timeout enforcement, active-guard evidence handoff, defensive validation, and same-volume publication/cleanup without external verification-tool execution. Semantic-catalog/bridge-fanout measurement .2 alone is active; external-tool execution, balanced measurement, calibration closure, cap repair, and promotion remain separately owned.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3: activate scale measurement foundation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9`
 
@@ -716,11 +716,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.1: implement scale measurement foundation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Measure semantic-catalog and bridge-fanout construction through their canonical provider-free stages.`
   Acceptance: `Consume only completed selected family constructions; record validation plus three gate and five qualification samples where applicable; re-prove every stage-local semantic, bridge, identity, rerun, failure, and cleanup oracle before retaining a sample; distinguish FSMGen-owned stage cost; preserve exact limit/over-limit dominance; retain every raw sample and justified exclusion; and make no external-tool, performance-budget, support, or capacity claim.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean predecessor 3946bf101 completes the common measurement foundation. Decision 0055 selects semantic_catalog_v1 through parse/validate/SemanticIR and bridge_fanout_v1 through the canonical HIAL route/bridge manifest; decision 0056 requires correctness-before-measurement, validation plus three gate/five qualification ordinals, raw samples, active guards, repository-volume lifecycle, earliest-cap truth, and explicit nonclaims. Canonical provider-free semantic construction is already owned by 145d3084a and bridge construction by 97dda148d; their unchanged focused suite passes Files=2/Tests=10. This leaf alone may add the family adapter, watcher, and accepted raw measurement evidence. It may not execute an external verification tool, derive a performance budget, repair a cap, or publish support/capacity/reached-boundary claims.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2: activate semantic and bridge measurement`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3`
   Status: `proposed`
@@ -1038,8 +1038,9 @@ emission `.2`, and unified provider-free qualification `.3`; parent `.17.2`
 therefore closes deterministic generation. Measurement parent `.17.3` is now
 active. Completed foundation `.17.3.1` owns the closed record, sampler,
 controller, active-guard evidence, and repository-volume lifecycle without an
-external verification-tool run; semantic/bridge measurement `.17.3.2` remains
-the proposed next leaf.
+external verification-tool run. Semantic/bridge measurement `.17.3.2` is now
+active and alone owns its family adapter, watcher, and raw evidence before
+execution/checking or external-tool measurement can begin.
 
 ## Decisions
 
@@ -1622,6 +1623,7 @@ the proposed next leaf.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-22` | `.17.3.2` semantic-catalog/bridge-fanout measurement activation | clean measurement-foundation predecessor `3946bf101`; decisions `0055`/`0056`; completed semantic constructor `145d3084a`; completed bridge constructor `97dda148d`; unchanged canonical family suite; exact provider-free stage/repetition/applicability/nonclaim boundary; task/index/Memory/book/fact/claim/containment continuity; task-tree, Knowledge Map, project-locality, relative-path, mdBook, claim, live-document, diff, docs-only staged acceptance, and doctrine gates | `passed`; `.17.3.2` alone is active to add canonical semantic/bridge family measurement through the common controller. Existing family tests pass Files=2/Tests=10. The 54-chapter mdBook test and inspected 89-file/19,133,640-byte repository-local render pass before exact removal; the maintained 54-file book grows by 24 lines/1,518 bytes under a fresh authority with no ceiling increase. Task integrity remains three trees/978 nodes; Knowledge Map parity is 1,150 facts/6,064 questions/6,231 occurrences/133 shards; claim inventory/disposition remains closed at 1,464 candidates plus 2,110 current/615 original constants as 875 derived gates/589 reviewed records/zero gaps. Activation changes no code, test, config, fixture, constructor, parser, SemanticIR, bridge, manifest, sampler, artifact, external execution, public API, performance budget, support, capacity, reached-boundary, or product behavior. |
 | `2026-08-22` | `.17.3.1` architecture-scale measurement foundation implementation | honest missing-module RED; exact record/stage/publication schemas; canonical workload/Git/dirty/host/tool/run identities; validation-before-measurement admission; twelve ordered stages; fork-isolated stage ownership; 250-ms monotonic process-tree sampling; wall/controller/descendant CPU and summed-tree/single-descendant RSS; semantic/file/line/byte/object counters; explicit unsupported reasons; smaller-of timeout enforcement; active RAM-guard evidence; stage and aggregate artifact censuses; bounded worker capture; sanitized diagnostics; hostile record mutation; success/exception/timeout cleanup; same-volume atomic publication, idempotence, collision, and injected failure rollback; explicit nonclaims; syntax; guarded focused/adjacent and workload compatibility; task/index/Memory/book/fact/rationale/claim/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, diff, staged acceptance, and doctrine gates | `passed`; Files=2/Tests=8 exact guarded measurement/guard coverage and Files=1/Tests=7 adjacent workload coverage pass. The foundation executes no provider or external verification tool and publishes no family, compile, runtime, trace, result, performance-budget, support, capacity, or reached-boundary claim. `.17.3.1` is done; `.17.3.2` remains the proposed next measurement leaf. |
 | `2026-08-22` | `.17.3` architecture-scale measurement activation | clean unified-qualification predecessor `490c35cc5`; decisions `0055`/`0056`/`0077`; absent measurement-schema/stage/run-ordinal implementation audit; nine-leaf decomposition; exact foundation/family/backend/tool/balanced/calibration ownership; task/index/Memory/book/fact/claim/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, live-document, diff, staged docs-only acceptance, and doctrine gates | `passed`; `.17.3` is active and `.17.3.1` alone owns the closed measurement schema/sampler/controller/lifecycle foundation before any external-tool run. Task integrity holds at three trees/978 nodes; Knowledge Map parity is 1,150 facts/6,059 questions/6,226 occurrences/133 shards; all 54 mdBook chapters test and its inspected 89-file/19,089,819-byte repository-local render is removed. The governed claim census remains complete at 1,459 candidates plus 2,105 current/615 original constants as 870 derived gates/589 reviewed records/zero gaps. The maintained book changes by zero lines/+260 bytes without a ceiling increase. Activation changes no code, test, config, fixture, generator, sampler, external execution, artifact, API, capability/support, performance, budget, capacity, reached-boundary, or product behavior. |
 | `2026-08-22` | `.17.2.7.3` unified provider-free qualification implementation | missing-module RED witness; exact fifteen-runtime/one-balanced ownership; frozen checked-source identity; canonical child construction/evaluation only; complete embedded child reports and content identities; normalized authority/applicability matrix; independent whole-gate regeneration; closed nonclaims; hostile source/report/claim/invocant/injection rejection; defensive values; simultaneous dual-family repository-volume success/failure cleanup; syntax; guarded focused and adjacent compatibility; CI inventory; task/index/Memory/book/fact/rationale/claim/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, diff, staged acceptance, and doctrine gates | `passed`; the 4,096-MiB guarded t/1655 watcher passes Files=1/Tests=4 in 600 seconds, while CI inventory plus t/1651 compatibility passes Files=2/Tests=7,098 in 62 seconds. All sixteen members qualify without provider or external-tool access; only balanced structural emission is complete. Compile, runtime, trace, result, public support, performance, capacity, and reached-boundary claims remain false. `.17.2.7.3`, `.17.2.7`, and `.17.2` are done; `.17.3` measurement remains proposed for a clean activation. |
@@ -5970,3 +5972,38 @@ raising an enforcement ceiling.
   acceptance, and final doctrine gates close in this commit. Family/tool
   execution, calibration, performance budgets, support, capacity, and
   reached-boundary claims remain unchanged and later-owned.
+
+## Acceptance Checklist (enforced) — `.17.3.2` semantic and bridge measurement activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Measure semantic-catalog and
+  bridge-fanout construction through their canonical provider-free stages.' -1
+  --format='%h %s' -- docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`
+  identifies decomposition commit `ec94d5d02`, where `.17.3.2` remained
+  proposed behind the common controller. Clean predecessor `3946bf101` now
+  completes that controller, while the family constructors remain durably
+  closed at `145d3084a` and `97dda148d`; no active leaf yet owned the adapter,
+  watcher, or raw semantic/bridge measurement records.
+- [x] **ADDRESSED (verified)** — `.17.3.2` alone is active. Its contract admits
+  only canonical `ArchitectureScaleSemanticCatalog` and
+  `ArchitectureScaleBridgeFanout` reconstruction, requires validation before
+  three gate or five qualification samples, re-proves the family oracle in
+  every retained run, separates FSMGen-owned construct/parse/bridge stages,
+  retains earliest-cap and cleanup truth, and marks later stages inapplicable.
+  External verification tools, execution/checking families, budget derivation,
+  cap repair, support, capacity, and reached-boundary claims remain separately
+  owned.
+- [x] **NO REGRESSION** — the unchanged semantic/bridge family suite reports
+  `All tests successful` at `Files=2, Tests=10`; task integrity remains three
+  trees/978 nodes; project-data locality passes; and `knowledge-map: OK` covers
+  1,150 facts/6,064 questions/6,231 occurrences/133 shards. Claim inventory and
+  disposition remain complete at 1,464 candidates plus 2,110 current/615
+  original constants as 875 derived gates/589 reviewed records/zero gaps. All
+  54 mdBook chapters test, and its inspected 89-file/19,133,640-byte
+  repository-local render is removed exactly. The maintained 54-file book
+  grows by 24 lines/1,518 bytes under a fresh authority with zero ceiling
+  increase; all 22 live-document surfaces/3,052 paths pass. Relative-path,
+  diff, docs-only staged acceptance, and final doctrine gates close in this
+  commit. No code, test, config, fixture, constructor, parser, SemanticIR,
+  bridge, manifest, sampler, artifact, external process, public API,
+  performance budget, support, capacity, reached-boundary, or product behavior
+  changes.

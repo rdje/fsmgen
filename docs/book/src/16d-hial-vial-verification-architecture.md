@@ -3685,8 +3685,10 @@ identity, and raw samples. The repository RAM guard retains its 88% host and
 clean calibration with explicit headroom; unknown hosts run correctness,
 determinism, safety, and cleanup without flaky performance failure. Measurement
 is active under `.17.3`. The common `.17.3.1` foundation is complete; later
-leaves own family and exact-tool runs, `.17.3.9` owns candidate calibration
-closure, and `.17.5` alone owns promotion.
+leaves own exact-tool runs, `.17.3.9` owns candidate calibration closure, and
+`.17.5` alone owns promotion. Semantic-catalog and bridge-fanout measurement is
+active under `.17.3.2`; it does not authorize execution/checking measurement or
+an external verification-tool run.
 
 ### Architecture-scale measurement foundation
 
@@ -3763,6 +3765,28 @@ the process tree. They never hold project output. Persisted paths remain
 repository-relative, diagnostics are sanitized, worker result capture is
 bounded, timeout termination targets both the worker process group and its
 direct PID, and cleanup records exact residue if removal itself fails.
+
+### Semantic and bridge measurement boundary
+
+The active `.17.3.2` leaf consumes only two already-completed provider-free
+families. `semantic_catalog_v1` must be reconstructed through
+`FSM::VIAL::ArchitectureScaleSemanticCatalog` and retain parse, validation, and
+SemanticIR oracles. `bridge_fanout_v1` must be reconstructed through
+`FSM::VIAL::ArchitectureScaleBridgeFanout` and retain the selected canonical
+HIAL route, manifest, mapping, binding, rerun, earliest-failure, and cleanup
+oracles. A measurement adapter may not accept caller-created IR, manifests,
+count overrides, or precomputed reports as substitutes for those authorities.
+
+Each accepted gate profile requires one correctness-only validation followed
+by three guarded measured ordinals; an accepted qualification profile requires
+five. Limit and over-limit levels remain correctness/failure evidence unless
+their decision-`0055` applicability says otherwise. Every retained timing or
+RSS sample must still pass the family oracle in its own measured run. This leaf
+separates FSMGen-owned `construct`, `parse_validate`, and `bridge` costs and
+marks every later or inapplicable stage `not_run` with a reason. It does not run
+a provider, compiler, simulator, or other external verification tool, derive a
+performance budget, repair an earlier cap, or claim support, capacity, or a
+reached boundary.
 
 Generated work stays below repository-derived `.artifacts/tmp/vial-scale/` and
 is removed exactly. An over-limit proof must fail at the earliest authoritative
