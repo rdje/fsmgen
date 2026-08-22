@@ -19,6 +19,7 @@ answers:
   - "does the VIAL measurement foundation execute external tools?"
   - "which VIAL scale families are measured first?"
   - "what does semantic and bridge scale measurement claim?"
+  - "how does semantic bridge measurement preserve semantic paths without allowing host paths?"
 date: 2026-08-22
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -33,6 +34,7 @@ evidence: >-
   perl/FSM/VIAL/ArchitectureScaleBalancedPortable.pm;
   perl/FSM/VIAL/ArchitectureScaleRuntimeBalancedQualification.pm;
   perl/FSM/VIAL/ArchitectureScaleMeasurement.pm;
+  perl/FSM/VIAL/ArchitectureScaleSemanticBridgeMeasurement.pm;
   perl/FSM/VIAL/ArchitectureScaleSemanticCatalog.pm;
   perl/FSM/VIAL/ArchitectureScaleBridgeFanout.pm;
   perl/FSM/HIAL/VIALBridge/Builder.pm; perl/FSM/VIAL/ExecutionBuilder.pm;
@@ -45,7 +47,7 @@ evidence: >-
   t/1647-vial-architecture-scale-backend-emission-portable-vhdl.t;
   t/1601-vial-architecture-scale-semantic-catalog.t;
   t/1602-vial-architecture-scale-bridge-fanout.t;
-  t/1648-vial-architecture-scale-backend-emission-osvvm.t; t/1650-vial-architecture-scale-backend-emission-family-qualification.t; t/1651-vial-architecture-scale-runtime-stream-construction.t; t/1652-vial-balanced-portable-bridge-admission.t; t/1653-vial-balanced-portable-composition.t; t/1654-vial-balanced-portable-emission.t; t/1655-vial-architecture-scale-runtime-balanced-qualification.t; t/1656-vial-architecture-scale-measurement-foundation.t;
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t; t/1650-vial-architecture-scale-backend-emission-family-qualification.t; t/1651-vial-architecture-scale-runtime-stream-construction.t; t/1652-vial-balanced-portable-bridge-admission.t; t/1653-vial-balanced-portable-composition.t; t/1654-vial-balanced-portable-emission.t; t/1655-vial-architecture-scale-runtime-balanced-qualification.t; t/1656-vial-architecture-scale-measurement-foundation.t; t/1657-vial-architecture-scale-semantic-bridge-measurement.t;
   docs/knowledge/vial-execution-scale-reachability.md;
   docs/knowledge/vial-semantic-scale-catalog.md;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
@@ -66,11 +68,13 @@ reverify: >-
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md &&
   rg -n 'vial_architecture_scale_measurement|SAMPLER_INTERVAL_NS|STAGING_BASE|PUBLICATION_BASE|measured runs require'
   perl/FSM/VIAL/ArchitectureScaleMeasurement.pm &&
+  rg -n 'vial_architecture_scale_semantic_bridge_measurement_set|measurement_evidence_projection|semantic_path|canonical family'
+  perl/FSM/VIAL/ArchitectureScaleSemanticBridgeMeasurement.pm &&
   prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t
   t/1602-vial-architecture-scale-bridge-fanout.t
   t/1644-vial-backend-emission-authority-alignment.t
   t/1645-vial-architecture-scale-backend-emission-foundation.t
-  t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t t/1652-vial-balanced-portable-bridge-admission.t t/1653-vial-balanced-portable-composition.t t/1654-vial-balanced-portable-emission.t t/1655-vial-architecture-scale-runtime-balanced-qualification.t t/1656-vial-architecture-scale-measurement-foundation.t
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t t/1652-vial-balanced-portable-bridge-admission.t t/1653-vial-balanced-portable-composition.t t/1654-vial-balanced-portable-emission.t t/1655-vial-architecture-scale-runtime-balanced-qualification.t t/1656-vial-architecture-scale-measurement-foundation.t t/1657-vial-architecture-scale-semantic-bridge-measurement.t
 ---
 
 Decisions `0055` and `0056` select architecture-scale proof without claiming capacity.
@@ -136,15 +140,22 @@ authority and exports only its effective threshold evidence. Workload and
 semantic identities exclude volatile measurements. t/1656 re-derives the
 record and lifecycle and falsifies forged paths, timeouts, reports, guard
 admission, ordinals, stage order, external classification, unreported output,
-publication collision, and publication failure. Semantic/bridge family
-measurement is active under `.17.3.2`. It alone may adapt the completed
-canonical family constructors to the common controller and retain validation
-plus three gate or five qualification ordinals. It must re-prove the family
-oracle in every sampled run, separate FSMGen-owned construct/parse/bridge
-stages, retain earliest-cap and cleanup truth, and mark later stages
-inapplicable. It executes no provider, compiler, simulator, or external
-verification tool and makes no performance-budget, support, capacity, or
-reached-boundary claim; those remain later-owned.
+publication collision, and publication failure. `.17.3.2` now has a caller-
+sealed semantic/bridge adapter. It accepts no constructed input or report,
+reconstructs each family through its canonical producer, reruns every stage
+payload independently, isolates reconstruction in the construct stage, and
+delegates guard, sampling, timeout, artifact census, and cleanup authority to
+the foundation. Original canonical evaluation JSON
+remains a stage artifact; the embedded generic oracle uses a collision-checked
+projection that changes family `path` keys to `semantic_path` so semantic
+pointers cannot be mistaken for machine-local paths. Independent validation
+regenerates both forms. The adapter retains validation plus exactly three gate
+or five qualification ordinals only after the family oracle accepts, and
+records an authoritative family rejection as validated-but-not-measured. It
+executes no provider, compiler, simulator, or external verification tool and
+makes no performance-budget, support, capacity, or reached-boundary claim. The
+complete selected semantic/bridge profile matrix remains active before
+`.17.3.2` can close.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

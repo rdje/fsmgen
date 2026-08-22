@@ -3768,14 +3768,62 @@ direct PID, and cleanup records exact residue if removal itself fails.
 
 ### Semantic and bridge measurement boundary
 
-The active `.17.3.2` leaf consumes only two already-completed provider-free
-families. `semantic_catalog_v1` must be reconstructed through
-`FSM::VIAL::ArchitectureScaleSemanticCatalog` and retain parse, validation, and
-SemanticIR oracles. `bridge_fanout_v1` must be reconstructed through
-`FSM::VIAL::ArchitectureScaleBridgeFanout` and retain the selected canonical
+The `.17.3.2` caller-sealed adapter consumes only two already-completed
+provider-free families. `semantic_catalog_v1` is reconstructed through
+`FSM::VIAL::ArchitectureScaleSemanticCatalog` and retains parse, validation, and
+SemanticIR oracles. `bridge_fanout_v1` is reconstructed through
+`FSM::VIAL::ArchitectureScaleBridgeFanout` and retains the selected canonical
 HIAL route, manifest, mapping, binding, rerun, earliest-failure, and cleanup
 oracles. A measurement adapter may not accept caller-created IR, manifests,
 count overrides, or precomputed reports as substitutes for those authorities.
+
+`FSM::VIAL::ArchitectureScaleSemanticBridgeMeasurement` exposes four operations:
+canonical construction, correctness-only validation, guarded gate or
+qualification measurement, and independent report validation. Each stage
+computes its own payload twice before the common controller accepts it. Only
+`construct` repeats canonical family reconstruction; later stages consume that
+sealed construction so their measurements do not include construction cost.
+The semantic family owns `construct` and
+`parse_validate`; the bridge family additionally owns `bridge`. Every later
+stage is explicitly `not_run`.
+
+Canonical family evaluation JSON is retained byte-for-byte as a stage-owned,
+content-addressed artifact. Its copy inside the generic measurement oracle is a
+closed evidence projection: any family diagnostic key named `path` becomes
+`semantic_path`, with a collision check if both spellings occur. This preserves
+the semantic pointer while keeping the foundation's rejection of absolute
+machine-local paths strict. Report validation independently regenerates both
+the original artifact identity and the projected evidence.
+
+A correctness-only reference check can be invoked directly:
+
+```perl
+use strict;
+use warnings;
+use lib 'perl';
+use FSM::VIAL::ArchitectureScaleSemanticBridgeMeasurement;
+
+my $report =
+    FSM::VIAL::ArchitectureScaleSemanticBridgeMeasurement->validate_profile({
+        repository_root => '.',
+        family => 'semantic_catalog_v1',
+        level => 'reference_v1',
+        primary_axis => 'imports',
+    });
+die "reference validation failed\n"
+    unless $report->{outcome} eq 'accepted_validation';
+print "semantic reference validation passed\n";
+```
+
+Non-reference validation and all measurements must execute below the real
+repository RAM guard. Setting guard-looking environment variables by hand is
+not equivalent to enforcement. The focused exact adapter proof is:
+
+```bash
+FSMGEN_VIAL_SCALE_SEMANTIC_BRIDGE_EXACT=1 \
+  scripts/run_with_ram_guard.sh -- \
+  prove -Iperl t/1657-vial-architecture-scale-semantic-bridge-measurement.t
+```
 
 Each accepted gate profile requires one correctness-only validation followed
 by three guarded measured ordinals; an accepted qualification profile requires
@@ -3802,3 +3850,6 @@ the selected AHB fixture approaches either limit.
 Even a later passing architecture profile will not substitute for the
 separately owned whole-product `big`/`really_big` qualification, mixed-language
 scale, native-UVM runtime scale, synthesis scale, or general backend parity.
+The adapter implementation is complete, but `.17.3.2` remains active until the
+complete selected semantic and bridge profile matrix and its limit/over-limit
+dominance evidence are retained.

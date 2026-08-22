@@ -605,3 +605,21 @@ without retaining performance, while measured ordinals require matching
 workload, Git, dirty-state, and host evidence from the preceding validation.
 These boundaries let backend-specific leaves add qualified commands later
 without weakening cleanup, identity, guard, or artifact authority.
+
+## 2026-08-22: Canonical family evidence needs a path-safe measurement projection
+
+The semantic and bridge family evaluators already own complete canonical JSON,
+including diagnostic fields named `path` whose slash-leading values are
+semantic pointers. Embedding those hashes unchanged in the generic measurement
+record would make them indistinguishable from forbidden machine-local absolute
+paths. Weakening the measurement foundation's recursive path rejection would
+allow an unrelated worker to leak host paths under the same generic key.
+
+The family adapter therefore retains the original canonical evaluation bytes as
+a stage-owned, content-addressed artifact and embeds a separate deterministic
+evidence projection. The projection recursively renames only keys exactly equal
+to `path` as `semantic_path`, rejects a hash that already contains both names,
+and changes no value or other key. Independent report validation regenerates
+the family evaluation, the projection, and the original artifact census. This
+keeps family authority byte-exact while preserving the generic measurement
+schema's stronger host-path boundary.
