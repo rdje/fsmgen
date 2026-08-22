@@ -182,7 +182,11 @@ only completed family stages. The unchanged ordinary referenced-declaration
 fixture now completes through chunked ASCII lexing with a Unicode-preserving
 fallback and linear four-state mask conversion. The fixed timeout and every
 support, performance-budget, capacity, and reached-boundary nonclaim remain
-unchanged.
+unchanged. Post-commit, the old revision's incomplete publication was
+re-censused and removed. Clean guarded validation plus independent regeneration
+accepted the exact combined-byte boundary with fully censused output and exact
+cleanup, leaving the semantic/bridge publication namespace empty for the full
+matrix.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

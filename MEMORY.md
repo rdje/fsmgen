@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2.1`.
-- next_action: commit the verified truthful-failure/parser-throughput repair,
-  remove the exact 54-file old-revision incomplete publication, then re-prove
-  profile 55 at the clean implementation revision and close this child leaf.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2`.
+- next_action: commit `.17.3.2.1` clean-revision closure, then run the full
+  guarded exact 108-profile semantic/bridge matrix from its verified empty
+  publication namespace and consume every resulting seal or failure.
 - in_flight_uncommitted: none.
 - in_flight_background: none
 - blockers: none.
