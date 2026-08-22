@@ -704,7 +704,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Measure portable backend generation, compile, execution, result, and artifact scaling.`
   Acceptance: `Run the selected workload profiles under active RAM/time controls for every applicable qualified backend, collect normalized wall/CPU/descendant-RSS/artifact/compile/run/result evidence, prove deterministic reruns and semantic outcomes, and distinguish tool cost from architecture cost without generalizing beyond measured profiles.`
-  Verification: `Clean unified provider-free qualification commit 490c35cc5 closes deterministic generation before any measured process or tool execution. Decision 0056 freezes the measurement schema, stage boundaries, raw-sample contract, repetitions, 250-ms sampling interval, exact host/tool identities, smaller-of timeouts, 88%-host/4,096-MiB descendant guard, repository-volume staging/publication, exclusion policy, budget formulas, and nonclaims. Completed foundation .1 implements the closed record, validation-before-measurement controller, fork-isolated stage workers, process-tree sampler, effective timeout enforcement, active-guard evidence handoff, defensive validation, and same-volume publication/cleanup without external verification-tool execution. Completed semantic-catalog/bridge-fanout measurement .2 retains its exact accepted matrix; execution-graph/checking-state activation .3 is next, while external-tool execution, balanced measurement, calibration closure, cap repair, and promotion remain separately owned.`
+  Verification: `Clean unified provider-free qualification commit 490c35cc5 closes deterministic generation before any measured process or tool execution. Decision 0056 freezes the measurement schema, stage boundaries, raw-sample contract, repetitions, 250-ms sampling interval, exact host/tool identities, smaller-of timeouts, 88%-host/4,096-MiB descendant guard, repository-volume staging/publication, exclusion policy, budget formulas, and nonclaims. Completed foundation .1 implements the closed record, validation-before-measurement controller, fork-isolated stage workers, process-tree sampler, effective timeout enforcement, active-guard evidence handoff, defensive validation, and same-volume publication/cleanup without external verification-tool execution. Completed semantic-catalog/bridge-fanout measurement .2 retains its exact accepted matrix; execution-graph/checking-state measurement .3 alone is active, while external-tool execution, balanced measurement, calibration closure, cap repair, and promotion remain separately owned.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3: activate scale measurement foundation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9`
 
@@ -731,11 +731,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2.1: repair truthful semantic boundary measurement`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Measure execution-graph and checking-state construction through canonical binding, planning, and oracle stages.`
   Acceptance: `Measure only reachable selected levels under the foundation controller; preserve preflight-dominated and not-materialized outcomes; prove exact execution/checking identities, ranks, semantics, packed-state and replay oracles, deterministic reruns, earliest authoritative failures, raw evidence, and cleanup; separate parse/bridge/bind-plan cost; and make no backend-runtime, performance-budget, support, or capacity claim.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean predecessor 9980fe5c1 closes the exact semantic/bridge matrix before this pivot. Decisions 0055 and 0056 require canonical stage-local correctness before measurement, truthful earlier-dominant and unmaterialized outcomes, validation plus the applicable guarded repetitions, raw evidence, and repository-volume cleanup. The completed ArchitectureScaleExecutionGraph and ArchitectureScaleCheckingState authorities already own the selected generated shapes and their exact identity, rank, ordering, packed-state, lifecycle, replay, rejection, and nonclaim oracles; .17.3.3 alone is active to add their caller-sealed provider-free measurement boundary through construct, parse_validate, bridge, and bind_plan. Backend emission, provider/tool access, compile/run/trace/result work, promoted budgets, cap repair, support, capacity, and reached-boundary claims remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3: activate execution and checking measurement`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4`
   Status: `proposed`
@@ -1631,6 +1631,7 @@ execution/checking or external-tool measurement can begin.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-22` | `.17.3.3` execution/checking measurement activation | clean semantic/bridge predecessor `9980fe5c1`; decisions `0055`/`0056`; completed execution/checking producer and oracle boundaries; owned-shape and stage-applicability derivation; unchanged guarded execution foundation/binding-boundary/checking qualification; task/index/Memory/book/fact/claim/containment continuity; task-tree, Knowledge Map, project-locality, relative-path, mdBook, claim, live-document, diff, docs-only staged acceptance, and doctrine gates | `passed`; `.17.3.3` alone is active to add caller-sealed provider-free execution/checking measurement through construct, parse/validate, bridge, and bind/plan. The guarded focused family suite passes Files=3/Tests=11 in 55 seconds. The 54-chapter mdBook test and inspected 89-file/19,167,723-byte repository-local render pass before exact removal; its 54-file source changes by zero lines/30 bytes under a fresh authority with no ceiling increase. Task integrity remains three trees/979 nodes; Knowledge Map parity is 1,150 facts/6,068 questions/6,235 occurrences/133 shards; claim inventory/disposition remains closed at 1,467 candidates plus 2,113 current/615 original constants as 878 derived gates/589 reviewed records/zero gaps. Activation changes no code, test, config, fixture, producer, oracle, sampler, artifact, external process, public API, promoted performance budget, support, capacity, reached-boundary, or product behavior. |
 | `2026-08-22` | `.17.3.2` exact semantic/bridge matrix completion | clean `ece87892d`; guarded empty-namespace capture plus same-revision profile-boundary resume after external host-memory interruption; 108 report, two family-manifest, and one complete-manifest census; byte/digest derivation; complete/family dominance inspection; separate guarded canonical regeneration; captured exact/default watchers; staging and Git census | `passed`; 111 immutable files total 7,418,437 bytes with combined digest `6e0ac8da...102b`. Accepted identity `semantic-bridge-matrix/81ce1716...71bb3` retains 69 accepted/39 expected-rejection profiles, 48 applicable/six inapplicable measurement profiles, 186 raw/zero excluded records, one clean revision and guard identity, and no staging. Independent regeneration returns the same identity; exact t/1658 passes Files=1/Tests=3 in 2,386 seconds and proves the complete manifest unchanged. `.17.3.2` is done; `.17.3.3` activation is next. |
 | `2026-08-22` | `.17.3.2.1` clean-revision closure | clean implementation commit `514761a4e`; exact old-revision 54-file/4,511,776-byte incomplete-publication re-census; absent family/full manifests and staging; exact namespace removal; real 88%/4,096-MiB RAM guard; source_bytes_combined/limit_v1 validation; independent report regeneration; stage/output/artifact/cleanup inspection; empty publication/staging and clean-Git census | `passed`; the exact removed ignored evidence is not file-recoverable, while its census, digest, and failure facts remain durable in task/Git. Clean validation plus independent regeneration completes in 56.893675 seconds with accepted_validation/accepted, parse_validate validated_unmeasured, one 4,514-byte output, eighteen censused artifacts, and exact cleanup. `.17.3.2.1` is done; parent `.17.3.2` resumes the full exact 108-profile capture from an empty namespace. |
 | `2026-08-22` | `.17.3.2.1` truthful boundary measurement implementation | bounded-run ASCII lexer with retained Unicode cursor path; linear four-state value/known/Z normalization; successful-stage rederivation plus truthful rejected/not-run validation; injected worker-failure mutation; exact canonical evaluator and guarded profile-55 validation; focused impacted/core/exact family suites; task/index/Memory/book/fact/rationale/claim/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, live-document, diff, staged acceptance, and doctrine gates | `passed`; canonical profile-55 evaluation is 8.113775 seconds and its complete guarded adapter validation is accepted in 42.596013 seconds under the unchanged 120-second ceiling, with one canonical artifact and exact cleanup. Failed controller evidence is preserved rather than masked. This implementation commit changes no fixture, timeout, public API, provider/tool execution, performance budget, support, capacity, or reached-boundary claim; clean-revision proof and old incomplete-publication removal remain post-commit. |
@@ -6213,3 +6214,38 @@ raising an enforcement ceiling.
   compiler, simulator, external verification tool, public API, promoted
   performance budget, support, capacity, reached-boundary, or product-
   behavior contract changes.
+
+## Acceptance Checklist (enforced) — `.17.3.3` execution/checking measurement activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Measure execution-graph and
+  checking-state construction through canonical binding, planning, and oracle
+  stages.' -1 --format='%h %s' -- docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`
+  identifies decomposition commit `ec94d5d02`, where `.17.3.3` remained
+  proposed behind earlier family measurement. Clean predecessor `9980fe5c1`
+  now closes the semantic/bridge matrix. Decisions `0055` and `0056` require a
+  distinct active owner before the common controller can measure the already-
+  completed execution/checking authorities or retain their earlier-dominant,
+  source-free, preflight, and not-materialized outcomes.
+- [x] **ADDRESSED (verified)** — `.17.3.3` alone is active. Its first
+  implementation slice must accept only canonical reconstructions from
+  `ArchitectureScaleExecutionGraph` and `ArchitectureScaleCheckingState`,
+  separate construct/parse/bridge/bind-plan cost, re-prove every applicable
+  identity and semantic oracle before retaining a sample, and preserve each
+  authority's exact rejection and non-materialization semantics. Backend
+  emission, provider/tool execution, compile/run/trace/result work, budget
+  promotion, cap repair, support, capacity, and reached-boundary claims remain
+  separately owned.
+- [x] **NO REGRESSION** — the unchanged guarded execution foundation,
+  unconstructible binding boundary, and checking qualification pass at
+  `Files=3, Tests=11` in 55 seconds. Task integrity remains three trees/979
+  nodes; Knowledge Map parity covers 1,150 facts/6,068 questions/6,235
+  occurrences/133 shards. The claim join closes 1,467 candidates as 878
+  derived gates/589 reviewed records/zero gaps with 2,113 current/615 original
+  constants. All 54 mdBook chapters test; its inspected 89-file/19,167,723-byte
+  repository-local render is removed exactly. The maintained 54-file book is
+  51,532 lines/2,735,204 bytes: zero lines/+30 bytes under exact aggregate
+  authority with no ceiling increase. Project locality, relative paths,
+  memory, containment, diff, docs-only staged acceptance, and doctrine gates
+  pass. No code, test, config, fixture, producer, oracle, sampler, artifact,
+  external process, public API, promoted performance budget, support,
+  capacity, reached-boundary, or product-behavior contract changes.

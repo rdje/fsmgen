@@ -183,9 +183,9 @@ fixture now completes through chunked ASCII lexing with a Unicode-preserving
 fallback and linear four-state mask conversion. The fixed timeout and every
 support, performance-budget, capacity, and reached-boundary nonclaim remain
 unchanged. The obsolete old-revision partial publication was re-censused and
-removed. The clean full capture retains 108 reports, two family manifests, and
-one complete manifest at one revision/host/tool/guard identity; independent
-guarded regeneration accepts the same identity with 186 raw records and zero exclusions.
+removed. The clean full capture retains 108 reports, two family manifests, one
+complete manifest, and 186 raw records with no exclusions. `.17.3.3` now owns
+provider-free execution/checking measurement.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

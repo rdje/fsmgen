@@ -3686,9 +3686,9 @@ clean calibration with explicit headroom; unknown hosts run correctness,
 determinism, safety, and cleanup without flaky performance failure. Measurement
 is active under `.17.3`. The common `.17.3.1` foundation is complete; later
 leaves own exact-tool runs, `.17.3.9` owns candidate calibration closure, and
-`.17.5` alone owns promotion. Semantic-catalog and bridge-fanout measurement is
-active under `.17.3.2`; it does not authorize execution/checking measurement or
-an external verification-tool run.
+`.17.5` alone owns promotion. Semantic/bridge measurement is complete under
+`.17.3.2`; execution/checking measurement is active under `.17.3.3`. Neither
+authorizes an external verification-tool run.
 
 ### Architecture-scale measurement foundation
 
@@ -3875,6 +3875,6 @@ the selected AHB fixture approaches either limit.
 Even a later passing architecture profile will not substitute for the
 separately owned whole-product `big`/`really_big` qualification, mixed-language
 scale, native-UVM runtime scale, synthesis scale, or general backend parity.
-The adapter, publisher, and exact semantic/bridge matrix are complete. This
-evidence remains limited to selected provider-free stages and does not qualify
-whole-product, external-tool, performance, support, capacity, or boundary behavior.
+The semantic/bridge adapter, publisher, and exact matrix are complete. Execution/checking
+measurement is active under `.17.3.3`; both boundaries remain provider-free and qualify
+no whole-product, external-tool, performance, support, capacity, or boundary behavior.
