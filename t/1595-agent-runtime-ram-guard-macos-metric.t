@@ -157,6 +157,14 @@ subtest 'unrelated safety contracts remain present' => sub {
         'Linux host-capacity branch still uses MemAvailable');
     unlike($source, qr/command -v memory_pressure/,
         'incomplete memory_pressure counters are not used as a capacity fallback');
+    like($source, qr/^export FSMGEN_RAM_GUARD_ACTIVE=1$/m,
+        'guarded children receive one explicit active-enforcement marker');
+    like($source,
+        qr/^export FSMGEN_RAM_GUARD_EFFECTIVE_HOST_MAX_PCT="\$host_max_pct"$/m,
+        'guarded children receive the exact effective host threshold');
+    like($source,
+        qr/^export FSMGEN_RAM_GUARD_EFFECTIVE_PROCESS_MAX_RSS_MB="\$process_max_rss_mb"$/m,
+        'guarded children receive the exact effective descendant threshold');
 };
 
 done_testing();

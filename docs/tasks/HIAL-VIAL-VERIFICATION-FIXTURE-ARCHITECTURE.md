@@ -704,16 +704,16 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Measure portable backend generation, compile, execution, result, and artifact scaling.`
   Acceptance: `Run the selected workload profiles under active RAM/time controls for every applicable qualified backend, collect normalized wall/CPU/descendant-RSS/artifact/compile/run/result evidence, prove deterministic reruns and semantic outcomes, and distinguish tool cost from architecture cost without generalizing beyond measured profiles.`
-  Verification: `Clean unified provider-free qualification commit 490c35cc5 closes deterministic generation before any measured process or tool execution. Decision 0056 already freezes the measurement schema, stage boundaries, raw-sample contract, repetitions, 250-ms sampling interval, exact host/tool identities, smaller-of timeouts, 88%-host/4,096-MiB descendant guard, repository-volume staging/publication, exclusion policy, budget formulas, and nonclaims. Repository and history audits find no implementation of fsmgen.vial_architecture_scale_measurement.v1, stage_measurements, or run ordinals, so .17.3 is decomposed into nine independently committable leaves. Foundation .1 alone is active; family measurement, external-tool execution, balanced measurement, calibration closure, cap repair, and promotion remain separately owned.`
+  Verification: `Clean unified provider-free qualification commit 490c35cc5 closes deterministic generation before any measured process or tool execution. Decision 0056 freezes the measurement schema, stage boundaries, raw-sample contract, repetitions, 250-ms sampling interval, exact host/tool identities, smaller-of timeouts, 88%-host/4,096-MiB descendant guard, repository-volume staging/publication, exclusion policy, budget formulas, and nonclaims. Completed foundation .1 implements the closed record, validation-before-measurement controller, fork-isolated stage workers, process-tree sampler, effective timeout enforcement, active-guard evidence handoff, defensive validation, and same-volume publication/cleanup without external verification-tool execution. Family measurement, external-tool execution, balanced measurement, calibration closure, cap repair, and promotion remain separately owned.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3: activate scale measurement foundation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.1`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the closed architecture-scale measurement record, stage sampler, controller, and repository-volume lifecycle foundation.`
   Acceptance: `Implement fsmgen.vial_architecture_scale_measurement.v1 without running an external verification tool: exact immutable workload/git/dirty/host/tool/run identities; all twelve decision-0056 stages; monotonic wall, controller/descendant CPU, summed-tree/single-descendant RSS, semantic and file/line/byte/object counters, command/outcome/timeout classification, explicit null-plus-reason unsupported counters, 250-ms raw samples, correctness-before-measurement admission, validation and measured-run classes, defensive canonical reports, content identities that exclude volatile measurement values, smaller-of timeout authority, 88%-host/4,096-MiB guard metadata, same-volume atomic publication, success/failure cleanup, hostile input/report mutation rejection, and explicit nonclaims. Prove the honest missing-foundation RED before implementation and leave family workloads, provider access, external compile/runtime, candidate budgets, support, and capacity to later leaves.`
-  Verification: `pending honest RED and implementation`
-  Commit: `pending implementation`
+  Verification: `The honest focused RED failed at watcher line 17 with Can't locate FSM/VIAL/ArchitectureScaleMeasurement.pm. The completed exact-class foundation emits and defensively validates fsmgen.vial_architecture_scale_measurement.v1: canonical workload/Git/dirty/host/foundation-tool/run identities, twelve ordered closed stage records, validation plus three gate/five qualification ordinals, 250-ms monotonic raw samples, controller and descendant CPU, summed process-tree and single-descendant RSS, exact semantic/file/line/byte/object/artifact counts, command/process/classification/status identities, explicit null-plus-reason unsupported counters, smaller-of outer/backend timeout authority, and the full nonclaim set. Each planned stage executes in a fork-isolated process with one stage-owned output subtree; stage and aggregate artifact censuses reject unreported, duplicate, missing, changed, symlink, special, or cross-stage output. Measured runs require a byte-valid preceding validation at the same workload/Git/dirty/host identity and active repository RAM guard; the guard exports only its effective evidence while retaining enforcement. Bounded worker capture, direct-PID/process-group termination, sanitized diagnostics, whole-controller failure cleanup, exact residue evidence, same-volume atomic accepted-measurement publication, byte-identical no-op, collision rejection, injected-rename rollback, and defensive hostile-record rejection are proved. Darwin sysctl/mount/ps and Linux procfs/ps access is read-only host/toolchain observation; all project-owned paths remain repository-relative. Syntax and diff checks pass. The exact guarded focused plus adjacent guard suite passes Files=2/Tests=8, and adjacent workload foundation passes Files=1/Tests=7. No provider or external verification tool executes; family workloads, compile/runtime/trace/result evidence, calibration budgets, support, capacity, and reached-boundary claims remain later-owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.1: implement scale measurement foundation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2`
   Status: `proposed`
@@ -1032,12 +1032,14 @@ support authority and qualifies the repaired family. Completed generator
 `.17.2.6.3` includes shared foundation `.1`, portable-SV `.2`, portable-VHDL
 `.3`, OSVVM `.4`, native-UVM `.5`, and family closure `.6`; all six children
 are complete and freeze the exact thirteen-emitted/seven-rejected profile
-partition. Runtime/balanced parent `.17.2.7` is active: runtime-stream
-construction `.1` and balanced composition `.2` are complete. The latter owns
-its revision-2 contract, bridge/binder boundary, canonical composition, and
-portable structural emission; unified qualification `.3` is now active.
-Measurement
-`.17.3` remains later.
+partition. Completed runtime/balanced parent `.17.2.7` owns runtime-stream
+construction `.1`, balanced revision-2 composition and portable structural
+emission `.2`, and unified provider-free qualification `.3`; parent `.17.2`
+therefore closes deterministic generation. Measurement parent `.17.3` is now
+active. Completed foundation `.17.3.1` owns the closed record, sampler,
+controller, active-guard evidence, and repository-volume lifecycle without an
+external verification-tool run; semantic/bridge measurement `.17.3.2` remains
+the proposed next leaf.
 
 ## Decisions
 
@@ -1620,6 +1622,7 @@ Measurement
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-22` | `.17.3.1` architecture-scale measurement foundation implementation | honest missing-module RED; exact record/stage/publication schemas; canonical workload/Git/dirty/host/tool/run identities; validation-before-measurement admission; twelve ordered stages; fork-isolated stage ownership; 250-ms monotonic process-tree sampling; wall/controller/descendant CPU and summed-tree/single-descendant RSS; semantic/file/line/byte/object counters; explicit unsupported reasons; smaller-of timeout enforcement; active RAM-guard evidence; stage and aggregate artifact censuses; bounded worker capture; sanitized diagnostics; hostile record mutation; success/exception/timeout cleanup; same-volume atomic publication, idempotence, collision, and injected failure rollback; explicit nonclaims; syntax; guarded focused/adjacent and workload compatibility; task/index/Memory/book/fact/rationale/claim/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, diff, staged acceptance, and doctrine gates | `passed`; Files=2/Tests=8 exact guarded measurement/guard coverage and Files=1/Tests=7 adjacent workload coverage pass. The foundation executes no provider or external verification tool and publishes no family, compile, runtime, trace, result, performance-budget, support, capacity, or reached-boundary claim. `.17.3.1` is done; `.17.3.2` remains the proposed next measurement leaf. |
 | `2026-08-22` | `.17.3` architecture-scale measurement activation | clean unified-qualification predecessor `490c35cc5`; decisions `0055`/`0056`/`0077`; absent measurement-schema/stage/run-ordinal implementation audit; nine-leaf decomposition; exact foundation/family/backend/tool/balanced/calibration ownership; task/index/Memory/book/fact/claim/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, live-document, diff, staged docs-only acceptance, and doctrine gates | `passed`; `.17.3` is active and `.17.3.1` alone owns the closed measurement schema/sampler/controller/lifecycle foundation before any external-tool run. Task integrity holds at three trees/978 nodes; Knowledge Map parity is 1,150 facts/6,059 questions/6,226 occurrences/133 shards; all 54 mdBook chapters test and its inspected 89-file/19,089,819-byte repository-local render is removed. The governed claim census remains complete at 1,459 candidates plus 2,105 current/615 original constants as 870 derived gates/589 reviewed records/zero gaps. The maintained book changes by zero lines/+260 bytes without a ceiling increase. Activation changes no code, test, config, fixture, generator, sampler, external execution, artifact, API, capability/support, performance, budget, capacity, reached-boundary, or product behavior. |
 | `2026-08-22` | `.17.2.7.3` unified provider-free qualification implementation | missing-module RED witness; exact fifteen-runtime/one-balanced ownership; frozen checked-source identity; canonical child construction/evaluation only; complete embedded child reports and content identities; normalized authority/applicability matrix; independent whole-gate regeneration; closed nonclaims; hostile source/report/claim/invocant/injection rejection; defensive values; simultaneous dual-family repository-volume success/failure cleanup; syntax; guarded focused and adjacent compatibility; CI inventory; task/index/Memory/book/fact/rationale/claim/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, diff, staged acceptance, and doctrine gates | `passed`; the 4,096-MiB guarded t/1655 watcher passes Files=1/Tests=4 in 600 seconds, while CI inventory plus t/1651 compatibility passes Files=2/Tests=7,098 in 62 seconds. All sixteen members qualify without provider or external-tool access; only balanced structural emission is complete. Compile, runtime, trace, result, public support, performance, capacity, and reached-boundary claims remain false. `.17.2.7.3`, `.17.2.7`, and `.17.2` are done; `.17.3` measurement remains proposed for a clean activation. |
 | `2026-08-22` | `.17.2.7.3` unified provider-free qualification activation | clean balanced-emission predecessor `ebf98fbbd`; completed runtime-stream and balanced family APIs; decisions `0055`/`0056`/`0077`; exact ownership/nonclaim boundary; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged docs-only acceptance, and doctrine gates | `passed`; `.17.2.7.3` alone is active to independently qualify the complete runtime-profile/level plus balanced construction family before measurement. Activation changes no code, test, config, generator, emitter, artifact, external execution, runtime result, API, capability/support, performance, capacity, reached-boundary, or product behavior. |
@@ -5926,3 +5929,44 @@ raising an enforcement ceiling.
   config, fixture, generator, sampler, external process, artifact, public API,
   capability/support, performance budget, capacity, reached-boundary, or
   product behavior changes.
+
+## Acceptance Checklist (enforced) — `.17.3.1` architecture-scale measurement foundation implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the honest focused RED command
+  `prove -Iperl t/1656-vial-architecture-scale-measurement-foundation.t`
+  failed with `Can't locate FSM/VIAL/ArchitectureScaleMeasurement.pm at t/1656-vial-architecture-scale-measurement-foundation.t line 17`. Decision
+  `0056` had frozen the evidence contract, but no record schema, stage
+  controller, sampler, validation/measured admission, guard handoff, or
+  publication lifecycle existed to consume the completed deterministic
+  `.17.2` constructions.
+- [x] **ADDRESSED (verified)** — the new exact-class foundation implements a
+  closed canonical record and all twelve ordered stages without an external
+  verification tool. Validation runs retain correctness but no performance;
+  measured runs require matching successful validation and the active
+  repository guard. Fork-isolated workers own disjoint output roots while the
+  controller samples the live process tree every 250 ms, applies smaller-of
+  timeouts, validates stage and aggregate artifact censuses, sanitizes bounded
+  failure evidence, and removes exact repository-volume staging after success,
+  exception, timeout, or rejected output. Publication accepts only successful
+  measured records and proves same-volume atomic rename, byte-identical no-op,
+  collision rejection, and rollback after injected failure. Closed report
+  validation rejects forged schema, timeout, path, identity, counter, oracle,
+  artifact, cleanup, diagnostic, and nonclaim evidence.
+- [x] **NO REGRESSION** — module/test/shell syntax and `git diff --check` pass.
+  The 4,096-MiB guarded exact measurement plus adjacent RAM-guard matrix reports
+  `All tests successful` at `Files=2, Tests=8`; adjacent canonical workload
+  construction reports `Files=1, Tests=7`; staged CI inventory, rationale,
+  containment, and claim-doctrine regressions report `Files=6, Tests=64`.
+  Project-data locality passes with read-only Darwin/Linux host observation and
+  repository-local project output.
+  Task integrity remains three trees/978 nodes; `knowledge-map: OK` covers
+  1,150 facts/6,062 questions/6,229 occurrences/133 shards; all 54 mdBook
+  chapters test, and its inspected 89-file/19,122,414-byte repository-local
+  render is removed exactly. Claim inventory/disposition closes 1,464
+  candidates plus 2,110 current/615 original constants as 875 derived gates/
+  589 reviewed records/zero gaps. The 54-file maintained book changes by 79
+  lines/4,160 bytes under a fresh exact authority with zero ceiling increase;
+  all 22 live-document surfaces/3,052 paths pass. Relative-path, diff, staged
+  acceptance, and final doctrine gates close in this commit. Family/tool
+  execution, calibration, performance budgets, support, capacity, and
+  reached-boundary claims remain unchanged and later-owned.

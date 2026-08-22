@@ -14,6 +14,9 @@ answers:
   - "how are VIAL runtime-stream measurement inputs constructed without tools?"
   - "how was the balanced portable bridge blocker resolved?"
   - "what closes deterministic VIAL scale generation before measurement?"
+  - "how does VIAL architecture scale measurement work?"
+  - "where are VIAL scale measurement artifacts staged and published?"
+  - "does the VIAL measurement foundation execute external tools?"
 date: 2026-08-22
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -27,6 +30,7 @@ evidence: >-
   perl/FSM/VIAL/ArchitectureScaleBackendEmission.pm; perl/FSM/VIAL/ArchitectureScaleRuntimeStream.pm;
   perl/FSM/VIAL/ArchitectureScaleBalancedPortable.pm;
   perl/FSM/VIAL/ArchitectureScaleRuntimeBalancedQualification.pm;
+  perl/FSM/VIAL/ArchitectureScaleMeasurement.pm;
   perl/FSM/HIAL/VIALBridge/Builder.pm; perl/FSM/VIAL/ExecutionBuilder.pm;
   perl/FSM/VIAL/Backend/SVPortableVerilator.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission/PortableVHDL.pm;
@@ -35,7 +39,7 @@ evidence: >-
   t/1644-vial-backend-emission-authority-alignment.t;
   t/1645-vial-architecture-scale-backend-emission-foundation.t;
   t/1647-vial-architecture-scale-backend-emission-portable-vhdl.t;
-  t/1648-vial-architecture-scale-backend-emission-osvvm.t; t/1650-vial-architecture-scale-backend-emission-family-qualification.t; t/1651-vial-architecture-scale-runtime-stream-construction.t; t/1652-vial-balanced-portable-bridge-admission.t; t/1653-vial-balanced-portable-composition.t; t/1654-vial-balanced-portable-emission.t; t/1655-vial-architecture-scale-runtime-balanced-qualification.t;
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t; t/1650-vial-architecture-scale-backend-emission-family-qualification.t; t/1651-vial-architecture-scale-runtime-stream-construction.t; t/1652-vial-balanced-portable-bridge-admission.t; t/1653-vial-balanced-portable-composition.t; t/1654-vial-balanced-portable-emission.t; t/1655-vial-architecture-scale-runtime-balanced-qualification.t; t/1656-vial-architecture-scale-measurement-foundation.t;
   docs/knowledge/vial-execution-scale-reachability.md;
   docs/knowledge/vial-semantic-scale-catalog.md;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
@@ -54,9 +58,11 @@ reverify: >-
   perl/FSM/HIAL/VIALBridge/Builder.pm perl/FSM/VIAL/ExecutionBuilder.pm
   perl/FSM/VIAL/Backend/SVPortableVerilator.pm
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md &&
+  rg -n 'vial_architecture_scale_measurement|SAMPLER_INTERVAL_NS|STAGING_BASE|PUBLICATION_BASE|measured runs require'
+  perl/FSM/VIAL/ArchitectureScaleMeasurement.pm &&
   prove -Iperl t/1644-vial-backend-emission-authority-alignment.t
   t/1645-vial-architecture-scale-backend-emission-foundation.t
-  t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t t/1652-vial-balanced-portable-bridge-admission.t t/1653-vial-balanced-portable-composition.t t/1654-vial-balanced-portable-emission.t t/1655-vial-architecture-scale-runtime-balanced-qualification.t
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t t/1652-vial-balanced-portable-bridge-admission.t t/1653-vial-balanced-portable-composition.t t/1654-vial-balanced-portable-emission.t t/1655-vial-architecture-scale-runtime-balanced-qualification.t t/1656-vial-architecture-scale-measurement-foundation.t
 ---
 
 Decisions `0055` and `0056` select architecture-scale proof without claiming capacity.
@@ -106,8 +112,25 @@ sources. Nested runtime/balanced staging cleans both repository-volume roots
 after success or failure. Public planning/AHB/revision 1/other backends and
 provider, compile, runtime, trace, result, support, performance, capacity, and
 reached-boundary claims stay unchanged and unclaimed. Focused t/1653-t/1655
-re-derive and falsify these boundaries; `.17.2` is complete and `.17.3.1` now
-owns measurement setup.
+re-derive and falsify these boundaries; `.17.2` is complete.
+
+Completed `.17.3.1` provides the common measurement foundation without running
+a provider or external verification tool. It closes all twelve decision-0056
+stage records, requires correctness-only validation before a guarded measured
+ordinal, samples controller and descendant process evidence every 250 ms,
+retains explicit unsupported reasons, enforces the smaller stage/backend
+timeout, validates disjoint stage artifacts plus the complete owned-tree
+census, and removes repository-derived staging after success, exception,
+timeout, or rejected output. Accepted measured records publish by same-volume
+atomic directory rename; byte-identical retry is unchanged, collision and
+injected commit failure are residue-free. The guard wrapper remains the safety
+authority and exports only its effective threshold evidence. Workload and
+semantic identities exclude volatile measurements. t/1656 re-derives the
+record and lifecycle and falsifies forged paths, timeouts, reports, guard
+admission, ordinals, stage order, external classification, unreported output,
+publication collision, and publication failure. Semantic/bridge family
+measurement remains proposed under `.17.3.2`; performance budgets, support,
+capacity, and reached-boundary claims remain later-owned.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

@@ -268,6 +268,13 @@ ps -o rss= -p "$$" >/dev/null 2>&1 \
 initial_host_pct=$(host_memory_pct) \
     || die "host memory inspection is unavailable; use an equivalent active monitor before running heavyweight commands"
 
+# Child workflows may record the effective active safety envelope without
+# re-parsing this launcher's command line or inventing a second guard state.
+# These values are evidence only; this wrapper remains the enforcing owner.
+export FSMGEN_RAM_GUARD_ACTIVE=1
+export FSMGEN_RAM_GUARD_EFFECTIVE_HOST_MAX_PCT="$host_max_pct"
+export FSMGEN_RAM_GUARD_EFFECTIVE_PROCESS_MAX_RSS_MB="$process_max_rss_mb"
+
 "$@" &
 root_pid=$!
 

@@ -582,3 +582,26 @@ structural emission is equivalent to a runtime member's future compiler or
 simulator work. This costs more validation time, but it keeps the handoff
 auditable, extensible by explicit schema revision, and honest about every
 deferred stage.
+
+## 2026-08-22: Measurement workers own outputs while the controller owns evidence
+
+A stage callback must be isolated enough that a timeout can terminate its
+whole descendant tree, but measurement cannot trust a callback's self-reported
+resource use or output inventory. The foundation therefore forks one worker
+per stage and gives it one disjoint `outputs/<stage>/` subtree. The parent
+samples the controller and live worker tree, validates the stage's reported
+files against that subtree, then validates every file in the aggregate owned
+root. This permits later leaves to compose multiple stages without mistaking a
+prior stage's artifact for unreported output or allowing a callback to certify
+its own census.
+
+The RAM-guard wrapper remains the enforcement authority. Its child environment
+contains only an active marker and the effective host/descendant thresholds so
+the report can bind the envelope actually in force; setting those values does
+not reproduce the monitor. Raw 250-ms samples are retained because descendant
+CPU and RSS can undercount short-lived processes, and that limitation stays
+explicit instead of becoming a synthetic zero. Validation executes correctness
+without retaining performance, while measured ordinals require matching
+workload, Git, dirty-state, and host evidence from the preceding validation.
+These boundaries let backend-specific leaves add qualified commands later
+without weakening cleanup, identity, guard, or artifact authority.

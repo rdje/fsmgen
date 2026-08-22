@@ -3683,7 +3683,86 @@ single-descendant RSS, files/lines/bytes, semantic counts, exact tool/host
 identity, and raw samples. The repository RAM guard retains its 88% host and
 4,096-MiB descendant ceilings. A promoted pinned-host budget is frozen from
 clean calibration with explicit headroom; unknown hosts run correctness,
-determinism, safety, and cleanup without flaky performance failure. Measurement is now active under `.17.3`: `.17.3.1` first owns the closed record, sampler, controller, and repository-volume lifecycle; later leaves own family and exact-tool runs; `.17.3.9` owns candidate calibration closure; and `.17.5` alone owns promotion.
+determinism, safety, and cleanup without flaky performance failure. Measurement
+is active under `.17.3`. The common `.17.3.1` foundation is complete; later
+leaves own family and exact-tool runs, `.17.3.9` owns candidate calibration
+closure, and `.17.5` alone owns promotion.
+
+### Architecture-scale measurement foundation
+
+`FSM::VIAL::ArchitectureScaleMeasurement` implements the closed
+`fsmgen.vial_architecture_scale_measurement.v1` evidence envelope. It does not
+make a workload large, execute a provider, or grant backend support. Instead,
+it gives later measurement leaves one fail-closed controller with these exact
+stage boundaries:
+
+```text
+construct -> parse_validate -> bridge -> bind_plan -> emit
+          -> compile_analyze -> elaborate -> run -> trace_validate
+          -> result_produce -> publish -> cleanup
+```
+
+Every record contains all twelve stages in that order. An inapplicable stage
+is `not_run` with a reason; it is not silently omitted or folded into an
+aggregate timer. Each executed stage has a logical command identity, FSMGen-
+owned versus external-tool classification, effective timeout authority,
+process exit/signal/timeout result, exact input/output and semantic counts,
+stage-local oracle IDs, and stage-owned artifact identities. The foundation
+admits only `fsmgen_owned` workers; exact external-tool admission belongs to
+the backend-specific measurement leaves.
+
+Validation and measurement are deliberately different run classes. A
+validation run executes the stage correctness oracles but retains no wall,
+CPU, or RSS values. A gate sample must use ordinal 1 through 3, and a
+qualification sample ordinal 1 through 5. Every measured sample must cite a
+successful ordinal-zero validation with the same canonical workload, Git
+revision, dirty state, and host profile. Volatile timing, RSS, host paths, and
+run ordinals do not enter workload or semantic-oracle identity.
+
+The controller forks one isolated worker per stage. The worker may write only
+below its assigned `outputs/<stage>/` subtree and must report every regular
+file's relative path, kind, byte/line count, and SHA-256 digest. The controller
+re-reads each file, checks its stage census, then checks the aggregate owned
+tree. Missing, duplicate, changed, cross-stage, symlink, special, or unreported
+output rejects the run before evidence can be accepted.
+
+Measured stages sample the live controller/descendant process tree every
+250 ms using monotonic time. The raw record retains controller and descendant
+CPU, controller RSS, summed process-tree RSS, peak single-descendant RSS, and
+the live descendant count. A counter that cannot be observed is `null` with a
+stable reason; zero is never invented. Descendant CPU explicitly records that
+short-lived processes can escape interval sampling. The stage timeout is the
+smaller of the architecture envelope and a qualified backend timeout.
+
+Do not simulate guard evidence by setting environment variables manually. Run
+exact measurement work through the enforcing repository wrapper; the wrapper
+passes its effective thresholds to the child only as recordable evidence:
+
+```bash
+FSMGEN_VIAL_SCALE_MEASUREMENT_EXACT=1 \
+  scripts/run_with_ram_guard.sh -- \
+  prove -Iperl t/1656-vial-architecture-scale-measurement-foundation.t
+```
+
+The wrapper continues to enforce the 88% host-memory and 4,096-MiB
+single-descendant ceilings. The sampler observes the full process tree but
+does not replace or weaken that guard.
+
+Ephemeral work is derived from the repository root below
+`.artifacts/tmp/vial-scale/<workload-id>/<run-class>/<run-ordinal>/` and is
+removed after success, worker exception, rejected output, or timeout.
+Publication accepts only an accepted measured record. It writes canonical JSON
+to fresh same-volume staging and atomically renames the complete directory to
+`.artifacts/qualification/vial-scale/v1/<profile-id>/`. Byte-identical
+republication is unchanged; different bytes collide; a failed atomic commit
+rolls back both staging and any newly created empty parent directories.
+
+The foundation's Darwin `sysctl`/`mount`/`ps` and Linux procfs/`ps` reads are
+read-only operating-system observations used to describe the host and sample
+the process tree. They never hold project output. Persisted paths remain
+repository-relative, diagnostics are sanitized, worker result capture is
+bounded, timeout termination targets both the worker process group and its
+direct PID, and cleanup records exact residue if removal itself fails.
 
 Generated work stays below repository-derived `.artifacts/tmp/vial-scale/` and
 is removed exactly. An over-limit proof must fail at the earliest authoritative
