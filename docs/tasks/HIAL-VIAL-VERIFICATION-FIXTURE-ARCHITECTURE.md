@@ -704,7 +704,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Measure portable backend generation, compile, execution, result, and artifact scaling.`
   Acceptance: `Run the selected workload profiles under active RAM/time controls for every applicable qualified backend, collect normalized wall/CPU/descendant-RSS/artifact/compile/run/result evidence, prove deterministic reruns and semantic outcomes, and distinguish tool cost from architecture cost without generalizing beyond measured profiles.`
-  Verification: `Clean unified provider-free qualification commit 490c35cc5 closes deterministic generation before any measured process or tool execution. Decision 0056 freezes the measurement schema, stage boundaries, raw-sample contract, repetitions, 250-ms sampling interval, exact host/tool identities, smaller-of timeouts, 88%-host/4,096-MiB descendant guard, repository-volume staging/publication, exclusion policy, budget formulas, and nonclaims. Completed foundation .1 implements the closed record, validation-before-measurement controller, fork-isolated stage workers, process-tree sampler, effective timeout enforcement, active-guard evidence handoff, defensive validation, and same-volume publication/cleanup without external verification-tool execution. Semantic-catalog/bridge-fanout measurement .2 alone is active; external-tool execution, balanced measurement, calibration closure, cap repair, and promotion remain separately owned.`
+  Verification: `Clean unified provider-free qualification commit 490c35cc5 closes deterministic generation before any measured process or tool execution. Decision 0056 freezes the measurement schema, stage boundaries, raw-sample contract, repetitions, 250-ms sampling interval, exact host/tool identities, smaller-of timeouts, 88%-host/4,096-MiB descendant guard, repository-volume staging/publication, exclusion policy, budget formulas, and nonclaims. Completed foundation .1 implements the closed record, validation-before-measurement controller, fork-isolated stage workers, process-tree sampler, effective timeout enforcement, active-guard evidence handoff, defensive validation, and same-volume publication/cleanup without external verification-tool execution. Completed semantic-catalog/bridge-fanout measurement .2 retains its exact accepted matrix; execution-graph/checking-state activation .3 is next, while external-tool execution, balanced measurement, calibration closure, cap repair, and promotion remain separately owned.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3: activate scale measurement foundation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9`
 
@@ -716,11 +716,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.1: implement scale measurement foundation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Measure semantic-catalog and bridge-fanout construction through their canonical provider-free stages.`
   Acceptance: `Consume only completed selected family constructions; record validation plus three gate and five qualification samples where applicable; re-prove every stage-local semantic, bridge, identity, rerun, failure, and cleanup oracle before retaining a sample; distinguish FSMGen-owned stage cost; preserve exact limit/over-limit dominance; retain every raw sample and justified exclusion; and make no external-tool, performance-budget, support, or capacity claim.`
-  Verification: `Completed adapter and publisher commits ae6f346ec and 363165d94 provide caller-sealed family measurement plus clean-revision, guarded, same-volume resumable publication. The first exact capture exposed and durably retained an adapter-mode mismatch; the second published 54 semantic profiles before profile 55 truthfully timed out under the fixed controller ceiling and exposed failure-masking revalidation. Child .17.3.2.1 closes that defect at implementation commit 514761a4e: rejected stages remain first-class evidence, successful stages still rederive, and the exact combined-byte boundary completes under the unchanged fixture and timeout. Its post-commit proof removed the re-censused revision-incompatible 54-file incomplete publication, accepted clean profile 55 with independent regeneration and exact cleanup, and left publication/staging empty. The complete 108-profile guarded capture from that empty namespace is this parent's next action. Exact historical timing, digest, cleanup, test, and doctrine evidence remains in the child checklist and verification log. No provider, compiler, simulator, external verification tool, public API, promoted performance budget, support, capacity, or reached-boundary claim is added.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2: implement caller-sealed family measurement adapter; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2: implement resumable matrix publication`
+  Verification: `Adapter, publisher, and mode-alignment commits ae6f346ec, b3a03d285, and 363165d94 provide caller-sealed measurement plus clean-revision, guarded, same-volume resumable publication. Child .17.3.2.1 repairs truthful rejected-stage validation and the exact combined-byte boundary without changing its fixture or timeout. At clean revision ece87892d, the full capture resumed safely after a real external host-memory guard interruption and sealed all 108 profiles, both family manifests, and the complete manifest. The immutable namespace contains 111 files/7,418,437 bytes with sorted-manifest digest 6e0ac8dad33a95a65d684b23bfc459a6e91aa4cce58cf4525df7ba40ebfb102b and no staging residue. Complete identity semantic-bridge-matrix/81ce1716facb87f12767f5e88a6bfe54738063d9b6a11bed7cc2470df8a71bb3 is accepted: 69 accepted profiles, 39 expected rejections, 48 applicable and six inapplicable measurement profiles, 186 raw records, and zero exclusions. A separate guarded canonical regeneration returns the same identity; the captured exact watcher resumes both family manifests, proves the complete manifest unchanged, and passes Files=1/Tests=3 in 2,386 seconds. No provider, compiler, simulator, external verification tool, public API, promoted performance budget, support, capacity, or reached-boundary claim is added.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2: implement caller-sealed family measurement adapter; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2: implement resumable matrix publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2: complete exact semantic bridge matrix`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2.1`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2.1`
@@ -1631,6 +1631,7 @@ execution/checking or external-tool measurement can begin.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-22` | `.17.3.2` exact semantic/bridge matrix completion | clean `ece87892d`; guarded empty-namespace capture plus same-revision profile-boundary resume after external host-memory interruption; 108 report, two family-manifest, and one complete-manifest census; byte/digest derivation; complete/family dominance inspection; separate guarded canonical regeneration; captured exact/default watchers; staging and Git census | `passed`; 111 immutable files total 7,418,437 bytes with combined digest `6e0ac8da...102b`. Accepted identity `semantic-bridge-matrix/81ce1716...71bb3` retains 69 accepted/39 expected-rejection profiles, 48 applicable/six inapplicable measurement profiles, 186 raw/zero excluded records, one clean revision and guard identity, and no staging. Independent regeneration returns the same identity; exact t/1658 passes Files=1/Tests=3 in 2,386 seconds and proves the complete manifest unchanged. `.17.3.2` is done; `.17.3.3` activation is next. |
 | `2026-08-22` | `.17.3.2.1` clean-revision closure | clean implementation commit `514761a4e`; exact old-revision 54-file/4,511,776-byte incomplete-publication re-census; absent family/full manifests and staging; exact namespace removal; real 88%/4,096-MiB RAM guard; source_bytes_combined/limit_v1 validation; independent report regeneration; stage/output/artifact/cleanup inspection; empty publication/staging and clean-Git census | `passed`; the exact removed ignored evidence is not file-recoverable, while its census, digest, and failure facts remain durable in task/Git. Clean validation plus independent regeneration completes in 56.893675 seconds with accepted_validation/accepted, parse_validate validated_unmeasured, one 4,514-byte output, eighteen censused artifacts, and exact cleanup. `.17.3.2.1` is done; parent `.17.3.2` resumes the full exact 108-profile capture from an empty namespace. |
 | `2026-08-22` | `.17.3.2.1` truthful boundary measurement implementation | bounded-run ASCII lexer with retained Unicode cursor path; linear four-state value/known/Z normalization; successful-stage rederivation plus truthful rejected/not-run validation; injected worker-failure mutation; exact canonical evaluator and guarded profile-55 validation; focused impacted/core/exact family suites; task/index/Memory/book/fact/rationale/claim/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, live-document, diff, staged acceptance, and doctrine gates | `passed`; canonical profile-55 evaluation is 8.113775 seconds and its complete guarded adapter validation is accepted in 42.596013 seconds under the unchanged 120-second ceiling, with one canonical artifact and exact cleanup. Failed controller evidence is preserved rather than masked. This implementation commit changes no fixture, timeout, public API, provider/tool execution, performance budget, support, capacity, or reached-boundary claim; clean-revision proof and old incomplete-publication removal remain post-commit. |
 | `2026-08-22` | `.17.3.2.1` truthful boundary measurement diagnosis/ownership | second clean guarded t/1658 capture at `363165d94`; 54-file incomplete-publication census and combined manifest digest; direct guarded foundation diagnostic; per-stage timeout/process/output/cleanup facts; guarded canonical evaluator and component timings; in-memory exact-codepoint-width falsification probe; decisions 0055/0056 and parser/adapter code trace | `active`; the fixed 120-second ceiling and no-padding fixture remain authoritative. The repair must preserve truthful failure evidence and eliminate the lexer hot path with semantic/span/Unicode parity; no invalid profile, family manifest, complete seal, support, capacity, or reached-boundary claim exists. |
@@ -6176,3 +6177,39 @@ raising an enforcement ceiling.
   clean `514761a4e` with independent regeneration and exact cleanup. No invalid
   profile, timeout/fixture/API/budget, provider/tool execution,
   support, capacity, reached-boundary, or product-behavior claim is added.
+
+## Acceptance Checklist (enforced) — `.17.3.2` exact semantic/bridge matrix completion
+
+- [x] **ROOT CAUSE (WHY + WHERE; reverified for completion)** — Implementation
+  alone could not satisfy the leaf's evidence contract. At clean `ece87892d`,
+  the qualification namespace was empty and no family or complete manifest
+  existed; `git log -S'complete matrix'` identifies publisher commit
+  `b3a03d285`. A first full attempt was correctly interrupted by the real host-
+  memory guard before the bridge/full seals, proving partial profile evidence
+  cannot be promoted as matrix completion.
+- [x] **ADDRESSED (verified)** — The same-revision resumable capture sealed 108
+  immutable profile reports, two exact family manifests, and one complete
+  manifest. The 111-file/7,418,437-byte namespace has sorted-manifest digest
+  `6e0ac8dad33a95a65d684b23bfc459a6e91aa4cce58cf4525df7ba40ebfb102b`,
+  clean revision `ece87892d`, one host/tool/guard identity, and no staging.
+  Accepted identity `semantic-bridge-matrix/81ce1716...71bb3` retains 69
+  accepted and 39 expected-rejection profiles, 48 applicable and six
+  inapplicable measurement profiles, 186 raw records, and zero exclusions.
+  Independent guarded regeneration returns the same complete identity.
+- [x] **NO REGRESSION** — The captured guarded exact watcher resumes both
+  family manifests, reports the complete manifest `unchanged`, and passes
+  `All tests successful` at `Files=1, Tests=3` in 2,386 seconds. The default
+  watcher also passes `Files=1, Tests=3`; exact census, content digest,
+  family/complete schema and dominance inspection, clean Git, and absent
+  staging checks pass. Task integrity remains three trees/979 nodes; Knowledge
+  Map parity covers 1,150 facts/6,068 questions/6,235 occurrences/133 shards.
+  The claim join closes 1,467 candidates as 878 derived gates/589 reviewed
+  records/zero gaps with 2,113 current/615 original constants. All 54 mdBook
+  chapters test; its inspected 89-file/19,167,376-byte repository-local render
+  is removed exactly. The maintained book remains 54 files/51,532 lines/
+  2,735,174 bytes: zero lines/+19 bytes under exact aggregate authority with
+  no ceiling increase. Project locality, relative paths, memory, containment,
+  diff, staged acceptance, and doctrine closeout gates pass. No provider,
+  compiler, simulator, external verification tool, public API, promoted
+  performance budget, support, capacity, reached-boundary, or product-
+  behavior contract changes.

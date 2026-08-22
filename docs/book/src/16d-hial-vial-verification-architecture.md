@@ -3864,8 +3864,8 @@ scripts/run_with_ram_guard.sh -- scripts/run_vial_semantic_bridge_measurement_ma
 scripts/run_vial_semantic_bridge_measurement_matrix.pl --validate
 ```
 
-The publisher is implemented, but `.17.3.2` remains active until the guarded command seals all 108 sets
-and both family/full manifests. No completed-matrix or reached-boundary claim is made before then.
+The guarded matrix is complete: 108 sets and both family/full manifests share one clean revision,
+one host/tool/guard identity, 186 raw records, zero exclusions, and one accepted aggregate identity.
 
 The public support snapshot and normative contract report the portable-SV
 Runner's enforced 8-MiB compile and 64-MiB runtime capture limits. Those are
@@ -3875,6 +3875,6 @@ the selected AHB fixture approaches either limit.
 Even a later passing architecture profile will not substitute for the
 separately owned whole-product `big`/`really_big` qualification, mixed-language
 scale, native-UVM runtime scale, synthesis scale, or general backend parity.
-The adapter and resumable publisher implementations are complete, but
-`.17.3.2` remains active until the complete selected semantic and bridge
-profile matrix and its limit/over-limit dominance evidence are retained.
+The adapter, publisher, and exact semantic/bridge matrix are complete. This
+evidence remains limited to selected provider-free stages and does not qualify
+whole-product, external-tool, performance, support, capacity, or boundary behavior.

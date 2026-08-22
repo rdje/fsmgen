@@ -171,8 +171,8 @@ collisions and ambiguous crash staging; and seals family/full manifests only
 after exact child censuses share one Git/host/tool/guard identity. The runner
 uses the adapter's exact `gate_measurement`, `qualification_measurement`, and
 `validation` mode vocabulary in inventory and reports, avoiding a second
-translation contract. It is implemented, but the clean guarded 108-profile
-capture remains active before `.17.3.2` can close.
+translation contract. The guarded 108-profile capture and independent
+regeneration close `.17.3.2` with one accepted immutable matrix.
 
 The first exact capture attempt at the combined-source-byte limit exposed a
 real controller timeout that adapter revalidation initially masked as a
@@ -182,11 +182,10 @@ only completed family stages. The unchanged ordinary referenced-declaration
 fixture now completes through chunked ASCII lexing with a Unicode-preserving
 fallback and linear four-state mask conversion. The fixed timeout and every
 support, performance-budget, capacity, and reached-boundary nonclaim remain
-unchanged. Post-commit, the old revision's incomplete publication was
-re-censused and removed. Clean guarded validation plus independent regeneration
-accepted the exact combined-byte boundary with fully censused output and exact
-cleanup, leaving the semantic/bridge publication namespace empty for the full
-matrix.
+unchanged. The obsolete old-revision partial publication was re-censused and
+removed. The clean full capture retains 108 reports, two family manifests, and
+one complete manifest at one revision/host/tool/guard identity; independent
+guarded regeneration accepts the same identity with 186 raw records and zero exclusions.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
