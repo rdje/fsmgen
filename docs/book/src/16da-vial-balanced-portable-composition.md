@@ -128,7 +128,7 @@ composition together.
 ## Deliberate nonclaims
 
 This slice ends at target-neutral plan construction. Portable-SystemVerilog
-emission remains separately owned by `.17.2.7.2.4`, which must negotiate the
+emission qualification is active via `.17.2.7.2.4`, which must negotiate the
 complete revision-2 bridge and ExecutionIR shape rather than trusting a
 capability label. No external compiler or runtime executes here. Public
 planning, other backends, support, performance, capacity, and reached-boundary

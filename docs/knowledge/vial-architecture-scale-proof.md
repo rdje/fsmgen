@@ -101,7 +101,7 @@ backends, runtime, support, performance, and capacity remain unchanged and
 unclaimed. Completed `.17.2.7.2.3` regenerates source, runs six fresh gates,
 rebuilds stages twice plus replay, derives the vector and
 semantics, and rejects injected evidence. Focused t/1653 re-derives and
-falsifies it; emitter child `.17.2.7.2.4` remains proposed.
+falsifies it; emitter child `.17.2.7.2.4` is active.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
