@@ -3683,7 +3683,7 @@ single-descendant RSS, files/lines/bytes, semantic counts, exact tool/host
 identity, and raw samples. The repository RAM guard retains its 88% host and
 4,096-MiB descendant ceilings. A promoted pinned-host budget is frozen from
 clean calibration with explicit headroom; unknown hosts run correctness,
-determinism, safety, and cleanup without flaky performance failure.
+determinism, safety, and cleanup without flaky performance failure. Measurement is now active under `.17.3`: `.17.3.1` first owns the closed record, sampler, controller, and repository-volume lifecycle; later leaves own family and exact-tool runs; `.17.3.9` owns candidate calibration closure; and `.17.5` alone owns promotion.
 
 Generated work stays below repository-derived `.artifacts/tmp/vial-scale/` and
 is removed exactly. An over-limit proof must fail at the earliest authoritative

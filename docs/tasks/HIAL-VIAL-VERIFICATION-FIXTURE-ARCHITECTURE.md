@@ -701,9 +701,73 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.3: qualify unified provider-free construction`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Measure portable backend generation, compile, execution, result, and artifact scaling.`
   Acceptance: `Run the selected workload profiles under active RAM/time controls for every applicable qualified backend, collect normalized wall/CPU/descendant-RSS/artifact/compile/run/result evidence, prove deterministic reruns and semantic outcomes, and distinguish tool cost from architecture cost without generalizing beyond measured profiles.`
+  Verification: `Clean unified provider-free qualification commit 490c35cc5 closes deterministic generation before any measured process or tool execution. Decision 0056 already freezes the measurement schema, stage boundaries, raw-sample contract, repetitions, 250-ms sampling interval, exact host/tool identities, smaller-of timeouts, 88%-host/4,096-MiB descendant guard, repository-volume staging/publication, exclusion policy, budget formulas, and nonclaims. Repository and history audits find no implementation of fsmgen.vial_architecture_scale_measurement.v1, stage_measurements, or run ordinals, so .17.3 is decomposed into nine independently committable leaves. Foundation .1 alone is active; family measurement, external-tool execution, balanced measurement, calibration closure, cap repair, and promotion remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3: activate scale measurement foundation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.1`
+  Status: `active`
+  Goal: `Implement the closed architecture-scale measurement record, stage sampler, controller, and repository-volume lifecycle foundation.`
+  Acceptance: `Implement fsmgen.vial_architecture_scale_measurement.v1 without running an external verification tool: exact immutable workload/git/dirty/host/tool/run identities; all twelve decision-0056 stages; monotonic wall, controller/descendant CPU, summed-tree/single-descendant RSS, semantic and file/line/byte/object counters, command/outcome/timeout classification, explicit null-plus-reason unsupported counters, 250-ms raw samples, correctness-before-measurement admission, validation and measured-run classes, defensive canonical reports, content identities that exclude volatile measurement values, smaller-of timeout authority, 88%-host/4,096-MiB guard metadata, same-volume atomic publication, success/failure cleanup, hostile input/report mutation rejection, and explicit nonclaims. Prove the honest missing-foundation RED before implementation and leave family workloads, provider access, external compile/runtime, candidate budgets, support, and capacity to later leaves.`
+  Verification: `pending honest RED and implementation`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2`
+  Status: `proposed`
+  Goal: `Measure semantic-catalog and bridge-fanout construction through their canonical provider-free stages.`
+  Acceptance: `Consume only completed selected family constructions; record validation plus three gate and five qualification samples where applicable; re-prove every stage-local semantic, bridge, identity, rerun, failure, and cleanup oracle before retaining a sample; distinguish FSMGen-owned stage cost; preserve exact limit/over-limit dominance; retain every raw sample and justified exclusion; and make no external-tool, performance-budget, support, or capacity claim.`
+  Verification: `pending`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3`
+  Status: `proposed`
+  Goal: `Measure execution-graph and checking-state construction through canonical binding, planning, and oracle stages.`
+  Acceptance: `Measure only reachable selected levels under the foundation controller; preserve preflight-dominated and not-materialized outcomes; prove exact execution/checking identities, ranks, semantics, packed-state and replay oracles, deterministic reruns, earliest authoritative failures, raw evidence, and cleanup; separate parse/bridge/bind-plan cost; and make no backend-runtime, performance-budget, support, or capacity claim.`
+  Verification: `pending`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4`
+  Status: `proposed`
+  Goal: `Measure deterministic structural backend emission for every applicable selected profile.`
+  Acceptance: `Measure canonical portable-SystemVerilog, portable-VHDL, OSVVM, and native-UVM review-profile construction only where their completed authorities apply; verify exact artifact/source/map/check identities and atomic rejection before retaining wall/CPU/RSS/count samples; distinguish FSMGen emission from provider verification and external execution; preserve native-UVM and over-limit non-applicability; and publish no compile/runtime, promoted budget, support, or capacity claim.`
+  Verification: `pending`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5`
+  Status: `proposed`
+  Goal: `Measure exact portable-SystemVerilog generation, compile, run, trace validation, and result production with qualified Verilator.`
+  Acceptance: `Use only the qualified Verilator profile and canonical runtime-stream inputs; perform one validation plus required measured repetitions in fresh owned staging; apply effective qualified compile/run limits and active guards; prove artifact, source-map, command, trace closure, normalized result, deterministic rerun, raw-sample, transcript, publication, and cleanup oracles; reject identity drift or excluded samples explicitly; and make no full-SystemVerilog, UVM, mixed-language, promoted-budget, support, or capacity claim.`
+  Verification: `pending`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6`
+  Status: `proposed`
+  Goal: `Measure exact provider-free portable-VHDL generation, analysis, elaboration, run, trace validation, and result production with qualified GHDL.`
+  Acceptance: `Use only the qualified GHDL profile and canonical runtime-stream inputs; perform one validation plus required measured repetitions in fresh owned staging; apply effective per-source analysis/elaboration/run limits and active guards; prove artifacts, source maps, checks, command identity, trace/result parity, deterministic rerun, raw evidence, publication, failure, and cleanup; and make no OSVVM, mixed-language, promoted-budget, support, or capacity claim.`
+  Verification: `pending`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7`
+  Status: `proposed`
+  Goal: `Measure exact OSVVM methodology generation, analysis, elaboration, run, trace validation, and result production with the qualified provider and GHDL.`
+  Acceptance: `Verify exact provider commit/tree/manifest/licence/notice identity before work; consume only the qualified OSVVM plus GHDL profile and canonical runtime inputs; perform validation and measured repetitions with qualified limits and guards; retain separate provider-verification, FSMGen, and external-tool stages; prove adapter/portable artifacts, mappings, trace/result semantics, raw evidence, deterministic rerun, atomic publication, failure, and cleanup; and make no provider-generality, mixed-language, promoted-budget, support, or capacity claim.`
+  Verification: `pending`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8`
+  Status: `proposed`
+  Goal: `Measure the caller-sealed revision-2 balanced portable composition without widening any public contract.`
+  Acceptance: `Run the exact decision-0077 balanced source-to-portable-SystemVerilog route through the common measurement foundation; prove all six fresh prerequisite gates, bridge/ExecutionIR/binding/operation/artifact/map identities, deterministic bytes, stage-local costs, raw samples, effective guard/timeouts, atomic publication, failure, and cleanup; measure external execution only if its separately qualified route is applicable; and preserve all public AHB/revision-1/support/performance/capacity nonclaims.`
+  Verification: `pending`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9`
+  Status: `proposed`
+  Goal: `Close the measured family with immutable raw evidence, derived views, and candidate pinned-host/tool budgets.`
+  Acceptance: `Independently regenerate every applicable family/profile/level ownership and measurement record; require complete validation/three-run gate or validation/five-run qualification evidence; derive minimum/median/maximum/MAD without discarding raw samples; freeze exact host/tool applicability and decision-0056 candidate formulas from accepted clean samples; distinguish FSMGen/tool/artifact costs; record exclusions, dominant caps, nonclaims, and residue; reject mutation or missing members; and leave cap implementation to .17.4 and public budget/support promotion to .17.5.`
   Verification: `pending`
   Commit: `pending activation`
 
@@ -1556,6 +1620,7 @@ Measurement
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-22` | `.17.3` architecture-scale measurement activation | clean unified-qualification predecessor `490c35cc5`; decisions `0055`/`0056`/`0077`; absent measurement-schema/stage/run-ordinal implementation audit; nine-leaf decomposition; exact foundation/family/backend/tool/balanced/calibration ownership; task/index/Memory/book/fact/claim/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, live-document, diff, staged docs-only acceptance, and doctrine gates | `passed`; `.17.3` is active and `.17.3.1` alone owns the closed measurement schema/sampler/controller/lifecycle foundation before any external-tool run. Task integrity holds at three trees/978 nodes; Knowledge Map parity is 1,150 facts/6,059 questions/6,226 occurrences/133 shards; all 54 mdBook chapters test and its inspected 89-file/19,089,819-byte repository-local render is removed. The governed claim census remains complete at 1,459 candidates plus 2,105 current/615 original constants as 870 derived gates/589 reviewed records/zero gaps. The maintained book changes by zero lines/+260 bytes without a ceiling increase. Activation changes no code, test, config, fixture, generator, sampler, external execution, artifact, API, capability/support, performance, budget, capacity, reached-boundary, or product behavior. |
 | `2026-08-22` | `.17.2.7.3` unified provider-free qualification implementation | missing-module RED witness; exact fifteen-runtime/one-balanced ownership; frozen checked-source identity; canonical child construction/evaluation only; complete embedded child reports and content identities; normalized authority/applicability matrix; independent whole-gate regeneration; closed nonclaims; hostile source/report/claim/invocant/injection rejection; defensive values; simultaneous dual-family repository-volume success/failure cleanup; syntax; guarded focused and adjacent compatibility; CI inventory; task/index/Memory/book/fact/rationale/claim/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, diff, staged acceptance, and doctrine gates | `passed`; the 4,096-MiB guarded t/1655 watcher passes Files=1/Tests=4 in 600 seconds, while CI inventory plus t/1651 compatibility passes Files=2/Tests=7,098 in 62 seconds. All sixteen members qualify without provider or external-tool access; only balanced structural emission is complete. Compile, runtime, trace, result, public support, performance, capacity, and reached-boundary claims remain false. `.17.2.7.3`, `.17.2.7`, and `.17.2` are done; `.17.3` measurement remains proposed for a clean activation. |
 | `2026-08-22` | `.17.2.7.3` unified provider-free qualification activation | clean balanced-emission predecessor `ebf98fbbd`; completed runtime-stream and balanced family APIs; decisions `0055`/`0056`/`0077`; exact ownership/nonclaim boundary; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged docs-only acceptance, and doctrine gates | `passed`; `.17.2.7.3` alone is active to independently qualify the complete runtime-profile/level plus balanced construction family before measurement. Activation changes no code, test, config, generator, emitter, artifact, external execution, runtime result, API, capability/support, performance, capacity, reached-boundary, or product behavior. |
 | `2026-08-22` | `.17.2.7.2.4` balanced portable-emission implementation | missing-module RED witness; fresh six-family composition; caller-sealed canonical bridge/ExecutionIR/backend-input route; exact fifteen-requirement backend negotiation; deterministic eight-artifact/three-source graph; complete operation and binding source maps; legal identifiers; stage/artifact/report identities; byte-equal rerun; public/unsealed/mutated evidence rejection; repository-volume success/failure cleanup; syntax; guarded focused and impacted compatibility; task/index/Memory/book/fact/rationale/claim/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, diff, staged acceptance, and doctrine gates | `passed`; the qualifier freezes 503,279 source bytes and 3,605 maps covering all 1,024 operations and 2,048 bindings. Final focused t/1654 passes Files=1/Tests=4 in 535 seconds and the guarded five-file public/revision-1/revision-2/composer compatibility matrix passes Files=5/Tests=26 in 403 seconds. Public emission rejects the private profile atomically; compilation, runtime, trace, result, support, performance, capacity, and reached-boundary claims remain false. `.17.2.7.2` is done and `.17.2.7.3` is proposed next. |
@@ -5826,3 +5891,38 @@ raising an enforcement ceiling.
   Staged acceptance and final doctrines close below. No existing family
   producer, public emitter, planner, bridge, API, support classification,
   external runtime, performance, capacity, or product behavior is widened.
+
+## Acceptance Checklist (enforced) — `.17.3` architecture-scale measurement activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Measure portable backend
+  generation, compile, execution, result, and artifact scaling.' -1
+  --format='%h %s' -- docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`
+  identifies selection commit `9de3bf9c8`, where one broad `.17.3` leaf was
+  proposed behind deterministic generation. Clean predecessor `490c35cc5` now
+  closes `.17.2`, while repository searches for
+  `vial_architecture_scale_measurement`, `stage_measurements`, and run ordinals
+  find no implementation. The measurement contract therefore needs an active
+  foundation owner and independently recoverable family/tool slices before any
+  watcher, sampler, process, or artifact can change the tree.
+- [x] **ADDRESSED (verified)** — `.17.3` is active and decomposed into nine
+  ordered leaves: common record/controller/lifecycle foundation; semantic and
+  bridge measurement; execution and checking measurement; structural backend
+  emission; exact Verilator, GHDL, and OSVVM+GHDL runs; revision-2 balanced
+  measurement; and immutable raw-evidence/candidate-calibration closure.
+  `.17.3.1` alone is active. Every leaf freezes correctness-before-measurement,
+  raw evidence, guard/timeout, same-volume publication/cleanup, applicability,
+  and nonclaim boundaries. `.17.4` still owns cap implementation and `.17.5`
+  still owns public promotion.
+- [x] **NO REGRESSION** — `scripts/check_task_tree_integrity.pl` reports three
+  trees/978 nodes; relative paths pass Files=1/Tests=2; `knowledge-map: OK`
+  retains 1,150 facts/6,059 questions/6,226 occurrences/133 shards. Claim
+  inventory/disposition closes 1,459 candidates plus 2,105 current/615 original
+  constants as 870 derived gates/589 reviewed records/zero gaps. All 54 mdBook
+  chapters test; its inspected repository-local render contains 89 files/
+  19,089,819 bytes and is removed exactly. The 54-file maintained book remains
+  51,353 lines/2,724,361 bytes under a fresh zero-line/+260-byte authority with
+  no ceiling increase. All 22 live-document surfaces/3,052 paths pass, as do
+  diff, docs-only staged acceptance, and final doctrines. No code, test,
+  config, fixture, generator, sampler, external process, artifact, public API,
+  capability/support, performance budget, capacity, reached-boundary, or
+  product behavior changes.

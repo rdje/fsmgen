@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: none; `.17.2.7.3`, `.17.2.7`, and `.17.2` are complete.
-- next_action: activate `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3`
-  measurement as a separate docs-only slice from the clean implementation
-  commit.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.1`.
+- next_action: add the honest missing-foundation watcher, then implement the
+  closed decision-`0056` measurement record/controller without external-tool
+  execution.
 - in_flight_uncommitted: none.
 - in_flight_background: none
 - blockers: none.

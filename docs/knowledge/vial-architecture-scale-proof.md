@@ -106,8 +106,8 @@ sources. Nested runtime/balanced staging cleans both repository-volume roots
 after success or failure. Public planning/AHB/revision 1/other backends and
 provider, compile, runtime, trace, result, support, performance, capacity, and
 reached-boundary claims stay unchanged and unclaimed. Focused t/1653-t/1655
-re-derive and falsify these boundaries; `.17.2` is complete and `.17.3`
-measurement remains separately proposed.
+re-derive and falsify these boundaries; `.17.2` is complete and `.17.3.1` now
+owns measurement setup.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
