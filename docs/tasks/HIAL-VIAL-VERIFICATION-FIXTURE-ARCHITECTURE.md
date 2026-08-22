@@ -734,8 +734,16 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Measure execution-graph and checking-state construction through canonical binding, planning, and oracle stages.`
   Acceptance: `Measure only reachable selected levels under the foundation controller; preserve preflight-dominated and not-materialized outcomes; prove exact execution/checking identities, ranks, semantics, packed-state and replay oracles, deterministic reruns, earliest authoritative failures, raw evidence, and cleanup; separate parse/bridge/bind-plan cost; and make no backend-runtime, performance-budget, support, or capacity claim.`
-  Verification: `Clean predecessor 9980fe5c1 closes the exact semantic/bridge matrix before this pivot. The completed caller-sealed ArchitectureScaleExecutionCheckingMeasurement adapter reconstructs only ArchitectureScaleExecutionGraph or ArchitectureScaleCheckingState shapes and delegates guarded validation/sampling/lifecycle to the common foundation. Its exact publisher freezes the producer-owned 40-execution/32-checking profile partition, publishes only complete guarded reports, resumes at immutable profile boundaries, and withholds family/complete seals until every child shares one clean revision, host, tool, and guard identity. A versioned provenance envelope binds source-free reports to that capture identity without inventing a workload or controller measurement record. Fast publisher/adapter and CI-inventory regression pass; exact clean-revision guarded capture remains the active frontier. Backend emission, provider/tool access, compile/run/trace/result work, promoted budgets, cap repair, support, capacity, and reached-boundary claims remain separately owned.`
+  Verification: `Clean predecessor 9980fe5c1 closes the exact semantic/bridge matrix before this pivot. The completed caller-sealed ArchitectureScaleExecutionCheckingMeasurement adapter reconstructs only ArchitectureScaleExecutionGraph or ArchitectureScaleCheckingState shapes and delegates guarded validation/sampling/lifecycle to the common foundation. Its exact publisher freezes the producer-owned 40-execution/32-checking profile partition, publishes only complete guarded reports, resumes at immutable profile boundaries, and withholds family/complete seals until every child shares one clean revision, host, tool, and guard identity. A versioned provenance envelope binds source-free reports to that capture identity without inventing a workload or controller measurement record. The first exact capture was safely stopped at 88.4% host memory before any profile publication, but exposed one controller-owned raw-sample staging tree that the foundation cannot yet reclaim after process-tree termination; child .17.3.3.1 owns the recovery repair before capture resumes. Backend emission, provider/tool access, compile/run/trace/result work, promoted budgets, cap repair, support, capacity, and reached-boundary claims remain separately owned.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3: activate execution and checking measurement; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3: implement execution and checking measurement adapter; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3: implement resumable execution checking matrix`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.1`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.1`
+  Status: `active`
+  Goal: `Make raw architecture-scale measurement staging safely resumable after controller termination.`
+  Acceptance: `Acquire exclusive repository-volume ownership for the exact workload/run-class/ordinal staging identity before inspecting or creating it; reject a concurrently owned identity; reclaim only a fully validated real-directory/regular-file orphan while ownership is held; reject symlink, special-file, cross-volume, or ambiguous residue without deletion; prove ordinary success/failure cleanup and deterministic evidence unchanged; use the retained real guard-interruption residue as a recovery witness; then resume the exact clean-revision 72-profile capture without weakening either guard threshold or manually deleting the orphan.`
+  Verification: `The first clean 3ccc4f5b9 exact capture began at 63.9% host memory and the real guard terminated its process tree at 88.4% while an unrelated pgen release rustc held more than 13 GiB. No profile, family, or complete publication was sealed. The interrupted execution bindings gate sample left the exact controller-owned .artifacts/tmp/vial-scale/<workload-id>/gate_measurement/03 tree; the existing foundation's _create_owned_stage rejects every pre-existing final staging directory and has no concurrency-safe orphan-recovery protocol. The retained tree is the honest recovery fixture; implementation and proof are pending.`
+  Commit: `pending interruption-safe recovery`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4`
   Status: `proposed`
@@ -6337,3 +6345,35 @@ raising an enforcement ceiling.
   first committed and can satisfy its own clean-revision contract. No provider,
   external tool, backend emission, compile/run/trace/result, public API,
   performance budget, support, capacity, or reached-boundary claim changes.
+
+## Acceptance Checklist (enforced) — `.17.3.3.1` interruption-recovery activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The first exact clean-revision t/1660
+  capture started below the real guard at 63.9% host memory, then
+  `ram-guard: host memory 88.4% reached cutoff 88%` terminated the process
+  tree while an unrelated pgen release compiler held more than 13 GiB. No
+  execution/checking publication exists, but the exact third gate sample
+  remains below `.artifacts/tmp/vial-scale/<workload-id>/gate_measurement/03`.
+  A direct invocation against that retained exact identity reports
+  `measurement staging root already exists at perl/FSM/VIAL/ArchitectureScaleMeasurement.pm line 1910`;
+  line 238 enters
+  `_create_owned_stage`, whose present implementation rejects every pre-
+  existing final run directory without a lock or safe orphan-recovery path.
+- [x] **ADDRESSED (verified)** — Active child `.17.3.3.1` now exclusively owns
+  concurrency-safe interrupted-stage recovery. Its acceptance requires exact
+  same-volume ownership, concurrent-owner rejection, real-directory/regular-
+  file validation before reclamation, fail-closed symlink/special/cross-volume
+  handling, unchanged evidence, proof against the retained real residue, and
+  capture resume with the original 88%/4,096-MiB guard. No residue was manually
+  removed and no incomplete evidence was promoted.
+- [x] **NO REGRESSION** — `mdbook test docs/book` reports every one of 54
+  chapters successful; relative-path and project-locality coverage reports
+  `All tests successful` at `Files=2, Tests=22`; task integrity reports three
+  trees/980 nodes; Knowledge Map parity remains 1,150 facts/6,071 questions/
+  6,238 occurrences/133 shards. Claim inventory/disposition closes 1,468
+  candidates as 879 derived gates/589 reviewed records/zero gaps. The
+  maintained book remains 54 files/51,532 lines/2,738,111 bytes under an exact
+  zero-file/zero-line/+155-byte authority and no ceiling increase; all 22 live-
+  document surfaces pass. This activation changes only durable ownership,
+  status, retrieval, claim, and containment records; implementation remains
+  pending under the new leaf.

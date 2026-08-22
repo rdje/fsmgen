@@ -165,8 +165,10 @@ host, tool, and guard capture identity. A closed immutable envelope binds that
 provenance to each nested report, including source-free reports that retain no
 workload or controller identity of their own. Retry independently regenerates
 the report under the real guard, accepts only the same immutable capture, and
-withholds family/full seals until every child agrees. The publisher is ready;
-the exact clean-revision guarded capture remains next.
+withholds family/full seals until every child agrees. A real host-guard stop
+before the first publication exposed raw-sample staging that still needs an
+exclusive orphan-recovery protocol; `.17.3.3.1` owns that repair before the
+exact clean-revision guarded capture resumes.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
