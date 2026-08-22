@@ -658,11 +658,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.1: construct provider-free runtime streams`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Compose the exact balanced portable workload from completed orthogonal gate constructions.`
   Acceptance: `Consume fresh successful gate-construction reports for every orthogonal family, then generate balanced_portable_v1 only through canonical VIAL/HIAL, SemanticIR, bridge, ExecutionIR, and portable-SystemVerilog emission routes; prove every decision-0055 interaction count, path-independent identities, byte-equal reruns, complete oracle applicability, mutation rejection, nonclaims, and exact same-volume cleanup without external execution or a capacity claim.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean provider-free runtime predecessor 3c1f0b411 completes .17.2.7.1 before this pivot. Decision 0055 and the version-1 workload catalog freeze the sole balanced interaction profile at one unit/domain, 128 endpoints, 16 transactions, 128 events, 32 probes/scenarios/models/scoreboards/faults/live fibers, 1,024 operations/total fibers/random occurrences, 2,048 bindings, 512 execution types/model cells, and 4,096 scoreboard capacity/coverage bins. Completed orthogonal constructors own the required fresh gate evidence and canonical route stages; this leaf alone is active to compose them without inventing a second authority. Activation changes no code, test, config, workload bytes, generator, emitter, external execution, runtime, public API, support, performance, capacity, or product behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2: activate balanced portable composition`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.3`
   Status: `proposed`
@@ -939,11 +939,17 @@ support authority and qualifies the repaired family. Completed generator
 `.17.2.6.3` includes shared foundation `.1`, portable-SV `.2`, portable-VHDL
 `.3`, OSVVM `.4`, native-UVM `.5`, and family closure `.6`; all six children
 are complete and freeze the exact thirteen-emitted/seven-rejected profile
-partition. Runtime/balanced parent `.17.2.7` is active as runtime-stream
-construction `.1`, proposed balanced composition `.2`, and proposed unified
-qualification `.3`; `.1` alone is active. Measurement `.17.3` remains later.
+partition. Runtime/balanced parent `.17.2.7` is active: runtime-stream
+construction `.1` is complete, balanced composition `.2` alone is active, and
+unified qualification `.3` remains proposed. Measurement `.17.3` remains later.
 
 ## Decisions
+
+- `2026-08-22`: Activate balanced portable composition `.17.2.7.2` after clean
+  provider-free runtime commit `3c1f0b411`. Consume the exact decision-`0055`
+  interaction profile and fresh successful reports from every completed
+  orthogonal constructor; do not create a shadow catalog, execute a provider or
+  external tool, or claim runtime, support, performance, or capacity.
 
 - `2026-08-22`: Activate runtime-stream/balanced integration `.17.2.7` after
   clean backend-emission closure commit `86faa137d`. Decompose provider-free
@@ -1473,6 +1479,7 @@ qualification `.3`; `.1` alone is active. Measurement `.17.3` remains later.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-22` | `.17.2.7.2` balanced portable composition activation | clean runtime-construction predecessor `3c1f0b411`; decisions `0055`/`0056`; exact catalog interaction profile and completed six-family constructor census; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.7.2` alone is active to consume six fresh orthogonal gate reports and compose the one catalog-owned portable-SystemVerilog interaction shape through canonical routes. Activation changes no code, test, config, workload bytes, generator, emitter, external execution, runtime, API, support, performance, capacity, or product behavior. |
 | `2026-08-22` | `.17.2.7.1` provider-free runtime-stream construction | missing-module RED witness; exact three-profile/five-level catalog ownership; frozen checked-AHB sources; double canonical SemanticIR/bridge/ExecutionIR/backend-input/plan route; content-addressed handoff and reports; profile/tool/schema/command/timeout/transcript authority; exact reference, 10,000/100,000, and earliest-cap specifications; no provider/tool/runtime/trace/result/reached-boundary claims; hostile invocant/source/tool/construction/report/support mutation rejection; same-volume success/failure cleanup; syntax; focused and guarded impacted compatibility; task/index/Memory/book/fact/claim/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, diff, staged-acceptance, and doctrine gates | `passed`; t/1651 passes Files=1/Tests=4 in 62 seconds and the guarded six-file impacted set passes Files=6/Tests=35 in 242 seconds. All fifteen reports are deterministic and provider-free; the 53-file/51,109-line book grows by 2,353 bytes without a ceiling increase and renders as 88 files/18,964,191 bytes before exact removal. No product API, external runtime, support, performance, capacity, or reached-boundary claim changes; `.17.2.7.2` remains proposed next. |
 | `2026-08-22` | `.17.2.7` runtime-stream/balanced activation and decomposition | clean backend-emission predecessor `86faa137d`; complete decisions `0055`/`0056`; current workload catalog/runtime-profile census; three-child task decomposition; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.7` is active as runtime-stream construction `.1`, balanced portable composition `.2`, and unified provider-free qualification `.3`; `.1` alone is active. Activation changes no code, test, config, generator, trace, result, external-tool execution, runtime, API, capability/support, performance, capacity, or product behavior. |
 | `2026-08-22` | `.17.2.6.3.6` family-closure implementation | missing-test RED witness; complete four-profile/five-level catalog derivation; exact thirteen-emitted/seven-rejected partition; repeated construction; representative reference/adjacent evaluation per profile; authority/oracle/metric/diagnostic/content/nonclaim closure; direct-helper, construction, report, and support-claim mutation rejection; same-volume success/rejection/consumer-failure cleanup; syntax; focused, CI-inventory, guarded eleven-file impacted matrix, and native-UVM gallery checks; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; t/1650 passes Files=1/Tests=4 in 119 seconds, CI inventory passes Files=1/Tests=12, and the 4,096-MiB guarded t/1640-t/1650 matrix passes Files=11/Tests=98 in 600 seconds. All twenty outcomes are structurally qualified as thirteen emitted graphs and seven atomic rejections; `.17.2.6.3.6`, `.17.2.6.3`, and `.17.2.6` are done. No external runtime, family-level product report, public API, capability/support, performance, capacity, or product claim changes; `.17.2.7` remains proposed next. |
@@ -5392,3 +5399,33 @@ raising an enforcement ceiling.
   allowance. Task integrity remains three trees/965 nodes. Relative-path,
   live-document, diff, staged acceptance, final doctrines, and zero generated-
   book/scale-stage residue complete the slice.
+
+## Acceptance Checklist (enforced) — `.17.2.7.2` balanced composition activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Compose the exact balanced
+  portable workload' --oneline --
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md` identifies clean
+  parent activation `dbc625adf`, which deliberately left `.2` proposed while
+  runtime-stream construction proceeded. Commit `3c1f0b411` now completes that
+  predecessor; the balanced composer still has no implementation and therefore
+  needs this sole active owner before a RED control or source change.
+- [x] **ADDRESSED (verified)** — `.17.2.7.2` alone is active. Its closed scope is
+  the one `balanced_portable_v1` catalog profile, the exact decision-`0055`
+  interaction counts, fresh successful reports from all six completed
+  orthogonal constructors, and ordinary VIAL/HIAL, SemanticIR, bridge,
+  ExecutionIR, and portable-SystemVerilog routes. Task index, bounded Memory,
+  Knowledge Map, and mdBook agree; activation changes no code, test, config,
+  workload bytes, generator, emitter, provider/tool execution, runtime, API,
+  support, performance, capacity, or product behavior.
+- [x] **NO REGRESSION** — task-tree integrity reports three trees/965 nodes;
+  relative-path tests pass at `Files=1, Tests=2`; Knowledge Map parity retains
+  1,150 facts/6,057 questions/6,224 occurrences/133 shards; claim inventory and
+  disposition close 1,427 candidates plus 2,073 current/615 original constants
+  as 838 derived gates/589 reviewed records/zero gaps. All 53 mdBook chapters
+  test; the inspected repository-local render contains 88 files/18,964,313
+  bytes and the exact active-leaf statement before removal. The maintained book
+  remains 53 files/51,109 lines with one exact 0-line/+40-byte authority and no
+  ceiling increase; the Knowledge-card surface remains within its existing
+  3,363,688-byte allowance. Live-document, diff, staged docs-only acceptance,
+  final doctrines, and zero generated-book/scale-stage residue complete the
+  activation.

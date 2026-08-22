@@ -96,7 +96,7 @@ advanced mappings, six semantic guards, twelve wrapper checks, and twenty
 portable prerequisite checks. The adjacent level returns only the wrapper's
 portable-foundation diagnostic with no partial provider or artifact evidence.
 Native-UVM `.17.2.6.3.5` emits only T=21 (16 artifacts/10 sources/75 maps/14 checks/25 mappings); T=22 and later reject before artifacts.
-Family closure `.17.2.6.3.6` freezes 13/7 outcomes. Runtime `.17.2.7.1` constructs three profiles/five levels through canonical backend inputs and exact expectations without provider/tool execution, materialized trace/result, reached-cap, runtime/support/performance/capacity claims.
+Family closure `.17.2.6.3.6` freezes 13/7 outcomes. Runtime `.17.2.7.1` constructs three profiles/five levels through canonical backend inputs and exact expectations without provider/tool execution, materialized trace/result, reached-cap, runtime/support/performance/capacity claims. Balanced `.17.2.7.2` is active after six gate reports.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

@@ -6,9 +6,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7`
-- next_action: after the clean `.17.2.7.1` commit, activate `.17.2.7.2` to
-  compose the exact balanced portable gate from completed orthogonal reports.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2`
+- next_action: record the missing-composer RED witness, then implement the exact
+  balanced portable gate from fresh completed orthogonal construction reports.
 - in_flight_uncommitted: none.
 - in_flight_background: none
 - blockers: none.
