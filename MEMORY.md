@@ -7,8 +7,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3`.
-- next_action: implement clean-revision, guarded, resumable execution/checking
-  matrix publication over the completed caller-sealed adapter.
+- next_action: commit the execution/checking matrix publisher, then run its
+  exact clean-revision guarded resumable 72-profile capture.
 - in_flight_uncommitted: none.
 - in_flight_background: none
 - blockers: none.

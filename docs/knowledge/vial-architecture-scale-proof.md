@@ -25,6 +25,7 @@ answers:
   - "how does the exact combined source byte profile stay below its timeout?"
   - "how are VIAL execution and checking stages measured?"
   - "why does source-free VIAL scale have no measurement record?"
+  - "how is the execution checking scale matrix resumed without borrowing identity?"
 date: 2026-08-23
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -42,8 +43,10 @@ evidence: >-
   perl/FSM/VIAL/ArchitectureScaleSemanticBridgeMeasurement.pm;
   perl/FSM/VIAL/ArchitectureScaleSemanticBridgeMeasurementMatrix.pm;
   perl/FSM/VIAL/ArchitectureScaleExecutionCheckingMeasurement.pm;
+  perl/FSM/VIAL/ArchitectureScaleExecutionCheckingMeasurementMatrix.pm;
   perl/FSM/VIAL/Parser.pm; perl/FSM/VIAL/SemanticBuilder.pm;
   scripts/run_vial_semantic_bridge_measurement_matrix.pl;
+  scripts/run_vial_execution_checking_measurement_matrix.pl;
   perl/FSM/VIAL/ArchitectureScaleSemanticCatalog.pm;
   perl/FSM/VIAL/ArchitectureScaleBridgeFanout.pm;
   perl/FSM/HIAL/VIALBridge/Builder.pm; perl/FSM/VIAL/ExecutionBuilder.pm;
@@ -56,7 +59,7 @@ evidence: >-
   t/1647-vial-architecture-scale-backend-emission-portable-vhdl.t;
   t/1601-vial-architecture-scale-semantic-catalog.t;
   t/1602-vial-architecture-scale-bridge-fanout.t;
-  t/1648-vial-architecture-scale-backend-emission-osvvm.t; t/1650-vial-architecture-scale-backend-emission-family-qualification.t; t/1651-vial-architecture-scale-runtime-stream-construction.t; t/1652-vial-balanced-portable-bridge-admission.t; t/1653-vial-balanced-portable-composition.t; t/1654-vial-balanced-portable-emission.t; t/1655-vial-architecture-scale-runtime-balanced-qualification.t; t/1656-vial-architecture-scale-measurement-foundation.t; t/1657-vial-architecture-scale-semantic-bridge-measurement.t; t/1659-vial-architecture-scale-execution-checking-measurement.t;
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t; t/1650-vial-architecture-scale-backend-emission-family-qualification.t; t/1651-vial-architecture-scale-runtime-stream-construction.t; t/1652-vial-balanced-portable-bridge-admission.t; t/1653-vial-balanced-portable-composition.t; t/1654-vial-balanced-portable-emission.t; t/1655-vial-architecture-scale-runtime-balanced-qualification.t; t/1656-vial-architecture-scale-measurement-foundation.t; t/1657-vial-architecture-scale-semantic-bridge-measurement.t; t/1659-vial-architecture-scale-execution-checking-measurement.t; t/1660-vial-architecture-scale-execution-checking-measurement-matrix.t;
   docs/knowledge/vial-execution-scale-reachability.md;
   docs/knowledge/vial-semantic-scale-catalog.md;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
@@ -85,11 +88,15 @@ reverify: >-
   rg -n 'source_free_construction|preflight_dominated|_measurement_inputs|bind_plan'
   perl/FSM/VIAL/ArchitectureScaleExecutionCheckingMeasurement.pm
   perl/FSM/VIAL/ArchitectureScaleExecutionGraph.pm perl/FSM/VIAL/ArchitectureScaleCheckingState.pm &&
+  rg -n 'profile_publication|capture_identity|source-free|72-profile'
+  perl/FSM/VIAL/ArchitectureScaleExecutionCheckingMeasurementMatrix.pm
+  scripts/run_vial_execution_checking_measurement_matrix.pl
+  docs/book/src/16d-hial-vial-verification-architecture.md &&
   prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t
   t/1602-vial-architecture-scale-bridge-fanout.t
   t/1644-vial-backend-emission-authority-alignment.t
   t/1645-vial-architecture-scale-backend-emission-foundation.t
-  t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t t/1652-vial-balanced-portable-bridge-admission.t t/1653-vial-balanced-portable-composition.t t/1654-vial-balanced-portable-emission.t t/1655-vial-architecture-scale-runtime-balanced-qualification.t t/1656-vial-architecture-scale-measurement-foundation.t t/1657-vial-architecture-scale-semantic-bridge-measurement.t t/1658-vial-architecture-scale-semantic-bridge-measurement-matrix.t t/1659-vial-architecture-scale-execution-checking-measurement.t
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t t/1652-vial-balanced-portable-bridge-admission.t t/1653-vial-balanced-portable-composition.t t/1654-vial-balanced-portable-emission.t t/1655-vial-architecture-scale-runtime-balanced-qualification.t t/1656-vial-architecture-scale-measurement-foundation.t t/1657-vial-architecture-scale-semantic-bridge-measurement.t t/1658-vial-architecture-scale-semantic-bridge-measurement-matrix.t t/1659-vial-architecture-scale-execution-checking-measurement.t t/1660-vial-architecture-scale-execution-checking-measurement-matrix.t
 ---
 
 Decisions `0055` and `0056` select architecture-scale proof without claiming capacity.
@@ -124,56 +131,21 @@ hostile evidence and clean repository staging. The dedicated card/book retains
 exact artifacts/maps. Provider/runtime/support/performance/capacity/boundary
 claims remain unclaimed; `.17.2` is complete.
 
-Completed `.17.3.1` provides the common measurement foundation without running
-a provider or external verification tool. It closes all twelve decision-0056
-stage records, requires correctness-only validation before a guarded measured
-ordinal, samples controller and descendant process evidence every 250 ms,
-retains explicit unsupported reasons, enforces the smaller stage/backend
-timeout, validates disjoint stage artifacts plus the complete owned-tree
-census, and removes repository-derived staging after success, exception,
-timeout, or rejected output. Accepted measured records publish by same-volume
-atomic directory rename; byte-identical retry is unchanged, collision and
-injected commit failure are residue-free. The guard wrapper remains the safety
-authority and exports only its effective threshold evidence. Workload and
-semantic identities exclude volatile measurements. t/1656 re-derives the
-record and lifecycle and falsifies forged paths, timeouts, reports, guard
-admission, ordinals, stage order, external classification, unreported output,
-publication collision, and publication failure. `.17.3.2` now has a caller-
-sealed semantic/bridge adapter. It accepts no constructed input or report,
-reconstructs each family through its canonical producer, reruns every stage
-payload independently, isolates reconstruction in the construct stage, and
-delegates guard, sampling, timeout, artifact census, and cleanup authority to
-the foundation. Original canonical evaluation JSON
-remains a stage artifact; the embedded generic oracle uses a collision-checked
-projection that changes family `path` keys to `semantic_path` so semantic
-pointers cannot be mistaken for machine-local paths. Independent validation
-regenerates both forms. The adapter retains validation plus exactly three gate
-or five qualification ordinals only after the family oracle accepts, and
-records an authoritative family rejection as validated-but-not-measured. It
-executes no provider, compiler, simulator, or external verification tool and
-makes no performance-budget, support, capacity, or reached-boundary claim. A
-resumable matrix publisher now freezes the exact four-level inventory across
-fourteen semantic and thirteen bridge axes. It admits only a clean Git
-revision below the real guard; publishes each complete profile set atomically
-with every raw record; resumes only byte-valid same-revision evidence; rejects
-collisions and ambiguous crash staging; and seals family/full manifests only
-after exact child censuses share one Git/host/tool/guard identity. The runner
-uses the adapter's exact `gate_measurement`, `qualification_measurement`, and
-`validation` mode vocabulary in inventory and reports, avoiding a second
-translation contract. The guarded 108-profile capture and independent
-regeneration close `.17.3.2` with one accepted immutable matrix.
-
-The first exact capture attempt at the combined-source-byte limit exposed a
-real controller timeout that adapter revalidation initially masked as a
-successful-output mismatch. The repaired adapter preserves rejected-stage
-zero-output evidence and the original controller diagnostic while rederiving
-only completed family stages. The unchanged ordinary referenced-declaration
-fixture now completes through chunked ASCII lexing with a Unicode-preserving
-fallback and linear four-state mask conversion. The fixed timeout and every
-support, performance-budget, capacity, and reached-boundary nonclaim remain
-unchanged. The obsolete old-revision partial publication was re-censused and
-removed. The clean full capture retains 108 reports, two family manifests, one
-complete manifest, and 186 raw records with no exclusions.
+Completed `.17.3.1` supplies twelve closed stage records, correctness-before-
+measurement, 250-ms controller/descendant sampling, smaller-of timeouts,
+disjoint artifact census, same-volume atomic publication, and exact cleanup;
+the guard wrapper remains enforcement authority. t/1656 falsifies identity,
+path, timeout, ordinal, stage, output, collision, and failure substitutions.
+`.17.3.2` adds caller-sealed semantic/bridge reconstruction, independent stage
+reruns, and a collision-checked `path` to `semantic_path` evidence projection
+while retaining original evaluation JSON as an artifact. Accepted gate and
+qualification profiles keep three/five raw ordinals; authoritative rejection
+is correctness-only. Its clean guarded publisher resumes immutable reports and
+seals exact child censuses at one Git/host/tool/guard identity. The 108-profile
+matrix retains 186 raw records and zero exclusions. A first combined-byte run
+exposed masked timeout evidence and parser/value-normalization hot paths; the
+repair preserves rejected-stage diagnostics, Unicode semantics, the fixture,
+and the fixed timeout. Tasks, decisions, and Git retain the detailed evidence.
 
 `.17.3.3` reconstructs only the execution or
 checking producer and measures independently rerun `construct`,
@@ -186,7 +158,15 @@ has no workload identity, so it retains regenerated family evidence
 without inventing controller records, samples, inputs, or artifacts. Exact
 t/1659 rederives and falsifies these boundaries under the real guard. No
 provider/tool/backend/runtime, budget, support, capacity, or reached-boundary
-claim follows. Exact matrix publication remains next.
+claim follows. Its exact publisher freezes the producer-owned ten-execution/
+eight-checking axes at four levels (72 profiles) and admits no caller inventory
+or reports. Complete controller-backed reports establish one clean revision,
+host, tool, and guard capture identity. A closed immutable envelope binds that
+provenance to each nested report, including source-free reports that retain no
+workload or controller identity of their own. Retry independently regenerates
+the report under the real guard, accepts only the same immutable capture, and
+withholds family/full seals until every child agrees. The publisher is ready;
+the exact clean-revision guarded capture remains next.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

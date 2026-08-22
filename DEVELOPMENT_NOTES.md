@@ -662,3 +662,23 @@ known, and Z masks use linear transliteration plus binary pack/unpack instead
 of three `Math::BigInt` conversions. This preserves the ordinary referenced-
 declaration fixture, semantic identities, source spans, and the fixed safety
 ceiling while removing implementation overhead at its owners.
+
+## 2026-08-23: Source-free matrix reports need capture provenance, not borrowed measurements
+
+Execution/checking scale includes canonical shapes that are intentionally
+unconstructible before a workload identity exists. Their reports correctly
+contain no common-controller validation record. A long resumable matrix still
+has to prove that every immutable child belongs to one clean revision, host,
+tool, and enforced guard; deriving that provenance from a nonexistent record
+would be impossible, while copying a neighboring measurement identity would be
+false evidence.
+
+The execution/checking publisher therefore wraps every complete report in a
+closed, content-addressed profile-publication envelope. Controller-backed
+profiles establish the common capture identity from their own records. Later
+source-free profiles inherit only that capture provenance in the envelope,
+while the nested canonical report remains identity-free. Inventory order begins
+with a constructible gate, every subsequent profile and both family seals must
+match the common identity, and capture rechecks that the clean revision did not
+change before sealing. This preserves resumability and revision truth without
+widening the measurement schema or manufacturing work that never occurred.
