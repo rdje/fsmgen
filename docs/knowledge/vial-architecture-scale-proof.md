@@ -11,6 +11,7 @@ answers:
   - "what exact workloads prove VIAL backend emission scale?"
   - "where are the VIAL portable backend source byte boundaries?"
   - "why does native UVM reject the portable backend scale ladder?"
+  - "how are VIAL runtime-stream measurement inputs constructed without tools?"
 date: 2026-08-21
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -20,14 +21,14 @@ evidence: >-
   docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md;
   docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md;
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/VIAL/ArchitectureScaleWorkload.pm;
-  perl/FSM/VIAL/ArchitectureScaleBackendEmission.pm;
+  perl/FSM/VIAL/ArchitectureScaleBackendEmission.pm; perl/FSM/VIAL/ArchitectureScaleRuntimeStream.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission/PortableVHDL.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission/OSVVM.pm;
   perl/FSM/Support/VIALVHDLEmissionContract.pm; perl/FSM/Support/VIALNativeUVMEmissionContract.pm;
   t/1644-vial-backend-emission-authority-alignment.t;
   t/1645-vial-architecture-scale-backend-emission-foundation.t;
   t/1647-vial-architecture-scale-backend-emission-portable-vhdl.t;
-  t/1648-vial-architecture-scale-backend-emission-osvvm.t; t/1650-vial-architecture-scale-backend-emission-family-qualification.t;
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t; t/1650-vial-architecture-scale-backend-emission-family-qualification.t; t/1651-vial-architecture-scale-runtime-stream-construction.t;
   docs/knowledge/vial-execution-scale-reachability.md;
   docs/knowledge/vial-semantic-scale-catalog.md;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
@@ -43,7 +44,7 @@ reverify: >-
   docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md &&
   prove -Iperl t/1644-vial-backend-emission-authority-alignment.t
   t/1645-vial-architecture-scale-backend-emission-foundation.t
-  t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t
 ---
 
 Decisions `0055` and `0056` select architecture-scale proof without claiming capacity.
@@ -94,12 +95,8 @@ source bytes, 66/173/557/29,553 complete adapter-first translated maps, seven
 advanced mappings, six semantic guards, twelve wrapper checks, and twenty
 portable prerequisite checks. The adjacent level returns only the wrapper's
 portable-foundation diagnostic with no partial provider or artifact evidence.
-Completed native-UVM generator leaf `.17.2.6.3.5` owns five public route outcomes but emits only the selected T=21 review
-graph: sixteen artifacts, ten SystemVerilog sources/138,345 bytes, 75 structural maps with six intentional operation
-associations, fourteen passing checks, 25 selected mappings, seven review stages, and five review-closure checks. Its four
-non-reference levels all execute the adjacent T=22 negotiation rejection; the three levels beyond the gate are explicitly
-preflight-dominated/not-constructed. Independent T=128 and changed-same-count T=21 witnesses reject before artifacts. Family
-closure `.17.2.6.3.6` freezes 13/7 outcomes; runtime child `.17.2.7.1` alone is active without runtime/support/capacity claims.
+Native-UVM `.17.2.6.3.5` emits only T=21 (16 artifacts/10 sources/75 maps/14 checks/25 mappings); T=22 and later reject before artifacts.
+Family closure `.17.2.6.3.6` freezes 13/7 outcomes. Runtime `.17.2.7.1` constructs three profiles/five levels through canonical backend inputs and exact expectations without provider/tool execution, materialized trace/result, reached-cap, runtime/support/performance/capacity claims.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

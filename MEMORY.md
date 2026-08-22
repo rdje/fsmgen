@@ -7,8 +7,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7`
-- next_action: implement `.17.2.7.1` with a RED missing-constructor witness,
-  then qualify provider-free runtime-stream construction for three profiles.
+- next_action: after the clean `.17.2.7.1` commit, activate `.17.2.7.2` to
+  compose the exact balanced portable gate from completed orthogonal reports.
 - in_flight_uncommitted: none.
 - in_flight_background: none
 - blockers: none.

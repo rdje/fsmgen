@@ -651,11 +651,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.3`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.1`
-  Status: `active`
+  Status: `done`
   Goal: `Implement caller-sealed provider-free runtime-stream construction and exact expected trace/result oracles.`
   Acceptance: `Consume the existing runtime_stream_v1 catalog for portable SystemVerilog, portable VHDL, and OSVVM across all five levels; derive canonical backend inputs only through completed structural generators; build deterministic compile/run/trace/result expectations without invoking an external tool; freeze reference, 10,000-record gate, 100,000-record qualification, and earliest-authority limit/over-limit specifications without claiming either structural boundary was reached; prove exact profile/tool/limit authority, identities, stage applicability, defensive reports, nonclaims, repository-volume success/failure cleanup, and focused RED-to-GREEN evidence.`
-  Verification: `Clean parent-activation slice owns this implementation next. No source, test, config, generator, trace, result, external tool, runtime, API, capability/support, performance, capacity, or product behavior changes in activation.`
-  Commit: `pending implementation`
+  Verification: `The honest first focused run failed because ArchitectureScaleRuntimeStream did not exist. The completed caller-sealed evaluator owns all fifteen three-profile/five-level catalog shapes, rebuilds the frozen HIAL/VIAL pair and canonical SemanticIR/bridge/ExecutionIR/backend-input/plan route twice, and publishes closed content-addressed compile/run/trace/result expectation reports. Exact Verilator 5.046, GHDL 6.0.0 LLVM-JIT, and OSVVM 2026.05+GHDL selectors, schemas, command authorities, 120/60/30-second limits, 8-MiB/64-MiB transcript limits, 8,000,002-record/64-MiB trace limits, checked reference, 10,000/100,000 semantic candidates, and limit/over-limit earliest-cap specifications are frozen without emitting backend artifacts, opening the OSVVM provider, executing tools/runtime, materializing trace/results, or claiming a reached boundary. Canonical regeneration rejects construction/report/support mutation; success and consumer-failure staging are same-volume and residue-free. Focused t/1651 passes Files=1/Tests=4 in 62 seconds under the 4,096-MiB guard; the guarded CI-inventory/catalog/authority/foundation/family/runtime set passes Files=6/Tests=35 in 242 seconds. No public product API, capability/support, performance, capacity, or product behavior claim changes; balanced composition .2 remains proposed next.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.1: construct provider-free runtime streams`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2`
   Status: `proposed`
@@ -1473,6 +1473,7 @@ qualification `.3`; `.1` alone is active. Measurement `.17.3` remains later.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-22` | `.17.2.7.1` provider-free runtime-stream construction | missing-module RED witness; exact three-profile/five-level catalog ownership; frozen checked-AHB sources; double canonical SemanticIR/bridge/ExecutionIR/backend-input/plan route; content-addressed handoff and reports; profile/tool/schema/command/timeout/transcript authority; exact reference, 10,000/100,000, and earliest-cap specifications; no provider/tool/runtime/trace/result/reached-boundary claims; hostile invocant/source/tool/construction/report/support mutation rejection; same-volume success/failure cleanup; syntax; focused and guarded impacted compatibility; task/index/Memory/book/fact/claim/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, diff, staged-acceptance, and doctrine gates | `passed`; t/1651 passes Files=1/Tests=4 in 62 seconds and the guarded six-file impacted set passes Files=6/Tests=35 in 242 seconds. All fifteen reports are deterministic and provider-free; the 53-file/51,109-line book grows by 2,353 bytes without a ceiling increase and renders as 88 files/18,964,191 bytes before exact removal. No product API, external runtime, support, performance, capacity, or reached-boundary claim changes; `.17.2.7.2` remains proposed next. |
 | `2026-08-22` | `.17.2.7` runtime-stream/balanced activation and decomposition | clean backend-emission predecessor `86faa137d`; complete decisions `0055`/`0056`; current workload catalog/runtime-profile census; three-child task decomposition; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.7` is active as runtime-stream construction `.1`, balanced portable composition `.2`, and unified provider-free qualification `.3`; `.1` alone is active. Activation changes no code, test, config, generator, trace, result, external-tool execution, runtime, API, capability/support, performance, capacity, or product behavior. |
 | `2026-08-22` | `.17.2.6.3.6` family-closure implementation | missing-test RED witness; complete four-profile/five-level catalog derivation; exact thirteen-emitted/seven-rejected partition; repeated construction; representative reference/adjacent evaluation per profile; authority/oracle/metric/diagnostic/content/nonclaim closure; direct-helper, construction, report, and support-claim mutation rejection; same-volume success/rejection/consumer-failure cleanup; syntax; focused, CI-inventory, guarded eleven-file impacted matrix, and native-UVM gallery checks; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; t/1650 passes Files=1/Tests=4 in 119 seconds, CI inventory passes Files=1/Tests=12, and the 4,096-MiB guarded t/1640-t/1650 matrix passes Files=11/Tests=98 in 600 seconds. All twenty outcomes are structurally qualified as thirteen emitted graphs and seven atomic rejections; `.17.2.6.3.6`, `.17.2.6.3`, and `.17.2.6` are done. No external runtime, family-level product report, public API, capability/support, performance, capacity, or product claim changes; `.17.2.7` remains proposed next. |
 | `2026-08-22` | `.17.2.6.3.6` family-closure activation | clean native-UVM predecessor `d8dd1ce82`; decision `0075`; exact 13-emitted/7-rejected partition; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged-acceptance, and doctrine gates | `passed`; `.17.2.6.3.6` alone is active to qualify all twenty profile-level outcomes and close `.17.2.6.3` plus `.17.2.6`. No implementation, family report, or product behavior changes. |
@@ -5350,3 +5351,44 @@ raising an enforcement ceiling.
   authority, the compacted 45,455-line/3,363,673-byte Knowledge-card surface,
   zero ceiling increases, diff checks, staged docs-only acceptance, and zero
   generated-book/scale-stage residue pass.
+
+## Acceptance Checklist (enforced) — `.17.2.7.1` runtime-stream implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Implement caller-sealed
+  provider-free runtime-stream construction' --oneline --
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md` identifies clean
+  activation commit `dbc625adf`, which deliberately left the new child without
+  an implementation. The honest first `prove -Iperl
+  t/1651-vial-architecture-scale-runtime-stream-construction.t` run then failed
+  with `Can't locate FSM/VIAL/ArchitectureScaleRuntimeStream.pm` and no tests,
+  proving that no constructor or shadow evidence existed.
+- [x] **ADDRESSED (verified)** — new caller-sealed
+  `ArchitectureScaleRuntimeStream` owns exactly three runtime profiles by five
+  levels. It accepts only the frozen checked-AHB HIAL/VIAL pair, derives the
+  tool selector from the existing catalog, and rebuilds the ordinary Parser/
+  PlanBuilder backend-input route twice through the completed backend-emission
+  foundation. Closed content-addressed reports freeze five route identities,
+  the exact checked-AHB metrics and structural authority, profile-specific
+  schemas/commands/tools/providers, 120/60/30-second and 8-MiB/64-MiB limits,
+  reference/10,000/100,000/limit/over-limit trace specifications, normalized
+  result expectations, stage applicability, defensive regeneration, and
+  same-volume cleanup. Provider access, artifact emission, external execution,
+  runtime, materialized trace/result, reached boundary, support, performance,
+  and capacity claims remain false. New t/1651 proves every shape plus hostile
+  invocant/source/tool/construction/report/support mutations and success/failure
+  cleanup; the book and Knowledge Map expose the same bounded contract.
+- [x] **NO REGRESSION** — both new files report `syntax OK`. The 4,096-MiB
+  guarded focused t/1651 run reports `All tests successful` at `Files=1,
+  Tests=4` in 62 seconds; the guarded CI-inventory, workload-catalog, backend-
+  authority, backend-input-foundation, backend-family, and runtime-construction
+  set reports `Files=6, Tests=35` in 242 seconds. Knowledge Map parity reports
+  1,150 facts/6,057 questions/6,224 occurrences/133 shards; claim inventory and
+  disposition close 1,427 candidates plus 2,073 current/615 original constants
+  as 838 derived gates/589 reviewed records/zero gaps. All 53 book chapters
+  test; the inspected repository-local render contains 88 files/18,964,191
+  bytes and the exact provider-free contract before removal. The maintained
+  book remains 53 files/51,109 lines with one exact +2,353-byte authority and
+  zero ceiling increases; Knowledge cards remain within their existing growth
+  allowance. Task integrity remains three trees/965 nodes. Relative-path,
+  live-document, diff, staged acceptance, final doctrines, and zero generated-
+  book/scale-stage residue complete the slice.
