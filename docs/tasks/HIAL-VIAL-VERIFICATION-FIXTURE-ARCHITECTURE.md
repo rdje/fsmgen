@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
-- Last updated: `2026-08-21`
+- Last updated: `2026-08-22`
 - Owner: repo-local workflow
 
 ## Goal
@@ -658,11 +658,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.1: construct provider-free runtime streams`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2`
-  Status: `active`
+  Status: `blocked`
   Goal: `Compose the exact balanced portable workload from completed orthogonal gate constructions.`
   Acceptance: `Consume fresh successful gate-construction reports for every orthogonal family, then generate balanced_portable_v1 only through canonical VIAL/HIAL, SemanticIR, bridge, ExecutionIR, and portable-SystemVerilog emission routes; prove every decision-0055 interaction count, path-independent identities, byte-equal reruns, complete oracle applicability, mutation rejection, nonclaims, and exact same-volume cleanup without external execution or a capacity claim.`
-  Verification: `Clean provider-free runtime predecessor 3c1f0b411 completes .17.2.7.1 before this pivot. Decision 0055 and the version-1 workload catalog freeze the sole balanced interaction profile at one unit/domain, 128 endpoints, 16 transactions, 128 events, 32 probes/scenarios/models/scoreboards/faults/live fibers, 1,024 operations/total fibers/random occurrences, 2,048 bindings, 512 execution types/model cells, and 4,096 scoreboard capacity/coverage bins. Completed orthogonal constructors own the required fresh gate evidence and canonical route stages; this leaf alone is active to compose them without inventing a second authority. Activation changes no code, test, config, workload bytes, generator, emitter, external execution, runtime, public API, support, performance, capacity, or product behavior.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2: activate balanced portable composition`
+  Verification: `Clean provider-free runtime predecessor 3c1f0b411 and activation commit 33d4e48b3 own this leaf. The honest first focused run reports that t/1652 does not exist. A source-level route audit then found a contract conflict before source authoring: the ordinary portable AHB bridge is closed to one six-field/six-event transaction, while the only generated bridge profile with scalable events/probes is architecture_scale_probe revision 1, closed to one field and marked qualification_only/private_nonportable by the caller-sealed binder; SVPortableVerilator does not admit that capability. With the required one unit/domain, 126 non-clock/reset endpoint bindings, 32 probes, 16 transaction aliases, and 128 events, exact 2,048 ExecutionIR bindings require 1,744 field bindings, or 109 fields on each alias of one carrier transaction; neither existing bridge profile can express that shape on an emitter-admitted canonical route. Re-derivation is the ExecutionBuilder resource formula plus the bridge validators; falsification audited every existing bridge profile, standard PlanBuilder route, caller-sealed scale binder, and portable-backend capability negotiation; durability is this task node, the canonical Knowledge card, bounded Memory, and the mdBook. Unblock condition: the director selects either (recommended) a narrowly caller-sealed revision-2 balanced qualification bridge plus explicit portable-emitter qualification, or a revision of decision 0055's portable/count contract. Focused bridge/backend/execution/binding regression passes at Files=4/Tests=20; task integrity remains three trees/965 nodes; Knowledge Map parity reports 1,150 facts/6,058 questions/6,225 occurrences/133 shards; claim inventory/disposition closes 1,427 candidates and 2,073 current/615 original constants with 838 derived gates/589 reviewed records/zero gaps. All 53 mdBook chapters test, and the inspected repository-local build contains 88 files/18,967,555 bytes plus the exact blocker paragraph before removal. The maintained book remains 53 files/51,109 lines with an exact 0-line/+621-byte authority and no ceiling increase. No code, test, protocol, capability, emitter, or product behavior was changed while that architectural choice remained unauthorized.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2: record balanced route blocker`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.3`
   Status: `proposed`
@@ -5429,3 +5429,38 @@ raising an enforcement ceiling.
   3,363,688-byte allowance. Live-document, diff, staged docs-only acceptance,
   final doctrines, and zero generated-book/scale-stage residue complete the
   activation.
+
+## Acceptance Checklist (enforced) — `.17.2.7.2` balanced route blocker audit
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_validate_ahb_bridge'`
+  identifies commit `51434a2ae` as the ordinary AHB bridge validator's origin;
+  `git log -S'_validate_architecture_scale_bridge'` identifies `97dda148d`
+  as the scalable direct-IAL1 profile's origin; and `git log
+  -S'qualification_only'` identifies `bfd85ade9` as the caller-sealed
+  ExecutionIR binding gate. The current validators prove the former is fixed
+  to six fields/six events and the latter to one field, while the binding
+  ledger classifies the latter `qualification_only`/`private_nonportable` and
+  the portable-SystemVerilog backend's closed capability set does not admit it.
+  Counting the remaining selected resources leaves 1,744 field bindings, or
+  109 fields on each of sixteen aliases, to reach exactly 2,048 bindings.
+- [x] **ADDRESSED (verified)** — no unauthorized bridge or emitter contract was
+  invented. `.17.2.7.2` is blocked durably in its owning node, task index,
+  bounded Memory, canonical Knowledge card and generated map, and mdBook. Each
+  surface records the same two resolution paths: select the recommended
+  caller-sealed revision-2 balanced qualification bridge with explicit
+  portable-emitter qualification, or revise decision `0055`'s selected counts
+  or portable-emission requirement. The maintained-reference registry carries
+  the exact 0-line/+621-byte blocker-documentation delta under a fresh authority
+  ID and raises no ceiling.
+- [x] **NO REGRESSION** — the guarded bridge/backend/execution/binding suite
+  reports `All tests successful` at `Files=4, Tests=20`. Task integrity remains
+  three trees/965 nodes; relative paths pass at Files=1/Tests=2; Knowledge Map
+  parity reports 1,150 facts/6,058 questions/6,225 occurrences/133 shards; and
+  claim inventory/disposition closes all 1,427 candidates plus 2,073 current/
+  615 original constants as 838 derived gates/589 reviewed records/zero gaps.
+  All 53 mdBook chapters test; the inspected repository-local render contains
+  88 files/18,967,555 bytes and the exact blocker paragraph before removal.
+  All 22 live-document surfaces, the fresh maintained-reference authority, zero
+  ceiling increases, diff checks, and zero generated-book residue pass. No
+  production code, test, protocol, capability, emitter, external execution,
+  runtime, support, performance, capacity, or product behavior changed.

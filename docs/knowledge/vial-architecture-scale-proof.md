@@ -12,7 +12,8 @@ answers:
   - "where are the VIAL portable backend source byte boundaries?"
   - "why does native UVM reject the portable backend scale ladder?"
   - "how are VIAL runtime-stream measurement inputs constructed without tools?"
-date: 2026-08-21
+  - "why is balanced portable composition blocked?"
+date: 2026-08-22
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
 evidence: >-
@@ -22,6 +23,8 @@ evidence: >-
   docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md;
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/VIAL/ArchitectureScaleWorkload.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission.pm; perl/FSM/VIAL/ArchitectureScaleRuntimeStream.pm;
+  perl/FSM/HIAL/VIALBridge/Builder.pm; perl/FSM/VIAL/ExecutionBuilder.pm;
+  perl/FSM/VIAL/Backend/SVPortableVerilator.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission/PortableVHDL.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission/OSVVM.pm;
   perl/FSM/Support/VIALVHDLEmissionContract.pm; perl/FSM/Support/VIALNativeUVMEmissionContract.pm;
@@ -42,6 +45,10 @@ reverify: >-
   docs/book/src/16d-hial-vial-verification-architecture.md &&
   rg -n 'T=6,319|T=29,508|T=22|Durability'
   docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md &&
+  rg -n '@expected_fields|@expected_events|private_nonportable|architecture_scale_probe|binding_count|SUPPORTED_CAPABILITY'
+  perl/FSM/HIAL/VIALBridge/Builder.pm perl/FSM/VIAL/ExecutionBuilder.pm
+  perl/FSM/VIAL/Backend/SVPortableVerilator.pm
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md &&
   prove -Iperl t/1644-vial-backend-emission-authority-alignment.t
   t/1645-vial-architecture-scale-backend-emission-foundation.t
   t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t
@@ -60,43 +67,27 @@ unmatched hosts. Earliest-cap dominance is reported honestly. These candidates
 are not support, multi-unit/domain, mixed-language, native-UVM-runtime, full-
 language, whole-product `big`/`really_big`, synthesis, or general-parity claims.
 
-Completed `.17.2.1`-`.17.2.5` cover source through checking-state families.
-Decision `0075` selects checked-AHB backend routes: portable SV accepts
-`T=6,319` and rejects `6,320`; portable VHDL/OSVVM select `29,508/29,509`;
-native UVM owns reference `T=21` and must reject unsupported `T=22`.
-Completed repair parent `.17.2.6.2` supplies linear VHDL validation, sealed
-OSVVM provider reuse, 66-entry wrapper map closure, and exact native-UVM
-selected-shape negotiation. One closed `BackendEmissionAuthority` source now
-feeds the workload catalog and VHDL/native-UVM discovery. It separates OSVVM's
-six-source portable foundation from one fixed adapter and provider, names the
-portable-only 16-MiB authority, and records native UVM's one-million-map cap
-beside its exact 21-operation/75-map/14-check/25-mapping selection. Unknown,
-missing, obsolete, or contradictory fields fail closed; the guarded repair
-family passes 18 files/7,248 tests. Completed caller-sealed foundation
-`.17.2.6.3.1` retains its private profile-neutral qualification mode. Completed
-portable-SystemVerilog ladder `.2` now owns exactly T=21/1,024/4,096/6,319
-acceptance and T=6,320 rejection. It rebuilds ordinary canonical routes twice,
-freezes the ordered eight-artifact/three-source identities and
-54/1,057/4,129/6,352 complete maps, validates exact operation-ID and manifest
-closure, and rejects the first 16-MiB excess with no partial graph. Reports
-remain defensive and content-addressed; success, expected rejection, and
-consumer failure leave no repository-local scale-stage residue. Completed
-portable-VHDL ladder `.3` owns exactly T=21/128/512/29,508 acceptance and
-T=29,509 rejection. Its caller-sealed child emits the ordinary Parser/
-PlanBuilder routes twice, freezes all seventeen artifact paths and six source
-identities, validates 59/166/550/29,546 complete maps and all twenty static
-checks, and proves atomic rejection with no partial graph. The selected ladder
-observes a stable 37-byte generated-identifier maximum below the separate
-255-byte limit. Completed OSVVM ladder `.4` owns the same five T levels through
-one callback-scoped provider verification and two defensive emissions. Its
-accepted levels freeze sixteen artifacts, the fixed adapter plus six
-byte-identical portable sources at 120,911/179,280/391,248/16,781,090 total
-source bytes, 66/173/557/29,553 complete adapter-first translated maps, seven
-advanced mappings, six semantic guards, twelve wrapper checks, and twenty
-portable prerequisite checks. The adjacent level returns only the wrapper's
-portable-foundation diagnostic with no partial provider or artifact evidence.
-Native-UVM `.17.2.6.3.5` emits only T=21 (16 artifacts/10 sources/75 maps/14 checks/25 mappings); T=22 and later reject before artifacts.
-Family closure `.17.2.6.3.6` freezes 13/7 outcomes. Runtime `.17.2.7.1` constructs three profiles/five levels through canonical backend inputs and exact expectations without provider/tool execution, materialized trace/result, reached-cap, runtime/support/performance/capacity claims. Balanced `.17.2.7.2` is active after six gate reports.
+Completed `.17.2.1`-`.17.2.5` cover source through checking state. Decision
+`0075` selects checked-AHB backend routes: portable SV accepts `T=6,319` and
+rejects `6,320`; portable VHDL/OSVVM select `29,508/29,509`; native UVM emits
+only `T=21` and rejects `T=22`. The closed `BackendEmissionAuthority`, repair
+parent `.17.2.6.2`, caller-sealed foundation `.17.2.6.3.1`, four profile
+ladders, and family closure `.17.2.6.3.6` preserve exact inventories, maps,
+checks, content-addressed reruns, atomic rejection, and cleanup. Runtime
+`.17.2.7.1` constructs three profiles/five levels without provider/tool
+execution or runtime/capacity claims. Exact historical counts remain in the
+task evidence and decisions `0075`/`0055`, not duplicated here.
+
+Balanced `.17.2.7.2` is blocked before source authoring. The portable AHB
+bridge is closed to one six-field/six-event transaction. The scalable direct-
+IAL1 bridge is closed to one field and its caller-sealed ExecutionIR capability
+is `qualification_only`/`private_nonportable`, so the portable-SV emitter
+rejects it. The selected 2,048-binding shape needs 1,744 field bindings after
+one unit/domain, 126 data endpoints, 32 probes, 16 transaction aliases, and 128
+events: exactly 109 fields per alias. Unblock by selecting a distinct sealed
+revision-2 balanced qualification profile with explicit emitter qualification,
+or by revising decision `0055`'s portable/count contract. No protocol or
+capability behavior changed during the audit.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
