@@ -13,6 +13,7 @@ answers:
   - "why does native UVM reject the portable backend scale ladder?"
   - "how are VIAL runtime-stream measurement inputs constructed without tools?"
   - "how was the balanced portable bridge blocker resolved?"
+  - "what closes deterministic VIAL scale generation before measurement?"
 date: 2026-08-22
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -25,6 +26,7 @@ evidence: >-
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/VIAL/ArchitectureScaleWorkload.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission.pm; perl/FSM/VIAL/ArchitectureScaleRuntimeStream.pm;
   perl/FSM/VIAL/ArchitectureScaleBalancedPortable.pm;
+  perl/FSM/VIAL/ArchitectureScaleRuntimeBalancedQualification.pm;
   perl/FSM/HIAL/VIALBridge/Builder.pm; perl/FSM/VIAL/ExecutionBuilder.pm;
   perl/FSM/VIAL/Backend/SVPortableVerilator.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission/PortableVHDL.pm;
@@ -33,7 +35,7 @@ evidence: >-
   t/1644-vial-backend-emission-authority-alignment.t;
   t/1645-vial-architecture-scale-backend-emission-foundation.t;
   t/1647-vial-architecture-scale-backend-emission-portable-vhdl.t;
-  t/1648-vial-architecture-scale-backend-emission-osvvm.t; t/1650-vial-architecture-scale-backend-emission-family-qualification.t; t/1651-vial-architecture-scale-runtime-stream-construction.t; t/1652-vial-balanced-portable-bridge-admission.t; t/1653-vial-balanced-portable-composition.t;
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t; t/1650-vial-architecture-scale-backend-emission-family-qualification.t; t/1651-vial-architecture-scale-runtime-stream-construction.t; t/1652-vial-balanced-portable-bridge-admission.t; t/1653-vial-balanced-portable-composition.t; t/1654-vial-balanced-portable-emission.t; t/1655-vial-architecture-scale-runtime-balanced-qualification.t;
   docs/knowledge/vial-execution-scale-reachability.md;
   docs/knowledge/vial-semantic-scale-catalog.md;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
@@ -54,7 +56,7 @@ reverify: >-
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md &&
   prove -Iperl t/1644-vial-backend-emission-authority-alignment.t
   t/1645-vial-architecture-scale-backend-emission-foundation.t
-  t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t t/1652-vial-balanced-portable-bridge-admission.t t/1653-vial-balanced-portable-composition.t
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t t/1652-vial-balanced-portable-bridge-admission.t t/1653-vial-balanced-portable-composition.t t/1654-vial-balanced-portable-emission.t t/1655-vial-architecture-scale-runtime-balanced-qualification.t
 ---
 
 Decisions `0055` and `0056` select architecture-scale proof without claiming capacity.
@@ -95,10 +97,17 @@ rejects injected evidence. Completed `.2.4` then negotiates fifteen exact
 requirements and emits a byte-equal eight-artifact/three-source graph: 503,279
 source bytes and 3,605 maps cover all 1,024 operations and 2,048 bindings.
 Public bypass and hostile evidence reject atomically; repository-volume staging
-is residue-free. Public planning/AHB/revision 1/other backends and compile,
-runtime, trace, result, support, performance, and capacity claims stay unchanged
-and unclaimed. Focused t/1653 and t/1654 re-derive and falsify the boundaries;
-unified provider-free family qualification `.17.2.7.3` is active next.
+is residue-free. Completed `.17.2.7.3` closes deterministic generation with one
+exact fifteen-runtime/one-balanced ownership partition. It constructs each
+member only through its family producer, embeds every complete child report and
+authority identity, normalizes stage applicability without erasing child
+semantics, and independently regenerates the complete aggregate from checked
+sources. Nested runtime/balanced staging cleans both repository-volume roots
+after success or failure. Public planning/AHB/revision 1/other backends and
+provider, compile, runtime, trace, result, support, performance, capacity, and
+reached-boundary claims stay unchanged and unclaimed. Focused t/1653-t/1655
+re-derive and falsify these boundaries; `.17.2` is complete and `.17.3`
+measurement remains separately proposed.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

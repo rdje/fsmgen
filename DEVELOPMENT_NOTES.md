@@ -565,3 +565,20 @@ external compiler or runtime. During implementation, explicit
 `sort(_unique(...))` calls replaced ambiguous Perl `sort SUBNAME LIST` parsing;
 canonical evidence ordering must be syntactically unambiguous at every sealed
 boundary.
+
+## 2026-08-22: Unified qualification retains child authority instead of flattening it
+
+Runtime-stream reports and balanced structural-emission reports intentionally
+use different stage vocabularies and evidence shapes. Converting both to one
+small generic report would discard profile-specific command, limit, artifact,
+and oracle authority precisely where the measurement handoff needs it most.
+
+The unified qualifier therefore embeds each complete closed child report and
+adds only content identities plus a normalized navigation matrix. Canonical
+validation regenerates the entire ordered family from checked source bytes, so
+the embedded evidence is neither caller-injected nor trusted by digest alone.
+The matrix records cross-family completion without pretending that a balanced
+structural emission is equivalent to a runtime member's future compiler or
+simulator work. This costs more validation time, but it keeps the handoff
+auditable, extensible by explicit schema revision, and honest about every
+deferred stage.

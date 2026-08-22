@@ -114,6 +114,43 @@ the same repository-volume success/failure cleanup contract as composition.
 This is deliberately stronger than label admission while remaining narrower
 than product support.
 
+## Unified provider-free qualification
+
+`FSM::VIAL::ArchitectureScaleRuntimeBalancedQualification` closes deterministic
+generation before measurement. Its public evaluator accepts only the frozen
+checked-AHB HIAL and VIAL source texts. Callers cannot inject a construction,
+child report, ownership row, oracle, requested count, or intermediate route.
+
+The qualifier derives one closed ordered partition:
+
+- fifteen `runtime_stream_v1` members: three runtime-eligible backends across
+  the five catalog levels; and
+- one `balanced_portable_v1/sv_portable_verilator/gate_candidate_v1` member.
+
+Each member is constructed and evaluated through its existing family owner.
+The unified result embeds the complete child report rather than replacing it
+with a lowest-common-denominator summary. Alongside each report it retains the
+construction, report, rerun, applicability, claim, and nonclaim identities.
+The aggregate stage matrix is therefore navigation, while the embedded report
+remains the authority for profile-specific commands, tools, limits, stages,
+artifacts, diagnostics, and oracle vocabulary.
+
+All sixteen members complete construction, semantic, bridge, plan, and backend-
+input production. Structural emission is complete only for the balanced member;
+the fifteen runtime members intentionally stop before emission. Compile,
+runtime, trace, and result work remains unexecuted for every member. The
+aggregate cannot turn an OSVVM provider named in a future compile expectation
+into provider-access evidence.
+
+`validate_report` first checks the closed nested schema, claims, identities,
+ownership, ordering, and applicability. It then regenerates every construction
+and report from the checked sources and requires byte equality with the supplied
+aggregate. Recomputing a forged top-level digest is therefore insufficient.
+Source mutation, report or claim mutation, unknown inputs, and borrowed class
+invocants fail closed. `with_staging` nests one representative runtime stage and
+the balanced stage so the consumer sees both simultaneously; both exact
+repository-volume trees are removed after success or consumer failure.
+
 ## Repository-root example
 
 Run this diagnostic from the repository root. It supplies no intermediate
@@ -125,6 +162,7 @@ use strict;
 use warnings;
 use FSM::VIAL::ArchitectureScaleBalancedPortable;
 use FSM::VIAL::ArchitectureScaleBalancedPortableEmission;
+use FSM::VIAL::ArchitectureScaleRuntimeBalancedQualification;
 
 sub read_raw {
     my ($path) = @_;
@@ -154,6 +192,18 @@ printf "artifacts=%d sources=%d maps=%d\n",
     $emission->{artifact_oracle}{artifact_count},
     $emission->{artifact_oracle}{source_artifact_count},
     $emission->{artifact_oracle}{source_map_entries};
+
+my $unified =
+    'FSM::VIAL::ArchitectureScaleRuntimeBalancedQualification'->evaluate({
+        reference_hial_text => read_raw('ppif/ahb_lite_subordinate.ppif'),
+        reference_vial_text =>
+            read_raw('vial/ahb_subordinate_base_output_arbitration.vial'),
+    });
+die "unified construction qualification rejected\n" unless $unified->{ok};
+printf "runtime=%d balanced=%d total=%d\n",
+    $unified->{ownership}{runtime_member_count},
+    $unified->{ownership}{balanced_member_count},
+    $unified->{ownership}{total_member_count};
 ```
 
 Run it as `perl -Iperl example.pl` if saved as `example.pl`. The output is:
@@ -161,6 +211,7 @@ Run it as `perl -Iperl example.pl` if saved as `example.pl`. The output is:
 ```text
 endpoints=128 transactions=16 fields/transaction=109 bindings=2048
 artifacts=8 sources=3 maps=3605
+runtime=15 balanced=1 total=16
 ```
 
 `validate_report` does not merely check the report's shape or digest. It
@@ -174,8 +225,12 @@ Focused `t/1653-vial-balanced-portable-composition.t` owns composition
 durability and falsification. Focused
 `t/1654-vial-balanced-portable-emission.t` owns exact negotiation, structural
 artifacts, map closure, mutation/public-bypass rejection, defensive report
-regeneration, and cleanup. Impacted matrices independently retain the six
-prerequisites and existing public/revision-1 behavior.
+regeneration, and cleanup. Focused
+`t/1655-vial-architecture-scale-runtime-balanced-qualification.t` owns the
+closed family partition, embedded authority, independent aggregate
+regeneration, hostile mutation rejection, and dual-family cleanup. Impacted
+matrices independently retain the six prerequisites and existing public/
+revision-1 behavior.
 
 ## Deliberate nonclaims
 
@@ -183,5 +238,6 @@ This profile ends at deterministic portable-SystemVerilog structural emission.
 No external compiler or runtime executes, no trace is materialized, and no
 result is produced. Public planning and emission, other backends, support,
 performance, capacity, and reached-boundary claims remain unchanged. Unified
-provider-free family qualification is active next under `.17.2.7.3`; it does
-not widen this profile.
+provider-free family qualification is complete under `.17.2.7.3` and does not
+widen this profile. External measurement remains separately proposed under
+`.17.3`.
