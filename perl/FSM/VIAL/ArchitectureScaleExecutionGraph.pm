@@ -445,6 +445,25 @@ sub evaluation_keys($class) {
     return [@EVALUATION_KEYS];
 }
 
+# The measurement adapter needs the canonical stage boundary, not caller-
+# supplied SemanticIR, bridge, or plan objects. Keep that handoff private to
+# the exact adapter so measurement cannot become a second public binder route.
+sub _measurement_inputs($class, @args) {
+    _exact_invocant($class, '_measurement_inputs');
+    my $caller = caller;
+    confess "execution measurement inputs are private to the exact adapter\n"
+        unless defined($caller)
+            && $caller eq
+                'FSM::VIAL::ArchitectureScaleExecutionCheckingMeasurement';
+    confess __PACKAGE__ . "->_measurement_inputs expects one closed hash\n"
+        unless @args == 1 && ref($args[0]) eq 'HASH'
+            && !blessed($args[0]);
+    _confess_exact_keys(
+        $args[0], \@EVALUATE_KEYS, 'execution measurement inputs',
+    );
+    return _canonical_inputs($args[0]{construction});
+}
+
 sub _canonical_inputs($raw) {
     my $construction = _validated_construction($raw);
     my $hial = _role_input($construction, 'hial_source');

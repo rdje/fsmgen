@@ -1509,6 +1509,27 @@ sub evaluation_keys($class) {
     return [@EVALUATION_KEYS];
 }
 
+# Measurement consumes this family's canonical stage products through one
+# caller-sealed seam. It cannot inject SemanticIR, bridge, plan, trace, result,
+# or support metadata and it does not widen the public execution builder.
+sub _measurement_inputs($class, @args) {
+    _exact_invocant($class, '_measurement_inputs');
+    my $caller = caller;
+    confess "checking measurement inputs are private to the exact adapter\n"
+        unless defined($caller)
+            && $caller eq
+                'FSM::VIAL::ArchitectureScaleExecutionCheckingMeasurement';
+    confess __PACKAGE__ . "->_measurement_inputs expects one closed hash\n"
+        unless @args == 1 && ref($args[0]) eq 'HASH'
+            && !blessed($args[0]);
+    _confess_exact_keys(
+        $args[0], \@EVALUATE_KEYS, 'checking measurement inputs',
+    );
+    return _canonical_inputs_from_construction(
+        _validated_construction($args[0]{construction}),
+    );
+}
+
 sub _owns($axis, $level) {
     return 0 unless defined($axis) && defined($level) && $OWNED_LEVELS{$axis};
     return scalar(grep { $_ eq $level } @{$OWNED_LEVELS{$axis}});
