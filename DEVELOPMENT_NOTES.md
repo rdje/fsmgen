@@ -536,3 +536,15 @@ the resulting 1,744 fields combine with the other selected resources to derive
 remain unaware of the private route. This design keeps scale infrastructure
 useful for interaction proof without promoting it into a product protocol or
 general portability promise.
+
+The canonical composer keeps that separation operational. It accepts only the
+frozen checked-AHB references, regenerates its balanced HIAL/VIAL sources, and
+runs one fresh substantive gate from each completed architecture-scale family
+before the private revision-2 route is reachable. It never accepts caller-
+supplied gates, intermediate IR, manifests, plans, requested metrics, or
+reports. Evaluation then reconstructs the complete source-to-plan projection
+twice and a strict keyed replay once, so determinism, report content identity,
+and replay equality are independent outcomes rather than trust in a cached
+route. Portable emission remains another caller-sealed negotiation boundary;
+composition success alone cannot promote the profile into emitter or product
+support.

@@ -24,6 +24,7 @@ evidence: >-
   docs/decisions/0077-vial-balanced-portable-uses-a-caller-sealed-revision-2-qualification-bridge.md;
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/VIAL/ArchitectureScaleWorkload.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission.pm; perl/FSM/VIAL/ArchitectureScaleRuntimeStream.pm;
+  perl/FSM/VIAL/ArchitectureScaleBalancedPortable.pm;
   perl/FSM/HIAL/VIALBridge/Builder.pm; perl/FSM/VIAL/ExecutionBuilder.pm;
   perl/FSM/VIAL/Backend/SVPortableVerilator.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission/PortableVHDL.pm;
@@ -32,15 +33,16 @@ evidence: >-
   t/1644-vial-backend-emission-authority-alignment.t;
   t/1645-vial-architecture-scale-backend-emission-foundation.t;
   t/1647-vial-architecture-scale-backend-emission-portable-vhdl.t;
-  t/1648-vial-architecture-scale-backend-emission-osvvm.t; t/1650-vial-architecture-scale-backend-emission-family-qualification.t; t/1651-vial-architecture-scale-runtime-stream-construction.t; t/1652-vial-balanced-portable-bridge-admission.t;
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t; t/1650-vial-architecture-scale-backend-emission-family-qualification.t; t/1651-vial-architecture-scale-runtime-stream-construction.t; t/1652-vial-balanced-portable-bridge-admission.t; t/1653-vial-balanced-portable-composition.t;
   docs/knowledge/vial-execution-scale-reachability.md;
   docs/knowledge/vial-semantic-scale-catalog.md;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
-  docs/book/src/16d-hial-vial-verification-architecture.md
+  docs/book/src/16da-vial-balanced-portable-composition.md
 reverify: >-
   rg -n 'semantic_catalog_v1|bridge_fanout_v1|execution_graph_v1|checking_state_v1|backend_emission_v1|runtime_stream_v1|big.*really_big'
   docs/decisions/0055-vial-scale-proof-uses-orthogonal-workloads-and-stage-local-oracles.md
-  docs/book/src/16d-hial-vial-verification-architecture.md &&
+  docs/book/src/16d-hial-vial-verification-architecture.md
+  docs/book/src/16da-vial-balanced-portable-composition.md &&
   rg -n '88%|4,096 MiB|pinned host|earliest authoritative cap|same-volume'
   docs/decisions/0056-vial-scale-measurements-use-pinned-evidence-and-bounded-failure.md
   docs/book/src/16d-hial-vial-verification-architecture.md &&
@@ -52,7 +54,7 @@ reverify: >-
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md &&
   prove -Iperl t/1644-vial-backend-emission-authority-alignment.t
   t/1645-vial-architecture-scale-backend-emission-foundation.t
-  t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t t/1652-vial-balanced-portable-bridge-admission.t
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t t/1652-vial-balanced-portable-bridge-admission.t t/1653-vial-balanced-portable-composition.t
 ---
 
 Decisions `0055` and `0056` select architecture-scale proof without claiming capacity.
@@ -96,8 +98,10 @@ binding equation remains one unit/domain,
 126 data endpoints, 32 probes, 16 aliases, 1,744 fields, and 128 events: 2,048
 bindings, with 109 fields per alias. Public planning, AHB, revision 1, other
 backends, runtime, support, performance, and capacity remain unchanged and
-unclaimed. Canonical composition `.17.2.7.2.3` is active; emitter qualification
-`.17.2.7.2.4` remains proposed.
+unclaimed. Completed `.17.2.7.2.3` regenerates source, runs six fresh gates,
+rebuilds stages twice plus replay, derives the vector and
+semantics, and rejects injected evidence. Focused t/1653 re-derives and
+falsifies it; emitter child `.17.2.7.2.4` remains proposed.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
