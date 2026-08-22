@@ -97,7 +97,8 @@ source bytes and 3,605 maps cover all 1,024 operations and 2,048 bindings.
 Public bypass and hostile evidence reject atomically; repository-volume staging
 is residue-free. Public planning/AHB/revision 1/other backends and compile,
 runtime, trace, result, support, performance, and capacity claims stay unchanged
-and unclaimed. Focused t/1653 and t/1654 re-derive and falsify the boundaries.
+and unclaimed. Focused t/1653 and t/1654 re-derive and falsify the boundaries;
+unified provider-free family qualification `.17.2.7.3` is active next.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

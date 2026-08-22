@@ -646,7 +646,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Integrate runtime-stream construction and the balanced portable workload, then close deterministic generation proof.`
   Acceptance: `Construct runtime_stream_v1 inputs and semantic/result expectations without executing external tools; compose balanced_portable_v1 only after every orthogonal gate candidate passes; prove exact interaction counts, path-independent identities, deterministic inputs/stage reports, complete oracle applicability, nonclaims, same-volume cleanup, and a unified provider-free construction gate ready for .17.3 measurement.`
-  Verification: `Clean backend-emission closure commit 86faa137d completes `.17.2.6` before this pivot. Decisions 0055/0056 and the existing workload catalog already freeze three runtime-eligible backend/tool profiles, five runtime levels, one conservative balanced gate shape, stage-local oracles, fixed guards, locality, cleanup, and explicit nonclaims, but no canonical provider-free runtime/balanced stage constructor exists. The parent is decomposed into runtime-stream construction .1, balanced portable composition .2, and unified family qualification .3; child .1 alone is active. Activation changes no code, test, config, generator, trace, result, external-tool execution, runtime, public API, capability/support, performance, capacity, or product behavior.`
+  Verification: `Clean backend-emission closure commit 86faa137d activates this parent and decomposes it into runtime-stream construction .1, balanced portable composition .2, and unified family qualification .3 under decisions 0055/0056. Completed .1 owns all fifteen provider-free runtime input/expectation shapes; completed .2 owns the caller-sealed revision-2 balanced source-to-portable-SystemVerilog structural route. Clean balanced-emission commit ebf98fbbd closes both prerequisites; .3 alone is active to independently qualify their complete ownership partition, regeneration, oracle/nonclaim applicability, mutation rejection, locality, and cleanup before measurement. No external tool execution, runtime result, public API, capability/support, performance, capacity, or product behavior is added by activation.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7: activate runtime-balanced integration`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.3`
 
@@ -694,11 +694,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.2.4: qualify balanced portable emission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Qualify runtime-stream and balanced construction as one unified provider-free measurement gate.`
   Acceptance: `Freeze the complete runtime-profile/level and balanced ownership partition, independently reproduce construction reports, prove authority/oracle/nonclaim applicability, hostile-caller and mutation rejection, same-volume success/failure cleanup, focused/default/guarded compatibility, CI inventory, and synchronized durable truth; then close .17.2.7 and parent .17.2 before .17.3 measurement activation.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean balanced portable-emission commit ebf98fbbd completes .17.2.7.2 after .17.2.7.1 already closed all fifteen provider-free runtime-stream constructions. The two completed families expose closed canonical evaluation/report-regeneration and repository-volume staging boundaries with explicit no-external-runtime/no-support/no-performance/no-capacity claims. This continuity-only slice activates .3 alone to add an independent unified family qualifier; its honest RED watcher and implementation must derive the complete runtime-profile/level plus balanced ownership partition without injected evidence or duplicated generation logic. Activation changes no code, test, config, generator, emitter, artifact, trace, result, external tool/runtime, public API, capability/support, performance, capacity, reached-boundary, or product behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.7.3: activate unified construction qualification`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3`
   Status: `proposed`
@@ -971,11 +971,19 @@ are complete and freeze the exact thirteen-emitted/seven-rejected profile
 partition. Runtime/balanced parent `.17.2.7` is active: runtime-stream
 construction `.1` and balanced composition `.2` are complete. The latter owns
 its revision-2 contract, bridge/binder boundary, canonical composition, and
-portable structural emission; unified qualification `.3` remains proposed
-next. Measurement
+portable structural emission; unified qualification `.3` is now active.
+Measurement
 `.17.3` remains later.
 
 ## Decisions
+
+- `2026-08-22`: Activate unified provider-free construction qualification
+  `.17.2.7.3` only after clean balanced-emission commit `ebf98fbbd` completes
+  both prerequisite families. Require one closed independent family evaluator
+  over the full runtime profile/level and balanced partition, canonical report
+  regeneration, applicability/nonclaim authority, hostile mutation rejection,
+  and repository-volume cleanup. Add no external execution, runtime result,
+  public API, support, performance, capacity, or reached-boundary claim.
 
 - `2026-08-22`: Complete balanced portable-SystemVerilog emission child
   `.17.2.7.2.4` and parent `.17.2.7.2` without activating `.3` in the dirty
@@ -1548,6 +1556,7 @@ next. Measurement
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-22` | `.17.2.7.3` unified provider-free qualification activation | clean balanced-emission predecessor `ebf98fbbd`; completed runtime-stream and balanced family APIs; decisions `0055`/`0056`/`0077`; exact ownership/nonclaim boundary; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged docs-only acceptance, and doctrine gates | `passed`; `.17.2.7.3` alone is active to independently qualify the complete runtime-profile/level plus balanced construction family before measurement. Activation changes no code, test, config, generator, emitter, artifact, external execution, runtime result, API, capability/support, performance, capacity, reached-boundary, or product behavior. |
 | `2026-08-22` | `.17.2.7.2.4` balanced portable-emission implementation | missing-module RED witness; fresh six-family composition; caller-sealed canonical bridge/ExecutionIR/backend-input route; exact fifteen-requirement backend negotiation; deterministic eight-artifact/three-source graph; complete operation and binding source maps; legal identifiers; stage/artifact/report identities; byte-equal rerun; public/unsealed/mutated evidence rejection; repository-volume success/failure cleanup; syntax; guarded focused and impacted compatibility; task/index/Memory/book/fact/rationale/claim/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, diff, staged acceptance, and doctrine gates | `passed`; the qualifier freezes 503,279 source bytes and 3,605 maps covering all 1,024 operations and 2,048 bindings. Final focused t/1654 passes Files=1/Tests=4 in 535 seconds and the guarded five-file public/revision-1/revision-2/composer compatibility matrix passes Files=5/Tests=26 in 403 seconds. Public emission rejects the private profile atomically; compilation, runtime, trace, result, support, performance, capacity, and reached-boundary claims remain false. `.17.2.7.2` is done and `.17.2.7.3` is proposed next. |
 | `2026-08-22` | `.17.2.7.2.4` balanced portable-emission activation | clean canonical-composition predecessor `d2305a59a`; decision `0077`; exact revision-2 bridge/ExecutionIR identity boundary; task/index/Memory/book/fact continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, containment, diff, staged docs-only acceptance, and doctrine gates | `passed`; `.17.2.7.2.4` alone is active to add exact portable-SystemVerilog emitter negotiation and structural emission proof. Activation changes no source, test, emitter, artifact, external execution, runtime, public API, capability/support, performance, capacity, or product behavior. |
 | `2026-08-22` | `.17.2.7.2.3` canonical balanced composition implementation | missing-module RED witness; closed caller-sealed composer; six freshly evaluated substantive family gates; ordinary repository-relative HIAL/VIAL; canonical Parser/revision-2 bridge/ExecutionBuilder/plan reruns and keyed replay; complete decision-0055 vector; stage/report identities; logical-time/fiber/checking/random oracles; hostile construction/report/private-seam rejection; same-volume success/failure cleanup; syntax; guarded focused and nine-file impacted matrix; task/index/Memory/book/fact/rationale/claim/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, diff, staged acceptance, and doctrine gates | `passed`; the composer derives the exact 1-unit/1-domain, 128-endpoint, 16-transaction, 1,744-field, 128-event, 32-probe, 32-scenario, 1,024-operation, 128-fiber/32-live, 2,048-binding, 512-type, 32-model/512-cell, 32-scoreboard/4,096-capacity, 256-coverpoint/4,096-bin, 32-fault, and 1,024-random-occurrence interaction shape. Final focused t/1653 passes Files=1/Tests=4 in 282 seconds and the guarded nine-file impacted matrix passes Files=9/Tests=38 in 551 seconds. Portable emission, external execution, runtime, public API, support, performance, capacity, and reached-boundary claims remain unchanged; `.17.2.7.2.4` is proposed next. |
@@ -5752,3 +5761,32 @@ raising an enforcement ceiling.
   final doctrines close below. No existing public emitter, planning, bridge,
   revision-1 scale, backend-support, external-runtime, performance, capacity,
   or product behavior is widened.
+
+## Acceptance Checklist (enforced) — `.17.2.7.3` unified qualification activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Qualify runtime-stream and
+  balanced construction as one unified provider-free measurement gate' -1
+  --format='%h %s' -- docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`
+  identifies parent-decomposition commit `dbc625adf`, where `.3` remained
+  proposed behind runtime-stream and balanced construction. Clean commit
+  `ebf98fbbd` now completes both prerequisites, so unified qualification needs
+  its own active owner before a RED watcher or implementation changes the tree.
+- [x] **ADDRESSED (verified)** — `.17.2.7.3` alone is active. The task/index,
+  bounded Memory, Knowledge card, and mdBook agree that it must independently
+  derive the complete runtime profile/level plus balanced ownership partition,
+  report regeneration, applicability/nonclaim authority, mutation rejection,
+  and repository-volume cleanup. External execution, runtime results, public
+  API, support, performance, capacity, and reached-boundary claims remain
+  excluded.
+- [x] **NO REGRESSION** — this activation changes continuity documentation only.
+  Task-tree integrity remains three trees/969 nodes; Knowledge Map parity
+  retains 1,150 facts/6,058 questions/6,225 occurrences/133 shards; relative
+  paths and claim gates pass `Files=4, Tests=33`; all 54 mdBook chapters test,
+  and its inspected repository-local render contains 89 files/19,064,876 bytes
+  before exact removal. Claim inventory/disposition remains complete at 1,459 candidates plus 2,105
+  current/615 original constants as 870 derived gates/589 reviewed records/
+  zero gaps. The maintained book changes by 0 files/+2 lines/+109 bytes with no
+  ceiling increase. Live-document containment, diff, staged docs-only
+  acceptance, and final doctrines close below. No code, test, config,
+  generator, emitter, artifact, external runtime, API, capability/support,
+  performance, capacity, reached-boundary, or product behavior changes.

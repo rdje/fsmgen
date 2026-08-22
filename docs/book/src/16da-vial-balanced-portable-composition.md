@@ -182,4 +182,6 @@ prerequisites and existing public/revision-1 behavior.
 This profile ends at deterministic portable-SystemVerilog structural emission.
 No external compiler or runtime executes, no trace is materialized, and no
 result is produced. Public planning and emission, other backends, support,
-performance, capacity, and reached-boundary claims remain unchanged.
+performance, capacity, and reached-boundary claims remain unchanged. Unified
+provider-free family qualification is active next under `.17.2.7.3`; it does
+not widen this profile.
