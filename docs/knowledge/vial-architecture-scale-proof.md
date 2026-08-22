@@ -166,9 +166,13 @@ provenance to each nested report, including source-free reports that retain no
 workload or controller identity of their own. Retry independently regenerates
 the report under the real guard, accepts only the same immutable capture, and
 withholds family/full seals until every child agrees. A real host-guard stop
-before the first publication exposed raw-sample staging that still needs an
-exclusive orphan-recovery protocol; `.17.3.3.1` owns that repair before the
-exact clean-revision guarded capture resumes.
+before the first publication exposed raw-sample staging. `.17.3.3.1` now gives
+each exact stage identity a repository-volume advisory lock, rejects live
+contention, and reclaims only recursively validated regular same-volume
+orphans; unsafe entries remain untouched. The real interrupted gate/03 tree
+was recovered through that protocol with three accepted samples and no
+exclusions or residue. Exact clean-revision capture resumes after the repair
+commit.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

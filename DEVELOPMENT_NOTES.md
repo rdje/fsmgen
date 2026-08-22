@@ -682,3 +682,30 @@ with a constructible gate, every subsequent profile and both family seals must
 match the common identity, and capture rechecks that the clean revision did not
 change before sealing. This preserves resumability and revision truth without
 widening the measurement schema or manufacturing work that never occurred.
+
+## 2026-08-23: Interrupted measurement staging needs ownership before recovery
+
+A guard or machine termination can stop the controller before its ordinary
+cleanup block runs. Because a raw sample uses one deterministic staging path,
+blindly deleting that path on retry could destroy a live concurrent run, while
+rejecting every pre-existing directory would make profile-level resumability
+stop at the first interrupted raw sample.
+
+The foundation now acquires a nonblocking exclusive advisory lock keyed by the
+exact repository-relative staging identity. The stable zero-byte lock lives on
+the repository volume outside ephemeral staging, has a verified regular inode,
+single link, owner, device, and close-on-exec descriptor, and remains held by
+the controller and its forked worker until the run ends. A retry that obtains
+the lock recursively admits only real directories and same-volume,
+single-linked regular files before removing the orphan, pruning empty owned
+parents, and creating a fresh stage. Symlinks, FIFOs, hard links, volume drift,
+and live contention reject without reclamation. The real guard-interrupted
+execution-bindings gate sample proved this route: recovery occurred at ordinal
+three and the replacement report retained three samples, zero exclusions, and
+zero residue. Persistent lock files are coordination identities, not partial
+measurement evidence, and therefore remain outside `.artifacts/tmp`.
+
+The same proof exposed an older test assumption that an injected publication
+failure could remove the entire shared qualification namespace. Rollback now
+proves absence of its exact target and removes only parents it created; a
+pre-existing semantic/bridge evidence namespace must remain untouched.

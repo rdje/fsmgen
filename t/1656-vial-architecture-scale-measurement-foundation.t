@@ -5,10 +5,12 @@ use warnings;
 
 use bytes ();
 use Digest::SHA qw(sha256_hex);
+use File::Basename qw(dirname);
 use File::Path qw(make_path remove_tree);
 use File::Spec;
 use FindBin;
 use JSON::PP ();
+use POSIX ();
 use Test::More;
 use Time::HiRes qw(sleep);
 
@@ -90,6 +92,136 @@ subtest 'foundation authorities are exact and defensive' => sub {
     $defensive->[0] = 'forged';
     is($class->stage_order->[0], 'construct',
         'authority callers receive defensive arrays');
+};
+
+subtest 'a validated interrupted stage is recovered under exact ownership' => sub {
+    my $stage_relative = validation_stage_relative($construction);
+    my $stage_root = repo_path($stage_relative);
+    make_path(File::Spec->catdir($stage_root, 'outputs', 'construct'));
+    write_raw(
+        File::Spec->catfile(
+            $stage_root, 'outputs', 'construct', 'interrupted.txt',
+        ),
+        "interrupted before controller cleanup\n",
+    );
+
+    my $recovered = eval {
+        $class->measure({
+            repository_root => $repo_root,
+            construction => $construction,
+            run_class => 'validation',
+            run_ordinal => 0,
+            validation_record => undef,
+            stage_plan => [construct_plan(delay_seconds => 0)],
+        });
+    };
+    my $error = "$@";
+    cleanup_stage_fixture($stage_relative) unless defined $recovered;
+    ok(defined($recovered),
+        'a regular controller-owned orphan is reclaimed before a fresh run')
+        or diag($error);
+    if (defined $recovered) {
+        is($recovered->{outcome}, 'accepted',
+            'the replacement run retains ordinary accepted evidence');
+        ok(!-e $stage_root,
+            'replacement-run cleanup removes the exact recovered identity');
+    }
+
+    my $pid = fork();
+    die "cannot fork concurrent measurement probe\n" unless defined $pid;
+    if ($pid == 0) {
+        my $record = eval {
+            $class->measure({
+                repository_root => $repo_root,
+                construction => $construction,
+                run_class => 'validation',
+                run_ordinal => 0,
+                validation_record => undef,
+                stage_plan => [construct_plan(delay_seconds => 2)],
+            });
+        };
+        POSIX::_exit(
+            defined($record) && $record->{outcome} eq 'accepted' ? 0 : 1,
+        );
+    }
+    for (1 .. 200) {
+        last if -d $stage_root;
+        sleep(0.01);
+    }
+    ok(-d $stage_root, 'concurrent owner reaches its exact staging identity');
+    like(dies(sub {
+        $class->measure({
+            repository_root => $repo_root,
+            construction => $construction,
+            run_class => 'validation',
+            run_ordinal => 0,
+            validation_record => undef,
+            stage_plan => [construct_plan(delay_seconds => 0)],
+        });
+    }), qr/measurement staging identity is concurrently owned/,
+        'a live owner rejects a second controller without reclamation');
+    ok(-d $stage_root,
+        'concurrent-owner rejection leaves the active tree untouched');
+    waitpid($pid, 0);
+    is($?, 0, 'the original concurrent owner completes normally');
+    ok(!-e $stage_root,
+        'the original owner removes its staging identity');
+
+    make_path($stage_root);
+    my $regular = File::Spec->catfile($stage_root, 'regular.txt');
+    write_raw($regular, "regular\n");
+    my $symlink = File::Spec->catfile($stage_root, 'unsafe-link');
+    symlink('regular.txt', $symlink)
+        or die "cannot create recovery symlink probe: $!";
+    like(dies(sub { validation_probe() }),
+        qr/interrupted measurement staging contains an unsafe entry/,
+        'symlink-bearing orphan rejects before reclamation');
+    ok(-l $symlink && -f $regular,
+        'symlink rejection leaves every ambiguous entry in place');
+    cleanup_stage_fixture($stage_relative);
+
+    make_path($stage_root);
+    my $fifo = File::Spec->catfile($stage_root, 'unsafe-fifo');
+    POSIX::mkfifo($fifo, 0600)
+        or die "cannot create recovery FIFO probe: $!";
+    like(dies(sub { validation_probe() }),
+        qr/interrupted measurement staging contains an unsafe entry/,
+        'special-file orphan rejects before reclamation');
+    ok(-p $fifo,
+        'special-file rejection leaves the ambiguous FIFO in place');
+    cleanup_stage_fixture($stage_relative);
+
+    make_path($stage_root);
+    my $original = File::Spec->catfile($stage_root, 'original.txt');
+    my $hard_link = File::Spec->catfile($stage_root, 'hard-link.txt');
+    write_raw($original, "hard-linked\n");
+    link($original, $hard_link)
+        or die "cannot create recovery hard-link probe: $!";
+    like(dies(sub { validation_probe() }),
+        qr/interrupted measurement staging contains a hard-linked file/,
+        'hard-linked orphan rejects before reclamation');
+    ok(-f $original && -f $hard_link,
+        'hard-link rejection leaves both ambiguous names in place');
+    cleanup_stage_fixture($stage_relative);
+
+    my $lock_path = stage_lock_path($stage_relative);
+    my $lock_target = File::Spec->catfile(
+        dirname($lock_path), 'unsafe-lock-target',
+    );
+    unlink($lock_path)
+        or die "cannot replace recovery lock probe: $!";
+    write_raw($lock_target, "not a lock\n");
+    symlink('unsafe-lock-target', $lock_path)
+        or die "cannot create recovery lock symlink probe: $!";
+    like(dies(sub { validation_probe() }),
+        qr/(?:cannot open measurement stage lock|measurement stage lock identity is invalid)/,
+        'a symlink cannot substitute for the exact lock inode');
+    ok(-l $lock_path && -f $lock_target,
+        'invalid lock identity rejects without touching either path');
+    unlink($lock_path)
+        or die "cannot remove recovery lock symlink probe: $!";
+    unlink($lock_target)
+        or die "cannot remove recovery lock target probe: $!";
 };
 
 subtest 'validation executes correctness without retaining performance' => sub {
@@ -374,6 +506,11 @@ subtest 'guarded sampling, failure cleanup, and publication are exact' => sub {
         $measured->{measurement_identity}, -12,
     );
     cleanup_publication($profile);
+    my $publication_base = repo_path(
+        '.artifacts', 'qualification', 'vial-scale',
+    );
+    my $publication_base_preexisting =
+        -d $publication_base && !-l $publication_base;
     like(dies(sub {
         $class->publish_record({
             repository_root => $repo_root,
@@ -405,8 +542,10 @@ subtest 'guarded sampling, failure cleanup, and publication are exact' => sub {
         'VIAL_SCALE_MEASUREMENT_PUBLICATION_ERROR',
         'atomic publication failure has one stable diagnostic');
     ok(!-e repo_path($rollback->{publication_identity})
-            && !-e repo_path('.artifacts', 'qualification', 'vial-scale'),
-        'publication failure rolls back staging and newly created parents');
+            && ($publication_base_preexisting
+                ? -d $publication_base && !-l $publication_base
+                : !-e $publication_base),
+        'publication failure rolls back only its target and new parents');
     my $published = $class->publish_record({
         repository_root => $repo_root,
         contract_version => 'v1',
@@ -586,6 +725,46 @@ sub cleanup_publication {
         my $path = repo_path(@$parts);
         rmdir $path if -d $path && !-l $path;
     }
+}
+
+sub validation_stage_relative {
+    my ($value) = @_;
+    my ($digest) = $value->{workload_identity}
+        =~ m{\Aworkload/([0-9a-f]{64})\z};
+    die "test construction has no workload digest\n" unless defined $digest;
+    return ".artifacts/tmp/vial-scale/$digest/validation/00";
+}
+
+sub stage_lock_path {
+    my ($stage_relative) = @_;
+    return repo_path(
+        '.artifacts', 'locks', 'vial-scale-measurement',
+        sha256_hex($stage_relative) . '.lock',
+    );
+}
+
+sub cleanup_stage_fixture {
+    my ($relative) = @_;
+    my $path = repo_path($relative);
+    remove_tree($path) if -d $path && !-l $path;
+    my @parts = split m{/}, $relative;
+    pop @parts;
+    while (@parts >= 2) {
+        my $parent = repo_path(@parts);
+        rmdir $parent if -d $parent && !-l $parent;
+        pop @parts;
+    }
+}
+
+sub validation_probe {
+    return $class->measure({
+        repository_root => $repo_root,
+        construction => $construction,
+        run_class => 'validation',
+        run_ordinal => 0,
+        validation_record => undef,
+        stage_plan => [construct_plan(delay_seconds => 0)],
+    });
 }
 
 sub repo_path {

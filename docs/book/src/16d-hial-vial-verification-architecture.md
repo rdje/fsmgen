@@ -3752,7 +3752,7 @@ does not replace or weaken that guard.
 
 Ephemeral work is derived from the repository root below
 `.artifacts/tmp/vial-scale/<workload-id>/<run-class>/<run-ordinal>/` and is
-removed after success, worker exception, rejected output, or timeout.
+removed after success, worker exception, rejected output, or timeout. Before touching that identity, the controller takes a nonblocking exclusive repository-volume lock at `.artifacts/locks/vial-scale-measurement/<identity-sha256>.lock`. A live owner rejects a second controller. An unlocked pre-existing stage is reclaimed only after a recursive census proves one real directory tree of same-volume, single-link regular files; symlinks, special files, hard links, or device changes reject in place. This stable zero-byte coordination identity remains outside ephemeral staging, so process death releases ownership without making recovery depend on a PID or host-local path.
 Publication accepts only an accepted measured record. It writes canonical JSON
 to fresh same-volume staging and atomically renames the complete directory to
 `.artifacts/qualification/vial-scale/v1/<profile-id>/`. Byte-identical

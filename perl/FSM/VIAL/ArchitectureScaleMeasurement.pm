@@ -7,8 +7,11 @@ use bytes ();
 use Carp qw(confess);
 use Config ();
 use Digest::SHA qw(sha256_hex);
-use Errno qw(EAGAIN EWOULDBLOCK);
-use Fcntl qw(F_GETFL F_SETFL O_NONBLOCK);
+use Errno qw(EAGAIN EEXIST EWOULDBLOCK);
+use Fcntl qw(
+    FD_CLOEXEC F_GETFD F_GETFL F_SETFD F_SETFL LOCK_EX LOCK_NB
+    O_CREAT O_NOFOLLOW O_NONBLOCK O_RDWR
+);
 use File::Basename qw(dirname);
 use File::Path qw(remove_tree);
 use File::Spec;
@@ -28,6 +31,7 @@ my $IMPLEMENTATION = 'fsmgen.perl_process_tree_sampler.v1';
 my $SAMPLER_INTERVAL_NS = 250_000_000;
 my $MAX_WORKER_RESULT_BYTES = 1_048_576;
 my $STAGING_BASE = '.artifacts/tmp/vial-scale';
+my $LOCK_BASE = '.artifacts/locks/vial-scale-measurement';
 my $PUBLICATION_BASE = '.artifacts/qualification/vial-scale';
 my @STAGES = qw(
     construct parse_validate bridge bind_plan emit compile_analyze elaborate
@@ -235,6 +239,14 @@ sub _measure($raw) {
         '/', $STAGING_BASE, $digest, $run_class,
         sprintf('%02d', $run_ordinal),
     );
+    my $stage_lock = _acquire_stage_lock(
+        $repo_root, $root_device, $stage_rel,
+    );
+    my $recovered = _recover_interrupted_stage(
+        $repo_root, $root_device, $stage_rel,
+    );
+    print STDERR "vial-scale-measurement: recovered $stage_rel\n"
+        if $recovered;
     my ($stage_abs, $created) = _create_owned_stage(
         $repo_root, $root_device, $stage_rel,
     );
@@ -1893,6 +1905,130 @@ sub _measurement_identity($record) {
     my $projection = _clone($record);
     $projection->{measurement_identity} = undef;
     return 'measurement/' . sha256_hex(_canonical_json($projection));
+}
+
+sub _acquire_stage_lock($repo_root, $root_device, $stage_rel) {
+    confess "measurement lock staging identity is unsafe\n"
+        unless _safe_relative_path($stage_rel)
+            && $stage_rel =~ m{\A\Q$STAGING_BASE\E/};
+    my $lock_rel = join(
+        '/', $LOCK_BASE, sha256_hex($stage_rel) . '.lock',
+    );
+    my $lock_abs = File::Spec->catfile(
+        $repo_root, split m{/}, $lock_rel,
+    );
+    _ensure_lock_parent(
+        $repo_root, $root_device, dirname($lock_abs), dirname($lock_rel),
+    );
+
+    sysopen(my $lock, $lock_abs, O_RDWR | O_CREAT | O_NOFOLLOW, 0600)
+        or confess "cannot open measurement stage lock\n";
+    my @path_stat = lstat($lock_abs);
+    my @handle_stat = stat($lock);
+    if (!@path_stat || !@handle_stat
+            || -l $lock_abs || !-f $lock
+            || $path_stat[0] != $root_device
+            || $handle_stat[0] != $root_device
+            || $path_stat[0] != $handle_stat[0]
+            || $path_stat[1] != $handle_stat[1]
+            || $handle_stat[3] != 1
+            || $handle_stat[4] != $>
+            || $handle_stat[7] != 0) {
+        close $lock;
+        confess "measurement stage lock identity is invalid\n";
+    }
+    my $descriptor_flags = fcntl($lock, F_GETFD, 0);
+    if (!defined($descriptor_flags)
+            || !fcntl(
+                $lock, F_SETFD, $descriptor_flags | FD_CLOEXEC,
+            )) {
+        close $lock;
+        confess "cannot secure measurement stage lock descriptor\n";
+    }
+    if (!flock($lock, LOCK_EX | LOCK_NB)) {
+        my $contended = $! == EAGAIN || $! == EWOULDBLOCK;
+        close $lock;
+        confess $contended
+            ? "measurement staging identity is concurrently owned\n"
+            : "cannot acquire measurement stage lock\n";
+    }
+    return $lock;
+}
+
+sub _ensure_lock_parent(
+    $repo_root, $root_device, $parent_abs, $parent_rel,
+) {
+    confess "measurement lock parent identity is unsafe\n"
+        unless _safe_relative_path($parent_rel)
+            && $parent_rel =~ m{\A\Q$LOCK_BASE\E(?:/|\z)};
+    my $path = $repo_root;
+    for my $part (split m{/}, $parent_rel) {
+        $path = File::Spec->catdir($path, $part);
+        if (!-e $path && !-l $path) {
+            mkdir($path) or do {
+                confess "cannot create measurement lock directory\n"
+                    unless $! == EEXIST;
+            };
+        }
+        my @stat = lstat($path);
+        confess "measurement lock directory is not a real directory\n"
+            unless @stat && !-l _ && -d _;
+        confess "measurement lock directory crossed repository volume\n"
+            unless $stat[0] == $root_device;
+    }
+    confess "measurement lock parent mismatch\n" unless $path eq $parent_abs;
+    return 1;
+}
+
+sub _recover_interrupted_stage($repo_root, $root_device, $stage_rel) {
+    my $stage_abs = File::Spec->catdir(
+        $repo_root, split m{/}, $stage_rel,
+    );
+    return 0 unless -e $stage_abs || -l $stage_abs;
+    _validate_recoverable_stage($stage_abs, $root_device);
+    my $errors;
+    remove_tree($stage_abs, {error => \$errors});
+    confess "cannot reclaim interrupted measurement staging root\n"
+        if $errors && @$errors;
+    confess "interrupted measurement staging root remains after recovery\n"
+        if -e $stage_abs || -l $stage_abs;
+    _prune_recovered_stage_parents($repo_root, dirname($stage_abs));
+    return 1;
+}
+
+sub _validate_recoverable_stage($path, $root_device) {
+    my @stat = lstat($path);
+    confess "interrupted measurement staging root is not a real directory\n"
+        unless @stat && !-l _ && -d _;
+    confess "interrupted measurement staging crossed repository volume\n"
+        unless $stat[0] == $root_device;
+    opendir my $dh, $path
+        or confess "cannot inventory interrupted measurement staging\n";
+    my @entries = sort grep { $_ ne '.' && $_ ne '..' } readdir $dh;
+    closedir $dh
+        or confess "cannot close interrupted measurement staging directory\n";
+    for my $name (@entries) {
+        my $entry = File::Spec->catfile($path, $name);
+        my @entry_stat = lstat($entry);
+        confess "interrupted measurement staging contains an unsafe entry\n"
+            unless @entry_stat && !-l _ && (-d _ || -f _);
+        confess "interrupted measurement staging crossed repository volume\n"
+            unless $entry_stat[0] == $root_device;
+        confess "interrupted measurement staging contains a hard-linked file\n"
+            if -f _ && $entry_stat[3] != 1;
+        _validate_recoverable_stage($entry, $root_device) if -d _;
+    }
+    return 1;
+}
+
+sub _prune_recovered_stage_parents($repo_root, $path) {
+    my $stop = File::Spec->catdir($repo_root, '.artifacts', 'tmp');
+    while ($path eq $stop
+            || index($path, "$stop/") == 0) {
+        last unless rmdir $path;
+        last if $path eq $stop;
+        $path = dirname($path);
+    }
 }
 
 sub _create_owned_stage($repo_root, $root_device, $stage_rel) {

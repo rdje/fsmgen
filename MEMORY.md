@@ -7,9 +7,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.1`.
-- next_action: implement and prove exclusive interruption-safe raw-stage
-  recovery against the retained guard-interruption residue, then resume the
-  exact clean-revision guarded 72-profile capture.
+- next_action: commit the proved interruption-safe raw-stage recovery, then
+  resume the exact clean-revision guarded 72-profile capture from its empty
+  execution/checking publication namespace.
 - in_flight_uncommitted: none.
 - in_flight_background: none
 - blockers: none.

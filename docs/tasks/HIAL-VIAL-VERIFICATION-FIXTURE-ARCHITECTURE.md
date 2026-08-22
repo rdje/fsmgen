@@ -742,8 +742,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Make raw architecture-scale measurement staging safely resumable after controller termination.`
   Acceptance: `Acquire exclusive repository-volume ownership for the exact workload/run-class/ordinal staging identity before inspecting or creating it; reject a concurrently owned identity; reclaim only a fully validated real-directory/regular-file orphan while ownership is held; reject symlink, special-file, cross-volume, or ambiguous residue without deletion; prove ordinary success/failure cleanup and deterministic evidence unchanged; use the retained real guard-interruption residue as a recovery witness; then resume the exact clean-revision 72-profile capture without weakening either guard threshold or manually deleting the orphan.`
-  Verification: `The first clean 3ccc4f5b9 exact capture began at 63.9% host memory and the real guard terminated its process tree at 88.4% while an unrelated pgen release rustc held more than 13 GiB. No profile, family, or complete publication was sealed. The interrupted execution bindings gate sample left the exact controller-owned .artifacts/tmp/vial-scale/<workload-id>/gate_measurement/03 tree; the existing foundation's _create_owned_stage rejects every pre-existing final staging directory and has no concurrency-safe orphan-recovery protocol. The retained tree is the honest recovery fixture; implementation and proof are pending.`
-  Commit: `pending interruption-safe recovery`
+  Verification: `The first clean 3ccc4f5b9 exact capture began at 63.9% host memory and the real guard terminated its process tree at 88.4% while an unrelated pgen release rustc held more than 13 GiB. No profile, family, or complete publication was sealed. The repair gives each exact relative stage identity a stable repository-volume advisory lock, rejects live contention, and reclaims only a recursively validated real-directory/regular-single-link same-volume orphan while ownership is held; symlink, FIFO, hard-link, lock-identity, and cleanup ambiguity fail closed. The retained execution bindings gate/03 tree was recovered by the real adapter—not manually deleted—and the replacement report accepted three samples, zero exclusions, and zero residue. Exact/default foundation, adjacent adapter/publisher, locality, and CI-inventory coverage pass. Required task evidence crosses its reviewed 80% warning milestone, so this same live owner declares measured warning debt plus one bounded ratchet step without changing a ceiling; the clean-revision 72-profile capture remains post-commit.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.1: implement interruption-safe measurement recovery`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4`
   Status: `proposed`
@@ -1639,6 +1639,7 @@ execution/checking or external-tool measurement can begin.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-23` | `.17.3.3.1` interruption-safe raw-stage recovery | honest retained-orphan RED; stable per-stage same-volume advisory lock; close-on-exec descriptor; live-contention rejection; recursive real-directory/regular-single-link/device census; symlink/FIFO/hard-link preservation and rejection; validated orphan reclamation; exact parent pruning and ordinary fresh-run cleanup; real interrupted execution-bindings gate/03 recovery witness; shared qualification-namespace rollback correction; exact/default foundation and adjacent adapter/publisher regressions; project-locality and CI-inventory coverage | `passed`; the retained guard-interrupted tree is reclaimed only by the new protocol, and its replacement adapter report accepts three raw samples with zero exclusions/residue. Exact t/1656 passes Files=1/Tests=5 under the real 88%-host/4,096-MiB-descendant guard; t/1657-t/1660 pass Files=4/Tests=17; t/1527 passes Files=1/Tests=20; t/1183 passes Files=1/Tests=12 in 33 seconds. No execution/checking profile, family, or complete publication exists yet; the exact clean-revision capture remains post-commit.` |
 | `2026-08-23` | `.17.3.3` resumable execution/checking matrix publisher | honest missing-module RED; exact 72-profile producer-owned inventory; closed report-envelope/profile/family/complete schemas; source-free capture provenance without controller-identity substitution; clean-revision and common host/tool/guard admission; immutable same-volume per-profile publication; family/full seal withholding; collision and ambiguous-staging rejection; canonical guarded reload; runner inventory/capture/validate interface; fast adapter/publisher and CI-inventory regression; task/index/Memory/book/fact/rationale/claim/containment continuity | `passed`; the publisher owns 40 execution and 32 checking profiles across four levels, accepts no caller report list, requires the real 88%-host/4,096-MiB-descendant guard for capture and revalidation, preserves every raw sample/exclusion and all four authoritative outcome classes, and leaves exact capture to the next clean-revision slice. Syntax and diff checks pass; t/1659+t/1660 pass Files=2/Tests=8, and t/1183 passes Files=1/Tests=12 in 50 seconds. All 54 book chapters test; the inspected 89-file/19,188,836-byte same-volume render is removed exactly, and the source remains 51,532 lines/2,737,956 bytes under a zero-line/+947-byte authority. Knowledge Map parity is 1,150 facts/6,071 questions/6,238 occurrences/133 shards; claims close 1,468 candidates plus 2,114 current/615 original constants as 879 gates/589 reviewed/zero gaps. No exact profile, family, complete-matrix, performance-budget, support, capacity, reached-boundary, provider, backend, compile, run, trace, or result claim is added.` |
 | `2026-08-23` | `.17.3.3` caller-sealed execution/checking measurement adapter | honest missing-module RED; exact family-authority/report/nonclaim schemas; canonical execution/checking reconstruction; caller-sealed producer handoff; independent construct/parse/bridge/bind-plan payload reruns; validation-before-measurement admission; three/five guarded ordinals; exact parser rejection and preflight stage applicability; source-free outcome without invented workload/controller identity; raw record/exclusion/cleanup preservation; independent report regeneration; hostile caller/report/evidence mutation; forced worker failure; exact guarded and adjacent regression coverage; task/index/Memory/book/fact/claim/containment continuity | `passed`; exact t/1659 passes Files=1/Tests=5 in 252 seconds under the real 88%-host/4,096-MiB-descendant guard, retaining three gate and five qualification records with no exclusions and exact staging cleanup. The six-file focused set passes Files=6/Tests=26 in 61 seconds; CI inventory passes Files=1/Tests=12. The 54-file/51,532-line/2,737,009-byte mdBook tests and its inspected 89-file/19,181,514-byte repository-local render are removed exactly. Task integrity remains three trees/979 nodes; Knowledge Map parity is 1,150 facts/6,070 questions/6,237 occurrences/133 shards; claims close 1,468 candidates plus 2,114 current/615 original constants as 879 gates/589 reviewed/zero gaps. No provider, external tool, backend emission, compile/run/trace/result, public product API, performance-budget, support, capacity, or reached-boundary claim is added. Exact resumable execution/checking matrix publication remains next under `.17.3.3`. |
 | `2026-08-22` | `.17.3.3` execution/checking measurement activation | clean semantic/bridge predecessor `9980fe5c1`; decisions `0055`/`0056`; completed execution/checking producer and oracle boundaries; owned-shape and stage-applicability derivation; unchanged guarded execution foundation/binding-boundary/checking qualification; task/index/Memory/book/fact/claim/containment continuity; task-tree, Knowledge Map, project-locality, relative-path, mdBook, claim, live-document, diff, docs-only staged acceptance, and doctrine gates | `passed`; `.17.3.3` alone is active to add caller-sealed provider-free execution/checking measurement through construct, parse/validate, bridge, and bind/plan. The guarded focused family suite passes Files=3/Tests=11 in 55 seconds. The 54-chapter mdBook test and inspected 89-file/19,167,723-byte repository-local render pass before exact removal; its 54-file source changes by zero lines/30 bytes under a fresh authority with no ceiling increase. Task integrity remains three trees/979 nodes; Knowledge Map parity is 1,150 facts/6,068 questions/6,235 occurrences/133 shards; claim inventory/disposition remains closed at 1,467 candidates plus 2,113 current/615 original constants as 878 derived gates/589 reviewed records/zero gaps. Activation changes no code, test, config, fixture, producer, oracle, sampler, artifact, external process, public API, promoted performance budget, support, capacity, reached-boundary, or product behavior. |
@@ -6377,3 +6378,48 @@ raising an enforcement ceiling.
   document surfaces pass. This activation changes only durable ownership,
   status, retrieval, claim, and containment records; implementation remains
   pending under the new leaf.
+
+## Acceptance Checklist (enforced) — `.17.3.3.1` interruption-safe measurement recovery
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The real 88% host guard terminated the
+  first clean exact matrix process tree during execution-bindings gate sample
+  three. The next exact identity remained a regular tree below
+  `.artifacts/tmp/vial-scale`, while a direct retry reported
+  `measurement staging root already exists at perl/FSM/VIAL/ArchitectureScaleMeasurement.pm line 1910`.
+  The old `_create_owned_stage` could neither distinguish that
+  orphan from a live controller nor recover it, so profile publication
+  resumability stopped below the publisher boundary.
+- [x] **ADDRESSED (verified)** — The common controller now derives a stable
+  SHA-256 lock identity from the exact repository-relative stage, verifies a
+  zero-byte single-link regular lock inode on the repository device and owned
+  by the current process user, marks its descriptor close-on-exec, and takes a
+  nonblocking exclusive advisory lock before inspecting staging. A held lock
+  rejects concurrent reuse. An unlocked tree is removed only after recursively
+  proving real directories plus same-volume, single-linked regular files;
+  symlinks, FIFOs, hard links, device drift, and malformed lock state reject in
+  place. Empty owned parents are pruned before normal fresh creation and exact
+  cleanup. The retained real gate/03 tree was recovered through this code path,
+  not manually deleted; its replacement report accepted all three samples with
+  zero exclusions and residue. Publication rollback now preserves a legitimate
+  pre-existing shared qualification namespace while removing its exact failed
+  target and only newly created parents.
+- [x] **NO REGRESSION** — The honest public-behavior RED reports the former
+  `measurement staging root already exists` diagnostic. Default and exact
+  guarded t/1656 now report `All tests successful` at `Files=1, Tests=5`,
+  including live contention and unsafe symlink/FIFO/hard-link controls.
+  Adjacent t/1657-t/1660 pass `Files=4, Tests=17`; relative-path/locality pass
+  `Files=2, Tests=22`; CI inventory passes `Files=1, Tests=12` in 33 seconds.
+  All 54 mdBook chapters test; the inspected 89-file/19,194,613-byte same-
+  volume render documents the recovery contract and is removed exactly. The
+  maintained book remains 54 files/51,532 lines/2,738,716 bytes under a zero-
+  file/zero-line/+605-byte authority with no ceiling increase. Task integrity
+  remains three trees/980 nodes; Knowledge Map parity is 1,150 facts/6,071
+  questions/6,238 occurrences/133 shards; claims close 1,468 candidates as 879
+  derived gates/589 reviewed records/zero gaps; all 22 live-document surfaces
+  pass. The `task_evidence` surface honestly enters `warning_debt` at 80.3% of
+  its line target from the exact HEAD baseline and retains one bounded ratchet
+  step under unchanged ceilings. Scale staging is absent. Stable
+  repository-local lock identities remain
+  outside ephemeral staging and are not measurement evidence. No profile,
+  family, complete-matrix, provider, backend, compile/run/trace/result,
+  performance-budget, support, capacity, or reached-boundary claim is added.
