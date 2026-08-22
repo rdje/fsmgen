@@ -163,8 +163,10 @@ revision below the real guard; publishes each complete profile set atomically
 with every raw record; resumes only byte-valid same-revision evidence; rejects
 collisions and ambiguous crash staging; and seals family/full manifests only
 after exact child censuses share one Git/host/tool/guard identity. The runner
-is implemented, but the clean guarded 108-profile capture remains active before
-`.17.3.2` can close.
+uses the adapter's exact `gate_measurement`, `qualification_measurement`, and
+`validation` mode vocabulary in inventory and reports, avoiding a second
+translation contract. It is implemented, but the clean guarded 108-profile
+capture remains active before `.17.3.2` can close.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

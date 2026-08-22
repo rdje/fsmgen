@@ -49,13 +49,16 @@ my %AXES = (
 my @LEVELS = qw(
     gate_candidate_v1 qualification_candidate_v1 limit_v1 over_limit_v1
 );
-my %MODE = (
-    gate_candidate_v1 => 'gate',
-    qualification_candidate_v1 => 'qualification',
+my %REPORT_MODE_BY_LEVEL = (
+    gate_candidate_v1 => 'gate_measurement',
+    qualification_candidate_v1 => 'qualification_measurement',
     limit_v1 => 'validation',
     over_limit_v1 => 'validation',
 );
-my %EXPECTED_SAMPLES = (gate => 3, qualification => 5);
+my %EXPECTED_SAMPLES_BY_MODE = (
+    gate_measurement => 3,
+    qualification_measurement => 5,
+);
 my @INVENTORY_KEYS = qw(profile_id family primary_axis level mode);
 my @MATRIX_KEYS = qw(
     schema schema_version matrix_identity family profile_count
@@ -304,7 +307,7 @@ sub _inventory() {
                     family => $family,
                     primary_axis => $axis,
                     level => $level,
-                    mode => $MODE{$level},
+                    mode => $REPORT_MODE_BY_LEVEL{$level},
                 };
             }
         }
@@ -410,7 +413,8 @@ sub _require_acceptable_profile_report($profile, $report) {
         confess "accepted family measurement is inapplicable\n"
             unless $applicable;
         confess "accepted family measurement has incomplete raw samples\n"
-            unless $measured == $EXPECTED_SAMPLES{$profile->{mode}};
+            unless $measured
+                == $EXPECTED_SAMPLES_BY_MODE{$profile->{mode}};
         confess "accepted family measurement has the wrong outcome\n"
             unless $report->{outcome} eq 'accepted';
     }
@@ -613,7 +617,6 @@ sub _publish_json($raw) {
     my $target_rel = join('/',
         $PUBLICATION_BASE, $raw->{profile_id},
     );
-    my $artifact_rel = "$target_rel/$raw->{filename}";
     my $target_abs = _safe_destination(
         $raw->{repository_root}, $raw->{root_device}, $target_rel,
     );

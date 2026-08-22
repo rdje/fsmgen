@@ -34,10 +34,10 @@ subtest 'closed inventory owns every selected measurable and boundary profile' =
             qr/\A[a-z][a-z0-9_.-]*\z/,
             'profile ID is safe for repository-local publication');
         is($profile->{mode},
-            $profile->{level} eq 'gate_candidate_v1' ? 'gate'
+            $profile->{level} eq 'gate_candidate_v1' ? 'gate_measurement'
                 : $profile->{level} eq 'qualification_candidate_v1'
-                    ? 'qualification' : 'validation',
-            'profile mode follows the frozen repetition contract');
+                    ? 'qualification_measurement' : 'validation',
+            'profile mode exactly matches the sealed adapter report contract');
     }
     is_deeply(\%family, {
         semantic_catalog_v1 => 56,
@@ -137,7 +137,7 @@ subtest 'guarded capture seals every raw report and dominant boundary' => sub {
                 'boundary profile retains correctness without timing');
         }
         elsif ($profile->{measurement_applicable}) {
-            my $expected = $profile->{mode} eq 'gate' ? 3 : 5;
+            my $expected = $profile->{mode} eq 'gate_measurement' ? 3 : 5;
             is($profile->{measured_samples}, $expected,
                 'applicable profile retains every required raw sample');
         }

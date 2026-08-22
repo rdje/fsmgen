@@ -3847,8 +3847,8 @@ semantic and thirteen bridge axes: 108 sets, never a caller list. Accepted
 gate/qualification sets retain three/five samples; limits and earlier dominant
 rejections retain correctness without timing. The checked reference is their
 construction anchor, not a separate measurement. Long work resumes only at a complete-profile boundary.
-Each set atomically publishes validation, every raw record/exclusion, identities, oracles, and cleanup
-to `.artifacts/qualification/vial-scale/v1/<profile-id>/measurement-set.json`.
+Inventory and published report modes use the adapter's exact sealed vocabulary: `gate_measurement`, `qualification_measurement`, or `validation`; no shorthand translation sits between selection, capture, and revalidation.
+Each set atomically publishes validation, every raw record/exclusion, identities, oracles, and cleanup to `.artifacts/qualification/vial-scale/v1/<profile-id>/measurement-set.json`.
 
 A retry revalidates immutable bytes at the same clean Git and common host/tool/guard
 identity. Byte-equal output is unchanged, different bytes collide, and ambiguous

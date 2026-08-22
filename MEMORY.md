@@ -7,9 +7,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2`.
-- next_action: commit the resumable semantic/bridge matrix publisher, then run
-  its complete clean-revision guarded capture and retain all 108 profile sets
-  plus family/complete dominance manifests.
+- next_action: align matrix inventory modes with the adapter's sealed report
+  vocabulary, commit the focused fix, then resume the clean guarded 108-profile
+  capture and retain both family manifests plus the complete dominance seal.
 - in_flight_uncommitted: none.
 - in_flight_background: none
 - blockers: none.
