@@ -3777,23 +3777,23 @@ HIAL route, manifest, mapping, binding, rerun, earliest-failure, and cleanup
 oracles. A measurement adapter may not accept caller-created IR, manifests,
 count overrides, or precomputed reports as substitutes for those authorities.
 
-`FSM::VIAL::ArchitectureScaleSemanticBridgeMeasurement` exposes four operations:
-canonical construction, correctness-only validation, guarded gate or
-qualification measurement, and independent report validation. Each stage
-computes its own payload twice before the common controller accepts it. Only
-`construct` repeats canonical family reconstruction; later stages consume that
-sealed construction so their measurements do not include construction cost.
-The semantic family owns `construct` and
-`parse_validate`; the bridge family additionally owns `bridge`. Every later
-stage is explicitly `not_run`.
+`FSM::VIAL::ArchitectureScaleSemanticBridgeMeasurement` exposes four operations: canonical construction, correctness-only validation,
+guarded gate or qualification measurement, and independent report validation. Each stage computes its own payload twice before the common
+controller accepts it. Only `construct` repeats canonical family reconstruction; later stages consume that sealed construction so their
+measurements do not include construction cost. The semantic family owns `construct` and `parse_validate`; the bridge family additionally owns `bridge`. Every later stage is explicitly `not_run`.
 
-Canonical family evaluation JSON is retained byte-for-byte as a stage-owned,
-content-addressed artifact. Its copy inside the generic measurement oracle is a
-closed evidence projection: any family diagnostic key named `path` becomes
-`semantic_path`, with a collision check if both spellings occur. This preserves
-the semantic pointer while keeping the foundation's rejection of absolute
-machine-local paths strict. Report validation independently regenerates both
-the original artifact identity and the projected evidence.
+Canonical family evaluation JSON is retained byte-for-byte as a stage-owned, content-addressed artifact. Its copy inside the generic
+measurement oracle is a closed evidence projection: any family diagnostic key named `path` becomes `semantic_path`, with a collision check
+if both spellings occur. This preserves the semantic pointer while keeping the foundation's rejection of absolute machine-local paths strict. Report validation independently regenerates both the original artifact identity and the projected evidence.
+
+Rejected stages remain first-class evidence rather than being re-executed as though they succeeded. The adapter verifies their command/input
+identity, requires zero output, semantic, oracle, and artifact evidence, requires later family stages to remain explicitly not-run, and
+preserves the controller's original stage diagnostic. Successfully completed stages still undergo full canonical rederivation.
+
+The exact combined-source-byte fixture remains ordinary, referenced VIAL declarations under the unchanged stage timeout. Its parser validates
+its required Unicode encoding before using a byte-oriented chunk cursor only for proven-ASCII source; non-ASCII input retains Unicode-scalar
+columns and source-byte offsets. Wide four-state value/known/Z masks are normalized linearly. These are semantic-preserving implementation repairs, not padding, a
+larger timeout, a promoted performance budget, or a capacity/reached-boundary claim.
 
 A correctness-only reference check can be invoked directly:
 

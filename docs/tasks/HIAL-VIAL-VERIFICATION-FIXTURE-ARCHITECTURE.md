@@ -726,9 +726,9 @@ decomposes the architecture needed to move beyond that bounded foundation.
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2.1`
   Status: `active`
   Goal: `Preserve truthful failed-stage evidence and make the exact semantic byte boundary complete inside the selected safety ceiling.`
-  Acceptance: `Keep decision 0055's ordinary referenced-declaration workload and decision 0056's 120-second parse_validate ceiling unchanged. Replace the parser lexer's per-character UTF-8 re-encoding hot path with bounded chunk advancement that preserves token values, byte/line/column spans, diagnostics, source styles, semantic identities, and non-ASCII behavior. Make adapter validation rederive only successfully completed family stages and preserve foundation-owned rejected/not-run evidence without masking its original diagnostic. Add focused ASCII/Unicode/span/diagnostic and rejected-stage mutations; prove the exact source_bytes_combined/limit_v1 validation accepts under the real RAM guard with canonical family evidence and exact cleanup; retain no invalid publication and add no timeout, fixture, public-API, support, performance-budget, capacity, or reached-boundary change.`
-  Verification: `At clean commit 363165d94, the 108-profile watcher published semantic profiles 1-54, then profile 55 failed with family stage 'parse_validate' output counts changed. A direct guarded foundation reproduction proves the underlying record is stage_failure with diagnostic VIAL_SCALE_MEASUREMENT_TIMEOUT, semantic path /stage_measurements/parse_validate/timeout, architecture_scale_outer authority, effective_seconds=120, timed_out=true, signal=15, zero failed-stage outputs, successful cleanup, and no later stages run. Independent guarded component timing measures source_bytes_combined/limit_v1 construction at 7.907177 seconds and one canonical evaluation at 167.695645 seconds: check_source 60.160775, second parse_source 60.330803, IR/report comparison/integrity/projection together below 1.5 seconds, and duplicate canonical formatting 44.161330 seconds. A no-file in-memory exact-codepoint-width probe improves evaluation only to 115.123453 seconds and is rejected as inadequate margin. Implementation and final verification are pending.`
-  Commit: `pending`
+  Acceptance: `Keep decision 0055's ordinary referenced-declaration workload and decision 0056's 120-second parse_validate ceiling unchanged. Replace the parser lexer's per-character UTF-8 re-encoding hot path with bounded chunk advancement and replace repeated wide four-state arbitrary-precision conversions with exact linear mask/hex normalization, preserving token values, byte/line/column spans, diagnostics, source styles, semantic identities, values, masks, widths, and non-ASCII behavior. Make adapter validation rederive only successfully completed family stages and preserve foundation-owned rejected/not-run evidence without masking its original diagnostic. Add focused ASCII/Unicode/span/diagnostic/value-mask and rejected-stage mutations; prove the exact source_bytes_combined/limit_v1 validation accepts under the real RAM guard with canonical family evidence and exact cleanup; retain no invalid publication and add no timeout, fixture, public-API, support, performance-budget, capacity, or reached-boundary change.`
+  Verification: `At clean commit 363165d94, the 108-profile watcher published semantic profiles 1-54, then profile 55 failed with family stage 'parse_validate' output counts changed. A direct guarded foundation reproduction proves the underlying record is stage_failure with diagnostic VIAL_SCALE_MEASUREMENT_TIMEOUT, semantic path /stage_measurements/parse_validate/timeout, architecture_scale_outer authority, effective_seconds=120, timed_out=true, signal=15, zero failed-stage outputs, successful cleanup, and no later stages run. Independent guarded component timing measures source_bytes_combined/limit_v1 construction at 7.907177 seconds and one canonical evaluation at 167.695645 seconds: check_source 60.160775, second parse_source 60.330803, IR/report comparison/integrity/projection together below 1.5 seconds, and duplicate canonical formatting 44.161330 seconds. A no-file in-memory exact-codepoint-width probe improves evaluation only to 115.123453 seconds and is rejected as inadequate margin. The owned implementation consumes whitespace/comments/atoms in bounded lexer runs, converts only proven-ASCII decoded input to constant-time byte cursors while retaining the Unicode path, and replaces three wide Math::BigInt binary conversions with linear value/known/Z translations plus binary pack/unpack. Canonical evaluation falls to 8.113775 seconds from the independently rederived 167.695645-second baseline without changing output; the full guarded adapter validates source_bytes_combined/limit_v1 in 42.596013 seconds as accepted_validation with a successful non-timeout parse_validate process, one 4,514-byte artifact, and exact cleanup. Adapter validation now rederives successful stages but preserves rejected-stage zero evidence, later prior_stage_failed state, and the original foundation diagnostic; an injected worker failure proves the path. Syntax passes; focused impacted coverage passes Files=6/Tests=39, core VIAL passes Files=6/Tests=46, the full 70-profile guarded semantic proof passes Files=1/Tests=4 in 83 seconds, and the exact guarded adapter proof passes Files=1/Tests=6 in 7 seconds. Documentation and doctrine closure is complete; the clean-revision profile proof and exact old-revision incomplete-publication cleanup remain the post-commit frontier.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2.1: repair truthful semantic boundary measurement`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3`
   Status: `proposed`
@@ -1631,6 +1631,7 @@ execution/checking or external-tool measurement can begin.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-22` | `.17.3.2.1` truthful boundary measurement implementation | bounded-run ASCII lexer with retained Unicode cursor path; linear four-state value/known/Z normalization; successful-stage rederivation plus truthful rejected/not-run validation; injected worker-failure mutation; exact canonical evaluator and guarded profile-55 validation; focused impacted/core/exact family suites; task/index/Memory/book/fact/rationale/claim/containment continuity; task-tree, Knowledge Map, relative-path, mdBook, claim, live-document, diff, staged acceptance, and doctrine gates | `passed`; canonical profile-55 evaluation is 8.113775 seconds and its complete guarded adapter validation is accepted in 42.596013 seconds under the unchanged 120-second ceiling, with one canonical artifact and exact cleanup. Failed controller evidence is preserved rather than masked. This implementation commit changes no fixture, timeout, public API, provider/tool execution, performance budget, support, capacity, or reached-boundary claim; clean-revision proof and old incomplete-publication removal remain post-commit. |
 | `2026-08-22` | `.17.3.2.1` truthful boundary measurement diagnosis/ownership | second clean guarded t/1658 capture at `363165d94`; 54-file incomplete-publication census and combined manifest digest; direct guarded foundation diagnostic; per-stage timeout/process/output/cleanup facts; guarded canonical evaluator and component timings; in-memory exact-codepoint-width falsification probe; decisions 0055/0056 and parser/adapter code trace | `active`; the fixed 120-second ceiling and no-padding fixture remain authoritative. The repair must preserve truthful failure evidence and eliminate the lexer hot path with semantic/span/Unicode parity; no invalid profile, family manifest, complete seal, support, capacity, or reached-boundary claim exists. |
 | `2026-08-22` | `.17.3.2` exact matrix/adapter mode alignment | first clean guarded t/1658 capture at `b3a03d285`; exact pre-publication failure locus; adapter-level/report vocabulary audit; empty qualification/staging census; exact inventory vocabulary; guarded first-profile admission; focused syntax/default/adjacent coverage; continuity and doctrine gates | `passed`; capture had rejected `gate` versus sealed `gate_measurement` before publishing any profile. The inventory now uses the adapter's exact vocabulary, and the guarded first semantic profile admits all three raw gate samples. The clean 108-profile capture remains the active frontier. |
 | `2026-08-22` | `.17.3.2` resumable semantic/bridge matrix publication implementation | honest missing-module RED; immutable 108-profile/four-level/fourteen-semantic/thirteen-bridge partition; clean-revision and active-guard admission; exact per-profile raw-report schema; same-volume atomic publication; byte-identical idempotence; collision and ambiguous-crash fail-closed boundaries; profile-level resume; family and complete census seals; common Git/host/tool/guard identity; dominance summaries; caller injection rejection; repository-root-derived CLI; focused/default/adjacent tests; isolated publication lifecycle probe; task/index/Memory/book/fact/rationale continuity | `passed`; the publisher implementation is complete and `.17.3.2` remains active for the clean guarded 108-profile capture. No matrix-completion, reached-boundary, external-tool, budget, support, or capacity claim is added. |
@@ -6134,21 +6135,42 @@ raising an enforcement ceiling.
 
 ## Acceptance Checklist (enforced) — `.17.3.2.1` truthful boundary measurement repair
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — The clean guarded matrix at commit
+- [x] **ROOT CAUSE (WHY + WHERE; reverified for implementation)** — The clean guarded matrix at commit
   `363165d94` stopped on semantic profile 55. The common controller correctly
   recorded `VIAL_SCALE_MEASUREMENT_TIMEOUT`, `timed_out=true`, signal 15, and
   zero `parse_validate` outputs after the fixed 120-second ceiling; adapter
   `_validate_record_family_evidence` then masked that record by rederiving and
-  demanding a successful stage payload. Guarded timing independently locates
-  60.16- and 60.33-second full parser passes plus 44.16 seconds of formatter
-  reruns. `FSM::VIAL::Parser::_advance` calls `Encode::encode` for every
-  decoded character, including every ASCII bit in the valid 16 MiB workload.
-- [ ] **ADDRESSED (pending)** — Replace the lexer hot path with exact bounded
-  chunk advancement, preserve all byte/line/column and Unicode semantics, and
-  make adapter validation preserve rejected/not-run foundation evidence while
-  rederiving every successfully completed family stage.
-- [ ] **NO REGRESSION (pending)** — Require focused parser span/diagnostic and
-  semantic/adapter mutation suites, the unchanged canonical family suites,
-  guarded exact profile-55 acceptance below the unchanged timeout, exact
-  cleanup/publication censuses, mdBook/current-truth sync, and all staged
-  acceptance/doctrine gates before this leaf can close.
+  demanding a successful stage payload. `git log -S'_validate_record_family_evidence'`
+  identifies adapter-introduction commit `ae6f346ec`. Guarded timing independently locates
+  two approximately 60-second parser/semantic passes plus 44 seconds of format
+  reruns. The parser performs costly Unicode cursor bookkeeping on proven-
+  ASCII source, and `SemanticBuilder::_binary_hex` sends three 4,096-bit masks
+  per referenced declaration through `Math::BigInt`; these repeated canonical
+  costs exceed the worker envelope when the adapter reruns its payload.
+- [x] **ADDRESSED (verified)** — The lexer now consumes bounded runs and uses
+  byte cursors only after UTF-8 validation proves ASCII, while non-ASCII retains
+  Unicode-scalar columns and UTF-8 byte offsets. Four-state value/known/Z masks
+  use exact linear translations and binary pack/unpack. Adapter validation
+  fully rederives successful stages but validates rejected/not-run stages as
+  zero-output failure evidence tied to the original foundation diagnostic.
+- [x] **NO REGRESSION** — module and watcher syntax pass. Focused parser,
+  semantic, adapter, bridge, and family coverage reports `Files=6, Tests=39`;
+  the broader core VIAL chain reports `Files=6, Tests=46`; the guarded exact
+  70-profile semantic proof reports `Files=1, Tests=4` in 83 seconds; and the
+  guarded exact adapter proof reports `Files=1, Tests=6` in 7 seconds. Direct
+  guarded profile-55 validation accepts in 42.596013 seconds below the
+  unchanged 120-second ceiling with one 4,514-byte artifact, no timeout or
+  signal, and exact staging cleanup. Task integrity is three trees/979 nodes;
+  Knowledge Map parity covers 1,150 facts/6,068 questions/6,235 occurrences/
+  133 shards. The claim join closes all 1,466 candidates plus 2,112 current/
+  615 original constants as 877 derived gates/589 reviewed records/zero gaps.
+  Documentation audits pass `Files=3/Tests=308`; all 54 mdBook chapters test,
+  and its inspected 89-file/19,167,192-byte repository-local render is removed
+  exactly. The maintained book remains 54 files/51,532 lines/2,735,155 bytes:
+  zero lines/+937 bytes under exact aggregate authority, with no ceiling
+  increase. Rationale-ledger reconstruction closes 2,878 entries; live-
+  document containment and diff checks pass. Staged implementation acceptance
+  and final doctrines close below. The old clean-revision incomplete
+  publication remains exactly censused and is removed only after this commit;
+  no invalid profile, timeout/fixture/API/budget, provider/tool execution,
+  support, capacity, reached-boundary, or product-behavior claim is added.

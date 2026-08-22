@@ -640,3 +640,25 @@ delete. Family manifests are withheld until every owned profile validates;
 the complete manifest is withheld until both family manifests share the same
 identity. This makes interruption recovery cheap without weakening raw-sample,
 earliest-cap, or no-partial-completion truth.
+
+## 2026-08-22: Boundary measurement repairs canonical work, not safety contracts
+
+An exact-limit workload that exceeds its measurement timeout is not permission
+to enlarge the timeout or replace meaningful source with padding. The first
+semantic combined-byte boundary exposed two independent problems: generic
+adapter validation re-executed a rejected stage and masked the controller's
+timeout diagnostic, while valid wide four-state declarations took a quadratic-
+feeling path through per-character lexer bookkeeping and repeated arbitrary-
+precision binary-to-hex conversion.
+
+Failed family stages are now validated as failed evidence: command and input
+identity remain exact, outputs/oracles/artifacts must remain absent, later
+family stages must be explicitly `prior_stage_failed`, and the original
+foundation diagnostic remains authoritative. Successfully completed stages
+still undergo full canonical rederivation. The parser validates UTF-8 first,
+then uses byte-oriented chunk cursors only for proven-ASCII input; non-ASCII
+  input retains Unicode-scalar columns and source-byte offsets. Four-state value,
+known, and Z masks use linear transliteration plus binary pack/unpack instead
+of three `Math::BigInt` conversions. This preserves the ordinary referenced-
+declaration fixture, semantic identities, source spans, and the fixed safety
+ceiling while removing implementation overhead at its owners.

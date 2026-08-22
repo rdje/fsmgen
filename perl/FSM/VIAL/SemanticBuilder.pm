@@ -1764,12 +1764,10 @@ sub _scalar_bounds {
 
 sub _four_state_value {
     my ($digits, $signed) = @_;
-    my ($value_bits, $known_mask, $z_mask) = ('', '', '');
-    for my $char (split //, $digits) {
-        $value_bits .= $char eq '1' ? '1' : '0';
-        $known_mask .= ($char eq '0' || $char eq '1') ? '1' : '0';
-        $z_mask .= $char eq 'z' ? '1' : '0';
-    }
+    my ($value_bits, $known_mask, $z_mask) = ($digits, $digits, $digits);
+    $value_bits =~ tr/01xz/0100/;
+    $known_mask =~ tr/01xz/1100/;
+    $z_mask =~ tr/01xz/0001/;
     my $width = length($digits);
     return {
         kind => 'logic_vector', width => $width, signed => $signed ? 1 : 0,
@@ -1781,11 +1779,9 @@ sub _four_state_value {
 
 sub _binary_hex {
     my ($bits, $width) = @_;
-    my $hex = Math::BigInt->from_bin("0b$bits")->as_hex;
-    $hex =~ s/\A0x//;
-    $hex = lc($hex);
     my $digits = int(($width + 3) / 4);
-    return ('0' x ($digits - length($hex))) . $hex;
+    my $padded = ('0' x ($digits * 4 - $width)) . $bits;
+    return substr(unpack('H*', pack('B*', $padded)), 0, $digits);
 }
 
 sub _bigint_binary {

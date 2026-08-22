@@ -319,30 +319,46 @@ sub _lex_and_parse {
         );
     }
 
-    my @chars = split //, $decoded;
+    # VIAL syntax and generated scale fixtures are normally ASCII. Keeping an
+    # all-ASCII source byte-oriented makes regex cursor updates constant-time;
+    # non-ASCII sources remain decoded so columns continue to count Unicode
+    # scalar values while byte offsets use their UTF-8 encoding.
+    utf8::downgrade($decoded, 1) unless $decoded =~ /[^\x00-\x7f]/;
+
+    my $character_length = length($decoded);
     my @tokens;
     my ($index, $byte, $line, $column) = (0, 0, 1, 1);
 
-    while ($index < @chars) {
-        my $char = $chars[$index];
+    while ($index < $character_length) {
+        my $char = substr($decoded, $index, 1);
         if ($char eq ' ' || $char eq "\t" || $char eq "\f") {
-            _advance(\@chars, \$index, \$byte, \$line, \$column);
+            pos($decoded) = $index;
+            $decoded =~ /\G([ \t\f]+)/gc
+                or die "internal VIAL lexer whitespace scan failed\n";
+            my $run = $1;
+            $index = pos($decoded);
+            $byte += length(encode('UTF-8', $run));
+            $column += length($run);
             next;
         }
         if ($char eq "\n" || $char eq "\r") {
-            _advance_newline(\@chars, \$index, \$byte, \$line, \$column);
+            _advance_newline($decoded, \$index, \$byte, \$line, \$column);
             next;
         }
         if ($char eq ';') {
-            while ($index < @chars && $chars[$index] ne "\n" && $chars[$index] ne "\r") {
-                _advance(\@chars, \$index, \$byte, \$line, \$column);
-            }
+            pos($decoded) = $index;
+            $decoded =~ /\G([^\r\n]*)/gc
+                or die "internal VIAL lexer comment scan failed\n";
+            my $run = $1;
+            $index = pos($decoded);
+            $byte += length(encode('UTF-8', $run));
+            $column += length($run);
             next;
         }
 
         my ($start_byte, $start_line, $start_column) = ($byte, $line, $column);
         if ($char eq '(' || $char eq ')') {
-            _advance(\@chars, \$index, \$byte, \$line, \$column);
+            _advance($decoded, \$index, \$byte, \$line, \$column);
             push @tokens, {
                 kind => $char eq '(' ? 'open' : 'close',
                 value => $char,
@@ -356,10 +372,10 @@ sub _lex_and_parse {
 
         if ($char eq '"') {
             my $raw = '"';
-            _advance(\@chars, \$index, \$byte, \$line, \$column);
+            _advance($decoded, \$index, \$byte, \$line, \$column);
             my $closed = 0;
-            while ($index < @chars) {
-                my $current = $chars[$index];
+            while ($index < $character_length) {
+                my $current = substr($decoded, $index, 1);
                 if ($current eq "\n" || $current eq "\r") {
                     _throw(
                         'VIAL_LEX_ERROR', 'lex', 'string literal crosses a line ending',
@@ -367,23 +383,23 @@ sub _lex_and_parse {
                     );
                 }
                 $raw .= $current;
-                _advance(\@chars, \$index, \$byte, \$line, \$column);
+                _advance($decoded, \$index, \$byte, \$line, \$column);
                 if ($current eq '"') {
                     $closed = 1;
                     last;
                 }
                 if ($current eq '\\') {
-                    if ($index >= @chars) {
+                    if ($index >= $character_length) {
                         last;
                     }
-                    my $escaped = $chars[$index];
+                    my $escaped = substr($decoded, $index, 1);
                     $raw .= $escaped;
-                    _advance(\@chars, \$index, \$byte, \$line, \$column);
+                    _advance($decoded, \$index, \$byte, \$line, \$column);
                     if ($escaped eq 'u') {
                         for (1 .. 4) {
-                            last if $index >= @chars;
-                            $raw .= $chars[$index];
-                            _advance(\@chars, \$index, \$byte, \$line, \$column);
+                            last if $index >= $character_length;
+                            $raw .= substr($decoded, $index, 1);
+                            _advance($decoded, \$index, \$byte, \$line, \$column);
                         }
                     }
                 }
@@ -405,15 +421,13 @@ sub _lex_and_parse {
             next;
         }
 
-        my $raw = '';
-        while ($index < @chars) {
-            my $current = $chars[$index];
-            last if $current eq '(' || $current eq ')' || $current eq ';';
-            last if $current eq ' ' || $current eq "\t" || $current eq "\f"
-                || $current eq "\n" || $current eq "\r";
-            $raw .= $current;
-            _advance(\@chars, \$index, \$byte, \$line, \$column);
-        }
+        pos($decoded) = $index;
+        $decoded =~ /\G([^(); \t\f\r\n]+)/gc
+            or die "internal VIAL lexer atom scan failed\n";
+        my $raw = $1;
+        $index = pos($decoded);
+        $byte += length(encode('UTF-8', $raw));
+        $column += length($raw);
         my $span = _span(
             $source_name, $start_byte, $byte, $start_line, $start_column,
             $line, $column - 1,
@@ -550,20 +564,22 @@ sub _safe_diagnostic_source_name {
 }
 
 sub _advance {
-    my ($chars, $index_ref, $byte_ref, $line_ref, $column_ref) = @_;
-    my $char = $chars->[$$index_ref];
+    my ($decoded, $index_ref, $byte_ref, $line_ref, $column_ref) = @_;
+    my $char = substr($decoded, $$index_ref, 1);
     $$byte_ref += length(encode('UTF-8', $char));
     ++$$index_ref;
     ++$$column_ref;
 }
 
 sub _advance_newline {
-    my ($chars, $index_ref, $byte_ref, $line_ref, $column_ref) = @_;
-    if ($chars->[$$index_ref] eq "\r") {
+    my ($decoded, $index_ref, $byte_ref, $line_ref, $column_ref) = @_;
+    my $character_length = length($decoded);
+    if (substr($decoded, $$index_ref, 1) eq "\r") {
         $$byte_ref += 1;
         ++$$index_ref;
     }
-    if ($$index_ref < @{$chars} && $chars->[$$index_ref] eq "\n") {
+    if ($$index_ref < $character_length
+            && substr($decoded, $$index_ref, 1) eq "\n") {
         $$byte_ref += 1;
         ++$$index_ref;
     }

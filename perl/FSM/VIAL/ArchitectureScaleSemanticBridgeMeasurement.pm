@@ -662,11 +662,26 @@ sub _validate_record_family_evidence($record, $construction) {
         $_->{oracle_id} => $_
     } @{$record->{correctness_oracles}};
     my @expected_artifacts;
+    my $family_stage_failed = 0;
     for my $stage (@{$FAMILY{$family}{stage_order}}) {
-        my $payload = _stage_payload($construction, $stage);
         my $entry = $measurement{$stage};
         confess "family record is missing stage '$stage'\n"
             unless defined $entry;
+        if ($entry->{status} eq 'not_run') {
+            if ($entry->{not_run_reason} eq 'controller_failure') {
+                confess "family controller failure conflicts with an accepted record\n"
+                    if $record->{outcome} eq 'accepted';
+                $family_stage_failed = 1;
+            }
+            else {
+                confess "family stage '$stage' was skipped before a family failure\n"
+                    unless $family_stage_failed
+                        && $entry->{not_run_reason} eq 'prior_stage_failed';
+            }
+            next;
+        }
+        confess "family stage '$stage' executed after a family failure\n"
+            if $family_stage_failed;
         my $expected_command = {
             logical_name => join('_', 'vial_scale', $family, $stage),
             arguments => [
@@ -693,6 +708,31 @@ sub _validate_record_family_evidence($record, $construction) {
         confess "family stage '$stage' input counts changed\n"
             unless _canonical_json($entry->{input_counts})
                 eq _canonical_json($expected_input);
+        if ($entry->{status} eq 'validation_rejected'
+                || $entry->{status} eq 'measured_rejected') {
+            confess "rejected family stage '$stage' conflicts with an accepted record\n"
+                if $record->{outcome} eq 'accepted';
+            confess "rejected family stage '$stage' retained output evidence\n"
+                unless _canonical_json($entry->{output_counts})
+                    eq _canonical_json({
+                        files => 0, lines => 0, bytes => 0, objects => 0,
+                    })
+                    && _canonical_json($entry->{semantic_object_counts}) eq '{}'
+                    && @{$entry->{correctness_oracle_ids}} == 0
+                    && !grep { $_->{stage} eq $stage }
+                        @{$record->{artifacts}{records}};
+            if ($record->{outcome} eq 'stage_failure') {
+                my $path = $record->{diagnostic}{semantic_path} // '';
+                confess "rejected family stage '$stage' lost its foundation diagnostic\n"
+                    unless $path =~ m{\A/stage_measurements/\Q$stage\E(?:/|\z)};
+            }
+            $family_stage_failed = 1;
+            next;
+        }
+        confess "family stage '$stage' has a non-success status\n"
+            unless $entry->{status} eq 'validated_unmeasured'
+                || $entry->{status} eq 'measured';
+        my $payload = _stage_payload($construction, $stage);
         my $expected_materialized = _materialized_projection($stage, $payload);
         confess "family stage '$stage' output counts changed\n"
             unless _canonical_json($entry->{output_counts})
@@ -711,6 +751,8 @@ sub _validate_record_family_evidence($record, $construction) {
         push @expected_artifacts,
             @{$expected_materialized->{artifact_records}};
     }
+    confess "accepted family record contains a failed family stage\n"
+        if $record->{outcome} eq 'accepted' && $family_stage_failed;
     confess "family artifact evidence changed\n"
         unless _canonical_json($record->{artifacts}{records})
             eq _canonical_json(\@expected_artifacts);

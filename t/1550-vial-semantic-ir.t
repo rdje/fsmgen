@@ -2,8 +2,10 @@
 
 use strict;
 use warnings;
+use utf8;
 
 use Digest::SHA qw(sha256_hex);
+use Encode qw(encode);
 use File::Spec;
 use FindBin;
 use JSON::PP ();
@@ -195,6 +197,15 @@ subtest 'semantic order, IDs, values, provenance, and reports are deterministic'
         { kind => 'logic_vector', width => 3, signed => 0, value_bits => '7', known_mask => '7', z_mask => '0' },
         'four-state values normalize to target-neutral value/known/Z masks',
     );
+    my $unknown_size = FSM::VIAL::Parser->parse_source({
+        text => changed($source, '#b111', '#b1xz', 'four-state masks'),
+        source_name => $source_name,
+    })->as_hashref->{packages}[0]{fixtures}[0]{faults}[0]{substitute}{value};
+    is_deeply(
+        $unknown_size,
+        { kind => 'logic_vector', width => 3, signed => 0, value_bits => '4', known_mask => '4', z_mask => '1' },
+        'four-state X/Z normalization preserves exact non-nibble-aligned masks',
+    );
     my $location = $first->source_location_for('/packages/0/fixtures/0/dut/endpoints/0');
     is($location->{source_name}, $source_name, 'provenance lookup returns repository-relative source name');
     ok($location->{start_byte} < $location->{end_byte_exclusive}, 'provenance uses half-open byte offsets');
@@ -296,6 +307,28 @@ subtest 'lexical and list grammar rejects invalid encoding, newlines, strings, l
     failure_is('source byte limit', $source . (' ' x (1_048_577 - length($source))), 'VIAL_LIMIT_ERROR', qr/1048576-byte limit/, qr{^/$});
     my $deep = ('(' x 129) . '(reset bus 1)' . (')' x 129);
     failure_is('list nesting limit', changed($source, '(reset bus 3)', $deep, 'list nesting'), 'VIAL_LIMIT_ERROR', qr/list nesting exceeds the 128-level limit/, qr{^/$});
+};
+
+subtest 'lexer chunk advancement preserves UTF-8 byte and scalar coordinates' => sub {
+    my $prefix = qq{(vial (version 1) "é雪" };
+    my $invalid = $prefix . "bad!)\n";
+    my $checked = FSM::VIAL::Parser->check_source({
+        text => $invalid,
+        source_name => 'vial/unicode_span_probe.vial',
+    });
+    ok(!$checked->{ok}, 'invalid atom after a Unicode string fails closed');
+    my $location = $checked->{diagnostics}[0]{source_location};
+    is($checked->{diagnostics}[0]{code}, 'VIAL_LEX_ERROR',
+        'Unicode-coordinate probe retains its lexical diagnostic family');
+    is($location->{start_byte}, length(encode('UTF-8', $prefix)),
+        'token start counts UTF-8 bytes before the invalid atom');
+    is($location->{end_byte_exclusive},
+        length(encode('UTF-8', $prefix . 'bad!')),
+        'token end remains one half-open UTF-8 byte offset');
+    is($location->{start_column}, length($prefix) + 1,
+        'token start column counts Unicode scalar values');
+    is($location->{end_column}, length($prefix) + length('bad!'),
+        'token end column remains inclusive in Unicode scalars');
 };
 
 subtest 'closed root and package sections reject wrong, duplicate, misordered, and unknown forms' => sub {

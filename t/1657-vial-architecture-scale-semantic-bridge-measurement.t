@@ -253,6 +253,47 @@ subtest 'measurement and non-reference validation require the real guard boundar
         'limit conformance is never mislabeled as a performance sample');
 };
 
+subtest 'adapter preserves a foundation-owned stage failure without successful rederivation' => sub {
+    my $original = \&FSM::VIAL::ArchitectureScaleSemanticBridgeMeasurement::_stage_payload;
+    no warnings 'redefine';
+    local *FSM::VIAL::ArchitectureScaleSemanticBridgeMeasurement::_stage_payload = sub {
+        my ($construction, $stage) = @_;
+        die "forced parse/validate worker failure\n"
+            if $stage eq 'parse_validate';
+        return $original->($construction, $stage);
+    };
+    my $report = $class->validate_profile({
+        repository_root => $repo_root,
+        family => 'semantic_catalog_v1',
+        level => 'reference_v1',
+        primary_axis => 'imports',
+    });
+    is($report->{outcome}, 'rejected',
+        'foundation stage failure remains a rejected family report');
+    is($report->{diagnostics}[0]{code},
+        'VIAL_SCALE_MEASUREMENT_WORKER_ERROR',
+        'adapter preserves the original foundation diagnostic family');
+    is($report->{diagnostics}[0]{semantic_path},
+        '/stage_measurements/parse_validate',
+        'adapter preserves the exact failed-stage diagnostic path');
+    my $failed = $report->{validation_record}{stage_measurements}[1];
+    is($failed->{status}, 'validation_rejected',
+        'failed family stage remains explicitly rejected');
+    is_deeply($failed->{output_counts},
+        {files => 0, lines => 0, bytes => 0, objects => 0},
+        'failed stage retains truthful zero output evidence');
+    is_deeply($failed->{correctness_oracle_ids}, [],
+        'failed stage invents no successful family oracle');
+    ok($report->{cleanup}{ephemeral_removed}
+            && !-e repo_path('.artifacts/tmp/vial-scale'),
+        'failed family report still removes exact staging');
+    is($json->encode($class->validate_report({
+        repository_root => $repo_root,
+        report => $report,
+    })), $json->encode($report),
+        'independent validation preserves rather than masks the failure');
+};
+
 subtest 'guarded gate, qualification, and dominant rejection are exact' => sub {
     plan skip_all =>
         'set FSMGEN_VIAL_SCALE_SEMANTIC_BRIDGE_EXACT=1 under the RAM guard'

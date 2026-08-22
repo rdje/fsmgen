@@ -21,6 +21,8 @@ answers:
   - "what does semantic and bridge scale measurement claim?"
   - "how does semantic bridge measurement preserve semantic paths without allowing host paths?"
   - "how is the semantic bridge scale matrix resumed and published?"
+  - "how does semantic bridge measurement preserve a failed stage diagnostic?"
+  - "how does the exact combined source byte profile stay below its timeout?"
 date: 2026-08-22
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -37,6 +39,7 @@ evidence: >-
   perl/FSM/VIAL/ArchitectureScaleMeasurement.pm;
   perl/FSM/VIAL/ArchitectureScaleSemanticBridgeMeasurement.pm;
   perl/FSM/VIAL/ArchitectureScaleSemanticBridgeMeasurementMatrix.pm;
+  perl/FSM/VIAL/Parser.pm; perl/FSM/VIAL/SemanticBuilder.pm;
   scripts/run_vial_semantic_bridge_measurement_matrix.pl;
   perl/FSM/VIAL/ArchitectureScaleSemanticCatalog.pm;
   perl/FSM/VIAL/ArchitectureScaleBridgeFanout.pm;
@@ -72,6 +75,9 @@ reverify: >-
   rg -n 'vial_architecture_scale_measurement|SAMPLER_INTERVAL_NS|STAGING_BASE|PUBLICATION_BASE|measured runs require'
   perl/FSM/VIAL/ArchitectureScaleMeasurement.pm &&
   rg -n 'vial_architecture_scale_semantic_bridge_measurement_set|measurement_evidence_projection|semantic_path|canonical family'
+  perl/FSM/VIAL/ArchitectureScaleSemanticBridgeMeasurement.pm &&
+  rg -n 'utf8::downgrade|pack.*B\*|validation_rejected|prior_stage_failed'
+  perl/FSM/VIAL/Parser.pm perl/FSM/VIAL/SemanticBuilder.pm
   perl/FSM/VIAL/ArchitectureScaleSemanticBridgeMeasurement.pm &&
   prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t
   t/1602-vial-architecture-scale-bridge-fanout.t
@@ -167,6 +173,16 @@ uses the adapter's exact `gate_measurement`, `qualification_measurement`, and
 `validation` mode vocabulary in inventory and reports, avoiding a second
 translation contract. It is implemented, but the clean guarded 108-profile
 capture remains active before `.17.3.2` can close.
+
+The first exact capture attempt at the combined-source-byte limit exposed a
+real controller timeout that adapter revalidation initially masked as a
+successful-output mismatch. The repaired adapter preserves rejected-stage
+zero-output evidence and the original controller diagnostic while rederiving
+only completed family stages. The unchanged ordinary referenced-declaration
+fixture now completes through chunked ASCII lexing with a Unicode-preserving
+fallback and linear four-state mask conversion. The fixed timeout and every
+support, performance-budget, capacity, and reached-boundary nonclaim remain
+unchanged.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
