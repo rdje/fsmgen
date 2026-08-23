@@ -224,9 +224,21 @@ SHA-256 prefix/counter bytes and skips rejection/modulo only for an exact full-
 space range. Fixed narrow, signed, rejection, wide, gate, qualification,
 million-attempt, replay, and exhaustion identities remain exact. The direct
 guarded adapter now accepts bind-plan with no diagnostic and exact cleanup.
-Active child `.17.3.3.2.2` next owns revision-keyed preservation of the old
-22-report prefix and clean-revision matrix restart without weakening the guard,
-timeout, determinism, or random/replay contract.
+The clean revision-`e4b95dbd` restart seals all 40 execution profiles and the
+execution-family manifest, including exact 16,384/16,385 live-fiber boundary
+evidence. It then seals 17 checking profiles before
+`random_occurrences/qualification_candidate_v1`. Canonical evaluation returns
+the expected `VIAL_EXECUTION_LIMIT_ERROR` at `/plan`, but the measured bind-plan
+stage times out at 300 seconds because `ExecutionBuilder` materializes 32,768
+random decisions and source maps, ExecutionIR, ExecutionReport, and complete
+canonical plan bytes before enforcing the 16,777,216-byte cap. Active child
+`.17.3.3.2.3` owns a general independently checked plan-projection byte
+preflight, exact agreement with terminal canonical bytes for accepted plans,
+and retention of the terminal limit as defense in depth. Axis-specific
+thresholds, guard/timeout/cap changes, evidence relabelling, and promoted
+support/performance/capacity claims are excluded. The 57 atomic profiles plus
+execution-family seal remain revision-bound interruption evidence; checking-
+family and complete seals remain withheld.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

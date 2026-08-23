@@ -69,6 +69,16 @@ same `/plan` diagnostic. The million-level scoreboard proof therefore cannot
 be represented as one operation per enqueue; it uses the qualification-only
 packed-state evaluator instead.
 
+The first exact measurement capture to reach that qualification proves why the
+cap must be enforced earlier without changing its contract. Canonical
+evaluation returns the historical `/plan` rejection, but the measured
+bind-plan stage times out after 300 seconds because the builder constructs the
+complete 32,768-decision plan before checking serialized bytes. Active child
+`.17.3.3.2.3` owns a general compact plan-projection byte preflight whose result
+must equal terminal canonical serialization for accepted plans; the terminal
+check remains. A hard-coded 8,440/8,441 occurrence threshold is explicitly not
+an admissible repair.
+
 That evaluator consumes caller-sealed canonical SemanticIR and ExecutionIR. A
 one-million-entry scoreboard stores only its varying 32-bit payload in a
 4,000,000-byte packed FIFO, compares every reconstructed complete transaction,
