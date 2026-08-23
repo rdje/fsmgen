@@ -230,6 +230,7 @@ subtest 'random algorithm has fixed vectors and strict replay round trip' => sub
     my @vector = (
         [1, 0, 'vector/one', 0, 1, undef, undef],
         [4, 1, 'vector/four', 1, 9, undef, undef],
+        [4, 2, 'vector/signed-four', -8, 7, undef, undef],
         [257, 7, 'vector/wide', 0, 10, undef, undef],
     );
     for my $case (@vector) {
@@ -244,7 +245,7 @@ subtest 'random algorithm has fixed vectors and strict replay round trip' => sub
     }
     is_deeply(
         [map { [$_->[5], $_->[6]] } @vector],
-        [[1, 0], [7, 1], [5, 0]],
+        [[1, 0], [7, 1], [-2, 0], [5, 0]],
         'SHA-256 counter/rejection vectors are fixed across narrow and multi-block widths',
     );
 

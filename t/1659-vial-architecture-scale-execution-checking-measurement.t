@@ -135,6 +135,39 @@ subtest 'construction is canonical, caller-sealed, and source-free when required
         'checking canonical-input seam rejects direct callers');
 };
 
+subtest 'bind-plan payload reruns do not nest canonical producer reruns' => sub {
+    my $construction = $class->construct({
+        repository_root => $repo_root,
+        family => 'execution_graph_v1',
+        level => 'gate_candidate_v1',
+        primary_axis => 'random_attempts',
+    });
+    my $expected = FSM::VIAL::ArchitectureScaleExecutionGraph->evaluate({
+        construction => clone($construction),
+    });
+    ok($expected->{ok}, 'random-attempt gate has accepted admission evidence');
+
+    my $stage_payload =
+        \&FSM::VIAL::ArchitectureScaleExecutionCheckingMeasurement::_stage_payload;
+    my $evaluate = \&FSM::VIAL::ArchitectureScaleExecutionGraph::evaluate;
+    my ($first, $second, $evaluation_calls);
+    {
+        no warnings 'redefine';
+        local *FSM::VIAL::ArchitectureScaleExecutionGraph::evaluate = sub {
+            $evaluation_calls++;
+            return $evaluate->(@_);
+        };
+        $first = $stage_payload->($construction, $expected, 'bind_plan');
+        $second = $stage_payload->($construction, $expected, 'bind_plan');
+    }
+    is($evaluation_calls, 2,
+        'two stage-owned payload reruns invoke the producer exactly once each');
+    is($json->encode($second), $json->encode($first),
+        'the independent bind-plan payload rerun remains byte-identical');
+    is($json->encode($first->{evidence}), $json->encode($expected),
+        'each payload remains sealed to the admitted canonical evaluation');
+};
+
 subtest 'validation and measurement require the bounded real-run contract' => sub {
     local $ENV{FSMGEN_RAM_GUARD_ACTIVE};
     local $ENV{FSMGEN_RAM_GUARD_EFFECTIVE_HOST_MAX_PCT};

@@ -53,11 +53,24 @@ sub generate($class, @args) {
     confess "ExecutionRandom max_attempts is invalid\n"
         unless defined($max) && !ref($max) && $max =~ /\A[1-9][0-9]*\z/
             && $max <= $MAX_ATTEMPTS;
+    my $candidate_prefix = _candidate_prefix($seed, $raw->{occurrence_id});
+    my $range_fills_space = $range->bcmp($space) == 0;
 
     for my $attempt (0 .. $max - 1) {
-        my $candidate = _candidate($width, $seed, $raw->{occurrence_id}, $attempt);
-        next if $candidate->bcmp($limit) >= 0;
-        my $proposal = $low->copy->badd($candidate->copy->bmod($range));
+        my $candidate = _candidate_from_prefix(
+            $width, $candidate_prefix, $attempt,
+        );
+        my $proposal;
+        if ($range_fills_space) {
+            # A width-bit candidate is already inside a full-width range.
+            # Retain the signed-range offset without an identity modulo.
+            $proposal = $candidate->copy;
+            $proposal->badd($low) unless $low->is_zero;
+        }
+        else {
+            next if $candidate->bcmp($limit) >= 0;
+            $proposal = $low->copy->badd($candidate->copy->bmod($range));
+        }
         next if $accept && !$accept->($proposal->copy);
         return {value => $proposal, attempt => $attempt};
     }
@@ -96,15 +109,26 @@ sub normalized_scalar($class, @args) {
 }
 
 sub _candidate($width, $seed, $occurrence, $attempt) {
-    my $blocks = int(($width + 255) / 256);
+    return _candidate_from_prefix(
+        $width, _candidate_prefix($seed, $occurrence), $attempt,
+    );
+}
+
+sub _candidate_prefix($seed, $occurrence) {
     my $seed_bytes = pack('H*', _u64_hex($seed));
     my $length = length($occurrence);
     confess "ExecutionRandom occurrence_id is too long\n" if $length > 0xffff_ffff;
-    my $attempt_big = Math::BigInt->new($attempt);
+    return $PREFIX . $seed_bytes . pack('N', $length) . $occurrence;
+}
+
+sub _candidate_from_prefix($width, $prefix, $attempt) {
+    my $blocks = int(($width + 255) / 256);
+    # generate() admits at most one million attempts, so the high u32 word of
+    # the normative unsigned-u64 counter is exactly zero.
+    my $attempt_bytes = pack('NN', 0, $attempt);
     my $hex = '';
     for my $block (0 .. $blocks - 1) {
-        my $input = $PREFIX . $seed_bytes . pack('N', $length) . $occurrence
-            . pack('H*', _u64_hex($attempt_big)) . pack('N', $block);
+        my $input = $prefix . $attempt_bytes . pack('N', $block);
         $hex .= unpack('H*', sha256($input));
     }
     my $value = Math::BigInt->from_hex('0x' . $hex);

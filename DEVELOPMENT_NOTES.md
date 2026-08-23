@@ -735,3 +735,22 @@ common-identity seal. They must be hash-verified and retained in a revision-
 keyed repository-volume archive, after which the repaired clean revision earns
 its own fresh complete-matrix capture. Preserving provenance takes precedence over a
 superficially convenient resume claim.
+
+## 2026-08-23: Bind-plan determinism must not multiply canonical admission
+
+The execution/checking adapter has two distinct determinism boundaries:
+canonical admission evaluates a producer twice, and the isolated stage worker
+runs each payload twice. Calling the admission helper from each bind-plan
+payload accidentally multiplied those boundaries. The valid million-attempt
+profile therefore spent its fixed stage lifetime repeating already independent
+work and timed out even though the canonical producer, replay, and preceding
+stages were correct.
+
+One closed helper now validates a single producer result. Admission invokes it
+twice and compares the results; each bind-plan payload invokes it once, compares
+against admission, and is still rerun by the worker. The random generator's hot
+loop separately hoists only immutable digest-prefix and counter encoding and
+uses full-space range algebra only where modulo and rejection are identities.
+This preserves layered independence, algorithm bytes, fixed vectors, attempt
+ordinals, plan/replay identities, and the normative timeout instead of trading
+correctness checks for benchmark headroom.

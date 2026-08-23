@@ -7,9 +7,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.2`.
-- next_action: add an honest RED proving bind-plan payload reruns nest redundant
-  canonical producer evaluations, remove only that duplicate layer, then prove
-  the million-attempt adapter profile under the unchanged real guard.
+- next_action: commit the verified bind-plan/random hot-path repair, archive the
+  incompatible 22-report prefix under its exact revision, prove the clean
+  revision, then restart the exact execution/checking matrix.
 - in_flight_uncommitted: none.
 - in_flight_background: none
 - blockers: none.

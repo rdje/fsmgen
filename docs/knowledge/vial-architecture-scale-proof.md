@@ -216,11 +216,17 @@ names `VIAL_SCALE_MEASUREMENT_TIMEOUT` at
 stages, zero failed-stage output, and exact cleanup. The guard does not
 terminate it; the failed profile is absent and family/full seals remain
 withheld. Source tracing proves redundant evaluation nesting: the stage worker
-already runs each payload twice, while each bind-plan payload calls the
-twice-evaluated canonical helper again. Active child `.17.3.3.2.2` owns an
-honest call-count RED, removal of only that duplicate layer, canonical-output
-equality, exact guarded GREEN, and same-revision resume without weakening the
-guard, timeout, determinism, or random/replay contract.
+already runs each payload twice, while each bind-plan payload called the
+twice-evaluated canonical helper again. The repair retains double canonical
+admission and double stage-payload execution but gives each payload one closed
+validated producer evaluation. The random generator precomputes only immutable
+SHA-256 prefix/counter bytes and skips rejection/modulo only for an exact full-
+space range. Fixed narrow, signed, rejection, wide, gate, qualification,
+million-attempt, replay, and exhaustion identities remain exact. The direct
+guarded adapter now accepts bind-plan with no diagnostic and exact cleanup.
+Active child `.17.3.3.2.2` next owns revision-keyed preservation of the old
+22-report prefix and clean-revision matrix restart without weakening the guard,
+timeout, determinism, or random/replay contract.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

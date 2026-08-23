@@ -764,8 +764,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Make the million-attempt execution profile's controller correctness validation exact, diagnosable, and acceptable without weakening its random/replay authority.`
   Acceptance: `Retain the 22 clean-revision atomic publications and absent family/full seals. Under the unchanged real guard, reproduce random_attempts/limit_v1 through the caller-sealed measurement adapter while durably exposing the rejected validation stage and diagnostic; independently compare construction, generated decision, strict replay, evaluation, controller stage plan, output counts, artifacts, cleanup, and identities with t/1614 and the accepted qualification profile. Root-cause the first disagreement before changing product code. Repair only the proven producer, controller, or matrix-admission layer; preserve exactly 1,000,000 attempts, zero-based accepted attempt 999,999, checked-AHB route, deterministic plan/replay identities, validation-first sampling, atomic publication, raw-stage cleanup, 4,096-MiB process guard, and fail-closed exclusions. Add a focused RED/GREEN regression, resume from the immutable 22-profile frontier at one clean revision, and withhold family/full seals until all 72 profiles validate.`
-  Verification: `Fresh exact capture at clean revision 14c619367 passes the repaired operations_total/over_limit_v1 profile that previously reached 4,869.5 MiB, then seals random_attempts/gate_candidate_v1 and qualification_candidate_v1. Profile random_attempts/limit_v1 runs under the unchanged 88%-host/4,096-MiB-process guard and exits 75 after 8,323 wall-clock seconds because its controller validation_record outcome is not accepted; the top-level matrix exception retains the admission failure but not the nested stage diagnostic. The guard does not terminate it, the publication count remains 22, raw staging is empty, and family/full seals are absent. Canonical t/1614 separately freezes the expected millionth generated decision and strict replay, so the active next step is exact adapter-level diagnostic retention and comparison rather than threshold change or evidence deletion.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.2: activate random-attempt correctness repair; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.2: diagnose redundant bind-plan evaluation timeout`
+  Verification: `Fresh exact capture at clean revision 14c619367 seals 22 profiles, then random_attempts/limit_v1 fails because bind_plan alone reaches the fixed 300-second stage timeout; preceding stages accept, the guard does not trip, and cleanup is exact. Source trace identifies nested duplication: the worker invokes every payload twice while each bind payload called the twice-evaluated canonical helper. An honest focused RED observes four producer calls instead of two. The implementation factors one validated-evaluation primitive so admission remains double and both stage payloads remain independent, but each payload evaluates once. ExecutionRandom precomputes immutable digest-prefix/counter bytes and removes only mathematically identity rejection/modulo work for exact full-space ranges. Fixed narrow/signed/rejection/wide vectors, random gate/qualification/limit/exhaustion, plan/replay identities, and diagnostics pass at Files=6/Tests=28. The exact guarded adapter returns accepted_validation/accepted with bind_plan accepted, one million attempts, complete stage evidence, no diagnostic, and zero residue. The active next step is revision-keyed preservation of the incompatible 22-report prefix followed by clean-revision matrix restart; guards, timeouts, counts, identities, support, budgets, and claims remain unchanged.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.2: activate random-attempt correctness repair; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.2: diagnose redundant bind-plan evaluation timeout; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.2: remove redundant bind-plan evaluation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4`
   Status: `proposed`
@@ -6473,6 +6473,27 @@ raising an enforcement ceiling.
   task, resume, book, fact, claim, and containment records; implementation is
   pending. Documentation checks report `Files=2, Tests=22`, and
   `knowledge-map: OK` confirms generated retrieval parity.
+
+## Acceptance Checklist (enforced) — `.17.3.3.2.2` bind-plan evaluation implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The direct guarded report names
+  `VIAL_SCALE_MEASUREMENT_TIMEOUT` at `/stage_measurements/bind_plan/timeout`.
+  `git log -S'_canonical_evaluation' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleExecutionCheckingMeasurement.pm` plus the
+  honest call-count RED prove that double stage-payload execution nested two
+  canonical producer evaluations per payload: observed four, required two.
+- [x] **ADDRESSED (verified)** — `_validated_evaluation_once` now closes oracle
+  and schema validation for one producer result. Canonical admission calls it
+  twice and compares byte identity; each of the worker's two payloads calls it
+  once and compares with admission. `ExecutionRandom` precomputes invariant
+  digest input, directly encodes the bounded u64 attempt, and uses the exact
+  full-space algebra without changing algorithm input or public results.
+- [x] **NO REGRESSION** — The exact adapter returns accepted validation,
+  accepted bind-plan, no diagnostic, and complete cleanup under the unchanged
+  guard. `All tests successful` at `Files=6, Tests=28` covers narrow, signed,
+  rejection, wide, gate, qualification, limit, exhaustion, replay, and adapter
+  oracles. Syntax, diff, mdBook, Knowledge Map, claims, task integrity,
+  containment, locality, and all doctrines pass with no ceiling increase.
 
 ## Acceptance Checklist (enforced) — `.17.3.3.2.2` bind-plan timeout diagnosis
 

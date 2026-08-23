@@ -471,7 +471,11 @@ sub _bridge_payload($construction, $evaluation) {
 
 sub _bind_plan_payload($construction, $expected) {
     my $family = $construction->{specification}{family};
-    my $evaluation = _canonical_evaluation($family, $construction);
+    # The stage worker invokes every payload twice and compares the complete
+    # results.  One validated producer evaluation per invocation therefore
+    # supplies the two independent bind/plan reruns; nesting the admission
+    # helper here would multiply each invocation by another canonical pair.
+    my $evaluation = _validated_evaluation_once($family, $construction);
     confess "canonical bind/plan evaluation changed from admission evidence\n"
         unless _canonical_json($evaluation) eq _canonical_json($expected);
     my %counts;
@@ -966,17 +970,23 @@ sub _canonical_construction($repo_root, $family, $level, $axis) {
 }
 
 sub _canonical_evaluation($family, $construction) {
-    my $producer = $FAMILY{$family}{producer_class};
-    my $first = $producer->evaluate({construction => $construction});
-    my $second = $producer->evaluate({construction => $construction});
-    confess "canonical family evaluation did not satisfy its oracle\n"
-        unless $first->{ok} && $second->{ok};
+    my $first = _validated_evaluation_once($family, $construction);
+    my $second = _validated_evaluation_once($family, $construction);
     confess "canonical family evaluation is nondeterministic\n"
         unless _canonical_json($first) eq _canonical_json($second);
-    confess "canonical family evaluation schema changed\n"
-        unless ($first->{schema} // '') eq $FAMILY{$family}{evaluation_schema}
-            && ($first->{schema_version} // -1) == 1;
     return _clone($first);
+}
+
+sub _validated_evaluation_once($family, $construction) {
+    my $producer = $FAMILY{$family}{producer_class};
+    my $evaluation = $producer->evaluate({construction => $construction});
+    confess "canonical family evaluation did not satisfy its oracle\n"
+        unless $evaluation->{ok};
+    confess "canonical family evaluation schema changed\n"
+        unless ($evaluation->{schema} // '')
+                eq $FAMILY{$family}{evaluation_schema}
+            && ($evaluation->{schema_version} // -1) == 1;
+    return _clone($evaluation);
 }
 
 sub _construct_once($repo_root, $family, $level, $axis) {
