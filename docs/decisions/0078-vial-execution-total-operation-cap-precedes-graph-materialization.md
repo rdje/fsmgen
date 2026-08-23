@@ -70,3 +70,19 @@ selects the precise scenario set before building bindings or operations.
 - The exact failed prefix remains immutable revision-keyed evidence. A later
   implementation revision must earn a fresh common-identity matrix rather than
   relabel or mix those reports.
+
+## Implementation evidence
+
+`ExecutionBuilder::_preflight_expanded_operations_total` now runs immediately
+after selected-scenario resolution. Its compact-tree walker validates repeat
+and parallel structure, uses saturating bounded addition/multiplication,
+requires equality with each validated semantic `action_count`, and invokes the
+unchanged aggregate limit before `_index_bridge`; the terminal check remains.
+
+Focused t/1626 compact oracles accept exactly 1,000,000 operations, reject
+1,000,001 with the byte-identical historical diagnostic, and reject a forged
+semantic count as an internal consistency failure. The real exact excess
+passes under the unchanged 4,096-MiB descendant guard at Files=1/Tests=9 in one
+second, retains `expected_rejection`, and a fatal sentinel proves bridge
+indexing has zero entries. Active publication and raw-staging censuses are
+empty; parent `.17.3.3.2` must now earn a fresh common-revision matrix.

@@ -14,6 +14,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::VIAL::ArchitectureScaleExecutionGraph;
 use FSM::VIAL::ArchitectureScaleWorkload;
+use FSM::VIAL::ExecutionBuilder;
 
 my $class = 'FSM::VIAL::ArchitectureScaleExecutionGraph';
 my $json = JSON::PP->new->canonical(1)->utf8(1);
@@ -108,6 +109,76 @@ subtest 'the compact recipe reaches each exact operation count' => sub {
             [grep { $_->{actions} != $_->{repeat_count} + 1 } @blocks], [],
             'one repeat operation joins every expanded body');
     }
+};
+
+subtest 'preflight independently checks compact repeat and parallel counts' => sub {
+    my $scenario = {
+        semantic_path => '/packages/0/fixtures/0/scenarios/0',
+        source_span => undef,
+        action_count => 8,
+        actions => [
+            {kind => 'reset'},
+            {kind => 'repeat', count => 3, actions => [{kind => 'reset'}]},
+            {
+                kind => 'parallel',
+                fibers => [
+                    {actions => [{kind => 'reset'}]},
+                    {actions => [{kind => 'reset'}]},
+                ],
+            },
+        ],
+    };
+    is(FSM::VIAL::ExecutionBuilder->_test_preflight_expanded_operations_total(
+            [$scenario]), 8,
+        'the compact tree independently rederives one plus four plus three operations');
+
+    my $forged = clone_json($scenario);
+    $forged->{action_count} = 7;
+    my $accepted = eval {
+        FSM::VIAL::ExecutionBuilder->_test_preflight_expanded_operations_total(
+            [$forged]);
+        1;
+    };
+    ok(!$accepted, 'a forged semantic action count fails closed');
+    is(ref($@), 'FSM::VIAL::ExecutionBuilder::Failure',
+        'the invariant failure uses the structured execution diagnostic');
+    is($@->{code}, 'VIAL_EXECUTION_INTERNAL_ERROR',
+        'the invariant failure is classified as an internal consistency error');
+    is($@->{phase}, 'internal',
+        'the invariant failure is assigned to the internal phase');
+    is($@->{semantic_path}, $scenario->{semantic_path},
+        'the invariant failure retains the selected scenario path');
+};
+
+subtest 'preflight preserves the inclusive aggregate boundary' => sub {
+    my @scenarios;
+    for my $index (0 .. $scenario_fanout - 1) {
+        push @scenarios, {
+            semantic_path => "/packages/0/fixtures/0/scenarios/$index",
+            source_span => undef,
+            action_count => 31_250,
+            actions => [{
+                kind => 'repeat',
+                count => 31_249,
+                actions => [{kind => 'reset'}],
+            }],
+        };
+    }
+    is(FSM::VIAL::ExecutionBuilder->_test_preflight_expanded_operations_total(
+            \@scenarios), $limit{operations},
+        'exactly one million independently derived operations are accepted');
+
+    $scenarios[-1]{action_count} = 31_251;
+    $scenarios[-1]{actions}[0]{count} = 31_250;
+    my $accepted = eval {
+        FSM::VIAL::ExecutionBuilder->_test_preflight_expanded_operations_total(
+            \@scenarios);
+        1;
+    };
+    my $error = $@;
+    ok(!$accepted, 'one million and one independently derived operations reject');
+    is_deeply({%{$error}}, $operation_diagnostic,
+        'bounded aggregate rejection preserves the exact historical diagnostic');
 };
 
 subtest 'the 1,000,000 limit level is authored compactly and identically' => sub {
@@ -279,11 +350,22 @@ subtest 'the total-operation ladder still fails closed on mutation and unowned s
 
 subtest 'exact over-limit rejection is explicit and RAM-guarded' => sub {
     plan skip_all => 'set FSMGEN_VIAL_SCALE_EXACT=1 under'
-        . ' scripts/run_with_ram_guard.sh --process-max-rss-mb 6144'
+        . ' scripts/run_with_ram_guard.sh --process-max-rss-mb 4096'
         . ' for exact total-operation excess proof'
         unless $ENV{FSMGEN_VIAL_SCALE_EXACT};
 
-    my $evaluation = $class->evaluate({construction => construction('over_limit_v1')});
+    my $bridge_index_entries = 0;
+    my $evaluation;
+    {
+        no warnings qw(once redefine);
+        local *FSM::VIAL::ExecutionBuilder::_index_bridge = sub {
+            ++$bridge_index_entries;
+            die 'bridge indexing must not precede total-operation rejection';
+        };
+        $evaluation = $class->evaluate({construction => construction('over_limit_v1')});
+    }
+    is($bridge_index_entries, 0,
+        'the one-million-and-one rejection occurs before bridge indexing');
     ok($evaluation->{ok}, 'over-limit evaluation satisfies every closed oracle');
     diag($json->encode($evaluation->{diagnostics})) unless $evaluation->{ok};
     is($evaluation->{status}, 'expected_rejection',
@@ -338,4 +420,11 @@ sub _test_repeat_recipe {
 sub _test_render_literal {
     my ($class, $requested) = @_;
     return _render_ahb_vial('operations_total', 'qualification_candidate_v1', $requested);
+}
+
+package FSM::VIAL::ExecutionBuilder;
+
+sub _test_preflight_expanded_operations_total {
+    my ($class, $scenarios) = @_;
+    return _preflight_expanded_operations_total($scenarios);
 }

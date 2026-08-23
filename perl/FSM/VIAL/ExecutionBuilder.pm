@@ -205,6 +205,7 @@ sub _build($raw, $qualification_profile = undef) {
 
     my ($package, $fixture) = _find_fixture($semantic, $raw->{fixture_id});
     my @selected_scenarios = _select_scenarios($fixture, $raw->{scenario_ids});
+    _preflight_expanded_operations_total(\@selected_scenarios);
     my $semantic_ir_id = 'semantic/' . sha256_hex(_canonical_json($semantic));
     my $semantic_identity = {
         semantic_ir_id => $semantic_ir_id,
@@ -603,6 +604,116 @@ sub _select_scenarios($fixture, $requested) {
         'scenario_ids must preserve authored scenario order', '/scenario_ids')
         unless join("\0", map { $_->{semantic_id} } @selected) eq join("\0", @$requested);
     return @selected;
+}
+
+sub _preflight_expanded_operations_total($scenarios) {
+    my $total = 0;
+    my $scenario_limit = $LIMIT{expanded_operations_per_scenario};
+    my $total_limit = $LIMIT{expanded_operations_total};
+    for my $scenario (@$scenarios) {
+        my $expected = _bounded_canonical_count(
+            $scenario->{action_count}, $scenario_limit,
+        );
+        _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+            'selected scenario action_count is outside its validated bound',
+            $scenario->{semantic_path}, $scenario->{source_span})
+            if $expected == 0 || $expected > $scenario_limit;
+
+        my $derived = _expanded_operation_count(
+            $scenario->{actions}, $expected, $scenario,
+        );
+        _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+            'selected scenario action_count disagrees with its compact action tree',
+            $scenario->{semantic_path}, $scenario->{source_span})
+            unless $derived == $expected;
+
+        $total = _bounded_count_add($total, $derived, $total_limit);
+        _limit('expanded_operations_total', $total, '/operation_graph/operations');
+    }
+    return $total;
+}
+
+sub _expanded_operation_count($actions, $ceiling, $scenario) {
+    _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+        'selected scenario compact action tree is malformed',
+        $scenario->{semantic_path}, $scenario->{source_span})
+        unless ref($actions) eq 'ARRAY' && @$actions;
+
+    my $count = 0;
+    for my $action (@$actions) {
+        _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+            'selected scenario compact action tree is malformed',
+            $scenario->{semantic_path}, $scenario->{source_span})
+            unless ref($action) eq 'HASH'
+                && defined($action->{kind}) && !ref($action->{kind})
+                && exists $ACTION_PHASE{$action->{kind}};
+        $count = _bounded_count_add($count, 1, $ceiling);
+
+        if ($action->{kind} eq 'parallel') {
+            _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+                'selected scenario parallel action is malformed',
+                $scenario->{semantic_path}, $scenario->{source_span})
+                unless ref($action->{fibers}) eq 'ARRAY'
+                    && @{$action->{fibers}} >= 2;
+            for my $fiber (@{$action->{fibers}}) {
+                _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+                    'selected scenario parallel fiber is malformed',
+                    $scenario->{semantic_path}, $scenario->{source_span})
+                    unless ref($fiber) eq 'HASH';
+                my $fiber_count = _expanded_operation_count(
+                    $fiber->{actions}, $ceiling, $scenario,
+                );
+                $count = _bounded_count_add($count, $fiber_count, $ceiling);
+            }
+        }
+        elsif ($action->{kind} eq 'repeat') {
+            my $raw_repeat_count = $action->{count} // $action->{times};
+            _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+                'selected scenario repeat action is malformed',
+                $scenario->{semantic_path}, $scenario->{source_span})
+                unless defined($raw_repeat_count) && !ref($raw_repeat_count)
+                    && "$raw_repeat_count" =~ /\A[1-9][0-9]*\z/;
+            my $repeat_count = _bounded_canonical_count(
+                $raw_repeat_count, $ceiling,
+            );
+            my $body = $action->{actions} || $action->{body};
+            my $body_count = _expanded_operation_count(
+                $body, $ceiling, $scenario,
+            );
+            my $expanded_body = _bounded_count_multiply(
+                $repeat_count, $body_count, $ceiling,
+            );
+            $count = _bounded_count_add($count, $expanded_body, $ceiling);
+        }
+    }
+    return $count;
+}
+
+sub _bounded_canonical_count($value, $ceiling) {
+    return $ceiling + 1
+        unless defined($value) && !ref($value)
+            && "$value" =~ /\A(?:0|[1-9][0-9]*)\z/;
+    my $text = "$value";
+    my $limit_text = "$ceiling";
+    return $ceiling + 1
+        if length($text) > length($limit_text)
+            || (length($text) == length($limit_text) && $text gt $limit_text);
+    return 0 + $text;
+}
+
+sub _bounded_count_add($left, $right, $ceiling) {
+    return $ceiling + 1
+        if $left > $ceiling || $right > $ceiling
+            || $right > $ceiling - $left;
+    return $left + $right;
+}
+
+sub _bounded_count_multiply($left, $right, $ceiling) {
+    return 0 if $left == 0 || $right == 0;
+    return $ceiling + 1
+        if $left > $ceiling || $right > $ceiling
+            || $left > int($ceiling / $right);
+    return $left * $right;
 }
 
 sub _index_bridge($ctx) {

@@ -196,14 +196,18 @@ profiles before the profile-twenty worker itself reaches 4,869.5 MiB at
 `operations_total/over_limit_v1` and the unchanged 4,096-MiB guard terminates
 it. The per-profile lifecycle therefore fixes coordinator retention but
 falsifies it as the remaining cause. `ExecutionBuilder::_build_operations`
-checks `expanded_operations_total` only after materializing every selected
-operation and source map; historical exact t/1626 accordingly requires a
-6,144-MiB opt-in guard. Decision `0078` assigns active child `.17.3.3.2.1` to
-rederive the compact selected-scenario operation total immediately after
-selection and enforce the existing cap before graph allocation, with the same
-diagnostic and a retained terminal check. The failed prefix is preserved as
-nineteen reports/1,739,213 bytes under its revision-keyed archive; the exact
-72-profile capture remains pending after the product repair.
+formerly checked `expanded_operations_total` only after materializing every
+selected operation and source map; historical exact t/1626 accordingly needed
+a 6,144-MiB opt-in guard. Decision `0078` is implemented by
+`_preflight_expanded_operations_total`: immediately after selection it walks
+compact repeat/parallel trees with bounded arithmetic, requires equality with
+each validated semantic action count, and enforces the same aggregate cap
+before bridge indexing. Compact tests accept 1,000,000 and reject 1,000,001
+with the unchanged diagnostic; the real exact excess passes in one second
+under the unchanged 4,096-MiB guard and proves bridge indexing is never
+entered. The terminal check remains. The failed prefix is preserved as
+nineteen reports/1,739,213 bytes under its revision-keyed archive; a fresh
+common-revision 72-profile capture remains pending.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
