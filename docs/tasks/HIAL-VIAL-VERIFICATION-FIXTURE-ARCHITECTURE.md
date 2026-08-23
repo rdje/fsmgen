@@ -771,8 +771,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Enforce the serialized-plan byte cap before materializing a checking-state plan that is provably over the existing limit.`
   Acceptance: `Keep the 16,777,216-byte serialized_plan_bytes cap, canonical plan schema and bytes, accepted-plan identities, random/replay semantics, checking-state levels, expected-rejection status, and existing VIAL_EXECUTION_LIMIT_ERROR phase/message/path unchanged. Add one general plan-projection preflight at the earliest point where all size-determining compact inputs are authoritative: independently derive the exact canonical serialized byte count with bounded or saturating arithmetic, reject malformed or inconsistent projections, and invoke the existing cap before allocating a known-excess random-decision list, source-map expansion, ExecutionIR, or ExecutionReport. Retain the complete terminal canonical serialization and byte-limit check as defense in depth, and prove preflight equality with terminal bytes for accepted ordinary and exact 8,440-occurrence boundary plans. Prove 8,441 and 32,768 occurrences return the byte-equal historical /plan diagnostic under the unchanged 300-second stage ceiling and 4,096-MiB descendant guard; preserve 65,536 preflight_dominated and 65,537 random-count-cap dominance, deterministic reruns, atomic publication, exact cleanup, and family/full seal withholding. No axis-specific numeric shortcut, cap/timeout/guard increase, workload relabelling, support claim, performance budget, capacity claim, or reached-boundary claim is admissible. Commit cleanly, revision-archive the incompatible 40-execution/17-checking prefix plus execution family seal with exact hashes, and resume the full 72-profile matrix from an empty active execution/checking namespace.`
-  Verification: `Activation evidence below fixes the first causal seam and acceptance boundary. The incompatible revision-e4b95dbd prefix is now preserved under its exact revision-keyed same-volume archive: 57 reports consume 5,662,418 bytes, the accepted execution-family manifest consumes 46,735 bytes, and independent reconstruction matches profile digest e8ba27e0986646a284505966828f3c4fdd0a78a55c24978b7a15bff82625f0f9 plus all-payload digest c9147898a109f21eda6bc8ec370f2b15620518cdb1fb3d7171bf83d9fec49170. The active execution/checking namespace and raw staging are empty, while 111 unrelated active evidence files retain digest e6538ea18897af1203fa26393ae4fafa0bafed0aa9b1423cfc630847cdd4125e. Implementation, guarded exact boundary proof, and full-matrix reseal remain pending.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3: activate serialized-plan preflight repair; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3: archive revision-e4b95dbd matrix prefix; pending implementation`
+  Verification: `ExecutionBuilder now performs a general two-pass canonical plan projection before random-decision-list, random-source-map, ExecutionIR, or terminal-report materialization. The projection streams generated or replay-validated decision records, per-scenario occurrence IDs, and random source-map records through the same canonical JSON authority; saturating arithmetic bounds the derived byte count, a caller-sealed ExecutionReport seam supplies the fixed base plan, and malformed or inconsistent projections fail internally. The unchanged 16,777,216-byte cap runs on that exact projection; accepted plans must match terminal canonical bytes exactly and still pass the original terminal check. RAM-guarded exact evidence keeps 8,440 accepted at 16,775,415 bytes, rejects 8,441 and 32,768 with the byte-equal historical /plan diagnostic, and preserves 65,536 preflight dominance plus 65,537 occurrence-cap dominance. The former random-occurrences qualification adapter now exits cleanly as expected_rejection/validated_not_measured with no diagnostic, measurement record, or staging residue under the unchanged guard and stage timeout. Frozen random/replay hashes, identities, attempts, diagnostics, ordinary ExecutionIR behavior, and the private report boundary pass the focused suite. The incompatible revision-e4b95dbd prefix remains preserved under its exact revision-keyed same-volume archive; the active execution/checking namespace and raw staging are empty. This clean implementation revision is the required restart point; a fresh 72-profile matrix reseal is next.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3: activate serialized-plan preflight repair; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3: archive revision-e4b95dbd matrix prefix; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3: enforce plan cap before materialization`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4`
   Status: `proposed`
@@ -1668,6 +1668,7 @@ execution/checking or external-tool measurement can begin.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-23` | `.17.3.3.2.3` serialized-plan preflight implementation | honest materialization-sentinel RED; shared canonical report projection; streaming decision/scenario-ID/source-map byte deltas; saturating arithmetic; replay validation/indexing; occurrence/source-map/plan cap order; projection/terminal equality; private caller seal; syntax/diff; focused ordinary/random/replay/limit/exhaustion/measurement regressions; exact guarded 8,440/8,441, 32,768, and 65,537 routes; direct guarded former-timeout adapter; staging residue census | `passed implementation`; 8,441 and 32,768 return the byte-equal historical `/plan` diagnostic before random-list, ExecutionIR, or terminal report materialization; 8,440 remains accepted at 16,775,415 canonical bytes; 65,537 remains occurrence-cap dominated. The former adapter blocker exits `expected_rejection` / `validated_not_measured` with no diagnostic, measurement record, or staging residue under unchanged guards/timeouts. The focused guarded suite passes Files=7/Tests=33, exact t/1634 passes Files=1/Tests=5, and the private-seam/core contract passes Files=1/Tests=6. Terminal serialization and cap remain. No product support, performance, capacity, or reached-boundary claim is added; fresh clean-revision matrix capture remains next. |
 | `2026-08-23` | `.17.3.3.2.3` revision-e4b95dbd evidence-prefix archival | same-volume device equality; exact 40 execution/17 checking profile admission; accepted 40-profile execution-family seal; per-file regular/single-link census; capture revision and dirty-state checks; independent post-move file/byte/hash/canonical-digest reconstruction; matrix identity; active/raw/staging residue census; unrelated active-evidence before/after digest | `passed`; the atomic archive contains exactly 57 reports/5,662,418 bytes, one 46,735-byte family manifest, and one archive manifest. Independent reconstruction matches profile digest `e8ba27e...25f0f9`, all-payload digest `c9147898...49170`, and matrix identity `execution-checking-matrix/5e99dcc5...e11b6a`. Active execution/checking evidence and raw staging are empty; all 111 unrelated files remain byte-identical at digest `e6538ea1...4125e`. Product code is untouched and preflight implementation remains pending. |
 | `2026-08-23` | `.17.3.3.2.3` serialized-plan preflight activation | clean revision-e4b95dbd exact matrix under unchanged real guard; 40 execution and 17 checking atomic profiles; sealed execution family; absent checking-family/complete seals; exact direct guarded adapter disagreement; canonical `/plan` rejection versus bind-plan timeout; ExecutionBuilder construction/serialization/limit order; exact 8,440/8,441 and 32,768 plan boundaries; 65,536/65,537 dominance order; task/index/Memory/book/cards continuity | `passed activation`; canonical checking evaluation expects the existing 16,777,216-byte `/plan` rejection, while the worker times out after materializing all 32,768 random decisions and the complete plan. Active child `.17.3.3.2.3` owns a general independently derived byte-exact plan projection before known-excess allocation, with terminal serialization retained. No threshold shortcut, guard/timeout/cap change, partial publication, support, budget, capacity, or reached-boundary claim is admitted. The revision-bound 57-profile prefix and execution-family seal await verified archival after the activation commit. |
 | `2026-08-23` | `.17.3.3.2.2` random-attempt correctness-repair activation | clean revision-14c619367 exact matrix under unchanged real guard; atomic publication stream; former profile-twenty operations-total excess; random-attempt gate/qualification/limit sequence; worker CPU/RSS and guard diagnostics; raw-stage/publication/family/full census; canonical t/1614 authority trace; Memory/task/index/book/card continuity | `passed activation`; the former operations-total blocker now seals, and 22 exact reports persist. Profile 23 `random_attempts/limit_v1` completes its one-million-attempt controller run but exits 75 because the correctness validation record does not accept; no guard termination, raw-stage residue, partial profile publication, or family/full seal occurs. Active child `.17.3.3.2.2` owns nested stage-diagnostic retention, first-disagreement root cause, focused repair, and same-revision resume without weakening the guard or random/replay contract. |
@@ -6560,6 +6561,69 @@ raising an enforcement ceiling.
   the focused locality/task/containment/reference/Knowledge Map suite and claim
   suite report `All tests successful` at `Files=5, Tests=87` plus
   `Files=3, Tests=31`, and all 54 mdBook chapters test.
+
+## Acceptance Checklist (enforced) — `.17.3.3.2.3` serialized-plan preflight implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The new honest regression replaces
+  `_build_randomness`, `ExecutionIR::_from_builder`, and
+  `ExecutionReport::build` with fatal sentinels around the real 8,441 route.
+  Before repair it enters `_build_randomness` and returns an internal `/`
+  diagnostic instead of the historical `/plan` limit record. `git log -S
+  '_limit_bytes' --oneline -- perl/FSM/VIAL/ExecutionBuilder.pm` identifies
+  the terminal-check origin: `_build` first retained every expected and
+  generated decision, appended every random source map, resolved the complete
+  graph, built ExecutionIR and ExecutionReport, canonicalized the full plan,
+  and only then called `_limit_bytes`.
+- [x] **ADDRESSED (verified)** — `_build` now counts random occurrences and
+  applies their existing cap first, then streams one generated or
+  replay-validated decision expectation at a time. The projection adds exact
+  canonical byte deltas for random-decision elements, per-scenario occurrence
+  ID elements, and random source-map elements to a shared-report base plan;
+  arithmetic saturates at the existing plan cap plus one and continues
+  validating the stream after saturation so random/replay errors keep
+  precedence. `ExecutionReport` exposes only a caller-sealed private projection
+  seam and shares one `_build_plan` schema implementation with its public
+  ExecutionIR route. The existing serialized-plan cap rejects the projection
+  before `_build_randomness`, source-map expansion, ExecutionIR, or terminal
+  report construction. Accepted plans then materialize normally, must equal
+  the projected byte count, and still pass the original terminal byte cap.
+  Replay lookup is indexed by occurrence without changing its closed-schema,
+  identity, value, range, constraint, or attempt validation.
+- [x] **NO REGRESSION** — `perl -Iperl -c` reports `syntax OK` for both changed
+  modules. The unchanged RAM guard reports `All tests successful` for the
+  random/execution/limit/exhaustion/measurement focused set at
+  `Files=7, Tests=33`. Exact guarded t/1634 reports `All tests successful` at
+  `Files=1, Tests=5`: 8,440 remains accepted at 16,775,415 bytes; 8,441 and
+  32,768 return the byte-equal historical `/plan` diagnostic; 65,537 returns
+  only the occurrence-cap diagnostic. Core report/ExecutionIR coverage,
+  including direct rejection of the private projection seam, reports
+  `All tests successful` at `Files=1, Tests=6`. The former exact
+  `random_occurrences/qualification_candidate_v1` adapter profile exits zero
+  under the unchanged 88%-host/4,096-MiB-descendant guard as
+  `expected_rejection` / `validated_not_measured`, with no diagnostic,
+  measurement record, or `.artifacts/tmp/vial-scale` residue. Frozen random
+  generation/replay values, attempts, byte counts, hashes, identities,
+  diagnostics, cap dominance, and terminal serialization remain exact. The
+  documentation sync also exposed and repairs one pre-existing rationale-index
+  drift: `git log -S'2844–2881' -- DEVELOPMENT_NOTES_INDEX.md` identifies
+  `b9463c663`, while the later `e4b95dbd` rationale append advanced the ledger
+  manifest to entry 39 without advancing the human index from entry 38. The
+  index and independently reconstructed manifest now both close through the
+  new entry 40. The two-pass accepted-plan cost is the deliberate
+  bounded-memory tradeoff; no
+  random list or source-map suffix is cached by preflight, and no timeout,
+  guard, cap, support, performance budget, capacity, or reached-boundary claim
+  changes. The final guarded two-file rerun on the reviewed code reports
+  `All tests successful` at `Files=2, Tests=11`. All 54 mdBook chapters test;
+  the inspected repository-local render contains 89 files / 19,243,865 bytes
+  and the changed chapter retains the exact boundary and nonclaims before the
+  render is removed. Relative paths pass at `Files=1, Tests=2`; task integrity
+  holds at three trees / 984 nodes; Knowledge Map parity is 1,150 facts / 6,079
+  questions / 6,246 occurrences / 133 shards; and the claim join closes all
+  1,474 candidates as 887 derived gates / 587 reviewed records / zero gaps.
+  All 22 live-document surfaces pass with zero ceiling increases; project data
+  remains repository-local with no disposable book, VIAL-scale, `.bin`, or
+  `.log` residue; and staged task acceptance plus all 12 doctrines pass.
 
 ## Acceptance Checklist (enforced) — `.17.3.3.2.2` bind-plan evaluation implementation
 

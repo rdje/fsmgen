@@ -139,6 +139,28 @@ subtest '65,536 occurrences are preflight dominated without materialization' => 
         'build refusal names the selected bounded method');
 };
 
+subtest 'adjacent plan excess rejects before execution materialization' => sub {
+    no warnings 'redefine';
+    local *FSM::VIAL::ExecutionBuilder::_build_randomness = sub {
+        die "random-decision materialization entered\n";
+    };
+    local *FSM::VIAL::ExecutionIR::_from_builder = sub {
+        die "ExecutionIR materialization entered\n";
+    };
+    local *FSM::VIAL::ExecutionReport::build = sub {
+        die "terminal plan materialization entered\n";
+    };
+    my $rejected = $class->_test_random_route_boundary(
+        $reference_hial, 8_441,
+    );
+    ok($rejected->{ok},
+        '8,441 rejects without entering any forbidden materialization seam');
+    is($rejected->{random_occurrences}, 8_441,
+        'preflight rejection retains the semantic occurrence count');
+    is_deeply($rejected->{diagnostics}, [plan_diagnostic()],
+        'preflight rejection is byte-equal to the historical plan diagnostic');
+};
+
 subtest 'replay, report, source, and staging mutation fail closed' => sub {
     my $constructed = construction('gate_candidate_v1');
     my $original =

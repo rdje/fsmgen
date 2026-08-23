@@ -66,6 +66,14 @@ subtest 'checked AHB fixture binds into immutable target-neutral execution IR an
         [sort @{FSM::VIAL::ExecutionReport->top_level_keys}],
         'sanitized plan has exactly the selected top-level keys',
     );
+    my $projection_exposed = eval {
+        FSM::VIAL::ExecutionReport->_build_from_builder_projection({});
+        1;
+    };
+    ok(!$projection_exposed,
+        'serialized-plan projection cannot become a public report API');
+    like($@, qr/private to ExecutionBuilder/,
+        'projection rejection names its exact caller seal');
     is($result->{execution_ir}->schema, 'fsmgen.vial_execution_ir.v1', 'ExecutionIR schema is exact');
     is($result->{plan}{schema}, 'fsmgen.vial_plan.v1', 'plan schema is exact');
     is($result->{plan}{status}, 'bound_target_neutral', 'plan is target-neutral');

@@ -32,6 +32,7 @@ answers:
   - "why does the isolated execution checking matrix still stop at operations total over limit?"
   - "where must the VIAL total operation cap be enforced?"
   - "where is the revision e4b95dbd execution checking prefix archived?"
+  - "how is the VIAL serialized plan cap enforced before random decision materialization?"
 date: 2026-08-23
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -230,15 +231,22 @@ execution-family manifest, including exact 16,384/16,385 live-fiber boundary
 evidence. It then seals 17 checking profiles before
 `random_occurrences/qualification_candidate_v1`. Canonical evaluation returns
 the expected `VIAL_EXECUTION_LIMIT_ERROR` at `/plan`, but the measured bind-plan
-stage times out at 300 seconds because `ExecutionBuilder` materializes 32,768
-random decisions and source maps, ExecutionIR, ExecutionReport, and complete
-canonical plan bytes before enforcing the 16,777,216-byte cap. Active child
-`.17.3.3.2.3` owns a general independently checked plan-projection byte
-preflight, exact agreement with terminal canonical bytes for accepted plans,
-and retention of the terminal limit as defense in depth. Axis-specific
-thresholds, guard/timeout/cap changes, evidence relabelling, and promoted
-support/performance/capacity claims are excluded. The 57 atomic profiles plus
-execution-family seal are preserved under the exact revision-`e4b95dbd`
+stage originally timed out at 300 seconds because `ExecutionBuilder`
+materialized 32,768 random decisions and source maps, ExecutionIR,
+ExecutionReport, and complete canonical plan bytes before enforcing the
+16,777,216-byte cap. `.17.3.3.2.3` now streams generated or replay-validated
+decision, scenario-ID, and source-map element bytes into a saturating exact
+projection over a caller-sealed shared-report base plan. The existing plan cap
+runs before a known-excess decision list, source-map suffix, ExecutionIR, or
+terminal report is allocated. Accepted plans must match terminal canonical
+bytes exactly and still pass the terminal limit. Exact guarded evidence retains
+8,440 acceptance at 16,775,415 bytes; the historical `/plan` rejection at
+8,441 and 32,768; and 65,536/65,537 dominance order. The former adapter blocker
+now exits `expected_rejection` / `validated_not_measured` with no diagnostic,
+performance sample, or staging residue. Axis-specific thresholds,
+guard/timeout/cap changes, evidence relabelling, and promoted
+support/performance/capacity claims remain excluded. The 57 atomic profiles
+plus execution-family seal are preserved under the exact revision-`e4b95dbd`
 same-volume history archive. Independent post-move reconstruction proves 57
 reports/5,662,418 bytes, one 46,735-byte family manifest, profile digest
 `e8ba27e0986646a284505966828f3c4fdd0a78a55c24978b7a15bff82625f0f9`,

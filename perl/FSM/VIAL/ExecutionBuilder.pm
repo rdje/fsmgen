@@ -248,11 +248,12 @@ sub _build($raw, $qualification_profile = undef) {
         if ($qualification_profile // '') eq 'balanced_portable_v2';
     _index_scenario_handle_bindings($ctx);
     my ($operation_graph, $scenario_records) = _build_operations($ctx);
-    my $randomness = _build_randomness(
+    my $random_occurrences = _random_occurrence_count($ctx);
+    _limit('random_occurrences', $random_occurrences, '/randomness/decisions');
+    my $random_projection = _project_random_plan_arrays(
         $ctx, $raw->{replay_manifest}, $semantic_identity, $bridge_identity,
+        $random_occurrences,
     );
-    _resolve_decision_references($operation_graph, $randomness);
-    _attach_decisions_to_scenarios($scenario_records, $randomness->{decisions});
 
     my ($models, $scalar_state_cells) = _build_models($ctx);
     my ($scoreboards, $scoreboard_capacity) = _build_scoreboards($ctx);
@@ -268,32 +269,64 @@ sub _build($raw, $qualification_profile = undef) {
     my $capability_ledger = _capability_ledger(
         $semantic, $bridge, $qualification_profile,
     );
+    my $base_source_map_records = scalar(@{$ctx->{source_map}});
+    my $source_map_records = _saturating_nonnegative_add(
+        $base_source_map_records, $random_occurrences,
+        $LIMIT{source_map_records} + 1,
+    );
+    _limit('source_map_records', $source_map_records, '/source_map');
     my $resource_summary = _resource_summary(
         $ctx, $bindings, $models, $scoreboards, $coverage, $faults,
-        $randomness, $scenario_records, $operation_graph, $scalar_state_cells,
-        $scoreboard_capacity, $coverage_materialization,
+        $scenario_records, $operation_graph, $scalar_state_cells,
+        $scoreboard_capacity, $coverage_materialization, $random_occurrences,
+        $source_map_records,
     );
-    _limit('source_map_records', scalar(@{$ctx->{source_map}}), '/source_map');
-
-    my $data = {
-        schema => $SCHEMA,
-        schema_version => 1,
-        profile => $PROFILE,
-        plan_id => undef,
+    my $projection_data = _execution_data({
+        ctx => $ctx,
         semantic_identity => $semantic_identity,
         bridge_identity => $bridge_identity,
-        fixture => {
-            fixture_id => $fixture->{semantic_id},
-            fixture_name => $fixture->{name},
-            unit_binding_id => $bindings->{unit}{binding_id},
-            scenario_ids => [map { $_->{semantic_id} } @selected_scenarios],
-            source_location => _clone($fixture->{source_span}),
-        },
-        type_table => $ctx->{type_entries},
+        fixture => $fixture,
+        selected_scenarios => \@selected_scenarios,
         bindings => $bindings,
-        domains => _clone($bindings->{domains}),
-        transactions => _execution_transactions($ctx, $bindings),
-        events => _clone($bindings->{events}),
+        models => $models,
+        scoreboards => $scoreboards,
+        coverage => $coverage,
+        faults => $faults,
+        randomness => {
+            algorithm => $RANDOM_ALGORITHM,
+            seed => 0 + $fixture->{randomness}{seed},
+            replay_id => defined($raw->{replay_manifest})
+                ? $raw->{replay_manifest}{replay_id} : undef,
+            decisions => [],
+        },
+        scenarios => $scenario_records,
+        operation_graph => $operation_graph,
+        capability_ledger => $capability_ledger,
+        source_map => $ctx->{source_map},
+        resource_summary => $resource_summary,
+        plan_id => 'plan/' . ('0' x 64),
+    });
+    my $preflight_plan_bytes = _preflight_serialized_plan_bytes(
+        $projection_data, $random_projection, $base_source_map_records,
+    );
+    _limit('serialized_plan_bytes', $preflight_plan_bytes, '/plan');
+
+    my $randomness = _build_randomness(
+        $ctx, $raw->{replay_manifest}, $semantic_identity, $bridge_identity,
+    );
+    _resolve_decision_references($operation_graph, $randomness);
+    _attach_decisions_to_scenarios($scenario_records, $randomness->{decisions});
+    _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+        'serialized-plan preflight source-map projection is inconsistent',
+        '/plan') unless @{$ctx->{source_map}} == $source_map_records;
+
+    my $data = _execution_data({
+        ctx => $ctx,
+        semantic_identity => $semantic_identity,
+        bridge_identity => $bridge_identity,
+        fixture => $fixture,
+        selected_scenarios => \@selected_scenarios,
+        bindings => $bindings,
         models => $models,
         scoreboards => $scoreboards,
         coverage => $coverage,
@@ -302,11 +335,10 @@ sub _build($raw, $qualification_profile = undef) {
         scenarios => $scenario_records,
         operation_graph => $operation_graph,
         capability_ledger => $capability_ledger,
-        native_extensions => [],
         source_map => $ctx->{source_map},
         resource_summary => $resource_summary,
-        diagnostics => [],
-    };
+        plan_id => undef,
+    });
     my $digest_data = _clone($data);
     delete $digest_data->{plan_id};
     delete $digest_data->{diagnostics};
@@ -314,7 +346,11 @@ sub _build($raw, $qualification_profile = undef) {
 
     my $execution_ir = FSM::VIAL::ExecutionIR->_from_builder($data);
     my $plan = FSM::VIAL::ExecutionReport->build($execution_ir);
-    _limit_bytes('serialized_plan_bytes', _canonical_json($plan), '/plan');
+    my $terminal_plan_json = _canonical_json($plan);
+    _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+        'serialized-plan preflight disagrees with terminal canonical bytes',
+        '/plan') unless bytes::length($terminal_plan_json) == $preflight_plan_bytes;
+    _limit_bytes('serialized_plan_bytes', $terminal_plan_json, '/plan');
     return {
         ok => JSON::PP::true,
         execution_ir => $execution_ir,
@@ -1601,9 +1637,22 @@ sub _all_actions($actions) {
     return @all;
 }
 
-sub _build_randomness($ctx, $replay, $semantic_identity, $bridge_identity) {
-    my @expected;
+sub _random_occurrence_count($ctx) {
+    my $count = 0;
+    for my $scenario (@{$ctx->{scenarios}}) {
+        my $operations = $ctx->{operation_by_scenario}{$scenario->{semantic_id}};
+        for my $choice (@{$ctx->{fixture}{randomness}{choices}}) {
+            ++$count if grep {
+                _contains_scalar($_->{typed_inputs}, $choice->{semantic_id})
+            } @$operations;
+        }
+    }
+    return $count;
+}
+
+sub _walk_random_expectations($ctx, $consumer) {
     my $seed = $ctx->{fixture}{randomness}{seed};
+    my $count = 0;
     for my $scenario (@{$ctx->{scenarios}}) {
         my $operations = $ctx->{operation_by_scenario}{$scenario->{semantic_id}};
         for my $choice (@{$ctx->{fixture}{randomness}{choices}}) {
@@ -1611,77 +1660,108 @@ sub _build_randomness($ctx, $replay, $semantic_identity, $bridge_identity) {
                 grep { _contains_scalar($_->{typed_inputs}, $choice->{semantic_id}) } @$operations;
             next unless @references;
             my $type = _resolved_type($choice->{type});
-            my $type_id = _register_type($ctx, _type_shape($type), $choice->{semantic_id});
-            my $occurrence = 'decision/' . $ctx->{fixture}{semantic_id} . '/'
-                . $scenario->{semantic_id} . '/' . $choice->{decision_id} . '/0';
-            my $low = _value_decimal($choice->{distribution}{low});
-            my $high = _value_decimal($choice->{distribution}{high});
-            my $distribution = {
-                kind => 'uniform',
-                low => _normalize_literal($ctx, $choice->{distribution}{low}, $choice->{type}),
-                high => _normalize_literal($ctx, $choice->{distribution}{high}, $choice->{type}),
-            };
-            push @expected, {
-                occurrence_id => $occurrence,
+            my $type_id = _register_type(
+                $ctx, _type_shape($type), $choice->{semantic_id},
+            );
+            my $item = {
+                occurrence_id => 'decision/' . $ctx->{fixture}{semantic_id} . '/'
+                    . $scenario->{semantic_id} . '/' . $choice->{decision_id} . '/0',
                 declaration_semantic_id => $choice->{semantic_id},
                 decision_id => $choice->{decision_id},
                 scenario_id => $scenario->{semantic_id},
                 algorithm => $RANDOM_ALGORITHM,
                 seed => 0 + $seed,
                 type_id => $type_id,
-                distribution => $distribution,
-                low_decimal => $low,
-                high_decimal => $high,
+                distribution => {
+                    kind => 'uniform',
+                    low => _normalize_literal(
+                        $ctx, $choice->{distribution}{low}, $choice->{type},
+                    ),
+                    high => _normalize_literal(
+                        $ctx, $choice->{distribution}{high}, $choice->{type},
+                    ),
+                },
+                low_decimal => _value_decimal($choice->{distribution}{low}),
+                high_decimal => _value_decimal($choice->{distribution}{high}),
                 choice => $choice,
                 reference_operation_ids => \@references,
                 source_location => _clone($choice->{source_span}),
             };
+            $consumer->($item, $count);
+            ++$count;
         }
     }
+    return $count;
+}
+
+sub _build_randomness($ctx, $replay, $semantic_identity, $bridge_identity) {
+    my @expected;
+    _walk_random_expectations($ctx, sub($item, $index) {
+        push @expected, $item;
+    });
     _limit('random_occurrences', scalar(@expected), '/randomness/decisions');
     my @decisions = defined($replay)
         ? _replayed_decisions($ctx, $replay, \@expected, $semantic_identity, $bridge_identity)
-        : _generated_decisions($ctx, \@expected);
+        : _generated_decisions(\@expected);
     for my $index (0 .. $#decisions) {
-        my ($expected) = grep { $_->{occurrence_id} eq $decisions[$index]{occurrence_id} } @expected;
-        _add_source_map($ctx, "/random_decisions/$index", $expected->{choice}{semantic_path}, [],
-            $expected->{choice}{source_span});
+        my $expected = $expected[$index];
+        _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+            'random decision ordering disagrees with its expectation',
+            '/randomness/decisions')
+            unless $expected->{occurrence_id} eq $decisions[$index]{occurrence_id};
+        _add_source_map(
+            $ctx, "/random_decisions/$index", $expected->{choice}{semantic_path},
+            [], $expected->{choice}{source_span},
+        );
     }
     return {
         algorithm => $RANDOM_ALGORITHM,
-        seed => 0 + $seed,
+        seed => 0 + $ctx->{fixture}{randomness}{seed},
         replay_id => defined($replay) ? $replay->{replay_id} : undef,
         decisions => \@decisions,
     };
 }
 
-sub _generated_decisions($ctx, $expected) {
-    my @decisions;
-    for my $item (@$expected) {
-        my $generated = FSM::VIAL::ExecutionRandom->generate({
-            width => _resolved_type($item->{choice}{type})->{width},
-            seed => $item->{seed},
-            occurrence_id => $item->{occurrence_id},
-            low => $item->{low_decimal},
-            high => $item->{high_decimal},
-            accept => sub($proposal) {
-                return _constraints_hold($item->{choice}{constraints}, $item->{choice}{semantic_id}, $proposal);
-            },
-        });
-        _throw('VIAL_RANDOM_EXHAUSTED', 'random',
-            "random choice '$item->{decision_id}' exhausted its attempt limit",
-            $item->{choice}{semantic_path}, $item->{choice}{source_span}) unless $generated;
-        my $value = FSM::VIAL::ExecutionRandom->normalized_scalar(
-            $generated->{value}->bstr, $item->{type_id}, 'two_state',
-            _resolved_type($item->{choice}{type})->{signed},
-            _resolved_type($item->{choice}{type})->{width},
-        );
-        push @decisions, _decision_record($item, $value, $generated->{attempt}, 'generated');
-    }
-    return @decisions;
+sub _generated_decisions($expected) {
+    return map { _generated_decision($_) } @$expected;
+}
+
+sub _generated_decision($item) {
+    my $resolved = _resolved_type($item->{choice}{type});
+    my $generated = FSM::VIAL::ExecutionRandom->generate({
+        width => $resolved->{width},
+        seed => $item->{seed},
+        occurrence_id => $item->{occurrence_id},
+        low => $item->{low_decimal},
+        high => $item->{high_decimal},
+        accept => sub($proposal) {
+            return _constraints_hold(
+                $item->{choice}{constraints}, $item->{choice}{semantic_id},
+                $proposal,
+            );
+        },
+    });
+    _throw('VIAL_RANDOM_EXHAUSTED', 'random',
+        "random choice '$item->{decision_id}' exhausted its attempt limit",
+        $item->{choice}{semantic_path}, $item->{choice}{source_span})
+        unless $generated;
+    my $value = FSM::VIAL::ExecutionRandom->normalized_scalar(
+        $generated->{value}->bstr, $item->{type_id}, 'two_state',
+        $resolved->{signed}, $resolved->{width},
+    );
+    return _decision_record(
+        $item, $value, $generated->{attempt}, 'generated',
+    );
 }
 
 sub _replayed_decisions($ctx, $replay, $expected, $semantic_identity, $bridge_identity) {
+    my $state = _prepare_replay(
+        $ctx, $replay, scalar(@$expected), $semantic_identity, $bridge_identity,
+    );
+    return map { _replayed_decision($state, $_) } @$expected;
+}
+
+sub _prepare_replay($ctx, $replay, $expected_count, $semantic_identity, $bridge_identity) {
     my %allowed = map { $_ => 1 } qw(
         schema schema_version replay_id semantic_ir_id bridge_manifest_id
         fixture_id scenario_ids algorithm decisions
@@ -1704,7 +1784,7 @@ sub _replayed_decisions($ctx, $replay, $expected, $semantic_identity, $bridge_id
             && join("\0", @{$replay->{scenario_ids}}) eq join("\0", map { $_->{semantic_id} } @{$ctx->{scenarios}})
             && ref($replay->{decisions}) eq 'ARRAY';
     _throw('VIAL_REPLAY_ERROR', 'replay', 'replay decision count does not match the plan', '/replay_manifest/decisions')
-        unless @{$replay->{decisions}} == @$expected;
+        unless @{$replay->{decisions}} == $expected_count;
     my %by_id;
     for my $index (0 .. $#{$replay->{decisions}}) {
         my $decision = $replay->{decisions}[$index];
@@ -1714,31 +1794,111 @@ sub _replayed_decisions($ctx, $replay, $expected, $semantic_identity, $bridge_id
         );
         _closed_hash($decision, \%keys, 'VIAL_REPLAY_ERROR', "/replay_manifest/decisions/$index");
         _throw('VIAL_REPLAY_ERROR', 'replay', 'duplicate replay occurrence', "/replay_manifest/decisions/$index")
-            if $by_id{$decision->{occurrence_id}}++;
+            if exists $by_id{$decision->{occurrence_id}};
+        $by_id{$decision->{occurrence_id}} = $decision;
     }
-    my @records;
-    for my $item (@$expected) {
-        my ($decision) = grep { $_->{occurrence_id} eq $item->{occurrence_id} } @{$replay->{decisions}};
-        _throw('VIAL_REPLAY_ERROR', 'replay', "missing replay occurrence '$item->{occurrence_id}'", '/replay_manifest/decisions')
-            unless $decision;
-        for my $key (qw(declaration_semantic_id decision_id scenario_id algorithm seed type_id)) {
-            _throw('VIAL_REPLAY_ERROR', 'replay', "replay occurrence has wrong $key", '/replay_manifest/decisions')
-                unless _canonical_json($decision->{$key}) eq _canonical_json($item->{$key});
-        }
-        _throw('VIAL_REPLAY_ERROR', 'replay', 'replay distribution differs from the plan', '/replay_manifest/decisions')
-            unless _canonical_json($decision->{distribution}) eq _canonical_json($item->{distribution});
-        _validate_normalized_value($decision->{value}, $item->{type_id}, _resolved_type($item->{choice}{type}));
-        my $numeric = _normalized_value_math($decision->{value}, _resolved_type($item->{choice}{type}));
-        _throw('VIAL_REPLAY_ERROR', 'replay', 'replay value is outside the declared distribution', '/replay_manifest/decisions')
-            if $numeric->bcmp($item->{low_decimal}) < 0 || $numeric->bcmp($item->{high_decimal}) > 0;
-        _throw('VIAL_REPLAY_ERROR', 'replay', 'replay value violates an authored constraint', '/replay_manifest/decisions')
-            unless _constraints_hold($item->{choice}{constraints}, $item->{choice}{semantic_id}, $numeric);
-        _throw('VIAL_REPLAY_ERROR', 'replay', 'replay attempt is invalid', '/replay_manifest/decisions')
-            unless defined($decision->{attempt}) && !ref($decision->{attempt})
-                && $decision->{attempt} =~ /\A[0-9]+\z/ && $decision->{attempt} < $LIMIT{random_attempts};
-        push @records, _decision_record($item, $decision->{value}, $decision->{attempt}, 'replayed');
+    return {decision_by_occurrence => \%by_id};
+}
+
+sub _replayed_decision($state, $item) {
+    my $decision = $state->{decision_by_occurrence}{$item->{occurrence_id}};
+    _throw('VIAL_REPLAY_ERROR', 'replay',
+        "missing replay occurrence '$item->{occurrence_id}'",
+        '/replay_manifest/decisions') unless $decision;
+    for my $key (qw(
+        declaration_semantic_id decision_id scenario_id algorithm seed type_id
+    )) {
+        _throw('VIAL_REPLAY_ERROR', 'replay',
+            "replay occurrence has wrong $key", '/replay_manifest/decisions')
+            unless _canonical_json($decision->{$key})
+                eq _canonical_json($item->{$key});
     }
-    return @records;
+    _throw('VIAL_REPLAY_ERROR', 'replay',
+        'replay distribution differs from the plan',
+        '/replay_manifest/decisions')
+        unless _canonical_json($decision->{distribution})
+            eq _canonical_json($item->{distribution});
+    my $resolved = _resolved_type($item->{choice}{type});
+    _validate_normalized_value($decision->{value}, $item->{type_id}, $resolved);
+    my $numeric = _normalized_value_math($decision->{value}, $resolved);
+    _throw('VIAL_REPLAY_ERROR', 'replay',
+        'replay value is outside the declared distribution',
+        '/replay_manifest/decisions')
+        if $numeric->bcmp($item->{low_decimal}) < 0
+            || $numeric->bcmp($item->{high_decimal}) > 0;
+    _throw('VIAL_REPLAY_ERROR', 'replay',
+        'replay value violates an authored constraint',
+        '/replay_manifest/decisions')
+        unless _constraints_hold(
+            $item->{choice}{constraints}, $item->{choice}{semantic_id}, $numeric,
+        );
+    _throw('VIAL_REPLAY_ERROR', 'replay', 'replay attempt is invalid',
+        '/replay_manifest/decisions')
+        unless defined($decision->{attempt}) && !ref($decision->{attempt})
+            && $decision->{attempt} =~ /\A[0-9]+\z/
+            && $decision->{attempt} < $LIMIT{random_attempts};
+    return _decision_record(
+        $item, $decision->{value}, $decision->{attempt}, 'replayed',
+    );
+}
+
+sub _project_random_plan_arrays($ctx, $replay, $semantic_identity,
+    $bridge_identity, $expected_count) {
+    my $saturation = $LIMIT{serialized_plan_bytes} + 1;
+    my $replay_state = defined($replay) ? _prepare_replay(
+        $ctx, $replay, $expected_count, $semantic_identity, $bridge_identity,
+    ) : undef;
+    my %scenario_decisions;
+    my $decision_delta = 0;
+    my $source_map_delta = 0;
+    my $scenario_delta = 0;
+    my $count = _walk_random_expectations($ctx, sub($item, $index) {
+        my $decision = defined($replay_state)
+            ? _replayed_decision($replay_state, $item)
+            : _generated_decision($item);
+        $decision_delta = _saturating_nonnegative_add(
+            $decision_delta, bytes::length(_canonical_json($decision)),
+            $saturation,
+        );
+        $decision_delta = _saturating_nonnegative_add(
+            $decision_delta, 1, $saturation,
+        ) if $index;
+
+        my $source_map_record = {
+            plan_path => "/random_decisions/$index",
+            semantic_path => $item->{choice}{semantic_path},
+            bridge_fact_paths => [],
+            source_locations => defined($item->{choice}{source_span})
+                ? [_clone($item->{choice}{source_span})] : [],
+        };
+        $source_map_delta = _saturating_nonnegative_add(
+            $source_map_delta,
+            bytes::length(_canonical_json($source_map_record)),
+            $saturation,
+        );
+        $source_map_delta = _saturating_nonnegative_add(
+            $source_map_delta, 1, $saturation,
+        ) if $index;
+
+        my $seen = $scenario_decisions{$item->{scenario_id}}++;
+        $scenario_delta = _saturating_nonnegative_add(
+            $scenario_delta,
+            bytes::length(_canonical_json($item->{occurrence_id})),
+            $saturation,
+        );
+        $scenario_delta = _saturating_nonnegative_add(
+            $scenario_delta, 1, $saturation,
+        ) if $seen;
+    });
+    _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+        'random occurrence pre-count disagrees with serialized-plan projection',
+        '/plan') unless $count == $expected_count;
+    return {
+        random_decisions_delta => $decision_delta,
+        random_source_maps_delta => $source_map_delta,
+        scenario_decision_ids_delta => $scenario_delta,
+        random_occurrences => $count,
+    };
 }
 
 sub _normalized_value_math($value, $type) {
@@ -2225,9 +2385,93 @@ sub _capability_ledger($semantic, $bridge, $qualification_profile) {
     } sort keys %known];
 }
 
+sub _execution_data($args) {
+    my $ctx = $args->{ctx};
+    my $fixture = $args->{fixture};
+    my $bindings = $args->{bindings};
+    return {
+        schema => $SCHEMA,
+        schema_version => 1,
+        profile => $PROFILE,
+        plan_id => $args->{plan_id},
+        semantic_identity => $args->{semantic_identity},
+        bridge_identity => $args->{bridge_identity},
+        fixture => {
+            fixture_id => $fixture->{semantic_id},
+            fixture_name => $fixture->{name},
+            unit_binding_id => $bindings->{unit}{binding_id},
+            scenario_ids => [map {
+                $_->{semantic_id}
+            } @{$args->{selected_scenarios}}],
+            source_location => _clone($fixture->{source_span}),
+        },
+        type_table => $ctx->{type_entries},
+        bindings => $bindings,
+        domains => _clone($bindings->{domains}),
+        transactions => _execution_transactions($ctx, $bindings),
+        events => _clone($bindings->{events}),
+        models => $args->{models},
+        scoreboards => $args->{scoreboards},
+        coverage => $args->{coverage},
+        faults => $args->{faults},
+        randomness => $args->{randomness},
+        scenarios => $args->{scenarios},
+        operation_graph => $args->{operation_graph},
+        capability_ledger => $args->{capability_ledger},
+        native_extensions => [],
+        source_map => $args->{source_map},
+        resource_summary => $args->{resource_summary},
+        diagnostics => [],
+    };
+}
+
+sub _preflight_serialized_plan_bytes($data, $projection,
+    $base_source_map_records) {
+    my $invalid = sub {
+        _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+            'serialized-plan projection input is inconsistent', '/plan');
+    };
+    $invalid->() unless ref($data->{randomness}{decisions}) eq 'ARRAY'
+        && !@{$data->{randomness}{decisions}};
+    $invalid->() unless ref($data->{source_map}) eq 'ARRAY'
+        && @{$data->{source_map}} == $base_source_map_records;
+    for my $scenario (@{$data->{scenarios}}) {
+        $invalid->()
+            unless ref($scenario->{plan_summary}{decision_occurrence_ids})
+                eq 'ARRAY'
+                && !@{$scenario->{plan_summary}{decision_occurrence_ids}};
+    }
+    my $random_occurrences = $projection->{random_occurrences};
+    my $source_map_records = _saturating_nonnegative_add(
+        $base_source_map_records, $random_occurrences,
+        $LIMIT{source_map_records} + 1,
+    );
+    $invalid->()
+        unless $data->{resource_summary}{random_occurrences}
+                == $random_occurrences
+            && $data->{resource_summary}{source_map_records}
+                == $source_map_records;
+
+    my $base_plan =
+        FSM::VIAL::ExecutionReport->_build_from_builder_projection($data);
+    my $saturation = $LIMIT{serialized_plan_bytes} + 1;
+    my $bytes = bytes::length(_canonical_json($base_plan));
+    for my $delta (qw(
+        random_decisions_delta scenario_decision_ids_delta
+        random_source_maps_delta
+    )) {
+        $bytes = _saturating_nonnegative_add(
+            $bytes, $projection->{$delta}, $saturation,
+        );
+    }
+    $bytes = _saturating_nonnegative_add($bytes, 1, $saturation)
+        if $base_source_map_records && $random_occurrences;
+    return $bytes;
+}
+
 sub _resource_summary($ctx, $bindings, $models, $scoreboards, $coverage, $faults,
-    $randomness, $scenarios, $graph, $scalar_state_cells, $scoreboard_capacity,
-    $coverage_materialization) {
+    $scenarios, $graph, $scalar_state_cells, $scoreboard_capacity,
+    $coverage_materialization, $random_occurrences, $source_map_records) {
     my $binding_count = 1 + @{$bindings->{domains}} + @{$bindings->{endpoints}}
         + @{$bindings->{probes}} + @{$bindings->{transactions}} + @{$bindings->{events}};
     $binding_count += scalar(@{$_->{fields}}) for @{$bindings->{transactions}};
@@ -2250,11 +2494,11 @@ sub _resource_summary($ctx, $bindings, $models, $scoreboards, $coverage, $faults
         coverpoints => scalar(@{$ctx->{fixture}{coverage}{coverpoints}}),
         coverage_bins_and_cross_tuples => $coverage_materialization,
         faults => scalar(@$faults),
-        random_occurrences => scalar(@{$randomness->{decisions}}),
+        random_occurrences => 0 + $random_occurrences,
         native_extensions => 0,
         native_artifacts => 0,
         native_identity_bytes => 0,
-        source_map_records => scalar(@{$ctx->{source_map}}),
+        source_map_records => 0 + $source_map_records,
         limits => _clone(\%LIMIT),
     };
 }
@@ -2304,6 +2548,25 @@ sub _closed_hash($value, $allowed, $code, $path) {
     my @missing = sort grep { !exists $value->{$_} } keys %$allowed;
     _throw($code, 'replay', "$path has unknown key(s): " . join(', ', @unknown), $path) if @unknown;
     _throw($code, 'replay', "$path is missing key(s): " . join(', ', @missing), $path) if @missing;
+}
+
+sub _saturating_nonnegative_add($left, $right, $saturation) {
+    for my $value ($left, $right) {
+        _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+            'serialized-plan projection arithmetic received an invalid operand',
+            '/plan')
+            unless defined($value) && !ref($value)
+                && $value =~ /\A(?:0|[1-9][0-9]*)\z/;
+    }
+    _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+        'serialized-plan projection arithmetic received an invalid saturation',
+        '/plan')
+        unless defined($saturation) && !ref($saturation)
+            && $saturation =~ /\A[1-9][0-9]*\z/;
+    return 0 + $saturation
+        if $left >= $saturation || $right >= $saturation
+            || $right > $saturation - $left;
+    return 0 + $left + $right;
 }
 
 sub _limit($name, $count, $path) {

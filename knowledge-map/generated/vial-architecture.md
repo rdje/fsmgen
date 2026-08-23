@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **30** uniquely owned question entries.
+> **1** facts · **31** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -16,6 +16,7 @@
 - q="how does semantic bridge measurement preserve semantic paths without allowing host paths?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how does the exact combined source byte profile stay below its timeout?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how is execution checking matrix validation memory bounded?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="how is the VIAL serialized plan cap enforced before random decision materialization?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how is the execution checking scale matrix resumed without borrowing identity?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how is the semantic bridge scale matrix resumed and published?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how was the balanced portable bridge blocker resolved?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)

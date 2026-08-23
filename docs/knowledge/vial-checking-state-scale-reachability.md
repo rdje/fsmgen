@@ -7,6 +7,7 @@ answers:
   - "how does VIAL prove an exact one million entry coverage hit vector?"
   - "what is the VIAL checking-state coverpoint source boundary?"
   - "what is the VIAL checking-state random occurrence plan boundary?"
+  - "how does checking-state reject an oversized random plan before materialization?"
   - "why does checking-state scale not use the portable SystemVerilog backend as its oracle?"
   - "does a VIAL cross enumerate explicit tuples or a static Cartesian bin domain?"
   - "what does preflight_dominated mean for checking-state random occurrences?"
@@ -72,15 +73,23 @@ packed-state evaluator instead.
 The first exact measurement capture to reach that qualification proves why the
 cap must be enforced earlier without changing its contract. Canonical
 evaluation returns the historical `/plan` rejection, but the measured
-bind-plan stage times out after 300 seconds because the builder constructs the
-complete 32,768-decision plan before checking serialized bytes. Active child
-`.17.3.3.2.3` owns a general compact plan-projection byte preflight whose result
-must equal terminal canonical serialization for accepted plans; the terminal
-check remains. A hard-coded 8,440/8,441 occurrence threshold is explicitly not
-an admissible repair. The revision-`e4b95dbd` interruption prefix is preserved
-under its revision-keyed same-volume archive with an independently reconstructed
-57-report manifest; active execution/checking evidence and raw staging are
-empty before implementation.
+bind-plan stage originally timed out after 300 seconds because the builder
+constructed the complete 32,768-decision plan before checking serialized bytes.
+The implemented `.17.3.3.2.3` repair instead streams each generated or
+replay-validated decision, scenario occurrence ID, and random source-map record
+through canonical JSON and adds their exact byte deltas to a caller-sealed base
+plan with saturating arithmetic. It retains no projected decision list or
+source-map suffix. The existing cap therefore rejects known excess before
+random-list, ExecutionIR, or terminal-report materialization; accepted plans
+must equal terminal canonical bytes and still pass the terminal check. A
+hard-coded 8,440/8,441 occurrence threshold is not used. Exact guarded routes
+retain 8,440 acceptance at 16,775,415 bytes, historical `/plan` rejection at
+8,441 and 32,768, and the 65,536/65,537 dominance order. The former adapter
+blocker is now `expected_rejection` / `validated_not_measured` with no
+diagnostic, performance sample, or staging residue. The revision-`e4b95dbd`
+interruption prefix remains preserved under its revision-keyed same-volume
+archive with an independently reconstructed 57-report manifest; active
+execution/checking evidence and raw staging are empty before the fresh matrix.
 
 That evaluator consumes caller-sealed canonical SemanticIR and ExecutionIR. A
 one-million-entry scoreboard stores only its varying 32-bit payload in a

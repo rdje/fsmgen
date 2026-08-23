@@ -754,3 +754,23 @@ uses full-space range algebra only where modulo and rejection are identities.
 This preserves layered independence, algorithm bytes, fixed vectors, attempt
 ordinals, plan/replay identities, and the normative timeout instead of trading
 correctness checks for benchmark headroom.
+
+## 2026-08-23: Exact plan preflight is a bounded two-pass projection
+
+The serialized-plan cap cannot be moved earlier by estimating average random
+record size or by hard-coding the known 8,440/8,441 boundary. Decision records,
+scenario occurrence IDs, and random source maps are three separate canonical
+arrays, while replay validation and random exhaustion must retain precedence
+over plan size. The builder therefore streams one fully validated would-be
+decision at a time through the canonical JSON encoder and accumulates exact
+element and comma deltas over a shared-report base plan. Saturating arithmetic
+bounds the count without stopping semantic validation.
+
+Preflight deliberately retains neither the decision list nor the random
+source-map suffix. An accepted plan consequently performs a second
+deterministic generation/replay pass for ordinary materialization; terminal
+canonical bytes must equal the projection and still meet the original limit.
+This spends CPU to keep the known-excess path memory-bounded and makes the
+terminal serializer a defense-in-depth oracle instead of a second schema
+implementation. The base-plan seam is private to `ExecutionBuilder`, so the
+optimization does not become a caller-supplied plan or public report API.

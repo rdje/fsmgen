@@ -30,6 +30,21 @@ sub build($class, @args) {
         unless @args == 1 && blessed($args[0])
             && ref($args[0]) eq 'FSM::VIAL::ExecutionIR';
     my $data = $args[0]->as_hashref;
+    return _build_plan($data);
+}
+
+sub _build_from_builder_projection($class, @args) {
+    my $caller = caller;
+    confess "$class->_build_from_builder_projection requires the exact class invocant\n"
+        unless defined($class) && !ref($class) && $class eq __PACKAGE__;
+    confess __PACKAGE__ . "->_build_from_builder_projection is private to ExecutionBuilder\n"
+        unless defined($caller) && $caller eq 'FSM::VIAL::ExecutionBuilder';
+    confess __PACKAGE__ . "->_build_from_builder_projection expects one plain projection hash\n"
+        unless @args == 1 && ref($args[0]) eq 'HASH' && !blessed($args[0]);
+    return _build_plan($args[0]);
+}
+
+sub _build_plan($data) {
     my $bindings = _plan_bindings($data->{bindings});
     my $plan = {
         schema => 'fsmgen.vial_plan.v1',
