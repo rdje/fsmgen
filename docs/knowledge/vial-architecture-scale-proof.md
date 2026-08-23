@@ -28,6 +28,7 @@ answers:
   - "how is the execution checking scale matrix resumed without borrowing identity?"
   - "why did execution checking matrix resume stop before profile twenty?"
   - "how is execution checking matrix validation memory bounded?"
+  - "why cannot the nineteen pre-repair scale reports enter the repaired revision seal?"
 date: 2026-08-23
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -177,10 +178,16 @@ exclusions or residue. The resumed capture seals nineteen profiles, then the
 real 4,096-MiB guard stops both the original coordinator and a fresh resume
 before profile twenty: `_capture_family` reloads and fully validates every
 large stored report in one long-lived process, and Perl retains the high-water
-heap across iterations. Active `.17.3.3.2` owns per-profile guard-visible
-process isolation; it must preserve complete validation and atomic publication
-while returning only a closed bounded result to the coordinator. The guard and
-the nineteen immutable reports remain unchanged.
+heap across iterations. `.17.3.3.2` now puts every complete profile capture,
+resume, and publication-validation lifecycle in one guard-visible child. Full
+adapter regeneration and atomic publication/reload remain inside the child;
+only a canonical closed compact result can cross its close-on-exec pipe under a
+1,048,576-byte ceiling. Signal, exit, exception, malformed/noncanonical/
+oversized output, identity drift, and artifact drift fail closed. The nineteen
+older reports all bind revision `c7493e3d`: the repaired code can independently
+revalidate them, but revision truth forbids relabelling or mixing them into a
+later implementation revision's seal. They remain revision-keyed interruption
+evidence while the repaired clean revision earns a fresh 72-profile capture.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

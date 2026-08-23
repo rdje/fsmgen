@@ -709,3 +709,29 @@ The same proof exposed an older test assumption that an injected publication
 failure could remove the entire shared qualification namespace. Rollback now
 proves absence of its exact target and removes only parents it created; a
 pre-existing semantic/bridge evidence namespace must remain untouched.
+
+## 2026-08-23: Exact profile isolation must preserve revision truth
+
+Loading and fully regenerating a sequence of large execution/checking reports
+in one Perl coordinator releases the logical values but not necessarily the
+allocator's high-water heap. Restarting that coordinator does not solve resume:
+validating the same immutable prefix recreates the same retained high-water
+state before the next profile begins.
+
+Capture, resume, and later family/complete revalidation therefore put each full
+report lifecycle in a separate guard-visible child. The child performs the
+existing adapter regeneration and atomic publication/reload checks, reduces the
+report to one compact entry, and returns it through a close-on-exec pipe. The
+parent admits only canonical JSON under a fixed byte ceiling and rechecks a
+closed operation/profile/status/common-identity/artifact shape; exits, signals,
+exceptions, malformed or noncanonical bytes, and oversized results fail closed.
+This bounds allocator retention without weakening the outer guard or trusting
+an immutable report without full validation.
+
+The implementation commit also changes the clean Git revision. Nineteen reports
+captured before the repair remain valid evidence for isolated revalidation, but
+their revision cannot be relabelled or mixed into the repaired revision's
+common-identity seal. They must be hash-verified and retained in a revision-
+keyed repository-volume archive, after which the repaired clean revision earns
+its own fresh complete-matrix capture. Preserving provenance takes precedence over a
+superficially convenient resume claim.

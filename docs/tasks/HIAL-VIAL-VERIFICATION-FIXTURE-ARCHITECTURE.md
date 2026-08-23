@@ -748,9 +748,9 @@ decomposes the architecture needed to move beyond that bounded foundation.
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2`
   Status: `active`
   Goal: `Bound execution/checking matrix capture and resume memory to one exact profile lifecycle at a time.`
-  Acceptance: `Run every profile capture or immutable-resume validation in its own guard-visible child lifecycle; admit only a closed bounded coordinator result; preserve full adapter report validation, atomic publication, common clean-revision/host/tool/guard identity, ordered progress, exact failure propagation, family/full seal withholding, and profile-boundary resume; prove child failure, signal, malformed/oversized result, publication collision, and large synthetic per-profile allocation fail closed without leaking a child or publication; resume the retained nineteen-profile exact capture under unchanged guards and seal the full 72-profile matrix.`
-  Verification: `Origin commit 3ccc4f5b9 introduced _capture_family as one long-lived loop whose resumed _load_report_publication path parses each complete report and invokes the full adapter validator in the coordinator. The first post-repair capture seals nineteen profiles, then the real guard terminates at 5,009.4 MiB before operations_total/over_limit; a fresh process independently validates the same nineteen immutable profiles but again reaches 4,936.7 MiB and is terminated at the same unsealed frontier. Both stops leave zero raw staging, no family/full seal, a clean tracked tree, and the same nineteen valid publications. Per-profile process isolation and proof are pending; guard weakening and evidence deletion are forbidden.`
-  Commit: `pending isolated-profile activation`
+  Acceptance: `Run every profile capture or immutable-publication validation in its own guard-visible child lifecycle; admit only a closed bounded coordinator result; preserve full adapter report validation, atomic publication, common clean-revision/host/tool/guard identity, ordered progress, exact failure propagation, family/full seal withholding, and same-revision profile-boundary resume; prove child failure, signal, malformed/oversized result, publication collision, and large synthetic per-profile allocation fail closed without leaking a child or publication; independently revalidate the retained nineteen revision-c7493e3de profiles through the repaired isolation path, preserve them in a verified revision-keyed same-volume archive rather than relabel or delete them, then seal a fresh full 72-profile matrix at the clean repaired revision under unchanged guards.`
+  Verification: `Origin commit 3ccc4f5b9 introduced _capture_family as one long-lived loop whose resumed _load_report_publication path parses each complete report and invokes the full adapter validator in the coordinator. The first post-repair capture seals nineteen profiles, then the real guard terminates at 5,009.4 MiB before operations_total/over_limit; a fresh process independently validates the same nineteen immutable profiles but again reaches 4,936.7 MiB and is terminated at the same unsealed frontier. Both stops leave zero raw staging, no family/full seal, a clean tracked tree, and the same nineteen valid publications at revision c7493e3de. Because any implementation commit necessarily has a later revision, those immutable reports can prove isolated validation but cannot honestly enter the repaired revision's common-identity seal. Per-profile process isolation, revision-keyed preservation, and fresh repaired-revision proof are pending; guard weakening, evidence relabelling, and evidence deletion are forbidden.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2: activate isolated profile coordinator repair`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4`
   Status: `proposed`
@@ -6455,3 +6455,39 @@ raising an enforcement ceiling.
   task, resume, book, fact, claim, and containment records; implementation is
   pending. Documentation checks report `Files=2, Tests=22`, and
   `knowledge-map: OK` confirms generated retrieval parity.
+
+## Acceptance Checklist (enforced) — `.17.3.3.2` isolated-profile coordinator
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_capture_family'` locates
+  origin `3ccc4f5b9`: capture and `_validate_family_publication` both loaded and
+  fully validated every large report in their long-lived coordinator. Two
+  unchanged-guard runs then stopped before profile twenty after validating the
+  same nineteen reports. Their envelopes all name clean revision `c7493e3d`,
+  while the isolated-worker implementation must be committed at a later clean
+  revision; same-revision sealing therefore forbids mixing or relabelling the
+  old reports even though they remain valid interruption evidence.
+- [x] **ADDRESSED (verified)** — Every capture, immutable resume, and family or
+  complete-publication report validation now executes in a forked descendant
+  visible to the outer guard. The child retains full adapter regeneration,
+  atomic publish/reload, capture-revision, common-identity, and profile-report
+  checks, then returns only a canonical closed payload inside a 1,048,576-byte
+  close-on-exec pipe envelope. The parent rejects signal/nonzero exit, empty,
+  malformed, noncanonical, oversized, unknown-key, wrong-profile, wrong-
+  operation, wrong-status, wrong-common-identity, revision, artifact-path,
+  digest, size, or sample-count evidence before retaining one compact entry.
+  Exceptions are deterministic and bounded to 4,096 bytes. The old nineteen
+  reports remain immutable pending guarded isolated revalidation and verified
+  revision-keyed archival; a fresh repaired-revision capture remains the exact
+  completion gate after this implementation is committed cleanly.
+- [x] **NO REGRESSION** — Module and watcher syntax pass. The real guarded
+  adapter/matrix suite reports `All tests successful` at `Files=2, Tests=9`.
+  Its new adversarial subtest proves a 67,108,864-byte child-only allocation,
+  distinct child PID, callback exception, exit 23, signal 9, malformed payload,
+  oversized result, noncanonical bytes, immutable-publication collision, and
+  exact repository-local fixture cleanup. Locality, rationale-ledger, and
+  matrix checks pass at `Files=4, Tests=29`; all 54 mdBook chapters test;
+  `knowledge-map: OK`, `git diff --check`, and every doctrine pass. No guard,
+  profile schema, report validator, measurement ordinal, publication path,
+  common identity, family/full completion rule, performance budget, support,
+  capacity, or reached-boundary claim is weakened; exact 72-profile evidence
+  remains explicitly pending the clean implementation revision.

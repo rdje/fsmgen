@@ -3,9 +3,11 @@
 use strict;
 use warnings;
 
+use File::Path qw(make_path remove_tree);
 use File::Spec;
 use FindBin;
 use JSON::PP ();
+use POSIX ();
 use Test::More;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
@@ -88,6 +90,125 @@ subtest 'capture and publication boundaries fail closed before work' => sub {
         });
     }), qr/family is not selected/,
         'publication validation rejects unknown ownership');
+};
+
+subtest 'profile isolation is bounded, process-owned, and fail closed' => sub {
+    my $profile_id = 'synthetic-profile-worker-v1';
+    my $parent_pid = $$;
+    my $run_isolated = $class->can('_run_isolated_profile_worker');
+    my $decode_envelope = $class->can('_decode_profile_worker_envelope');
+    my $publish_json = $class->can('_publish_json');
+    my $validate_small_payload = sub {
+        my ($payload) = @_;
+        die "synthetic worker payload must be one closed hash\n"
+            unless ref($payload) eq 'HASH'
+                && join(',', sort keys %$payload) eq 'allocated_bytes,pid';
+        die "synthetic worker payload allocation is invalid\n"
+            unless $payload->{allocated_bytes} == 67_108_864;
+        die "synthetic worker payload PID is invalid\n"
+            unless $payload->{pid} =~ /\A[1-9][0-9]*\z/;
+    };
+    my $isolated = $run_isolated->({
+                profile_id => $profile_id,
+                worker => sub {
+                    my $allocation = 'x' x 67_108_864;
+                    die "synthetic child allocation changed\n"
+                        unless length($allocation) == 67_108_864;
+                    return {
+                        allocated_bytes => length($allocation),
+                        pid => $$,
+                    };
+                },
+                validate_payload => $validate_small_payload,
+            });
+    is($isolated->{allocated_bytes}, 67_108_864,
+        'large synthetic state exists only for one child lifecycle');
+    isnt($isolated->{pid}, $parent_pid,
+        'profile work executes outside the long-lived coordinator');
+
+    like(dies(sub {
+        $run_isolated->({
+                profile_id => $profile_id,
+                worker => sub { die "synthetic worker exception\n" },
+                validate_payload => sub { },
+            });
+    }), qr/failed: synthetic worker exception/,
+        'child exceptions cross the bounded envelope without ambiguity');
+    like(dies(sub {
+        $run_isolated->({
+                profile_id => $profile_id,
+                worker => sub { POSIX::_exit(23) },
+                validate_payload => sub { },
+            });
+    }), qr/returned no result with exit status 23/,
+        'an abrupt nonzero child exit fails closed');
+    like(dies(sub {
+        $run_isolated->({
+                profile_id => $profile_id,
+                worker => sub { kill 9, $$; return {} },
+                validate_payload => sub { },
+            });
+    }), qr/terminated by signal 9/,
+        'a signaled child fails closed with its exact signal');
+    like(dies(sub {
+        $run_isolated->({
+                profile_id => $profile_id,
+                worker => sub { return 'not-a-closed-payload' },
+                validate_payload => sub {
+                    die "synthetic worker payload must be one closed hash\n";
+                },
+            });
+    }), qr/payload is invalid: synthetic worker payload must be one closed hash/,
+        'a malformed success payload cannot cross the parent boundary');
+    like(dies(sub {
+        $run_isolated->({
+                profile_id => $profile_id,
+                worker => sub { return 'x' x 1_048_577 },
+                validate_payload => sub { },
+            });
+    }), qr/failed: isolated profile worker result exceeded the bounded envelope/,
+        'an oversized result becomes one bounded deterministic failure');
+
+    my $canonical_envelope = $json->encode({
+        schema => 'fsmgen.vial_architecture_scale_profile_worker.v1',
+        schema_version => 1,
+        ok => JSON::PP::true,
+        payload => {},
+        error => undef,
+    });
+    my (undef, $canonical_error) =
+        $decode_envelope->("$canonical_envelope\n");
+    is($canonical_error, 'result is not canonical JSON',
+        'noncanonical worker bytes are rejected before payload use');
+
+    my $fixture_root = repo_path(
+        ".artifacts/tmp/t1660-profile-publication-collision-$$",
+    );
+    remove_tree($fixture_root) if -e $fixture_root;
+    make_path(File::Spec->catdir($fixture_root, '.git'));
+    my @root_stat = stat($fixture_root);
+    my $first = $publish_json->({
+                repository_root => $fixture_root,
+                root_device => $root_stat[0],
+                profile_id => $profile_id,
+                filename => 'measurement-publication.json',
+                value => {generation => 1},
+            });
+    is($first->{status}, 'published',
+        'synthetic publication establishes one immutable identity');
+    like(dies(sub {
+        $publish_json->({
+                repository_root => $fixture_root,
+                root_device => $root_stat[0],
+                profile_id => $profile_id,
+                filename => 'measurement-publication.json',
+                value => {generation => 2},
+            });
+    }), qr/publication collision/,
+        'an isolated worker cannot overwrite a conflicting publication');
+    remove_tree($fixture_root);
+    ok(!-e $fixture_root,
+        'synthetic collision fixture leaves no repository-local residue');
 };
 
 subtest 'guarded capture seals every raw report and authoritative outcome' => sub {

@@ -7,13 +7,19 @@ use bytes ();
 use Carp qw(confess);
 use Cwd ();
 use Digest::SHA qw(sha256_hex);
-use Fcntl qw(O_CREAT O_EXCL O_WRONLY);
+use Errno qw(EAGAIN EINTR EWOULDBLOCK);
+use Fcntl qw(
+    FD_CLOEXEC F_GETFD F_GETFL F_SETFD F_SETFL O_CREAT O_EXCL O_NONBLOCK
+    O_WRONLY
+);
 use File::Basename qw(dirname);
 use File::Path qw(remove_tree);
 use File::Spec;
 use IO::Handle ();
 use JSON::PP ();
+use POSIX qw(WEXITSTATUS WIFEXITED WIFSIGNALED WNOHANG WTERMSIG _exit);
 use Scalar::Util qw(blessed);
+use Time::HiRes qw(sleep);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
@@ -33,6 +39,10 @@ my $STAGING_BASE = '.artifacts/tmp/vial-scale/matrix-publication';
 my $REPORT_FILENAME = 'measurement-publication.json';
 my $MATRIX_FILENAME = 'matrix.json';
 my $COMPLETE_FILENAME = 'complete-matrix.json';
+my $PROFILE_WORKER_SCHEMA =
+    'fsmgen.vial_architecture_scale_profile_worker.v1';
+my $MAX_PROFILE_WORKER_RESULT_BYTES = 1_048_576;
+my $MAX_PROFILE_WORKER_ERROR_BYTES = 4_096;
 my $ADAPTER =
     'FSM::VIAL::ArchitectureScaleExecutionCheckingMeasurement';
 
@@ -85,6 +95,12 @@ my @PROFILE_KEYS = qw(
     controller_applicable controller_reason measurement_applicable
     measurement_reason measured_samples excluded_samples outcome diagnostics
     artifact_relative_path artifact_sha256 artifact_bytes
+);
+my @PROFILE_WORKER_ENVELOPE_KEYS = qw(
+    schema schema_version ok payload error
+);
+my @PROFILE_WORKER_PAYLOAD_KEYS = qw(
+    operation profile_id publication_status common_identity entry
 );
 my @COMMON_KEYS = qw(
     git_revision dirty_state host_profile tool_profile resource_guard
@@ -216,74 +232,27 @@ sub _capture_family($repo_root, $root_device, $family, $git_revision) {
     my (@captured, $common_identity);
     for my $index (0 .. $#profiles) {
         my $profile = $profiles[$index];
-        my ($publication_set, $publication);
-        if (_publication_exists($repo_root, $profile->{profile_id})) {
-            ($publication_set, $publication) = _load_report_publication(
-                $repo_root, $root_device, $profile,
-            );
-            _require_capture_revision(
-                $publication_set->{capture_identity}, $git_revision,
-            );
-            $publication->{status} = 'resumed';
-        }
-        else {
-            my $report = $profile->{mode} eq 'validation'
-                ? $ADAPTER->validate_profile({
-                    repository_root => $repo_root,
-                    family => $family,
-                    level => $profile->{level},
-                    primary_axis => $profile->{primary_axis},
-                })
-                : $ADAPTER->measure_profile({
-                    repository_root => $repo_root,
-                    family => $family,
-                    level => $profile->{level},
-                    primary_axis => $profile->{primary_axis},
-                });
-            $ADAPTER->validate_report({
-                repository_root => $repo_root,
-                report => $report,
-            });
-            _require_acceptable_profile_report($profile, $report);
-            my $report_common = _report_common_identity($report);
-            if (defined $report_common) {
-                _require_common_match($common_identity, $report_common)
-                    if defined $common_identity;
-                $common_identity //= $report_common;
-            }
-            confess "source-free matrix profile cannot establish capture identity\n"
-                unless defined $common_identity;
-            _require_capture_revision($common_identity, $git_revision);
-            $publication_set = _profile_publication(
-                $common_identity, $report,
-            );
-            $publication = _publish_json({
-                repository_root => $repo_root,
-                root_device => $root_device,
-                profile_id => $profile->{profile_id},
-                filename => $REPORT_FILENAME,
-                value => $publication_set,
-            });
-            my $publication_status = $publication->{status};
-            ($publication_set, $publication) = _load_report_publication(
-                $repo_root, $root_device, $profile,
-            );
-            $publication->{status} = $publication_status;
-        }
-        my $loaded_common = $publication_set->{capture_identity};
+        my $result = _run_profile_process({
+            repository_root => $repo_root,
+            root_device => $root_device,
+            profile => $profile,
+            operation => 'capture_or_resume',
+            git_revision => $git_revision,
+            expected_common_identity => $common_identity,
+        });
+        my $loaded_common = $result->{common_identity};
         _require_common_match($common_identity, $loaded_common)
             if defined $common_identity;
         $common_identity //= _clone($loaded_common);
-        push @captured, _profile_entry(
-            $profile, $publication_set->{report}, $publication,
-            $loaded_common,
-        );
+        my $entry = _clone($result->{entry});
+        $entry->{_common_identity} = _clone($loaded_common);
+        push @captured, $entry;
         my $ordinal = $index + 1;
         print STDERR join(' ',
             'vial-scale-execution-checking-matrix:', $family,
             "$ordinal/" . scalar(@profiles),
             "$profile->{primary_axis}/$profile->{level}",
-            $publication->{status},
+            $result->{publication_status},
         ), "\n";
     }
 
@@ -305,15 +274,23 @@ sub _capture_family($repo_root, $root_device, $family, $git_revision) {
 
 sub _validate_family_publication($repo_root, $root_device, $family) {
     my @profiles = grep { $_->{family} eq $family } @{_inventory()};
-    my @entries;
+    my (@entries, $common_identity);
     for my $profile (@profiles) {
-        my ($publication_set, $publication) = _load_report_publication(
-            $repo_root, $root_device, $profile,
-        );
-        push @entries, _profile_entry(
-            $profile, $publication_set->{report}, $publication,
-            $publication_set->{capture_identity},
-        );
+        my $result = _run_profile_process({
+            repository_root => $repo_root,
+            root_device => $root_device,
+            profile => $profile,
+            operation => 'validate_publication',
+            git_revision => undef,
+            expected_common_identity => $common_identity,
+        });
+        my $loaded_common = $result->{common_identity};
+        _require_common_match($common_identity, $loaded_common)
+            if defined $common_identity;
+        $common_identity //= _clone($loaded_common);
+        my $entry = _clone($result->{entry});
+        $entry->{_common_identity} = _clone($loaded_common);
+        push @entries, $entry;
     }
     my $expected = _family_manifest($family, \@entries);
     my ($actual) = _read_json_publication({
@@ -387,6 +364,415 @@ sub _assert_owned_partition() {
             }
         }
     }
+}
+
+sub _run_profile_process($raw) {
+    _exact_keys(
+        $raw,
+        [qw(repository_root root_device profile operation git_revision
+            expected_common_identity)],
+        'isolated profile process invocation',
+    );
+    my $profile = $raw->{profile};
+    _exact_keys(
+        $profile, \@INVENTORY_KEYS, 'isolated profile process profile',
+    );
+    confess "isolated profile process operation is invalid\n"
+        unless ($raw->{operation} // '') eq 'capture_or_resume'
+            || ($raw->{operation} // '') eq 'validate_publication';
+    confess "isolated profile process repository identity is invalid\n"
+        unless defined($raw->{repository_root})
+            && !ref($raw->{repository_root})
+            && -d $raw->{repository_root}
+            && _nonnegative_integer($raw->{root_device});
+    if (defined $raw->{git_revision}) {
+        confess "isolated profile process Git revision is invalid\n"
+            unless $raw->{operation} eq 'capture_or_resume'
+                && !ref($raw->{git_revision})
+                && $raw->{git_revision} =~ /\A[0-9a-f]{40}\z/;
+    }
+    elsif ($raw->{operation} eq 'capture_or_resume') {
+        confess "isolated profile capture omitted its Git revision\n";
+    }
+    _validate_common_identity($raw->{expected_common_identity})
+        if defined $raw->{expected_common_identity};
+    my $payload = _run_isolated_profile_worker({
+        profile_id => $profile->{profile_id},
+        worker => sub { _profile_worker_payload($raw) },
+        validate_payload => sub($candidate) {
+            _validate_profile_worker_payload($candidate, $raw);
+        },
+    });
+    return $payload;
+}
+
+sub _profile_worker_payload($raw) {
+    my $repo_root = $raw->{repository_root};
+    my $root_device = $raw->{root_device};
+    my $profile = $raw->{profile};
+    my $operation = $raw->{operation};
+    my $git_revision = $raw->{git_revision};
+    my $common_identity = defined($raw->{expected_common_identity})
+        ? _clone($raw->{expected_common_identity}) : undef;
+    my ($publication_set, $publication);
+
+    if (_publication_exists($repo_root, $profile->{profile_id})) {
+        ($publication_set, $publication) = _load_report_publication(
+            $repo_root, $root_device, $profile,
+        );
+        $publication->{status} = $operation eq 'capture_or_resume'
+            ? 'resumed' : 'loaded';
+    }
+    else {
+        confess "execution/checking profile publication is absent\n"
+            unless $operation eq 'capture_or_resume';
+        my $report = $profile->{mode} eq 'validation'
+            ? $ADAPTER->validate_profile({
+                repository_root => $repo_root,
+                family => $profile->{family},
+                level => $profile->{level},
+                primary_axis => $profile->{primary_axis},
+            })
+            : $ADAPTER->measure_profile({
+                repository_root => $repo_root,
+                family => $profile->{family},
+                level => $profile->{level},
+                primary_axis => $profile->{primary_axis},
+            });
+        $ADAPTER->validate_report({
+            repository_root => $repo_root,
+            report => $report,
+        });
+        _require_acceptable_profile_report($profile, $report);
+        my $report_common = _report_common_identity($report);
+        if (defined $report_common) {
+            _require_common_match($common_identity, $report_common)
+                if defined $common_identity;
+            $common_identity //= _clone($report_common);
+        }
+        confess "source-free matrix profile cannot establish capture identity\n"
+            unless defined $common_identity;
+        _require_capture_revision($common_identity, $git_revision);
+        $publication_set = _profile_publication(
+            $common_identity, $report,
+        );
+        $publication = _publish_json({
+            repository_root => $repo_root,
+            root_device => $root_device,
+            profile_id => $profile->{profile_id},
+            filename => $REPORT_FILENAME,
+            value => $publication_set,
+        });
+        my $publication_status = $publication->{status};
+        ($publication_set, $publication) = _load_report_publication(
+            $repo_root, $root_device, $profile,
+        );
+        $publication->{status} = $publication_status;
+    }
+
+    my $loaded_common = $publication_set->{capture_identity};
+    _require_common_match($common_identity, $loaded_common)
+        if defined $common_identity;
+    _require_capture_revision($loaded_common, $git_revision)
+        if defined $git_revision;
+    my $entry = _profile_entry(
+        $profile, $publication_set->{report}, $publication, $loaded_common,
+    );
+    delete $entry->{_common_identity};
+    return {
+        operation => $operation,
+        profile_id => $profile->{profile_id},
+        publication_status => $publication->{status},
+        common_identity => _clone($loaded_common),
+        entry => $entry,
+    };
+}
+
+sub _run_isolated_profile_worker($raw) {
+    _exact_keys(
+        $raw, [qw(profile_id worker validate_payload)],
+        'isolated profile worker invocation',
+    );
+    confess "isolated profile worker profile ID is invalid\n"
+        unless _safe_token($raw->{profile_id});
+    confess "isolated profile worker callback is invalid\n"
+        unless ref($raw->{worker}) eq 'CODE'
+            && ref($raw->{validate_payload}) eq 'CODE';
+
+    pipe(my $reader, my $writer)
+        or confess "cannot create isolated profile worker pipe\n";
+    my $descriptor_ok = eval {
+        _set_close_on_exec($reader, 'reader');
+        _set_close_on_exec($writer, 'writer');
+        my $flags = fcntl($reader, F_GETFL, 0);
+        confess "cannot inspect isolated profile worker reader flags\n"
+            unless defined $flags;
+        confess "cannot make isolated profile worker reader nonblocking\n"
+            unless fcntl($reader, F_SETFL, $flags | O_NONBLOCK);
+        1;
+    };
+    if (!$descriptor_ok) {
+        my $error = $@;
+        close $reader;
+        close $writer;
+        die $error;
+    }
+
+    my $pid = fork();
+    if (!defined $pid) {
+        close $reader;
+        close $writer;
+        confess "cannot fork isolated profile worker\n";
+    }
+    if ($pid == 0) {
+        close $reader;
+        my ($payload, $worker_error);
+        {
+            local $@;
+            my $ok = eval {
+                $payload = $raw->{worker}->();
+                1;
+            };
+            $worker_error = $@ unless $ok;
+        }
+        my $envelope = defined($worker_error)
+            ? _profile_worker_failure_envelope($worker_error)
+            : {
+                schema => $PROFILE_WORKER_SCHEMA,
+                schema_version => 1,
+                ok => JSON::PP::true,
+                payload => $payload,
+                error => undef,
+            };
+        my $encoded = eval { _canonical_json($envelope) };
+        my $exit_code = defined($worker_error) ? 70 : 0;
+        if (!defined($encoded)
+                || bytes::length($encoded)
+                    > $MAX_PROFILE_WORKER_RESULT_BYTES) {
+            $envelope = _profile_worker_failure_envelope(
+                'isolated profile worker result exceeded the bounded envelope',
+            );
+            $encoded = _canonical_json($envelope);
+            $exit_code = 75;
+        }
+        my $written = _write_profile_worker_result($writer, $encoded);
+        close $writer;
+        _exit($written ? $exit_code : 74);
+    }
+
+    close $writer;
+    my ($buffer, $read_error, $wait_status, $done) = ('', undef, undef, 0);
+    while (!$done) {
+        $read_error //= _drain_profile_worker_pipe($reader, \$buffer);
+        if (defined $read_error) {
+            kill 'TERM', $pid;
+            my $waited = waitpid($pid, 0);
+            $wait_status = $? if $waited == $pid;
+            last;
+        }
+        my $waited = waitpid($pid, WNOHANG);
+        if ($waited == $pid) {
+            $wait_status = $?;
+            $done = 1;
+        }
+        elsif ($waited == -1) {
+            $read_error = 'cannot wait for isolated profile worker';
+            $done = 1;
+        }
+        else {
+            sleep(0.01);
+        }
+    }
+    $read_error //= _drain_profile_worker_pipe($reader, \$buffer);
+    close $reader
+        or $read_error //= 'cannot close isolated profile worker reader';
+    confess "$read_error\n" if defined $read_error;
+
+    my $signal = defined($wait_status) && WIFSIGNALED($wait_status)
+        ? WTERMSIG($wait_status) : 0;
+    confess "isolated profile worker '$raw->{profile_id}' terminated by signal $signal\n"
+        if $signal;
+    my ($envelope, $decode_error) =
+        _decode_profile_worker_envelope($buffer);
+    my $exit_code = defined($wait_status) && WIFEXITED($wait_status)
+        ? WEXITSTATUS($wait_status) : undef;
+    if (defined $decode_error) {
+        my $status = defined($exit_code)
+            ? " with exit status $exit_code" : '';
+        confess "isolated profile worker '$raw->{profile_id}' $decode_error$status\n";
+    }
+    if (!$envelope->{ok}) {
+        confess "isolated profile worker '$raw->{profile_id}' failed: "
+            . "$envelope->{error}\n";
+    }
+    confess "isolated profile worker '$raw->{profile_id}' exited with status "
+        . "$exit_code\n"
+        unless defined($exit_code) && $exit_code == 0;
+    my $payload_ok = eval {
+        $raw->{validate_payload}->($envelope->{payload});
+        1;
+    };
+    confess "isolated profile worker '$raw->{profile_id}' payload is invalid: $@"
+        unless $payload_ok;
+    return _clone($envelope->{payload});
+}
+
+sub _validate_profile_worker_payload($payload, $raw) {
+    _exact_keys(
+        $payload, \@PROFILE_WORKER_PAYLOAD_KEYS,
+        'isolated profile worker payload',
+    );
+    confess "isolated profile worker operation changed\n"
+        unless ($payload->{operation} // '') eq $raw->{operation};
+    confess "isolated profile worker profile changed\n"
+        unless ($payload->{profile_id} // '')
+            eq $raw->{profile}{profile_id};
+    my %allowed_status = $raw->{operation} eq 'capture_or_resume'
+        ? map { $_ => 1 } qw(published recovered unchanged resumed)
+        : (loaded => 1);
+    confess "isolated profile worker publication status is invalid\n"
+        unless $allowed_status{$payload->{publication_status} // ''};
+    _validate_common_identity($payload->{common_identity});
+    _require_common_match(
+        $raw->{expected_common_identity}, $payload->{common_identity},
+    ) if defined $raw->{expected_common_identity};
+    _require_capture_revision(
+        $payload->{common_identity}, $raw->{git_revision},
+    ) if defined $raw->{git_revision};
+    _validate_profile_entry($payload->{entry}, $raw->{profile});
+}
+
+sub _validate_profile_entry($entry, $profile) {
+    _exact_keys(
+        $entry, \@PROFILE_KEYS, 'isolated profile worker profile entry',
+    );
+    for my $key (qw(profile_id family primary_axis level mode)) {
+        confess "isolated profile worker entry $key changed\n"
+            unless ($entry->{$key} // '') eq ($profile->{$key} // '');
+    }
+    confess "isolated profile worker authority status is invalid\n"
+        unless $AUTHORITY_STATUS{$entry->{authority_status} // ''};
+    confess "isolated profile worker sample counts are invalid\n"
+        unless _nonnegative_integer($entry->{measured_samples})
+            && _nonnegative_integer($entry->{excluded_samples});
+    confess "isolated profile worker retained excluded samples\n"
+        if $entry->{excluded_samples};
+    my $expected_path = join('/',
+        $PUBLICATION_BASE, $profile->{profile_id}, $REPORT_FILENAME,
+    );
+    confess "isolated profile worker artifact path changed\n"
+        unless ($entry->{artifact_relative_path} // '') eq $expected_path;
+    confess "isolated profile worker artifact digest is invalid\n"
+        unless ($entry->{artifact_sha256} // '') =~ /\A[0-9a-f]{64}\z/;
+    confess "isolated profile worker artifact size is invalid\n"
+        unless _nonnegative_integer($entry->{artifact_bytes})
+            && $entry->{artifact_bytes} > 0;
+    confess "isolated profile worker diagnostics are invalid\n"
+        unless ref($entry->{diagnostics}) eq 'ARRAY';
+}
+
+sub _profile_worker_failure_envelope($error) {
+    return {
+        schema => $PROFILE_WORKER_SCHEMA,
+        schema_version => 1,
+        ok => JSON::PP::false,
+        payload => undef,
+        error => _bounded_profile_worker_error($error),
+    };
+}
+
+sub _bounded_profile_worker_error($error) {
+    $error = 'isolated profile worker failed without an exception'
+        unless defined($error) && !ref($error) && length($error);
+    $error =~ s/[^\x20-\x7e]+/ /g;
+    $error =~ s/\s+/ /g;
+    $error =~ s/\A\s+|\s+\z//g;
+    return substr($error, 0, $MAX_PROFILE_WORKER_ERROR_BYTES);
+}
+
+sub _decode_profile_worker_envelope($buffer) {
+    return (undef, 'returned no result') unless length $buffer;
+    return (undef, 'result exceeded the bounded envelope')
+        if bytes::length($buffer) > $MAX_PROFILE_WORKER_RESULT_BYTES;
+    my $decoded = eval { JSON::PP->new->utf8(1)->decode($buffer) };
+    return (undef, 'result is not valid JSON') unless defined $decoded;
+    return (undef, 'result is not canonical JSON')
+        unless _canonical_json($decoded) eq $buffer;
+    my $valid = eval {
+        _exact_keys(
+            $decoded, \@PROFILE_WORKER_ENVELOPE_KEYS,
+            'isolated profile worker envelope',
+        );
+        confess "isolated profile worker envelope schema is invalid\n"
+            unless ($decoded->{schema} // '') eq $PROFILE_WORKER_SCHEMA
+                && ($decoded->{schema_version} // 0) == 1;
+        _json_boolean($decoded->{ok}, 'isolated profile worker envelope ok');
+        if ($decoded->{ok}) {
+            confess "successful isolated profile worker retained an error\n"
+                if defined $decoded->{error};
+        }
+        else {
+            confess "failed isolated profile worker retained a payload\n"
+                if defined $decoded->{payload};
+            confess "failed isolated profile worker error is invalid\n"
+                unless defined($decoded->{error})
+                    && !ref($decoded->{error})
+                    && length($decoded->{error})
+                    && bytes::length($decoded->{error})
+                        <= $MAX_PROFILE_WORKER_ERROR_BYTES;
+        }
+        1;
+    };
+    return (undef, _bounded_profile_worker_error($@)) unless $valid;
+    return ($decoded, undef);
+}
+
+sub _set_close_on_exec($handle, $label) {
+    my $flags = fcntl($handle, F_GETFD, 0);
+    confess "cannot inspect isolated profile worker $label descriptor\n"
+        unless defined $flags;
+    confess "cannot protect isolated profile worker $label descriptor\n"
+        unless fcntl($handle, F_SETFD, $flags | FD_CLOEXEC);
+}
+
+sub _write_profile_worker_result($writer, $encoded) {
+    my $offset = 0;
+    while ($offset < bytes::length($encoded)) {
+        my $written = syswrite(
+            $writer, $encoded, bytes::length($encoded) - $offset, $offset,
+        );
+        if (!defined $written) {
+            next if $! == EINTR;
+            return 0;
+        }
+        return 0 if $written == 0;
+        $offset += $written;
+    }
+    return 1;
+}
+
+sub _drain_profile_worker_pipe($reader, $buffer_ref) {
+    while (1) {
+        my $chunk = '';
+        my $read = sysread($reader, $chunk, 65_536);
+        if (defined $read) {
+            return undef if $read == 0;
+            my $remaining = $MAX_PROFILE_WORKER_RESULT_BYTES + 1
+                - bytes::length($$buffer_ref);
+            $$buffer_ref .= substr($chunk, 0, $remaining)
+                if $remaining > 0;
+            next;
+        }
+        next if $! == EINTR;
+        return undef if $! == EAGAIN || $! == EWOULDBLOCK;
+        return 'cannot read isolated profile worker result';
+    }
+}
+
+sub _json_boolean($value, $label) {
+    confess "$label must be a JSON boolean\n"
+        unless blessed($value) && $value->isa('JSON::PP::Boolean');
+    return $value ? JSON::PP::true : JSON::PP::false;
 }
 
 sub _profile_publication($common, $report) {
