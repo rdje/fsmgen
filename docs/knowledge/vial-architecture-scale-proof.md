@@ -206,8 +206,16 @@ before bridge indexing. Compact tests accept 1,000,000 and reject 1,000,001
 with the unchanged diagnostic; the real exact excess passes in one second
 under the unchanged 4,096-MiB guard and proves bridge indexing is never
 entered. The terminal check remains. The failed prefix is preserved as
-nineteen reports/1,739,213 bytes under its revision-keyed archive; a fresh
-common-revision 72-profile capture remains pending.
+nineteen reports/1,739,213 bytes under its revision-keyed archive. A fresh
+revision-14c619367 capture then proves the former profile-twenty excess seals
+under the unchanged guard and advances through 22 atomic reports. Profile 23,
+`random_attempts/limit_v1`, completes its one-million-attempt controller work
+but fails matrix admission because its correctness-validation record does not
+accept. The guard does not terminate it; raw staging is empty, the failed
+profile is absent, and family/full seals remain withheld. Active child
+`.17.3.3.2.2` owns nested stage-diagnostic retention, comparison with t/1614,
+first-disagreement repair, and same-revision resume without weakening the
+guard or random/replay contract.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
