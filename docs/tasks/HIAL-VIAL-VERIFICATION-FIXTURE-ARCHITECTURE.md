@@ -765,7 +765,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Goal: `Make the million-attempt execution profile's controller correctness validation exact, diagnosable, and acceptable without weakening its random/replay authority.`
   Acceptance: `Retain the 22 clean-revision atomic publications and absent family/full seals. Under the unchanged real guard, reproduce random_attempts/limit_v1 through the caller-sealed measurement adapter while durably exposing the rejected validation stage and diagnostic; independently compare construction, generated decision, strict replay, evaluation, controller stage plan, output counts, artifacts, cleanup, and identities with t/1614 and the accepted qualification profile. Root-cause the first disagreement before changing product code. Repair only the proven producer, controller, or matrix-admission layer; preserve exactly 1,000,000 attempts, zero-based accepted attempt 999,999, checked-AHB route, deterministic plan/replay identities, validation-first sampling, atomic publication, raw-stage cleanup, 4,096-MiB process guard, and fail-closed exclusions. Add a focused RED/GREEN regression, resume from the immutable 22-profile frontier at one clean revision, and withhold family/full seals until all 72 profiles validate.`
   Verification: `Fresh exact capture at clean revision 14c619367 passes the repaired operations_total/over_limit_v1 profile that previously reached 4,869.5 MiB, then seals random_attempts/gate_candidate_v1 and qualification_candidate_v1. Profile random_attempts/limit_v1 runs under the unchanged 88%-host/4,096-MiB-process guard and exits 75 after 8,323 wall-clock seconds because its controller validation_record outcome is not accepted; the top-level matrix exception retains the admission failure but not the nested stage diagnostic. The guard does not terminate it, the publication count remains 22, raw staging is empty, and family/full seals are absent. Canonical t/1614 separately freezes the expected millionth generated decision and strict replay, so the active next step is exact adapter-level diagnostic retention and comparison rather than threshold change or evidence deletion.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.2: activate random-attempt correctness repair`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.2: activate random-attempt correctness repair; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.2: diagnose redundant bind-plan evaluation timeout`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4`
   Status: `proposed`
@@ -6473,6 +6473,27 @@ raising an enforcement ceiling.
   task, resume, book, fact, claim, and containment records; implementation is
   pending. Documentation checks report `Files=2, Tests=22`, and
   `knowledge-map: OK` confirms generated retrieval parity.
+
+## Acceptance Checklist (enforced) — `.17.3.3.2.2` bind-plan timeout diagnosis
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — A direct guarded adapter reproduction
+  retains `VIAL_SCALE_MEASUREMENT_TIMEOUT` at
+  `/stage_measurements/bind_plan/timeout`: the preceding family stages accept,
+  bind-plan is terminated at its fixed effective ceiling with no output, and
+  exact cleanup succeeds. `git log -S'_canonical_evaluation' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleExecutionCheckingMeasurement.pm` identifies
+  origin `11eda923e`; its stage worker already invokes `_stage_payload` twice,
+  but `_bind_plan_payload` independently nests the twice-evaluated
+  `_canonical_evaluation`, multiplying the million-attempt work.
+- [x] **ADDRESSED (verified)** — The exact diagnostic, first causal code seam,
+  retained publication frontier, and unchanged-contract repair direction are
+  durable in the task, Memory, task index, mdBook, and Knowledge Map. No code,
+  test, timeout, guard, workload, random/replay contract, or evidence changed.
+- [x] **NO REGRESSION** — The guarded report preserves successful construct,
+  parse/validate, and bridge records, zero bind-plan output, exact cleanup, no
+  RAM-guard trip, no failed publication, no family/full seal, and a clean Git
+  tree. `knowledge-map: OK` confirms generated retrieval parity; all mdBook
+  chapters, claims, containment, task integrity, locality, and doctrines pass.
 
 ## Acceptance Checklist (enforced) — `.17.3.3.2.2` random-attempt correctness-repair activation
 

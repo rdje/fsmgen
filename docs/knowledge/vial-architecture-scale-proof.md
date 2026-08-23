@@ -209,13 +209,18 @@ entered. The terminal check remains. The failed prefix is preserved as
 nineteen reports/1,739,213 bytes under its revision-keyed archive. A fresh
 revision-14c619367 capture then proves the former profile-twenty excess seals
 under the unchanged guard and advances through 22 atomic reports. Profile 23,
-`random_attempts/limit_v1`, completes its one-million-attempt controller work
-but fails matrix admission because its correctness-validation record does not
-accept. The guard does not terminate it; raw staging is empty, the failed
-profile is absent, and family/full seals remain withheld. Active child
-`.17.3.3.2.2` owns nested stage-diagnostic retention, comparison with t/1614,
-first-disagreement repair, and same-revision resume without weakening the
-guard or random/replay contract.
+`random_attempts/limit_v1`, completes canonical admission but its bind-plan
+worker reaches the fixed 300-second effective timeout. The retained report
+names `VIAL_SCALE_MEASUREMENT_TIMEOUT` at
+`/stage_measurements/bind_plan/timeout`, signal 15, successful preceding
+stages, zero failed-stage output, and exact cleanup. The guard does not
+terminate it; the failed profile is absent and family/full seals remain
+withheld. Source tracing proves redundant evaluation nesting: the stage worker
+already runs each payload twice, while each bind-plan payload calls the
+twice-evaluated canonical helper again. Active child `.17.3.3.2.2` owns an
+honest call-count RED, removal of only that duplicate layer, canonical-output
+equality, exact guarded GREEN, and same-revision resume without weakening the
+guard, timeout, determinism, or random/replay contract.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
