@@ -26,6 +26,8 @@ answers:
   - "how are VIAL execution and checking stages measured?"
   - "why does source-free VIAL scale have no measurement record?"
   - "how is the execution checking scale matrix resumed without borrowing identity?"
+  - "why did execution checking matrix resume stop before profile twenty?"
+  - "how is execution checking matrix validation memory bounded?"
 date: 2026-08-23
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -171,8 +173,14 @@ each exact stage identity a repository-volume advisory lock, rejects live
 contention, and reclaims only recursively validated regular same-volume
 orphans; unsafe entries remain untouched. The real interrupted gate/03 tree
 was recovered through that protocol with three accepted samples and no
-exclusions or residue. Exact clean-revision capture resumes after the repair
-commit.
+exclusions or residue. The resumed capture seals nineteen profiles, then the
+real 4,096-MiB guard stops both the original coordinator and a fresh resume
+before profile twenty: `_capture_family` reloads and fully validates every
+large stored report in one long-lived process, and Perl retains the high-water
+heap across iterations. Active `.17.3.3.2` owns per-profile guard-visible
+process isolation; it must preserve complete validation and atomic publication
+while returning only a closed bounded result to the coordinator. The guard and
+the nineteen immutable reports remain unchanged.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

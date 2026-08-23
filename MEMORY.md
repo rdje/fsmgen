@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.1`.
-- next_action: commit the proved interruption-safe raw-stage recovery, then
-  resume the exact clean-revision guarded 72-profile capture from its empty
-  execution/checking publication namespace.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2`.
+- next_action: isolate each execution/checking profile capture or resume
+  validation in a guard-visible child, prove the bounded coordinator protocol,
+  then continue the exact matrix from nineteen immutable profiles.
 - in_flight_uncommitted: none.
 - in_flight_background: none
 - blockers: none.
