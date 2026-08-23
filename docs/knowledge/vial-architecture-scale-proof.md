@@ -29,6 +29,8 @@ answers:
   - "why did execution checking matrix resume stop before profile twenty?"
   - "how is execution checking matrix validation memory bounded?"
   - "why cannot the nineteen pre-repair scale reports enter the repaired revision seal?"
+  - "why does the isolated execution checking matrix still stop at operations total over limit?"
+  - "where must the VIAL total operation cap be enforced?"
 date: 2026-08-23
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -38,6 +40,7 @@ evidence: >-
   docs/decisions/0061-vial-execution-scale-uses-a-caller-sealed-qualification-binder.md;
   docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md;
   docs/decisions/0077-vial-balanced-portable-uses-a-caller-sealed-revision-2-qualification-bridge.md;
+  docs/decisions/0078-vial-execution-total-operation-cap-precedes-graph-materialization.md;
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/VIAL/ArchitectureScaleWorkload.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission.pm; perl/FSM/VIAL/ArchitectureScaleRuntimeStream.pm;
   perl/FSM/VIAL/ArchitectureScaleBalancedPortable.pm;
@@ -57,6 +60,7 @@ evidence: >-
   perl/FSM/VIAL/ArchitectureScaleBackendEmission/PortableVHDL.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission/OSVVM.pm;
   perl/FSM/Support/VIALVHDLEmissionContract.pm; perl/FSM/Support/VIALNativeUVMEmissionContract.pm;
+  t/1626-vial-architecture-scale-execution-total-operation-limit.t;
   t/1644-vial-backend-emission-authority-alignment.t;
   t/1645-vial-architecture-scale-backend-emission-foundation.t;
   t/1647-vial-architecture-scale-backend-emission-portable-vhdl.t;
@@ -187,7 +191,19 @@ oversized output, identity drift, and artifact drift fail closed. The nineteen
 older reports all bind revision `c7493e3d`: the repaired code can independently
 revalidate them, but revision truth forbids relabelling or mixing them into a
 later implementation revision's seal. They remain revision-keyed interruption
-evidence while the repaired clean revision earns a fresh 72-profile capture.
+evidence. A clean isolated capture at `b9463c6` then publishes nineteen fresh
+profiles before the profile-twenty worker itself reaches 4,869.5 MiB at
+`operations_total/over_limit_v1` and the unchanged 4,096-MiB guard terminates
+it. The per-profile lifecycle therefore fixes coordinator retention but
+falsifies it as the remaining cause. `ExecutionBuilder::_build_operations`
+checks `expanded_operations_total` only after materializing every selected
+operation and source map; historical exact t/1626 accordingly requires a
+6,144-MiB opt-in guard. Decision `0078` assigns active child `.17.3.3.2.1` to
+rederive the compact selected-scenario operation total immediately after
+selection and enforce the existing cap before graph allocation, with the same
+diagnostic and a retained terminal check. The failed prefix is preserved as
+nineteen reports/1,739,213 bytes under its revision-keyed archive; the exact
+72-profile capture remains pending after the product repair.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
