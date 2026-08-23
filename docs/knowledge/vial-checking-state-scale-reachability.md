@@ -14,7 +14,7 @@ answers:
   - "how does VIAL prove every scalar model-state cell changes?"
   - "how does VIAL prove fault activation, expiry, and restoration at scale?"
   - "how are VIAL Runner capture limits and nonzero tool exits kept fail closed?"
-date: 2026-08-20
+date: 2026-08-23
 status: current
 tags: [vial, checking-state, scale, scoreboard, coverage, faults, randomness]
 evidence: >-
@@ -77,7 +77,10 @@ complete 32,768-decision plan before checking serialized bytes. Active child
 `.17.3.3.2.3` owns a general compact plan-projection byte preflight whose result
 must equal terminal canonical serialization for accepted plans; the terminal
 check remains. A hard-coded 8,440/8,441 occurrence threshold is explicitly not
-an admissible repair.
+an admissible repair. The revision-`e4b95dbd` interruption prefix is preserved
+under its revision-keyed same-volume archive with an independently reconstructed
+57-report manifest; active execution/checking evidence and raw staging are
+empty before implementation.
 
 That evaluator consumes caller-sealed canonical SemanticIR and ExecutionIR. A
 one-million-entry scoreboard stores only its varying 32-bit payload in a

@@ -31,6 +31,7 @@ answers:
   - "why cannot the nineteen pre-repair scale reports enter the repaired revision seal?"
   - "why does the isolated execution checking matrix still stop at operations total over limit?"
   - "where must the VIAL total operation cap be enforced?"
+  - "where is the revision e4b95dbd execution checking prefix archived?"
 date: 2026-08-23
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -237,7 +238,13 @@ preflight, exact agreement with terminal canonical bytes for accepted plans,
 and retention of the terminal limit as defense in depth. Axis-specific
 thresholds, guard/timeout/cap changes, evidence relabelling, and promoted
 support/performance/capacity claims are excluded. The 57 atomic profiles plus
-execution-family seal remain revision-bound interruption evidence; checking-
+execution-family seal are preserved under the exact revision-`e4b95dbd`
+same-volume history archive. Independent post-move reconstruction proves 57
+reports/5,662,418 bytes, one 46,735-byte family manifest, profile digest
+`e8ba27e0986646a284505966828f3c4fdd0a78a55c24978b7a15bff82625f0f9`,
+and all-payload digest
+`c9147898a109f21eda6bc8ec370f2b15620518cdb1fb3d7171bf83d9fec49170`;
+the active execution/checking namespace and raw staging are empty. Checking-
 family and complete seals remain withheld.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],

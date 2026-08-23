@@ -771,8 +771,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Enforce the serialized-plan byte cap before materializing a checking-state plan that is provably over the existing limit.`
   Acceptance: `Keep the 16,777,216-byte serialized_plan_bytes cap, canonical plan schema and bytes, accepted-plan identities, random/replay semantics, checking-state levels, expected-rejection status, and existing VIAL_EXECUTION_LIMIT_ERROR phase/message/path unchanged. Add one general plan-projection preflight at the earliest point where all size-determining compact inputs are authoritative: independently derive the exact canonical serialized byte count with bounded or saturating arithmetic, reject malformed or inconsistent projections, and invoke the existing cap before allocating a known-excess random-decision list, source-map expansion, ExecutionIR, or ExecutionReport. Retain the complete terminal canonical serialization and byte-limit check as defense in depth, and prove preflight equality with terminal bytes for accepted ordinary and exact 8,440-occurrence boundary plans. Prove 8,441 and 32,768 occurrences return the byte-equal historical /plan diagnostic under the unchanged 300-second stage ceiling and 4,096-MiB descendant guard; preserve 65,536 preflight_dominated and 65,537 random-count-cap dominance, deterministic reruns, atomic publication, exact cleanup, and family/full seal withholding. No axis-specific numeric shortcut, cap/timeout/guard increase, workload relabelling, support claim, performance budget, capacity claim, or reached-boundary claim is admissible. Commit cleanly, revision-archive the incompatible 40-execution/17-checking prefix plus execution family seal with exact hashes, and resume the full 72-profile matrix from an empty active execution/checking namespace.`
-  Verification: `Activation evidence below fixes the first causal seam and acceptance boundary. Implementation, clean-revision archival, guarded exact boundary proof, and full-matrix reseal remain pending.`
-  Commit: `pending implementation`
+  Verification: `Activation evidence below fixes the first causal seam and acceptance boundary. The incompatible revision-e4b95dbd prefix is now preserved under its exact revision-keyed same-volume archive: 57 reports consume 5,662,418 bytes, the accepted execution-family manifest consumes 46,735 bytes, and independent reconstruction matches profile digest e8ba27e0986646a284505966828f3c4fdd0a78a55c24978b7a15bff82625f0f9 plus all-payload digest c9147898a109f21eda6bc8ec370f2b15620518cdb1fb3d7171bf83d9fec49170. The active execution/checking namespace and raw staging are empty, while 111 unrelated active evidence files retain digest e6538ea18897af1203fa26393ae4fafa0bafed0aa9b1423cfc630847cdd4125e. Implementation, guarded exact boundary proof, and full-matrix reseal remain pending.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3: activate serialized-plan preflight repair; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3: archive revision-e4b95dbd matrix prefix; pending implementation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4`
   Status: `proposed`
@@ -1668,6 +1668,7 @@ execution/checking or external-tool measurement can begin.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-23` | `.17.3.3.2.3` revision-e4b95dbd evidence-prefix archival | same-volume device equality; exact 40 execution/17 checking profile admission; accepted 40-profile execution-family seal; per-file regular/single-link census; capture revision and dirty-state checks; independent post-move file/byte/hash/canonical-digest reconstruction; matrix identity; active/raw/staging residue census; unrelated active-evidence before/after digest | `passed`; the atomic archive contains exactly 57 reports/5,662,418 bytes, one 46,735-byte family manifest, and one archive manifest. Independent reconstruction matches profile digest `e8ba27e...25f0f9`, all-payload digest `c9147898...49170`, and matrix identity `execution-checking-matrix/5e99dcc5...e11b6a`. Active execution/checking evidence and raw staging are empty; all 111 unrelated files remain byte-identical at digest `e6538ea1...4125e`. Product code is untouched and preflight implementation remains pending. |
 | `2026-08-23` | `.17.3.3.2.3` serialized-plan preflight activation | clean revision-e4b95dbd exact matrix under unchanged real guard; 40 execution and 17 checking atomic profiles; sealed execution family; absent checking-family/complete seals; exact direct guarded adapter disagreement; canonical `/plan` rejection versus bind-plan timeout; ExecutionBuilder construction/serialization/limit order; exact 8,440/8,441 and 32,768 plan boundaries; 65,536/65,537 dominance order; task/index/Memory/book/cards continuity | `passed activation`; canonical checking evaluation expects the existing 16,777,216-byte `/plan` rejection, while the worker times out after materializing all 32,768 random decisions and the complete plan. Active child `.17.3.3.2.3` owns a general independently derived byte-exact plan projection before known-excess allocation, with terminal serialization retained. No threshold shortcut, guard/timeout/cap change, partial publication, support, budget, capacity, or reached-boundary claim is admitted. The revision-bound 57-profile prefix and execution-family seal await verified archival after the activation commit. |
 | `2026-08-23` | `.17.3.3.2.2` random-attempt correctness-repair activation | clean revision-14c619367 exact matrix under unchanged real guard; atomic publication stream; former profile-twenty operations-total excess; random-attempt gate/qualification/limit sequence; worker CPU/RSS and guard diagnostics; raw-stage/publication/family/full census; canonical t/1614 authority trace; Memory/task/index/book/card continuity | `passed activation`; the former operations-total blocker now seals, and 22 exact reports persist. Profile 23 `random_attempts/limit_v1` completes its one-million-attempt controller run but exits 75 because the correctness validation record does not accept; no guard termination, raw-stage residue, partial profile publication, or family/full seal occurs. Active child `.17.3.3.2.2` owns nested stage-diagnostic retention, first-disagreement root cause, focused repair, and same-revision resume without weakening the guard or random/replay contract. |
 | `2026-08-23` | `.17.3.3.2.1` early total-operation enforcement implementation | compact-tree per-scenario rederivation; canonical positive repeat and nonempty parallel/repeat invariants; saturating bounded add/multiply; semantic action-count equality; inclusive 1,000,000/1,000,001 aggregate boundary; historical diagnostic equality; fatal bridge-index sentinel; real unchanged 88%-host/4,096-MiB-descendant guard; accepted ExecutionIR/topology, adjacent qualification, and measurement adapter; empty active publication/raw staging census; task/decision/Memory/book/card synchronization | `passed`; the exact excess returns `expected_rejection` in one second at Files=1/Tests=9 without entering bridge indexing, while the focused accepted/adjacent suite passes Files=4/Tests=19 in 80 seconds. The unchanged terminal cap remains as defense in depth, and malformed or forged compact counts fail internally. Parent `.17.3.3.2` next owns the fresh clean-revision 72-profile matrix; no guard, cap, diagnostic, support, performance budget, or capacity claim changes. |
@@ -6482,6 +6483,44 @@ raising an enforcement ceiling.
   pending. Documentation checks report `Files=2, Tests=22`, and
   `knowledge-map: OK` confirms generated retrieval parity.
 
+## Acceptance Checklist (enforced) — `.17.3.3.2.3` evidence-prefix archival checkpoint
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Every execution/checking matrix envelope
+  is sealed to one clean capture revision. The 57 atomic publications and
+  execution-family manifest captured at revision `e4b95dbd` cannot enter a
+  future implementation-revision checking-family or complete seal, while
+  deletion or relabelling would destroy the exact interruption evidence.
+  `git log -S'capture_identity' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleExecutionCheckingMeasurementMatrix.pm`
+  identifies commits `3ccc4f5b9` and `b9463c663` as the revision-sealing and
+  isolated-resume origins.
+- [x] **ADDRESSED (verified)** — A one-use fail-closed workflow admitted only
+  the expected 40 execution reports, 17 checking reports, and accepted
+  execution-family manifest; required regular single-link payloads, clean
+  capture identities, the exact matrix identity, and same-volume devices; then
+  moved them through a private staging directory into
+  `.artifacts/qualification/vial-scale/history/e4b95dbda91777b33fef5e392d7c0b42c4d92871/execution-checking-serialized-plan-timeout-profile-58-v1`.
+  The final manifest records capture revision `e4b95dbd`, superseding revision
+  `9cfe1168a`, the failed profile/stage/diagnostics, per-file hashes, and
+  canonical aggregate digests. The one-use workflow was removed afterward.
+- [x] **NO REGRESSION** — Independent reconstruction—not the archival
+  workflow—finds 59 archive files: 57 reports/5,662,418 bytes, one
+  46,735-byte execution-family manifest, and one archive manifest. It
+  reproduces profile digest
+  `e8ba27e0986646a284505966828f3c4fdd0a78a55c24978b7a15bff82625f0f9`,
+  family digest
+  `31718f483626abd06d555f66890288f998d536e0577562fd9f1e76029f68a728`,
+  and all-payload digest
+  `c9147898a109f21eda6bc8ec370f2b15620518cdb1fb3d7171bf83d9fec49170`.
+  The active execution/checking file count is zero, raw/staging residue is
+  absent, and all 111 unrelated active files retain their before/after digest
+  `e6538ea18897af1203fa26393ae4fafa0bafed0aa9b1423cfc630847cdd4125e`.
+  Product code, tests, limits, guards, outcomes, identities, and claims are
+  unchanged; implementation remains pending. The RAM-guarded focused suite
+  reports `All tests successful` at `Files=5, Tests=55`; all 54 mdBook
+  chapters test, `knowledge-map: OK` holds, all 22 containment surfaces pass,
+  and the staged doctrine driver is rerun after this checklist update.
+
 ## Acceptance Checklist (enforced) — `.17.3.3.2.3` serialized-plan preflight activation
 
 - [x] **ROOT CAUSE (WHY + WHERE)** — The clean revision-`e4b95dbd` matrix
@@ -6509,14 +6548,14 @@ raising an enforcement ceiling.
   acceptance obligations. Axis-specific thresholds, cap/timeout/guard changes,
   evidence relabelling, and support/performance/capacity promotion are outside
   the leaf.
-- [x] **NO REGRESSION** — Activation changes task/continuity/documentation
-  records only; product code and tests remain untouched. The active ignored
-  evidence namespace contains exactly 57 atomic profile publications—40
+- [x] **NO REGRESSION** — Activation changed task/continuity/documentation
+  records only; product code and tests remained untouched. At that commit the
+  active ignored evidence namespace contained exactly 57 publications—40
   execution and 17 checking—plus the sealed execution family, all at revision
   `e4b95dbda91777b33fef5e392d7c0b42c4d92871`; no checking-family or complete
-  manifest and no raw staging residue exists. The tracked tree was clean before
-  activation, and clean-revision archival is deferred until this activation is
-  committed so its superseding revision can be recorded truthfully.
+  manifest and no raw staging residue existed. The tracked tree was clean
+  before activation; the subsequent archival checkpoint above truthfully
+  records the committed superseding revision.
   `knowledge-map: OK` reports 1,150 facts/6,076 questions/6,243 occurrences;
   the focused locality/task/containment/reference/Knowledge Map suite and claim
   suite report `All tests successful` at `Files=5, Tests=87` plus

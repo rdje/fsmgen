@@ -24,5 +24,5 @@
 
 _VIAL checking-state scale uses packed semantic oracles at each reachable level_
 
-- **date:** 2026-08-20 · **status:** current
+- **date:** 2026-08-23 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-checking-state-scale-reachability.md`](../../docs/knowledge/vial-checking-state-scale-reachability.md)
