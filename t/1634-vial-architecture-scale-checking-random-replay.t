@@ -141,6 +141,16 @@ subtest '65,536 occurrences are preflight dominated without materialization' => 
 
 subtest 'adjacent plan excess rejects before execution materialization' => sub {
     no warnings 'redefine';
+    my $original_projection =
+        \&FSM::VIAL::ExecutionBuilder::_project_random_plan_arrays;
+    my @transcript_bytes;
+    local *FSM::VIAL::ExecutionBuilder::_project_random_plan_arrays = sub {
+        my $projection = $original_projection->(@_);
+        push @transcript_bytes,
+            defined($projection->{random_decision_transcript})
+                ? length($projection->{random_decision_transcript}) : undef;
+        return $projection;
+    };
     local *FSM::VIAL::ExecutionBuilder::_build_randomness = sub {
         die "random-decision materialization entered\n";
     };
@@ -157,6 +167,10 @@ subtest 'adjacent plan excess rejects before execution materialization' => sub {
         '8,441 rejects without entering any forbidden materialization seam');
     is($rejected->{random_occurrences}, 8_441,
         'preflight rejection retains the semantic occurrence count');
+    is(scalar(@transcript_bytes), 2,
+        'both independent excess projections reach the transcript checkpoint');
+    ok(!scalar(grep { !defined($_) || $_ <= 0 } @transcript_bytes),
+        'each excess projection remains a complete scalar until plan rejection');
     is_deeply($rejected->{diagnostics}, [plan_diagnostic()],
         'preflight rejection is byte-equal to the historical plan diagnostic');
 };
@@ -240,14 +254,30 @@ subtest 'high-count and adjacent route outcomes are exact and RAM-guarded' => su
         @{$qualification->{inputs}};
     is(length($qualification_source->{content}), 470_412,
         '32,768 source byte witness is exact');
-    my $qualification_evaluation =
-        $class->evaluate({construction => $qualification});
+    my $original_projection =
+        \&FSM::VIAL::ExecutionBuilder::_project_random_plan_arrays;
+    my @qualification_transcript;
+    my $qualification_evaluation;
+    {
+        no warnings 'redefine';
+        local *FSM::VIAL::ExecutionBuilder::_project_random_plan_arrays = sub {
+            my $projection = $original_projection->(@_);
+            push @qualification_transcript,
+                $projection->{random_decision_transcript};
+            return $projection;
+        };
+        $qualification_evaluation =
+            $class->evaluate({construction => $qualification});
+    }
     ok($qualification_evaluation->{ok},
         '32,768 full route reaches the selected plan rejection');
     is($qualification_evaluation->{status}, 'expected_rejection',
         '32,768 outcome is an expected rejection');
     is($qualification_evaluation->{metrics}{random_occurrences}, 32_768,
         'semantic route contains all 32,768 selected occurrences');
+    ok(@qualification_transcript
+            && !scalar(grep { defined($_) } @qualification_transcript),
+        'every 32,768-occurrence projection discards its saturated transcript');
     is_deeply($qualification_evaluation->{diagnostics}, [plan_diagnostic()],
         '32,768 route returns only the exact plan diagnostic');
 

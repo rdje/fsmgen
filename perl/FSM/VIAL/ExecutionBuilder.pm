@@ -28,6 +28,9 @@ my $BALANCED_PORTABLE_CAPABILITY =
 my $BALANCED_PORTABLE_CALLER =
     'FSM::VIAL::ArchitectureScaleBalancedPortable';
 my %LIMIT = %{build_vial_execution_contract()->{limits}};
+my $RANDOM_TRANSCRIPT_FRAME_BYTES = 4;
+my $MAX_RANDOM_TRANSCRIPT_BYTES = $LIMIT{serialized_plan_bytes}
+    + $RANDOM_TRANSCRIPT_FRAME_BYTES * $LIMIT{random_occurrences};
 
 my @EXECUTION_CAPABILITIES = qw(
     vial.execution_ir.v1
@@ -312,7 +315,7 @@ sub _build($raw, $qualification_profile = undef) {
     _limit('serialized_plan_bytes', $preflight_plan_bytes, '/plan');
 
     my $randomness = _build_randomness(
-        $ctx, $raw->{replay_manifest}, $semantic_identity, $bridge_identity,
+        $ctx, $raw->{replay_manifest}, $random_projection,
     );
     _resolve_decision_references($operation_graph, $randomness);
     _attach_decisions_to_scenarios($scenario_records, $randomness->{decisions});
@@ -1694,36 +1697,51 @@ sub _walk_random_expectations($ctx, $consumer) {
     return $count;
 }
 
-sub _build_randomness($ctx, $replay, $semantic_identity, $bridge_identity) {
-    my @expected;
-    _walk_random_expectations($ctx, sub($item, $index) {
-        push @expected, $item;
-    });
-    _limit('random_occurrences', scalar(@expected), '/randomness/decisions');
-    my @decisions = defined($replay)
-        ? _replayed_decisions($ctx, $replay, \@expected, $semantic_identity, $bridge_identity)
-        : _generated_decisions(\@expected);
-    for my $index (0 .. $#decisions) {
-        my $expected = $expected[$index];
-        _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
-            'random decision ordering disagrees with its expectation',
-            '/randomness/decisions')
-            unless $expected->{occurrence_id} eq $decisions[$index]{occurrence_id};
-        _add_source_map(
-            $ctx, "/random_decisions/$index", $expected->{choice}{semantic_path},
-            [], $expected->{choice}{source_span},
+sub _build_randomness($ctx, $replay, $projection) {
+    _random_transcript_error('random decision transcript projection is absent')
+        unless ref($projection) eq 'HASH' && !blessed($projection);
+    _random_transcript_error('random decision transcript occurrence count is invalid')
+        unless defined($projection->{random_occurrences})
+            && !ref($projection->{random_occurrences})
+            && $projection->{random_occurrences} =~ /\A[0-9]+\z/
+            && $projection->{random_occurrences} <= $LIMIT{random_occurrences};
+    my $transcript = $projection->{random_decision_transcript};
+    my $transcript_sha256 = $projection->{random_decision_transcript_sha256};
+    _random_transcript_error('accepted random decision transcript is incomplete')
+        unless defined($transcript) && !ref($transcript);
+    _random_transcript_error('accepted random decision transcript exceeds its independent bound')
+        if bytes::length($transcript) > $MAX_RANDOM_TRANSCRIPT_BYTES;
+    _random_transcript_error('accepted random decision transcript seal is invalid')
+        unless defined($transcript_sha256) && !ref($transcript_sha256)
+            && $transcript_sha256 =~ /\A[0-9a-f]{64}\z/
+            && sha256_hex($transcript) eq $transcript_sha256;
+
+    my @decisions;
+    my $cursor = 0;
+    my $expected_origin = defined($replay) ? 'replayed' : 'generated';
+    my $count = _walk_random_expectations($ctx, sub($item, $index) {
+        my $decision = _consume_random_transcript_record(
+            $transcript, \$cursor, $item, $expected_origin,
         );
-    }
+        push @decisions, $decision;
+        _add_source_map(
+            $ctx, "/random_decisions/$index", $item->{choice}{semantic_path},
+            [], $item->{choice}{source_span},
+        );
+    });
+    _limit('random_occurrences', $count, '/randomness/decisions');
+    _random_transcript_error('random decision transcript occurrence count is inconsistent')
+        unless $count == $projection->{random_occurrences};
+    _random_transcript_error('random decision transcript has trailing bytes')
+        unless $cursor == bytes::length($transcript);
+    delete $projection->{random_decision_transcript};
+    delete $projection->{random_decision_transcript_sha256};
     return {
         algorithm => $RANDOM_ALGORITHM,
         seed => 0 + $ctx->{fixture}{randomness}{seed},
         replay_id => defined($replay) ? $replay->{replay_id} : undef,
         decisions => \@decisions,
     };
-}
-
-sub _generated_decisions($expected) {
-    return map { _generated_decision($_) } @$expected;
 }
 
 sub _generated_decision($item) {
@@ -1752,13 +1770,6 @@ sub _generated_decision($item) {
     return _decision_record(
         $item, $value, $generated->{attempt}, 'generated',
     );
-}
-
-sub _replayed_decisions($ctx, $replay, $expected, $semantic_identity, $bridge_identity) {
-    my $state = _prepare_replay(
-        $ctx, $replay, scalar(@$expected), $semantic_identity, $bridge_identity,
-    );
-    return map { _replayed_decision($state, $_) } @$expected;
 }
 
 sub _prepare_replay($ctx, $replay, $expected_count, $semantic_identity, $bridge_identity) {
@@ -1852,17 +1863,33 @@ sub _project_random_plan_arrays($ctx, $replay, $semantic_identity,
     my $decision_delta = 0;
     my $source_map_delta = 0;
     my $scenario_delta = 0;
+    my $transcript = '';
     my $count = _walk_random_expectations($ctx, sub($item, $index) {
         my $decision = defined($replay_state)
             ? _replayed_decision($replay_state, $item)
             : _generated_decision($item);
+        my $decision_json = _canonical_json_bytes($decision);
         $decision_delta = _saturating_nonnegative_add(
-            $decision_delta, bytes::length(_canonical_json($decision)),
+            $decision_delta, bytes::length($decision_json),
             $saturation,
         );
         $decision_delta = _saturating_nonnegative_add(
             $decision_delta, 1, $saturation,
         ) if $index;
+        if (defined($transcript)) {
+            my $record_bytes = bytes::length($decision_json);
+            my $framed_bytes = $RANDOM_TRANSCRIPT_FRAME_BYTES + $record_bytes;
+            if ($decision_delta > $LIMIT{serialized_plan_bytes}
+                || $record_bytes > 0xffff_ffff
+                || $framed_bytes > $MAX_RANDOM_TRANSCRIPT_BYTES
+                || bytes::length($transcript)
+                    > $MAX_RANDOM_TRANSCRIPT_BYTES - $framed_bytes) {
+                undef $transcript;
+            }
+            else {
+                $transcript .= pack('N', $record_bytes) . $decision_json;
+            }
+        }
 
         my $source_map_record = {
             plan_path => "/random_decisions/$index",
@@ -1898,7 +1925,109 @@ sub _project_random_plan_arrays($ctx, $replay, $semantic_identity,
         random_source_maps_delta => $source_map_delta,
         scenario_decision_ids_delta => $scenario_delta,
         random_occurrences => $count,
+        random_decision_transcript => $transcript,
+        random_decision_transcript_sha256 => defined($transcript)
+            ? sha256_hex($transcript) : undef,
     };
+}
+
+sub _consume_random_transcript_record($transcript, $cursor, $item,
+    $expected_origin) {
+    my $remaining = bytes::length($transcript) - $$cursor;
+    _random_transcript_error('random decision transcript frame is truncated')
+        if $remaining < $RANDOM_TRANSCRIPT_FRAME_BYTES;
+    my $record_bytes = unpack(
+        'N', substr($transcript, $$cursor, $RANDOM_TRANSCRIPT_FRAME_BYTES),
+    );
+    $$cursor += $RANDOM_TRANSCRIPT_FRAME_BYTES;
+    $remaining = bytes::length($transcript) - $$cursor;
+    _random_transcript_error('random decision transcript record is truncated')
+        if !$record_bytes || $record_bytes > $remaining;
+    my $encoded = substr($transcript, $$cursor, $record_bytes);
+    $$cursor += $record_bytes;
+
+    my $decision = eval {
+        JSON::PP->new->allow_nonref(1)->utf8(1)->decode($encoded);
+    };
+    _random_transcript_error('random decision transcript record is not valid JSON')
+        if $@ || ref($decision) ne 'HASH' || blessed($decision);
+    _random_transcript_error('random decision transcript record is not canonical')
+        unless _canonical_json_bytes($decision) eq $encoded;
+    return _validate_random_transcript_decision(
+        $decision, $encoded, $item, $expected_origin,
+    );
+}
+
+sub _validate_random_transcript_decision($decision, $encoded, $item,
+    $expected_origin) {
+    my %record_keys = map { $_ => 1 } qw(
+        occurrence_id declaration_semantic_id decision_id scenario_id
+        algorithm seed type_id distribution value attempt origin
+        reference_operation_ids source_location
+    );
+    my @unknown = grep { !$record_keys{$_} } keys %$decision;
+    my @missing = grep { !exists($decision->{$_}) } keys %record_keys;
+    _random_transcript_error('random decision transcript record schema is invalid')
+        if @unknown || @missing;
+
+    for my $key (qw(
+        occurrence_id declaration_semantic_id decision_id scenario_id
+        algorithm seed type_id distribution
+    )) {
+        _random_transcript_error(
+            'random decision transcript identity disagrees with its expectation',
+        ) unless _canonical_json($decision->{$key})
+            eq _canonical_json($item->{$key});
+    }
+    _random_transcript_error('random decision transcript origin is invalid')
+        unless defined($decision->{origin}) && !ref($decision->{origin})
+            && $decision->{origin} eq $expected_origin;
+    _random_transcript_error('random decision transcript attempt is invalid')
+        unless defined($decision->{attempt}) && !ref($decision->{attempt})
+            && $decision->{attempt} =~ /\A[0-9]+\z/
+            && $decision->{attempt} < $LIMIT{random_attempts};
+
+    my $value = $decision->{value};
+    my %value_keys = map { $_ => 1 } qw(
+        kind type_id state_domain signed width value_hex known_hex z_hex
+    );
+    _random_transcript_error('random decision transcript value schema is invalid')
+        unless ref($value) eq 'HASH' && !blessed($value)
+            && !grep({ !$value_keys{$_} } keys %$value)
+            && !grep({ !exists($value->{$_}) } keys %value_keys)
+            && defined($value->{value_hex}) && !ref($value->{value_hex})
+            && $value->{value_hex} =~ /\A[0-9a-f]+\z/;
+    my $resolved = _resolved_type($item->{choice}{type});
+    my $normalized = eval {
+        FSM::VIAL::ExecutionRandom->normalized_scalar(
+            Math::BigInt->from_hex('0x' . $value->{value_hex})->bstr,
+            $item->{type_id}, 'two_state', $resolved->{signed},
+            $resolved->{width},
+        );
+    };
+    _random_transcript_error('random decision transcript value is not canonically normalized')
+        if $@ || _canonical_json($normalized) ne _canonical_json($value);
+    my $numeric = _normalized_value_math($value, $resolved);
+    _random_transcript_error('random decision transcript value is outside the declared distribution')
+        if $numeric->bcmp($item->{low_decimal}) < 0
+            || $numeric->bcmp($item->{high_decimal}) > 0;
+    _random_transcript_error('random decision transcript value violates an authored constraint')
+        unless _constraints_hold(
+            $item->{choice}{constraints}, $item->{choice}{semantic_id},
+            $numeric,
+        );
+
+    my $expected = _decision_record(
+        $item, $value, $decision->{attempt}, $expected_origin,
+    );
+    _random_transcript_error(
+        'random decision transcript record disagrees with its expectation',
+    ) unless _canonical_json_bytes($expected) eq $encoded;
+    return $expected;
+}
+
+sub _random_transcript_error($message) {
+    _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal', $message, '/plan');
 }
 
 sub _normalized_value_math($value, $type) {
@@ -2529,6 +2658,11 @@ sub _pointer_escape($value) {
 
 sub _canonical_json($value) {
     return JSON::PP->new->canonical(1)->allow_nonref(1)->encode($value);
+}
+
+sub _canonical_json_bytes($value) {
+    return JSON::PP->new->canonical(1)->allow_nonref(1)->utf8(1)
+        ->encode($value);
 }
 
 sub _contains_scalar($value, $needle) {

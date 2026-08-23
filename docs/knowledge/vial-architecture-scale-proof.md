@@ -255,12 +255,12 @@ and all-payload digest
 the active execution/checking namespace and raw staging are empty. Checking-
 family and complete seals remain withheld.
 
-Revision `037e56f09` seals 22 profiles before `random_attempts/limit_v1` fails.
-Projection/materialization and family/controller reruns compose eight searches;
-one guarded million-attempt pass derives 488.756584 seconds against 300 seconds.
-The guard stays active and profile 23 is withheld. Decision `0079` selects one
-bounded transcript: one projection search, no excess final list/map/IR/report,
-and accepted record reuse. The 22 reports/2,609,009 bytes are preserved under their exact revision-keyed archive; independent reconstruction reproduces digest `6dbfa2d02f7eee0332881074628d50d2b454fe94ac241137a11d7c651c162d90` and leaves active execution/raw/staging residue empty. Implementation and the fresh matrix remain under `.17.3.3.2.3.1`.
+Revision `037e56f09` seals 22 profiles before `random_attempts/limit_v1` fails;
+its 22 reports/2,609,009 bytes reconstruct at digest `6dbfa2d02f7eee0332881074628d50d2b454fe94ac241137a11d7c651c162d90`.
+Decision `0079` is implemented by a private SHA-256-sealed, u32-framed canonical UTF-8 transcript bounded to 16,777,216 + 4 x 65,536 = 17,039,360 bytes. Projection
+searches or replay-validates once; accepted materialization independently checks
+and consumes records, while known excess allocates no final list/map/IR/report.
+Exact adapters preserve identities, attempts, 8,440/8,441/32,768 outcomes, the 300-second stage ceiling, and clean staging; the fresh 72-profile matrix remains under `.17.3.3.2.3.1`.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

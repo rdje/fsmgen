@@ -779,8 +779,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Preserve early serialized-plan rejection without regenerating an accepted plan's deterministic random decisions during materialization.`
   Acceptance: `Keep the unchanged one-million random-attempt cap and exact accepted attempt 999,999, random/replay algorithm and identities, canonical plan schema/bytes/identity, 16,777,216-byte serialized-plan cap, 8,440/8,441 and 32,768 occurrence outcomes, controller two-rerun correctness oracle, 300-second stage timeout, 4,096-MiB descendant guard, and every support/performance/capacity nonclaim. Replace the projection/materialization random-generation duplication with one general caller-private bounded transcript or equivalently closed mechanism: stream and validate each generated or replayed decision exactly once while projecting; retain no Perl decision list, random source-map list, ExecutionIR, or report before the cap; bound any reusable representation independently of caller input and the plan cap; discard it on rejection; and on acceptance consume it exactly once to materialize the byte-identical decisions while independently reconstructing expectation order, source maps, scenario links, and terminal canonical byte equality. Prove a product-level RED that one accepted occurrence currently enters ExecutionRandom twice, prove the repaired builder enters it once without trusting caller data, prove malformed/truncated/trailing/internal transcript state fails closed, and preserve random exhaustion plus replay-validation precedence after plan-byte saturation. Revision-archive the clean revision-037e56f09 22-profile prefix with exact reconstruction before product changes, then run the exact random-attempt adapter below the unchanged stage ceiling and restart the complete 72-profile matrix only from the clean repaired revision.`
-  Verification: `The clean revision-037e56f09 matrix publishes 22 profiles and fails atomically at random_attempts/limit_v1 because its correctness validation does not accept; profile 23, execution/checking family seals, the complete seal, and raw-stage residue are absent. Source tracing proves the accepted builder generates every decision once for projection and again for materialization; the execution-family evaluator builds twice, and the controller stage runs that evaluator twice, for eight generator passes inside one 300-second bind-plan stage. A direct unchanged-guard primitive reaches exact attempt 999,999 in 61.094573 seconds, deriving a 488.756584-second generator-only lower bound that excludes the stage ceiling before other work. Decision 0079 selects one caller-private bounded canonical decision transcript: projection generates or replay-validates once, known excess still rejects before final lists/IR/report, accepted materialization consumes closed framing without rerunning random search, and independent builder/controller reruns remain. The exact 22-report/2,609,009-byte prefix is now preserved under its revision-keyed same-volume archive; independent reconstruction reproduces digest 6dbfa2d02f7eee0332881074628d50d2b454fe94ac241137a11d7c651c162d90, proves all 111 unrelated active files byte-identical, and leaves the active execution namespace plus raw/staging residue empty. Implementation, corruption tests, exact adapter acceptance, and fresh matrix closure remain pending.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3.1: activate accepted-plan random transcript repair; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3.1: archive revision-037e56f09 matrix prefix`
+  Verification: `The revision-037e56f09 diagnosis/archive remain exact: 22 reports/2,609,009 bytes reconstruct at digest 6dbfa2d02f7eee0332881074628d50d2b454fe94ac241137a11d7c651c162d90, while the focused RED records two ExecutionRandom::generate entries for one accepted occurrence. Decision 0079 is now implemented generally: projection generates or replay-validates once into a private SHA-256-sealed, u32-framed canonical UTF-8 scalar bounded to 17,039,360 bytes (16,777,216 plan bytes plus four framing bytes for at most 65,536 occurrences); accepted materialization rewalks expectations, validates schema/order/identity/value/range/constraint/attempt/origin/count/trailing closure, consumes once, and deletes the scalar without rerunning the generator. Missing, bad-seal, truncated-frame/record, trailing, noncanonical, malformed-JSON, schema, identity, value, attempt, origin, over-bound, and post-saturation random/replay-authority cases fail closed at internal /plan. Known excess still reaches the unchanged limit before final decisions/maps/IR/report. The guarded selected suite passes Files=7/Tests=33 in 181 seconds; exact t/1614 and t/1615 pass Files=1/Tests=4 in 201/202 seconds with attempt 999,999, frozen identities, and exact exhaustion; exact t/1634 passes Files=1/Tests=5 in 254 seconds with 8,440 accepted at 16,775,415 bytes, 8,441 and 32,768 exact /plan rejection, saturated-transcript discard, and 65,537 occurrence-cap dominance. The exact guarded profile-23 adapter returns accepted_validation/canonical accepted, exact one-million attempts and plan hash 5c4740ba19b104df999d38b8d153edc92645049a701e7e6b036ae10604f69ec6, accepted bind-plan, zero diagnostics, exact cleanup, no staging, and no background residue. Limits, guards, 300-second stage timeout, reruns, bytes, identities, support/performance/capacity nonclaims, and atomic publisher semantics are unchanged. The fresh clean-revision 72-profile capture remains pending.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3.1: activate accepted-plan random transcript repair; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3.1: archive revision-037e56f09 matrix prefix; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3.1: reuse bounded random-decision transcript`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4`
   Status: `proposed`
@@ -1677,7 +1677,7 @@ execution/checking or external-tool measurement can begin.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-08-23` | `.17.3.3.2.3.1` revision-037e56f09 prefix archive | exact 22-profile ordinal inventory; regular single-link payloads; clean capture identity; family/complete/raw absence; same-volume move with rollback; canonical manifest; independent file/byte/hash reconstruction; unrelated-active before/after identity | `passed archival checkpoint`; 22 reports/2,609,009 bytes are preserved under the exact revision-keyed archive with profile digest `6dbfa2d02f7eee0332881074628d50d2b454fe94ac241137a11d7c651c162d90`. The archive has 23 files including its canonical manifest; all 111 unrelated active files retain 7,418,437 bytes and digest `5b3e00bd52730b91a404cea009913bc782ceac6b9fe600bb4f21466b7f9a6e69`; active execution, raw-stage, and archive-staging counts are zero. Product code remains unchanged and the duplicate-search RED is next. |
-| `2026-08-23` | `.17.3.3.2.3.1` accepted-plan random-transcript activation | clean revision-037e56f09 exact matrix; first 22 atomic publications; profile-23 failure propagation; absent profile/family/full/raw residue; prior accepted revision-e4b95dbd profile; ExecutionBuilder projection/materialization call graph; execution-family and controller rerun multiplicity; exact one-million-attempt guarded primitive; decision 0079; task/index/Memory/book/cards continuity | `passed activation`; profile 23 cannot fit its unchanged 300-second bind-plan ceiling because eight exact generator passes have a measured 488.756584-second generator-only lower bound. The guard and publisher behave correctly. Active child `.17.3.3.2.3.1` owns a private bounded canonical transcript that must preserve early known-excess rejection while letting accepted materialization reuse the already validated decision bytes exactly once. The 22-report prefix awaits revision-keyed archival; product implementation and fresh matrix remain pending. |
+| `2026-08-23` | `.17.3.3.2.3.1` bounded random-transcript implementation | product call-count RED/GREEN; decision-0079 UTF-8 byte framing/seal/bound/lifecycle; corruption and post-saturation authority negatives; exact 8,440/8,441/32,768/65,537 routes; exact one-million limit/exhaustion; isolated profile-23 adapter; staging/background census; task/book/card/claim/Memory continuity | `passed implementation`; accepted builders enter ExecutionRandom once per occurrence, reuse only a private 17,039,360-byte-maximum scalar transcript, reconstruct final records/maps/links independently, and preserve all terminal defenses. Exact adapter acceptance closes the former timeout without changing its 300-second ceiling, guard, attempts, plan identity, reruns, or nonclaims. The revision-037e56f09 prefix remains archived; a clean-revision 72-profile reseal is next. |
 | `2026-08-23` | `.17.3.3.2.3` serialized-plan preflight implementation | honest materialization-sentinel RED; shared canonical report projection; streaming decision/scenario-ID/source-map byte deltas; saturating arithmetic; replay validation/indexing; occurrence/source-map/plan cap order; projection/terminal equality; private caller seal; syntax/diff; focused ordinary/random/replay/limit/exhaustion/measurement regressions; exact guarded 8,440/8,441, 32,768, and 65,537 routes; direct guarded former-timeout adapter; staging residue census | `passed implementation`; 8,441 and 32,768 return the byte-equal historical `/plan` diagnostic before random-list, ExecutionIR, or terminal report materialization; 8,440 remains accepted at 16,775,415 canonical bytes; 65,537 remains occurrence-cap dominated. The former adapter blocker exits `expected_rejection` / `validated_not_measured` with no diagnostic, measurement record, or staging residue under unchanged guards/timeouts. The focused guarded suite passes Files=7/Tests=33, exact t/1634 passes Files=1/Tests=5, and the private-seam/core contract passes Files=1/Tests=6. Terminal serialization and cap remain. No product support, performance, capacity, or reached-boundary claim is added; fresh clean-revision matrix capture remains next. |
 | `2026-08-23` | `.17.3.3.2.3` revision-e4b95dbd evidence-prefix archival | same-volume device equality; exact 40 execution/17 checking profile admission; accepted 40-profile execution-family seal; per-file regular/single-link census; capture revision and dirty-state checks; independent post-move file/byte/hash/canonical-digest reconstruction; matrix identity; active/raw/staging residue census; unrelated active-evidence before/after digest | `passed`; the atomic archive contains exactly 57 reports/5,662,418 bytes, one 46,735-byte family manifest, and one archive manifest. Independent reconstruction matches profile digest `e8ba27e...25f0f9`, all-payload digest `c9147898...49170`, and matrix identity `execution-checking-matrix/5e99dcc5...e11b6a`. Active execution/checking evidence and raw staging are empty; all 111 unrelated files remain byte-identical at digest `e6538ea1...4125e`. Product code is untouched and preflight implementation remains pending. |
 | `2026-08-23` | `.17.3.3.2.3` serialized-plan preflight activation | clean revision-e4b95dbd exact matrix under unchanged real guard; 40 execution and 17 checking atomic profiles; sealed execution family; absent checking-family/complete seals; exact direct guarded adapter disagreement; canonical `/plan` rejection versus bind-plan timeout; ExecutionBuilder construction/serialization/limit order; exact 8,440/8,441 and 32,768 plan boundaries; 65,536/65,537 dominance order; task/index/Memory/book/cards continuity | `passed activation`; canonical checking evaluation expects the existing 16,777,216-byte `/plan` rejection, while the worker times out after materializing all 32,768 random decisions and the complete plan. Active child `.17.3.3.2.3` owns a general independently derived byte-exact plan projection before known-excess allocation, with terminal serialization retained. No threshold shortcut, guard/timeout/cap change, partial publication, support, budget, capacity, or reached-boundary claim is admitted. The revision-bound 57-profile prefix and execution-family seal await verified archival after the activation commit. |
@@ -6601,50 +6601,43 @@ raising an enforcement ceiling.
   claims are unchanged. `knowledge-map: OK`, mdBook, task integrity, locality,
   containment, claim inventory, staged acceptance, and all doctrines are required green before commit.
 
-## Acceptance Checklist (enforced) — `.17.3.3.2.3.1` accepted-plan random-transcript activation
+## Acceptance Checklist (enforced) — `.17.3.3.2.3.1` bounded random-transcript implementation
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — The clean revision-`037e56f09` matrix
-  publishes profiles one through twenty-two, then the isolated
-  `random_attempts/limit_v1` worker fails because the controller correctness
-  validation does not accept. `ExecutionBuilder::_build` calls
-  `_project_random_plan_arrays` and then `_build_randomness`; both call
-  `_generated_decision` for an accepted occurrence. The family evaluator
-  builds independently twice, and the controller worker invokes that complete
-  evaluation twice. A direct run under the unchanged guard reaches exact
-  attempt 999,999 in 61.094573 seconds. Re-deriving the eight-call composition
-  gives a 488.756584-second generator-only lower bound against the fixed
-  300-second stage ceiling. The falsification leg excludes guard, publication,
-  and random-contract failure: there is no guard diagnostic, profile 23 is
-  absent atomically, raw staging is absent, the tracked tree is clean, and the
-  prior revision retains the exact accepted plan identity.
-  `git log -S'_project_random_plan_arrays' --oneline --
-  perl/FSM/VIAL/ExecutionBuilder.pm` identifies `037e56f09` as the exact
-  product change that introduced the duplicated accepted-plan search seam.
-- [x] **ADDRESSED (verified)** — Active child `.17.3.3.2.3.1` and decision
-  `0079` select a general repair rather than a profile exception or timeout
-  increase. Projection must generate or replay-validate each decision once and
-  retain only one caller-private canonical scalar transcript bounded by the
-  plan cap plus fixed framing under the existing occurrence cap. Known excess
-  still rejects before a final decision list, source-map suffix, ExecutionIR,
-  or report. Accepted materialization independently reconstructs expectation
-  order and consumes exact closed records without rerunning random search;
-  framing, schema, identity, value, range, constraint, attempt, origin,
-  truncation, surplus, and trailing-byte errors fail internally. Independent
-  builder, family, controller, terminal serialization, and terminal cap proofs
-  remain unchanged. Implementation evidence is explicitly missing.
-- [x] **NO REGRESSION** — This activation changes no product module, test,
-  fixture, command, cap, timeout, guard, plan, or publication. The first 22
-  revision-`037e56f09` reports remain immutable and profile 23 plus execution,
-  checking, complete, and raw-stage outputs remain absent. Task integrity
-  reports three trees / 985 nodes; Knowledge Map generation and query parity
-  report 1,150 facts / 6,079 questions / 6,246 occurrences / 133 shards;
-  relative paths pass at `Files=1, Tests=2`; Memory architecture passes with a
-  14-line bounded pointer; all 54 mdBook chapters test; and all 22 live-document
-  surfaces plus maintained-reference authority pass with zero ceiling
-  increases after the status prose is kept within the existing book/card
-  transition allowances. `git diff --check` is clean. Implementation, prefix
-  archival, exact adapter acceptance, and matrix closure remain explicitly
-  pending rather than being claimed by this documentation-only activation.
+- [x] **ROOT CAUSE (WHY + WHERE)** — The product-level RED keeps one accepted
+  generated build successful but records two `ExecutionRandom::generate`
+  entries for its one occurrence (`got 2`, `expected 1`). `_build` first calls
+  `_project_random_plan_arrays` and later `_build_randomness`; revision
+  `037e56f09` made both paths call `_generated_decision`. Two evaluator builds
+  inside each of two controller payloads therefore compose eight searches.
+  One exact guarded search measured 61.094573 seconds, so the generator-only
+  lower bound is 488.756584 seconds against the fixed 300-second stage limit.
+  The archive and absence census falsify guard, publisher, residue, or input
+  drift as alternatives. `git log -S'_project_random_plan_arrays' --oneline --
+  perl/FSM/VIAL/ExecutionBuilder.pm` identifies the introducing product change.
+- [x] **ADDRESSED (verified)** — Decision `0079` is implemented as one private
+  SHA-256-sealed scalar of u32-length-framed canonical UTF-8 records, bounded
+  independently to 17,039,360 bytes from existing plan and occurrence caps.
+  Projection generates or replay-validates once. Accepted materialization
+  independently rewalks expectations, validates framing, canonical schema,
+  identity, normalized value, range, constraints, attempt, origin, count, and
+  trailing closure, reconstructs final records/maps/links, and deletes the
+  transcript without another generator call. Missing, malformed, corrupt,
+  over-bound, and post-saturation authority cases fail closed at `/plan`.
+  Known excess still rejects before final decision/map/IR/report allocation;
+  terminal canonical equality and the original terminal cap remain intact.
+- [x] **NO REGRESSION** — Guarded focused evidence passes `Files=7, Tests=33`;
+  exact t/1614 and t/1615 pass `Files=1, Tests=4` in 201/202 seconds; exact
+  t/1634 passes `Files=1, Tests=5` in 254 seconds with 8,440 accepted,
+  8,441/32,768 plan rejection and 65,537 occurrence rejection. Profile 23's
+  real guarded adapter returns `accepted_validation`, exact one-million
+  attempts/frozen plan hash, accepted bind-plan, zero diagnostics, and exact
+  cleanup. The 22-report archive remains reconstructed; active staging,
+  sample residue, and background processes are absent. Syntax, diff, relative
+  paths, all mdBook chapters, task integrity, claims, containment, staged
+  acceptance, `knowledge-map: OK`, and all doctrines must pass before commit.
+  No cap, timeout, guard, rerun, identity, support, performance, capacity,
+  reached-boundary, or publisher contract changed; the clean 72-profile reseal
+  remains explicitly pending.
 
 ## Acceptance Checklist (enforced) — `.17.3.3.2.3` serialized-plan preflight implementation
 
