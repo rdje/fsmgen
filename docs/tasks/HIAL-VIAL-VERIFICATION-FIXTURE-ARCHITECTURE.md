@@ -808,7 +808,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Measure exact portable-SystemVerilog generation, compile, run, trace validation, and result production with qualified Verilator.`
   Acceptance: `Use only the qualified Verilator profile and canonical runtime-stream inputs; perform one validation plus required measured repetitions in fresh owned staging; apply effective qualified compile/run limits and active guards; prove artifact, source-map, command, trace closure, normalized result, deterministic rerun, raw-sample, transcript, publication, and cleanup oracles; reject identity drift or excluded samples explicitly; and make no full-SystemVerilog, UVM, mixed-language, promoted-budget, support, or capacity claim.`
-  Verification: `Clean structural-matrix closure 6c76b4c39 permits the pivot. Existing runtime-stream construction owns exact provider-free inputs and expectations but intentionally materializes no scale trace/result; the shipped Verilator Runner owns correct external execution as one atomic transaction rather than independently measurable shared stages. Completed selection child .1 and decision 0083 choose checked-in authored reset-sampling fixtures, exact 10,000/15,000 portable candidates, honest byte-cap dominance, and one content-addressed lifecycle shared by the public Runner and measurement workers. Source-text patching, output padding/truncation, duplicated tool execution, hidden public widening, borrowed support, and unproved record-count reachability remain inadmissible. Active child .2 now owns the versioned materialization/oracle and portable 100,000-to-15,000 candidate repair.`
+  Verification: `Clean structural-matrix closure 6c76b4c39 permits the pivot. Existing runtime-stream construction owned exact provider-free inputs and expectations but intentionally materialized no scale trace/result; the shipped Verilator Runner owns correct external execution as one atomic transaction rather than independently measurable shared stages. Completed selection child .1 and decision 0083 choose checked-in authored reset-sampling fixtures, exact 10,000/15,000 portable candidates, honest byte-cap dominance, and one content-addressed lifecycle shared by the public Runner and measurement workers. Completed child .2 now binds the two tracked sources through the ordinary route, freezes exact schedule/emission/record-family/full-graph identities, replaces only portable qualification's unrepresentable 100,000 candidate, and proves both candidates through the opt-in public Runner. Source-text patching, output padding/truncation, duplicated tool execution, hidden public widening, borrowed support, and unproved record-count reachability remain inadmissible. Proposed child .3 is next for the shared lifecycle.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5: activate portable-Verilator runtime measurement`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5`
 
@@ -849,11 +849,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.4: activate portable scale identity reconciliation; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.4: reconcile portable scale oracle revision 2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the selected caller-sealed portable-SystemVerilog runtime-stream materialization and structural oracle.`
   Acceptance: `Implement decision 0083 from canonical child-.1 authority: add checked-in, reviewable gate and qualification VIAL sources with exact N=1,948/2,948 authored reset holds and terminal scale expectation; structurally prove that only the selected reset/timeout/window/expectation deltas differ from the checked reference; version the portable runtime-stream materialization/oracle and replace only sv_portable_verilator's unrepresentable 100,000-record candidate with 15,000 while retaining 10,000 gate and stable role labels. Preserve the ordinary public parse/bridge/plan/emission route; produce deterministic schedule-bound artifacts and exact pre-tool record-family/full-graph projections; independently prove final 15,000 artifacts stay within the three-quarter public byte threshold and 20,000/25,000/100,000 falsifiers remain honestly classified; reject nominal limit/excess and every unrepresentable shape before external execution. Prove source-map, generated-loop, identity, semantic repetition, mutation, atomic failure, and cleanup without runtime source rewriting, padding, truncation, public API widening, or runtime/support/performance/capacity claims.`
-  Verification: `Clean decision-0083 selection commit 769df71d5 closes .1 with exact authored workload, full-graph headroom, byte-cap dominance, and shared-lifecycle boundaries. This activation changes only task/index/Memory/book/fact continuity; .2 alone now owns the checked gate/qualification sources, portable candidate repair, structural oracle, deterministic projections, preflight classifications, mutation defenses, and exact cleanup before any Verilator lifecycle implementation or measurement.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2: activate authored portable runtime materialization`
+  Verification: `Clean decision-0083 selection commit 769df71d5 closes .1 with exact authored workload, full-graph headroom, byte-cap dominance, and shared-lifecycle boundaries. The two tracked 5,064-byte VIAL sources have exact SHA-256 f9a6a3f563b8f58e694ccd2a9e82b50e4866ac9c794b3aef363e7f2251518475/569f9adbffd9aab214b09fab2ed8c9b4731e14b3c17781e1e75195e7a92275fa and author 1,948/2,948 reset cycles inside one 4,096-cycle envelope plus one terminal post-scoreboard expectation. The exact-class caller-sealed materializer reconstructs the ordinary Parser/PlanBuilder/bridge/ExecutionIR/portable-emitter route twice, uses source projection only as a mutation oracle, freezes schedule, artifact, map, loop, stage, and report identities, and returns defensive canonical reports. Gate and qualification project exact record families totaling 10,000/15,000 and final tracked public graphs of 32,098,531/47,505,049 bytes; qualification retains 19,603,815 bytes of hard-cap and 2,826,599 bytes of admission headroom. Only portable qualification changes from 100,000 to 15,000; VHDL/OSVVM and stable role labels remain unchanged. Nominal limit/excess and 20,000/25,000/100,000 falsifiers remain pre-tool under their exact dominance authorities. Default focused tests stay tool-free; the guarded opt-in public Runner executes both tracked sources and matches exact graph/family/result/scenario oracles with zero residue. No lifecycle extraction, runtime support, performance budget, capacity, reached-boundary, parity, or public-API claim is added.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2: activate authored portable runtime materialization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2: materialize authored portable runtime streams`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3`
   Status: `proposed`
@@ -1756,6 +1756,7 @@ execution/checking or external-tool measurement can begin.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
+| `2026-08-24` | `.17.3.5.2` authored portable runtime materialization | tracked source hashes and selected source deltas; exact-class caller seal; ordinary route rebuilt twice; schedule/generated-loop/artifact/map/stage/report identities; full record-family projection; portable-only candidate override; final tracked public graphs and headroom; preflight and 20,000/25,000/100,000 dominance; hostile source/report/route/invocant/relocation/staging mutations; guarded public Runner execution; docs/card/rationale/claim/containment continuity | `passed implementation`; two 5,064-byte sources author exact 10,000/15,000 traces, final 19-artifact public graphs are 32,098,531/47,505,049 bytes, and qualification retains 2,826,599 bytes below the three-quarter admission ceiling. The six-file focused gate passes Files=6/Tests=45 in 161 seconds; guarded opt-in t/1663 passes Files=1/Tests=18 in 123 seconds with both real Verilator runs and exact inventory/graph/family/result/scenario/cleanup evidence; the sixteen-member runtime/balanced gate passes Files=1/Tests=4 in 713 seconds. VHDL/OSVVM retain 100,000; lifecycle extraction remains next; no support, performance, capacity, reached-boundary, parity, or public-API claim is added. |
 | `2026-08-24` | `.17.3.4.2` clean structural measurement matrix closure | producer-derived twenty-profile order and mode routing; isolated child capture and independent reload; calibrated file/IPC/error ceilings; immutable same-volume profile/family/complete publication; common identity; exact profile/sample/provider/dominance/artifact/hash census; hostile process/envelope/collision/recovery negatives; fresh-process guarded canonical reload; task/book/card/claim/containment continuity | `passed closure`; implementation commit `fdc6e6a1b` seals 20 reports plus family/complete manifests as 22 immutable files/2,232,452 bytes at complete identity `backend-emission-matrix/a5bb05a5f4be7fb364fbf52c6750b10e04417d53732f364158e6f143bc71f735`. Exact t/1662 passes Files=1/Tests=5 in 12,656 seconds under unchanged 88%-host/4,096-MiB-per-descendant guards; a separate guarded `--validate` returns the same 13-emitted/seven-non-emission, 24-raw/zero-excluded, five-provider, three-preflight partition. The largest 442,009-byte profile stays below the 524,288-byte ceiling; family/complete hashes are `fc9e43c1...72ea3`/`6c0fbc21...878a`; `.artifacts/tmp/vial-scale` is absent. No external-tool, compile/run/IASIM/trace/result, support, budget, capacity, reached-boundary, parity, or public-API claim is added. |
 | `2026-08-24` | `.17.3.4.1` structural backend-emission measurement adapter | exact caller seal; anchored reconstruction; producer validation-before-retention; cumulative five-stage controller route; three/five raw sampling; native-UVM non-emission/dominance; OSVVM provider classification; mutation/defensive-return/failure/cleanup negatives; producer/common-controller/CI watchers; task/book/card/claim/containment continuity | `passed implementation`; default and final real-guard t/1661 pass Files=1/Tests=5, with the exact run completing in 724 seconds below unchanged 88%-host/4,096-MiB-descendant guards. Portable-SV gate retains three records, OSVVM qualification five, native UVM none, and all reports regenerate canonically with zero raw staging residue. External-tool, compile/run/trace/result, support, promoted-budget, capacity, reached-boundary, parity, and public-API nonclaims remain closed; proposed `.17.3.4.2` next owns immutable matrix publication/reload. |
 | `2026-08-24` | `.17.3.3.2.3.1` clean 72-profile matrix closure | guarded clean capture, immutable host-cutoff resume, complete seal, separate canonical reload, exact residue/continuity gates | `passed closure`; revision `9c0209c22` seals all 72 profiles, both families, 119 raw records, and zero exclusions as 75 files/7,312,415 bytes at `execution-checking-matrix/0548629720a9f4c8636c912396cfaefff523da92fc800594618db68b788b91d0`. Reload returns the same identity with zero diagnostics; commit `040ab0e55` retains exact evidence and nonclaims. |
@@ -7305,3 +7306,52 @@ raising an enforcement ceiling.
   document, diff, staged acceptance, and doctrine gates are recorded by this
   commit workflow with zero ceiling increase and no external process,
   runtime, support, performance, capacity, or reached-boundary claim.
+
+## Acceptance Checklist (enforced) — `.17.3.5.2` authored runtime materialization implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE; rederived public boundary)** — The original
+  provider-free producer deliberately reports runtime trace/result as
+  unmaterialized and gives every backend the common 100,000-record
+  qualification role. `git log -S'ArchitectureScaleRuntimeStream' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleRuntimeStream.pm` locates that boundary at
+  `3c1f0b411`; `git log -S'records(N)' --oneline -- docs/decisions/0083-portable-systemverilog-runtime-scale-uses-authored-cycle-sampling-and-one-shared-staged-lifecycle.md`
+  locates the independently probed repair contract at selection commit
+  `769df71d5`. The final tracked-path public runs then rederive complete graphs
+  of 32,098,531/47,505,049 bytes, distinguishing real source provenance from
+  the selection-time temporary-path observations without assuming a constant
+  offset.
+- [x] **ADDRESSED (verified)** — Two reviewed 5,064-byte VIAL files author the
+  selected 1,948/2,948 reset cycles, 4,096-cycle timeout/windows, and terminal
+  post-scoreboard expectation. The exact-class caller-sealed materializer
+  reads those files as inputs, uses a reference projection only as a hostile-
+  mutation oracle, and reconstructs Parser through portable emission twice.
+  It freezes source/schedule/stage/loop/artifact/map/report identities and the
+  exact 10,000/15,000 record families. Only the portable qualification
+  specification becomes 15,000; stable roles and VHDL/OSVVM's 100,000 remain.
+  Limit/excess and 20,000/25,000/100,000 falsifiers create no tool-eligible
+  route or staging. Source, report, invocant, route, relocation, consumer, and
+  preflight mutations fail closed with exact repository-volume cleanup.
+- [x] **NO REGRESSION** — Changed Perl files report `syntax OK`; the default
+  construction/materialization watcher reports `All tests successful` at
+  `Files=2, Tests=18` in 116 seconds. The separately opted-in public Runner
+  watcher, nested under the unchanged repository RAM guard, reports `All tests
+  successful` at `Files=1, Tests=18` in 123 seconds and independently matches
+  both 19-artifact inventories, final graph sizes, every record family, passing
+  result, two scenarios, and zero runtime residue. The broader guarded focused
+  set reports `All tests successful` at `Files=6, Tests=45` in 161 seconds;
+  the separately expensive sixteen-member runtime/balanced consumer reports
+  `All tests successful` at `Files=1, Tests=4` in 713 seconds, preserving all
+  three backend profiles and the balanced bridge. Final mdBook, Knowledge Map,
+  task, claim, containment, relative-path, diff, staged acceptance, and
+  doctrine evidence is recorded by this commit workflow: all 54 mdBook
+  chapters test; Knowledge Map parity is 1,150 facts/6,098 questions/6,265
+  occurrences/133 shards; task integrity remains three trees/996 nodes; the
+  claim join closes 1,532 candidates as 27 claim records/900 derived gates/588
+  reviewed records/17 later-owned gaps/zero open candidates; the rationale
+  ledger reconstructs 2,886 entries; and all 22 live-document surfaces pass
+  with one exact maintained-reference change and zero ceiling increases. Per
+  CI policy no
+  unrelated full CI runs before push. The structural materializer itself runs
+  no external tool and adds no lifecycle, support, performance budget,
+  capacity, reached-boundary, parity, full-SystemVerilog, methodology, or
+  public-API claim.

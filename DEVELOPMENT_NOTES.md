@@ -817,3 +817,23 @@ measurement may select different sealed storage contexts, but they retain the
 same tool, flags, inputs, commands, validators, results, limits, and transition
 semantics. This permits process-isolated stage costs without creating a second
 compiler/simulator contract or trusting large payloads sent over worker IPC.
+
+## 2026-08-24: Runtime qualification identities include tracked source provenance
+
+Selection probes used repository-local temporary sources to choose semantic
+activity before checked-in qualification paths existed. Once those sources are
+tracked, their paths participate legitimately in SemanticIR, plan, emission,
+trace, result, and public artifact identities. The final complete graphs are
+therefore 32,098,531 and 47,505,049 bytes rather than the provisional
+32,096,420 and 47,502,039 bytes. Qualification still retains 2,826,599 bytes
+below the selected three-quarter admission ceiling, so implementation freezes
+the final measured graphs instead of pretending path provenance is byte-free
+or blindly adding an assumed constant.
+
+The structural source projection is deliberately only an oracle: the tracked
+gate and qualification files are always the actual parser inputs. The oracle
+allows exactly the selected reset, timeout/window, and terminal-expectation
+deltas from the checked reference, after which the ordinary source-to-emission
+route is reconstructed twice and compared. The portable-only 15,000 override
+is applied when selecting that exact profile's specification, preserving the
+stable cross-profile role and the separate 100,000 VHDL/OSVVM candidates.

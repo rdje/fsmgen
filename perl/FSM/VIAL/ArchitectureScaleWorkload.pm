@@ -221,6 +221,13 @@ sub _selected_specification($raw) {
         );
     }
     if ($family eq 'runtime_stream_v1') {
+        # Decision 0083 replaces only the portable-SystemVerilog
+        # qualification candidate.  The shared role label remains stable;
+        # sibling runtime backends retain their separately owned candidate
+        # until their complete artifact graphs are audited.
+        $counts->{semantic_trace_records} = 15_000
+            if $backend_profile eq 'sv_portable_verilator'
+                && $level eq 'qualification_candidate_v1';
         $counts->{backend_limits} = _clone(
             $catalog->{backend_profiles}{$backend_profile}{runtime_limits}
         );

@@ -49,6 +49,8 @@ answers:
   - "what is the portable SystemVerilog 16 MiB boundary after scheduler repair?"
   - "how does portable runtime-stream activity reach exactly 10,000 records?"
   - "why is portable qualification 15,000 records instead of 100,000?"
+  - "where are the authored portable runtime qualification sources and structural oracle?"
+  - "what are the final tracked portable runtime artifact graph sizes?"
   - "how will the Runner and scale measurement share Verilator stages?"
 date: 2026-08-24
 status: current
@@ -74,6 +76,7 @@ evidence: >-
   perl/FSM/VIAL/ArchitectureScaleExecutionCheckingMeasurementMatrix.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmissionMeasurement.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmissionMeasurementMatrix.pm;
+  perl/FSM/VIAL/ArchitectureScalePortableRuntimeMaterialization.pm;
   perl/FSM/VIAL/Parser.pm; perl/FSM/VIAL/SemanticBuilder.pm;
   scripts/run_vial_semantic_bridge_measurement_matrix.pl;
   scripts/run_vial_execution_checking_measurement_matrix.pl;
@@ -96,6 +99,9 @@ evidence: >-
   t/1557-vial-portable-sv-backend-emission.t;
   t/1558-vial-verilator-run-integration.t;
   t/1662-vial-architecture-scale-backend-emission-measurement-matrix.t;
+  t/1663-vial-architecture-scale-portable-runtime-materialization.t;
+  vial/qualification/sv_portable_verilator_runtime_gate.vial;
+  vial/qualification/sv_portable_verilator_runtime_qualification.vial;
   docs/knowledge/vial-execution-scale-reachability.md;
   docs/knowledge/vial-semantic-scale-catalog.md;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
@@ -152,6 +158,12 @@ reverify: >-
   rg -n '5N \+ 260|10,000|15,000|three quarters|VerilatorLifecycle|content-addressed|workspace-normalized'
   docs/decisions/0083-portable-systemverilog-runtime-scale-uses-authored-cycle-sampling-and-one-shared-staged-lifecycle.md
   docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md &&
+  rg -n 'expected_full_graph_bytes|final_tracked_public_run_rederived|record_families|preflight_dominated|caller-sealed'
+  perl/FSM/VIAL/ArchitectureScalePortableRuntimeMaterialization.pm
+  t/1663-vial-architecture-scale-portable-runtime-materialization.t &&
+  rg -n 'reset bus (1948|2948)|timeout \(cycles bus 4096\)|scale_response_zero'
+  vial/qualification/sv_portable_verilator_runtime_gate.vial
+  vial/qualification/sv_portable_verilator_runtime_qualification.vial &&
   prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t
   t/1602-vial-architecture-scale-bridge-fanout.t
   t/1644-vial-backend-emission-authority-alignment.t
@@ -184,8 +196,12 @@ hits the complete public artifact-graph cap. Portable qualification therefore
 uses the largest 5,000-record step whose complete graph remains at or below
 three quarters of that cap: the 15,000 probe used 47,502,039 bytes and left
 19,606,825 bytes of hard-cap headroom, while 20,000 left only 4,194,825 bytes.
-Those revision-local probe bytes select the workload; implementation child
-`.17.3.5.2` must regenerate and seal the tracked source and final graph.
+Those revision-local probe bytes selected the workload. Completed child
+`.17.3.5.2` regenerates the ordinary source-to-emission route twice from the
+tracked inputs and seals the final graphs at 32,098,531/47,505,049 bytes. The
+qualification graph leaves 19,603,815 bytes below the hard cap and 2,826,599
+bytes below the three-quarter admission ceiling; the changed provenance bytes
+are therefore measured identities, not an inferred adjustment to the probes.
 
 The same decision selects one private caller-sealed
 `FSM::VIAL::Backend::VerilatorLifecycle` for both public Runner execution and
@@ -196,7 +212,7 @@ reconstructs the source-to-emission authority in every consumer, preserves the
 current tool/deadline/capture contracts, and separates storage context without
 creating a second executor. Reference stays correctness-only; nominal record
 limit/excess stay byte-preflight dominated; other backend selection remains
-separate; implementation is still pending.
+separate. Its lifecycle implementation remains pending under `.17.3.5.3`.
 
 Completed `.17.2.1`-`.17.2.5` cover source through checking state. Decision
 `0075` selects checked-AHB backend routes: portable-SV oracle revision 2
@@ -370,14 +386,25 @@ yet separate process-launch delay from generated-main time. Existing
 observation is neither hidden nor misreported as a direct-drive semantic
 failure.
 
-The provider-free runtime construction still does not prove that its selected
-semantic activity can be represented truthfully by the shipped trace and
-result contracts, and the public Runner still owns the external stages as one
-atomic transaction. Selection is complete; the authored-workload
-materialization child is active and must bind activity into canonical evidence
-before the separately owned shared-lifecycle implementation. Source-text
-patching, padded or truncated output, duplicated execution semantics, hidden
-public widening, and borrowed support or capacity claims are rejected.
+Completed `.17.3.5.2` replaces only portable-SystemVerilog qualification's
+unrepresentable 100,000-record candidate with 15,000; the stable role remains
+unchanged and VHDL/OSVVM retain their separately owned 100,000 candidates. Two
+5,064-byte authored sources retain exact reset counts 1,948/2,948, a 4,096-cycle
+timeout/window envelope, and one terminal expectation after the scoreboard.
+The caller-sealed materializer reads those sources as the real inputs, uses an
+exact reference projection only as an oracle, rebuilds Parser through portable
+emission twice, and freezes the generated loop, artifacts, source maps, stage
+identities, and 10,000/15,000 record-family partitions. The nominal limit and
+excess reject from minimum structural trace evidence without emission,
+staging, or tool eligibility. A guarded opt-in public Runner test independently
+executes both tracked candidates and verifies their complete graph and exact
+trace families; the default test remains tool-free.
+
+The public Runner still owns the external stages as one atomic transaction.
+`.17.3.5.3` next owns the separately selected shared lifecycle and its
+stage-local timeout evidence. Source-text patching, padded or truncated output,
+duplicated execution semantics, hidden public widening, and borrowed runtime,
+support, performance, or capacity claims remain rejected.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

@@ -273,7 +273,10 @@ subtest 'provider-free reports freeze inputs, stages, and exact expectations' =>
 
             my $trace = $evaluated->{trace_expectation};
             my $count = $trace->{record_count_expectation};
-            my $expected = $level{$selected_level};
+            my $expected = clone($level{$selected_level});
+            $expected->{semantic} = 15_000
+                if $backend_profile eq 'sv_portable_verilator'
+                    && $selected_level eq 'qualification_candidate_v1';
             is($trace->{trace_schema},
                 $profile{$backend_profile}{trace_schema},
                 "$key trace schema is profile-exact");

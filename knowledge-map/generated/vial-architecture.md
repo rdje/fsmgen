@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **48** uniquely owned question entries.
+> **1** facts · **50** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -31,6 +31,7 @@
 - q="is OSVVM provider verification an external verification tool run?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="what Runner timeout risk was found before portable runtime measurement?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="what are the VIAL scale workload families?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="what are the final tracked portable runtime artifact graph sizes?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="what closes deterministic VIAL scale generation before measurement?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="what do the backend emission publication and IPC ceilings mean?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="what does semantic and bridge scale measurement claim?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
@@ -38,6 +39,7 @@
 - q="what is the portable SystemVerilog 16 MiB boundary after scheduler repair?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="where are VIAL scale measurement artifacts staged and published?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="where are the VIAL portable backend source byte boundaries?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="where are the authored portable runtime qualification sources and structural oracle?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="where is the revision e4b95dbd execution checking prefix archived?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="where must the VIAL total operation cap be enforced?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="which VIAL scale families are measured first?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)

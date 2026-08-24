@@ -1,16 +1,24 @@
 # Portable Verilator Runtime Measurement
 
-Portable-SystemVerilog runtime measurement is the active next step after the
+Portable-SystemVerilog runtime measurement follows the
 [structural backend-emission matrix](16db-vial-structural-backend-emission-matrix.md).
-Implementation and measurement are not complete yet, but decision `0083` now
-closes the architecture. The current product constructs canonical
-runtime-stream expectations without manufacturing activity or starting
-Verilator; the authored-workload materialization child is now active, before
-the separately owned shared stage-lifecycle implementation.
+Decision `0083` closes its architecture, and the authored-workload
+materialization is now implemented. Two tracked VIAL sources, one
+caller-sealed structural qualifier, and an exact public-Runner watcher bind the
+10,000/15,000 candidates to real schedules without manufacturing activity.
+Repeated stage measurement is not complete: the separately owned shared
+Verilator lifecycle remains the next implementation boundary.
 
 This “execution” means external execution of generated portable SystemVerilog
 with the already qualified Verilator profile. It is not IASIM execution and it
 does not change IASIM's separately owned reference-semantics role.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-portable-runtime-materialization-v1 -->
+- Claim: The two tracked portable-SystemVerilog runtime sources produce exact 10,000- and 15,000-record semantic traces through the qualified public Runner; each complete graph contains 19 artifacts totaling 32,098,531 and 47,505,049 bytes respectively, and qualification remains 2,826,599 bytes below the selected three-quarter admission ceiling.
+- Re-derive: Reconstruct each tracked source through the ordinary Parser/PlanBuilder/bridge/ExecutionIR/portable-emitter route twice, independently project its semantic record families, then run both through the unchanged qualified public Runner and census the returned artifact sink and validated trace.
+- Falsify: Run source/report/route/invocant/relocation/staging mutations and the guarded opt-in Runner path; require exact inventory, total bytes, record-family partition, result/scenario closure, sibling-profile preservation, preflight denial, and zero residue.
+- Durability: Retain the tracked authored sources, caller-sealed materializer, provider-free profile watcher, guarded opt-in public Runner watcher, book/card/task claim, claim registry, and doctrine gate in one Git history chain.
+<!-- CLAIM-VERIFICATION:END vial-portable-runtime-materialization-v1 -->
 
 ## Why contract selection came first
 
@@ -215,18 +223,32 @@ records(N) = 274 + 5 * (N - 3) + 1
            = 5N + 260
 ```
 
-The gate source uses `N=1,948` and must reach exactly 10,000 records. The
-portable qualification source uses `N=2,948` and must reach exactly 15,000.
-Both will be checked-in VIAL sources below `vial/qualification/`, not strings
-patched during a run. They retain the real transaction, random decision,
+The implemented gate source is
+`vial/qualification/sv_portable_verilator_runtime_gate.vial`; it uses
+`N=1,948` and reaches exactly 10,000 records. The implemented qualification
+source is
+`vial/qualification/sv_portable_verilator_runtime_qualification.vial`; it uses
+`N=2,948` and reaches exactly 15,000 records. Both use a 4,096-cycle success
+timeout/window envelope and retain the real transaction, random decision,
 parallel waits, event models, scoreboard, coverage, injected fault, passing
-expectations, and unsupported-size scenario from the reference.
+expectations, and unsupported-size scenario from the reference. Their only
+additional terminal operation is:
 
-Before Verilator starts, a structural oracle must prove that each source differs
-from the reference only in its declared reset/timeout/window literals and
-terminal scale expectation. It follows the count through SemanticIR,
-ExecutionIR, source maps, and the generated reset loop. After execution, the
-same work must appear in the validated trace and normalized result:
+```lisp
+(scoreboard_check writes)
+(expect scale_response_zero (same (sample response) #b0))
+```
+
+These are tracked sources, not strings patched during a run.
+
+Before Verilator starts,
+`FSM::VIAL::ArchitectureScalePortableRuntimeMaterialization` verifies the exact
+source bytes and reconstructs an oracle-only reference projection. It accepts
+only the declared reset/timeout/window literals and terminal expectation as
+deltas, then independently rebuilds SemanticIR, the checked bridge,
+ExecutionIR, source maps, plan, and portable emission twice. The actual route
+always consumes the tracked source; the projection is never an emission or
+runtime input. The evidence chain is:
 
 ```text
 VIAL reset count
@@ -241,6 +263,34 @@ VIAL reset count
 
 Output padding, trace truncation, post-emission HDL editing, or a backend-only
 synthetic loop would break this chain and are forbidden.
+
+The structural reports freeze 22 operations and 40 ExecutionIR source maps for
+each candidate. Emission contains one exact `repeat (1948)` or `repeat (2948)`
+inactive-barrier loop and 55 backend source-map entries. The reports also
+derive each trace family before tool execution:
+
+| Record family | 10,000 gate | 15,000 qualification |
+| --- | ---: | ---: |
+| samples | 7,928 | 11,928 |
+| coverage | 1,982 | 2,982 |
+| expectations | 11 | 11 |
+| events / drives | 36 / 16 | 36 / 16 |
+| models / scoreboards | 4 / 4 | 4 / 4 |
+| faults / fibers / transactions | 3 / 8 / 2 | 3 / 8 / 2 |
+| scenario start / end | 2 / 2 | 2 / 2 |
+| header / footer | 1 / 1 | 1 / 1 |
+| **total** | **10,000** | **15,000** |
+
+The default structural watcher is:
+
+```text
+prove -Iperl t/1663-vial-architecture-scale-portable-runtime-materialization.t
+```
+
+Setting `FSMGEN_RUN_VIAL_PORTABLE_RUNTIME_EXACT=1` while running that test
+under `scripts/run_with_ram_guard.sh` additionally executes both tracked
+sources through the unchanged qualified public Runner and compares the real
+19-artifact graphs and every trace-family count with the pre-tool reports.
 
 ## Why portable qualification uses 15,000 records
 
@@ -257,7 +307,8 @@ manifests, command records, normalized trace and result, transcripts, and
 evidence. A trace that fits by itself is not usable if its required result makes
 the public graph unpublishable.
 
-Selection probes established this profile:
+Selection probes established this profile before final source paths and
+identities were tracked:
 
 | Trace records | Complete graph bytes | Selection result |
 | ---: | ---: | --- |
@@ -270,8 +321,21 @@ Selection probes established this profile:
 Qualification uses the largest 5,000-record step whose complete graph occupies
 no more than three quarters of the hard public artifact cap. The 15,000-record
 probe left 19,606,825 bytes of hard-cap headroom; 20,000 left only 4,194,825.
-The final tracked fixtures must independently regenerate and pass this rule,
-because the table is selection evidence rather than frozen capacity.
+The implemented tracked-source reruns independently regenerate slightly
+different complete-graph bytes because their final source paths and identities
+are themselves evidence:
+
+| Tracked level | Complete graph | Three-quarter margin | Hard-cap headroom |
+| --- | ---: | ---: | ---: |
+| 10,000 gate | 32,098,531 | 18,233,117 | 35,010,333 |
+| 15,000 qualification | 47,505,049 | 2,826,599 | 19,603,815 |
+
+The governing three-quarter ceiling is 50,331,648 bytes. The final 15,000
+source therefore passes the rule independently rather than inheriting the
+47,502,039-byte selection observation. The 20,000 selection remains rejected
+by headroom, 25,000 by the complete-graph cap, and 100,000 by runtime capture;
+all three are classified before an external tool can start in the
+materialization contract.
 
 The rule does not lower or replace a public limit. It chooses a non-boundary
 qualification workload with deliberate room for honest evidence-schema growth.
@@ -288,11 +352,13 @@ The portable levels are now classified as follows:
 | `limit_v1` | structural specification only; earlier byte representation dominates, so no tool run |
 | `over_limit_v1` | structural excess specification only; fail during preflight with no tool run |
 
-The old portable 100,000 candidate is therefore an owned contract defect, not
-an ignored failed test. Materialization task `.17.3.5.2` versions the portable
-runtime oracle and replaces only this backend profile's value. Other runtime
-backends keep separate selection ownership until their exact artifact graphs
-are audited.
+The old portable 100,000 candidate was therefore an owned contract defect, not
+an ignored failed test. The workload constructor now returns 15,000 only for
+`sv_portable_verilator/qualification_candidate_v1`; portable VHDL and qualified
+OSVVM retain their separately owned 100,000 candidate under the same stable
+role label. Nominal limit and excess reports contain only structural minimum
+representations, create no route or stage, and claim no reached record
+boundary.
 
 The nominal record limit and excess remain useful specifications, but neither
 is a reached record boundary. Later cap work must identify the exact earliest

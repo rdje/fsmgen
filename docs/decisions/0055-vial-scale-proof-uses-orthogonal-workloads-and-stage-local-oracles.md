@@ -375,13 +375,16 @@ Decision [0083](0083-portable-systemverilog-runtime-scale-uses-authored-cycle-sa
 preserves the provider-free 10,000/100,000 levels above as the original common
 candidate selection. Exact portable-SystemVerilog execution shows that the
 100,000-record candidate exceeds the Runner output envelope and that the
-complete public artifact graph has its own 67,108,864-byte cap. Portable
-SystemVerilog therefore selects authored 10,000/15,000-record gate and
-qualification fixtures, with qualification admitted only while the complete
-graph remains at or below three quarters of that cap. Implementation leaf
-`.17.3.5.2` owns this versioned portable-only repair. Other backend candidates
-remain independently selected, and neither the structural record limit nor a
-reached-capacity claim is silently rewritten.
+complete public artifact graph has its own 67,108,864-byte cap. Completed
+`.17.3.5.2` therefore versions the portable-only qualification to 15,000 while
+retaining the 10,000 gate and the shared role names; VHDL/OSVVM remain at their
+separately owned 100,000 candidate. The tracked-source public graphs are
+32,098,531/47,505,049 bytes, and qualification remains 2,826,599 bytes below
+the 50,331,648-byte three-quarter admission ceiling. Nominal limit/excess and
+20,000/25,000/100,000 falsifiers reject by their earlier structural/headroom,
+complete-graph, or runtime-capture authority before an external tool is
+eligible. Neither the structural record limit nor a reached-capacity claim is
+silently rewritten.
 
 The `sv_portable_verilator` Runner enforces 120 seconds and 8,388,608 captured
 bytes for compile, then 30 seconds and 67,108,864 captured bytes for runtime.
