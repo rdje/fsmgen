@@ -51,7 +51,6 @@ answers:
   - "why is portable qualification 15,000 records instead of 100,000?"
   - "where are the authored portable runtime qualification sources and structural oracle?"
   - "what are the final tracked portable runtime artifact graph sizes?"
-  - "how will the Runner and scale measurement share Verilator stages?"
 date: 2026-08-24
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -202,17 +201,6 @@ tracked inputs and seals the final graphs at 32,098,531/47,505,049 bytes. The
 qualification graph leaves 19,603,815 bytes below the hard cap and 2,826,599
 bytes below the three-quarter admission ceiling; the changed provenance bytes
 are therefore measured identities, not an inferred adjustment to the probes.
-
-The same decision selects one private caller-sealed
-`FSM::VIAL::Backend::VerilatorLifecycle` for both public Runner execution and
-process-isolated scale stages. Its forward-only admitted/prepared/tool-
-verified/compiled/ran/trace-validated/result-produced/assembled/cleaned chain
-uses canonical content-addressed predecessor state and objects, independently
-reconstructs the source-to-emission authority in every consumer, preserves the
-current tool/deadline/capture contracts, and separates storage context without
-creating a second executor. Reference stays correctness-only; nominal record
-limit/excess stay byte-preflight dominated; other backend selection remains
-separate. Its lifecycle implementation remains pending under `.17.3.5.3`.
 
 Completed `.17.2.1`-`.17.2.5` cover source through checking state. Decision
 `0075` selects checked-AHB backend routes: portable-SV oracle revision 2
@@ -378,14 +366,6 @@ and the expanded route needs it, so neither semantic rollback nor cosmetic
 mutation rejection, family and balanced-prerequisite watchers provide the
 rederive/falsify/durability closure without support, performance, or capacity
 claims.
-Repeated guarded full integration attempts timed out different baseline/direct
-executions at Runner's fixed 30-second run wall while byte-identical executions
-passed in other attempts under concurrent compiler load. The diagnostic cannot
-yet separate process-launch delay from generated-main time. Existing
-`.17.3.5.3` owns that stage/timeout evidence and lifecycle policy, so the
-observation is neither hidden nor misreported as a direct-drive semantic
-failure.
-
 Completed `.17.3.5.2` replaces only portable-SystemVerilog qualification's
 unrepresentable 100,000-record candidate with 15,000; the stable role remains
 unchanged and VHDL/OSVVM retain their separately owned 100,000 candidates. Two
@@ -399,12 +379,6 @@ excess reject from minimum structural trace evidence without emission,
 staging, or tool eligibility. A guarded opt-in public Runner test independently
 executes both tracked candidates and verifies their complete graph and exact
 trace families; the default test remains tool-free.
-
-The public Runner still owns the external stages as one atomic transaction.
-Active child `.17.3.5.3` owns the separately selected shared lifecycle and its
-stage-local timeout evidence. Source-text patching, padded or truncated output,
-duplicated execution semantics, hidden public widening, and borrowed runtime,
-support, performance, or capacity claims remain rejected.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

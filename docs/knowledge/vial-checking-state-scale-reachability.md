@@ -35,6 +35,7 @@ evidence: >-
   t/1634-vial-architecture-scale-checking-random-replay.t;
   t/1635-vial-architecture-scale-checking-qualification.t;
   perl/FSM/VIAL/Backend/Runner.pm;
+  perl/FSM/VIAL/Backend/VerilatorLifecycle.pm;
   t/1640-vial-runner-capture-limits.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
@@ -206,6 +207,7 @@ cleanup. Guarded default `t/1629`-`t/1635` passes at Files=7/Tests=36 in 166
 seconds; the complete exact `t/1630`-`t/1634` matrix passes at Files=5/Tests=27
 in 593 seconds under the 4,096-MiB guard.
 
-Focused `t/1640` now proves Runner's aggregate exact/one-over capture boundary
-and that successful capture infrastructure cannot accept a nonzero tool exit;
-public contract and integration tests retain the shipped ceiling values.
+Focused `t/1640` now proves the shared lifecycle's aggregate exact/one-over
+capture boundary and that successful capture infrastructure cannot accept a
+nonzero tool exit; Runner remains the public adapter, and public contract plus
+integration tests retain the shipped ceiling values.

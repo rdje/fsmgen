@@ -837,3 +837,43 @@ deltas from the checked reference, after which the ordinary source-to-emission
 route is reconstructed twice and compared. The portable-only 15,000 override
 is applied when selecting that exact profile's specification, preserving the
 stable cross-profile role and the separate 100,000 VHDL/OSVVM candidates.
+
+## 2026-08-24: Lifecycle cleanup authority follows identity proof, not call entry
+
+The staged Verilator lifecycle cannot treat possession of a storage path as
+permission to remove it. Admission publishes cleanup authority only after it
+successfully creates a previously absent exact root. Resume publishes that
+authority only after the closed handle matches the reconstructed lifecycle,
+operation, storage context, state path, ordinal, and successor. This lets a
+failure while validating an owned predecessor, object, or prepared input clean
+the corrupted session, while a collision, foreign handle, or forged successor
+cannot delete the existing owner. Final public assembly is constructed in
+memory before cleanup, but is returned only after exact removal succeeds.
+
+Content-addressed state is not enough if mutable work copies escape validation.
+Every resume therefore checks the complete state-file census and predecessor
+chain, exact state-specific object-kind inventory, object digest/bytes/mode,
+prepared SystemVerilog copies against canonical emission, and the compiled
+work executable against its sealed object. Public and measurement callers use
+different sealed roots and honest actual command digests. Measurement rebases
+only the operation-owned work prefix; a second root-normalized command identity
+proves semantic equivalence without claiming the concrete records are equal.
+
+Process supervision similarly separates authority and outcome. A close-on-exec
+control pipe uses unbuffered child writes for handoff errors and is consumed
+before ordinary output when both are ready. Deadline polling continues after
+all capture descriptors close, aggregate overflow remains distinct from a
+normal nonzero exit, and public timeout termination waits for the entire
+process group rather than only its leader. The thin public Runner also retains
+its original total-function boundary: an unexpected private lifecycle
+exception or malformed private projection becomes one sanitized host-error
+result rather than escaping, trusting partial cleanup authority, or leaking a
+host path. Implementation-time macOS samples
+localized repeated zero-output timeouts to pre-main `_dyld_start`; concurrent
+policy/compiler activity remains only a correlation and is owned by proposed
+`.17.3.5.3.1`, not by a retry, signing, security-bypass, or deadline workaround.
+The final guarded exact lifecycle traversal and independent AHB runtime-parity
+watcher pass. The broader public integration watcher passes six of seven top-
+level subtests but reproduces the same wall only for the byte-identical second
+direct-drive execution after the first passes; that result stays failed and
+child-owned rather than becoming a retry or a weakened signoff criterion.

@@ -194,11 +194,26 @@ Repeated guarded full integration attempts also exposed the existing Runner's
 fixed 30-second run wall under concurrent cross-repository compiler load. A
 direct-drive replay, a baseline replay, and later the first unchanged baseline
 run have each timed out in separate attempts, while byte-identical counterparts
-passed in the other attempts. The available diagnostic cannot distinguish
-executable-launch delay from time spent in generated `main`, so no narrower
-root-cause claim is made. Active implementation task `.17.3.5.3` now owns
-timeout/stage-state evidence and the shared lifecycle policy; the focused
-direct-drive runtime proof remains separate from that lifecycle defect/risk.
+passed in the other attempts. The shared lifecycle now distinguishes process-
+group creation, successful `exec` handoff, first generated output, and process
+exit with monotonic evidence. Three implementation-time failures completed
+`exec` in milliseconds but produced no bytes before the unchanged deadline. A
+read-only macOS stack sample then placed every sampled main-thread frame in
+`_dyld_start`, before the generated FSMGEN `main` or trace output. This closes
+the lifecycle-attribution question for those observations; it does not prove
+that macOS policy activity was causal or general. Proposed follow-up
+`.17.3.5.3.1` owns that host-policy qualification without authorizing retries,
+security bypasses, signing changes, or a wider deadline.
+
+Implementation verification keeps those two conclusions separate. The exact
+guarded lifecycle watcher traverses all nine states with qualified Verilator,
+assembles the expected public artifact graph, and removes its stage. The
+independent guarded AHB runtime-parity watcher also passes. In the broader
+public API/CLI watcher, six of seven top-level subtests pass; the first direct-
+drive execution passes, while its byte-identical repeated execution alone
+reaches the unchanged run wall. That non-deterministic host outcome is
+retained as a failed check under `.17.3.5.3.1`, not relabeled as a lifecycle
+success or worked around in the public contract.
 
 ## Selected authored runtime activity
 
@@ -370,7 +385,7 @@ The shipped public Runner is correctly atomic from a user's perspective: it
 validates the tool, prepares inputs, compiles, runs, validates the trace,
 produces the result, assembles artifacts, and removes its stage before return.
 Scale measurement needs those operations as separate cost centers and uses a
-fresh worker process per stage. The selected design preserves both needs with
+fresh worker process per stage. The implemented design preserves both needs with
 one private `FSM::VIAL::Backend::VerilatorLifecycle` implementation.
 
 Its only legal state chain is:
@@ -394,6 +409,18 @@ the executable, bounded raw output, normalized trace, and result are stored as
 digest/byte/kind-checked objects on the repository volume; they do not cross
 the measurement controller's bounded JSON pipe.
 
+The implementation validates more than the final state filename. Every resume
+reconstructs the ExecutionIR and emission authority supplied by its sealed
+caller, verifies the complete state-file census and predecessor chain, requires
+the exact state-specific object-kind inventory, and rehashes every object with
+its byte count and file mode. Prepared SystemVerilog work copies are compared
+again with the sealed emitted sources before another process can consume them;
+after compile, the executable work copy is compared with its sealed executable
+object on every later transition. A stale handle may authorize cleanup only
+after its lifecycle/storage authority is proved. A malformed or foreign handle
+never gains deletion authority, while a failure after creation cleans the exact
+new root.
+
 A later worker cannot trust a path or state supplied by its caller. It
 reconstructs the canonical source-to-emission route, derives the lifecycle
 identity and owned root, verifies the complete predecessor chain and object
@@ -407,6 +434,17 @@ staging paths and command digests may consequently differ, so the lifecycle
 retains both the exact command and a stable workspace-normalized command
 identity. The executable, flags, input bytes, tool, scheduling, trace validator,
 result producer, and artifact assembly remain one shared implementation.
+
+Concretely, the measurement caller supplies one of the controller-owned
+`validation/00`, `gate_measurement/01..03`, or
+`qualification_measurement/01..05` lifecycle roots. The lifecycle derives the
+actual compile/run records by rebasing only the emitted operation-owned work
+prefix and then recomputes their content digests. Independently, it replaces
+the concrete lifecycle and artifact roots with stable tokens to derive the
+workspace-normalized identities. The real public and measurement command
+digests therefore remain honestly different, while the normalized identities
+prove that tool, flags, top, inputs, outputs, and command semantics are the
+same. No caller-provided argv or arbitrary storage root is accepted.
 
 The common measurement stages map to lifecycle work like this:
 
@@ -435,12 +473,30 @@ capture overflow, tool drift, malformed output, or consumer failure terminates
 and reaps the complete owned process tree, publishes no final graph, and removes
 only the exact proven-owned stage. No retry or timeout widening is selected.
 
+The process evidence keeps the following distinctions:
+
+| Evidence | Meaning |
+| --- | --- |
+| `spawn_to_exec_ns` | containment, working-directory, and descriptor handoff before successful `exec` |
+| `exec_to_first_output_ns` | loader/startup plus generated execution before the first captured byte |
+| `first_output_to_exit_ns` | generated execution after output begins |
+| `exec_failed` / `exec_error` | bounded control-pipe failure before the target image ran |
+| `timed_out` / `output_limited` / `signal` | independent deadline, aggregate-capture, and process outcomes |
+
+Control-pipe readiness is consumed before ordinary output when both are ready,
+so observation order cannot invert the causal `exec` boundary. The deadline
+continues even if a hostile child closes both output descriptors and hangs.
+Public execution owns a fresh process group; TERM/KILL completion checks the
+whole group rather than treating leader reaping as proof that descendants are
+gone. Measurement tools remain in the common controller worker's outer process
+group, where the controller applies the stricter effective deadline.
+
 ## Intended ownership sequence
 
 The task tree separates completed prerequisite repairs and selection from
 runtime materialization, shared lifecycle, per-profile measurement, and
 immutable matrix publication. Each unit must commit cleanly before the next
-begins. The shared lifecycle remains private:
+begins. The implemented shared lifecycle remains private:
 the existing public command and result contract must keep its successful bytes,
 qualified commands, stable diagnostics, process-group termination, transcript
 limits, and exact cleanup behavior.
