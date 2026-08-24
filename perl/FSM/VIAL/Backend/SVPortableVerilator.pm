@@ -64,6 +64,27 @@ my %SUPPORTED_OPERATION = map { $_ => 1 } qw(
     reset drive start await parallel repeat expect scoreboard_expect
     scoreboard_check inject
 );
+my %PHASE_RANK = (
+    drive => 0,
+    sample => 1,
+    react => 2,
+    check => 3,
+);
+# Backend compatibility, independent of ExecutionBuilder: eligible phases must
+# match ExecutionIR, while lowering_completion records how far each generated
+# task has genuinely advanced before the root scheduler invokes its successor.
+my %OPERATION_PHASE = (
+    reset => {eligible => 'drive', lowering_completion => 'check'},
+    drive => {eligible => 'drive', lowering_completion => 'react'},
+    start => {eligible => 'drive', lowering_completion => 'react'},
+    await => {eligible => 'check', lowering_completion => 'check'},
+    parallel => {eligible => 'react', lowering_completion => 'check'},
+    repeat => {eligible => 'react', lowering_completion => 'react'},
+    expect => {eligible => 'check', lowering_completion => 'check'},
+    scoreboard_expect => {eligible => 'react', lowering_completion => 'react'},
+    scoreboard_check => {eligible => 'check', lowering_completion => 'check'},
+    inject => {eligible => 'react', lowering_completion => 'react'},
+);
 
 sub result_keys($class) {
     confess __PACKAGE__ . "->result_keys requires the exact class invocant\n"
@@ -423,10 +444,7 @@ sub _negotiate(
                 && $relation->{width} =~ /\A[0-9]+\z/
                 && $relation->{width} >= 1 && $relation->{width} <= 65_536;
     }
-    for my $operation (@{$execution->{operation_graph}{operations} || []}) {
-        push @unsatisfied, "operation:$operation->{kind}"
-            unless $SUPPORTED_OPERATION{$operation->{kind} // ''};
-    }
+    push @unsatisfied, _operation_phase_errors($execution);
     _walk_values($execution, sub ($value, $path) {
         return unless ref($value) eq 'HASH' && ($value->{kind} // '') eq 'scalar'
             && exists($value->{value_hex}) && exists($value->{known_hex})
@@ -475,10 +493,7 @@ sub _negotiate_balanced_portable($execution, $bridge, $backend_inputs) {
                 && $relation->{width} =~ /\A[0-9]+\z/
                 && $relation->{width} >= 1 && $relation->{width} <= 65_536;
     }
-    for my $operation (@{$execution->{operation_graph}{operations} || []}) {
-        push @unsatisfied, "operation:$operation->{kind}"
-            unless $SUPPORTED_OPERATION{$operation->{kind} // ''};
-    }
+    push @unsatisfied, _operation_phase_errors($execution);
     _walk_values($execution, sub ($value, $path) {
         return unless ref($value) eq 'HASH'
             && ($value->{kind} // '') eq 'scalar'
@@ -1702,9 +1717,16 @@ sub _render_fixture(%arg) {
             },
             0, 0, 0, $root_fiber->{fiber_id},
         ));
-        for my $op (@{$operation_by_scenario{$scenario->{scenario_id}} || []}) {
-            next unless $op->{fiber_id} eq $scenario->{root_fiber_id};
+        my @root_operation = grep {
+            $_->{fiber_id} eq $scenario->{root_fiber_id}
+        } @{$operation_by_scenario{$scenario->{scenario_id}} || []};
+        my $completed_phase;
+        for my $op (@root_operation) {
+            $push->('    ' . $_) for _successor_rollover_statements(
+                $completed_phase, $op,
+            );
             $push->("    $symbol{$op->{operation_id}}();");
+            $completed_phase = $OPERATION_PHASE{$op->{kind}}{lowering_completion};
         }
 
         for my $coverpoint (@{$execution->{coverage}{coverpoints}}) {
@@ -1925,7 +1947,6 @@ sub _render_operation($op, $execution, $bridge, $backend, $endpoint, $symbol,
         my $handle_id = $input{handle_id};
         my $binding_id = $input{transaction_binding_id};
         return (
-            'vial_cycle = vial_cycle + 1;',
             'vial_transaction_static_rank = ' . $op->{static_rank} . ';',
             'vial_transaction_request_cycle = vial_cycle;',
             'vial_transaction_handle_id = "' . _sv_string($JSON->encode($handle_id)) . '";',
@@ -2189,6 +2210,44 @@ sub _render_operation($op, $execution, $bridge, $backend, $endpoint, $symbol,
         return ('// Literal repeat topology is expanded into fixed operation tasks.');
     }
     return ('// Closed operation kind emitted with no additional runtime state.');
+}
+
+sub _successor_rollover_statements($completed_phase, $operation) {
+    return () unless defined $completed_phase;
+    my $kind = $operation->{kind} // '';
+    my $eligible_phase = $operation->{eligible_phase} // '';
+    confess "portable operation '$kind' has no closed eligible phase"
+        unless exists($OPERATION_PHASE{$kind})
+            && $eligible_phase eq $OPERATION_PHASE{$kind}{eligible}
+            && exists($PHASE_RANK{$completed_phase})
+            && exists($PHASE_RANK{$eligible_phase});
+    return () unless $PHASE_RANK{$eligible_phase} < $PHASE_RANK{$completed_phase};
+
+    my $comment = "// VIAL successor phase rollover: $completed_phase -> "
+        . "$eligible_phase advances to the next logical cycle.";
+    return ($comment, 'vial_cycle = vial_cycle + 1;')
+        if $eligible_phase eq 'drive';
+    return ($comment, 'vial_inactive_barrier();')
+        if $eligible_phase eq 'react';
+    confess "portable successor rollover to '$eligible_phase' is unsupported";
+}
+
+sub _operation_phase_errors($execution) {
+    my @error;
+    my $graph = $execution->{operation_graph} || {};
+    push @error, 'operation-phase-order'
+        unless ref($graph->{phase_order}) eq 'ARRAY'
+            && join("\0", @{$graph->{phase_order}})
+                eq join("\0", qw(drive sample react check));
+    for my $operation (@{$graph->{operations} || []}) {
+        my $kind = $operation->{kind} // '';
+        push @error, "operation:$kind" unless $SUPPORTED_OPERATION{$kind};
+        push @error, "operation-phase:$operation->{operation_id}"
+            unless exists($OPERATION_PHASE{$kind})
+                && ($operation->{eligible_phase} // '')
+                    eq $OPERATION_PHASE{$kind}{eligible};
+    }
+    return @error;
 }
 
 sub _property_mentions_event($node, $event_name) {

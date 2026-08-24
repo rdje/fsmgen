@@ -245,6 +245,58 @@ subtest 'parallel any uses authored-order tie breaking and cancels non-winners' 
     ok(!-e repo_path($backend->{cleanup}{staging_identity}), 'parallel-any execution staging is removed');
 };
 
+subtest 'check-to-react authored successors roll into the next logical cycle' => sub {
+    my $phase_text = $vial_text;
+    $phase_text =~ s{
+        \(reset\ bus\ 3\)\n
+        \s+\(scoreboard_expect\ writes
+    }{(reset bus 3)\n              (expect phase_before_scoreboard (same (sample response) #b0))\n              (scoreboard_expect writes}x
+        or die 'check-to-react runtime mutation did not find the success scoreboard';
+    my $request = run_request();
+    $request->{vial_source} = source_envelope($vial_id, $phase_text, 'vial');
+    $request->{options}{scenario_ids} = ['success'];
+    my $sink = [];
+    my $result = execute_vial_tool_request($request, {
+        source_catalog => {}, artifact_sink => $sink, repository_root => $repo_root,
+    });
+    ok($result->{success}, 'public Runner accepts a check-phase operation before its react-phase successor');
+    diag($json->encode($result->{diagnostics})) unless $result->{success};
+    is($result->{result_manifest}{status}, 'pass', 'phase-rollover scenario retains its semantic pass result');
+    my @expectation = grep {
+        $_->{expectation_id} =~ /phase_before_scoreboard\z/
+    } @{$result->{result_manifest}{expectations} || []};
+    is(scalar(@expectation), 1, 'inserted expectation produces exactly one genuine runtime record');
+    ok(
+        @expectation == 1 && $expectation[0]{outcome},
+        'inserted expectation passes before the rolled-over scoreboard operation',
+    );
+    my ($backend_manifest) = grep { $_->{role} eq 'backend_manifest' } @$sink;
+    ok(defined($backend_manifest), 'successful phase-rollover run publishes its backend manifest');
+    my $backend = defined($backend_manifest)
+        ? JSON::PP->new->decode($backend_manifest->{content})
+        : undef;
+    ok(
+        defined($backend)
+            && !-e repo_path($backend->{cleanup}{staging_identity}),
+        'phase-rollover execution staging is removed',
+    );
+
+    my $second_sink = [];
+    my $second = execute_vial_tool_request($request, {
+        source_catalog => {}, artifact_sink => $second_sink,
+        repository_root => $repo_root,
+    });
+    ok($second->{success}, 'repeated phase-rollover run succeeds');
+    is(
+        $json->encode($second), $json->encode($result),
+        'repeated phase-rollover result is byte-deterministic',
+    );
+    is(
+        $json->encode($second_sink), $json->encode($sink),
+        'repeated phase-rollover artifact graph is byte-deterministic',
+    );
+};
+
 subtest 'discovery and support accounting expose only the qualified shipped boundary' => sub {
     my $tooling = build_vial_tooling_contract();
     my $execution = build_vial_execution_contract();

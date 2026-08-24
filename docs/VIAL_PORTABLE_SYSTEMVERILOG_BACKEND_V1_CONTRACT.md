@@ -245,6 +245,44 @@ Within each logical phase the runtime follows the ExecutionIR tuple
 records its selected ordinal. Simulator timestamps and delta/event-region
 positions are never written into portable result records.
 
+### Root-successor phase rollover
+
+Authored root operations remain in immutable ExecutionIR array/static-rank
+order. The emitter does not sort them into phase buckets: doing so could move a
+later action ahead of its dependency. Instead, the scenario scheduler retains
+the last logical phase consumed by each generated operation task and compares
+it with the next operation's ExecutionIR `eligible_phase`.
+
+The independent backend compatibility table accepts only the exact execution
+phase order and operation/eligible-phase pairs selected by the execution-v1
+contract. Its lowering-completion groups are:
+
+| Last phase consumed | Generated operation tasks |
+| --- | --- |
+| `react` | `drive`, `start`, `repeat`, `scoreboard_expect`, `inject` |
+| `check` | `reset`, `await`, `parallel`, `expect`, `scoreboard_check` |
+
+This is a backend-lowering fact, not a new ExecutionIR field. A blocking task
+may consume several cycles before it returns, but its last phase remains
+closed. When the next eligible phase has an equal or greater phase rank, the
+task runs without rollover and same-phase static order is preserved. A lower
+phase rank means the dependency crosses the logical-cycle boundary:
+
+| Backward crossing | Exact scheduler action |
+| --- | --- |
+| `check -> react` | traverse `vial_inactive_barrier()` to genuine next-cycle sample/react state |
+| `react -> drive` | increment `vial_cycle` once to the next drive |
+| `check -> drive` | increment `vial_cycle` once to the next drive |
+
+No version-1 operation is sample-eligible, and no backward target can be
+`check`. The `start` task therefore contains no unconditional initial cycle
+increment; the common successor scheduler supplies an increment only when the
+preceding phase requires one, while a first start remains eligible in
+cycle-zero drive. Operation-phase or phase-order drift rejects negotiation
+before source emission. The backend never fixes the order by rewriting source,
+sorting dependencies, inserting an unconditional barrier, or fabricating
+trace timestamps. Decision `0080` records the alternatives and rollback.
+
 The generated clock uses an explicit `timeunit 1ns`, `timeprecision 1ps`, and
 one-unit half-period. These physical values are backend mechanics only; VIAL
 timeouts and results remain logical cycles. The command supplies
@@ -346,6 +384,14 @@ The first backend implements exactly the execution-v1 meanings of:
 Each family uses fixed plan-derived storage. There is no dynamic name lookup,
 class factory, unbounded queue, backend callback, simulator randomization,
 recursive task, fork scheduling authority, DPI/VPI, or host-language escape.
+
+The phase-rollover review also found that the existing direct `drive` task is
+negotiated but currently advances only an inactive barrier instead of assigning
+and recording its requested endpoint value. That separate pre-existing defect
+is not hidden inside rollover scheduling: task `.17.3.5.1.2` owns an ordinary
+source/ExecutionIR/emission/runtime repair before runtime-scale selection may
+resume. Transaction `start` drive behavior and the checked-AHB qualification
+remain executable and covered.
 
 Runtime limit failure, expectation failure, mismatch, illegal bin, timeout, or
 internal error follows the ExecutionIR's deterministic cancellation and

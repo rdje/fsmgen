@@ -40,6 +40,8 @@ answers:
   - "what do the backend emission publication and IPC ceilings mean?"
   - "how will portable Verilator runtime scale measurement reuse the qualified runner?"
   - "why did portable Verilator runtime reachability expose a phase-order defect?"
+  - "how does portable SystemVerilog schedule a check-to-react successor?"
+  - "why is portable SystemVerilog direct drive a separate prerequisite?"
 date: 2026-08-24
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -50,6 +52,7 @@ evidence: >-
   docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md;
   docs/decisions/0077-vial-balanced-portable-uses-a-caller-sealed-revision-2-qualification-bridge.md;
   docs/decisions/0078-vial-execution-total-operation-cap-precedes-graph-materialization.md;
+  docs/decisions/0080-portable-systemverilog-rolls-backward-successors-by-logical-phase.md;
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/VIAL/ArchitectureScaleWorkload.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission.pm; perl/FSM/VIAL/ArchitectureScaleRuntimeStream.pm;
   perl/FSM/VIAL/ArchitectureScaleBalancedPortable.pm;
@@ -79,6 +82,8 @@ evidence: >-
   t/1601-vial-architecture-scale-semantic-catalog.t;
   t/1602-vial-architecture-scale-bridge-fanout.t;
   t/1648-vial-architecture-scale-backend-emission-osvvm.t; t/1650-vial-architecture-scale-backend-emission-family-qualification.t; t/1651-vial-architecture-scale-runtime-stream-construction.t; t/1652-vial-balanced-portable-bridge-admission.t; t/1653-vial-balanced-portable-composition.t; t/1654-vial-balanced-portable-emission.t; t/1655-vial-architecture-scale-runtime-balanced-qualification.t; t/1656-vial-architecture-scale-measurement-foundation.t; t/1657-vial-architecture-scale-semantic-bridge-measurement.t; t/1659-vial-architecture-scale-execution-checking-measurement.t; t/1660-vial-architecture-scale-execution-checking-measurement-matrix.t; t/1661-vial-architecture-scale-backend-emission-measurement.t;
+  t/1557-vial-portable-sv-backend-emission.t;
+  t/1558-vial-verilator-run-integration.t;
   t/1662-vial-architecture-scale-backend-emission-measurement-matrix.t;
   docs/knowledge/vial-execution-scale-reachability.md;
   docs/knowledge/vial-semantic-scale-catalog.md;
@@ -124,6 +129,11 @@ reverify: >-
   rg -n 'runtime activity|shared lifecycle|second tool runner|IASIM'
   docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md &&
+  rg -n 'successor phase rollover|_successor_rollover_statements|operation-phase-order|vial_inactive_barrier'
+  docs/decisions/0080-portable-systemverilog-rolls-backward-successors-by-logical-phase.md
+  perl/FSM/VIAL/Backend/SVPortableVerilator.pm
+  t/1557-vial-portable-sv-backend-emission.t
+  t/1558-vial-verilator-run-integration.t &&
   prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t
   t/1602-vial-architecture-scale-bridge-fanout.t
   t/1644-vial-backend-emission-authority-alignment.t
@@ -255,18 +265,25 @@ family and complete manifests are 30,203/2,535 bytes. Exact t/1662 passes in
 `--validate` returns the same identity and partition. The elapsed observation
 is capture provenance, not a public budget or capacity claim.
 
-Active `.17.3.5.1.1` is a prerequisite to portable-Verilator runtime
-materialization selection. A real gate-reachability probe authored a legal
-check-phase `expect` before a later react-phase `scoreboard_expect`. ExecutionIR
-preserved that successor order and both eligible phases, but the portable-SV
-scenario task invoked operations directly in authored order without rolling a
-backward phase crossing into the next logical cycle. The emitted check-to-react
-trace therefore failed the shipped deterministic-order validator. The repair
-must derive scheduling from successor plus phase authority, preserve authored
-dependencies and same-phase rank order, and advance backward crossings rather
-than sorting, rejecting legal source, fabricating time, or special-casing the
-scale fixture. Runtime materialization/lifecycle selection resumes only after
-the general product repair commits cleanly.
+Completed `.17.3.5.1.1` repairs the portable-SV phase-order defect found by a
+real gate-reachability probe. It preserves immutable operation/static-rank
+order and tracks the last phase consumed by each closed lowering. Same/forward
+successors call directly; check-to-react uses one genuine inactive-edge
+barrier, while react/check-to-drive increments the logical cycle once. Start no
+longer advances unconditionally, and negotiation rejects phase-order or
+kind/eligible-phase drift before artifacts. Structural tests cover every
+backward pair, same-phase retention, blocking reset, and fail-closed drift; the
+qualified-Verilator Runner produces a genuine passing inserted expectation and
+byte-identical repeated result/artifact graphs. Decision `0080` retains the
+rationale, alternatives, rollback, and three verification legs.
+
+That signoff review separately confirmed a pre-existing direct-drive defect.
+Ordinary VIAL with a drive-capable endpoint builds immutable `update_driver`
+intent and negotiates successfully, but the emitted `drive` task contains only
+an inactive barrier; its effect target is also null. Proposed `.17.3.5.1.2`
+owns endpoint/relation validation, assignment and drive-record emission,
+completion-phase/successor semantics, real runtime proof, determinism, and
+support truth before runtime materialization/lifecycle selection resumes.
 
 The provider-free runtime construction still does not prove that its selected
 semantic activity can be represented truthfully by the shipped trace and

@@ -816,16 +816,23 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Select the exact runtime-stream materialization, identity, and shared Verilator stage-lifecycle contract.`
   Acceptance: `Audit the canonical runtime construction, portable emitter, Runner, trace validator, result producer, measurement controller, qualified tool/limit authority, and reference runtime evidence. Select a closed workload-to-runtime schedule that proves candidate record-count reachability while preserving semantic truth, binds every repeated activity into trace/result/backend evidence, and classifies reference/limit/excess applicability honestly. Select one caller-sealed staged execution lifecycle reused by the public Runner and measurement workers across process boundaries with exact tool identity, commands, timeouts, transcript bounds, state transitions, same-volume ownership, failure cleanup, and no second execution semantics. Record alternatives and rollback in a decision; change no product behavior.`
-  Verification: `The exact gate-reachability probe exposed a portable-SystemVerilog scheduler defect before selection could close: legal authored source with a check-phase expect followed by a react-phase scoreboard operation emits check then react in one logical cycle and the shipped TraceValidator rejects the run. Child .1.1 owns the prerequisite product repair; .1 resumes its reachability proof and architecture selection only after that repair commits cleanly.`
+  Verification: `The exact gate-reachability probe exposed a portable-SystemVerilog scheduler defect before selection could close: legal authored source with a check-phase expect followed by a react-phase scoreboard operation emitted check then react in one logical cycle and the shipped TraceValidator rejected the run. Completed child .1.1 now rolls every supported backward phase crossing exactly once and rejects operation-phase drift. Its signoff review independently proved that direct VIAL drive is negotiated into immutable update_driver intent but the existing generated task only advances a barrier; proposed child .1.2 must repair that separate pre-existing product defect before .1 resumes reachability proof and architecture selection.`
   Commit: `pending selection`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.1`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.1`
-  Status: `active`
+  Status: `done`
   Goal: `Repair portable-SystemVerilog successor scheduling when authored operation order crosses backward in logical phase order.`
-  Acceptance: `First preserve an executable RED witness in which a legal root-fiber check-phase operation precedes a react-phase successor and the emitted runtime trace fails only because it regresses from check to react in one cycle. Implement a general backend scheduler rule derived solely from immutable ExecutionIR successor and eligible-phase authority: preserve authored dependency order, retain same-phase static-rank ordering, and advance a backward-phase successor to its first legal phase in the next logical cycle without sorting operations, rewriting source, special-casing the scale fixture, fabricating trace time, or widening the public API. Cover every backward phase boundary accepted by the portable profile, blocking/cycle-advancing predecessors, deterministic reruns, trace/result validation, existing checked-AHB behavior, stable diagnostics, and cleanup. Update the backend contract, mdBook, Knowledge Map, and task evidence; add no scale reachability, performance, capacity, parity, full-SystemVerilog, four-state, or methodology claim.`
-  Verification: `pending RED/GREEN implementation`
-  Commit: `pending implementation`
+  Acceptance: `First preserve an executable RED witness in which a legal root-fiber check-phase operation precedes a react-phase successor and the emitted runtime trace fails only because it regresses from check to react in one cycle. Implement a general backend scheduler rule derived from immutable ExecutionIR operation topology, static-rank/successor dependencies, eligible phases, and the backend's closed action-lowering completion semantics: preserve authored dependency order, retain same-phase static-rank ordering, and advance a backward-phase successor to its first legal phase in the next logical cycle without sorting operations, rewriting source, special-casing the scale fixture, fabricating trace time, or widening the public API. Cover every backward phase boundary accepted by the portable profile, blocking/cycle-advancing predecessors, deterministic reruns, trace/result validation, existing checked-AHB behavior, stable diagnostics, and cleanup. Update the backend contract, mdBook, Knowledge Map, and task evidence; add no scale reachability, performance, capacity, parity, full-SystemVerilog, four-state, or methodology claim.`
+  Verification: `Decision 0080 retains static partial evaluation and makes the emitted scenario task track the last logical phase consumed by each closed operation lowering. Same/forward phases call directly; check-to-react uses the qualified inactive-edge barrier, while react/check-to-drive increments the logical cycle once. The start task's former unconditional increment is centralized at the successor boundary. Negotiation independently rejects phase-order or kind/eligible-phase drift before artifacts. The exact public-Runner RED was VIAL_RUN_TRACE_ERROR over a cycle-4 check tuple followed by cycle-4 react; repaired qualified-Verilator execution passes with one genuine expectation and byte-identical rerun artifacts/results. Structural mutations cover every supported backward pair, same-phase order, blocking reset, and phase drift. The review also records direct-drive omission under separate proposed child .1.2 rather than hiding it in this repair.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.1: repair portable-SV phase rollover`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.2`
+  Status: `proposed`
+  Goal: `Repair portable-SystemVerilog direct-drive lowering so accepted update-driver intent changes and records the exact bound endpoint value.`
+  Acceptance: `Preserve an ordinary VIAL/HIAL RED whose added public input endpoint and (drive ENDPOINT VALUE) action produce immutable ExecutionIR kind=drive, eligible_phase=drive, update_driver effect, endpoint/value typed inputs, and successful portable negotiation, while the generated operation task contains only vial_inactive_barrier() and no endpoint assignment or drive record. Root-cause and repair the missing effect target and renderer path generally: bind only an exactly drive-capable bridge endpoint and recorded representation relation; emit the normalized assignment and drives record at the requested logical drive phase; define zero-duration versus cycle-consuming completion consistently with decision 0036; update successor rollover authority and every affected deterministic identity; reject sample-only/probe/unbound/type-incompatible targets before artifacts; prove same-phase drive ordering/conflicts, drive-to-react/check, backward successors, real qualified-Verilator behavior, result/trace closure, repeated byte determinism, diagnostics, and cleanup. Update contract/book/card/task evidence and capability/support truth as required. Do not special-case checked AHB, forge a bridge name or trace record, weaken direction/type safety, add a public API, or claim scale, full-SystemVerilog, four-state, methodology, performance, capacity, or general parity.`
+  Verification: `The 2026-08-24 in-memory ordinary-source probe added endpoint endpoint/HSEL and (drive select #b1). Parser/PlanBuilder produced a successful immutable drive operation with update_driver effect and typed endpoint/value inputs; portable emission negotiated successfully but rendered the exact task body as only vial_inactive_barrier(). ExecutionBuilder::_action_target also omits endpoint_id, leaving the effect target null. Implementation is deliberately deferred until .1.1 commits cleanly.`
+  Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2`
   Status: `proposed`
@@ -6971,3 +6978,43 @@ raising an enforcement ceiling.
   chapters; `knowledge-map: OK` reports 1,150 facts/6,086 questions/6,253
   answer occurrences; live-document size, task-tree integrity, and
   `git diff --check` pass.
+
+## Acceptance Checklist (enforced) — `.17.3.5.1.1` portable-SV phase-rollover implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE; executable RED)** — The ordinary checked-AHB
+  mutation inserted `expect phase_before_scoreboard` before the success
+  `scoreboard_expect`. Parser, bridge, and immutable ExecutionIR succeeded and
+  retained increasing static ranks with exact check/react eligibility. The
+  unmodified public Runner reached qualified Verilator, then returned
+  `VIAL_RUN_TRACE_ERROR`; its unchanged validator exposed cycle-4 prior tuple
+  phase rank 3/static rank 1 followed by current phase rank 2/static rank 2.
+  The structural RED simultaneously found no rollover at check-to-react,
+  react-to-drive, or check-to-drive boundaries. `git log -S'operation_by_scenario'
+  -1 -- perl/FSM/VIAL/Backend/SVPortableVerilator.pm`
+  identifies cursor-free emitter origin `dfe87f536`; the scenario task called
+  immutable root operations directly and `start` advanced its cycle privately.
+- [x] **ADDRESSED (verified)** — Decision `0080` and the backend's independent
+  closed phase table pair every supported operation's ExecutionIR eligible
+  phase with the last phase consumed by its generated lowering. The root
+  scheduler preserves operation-array/static-rank order, calls same/forward
+  phases directly, traverses the real inactive-edge barrier for check-to-react,
+  and increments once for react/check-to-drive. `start` no longer increments
+  unconditionally. Negotiation rejects phase-order or kind/eligible-phase drift
+  before artifacts. Structural and real-Runner tests prove every backward pair,
+  same-phase retention, blocking reset, one genuine repaired expectation,
+  byte-identical repeated result/artifact graphs, stable failures, and cleanup.
+  The same signoff review proved the independent pre-existing direct-drive
+  omission and task-owns its complete repair under proposed `.17.3.5.1.2`
+  rather than widening or hiding it in this slice.
+- [x] **NO REGRESSION** — The final guarded ExecutionIR/emission/real-Runner/
+  parity/runtime-stream suite reports `All tests successful` at `Files=5,
+  Tests=27` in 205 seconds under the unchanged 88%-host/4,096-MiB-descendant
+  limits. The module and two changed tests report `syntax OK`; all 54 mdBook
+  chapters test; `knowledge-map: OK` covers 1,150 facts/6,088 questions/6,255
+  occurrences/133 shards; task integrity holds at three trees/994 nodes; the
+  claim join closes 1,473 candidates as 884 gates/587 reviewed records/zero
+  gaps; all 22 live-document surfaces and maintained-reference authorities
+  pass with zero ceiling increases. Relative-path/locality, diff, staged
+  implementation acceptance, and all doctrine gates pass. No ExecutionIR,
+  public API, support, scale reachability, performance, capacity, parity,
+  full-SystemVerilog, four-state, UVM, or methodology claim is added.

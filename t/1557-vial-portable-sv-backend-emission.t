@@ -162,6 +162,52 @@ subtest 'private emitter produces a deterministic closed portable-SystemVerilog 
     isnt($second->{artifacts}[0]{content}, 'mutated', 'emission results are deeply defensive');
 };
 
+subtest 'root successor scheduling rolls every backward phase crossing to the next cycle' => sub {
+    my $ordinary = emitted_fixture_source($built);
+    like(
+        $ordinary,
+        qr{vial_op_0_reset_[0-9a-f]{12}\(\);\s+// VIAL successor phase rollover: check -> react advances to the next logical cycle\.\s+vial_inactive_barrier\(\);\s+vial_op_1_scoreboard_expect_[0-9a-f]{12}\(\);\s+// VIAL successor phase rollover: react -> drive advances to the next logical cycle\.\s+vial_cycle = vial_cycle \+ 1;\s+vial_op_2_start_[0-9a-f]{12}\(\);}s,
+        'blocking reset check-to-react and scoreboard react-to-drive crossings each use their exact rollover',
+    );
+    like(
+        $ordinary,
+        qr{vial_op_6_expect_[0-9a-f]{12}\(\);\s+vial_op_7_expect_[0-9a-f]{12}\(\);\s+vial_op_8_expect_[0-9a-f]{12}\(\);\s+vial_op_9_expect_[0-9a-f]{12}\(\);\s+vial_op_10_expect_[0-9a-f]{12}\(\);\s+vial_op_11_scoreboard_check_[0-9a-f]{12}\(\);}s,
+        'same-phase check successors retain authored static-rank order without rollover',
+    );
+
+    my $check_react_text = slurp_raw(repo_path($vial_id));
+    $check_react_text =~ s{
+        \(reset\ bus\ 3\)\n
+        \s+\(scoreboard_expect\ writes
+    }{(reset bus 3)\n              (expect phase_before_scoreboard (same (sample response) #b0))\n              (scoreboard_expect writes}x
+        or die 'check-to-react source mutation did not find the success scoreboard';
+    my $check_react = build_plan($check_react_text);
+    ok($check_react->{ok}, 'check-to-react source builds through immutable ExecutionIR');
+    diag($json->encode($check_react->{diagnostics})) unless $check_react->{ok};
+    my $check_react_sv = emitted_fixture_source($check_react);
+    like(
+        $check_react_sv,
+        qr{vial_op_1_expect_[0-9a-f]{12}\(\);\s+// VIAL successor phase rollover: check -> react advances to the next logical cycle\.\s+vial_inactive_barrier\(\);\s+vial_op_2_scoreboard_expect_[0-9a-f]{12}\(\);}s,
+        'check-to-react successor advances through the inactive-edge next-cycle barrier',
+    );
+
+    my $check_drive_text = slurp_raw(repo_path($vial_id));
+    $check_drive_text =~ s{
+        (\(scoreboard_expect\ writes.*?\(wait_cycles\ \(choice\ success_wait\)\)\)\)\n)
+        (\s+\(start\ success_write)
+    }{$1              (expect phase_before_start (same (sample response) #b0))\n$2}sx
+        or die 'check-to-drive source mutation did not find the success start';
+    my $check_drive = build_plan($check_drive_text);
+    ok($check_drive->{ok}, 'check-to-drive source builds through immutable ExecutionIR');
+    diag($json->encode($check_drive->{diagnostics})) unless $check_drive->{ok};
+    my $check_drive_sv = emitted_fixture_source($check_drive);
+    like(
+        $check_drive_sv,
+        qr{vial_op_2_expect_[0-9a-f]{12}\(\);\s+// VIAL successor phase rollover: check -> drive advances to the next logical cycle\.\s+vial_cycle = vial_cycle \+ 1;\s+vial_op_3_start_[0-9a-f]{12}\(\);}s,
+        'check-to-drive successor advances directly to the next logical drive phase',
+    );
+};
+
 subtest 'negotiation and invocation failures emit nothing' => sub {
     my $wrong = emit_backend(backend_profile => 'other_backend');
     backend_failure($wrong, 'VIAL_BACKEND_UNSUPPORTED', 'wrong backend profile');
@@ -174,6 +220,23 @@ subtest 'negotiation and invocation failures emit nothing' => sub {
         dut_vhdl => $built->{backend_inputs}{dut_vhdl},
     });
     backend_failure($missing, 'VIAL_BACKEND_UNSUPPORTED', 'missing DUT input');
+
+    my $phase_drift_plan = build_plan();
+    my $phase_drift_operation =
+        $phase_drift_plan->{execution_ir}{data}{operation_graph}{operations}[0];
+    $phase_drift_operation->{eligible_phase} = 'react';
+    my $phase_drift = emit_backend(
+        execution_ir => $phase_drift_plan->{execution_ir},
+    );
+    backend_failure(
+        $phase_drift, 'VIAL_BACKEND_UNSUPPORTED',
+        'ExecutionIR operation-phase drift',
+    );
+    is_deeply(
+        $phase_drift->{negotiation}{unsatisfied},
+        ["operation-phase:$phase_drift_operation->{operation_id}"],
+        'phase drift fails closed at negotiation with the exact operation identity',
+    );
 
     my $invocation = FSM::VIAL::Backend::SVPortableVerilator->emit({});
     backend_failure($invocation, 'VIAL_BACKEND_INVOCATION_ERROR', 'incomplete invocation');
@@ -242,8 +305,10 @@ subtest 'capability discovery distinguishes bounded AHB parity from general pari
 done_testing();
 
 sub build_plan {
+    my ($vial_text) = @_;
+    $vial_text //= slurp_raw(repo_path($vial_id));
     my $semantic_ir = FSM::VIAL::Parser->parse_source({
-        text => slurp_raw(repo_path($vial_id)),
+        text => $vial_text,
         source_name => $vial_id,
         source_catalog => {},
     });
@@ -260,6 +325,23 @@ sub build_plan {
         replay_manifest => undef,
         native_extension_catalog => [],
     });
+}
+
+sub emitted_fixture_source {
+    my ($plan) = @_;
+    my $emitted = FSM::VIAL::Backend::SVPortableVerilator->emit({
+        execution_ir => $plan->{execution_ir},
+        bridge_manifest => $plan->{bridge_manifest},
+        backend_inputs => $plan->{backend_inputs},
+        artifact_root => '.artifacts/test/vial-portable-sv-emission',
+        backend_profile => 'sv_portable_verilator',
+    });
+    ok($emitted->{ok}, 'phase-order fixture emits successfully');
+    diag($json->encode($emitted->{diagnostics})) unless $emitted->{ok};
+    my ($fixture) = grep {
+        $_->{relpath} eq 'backends/sv_portable_verilator/src/base_output_arbitration_tb.sv'
+    } @{$emitted->{artifacts} || []};
+    return defined($fixture) ? $fixture->{content} : '';
 }
 
 sub emit_backend {
