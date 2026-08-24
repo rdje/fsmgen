@@ -280,7 +280,7 @@ rationale, alternatives, rollback, and three verification legs.
 That signoff review separately confirmed a pre-existing direct-drive defect.
 Ordinary VIAL with a drive-capable endpoint builds immutable `update_driver`
 intent and negotiates successfully, but the emitted `drive` task contains only
-an inactive barrier; its effect target is also null. Proposed `.17.3.5.1.2`
+an inactive barrier; its effect target is also null. Active `.17.3.5.1.2`
 owns endpoint/relation validation, assignment and drive-record emission,
 completion-phase/successor semantics, real runtime proof, determinism, and
 support truth before runtime materialization/lifecycle selection resumes.

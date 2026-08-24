@@ -816,7 +816,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Select the exact runtime-stream materialization, identity, and shared Verilator stage-lifecycle contract.`
   Acceptance: `Audit the canonical runtime construction, portable emitter, Runner, trace validator, result producer, measurement controller, qualified tool/limit authority, and reference runtime evidence. Select a closed workload-to-runtime schedule that proves candidate record-count reachability while preserving semantic truth, binds every repeated activity into trace/result/backend evidence, and classifies reference/limit/excess applicability honestly. Select one caller-sealed staged execution lifecycle reused by the public Runner and measurement workers across process boundaries with exact tool identity, commands, timeouts, transcript bounds, state transitions, same-volume ownership, failure cleanup, and no second execution semantics. Record alternatives and rollback in a decision; change no product behavior.`
-  Verification: `The exact gate-reachability probe exposed a portable-SystemVerilog scheduler defect before selection could close: legal authored source with a check-phase expect followed by a react-phase scoreboard operation emitted check then react in one logical cycle and the shipped TraceValidator rejected the run. Completed child .1.1 now rolls every supported backward phase crossing exactly once and rejects operation-phase drift. Its signoff review independently proved that direct VIAL drive is negotiated into immutable update_driver intent but the existing generated task only advances a barrier; proposed child .1.2 must repair that separate pre-existing product defect before .1 resumes reachability proof and architecture selection.`
+  Verification: `The exact gate-reachability probe exposed a portable-SystemVerilog scheduler defect before selection could close: legal authored source with a check-phase expect followed by a react-phase scoreboard operation emitted check then react in one logical cycle and the shipped TraceValidator rejected the run. Completed child .1.1 now rolls every supported backward phase crossing exactly once and rejects operation-phase drift. Its signoff review independently proved that direct VIAL drive is negotiated into immutable update_driver intent but the existing generated task only advances a barrier; active child .1.2 must repair that separate pre-existing product defect before .1 resumes reachability proof and architecture selection.`
   Commit: `pending selection`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.2`
 
@@ -828,11 +828,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.1: repair portable-SV phase rollover`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Repair portable-SystemVerilog direct-drive lowering so accepted update-driver intent changes and records the exact bound endpoint value.`
   Acceptance: `Preserve an ordinary VIAL/HIAL RED whose added public input endpoint and (drive ENDPOINT VALUE) action produce immutable ExecutionIR kind=drive, eligible_phase=drive, update_driver effect, endpoint/value typed inputs, and successful portable negotiation, while the generated operation task contains only vial_inactive_barrier() and no endpoint assignment or drive record. Root-cause and repair the missing effect target and renderer path generally: bind only an exactly drive-capable bridge endpoint and recorded representation relation; emit the normalized assignment and drives record at the requested logical drive phase; define zero-duration versus cycle-consuming completion consistently with decision 0036; update successor rollover authority and every affected deterministic identity; reject sample-only/probe/unbound/type-incompatible targets before artifacts; prove same-phase drive ordering/conflicts, drive-to-react/check, backward successors, real qualified-Verilator behavior, result/trace closure, repeated byte determinism, diagnostics, and cleanup. Update contract/book/card/task evidence and capability/support truth as required. Do not special-case checked AHB, forge a bridge name or trace record, weaken direction/type safety, add a public API, or claim scale, full-SystemVerilog, four-state, methodology, performance, capacity, or general parity.`
-  Verification: `The 2026-08-24 in-memory ordinary-source probe added endpoint endpoint/HSEL and (drive select #b1). Parser/PlanBuilder produced a successful immutable drive operation with update_driver effect and typed endpoint/value inputs; portable emission negotiated successfully but rendered the exact task body as only vial_inactive_barrier(). ExecutionBuilder::_action_target also omits endpoint_id, leaving the effect target null. Implementation is deliberately deferred until .1.1 commits cleanly.`
-  Commit: `pending activation`
+  Verification: `The 2026-08-24 in-memory ordinary-source probe added endpoint endpoint/HSEL and (drive select #b1). Parser/PlanBuilder produced a successful immutable drive operation with update_driver effect and typed endpoint/value inputs; portable emission negotiated successfully but rendered the exact task body as only vial_inactive_barrier(). ExecutionBuilder::_action_target also omits endpoint_id, leaving the effect target null. Clean prerequisite commit 1e9ab0e61 closes .1.1; this child alone now owns executable RED preservation and the complete direct-drive repair.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.2: activate portable-SV direct-drive repair`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2`
   Status: `proposed`
@@ -7004,7 +7004,7 @@ raising an enforcement ceiling.
   same-phase retention, blocking reset, one genuine repaired expectation,
   byte-identical repeated result/artifact graphs, stable failures, and cleanup.
   The same signoff review proved the independent pre-existing direct-drive
-  omission and task-owns its complete repair under proposed `.17.3.5.1.2`
+  omission and task-owns its complete repair under active `.17.3.5.1.2`
   rather than widening or hiding it in this slice.
 - [x] **NO REGRESSION** — The final guarded ExecutionIR/emission/real-Runner/
   parity/runtime-stream suite reports `All tests successful` at `Files=5,
@@ -7018,3 +7018,33 @@ raising an enforcement ceiling.
   implementation acceptance, and all doctrine gates pass. No ExecutionIR,
   public API, support, scale reachability, performance, capacity, parity,
   full-SystemVerilog, four-state, UVM, or methodology claim is added.
+
+## Acceptance Checklist (enforced) — `.17.3.5.1.2` portable-SV direct-drive repair activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The ordinary in-memory VIAL/HIAL probe
+  added drive-capable `endpoint/HSEL` and `(drive select #b1)`. Parser and
+  PlanBuilder returned a successful immutable `drive` operation with exact
+  typed endpoint/value inputs, `eligible_phase=drive`, and `update_driver`, and
+  portable negotiation succeeded. The emitted task body was only
+  `vial_inactive_barrier();`: no endpoint assignment or drive record.
+  `ExecutionBuilder::_action_target` also has no `endpoint_id` branch, so the
+  operation effect target is null. The distinct history probe
+  `git log -S'_action_target' -1 -- perl/FSM/VIAL/ExecutionBuilder.pm` locates
+  that projection at origin commit `44dbecd1a`, proving the defect predates
+  this activation. This is a pre-existing direct-action defect,
+  not a phase-rollover, Verilator, scale, resource, or source-validity failure.
+- [x] **ADDRESSED (verified)** — Clean prerequisite implementation commit
+  `1e9ab0e61` permits the pivot. Child `.17.3.5.1.2` alone is active and owns an
+  executable ordinary-source RED plus target projection, exact drive-capable
+  bridge/relation admission, normalized assignment and trace, completion/
+  successor semantics, hostile targets/types, real qualified-Verilator proof,
+  deterministic identities/results, diagnostics, cleanup, documentation, and
+  support truth. Runtime materialization/lifecycle selection remains paused;
+  no product implementation is included in this activation.
+- [x] **NO REGRESSION** — The unchanged guarded portable-SV emission watcher
+  reports `All tests successful` at `Files=1, Tests=7`; all 54 mdBook chapters
+  test; Knowledge Map generation/parity, task integrity, claim inventory/
+  disposition, live-document containment, project locality, diff, and all
+  doctrine gates pass. No code, test, fixture, parser, SemanticIR, bridge,
+  ExecutionIR, emission, runtime, trace, result, API, support, scale,
+  performance, capacity, parity, four-state, or methodology behavior changes.

@@ -100,7 +100,7 @@ succeeds, but the existing generated operation task contains only
 record. The effect target is also null because the builder's target projection
 omits `endpoint_id`.
 
-Task `.17.3.5.1.2` owns that full semantic repair next: exact drive-capable
+Active task `.17.3.5.1.2` owns that full semantic repair: exact drive-capable
 binding, normalized assignment and trace record, completion-phase definition,
 successor interaction, hostile target/type rejection, real Verilator behavior,
 determinism, and support truth. Runtime materialization selection remains
