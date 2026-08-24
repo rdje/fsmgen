@@ -842,11 +842,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.3: activate portable-SV parallel-child repair; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.3: close portable-SV parallel-child admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Reconcile the portable-SystemVerilog architecture-scale emission ladder with the scheduler and direct-drive repairs that changed generated source identity.`
   Acceptance: `Preserve the exact backend-emission RED at clean predecessor 87684237a and locate every output-affecting origin commit. Independently regenerate every selected portable level, derive source bytes and identities from emitted artifacts rather than copying failed expectations, falsify them with byte-equal reruns and mutation, and determine whether conditional zero-overhead emission can preserve the selected ladder without weakening semantics. If correct semantics necessarily change bytes or the 16-MiB adjacent boundary, select and document a versioned count/boundary reconciliation before implementation; update decision 0075 and every backend-emission/runtime-balanced consumer consistently. Prove reference/gate/qualification/limit/over-limit outcomes, balanced revision-2 prerequisites, exact cleanup, and no borrowed runtime, support, performance, or capacity claim. Do not blindly rebaseline a hash, weaken the source cap, hide an earlier rejecting level, or alter the public scheduler/direct-drive semantics.`
   Verification: `The .1.3 compatibility sweep ran t1650 in the current tree and in a repository-local detached worktree at clean predecessor 87684237a. Both independently produced the exact portable reference mismatch: 164,507 generated source bytes versus frozen 164,093, plus source-identity drift. The detached worktree was removed and pruned exactly. Git history locates the frozen oracle at 5d309b0eb, scheduler rollover repair at 1e9ab0e61, and direct-drive repair at 69384201c. The former selected limit retained only 386 unused bytes below the 16-MiB cap, so a fixed 414-byte reference delta is sufficient to threaten its classification; no all-level or linear-delta claim is made until this child runs its independent derivation.`
-  Commit: `pending activation`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.4: activate portable scale identity reconciliation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2`
   Status: `proposed`
@@ -7176,3 +7176,30 @@ raising an enforcement ceiling.
   Project locality and diff checks pass. Per CI policy, no unrelated full CI
   runs before push, and no scale, performance, capacity, four-state,
   methodology, parity, or general child-sequence support claim is added.
+
+## Acceptance Checklist (enforced) — `.17.3.5.1.4` portable scale identity reconciliation activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Clean commit `f1b79af06` durably closes
+  the prerequisite parallel-child repair. Its separately reproduced current
+  and clean-predecessor `t/1650` evidence identifies a stale portable scale
+  source oracle after the scheduler/direct-drive repairs, while the existing
+  386-byte limit margin is smaller than the observed 414-byte reference drift.
+  `git log -S'164_093' --oneline -- perl/FSM/VIAL/ArchitectureScaleBackendEmission/PortableSV.pm
+  t/1646-vial-architecture-scale-backend-emission-portable-sv.t
+  t/1650-vial-architecture-scale-backend-emission-family-qualification.t`
+  locates the original freeze at `5d309b0eb` and its family copy at `86faa137d`.
+  The owning card and task evidence explicitly withhold any all-level or
+  constant-delta inference.
+- [x] **ADDRESSED (verified)** — Child `.17.3.5.1.4` alone is active and owns
+  producer-derived level discovery, independent all-level regeneration and
+  byte-equal replay, conditional-overhead analysis, mutation falsification,
+  an explicit versioned boundary decision if required, every affected
+  consumer, and cleanup. Task index, bounded Memory, mdBook, and Knowledge Map
+  route to that exact frontier. No product or test behavior changes.
+- [x] **NO REGRESSION** — Task-tree integrity remains three trees/996 nodes;
+  relative-path verification passes at `Files=1, Tests=2`; Knowledge Map parity
+  remains 1,150 facts/6,091 questions/6,258 occurrences/133 shards; project
+  locality and diff checks pass. Final claim, containment, staged acceptance,
+  and doctrine gates run before this activation commit. No scheduler,
+  direct-drive, backend, runtime, trace/result, scale, support, performance,
+  capacity, four-state, methodology, parity, or public-API claim changes.

@@ -317,7 +317,7 @@ The compatibility sweep also independently reproduced a pre-existing portable
 backend-emission oracle drift at clean predecessor `87684237a`: current
 reference output is 164,507 SystemVerilog bytes while the frozen scale oracle
 expects 164,093 and its earlier identity. The former selected limit had only
-386 unused bytes below 16 MiB, so proposed `.17.3.5.1.4` owns all-level
+386 unused bytes below 16 MiB, so active `.17.3.5.1.4` owns all-level
 byte/identity rederivation and boundary reconciliation. No linear-delta,
 accepted-limit, performance, support, or capacity claim is made from the
 reference observation alone.

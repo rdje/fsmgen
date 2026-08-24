@@ -172,7 +172,7 @@ architecture-scale reference renderer produces 164,507 SystemVerilog bytes
 while its frozen oracle still expects 164,093 and the former digest. The oracle
 predates the completed phase-rollover and direct-drive repairs, and its selected
 16-MiB limit retained only 386 unused bytes below the cap, so neither a blind digest update
-nor an assumed constant delta is safe. Proposed `.17.3.5.1.4` owns independent
+nor an assumed constant delta is safe. Active `.17.3.5.1.4` owns independent
 all-level rederivation and an explicit boundary decision before runtime
 materialization selection resumes.
 
