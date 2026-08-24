@@ -1,12 +1,13 @@
 # Knowledge Map: `vial-verilator`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **3** uniquely owned question entries.
+> **1** facts · **4** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="how does the shared Verilator lifecycle preserve state and cleanup authority?" · facts=[vial-verilator-shared-lifecycle](../../docs/knowledge/vial-verilator-shared-lifecycle.md)
 - q="how will the Runner and scale measurement share Verilator stages?" · facts=[vial-verilator-shared-lifecycle](../../docs/knowledge/vial-verilator-shared-lifecycle.md)
+- q="what did the macOS pre-main qualification conclude?" · facts=[vial-verilator-shared-lifecycle](../../docs/knowledge/vial-verilator-shared-lifecycle.md)
 - q="why can portable Verilator time out before generated main on macOS?" · facts=[vial-verilator-shared-lifecycle](../../docs/knowledge/vial-verilator-shared-lifecycle.md)
 
 ## Facts

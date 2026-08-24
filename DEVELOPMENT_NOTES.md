@@ -877,3 +877,25 @@ watcher pass. The broader public integration watcher passes six of seven top-
 level subtests but reproduces the same wall only for the byte-identical second
 direct-drive execution after the first passes; that result stays failed and
 child-owned rather than becoming a retry or a weakened signoff criterion.
+
+## 2026-08-24: A host stall is preserved by qualification, not hidden by recovery
+
+The sampled `_dyld_start` stalls are real, but the initial compiler/policy
+correlation is not a sufficient cause. The same canonical generated executable
+reached first output with `syspolicyd` at 49.0% CPU during unrelated compiler
+orchestration, and two zero-compiler observations also passed. Generated,
+byte-identical different-path, and fresh minimal C++ binaries all carried the
+same provenance value and valid linker-created ad-hoc signatures. The full
+public repeated-direct-drive route later passed under the natural quiet
+condition. Decision 0084 therefore preserves the existing lifecycle and fixed
+wall and adds only an explicit-guard evidence watcher plus a bounded static
+record.
+
+The diagnostic treats controls as causal probes, never recovery paths. The
+primary executes once and alone determines success; a timeout remains a failed
+test even if a byte-identical copy or minimal binary later runs. Read-only
+sampling begins only after two seconds of continued life, all evidence remains
+under a same-device non-symlink repository root, and incomplete attempts cannot
+strand sample data. This gives future macOS observations exact host, process,
+binary, signature, xattr, timing, stack, and cleanup context without retry,
+deadline widening, security/signing changes, or false backend support.

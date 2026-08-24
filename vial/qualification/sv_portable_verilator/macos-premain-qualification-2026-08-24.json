@@ -1,0 +1,207 @@
+{
+  "schema": "fsmgen.vial_macos_premain_qualification_evidence.v1",
+  "schema_version": 1,
+  "work_unit": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3.1",
+  "producer": {
+    "path": "t/1665-vial-macos-premain-qualification.t",
+    "sha256": "7968517cc9607c8a2236989075ab02b7f1bf92607f4aa1085f61715da4589d69",
+    "bytes": 24876,
+    "guard": "FSMGEN_VIAL_MACOS_PREMAIN_QUALIFICATION=1",
+    "conditions": [
+      "concurrent_link",
+      "quiet_no_compiler"
+    ]
+  },
+  "host": {
+    "product": "macOS 26.5.2",
+    "build": "25F84",
+    "kernel": "Darwin 25.5.0",
+    "machine": "Mac16,11",
+    "cpu": "Apple M4 Pro",
+    "architecture": "arm64",
+    "logical_cpus": 12,
+    "memory_bytes": 25769803776,
+    "verilator": "Verilator 5.046 2026-02-28 rev vUNKNOWN-built20260228",
+    "clang": "Apple clang 21.0.0 (clang-2100.1.1.101)",
+    "filesystem": "APFS",
+    "assessment_status": "assessments enabled"
+  },
+  "historical_failure_evidence": {
+    "fresh_generated_executables": 3,
+    "executable_bytes": 1847672,
+    "spawn_to_exec_ns_min": 3700000,
+    "spawn_to_exec_ns_max": 4100000,
+    "first_output_observed": false,
+    "output_bytes": 0,
+    "deadline_seconds": 30,
+    "terminated_and_cleaned": true,
+    "sample": {
+      "duration_seconds": 3,
+      "bytes": 995,
+      "sha256": "54f039b4ffa59c9af9ba3cec1b53d10a0605d34c798e12cad1ebbfa4f2fb2ad2",
+      "main_thread_samples": 2389,
+      "dyld_start_samples": 2389,
+      "footprint_bytes": 98304,
+      "binary_image_map_present": false
+    },
+    "correlated_not_causal": {
+      "syspolicyd_cpu_percent_snapshot": 28.6,
+      "separate_policy_network_timeout_seconds": 30.179,
+      "unrelated_rust_link_activity": true
+    }
+  },
+  "controlled_observations": [
+    {
+      "label": "concurrent-link-policy-active",
+      "raw_record_sha256": "14db6cc9cea7feff17ba823e8f6ca056fa662c4ce35a910db2a42b9c62907ab8",
+      "raw_record_bytes": 19758,
+      "raw_record_retention": "consumed_then_removed",
+      "condition": "concurrent_link",
+      "compiler_process_count": 1,
+      "syspolicyd_cpu_percent_before": 49.0,
+      "syspolicyd_cpu_percent_after": 36.2,
+      "generated_binary": {
+        "sha256": "961d436877624b32fbee5ea78df9735aa862c11460651c7065a38cb21ba59ebd",
+        "bytes": 1847672,
+        "mode": "0755",
+        "format": "Mach-O 64-bit executable arm64",
+        "extended_attribute": "com.apple.provenance",
+        "extended_attribute_hex": "010200b62bae1f42869ecd",
+        "signature": "adhoc,linker-signed",
+        "codesign_verify_status": 0
+      },
+      "primary": {
+        "ok": true,
+        "spawn_to_exec_ns": 3760000,
+        "exec_to_first_output_ns": 391195000,
+        "execution_ns": 392757000,
+        "output_bytes": 345048,
+        "timed_out": false,
+        "cleanup_removed": true,
+        "sample_status": "exited_before_sample"
+      },
+      "byte_identical_different_path_control": {
+        "sha256": "961d436877624b32fbee5ea78df9735aa862c11460651c7065a38cb21ba59ebd",
+        "ok": true,
+        "exec_to_first_output_ns": 151414000
+      },
+      "fresh_minimal_cpp_control": {
+        "sha256": "4a7eac50d700ac02402ce451d1c18510233c30f76deca457db2d1974a7e6239b",
+        "extended_attribute_hex": "010200b62bae1f42869ecd",
+        "ok": true,
+        "exec_to_first_output_ns": 99541000
+      },
+      "platform_true_control_ok": true
+    },
+    {
+      "label": "quiet-no-compiler-log-correlated",
+      "raw_record_sha256": "607d60bcae28996ae64136d01ad8eeead3689baffd1f8bf72c6b56d539d194f9",
+      "raw_record_bytes": 20644,
+      "raw_record_retention": "consumed_then_removed",
+      "condition": "quiet_no_compiler",
+      "compiler_process_count": 0,
+      "syspolicyd_cpu_percent_before_primary": 0.0,
+      "syspolicyd_cpu_percent_after_primary": 6.5,
+      "primary": {
+        "started_at_utc": "2026-08-24T18:07:09Z",
+        "finished_at_utc": "2026-08-24T18:07:10Z",
+        "ok": true,
+        "spawn_to_exec_ns": 3702000,
+        "exec_to_first_output_ns": 311167000,
+        "execution_ns": 312626000,
+        "output_bytes": 345048,
+        "timed_out": false,
+        "cleanup_removed": true,
+        "sample_status": "exited_before_sample"
+      },
+      "exact_syspolicyd_log_window": {
+        "started_at_utc": "2026-08-24T18:07:08Z",
+        "finished_at_utc": "2026-08-24T18:07:12Z",
+        "all_lines": 0,
+        "exec_lines": 0,
+        "network_lines": 0,
+        "gatekeeper_lines": 0,
+        "provenance_lines": 0
+      }
+    },
+    {
+      "label": "quiet-no-compiler-hardened-watcher",
+      "raw_record_sha256": "2e294d4d6304f86ab7b2ae665bb4713ea031cef0eeab7fd0e681465514fd18bc",
+      "raw_record_bytes": 20648,
+      "raw_record_retention": "consumed_then_removed",
+      "condition": "quiet_no_compiler",
+      "compiler_process_count": 0,
+      "syspolicyd_cpu_percent_before_primary": 1.7,
+      "syspolicyd_cpu_percent_after_primary": 5.4,
+      "generated_binary": {
+        "sha256": "cdac71ff126763b1ae529ba434e6ab8b22e21e79b51b60e6fae4e6dd8e4f6e02",
+        "bytes": 1847672,
+        "mode": "0755",
+        "format": "Mach-O 64-bit executable arm64",
+        "extended_attribute": "com.apple.provenance",
+        "extended_attribute_hex": "010200b62bae1f42869ecd",
+        "signature": "adhoc,linker-signed",
+        "codesign_verify_status": 0
+      },
+      "primary": {
+        "started_at_utc": "2026-08-24T18:12:47Z",
+        "finished_at_utc": "2026-08-24T18:12:48Z",
+        "ok": true,
+        "spawn_to_exec_ns": 4009000,
+        "exec_to_first_output_ns": 345101000,
+        "execution_ns": 346582000,
+        "output_bytes": 345048,
+        "timed_out": false,
+        "cleanup_removed": true,
+        "sample_status": "exited_before_sample"
+      },
+      "byte_identical_different_path_control": {
+        "sha256": "cdac71ff126763b1ae529ba434e6ab8b22e21e79b51b60e6fae4e6dd8e4f6e02",
+        "ok": true,
+        "exec_to_first_output_ns": 139902000
+      },
+      "fresh_minimal_cpp_control": {
+        "sha256": "4a7eac50d700ac02402ce451d1c18510233c30f76deca457db2d1974a7e6239b",
+        "extended_attribute_hex": "010200b62bae1f42869ecd",
+        "ok": true,
+        "exec_to_first_output_ns": 214495000
+      },
+      "platform_true_control_ok": true
+    }
+  ],
+  "public_integration_control": {
+    "condition": "quiet_no_compiler",
+    "path": "t/1558-vial-verilator-run-integration.t",
+    "files": 1,
+    "top_level_tests": 7,
+    "wall_seconds": 167,
+    "result": "PASS",
+    "repeated_api_ok": true,
+    "repeated_cli_ok": true,
+    "repeated_phase_rollover_ok": true,
+    "repeated_direct_drive_ok": true,
+    "byte_deterministic_results_and_artifacts": true,
+    "cleanup_exact": true
+  },
+  "conclusion": {
+    "confirmed": "intermittent host-side pre-main dyld stall",
+    "not_confirmed": "Gatekeeper, syspolicyd contention, provenance metadata, linker signature integrity, generated executable bytes, generated executable path, or concurrent compiler activity as a sufficient deterministic cause",
+    "backend_defect_reproduced": false,
+    "selected_project_response": "guarded host qualification watcher",
+    "backend_change": "none",
+    "public_contract_change": "none"
+  },
+  "boundaries": {
+    "retry_count": 0,
+    "run_deadline_seconds": 30,
+    "signing_changed": false,
+    "security_changed": false,
+    "unrelated_process_changed": false,
+    "failed_result_promoted": false
+  },
+  "claim_verification": {
+    "rederivation": "the guarded watcher independently reconstructs the canonical VIAL/HIAL/emission/lifecycle route and records host, binary, signing, xattr, process, timing, sample, control, and cleanup evidence",
+    "falsification": "policy-active concurrent-link, quiet no-compiler, byte-identical different-path, freshly linked minimal C++, platform-signed true, exact policy-log-window, and full repeated public integration controls",
+    "durability": "this bounded evidence record, t/1665, t/1666, decision 0084, the owning task-tree, mdBook, Knowledge Map, and Git history"
+  }
+}
