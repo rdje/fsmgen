@@ -222,7 +222,7 @@ failure cleanup, independent regeneration, and zero staging under the real
 guard. No compile/run/trace/result, support, budget, capacity, reached-boundary,
 native-UVM-runtime, parity, or public-API claim follows.
 
-Active `.17.3.4.2` adds the immutable matrix publisher over that adapter. Its
+Completed `.17.3.4.2` adds the immutable matrix publisher over that adapter. Its
 twenty ordered profiles come only from producer `owned_shapes`; reference,
 limit, and excess use validation while gate/qualification use sampling only
 when the canonical outcome emitted artifacts. Every capture, resume, and
@@ -235,6 +235,19 @@ revision/host/tool/guard identity and retain exact dominance, samples,
 exclusions, provider classification, content identity, and nonclaims. These
 bounds and manifests are structural evidence, not IASIM/tool execution,
 support, performance budgets, capacity, or reached-boundary claims.
+
+Clean revision `fdc6e6a1b` seals all twenty profiles as 22 immutable files/
+2,232,452 bytes at complete identity
+`backend-emission-matrix/a5bb05a5f4be7fb364fbf52c6750b10e04417d53732f364158e6f143bc71f735`.
+The accepted partition is 13 emitted/seven authoritative non-emission,
+twelve validation/eight measurement-candidate, six applicable/two
+inapplicable measurement, 24 raw/zero excluded records, five read-only
+provider-verification profiles, and three preflight-dominated profiles. The
+largest profile is 442,009 bytes below the 524,288-byte publication ceiling;
+family and complete manifests are 30,203/2,535 bytes. Exact t/1662 passes in
+12,656 seconds under the unchanged guard, and a fresh-process guarded
+`--validate` returns the same identity and partition. The elapsed observation
+is capture provenance, not a public budget or capacity claim.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
