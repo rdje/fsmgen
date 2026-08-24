@@ -245,22 +245,12 @@ bytes exactly and still pass the terminal limit. Exact guarded evidence retains
 now exits `expected_rejection` / `validated_not_measured` with no diagnostic,
 performance sample, or staging residue. Axis-specific thresholds,
 guard/timeout/cap changes, evidence relabelling, and promoted
-support/performance/capacity claims remain excluded. The 57 atomic profiles
-plus execution-family seal are preserved under the exact revision-`e4b95dbd`
-same-volume history archive. Independent post-move reconstruction proves 57
-reports/5,662,418 bytes, one 46,735-byte family manifest, profile digest
-`e8ba27e0986646a284505966828f3c4fdd0a78a55c24978b7a15bff82625f0f9`,
-and all-payload digest
-`c9147898a109f21eda6bc8ec370f2b15620518cdb1fb3d7171bf83d9fec49170`;
-the active execution/checking namespace and raw staging are empty. Checking-
-family and complete seals remain withheld.
+support/performance/capacity claims remain excluded. The exact revision-`e4b95dbd` archive retains 57 reports/5,662,418 bytes plus its 46,735-byte execution-family manifest at profile digest `e8ba27e0986646a284505966828f3c4fdd0a78a55c24978b7a15bff82625f0f9` and all-payload digest `c9147898a109f21eda6bc8ec370f2b15620518cdb1fb3d7171bf83d9fec49170`; checking/full seals were correctly withheld.
 
-Revision `037e56f09` seals 22 profiles before `random_attempts/limit_v1` fails;
-its 22 reports/2,609,009 bytes reconstruct at digest `6dbfa2d02f7eee0332881074628d50d2b454fe94ac241137a11d7c651c162d90`.
-Decision `0079` is implemented by a private SHA-256-sealed, u32-framed canonical UTF-8 transcript bounded to 16,777,216 + 4 x 65,536 = 17,039,360 bytes. Projection
-searches or replay-validates once; accepted materialization independently checks
-and consumes records, while known excess allocates no final list/map/IR/report.
-Exact adapters preserve identities, attempts, 8,440/8,441/32,768 outcomes, the 300-second stage ceiling, and clean staging; the fresh 72-profile matrix remains under `.17.3.3.2.3.1`.
+Revision `037e56f09` retains its 22-report/2,609,009-byte prefix at digest `6dbfa2d02f7eee0332881074628d50d2b454fe94ac241137a11d7c651c162d90`. Decision `0079` uses a private SHA-256-sealed, u32-framed canonical UTF-8 transcript bounded to 16,777,216 + 4 x 65,536 = 17,039,360 bytes: projection searches or replay-validates once, accepted materialization independently validates and consumes records, and known excess allocates no final list/map/IR/report. Exact adapters preserve identities, attempts, 8,440/8,441/32,768 outcomes, the 300-second ceiling, and clean staging.
+
+Revision `9c0209c22` seals the complete 40-execution/32-checking matrix: 75 active files/7,312,415 bytes, both family manifests, accepted identity `execution-checking-matrix/0548629720a9f4c8636c912396cfaefff523da92fc800594618db68b788b91d0`, 41 accepted, 19 expected rejection, five inapplicable measurement, two preflight dominated, 31 applicable measurement, 62 controller applicable, ten controller inapplicable, 119 raw records, ten source-free profiles, and zero exclusions.
+The 88% host cutoff safely interrupted immutable execution-family revalidation; same-identity resume left zero raw staging and completed checking plus the aggregate seal. A separate guarded `--validate` reloads the same identity and partition with zero diagnostics. This does not claim capacity, reached boundaries, public budgets, backend/tool execution, compile/run/trace/result behavior, support, or a public API.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
