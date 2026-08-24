@@ -417,8 +417,9 @@ subtest 'discovery and support accounting expose only the qualified shipped boun
     my %nonclaim = map { $_ => 1 } @{$execution->{explicit_nonclaims}};
     ok($nonclaim{complete_four_state} && $nonclaim{general_cross_backend_parity} && $nonclaim{uvm} && $nonclaim{vhdl_methodology}, 'four-state/general-parity/methodology non-claims remain explicit');
     ok(
-        $nonclaim{non_root_direct_drive} && $nonclaim{inout_direct_drive},
-        'non-root and inout portable direct drive remain explicit non-claims',
+        $nonclaim{non_root_direct_drive} && $nonclaim{inout_direct_drive}
+            && $nonclaim{general_parallel_child_sequences},
+        'unqualified direct-drive and general parallel-child profiles remain explicit non-claims',
     );
     my ($entry) = grep { $_->{id} eq 'feature.vial_sv_portable_verilator_runtime' } regression_corpus_entries();
     is($entry->{coverage}, 'vial_sv_portable_verilator_runtime_cli_api', 'runtime has a distinct support identity');

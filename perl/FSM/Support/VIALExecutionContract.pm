@@ -131,8 +131,9 @@ sub build_vial_execution_contract {
         writes_files => JSON::PP::true,
         public_embedding_api => JSON::PP::true,
         explicit_nonclaims => [qw(
-            complete_four_state general_cross_backend_parity uvm vhdl_methodology
-            inout_direct_drive mixed_language non_root_direct_drive scale
+            complete_four_state general_cross_backend_parity
+            general_parallel_child_sequences inout_direct_drive mixed_language
+            non_root_direct_drive scale uvm vhdl_methodology
         )],
         guidance => [
             'Use the public VIAL run CLI/API for the selected portable-SystemVerilog Verilator pipeline; the backend classes remain private compiler seams.',
@@ -140,6 +141,7 @@ sub build_vial_execution_contract {
             'Run materializes only an operation-owned repository-local staging tree, invokes exact Verilator 5.046 commands without warning suppressions, and removes staging before publication.',
             'Trace validation projects the produced closed trace without executing VIAL meaning; ResultProducer converts that validated projection into the closed verification-result contract.',
             'Portable direct endpoint drive is bounded to input carriers and scenario-root operations; inout or non-root direct drive fails backend negotiation before artifacts.',
+            'Portable parallel execution is bounded to exactly one await operation in each direct child fiber; other child kinds, multiple operations, and nested parallel fail backend negotiation before artifacts.',
             'Leaf .11 ships a closed deterministic parity report for the selected AHB fixture by comparing public/shared outcomes from the normalized result with the independently executed handwritten oracle on byte-identical generated DUT source.',
             'Do not infer complete four-state observation, general cross-backend parity beyond the selected AHB oracle, UVM, VHDL, mixed-language execution, or scale qualification from the selected runtime profile.',
         ],

@@ -149,13 +149,32 @@ qualified child-fiber scheduler. Both fail before artifacts and remain explicit
 non-claims. Decision `0081` records the rationale, alternatives, rollback, and
 three verification legs.
 
-The same signoff audit found that the current `parallel` renderer assumes its
-child operations are await-like. Arbitrary non-await child actions can pass
-target-neutral planning without a matching portable child scheduler. Active
-task `.17.3.5.1.3` now owns an ordinary-source RED, a complete admitted-kind
-inventory, and selection of fail-closed admission or complete deterministic
-lowering before runtime materialization resumes. Existing nested-operation
-support is not silently generalized.
+The same signoff audit found that the current `parallel` renderer is a property
+scheduler, not a general child-fiber interpreter. An ordinary-source RED
+replaced one child `await` with `reset`: target-neutral planning succeeded and
+the backend emitted a complete artifact set, but the reset was never executed.
+Completed `.17.3.5.1.3` now reconstructs the complete parallel/fiber ownership
+shape during negotiation and admits only the already qualified profile: every
+distinct direct child fiber contains exactly one terminal `await`. Every other
+recognized child operation, multi-operation sequence, nested parallel, and
+malformed ownership shape fails before artifacts with identity-complete stable
+diagnostics. Existing `all`/`any` tie and cancellation behavior is unchanged;
+general parallel-child sequences are an explicit machine-readable nonclaim.
+Decision `0082` records why a future general scheduler must be a selected,
+versioned architecture rather than an implicit defect-repair side effect.
+The gate is scoped to the public revision-1 runtime profile: the separately
+caller-sealed balanced revision-2 renderer remains a structural-qualification
+route with no compile/runtime/trace/result claim and its own exact-shape oracle.
+
+That compatibility sweep also found a separate, older scale-evidence drift.
+At both the clean `.1.3` predecessor and the current tree, the portable
+architecture-scale reference renderer produces 164,507 SystemVerilog bytes
+while its frozen oracle still expects 164,093 and the former digest. The oracle
+predates the completed phase-rollover and direct-drive repairs, and its selected
+16-MiB limit retained only 386 unused bytes below the cap, so neither a blind digest update
+nor an assumed constant delta is safe. Proposed `.17.3.5.1.4` owns independent
+all-level rederivation and an explicit boundary decision before runtime
+materialization selection resumes.
 
 Repeated guarded full integration attempts also exposed the existing Runner's
 fixed 30-second run wall under concurrent cross-repository compiler load. A

@@ -298,10 +298,29 @@ forged endpoint, value, transaction-field, or logical-slot claims. The portable
 profile fails closed for inout and non-root direct drive and publishes both as
 explicit nonclaims. Decision `0081` retains the rule and three proof legs.
 
-The signoff audit also found that portable `parallel` rendering assumes await-
-like children even though target-neutral planning can retain other child action
-kinds. Active `.17.3.5.1.3` owns the ordinary-source RED, complete admitted-
-kind inventory, and selection of complete lowering or fail-closed admission.
+The signoff audit also found that portable `parallel` rendering is a property
+scheduler rather than a general child-fiber interpreter. The preserved
+ordinary-source RED replaces a child `await` with `reset`: target-neutral
+planning succeeds, the former backend emitted complete artifacts, and the
+reset was never invoked. Completed `.17.3.5.1.3` now reconstructs parallel
+ownership and admits only distinct direct child fibers containing exactly one
+terminal `await`; every other recognized kind, multi-operation sequence,
+nested parallel, or malformed ownership fails before artifacts. Decision
+`0082` records the compatibility boundary and the machine support contract
+publishes `general_parallel_child_sequences` as a nonclaim.
+The caller-sealed balanced revision-2 route remains separately governed by
+decision `0077`: it qualifies structural emission only, claims no runtime
+execution of its reset-child fibers, and retains its exact private shape gate
+and public-bypass rejection.
+
+The compatibility sweep also independently reproduced a pre-existing portable
+backend-emission oracle drift at clean predecessor `87684237a`: current
+reference output is 164,507 SystemVerilog bytes while the frozen scale oracle
+expects 164,093 and its earlier identity. The former selected limit had only
+386 unused bytes below 16 MiB, so proposed `.17.3.5.1.4` owns all-level
+byte/identity rederivation and boundary reconciliation. No linear-delta,
+accepted-limit, performance, support, or capacity claim is made from the
+reference observation alone.
 Repeated guarded full integration attempts timed out different baseline/direct
 executions at Runner's fixed 30-second run wall while byte-identical executions
 passed in other attempts under concurrent compiler load. The diagnostic cannot

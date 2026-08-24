@@ -1326,6 +1326,13 @@ narrower support boundary remain owned by the backend contract and decision
 `0081`; this target-neutral contract does not infer inout or non-root backend
 support.
 
+The same separation applies to parallel child programs. ExecutionIR remains a
+target-neutral recursive operation graph and does not narrow child fibers to a
+backend's scheduler. Portable-SystemVerilog revision 1 independently admits
+only direct child fibers containing exactly one terminal `await`; decision
+`0082` owns that fail-closed backend boundary. No consumer may infer general
+parallel-child execution support merely because planning preserved the graph.
+
 ## Validation And Rollback
 
 Implementation signoff must pass current VIAL parser/SemanticIR and bridge evidence,

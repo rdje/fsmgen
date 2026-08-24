@@ -465,6 +465,9 @@ subtest 'negotiation and invocation failures emit nothing' => sub {
     my @parallel_drive_operation = grep {
         ($_->{kind} // '') eq 'drive'
     } @{$parallel_drive_plan->{execution_ir}{data}{operation_graph}{operations}};
+    my ($parallel_drive_parent) = grep {
+        ($_->{kind} // '') eq 'parallel'
+    } @{$parallel_drive_plan->{execution_ir}{data}{operation_graph}{operations}};
     my $parallel_drive = emit_backend(
         execution_ir => $parallel_drive_plan->{execution_ir},
         bridge_manifest => $parallel_drive_plan->{bridge_manifest},
@@ -476,10 +479,18 @@ subtest 'negotiation and invocation failures emit nothing' => sub {
     );
     is_deeply(
         $parallel_drive->{negotiation}{unsatisfied},
-        ['direct-drive-conflict:'
-            . $parallel_drive_operation[0]{scenario_id} . ':'
-            . $parallel_drive_operation[0]{effects}[0]{target_id}],
-        'live sibling writes to one slot fail closed even when one value could win by host order',
+        [
+            'direct-drive-conflict:'
+                . $parallel_drive_operation[0]{scenario_id} . ':'
+                . $parallel_drive_operation[0]{effects}[0]{target_id},
+            'parallel-child:' . $parallel_drive_parent->{operation_id} . ':'
+                . $parallel_drive_operation[0]{operation_id}
+                . ':unsupported-kind:drive',
+            'parallel-child:' . $parallel_drive_parent->{operation_id} . ':'
+                . $parallel_drive_operation[1]{operation_id}
+                . ':unsupported-kind:drive',
+        ],
+        'live sibling writes and both unsupported child operations fail closed without a host-order winner',
     );
 
     my $invocation = FSM::VIAL::Backend::SVPortableVerilator->emit({});
@@ -569,6 +580,248 @@ subtest 'pure trace validation projects a closed stream without executing semant
     );
 };
 
+subtest 'portable parallel children fail closed outside the qualified single-await leaf profile' => sub {
+    my $reset_child_plan = build_plan(parallel_reset_child_source());
+    ok($reset_child_plan->{ok},
+        'ordinary source reaches target-neutral ExecutionIR with a reset child');
+    diag($json->encode($reset_child_plan->{diagnostics}))
+        unless $reset_child_plan->{ok};
+    my $execution = $reset_child_plan->{execution_ir}->as_hashref;
+    my ($parallel) = grep { ($_->{kind} // '') eq 'parallel' }
+        @{$execution->{operation_graph}{operations}};
+    my ($reset) = grep {
+        ($_->{kind} // '') eq 'reset'
+            && ($_->{fiber_id} // '') ne ($execution->{scenarios}[0]{root_fiber_id} // '')
+    } @{$execution->{operation_graph}{operations}};
+    ok(defined($parallel) && defined($reset),
+        'RED retains the exact parent and non-root reset operation identities');
+
+    my $emitted = emit_plan($reset_child_plan);
+    backend_failure(
+        $emitted, 'VIAL_BACKEND_UNSUPPORTED',
+        'ordinary non-await parallel child',
+    );
+    my $unsatisfied = ref($emitted->{negotiation}) eq 'HASH'
+        ? $emitted->{negotiation}{unsatisfied} : [];
+    is_deeply(
+        $unsatisfied,
+        ["parallel-child:$parallel->{operation_id}:$reset->{operation_id}:unsupported-kind:reset"],
+        'negotiation names the exact parent, child, and unsupported operation kind',
+    );
+    my $repeated = emit_plan($reset_child_plan);
+    is($json->encode($repeated), $json->encode($emitted),
+        'the complete unsupported result repeats byte-identically');
+
+    my $multi_plan = build_plan(parallel_multi_action_child_source());
+    ok($multi_plan->{ok},
+        'ordinary source reaches target-neutral ExecutionIR with a two-operation child');
+    diag($json->encode($multi_plan->{diagnostics})) unless $multi_plan->{ok};
+    my $multi_execution = $multi_plan->{execution_ir}->as_hashref;
+    my ($multi_parent) = grep { ($_->{kind} // '') eq 'parallel' }
+        @{$multi_execution->{operation_graph}{operations}};
+    my ($multi_effect) = grep { ($_->{kind} // '') eq 'activate_fibers' }
+        @{$multi_parent->{effects}};
+    my $multi_child_id = $multi_effect->{child_root_operation_ids}[0];
+    my $multi_emitted = emit_plan($multi_plan);
+    backend_failure(
+        $multi_emitted, 'VIAL_BACKEND_UNSUPPORTED',
+        'ordinary multi-operation parallel child',
+    );
+    is_deeply(
+        $multi_emitted->{negotiation}{unsatisfied},
+        ["parallel-child:$multi_parent->{operation_id}:$multi_child_id:operation-count:2"],
+        'multi-operation child fails at the exact parent and child root before lowering',
+    );
+
+    my %phase_for = (
+        reset => 'drive', drive => 'drive', start => 'drive',
+        parallel => 'react', repeat => 'react', expect => 'check',
+        scoreboard_expect => 'react', scoreboard_check => 'check',
+        inject => 'react',
+    );
+    my $inventory_plan = build_plan();
+    my $inventory_execution = $inventory_plan->{execution_ir}{data};
+    my ($inventory_parent) = grep { ($_->{kind} // '') eq 'parallel' }
+        @{$inventory_execution->{operation_graph}{operations}};
+    my ($inventory_effect) = grep { ($_->{kind} // '') eq 'activate_fibers' }
+        @{$inventory_parent->{effects}};
+    my $inventory_child_id = $inventory_effect->{child_root_operation_ids}[0];
+    my ($inventory_child) = grep {
+        ($_->{operation_id} // '') eq $inventory_child_id
+    } @{$inventory_execution->{operation_graph}{operations}};
+    for my $kind (sort keys %phase_for) {
+        $inventory_child->{kind} = $kind;
+        $inventory_child->{eligible_phase} = $phase_for{$kind};
+        my $candidate = emit_plan($inventory_plan);
+        backend_failure(
+            $candidate, 'VIAL_BACKEND_UNSUPPORTED',
+            "parallel child kind $kind",
+        );
+        my $wanted = "parallel-child:$inventory_parent->{operation_id}:"
+            . "$inventory_child_id:unsupported-kind:$kind";
+        ok(scalar(grep { $_ eq $wanted }
+                @{$candidate->{negotiation}{unsatisfied}}),
+            "$kind has an exact fail-closed child-profile diagnostic");
+    }
+
+    my $duplicate_plan = build_plan();
+    my $duplicate_execution = $duplicate_plan->{execution_ir}{data};
+    my ($duplicate_parent) = grep { ($_->{kind} // '') eq 'parallel' }
+        @{$duplicate_execution->{operation_graph}{operations}};
+    my ($duplicate_effect) = grep { ($_->{kind} // '') eq 'activate_fibers' }
+        @{$duplicate_parent->{effects}};
+    my $duplicate_child_id = $duplicate_effect->{child_root_operation_ids}[0];
+    my $unowned_child_id = $duplicate_effect->{child_root_operation_ids}[1];
+    my ($unowned_child) = grep {
+        ($_->{operation_id} // '') eq $unowned_child_id
+    } @{$duplicate_execution->{operation_graph}{operations}};
+    $duplicate_effect->{child_root_operation_ids}[1] = $duplicate_child_id;
+    my $duplicate = emit_plan($duplicate_plan);
+    backend_failure(
+        $duplicate, 'VIAL_BACKEND_UNSUPPORTED',
+        'duplicate parallel child root',
+    );
+    ok(
+        scalar(grep {
+            $_ eq "parallel-child:$duplicate_parent->{operation_id}:"
+                . "$duplicate_child_id:duplicate-child-root"
+        } @{$duplicate->{negotiation}{unsatisfied}})
+            && scalar(grep {
+                $_ eq 'parallel-fiber:' . $unowned_child->{scenario_id} . ':'
+                    . $unowned_child->{fiber_id} . ':owner-count:0'
+            } @{$duplicate->{negotiation}{unsatisfied}}),
+        'duplicate roots and the resulting unowned fiber both fail explicitly',
+    );
+
+    for my $case (
+        ['property input', sub { my ($child) = @_; $child->{typed_inputs} = [] }],
+        ['property input container', sub {
+            my ($child) = @_;
+            $child->{typed_inputs} = {};
+        }],
+        ['evaluation effect', sub { my ($child) = @_; $child->{effects} = [] }],
+        ['evaluation effect container', sub {
+            my ($child) = @_;
+            $child->{effects} = {};
+        }],
+        ['terminal successor', sub {
+            my ($child) = @_;
+            $child->{successor_ids} = ['operation/forged-successor'];
+        }],
+        ['check deadline', sub {
+            my ($child) = @_;
+            $child->{deadline}{phase} = 'react';
+        }],
+    ) {
+        my $shape_plan = build_plan();
+        my $shape_execution = $shape_plan->{execution_ir}{data};
+        my ($shape_parent) = grep { ($_->{kind} // '') eq 'parallel' }
+            @{$shape_execution->{operation_graph}{operations}};
+        my ($shape_effect) = grep { ($_->{kind} // '') eq 'activate_fibers' }
+            @{$shape_parent->{effects}};
+        my $shape_child_id = $shape_effect->{child_root_operation_ids}[0];
+        my ($shape_child) = grep {
+            ($_->{operation_id} // '') eq $shape_child_id
+        } @{$shape_execution->{operation_graph}{operations}};
+        $case->[1]->($shape_child);
+        my $shape = emit_plan($shape_plan);
+        backend_failure(
+            $shape, 'VIAL_BACKEND_UNSUPPORTED',
+            "malformed parallel await $case->[0]",
+        );
+        ok(
+            scalar(grep {
+                $_ eq "parallel-child:$shape_parent->{operation_id}:"
+                    . "$shape_child_id:await-shape"
+            } @{$shape->{negotiation}{unsatisfied}}),
+            "malformed await $case->[0] fails at the structural boundary",
+        );
+    }
+
+    my $effect_plan = build_plan();
+    my $effect_execution = $effect_plan->{execution_ir}{data};
+    my ($effect_parent) = grep { ($_->{kind} // '') eq 'parallel' }
+        @{$effect_execution->{operation_graph}{operations}};
+    $effect_parent->{effects} = {};
+    my $bad_effect = emit_plan($effect_plan);
+    backend_failure(
+        $bad_effect, 'VIAL_BACKEND_UNSUPPORTED',
+        'parallel parent with malformed effect container',
+    );
+    ok(
+        scalar(grep {
+            $_ eq "parallel-child:$effect_parent->{operation_id}:effect"
+        } @{$bad_effect->{negotiation}{unsatisfied}}),
+        'malformed parent-effect container fails inside negotiation',
+    );
+
+    my $parentage_plan = build_plan();
+    my $parentage_execution = $parentage_plan->{execution_ir}{data};
+    my ($parentage_parent) = grep { ($_->{kind} // '') eq 'parallel' }
+        @{$parentage_execution->{operation_graph}{operations}};
+    my ($parentage_effect) = grep { ($_->{kind} // '') eq 'activate_fibers' }
+        @{$parentage_parent->{effects}};
+    my $parentage_child_id = $parentage_effect->{child_root_operation_ids}[0];
+    my ($parentage_child) = grep {
+        ($_->{operation_id} // '') eq $parentage_child_id
+    } @{$parentage_execution->{operation_graph}{operations}};
+    my ($parentage_fiber) = grep {
+        ($_->{fiber_id} // '') eq ($parentage_child->{fiber_id} // '')
+    } @{$parentage_execution->{scenarios}[0]{fibers}};
+    $parentage_fiber->{parent_fiber_id} = 'fiber/forged-parent';
+    my $parentage = emit_plan($parentage_plan);
+    backend_failure(
+        $parentage, 'VIAL_BACKEND_UNSUPPORTED',
+        'parallel child with forged direct parent',
+    );
+    ok(
+        scalar(grep {
+            $_ eq "parallel-child:$parentage_parent->{operation_id}:"
+                . "$parentage_child_id:fiber"
+        } @{$parentage->{negotiation}{unsatisfied}}),
+        'forged direct parent fails with exact parent/child identity',
+    );
+
+    my $multi_owner_plan = build_plan();
+    my $multi_owner_execution = $multi_owner_plan->{execution_ir}{data};
+    my ($owner_parent) = grep { ($_->{kind} // '') eq 'parallel' }
+        @{$multi_owner_execution->{operation_graph}{operations}};
+    my $forged_owner = $json->decode($json->encode($owner_parent));
+    $forged_owner->{operation_id} .= '/forged-owner';
+    push @{$multi_owner_execution->{operation_graph}{operations}}, $forged_owner;
+    my $multi_owner = emit_plan($multi_owner_plan);
+    backend_failure(
+        $multi_owner, 'VIAL_BACKEND_UNSUPPORTED',
+        'parallel fibers with multiple owners',
+    );
+    my @owned_fiber = map {
+        my $child_id = $_;
+        my ($operation) = grep { ($_->{operation_id} // '') eq $child_id }
+            @{$multi_owner_execution->{operation_graph}{operations}};
+        $operation->{fiber_id}
+    } @{$owner_parent->{effects}[0]{child_root_operation_ids}};
+    for my $fiber_id (@owned_fiber) {
+        ok(
+            scalar(grep {
+                $_ eq 'parallel-fiber:' . $owner_parent->{scenario_id} . ':'
+                    . "$fiber_id:owner-count:2"
+            } @{$multi_owner->{negotiation}{unsatisfied}}),
+            "multiply owned fiber $fiber_id fails before artifacts",
+        );
+    }
+
+    my $qualified = emit_backend();
+    ok($qualified->{ok}, 'the existing qualified single-await topology still emits');
+    ok(
+        scalar(grep { $_ eq 'single_await_parallel_children_only' }
+            @{$qualified->{negotiation}{limitations}})
+            && scalar(grep {
+                $_ eq 'parallel child fibers are limited to exactly one await operation'
+            } @{$qualified->{backend_manifest}{limitations}}),
+        'machine and human manifests publish the exact child-fiber boundary',
+    );
+};
+
 subtest 'capability discovery distinguishes bounded AHB parity from general parity' => sub {
     my $contract = build_vial_execution_contract();
     is_deeply([sort keys %$contract], [sort @{vial_execution_contract_keys()}], 'private execution/backend contract is closed');
@@ -584,8 +837,10 @@ subtest 'capability discovery distinguishes bounded AHB parity from general pari
         scalar(grep { $_ eq 'non_root_direct_drive' }
             @{$contract->{explicit_nonclaims}})
             && scalar(grep { $_ eq 'inout_direct_drive' }
+                @{$contract->{explicit_nonclaims}})
+            && scalar(grep { $_ eq 'general_parallel_child_sequences' }
                 @{$contract->{explicit_nonclaims}}),
-        'execution support truth denies non-root and inout portable direct drive',
+        'execution support truth denies unqualified direct-drive and parallel-child profiles',
     );
     ok($contract->{public_embedding_api}, 'execution is exposed through the public VIAL tool API');
     my $manifest = build_capability_manifest();
@@ -899,5 +1154,24 @@ sub parallel_direct_drive_source {
                 (fiber direct_zero (drive select #b0))
                 (fiber direct_one (drive select #b1)))}x
         or die 'parallel-drive source mutation did not find the direct drive';
+    return $text;
+}
+
+sub parallel_reset_child_source {
+    my $text = slurp_raw(repo_path($vial_id));
+    $text =~ s{
+        \(await\ \(within\ \(event\ success_write\ completed\)\ 1\ 256\)\)
+    }{(reset bus 1)}x
+        or die 'parallel-reset source mutation did not find the first child await';
+    return $text;
+}
+
+sub parallel_multi_action_child_source {
+    my $text = slurp_raw(repo_path($vial_id));
+    $text =~ s{
+        \(await\ \(within\ \(event\ success_write\ completed\)\ 1\ 256\)\)
+    }{(await (within (event success_write completed) 1 256))
+                  (reset bus 1)}x
+        or die 'parallel-multi source mutation did not find the first child await';
     return $text;
 }

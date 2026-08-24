@@ -325,6 +325,7 @@ sub _emit($raw, $qualification_profile = undef) {
             'emission is implemented; compile, runtime, result, and parity gates have not run',
             'one unit, one clock domain, no native extension, and declared probe adapters only',
             'direct endpoint drives require an input carrier in the scenario root fiber',
+            'parallel child fibers are limited to exactly one await operation',
         ];
     my $manifest = {
         schema => $BACKEND_SCHEMA,
@@ -446,6 +447,15 @@ sub _negotiate(
                 && $relation->{width} >= 1 && $relation->{width} <= 65_536;
     }
     push @unsatisfied, _operation_phase_errors($execution);
+    my $balanced_structural_profile = scalar(grep {
+        ($_->{capability_id} // '') eq $BALANCED_PORTABLE_CAPABILITY
+    } @{$execution->{capability_ledger} || []});
+    # Decision 0077's private revision-2 route has a separate exact-shape
+    # structural renderer and no runtime claim.  Its public path already fails
+    # on the dedicated capability requirements, so preserve that atomic
+    # rejection instead of reinterpreting the graph as a revision-1 runtime.
+    push @unsatisfied, _parallel_child_errors($execution)
+        unless $balanced_structural_profile;
     push @unsatisfied, _direct_drive_errors($execution, $bridge);
     _walk_values($execution, sub ($value, $path) {
         return unless ref($value) eq 'HASH' && ($value->{kind} // '') eq 'scalar'
@@ -473,7 +483,8 @@ sub _negotiate(
         'single_unit_single_domain',
         'no_native_extensions',
         'input_carrier_direct_drive_only',
-        'root_fiber_direct_drive_only';
+        'root_fiber_direct_drive_only',
+        'single_await_parallel_children_only';
     return {
         required => [sort @required],
         satisfied => [sort @satisfied],
@@ -2334,6 +2345,136 @@ sub _phase_transition_statements($completed_phase, $eligible_phase, $label) {
     return ($comment, 'vial_inactive_barrier();')
         if $eligible_phase eq 'react';
     confess "portable successor rollover to '$eligible_phase' is unsupported";
+}
+
+sub _parallel_child_errors($execution) {
+    my @error;
+    my $graph = $execution->{operation_graph};
+    return ('parallel-topology:operations')
+        unless ref($graph) eq 'HASH'
+            && ref($graph->{operations}) eq 'ARRAY';
+    my @operation = @{$graph->{operations}};
+    my %operation_by_id;
+    my %operation_by_fiber;
+    for my $operation (@operation) {
+        push @{$operation_by_id{$operation->{operation_id} // ''}}, $operation;
+        push @{$operation_by_fiber{join("\0",
+            $operation->{scenario_id} // '', $operation->{fiber_id} // '')}},
+            $operation;
+    }
+
+    return ('parallel-topology:scenarios')
+        unless ref($execution->{scenarios}) eq 'ARRAY';
+    my %scenario = map { ($_->{scenario_id} // '') => $_ }
+        @{$execution->{scenarios}};
+    my %fiber_record;
+    for my $scenario (@{$execution->{scenarios}}) {
+        my $fibers = $scenario->{fibers};
+        if (ref($fibers) ne 'ARRAY') {
+            push @error,
+                'parallel-scenario:' . ($scenario->{scenario_id} // '')
+                    . ':fibers';
+            next;
+        }
+        for my $fiber (@$fibers) {
+            push @{$fiber_record{join("\0", $scenario->{scenario_id} // '',
+                $fiber->{fiber_id} // '')}}, $fiber;
+        }
+    }
+
+    my %fiber_owner_count;
+    for my $parent (@operation) {
+        next unless ($parent->{kind} // '') eq 'parallel';
+        my $parent_id = $parent->{operation_id} // '';
+        my $prefix = "parallel-child:$parent_id";
+        my $effects = $parent->{effects};
+        if (ref($effects) ne 'ARRAY' || @$effects != 1
+                || ref($effects->[0]) ne 'HASH'
+                || ($effects->[0]{kind} // '') ne 'activate_fibers') {
+            push @error, "$prefix:effect";
+            next;
+        }
+        my $child_ids = $effects->[0]{child_root_operation_ids};
+        if (ref($child_ids) ne 'ARRAY' || @$child_ids < 2) {
+            push @error, "$prefix:child-roots";
+            next;
+        }
+
+        my %seen_child;
+        for my $child_id (@$child_ids) {
+            if (!defined($child_id) || ref($child_id) || !length($child_id)) {
+                push @error, "$prefix:invalid-child-root";
+                next;
+            }
+            if ($seen_child{$child_id}++) {
+                push @error, "$prefix:$child_id:duplicate-child-root";
+                next;
+            }
+            my @candidate = @{$operation_by_id{$child_id} || []};
+            if (@candidate != 1) {
+                push @error, "$prefix:$child_id:identity";
+                next;
+            }
+            my $child = $candidate[0];
+            if (($child->{scenario_id} // '') ne ($parent->{scenario_id} // '')) {
+                push @error, "$prefix:$child_id:scenario";
+                next;
+            }
+            my $fiber_id = $child->{fiber_id} // '';
+            my $fiber_key = join("\0", $child->{scenario_id} // '', $fiber_id);
+            ++$fiber_owner_count{$fiber_key};
+            my @fiber = @{$fiber_record{$fiber_key} || []};
+            if (!length($fiber_id) || @fiber != 1
+                    || ($fiber[0]{parent_fiber_id} // '')
+                        ne ($parent->{fiber_id} // '')) {
+                push @error, "$prefix:$child_id:fiber";
+                next;
+            }
+            my @member = @{$operation_by_fiber{$fiber_key} || []};
+            unless (@member == 1
+                    && ($member[0]{operation_id} // '') eq $child_id) {
+                push @error,
+                    "$prefix:$child_id:operation-count:" . scalar(@member);
+                next;
+            }
+
+            my $kind = $child->{kind} // '';
+            if ($kind ne 'await') {
+                push @error, "$prefix:$child_id:unsupported-kind:$kind";
+                next;
+            }
+            my $input = $child->{typed_inputs};
+            my $child_effect = $child->{effects};
+            my $successor = $child->{successor_ids};
+            my $deadline = $child->{deadline};
+            push @error, "$prefix:$child_id:await-shape"
+                unless ref($input) eq 'ARRAY' && @$input == 1
+                    && ref($input->[0]) eq 'HASH'
+                    && ($input->[0]{name} // '') eq 'property'
+                    && ref($input->[0]{value}) eq 'HASH'
+                    && ref($child_effect) eq 'ARRAY' && @$child_effect == 1
+                    && ref($child_effect->[0]) eq 'HASH'
+                    && ($child_effect->[0]{kind} // '') eq 'evaluate_property'
+                    && ref($successor) eq 'ARRAY' && !@$successor
+                    && !defined($child->{failure_successor_id})
+                    && ref($deadline) eq 'HASH'
+                    && ($deadline->{phase} // '') eq 'check';
+        }
+    }
+
+    for my $scenario_id (sort keys %scenario) {
+        my $root_fiber_id = $scenario{$scenario_id}{root_fiber_id} // '';
+        next unless ref($scenario{$scenario_id}{fibers}) eq 'ARRAY';
+        for my $fiber (@{$scenario{$scenario_id}{fibers}}) {
+            my $fiber_id = $fiber->{fiber_id} // '';
+            next if $fiber_id eq $root_fiber_id;
+            my $key = join("\0", $scenario_id, $fiber_id);
+            my $owners = $fiber_owner_count{$key} // 0;
+            push @error, "parallel-fiber:$scenario_id:$fiber_id:owner-count:$owners"
+                unless $owners == 1;
+        }
+    }
+    return @error;
 }
 
 sub _direct_drive_errors($execution, $bridge) {

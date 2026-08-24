@@ -501,6 +501,21 @@ If both fibers resolve at one check stamp, the lower authored fiber rank wins;
 the loser is cancelled before another action, without undoing effects already
 committed.
 
+That example is also the exact portable-SystemVerilog revision-1 parallel
+profile: each direct child fiber is a single terminal `await`. ExecutionIR is
+intentionally more general and can retain other operations and successor
+sequences inside child fibers, but the portable backend does not claim a
+general fiber interpreter. It rejects non-`await`, multi-operation, nested,
+duplicate-root, and malformed-ownership shapes during negotiation, before any
+artifact exists. This preserves qualified deterministic `all`/`any` behavior
+without silently dropping child semantics; decision `0082` keeps the rationale
+and the requirements for any future versioned expansion.
+
+Decision `0077`'s caller-sealed balanced revision-2 emitter is deliberately
+separate: it proves exact structural coverage only and does not claim that its
+reset-child fibers have executed. Its own sealed shape oracle remains the
+authority, while the public revision-1 route rejects it before artifacts.
+
 Random choices are resolved once during plan elaboration, not independently by
 each simulator. `sha256_counter_rejection_v1` hashes the source-defined seed
 and scenario-scoped occurrence ID into arbitrary-width unbiased candidates,

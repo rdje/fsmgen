@@ -394,12 +394,14 @@ must provide its own equivalent adapter or remain unsupported.
 
 ## Actions, Fibers, Checks, And Stateful Families
 
-The first backend implements exactly the execution-v1 meanings of:
+The first backend implements exactly the execution-v1 meanings of the
+following operations in a scenario root fiber:
 
 - `reset`, `drive`, `start`, `await`, `parallel`, literal `repeat`, `expect`,
   `scoreboard_expect`, `scoreboard_check`, and substitution `inject`;
-- root/nested fibers, `all`/`any` joins, deterministic tie selection,
-  cancellation, failure propagation, and finalization;
+- `all`/`any` joins whose distinct direct child fibers each contain exactly one
+  terminal `await`, including deterministic tie selection, cancellation,
+  failure propagation, and finalization for that qualified shape;
 - Boolean, overlapping implication, `next`, and bounded `within` evaluators;
 - event counters and scalar-state deterministic models;
 - bounded `in_order` and `keyed` scoreboards;
@@ -418,6 +420,24 @@ identities; emission performs the assignment/record/finalizer behavior above;
 and trace validation rejects a forged endpoint, value, transaction field, or
 logical slot. Transaction `start` drive behavior and the checked-AHB
 qualification remain distinct and covered.
+
+The target-neutral ExecutionIR can represent broader programs in parallel
+child fibers, but this backend revision has no per-fiber operation interpreter.
+Negotiation therefore reconstructs the complete parallel/fiber ownership graph
+and fails before artifacts unless every direct child is exactly one terminal
+`await` with the qualified property/effect/deadline shape. Non-`await` child
+operations, successor sequences, nested parallel, duplicate child roots, and
+malformed or unowned fibers are unsupported. Decision `0082` records this
+backend boundary; the machine support contract names
+`general_parallel_child_sequences` as a nonclaim, and the backend manifest
+publishes the corresponding single-`await` limitation.
+
+This version-1 runtime boundary does not apply to decision `0077`'s
+caller-sealed balanced revision-2 structural qualification. That separate
+renderer statically covers its exact bridge, binding, and operation identities
+but claims no compile, runtime, trace, or result behavior; its private admission
+and stable public-bypass rejection remain governed by its own exact-shape
+contract.
 
 Runtime limit failure, expectation failure, mismatch, illegal bin, timeout, or
 internal error follows the ExecutionIR's deterministic cancellation and
@@ -565,6 +585,8 @@ The profile does **not** claim:
 - native VIAL semantic families, UVM events/callbacks, factories, phases,
   objections, sequences, TLM, config DB, RAL, or methodology components;
 - direct endpoint drive through an inout carrier or from a non-root fiber;
+- general parallel-child operation sequences, non-`await` child operations,
+  or nested parallel composition;
 - VHDL, mixed-language, formal, analog/real-time, performance, large-fixture,
   or cross-backend parity qualification; or
 - compatibility of any unexecuted Verilator/toolchain version.
@@ -611,7 +633,8 @@ The implementation gate must prove:
   source maps, no absolute/off-volume path, and defensive public projections;
 - inactive-edge scheduling with drive-before-active-edge and stable
   post-active-edge snapshot, exact reset interval, logical ordinal order,
-  timeout boundary, fiber ties/cancellation, and no same-edge races;
+  timeout boundary, single-`await` child-fiber ties/cancellation, rejection of
+  every broader child topology, and no same-edge races;
 - exact normalized values and all three directional drive/sample relation
   mappings without target casts or rerandomization;
 - action/property/model/scoreboard/coverage/fault semantics and fixed resource
