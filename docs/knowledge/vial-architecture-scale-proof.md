@@ -47,6 +47,9 @@ answers:
   - "what Runner timeout risk was found before portable runtime measurement?"
   - "why did the portable SystemVerilog scale oracle move to revision 2?"
   - "what is the portable SystemVerilog 16 MiB boundary after scheduler repair?"
+  - "how does portable runtime-stream activity reach exactly 10,000 records?"
+  - "why is portable qualification 15,000 records instead of 100,000?"
+  - "how will the Runner and scale measurement share Verilator stages?"
 date: 2026-08-24
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -59,6 +62,7 @@ evidence: >-
   docs/decisions/0078-vial-execution-total-operation-cap-precedes-graph-materialization.md;
   docs/decisions/0080-portable-systemverilog-rolls-backward-successors-by-logical-phase.md;
   docs/decisions/0081-portable-systemverilog-direct-drive-uses-root-owned-zero-duration-driver-slots.md;
+  docs/decisions/0083-portable-systemverilog-runtime-scale-uses-authored-cycle-sampling-and-one-shared-staged-lifecycle.md;
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/VIAL/ArchitectureScaleWorkload.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission.pm; perl/FSM/VIAL/ArchitectureScaleRuntimeStream.pm;
   perl/FSM/VIAL/ArchitectureScaleBalancedPortable.pm;
@@ -145,6 +149,9 @@ reverify: >-
   perl/FSM/VIAL/Backend/SVPortableVerilator.pm perl/FSM/VIAL/Backend/TraceValidator.pm
   perl/FSM/Support/VIALExecutionContract.pm
   docs/decisions/0081-portable-systemverilog-direct-drive-uses-root-owned-zero-duration-driver-slots.md &&
+  rg -n '5N \+ 260|10,000|15,000|three quarters|VerilatorLifecycle|content-addressed|workspace-normalized'
+  docs/decisions/0083-portable-systemverilog-runtime-scale-uses-authored-cycle-sampling-and-one-shared-staged-lifecycle.md
+  docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md &&
   prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t
   t/1602-vial-architecture-scale-bridge-fanout.t
   t/1644-vial-backend-emission-authority-alignment.t
@@ -165,6 +172,31 @@ budgets derive immutably from clean pinned-host calibration and do not fail on
 unmatched hosts. Earliest-cap dominance is reported honestly. These candidates
 are not support, multi-unit/domain, mixed-language, native-UVM-runtime, full-
 language, whole-product `big`/`really_big`, synthesis, or general-parity claims.
+
+Decision `0083` closes portable-SystemVerilog runtime-stream selection without
+promoting a benchmark to support or capacity. The checked 274-record reference
+adds five genuine records per extra authored reset cycle—four endpoint/probe
+samples and one coverage record—and one final passing expectation, giving
+`records(N)=5N+260`. Qualified public probes reach exact 10,000 records at
+`N=1,948` and exact 15,000 records at `N=2,948`. The former 100,000 candidate
+hits the Runner's 67,108,864-byte runtime-output envelope; 25,000 separately
+hits the complete public artifact-graph cap. Portable qualification therefore
+uses the largest 5,000-record step whose complete graph remains at or below
+three quarters of that cap: the 15,000 probe used 47,502,039 bytes and left
+19,606,825 bytes of hard-cap headroom, while 20,000 left only 4,194,825 bytes.
+Those revision-local probe bytes select the workload; implementation child
+`.17.3.5.2` must regenerate and seal the tracked source and final graph.
+
+The same decision selects one private caller-sealed
+`FSM::VIAL::Backend::VerilatorLifecycle` for both public Runner execution and
+process-isolated scale stages. Its forward-only admitted/prepared/tool-
+verified/compiled/ran/trace-validated/result-produced/assembled/cleaned chain
+uses canonical content-addressed predecessor state and objects, independently
+reconstructs the source-to-emission authority in every consumer, preserves the
+current tool/deadline/capture contracts, and separates storage context without
+creating a second executor. Reference stays correctness-only; nominal record
+limit/excess stay byte-preflight dominated; other backend selection remains
+separate; implementation is still pending.
 
 Completed `.17.2.1`-`.17.2.5` cover source through checking state. Decision
 `0075` selects checked-AHB backend routes: portable-SV oracle revision 2

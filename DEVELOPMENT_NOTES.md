@@ -792,3 +792,28 @@ versions the portable artifact oracle and its schema to revision 2, and leaves
 the shared role labels stable for unaffected profiles. Evidence compatibility
 is expressed at the profile oracle that actually changed, not by renaming the
 whole multi-backend workload catalog.
+
+## 2026-08-24: Runtime qualification must fit its complete public artifact graph
+
+A trace that fits its own capture is not a usable qualification workload when
+the normalized result and companion artifacts make the final public
+transaction exceed its independent byte cap. Exact portable-SystemVerilog
+probes exposed both boundaries: 100,000 genuine records exceed runtime capture,
+while a smaller 25,000-record run completes internally but cannot publish its
+complete artifact graph. Selecting by trace records alone would therefore
+encode a benchmark that the qualified public workflow cannot retain.
+
+Portable runtime scale now uses authored reset-cycle sampling, for which every
+extra cycle produces four real endpoint/probe samples plus one coverage record.
+The exact 10,000-record gate remains, while qualification moves to 15,000: the
+largest reproducible 5,000-record step whose complete graph stays at or below
+three quarters of the public cap. The rule deliberately leaves schema-growth
+headroom and remains an admission criterion, not a new limit or capacity claim.
+
+Stage measurement also cannot duplicate the public Runner. One private,
+caller-sealed Verilator lifecycle must own canonical emission through cleanup,
+with forward-only content-addressed predecessor state. Public execution and
+measurement may select different sealed storage contexts, but they retain the
+same tool, flags, inputs, commands, validators, results, limits, and transition
+semantics. This permits process-isolated stage costs without creating a second
+compiler/simulator contract or trusting large payloads sent over worker IPC.

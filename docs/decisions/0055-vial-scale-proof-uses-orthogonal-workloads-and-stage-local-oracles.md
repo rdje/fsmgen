@@ -369,6 +369,20 @@ the byte limit dominate, no test may claim the record boundary unless it
 actually reaches it within the byte cap. The normalized result cap remains
 67,108,864 bytes.
 
+### Portable runtime-selection refinement (2026-08-24)
+
+Decision [0083](0083-portable-systemverilog-runtime-scale-uses-authored-cycle-sampling-and-one-shared-staged-lifecycle.md)
+preserves the provider-free 10,000/100,000 levels above as the original common
+candidate selection. Exact portable-SystemVerilog execution shows that the
+100,000-record candidate exceeds the Runner output envelope and that the
+complete public artifact graph has its own 67,108,864-byte cap. Portable
+SystemVerilog therefore selects authored 10,000/15,000-record gate and
+qualification fixtures, with qualification admitted only while the complete
+graph remains at or below three quarters of that cap. Implementation leaf
+`.17.3.5.2` owns this versioned portable-only repair. Other backend candidates
+remain independently selected, and neither the structural record limit nor a
+reached-capacity claim is silently rewritten.
+
 The `sv_portable_verilator` Runner enforces 120 seconds and 8,388,608 captured
 bytes for compile, then 30 seconds and 67,108,864 captured bytes for runtime.
 Those values agree with the normative portable-backend contract. The public
