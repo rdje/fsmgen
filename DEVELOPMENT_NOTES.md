@@ -899,3 +899,32 @@ under a same-device non-symlink repository root, and incomplete attempts cannot
 strand sample data. This gives future macOS observations exact host, process,
 binary, signature, xattr, timing, stack, and cleanup context without retry,
 deadline widening, security/signing changes, or false backend support.
+
+## 2026-08-24: Tool deadlines begin at the tool boundary, not route reconstruction
+
+The portable-Verilator common worker must reconstruct the selected source,
+route, ExecutionIR, emission, and predecessor authority before it can resume a
+shared lifecycle transition. Treating the lifecycle's 30-second generated-
+runtime limit as the whole run worker's wall made unrelated reconstruction
+time consume the tool allowance. Under host load, the controller could kill
+the worker before or during lifecycle handoff and report a controller timeout
+that looked like a Verilator runtime failure.
+
+The controller now owns explicit 900-second compile-worker and 300-second
+run-worker containment envelopes. The shared lifecycle independently retains
+the qualified 10-second version, 120-second compile, and 30-second runtime
+limits plus the existing capture ceilings. Accepted evidence checks both
+layers, so the larger outer envelope neither widens nor retries tool execution.
+This composition makes cleanup and failure attribution deterministic while
+preserving the public Runner's exact execution contract.
+
+The same isolation boundary made a full public assembly unsuitable for the
+controller pipe: serializing and decoding tens of MiB repeated work already
+sealed in lifecycle objects. Measurement assembly therefore persists a compact
+content-addressed descriptor and materializes the final graph once under the
+controller-owned publish root. Fresh-process public resume still reconstructs
+and verifies the complete assembly; ordinary Runner success still returns the
+unchanged in-memory graph. The compact measurement projection carries exact
+artifact identities, actual commands, normalized command digests, transcripts,
+trace/result identities, and cleanup evidence without creating a second runner
+or a second artifact contract.

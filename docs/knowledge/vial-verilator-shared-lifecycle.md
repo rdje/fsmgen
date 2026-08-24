@@ -6,8 +6,8 @@ answers:
   - "how does the shared Verilator lifecycle preserve state and cleanup authority?"
   - "why can portable Verilator time out before generated main on macOS?"
   - "what did the macOS pre-main qualification conclude?"
-  - "what portable Verilator measurement work is active after lifecycle qualification?"
-date: 2026-08-24
+  - "what work follows completed common-controller portable Verilator measurement?"
+date: 2026-08-25
 status: current
 tags: [vial, verilator, lifecycle, runner, scalability, macos]
 evidence: >-
@@ -15,11 +15,13 @@ evidence: >-
   docs/decisions/0084-macos-premain-stalls-retain-guarded-qualification-not-backend-workarounds.md;
   perl/FSM/VIAL/Backend/VerilatorLifecycle.pm;
   perl/FSM/VIAL/Backend/Runner.pm;
+  perl/FSM/VIAL/ArchitectureScalePortableRuntimeMeasurement.pm;
   t/1640-vial-runner-capture-limits.t;
   t/1558-vial-verilator-run-integration.t;
   t/1664-vial-verilator-shared-lifecycle.t;
   t/1665-vial-macos-premain-qualification.t;
   t/1666-vial-macos-premain-evidence.t;
+  t/1667-vial-architecture-scale-portable-runtime-measurement.t;
   vial/qualification/sv_portable_verilator/macos-premain-qualification-2026-08-24.json;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md
@@ -30,6 +32,10 @@ reverify: >-
   prove -Iperl t/1640-vial-runner-capture-limits.t
   t/1664-vial-verilator-shared-lifecycle.t
   t/1666-vial-macos-premain-evidence.t
+  t/1667-vial-architecture-scale-portable-runtime-measurement.t &&
+  FSMGEN_VIAL_PORTABLE_RUNTIME_MEASUREMENT_EXACT=1
+  scripts/run_with_ram_guard.sh --
+  prove -Iperl t/1667-vial-architecture-scale-portable-runtime-measurement.t
 ---
 
 Decision `0083` selects one private caller-sealed
@@ -92,12 +98,19 @@ writes only closed host-path-free evidence below a same-device repository root.
 It adds no retry, signing/security change, timeout widening, support promise,
 or passed-result fabrication.
 
-Active `.17.3.5.4` now owns the next boundary: route the applicable reference,
-gate, and qualification repetitions through the common controller and this
-sole lifecycle, retaining exact stage identities, raw samples, exclusions,
-guards, and cleanup. Nominal record limit/excess shapes remain tool-free, and
-activation adds no performance budget, support, capacity, reached-boundary,
-parity, or public API claim.
+Completed `.17.3.5.4` routes the applicable reference, gate, and qualification
+repetitions through the common controller and this sole lifecycle. The exact
+guarded watcher accepts one 274-record reference validation, gate validation
+plus three 10,000-record measurements, and qualification validation plus five
+15,000-record measurements. Every accepted runtime retains the typed actual
+and workspace-normalized commands, complete predecessor chain, 12-artifact
+graph, trace/result identities, required raw samples, zero exclusions, and
+exact cleanup. Nominal record limit/excess shapes remain tool-free. Compact
+assembled state stores a graph descriptor rather than the full graph; a
+separate exact watcher proves fresh-process reconstruction and cleanup.
+Child `.17.3.5.5` is next and separately owns immutable matrix publication and
+independent reload. No performance budget, support, capacity, reached-boundary,
+parity, or public API claim is added.
 
 Related: [[vial-architecture-scale-proof]],
 [[hial-vial-verification-fixture-architecture]].

@@ -163,6 +163,44 @@ sub with_staging($class, @args) {
     });
 }
 
+# Runtime measurement needs the canonical blessed route and emission so the
+# shared lifecycle, rather than a second adapter-owned executor, remains the
+# only tool authority.  Keep this cumulative seam private to the exact
+# measurement adapter.  This producer rechecks repository source and emission
+# contracts; the adapter binds the returned route and emission projections to
+# its admitted canonical structural report before any lifecycle transition.
+sub _measurement_inputs($class, @args) {
+    _exact_invocant($class, '_measurement_inputs');
+    my $caller = caller;
+    confess "portable runtime measurement inputs are private to the exact adapter\n"
+        unless defined($caller)
+            && $caller eq
+                'FSM::VIAL::ArchitectureScalePortableRuntimeMeasurement';
+    my $raw = _request(
+        '_measurement_inputs', \@args,
+        [qw(repository_root level artifact_root)],
+    );
+    my $repo_root = _repository_root($raw->{repository_root});
+    _selected_level($raw->{level});
+    confess "preflight-dominated runtime shapes have no lifecycle inputs\n"
+        unless exists $MATERIALIZED{$raw->{level}};
+    my $artifact_root = _safe_relative_path($raw->{artifact_root});
+    my $construction = _canonical_construction($repo_root, $raw->{level});
+    my $source = _source_input($construction);
+    my $route = _canonical_route(
+        $source->{relative_path}, $source->{content},
+        _hial_input($construction)->{content},
+    );
+    my $emission = _emit($route, $artifact_root);
+    my $oracle = _emission_oracle($raw->{level}, $emission);
+    return {
+        construction => _clone($construction),
+        route => $route,
+        emission => $emission,
+        emission_oracle => $oracle,
+    };
+}
+
 sub _evaluate($repo_root, $level) {
     my $first_construction = _canonical_construction($repo_root, $level);
     my $second_construction = _canonical_construction($repo_root, $level);

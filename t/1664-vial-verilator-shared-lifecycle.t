@@ -270,21 +270,82 @@ subtest 'measurement caller has one distinct sealed storage context' => sub {
         'outer_worker_process_group',
         'measurement lifecycle inherits the controller containment domain',
     );
-    my $prepared =
+    my $current =
         FSM::VIAL::ArchitectureScalePortableRuntimeMeasurement::_lifecycle_advance_for_test({
             %$request,
             handle => clone($begin->{handle}),
         });
-    ok($prepared->{ok}, 'measurement lifecycle advances through preparation');
-    my $abort =
-        FSM::VIAL::ArchitectureScalePortableRuntimeMeasurement::_lifecycle_abort_for_test({
-            %$request,
-            handle => clone($prepared->{handle}),
-        });
-    ok($abort->{ok}, 'measurement caller cleans its exact lifecycle root');
+    ok($current->{ok}, 'measurement lifecycle advances through preparation');
+    unless ($ENV{FSMGEN_VIAL_MEASUREMENT_COMPACT_RESUME_EXACT}) {
+        my $abort =
+            FSM::VIAL::ArchitectureScalePortableRuntimeMeasurement::_lifecycle_abort_for_test({
+                %$request,
+                handle => clone($current->{handle}),
+            });
+        ok($abort->{ok},
+            'default measurement caller aborts and cleans its exact root');
+        ok(!-e $measurement_abs && !-l $measurement_abs,
+            'default measurement lifecycle leaves no controller residue');
+        return;
+    }
+    for my $state (qw(
+        tool_verified compiled ran trace_validated result_produced assembled
+    )) {
+        $current =
+            FSM::VIAL::ArchitectureScalePortableRuntimeMeasurement::_lifecycle_advance_for_test({
+                %$request,
+                handle => clone($current->{handle}),
+            });
+        diag($json->encode($current->{diagnostics})) unless $current->{ok};
+        ok($current->{ok}, "measurement lifecycle advances through $state");
+        last unless $current->{ok};
+        is($current->{status}, $state, "measurement state $state is exact");
+    }
+    SKIP: {
+        skip 'measurement lifecycle did not reach assembled', 8
+            unless $current->{ok} && $current->{status} eq 'assembled';
+        my $state = decode_raw(
+            repo_path($current->{handle}{state_relpath}),
+        );
+        my ($assembly) = grep {
+            $_->{kind} eq 'assembly_payload'
+        } @{$state->{objects}};
+        ok(defined($assembly),
+            'assembled measurement state retains one assembly object');
+        my $assembly_abs = repo_path($assembly->{relative_path});
+        cmp_ok(-s $assembly_abs, '<', 4_096,
+            'measurement assembly state is one compact descriptor');
+        my $descriptor = decode_raw($assembly_abs);
+        is($descriptor->{schema},
+            'fsmgen.vial_verilator_measurement_assembly.v1',
+            'compact descriptor schema is exact');
+        like($descriptor->{artifact_identity_sha256},
+            qr{\A[0-9a-f]{64}\z},
+            'compact descriptor seals the full artifact graph identity');
+        my $finished =
+            FSM::VIAL::ArchitectureScalePortableRuntimeMeasurement::_lifecycle_finish_for_test({
+                %$request,
+                handle => clone($current->{handle}),
+            });
+        diag($json->encode($finished->{diagnostics})) unless $finished->{ok};
+        ok($finished->{ok},
+            'fresh measurement finish reconstructs the compact assembly');
+        ok($finished->{cleanup}{removed}
+                && !-e $measurement_abs && !-l $measurement_abs,
+            'fresh finish removes the exact lifecycle root');
+        is(scalar(@{$finished->{assembled_result}{artifacts}}), 12,
+            'fresh finish returns only compact final artifact identities');
+        my $graph_abs = repo_path(
+            $finished->{assembled_result}{materialized_identity},
+        );
+        ok(-d $graph_abs && !-l $graph_abs,
+            'fresh finish materializes the exact controller publish graph');
+    }
+    remove_tree($measurement_owner_abs)
+        if -d $measurement_owner_abs && !-l $measurement_owner_abs;
     ok(
-        !-e $measurement_abs && !-l $measurement_abs,
-        'measurement lifecycle leaves no controller-owned residue',
+        !-e $measurement_owner_abs && !-l $measurement_owner_abs,
+        'measurement test removes its exact controller owner root',
     );
 };
 
@@ -783,6 +844,11 @@ sub _lifecycle_advance_for_test {
 sub _lifecycle_abort_for_test {
     my ($raw) = @_;
     return FSM::VIAL::Backend::VerilatorLifecycle->abort_session($raw);
+}
+
+sub _lifecycle_finish_for_test {
+    my ($raw) = @_;
+    return FSM::VIAL::Backend::VerilatorLifecycle->finish_session($raw);
 }
 
 package main;

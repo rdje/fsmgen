@@ -49,6 +49,10 @@ my @HANDLE_KEYS = qw(
 my @STORAGE_KEYS = qw(
     schema schema_version mode staging_identity containment
 );
+my @MEASUREMENT_ASSEMBLY_KEYS = qw(
+    schema schema_version result_production_payload_sha256
+    artifact_count artifact_identity_sha256 result_rel
+);
 my @STATE_KEYS = qw(
     schema schema_version lifecycle_identity operation_id state ordinal
     state_identity predecessor_identity predecessor_relpath next_state
@@ -250,6 +254,42 @@ sub finish_session($class, @args) {
             'lifecycle finish invocation',
         );
         $session = _resume_session($args[0], $role, \$session);
+        return _finish_session($session);
+    };
+    return $finished if defined $finished;
+    return _exception_result($@, $session);
+}
+
+sub finish_measurement_session($class, @args) {
+    my $role = _authorized_role(
+        $class, 'finish_measurement_session', scalar caller,
+    );
+    return _failure_result(
+        'VIAL_LIFECYCLE_INVOCATION_ERROR',
+        'measurement lifecycle terminal transition is caller-sealed',
+        '/', undef,
+    ) unless defined $role && $role eq 'architecture_scale_measurement';
+    return _failure_result(
+        'VIAL_LIFECYCLE_INVOCATION_ERROR',
+        'finish_measurement_session expects one closed argument hash',
+        '/', undef,
+    ) unless @args == 1 && ref($args[0]) eq 'HASH'
+        && !blessed($args[0]);
+    my $session;
+    my $finished = eval {
+        _require_exact_keys(
+            $args[0],
+            [qw(repo_root execution_ir emission storage_context handle)],
+            'measurement lifecycle terminal invocation',
+        );
+        $session = _resume_session($args[0], $role, \$session);
+        _throw(
+            'VIAL_LIFECYCLE_STATE_ERROR',
+            'measurement terminal transition requires result_produced',
+            '/handle/state',
+        ) unless $session->{handle}{state} eq 'result_produced'
+            && ($session->{handle}{next_state} // '') eq 'assembled';
+        _advance_session($session, 'assembled');
         return _finish_session($session);
     };
     return $finished if defined $finished;
@@ -898,6 +938,27 @@ sub _phase_assemble($session) {
             $session->{objects}, 'result_production_payload',
         ),
     );
+    my $assembly = _build_assembly($session, $payload);
+    $session->{terminal_assembly} = $assembly;
+    my $stored = $session->{storage_context}{mode}
+            eq 'architecture_scale_measurement'
+        ? _measurement_assembly_descriptor($session, $assembly)
+        : $assembly;
+    my $object = _write_content_object(
+        $session, 'assembly_payload',
+        _canonical_json($stored), 0,
+    );
+    return {
+        objects => [$object],
+        evidence => {
+            assembly_payload_sha256 => $object->{sha256},
+            artifact_count_before_cleanup =>
+                scalar keys %{$assembly->{artifact}},
+        },
+    };
+}
+
+sub _build_assembly($session, $payload) {
     my %artifact = map {
         $_ => _clone($session->{artifact}{$_})
     } keys %{$session->{artifact}};
@@ -939,7 +1000,7 @@ sub _phase_assemble($session) {
         $payload->{result}{content},
         [$session->{emission}{plan_id}, $payload->{simulation_id}],
     );
-    my $assembly = {
+    return {
         artifact => \%artifact,
         result => $payload->{result},
         result_rel => $result_rel,
@@ -948,18 +1009,72 @@ sub _phase_assemble($session) {
         compile_id => $payload->{compile_id},
         simulation_id => $payload->{simulation_id},
     };
-    my $object = _write_content_object(
-        $session, 'assembly_payload',
-        _canonical_json($assembly), 0,
+}
+
+sub _measurement_assembly_descriptor(
+    $session, $assembly, $objects = undef,
+) {
+    my $payload = _object_by_kind(
+        $objects // $session->{objects}, 'result_production_payload',
     );
+    _validate_object($session, $payload);
+    my @identity = map {
+        my $artifact = $assembly->{artifact}{$_};
+        {
+            relpath => $_,
+            kind => $artifact->{kind},
+            bytes => bytes::length($artifact->{content}),
+            sha256 => sha256_hex($artifact->{content}),
+        }
+    } sort keys %{$assembly->{artifact}};
     return {
-        objects => [$object],
-        evidence => {
-            assembly_payload_sha256 => $object->{sha256},
-            artifact_count_before_cleanup =>
-                scalar keys %artifact,
-        },
+        schema => 'fsmgen.vial_verilator_measurement_assembly.v1',
+        schema_version => 1,
+        result_production_payload_sha256 => $payload->{sha256},
+        artifact_count => scalar(@identity),
+        artifact_identity_sha256 => sha256_hex(_canonical_json(\@identity)),
+        result_rel => $assembly->{result_rel},
     };
+}
+
+sub _restore_measurement_assembly($session) {
+    my $stored = _decode_object_json(
+        $session, _object_by_kind(
+            $session->{objects}, 'assembly_payload',
+        ),
+    );
+    _require_exact_keys(
+        $stored, \@MEASUREMENT_ASSEMBLY_KEYS,
+        'measurement assembly descriptor',
+    );
+    _throw(
+        'VIAL_LIFECYCLE_OBJECT_ERROR',
+        'measurement assembly descriptor schema changed',
+        '/objects/assembly_payload',
+    ) unless ($stored->{schema} // '')
+            eq 'fsmgen.vial_verilator_measurement_assembly.v1'
+        && ($stored->{schema_version} // 0) == 1;
+    my $payload_object = _object_by_kind(
+        $session->{objects}, 'result_production_payload',
+    );
+    _validate_object($session, $payload_object);
+    _throw(
+        'VIAL_LIFECYCLE_OBJECT_ERROR',
+        'measurement assembly result predecessor changed',
+        '/objects/assembly_payload',
+    ) unless ($stored->{result_production_payload_sha256} // '')
+        eq $payload_object->{sha256};
+    my $payload = _decode_object_json($session, $payload_object);
+    my $assembly = _build_assembly($session, $payload);
+    _throw(
+        'VIAL_LIFECYCLE_OBJECT_ERROR',
+        'measurement assembly descriptor identity changed',
+        '/objects/assembly_payload',
+    ) unless _canonical_json($stored)
+        eq _canonical_json(
+            _measurement_assembly_descriptor($session, $assembly),
+        );
+    return $assembly;
 }
 
 sub _finish_session($session) {
@@ -971,12 +1086,19 @@ sub _finish_session($session) {
         && ($session->{handle}{next_state} // '') eq 'cleaned';
     _load_state_chain($session, $session->{handle});
     my $evidence = _stage_evidence($session);
-    my $assembly = _decode_object_json(
-        $session, _object_by_kind(
-            $session->{objects}, 'assembly_payload',
-        ),
-    );
-    my $assembled = _finalize_public_result($session, $assembly);
+    my $assembly = delete($session->{terminal_assembly});
+    $assembly //= $session->{storage_context}{mode}
+            eq 'architecture_scale_measurement'
+        ? _restore_measurement_assembly($session)
+        : _decode_object_json(
+            $session, _object_by_kind(
+                $session->{objects}, 'assembly_payload',
+            ),
+        );
+    my $assembled = $session->{storage_context}{mode}
+            eq 'architecture_scale_measurement'
+        ? _finalize_measurement_result($session, $assembly)
+        : _finalize_public_result($session, $assembly);
     _remove_session_root($session);
     return _lifecycle_result({
         ok => JSON::PP::true,
@@ -995,7 +1117,7 @@ sub _finish_session($session) {
     });
 }
 
-sub _finalize_public_result($session, $assembly) {
+sub _finalize_public_result($session, $assembly, $clone_artifacts = 1) {
     my %artifact = %{$assembly->{artifact}};
     my $backend_manifest = _clone(
         $session->{emission}{backend_manifest},
@@ -1050,7 +1172,7 @@ sub _finalize_public_result($session, $assembly) {
     $artifact{"$BASE/backend-manifest.json"}{content} =
         _json_text($backend_manifest);
     my @artifacts = map {
-        _clone($artifact{$_})
+        $clone_artifacts ? _clone($artifact{$_}) : $artifact{$_}
     } sort keys %artifact;
     return {
         ok => JSON::PP::true,
@@ -1065,6 +1187,88 @@ sub _finalize_public_result($session, $assembly) {
             staging_identity => $session->{stage_rel},
             removed => JSON::PP::true,
         },
+    };
+}
+
+sub _finalize_measurement_result($session, $assembly) {
+    my $public = _finalize_public_result($session, $assembly, 0);
+    my $controller_rel = $session->{stage_rel};
+    _throw(
+        'VIAL_LIFECYCLE_STORAGE_ERROR',
+        'measurement lifecycle root has no exact controller parent',
+        '/storage_context/staging_identity',
+    ) unless $controller_rel =~ s{/lifecycle\z}{};
+    my $graph_rel = "$controller_rel/outputs/publish/artifact-graph";
+    my $graph_abs = _safe_destination(
+        $session->{repo_root}, $graph_rel, $session->{root_device},
+    );
+    _throw(
+        'VIAL_RUN_COLLISION',
+        'measurement publication graph already exists',
+        '/assembled_result/materialized_identity',
+    ) if -e $graph_abs || -l $graph_abs;
+    _make_directory($graph_abs, $graph_rel);
+    my @identity;
+    for my $artifact (@{$public->{artifacts}}) {
+        my $relative = $artifact->{relpath};
+        _rel_abs('.', $relative);
+        my $content = $artifact->{content};
+        _throw(
+            'VIAL_RUN_RESULT_ERROR',
+            'measurement publication artifact has invalid content',
+            '/assembled_result/artifacts',
+        ) unless defined($content) && !ref($content);
+        my $target_rel = "$graph_rel/$relative";
+        my $target_abs = _safe_destination(
+            $session->{repo_root}, $target_rel, $session->{root_device},
+        );
+        _make_directory(dirname($target_abs), dirname($target_rel));
+        _write_exact($target_abs, $content, $target_rel);
+        my $lines = () = $content =~ /\n/g;
+        push @identity, {
+            relpath => $relative,
+            kind => $artifact->{kind},
+            bytes => bytes::length($content),
+            lines => $lines,
+            sha256 => sha256_hex($content),
+        };
+    }
+    my %artifact = map { $_->{relpath} => $_ } @{$public->{artifacts}};
+    my %transcript;
+    for my $name (qw(compile run)) {
+        my $relative = "$BASE/evidence/$name-transcript.txt";
+        my $entry = $artifact{$relative};
+        _throw(
+            'VIAL_RUN_RESULT_ERROR',
+            "measurement publication lacks the $name transcript",
+            '/assembled_result/transcripts',
+        ) unless ref($entry) eq 'HASH'
+            && defined($entry->{content}) && !ref($entry->{content});
+        $transcript{$name} = {
+            content => $entry->{content},
+            sha256 => sha256_hex($entry->{content}),
+        };
+    }
+    return {
+        ok => JSON::PP::true,
+        status => $public->{status},
+        operation_id => $public->{operation_id},
+        backend_profile => $public->{backend_profile},
+        backend_manifest => $public->{backend_manifest},
+        result_manifest => $public->{result_manifest},
+        artifacts => \@identity,
+        materialized_identity => $graph_rel,
+        commands => {
+            compile => _clone($session->{compile}),
+            run => _clone($session->{run}),
+        },
+        workspace_command_digests => {
+            compile => $session->{compile_workspace_digest},
+            run => $session->{run_workspace_digest},
+        },
+        transcripts => \%transcript,
+        diagnostics => [],
+        cleanup => $public->{cleanup},
     };
 }
 
@@ -1657,12 +1861,39 @@ sub _validate_state_shape($session, $record) {
             $record->{objects}, 'assembly_payload',
         );
         my $assembly = _decode_object_json($session, $assembly_ref);
-        _throw(
-            'VIAL_LIFECYCLE_STATE_ERROR',
-            'sealed assembly payload is not one closed object',
-            '/objects/assembly_payload',
-        ) unless ref($assembly) eq 'HASH'
-            && ref($assembly->{artifact}) eq 'HASH';
+        my $artifact_count;
+        if ($session->{storage_context}{mode}
+                eq 'architecture_scale_measurement') {
+            _closed_lifecycle_record(
+                $assembly, \@MEASUREMENT_ASSEMBLY_KEYS,
+                'measurement assembly descriptor',
+                '/objects/assembly_payload',
+            );
+            my $payload_ref = _object_by_kind(
+                $record->{objects}, 'result_production_payload',
+            );
+            my $payload = _decode_object_json($session, $payload_ref);
+            my $rebuilt = _build_assembly($session, $payload);
+            _throw(
+                'VIAL_LIFECYCLE_STATE_ERROR',
+                'sealed measurement assembly descriptor changed',
+                '/objects/assembly_payload',
+            ) unless _canonical_json($assembly) eq _canonical_json(
+                _measurement_assembly_descriptor(
+                    $session, $rebuilt, $record->{objects},
+                ),
+            );
+            $artifact_count = $assembly->{artifact_count};
+        }
+        else {
+            _throw(
+                'VIAL_LIFECYCLE_STATE_ERROR',
+                'sealed assembly payload is not one closed object',
+                '/objects/assembly_payload',
+            ) unless ref($assembly) eq 'HASH'
+                && ref($assembly->{artifact}) eq 'HASH';
+            $artifact_count = scalar(keys %{$assembly->{artifact}});
+        }
         _throw(
             'VIAL_LIFECYCLE_STATE_ERROR',
             'assembly evidence differs from the sealed artifact payload',
@@ -1670,7 +1901,7 @@ sub _validate_state_shape($session, $record) {
         ) unless ($record->{evidence}{assembly_payload_sha256} // '')
                 eq $assembly_ref->{sha256}
             && ($record->{evidence}{artifact_count_before_cleanup} // -1)
-                == scalar(keys %{$assembly->{artifact}});
+                == $artifact_count;
     }
     return 1;
 }

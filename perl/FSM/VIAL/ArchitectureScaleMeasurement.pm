@@ -175,13 +175,18 @@ sub measure($class, @args) {
     confess __PACKAGE__ . "->measure expects one closed hash\n"
         unless @args == 1 && ref($args[0]) eq 'HASH'
             && !blessed($args[0]);
-    _exact_keys(
-        $args[0], [qw(
-            repository_root construction run_class run_ordinal
-            validation_record stage_plan
-        )],
-        'measurement invocation',
+    my @keys = qw(
+        repository_root construction run_class run_ordinal
+        validation_record stage_plan
     );
+    if (exists $args[0]{tool_profile}) {
+        my $caller = caller;
+        confess "external-tool measurement is private to the selected runtime adapter\n"
+            unless defined($caller) && $caller eq
+                'FSM::VIAL::ArchitectureScalePortableRuntimeMeasurement';
+        push @keys, 'tool_profile';
+    }
+    _exact_keys($args[0], \@keys, 'measurement invocation');
     return _measure($args[0]);
 }
 
@@ -213,10 +218,14 @@ sub _measure($raw) {
     my $construction = _validated_construction($raw->{construction});
     my ($run_class, $run_ordinal) =
         _validated_run($raw->{run_class}, $raw->{run_ordinal});
-    my $plan = _validated_stage_plan($raw->{stage_plan});
+    my $plan = _validated_stage_plan(
+        $raw->{stage_plan}, $construction->{specification},
+    );
     my $git = _git_profile($repo_root);
     my $host = _host_profile($repo_root);
-    my $tool = _foundation_tool_profile();
+    my $tool = _selected_tool_profile(
+        $construction->{specification}, $raw->{tool_profile},
+    );
     my $guard = _resource_guard($run_class);
 
     if ($run_class eq 'validation') {
@@ -608,7 +617,7 @@ sub _run_stage($raw) {
     };
 }
 
-sub _validated_stage_plan($raw) {
+sub _validated_stage_plan($raw, $specification) {
     confess "stage_plan must be a non-empty array\n"
         unless ref($raw) eq 'ARRAY' && @$raw;
     my (@plan, %seen);
@@ -629,10 +638,14 @@ sub _validated_stage_plan($raw) {
         confess "stage plan must follow normative stage order\n"
             if $STAGE_INDEX{$stage} <= $last;
         $last = $STAGE_INDEX{$stage};
-        confess "external-tool stage admission is not implemented by the foundation\n"
+        confess "stage classification is not selected by the measurement foundation\n"
             unless defined($entry->{classification})
                 && !ref($entry->{classification})
-                && $entry->{classification} eq 'fsmgen_owned';
+                && $entry->{classification}
+                    =~ /\A(?:fsmgen_owned|external_tool)\z/;
+        confess "external-tool stage admission is not implemented for this construction\n"
+            if $entry->{classification} eq 'external_tool'
+                && !defined($specification->{tool_profile});
         _validated_command_identity($entry->{command_identity});
         _validated_counts($entry->{input_counts}, 'stage input counts');
         _effective_timeout($stage, $entry->{backend_timeout_seconds});
@@ -771,6 +784,40 @@ sub _foundation_tool_profile() {
         job_count => 1,
         external_verification_tool => JSON::PP::false,
     };
+}
+
+sub _selected_tool_profile($specification, $supplied) {
+    my $selected = $specification->{tool_profile};
+    if (!defined $selected) {
+        confess "foundation-only measurement cannot accept a supplied tool profile\n"
+            if defined $supplied;
+        return _foundation_tool_profile();
+    }
+    confess "runtime measurement requires one closed selected tool profile\n"
+        unless ref($supplied) eq 'HASH' && !blessed($supplied);
+    _validate_tool_profile($supplied);
+    my $expected = $selected eq 'verilator_5_046'
+        ? {
+            applicability => 'qualified_runtime',
+            logical_name => 'verilator',
+            reported_version =>
+                'Verilator 5.046 2026-02-28 rev vUNKNOWN-built20260228',
+            build => '5.046',
+            provider_identity => 'qualified_verilator_5_046',
+            arguments => [qw(
+                --binary --timing --assert --threads 1 -j 1
+                --x-initial 0 --x-assign 0
+            )],
+            thread_count => 1,
+            job_count => 1,
+            external_verification_tool => JSON::PP::true,
+        }
+        : undef;
+    confess "selected runtime tool profile is not implemented by the common controller\n"
+        unless defined $expected;
+    confess "supplied runtime tool profile differs from repository authority\n"
+        unless _canonical_json($supplied) eq _canonical_json($expected);
+    return _clone($expected);
 }
 
 sub _git_profile($repo_root) {
@@ -1435,6 +1482,14 @@ sub _validate_record($record) {
     _json_boolean($record->{dirty_state}, 'measurement dirty_state');
     _validate_host_profile($record->{host_profile});
     _validate_tool_profile($record->{tool_profile});
+    my $expected_tool = _selected_tool_profile(
+        $record->{workload_specification},
+        defined($record->{workload_specification}{tool_profile})
+            ? $record->{tool_profile} : undef,
+    );
+    confess "measurement tool profile changed from workload authority\n"
+        unless _canonical_json($record->{tool_profile})
+            eq _canonical_json($expected_tool);
     _validate_resource_guard($record->{resource_guard}, $record->{run_class});
     confess "measurement stage array is invalid\n"
         unless ref($record->{stage_measurements}) eq 'ARRAY'
@@ -1448,6 +1503,9 @@ sub _validate_record($record) {
         _exact_keys($stage, \@STAGE_KEYS, "measurement stage $index");
         push @actual_stages, $stage->{stage};
         _validate_stage_measurement($stage, $record->{run_class});
+        confess "external-tool stage lacks an external selected tool profile\n"
+            if ($stage->{classification} // '') eq 'external_tool'
+                && !$record->{tool_profile}{external_verification_tool};
         for my $oracle_id (@{$stage->{correctness_oracle_ids}}) {
             confess "measurement oracle '$oracle_id' is referenced twice\n"
                 if exists $oracle_ids{$oracle_id};
@@ -1562,7 +1620,8 @@ sub _validate_stage_measurement($stage, $run_class) {
         confess "executed stage worker status is invalid\n"
             unless _safe_token($stage->{worker_status});
         confess "executed stage classification changed\n"
-            unless ($stage->{classification} // '') eq 'fsmgen_owned';
+            unless ($stage->{classification} // '')
+                =~ /\A(?:fsmgen_owned|external_tool)\z/;
         confess "executed stage retained a not-run reason\n"
             if defined $stage->{not_run_reason};
     }

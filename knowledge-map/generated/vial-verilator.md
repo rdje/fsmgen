@@ -8,7 +8,7 @@
 - q="how does the shared Verilator lifecycle preserve state and cleanup authority?" · facts=[vial-verilator-shared-lifecycle](../../docs/knowledge/vial-verilator-shared-lifecycle.md)
 - q="how will the Runner and scale measurement share Verilator stages?" · facts=[vial-verilator-shared-lifecycle](../../docs/knowledge/vial-verilator-shared-lifecycle.md)
 - q="what did the macOS pre-main qualification conclude?" · facts=[vial-verilator-shared-lifecycle](../../docs/knowledge/vial-verilator-shared-lifecycle.md)
-- q="what portable Verilator measurement work is active after lifecycle qualification?" · facts=[vial-verilator-shared-lifecycle](../../docs/knowledge/vial-verilator-shared-lifecycle.md)
+- q="what work follows completed common-controller portable Verilator measurement?" · facts=[vial-verilator-shared-lifecycle](../../docs/knowledge/vial-verilator-shared-lifecycle.md)
 - q="why can portable Verilator time out before generated main on macOS?" · facts=[vial-verilator-shared-lifecycle](../../docs/knowledge/vial-verilator-shared-lifecycle.md)
 
 ## Facts
@@ -17,5 +17,5 @@
 
 _One caller-sealed lifecycle owns public and scale Verilator execution_
 
-- **date:** 2026-08-24 · **status:** current
+- **date:** 2026-08-25 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-verilator-shared-lifecycle.md`](../../docs/knowledge/vial-verilator-shared-lifecycle.md)

@@ -6,9 +6,11 @@ Decision `0083` closes its architecture, and the authored-workload
 materialization is now implemented. Two tracked VIAL sources, one
 caller-sealed structural qualifier, and an exact public-Runner watcher bind the
 10,000/15,000 candidates to real schedules without manufacturing activity.
-Repeated stage measurement is not complete. The shared lifecycle and guarded
-host qualification are implemented; common-controller measurement of the
-applicable validation and gate/qualification repetitions is now active.
+The shared lifecycle, guarded host qualification, and common-controller
+measurement adapter are implemented. Exact guarded qualification covers one
+correctness-only reference, one validation plus three measured gate runs, and
+one validation plus five measured qualification runs; immutable matrix
+publication remains the next separately owned step.
 
 This “execution” means external execution of generated portable SystemVerilog
 with the already qualified Verilator profile. It is not IASIM execution and it
@@ -493,9 +495,13 @@ The common measurement stages map to lifecycle work like this:
 
 The backend limits do not widen for measurement: the exact version query keeps
 its 10-second ceiling, compile keeps 120 seconds and 8,388,608 captured bytes,
-and runtime keeps 30 seconds and 67,108,864 captured bytes. The common outer
-stage ceiling remains an additional guard; the effective deadline is the
-smaller applicable value.
+and runtime keeps 30 seconds and 67,108,864 captured bytes. Those tool limits
+begin inside the shared lifecycle, after the isolated worker has reconstructed
+canonical route and emission authority. The controller independently contains
+the complete compile worker for 900 seconds and the complete run worker for 300
+seconds. These are outer failure/cleanup envelopes, not alternate tool
+allowances: accepted evidence must prove both the outer envelope and the exact
+inner 10/120/30-second captures.
 
 Process supervision establishes containment before `exec`, uses close-on-exec
 control pipes, and records spawn/exec handoff separately from generated-main
@@ -521,7 +527,92 @@ continues even if a hostile child closes both output descriptors and hangs.
 Public execution owns a fresh process group; TERM/KILL completion checks the
 whole group rather than treating leader reaping as proof that descendants are
 gone. Measurement tools remain in the common controller worker's outer process
-group, where the controller applies the stricter effective deadline.
+group, while the lifecycle remains their sole tool-deadline supervisor.
+
+## Implemented common-controller measurement
+
+`FSM::VIAL::ArchitectureScalePortableRuntimeMeasurement` is the one
+caller-sealed adapter between the generic architecture-scale controller, the
+portable runtime materializer, and the shared Verilator lifecycle. It owns
+exactly five shapes:
+
+| Shape | Controller/tool behavior |
+| --- | --- |
+| `reference_v1` | one correctness-only controller validation |
+| `gate_candidate_v1` | one validation, then three measured repetitions |
+| `qualification_candidate_v1` | one validation, then five measured repetitions |
+| `limit_v1` | structural preflight rejection; no controller or Verilator |
+| `over_limit_v1` | structural preflight rejection; no controller or Verilator |
+
+Every applicable worker reconstructs the tracked construction, blessed route,
+ExecutionIR, emission, and tool profile from repository anchors. The adapter
+then cross-checks the structural identities and admits only the exact qualified
+Verilator 5.046 profile. `compile_analyze` and `run` are classified as external
+tool stages; construction, parse/validation, bridge, bind/plan, emission,
+trace validation, result production, publication, and cleanup remain
+FSMGEN-owned. Integrated elaboration is retained explicitly as `not_run`, not
+silently omitted or assigned a fabricated duration.
+
+An accepted controller record retains raw samples for every executed measured
+stage, exact controller command identity and input counts, lifecycle and
+operation identities, the full predecessor-state chain, actual compile/run
+commands and their digests, workspace-normalized command digests, bounded
+compile/run transcripts, trace count/hash, result identity, the complete final
+artifact census, and exact lifecycle/controller cleanup. Validation records
+run the same correctness route but intentionally retain no performance sample.
+A failed validation prevents measured repetitions; a failed repetition stays a
+failed exclusion and is never retried or relabelled.
+
+The final public graph is large enough that moving it through the controller's
+JSON pipe would duplicate tens of MiB of already sealed evidence. Measurement
+therefore stores a compact content-addressed assembled-state descriptor with
+the result-payload digest, artifact count/identity, and result path. A fresh
+resume rebuilds and verifies the complete assembly from lifecycle objects. The
+terminal measurement transition materializes the public graph exactly once
+beneath the controller-owned publish output and returns compact identities,
+commands, digests, and transcripts. The public Runner still returns its
+unchanged complete in-memory graph.
+
+The measurement graph contains the 12 artifacts actually returned by the
+qualified runtime lifecycle. The earlier structural materialization graph has
+19 complete virtual artifacts because it projects additional pre-tool
+structure. Both are valid for their separate questions; their counts and byte
+totals must not be compared as though they were the same graph.
+
+The normal closed-contract watcher is inexpensive and tool-free:
+
+```sh
+prove -Iperl t/1667-vial-architecture-scale-portable-runtime-measurement.t
+```
+
+Exact runtime qualification is deliberately opt-in and must run below the
+repository RAM guard:
+
+```sh
+FSMGEN_VIAL_PORTABLE_RUNTIME_MEASUREMENT_EXACT=1 \
+  scripts/run_with_ram_guard.sh -- \
+  prove -Iperl t/1667-vial-architecture-scale-portable-runtime-measurement.t
+```
+
+The shared lifecycle's compact assembled-state fresh-resume proof is likewise
+available as an exact guarded watcher:
+
+```sh
+FSMGEN_VIAL_MEASUREMENT_COMPACT_RESUME_EXACT=1 \
+  scripts/run_with_ram_guard.sh -- \
+  prove -Iperl t/1664-vial-verilator-shared-lifecycle.t
+```
+
+Here, “runtime execution” means running the generated portable SystemVerilog
+through Verilator. IASIM remains the separately owned reference-semantics
+engine; this adapter neither invokes it nor changes its contract.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-portable-runtime-measurement-v1 -->
+- Claim: The exact guarded common-controller watcher accepts one 274-record reference validation, one 10,000-record gate validation plus three measured repetitions, and one 15,000-record qualification validation plus five measured repetitions; every accepted runtime returns the exact 12-artifact graph, all selected measured-stage samples, zero exclusions, and zero cleanup residue.
+- Re-derive: Run guarded `t/1667-vial-architecture-scale-portable-runtime-measurement.t`; the adapter independently reconstructs repository construction, route, emission, tool, lifecycle, trace/result, artifact, and cleanup authority for every isolated stage and reloads the completed report.
+- Falsify: Run the default preflight/caller-seal/guard/schema/failure-evidence tests, the exact compact-descriptor fresh-resume watcher, and the guarded full watcher; require tool-free limit/excess, typed command identities, exact state/trace/result/artifact closure, and keep every host timeout, guard trip, or exclusion failed.
+- Durability: Retain the tracked adapter, sole lifecycle, materializer seam, default and guarded watchers, task/decision/book/card/claim records, doctrine gates, and Git history. Raw performance values remain unpublished until child `.17.3.5.5` seals and independently reloads the matrix.
+<!-- CLAIM-VERIFICATION:END vial-portable-runtime-measurement-v1 -->
 
 ## Intended ownership sequence
 

@@ -174,6 +174,32 @@ deadline, 30-second run deadline, 8,388,608-byte compile capture, and
 of outer policy. No observation in this selection authorizes retry, timeout
 widening, or a changed qualified tool.
 
+Implementation clarification (2026-08-24): an isolated common-controller
+worker reconstructs the canonical route and emission before it enters the
+shared lifecycle. Its 900-second compile-worker and 300-second run-worker
+envelopes cover that complete worker transaction, including reconstruction,
+process startup, lifecycle work, evidence projection, and cleanup. They are
+containment/failure ceilings, not tool allowances. Inside that worker the
+shared lifecycle remains the sole tool supervisor and still applies the exact
+10/120/30-second version/compile/run deadlines and existing capture ceilings.
+Applying the 30-second tool wall to route reconstruction plus execution would
+silently shorten the qualified runtime allowance, let unrelated reconstruction
+load race the cleanup/evidence handoff, and misclassify a controller kill as a
+Verilator timeout. Accepted records therefore prove both layers independently:
+the controller envelope and the unchanged lifecycle capture limit.
+
+Measurement also keeps the controller pipe bounded. At `assembled`, the
+lifecycle persists a content-addressed descriptor containing the result-
+payload digest, artifact count and identity, and result-object path instead of
+copying the 30--47 MiB public graph into state JSON. A fresh public resume
+reconstructs and verifies the complete assembly from the sealed predecessor;
+an ordinary same-process Runner uses the already validated in-memory assembly.
+The measurement finalizer writes the complete graph exactly once beneath the
+controller-owned publish output and returns only compact artifact identities,
+actual commands, normalized command digests, and bounded transcripts. This is
+an internal storage/projection refinement: the Runner's public result and
+complete artifact graph remain unchanged.
+
 Process supervision must establish containment before `exec`, use close-on-
 exec control pipes, distinguish spawn/exec handoff from generated-main time,
 record monotonic stage-local evidence, and terminate/reap the complete owned
