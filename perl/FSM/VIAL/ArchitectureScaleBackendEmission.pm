@@ -492,7 +492,7 @@ sub _evaluate_portable_sv(
         $construction, $first_route, $second_route, $first_projection,
         $stage_identities, $rerun_identity, $route_diagnostics,
         $PORTABLE_SV_CLASS, $PORTABLE_SV_PROFILE,
-        'portable_sv', 'portable_sv_artifact_graph_v1',
+        'portable_sv', 'portable_sv_artifact_graph_v2',
     );
 }
 

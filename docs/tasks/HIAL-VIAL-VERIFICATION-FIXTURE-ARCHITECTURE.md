@@ -816,7 +816,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Select the exact runtime-stream materialization, identity, and shared Verilator stage-lifecycle contract.`
   Acceptance: `Audit the canonical runtime construction, portable emitter, Runner, trace validator, result producer, measurement controller, qualified tool/limit authority, and reference runtime evidence. Select a closed workload-to-runtime schedule that proves candidate record-count reachability while preserving semantic truth, binds every repeated activity into trace/result/backend evidence, and classifies reference/limit/excess applicability honestly. Select one caller-sealed staged execution lifecycle reused by the public Runner and measurement workers across process boundaries with exact tool identity, commands, timeouts, transcript bounds, state transitions, same-volume ownership, failure cleanup, and no second execution semantics. Record alternatives and rollback in a decision; change no product behavior.`
-  Verification: `The exact gate-reachability probe exposed a portable-SystemVerilog scheduler defect before selection could close: legal authored source with a check-phase expect followed by a react-phase scoreboard operation emitted check then react in one logical cycle and the shipped TraceValidator rejected the run. Completed child .1.1 now rolls every supported backward phase crossing exactly once and rejects operation-phase drift. Completed child .1.2 repairs the separately proven inert direct-drive path from target projection through binding, negotiation, zero-duration assignment/trace, safe finalization, validation, and support truth. Completed child .1.3 preserves qualified single-await all/any composition and rejects every broader public revision-1 parallel-child topology before artifacts, while leaving the separately sealed non-runtime balanced revision-2 structural renderer unchanged. Its compatibility sweep independently reproduced a pre-existing portable architecture-scale source-identity mismatch at clean predecessor 87684237a: the current reference fixture is 164,507 bytes while its frozen oracle still expects 164,093 after completed scheduler/direct-drive repairs. Proposed child .1.4 owns exact all-level rederivation, falsification, and boundary reconciliation before .1 resumes reachability proof and architecture selection. Repeated loaded-host full integration attempts exposed fixed-30-second runtime timeouts in different byte-identical baseline/direct executions while counterparts passed elsewhere; child .3 already owns the missing launch/main timing evidence and shared lifecycle policy, so no narrower cause is claimed here.`
+  Verification: `The exact gate-reachability probe exposed a portable-SystemVerilog scheduler defect before selection could close: legal authored source with a check-phase expect followed by a react-phase scoreboard operation emitted check then react in one logical cycle and the shipped TraceValidator rejected the run. Completed child .1.1 now rolls every supported backward phase crossing exactly once and rejects operation-phase drift. Completed child .1.2 repairs the separately proven inert direct-drive path from target projection through binding, negotiation, zero-duration assignment/trace, safe finalization, validation, and support truth. Completed child .1.3 preserves qualified single-await all/any composition and rejects every broader public revision-1 parallel-child topology before artifacts, while leaving the separately sealed non-runtime balanced revision-2 structural renderer unchanged. Completed child .1.4 independently reconciles every portable scale source identity after those repairs, versions the portable artifact oracle, and proves the unchanged 16-MiB cap at exact accepted/rejected T=6,318/6,319 without semantic rollback or cosmetic byte shaving. Runtime reachability proof and architecture selection can now resume. Repeated loaded-host full integration attempts exposed fixed-30-second runtime timeouts in different byte-identical baseline/direct executions while counterparts passed elsewhere; child .3 already owns the missing launch/main timing evidence and shared lifecycle policy, so no narrower cause is claimed here.`
   Commit: `pending selection`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.4`
 
@@ -842,11 +842,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.3: activate portable-SV parallel-child repair; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.3: close portable-SV parallel-child admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.4`
-  Status: `active`
+  Status: `done`
   Goal: `Reconcile the portable-SystemVerilog architecture-scale emission ladder with the scheduler and direct-drive repairs that changed generated source identity.`
   Acceptance: `Preserve the exact backend-emission RED at clean predecessor 87684237a and locate every output-affecting origin commit. Independently regenerate every selected portable level, derive source bytes and identities from emitted artifacts rather than copying failed expectations, falsify them with byte-equal reruns and mutation, and determine whether conditional zero-overhead emission can preserve the selected ladder without weakening semantics. If correct semantics necessarily change bytes or the 16-MiB adjacent boundary, select and document a versioned count/boundary reconciliation before implementation; update decision 0075 and every backend-emission/runtime-balanced consumer consistently. Prove reference/gate/qualification/limit/over-limit outcomes, balanced revision-2 prerequisites, exact cleanup, and no borrowed runtime, support, performance, or capacity claim. Do not blindly rebaseline a hash, weaken the source cap, hide an earlier rejecting level, or alter the public scheduler/direct-drive semantics.`
-  Verification: `The .1.3 compatibility sweep ran t1650 in the current tree and in a repository-local detached worktree at clean predecessor 87684237a. Both independently produced the exact portable reference mismatch: 164,507 generated source bytes versus frozen 164,093, plus source-identity drift. The detached worktree was removed and pruned exactly. Git history locates the frozen oracle at 5d309b0eb, scheduler rollover repair at 1e9ab0e61, and direct-drive repair at 69384201c. The former selected limit retained only 386 unused bytes below the 16-MiB cap, so a fixed 414-byte reference delta is sufficient to threaten its classification; no all-level or linear-delta claim is made until this child runs its independent derivation.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.4: activate portable scale identity reconciliation`
+  Verification: `The .1.3 compatibility sweep ran t1650 in the current tree and in a repository-local detached worktree at clean predecessor 87684237a. Both independently produced the exact portable reference mismatch: 164,507 generated source bytes versus frozen 164,093, plus source-identity drift. Git history locates the frozen oracle at 5d309b0eb, scheduler rollover repair at 1e9ab0e61, and direct-drive repair at 69384201c. Fresh ordinary Parser/bridge/PlanBuilder/backend paths regenerate all five producer-owned levels twice: T=21/1,024/4,096 emit 164,507/2,803,857/10,910,865 source bytes with 54/1,057/4,129 maps; the new exact T=6,318 limit emits 16,774,723 bytes/6,351 maps and T=6,319 renders 16,777,362 bytes before rejecting atomically at the unchanged 16-MiB cap. Exact fixture hashes are frozen in portable oracle schema revision 2, whose shared discriminator is portable_sv_artifact_graph_v2. Different +414/+532/+532 deltas falsify fixed padding; the renderer already scopes rollover to genuine backward transitions, so semantic removal and cosmetic 146-byte boundary shaving are rejected. Byte-equal reruns, canonical mutation rejection, family partition, balanced revision-2 emission/report prerequisites, runtime construction, measurement adapters, and exact cleanup pass in three guarded runs totaling Files=7/Tests=33. Decision 0075, the book, card, rationale ledger, and every current consumer are synchronized. No runtime, support, performance, capacity, or public-scheduler behavior claim is added.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.4: activate portable scale identity reconciliation; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.4: reconcile portable scale oracle revision 2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2`
   Status: `proposed`
@@ -7203,3 +7203,34 @@ raising an enforcement ceiling.
   and doctrine gates run before this activation commit. No scheduler,
   direct-drive, backend, runtime, trace/result, scale, support, performance,
   capacity, four-state, methodology, parity, or public-API claim changes.
+
+## Acceptance Checklist (enforced) — `.17.3.5.1.4` portable scale identity reconciliation implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE; reproduced RED and origin history)** — Current
+  and clean-predecessor `t/1650` both emitted a 164,507-byte reference against
+  the frozen 164,093-byte identity. `git log -S'164_093' -- perl/FSM/VIAL/ArchitectureScaleBackendEmission/PortableSV.pm` locates that stale freeze at `5d309b0eb`;
+  later phase-rollover `1e9ab0e61` and direct-drive `69384201c` correctness
+  repairs change generated scheduler/finalization source. All-level regeneration
+  disproves a constant offset: reference grows 414 bytes, while gate and
+  qualification grow 532 bytes. The former `T=6,319` limit now renders
+  16,777,362 bytes, 146 over the unchanged 16-MiB cap, and rejects exactly.
+- [x] **ADDRESSED (verified)** — Decision `0075` selects portable artifact-
+  oracle revision 2 and records why semantic rollback or cosmetic source
+  shaving is inadmissible. The caller-sealed producer and independent watcher
+  freeze exact source totals, fixture bytes/hashes, maps, operation IDs, three-
+  source inventories, byte-equal reruns, atomic diagnostics, mutation failure,
+  and cleanup for reference/gate/qualification/new `T=6,318` limit plus
+  adjacent `T=6,319` rejection. `portable_sv_artifact_graph_v2` and the `.v2`
+  schema make the compatibility break explicit while common cross-profile role
+  labels and the three unaffected backend oracles stay unchanged.
+- [x] **NO REGRESSION** — The guarded all-level portable watcher passes at
+  `Files=1, Tests=7` in 84 seconds. Family, balanced emission, and balanced
+  runtime qualification pass at `Files=3, Tests=12` in 1,481 seconds; runtime-
+  stream construction and both structural-measurement adapters pass at
+  `Files=3, Tests=14` in 63 seconds. Changed Perl/modules tests report `syntax
+  OK`; exact map/source/result mutation and repository-local staging cleanup
+  remain covered. Final mdBook, Knowledge Map, task-tree, claim, containment,
+  relative-path, diff, staged acceptance, and doctrine results are recorded by
+  this commit workflow. Per CI policy no unrelated full CI runs before push,
+  and no external runtime, support, performance, capacity, public scheduler,
+  direct-drive, four-state, methodology, or parity claim is added.

@@ -774,3 +774,21 @@ This spends CPU to keep the known-excess path memory-bounded and makes the
 terminal serializer a defense-in-depth oracle instead of a second schema
 implementation. The base-plan seam is private to `ExecutionBuilder`, so the
 optimization does not become a caller-supplied plan or public report API.
+
+## 2026-08-24: Semantic repair takes precedence over a cosmetic scale boundary
+
+The portable-SystemVerilog scale oracle was frozen before later scheduler and
+direct-drive correctness repairs changed generated source. Re-deriving all
+levels showed that the change is topology-sensitive, not one fixed byte delta,
+and moved the exact 16-MiB boundary from 6,319/6,320 operations to
+6,318/6,319. The first rejected shape is only 146 rendered bytes over the cap.
+
+The renderer already conditions its added rollover on a genuine backward
+logical-phase transition. Removing it would restore the trace-order defect,
+while shortening comments or diagnostics solely to reclaim 146 bytes would
+make a structural qualification boundary depend on cosmetic source text. The
+long-term contract therefore keeps the cap and corrected semantics unchanged,
+versions the portable artifact oracle and its schema to revision 2, and leaves
+the shared role labels stable for unaffected profiles. Evidence compatibility
+is expressed at the profile oracle that actually changed, not by renaming the
+whole multi-backend workload catalog.

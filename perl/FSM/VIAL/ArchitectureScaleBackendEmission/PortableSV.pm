@@ -15,7 +15,7 @@ use FSM::VIAL::Backend::SVPortableVerilator;
 
 my $PROFILE = 'sv_portable_verilator';
 my $ORACLE_SCHEMA =
-    'fsmgen.vial_architecture_scale_backend_emission_portable_sv_oracle.v1';
+    'fsmgen.vial_architecture_scale_backend_emission_portable_sv_oracle.v2';
 my $SCALE_SOURCE =
     'vial/ahb_subordinate_base_output_arbitration_1.vial';
 my $IDENTIFIER_LIMIT = 255;
@@ -49,30 +49,30 @@ my @ARTIFACT_RELPATHS = qw(
 my @SOURCE_RELPATHS = @ARTIFACT_RELPATHS[5 .. 7];
 my %EXPECTED = (
     reference_v1 => {
-        operations => 21, source_bytes => 164_093, source_maps => 54,
-        fixture_bytes => 105_767,
+        operations => 21, source_bytes => 164_507, source_maps => 54,
+        fixture_bytes => 106_181,
         fixture_sha256 =>
-            'aa894ec0830503cc65f95d11dd10972cccb64c00f63d7c579995e18498d422d7',
+            '1839aae7d65c3394442a4b26538b9ea73ab35ae142ca32e29177775919d0f730',
     },
     gate_candidate_v1 => {
-        operations => 1_024, source_bytes => 2_803_325,
-        source_maps => 1_057, fixture_bytes => 2_744_999,
+        operations => 1_024, source_bytes => 2_803_857,
+        source_maps => 1_057, fixture_bytes => 2_745_531,
         fixture_sha256 =>
-            'd9d8a5e4804df6d49d1b8775e981db65467ffbe09862411513d622dfcef3b1e7',
+            'ec5a91968cea2bb5f88994188517cc8b506bf49d6a4ec984fc6b0ad4ee367481',
     },
     qualification_candidate_v1 => {
-        operations => 4_096, source_bytes => 10_910_333,
-        source_maps => 4_129, fixture_bytes => 10_852_007,
+        operations => 4_096, source_bytes => 10_910_865,
+        source_maps => 4_129, fixture_bytes => 10_852_539,
         fixture_sha256 =>
-            'edaea54ee838f2732e3e0583f8df8afa68a837738e1c07677fb4839d692b54c1',
+            'd7087673e824dc18e6a91d7a41f819483428650049fc92a0bd28e3a1737065e8',
     },
     limit_v1 => {
-        operations => 6_319, source_bytes => 16_776_830,
-        source_maps => 6_352, fixture_bytes => 16_718_504,
+        operations => 6_318, source_bytes => 16_774_723,
+        source_maps => 6_351, fixture_bytes => 16_716_397,
         fixture_sha256 =>
-            'cd4412622ab92d4b7624928df99600865a377c64abb8a8b2d171bb1ba9d7cfd5',
+            'f05f90e1a730b187e2eb6f2f15925c92b1a5f4a6dd12268d705297410dc7eb21',
     },
-    over_limit_v1 => {operations => 6_320},
+    over_limit_v1 => {operations => 6_319},
 );
 
 sub profile($class) {
@@ -338,7 +338,7 @@ sub _artifact_oracle($level, $execution, $emission, $artifact_root, $byte_equal)
 
     return ({
         schema => $ORACLE_SCHEMA,
-        schema_version => 1,
+        schema_version => 2,
         backend_profile => $PROFILE,
         level => $level,
         requested_operation_total => 0 + $expected->{operations},

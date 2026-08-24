@@ -166,15 +166,20 @@ The gate is scoped to the public revision-1 runtime profile: the separately
 caller-sealed balanced revision-2 renderer remains a structural-qualification
 route with no compile/runtime/trace/result claim and its own exact-shape oracle.
 
-That compatibility sweep also found a separate, older scale-evidence drift.
-At both the clean `.1.3` predecessor and the current tree, the portable
-architecture-scale reference renderer produces 164,507 SystemVerilog bytes
-while its frozen oracle still expects 164,093 and the former digest. The oracle
-predates the completed phase-rollover and direct-drive repairs, and its selected
-16-MiB limit retained only 386 unused bytes below the cap, so neither a blind digest update
-nor an assumed constant delta is safe. Active `.17.3.5.1.4` owns independent
-all-level rederivation and an explicit boundary decision before runtime
-materialization selection resumes.
+That compatibility sweep also found and closed a separate, older scale-evidence
+drift. The frozen portable oracle predated the completed phase-rollover and
+direct-drive repairs. Independent regeneration produced different deltas at
+reference and expanded levels, so the result was not fixed padding. Decision
+`0075` now defines portable artifact-oracle revision 2: reference, gate, and
+qualification are 164,507, 2,803,857, and 10,910,865 source bytes; `T=6,318`
+is the exact 16,774,723-byte accepted limit; and pre-cap `T=6,319` is
+16,777,362 bytes and rejects atomically under the unchanged 16-MiB cap. The
+renderer already conditions rollover on a real backward phase transition, so
+removing it would reintroduce the semantic defect; cosmetic byte shaving was
+also rejected as a boundary-preservation hack. The versioned oracle, all
+source identities, byte-equal reruns, mutation rejection, balanced revision-2
+prerequisite, and cleanup watchers now let runtime materialization selection
+resume without weakening semantics or borrowing a support/capacity claim.
 
 Repeated guarded full integration attempts also exposed the existing Runner's
 fixed 30-second run wall under concurrent cross-repository compiler load. A

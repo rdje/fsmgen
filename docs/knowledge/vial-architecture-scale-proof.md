@@ -45,6 +45,8 @@ answers:
   - "how does portable SystemVerilog implement a direct endpoint drive?"
   - "why are portable direct drives limited to input carriers and root fibers?"
   - "what Runner timeout risk was found before portable runtime measurement?"
+  - "why did the portable SystemVerilog scale oracle move to revision 2?"
+  - "what is the portable SystemVerilog 16 MiB boundary after scheduler repair?"
 date: 2026-08-24
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -106,7 +108,7 @@ reverify: >-
   rg -n '88%|4,096 MiB|pinned host|earliest authoritative cap|same-volume'
   docs/decisions/0056-vial-scale-measurements-use-pinned-evidence-and-bounded-failure.md
   docs/book/src/16d-hial-vial-verification-architecture.md &&
-  rg -n 'T=6,319|T=29,508|T=22|Durability'
+  rg -n 'T=6,318|T=29,508|T=22|Durability'
   docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md &&
   rg -n 'balanced_portable_v2|private_nonportable|architecture_scale_probe|binding_count|SUPPORTED_CAPABILITY'
   perl/FSM/HIAL/VIALBridge/Builder.pm perl/FSM/VIAL/ExecutionBuilder.pm
@@ -165,8 +167,9 @@ are not support, multi-unit/domain, mixed-language, native-UVM-runtime, full-
 language, whole-product `big`/`really_big`, synthesis, or general-parity claims.
 
 Completed `.17.2.1`-`.17.2.5` cover source through checking state. Decision
-`0075` selects checked-AHB backend routes: portable SV accepts `T=6,319` and
-rejects `6,320`; portable VHDL/OSVVM select `29,508/29,509`; native UVM emits
+`0075` selects checked-AHB backend routes: portable-SV oracle revision 2
+accepts `T=6,318` and rejects `6,319`; portable VHDL/OSVVM select
+`29,508/29,509`; native UVM emits
 only `T=21` and rejects `T=22`. The closed `BackendEmissionAuthority`, repair
 parent `.17.2.6.2`, caller-sealed foundation `.17.2.6.3.1`, four profile
 ladders, and family closure `.17.2.6.3.6` preserve exact inventories, maps,
@@ -313,14 +316,20 @@ decision `0077`: it qualifies structural emission only, claims no runtime
 execution of its reset-child fibers, and retains its exact private shape gate
 and public-bypass rejection.
 
-The compatibility sweep also independently reproduced a pre-existing portable
-backend-emission oracle drift at clean predecessor `87684237a`: current
-reference output is 164,507 SystemVerilog bytes while the frozen scale oracle
-expects 164,093 and its earlier identity. The former selected limit had only
-386 unused bytes below 16 MiB, so active `.17.3.5.1.4` owns all-level
-byte/identity rederivation and boundary reconciliation. No linear-delta,
-accepted-limit, performance, support, or capacity claim is made from the
-reference observation alone.
+The compatibility sweep independently reproduced a pre-existing portable
+backend-emission oracle drift at clean predecessor `87684237a`. Completed
+`.17.3.5.1.4` regenerates every level twice and selects a versioned resolution:
+reference/gate/qualification total 164,507/2,803,857/10,910,865 source bytes;
+`T=6,318` emits 16,774,723 bytes and 6,351 maps; pre-cap `T=6,319` renders
+16,777,362 bytes and rejects atomically under the unchanged 16-MiB cap. The
+portable artifact discriminator and schema are revision 2, while shared level
+role labels remain stable for the other profiles. Different 414/532-byte
+deltas falsify fixed padding. Conditional rollover is already topology-scoped,
+and the expanded route needs it, so neither semantic rollback nor cosmetic
+146-byte shaving is admitted. The exact source identities, byte-equal reruns,
+mutation rejection, family and balanced-prerequisite watchers provide the
+rederive/falsify/durability closure without support, performance, or capacity
+claims.
 Repeated guarded full integration attempts timed out different baseline/direct
 executions at Runner's fixed 30-second run wall while byte-identical executions
 passed in other attempts under concurrent compiler load. The diagnostic cannot
