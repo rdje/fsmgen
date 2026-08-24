@@ -38,6 +38,30 @@ The active selection leaf must close both contracts before implementation:
 | reuse | how the public Runner and scale measurement invoke the same caller-sealed lifecycle |
 | failure | how timeout, signal, capture limit, malformed state, collision, and cleanup remain atomic and diagnosable |
 
+## Prerequisite scheduler repair
+
+The first real reachability probe found a product defect before it found a
+scale limit. A legal scenario can place a check-phase `expect` before a later
+react-phase `scoreboard_expect`. ExecutionIR retains the authored successor
+dependency and labels both eligible phases correctly, but the portable
+SystemVerilog emitter currently calls root operations directly in authored
+order. It can therefore emit check followed by react in the same logical
+cycle, which the runtime trace validator correctly rejects.
+
+The selected repair boundary is general and semantic:
+
+- authored dependencies stay in order;
+- operations already ordered within one phase keep their stable static ranks;
+- a successor whose eligible phase is earlier than the completed predecessor
+  advances to its first legal phase in the next logical cycle; and
+- the backend must not sort operations, reject otherwise legal VIAL, rewrite
+  source, invent trace timestamps, or recognize a scale-only fixture.
+
+Task `.17.3.5.1.1` owns an executable RED/GREEN proof for that behavior before
+runtime materialization selection resumes. Until it closes, the exact gate
+record count, larger-level applicability, and staged lifecycle remain selected
+work rather than shipped scale evidence.
+
 ## Intended ownership sequence
 
 The task tree separates selection, runtime materialization, shared lifecycle,

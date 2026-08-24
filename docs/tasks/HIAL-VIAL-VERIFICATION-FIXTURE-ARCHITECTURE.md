@@ -816,8 +816,16 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Select the exact runtime-stream materialization, identity, and shared Verilator stage-lifecycle contract.`
   Acceptance: `Audit the canonical runtime construction, portable emitter, Runner, trace validator, result producer, measurement controller, qualified tool/limit authority, and reference runtime evidence. Select a closed workload-to-runtime schedule that proves candidate record-count reachability while preserving semantic truth, binds every repeated activity into trace/result/backend evidence, and classifies reference/limit/excess applicability honestly. Select one caller-sealed staged execution lifecycle reused by the public Runner and measurement workers across process boundaries with exact tool identity, commands, timeouts, transcript bounds, state transitions, same-volume ownership, failure cleanup, and no second execution semantics. Record alternatives and rollback in a decision; change no product behavior.`
-  Verification: `pending`
+  Verification: `The exact gate-reachability probe exposed a portable-SystemVerilog scheduler defect before selection could close: legal authored source with a check-phase expect followed by a react-phase scoreboard operation emits check then react in one logical cycle and the shipped TraceValidator rejects the run. Child .1.1 owns the prerequisite product repair; .1 resumes its reachability proof and architecture selection only after that repair commits cleanly.`
   Commit: `pending selection`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.1`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.1`
+  Status: `active`
+  Goal: `Repair portable-SystemVerilog successor scheduling when authored operation order crosses backward in logical phase order.`
+  Acceptance: `First preserve an executable RED witness in which a legal root-fiber check-phase operation precedes a react-phase successor and the emitted runtime trace fails only because it regresses from check to react in one cycle. Implement a general backend scheduler rule derived solely from immutable ExecutionIR successor and eligible-phase authority: preserve authored dependency order, retain same-phase static-rank ordering, and advance a backward-phase successor to its first legal phase in the next logical cycle without sorting operations, rewriting source, special-casing the scale fixture, fabricating trace time, or widening the public API. Cover every backward phase boundary accepted by the portable profile, blocking/cycle-advancing predecessors, deterministic reruns, trace/result validation, existing checked-AHB behavior, stable diagnostics, and cleanup. Update the backend contract, mdBook, Knowledge Map, and task evidence; add no scale reachability, performance, capacity, parity, full-SystemVerilog, four-state, or methodology claim.`
+  Verification: `pending RED/GREEN implementation`
+  Commit: `pending implementation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2`
   Status: `proposed`
@@ -6929,3 +6937,37 @@ raising an enforcement ceiling.
   integrity, and `git diff --check` pass. No parser, SemanticIR, bridge,
   ExecutionIR, emission, tool execution, trace, result, diagnostic, support,
   performance, capacity, or public API behavior changes in this activation.
+
+## Acceptance Checklist (enforced) — `.17.3.5.1.1` portable-SV phase-rollover repair activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — A real public-Runner reachability probe
+  authored a legal check-phase `expect` before a later react-phase
+  `scoreboard_expect`. `git log -S'operation_by_scenario' --oneline --
+  perl/FSM/VIAL/Backend/SVPortableVerilator.pm` identifies shipped-runtime
+  origin `dfe87f536`; `ExecutionBuilder::_emit_sequence` retained the authored
+  successor dependency, increasing static ranks, and exact `check`/`react`
+  eligibility. `SVPortableVerilator::_render_fixture_module`, introduced with
+  the shipped runtime in `dfe87f536`, instead emitted root task calls directly
+  in operation-array order with no phase cursor or backward-phase rollover.
+  The resulting same-cycle check-to-react record order was rejected by the
+  unchanged `TraceValidator::_validate_logical_order`; no resource guard,
+  Verilator, parser, bridge, or scale-count failure caused the result.
+- [x] **ADDRESSED (verified)** — Active child `.17.3.5.1.1` now exclusively
+  owns a general phase-aware successor repair before scale selection continues.
+  Its acceptance forbids source/trace rewriting, global phase sorting, legal-
+  source rejection, scale special cases, and public widening, and requires
+  executable coverage of every supported backward phase boundary plus
+  blocking predecessors, deterministic reruns, existing runtime behavior,
+  diagnostics, and cleanup.
+- [x] **NO REGRESSION** — This activation changes task, resume, Knowledge Map,
+  mdBook, and their exact containment authority state only. The shipped-book
+  aggregate is re-authorized from the prior committed 56-file/51,707-line/
+  2,756,814-byte state by the exact 0-file/24-line/1,282-byte delta, while the
+  Knowledge Map allowance is re-declared to measured growth plus one unchanged
+  ratchet step; neither enforcement ceiling changes. Product code, generated
+  runtime artifacts, contracts, public APIs, support accounting, and runtime
+  behavior remain unchanged; the focused RED/GREEN implementation evidence is
+  deliberately pending in the active child. `mdbook test` passes all 54
+  chapters; `knowledge-map: OK` reports 1,150 facts/6,086 questions/6,253
+  answer occurrences; live-document size, task-tree integrity, and
+  `git diff --check` pass.

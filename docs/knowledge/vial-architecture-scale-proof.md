@@ -39,6 +39,7 @@ answers:
   - "why does the backend emission matrix isolate every profile in a child?"
   - "what do the backend emission publication and IPC ceilings mean?"
   - "how will portable Verilator runtime scale measurement reuse the qualified runner?"
+  - "why did portable Verilator runtime reachability expose a phase-order defect?"
 date: 2026-08-24
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -254,14 +255,26 @@ family and complete manifests are 30,203/2,535 bytes. Exact t/1662 passes in
 `--validate` returns the same identity and partition. The elapsed observation
 is capture provenance, not a public budget or capacity claim.
 
-Active `.17.3.5.1` selects portable-Verilator runtime materialization before
-implementation. The provider-free construction does not yet prove that its
-selected semantic activity can be represented truthfully by the shipped trace
-and result contracts, and the public Runner currently owns the external stages
-as one atomic transaction. Selection must bind activity into canonical
-evidence and make measurement reuse one private staged lifecycle; source-text
-patching, padded or truncated output, duplicated execution semantics, hidden
-public widening, and borrowed support or capacity claims are rejected.
+Active `.17.3.5.1.1` is a prerequisite to portable-Verilator runtime
+materialization selection. A real gate-reachability probe authored a legal
+check-phase `expect` before a later react-phase `scoreboard_expect`. ExecutionIR
+preserved that successor order and both eligible phases, but the portable-SV
+scenario task invoked operations directly in authored order without rolling a
+backward phase crossing into the next logical cycle. The emitted check-to-react
+trace therefore failed the shipped deterministic-order validator. The repair
+must derive scheduling from successor plus phase authority, preserve authored
+dependencies and same-phase rank order, and advance backward crossings rather
+than sorting, rejecting legal source, fabricating time, or special-casing the
+scale fixture. Runtime materialization/lifecycle selection resumes only after
+the general product repair commits cleanly.
+
+The provider-free runtime construction still does not prove that its selected
+semantic activity can be represented truthfully by the shipped trace and
+result contracts, and the public Runner still owns the external stages as one
+atomic transaction. Selection must bind activity into canonical evidence and
+make measurement reuse one private staged lifecycle; source-text patching,
+padded or truncated output, duplicated execution semantics, hidden public
+widening, and borrowed support or capacity claims are rejected.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
