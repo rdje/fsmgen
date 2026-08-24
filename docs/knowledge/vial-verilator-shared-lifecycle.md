@@ -61,7 +61,7 @@ samples at `_dyld_start`, with a 96-KiB footprint and no binary-image map. That
 proves the sampled stall preceded generated FSMGEN main/output, but the
 concurrent unrelated Rust compilation plus 28.6%-CPU `syspolicyd` activity and
 one separate 30.179-second policy-network timeout are correlation only.
-Proposed `.17.3.5.3.1` owns quiet-host and platform-control falsification; no
+Active `.17.3.5.3.1` owns quiet-host and platform-control falsification; no
 retry, signing/security change, timeout widening, or passed-result fabrication
 is selected.
 

@@ -201,7 +201,7 @@ exit with monotonic evidence. Three implementation-time failures completed
 read-only macOS stack sample then placed every sampled main-thread frame in
 `_dyld_start`, before the generated FSMGEN `main` or trace output. This closes
 the lifecycle-attribution question for those observations; it does not prove
-that macOS policy activity was causal or general. Proposed follow-up
+that macOS policy activity was causal or general. Active follow-up
 `.17.3.5.3.1` owns that host-policy qualification without authorizing retries,
 security bypasses, signing changes, or a wider deadline.
 
