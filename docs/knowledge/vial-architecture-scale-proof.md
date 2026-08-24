@@ -33,7 +33,9 @@ answers:
   - "where must the VIAL total operation cap be enforced?"
   - "where is the revision e4b95dbd execution checking prefix archived?"
   - "how is the VIAL serialized plan cap enforced before random decision materialization?"
-date: 2026-08-23
+  - "how is structural backend emission measured without executing an HDL tool?"
+  - "is OSVVM provider verification an external verification tool run?"
+date: 2026-08-24
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
 evidence: >-
@@ -52,6 +54,7 @@ evidence: >-
   perl/FSM/VIAL/ArchitectureScaleSemanticBridgeMeasurementMatrix.pm;
   perl/FSM/VIAL/ArchitectureScaleExecutionCheckingMeasurement.pm;
   perl/FSM/VIAL/ArchitectureScaleExecutionCheckingMeasurementMatrix.pm;
+  perl/FSM/VIAL/ArchitectureScaleBackendEmissionMeasurement.pm;
   perl/FSM/VIAL/Parser.pm; perl/FSM/VIAL/SemanticBuilder.pm;
   scripts/run_vial_semantic_bridge_measurement_matrix.pl;
   scripts/run_vial_execution_checking_measurement_matrix.pl;
@@ -68,7 +71,7 @@ evidence: >-
   t/1647-vial-architecture-scale-backend-emission-portable-vhdl.t;
   t/1601-vial-architecture-scale-semantic-catalog.t;
   t/1602-vial-architecture-scale-bridge-fanout.t;
-  t/1648-vial-architecture-scale-backend-emission-osvvm.t; t/1650-vial-architecture-scale-backend-emission-family-qualification.t; t/1651-vial-architecture-scale-runtime-stream-construction.t; t/1652-vial-balanced-portable-bridge-admission.t; t/1653-vial-balanced-portable-composition.t; t/1654-vial-balanced-portable-emission.t; t/1655-vial-architecture-scale-runtime-balanced-qualification.t; t/1656-vial-architecture-scale-measurement-foundation.t; t/1657-vial-architecture-scale-semantic-bridge-measurement.t; t/1659-vial-architecture-scale-execution-checking-measurement.t; t/1660-vial-architecture-scale-execution-checking-measurement-matrix.t;
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t; t/1650-vial-architecture-scale-backend-emission-family-qualification.t; t/1651-vial-architecture-scale-runtime-stream-construction.t; t/1652-vial-balanced-portable-bridge-admission.t; t/1653-vial-balanced-portable-composition.t; t/1654-vial-balanced-portable-emission.t; t/1655-vial-architecture-scale-runtime-balanced-qualification.t; t/1656-vial-architecture-scale-measurement-foundation.t; t/1657-vial-architecture-scale-semantic-bridge-measurement.t; t/1659-vial-architecture-scale-execution-checking-measurement.t; t/1660-vial-architecture-scale-execution-checking-measurement-matrix.t; t/1661-vial-architecture-scale-backend-emission-measurement.t;
   docs/knowledge/vial-execution-scale-reachability.md;
   docs/knowledge/vial-semantic-scale-catalog.md;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
@@ -101,6 +104,8 @@ reverify: >-
   perl/FSM/VIAL/ArchitectureScaleExecutionCheckingMeasurementMatrix.pm
   scripts/run_vial_execution_checking_measurement_matrix.pl
   docs/book/src/16d-hial-vial-verification-architecture.md &&
+  rg -n 'provider_verification|authoritative_non_emission|parse_validate|bind_plan|emit'
+  perl/FSM/VIAL/ArchitectureScaleBackendEmissionMeasurement.pm &&
   prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t
   t/1602-vial-architecture-scale-bridge-fanout.t
   t/1644-vial-backend-emission-authority-alignment.t
@@ -174,83 +179,35 @@ host, tool, and guard capture identity. A closed immutable envelope binds that
 provenance to each nested report, including source-free reports that retain no
 workload or controller identity of their own. Retry independently regenerates
 the report under the real guard, accepts only the same immutable capture, and
-withholds family/full seals until every child agrees. A real host-guard stop
-before the first publication exposed raw-sample staging. `.17.3.3.1` now gives
-each exact stage identity a repository-volume advisory lock, rejects live
-contention, and reclaims only recursively validated regular same-volume
-orphans; unsafe entries remain untouched. The real interrupted gate/03 tree
-was recovered through that protocol with three accepted samples and no
-exclusions or residue. The resumed capture seals nineteen profiles, then the
-real 4,096-MiB guard stops both the original coordinator and a fresh resume
-before profile twenty: `_capture_family` reloads and fully validates every
-large stored report in one long-lived process, and Perl retains the high-water
-heap across iterations. `.17.3.3.2` now puts every complete profile capture,
-resume, and publication-validation lifecycle in one guard-visible child. Full
-adapter regeneration and atomic publication/reload remain inside the child;
-only a canonical closed compact result can cross its close-on-exec pipe under a
-1,048,576-byte ceiling. Signal, exit, exception, malformed/noncanonical/
-oversized output, identity drift, and artifact drift fail closed. The nineteen
-older reports all bind revision `c7493e3d`: the repaired code can independently
-revalidate them, but revision truth forbids relabelling or mixing them into a
-later implementation revision's seal. They remain revision-keyed interruption
-evidence. A clean isolated capture at `b9463c6` then publishes nineteen fresh
-profiles before the profile-twenty worker itself reaches 4,869.5 MiB at
-`operations_total/over_limit_v1` and the unchanged 4,096-MiB guard terminates
-it. The per-profile lifecycle therefore fixes coordinator retention but
-falsifies it as the remaining cause. `ExecutionBuilder::_build_operations`
-formerly checked `expanded_operations_total` only after materializing every
-selected operation and source map; historical exact t/1626 accordingly needed
-a 6,144-MiB opt-in guard. Decision `0078` is implemented by
-`_preflight_expanded_operations_total`: immediately after selection it walks
-compact repeat/parallel trees with bounded arithmetic, requires equality with
-each validated semantic action count, and enforces the same aggregate cap
-before bridge indexing. Compact tests accept 1,000,000 and reject 1,000,001
-with the unchanged diagnostic; the real exact excess passes in one second
-under the unchanged 4,096-MiB guard and proves bridge indexing is never
-entered. The terminal check remains. The failed prefix is preserved as
-nineteen reports/1,739,213 bytes under its revision-keyed archive. A fresh
-revision-14c619367 capture then proves the former profile-twenty excess seals
-under the unchanged guard and advances through 22 atomic reports. Profile 23,
-`random_attempts/limit_v1`, completes canonical admission but its bind-plan
-worker reaches the fixed 300-second effective timeout. The retained report
-names `VIAL_SCALE_MEASUREMENT_TIMEOUT` at
-`/stage_measurements/bind_plan/timeout`, signal 15, successful preceding
-stages, zero failed-stage output, and exact cleanup. The guard does not
-terminate it; the failed profile is absent and family/full seals remain
-withheld. Source tracing proves redundant evaluation nesting: the stage worker
-already runs each payload twice, while each bind-plan payload called the
-twice-evaluated canonical helper again. The repair retains double canonical
-admission and double stage-payload execution but gives each payload one closed
-validated producer evaluation. The random generator precomputes only immutable
-SHA-256 prefix/counter bytes and skips rejection/modulo only for an exact full-
-space range. Fixed narrow, signed, rejection, wide, gate, qualification,
-million-attempt, replay, and exhaustion identities remain exact. The direct
-guarded adapter now accepts bind-plan with no diagnostic and exact cleanup.
-The clean revision-`e4b95dbd` restart seals all 40 execution profiles and the
-execution-family manifest, including exact 16,384/16,385 live-fiber boundary
-evidence. It then seals 17 checking profiles before
-`random_occurrences/qualification_candidate_v1`. Canonical evaluation returns
-the expected `VIAL_EXECUTION_LIMIT_ERROR` at `/plan`, but the measured bind-plan
-stage originally timed out at 300 seconds because `ExecutionBuilder`
-materialized 32,768 random decisions and source maps, ExecutionIR,
-ExecutionReport, and complete canonical plan bytes before enforcing the
-16,777,216-byte cap. `.17.3.3.2.3` now streams generated or replay-validated
-decision, scenario-ID, and source-map element bytes into a saturating exact
-projection over a caller-sealed shared-report base plan. The existing plan cap
-runs before a known-excess decision list, source-map suffix, ExecutionIR, or
-terminal report is allocated. Accepted plans must match terminal canonical
-bytes exactly and still pass the terminal limit. Exact guarded evidence retains
-8,440 acceptance at 16,775,415 bytes; the historical `/plan` rejection at
-8,441 and 32,768; and 65,536/65,537 dominance order. The former adapter blocker
-now exits `expected_rejection` / `validated_not_measured` with no diagnostic,
-performance sample, or staging residue. Axis-specific thresholds,
-guard/timeout/cap changes, evidence relabelling, and promoted
-support/performance/capacity claims remain excluded. The exact revision-`e4b95dbd` archive retains 57 reports/5,662,418 bytes plus its 46,735-byte execution-family manifest at profile digest `e8ba27e0986646a284505966828f3c4fdd0a78a55c24978b7a15bff82625f0f9` and all-payload digest `c9147898a109f21eda6bc8ec370f2b15620518cdb1fb3d7171bf83d9fec49170`; checking/full seals were correctly withheld.
-
-Revision `037e56f09` retains its 22-report/2,609,009-byte prefix at digest `6dbfa2d02f7eee0332881074628d50d2b454fe94ac241137a11d7c651c162d90`. Decision `0079` uses a private SHA-256-sealed, u32-framed canonical UTF-8 transcript bounded to 16,777,216 + 4 x 65,536 = 17,039,360 bytes: projection searches or replay-validates once, accepted materialization independently validates and consumes records, and known excess allocates no final list/map/IR/report. Exact adapters preserve identities, attempts, 8,440/8,441/32,768 outcomes, the 300-second ceiling, and clean staging.
+withholds family/full seals until every child agrees. The completed repair
+chain gives each raw identity an advisory lock and safe orphan recovery,
+isolates each profile lifecycle below the real guard, enforces the unchanged
+total-operation and serialized-plan caps before known-excess materialization,
+and reuses one private sealed random transcript after independent validation.
+Revision-keyed interruption archives preserve every incompatible prefix;
+signal, timeout, malformed child output, identity drift, collision, and
+residue remain rejected. Decisions `0078`/`0079`, the owning task, and Git
+retain the exact causal chronology and boundary counts. The shared plan
+projection and decision-`0079` transcript preserve canonical byte equality and
+all terminal defenses while rejecting known excess before final list, map, IR,
+or report allocation. Exact adapters retain attempts, identities, boundary
+outcomes, the fixed 300-second ceiling, and clean staging.
 
 Revision `9c0209c22` seals the complete 40-execution/32-checking matrix: 75 active files/7,312,415 bytes, both family manifests, accepted identity `execution-checking-matrix/0548629720a9f4c8636c912396cfaefff523da92fc800594618db68b788b91d0`, 41 accepted, 19 expected rejection, five inapplicable measurement, two preflight dominated, 31 applicable measurement, 62 controller applicable, ten controller inapplicable, 119 raw records, ten source-free profiles, and zero exclusions.
 The 88% host cutoff safely interrupted immutable execution-family revalidation; same-identity resume left zero raw staging and completed checking plus the aggregate seal. A separate guarded `--validate` reloads the same identity and partition with zero diagnostics. This does not claim capacity, reached boundaries, public budgets, backend/tool execution, compile/run/trace/result behavior, support, or a public API.
+
+`.17.3.4.1` measures only structural `backend_emission_v1` production through
+caller-sealed `construct`, `parse_validate`, `bridge`, `bind_plan`, and `emit`
+payloads. The adapter reconstructs repository anchors, validates the complete
+canonical evaluation before retention, records three/five samples only for
+emitted gate/qualification routes, and keeps reference, limit, excess, native-
+UVM rejection, and preflight-dominated outcomes correctness-only. OSVVM's
+sealed repository-local provider verification is read-only and included in
+`emit`; it is explicitly not an external verification-tool run. Exact t/1661
+proves mutation, applicability/provider contradiction, defensive return,
+failure cleanup, independent regeneration, and zero staging under the real
+guard. No compile/run/trace/result, support, budget, capacity, reached-boundary,
+native-UVM-runtime, parity, or public-API claim follows.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

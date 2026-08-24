@@ -203,6 +203,69 @@ sub validate_evaluation($class, @args) {
     return _clone($rebuilt);
 }
 
+# Structural measurement needs canonical stage products, not caller-created
+# SemanticIR, bridge, execution, backend-input, or plan objects.  Keep this
+# cumulative stage projection private to the exact measurement adapter so it
+# cannot become a second public planning or backend-emission route.
+sub _measurement_inputs($class, @args) {
+    _exact_invocant($class, '_measurement_inputs');
+    my $caller = caller;
+    confess "backend-emission measurement inputs are private to the exact adapter\n"
+        unless defined($caller)
+            && $caller eq
+                'FSM::VIAL::ArchitectureScaleBackendEmissionMeasurement';
+    confess __PACKAGE__ . "->_measurement_inputs expects one closed hash\n"
+        unless @args == 1 && ref($args[0]) eq 'HASH'
+            && !blessed($args[0]);
+    _confess_exact_keys(
+        $args[0], [qw(construction stage)],
+        'backend-emission measurement inputs',
+    );
+    my $construction = _validated_construction($args[0]{construction});
+    my $stage = $args[0]{stage};
+    confess "backend-emission measurement stage is not selected\n"
+        unless defined($stage) && !ref($stage)
+            && $stage =~ /\A(?:parse_validate|bridge|bind_plan)\z/;
+
+    my $vial = _role_input($construction, 'vial_source');
+    my ($source_name, $source_text) =
+        _canonical_vial_source($construction, $vial);
+    my $semantic_ir = FSM::VIAL::Parser->parse_source({
+        text => $source_text,
+        source_name => $source_name,
+        source_catalog => {},
+    });
+    my $semantic = $semantic_ir->as_hashref;
+    my $source = {
+        relative_path => $source_name,
+        bytes => bytes::length($source_text),
+        sha256 => sha256_hex($source_text),
+    };
+    return _clone({
+        source => $source,
+        semantic_ir => $semantic,
+    }) if $stage eq 'parse_validate';
+
+    my $route = _canonical_route_from_construction($construction);
+    confess "canonical backend-emission measurement route was rejected\n"
+        unless $route->{ok};
+    my $projection = _route_projection($route);
+    return _clone({
+        source => $source,
+        semantic_ir => $projection->{semantic_ir},
+        bridge_manifest => $projection->{bridge_manifest},
+        backend_inputs => $projection->{backend_inputs},
+    }) if $stage eq 'bridge';
+    return _clone({
+        source => $source,
+        semantic_ir => $projection->{semantic_ir},
+        bridge_manifest => $projection->{bridge_manifest},
+        backend_inputs => $projection->{backend_inputs},
+        execution_ir => $projection->{execution_ir},
+        plan => $projection->{plan},
+    });
+}
+
 sub with_staging($class, @args) {
     _exact_invocant($class, 'with_staging');
     confess __PACKAGE__ . "->with_staging expects one closed hash\n"
