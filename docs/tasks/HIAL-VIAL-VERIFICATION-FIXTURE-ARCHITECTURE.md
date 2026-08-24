@@ -561,7 +561,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Measure exact portable-SystemVerilog generation, compile, run, trace validation, and result production with qualified Verilator.`
   Acceptance: `Use only the qualified Verilator profile and canonical runtime-stream inputs; perform one validation plus required measured repetitions in fresh owned staging; apply effective qualified compile/run limits and active guards; prove artifact, source-map, command, trace closure, normalized result, deterministic rerun, raw-sample, transcript, publication, and cleanup oracles; reject identity drift or excluded samples explicitly; and make no full-SystemVerilog, UVM, mixed-language, promoted-budget, support, or capacity claim.`
-  Verification: `Clean structural-matrix closure 6c76b4c39 permits the pivot. Existing runtime-stream construction owned exact provider-free inputs and expectations but intentionally materialized no scale trace/result; the shipped Verilator Runner owns correct external execution as one atomic transaction rather than independently measurable shared stages. Completed selection child .1 and decision 0083 choose checked-in authored reset-sampling fixtures, exact 10,000/15,000 portable candidates, honest byte-cap dominance, and one content-addressed lifecycle shared by the public Runner and measurement workers. Completed child .2 now binds the two tracked sources through the ordinary route, freezes exact schedule/emission/record-family/full-graph identities, replaces only portable qualification's unrepresentable 100,000 candidate, and proves both candidates through the opt-in public Runner. Active child .3 owns the shared lifecycle and public-Runner integration. Source-text patching, output padding/truncation, duplicated tool execution, hidden public widening, borrowed support, and unproved record-count reachability remain inadmissible.`
+  Verification: `Clean structural-matrix closure 6c76b4c39 permits the pivot. Existing runtime-stream construction owned exact provider-free inputs and expectations but intentionally materialized no scale trace/result; the shipped Verilator Runner owns correct external execution as one atomic transaction rather than independently measurable shared stages. Completed selection child .1 and decision 0083 choose checked-in authored reset-sampling fixtures, exact 10,000/15,000 portable candidates, honest byte-cap dominance, and one content-addressed lifecycle shared by the public Runner and measurement workers. Completed child .2 binds the two tracked sources through the ordinary route and freezes exact schedule/emission/record-family/full-graph identities. Completed child .3 installs the sole shared lifecycle; completed .3.1 retains the intermittent macOS pre-main result through guarded qualification without a workaround. Active child .4 now owns common-controller stage routing and measured repetitions. Source-text patching, output padding/truncation, duplicated tool execution, hidden public widening, borrowed support, and unproved record-count reachability remain inadmissible.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5: activate portable-Verilator runtime measurement`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5`
 
@@ -624,11 +624,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3.1: activate macOS pre-main qualification; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3.1: qualify macOS pre-main stalls`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Measure each applicable portable-Verilator runtime-stream profile through the common controller.`
   Acceptance: `Reconstruct the selected runtime construction, schedule, emission, tool profile, and lifecycle from repository anchors only. Route applicable validation and gate/qualification repetitions through distinct common-controller stages and the shared lifecycle; retain exact raw samples, tool/command/transcript/artifact/trace/result identities, semantic oracles, exclusions, guard evidence, and cleanup. Keep preflight-dominated shapes tool-free and add no promoted budget, support, capacity, reached-boundary, parity, or public API claim.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean macOS qualification commit 95ef93f0d closes the shared-lifecycle prerequisite without changing the backend contract. Decision 0083 already fixes the applicable reference/gate/qualification roles, one-validation-plus-three/five repetition policy, common emit/compile_analyze/elaborate-not-run/run/trace_validate/result_produce/publish/cleanup vocabulary, stricter-of lifecycle/controller limits, exact repository-owned staging, and tool-free nominal limit/excess outcomes. Decision 0084 removes no implementation prerequisite: it retains the intermittent host observation through an explicit diagnostic while leaving commands, retry, deadlines, signing/security, support, and success classification unchanged. This activation changes continuity only and authorizes .4 to audit the existing common controller before routing the selected profiles through the sole shared lifecycle.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.4: activate portable-Verilator runtime measurement`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5`
   Status: `proposed`
@@ -7256,3 +7256,28 @@ raising an enforcement ceiling.
   later-owned gaps, and zero open candidates; the rationale ledger
   reconstructs 2,888 entries. Full unrelated CI remains deferred to the push
   boundary.
+
+## Acceptance Checklist (enforced) — `.17.3.5.4` common-controller measurement activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'Measure each applicable
+  portable-Verilator runtime-stream profile' --oneline --
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md` independently
+  locates proposed child `.17.3.5.4` at `0e2140791`. Clean predecessor
+  `95ef93f0d` closes the shared lifecycle and guarded macOS qualification, so
+  the decision-0083 common-controller route is the first dependency-ready
+  portable runtime-measurement leaf.
+- [x] **ADDRESSED (verified)** — Continuity alone marks `.17.3.5.4` active in
+  its owning node, parent verification, task index, bounded Memory pointer,
+  mdBook status, canonical fact card, generated Knowledge Map, claim inventory,
+  and live-document authority. Product source, tests, fixtures, controller,
+  lifecycle, Runner, tool commands, limits, guards, support, and public
+  behavior remain unchanged.
+- [x] **NO REGRESSION** — Focused task, relative-path, Knowledge Map, claim,
+  and history checks report `All tests successful` at `Files=4, Tests=50`;
+  all 55 mdBook chapters test, and the inspected 91-file/39,175,530-byte
+  repository-local render is removed exactly. Knowledge Map parity is 1,151
+  facts/6,102 questions/6,269 occurrences/134 shards, and the claim inventory
+  retains 1,535 candidates with zero open migration owners. Final containment,
+  staged task acceptance, and `[doctrine] all doctrine checks passed` evidence
+  closes this activation commit with no ceiling increase or generated residue.
+  Full unrelated CI remains deferred to the push boundary.

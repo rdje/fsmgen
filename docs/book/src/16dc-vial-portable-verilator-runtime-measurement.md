@@ -6,8 +6,9 @@ Decision `0083` closes its architecture, and the authored-workload
 materialization is now implemented. Two tracked VIAL sources, one
 caller-sealed structural qualifier, and an exact public-Runner watcher bind the
 10,000/15,000 candidates to real schedules without manufacturing activity.
-Repeated stage measurement is not complete: the separately owned shared
-Verilator lifecycle is now the active implementation boundary.
+Repeated stage measurement is not complete. The shared lifecycle and guarded
+host qualification are implemented; common-controller measurement of the
+applicable validation and gate/qualification repetitions is now active.
 
 This “execution” means external execution of generated portable SystemVerilog
 with the already qualified Verilator profile. It is not IASIM execution and it

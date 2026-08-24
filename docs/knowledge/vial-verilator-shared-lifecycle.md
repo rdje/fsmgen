@@ -6,6 +6,7 @@ answers:
   - "how does the shared Verilator lifecycle preserve state and cleanup authority?"
   - "why can portable Verilator time out before generated main on macOS?"
   - "what did the macOS pre-main qualification conclude?"
+  - "what portable Verilator measurement work is active after lifecycle qualification?"
 date: 2026-08-24
 status: current
 tags: [vial, verilator, lifecycle, runner, scalability, macos]
@@ -90,6 +91,13 @@ retains a timeout as failure, collects a read-only delayed stack sample, and
 writes only closed host-path-free evidence below a same-device repository root.
 It adds no retry, signing/security change, timeout widening, support promise,
 or passed-result fabrication.
+
+Active `.17.3.5.4` now owns the next boundary: route the applicable reference,
+gate, and qualification repetitions through the common controller and this
+sole lifecycle, retaining exact stage identities, raw samples, exclusions,
+guards, and cleanup. Nominal record limit/excess shapes remain tool-free, and
+activation adds no performance budget, support, capacity, reached-boundary,
+parity, or public API claim.
 
 Related: [[vial-architecture-scale-proof]],
 [[hial-vial-verification-fixture-architecture]].
