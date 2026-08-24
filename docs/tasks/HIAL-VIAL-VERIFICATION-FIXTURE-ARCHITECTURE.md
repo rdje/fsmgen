@@ -808,7 +808,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Measure exact portable-SystemVerilog generation, compile, run, trace validation, and result production with qualified Verilator.`
   Acceptance: `Use only the qualified Verilator profile and canonical runtime-stream inputs; perform one validation plus required measured repetitions in fresh owned staging; apply effective qualified compile/run limits and active guards; prove artifact, source-map, command, trace closure, normalized result, deterministic rerun, raw-sample, transcript, publication, and cleanup oracles; reject identity drift or excluded samples explicitly; and make no full-SystemVerilog, UVM, mixed-language, promoted-budget, support, or capacity claim.`
-  Verification: `Clean structural-matrix closure 6c76b4c39 permits the pivot. Existing runtime-stream construction owns exact provider-free inputs and expectations but intentionally materializes no scale trace/result; the shipped Verilator Runner owns correct external execution as one atomic transaction rather than independently measurable shared stages. Completed selection child .1 and decision 0083 choose checked-in authored reset-sampling fixtures, exact 10,000/15,000 portable candidates, honest byte-cap dominance, and one content-addressed lifecycle shared by the public Runner and measurement workers. Source-text patching, output padding/truncation, duplicated tool execution, hidden public widening, borrowed support, and unproved record-count reachability remain inadmissible. Proposed child .2 is the next activation owner for the versioned materialization/oracle and portable 100,000-to-15,000 candidate repair.`
+  Verification: `Clean structural-matrix closure 6c76b4c39 permits the pivot. Existing runtime-stream construction owns exact provider-free inputs and expectations but intentionally materializes no scale trace/result; the shipped Verilator Runner owns correct external execution as one atomic transaction rather than independently measurable shared stages. Completed selection child .1 and decision 0083 choose checked-in authored reset-sampling fixtures, exact 10,000/15,000 portable candidates, honest byte-cap dominance, and one content-addressed lifecycle shared by the public Runner and measurement workers. Source-text patching, output padding/truncation, duplicated tool execution, hidden public widening, borrowed support, and unproved record-count reachability remain inadmissible. Active child .2 now owns the versioned materialization/oracle and portable 100,000-to-15,000 candidate repair.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5: activate portable-Verilator runtime measurement`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5`
 
@@ -849,11 +849,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.4: activate portable scale identity reconciliation; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.4: reconcile portable scale oracle revision 2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the selected caller-sealed portable-SystemVerilog runtime-stream materialization and structural oracle.`
   Acceptance: `Implement decision 0083 from canonical child-.1 authority: add checked-in, reviewable gate and qualification VIAL sources with exact N=1,948/2,948 authored reset holds and terminal scale expectation; structurally prove that only the selected reset/timeout/window/expectation deltas differ from the checked reference; version the portable runtime-stream materialization/oracle and replace only sv_portable_verilator's unrepresentable 100,000-record candidate with 15,000 while retaining 10,000 gate and stable role labels. Preserve the ordinary public parse/bridge/plan/emission route; produce deterministic schedule-bound artifacts and exact pre-tool record-family/full-graph projections; independently prove final 15,000 artifacts stay within the three-quarter public byte threshold and 20,000/25,000/100,000 falsifiers remain honestly classified; reject nominal limit/excess and every unrepresentable shape before external execution. Prove source-map, generated-loop, identity, semantic repetition, mutation, atomic failure, and cleanup without runtime source rewriting, padding, truncation, public API widening, or runtime/support/performance/capacity claims.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean decision-0083 selection commit 769df71d5 closes .1 with exact authored workload, full-graph headroom, byte-cap dominance, and shared-lifecycle boundaries. This activation changes only task/index/Memory/book/fact continuity; .2 alone now owns the checked gate/qualification sources, portable candidate repair, structural oracle, deterministic projections, preflight classifications, mutation defenses, and exact cleanup before any Verilator lifecycle implementation or measurement.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2: activate authored portable runtime materialization`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3`
   Status: `proposed`
@@ -7282,3 +7282,26 @@ raising an enforcement ceiling.
   doctrine results are recorded by this commit workflow. No parser,
   SemanticIR, bridge, ExecutionIR, backend, Runner, trace/result, limit,
   support, performance, capacity, parity, or public-API behavior changes.
+
+## Acceptance Checklist (enforced) — `.17.3.5.2` authored runtime materialization activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Clean selection commit `769df71d5`
+  closes decision `0083` and leaves `.17.3.5.2` as the sole dependency-ready
+  implementation child. `git log -S` identifies `0e2140791` as the commit that
+  first introduced the proposed child beneath active portable-Verilator
+  measurement; no later commit activated it before this continuity slice.
+- [x] **ADDRESSED (verified)** — Only continuity and its exact governance
+  projections now mark `.17.3.5.2` active: the owning task node, parent
+  frontier, task index, bounded Memory pointer, mdBook status sentence,
+  canonical fact card/Knowledge Map, claim inventory, and live-document
+  transition authority. Product, source, test, fixture, oracle, emitter,
+  Runner, trace, result, and public contract behavior remain unchanged.
+- [x] **NO REGRESSION** — The guarded relative-path/task/Knowledge Map suite
+  reports `All tests successful` at `Files=3, Tests=47`; all 54 mdBook chapters
+  test. Task integrity remains three trees/996 nodes; Knowledge Map parity is
+  1,150 facts/6,096 questions/6,263 occurrences/133 shards; claims remain
+  closed at 1,506 candidates plus 2,172 current/615 original constants with
+  the same 21 explicit implementation-owned durability gaps. Final live-
+  document, diff, staged acceptance, and doctrine gates are recorded by this
+  commit workflow with zero ceiling increase and no external process,
+  runtime, support, performance, capacity, or reached-boundary claim.

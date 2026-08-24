@@ -373,10 +373,11 @@ failure.
 The provider-free runtime construction still does not prove that its selected
 semantic activity can be represented truthfully by the shipped trace and
 result contracts, and the public Runner still owns the external stages as one
-atomic transaction. Selection must bind activity into canonical evidence and
-make measurement reuse one private staged lifecycle; source-text patching,
-padded or truncated output, duplicated execution semantics, hidden public
-widening, and borrowed support or capacity claims are rejected.
+atomic transaction. Selection is complete; the authored-workload
+materialization child is active and must bind activity into canonical evidence
+before the separately owned shared-lifecycle implementation. Source-text
+patching, padded or truncated output, duplicated execution semantics, hidden
+public widening, and borrowed support or capacity claims are rejected.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

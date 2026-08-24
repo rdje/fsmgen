@@ -5,8 +5,8 @@ Portable-SystemVerilog runtime measurement is the active next step after the
 Implementation and measurement are not complete yet, but decision `0083` now
 closes the architecture. The current product constructs canonical
 runtime-stream expectations without manufacturing activity or starting
-Verilator; the next leaves implement the selected authored workload and shared
-stage lifecycle.
+Verilator; the authored-workload materialization child is now active, before
+the separately owned shared stage-lifecycle implementation.
 
 This “execution” means external execution of generated portable SystemVerilog
 with the already qualified Verilator profile. It is not IASIM execution and it
