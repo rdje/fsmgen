@@ -749,7 +749,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `done`
   Goal: `Bound execution/checking matrix capture and resume memory to one exact profile lifecycle at a time.`
   Acceptance: `Run every profile capture or immutable-publication validation in its own guard-visible child lifecycle; admit only a closed bounded coordinator result; preserve full adapter report validation, atomic publication, common clean-revision/host/tool/guard identity, ordered progress, exact failure propagation, family/full seal withholding, and same-revision profile-boundary resume; prove child failure, signal, malformed/oversized result, publication collision, and large synthetic per-profile allocation fail closed without leaking a child or publication; independently revalidate the retained nineteen revision-c7493e3de profiles through the repaired isolation path, preserve them in a verified revision-keyed same-volume archive rather than relabel or delete them, then seal a fresh full 72-profile matrix at the clean repaired revision under unchanged guards.`
-  Verification: `Origin commit 3ccc4f5b9 introduced _capture_family as one long-lived loop whose resumed _load_report_publication path retained full adapter-validation allocator state. Commit b9463c663 makes capture, resume, and revalidation per-profile process-owned and archives rather than relabels every incompatible revision prefix. Real guarded retries then falsify coordinator retention as the only cause and expose two product defects: terminal-only total-operation/serialized-plan enforcement and redundant accepted random generation. Children .1 through .3.1 repair those roots generally with independently checked compact counts, a canonical plan projection, and one sealed bounded transcript; every historical prefix remains reconstructable. The clean 9c0209c22 capture completes the exact 40/32 partition under unchanged 88%-host and 4,096-MiB-per-descendant guards. A host-cutoff stop during family revalidation leaves no staging and resumes only from immutable same-identity evidence; complete publication then seals 75 files/7,312,415 bytes and identity execution-checking-matrix/0548629720a9f4c8636c912396cfaefff523da92fc800594618db68b788b91d0. Separate guarded canonical reload accepts the same 72 profiles, family seals, complete seal, dominance partition, 119 raw records, and zero exclusions/diagnostics. Guard weakening, axis shortcuts, evidence relabelling/deletion, support, performance-budget, capacity, and reached-boundary claims remain forbidden.`
+  Verification: `Commits 3ccc4f5b9/b9463c663 locate and isolate the long-lived publisher allocator root; children .1-.3.1 retain the separately exposed cap and duplicate-random roots plus their exact repairs. Clean revision 9c0209c22 seals the 40/32 partition as 75 files/7,312,415 bytes at execution-checking-matrix/0548629720a9f4c8636c912396cfaefff523da92fc800594618db68b788b91d0 under unchanged guards. Immutable resume after host cutoff leaves no staging; separate guarded reload accepts all 72 profiles, both families, the complete seal, 119 raw records, and zero exclusions/diagnostics. Child nodes and exact commits retain the full evidence.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2: activate isolated profile coordinator repair; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3.1: seal clean 72-profile matrix`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3`
 
@@ -783,10 +783,25 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3.1: activate accepted-plan random transcript repair; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3.1: archive revision-037e56f09 matrix prefix; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3.1: reuse bounded random-decision transcript; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3.2.3.1: seal clean 72-profile matrix`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Measure deterministic structural backend emission for every applicable selected profile.`
   Acceptance: `Measure canonical portable-SystemVerilog, portable-VHDL, OSVVM, and native-UVM review-profile construction only where their completed authorities apply; verify exact artifact/source/map/check identities and atomic rejection before retaining wall/CPU/RSS/count samples; distinguish FSMGen emission from provider verification and external execution; preserve native-UVM and over-limit non-applicability; and publish no compile/runtime, promoted budget, support, or capacity claim.`
-  Verification: `pending`
+  Verification: `Clean predecessor 040ab0e55 seals and independently reloads the exact execution/checking matrix before this pivot. Decisions 0056 and 0075 already freeze the common measurement record, guards/timeouts/repetitions, the profile-specific checked-AHB operation ladders, exact thirteen-emitted/seven-rejected structural outcomes, native-UVM reference-only negotiation boundary, OSVVM provider prerequisite, and all nonclaims. Active child .1 owns one caller-sealed adapter over the completed canonical producer and common controller; proposed child .2 separately owns immutable same-identity publication, resume, aggregate sealing, and independent guarded reload. Provider verification must remain explicitly identified within the OSVVM emit route and cannot become external-tool, compile/runtime, support, performance-budget, capacity, or reached-boundary evidence.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4: activate structural backend-emission measurement`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4.1`
+  Status: `active`
+  Goal: `Implement caller-sealed structural backend-emission measurement through the common architecture-scale controller.`
+  Acceptance: `Admit only repository root, one decision-0075 backend profile, and one owned level; reconstruct the frozen checked-AHB sources, canonical construction, and exact ArchitectureScaleBackendEmission evaluation without caller source, IR, backend input, artifact, provider result, diagnostic, or report injection. Use only the common twelve-stage measurement schema with planned construct/parse_validate/bridge/bind_plan/emit stages; make every stage payload independently deterministic and validate the complete producer authority before retention. Run correctness validation plus exactly three/five measured repetitions only for emitted gate/qualification routes; preserve reference, limit, excess, native-UVM unsupported/preflight-dominated, and any authoritative rejection as validated_not_measured with no fabricated sample. Record exact structural artifact/source/byte/map/check/identifier/identity counts, mark whether the OSVVM emit stage includes its sealed read-only provider verification, and keep that prerequisite distinct from external verification-tool execution. Prove hostile caller/report mutation, stage failure/timeout/signal, missing or contradictory provider/applicability evidence, deterministic reruns, common guard enforcement, bounded capture, same-volume staging, success/failure/consumer-failure cleanup, and defensive returned data. Add no compiler, simulator, runtime, trace, result, public API, support, promoted budget, capacity, reached-boundary, or general-parity claim.`
+  Verification: `pending implementation`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4.2`
+  Status: `proposed`
+  Goal: `Publish and independently reload the exact structural backend-emission measurement matrix.`
+  Acceptance: `Freeze producer-owned profile/level order and admit only complete child-.1 reports at one clean revision, host, in-process tool, and enforced-guard identity. Publish every profile atomically in a content-addressed same-volume namespace; resume only from independently regenerated immutable reports; reject missing, extra, reordered, mutated, mixed-identity, collision, malformed, oversized, signal, or stale staging evidence; and withhold the aggregate seal until the complete selected matrix validates. Retain all validation and required raw samples, explicit applicability/rejection/dominance accounting, provider-verification inclusion, zero unjustified exclusions, exact cleanup, and the closed nonclaim set. Complete one guarded clean-revision capture plus a separate guarded canonical reload before closing parent .17.3.4; do not promote budgets, support, capacity, reached boundaries, external-tool, compile/run/trace/result, or public API claims.`
+  Verification: `pending child .1`
   Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5`
@@ -1676,7 +1691,8 @@ execution/checking or external-tool measurement can begin.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-08-24` | `.17.3.3.2.3.1` clean 72-profile matrix closure | clean revision/host/tool/guard identity; guarded 40-execution/32-checking publication; immutable-family host-cutoff recovery; both family manifests; complete seal; dominance/raw/nonclaim accounting; exact active-file/byte and zero-staging census; separate guarded canonical `--validate`; task/index/Memory/book/card/claim/containment continuity | `passed closure`; revision `9c0209c22cd035fdc4dd55e3938842b79b36b622` seals accepted complete identity `execution-checking-matrix/0548629720a9f4c8636c912396cfaefff523da92fc800594618db68b788b91d0`. The 75 active files/7,312,415 bytes contain all 72 profiles plus both family and complete manifests, 119 raw records, and zero exclusions. An 88% host-memory stop during immutable execution-family revalidation leaves zero staging and exact resume completes the matrix; a separate guarded reload returns the same identity/partition with zero diagnostics. `.17.3.3`, `.17.3.3.2`, `.17.3.3.2.3`, and `.17.3.3.2.3.1` close without changing guards, timeouts, caps, support, budgets, capacity, reached-boundary, backend/tool, runtime, or public-API claims. Proposed `.17.3.4` is next. |
+| `2026-08-24` | `.17.3.4` structural backend-emission measurement activation | clean `.17.3.3` predecessor; Knowledge Map query; decisions 0056/0075; completed four-profile producer and family watcher; common measurement adapter/publisher boundaries; provider-verification classification; task/index/Memory continuity | `passed activation`; active `.17.3.4.1` owns the caller-sealed common-controller adapter and proposed `.17.3.4.2` owns exact same-identity resumable publication/reload. The selected structural producer remains thirteen emitted and seven rejected outcomes; native UVM stays reference-only, OSVVM provider verification stays explicit and read-only, and no external-tool, compile/run/trace/result, promoted-budget, support, capacity, reached-boundary, or public-API claim is admitted. Product code and tests remain unchanged. |
+| `2026-08-24` | `.17.3.3.2.3.1` clean 72-profile matrix closure | guarded clean capture, immutable host-cutoff resume, complete seal, separate canonical reload, exact residue/continuity gates | `passed closure`; revision `9c0209c22` seals all 72 profiles, both families, 119 raw records, and zero exclusions as 75 files/7,312,415 bytes at `execution-checking-matrix/0548629720a9f4c8636c912396cfaefff523da92fc800594618db68b788b91d0`. Reload returns the same identity with zero diagnostics; commit `040ab0e55` retains exact evidence and nonclaims. |
 | `2026-08-23` | `.17.3.3.2.3.1` revision-037e56f09 prefix archive | exact 22-profile ordinal inventory; regular single-link payloads; clean capture identity; family/complete/raw absence; same-volume move with rollback; canonical manifest; independent file/byte/hash reconstruction; unrelated-active before/after identity | `passed archival checkpoint`; 22 reports/2,609,009 bytes are preserved under the exact revision-keyed archive with profile digest `6dbfa2d02f7eee0332881074628d50d2b454fe94ac241137a11d7c651c162d90`. The archive has 23 files including its canonical manifest; all 111 unrelated active files retain 7,418,437 bytes and digest `5b3e00bd52730b91a404cea009913bc782ceac6b9fe600bb4f21466b7f9a6e69`; active execution, raw-stage, and archive-staging counts are zero. Product code remains unchanged and the duplicate-search RED is next. |
 | `2026-08-23` | `.17.3.3.2.3.1` bounded random-transcript implementation | product call-count RED/GREEN; decision-0079 UTF-8 byte framing/seal/bound/lifecycle; corruption and post-saturation authority negatives; exact 8,440/8,441/32,768/65,537 routes; exact one-million limit/exhaustion; isolated profile-23 adapter; staging/background census; task/book/card/claim/Memory continuity | `passed implementation`; accepted builders enter ExecutionRandom once per occurrence, reuse only a private 17,039,360-byte-maximum scalar transcript, reconstruct final records/maps/links independently, and preserve all terminal defenses. Exact adapter acceptance closes the former timeout without changing its 300-second ceiling, guard, attempts, plan identity, reruns, or nonclaims. The revision-037e56f09 prefix remains archived; a clean-revision 72-profile reseal is next. |
 | `2026-08-23` | `.17.3.3.2.3` serialized-plan preflight implementation | honest materialization-sentinel RED; shared canonical report projection; streaming decision/scenario-ID/source-map byte deltas; saturating arithmetic; replay validation/indexing; occurrence/source-map/plan cap order; projection/terminal equality; private caller seal; syntax/diff; focused ordinary/random/replay/limit/exhaustion/measurement regressions; exact guarded 8,440/8,441, 32,768, and 65,537 routes; direct guarded former-timeout adapter; staging residue census | `passed implementation`; 8,441 and 32,768 return the byte-equal historical `/plan` diagnostic before random-list, ExecutionIR, or terminal report materialization; 8,440 remains accepted at 16,775,415 canonical bytes; 65,537 remains occurrence-cap dominated. The former adapter blocker exits `expected_rejection` / `validated_not_measured` with no diagnostic, measurement record, or staging residue under unchanged guards/timeouts. The focused guarded suite passes Files=7/Tests=33, exact t/1634 passes Files=1/Tests=5, and the private-seam/core contract passes Files=1/Tests=6. Terminal serialization and cap remain. No product support, performance, capacity, or reached-boundary claim is added; fresh clean-revision matrix capture remains next. |
@@ -6602,47 +6618,17 @@ raising an enforcement ceiling.
   claims are unchanged. `knowledge-map: OK`, mdBook, task integrity, locality,
   containment, claim inventory, staged acceptance, and all doctrines are required green before commit.
 
+## Acceptance Checklist (enforced) — `.17.3.4` structural backend-emission measurement activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Clean predecessor `040ab0e55` explicitly nonclaims backend emission; decision `0075` proves the portable profiles own distinct emitted ladders while native UVM owns only its reference review shape. `git log -S'backend_emission_v1' -- perl/FSM/VIAL/ArchitectureScaleWorkload.pm` locates that profile-specific authority.
+- [x] **ADDRESSED (verified)** — Active child `.1` exclusively owns caller-sealed adapter, stage/applicability/oracle/provider classification, guard, hostile boundaries, and cleanup; proposed child `.2` separately owns immutable publication, same-identity resume, aggregate seal, and guarded reload under decisions 0056/0075.
+- [x] **NO REGRESSION** — Product modules/tests are unchanged; index and Memory select only `.17.3.4.1`; task, path, Knowledge Map, claim, containment, and doctrine gates must pass. External-tool, compile/run/trace/result, budget, support, capacity, reached-boundary, native-UVM-runtime, and public-API nonclaims remain exact.
+
 ## Acceptance Checklist (enforced) — `.17.3.3.2.3.1` clean 72-profile matrix closure
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — The missing complete seal was not a
-  publisher shortcut or evidence-label problem: guarded exact capture exposed
-  post-materialization total-operation/plan checks and duplicate accepted-plan
-  random search in `ExecutionBuilder`, while earlier long-lived publisher
-  validation retained full-report allocator state. The owned repair chain
-  isolates each profile, preflights known excess generally, and reuses one
-  independently validated bounded transcript. The clean capture crosses every
-  former failing ordinal. Its only interruption is the unchanged 88% host
-  cutoff during revalidation of an already immutable execution-family seal;
-  zero raw staging and exact immutable resume falsify a new product or residue
-  defect. `git log -S'_capture_family' --
-  perl/FSM/VIAL/ArchitectureScaleExecutionCheckingMeasurementMatrix.pm` and
-  `git log -S'_project_random_plan_arrays' --
-  perl/FSM/VIAL/ExecutionBuilder.pm` locate the two causal mechanisms and their
-  repairs in exact history.
-- [x] **ADDRESSED (verified)** — Revision
-  `9c0209c22cd035fdc4dd55e3938842b79b36b622` publishes all 40 execution and 32
-  checking profiles, then both family manifests and accepted complete identity
-  `execution-checking-matrix/0548629720a9f4c8636c912396cfaefff523da92fc800594618db68b788b91d0`.
-  The closed dominance account contains 41 accepted, 19 expected rejection,
-  five inapplicable measurement, two preflight dominated, 31 applicable
-  measurement, 62 controller applicable, ten controller inapplicable, 119 raw
-  measurement, ten source-free, and zero excluded records. Every child shares
-  the exact clean revision, Apple-M4-Pro/Darwin-25.5.0/APFS host, in-process
-  Perl tool, 88%-host/4,096-MiB-per-descendant guard, and 250-ms sampler
-  identity; partial or mixed completion remains rejected.
-- [x] **NO REGRESSION** — The active namespace is exactly 75 files and
-  7,312,415 bytes: 72 immutable profiles, two family manifests, and one complete
-  manifest. Raw staging is absent. A separate fresh guarded `--validate`
-  canonically reloads every profile and both family/full seals, returns the same
-  identity and partition, and emits zero diagnostics. Tracked Git state and
-  the scratch commit message are clean before documentation; task/index/Memory,
-  mdBook, claim, containment, and staged acceptance pass; `knowledge-map: OK`
-  records 1,150 facts, 6,079 unique questions, 6,246 answer occurrences, and
-  133 bounded topic shards. All doctrine gates must pass before commit. No cap,
-  timeout, guard, rerun, random/plan
-  identity, support, public performance budget, capacity, reached-boundary,
-  backend emission, external-tool, compile/run/trace/result, or public-API claim
-  changed; proposed `.17.3.4` is the next separately activated frontier.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Guarded capture exposed long-lived publisher validation plus late total-operation/plan enforcement and duplicate accepted random search; `git log -S'_capture_family' -- perl/FSM/VIAL/ArchitectureScaleExecutionCheckingMeasurementMatrix.pm` and `git log -S'_project_random_plan_arrays' -- perl/FSM/VIAL/ExecutionBuilder.pm` retain the causal history and repairs.
+- [x] **ADDRESSED (verified)** — Revision `9c0209c22cd035fdc4dd55e3938842b79b36b622` seals all 40 execution/32 checking profiles, both families, complete identity `execution-checking-matrix/0548629720a9f4c8636c912396cfaefff523da92fc800594618db68b788b91d0`, the exact dominance partition, 119 raw records, and zero exclusions at one clean host/tool/guard identity.
+- [x] **NO REGRESSION** — The 75-file/7,312,415-byte namespace has zero staging; separate guarded reload returns the same identity/partition with zero diagnostics; `knowledge-map: OK` and all doctrine gates passed. No cap, timeout, guard, identity, support, budget, capacity, reached-boundary, backend/external-tool/runtime, or public-API claim changed.
 
 ## Acceptance Checklist (enforced) — `.17.3.3.2.3` serialized-plan preflight implementation
 
