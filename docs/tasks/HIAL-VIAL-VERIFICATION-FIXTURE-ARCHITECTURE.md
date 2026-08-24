@@ -816,7 +816,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Select the exact runtime-stream materialization, identity, and shared Verilator stage-lifecycle contract.`
   Acceptance: `Audit the canonical runtime construction, portable emitter, Runner, trace validator, result producer, measurement controller, qualified tool/limit authority, and reference runtime evidence. Select a closed workload-to-runtime schedule that proves candidate record-count reachability while preserving semantic truth, binds every repeated activity into trace/result/backend evidence, and classifies reference/limit/excess applicability honestly. Select one caller-sealed staged execution lifecycle reused by the public Runner and measurement workers across process boundaries with exact tool identity, commands, timeouts, transcript bounds, state transitions, same-volume ownership, failure cleanup, and no second execution semantics. Record alternatives and rollback in a decision; change no product behavior.`
-  Verification: `The exact gate-reachability probe exposed a portable-SystemVerilog scheduler defect before selection could close: legal authored source with a check-phase expect followed by a react-phase scoreboard operation emitted check then react in one logical cycle and the shipped TraceValidator rejected the run. Completed child .1.1 now rolls every supported backward phase crossing exactly once and rejects operation-phase drift. Completed child .1.2 repairs the separately proven inert direct-drive path from target projection through binding, negotiation, zero-duration assignment/trace, safe finalization, validation, and support truth. Its signoff audit also proved that portable parallel rendering assumes await-like child operations while target-neutral planning admits other child kinds; proposed .1.3 must close that admission/lowering boundary before .1 resumes reachability proof and architecture selection. Repeated loaded-host full integration attempts exposed fixed-30-second runtime timeouts in different byte-identical baseline/direct executions while counterparts passed elsewhere; child .3 already owns the missing launch/main timing evidence and shared lifecycle policy, so no narrower cause is claimed here.`
+  Verification: `The exact gate-reachability probe exposed a portable-SystemVerilog scheduler defect before selection could close: legal authored source with a check-phase expect followed by a react-phase scoreboard operation emitted check then react in one logical cycle and the shipped TraceValidator rejected the run. Completed child .1.1 now rolls every supported backward phase crossing exactly once and rejects operation-phase drift. Completed child .1.2 repairs the separately proven inert direct-drive path from target projection through binding, negotiation, zero-duration assignment/trace, safe finalization, validation, and support truth. Its signoff audit also proved that portable parallel rendering assumes await-like child operations while target-neutral planning admits other child kinds; active .1.3 must close that admission/lowering boundary before .1 resumes reachability proof and architecture selection. Repeated loaded-host full integration attempts exposed fixed-30-second runtime timeouts in different byte-identical baseline/direct executions while counterparts passed elsewhere; child .3 already owns the missing launch/main timing evidence and shared lifecycle policy, so no narrower cause is claimed here.`
   Commit: `pending selection`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.3`
 
@@ -835,11 +835,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.2: activate portable-SV direct-drive repair; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.2: repair portable-SV direct drive`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Close portable-SystemVerilog admission and lowering for non-await operations nested under parallel fibers.`
   Acceptance: `First preserve an ordinary-source RED whose target-neutral ExecutionIR contains non-await parallel-child operations and whose current portable negotiation/emission either loses, misorders, or fails to invoke their generated behavior. Inventory every operation kind the execution profile permits in child fibers and independently compare that set with the portable renderer's child scheduler. Select and implement either complete deterministic child-operation lowering or exact fail-closed negotiation for every unimplemented topology; preserve authored/static ranks, all/any completion and cancellation, logical phases, conflicts, trace/result identity, deterministic reruns, diagnostics, and cleanup. Reject no legal topology already proved executable without an explicit compatibility decision, and do not special-case direct drive, rewrite source, rely on SystemVerilog fork order, fabricate trace time, widen public APIs, or claim scale, performance, capacity, four-state, methodology, or parity.`
-  Verification: `The .1.2 signoff probe showed that target-neutral planning can retain direct-drive children under parallel. Before the new direct-drive conflict/root-fiber guard, portable negotiation and emission accepted that plan, while _render_parallel constructs child readiness/completion around await-property evaluation and does not invoke arbitrary child operation tasks. The direct-drive guard now fails that particular topology closed, but the broader accepted-kind versus rendered-child-kind mismatch remains unproved. This node durably owns the general RED, compatibility selection, and repair after separate clean activation.`
-  Commit: `pending activation`
+  Verification: `The .1.2 signoff probe showed that target-neutral planning can retain direct-drive children under parallel. Before the new direct-drive conflict/root-fiber guard, portable negotiation and emission accepted that plan, while the parallel renderer constructs child readiness/completion from each child root's property input and does not invoke arbitrary child operation tasks. ExecutionBuilder recursively admits every recognized action kind into child fibers. Clean prerequisite commit 69384201c permits this pivot; this child alone is active and owns the general RED, complete admitted-kind/rendered-kind inventory, compatibility decision, implementation, deterministic runtime proof, support truth, and documentation before .1 resumes. No product implementation is included in activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.3: activate portable-SV parallel-child repair`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2`
   Status: `proposed`
@@ -7097,3 +7097,32 @@ raising an enforcement ceiling.
   maintained references pass with zero ceiling increases. Repository locality,
   exact failed-run cleanup, and diff checks pass. No scale, four-state,
   methodology, performance, capacity, or general-parity claim is added.
+
+## Acceptance Checklist (enforced) — `.17.3.5.1.3` portable-SV parallel-child repair activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `ExecutionBuilder::_emit_sequence`
+  recursively admits every recognized action kind beneath `parallel`, while
+  the portable backend's parallel branch reads each child root's `property`
+  typed input and passes it to `_render_property` instead of invoking the
+  child's kind-specific lowering. `git log -S'Child fibers are evaluated by
+  this one scheduler' -1 -- perl/FSM/VIAL/Backend/SVPortableVerilator.pm`
+  locates the shipped renderer at `201590d84`. Direct drive now fails its own
+  non-root boundary, but that narrow guard neither inventories nor closes the
+  general admitted-kind/rendered-kind mismatch.
+- [x] **ADDRESSED (verified)** — Clean implementation commit `69384201c`
+  permits the pivot. Child `.17.3.5.1.3` alone is active and owns an ordinary-
+  source RED, the complete child-operation inventory, compatibility selection,
+  deterministic all/any scheduling or exact fail-closed admission, runtime and
+  trace/result proof, diagnostics, cleanup, support truth, and documentation.
+  No product, test, fixture, contract, capability, or support behavior changes
+  in this activation.
+- [x] **NO REGRESSION** — The unchanged RAM-guarded portable-emitter suite
+  reports `All tests successful` at `Files=1, Tests=8`. All 54 mdBook chapters
+  test and the book builds; its generated output is then cleaned. Knowledge Map
+  parity holds at 1,150 facts/6,091 questions/6,258 occurrences/133 shards;
+  task integrity holds at three trees/995 nodes; claim inventory and its 1,474-
+  candidate disposition join pass; all 22 live-document surfaces and both
+  maintained references pass with zero ceiling increases. Project locality and
+  diff checks pass. No code, test, fixture, ExecutionIR, backend, runtime,
+  trace, result, capability, support, scale, performance, capacity, four-state,
+  methodology, parity, or public-API behavior changes in this activation.

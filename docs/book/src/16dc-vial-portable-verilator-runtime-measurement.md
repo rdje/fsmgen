@@ -151,10 +151,11 @@ three verification legs.
 
 The same signoff audit found that the current `parallel` renderer assumes its
 child operations are await-like. Arbitrary non-await child actions can pass
-target-neutral planning without a matching portable child scheduler. Proposed
-task `.17.3.5.1.3` owns fail-closed admission or a complete lowering before
-runtime materialization selection resumes; this direct-drive slice does not
-silently generalize nested operation support.
+target-neutral planning without a matching portable child scheduler. Active
+task `.17.3.5.1.3` now owns an ordinary-source RED, a complete admitted-kind
+inventory, and selection of fail-closed admission or complete deterministic
+lowering before runtime materialization resumes. Existing nested-operation
+support is not silently generalized.
 
 Repeated guarded full integration attempts also exposed the existing Runner's
 fixed 30-second run wall under concurrent cross-repository compiler load. A

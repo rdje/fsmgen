@@ -300,7 +300,8 @@ explicit nonclaims. Decision `0081` retains the rule and three proof legs.
 
 The signoff audit also found that portable `parallel` rendering assumes await-
 like children even though target-neutral planning can retain other child action
-kinds. Proposed `.17.3.5.1.3` owns complete lowering or fail-closed admission.
+kinds. Active `.17.3.5.1.3` owns the ordinary-source RED, complete admitted-
+kind inventory, and selection of complete lowering or fail-closed admission.
 Repeated guarded full integration attempts timed out different baseline/direct
 executions at Runner's fixed 30-second run wall while byte-identical executions
 passed in other attempts under concurrent compiler load. The diagnostic cannot
