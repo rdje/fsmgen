@@ -704,7 +704,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Measure portable backend generation, compile, execution, result, and artifact scaling.`
   Acceptance: `Run the selected workload profiles under active RAM/time controls for every applicable qualified backend, collect normalized wall/CPU/descendant-RSS/artifact/compile/run/result evidence, prove deterministic reruns and semantic outcomes, and distinguish tool cost from architecture cost without generalizing beyond measured profiles.`
-  Verification: `Clean unified provider-free qualification commit 490c35cc5 closes deterministic generation before any measured process or tool execution. Decision 0056 freezes the measurement schema, stage boundaries, raw-sample contract, repetitions, 250-ms sampling interval, exact host/tool identities, smaller-of timeouts, 88%-host/4,096-MiB descendant guard, repository-volume staging/publication, exclusion policy, budget formulas, and nonclaims. Completed foundation .1 implements the closed record, validation-before-measurement controller, fork-isolated stage workers, process-tree sampler, effective timeout enforcement, active-guard evidence handoff, defensive validation, and same-volume publication/cleanup without external verification-tool execution. Completed semantic-catalog/bridge-fanout measurement .2 retains its exact accepted matrix; completed execution-graph/checking-state measurement .3 retains its clean-revision 72-profile accepted matrix and independent guarded reload. Proposed .4 is the next activation frontier; external-tool execution, balanced measurement, calibration closure, remaining cross-layer cap repair, and promotion remain separately owned.`
+  Verification: `Clean unified provider-free qualification commit 490c35cc5 closes deterministic generation before any measured process or tool execution. Decision 0056 freezes the measurement schema, stage boundaries, raw-sample contract, repetitions, 250-ms sampling interval, exact host/tool identities, smaller-of timeouts, 88%-host/4,096-MiB descendant guard, repository-volume staging/publication, exclusion policy, budget formulas, and nonclaims. Completed foundation .1 implements the closed record, validation-before-measurement controller, fork-isolated stage workers, process-tree sampler, effective timeout enforcement, active-guard evidence handoff, defensive validation, and same-volume publication/cleanup. Completed .2-.4 retain accepted semantic/bridge, execution/checking, and structural-emission matrices. Active .5 begins qualified-Verilator runtime measurement with contract selection before implementation; VHDL/OSVVM execution, balanced measurement, calibration closure, remaining cap repair, and promotion remain separately owned.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3: activate scale measurement foundation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9`
 
@@ -805,9 +805,45 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4.2: activate structural measurement matrix publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4.2: implement structural measurement matrix publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4.2: seal clean structural measurement matrix`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5`
-  Status: `proposed`
+  Status: `active`
   Goal: `Measure exact portable-SystemVerilog generation, compile, run, trace validation, and result production with qualified Verilator.`
   Acceptance: `Use only the qualified Verilator profile and canonical runtime-stream inputs; perform one validation plus required measured repetitions in fresh owned staging; apply effective qualified compile/run limits and active guards; prove artifact, source-map, command, trace closure, normalized result, deterministic rerun, raw-sample, transcript, publication, and cleanup oracles; reject identity drift or excluded samples explicitly; and make no full-SystemVerilog, UVM, mixed-language, promoted-budget, support, or capacity claim.`
+  Verification: `Clean structural-matrix closure 6c76b4c39 permits the pivot. Existing runtime-stream construction owns exact provider-free inputs and expectations but intentionally materializes no scale trace/result; the shipped Verilator Runner owns correct external execution as one atomic transaction rather than independently measurable shared stages. Active child .1 must select an identity-complete runtime-activity contract and reusable staged lifecycle before code changes. Source-text patching, output padding/truncation, duplicated tool execution, hidden public widening, borrowed support, and unproved record-count reachability are inadmissible. The unchanged provider-free construction and real qualified-Verilator integration pass together under the repository RAM guard at Files=2, Tests=9.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5: activate portable-Verilator runtime measurement`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1`
+  Status: `active`
+  Goal: `Select the exact runtime-stream materialization, identity, and shared Verilator stage-lifecycle contract.`
+  Acceptance: `Audit the canonical runtime construction, portable emitter, Runner, trace validator, result producer, measurement controller, qualified tool/limit authority, and reference runtime evidence. Select a closed workload-to-runtime schedule that proves candidate record-count reachability while preserving semantic truth, binds every repeated activity into trace/result/backend evidence, and classifies reference/limit/excess applicability honestly. Select one caller-sealed staged execution lifecycle reused by the public Runner and measurement workers across process boundaries with exact tool identity, commands, timeouts, transcript bounds, state transitions, same-volume ownership, failure cleanup, and no second execution semantics. Record alternatives and rollback in a decision; change no product behavior.`
+  Verification: `pending`
+  Commit: `pending selection`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2`
+  Status: `proposed`
+  Goal: `Implement the selected caller-sealed portable-SystemVerilog runtime-stream materialization and structural oracle.`
+  Acceptance: `Consume only canonical child-.1 authority and runtime-stream constructions; preserve the ordinary public emission route; produce deterministic schedule-bound artifacts and exact pre-tool trace/result projections; reject unrepresentable or preflight-dominated shapes before external execution; prove source-map, identity, semantic repetition, boundary classification, mutation, atomic failure, and cleanup without source-text rewriting, padding, truncation, public API widening, or runtime/support/performance/capacity claims.`
+  Verification: `pending`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3`
+  Status: `proposed`
+  Goal: `Implement the selected shared staged Verilator execution lifecycle without changing the public Runner contract.`
+  Acceptance: `Extract one caller-sealed state machine for qualified tool discovery, input preparation, compile, run, trace extraction/validation, result production, final artifact assembly, and cleanup. Persist only closed content-addressed state below an exact repository-owned stage, independently validate every predecessor before transition, preserve process-group termination and capture ceilings, reject skips/replay/mutation/collision/symlink/partial state, and make the existing Runner consume the same transitions with byte-equal success artifacts and stable failure diagnostics.`
+  Verification: `pending`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.4`
+  Status: `proposed`
+  Goal: `Measure each applicable portable-Verilator runtime-stream profile through the common controller.`
+  Acceptance: `Reconstruct the selected runtime construction, schedule, emission, tool profile, and lifecycle from repository anchors only. Route applicable validation and gate/qualification repetitions through distinct common-controller stages and the shared lifecycle; retain exact raw samples, tool/command/transcript/artifact/trace/result identities, semantic oracles, exclusions, guard evidence, and cleanup. Keep preflight-dominated shapes tool-free and add no promoted budget, support, capacity, reached-boundary, parity, or public API claim.`
+  Verification: `pending`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5`
+  Status: `proposed`
+  Goal: `Publish and independently reload the exact portable-Verilator runtime measurement matrix.`
+  Acceptance: `Derive the complete profile/level order from producer ownership; isolate capture/reload lifecycles; atomically publish bounded immutable reports at one clean revision/host/tool/guard identity; resume only independently regenerated evidence; reject incomplete, reordered, mutated, mixed, collided, oversized, signalled, stale, or ambiguous state; retain every raw/excluded sample and dominance/nonclaim; and complete guarded capture plus fresh-process reload before closing .17.3.5.`
   Verification: `pending`
   Commit: `pending activation`
 
@@ -6867,3 +6903,29 @@ raising an enforcement ceiling.
   common identity, family/full completion rule, performance budget, support,
   capacity, or reached-boundary claim is weakened; exact 72-profile evidence
   remains explicitly pending the clean implementation revision.
+
+## Acceptance Checklist (enforced) — `.17.3.5` portable-Verilator runtime measurement activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_capture_process' --oneline --
+  perl/FSM/VIAL/Backend/Runner.pm` identifies origin `dfe87f536`. Current source
+  inspection proves that `ArchitectureScaleRuntimeStream` intentionally owns
+  only provider-free construction and expectations, while the public Runner
+  keeps prepare, compile, run, trace, result, and cleanup inside one private
+  atomic transaction. A stage-measurement implementation therefore has neither
+  a proved scale-runtime materialization/identity contract nor a shared staged
+  lifecycle it can reuse without duplicating external-execution semantics.
+- [x] **ADDRESSED (verified)** — Active child `.17.3.5.1` now owns selection of
+  the missing runtime-activity, identity, applicability, and reusable lifecycle
+  contracts before product changes. Children `.2` through `.5` separately own
+  materialization, shared lifecycle implementation, measurement, and immutable
+  matrix publication. The task-tree, bounded Memory pointer, Knowledge Map, and
+  mdBook state the active boundary, external-Verilator/IASIM distinction, and
+  forbidden source rewriting, output padding/truncation, duplicated execution,
+  hidden API widening, borrowed support, and unproved reachability shortcuts.
+- [x] **NO REGRESSION** — The unchanged provider-free runtime construction and
+  real Verilator integration report `All tests successful` at `Files=2,
+  Tests=9` under the unchanged 88%-host/4,096-MiB-descendant guard. `mdbook
+  test`, Knowledge Map generation/parity, live-document containment, task-tree
+  integrity, and `git diff --check` pass. No parser, SemanticIR, bridge,
+  ExecutionIR, emission, tool execution, trace, result, diagnostic, support,
+  performance, capacity, or public API behavior changes in this activation.

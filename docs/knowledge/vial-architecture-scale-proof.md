@@ -38,6 +38,7 @@ answers:
   - "how is the structural backend emission matrix resumed and published?"
   - "why does the backend emission matrix isolate every profile in a child?"
   - "what do the backend emission publication and IPC ceilings mean?"
+  - "how will portable Verilator runtime scale measurement reuse the qualified runner?"
 date: 2026-08-24
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -82,7 +83,8 @@ evidence: >-
   docs/knowledge/vial-semantic-scale-catalog.md;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16da-vial-balanced-portable-composition.md;
-  docs/book/src/16db-vial-structural-backend-emission-matrix.md
+  docs/book/src/16db-vial-structural-backend-emission-matrix.md;
+  docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md
 reverify: >-
   rg -n 'semantic_catalog_v1|bridge_fanout_v1|execution_graph_v1|checking_state_v1|backend_emission_v1|runtime_stream_v1|big.*really_big'
   docs/decisions/0055-vial-scale-proof-uses-orthogonal-workloads-and-stage-local-oracles.md
@@ -118,6 +120,9 @@ reverify: >-
   rg -n 'owned_shapes|MAX_PUBLICATION_BYTES|MAX_PROFILE_WORKER_RESULT_BYTES|capture_identity|provider_verification_profiles'
   perl/FSM/VIAL/ArchitectureScaleBackendEmissionMeasurementMatrix.pm
   scripts/run_vial_backend_emission_measurement_matrix.pl &&
+  rg -n 'runtime activity|shared lifecycle|second tool runner|IASIM'
+  docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md &&
   prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t
   t/1602-vial-architecture-scale-bridge-fanout.t
   t/1644-vial-backend-emission-authority-alignment.t
@@ -248,6 +253,15 @@ family and complete manifests are 30,203/2,535 bytes. Exact t/1662 passes in
 12,656 seconds under the unchanged guard, and a fresh-process guarded
 `--validate` returns the same identity and partition. The elapsed observation
 is capture provenance, not a public budget or capacity claim.
+
+Active `.17.3.5.1` selects portable-Verilator runtime materialization before
+implementation. The provider-free construction does not yet prove that its
+selected semantic activity can be represented truthfully by the shipped trace
+and result contracts, and the public Runner currently owns the external stages
+as one atomic transaction. Selection must bind activity into canonical
+evidence and make measurement reuse one private staged lifecycle; source-text
+patching, padded or truncated output, duplicated execution semantics, hidden
+public widening, and borrowed support or capacity claims are rejected.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
