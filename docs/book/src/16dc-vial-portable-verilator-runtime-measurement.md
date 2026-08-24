@@ -7,7 +7,7 @@ materialization is now implemented. Two tracked VIAL sources, one
 caller-sealed structural qualifier, and an exact public-Runner watcher bind the
 10,000/15,000 candidates to real schedules without manufacturing activity.
 Repeated stage measurement is not complete: the separately owned shared
-Verilator lifecycle remains the next implementation boundary.
+Verilator lifecycle is now the active implementation boundary.
 
 This “execution” means external execution of generated portable SystemVerilog
 with the already qualified Verilator profile. It is not IASIM execution and it
@@ -196,7 +196,7 @@ direct-drive replay, a baseline replay, and later the first unchanged baseline
 run have each timed out in separate attempts, while byte-identical counterparts
 passed in the other attempts. The available diagnostic cannot distinguish
 executable-launch delay from time spent in generated `main`, so no narrower
-root-cause claim is made. Existing implementation task `.17.3.5.3` now owns
+root-cause claim is made. Active implementation task `.17.3.5.3` now owns
 timeout/stage-state evidence and the shared lifecycle policy; the focused
 direct-drive runtime proof remains separate from that lifecycle defect/risk.
 

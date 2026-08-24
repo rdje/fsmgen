@@ -808,7 +808,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Measure exact portable-SystemVerilog generation, compile, run, trace validation, and result production with qualified Verilator.`
   Acceptance: `Use only the qualified Verilator profile and canonical runtime-stream inputs; perform one validation plus required measured repetitions in fresh owned staging; apply effective qualified compile/run limits and active guards; prove artifact, source-map, command, trace closure, normalized result, deterministic rerun, raw-sample, transcript, publication, and cleanup oracles; reject identity drift or excluded samples explicitly; and make no full-SystemVerilog, UVM, mixed-language, promoted-budget, support, or capacity claim.`
-  Verification: `Clean structural-matrix closure 6c76b4c39 permits the pivot. Existing runtime-stream construction owned exact provider-free inputs and expectations but intentionally materialized no scale trace/result; the shipped Verilator Runner owns correct external execution as one atomic transaction rather than independently measurable shared stages. Completed selection child .1 and decision 0083 choose checked-in authored reset-sampling fixtures, exact 10,000/15,000 portable candidates, honest byte-cap dominance, and one content-addressed lifecycle shared by the public Runner and measurement workers. Completed child .2 now binds the two tracked sources through the ordinary route, freezes exact schedule/emission/record-family/full-graph identities, replaces only portable qualification's unrepresentable 100,000 candidate, and proves both candidates through the opt-in public Runner. Source-text patching, output padding/truncation, duplicated tool execution, hidden public widening, borrowed support, and unproved record-count reachability remain inadmissible. Proposed child .3 is next for the shared lifecycle.`
+  Verification: `Clean structural-matrix closure 6c76b4c39 permits the pivot. Existing runtime-stream construction owned exact provider-free inputs and expectations but intentionally materialized no scale trace/result; the shipped Verilator Runner owns correct external execution as one atomic transaction rather than independently measurable shared stages. Completed selection child .1 and decision 0083 choose checked-in authored reset-sampling fixtures, exact 10,000/15,000 portable candidates, honest byte-cap dominance, and one content-addressed lifecycle shared by the public Runner and measurement workers. Completed child .2 now binds the two tracked sources through the ordinary route, freezes exact schedule/emission/record-family/full-graph identities, replaces only portable qualification's unrepresentable 100,000 candidate, and proves both candidates through the opt-in public Runner. Active child .3 owns the shared lifecycle and public-Runner integration. Source-text patching, output padding/truncation, duplicated tool execution, hidden public widening, borrowed support, and unproved record-count reachability remain inadmissible.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5: activate portable-Verilator runtime measurement`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5`
 
@@ -856,11 +856,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2: activate authored portable runtime materialization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2: materialize authored portable runtime streams`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the selected shared staged Verilator execution lifecycle without changing the public Runner contract.`
   Acceptance: `Extract one caller-sealed state machine for qualified tool discovery, input preparation, compile, run, trace extraction/validation, result production, final artifact assembly, and cleanup. Persist only closed content-addressed state below an exact repository-owned stage, independently validate every predecessor before transition, preserve process-group termination and capture ceilings, reject skips/replay/mutation/collision/symlink/partial state, and make the existing Runner consume the same transitions with byte-equal success artifacts and stable failure diagnostics.`
-  Verification: `The .1.2 signoff supplied lifecycle evidence without changing this proposed implementation owner: repeated guarded t1558 attempts timed out different byte-identical baseline/direct executions at Runner's fixed 30-second run wall while counterparts passed in other attempts and unrelated compiler work was active. Runner currently reports only VIAL_RUN_RUNTIME_ERROR and cannot distinguish executable launch/policy delay from generated-main time. This node must retain stage-local monotonic timing and host/guard context, then preserve or deliberately revise the effective qualified deadline under the selected lifecycle; no root cause, retry policy, or timeout widening is authorized by the observation alone.`
-  Commit: `pending activation`
+  Verification: `Clean materialization commit bd5c0e628 closes .2 with exact tracked 10,000/15,000 sources, deterministic ordinary-route graphs, public-Runner runtime proof, and no lifecycle extraction. This activation changes continuity only: .3 now exclusively owns decision 0083's private forward-only state chain, immutable object/state storage, independent predecessor validation, process containment, stage-local timeout evidence, exact cleanup, and byte-equal public-Runner integration. The .1.2 signoff supplied lifecycle risk evidence: repeated guarded t1558 attempts timed out different byte-identical baseline/direct executions at Runner's fixed 30-second run wall while counterparts passed in other attempts and unrelated compiler work was active. Runner currently reports only VIAL_RUN_RUNTIME_ERROR and cannot distinguish executable launch/policy delay from generated-main time. Implementation must retain stage-local monotonic timing and host/guard context, then preserve or deliberately revise the effective qualified deadline under the selected lifecycle; no root cause, retry policy, or timeout widening is authorized by the observation alone.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3: activate shared staged Verilator lifecycle`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.4`
   Status: `proposed`
@@ -7355,3 +7355,28 @@ raising an enforcement ceiling.
   no external tool and adds no lifecycle, support, performance budget,
   capacity, reached-boundary, parity, full-SystemVerilog, methodology, or
   public-API claim.
+
+## Acceptance Checklist (enforced) — `.17.3.5.3` shared lifecycle activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Clean materialization commit `bd5c0e628`
+  closes `.17.3.5.2` and leaves the already selected lifecycle as the sole
+  dependency-ready child. `git log -S` identifies `0e2140791` as the commit
+  that first introduced proposed child `.17.3.5.3`; no later commit activated
+  it before this continuity slice.
+- [x] **ADDRESSED (verified)** — The owning node, parent frontier, task index,
+  bounded Memory pointer, mdBook status sentence, canonical fact card,
+  generated Knowledge Map, claim inventory, and live-document transition
+  authority alone mark `.17.3.5.3` active. Decision `0083` remains the closed
+  implementation contract. Product source, tests, fixtures, lifecycle,
+  Runner, trace, result, support, limits, and public behavior are unchanged.
+- [x] **NO REGRESSION** — The guarded relative-path/task/Knowledge Map suite
+  reports `All tests successful` at `Files=3, Tests=47`; all 54 mdBook chapters
+  test under the unchanged 88%-host/4,096-MiB-descendant guard. Task integrity
+  remains three trees/996 nodes; Knowledge Map parity remains 1,150 facts/
+  6,098 questions/6,265 occurrences/133 shards; and the claim join remains
+  closed at 1,532 candidates as 27 claim records/900 derived gates/588
+  reviewed records/17 later-owned gaps/zero open candidates. Final live-
+  document, relative-path, diff, staged-acceptance, and doctrine evidence is
+  recorded by this commit workflow with zero ceiling increase. No external
+  tool, runtime, support, performance, capacity, reached-boundary, retry, or
+  timeout-widening claim is authorized.

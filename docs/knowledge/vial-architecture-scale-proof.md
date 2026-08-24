@@ -401,7 +401,7 @@ executes both tracked candidates and verifies their complete graph and exact
 trace families; the default test remains tool-free.
 
 The public Runner still owns the external stages as one atomic transaction.
-`.17.3.5.3` next owns the separately selected shared lifecycle and its
+Active child `.17.3.5.3` owns the separately selected shared lifecycle and its
 stage-local timeout evidence. Source-text patching, padded or truncated output,
 duplicated execution semantics, hidden public widening, and borrowed runtime,
 support, performance, or capacity claims remain rejected.
