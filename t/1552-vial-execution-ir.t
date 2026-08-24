@@ -234,6 +234,69 @@ subtest 'operation graph, decisions, source maps, and hashes are deterministic a
     isnt($first->{execution_ir}->type_table->[0]{semantic_type}{kind}, 'mutated', 'ExecutionIR accessors are deeply defensive');
 };
 
+subtest 'direct endpoint updates retain exact targets and reject non-driver bindings' => sub {
+    my $direct_text = changed(
+        $vial_text,
+        "(endpoints\n            (endpoint ready_out",
+        "(endpoints\n            (endpoint select \"endpoint/HSEL\" (logic 1) public_port)\n            (endpoint ready_out",
+        'direct-drive endpoint declaration',
+    );
+    $direct_text = changed(
+        $direct_text,
+        '(reset bus 3)',
+        "(reset bus 3)\n              (drive select #b1)",
+        'direct-drive action',
+    );
+    my $direct = FSM::VIAL::ExecutionBuilder->build(
+        build_args(semantic_ir => parse_vial($direct_text)),
+    );
+    ok($direct->{ok}, 'drive-capable public input builds');
+    diag($json->encode($direct->{diagnostics})) unless $direct->{ok};
+    my ($operation) = grep {
+        ($_->{kind} // '') eq 'drive'
+    } @{$direct->{execution_ir}->operation_graph->{operations}};
+    my ($binding) = grep {
+        ($_->{semantic_id} // '') eq $operation->{effects}[0]{target_id}
+    } @{$direct->{execution_ir}->bindings->{endpoints}};
+    is(
+        $operation->{effects}[0]{target_id},
+        'ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::endpoint::select',
+        'update-driver effect retains the semantic endpoint identity',
+    );
+    is($binding->{endpoint_id}, 'endpoint/HSEL', 'target resolves to the exact bridge endpoint');
+    is_deeply(
+        [map { $_->{direction} } @{$binding->{relations}}],
+        ['drive'],
+        'target carries one exact drive representation relation',
+    );
+
+    my $sample_only = changed(
+        $vial_text,
+        '(reset bus 3)',
+        "(reset bus 3)\n              (drive response #b1)",
+        'drive sampled output',
+    );
+    execution_failure(
+        'direct drive of sample-only output', 'VIAL_BIND_ACCESS_ERROR',
+        FSM::VIAL::ExecutionBuilder->build(
+            build_args(semantic_ir => parse_vial($sample_only)),
+        ),
+    );
+
+    my $probe_drive = changed(
+        $vial_text,
+        '(reset bus 3)',
+        "(reset bus 3)\n              (drive stored_data #b00000000000000000000000000000000)",
+        'drive verification probe',
+    );
+    execution_failure(
+        'direct drive of verification probe', 'VIAL_BIND_ACCESS_ERROR',
+        FSM::VIAL::ExecutionBuilder->build(
+            build_args(semantic_ir => parse_vial($probe_drive)),
+        ),
+    );
+};
+
 subtest 'random algorithm has fixed vectors and strict replay round trip' => sub {
     my @vector = (
         [1, 0, 'vector/one', 0, 1, undef, undef],

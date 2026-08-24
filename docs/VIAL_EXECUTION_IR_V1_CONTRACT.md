@@ -445,6 +445,16 @@ transaction driver owns that slot. Two same-phase writes to one slot from live
 fibers are a deterministic conflict error even when values match; source order
 does not silently choose a winner.
 
+The immutable direct action carries `endpoint_id` as both a typed input and the
+exact `update_driver.target_id`; a null target is invalid. Direct action use is
+discovered from the action record itself, so it participates in directional
+binding even when no expression-reference node names the endpoint. A probe
+remains sample-only and fails binding if selected as a direct target. The first
+portable-SystemVerilog realization further limits direct drive to public input
+carriers and scenario-root operations; `inout_direct_drive` and
+`non_root_direct_drive` are backend non-claims, not narrower ExecutionIR
+semantics. Decision `0081` records that realization and its rollback.
+
 A transaction start evaluates every field once from the plan's fixed choices
 and current model/sample values permitted by the typed expression. Active
 substitution faults are applied afterward. The resulting effective field
@@ -1306,6 +1316,15 @@ limits, and fails atomically. Completed `.10.2` composes that private builder
 behind the public planner, admits transaction-free direct-IAL0 endpoint
 fixtures, and publishes the defensive plan without exposing ExecutionIR. It
 still emits no backend, result, runtime, or parity pass.
+
+Completed repair `.17.3.5.1.2` closes the direct-action projection defect in
+the shipped builder: ordinary source now produces the exact endpoint-targeted
+effect, while sample-only endpoints and probes fail before a plan. Focused
+ExecutionIR tests independently retain target identity and the exact drive
+relation. Portable rendering, runtime, trace validation, finalization, and its
+narrower support boundary remain owned by the backend contract and decision
+`0081`; this target-neutral contract does not infer inout or non-root backend
+support.
 
 ## Validation And Rollback
 

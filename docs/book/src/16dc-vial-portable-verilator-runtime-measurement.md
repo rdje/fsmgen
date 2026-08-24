@@ -55,7 +55,8 @@ eligible phase with the last logical phase consumed by its generated task:
 
 | Lowering returns after | Actions |
 | --- | --- |
-| `react` | `drive`, `start`, `repeat`, `scoreboard_expect`, `inject` |
+| `drive` | `drive` |
+| `react` | `start`, `repeat`, `scoreboard_expect`, `inject` |
 | `check` | `reset`, `await`, `parallel`, `expect`, `scoreboard_check` |
 
 The scheduler walks immutable root-operation/static-rank order and retains that
@@ -68,6 +69,13 @@ backward crossing advances exactly once:
 | `check -> react` | one inactive-edge barrier | reaches genuine next-cycle sample/react state |
 | `react -> drive` | one logical-cycle increment | selects the next drive phase without an extra sample |
 | `check -> drive` | one logical-cycle increment | selects the next drive phase without an extra sample |
+
+A direct slot update returns in `drive`. Another root direct drive therefore
+runs in the same phase and retains authored/static-rank order. A later react or
+check action is a forward rank numerically, but it cannot consume a post-edge
+snapshot until the current cycle has crossed the real inactive-edge sample
+barrier. The scheduler inserts exactly that one barrier; it also traverses it
+before scenario finalization when drive is the last operation.
 
 There is no sample-eligible version-1 action and no possible backward target at
 check. `start` no longer increments the cycle unconditionally inside its own
@@ -89,25 +97,74 @@ expectation, validates the complete result, removes staging, and returns
 byte-identical results and artifacts on a repeated repaired run. Decision
 `0080` records the alternatives and rollback.
 
-## Next prerequisite: direct `drive`
+## Completed prerequisite: direct `drive`
 
 The phase-table signoff exposed a separate pre-existing defect rather than
-hiding it in the rollover change. Ordinary VIAL that binds a public DUT input
-and authors `(drive select #b1)` builds an immutable `drive` operation with
-`update_driver` intent and typed endpoint/value inputs. Portable negotiation
-succeeds, but the existing generated operation task contains only
-`vial_inactive_barrier()`—it neither assigns the endpoint nor emits the drive
-record. The effect target is also null because the builder's target projection
-omits `endpoint_id`.
+hiding it in the rollover change. Ordinary VIAL could bind a public DUT input
+and retain a `drive` operation with typed endpoint/value inputs, yet the effect
+target was null and the generated task contained only a barrier. It neither
+assigned the endpoint nor emitted a drive record.
 
-Active task `.17.3.5.1.2` owns that full semantic repair: exact drive-capable
-binding, normalized assignment and trace record, completion-phase definition,
-successor interaction, hostile target/type rejection, real Verilator behavior,
-determinism, and support truth. Runtime materialization selection remains
-paused until it commits cleanly. This is not a scale limitation and does not
-invalidate the transaction-`start` checked-AHB qualification; it is an accepted
-direct-action implementation defect that must be removed before broader
-runtime measurement relies on the advertised action set.
+Completed task `.17.3.5.1.2` repairs the entire semantic chain. For example,
+the checked source can add this endpoint declaration and action:
+
+```lisp
+(endpoint select "endpoint/HSEL" (logic 1) public_port)
+...
+(drive select #b1)
+```
+
+The builder now produces one exact `update_driver` target and one drive
+representation relation. The backend independently requires that effect,
+binding, relation, normalized known scalar, public input carrier, and declared
+SystemVerilog port before emitting anything. Its generated operation is
+equivalent to:
+
+```systemverilog
+vial_transaction_static_rank = 1;
+HSEL = 1'h1;
+vial_emit("drives", /* exact endpoint, operation, logical time, and value */);
+```
+
+This is a zero-duration drive-phase update: the task itself has no barrier.
+Same-fiber updates stay ordered in one phase; drive-to-react/check traverses one
+real sample barrier. Live sibling writes to the same slot fail once with a
+stable scenario/endpoint conflict rather than choosing by simulator order.
+After the terminal fiber record, scenario finalization restores each directly
+used slot once to safe zero before `scenario_end`; that lifecycle assignment is
+not a second authored drive and has its own exact source-map provenance.
+
+Trace validation does not trust a plausible runtime line. For a direct record
+it rechecks the immutable operation, exact bound bridge endpoint, null
+transaction field, canonical effective value, drive-phase/static/local ranks,
+and semantic endpoint identity. Endpoint, value, or phase forgery fails before
+result production. A real qualified-Verilator public run observes exactly one
+`endpoint/HSEL` drive and returns byte-equal results and artifacts on its
+focused replay.
+
+The portable support boundary is deliberately narrower than generic
+ExecutionIR: only a public `input` carrier in the scenario root fiber is
+accepted. Inout needs a resolved-driver policy and non-root drive needs a
+qualified child-fiber scheduler. Both fail before artifacts and remain explicit
+non-claims. Decision `0081` records the rationale, alternatives, rollback, and
+three verification legs.
+
+The same signoff audit found that the current `parallel` renderer assumes its
+child operations are await-like. Arbitrary non-await child actions can pass
+target-neutral planning without a matching portable child scheduler. Proposed
+task `.17.3.5.1.3` owns fail-closed admission or a complete lowering before
+runtime materialization selection resumes; this direct-drive slice does not
+silently generalize nested operation support.
+
+Repeated guarded full integration attempts also exposed the existing Runner's
+fixed 30-second run wall under concurrent cross-repository compiler load. A
+direct-drive replay, a baseline replay, and later the first unchanged baseline
+run have each timed out in separate attempts, while byte-identical counterparts
+passed in the other attempts. The available diagnostic cannot distinguish
+executable-launch delay from time spent in generated `main`, so no narrower
+root-cause claim is made. Existing implementation task `.17.3.5.3` now owns
+timeout/stage-state evidence and the shared lifecycle policy; the focused
+direct-drive runtime proof remains separate from that lifecycle defect/risk.
 
 ## Intended ownership sequence
 

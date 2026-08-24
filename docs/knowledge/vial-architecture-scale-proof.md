@@ -42,6 +42,9 @@ answers:
   - "why did portable Verilator runtime reachability expose a phase-order defect?"
   - "how does portable SystemVerilog schedule a check-to-react successor?"
   - "why is portable SystemVerilog direct drive a separate prerequisite?"
+  - "how does portable SystemVerilog implement a direct endpoint drive?"
+  - "why are portable direct drives limited to input carriers and root fibers?"
+  - "what Runner timeout risk was found before portable runtime measurement?"
 date: 2026-08-24
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -53,6 +56,7 @@ evidence: >-
   docs/decisions/0077-vial-balanced-portable-uses-a-caller-sealed-revision-2-qualification-bridge.md;
   docs/decisions/0078-vial-execution-total-operation-cap-precedes-graph-materialization.md;
   docs/decisions/0080-portable-systemverilog-rolls-backward-successors-by-logical-phase.md;
+  docs/decisions/0081-portable-systemverilog-direct-drive-uses-root-owned-zero-duration-driver-slots.md;
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/VIAL/ArchitectureScaleWorkload.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission.pm; perl/FSM/VIAL/ArchitectureScaleRuntimeStream.pm;
   perl/FSM/VIAL/ArchitectureScaleBalancedPortable.pm;
@@ -72,6 +76,7 @@ evidence: >-
   perl/FSM/VIAL/ArchitectureScaleBridgeFanout.pm;
   perl/FSM/HIAL/VIALBridge/Builder.pm; perl/FSM/VIAL/ExecutionBuilder.pm;
   perl/FSM/VIAL/Backend/SVPortableVerilator.pm;
+  perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/Support/VIALExecutionContract.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission/PortableVHDL.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission/OSVVM.pm;
   perl/FSM/Support/VIALVHDLEmissionContract.pm; perl/FSM/Support/VIALNativeUVMEmissionContract.pm;
@@ -134,6 +139,10 @@ reverify: >-
   perl/FSM/VIAL/Backend/SVPortableVerilator.pm
   t/1557-vial-portable-sv-backend-emission.t
   t/1558-vial-verilator-run-integration.t &&
+  rg -n 'input_carrier_direct_drive_only|root_fiber_direct_drive_only|direct_driver_safe_zero_finalization|direct-drive-conflict'
+  perl/FSM/VIAL/Backend/SVPortableVerilator.pm perl/FSM/VIAL/Backend/TraceValidator.pm
+  perl/FSM/Support/VIALExecutionContract.pm
+  docs/decisions/0081-portable-systemverilog-direct-drive-uses-root-owned-zero-duration-driver-slots.md &&
   prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t
   t/1602-vial-architecture-scale-bridge-fanout.t
   t/1644-vial-backend-emission-authority-alignment.t
@@ -277,13 +286,28 @@ qualified-Verilator Runner produces a genuine passing inserted expectation and
 byte-identical repeated result/artifact graphs. Decision `0080` retains the
 rationale, alternatives, rollback, and three verification legs.
 
-That signoff review separately confirmed a pre-existing direct-drive defect.
-Ordinary VIAL with a drive-capable endpoint builds immutable `update_driver`
-intent and negotiates successfully, but the emitted `drive` task contains only
-an inactive barrier; its effect target is also null. Active `.17.3.5.1.2`
-owns endpoint/relation validation, assignment and drive-record emission,
-completion-phase/successor semantics, real runtime proof, determinism, and
-support truth before runtime materialization/lifecycle selection resumes.
+Completed `.17.3.5.1.2` repairs the separately proven direct-drive defect.
+Ordinary VIAL now retains the exact `update_driver` endpoint target and drive
+relation; the portable backend renegotiates effect/binding/relation/value/port
+identity, assigns the normalized value, and emits one exact drive-phase record
+without consuming a barrier. Same-fiber writes stay ordered, a later
+react/check crosses one genuine sample barrier, conflicting live sibling writes
+reject deterministically, and scenario finalization restores each used slot to
+safe zero with dedicated provenance. Trace validation independently rejects
+forged endpoint, value, transaction-field, or logical-slot claims. The portable
+profile fails closed for inout and non-root direct drive and publishes both as
+explicit nonclaims. Decision `0081` retains the rule and three proof legs.
+
+The signoff audit also found that portable `parallel` rendering assumes await-
+like children even though target-neutral planning can retain other child action
+kinds. Proposed `.17.3.5.1.3` owns complete lowering or fail-closed admission.
+Repeated guarded full integration attempts timed out different baseline/direct
+executions at Runner's fixed 30-second run wall while byte-identical executions
+passed in other attempts under concurrent compiler load. The diagnostic cannot
+yet separate process-launch delay from generated-main time. Existing
+`.17.3.5.3` owns that stage/timeout evidence and lifecycle policy, so the
+observation is neither hidden nor misreported as a direct-drive semantic
+failure.
 
 The provider-free runtime construction still does not prove that its selected
 semantic activity can be represented truthfully by the shipped trace and

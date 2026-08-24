@@ -816,9 +816,9 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Select the exact runtime-stream materialization, identity, and shared Verilator stage-lifecycle contract.`
   Acceptance: `Audit the canonical runtime construction, portable emitter, Runner, trace validator, result producer, measurement controller, qualified tool/limit authority, and reference runtime evidence. Select a closed workload-to-runtime schedule that proves candidate record-count reachability while preserving semantic truth, binds every repeated activity into trace/result/backend evidence, and classifies reference/limit/excess applicability honestly. Select one caller-sealed staged execution lifecycle reused by the public Runner and measurement workers across process boundaries with exact tool identity, commands, timeouts, transcript bounds, state transitions, same-volume ownership, failure cleanup, and no second execution semantics. Record alternatives and rollback in a decision; change no product behavior.`
-  Verification: `The exact gate-reachability probe exposed a portable-SystemVerilog scheduler defect before selection could close: legal authored source with a check-phase expect followed by a react-phase scoreboard operation emitted check then react in one logical cycle and the shipped TraceValidator rejected the run. Completed child .1.1 now rolls every supported backward phase crossing exactly once and rejects operation-phase drift. Its signoff review independently proved that direct VIAL drive is negotiated into immutable update_driver intent but the existing generated task only advances a barrier; active child .1.2 must repair that separate pre-existing product defect before .1 resumes reachability proof and architecture selection.`
+  Verification: `The exact gate-reachability probe exposed a portable-SystemVerilog scheduler defect before selection could close: legal authored source with a check-phase expect followed by a react-phase scoreboard operation emitted check then react in one logical cycle and the shipped TraceValidator rejected the run. Completed child .1.1 now rolls every supported backward phase crossing exactly once and rejects operation-phase drift. Completed child .1.2 repairs the separately proven inert direct-drive path from target projection through binding, negotiation, zero-duration assignment/trace, safe finalization, validation, and support truth. Its signoff audit also proved that portable parallel rendering assumes await-like child operations while target-neutral planning admits other child kinds; proposed .1.3 must close that admission/lowering boundary before .1 resumes reachability proof and architecture selection. Repeated loaded-host full integration attempts exposed fixed-30-second runtime timeouts in different byte-identical baseline/direct executions while counterparts passed elsewhere; child .3 already owns the missing launch/main timing evidence and shared lifecycle policy, so no narrower cause is claimed here.`
   Commit: `pending selection`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.2`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.3`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.1`
   Status: `done`
@@ -828,11 +828,18 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.1: repair portable-SV phase rollover`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.2`
-  Status: `active`
+  Status: `done`
   Goal: `Repair portable-SystemVerilog direct-drive lowering so accepted update-driver intent changes and records the exact bound endpoint value.`
   Acceptance: `Preserve an ordinary VIAL/HIAL RED whose added public input endpoint and (drive ENDPOINT VALUE) action produce immutable ExecutionIR kind=drive, eligible_phase=drive, update_driver effect, endpoint/value typed inputs, and successful portable negotiation, while the generated operation task contains only vial_inactive_barrier() and no endpoint assignment or drive record. Root-cause and repair the missing effect target and renderer path generally: bind only an exactly drive-capable bridge endpoint and recorded representation relation; emit the normalized assignment and drives record at the requested logical drive phase; define zero-duration versus cycle-consuming completion consistently with decision 0036; update successor rollover authority and every affected deterministic identity; reject sample-only/probe/unbound/type-incompatible targets before artifacts; prove same-phase drive ordering/conflicts, drive-to-react/check, backward successors, real qualified-Verilator behavior, result/trace closure, repeated byte determinism, diagnostics, and cleanup. Update contract/book/card/task evidence and capability/support truth as required. Do not special-case checked AHB, forge a bridge name or trace record, weaken direction/type safety, add a public API, or claim scale, full-SystemVerilog, four-state, methodology, performance, capacity, or general parity.`
-  Verification: `The 2026-08-24 in-memory ordinary-source probe added endpoint endpoint/HSEL and (drive select #b1). Parser/PlanBuilder produced a successful immutable drive operation with update_driver effect and typed endpoint/value inputs; portable emission negotiated successfully but rendered the exact task body as only vial_inactive_barrier(). ExecutionBuilder::_action_target also omits endpoint_id, leaving the effect target null. Clean prerequisite commit 1e9ab0e61 closes .1.1; this child alone now owns executable RED preservation and the complete direct-drive repair.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.2: activate portable-SV direct-drive repair`
+  Verification: `Decision 0081 and the preserved ordinary-source RED close the direct-drive semantic chain. ExecutionBuilder projects endpoint_id into the update_driver target and discovers action-level drive use; probes and sample-only endpoints fail binding. Portable negotiation independently requires the exact effect, root-fiber/public-input execution and bridge binding, one drive relation, fully known equal normalized scalar, and declared SystemVerilog port; inout/non-root remain explicit nonclaims and live sibling conflicts reject once by scenario/endpoint identity. Emission performs the exact zero-duration port assignment plus drive record, retains same-phase order, traverses one real sample barrier before react/check/finalization, restores each used slot once to safe zero, and source-maps that lifecycle write. TraceValidator independently closes endpoint, null transaction field, value, and logical slot. Guarded t1552/t1557 pass Files=2/Tests=15; the final loaded-host t1558 run passed the complete repeated direct-drive subtest while its unrelated baseline replay alone reached the pre-existing fixed 30-second Runner wall, now durably routed to child .3 without a fabricated root cause. The same audit routes the broader parallel-child admission/rendering defect to proposed .1.3. No scale, four-state, methodology, performance, capacity, or general-parity claim is added.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.2: activate portable-SV direct-drive repair; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.2: repair portable-SV direct drive`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.3`
+  Status: `proposed`
+  Goal: `Close portable-SystemVerilog admission and lowering for non-await operations nested under parallel fibers.`
+  Acceptance: `First preserve an ordinary-source RED whose target-neutral ExecutionIR contains non-await parallel-child operations and whose current portable negotiation/emission either loses, misorders, or fails to invoke their generated behavior. Inventory every operation kind the execution profile permits in child fibers and independently compare that set with the portable renderer's child scheduler. Select and implement either complete deterministic child-operation lowering or exact fail-closed negotiation for every unimplemented topology; preserve authored/static ranks, all/any completion and cancellation, logical phases, conflicts, trace/result identity, deterministic reruns, diagnostics, and cleanup. Reject no legal topology already proved executable without an explicit compatibility decision, and do not special-case direct drive, rewrite source, rely on SystemVerilog fork order, fabricate trace time, widen public APIs, or claim scale, performance, capacity, four-state, methodology, or parity.`
+  Verification: `The .1.2 signoff probe showed that target-neutral planning can retain direct-drive children under parallel. Before the new direct-drive conflict/root-fiber guard, portable negotiation and emission accepted that plan, while _render_parallel constructs child readiness/completion around await-property evaluation and does not invoke arbitrary child operation tasks. The direct-drive guard now fails that particular topology closed, but the broader accepted-kind versus rendered-child-kind mismatch remains unproved. This node durably owns the general RED, compatibility selection, and repair after separate clean activation.`
+  Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2`
   Status: `proposed`
@@ -845,7 +852,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `proposed`
   Goal: `Implement the selected shared staged Verilator execution lifecycle without changing the public Runner contract.`
   Acceptance: `Extract one caller-sealed state machine for qualified tool discovery, input preparation, compile, run, trace extraction/validation, result production, final artifact assembly, and cleanup. Persist only closed content-addressed state below an exact repository-owned stage, independently validate every predecessor before transition, preserve process-group termination and capture ceilings, reject skips/replay/mutation/collision/symlink/partial state, and make the existing Runner consume the same transitions with byte-equal success artifacts and stable failure diagnostics.`
-  Verification: `pending`
+  Verification: `The .1.2 signoff supplied lifecycle evidence without changing this proposed implementation owner: repeated guarded t1558 attempts timed out different byte-identical baseline/direct executions at Runner's fixed 30-second run wall while counterparts passed in other attempts and unrelated compiler work was active. Runner currently reports only VIAL_RUN_RUNTIME_ERROR and cannot distinguish executable launch/policy delay from generated-main time. This node must retain stage-local monotonic timing and host/guard context, then preserve or deliberately revise the effective qualified deadline under the selected lifecycle; no root cause, retry policy, or timeout widening is authorized by the observation alone.`
   Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.4`
@@ -7048,3 +7055,45 @@ raising an enforcement ceiling.
   doctrine gates pass. No code, test, fixture, parser, SemanticIR, bridge,
   ExecutionIR, emission, runtime, trace, result, API, support, scale,
   performance, capacity, parity, four-state, or methodology behavior changes.
+
+## Acceptance Checklist (enforced) — `.17.3.5.1.2` portable-SV direct-drive implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE; executable RED)** — The preserved ordinary
+  source adds public input endpoint `endpoint/HSEL` and `(drive select #b1)`.
+  Parser/PlanBuilder produce a successful immutable drive operation with exact
+  typed endpoint/value inputs and one `update_driver` effect, but the pre-fix
+  effect target is null because `_action_target` omits `endpoint_id`; the
+  pre-fix generated task is exactly `vial_inactive_barrier()` with no `HSEL`
+  assignment or `drives` record. Binder reference discovery also sees only
+  expression references, so direct action use does not independently establish
+  drive direction. The executable RED reports four exact focused failures;
+  `git log -S'_action_target' -1 -- perl/FSM/VIAL/ExecutionBuilder.pm` locates
+  the original target projection at `44dbecd1a`.
+- [x] **ADDRESSED (verified)** — Decision `0081` governs one coherent repair.
+  Builder target/reference projection and probe rejection close immutable
+  intent; backend negotiation re-derives effect, binding, relation, fully known
+  normalized value, declared port, input/root-fiber boundary, and live-sibling
+  conflict before artifacts. Rendering assigns and records one zero-duration
+  drive, preserves same-phase order, crosses one sample barrier before later
+  phases/finalization, restores safe zero once, and emits dedicated provenance.
+  TraceValidator rechecks endpoint, null transaction field, canonical value,
+  and exact logical slot. Inout/non-root direct drive remain explicit support
+  nonclaims rather than speculative support.
+- [x] **NO REGRESSION (owning boundary; broader lifecycle gap explicit)** — All
+  changed modules/tests report `syntax OK`. The final guarded IR/emitter/support
+  suite reports `All tests successful` at `Files=3, Tests=7109`; independent
+  capability/runtime-construction coverage passes at `Files=2, Tests=8`.
+  Qualified-Verilator execution has observed the complete direct-drive
+  subtest—including exact HSEL assignment/record, safe-zero finalization,
+  result/artifact byte replay, and cleanup—pass. Repeated full `t/1558` runs
+  are not claimed green: different unchanged/direct executions reach Runner's
+  pre-existing fixed runtime wall under concurrent host work, with no live
+  process or staging residue; `.17.3.5.3` owns the missing launch/main timing
+  evidence and the test now fails concisely without dereferencing absent
+  artifacts. All 54 mdBook chapters test and render; Knowledge Map parity holds
+  at 1,150 facts/6,091 questions/6,258 occurrences/133 shards; task integrity
+  holds at three trees/995 nodes; the claim join closes 1,474 candidates as 884
+  gates/588 reviewed records/zero gaps; all 22 live-document surfaces and both
+  maintained references pass with zero ceiling increases. Repository locality,
+  exact failed-run cleanup, and diff checks pass. No scale, four-state,
+  methodology, performance, capacity, or general-parity claim is added.

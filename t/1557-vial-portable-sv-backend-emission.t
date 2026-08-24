@@ -208,6 +208,131 @@ subtest 'root successor scheduling rolls every backward phase crossing to the ne
     );
 };
 
+subtest 'ordinary direct drive lowers one exact bound endpoint update and record' => sub {
+    my $direct = build_plan(direct_drive_source());
+    ok($direct->{ok}, 'ordinary direct-drive source builds through immutable ExecutionIR');
+    diag($json->encode($direct->{diagnostics})) unless $direct->{ok};
+
+    my ($binding) = grep {
+        ($_->{endpoint_id} // '') eq 'endpoint/HSEL'
+    } @{$direct->{execution_ir}{data}{bindings}{endpoints} || []};
+    ok(defined($binding), 'direct-drive endpoint has one execution binding');
+    is($binding->{carrier_direction}, 'input', 'bound carrier is drive-capable');
+    is_deeply(
+        [map { $_->{direction} } @{$binding->{relations} || []}],
+        ['drive'],
+        'binding carries one exact drive representation relation',
+    );
+
+    my ($drive) = grep {
+        ($_->{kind} // '') eq 'drive'
+    } @{$direct->{execution_ir}{data}{operation_graph}{operations} || []};
+    ok(defined($drive), 'authored drive becomes one immutable drive operation');
+    is($drive->{eligible_phase}, 'drive', 'direct operation is eligible in the drive phase');
+    is($drive->{effects}[0]{kind}, 'update_driver', 'direct operation retains update-driver intent');
+    is(
+        $drive->{effects}[0]{target_id},
+        $binding->{semantic_id},
+        'update-driver effect names the exact semantic endpoint target',
+    );
+
+    my $fixture = emitted_fixture_source($direct);
+    my ($body) = $fixture =~ m{
+        //\ VIAL\ operation:\ \Q$drive->{operation_id}\E\n
+        \ \ task\ automatic\ [^;]+;\n
+        (.*?)
+        \ \ endtask
+    }sx;
+    ok(defined($body), 'direct-drive operation task is independently recoverable');
+    like($body, qr{^\s*HSEL = 1'h1;$}m, 'direct-drive task assigns the exact bound port value');
+    like(
+        $body,
+        qr{vial_emit\("drives".*\\"endpoint_id\\":\\"endpoint/HSEL\\"}s,
+        'direct-drive task emits one endpoint-qualified drive record',
+    );
+    unlike($body, qr{vial_inactive_barrier\(\)}, 'zero-duration direct drive does not consume a sample barrier');
+    like(
+        $fixture,
+        qr{HSEL = '0;\s+\$display\("FSMGEN_VIAL_TRACE_V1\\t%s", vial_trace_record\("scenario_end"}s,
+        'scenario finalization restores the direct driver slot to its selected safe zero',
+    );
+    my $direct_emission = emit_plan($direct);
+    ok($direct_emission->{ok}, 'direct-drive finalizer emits with complete provenance');
+    ok(
+        scalar(grep { $_ eq 'root_fiber_direct_drive_only' }
+            @{$direct_emission->{negotiation}{limitations}}),
+        'negotiation publishes the exact non-root direct-drive boundary',
+    );
+    ok(
+        scalar(grep { $_ eq 'input_carrier_direct_drive_only' }
+            @{$direct_emission->{negotiation}{limitations}}),
+        'negotiation publishes the exact input-carrier direct-drive boundary',
+    );
+    my ($map_artifact) = grep {
+        $_->{relpath} eq 'backends/sv_portable_verilator/backend-source-map.json'
+    } @{$direct_emission->{artifacts} || []};
+    my $direct_map = JSON::PP->new->decode($map_artifact->{content});
+    my @finalizer_map = grep {
+        ($_->{role} // '') eq 'direct_driver_safe_zero_finalization'
+    } @{$direct_map->{entries} || []};
+    is(scalar(@finalizer_map), 1, 'direct driver finalization has one dedicated source-map entry');
+    is_deeply(
+        $finalizer_map[0]{semantic_paths},
+        [$binding->{semantic_id}, $drive->{operation_id}],
+        'finalizer provenance closes over the exact endpoint and owning operation',
+    );
+    my $bridge_endpoint = $direct->{bridge_manifest}->get('endpoints');
+    my ($bridge_index) = grep {
+        $bridge_endpoint->[$_]{endpoint_id} eq $binding->{endpoint_id}
+    } 0 .. $#$bridge_endpoint;
+    is_deeply(
+        $finalizer_map[0]{bridge_fact_paths},
+        ["/endpoints/$bridge_index"],
+        'finalizer provenance names the exact bridge endpoint fact',
+    );
+
+    my $ordered_source = direct_drive_source();
+    $ordered_source =~ s{
+        \(drive\ select\ \#b1\)
+    }{(drive select #b0)\n              (drive select #b1)}x
+        or die 'ordered-drive source mutation did not find the direct drive';
+    my $ordered = build_plan($ordered_source);
+    ok($ordered->{ok}, 'two root-fiber writes to one slot build in authored order');
+    diag($json->encode($ordered->{diagnostics})) unless $ordered->{ok};
+    my $ordered_fixture = emitted_fixture_source($ordered);
+    like(
+        $ordered_fixture,
+        qr{
+            vial_op_1_drive_[0-9a-f]{12}\(\);\s+
+            vial_op_2_drive_[0-9a-f]{12}\(\);\s+
+            //\ VIAL\ phase\ advance:\ drive\ ->\ react\ traverses\ the\ current\ cycle\ sample\ barrier\.\s+
+            vial_inactive_barrier\(\);\s+
+            vial_op_3_scoreboard_expect_[0-9a-f]{12}\(\);
+        }sx,
+        'same-fiber same-phase drives retain static-rank order before one sample barrier',
+    );
+
+    my $check_source = direct_drive_source();
+    $check_source =~ s{
+        (\(drive\ select\ \#b1\)\n)
+    }{$1              (expect direct_drive_check (same (sample response) #b0))\n}x
+        or die 'drive-to-check source mutation did not find the direct drive';
+    my $check = build_plan($check_source);
+    ok($check->{ok}, 'direct drive followed by a check-phase operation builds');
+    diag($json->encode($check->{diagnostics})) unless $check->{ok};
+    my $check_fixture = emitted_fixture_source($check);
+    like(
+        $check_fixture,
+        qr{
+            vial_op_1_drive_[0-9a-f]{12}\(\);\s+
+            //\ VIAL\ phase\ advance:\ drive\ ->\ check\ traverses\ the\ current\ cycle\ sample\ barrier\.\s+
+            vial_inactive_barrier\(\);\s+
+            vial_op_2_expect_[0-9a-f]{12}\(\);
+        }sx,
+        'drive-to-check crosses one real sample barrier before evaluation',
+    );
+};
+
 subtest 'negotiation and invocation failures emit nothing' => sub {
     my $wrong = emit_backend(backend_profile => 'other_backend');
     backend_failure($wrong, 'VIAL_BACKEND_UNSUPPORTED', 'wrong backend profile');
@@ -236,6 +361,125 @@ subtest 'negotiation and invocation failures emit nothing' => sub {
         $phase_drift->{negotiation}{unsatisfied},
         ["operation-phase:$phase_drift_operation->{operation_id}"],
         'phase drift fails closed at negotiation with the exact operation identity',
+    );
+
+    my $wrong_drive_target_plan = build_plan(direct_drive_source());
+    my ($wrong_drive_target_operation) = grep {
+        ($_->{kind} // '') eq 'drive'
+    } @{$wrong_drive_target_plan->{execution_ir}{data}{operation_graph}{operations}};
+    $wrong_drive_target_operation->{effects}[0]{target_id} = 'endpoint/forged';
+    my $wrong_drive_target = emit_backend(
+        execution_ir => $wrong_drive_target_plan->{execution_ir},
+        bridge_manifest => $wrong_drive_target_plan->{bridge_manifest},
+        backend_inputs => $wrong_drive_target_plan->{backend_inputs},
+    );
+    backend_failure(
+        $wrong_drive_target, 'VIAL_BACKEND_UNSUPPORTED',
+        'direct-drive effect-target drift',
+    );
+    is_deeply(
+        $wrong_drive_target->{negotiation}{unsatisfied},
+        ["direct-drive:$wrong_drive_target_operation->{operation_id}:effect"],
+        'effect-target drift names the exact rejected direct operation',
+    );
+
+    my $wrong_drive_relation_plan = build_plan(direct_drive_source());
+    my ($wrong_drive_relation_operation) = grep {
+        ($_->{kind} // '') eq 'drive'
+    } @{$wrong_drive_relation_plan->{execution_ir}{data}{operation_graph}{operations}};
+    my ($wrong_drive_binding) = grep {
+        ($_->{semantic_id} // '')
+            eq $wrong_drive_relation_operation->{effects}[0]{target_id}
+    } @{$wrong_drive_relation_plan->{execution_ir}{data}{bindings}{endpoints}};
+    $wrong_drive_binding->{relations}[0]{direction} = 'sample';
+    my $wrong_drive_relation = emit_backend(
+        execution_ir => $wrong_drive_relation_plan->{execution_ir},
+        bridge_manifest => $wrong_drive_relation_plan->{bridge_manifest},
+        backend_inputs => $wrong_drive_relation_plan->{backend_inputs},
+    );
+    backend_failure(
+        $wrong_drive_relation, 'VIAL_BACKEND_UNSUPPORTED',
+        'direct-drive relation drift',
+    );
+    is_deeply(
+        $wrong_drive_relation->{negotiation}{unsatisfied},
+        ["direct-drive:$wrong_drive_relation_operation->{operation_id}:drive-relation"],
+        'relation drift names the exact rejected direct operation',
+    );
+
+    my $inout_drive_plan = build_plan(direct_drive_source());
+    my ($inout_drive_operation) = grep {
+        ($_->{kind} // '') eq 'drive'
+    } @{$inout_drive_plan->{execution_ir}{data}{operation_graph}{operations}};
+    my ($inout_drive_binding) = grep {
+        ($_->{semantic_id} // '')
+            eq $inout_drive_operation->{effects}[0]{target_id}
+    } @{$inout_drive_plan->{execution_ir}{data}{bindings}{endpoints}};
+    $inout_drive_binding->{carrier_direction} = 'inout';
+    my ($inout_bridge_endpoint) = grep {
+        ($_->{endpoint_id} // '') eq $inout_drive_binding->{endpoint_id}
+    } @{$inout_drive_plan->{bridge_manifest}{data}{endpoints}};
+    $inout_bridge_endpoint->{direction} = 'inout';
+    my $inout_drive = emit_backend(
+        execution_ir => $inout_drive_plan->{execution_ir},
+        bridge_manifest => $inout_drive_plan->{bridge_manifest},
+        backend_inputs => $inout_drive_plan->{backend_inputs},
+    );
+    backend_failure(
+        $inout_drive, 'VIAL_BACKEND_UNSUPPORTED',
+        'direct-drive inout carrier',
+    );
+    is_deeply(
+        $inout_drive->{negotiation}{unsatisfied},
+        ["direct-drive:$inout_drive_operation->{operation_id}:carrier-direction"],
+        'inout direct drive fails closed at its exact published profile boundary',
+    );
+
+    my $wrong_drive_value_plan = build_plan(direct_drive_source());
+    my ($wrong_drive_value_operation) = grep {
+        ($_->{kind} // '') eq 'drive'
+    } @{$wrong_drive_value_plan->{execution_ir}{data}{operation_graph}{operations}};
+    my ($wrong_drive_value_input) = grep {
+        ($_->{name} // '') eq 'value'
+    } @{$wrong_drive_value_operation->{typed_inputs}};
+    $wrong_drive_value_input->{value}{type_id} = 'execution-type/forged';
+    my $wrong_drive_value = emit_backend(
+        execution_ir => $wrong_drive_value_plan->{execution_ir},
+        bridge_manifest => $wrong_drive_value_plan->{bridge_manifest},
+        backend_inputs => $wrong_drive_value_plan->{backend_inputs},
+    );
+    backend_failure(
+        $wrong_drive_value, 'VIAL_BACKEND_UNSUPPORTED',
+        'direct-drive value-type drift',
+    );
+    is_deeply(
+        $wrong_drive_value->{negotiation}{unsatisfied},
+        ["direct-drive:$wrong_drive_value_operation->{operation_id}:value"],
+        'value-type drift names the exact rejected direct operation',
+    );
+
+    my $parallel_drive_plan = build_plan(parallel_direct_drive_source());
+    ok($parallel_drive_plan->{ok}, 'target-neutral plan retains parallel direct-drive intent');
+    diag($json->encode($parallel_drive_plan->{diagnostics}))
+        unless $parallel_drive_plan->{ok};
+    my @parallel_drive_operation = grep {
+        ($_->{kind} // '') eq 'drive'
+    } @{$parallel_drive_plan->{execution_ir}{data}{operation_graph}{operations}};
+    my $parallel_drive = emit_backend(
+        execution_ir => $parallel_drive_plan->{execution_ir},
+        bridge_manifest => $parallel_drive_plan->{bridge_manifest},
+        backend_inputs => $parallel_drive_plan->{backend_inputs},
+    );
+    backend_failure(
+        $parallel_drive, 'VIAL_BACKEND_UNSUPPORTED',
+        'same-phase parallel direct-drive conflict',
+    );
+    is_deeply(
+        $parallel_drive->{negotiation}{unsatisfied},
+        ['direct-drive-conflict:'
+            . $parallel_drive_operation[0]{scenario_id} . ':'
+            . $parallel_drive_operation[0]{effects}[0]{target_id}],
+        'live sibling writes to one slot fail closed even when one value could win by host order',
     );
 
     my $invocation = FSM::VIAL::Backend::SVPortableVerilator->emit({});
@@ -284,6 +528,45 @@ subtest 'pure trace validation projects a closed stream without executing semant
     trace_failure($forged, 0, 'VIAL_TRACE_SCHEMA_ERROR', 'unknown record kind');
     my $bad_counts = mutate_record($trace, 6, sub { $_[0]{payload}{counts}{events} = 2 });
     trace_failure($bad_counts, 0, 'VIAL_TRACE_COUNT_ERROR', 'footer count mismatch');
+
+    my $direct_plan = build_plan(direct_drive_source());
+    my $direct_trace = valid_direct_drive_trace($direct_plan->{execution_ir});
+    my $direct_validated = FSM::VIAL::Backend::TraceValidator->validate({
+        execution_ir => $direct_plan->{execution_ir},
+        trace_text => $direct_trace,
+        simulator_exit_code => 0,
+    });
+    ok($direct_validated->{ok}, 'exact direct-drive trace validates');
+    diag($json->encode($direct_validated->{diagnostics}))
+        unless $direct_validated->{ok};
+    is(
+        $direct_validated->{projection}{counts}{drives}, 1,
+        'direct-drive trace projection retains one genuine drive record',
+    );
+    my $wrong_direct_endpoint = mutate_record(
+        $direct_trace, 2,
+        sub { $_[0]{payload}{endpoint_id} = 'endpoint/HRESP' },
+    );
+    trace_failure_for(
+        $direct_plan->{execution_ir}, $wrong_direct_endpoint, 0,
+        'VIAL_TRACE_IDENTITY_ERROR', 'forged direct-drive endpoint',
+    );
+    my $wrong_direct_value = mutate_record(
+        $direct_trace, 2,
+        sub { $_[0]{payload}{effective_value}{value_hex} = '0' },
+    );
+    trace_failure_for(
+        $direct_plan->{execution_ir}, $wrong_direct_value, 0,
+        'VIAL_TRACE_IDENTITY_ERROR', 'forged direct-drive value',
+    );
+    my $wrong_direct_phase = mutate_record(
+        $direct_trace, 2,
+        sub { $_[0]{payload}{logical_time}{phase_rank} = 1 },
+    );
+    trace_failure_for(
+        $direct_plan->{execution_ir}, $wrong_direct_phase, 0,
+        'VIAL_TRACE_IDENTITY_ERROR', 'forged direct-drive phase',
+    );
 };
 
 subtest 'capability discovery distinguishes bounded AHB parity from general parity' => sub {
@@ -297,6 +580,13 @@ subtest 'capability discovery distinguishes bounded AHB parity from general pari
     is($contract->{backend_stage_status}{result}, 'shipped_verification_result_manifest_v1', 'result production is shipped');
     is($contract->{backend_stage_status}{parity}, 'shipped_handwritten_ahb_oracle', 'bounded handwritten AHB parity is shipped');
     ok($contract->{writes_files}, 'execution records operation-owned staging and publication');
+    ok(
+        scalar(grep { $_ eq 'non_root_direct_drive' }
+            @{$contract->{explicit_nonclaims}})
+            && scalar(grep { $_ eq 'inout_direct_drive' }
+                @{$contract->{explicit_nonclaims}}),
+        'execution support truth denies non-root and inout portable direct drive',
+    );
     ok($contract->{public_embedding_api}, 'execution is exposed through the public VIAL tool API');
     my $manifest = build_capability_manifest();
     is_deeply($manifest->{language_surface}{vial_execution}, $contract, 'capability manifest publishes the exact private stage boundary');
@@ -329,19 +619,24 @@ sub build_plan {
 
 sub emitted_fixture_source {
     my ($plan) = @_;
-    my $emitted = FSM::VIAL::Backend::SVPortableVerilator->emit({
-        execution_ir => $plan->{execution_ir},
-        bridge_manifest => $plan->{bridge_manifest},
-        backend_inputs => $plan->{backend_inputs},
-        artifact_root => '.artifacts/test/vial-portable-sv-emission',
-        backend_profile => 'sv_portable_verilator',
-    });
+    my $emitted = emit_plan($plan);
     ok($emitted->{ok}, 'phase-order fixture emits successfully');
     diag($json->encode($emitted->{diagnostics})) unless $emitted->{ok};
     my ($fixture) = grep {
         $_->{relpath} eq 'backends/sv_portable_verilator/src/base_output_arbitration_tb.sv'
     } @{$emitted->{artifacts} || []};
     return defined($fixture) ? $fixture->{content} : '';
+}
+
+sub emit_plan {
+    my ($plan) = @_;
+    return FSM::VIAL::Backend::SVPortableVerilator->emit({
+        execution_ir => $plan->{execution_ir},
+        bridge_manifest => $plan->{bridge_manifest},
+        backend_inputs => $plan->{backend_inputs},
+        artifact_root => '.artifacts/test/vial-portable-sv-emission',
+        backend_profile => 'sv_portable_verilator',
+    });
 }
 
 sub emit_backend {
@@ -424,6 +719,102 @@ sub valid_trace {
     return join('', map { "FSMGEN_VIAL_TRACE_V1\t" . $json->encode($_) . "\n" } @record);
 }
 
+sub valid_direct_drive_trace {
+    my ($execution_ir) = @_;
+    my $execution = $execution_ir->as_hashref;
+    my @scenario_runs = map {{
+        scenario_id => $_->{scenario_id},
+        run_id => "run/$execution->{plan_id}/$_->{scenario_id}",
+    }} @{$execution->{scenarios}};
+    my ($drive) = grep { ($_->{kind} // '') eq 'drive' }
+        @{$execution->{operation_graph}{operations}};
+    my %input = map { $_->{name} => $_->{value} } @{$drive->{typed_inputs}};
+    my ($binding) = grep {
+        ($_->{semantic_id} // '') eq $input{endpoint_id}
+    } @{$execution->{bindings}{endpoints}};
+    my @record = (
+        trace_record(
+            'header', $execution->{plan_id}, undef,
+            {
+                fixture_id => $execution->{fixture}{fixture_id},
+                execution_profile => $execution->{profile},
+                backend_profile => 'sv_portable_verilator',
+                scenario_runs => \@scenario_runs,
+                decision_digest => sha256_hex(
+                    $json->encode($execution->{randomness}{decisions}),
+                ),
+            },
+        ),
+        trace_record(
+            'scenario_start', $execution->{plan_id}, $scenario_runs[0]{run_id},
+            {scenario_id => $scenario_runs[0]{scenario_id}},
+        ),
+        trace_record(
+            'drives', $execution->{plan_id}, $scenario_runs[0]{run_id},
+            {
+                effective_value => $input{value}{value},
+                endpoint_id => $binding->{endpoint_id},
+                logical_time => {
+                    cycle => 5,
+                    domain_rank => 0,
+                    phase_rank => 0,
+                    static_operation_rank => $drive->{static_rank},
+                    local_emission_index => 0,
+                    semantic_id => $binding->{semantic_id},
+                },
+                operation_id => $drive->{operation_id},
+                record_id => 'record/' . $scenario_runs[0]{scenario_id}
+                    . '/drives/' . $binding->{semantic_id} . '/0',
+                run_id => $scenario_runs[0]{run_id},
+                transaction_field_id => undef,
+            },
+        ),
+        trace_record(
+            'scenario_end', $execution->{plan_id}, $scenario_runs[0]{run_id},
+            {
+                logical_cycle_count => 6,
+                scenario_id => $scenario_runs[0]{scenario_id},
+                status => 'passed',
+            },
+        ),
+    );
+    for my $index (1 .. $#scenario_runs) {
+        push @record,
+            trace_record(
+                'scenario_start', $execution->{plan_id},
+                $scenario_runs[$index]{run_id},
+                {scenario_id => $scenario_runs[$index]{scenario_id}},
+            ),
+            trace_record(
+                'scenario_end', $execution->{plan_id},
+                $scenario_runs[$index]{run_id},
+                {
+                    logical_cycle_count => 1,
+                    scenario_id => $scenario_runs[$index]{scenario_id},
+                    status => 'passed',
+                },
+            );
+    }
+    my %count;
+    $count{$_->{record_kind}}++ for @record;
+    $count{footer} = 1;
+    push @record, trace_record(
+        'footer', $execution->{plan_id}, undef,
+        {
+            status => 'passed',
+            scenario_completion_summaries => [
+                map {{%$_, status => 'passed'}} @scenario_runs
+            ],
+            counts => {map { $_ => $count{$_} } sort keys %count},
+            clean_termination => JSON::PP::true,
+        },
+    );
+    $record[$_]{sequence} = $_ for 0 .. $#record;
+    return join('', map {
+        "FSMGEN_VIAL_TRACE_V1\t" . $json->encode($_) . "\n"
+    } @record);
+}
+
 sub trace_record {
     my ($kind, $plan_id, $run_id, $payload) = @_;
     return {
@@ -457,8 +848,13 @@ sub backend_failure {
 
 sub trace_failure {
     my ($trace, $exit, $code, $label) = @_;
+    return trace_failure_for($built->{execution_ir}, $trace, $exit, $code, $label);
+}
+
+sub trace_failure_for {
+    my ($execution_ir, $trace, $exit, $code, $label) = @_;
     my $result = FSM::VIAL::Backend::TraceValidator->validate({
-        execution_ir => $built->{execution_ir},
+        execution_ir => $execution_ir,
         trace_text => $trace,
         simulator_exit_code => $exit,
     });
@@ -479,5 +875,29 @@ sub slurp_raw {
     local $/;
     my $text = <$fh>;
     close $fh or die "cannot close $path: $!";
+    return $text;
+}
+
+sub direct_drive_source {
+    my $text = slurp_raw(repo_path($vial_id));
+    $text =~ s{
+        (\(endpoints\n)
+    }{$1            (endpoint select "endpoint/HSEL" (logic 1) public_port)\n}x
+        or die 'direct-drive source mutation did not find fixture endpoints';
+    $text =~ s{
+        (\(reset\ bus\ 3\)\n)
+    }{$1              (drive select #b1)\n}x
+        or die 'direct-drive source mutation did not find the success reset';
+    return $text;
+}
+
+sub parallel_direct_drive_source {
+    my $text = direct_drive_source();
+    $text =~ s{
+        \(drive\ select\ \#b1\)
+    }{(parallel all
+                (fiber direct_zero (drive select #b0))
+                (fiber direct_one (drive select #b1)))}x
+        or die 'parallel-drive source mutation did not find the direct drive';
     return $text;
 }

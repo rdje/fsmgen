@@ -49,6 +49,10 @@ subtest 'public API executes the exact bounded backend and returns normalized re
     });
     ok($result->{success}, 'selected VIAL/HIAL fixture executes successfully');
     diag($json->encode($result->{diagnostics})) unless $result->{success};
+    unless ($result->{success}) {
+        is_deeply($sink, [], 'failed initial API runtime publishes no artifact');
+        return;
+    }
     is($result->{action}, 'run', 'public result preserves the run action');
     is($result->{status}, 'executed', 'public run status is executed');
     is($result->{implementation}{stage}, 'public_verilator_runtime', 'implementation stage is exact');
@@ -155,6 +159,11 @@ subtest 'public API executes the exact bounded backend and returns normalized re
         source_catalog => {}, artifact_sink => $second_sink, repository_root => $repo_root,
     });
     ok($second->{success}, 'repeated API run succeeds');
+    unless ($second->{success}) {
+        diag($json->encode($second->{diagnostics}));
+        is_deeply($second_sink, [], 'failed repeated API runtime publishes no artifact');
+        return;
+    }
     is($json->encode($second), $json->encode($result), 'repeated API result is byte-deterministic');
     is($json->encode($second_sink), $json->encode($sink), 'repeated virtual artifact graph is byte-deterministic');
     ok(!-e repo_path($backend_manifest->{cleanup}{staging_identity}), 'repeated API run also removes exact execution staging');
@@ -297,6 +306,101 @@ subtest 'check-to-react authored successors roll into the next logical cycle' =>
     );
 };
 
+subtest 'ordinary direct drive executes one exact port update and normalized record' => sub {
+    my $drive_text = $vial_text;
+    $drive_text =~ s{
+        (\(endpoints\n)
+    }{$1            (endpoint select "endpoint/HSEL" (logic 1) public_port)\n}x
+        or die 'direct-drive runtime mutation did not find fixture endpoints';
+    $drive_text =~ s{
+        (\(reset\ bus\ 3\)\n)
+    }{$1              (drive select #b1)\n}x
+        or die 'direct-drive runtime mutation did not find the success reset';
+    my $request = run_request();
+    $request->{vial_source} = source_envelope($vial_id, $drive_text, 'vial');
+    $request->{options}{scenario_ids} = ['success'];
+
+    my $sink = [];
+    my $result = execute_vial_tool_request($request, {
+        source_catalog => {}, artifact_sink => $sink,
+        repository_root => $repo_root,
+    });
+    ok($result->{success}, 'public Runner executes the ordinary direct-drive scenario');
+    diag($json->encode($result->{diagnostics})) unless $result->{success};
+    unless ($result->{success}) {
+        is_deeply($sink, [], 'failed direct-drive runtime publishes no artifact');
+        return;
+    }
+    is($result->{result_manifest}{status}, 'pass', 'direct-drive scenario retains a passing semantic result');
+    my @direct = grep {
+        ($_->{endpoint_id} // '') eq 'endpoint/HSEL'
+            && !defined($_->{transaction_field_id})
+    } @{$result->{result_manifest}{drives} || []};
+    is(scalar(@direct), 1, 'runtime result contains exactly one direct HSEL drive');
+    is_deeply(
+        @direct ? $direct[0]{effective_value} : undef,
+        {
+            kind => 'scalar',
+            known_hex => '1',
+            signed => 0,
+            state_domain => 'four_state',
+            type_id => @direct ? $direct[0]{effective_value}{type_id} : undef,
+            value_hex => '1',
+            width => 1,
+            z_hex => '0',
+        },
+        'direct-drive record retains the exact normalized known one-bit value',
+    );
+    like(
+        @direct ? $direct[0]{operation_id} : '',
+        qr{\Aoperation/.+/root\z},
+        'direct-drive result names its immutable owning operation',
+    );
+    is(
+        @direct ? $direct[0]{logical_time}{phase} : undef,
+        'drive',
+        'direct-drive record occurs in the logical drive phase',
+    );
+
+    my %artifact = map { $_->{relpath} => $_ } @$sink;
+    my $fixture = $artifact{
+        'backends/sv_portable_verilator/src/base_output_arbitration_tb.sv'
+    }{content};
+    like(
+        $fixture,
+        qr{task automatic vial_op_[0-9]+_drive_[0-9a-f]{12};\s+vial_transaction_static_rank = [0-9]+;\s+HSEL = 1'h1;\s+vial_emit\("drives"}s,
+        'executed target source couples the direct port assignment to its drive record',
+    );
+    like(
+        $fixture,
+        qr{HSEL = '0;\s+\$display\("FSMGEN_VIAL_TRACE_V1\\t%s", vial_trace_record\("scenario_end"}s,
+        'executed scenario finalization restores the direct driver slot to safe zero',
+    );
+    my ($backend_manifest) = grep { $_->{role} eq 'backend_manifest' } @$sink;
+    my $backend = JSON::PP->new->decode($backend_manifest->{content});
+    ok(!-e repo_path($backend->{cleanup}{staging_identity}), 'direct-drive execution staging is removed');
+
+    my $second_sink = [];
+    my $second = execute_vial_tool_request($request, {
+        source_catalog => {}, artifact_sink => $second_sink,
+        repository_root => $repo_root,
+    });
+    ok($second->{success}, 'repeated direct-drive run succeeds');
+    unless ($second->{success}) {
+        diag($json->encode($second->{diagnostics}));
+        is_deeply($second_sink, [], 'failed repeated direct-drive runtime publishes no artifact');
+        return;
+    }
+    is(
+        $json->encode($second), $json->encode($result),
+        'repeated direct-drive result is byte-deterministic',
+    );
+    is(
+        $json->encode($second_sink), $json->encode($sink),
+        'repeated direct-drive artifact graph is byte-deterministic',
+    );
+};
+
 subtest 'discovery and support accounting expose only the qualified shipped boundary' => sub {
     my $tooling = build_vial_tooling_contract();
     my $execution = build_vial_execution_contract();
@@ -312,6 +416,10 @@ subtest 'discovery and support accounting expose only the qualified shipped boun
         'execution support reports the Runner runtime-capture limit');
     my %nonclaim = map { $_ => 1 } @{$execution->{explicit_nonclaims}};
     ok($nonclaim{complete_four_state} && $nonclaim{general_cross_backend_parity} && $nonclaim{uvm} && $nonclaim{vhdl_methodology}, 'four-state/general-parity/methodology non-claims remain explicit');
+    ok(
+        $nonclaim{non_root_direct_drive} && $nonclaim{inout_direct_drive},
+        'non-root and inout portable direct drive remain explicit non-claims',
+    );
     my ($entry) = grep { $_->{id} eq 'feature.vial_sv_portable_verilator_runtime' } regression_corpus_entries();
     is($entry->{coverage}, 'vial_sv_portable_verilator_runtime_cli_api', 'runtime has a distinct support identity');
     is($entry->{classification}, 'supported_smoke', 'runtime support classification is exact');

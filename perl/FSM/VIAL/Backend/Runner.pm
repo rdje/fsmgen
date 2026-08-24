@@ -236,6 +236,7 @@ sub _run($raw) {
     $backend_manifest->{limitations} = [
         'known-value trace observation only; complete four-state observation is not claimed',
         'one unit, one clock domain, no native extension, and declared probe adapters only',
+        'direct endpoint drives require an input carrier in the scenario root fiber',
         'runtime result is produced; cross-backend parity remains unevaluated',
     ];
     $backend_manifest->{commands}{compile}{execution_status} = 'passed';

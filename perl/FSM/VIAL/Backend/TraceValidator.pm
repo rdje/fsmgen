@@ -201,9 +201,45 @@ sub _validate_semantic_payload($record, $execution, $index) {
         _nonnegative_integer($payload->{event_occurrence_index}, "$path/event_occurrence_index");
     }
     elsif ($kind eq 'drives') {
-        my %operation = map { $_->{operation_id} => 1 } @{$execution->{operation_graph}{operations}};
+        my %operation = map { $_->{operation_id} => $_ }
+            @{$execution->{operation_graph}{operations}};
+        my $operation = $operation{$payload->{operation_id} // ''};
         _throw('VIAL_TRACE_IDENTITY_ERROR', 'drive record names an unknown operation', "$path/operation_id")
-            unless $operation{$payload->{operation_id} // ''};
+            unless $operation;
+        if (($operation->{kind} // '') eq 'drive') {
+            my %input = map { ($_->{name} // '') => $_->{value} }
+                @{$operation->{typed_inputs} || []};
+            my ($binding) = grep {
+                ($_->{semantic_id} // '') eq ($input{endpoint_id} // '')
+            } @{$execution->{bindings}{endpoints} || []};
+            my $effective = ref($input{value}) eq 'HASH'
+                    && ($input{value}{kind} // '') eq 'literal'
+                ? $input{value}{value} : undef;
+            _throw('VIAL_TRACE_IDENTITY_ERROR',
+                'direct drive record does not match its bound endpoint',
+                "$path/endpoint_id")
+                unless defined($binding)
+                    && ($payload->{endpoint_id} // '')
+                        eq ($binding->{endpoint_id} // '')
+                    && !defined($payload->{transaction_field_id});
+            _throw('VIAL_TRACE_IDENTITY_ERROR',
+                'direct drive record does not match its normalized value',
+                "$path/effective_value")
+                unless ref($effective) eq 'HASH'
+                    && $JSON->encode($payload->{effective_value})
+                        eq $JSON->encode($effective);
+            my $time = $payload->{logical_time};
+            _throw('VIAL_TRACE_IDENTITY_ERROR',
+                'direct drive record does not match its logical drive slot',
+                "$path/logical_time")
+                unless ref($time) eq 'HASH'
+                    && ($time->{phase_rank} // -1) == 0
+                    && ($time->{static_operation_rank} // -1)
+                        == ($operation->{static_rank} // -2)
+                    && ($time->{local_emission_index} // -1) == 0
+                    && ($time->{semantic_id} // '')
+                        eq ($binding->{semantic_id} // '');
+        }
     }
     elsif ($kind eq 'transactions') {
         _throw('VIAL_TRACE_SCHEMA_ERROR', 'transaction status is not closed', "$path/status")

@@ -259,7 +259,8 @@ contract. Its lowering-completion groups are:
 
 | Last phase consumed | Generated operation tasks |
 | --- | --- |
-| `react` | `drive`, `start`, `repeat`, `scoreboard_expect`, `inject` |
+| `drive` | `drive` |
+| `react` | `start`, `repeat`, `scoreboard_expect`, `inject` |
 | `check` | `reset`, `await`, `parallel`, `expect`, `scoreboard_check` |
 
 This is a backend-lowering fact, not a new ExecutionIR field. A blocking task
@@ -273,6 +274,14 @@ phase rank means the dependency crosses the logical-cycle boundary:
 | `check -> react` | traverse `vial_inactive_barrier()` to genuine next-cycle sample/react state |
 | `react -> drive` | increment `vial_cycle` once to the next drive |
 | `check -> drive` | increment `vial_cycle` once to the next drive |
+
+Direct drive is the one forward-rank exception to “call without a barrier.” A
+zero-duration slot update returns in `drive`; a following `react` or `check`
+must first traverse the current cycle's inactive-edge barrier so those phases
+consume a genuine post-active-edge sample. Two consecutive direct drives stay
+in authored/static-rank order in the same drive phase. If direct drive is the
+last operation, scenario finalization traverses that same barrier before
+committing completion.
 
 No version-1 operation is sample-eligible, and no backward target can be
 `check`. The `start` task therefore contains no unconditional initial cycle
@@ -331,11 +340,27 @@ materialize a legal width within the selected safety and result-size caps.
 
 ## Drivers, Samples, Transactions, And Probe Adapters
 
-One fixed driver slot exists per driven logical endpoint. The generated
-scheduler is the only writer. Two live same-phase writes remain the
-ExecutionIR conflict error and cannot be resolved by SystemVerilog source order.
-Slots persist until changed or deterministic finalization applies the selected
-safe value.
+One fixed driver slot exists per driven logical endpoint. A direct `drive`
+operation resolves its semantic endpoint only through the immutable execution
+binding, bridge endpoint/relation, and declared SystemVerilog port binding. Its
+zero-duration task assigns the exact normalized known literal and emits one
+`drives` record in logical drive with the owning operation ID, bridge endpoint
+ID, null transaction-field ID, and immutable effective value. The task does
+not consume a barrier.
+
+The portable backend admits this direct operation only on a public `input`
+carrier in the scenario root fiber. Inout carriers need a separately selected
+resolved-driver policy; non-root drives need the separately qualified child-
+fiber scheduler. Both fail negotiation before artifacts and remain explicit
+public non-claims. Two live sibling writes to one direct slot fail once with a
+deterministic scenario/endpoint conflict even when their values match; emitted
+SystemVerilog order is never a winner policy.
+
+Slots persist until changed. After the scenario terminal-fiber record, every
+directly used slot is restored once to the selected safe zero before
+`scenario_end`. This backend lifecycle assignment creates no second semantic
+drive record. It has a dedicated source-map entry tied to the exact execution
+binding, bridge endpoint, owning operations, and authored locations.
 
 One immutable sample snapshot is captured per logical cycle at the inactive
 barrier. Event predicates, models, coverage, and checks read that snapshot;
@@ -385,13 +410,14 @@ Each family uses fixed plan-derived storage. There is no dynamic name lookup,
 class factory, unbounded queue, backend callback, simulator randomization,
 recursive task, fork scheduling authority, DPI/VPI, or host-language escape.
 
-The phase-rollover review also found that the existing direct `drive` task is
-negotiated but currently advances only an inactive barrier instead of assigning
-and recording its requested endpoint value. That separate pre-existing defect
-is not hidden inside rollover scheduling: task `.17.3.5.1.2` owns an ordinary
-source/ExecutionIR/emission/runtime repair before runtime-scale selection may
-resume. Transaction `start` drive behavior and the checked-AHB qualification
-remain executable and covered.
+Completed task `.17.3.5.1.2` repaired the pre-existing inert direct `drive`
+lowering under decision `0081`. ExecutionBuilder now retains the exact effect
+target; binding rejects probe/sample-only use; backend negotiation independently
+closes the effect, endpoint, relation, type/value, port, fiber, and conflict
+identities; emission performs the assignment/record/finalizer behavior above;
+and trace validation rejects a forged endpoint, value, transaction field, or
+logical slot. Transaction `start` drive behavior and the checked-AHB
+qualification remain distinct and covered.
 
 Runtime limit failure, expectation failure, mismatch, illegal bin, timeout, or
 internal error follows the ExecutionIR's deterministic cancellation and
@@ -461,6 +487,9 @@ generated scenario, fiber, operation, driver/sample binding, transaction/event
 adapter, model rule, scoreboard operation, coverage point/bin/cross, fault,
 diagnostic site, and probe adapter has at least one entry. Boilerplate maps to
 the backend contract rather than inventing an authored VIAL location.
+The unrecorded safe-zero lifecycle assignment for a direct slot has its own
+`direct_driver_safe_zero_finalization` entry; it is not hidden inside only the
+scenario-wide span.
 
 Generated source uses deterministic LF text, two-space indentation, stable
 declaration order, meaningful plan-derived symbols, concise identity comments,
@@ -535,6 +564,7 @@ The profile does **not** claim:
   database compatibility, DPI, VPI, classes, constrained randomization, or UVM;
 - native VIAL semantic families, UVM events/callbacks, factories, phases,
   objections, sequences, TLM, config DB, RAL, or methodology components;
+- direct endpoint drive through an inout carrier or from a non-root fiber;
 - VHDL, mixed-language, formal, analog/real-time, performance, large-fixture,
   or cross-backend parity qualification; or
 - compatibility of any unexecuted Verilator/toolchain version.

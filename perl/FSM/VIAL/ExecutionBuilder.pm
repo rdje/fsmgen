@@ -1011,6 +1011,13 @@ sub _bind_probe($ctx, $bindings, $semantic, $unit) {
         "probe bridge reference '$semantic->{bridge_ref}' is unresolved",
         $semantic->{semantic_path}, $semantic->{source_span}, ['/probes']) unless $entry;
     my $carrier = $entry->{record};
+    _throw('VIAL_BIND_ACCESS_ERROR', 'bind',
+        "verification probe '$carrier->{probe_id}' cannot be driven",
+        $semantic->{semantic_path}, $semantic->{source_span},
+        ["/probes/$entry->{index}/access"])
+        if _node_has_reference(
+            $ctx->{fixture}, 'drive', $semantic->{semantic_id},
+        );
     _throw('VIAL_BIND_ACCESS_ERROR', 'bind', "probe '$carrier->{probe_id}' has incompatible access",
         $semantic->{semantic_path}, $semantic->{source_span}, ["/probes/$entry->{index}/access"])
         unless $carrier->{unit_id} eq $unit->{unit_id}
@@ -1052,6 +1059,9 @@ sub _semantic_endpoint_directions($ctx, $semantic) {
 sub _node_has_reference($value, $op, $semantic_id) {
     return 0 unless ref($value);
     if (ref($value) eq 'HASH') {
+        return 1 if $op eq 'drive'
+            && ($value->{kind} // '') eq 'drive'
+            && ($value->{endpoint_id} // '') eq $semantic_id;
         return 1 if ($value->{kind} // '') eq 'reference'
             && ($value->{op} // '') eq $op
             && ($value->{semantic_id} // '') eq $semantic_id;
@@ -1622,6 +1632,7 @@ sub _action_inputs($ctx, $action) {
 
 sub _action_target($action) {
     return $action->{domain_id} if exists $action->{domain_id};
+    return $action->{endpoint_id} if exists $action->{endpoint_id};
     return $action->{transaction_binding_id} if exists $action->{transaction_binding_id};
     return $action->{scoreboard_instance_id} if exists $action->{scoreboard_instance_id};
     return $action->{fault_id} if exists $action->{fault_id};

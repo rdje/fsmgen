@@ -75,7 +75,7 @@ my %PHASE_RANK = (
 # task has genuinely advanced before the root scheduler invokes its successor.
 my %OPERATION_PHASE = (
     reset => {eligible => 'drive', lowering_completion => 'check'},
-    drive => {eligible => 'drive', lowering_completion => 'react'},
+    drive => {eligible => 'drive', lowering_completion => 'drive'},
     start => {eligible => 'drive', lowering_completion => 'react'},
     await => {eligible => 'check', lowering_completion => 'check'},
     parallel => {eligible => 'react', lowering_completion => 'check'},
@@ -324,6 +324,7 @@ sub _emit($raw, $qualification_profile = undef) {
             'known-value trace observation only; complete four-state observation is not claimed',
             'emission is implemented; compile, runtime, result, and parity gates have not run',
             'one unit, one clock domain, no native extension, and declared probe adapters only',
+            'direct endpoint drives require an input carrier in the scenario root fiber',
         ];
     my $manifest = {
         schema => $BACKEND_SCHEMA,
@@ -445,6 +446,7 @@ sub _negotiate(
                 && $relation->{width} >= 1 && $relation->{width} <= 65_536;
     }
     push @unsatisfied, _operation_phase_errors($execution);
+    push @unsatisfied, _direct_drive_errors($execution, $bridge);
     _walk_values($execution, sub ($value, $path) {
         return unless ref($value) eq 'HASH' && ($value->{kind} // '') eq 'scalar'
             && exists($value->{value_hex}) && exists($value->{known_hex})
@@ -469,7 +471,9 @@ sub _negotiate(
         'known_value_trace_only',
         'four_state_observation_unavailable',
         'single_unit_single_domain',
-        'no_native_extensions';
+        'no_native_extensions',
+        'input_carrier_direct_drive_only',
+        'root_fiber_direct_drive_only';
     return {
         required => [sort @required],
         satisfied => [sort @satisfied],
@@ -1208,6 +1212,9 @@ sub _render_fixture(%arg) {
         $_->{target_language} eq 'systemverilog' ? ($_->{semantic_id} => $_) : ()
     } @{$bridge->{backend_bindings}};
     my %endpoint = map { $_->{endpoint_id} => $_ } @{$bridge->{endpoints}};
+    my %execution_endpoint = map {
+        ($_->{semantic_id} // '') => $_
+    } @{$execution->{bindings}{endpoints} || []};
     my @line;
     my @spec;
     my $push = sub (@text) { push @line, @text };
@@ -1641,6 +1648,15 @@ sub _render_fixture(%arg) {
     my %operation = map { $_->{operation_id} => $_ } @{$execution->{operation_graph}{operations}};
     my %symbol = map { $_->{operation_id} => _operation_symbol($_) }
         @{$execution->{operation_graph}{operations}};
+    my %operation_index = map {
+        $execution->{operation_graph}{operations}[$_]{operation_id} => $_
+    } 0 .. $#{$execution->{operation_graph}{operations}};
+    my %execution_endpoint_index = map {
+        ($execution->{bindings}{endpoints}[$_]{semantic_id} // '') => $_
+    } 0 .. $#{$execution->{bindings}{endpoints}};
+    my %bridge_endpoint_index = map {
+        $bridge->{endpoints}[$_]{endpoint_id} => $_
+    } 0 .. $#{$bridge->{endpoints}};
     for my $index (0 .. $#{$execution->{operation_graph}{operations}}) {
         my $op = $execution->{operation_graph}{operations}[$index];
         my $start = @line + 1;
@@ -1728,6 +1744,9 @@ sub _render_fixture(%arg) {
             $push->("    $symbol{$op->{operation_id}}();");
             $completed_phase = $OPERATION_PHASE{$op->{kind}}{lowering_completion};
         }
+        $push->('    ' . $_) for _phase_transition_statements(
+            $completed_phase, 'check', 'scenario finalization',
+        );
 
         for my $coverpoint (@{$execution->{coverage}{coverpoints}}) {
             for my $bin (@{$coverpoint->{bins}}) {
@@ -1776,6 +1795,50 @@ sub _render_fixture(%arg) {
         ));
         $push->("      $pass_symbol = 1;");
         $push->('    end');
+        my %finalized_endpoint;
+        for my $operation (
+            @{$operation_by_scenario{$scenario->{scenario_id}} || []}
+        ) {
+            next unless ($operation->{kind} // '') eq 'drive';
+            my %input = map { ($_->{name} // '') => $_->{value} }
+                @{$operation->{typed_inputs} || []};
+            my $binding = $execution_endpoint{$input{endpoint_id} // ''};
+            next unless $binding
+                && !$finalized_endpoint{$binding->{endpoint_id}}++;
+            my $target = $backend{$binding->{endpoint_id}}{target_name};
+            my @owner = grep {
+                ($_->{kind} // '') eq 'drive'
+                    && grep {
+                        ($_->{name} // '') eq 'endpoint_id'
+                            && ($_->{value} // '') eq ($binding->{semantic_id} // '')
+                    } @{$_->{typed_inputs} || []}
+            } @{$operation_by_scenario{$scenario->{scenario_id}} || []};
+            my $finalize_line = @line + 1;
+            $push->("    $target = '0;");
+            push @spec, _map_spec(
+                relpath => $relpath,
+                start => $finalize_line,
+                end => $finalize_line,
+                symbol => $target,
+                role => 'direct_driver_safe_zero_finalization',
+                plan_paths => [
+                    '/bindings/endpoints/'
+                        . $execution_endpoint_index{$binding->{semantic_id}},
+                    map {
+                        '/operation_graph/operations/'
+                            . $operation_index{$_->{operation_id}}
+                    } @owner,
+                ],
+                semantic_paths => [
+                    $binding->{semantic_id},
+                    map { $_->{operation_id} } @owner,
+                ],
+                bridge_paths => [
+                    '/endpoints/' . $bridge_endpoint_index{$binding->{endpoint_id}},
+                ],
+                locations => [map { $_->{source_location} } @owner],
+            );
+        }
         $push->('    $display("FSMGEN_VIAL_TRACE_V1\\t%s", vial_trace_record("scenario_end", "'
             . $execution->{plan_id} . '", vial_current_run_id_json, vial_sequence, '
             . '{"{\"logical_cycle_count\":", vial_uint_json(vial_cycle + 1), '
@@ -2204,7 +2267,29 @@ sub _render_operation($op, $execution, $bridge, $backend, $endpoint, $symbol,
         );
     }
     if ($op->{kind} eq 'drive') {
-        return ('vial_inactive_barrier();');
+        my $semantic_endpoint_id = $input{endpoint_id};
+        my ($binding) = grep {
+            ($_->{semantic_id} // '') eq $semantic_endpoint_id
+        } @{$execution->{bindings}{endpoints} || []};
+        confess "direct-drive execution binding is missing"
+            unless defined $binding;
+        my $target = $backend->{$binding->{endpoint_id}}{target_name};
+        my $value = $input{value}{value};
+        return (
+            'vial_transaction_static_rank = ' . $op->{static_rank} . ';',
+            "$target = $value->{width}'h$value->{value_hex};",
+            $semantic_statement->(
+                'drives',
+                {
+                    effective_value => _clone($value),
+                    endpoint_id => $binding->{endpoint_id},
+                    operation_id => $op->{operation_id},
+                    transaction_field_id => undef,
+                },
+                0, $op->{static_rank}, 0,
+                $binding->{semantic_id},
+            ),
+        );
     }
     if ($op->{kind} eq 'repeat') {
         return ('// Literal repeat topology is expanded into fixed operation tasks.');
@@ -2221,7 +2306,26 @@ sub _successor_rollover_statements($completed_phase, $operation) {
             && $eligible_phase eq $OPERATION_PHASE{$kind}{eligible}
             && exists($PHASE_RANK{$completed_phase})
             && exists($PHASE_RANK{$eligible_phase});
-    return () unless $PHASE_RANK{$eligible_phase} < $PHASE_RANK{$completed_phase};
+    return _phase_transition_statements(
+        $completed_phase, $eligible_phase, "operation '$kind' successor",
+    );
+}
+
+sub _phase_transition_statements($completed_phase, $eligible_phase, $label) {
+    return () unless defined $completed_phase;
+    confess "portable $label has an unknown phase transition"
+        unless exists($PHASE_RANK{$completed_phase})
+            && exists($PHASE_RANK{$eligible_phase});
+    return () if $completed_phase eq $eligible_phase;
+
+    if ($completed_phase eq 'drive'
+            && ($eligible_phase eq 'react' || $eligible_phase eq 'check')) {
+        return (
+            "// VIAL phase advance: drive -> $eligible_phase traverses the current cycle sample barrier.",
+            'vial_inactive_barrier();',
+        );
+    }
+    return () if $PHASE_RANK{$eligible_phase} > $PHASE_RANK{$completed_phase};
 
     my $comment = "// VIAL successor phase rollover: $completed_phase -> "
         . "$eligible_phase advances to the next logical cycle.";
@@ -2230,6 +2334,127 @@ sub _successor_rollover_statements($completed_phase, $operation) {
     return ($comment, 'vial_inactive_barrier();')
         if $eligible_phase eq 'react';
     confess "portable successor rollover to '$eligible_phase' is unsupported";
+}
+
+sub _direct_drive_errors($execution, $bridge) {
+    my @error;
+    my %root_fiber = map {
+        ($_->{scenario_id} // '') => ($_->{root_fiber_id} // '')
+    } @{$execution->{scenarios} || []};
+    my %parallel_drive;
+    for my $operation (@{$execution->{operation_graph}{operations} || []}) {
+        next unless ($operation->{kind} // '') eq 'drive'
+            && ($operation->{fiber_id} // '')
+                ne ($root_fiber{$operation->{scenario_id} // ''} // '');
+        my %input = map { ($_->{name} // '') => $_->{value} }
+            @{$operation->{typed_inputs} || []};
+        next unless defined($input{endpoint_id}) && !ref($input{endpoint_id});
+        $parallel_drive{join("\0", $operation->{scenario_id} // '',
+            $input{endpoint_id})}{$operation->{fiber_id} // ''} = 1;
+    }
+    my %parallel_conflict = map {
+        keys(%{$parallel_drive{$_}}) > 1 ? ($_ => 1) : ()
+    } keys %parallel_drive;
+    for my $key (sort keys %parallel_conflict) {
+        my ($scenario_id, $endpoint_id) = split /\0/, $key, 2;
+        push @error, "direct-drive-conflict:$scenario_id:$endpoint_id";
+    }
+
+    my %execution_binding;
+    push @{$execution_binding{$_->{semantic_id} // ''}}, $_
+        for @{$execution->{bindings}{endpoints} || []};
+    my %bridge_endpoint;
+    push @{$bridge_endpoint{$_->{endpoint_id} // ''}}, $_
+        for @{$bridge->{endpoints} || []};
+    my %bridge_type = map { ($_->{type_id} // '') => $_ }
+        @{$bridge->{types} || []};
+    my %backend_binding;
+    push @{$backend_binding{$_->{semantic_id} // ''}}, $_
+        for grep { ($_->{target_language} // '') eq 'systemverilog' }
+            @{$bridge->{backend_bindings} || []};
+
+    for my $operation (@{$execution->{operation_graph}{operations} || []}) {
+        next unless ($operation->{kind} // '') eq 'drive';
+        my $operation_id = $operation->{operation_id} // '';
+        my $prefix = "direct-drive:$operation_id";
+        my %input = map { ($_->{name} // '') => $_->{value} }
+            @{$operation->{typed_inputs} || []};
+        my $semantic_endpoint_id = $input{endpoint_id};
+        my $parallel_key = defined($semantic_endpoint_id)
+                && !ref($semantic_endpoint_id)
+            ? join("\0", $operation->{scenario_id} // '',
+                $semantic_endpoint_id)
+            : undef;
+        if (($operation->{fiber_id} // '')
+                ne ($root_fiber{$operation->{scenario_id} // ''} // '')) {
+            push @error, "$prefix:non-root-fiber"
+                unless defined($parallel_key)
+                    && $parallel_conflict{$parallel_key};
+            next;
+        }
+        my $value = ref($input{value}) eq 'HASH'
+            && ($input{value}{kind} // '') eq 'literal'
+            ? $input{value}{value} : undef;
+        my @effect = @{$operation->{effects} || []};
+        push @error, "$prefix:effect"
+            unless @effect == 1
+                && ($effect[0]{kind} // '') eq 'update_driver'
+                && defined($semantic_endpoint_id)
+                && !ref($semantic_endpoint_id)
+                && ($effect[0]{target_id} // '') eq $semantic_endpoint_id;
+
+        my @binding = defined($semantic_endpoint_id) && !ref($semantic_endpoint_id)
+            ? @{$execution_binding{$semantic_endpoint_id} || []} : ();
+        push @error, "$prefix:execution-binding" unless @binding == 1;
+        next unless @binding == 1;
+        my $binding = $binding[0];
+        my @carrier = @{$bridge_endpoint{$binding->{endpoint_id} // ''} || []};
+        push @error, "$prefix:bridge-endpoint" unless @carrier == 1;
+        next unless @carrier == 1;
+        my $carrier = $carrier[0];
+        push @error, "$prefix:carrier-access"
+            unless ($binding->{access} // '') eq 'public_port'
+                && ($carrier->{access} // '') eq 'public_port';
+        push @error, "$prefix:carrier-direction"
+            unless ($binding->{carrier_direction} // '') eq 'input'
+                && ($carrier->{direction} // '') eq 'input';
+
+        my @relation = grep { ($_->{direction} // '') eq 'drive' }
+            @{$binding->{relations} || []};
+        push @error, "$prefix:drive-relation" unless @relation == 1;
+        next unless @relation == 1;
+        my $relation = $relation[0];
+        my $type = $bridge_type{$carrier->{type_id} // ''};
+        push @error, "$prefix:value"
+            unless ref($value) eq 'HASH'
+                && ($value->{kind} // '') eq 'scalar'
+                && defined($value->{type_id}) && !ref($value->{type_id})
+                && ($value->{type_id} // '')
+                    eq ($input{value}{type_id} // '')
+                && ($value->{type_id} // '')
+                    eq ($relation->{semantic_type_id} // '')
+                && defined($value->{width}) && !ref($value->{width})
+                && $value->{width} =~ /\A[1-9][0-9]*\z/
+                && ref($type) eq 'HASH'
+                && $value->{width} == ($relation->{width} // -1)
+                && $value->{width} == ($type->{width} // -2)
+                && ($relation->{carrier_type_id} // '')
+                    eq ($carrier->{type_id} // '')
+                && defined($value->{value_hex}) && !ref($value->{value_hex})
+                && $value->{value_hex} =~ /\A[0-9a-f]+\z/
+                && Math::BigInt->from_hex('0x' . $value->{value_hex})
+                    < Math::BigInt->new(2)->bpow($value->{width})
+                && _fully_known_scalar($value);
+
+        my @backend = @{$backend_binding{$carrier->{endpoint_id}} || []};
+        push @error, "$prefix:systemverilog-binding"
+            unless @backend == 1
+                && ($backend[0]{target_kind} // '') eq 'port'
+                && ($backend[0]{status} // '') eq 'declared'
+                && ($backend[0]{target_name} // '')
+                    =~ /\A[A-Za-z_][A-Za-z0-9_]*\z/;
+    }
+    return @error;
 }
 
 sub _operation_phase_errors($execution) {
