@@ -50,6 +50,7 @@
   - [AHB Current Boundary](16c-ial2-ahb.md)
   - [HIAL/VIAL Verification Architecture](16d-hial-vial-verification-architecture.md)
   - [Balanced Portable Composition](16da-vial-balanced-portable-composition.md)
+  - [Structural Backend-Emission Matrix](16db-vial-structural-backend-emission-matrix.md)
   - [NEXSIM Semantic API and MCP Agent-Consumer Requirements](16e-nexsim-api-mcp-consumer-requirements.md)
 - [Reference Map](90-reference-map.md)
 - [Live-Document Containment Adoption](91-live-document-containment-adoption.md)

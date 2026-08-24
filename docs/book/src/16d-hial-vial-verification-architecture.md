@@ -3948,10 +3948,7 @@ FSMGEN_VIAL_SCALE_BACKEND_EMISSION_MEASUREMENT_EXACT=1 \
   t/1661-vial-architecture-scale-backend-emission-measurement.t
 ```
 
-The proof covers the three/five raw-sample contracts, all five stages,
-native-UVM applicability, provider classification, hostile mutation,
-independent regeneration, defensive returns, common failure handling, and
-exact cleanup in repository-derived same-volume staging. This structural
-evidence does not establish compilation, execution, support, a promoted
-budget, capacity, a reached boundary, native-UVM runtime, backend parity, or a
-public API.
+The proof covers the three/five raw-sample contracts, all five stages, native-UVM applicability, provider classification, hostile mutation, independent regeneration, defensive returns, common failure handling, and exact cleanup in repository-derived same-volume staging. This structural evidence does not establish compilation, execution, support, a promoted budget, capacity, a reached boundary, native-UVM runtime, backend parity, or a public API.
+
+See [Structural Backend-Emission Matrix](16db-vial-structural-backend-emission-matrix.md)
+for aggregate publication, bounds, recovery, and commands.

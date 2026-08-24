@@ -35,6 +35,9 @@ answers:
   - "how is the VIAL serialized plan cap enforced before random decision materialization?"
   - "how is structural backend emission measured without executing an HDL tool?"
   - "is OSVVM provider verification an external verification tool run?"
+  - "how is the structural backend emission matrix resumed and published?"
+  - "why does the backend emission matrix isolate every profile in a child?"
+  - "what do the backend emission publication and IPC ceilings mean?"
 date: 2026-08-24
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -55,9 +58,11 @@ evidence: >-
   perl/FSM/VIAL/ArchitectureScaleExecutionCheckingMeasurement.pm;
   perl/FSM/VIAL/ArchitectureScaleExecutionCheckingMeasurementMatrix.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmissionMeasurement.pm;
+  perl/FSM/VIAL/ArchitectureScaleBackendEmissionMeasurementMatrix.pm;
   perl/FSM/VIAL/Parser.pm; perl/FSM/VIAL/SemanticBuilder.pm;
   scripts/run_vial_semantic_bridge_measurement_matrix.pl;
   scripts/run_vial_execution_checking_measurement_matrix.pl;
+  scripts/run_vial_backend_emission_measurement_matrix.pl;
   perl/FSM/VIAL/ArchitectureScaleSemanticCatalog.pm;
   perl/FSM/VIAL/ArchitectureScaleBridgeFanout.pm;
   perl/FSM/HIAL/VIALBridge/Builder.pm; perl/FSM/VIAL/ExecutionBuilder.pm;
@@ -72,15 +77,19 @@ evidence: >-
   t/1601-vial-architecture-scale-semantic-catalog.t;
   t/1602-vial-architecture-scale-bridge-fanout.t;
   t/1648-vial-architecture-scale-backend-emission-osvvm.t; t/1650-vial-architecture-scale-backend-emission-family-qualification.t; t/1651-vial-architecture-scale-runtime-stream-construction.t; t/1652-vial-balanced-portable-bridge-admission.t; t/1653-vial-balanced-portable-composition.t; t/1654-vial-balanced-portable-emission.t; t/1655-vial-architecture-scale-runtime-balanced-qualification.t; t/1656-vial-architecture-scale-measurement-foundation.t; t/1657-vial-architecture-scale-semantic-bridge-measurement.t; t/1659-vial-architecture-scale-execution-checking-measurement.t; t/1660-vial-architecture-scale-execution-checking-measurement-matrix.t; t/1661-vial-architecture-scale-backend-emission-measurement.t;
+  t/1662-vial-architecture-scale-backend-emission-measurement-matrix.t;
   docs/knowledge/vial-execution-scale-reachability.md;
   docs/knowledge/vial-semantic-scale-catalog.md;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
-  docs/book/src/16da-vial-balanced-portable-composition.md
+  docs/book/src/16da-vial-balanced-portable-composition.md;
+  docs/book/src/16db-vial-structural-backend-emission-matrix.md
 reverify: >-
   rg -n 'semantic_catalog_v1|bridge_fanout_v1|execution_graph_v1|checking_state_v1|backend_emission_v1|runtime_stream_v1|big.*really_big'
   docs/decisions/0055-vial-scale-proof-uses-orthogonal-workloads-and-stage-local-oracles.md
   docs/book/src/16d-hial-vial-verification-architecture.md
   docs/book/src/16da-vial-balanced-portable-composition.md &&
+  rg -n '524,288|65,536|run_vial_backend_emission_measurement_matrix'
+  docs/book/src/16db-vial-structural-backend-emission-matrix.md &&
   rg -n '88%|4,096 MiB|pinned host|earliest authoritative cap|same-volume'
   docs/decisions/0056-vial-scale-measurements-use-pinned-evidence-and-bounded-failure.md
   docs/book/src/16d-hial-vial-verification-architecture.md &&
@@ -106,11 +115,15 @@ reverify: >-
   docs/book/src/16d-hial-vial-verification-architecture.md &&
   rg -n 'provider_verification|authoritative_non_emission|parse_validate|bind_plan|emit'
   perl/FSM/VIAL/ArchitectureScaleBackendEmissionMeasurement.pm &&
+  rg -n 'owned_shapes|MAX_PUBLICATION_BYTES|MAX_PROFILE_WORKER_RESULT_BYTES|capture_identity|provider_verification_profiles'
+  perl/FSM/VIAL/ArchitectureScaleBackendEmissionMeasurementMatrix.pm
+  scripts/run_vial_backend_emission_measurement_matrix.pl &&
   prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t
   t/1602-vial-architecture-scale-bridge-fanout.t
   t/1644-vial-backend-emission-authority-alignment.t
   t/1645-vial-architecture-scale-backend-emission-foundation.t
-  t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t t/1652-vial-balanced-portable-bridge-admission.t t/1653-vial-balanced-portable-composition.t t/1654-vial-balanced-portable-emission.t t/1655-vial-architecture-scale-runtime-balanced-qualification.t t/1656-vial-architecture-scale-measurement-foundation.t t/1657-vial-architecture-scale-semantic-bridge-measurement.t t/1658-vial-architecture-scale-semantic-bridge-measurement-matrix.t t/1659-vial-architecture-scale-execution-checking-measurement.t t/1660-vial-architecture-scale-execution-checking-measurement-matrix.t
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t t/1652-vial-balanced-portable-bridge-admission.t t/1653-vial-balanced-portable-composition.t t/1654-vial-balanced-portable-emission.t t/1655-vial-architecture-scale-runtime-balanced-qualification.t t/1656-vial-architecture-scale-measurement-foundation.t t/1657-vial-architecture-scale-semantic-bridge-measurement.t t/1658-vial-architecture-scale-semantic-bridge-measurement-matrix.t t/1659-vial-architecture-scale-execution-checking-measurement.t t/1660-vial-architecture-scale-execution-checking-measurement-matrix.t t/1661-vial-architecture-scale-backend-emission-measurement.t
+  t/1662-vial-architecture-scale-backend-emission-measurement-matrix.t
 ---
 
 Decisions `0055` and `0056` select architecture-scale proof without claiming capacity.
@@ -208,6 +221,20 @@ proves mutation, applicability/provider contradiction, defensive return,
 failure cleanup, independent regeneration, and zero staging under the real
 guard. No compile/run/trace/result, support, budget, capacity, reached-boundary,
 native-UVM-runtime, parity, or public-API claim follows.
+
+Active `.17.3.4.2` adds the immutable matrix publisher over that adapter. Its
+twenty ordered profiles come only from producer `owned_shapes`; reference,
+limit, and excess use validation while gate/qualification use sampling only
+when the canonical outcome emitted artifacts. Every capture, resume, and
+reload runs in a separate guard-visible child, publishes the complete report
+first, and returns only a closed compact entry. Publication and IPC envelopes
+are independently bounded; content collisions, noncanonical/oversized child
+results, signals, identity drift, reordered profiles, provider borrowing, and
+ambiguous crash staging reject. Family/complete manifests require one clean
+revision/host/tool/guard identity and retain exact dominance, samples,
+exclusions, provider classification, content identity, and nonclaims. These
+bounds and manifests are structural evidence, not IASIM/tool execution,
+support, performance budgets, capacity, or reached-boundary claims.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
