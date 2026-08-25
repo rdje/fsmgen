@@ -13,6 +13,7 @@ tags: [vial, verilator, lifecycle, runner, scalability, macos]
 evidence: >-
   docs/decisions/0083-portable-systemverilog-runtime-scale-uses-authored-cycle-sampling-and-one-shared-staged-lifecycle.md;
   docs/decisions/0084-macos-premain-stalls-retain-guarded-qualification-not-backend-workarounds.md;
+  docs/decisions/0085-darwin-runtime-integration-is-explicit-and-sampling-stays-repository-local.md;
   perl/FSM/VIAL/Backend/VerilatorLifecycle.pm;
   perl/FSM/VIAL/Backend/Runner.pm;
   perl/FSM/VIAL/ArchitectureScalePortableRuntimeMeasurement.pm;
@@ -30,6 +31,8 @@ reverify: >-
   perl/FSM/VIAL/Backend/VerilatorLifecycle.pm
   docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md &&
   prove -Iperl t/1640-vial-runner-capture-limits.t
+  t/1558-vial-verilator-run-integration.t
+  t/1665-vial-macos-premain-qualification.t
   t/1664-vial-verilator-shared-lifecycle.t
   t/1666-vial-macos-premain-evidence.t
   t/1667-vial-architecture-scale-portable-runtime-measurement.t &&
@@ -86,6 +89,17 @@ also passes under the same supervisor. These observations refute each recorded
 condition as an individually sufficient deterministic cause; they do not prove
 that macOS policy can never participate in an intermittent stall.
 
+Fresh `.17.3.5.3.2` evidence reproduces the moving first-executable failure
+without changing the lifecycle: `exec` completes in 3.653 ms, the primary
+produces zero bytes and times out at 30 seconds, and all 895 sampled main-thread
+frames remain at `_dyld_start` before a binary-image map exists. Its byte-
+identical different-path control passes after 10.823397 seconds to first output;
+fresh minimal C++ and platform controls also pass. Decision `0085` therefore
+makes full Darwin `t/1558` execution explicit through
+`FSMGEN_VIAL_DARWIN_RUNTIME_INTEGRATION=1`, while standard Darwin regression
+validates the bounded record and non-Darwin integration remains unchanged. A
+timeout is never retried or promoted.
+
 The guarded exact lifecycle test traverses every sealed state
 with qualified Verilator, assembles 12 public artifacts, and cleans exactly;
 the separate guarded AHB runtime-parity watcher passes. The broader public
@@ -95,6 +109,8 @@ determinism. The historical failure remains explicit evidence rather than being
 erased by this later pass. The guarded watcher executes the primary once,
 retains a timeout as failure, collects a read-only delayed stack sample, and
 writes only closed host-path-free evidence below a same-device repository root.
+The sampler supplies `-file` with that prevalidated repository-derived sidecar;
+it never owns project output through `/tmp` or another off-volume default.
 It adds no retry, signing/security change, timeout widening, support promise,
 or passed-result fabrication.
 

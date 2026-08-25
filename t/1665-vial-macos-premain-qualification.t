@@ -533,27 +533,46 @@ sub start_sampler {
         sleep 2;
         if (kill 0, $target_pid) {
             my $sample = supervised(
-                ['/usr/bin/sample', "$target_pid", '1', '1'],
+                [
+                    '/usr/bin/sample', "$target_pid", '1', '1',
+                    '-file', $sample_abs,
+                ],
                 10, 8_388_608,
             );
-            if (bytes::length($sample->{output})) {
-                write_exclusive($sample_abs, $sample->{output}, 0644);
-                my $dyld_count = () = $sample->{output} =~ /_dyld_start/g;
-                my $image_count = () = $sample->{output} =~ /^Binary Images:/mg;
+            if (-e $sample_abs || -l $sample_abs) {
+                die "qualification sample is not a regular nonsymlink file\n"
+                    unless -f $sample_abs && !-l $sample_abs;
+                my @sample_stat = lstat($sample_abs);
+                my @repo_stat = lstat($repo_root);
+                die "qualification sample changed filesystem volume\n"
+                    unless @sample_stat && @repo_stat
+                        && $sample_stat[0] == $repo_stat[0];
+                my $raw_sample = slurp_raw($sample_abs);
+                my $dyld_count = () = $raw_sample =~ /_dyld_start/g;
+                my $image_count = () = $raw_sample =~ /^Binary Images:/mg;
                 $summary = {
-                    status => $sample->{ok}
-                        ? 'sample_captured' : 'sample_command_failed',
+                    status => $sample->{ok} && bytes::length($raw_sample)
+                        ? 'sample_captured'
+                        : $sample->{ok}
+                            ? 'sample_produced_no_output'
+                            : 'sample_command_failed',
                     observed_pid => 0 + $target_pid,
                     sample_exit_code => $sample->{exit_code},
-                    sample_sha256 => sha256_hex($sample->{output}),
-                    sample_bytes => bytes::length($sample->{output}),
+                    sample_sha256 => sha256_hex($raw_sample),
+                    sample_bytes => bytes::length($raw_sample),
                     dyld_start_occurrences => $dyld_count,
                     binary_image_headers => $image_count,
                     raw_sample_relative_path => $sample_rel,
                 };
             }
             else {
-                $summary->{status} = 'sample_produced_no_output';
+                $summary = {
+                    status => $sample->{ok}
+                        ? 'sample_produced_no_output'
+                        : 'sample_command_failed',
+                    observed_pid => 0 + $target_pid,
+                    sample_exit_code => $sample->{exit_code},
+                };
             }
         }
     }

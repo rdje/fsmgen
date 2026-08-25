@@ -609,10 +609,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2: activate authored portable runtime materialization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2: materialize authored portable runtime streams`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the selected shared staged Verilator execution lifecycle without changing the public Runner contract.`
   Acceptance: `Extract one caller-sealed state machine for qualified tool discovery, input preparation, compile, run, trace extraction/validation, result production, final artifact assembly, and cleanup. Persist only closed content-addressed state below an exact repository-owned stage, independently validate every predecessor before transition, preserve process-group termination and capture ceilings, reject skips/replay/mutation/collision/symlink/partial state, and make the existing Runner consume the same transitions with byte-equal success artifacts and stable failure diagnostics.`
-  Verification: `Clean materialization commit bd5c0e628 closes .2 and implementation commit 037c962fd installs decision 0083's sole admitted/prepared/tool_verified/compiled/ran/trace_validated/result_produced/assembled/cleaned owner for public Runner and measurement callers. Closed content-addressed state/object/predecessor validation, caller-sealed repository-volume roots, prepared-input/executable revalidation, actual/workspace-normalized commands, close-on-exec control-before-output supervision, inclusive captures, integer monotonic timing, deadline-after-pipe-close enforcement, process-group termination, and exact cleanup fail closed without retry or widened authority. Decision 0084 and completed child .3.1 retain the intermittent sampled macOS pre-main outcome through guarded host qualification rather than a backend workaround. Exact t1664 traverses all nine real states, t1559 preserves independent AHB runtime parity, and the final quiet-host t1558 rerun passes all seven top-level public API/CLI subtests including repeated direct drive. Complete CI and isolated t1558 now each expose one movable first-executable timeout; active .3.2 owns fresh evidence and standard-CI resolution without changing the Runner contract.`
+  Verification: `Commits bd5c0e628/037c962fd install decision 0083's nine-state Runner/measurement lifecycle with sealed state/inputs/roots/commands, bounded supervision/capture/deadlines, process-group containment, and cleanup. Decisions 0084/0085 and completed .3.1/.3.2 retain intermittent macOS pre-main outcomes through explicit Darwin qualification/default evidence, not a backend workaround. t1664 traverses every state, t1559 keeps AHB parity, non-Darwin t1558 is unchanged, and opt-in Darwin keeps first-failure truth.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3: activate shared staged Verilator lifecycle; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3: implement shared Verilator lifecycle`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3.2`
 
@@ -624,11 +624,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3.1: activate macOS pre-main qualification; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3.1: qualify macOS pre-main stalls`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Resolve standard-CI instability from the retained macOS pre-main stall without weakening runtime failure truth.`
-  Acceptance: `Retain both failures; capture one fresh guarded primary plus byte-identical-path, fresh minimal-C++, and platform controls under an honest host condition. Select a production-grade CI contract preserving the 30-second deadline, zero retries, primary failure, containment, cleanup, security/signing, and qualified runtime coverage. Prove default CI cannot pass a failed primary and guarded evidence remains durable; add no support, performance, capacity, parity, or API claim.`
-  Verification: `Complete CI times out only first phase-rollover while its repeat passes; isolated unchanged t1558 times out only first baseline API while all later routes pass. The movable failure falsifies deterministic scenario semantics. Fresh guarded evidence, resolution, focused gates, and complete CI remain pending.`
-  Commit: `pending activation`
+  Acceptance: `Retain a fresh failed primary plus byte-identical-path, fresh-C++, and platform controls under an honest host condition. Preserve the 30-second wall, zero retries, failure truth, containment, cleanup, signing/security, and qualified coverage; prove default CI cannot pass the failure and add no support, performance, capacity, parity, or API claim.`
+  Verification: `Complete CI and isolated t1558 fail only different first executions; later routes pass. Fresh evidence reaches exec in 3.653 ms, then fails with zero output at 30.058109 seconds and all 895 sampled frames at _dyld_start; byte-identical-path, fresh-C++, and platform controls pass. Decision 0085 makes Darwin t1558 explicit before discovery, leaves non-Darwin unchanged, and retains t1665/t1666 as failed-primary producer/bounded oracle. sample -file repairs the exact copied/verified/deleted 992-byte off-volume report. Focused defaults pass Files=3/Tests=79; runtime and public contracts remain unchanged.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3.2: activate pre-main CI recovery; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3.2: make Darwin runtime qualification explicit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.4`
   Status: `done`
@@ -7246,19 +7246,12 @@ raising an enforcement ceiling.
   workarounds, and all three claim legs. Parent `.17.3.5.3` and child `.3.1`
   close without changing lifecycle, Runner, deadline, capture, signing,
   security, unrelated workloads, public behavior, support, or API authority.
-- [x] **NO REGRESSION** — Both new Perl watchers report `syntax OK`; default
-  guarded/static evidence reports `All tests successful` at `Files=2,
-  Tests=50`, and the hardened quiet guard reports `Files=1, Tests=27`. The
-  quiet full public integration watcher reports `All tests successful` at
-  `Files=1, Tests=7` in 167 seconds, including repeated API, CLI,
-  phase-rollover, direct-drive byte determinism, and exact cleanup. Final
-  mdBook, task/decision, Knowledge Map, claim inventory, containment,
-  relative-path, staged acceptance, and doctrine evidence is recorded by this
-  commit workflow. The claim join closes all 1,535 candidates as 30
-  claim-record dispositions, 900 derived gates, 588 reviewed records, 17
-  later-owned gaps, and zero open candidates; the rationale ledger
-  reconstructs 2,888 entries. Full unrelated CI remains deferred to the push
-  boundary.
+- [x] **NO REGRESSION** — Syntax, bounded/quiet qualification, and quiet full integration pass Files=2/50, 1/27, and 1/7 with deterministic API/CLI/phase/direct-drive cleanup. Final docs/claims/doctrines close 1,535 candidates as 30 claims, 900 gates, 588 reviews, 17 gaps, zero open, and reconstruct 2,888 rationale entries; full CI remains pre-push.
+
+## Acceptance Checklist (enforced) — `.17.3.5.3.2` pre-main CI recovery
+- [x] **ROOT CAUSE (WHY + WHERE)** — CI/isolated t1558 fail different first executions; later routes pass. Fresh evidence reaches exec in 3.653 ms, fails zero-output at 30.058109 seconds, and samples 895/895 `_dyld_start`; controls pass. `git log -S '/usr/bin/sample'` locates the unqualified 992-byte off-volume call at `95ef93f0d`.
+- [x] **ADDRESSED (verified)** — Decision 0085 makes Darwin t1558 explicit before discovery, preserves non-Darwin/first-timeout truth, and retains t1665/t1666 as producer/oracle. A prevalidated repository `sample -file` sidecar replaces the default; the equal-hash old copy is verified, consumed, deleted, and censused absent. Contracts/claims/nonclaims agree.
+- [x] **NO REGRESSION** — Syntax/default pass Files=3, Tests=79; runtime impact passes Files=7/111; docs/claims pass Files=6/47 plus task/containment gates; all 55 book chapters test and its 91-file build is removed. The 1,548-candidate join closes 36 claims/907 gates/588 reviews/17 gaps/zero open; locality/raw/book/temp censuses are empty; complete CI remains pre-push.
 
 ## Acceptance Checklist (enforced) — `.17.3.5.4` common-controller measurement activation
 

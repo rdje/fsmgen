@@ -1,11 +1,11 @@
 {
   "schema": "fsmgen.vial_macos_premain_qualification_evidence.v1",
   "schema_version": 1,
-  "work_unit": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3.1",
+  "work_unit": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3.2",
   "producer": {
     "path": "t/1665-vial-macos-premain-qualification.t",
-    "sha256": "7968517cc9607c8a2236989075ab02b7f1bf92607f4aa1085f61715da4589d69",
-    "bytes": 24876,
+    "sha256": "df799a366fe32749de88326b4bf476f43d26a14765a4ed4832a760dab8e7c91c",
+    "bytes": 25752,
     "guard": "FSMGEN_VIAL_MACOS_PREMAIN_QUALIFICATION=1",
     "conditions": [
       "concurrent_link",
@@ -167,6 +167,59 @@
         "exec_to_first_output_ns": 214495000
       },
       "platform_true_control_ok": true
+    },
+    {
+      "label": "ci-recovery-concurrent-link-timeout",
+      "raw_record_sha256": "93d08dd328a4792f50e15135c62774ce9fd35baf661cd84c32e9c55a199d9bd7",
+      "raw_record_bytes": 21141,
+      "raw_record_retention": "consumed_then_removed",
+      "condition": "concurrent_link",
+      "compiler_process_count": 3,
+      "syspolicyd_cpu_percent_before": 76.1,
+      "syspolicyd_cpu_percent_after": 34.7,
+      "generated_binary": {
+        "sha256": "a62bae214ad47ea5a2b1ad07a5aff9853dfb0e950b0e67e7261e4ade3bc8ca05",
+        "bytes": 1847672,
+        "mode": "0755",
+        "format": "Mach-O 64-bit executable arm64",
+        "extended_attribute": "com.apple.provenance",
+        "extended_attribute_hex": "010200b62bae1f42869ecd",
+        "signature": "adhoc,linker-signed",
+        "codesign_verify_status": 0
+      },
+      "primary": {
+        "started_at_utc": "2026-08-25T20:15:46Z",
+        "finished_at_utc": "2026-08-25T20:16:17Z",
+        "ok": false,
+        "spawn_to_exec_ns": 3653000,
+        "exec_to_first_output_ns": null,
+        "execution_ns": 30058109000,
+        "output_bytes": 0,
+        "timed_out": true,
+        "cleanup_removed": true,
+        "sample_status": "sample_captured"
+      },
+      "sample": {
+        "raw_sample_sha256": "409745bf2e62765be5add970464fe881ea4b8d338d8dfcb6b40dcc4587c3a508",
+        "raw_sample_bytes": 1285,
+        "raw_sample_retention": "consumed_then_removed",
+        "main_thread_samples": 895,
+        "dyld_start_samples": 895,
+        "footprint_bytes": 98304,
+        "binary_image_map_present": false
+      },
+      "byte_identical_different_path_control": {
+        "sha256": "a62bae214ad47ea5a2b1ad07a5aff9853dfb0e950b0e67e7261e4ade3bc8ca05",
+        "ok": true,
+        "exec_to_first_output_ns": 10823397000
+      },
+      "fresh_minimal_cpp_control": {
+        "sha256": "4a7eac50d700ac02402ce451d1c18510233c30f76deca457db2d1974a7e6239b",
+        "extended_attribute_hex": "010200b62bae1f42869ecd",
+        "ok": true,
+        "exec_to_first_output_ns": 899384000
+      },
+      "platform_true_control_ok": true
     }
   ],
   "public_integration_control": {
@@ -176,6 +229,9 @@
     "top_level_tests": 7,
     "wall_seconds": 167,
     "result": "PASS",
+    "darwin_standard_mode": "explicit_skip",
+    "darwin_qualification_guard": "FSMGEN_VIAL_DARWIN_RUNTIME_INTEGRATION=1",
+    "non_darwin_mode": "unchanged_integration",
     "repeated_api_ok": true,
     "repeated_cli_ok": true,
     "repeated_phase_rollover_ok": true,
@@ -183,11 +239,26 @@
     "byte_deterministic_results_and_artifacts": true,
     "cleanup_exact": true
   },
+  "locality_recovery": {
+    "off_volume_residue": {
+      "cause": "sample invoked without -file",
+      "bytes": 992,
+      "sha256": "0e96ecabc3d27e171ada695c2e73492c9cabbf28d06a45c1f7e6fc2a3662447e"
+    },
+    "copy_verify_use_delete": {
+      "repository_copy_bytes": 992,
+      "repository_copy_sha256": "0e96ecabc3d27e171ada695c2e73492c9cabbf28d06a45c1f7e6fc2a3662447e",
+      "copy_verified": true,
+      "exact_source_deleted": true,
+      "residue_census": 0
+    },
+    "repair": "sample -file repository-derived sidecar"
+  },
   "conclusion": {
-    "confirmed": "intermittent host-side pre-main dyld stall",
+    "confirmed": "fresh and historical intermittent host-side pre-main dyld stalls",
     "not_confirmed": "Gatekeeper, syspolicyd contention, provenance metadata, linker signature integrity, generated executable bytes, generated executable path, or concurrent compiler activity as a sufficient deterministic cause",
     "backend_defect_reproduced": false,
-    "selected_project_response": "guarded host qualification watcher",
+    "selected_project_response": "explicit Darwin runtime qualification plus default bounded evidence",
     "backend_change": "none",
     "public_contract_change": "none"
   },
@@ -200,8 +271,8 @@
     "failed_result_promoted": false
   },
   "claim_verification": {
-    "rederivation": "the guarded watcher independently reconstructs the canonical VIAL/HIAL/emission/lifecycle route and records host, binary, signing, xattr, process, timing, sample, control, and cleanup evidence",
-    "falsification": "policy-active concurrent-link, quiet no-compiler, byte-identical different-path, freshly linked minimal C++, platform-signed true, exact policy-log-window, and full repeated public integration controls",
-    "durability": "this bounded evidence record, t/1665, t/1666, decision 0084, the owning task-tree, mdBook, Knowledge Map, and Git history"
+    "rederivation": "the guarded watcher independently reconstructs the canonical VIAL/HIAL/emission/lifecycle route and records host, binary, signing, xattr, process, timing, repository-local sample, control, and cleanup evidence; Darwin public integration remains separately opt-in",
+    "falsification": "fresh failed and earlier passing policy-active observations, quiet no-compiler runs, byte-identical different-path, freshly linked minimal C++, platform-signed true, exact policy-log-window, and full repeated public integration controls",
+    "durability": "this bounded evidence record, t/1558, t/1665, t/1666, decisions 0084 and 0085, the owning task-tree, mdBook, Knowledge Map, claim registry, doctrine gates, and Git history"
   }
 }

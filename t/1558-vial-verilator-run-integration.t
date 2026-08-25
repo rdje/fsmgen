@@ -21,6 +21,11 @@ use FSM::Support::VIALExecutionContract qw(build_vial_execution_contract);
 use FSM::Support::VIALToolingContract qw(build_vial_tooling_contract);
 use FSM::VIAL::Tool qw(execute_vial_tool_request);
 
+plan skip_all =>
+    'set FSMGEN_VIAL_DARWIN_RUNTIME_INTEGRATION=1 for Darwin runtime qualification'
+    if $^O eq 'darwin'
+        && !$ENV{FSMGEN_VIAL_DARWIN_RUNTIME_INTEGRATION};
+
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my $vial_id = 'vial/ahb_subordinate_base_output_arbitration.vial';
 my $hial_id = 'ppif/ahb_lite_subordinate.ppif';
