@@ -6,12 +6,12 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-SPEC-TEST-INDEX-SYNC.3` (`active`; exact t/1639 focused-test index repair before the pending push gate)
-- next_action: commit the focused-green one-link repair and fresh maintained-
-  reference authority, then rerun complete guarded CI; close `.3`, push, and
-  qualify the exact hosted revision only after that gate is green.
+- active_work_unit: `ISF-SPEC-TEST-INDEX-SYNC.3` (`active`; exact t/1639 post-partition transformation before the pending push gate)
+- next_action: commit the green exact-transformation repair, then task-tree-own
+  and resolve the t/1558 complete-CI timeout and activate durable t/296
+  checkpointing before rerunning complete guarded CI.
 - in_flight_uncommitted: none after the current commit workflow completes.
 - in_flight_background: none
-- blockers: none. The first complete-CI attempt found the exact t/1639 index
-  drift, then the host guard terminated final strict-CLI corpus work at its
-  unchanged cutoff; the clean retry follows the committed `.3` repair.
+- blockers: none. Complete CI exposed a separate t/1558 first-run timeout and
+  proved t/296 checkpointing was not active before the host guard terminated
+  at its unchanged cutoff; both findings have safe next investigations.
