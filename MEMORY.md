@@ -6,12 +6,12 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-SPEC-TEST-INDEX-SYNC.3` (`active`; exact t/1639 post-partition transformation before the pending push gate)
-- next_action: commit the green exact-transformation repair, then task-tree-own
-  and resolve the t/1558 complete-CI timeout and activate durable t/296
-  checkpointing before rerunning complete guarded CI.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3.2` (`active`; retained macOS pre-main standard-CI instability)
+- next_action: commit recovery-child activation, capture one fresh no-retry
+  guarded primary/control record under an honestly observed host condition,
+  then select and verify the production-grade CI contract.
 - in_flight_uncommitted: none after the current commit workflow completes.
 - in_flight_background: none
-- blockers: none. Complete CI exposed a separate t/1558 first-run timeout and
-  proved t/296 checkpointing was not active before the host guard terminated
-  at its unchanged cutoff; both findings have safe next investigations.
+- blockers: none. The t/1558 failure is reproducible and task-owned; the later
+  t/296 checkpoint-activation gap remains durably recorded for repair before
+  the next complete-CI attempt.
