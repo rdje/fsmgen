@@ -55,14 +55,14 @@ repo's `t/*-isf-*.t` regression files.
   Status: `active`
   Goal: `Repair focused-test index drift after published timing-claim coverage`
   Acceptance: `Record the exact introducing change; add only t/1639-isf-published-timing-claims.t at the lexicographically correct authoritative mdBook source location; prove the index has no missing or extra paths; retain the audit unchanged; pass focused, book, doctrine, and complete guarded-CI gates before the pending 200-commit push.`
-  Verification: `Pre-fix guarded ./bin/ci-regression reaches one t/1250 mismatch: listed index 332 has no element where expected index 332 is t/1639-isf-published-timing-claims.t; the independently executed t/1639 passes. Git identifies 8b2a6697905bf6f6b66dad0306b4e4c9576af470 as adding t/1639 without changing the authoritative focused-test source. The same guarded run later reaches t/296 strict-CLI execution and exits 137 only when host occupied memory reaches the authorized 88% cutoff; the active FSMGEN child remains far below its separate 4,096-MiB descendant ceiling. Exact repository-local interrupted-run residue is removed after proving the process tree and open-file set empty. Final evidence pending implementation.`
+  Verification: `Pre-fix guarded ./bin/ci-regression reaches one t/1250 mismatch: listed index 332 has no element where expected index 332 is t/1639-isf-published-timing-claims.t; the independently executed t/1639 passes. Git identifies 8b2a6697905bf6f6b66dad0306b4e4c9576af470 as adding t/1639 without changing the authoritative focused-test source. The same guarded run later reaches t/296 strict-CLI execution and exits 137 only when host occupied memory reaches the authorized 88% cutoff; the active FSMGEN child remains far below its separate 4,096-MiB descendant ceiling. Exact repository-local interrupted-run residue is removed after proving the process tree and open-file set empty. Post-fix ordered and independent set oracles both prove 333 listed/expected with zero missing/extra; focused reference tests, all mdBook chapters, maintained-reference authority, containment, and zero-ceiling-increase gates pass. Complete guarded CI remains pending after the repair commit.`
   Commit: `pending`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-SPEC-TEST-INDEX-SYNC.3` | `active` | Restore the exact one-link focused-test index invariant before rerunning the mandatory push gate. |
+| 1 | `ISF-SPEC-TEST-INDEX-SYNC.3` | `active` | Focused repair is green; commit it, then rerun complete guarded CI before closing and pushing. |
 
 ## Decisions
 
@@ -86,6 +86,7 @@ repo's `t/*-isf-*.t` regression files.
 | `2026-05-16` | `ISF-SPEC-TEST-INDEX-SYNC.1` | `prove -Iperl t/1207-isf-assignment-provenance-inventory.t t/1208-isf-compatible-fanin-classification.t t/1248-isf-rule-trigger-parameter-binding.t t/1249-isf-activation-parameter-constants.t t/1250-isf-spec-focused-test-index-audit.t`; `mdbook build docs/book`; `git diff --check` | `pass` |
 | `2026-05-21` | `ISF-SPEC-TEST-INDEX-SYNC.2` | `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t`; `mdbook build docs/book`; `git diff --check` | `pass` |
 | `2026-08-25` | `ISF-SPEC-TEST-INDEX-SYNC.3` activation | Knowledge Map query; exact t/1250 source/spec comparison; `git show 8b2a66979`; guarded full CI; PID/resource/residue census; `git status --short` | `active`; root cause is one omitted authoritative source link. The broad run independently passes t/1639, reaches final strict-CLI corpus work, then the host guard terminates the tree at 88.1% occupied memory. Descendant ceiling does not trip; exact 4-file/1.8-MiB repository-local residue is removed and both temp roots are absent. |
+| `2026-08-25` | `ISF-SPEC-TEST-INDEX-SYNC.3` focused repair | `git log -S'published_wait_16'`; ordered t/1250 plus independent set comparison; t/1120/t/1250/t/1303/t/1414/t/1639; ISF partition, mdBook test/build, render census/cleanup, maintained-reference, containment, ceiling, diff, and doctrine gates | `pass`; one link restores 333/333 with zero missing/extra, focused regression reports `All tests successful`, `Files=5, Tests=37`, all 56 book chapters pass, the exact 91-file render is removed, and +1 line/+85 bytes has fresh authority with zero ceiling increase. Complete guarded CI remains pending. |
 
 ## Commit Log
 
@@ -93,13 +94,13 @@ repo's `t/*-isf-*.t` regression files.
 | --- | --- | --- |
 | `ISF-SPEC-TEST-INDEX-SYNC.1` | `ISF-SPEC-TEST-INDEX-SYNC.1: audit spec test index` | `committed` |
 | `ISF-SPEC-TEST-INDEX-SYNC.2` | `ISF-SPEC-TEST-INDEX-SYNC.2: sync ATL doc-status audit index` | `committed` |
-| `ISF-SPEC-TEST-INDEX-SYNC.3` | `pending` | `active` |
+| `ISF-SPEC-TEST-INDEX-SYNC.3` | `e9e4c63c3` activation; repair commit pending | `focused green; complete CI pending` |
 
 ## Acceptance Checklist — `.3` (enforced before completion)
 
-- [ ] **ROOT CAUSE (WHY + WHERE)** — The pre-fix t/1250 oracle and Git history must name the exact missing authoritative link and introducing commit.
-- [ ] **ADDRESSED (verified)** — The post-fix exact listed/expected comparison and t/1250 must report no missing or extra paths.
-- [ ] **NO REGRESSION** — Focused timing-claim/spec tests, mdBook, doctrines, and the complete guarded CI must pass before push.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Pre-fix t/1250 emits the exact Perl diagnostic `at t/1250-isf-spec-focused-test-index-audit.t line 32`: listed index 332 is absent where expected index 332 is t/1639. `git log -S'published_wait_16'` identifies introducing commit `8b2a66979`, which adds t/1639 but not the authoritative link.
+- [x] **ADDRESSED (verified)** — The one-link repair makes t/1250 pass and an independent unordered census reports `listed=333 expected=333 missing=0 extra=0`; the audit itself is unchanged.
+- [x] **NO REGRESSION** — The adjacent reference set reports `All tests successful`, `Files=5, Tests=37`; all mdBook chapters test/build, maintained-reference/containment/ceiling gates pass, and the staged doctrine driver is required. Complete guarded CI remains required before tree closure and push.
 
 ## Changelog
 
@@ -108,4 +109,4 @@ repo's `t/*-isf-*.t` regression files.
   adding a drift audit.
 - `2026-05-21`: Repaired focused-test index drift found by hosted CI after
   `t/1332-isf-atl-doc-status-audit.t` was added.
-- `2026-08-25`: Reopened the tree at `.3` after the mandatory full-CI gate found the t/1639 authoritative-list omission; retained the audit and normal RAM cutoffs unchanged.
+- `2026-08-25`: Reopened `.3` after the mandatory full-CI gate found the t/1639 authoritative-list omission, then implemented the exact link and fresh maintained-reference authority; retained the audit, ceilings, and normal RAM cutoffs unchanged.

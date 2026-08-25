@@ -1264,6 +1264,7 @@ Focused tests:
 - [t/1510-isf-multibit-loop-predicate-truthiness.t](../../t/1510-isf-multibit-loop-predicate-truthiness.t)
 - [t/1542-isf-rule-transaction-named-drive-priority-readiness.t](../../t/1542-isf-rule-transaction-named-drive-priority-readiness.t)
 - [t/1544-isf-assert-nested-bitwise-precedence-readiness.t](../../t/1544-isf-assert-nested-bitwise-precedence-readiness.t)
+- [t/1639-isf-published-timing-claims.t](../../t/1639-isf-published-timing-claims.t)
 
 ## 12. Explicitly Deferred
 
