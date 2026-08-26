@@ -262,6 +262,17 @@ retry, larger timeout, xattr/signature change, security bypass, unrelated-
 process termination, support promise, backend workaround, or public API change
 follows from this qualification.
 
+A later pre-push complete-CI run exposed a separate legacy-test boundary, not
+a change to the qualified public Runner: the two-subordinate paired-BUSY test
+launched its generated Verilator binary directly through `IPC::Cmd::run` with
+no timeout or Darwin qualification. A live sample matched the retained
+pre-main `_dyld_start` signature, so the run was stopped honestly; neither the
+current file nor the unrun suffix was promoted to success. Active task tree
+`DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION` now owns a complete callsite
+audit and one central bounded contract before any migration. This finding does
+not authorize a one-file skip, a retry, a larger product deadline, or a change
+to non-Darwin runtime behavior.
+
 ## Selected authored runtime activity
 
 The runtime-stream axis measures the cost of producing, validating, and
