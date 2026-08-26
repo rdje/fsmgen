@@ -10,6 +10,18 @@ use IPC::Cmd qw(run);
 use JSON::PP qw(decode_json);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
+
+use FSM::Test::ProjectDataLocality;
+use FSM::Test::VerilatorRuntime qw(
+    darwin_verilator_runtime_qualified
+    darwin_verilator_runtime_skip_reason
+    run_generated_binary
+    run_verilator_compile
+);
+
+plan skip_all => darwin_verilator_runtime_skip_reason()
+    unless darwin_verilator_runtime_qualified();
 
 use FSM::Adapter::IAL2::PPIF;
 use FSM::ProjectDataLocality qw(configure_project_temp_environment create_project_tempdir);
@@ -187,15 +199,20 @@ subtest 'generated HDL retires exact 5, 8, and 16 qualified BUSY events with ass
         my $width = $width_for{$count};
         my $module = module_name($count);
         my $objdir = File::Spec->catdir($workspace, "obj-$count");
-        my ($compile_ok, undef, undef, $compile_stdout, $compile_stderr) = run(
-            command => [
-                'verilator', '--binary', '--timing', '--assert', '-Wno-fatal',
-                '-j', '1', '--top-module', 'ahb_requester_generalized_busy_count_tb',
-                '--Mdir', $objdir,
-                "-DDUT_MODULE=$module", "-DBUSY_COUNT=$count", "-DBUSY_WIDTH=$width",
-                $candidate_hdl{$count}, testbench_path(),
-            ],
-        );
+        my $compile_result = run_verilator_compile([
+            'verilator', '--binary', '--timing', '--assert', '-Wno-fatal',
+            '-j', '1', '--top-module', 'ahb_requester_generalized_busy_count_tb',
+            '--Mdir', $objdir,
+            "-DDUT_MODULE=$module", "-DBUSY_COUNT=$count", "-DBUSY_WIDTH=$width",
+            $candidate_hdl{$count}, testbench_path(),
+        ]);
+        my $compile_ok = $compile_result->{ok};
+        my $compile_stdout = [$compile_result->{stdout}];
+        my $compile_stderr = [
+            $compile_result->{stderr},
+            $compile_result->{ok} ? () :
+                "$compile_result->{status}: $compile_result->{diagnostic}\n",
+        ];
         my $compile_output = join('', @{$compile_stdout || []}, @{$compile_stderr || []});
         ok($compile_ok, "count $count Verilator build succeeds with assertions enabled")
             or diag($compile_output);
@@ -205,9 +222,14 @@ subtest 'generated HDL retires exact 5, 8, and 16 qualified BUSY events with ass
         my $binary = File::Spec->catfile($objdir, 'Vahb_requester_generalized_busy_count_tb');
         for my $stall_mode (@{$scenarios{$count}}) {
             my $stall_clocks = $stall_mode == 0 ? 0 : 32;
-            my ($run_ok, undef, undef, $run_stdout, $run_stderr) = run(
-                command => [$binary, "+STALL_MODE=$stall_mode"],
-            );
+            my $run_result = run_generated_binary([$binary, "+STALL_MODE=$stall_mode"]);
+            my $run_ok = $run_result->{ok};
+            my $run_stdout = [$run_result->{stdout}];
+            my $run_stderr = [
+                $run_result->{stderr},
+                $run_result->{ok} ? () :
+                    "$run_result->{status}: $run_result->{diagnostic}\n",
+            ];
             my $run_output = join('', @{$run_stdout || []}, @{$run_stderr || []});
             ok($run_ok, "count $count stall mode $stall_mode runtime passes")
                 or diag($run_output);

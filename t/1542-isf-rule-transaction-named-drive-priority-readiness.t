@@ -9,6 +9,18 @@ use IPC::Cmd qw(run);
 use JSON::PP qw(decode_json);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
+
+use FSM::Test::ProjectDataLocality;
+use FSM::Test::VerilatorRuntime qw(
+    darwin_verilator_runtime_qualified
+    darwin_verilator_runtime_skip_reason
+    run_generated_binary
+    run_verilator_compile
+);
+
+plan skip_all => darwin_verilator_runtime_skip_reason()
+    unless darwin_verilator_runtime_qualified();
 
 use FSM::Adapter::ISF;
 use FSM::Pipeline::HDLGenerator;
@@ -499,20 +511,32 @@ sub run_runtime {
     my $hdl_path = File::Spec->catfile($workspace, "$args{module}.sv");
     write_file($hdl_path, $args{hdl});
     my $objdir = File::Spec->catdir($workspace, "obj-$args{module}");
-    my ($compile_ok, undef, undef, $compile_stdout, $compile_stderr) = run(
-        command => [
-            'verilator', '--binary', '--timing', '--assert', '-Wno-fatal',
-            '-j', '1', '--sv', '--top-module', $args{top}, '--Mdir', $objdir,
-            $hdl_path, $args{testbench},
-        ],
-    );
+    my $compile_result = run_verilator_compile([
+        'verilator', '--binary', '--timing', '--assert', '-Wno-fatal',
+        '-j', '1', '--sv', '--top-module', $args{top}, '--Mdir', $objdir,
+        $hdl_path, $args{testbench},
+    ]);
+    my $compile_ok = $compile_result->{ok};
+    my $compile_stdout = [$compile_result->{stdout}];
+    my $compile_stderr = [
+        $compile_result->{stderr},
+        $compile_result->{ok} ? () :
+            "$compile_result->{status}: $compile_result->{diagnostic}\n",
+    ];
     my $compile_output = join('', @{$compile_stdout || []}, @{$compile_stderr || []});
     ok($compile_ok, "$args{module} assertion-enabled Verilator build succeeds")
         or diag($compile_output);
     return unless $compile_ok;
 
     my $binary = File::Spec->catfile($objdir, "V$args{top}");
-    my ($run_ok, undef, undef, $run_stdout, $run_stderr) = run(command => [$binary]);
+    my $run_result = run_generated_binary([$binary]);
+    my $run_ok = $run_result->{ok};
+    my $run_stdout = [$run_result->{stdout}];
+    my $run_stderr = [
+        $run_result->{stderr},
+        $run_result->{ok} ? () :
+            "$run_result->{status}: $run_result->{diagnostic}\n",
+    ];
     my $run_output = join('', @{$run_stdout || []}, @{$run_stderr || []});
     is($run_ok ? 1 : 0, $args{expect_success} ? 1 : 0, "$args{module} runtime has the expected success state")
         or diag($run_output);

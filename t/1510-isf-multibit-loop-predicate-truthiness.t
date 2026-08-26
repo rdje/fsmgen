@@ -9,6 +9,18 @@ use IPC::Cmd qw(run);
 use JSON::PP qw(decode_json);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
+
+use FSM::Test::ProjectDataLocality;
+use FSM::Test::VerilatorRuntime qw(
+    darwin_verilator_runtime_qualified
+    darwin_verilator_runtime_skip_reason
+    run_generated_binary
+    run_verilator_compile
+);
+
+plan skip_all => darwin_verilator_runtime_skip_reason()
+    unless darwin_verilator_runtime_qualified();
 
 use FSM::Adapter::IAL2::PPIF;
 use FSM::Adapter::ISF;
@@ -66,19 +78,31 @@ subtest 'generated HDL treats every three-bit value with nonzero truthiness' => 
         'data',
         'isf_multibit_loop_predicate_truthiness_tb.svt',
     );
-    my ($compile_ok, undef, undef, $compile_stdout, $compile_stderr) = run(
-        command => [
-            'verilator', '--binary', '--timing', '--no-assert', '-Wno-fatal',
-            '-j', '1', '--top-module', 'isf_multibit_loop_predicate_truthiness_tb',
-            '--Mdir', $objdir, $hdl, $testbench,
-        ],
-    );
+    my $compile_result = run_verilator_compile([
+        'verilator', '--binary', '--timing', '--no-assert', '-Wno-fatal',
+        '-j', '1', '--top-module', 'isf_multibit_loop_predicate_truthiness_tb',
+        '--Mdir', $objdir, $hdl, $testbench,
+    ]);
+    my $compile_ok = $compile_result->{ok};
+    my $compile_stdout = [$compile_result->{stdout}];
+    my $compile_stderr = [
+        $compile_result->{stderr},
+        $compile_result->{ok} ? () :
+            "$compile_result->{status}: $compile_result->{diagnostic}\n",
+    ];
     ok($compile_ok, 'Verilator builds the direct multi-bit loop harness')
         or diag(join('', @{$compile_stdout || []}), join('', @{$compile_stderr || []}));
     return unless $compile_ok;
 
     my $binary = File::Spec->catfile($objdir, 'Visf_multibit_loop_predicate_truthiness_tb');
-    my ($run_ok, undef, undef, $run_stdout, $run_stderr) = run(command => [$binary]);
+    my $run_result = run_generated_binary([$binary]);
+    my $run_ok = $run_result->{ok};
+    my $run_stdout = [$run_result->{stdout}];
+    my $run_stderr = [
+        $run_result->{stderr},
+        $run_result->{ok} ? () :
+            "$run_result->{status}: $run_result->{diagnostic}\n",
+    ];
     ok($run_ok, 'direct generated-HDL loop truthiness behavior passes')
         or diag(join('', @{$run_stdout || []}), join('', @{$run_stderr || []}));
     like(
@@ -112,19 +136,31 @@ subtest 'the shipped requester advances beyond its former INCR4 loop-entry stall
         'data',
         'ahb_requester_loop_entry_truthiness_tb.svt',
     );
-    my ($compile_ok, undef, undef, $compile_stdout, $compile_stderr) = run(
-        command => [
-            'verilator', '--binary', '--timing', '--no-assert', '-Wno-fatal',
-            '-j', '1', '--top-module', 'ahb_requester_loop_entry_truthiness_tb',
-            '--Mdir', $objdir, $hdl, $testbench,
-        ],
-    );
+    my $compile_result = run_verilator_compile([
+        'verilator', '--binary', '--timing', '--no-assert', '-Wno-fatal',
+        '-j', '1', '--top-module', 'ahb_requester_loop_entry_truthiness_tb',
+        '--Mdir', $objdir, $hdl, $testbench,
+    ]);
+    my $compile_ok = $compile_result->{ok};
+    my $compile_stdout = [$compile_result->{stdout}];
+    my $compile_stderr = [
+        $compile_result->{stderr},
+        $compile_result->{ok} ? () :
+            "$compile_result->{status}: $compile_result->{diagnostic}\n",
+    ];
     ok($compile_ok, 'Verilator builds the AHB loop-entry harness')
         or diag(join('', @{$compile_stdout || []}), join('', @{$compile_stderr || []}));
     return unless $compile_ok;
 
     my $binary = File::Spec->catfile($objdir, 'Vahb_requester_loop_entry_truthiness_tb');
-    my ($run_ok, undef, undef, $run_stdout, $run_stderr) = run(command => [$binary]);
+    my $run_result = run_generated_binary([$binary]);
+    my $run_ok = $run_result->{ok};
+    my $run_stdout = [$run_result->{stdout}];
+    my $run_stderr = [
+        $run_result->{stderr},
+        $run_result->{ok} ? () :
+            "$run_result->{status}: $run_result->{diagnostic}\n",
+    ];
     ok($run_ok, 'AHB requester advances from remaining count four to three')
         or diag(join('', @{$run_stdout || []}), join('', @{$run_stderr || []}));
     like(

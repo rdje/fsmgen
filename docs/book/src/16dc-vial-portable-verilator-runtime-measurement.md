@@ -267,32 +267,92 @@ a change to the qualified public Runner: the two-subordinate paired-BUSY test
 launched its generated Verilator binary directly through `IPC::Cmd::run` with
 no timeout or Darwin qualification. A live sample matched the retained
 pre-main `_dyld_start` signature, so the run was stopped honestly; neither the
-current file nor the unrun suffix was promoted to success. Active task tree
-`DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION` owns the complete callsite
-audit and migration. Decision `0086` has selected a test-only bounded
-supervisor; implementation is active and has not yet replaced the legacy
-calls. Until that migration lands, do not treat a direct legacy generated
-runtime as deadline-safe merely because an earlier invocation passed. This
-finding does not authorize a one-file skip, a retry, a larger product
-deadline, or a change to non-Darwin runtime behavior.
+current file nor the unrun suffix was promoted to success. The complete audit
+found 37 compile and 37 generated-runtime calls across the same 34 legacy test
+files. Thirty-six runtime calls were unbounded; the remaining `t/1559` path
+used an alarm timeout without verified descendant cleanup.
 
-The selected boundary deliberately does not borrow the private VIAL
+Decision `0086` is now implemented. Every audited compile and generated run
+uses `FSM::Test::VerilatorRuntime`; no direct generated-binary IPC launch
+remains. The test helper is deliberately not public product API. It derives
+the repository root from its tracked module location, changes every child to
+that root, accepts scalar argument vectors without a shell, requires the
+compile object directory and generated executable to remain on the repository
+volume, and rejects symlink executables. Version, compile, and runtime have
+sealed 10/120/30-second walls and aggregate 65,536/8,388,608/67,108,864-byte
+capture limits. Callers cannot replace or widen those values.
+
+The boundary deliberately does not borrow the private VIAL
 lifecycle. These IAL2/ISF tests compile handwritten harnesses and do not own
 VIAL ExecutionIR, artifact, or state-transition authority. Their test-only
-supervisor will instead apply the same mature process principles at the proper
-layer: scalar argument vectors without a shell, fixed version/compile/runtime
-walls, bounded stdout/stderr, close-on-exec handoff evidence, monotonic timing,
-and complete process-group cleanup. Every first timeout, nonzero exit, signal,
-capture overflow, handoff failure, or cleanup failure remains failed; no
-control or retry can promote it.
+supervisor applies the same mature process principles at the proper layer.
+Separate nonblocking stdout and stderr share the stage limit; a close-on-exec
+control pipe distinguishes successful exec handoff from containment, chdir,
+descriptor, and exec failures. Monotonic evidence records spawn, exec, first
+output when present, and completion. Each child owns one process group. A
+timeout, overflow, interrupted handoff, or surviving descendant sends TERM to
+the complete group, escalates to KILL after a fixed grace interval, reaps the
+leader, and verifies that the group is gone before returning.
 
-On Darwin, the affected legacy runtime surface will require explicit
-`FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1` qualification before tool discovery.
-The helper will enforce the same boundary internally before it can launch a
-process, while non-Darwin execution remains ordinary. The earlier
+The returned `fsmgen.test.verilator_runtime_result.v1` hash keeps separate
+streams, exit and signal truth, timeout/overflow/exec flags, selected bounds,
+timings, and closed cleanup evidence. `success`, `invocation_error`,
+`qualification_required`, `exec_error`, `timed_out`, `output_limited`,
+`signaled`, `nonzero_exit`, `surviving_descendants`, `cleanup_failed`, and
+`host_error` remain distinct. No retry or later control can promote the first
+failed result. The helper does not mutate the caller environment.
+
+On Darwin, each affected legacy test issues `skip_all` with the exact reason
+before any Verilator discovery unless the exact
+`FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1` opt-in is present.
+The helper enforces the same boundary independently before it can inspect a
+command path or fork. This deliberate double boundary makes an omitted caller
+skip fail closed. Non-Darwin execution remains ordinary, so hosted Linux keeps
+the existing generated-HDL runtime coverage. The earlier
 `FSMGEN_VIAL_DARWIN_RUNTIME_INTEGRATION` guard keeps its narrower public-VIAL
 scope. This is test-process supervision, not IASIM execution and not a VIAL
 execution profile.
+
+A legacy test follows this shape:
+
+```perl
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
+use FSM::Test::ProjectDataLocality;
+use FSM::Test::VerilatorRuntime qw(
+    darwin_verilator_runtime_qualified
+    darwin_verilator_runtime_skip_reason
+    run_generated_binary
+    run_verilator_compile
+);
+
+plan skip_all => darwin_verilator_runtime_skip_reason()
+    unless darwin_verilator_runtime_qualified();
+
+my $compile = run_verilator_compile([
+    'verilator', '--binary', '--timing', '--Mdir', $object_dir,
+    $generated_hdl, $testbench,
+]);
+ok($compile->{ok}, 'bounded compile succeeds')
+    or diag($compile->{status}, $compile->{stdout}, $compile->{stderr});
+
+my $runtime = run_generated_binary([$generated_executable]);
+ok($runtime->{ok}, 'bounded generated runtime succeeds')
+    or diag($runtime->{status}, $runtime->{stdout}, $runtime->{stderr});
+```
+
+The closed tracked
+`t/data/darwin_inline_verilator_runtime_manifest.json` file owns the exact
+affected path list and both callsite totals independently of the test code.
+`t/1668-darwin-inline-verilator-test-runtime.t` consumes and validates that
+manifest, then acts as both the hostile process oracle and recurrence watcher.
+It proves guard ordering and environment
+preservation; rejects invalid, symlink, and exec paths; retains nonzero and
+signal truth; hits the real version capture ceiling; kills a TERM-resistant
+descendant at the sealed deadline; rejects a leader that leaves descendants;
+and recomputes the complete migration. The originally interrupted `t/1515`
+also passes when explicitly qualified under the bounded helper. That passing
+observation does not erase the earlier pre-main stall or justify retry-based
+success; it proves that either future outcome is now finite and cleanup-safe.
 
 ## Selected authored runtime activity
 

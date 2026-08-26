@@ -7,12 +7,24 @@ use Digest::SHA qw(sha256_hex);
 use File::Path qw(make_path remove_tree);
 use File::Spec;
 use FindBin;
-use IPC::Cmd qw(run);
 use JSON::PP ();
 use Scalar::Util qw(blessed);
 use Test::More;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
+
+use FSM::Test::ProjectDataLocality;
+use FSM::Test::VerilatorRuntime qw(
+    darwin_verilator_runtime_qualified
+    darwin_verilator_runtime_skip_reason
+    run_generated_binary
+    run_verilator_compile
+    run_verilator_version
+);
+
+plan skip_all => darwin_verilator_runtime_skip_reason()
+    unless darwin_verilator_runtime_qualified();
 
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
 use FSM::Support::VIALExecutionContract qw(build_vial_execution_contract);
@@ -31,9 +43,10 @@ my $json = JSON::PP->new->canonical(1);
 my $test_root_rel = ".artifacts/test/vial-ahb-parity-$$";
 my $test_root = repo_path($test_root_rel);
 
-my ($version_ok, $version_output) = run_command(['verilator', '--version'], 10);
+my $version_result = run_verilator_version();
+my $version_output = $version_result->{stdout} . $version_result->{stderr};
 plan skip_all => 'exact qualified Verilator 5.046 build is not installed'
-    unless $version_ok
+    unless $version_result->{ok}
         && $version_output eq "Verilator 5.046 2026-02-28 rev vUNKNOWN-built20260228\n";
 
 END {
@@ -71,18 +84,27 @@ subtest 'handwritten and generated VIAL harnesses execute the identical generate
         'ahb_generated_subordinate_base_output_arbitration_tb',
         '--Mdir', $object_rel, $dut_rel, $baseline_id,
     );
-    my ($compile_ok, $compile_output) = run_command(\@compile, 120);
-    ok($compile_ok, 'exact qualified profile compiles the handwritten harness');
-    diag($compile_output) unless $compile_ok;
-    return unless $compile_ok;
+    my $compile_result = run_verilator_compile(\@compile);
+    my $compile_output =
+        $compile_result->{stdout} . $compile_result->{stderr};
+    ok($compile_result->{ok}, 'exact qualified profile compiles the handwritten harness');
+    diag(
+        "$compile_result->{status}: $compile_result->{diagnostic}\n",
+        $compile_output,
+    ) unless $compile_result->{ok};
+    return unless $compile_result->{ok};
     unlike($compile_output, qr/%Error:/, 'handwritten compile contains no Verilator error');
 
     my $binary_rel = "$object_rel/Vahb_generated_subordinate_base_output_arbitration_tb";
     ok(-x repo_path($binary_rel), 'compile produces the exact handwritten executable');
-    my ($run_ok, $run_output) = run_command([$binary_rel], 30);
-    ok($run_ok, 'handwritten AHB harness completes successfully');
-    diag($run_output) unless $run_ok;
-    return unless $run_ok;
+    my $run_result = run_generated_binary([$binary_rel]);
+    my $run_output = $run_result->{stdout} . $run_result->{stderr};
+    ok($run_result->{ok}, 'handwritten AHB harness completes successfully');
+    diag(
+        "$run_result->{status}: $run_result->{diagnostic}\n",
+        $run_output,
+    ) unless $run_result->{ok};
+    return unless $run_result->{ok};
     $baseline_stdout = $run_output;
     like(
         $baseline_stdout,
@@ -218,14 +240,6 @@ sub source_envelope {
         encoding => 'utf-8', origin => 'memory', display_name => $source_id,
         canonical_id => undef, relative_path => $source_id, metadata => {},
     };
-}
-
-sub run_command {
-    my ($command, $timeout) = @_;
-    my ($ok, undef, undef, $stdout, $stderr) = run(
-        command => $command, timeout => $timeout,
-    );
-    return ($ok ? 1 : 0, join('', @{$stdout || []}, @{$stderr || []}));
 }
 
 sub write_raw {

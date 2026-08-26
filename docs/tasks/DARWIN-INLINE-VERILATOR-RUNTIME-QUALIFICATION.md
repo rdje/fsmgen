@@ -73,14 +73,14 @@ by that run.
   Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.1: activate legacy inline runtime audit; DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.1: select bounded test runtime supervision`
 
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the selected central runtime supervision and migrate every affected tracked callsite.`
   Acceptance: `Use only the committed .1 selection; add one readable caller-safe helper, stable bounded diagnostics, process-tree cleanup, explicit Darwin opt-in before tool discovery, unchanged non-Darwin execution, exact environment restoration, hostile-input tests, and mechanical detection of newly introduced unbounded direct launches.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `FSM::Test::VerilatorRuntime implements sealed version/compile/runtime entrypoints, repository-root cwd and same-volume path admission, scalar argv, separate aggregate-bounded stdout/stderr, close-on-exec handoff evidence, monotonic timestamps, one process group, first-failure-preserving statuses, and verified TERM/KILL cleanup. A closed tracked manifest independently owns the exact 34-file/37-compile/37-runtime census. Every listed callsite uses the helper; no direct command => [$binary] launch remains, every affected file activates project-local temp storage and the pre-discovery Darwin guard, t1559 uses the sealed version path, and t1542's Icarus/vvp path remains separate. The focused watcher passes at Files=1/Tests=6, including guard ordering, environment preservation, invalid/symlink/exec/nonzero/signal failures, capture overflow, immediate surviving-descendant cleanup, a real ten-second TERM-resistant timeout, and the complete source census. All 34 migrated files compile syntactically; their ordinary Darwin run skips before discovery with the exact guard. An explicitly qualified t1515 run passes at Files=1/Tests=3 under the bounded helper.`
+  Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.2: bound legacy Verilator test processes`
 
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify the migrated runtime surface, resume complete CI, and close the due push follow-up.`
   Acceptance: `Pass focused helper/callsite/runtime tests, resume the RAM-guarded complete-CI suffix at t/1515 through the lexical tail, validate the mdBook build and repository locality/cleanup, push the exact clean revision at the standing cadence, and consume every expected hosted workflow/job to terminal success with durable URLs and conclusions.`
   Verification: `pending`
@@ -91,8 +91,8 @@ by that run.
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | The exact callsite census and decision `0086` select the bounded test-only contract. |
-| 2 | `.2` | `active` | Implement the selected helper, watcher, and exact 34-file migration. |
-| 3 | `.3` | `pending` | Complete-CI and push qualification depend on the migrated runtime surface. |
+| 2 | `.2` | `done` | The helper, hostile watcher, and exact 34-file migration are focused-green. |
+| 3 | `.3` | `active` | Resume complete CI at the repaired t/1515 frontier, then push and consume hosted qualification. |
 
 ## Decisions
 
@@ -109,6 +109,17 @@ by that run.
   requires `FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1` before any affected Darwin
   tool discovery, preserves non-Darwin execution and first-failure truth, and
   mechanically rejects future unbounded direct launches.
+- `2026-08-26`: Implement the helper as an independent test authority, not a
+  wrapper around `IPC::Cmd` and not a new product lifecycle. The caller guard
+  and the helper guard are deliberately redundant: TAP skips ordinary Darwin
+  before discovery, while every entrypoint still refuses an unqualified
+  fork/exec. The watcher freezes the complete migration and keeps Icarus/vvp
+  outside this Verilator-only contract.
+- `2026-08-26`: Store the exact migrated path and callsite census in the closed
+  tracked `t/data/darwin_inline_verilator_runtime_manifest.json` producer. The
+  hostile watcher consumes that manifest, freezes its cardinalities, and
+  independently scans tracked tests, so published counts are re-derived,
+  falsified, and kept durable by distinct evidence legs.
 
 ## `.1` tracked launch audit
 
@@ -137,40 +148,40 @@ Audit classes carry all required dimensions:
 
 | Source | Compile/runtime sites | Class | `.2` disposition |
 | --- | ---: | --- | --- |
-| `t/1498-ial2-ahb-requester-busy-insert.t` | `1/1` | L1 | migrate |
-| `t/1499-ial2-axi-aw-driver.t` | `1/1` | L1 | migrate |
-| `t/1500-ial2-axi-w-driver.t` | `1/1` | L1 | migrate |
-| `t/1501-ial2-axi-b-response-acceptor.t` | `1/1` | L1 | migrate |
-| `t/1502-ial2-axi-write-request-composition.t` | `1/1` | L1 | migrate |
-| `t/1503-ial2-axi-write-transaction-composition.t` | `1/1` | L1 | migrate |
-| `t/1504-ial2-axi-ar-driver.t` | `1/1` | L1 | migrate |
-| `t/1505-ial2-axi-r-beat-acceptor.t` | `1/1` | L1 | migrate |
-| `t/1506-ial2-axi-read-transaction-composition.t` | `1/1` | L1 | migrate |
-| `t/1507-ial2-axi-read-burst4-transaction-composition.t` | `2/2` | L1 | migrate |
-| `t/1508-ial2-axi-w-burst4-driver.t` | `1/1` | L1 | migrate |
-| `t/1509-ial2-axi-write-burst4-request-composition.t` | `1/1` | L1 | migrate |
-| `t/1510-isf-multibit-loop-predicate-truthiness.t` | `2/2` | L1 | migrate |
-| `t/1511-ial2-ahb-requester-burst-completion.t` | `1/1` | L1 | migrate |
-| `t/1513-ial2-ahb-paired-busy-composition.t` | `1/1` | L1 | migrate |
-| `t/1514-ial2-ahb-paired-busy-composition-profile-alias.t` | `1/1` | L1 | migrate |
-| `t/1515-ial2-ahb-two-subordinate-paired-busy-composition.t` | `1/1` | L1 | migrate |
-| `t/1516-ial2-ahb-two-subordinate-paired-busy-composition-profile-alias.t` | `1/1` | L1 | migrate |
-| `t/1517-ial2-ahb-requester-wrap-progression-audit.t` | `1/1` | L1 | migrate |
-| `t/1519-ial2-ahb-pipelined-active-transfer-audit.t` | `2/2` | L1 | migrate |
-| `t/1520-ahb-direct-subordinate-pipelined-active-transfer-audit.t` | `1/1` | L1 | migrate |
-| `t/1521-ial2-ahb-requester-two-busy-insert.t` | `1/1` | L1 | migrate |
-| `t/1523-ial2-ahb-exact-two-paired-busy-composition.t` | `1/1` | L1 | migrate |
-| `t/1525-ial2-ahb-two-subordinate-exact-two-paired-busy-composition.t` | `1/1` | L1 | migrate |
-| `t/1528-ial2-ahb-requester-three-busy-insert.t` | `1/1` | L1 | migrate |
-| `t/1530-ial2-ahb-interconnect-output-arbitration.t` | `1/1` | L1 | migrate |
-| `t/1531-ial2-ahb-exact-three-paired-busy-composition.t` | `1/1` | L1 | migrate |
-| `t/1533-ial2-ahb-two-subordinate-exact-three-paired-busy-composition.t` | `1/1` | L1 | migrate |
-| `t/1535-ial2-ahb-requester-four-busy-insert.t` | `1/1` | L1 | migrate |
-| `t/1537-ial2-ahb-exact-four-paired-busy-composition.t` | `1/1` | L1 | migrate |
-| `t/1539-ial2-ahb-two-subordinate-exact-four-paired-busy-composition.t` | `1/1` | L1 | migrate |
-| `t/1541-ial2-ahb-requester-generalized-busy-count-range.t` | `1/1` | L1 | migrate |
-| `t/1542-isf-rule-transaction-named-drive-priority-readiness.t` | `1/1` | L1 | migrate Verilator only; keep `vvp` separate |
-| `t/1559-vial-ahb-runtime-parity.t` direct baseline | `1/1` | L2 | migrate; retain public Runner path |
+| `t/1498-ial2-ahb-requester-busy-insert.t` | `1/1` | L1 | migrated |
+| `t/1499-ial2-axi-aw-driver.t` | `1/1` | L1 | migrated |
+| `t/1500-ial2-axi-w-driver.t` | `1/1` | L1 | migrated |
+| `t/1501-ial2-axi-b-response-acceptor.t` | `1/1` | L1 | migrated |
+| `t/1502-ial2-axi-write-request-composition.t` | `1/1` | L1 | migrated |
+| `t/1503-ial2-axi-write-transaction-composition.t` | `1/1` | L1 | migrated |
+| `t/1504-ial2-axi-ar-driver.t` | `1/1` | L1 | migrated |
+| `t/1505-ial2-axi-r-beat-acceptor.t` | `1/1` | L1 | migrated |
+| `t/1506-ial2-axi-read-transaction-composition.t` | `1/1` | L1 | migrated |
+| `t/1507-ial2-axi-read-burst4-transaction-composition.t` | `2/2` | L1 | migrated |
+| `t/1508-ial2-axi-w-burst4-driver.t` | `1/1` | L1 | migrated |
+| `t/1509-ial2-axi-write-burst4-request-composition.t` | `1/1` | L1 | migrated |
+| `t/1510-isf-multibit-loop-predicate-truthiness.t` | `2/2` | L1 | migrated |
+| `t/1511-ial2-ahb-requester-burst-completion.t` | `1/1` | L1 | migrated |
+| `t/1513-ial2-ahb-paired-busy-composition.t` | `1/1` | L1 | migrated |
+| `t/1514-ial2-ahb-paired-busy-composition-profile-alias.t` | `1/1` | L1 | migrated |
+| `t/1515-ial2-ahb-two-subordinate-paired-busy-composition.t` | `1/1` | L1 | migrated |
+| `t/1516-ial2-ahb-two-subordinate-paired-busy-composition-profile-alias.t` | `1/1` | L1 | migrated |
+| `t/1517-ial2-ahb-requester-wrap-progression-audit.t` | `1/1` | L1 | migrated |
+| `t/1519-ial2-ahb-pipelined-active-transfer-audit.t` | `2/2` | L1 | migrated |
+| `t/1520-ahb-direct-subordinate-pipelined-active-transfer-audit.t` | `1/1` | L1 | migrated |
+| `t/1521-ial2-ahb-requester-two-busy-insert.t` | `1/1` | L1 | migrated |
+| `t/1523-ial2-ahb-exact-two-paired-busy-composition.t` | `1/1` | L1 | migrated |
+| `t/1525-ial2-ahb-two-subordinate-exact-two-paired-busy-composition.t` | `1/1` | L1 | migrated |
+| `t/1528-ial2-ahb-requester-three-busy-insert.t` | `1/1` | L1 | migrated |
+| `t/1530-ial2-ahb-interconnect-output-arbitration.t` | `1/1` | L1 | migrated |
+| `t/1531-ial2-ahb-exact-three-paired-busy-composition.t` | `1/1` | L1 | migrated |
+| `t/1533-ial2-ahb-two-subordinate-exact-three-paired-busy-composition.t` | `1/1` | L1 | migrated |
+| `t/1535-ial2-ahb-requester-four-busy-insert.t` | `1/1` | L1 | migrated |
+| `t/1537-ial2-ahb-exact-four-paired-busy-composition.t` | `1/1` | L1 | migrated |
+| `t/1539-ial2-ahb-two-subordinate-exact-four-paired-busy-composition.t` | `1/1` | L1 | migrated |
+| `t/1541-ial2-ahb-requester-generalized-busy-count-range.t` | `1/1` | L1 | migrated |
+| `t/1542-isf-rule-transaction-named-drive-priority-readiness.t` | `1/1` | L1 | migrated Verilator only; `vvp` retained separately |
+| `t/1559-vial-ahb-runtime-parity.t` direct baseline | `1/1` | L2 | migrated; public Runner path retained |
 
 Protected test-side tool routes are excluded from migration, not from the
 audit: `t/1558` (Darwin-explicit public Runner), `t/1663` (exact public-run
@@ -195,9 +206,16 @@ Verilator process.
 - [x] **ADDRESSED (verified)** — Decision `0086`, the per-path table above, the Knowledge Map card, and the mdBook select one test-only closed supervisor with fixed stage bounds, close-on-exec handoff evidence, whole-group TERM/KILL cleanup, pre-discovery Darwin qualification, unchanged non-Darwin execution, no retry, and one exact 34-file migration plus watcher.
 - [x] **NO REGRESSION** — `prove -Iperl t/1414-docs-relative-paths-audit.t` reports `All tests successful`; task-tree, Memory, decision-index, Knowledge Map, mdBook, live-document containment/reference authority, claim inventory/dispositions, locality, diff, and staged doctrine gates pass with zero enforcement ceiling increases.
 
+## Acceptance Checklist (enforced) — `.2` bounded implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'command => [$binary,' -- t/1498-ial2-ahb-requester-busy-insert.t` locates the exact historical source pattern at `83aabe13b`; it still reached the generated executable directly in all 34 audited files and left 36 paths without any deadline plus one alarm-only path without group cleanup. Independent literal-compile and generated-runtime censuses both derive 37 callsites and the same file set.
+- [x] **ADDRESSED (verified)** — `t/lib/FSM/Test/VerilatorRuntime.pm` owns the sealed stage bounds, qualification, path/cwd admission, split aggregate-bounded capture, exec handoff, monotonic evidence, process group, first-failure status, and verified cleanup. The closed tracked census manifest independently names all 34 affected files and both 37-call totals. `t/1668-darwin-inline-verilator-test-runtime.t` proves hostile outcomes and recomputes the exact migration: 37/37 helper-owned callsites, zero direct generated-binary IPC launches, pre-discovery guard and project-local temp activation everywhere, and unchanged separate Icarus/vvp ownership.
+- [x] **NO REGRESSION** — All 34 migrated files report `syntax OK`; their ordinary Darwin run produces the exact pre-discovery skip for all 34 files; the hostile watcher passes at `Files=1, Tests=6`; explicitly qualified `t/1515` passes at `Files=1, Tests=3`; task-tree, Memory, Knowledge Map, mdBook, claim, live-document, locality, diff, and staged doctrine gates pass with no containment-ceiling increase.
+
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-08-26` | `.1` activation | pre-push CI prefix; live process census; one-second stack sample; timeout-source inspection | `t/01-t/1514 green; t/1515 has an unbounded direct launch and 804/804 _dyld_start frames; exact audit/selection now active` |
 | `2026-08-26` | `.1` selection | literal compile census; independent runtime census; exact file-set comparison; IPC timeout documentation; decision/card/book/task/doctrine checks | `37 compile + 37 runtime sites in 34 affected files; decision 0086 accepted; .2 active` |
+| `2026-08-26` | `.2` bounded implementation | closed census manifest; 34-file syntax gate; hostile helper/watcher; standard Darwin guard run; explicitly qualified original t1515; independent source scan | `37 compile + 37 runtime sites helper-owned; direct generated-binary IPC=0; Files=1/Tests=6 watcher and Files=1/Tests=3 qualified t1515 pass; .3 active` |
