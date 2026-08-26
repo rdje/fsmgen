@@ -9,10 +9,14 @@ use File::Copy qw(copy);
 use File::Path qw(make_path);
 use File::Spec;
 use FindBin;
-use IPC::Cmd qw(run);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
 use FSM::ProjectDataLocality qw(create_project_tempdir);
+use FSM::Test::TaskAcceptanceFixtureRuntime qw(
+    run_fixture_checker
+    run_fixture_git
+);
 
 my $repo_root = abs_path(File::Spec->catdir($FindBin::Bin, '..'));
 my $checker_source = File::Spec->catfile($repo_root, 'scripts', 'check_task_acceptance.sh');
@@ -247,17 +251,19 @@ sub git_ok {
 
 sub command_ok {
     my ($command, $label) = @_;
-    my ($ok, undef, undef, $stdout, $stderr) = run(command => $command);
-    if (!$ok) {
-        my $output = join('', @{$stdout || []}, @{$stderr || []});
-        die "$label failed: $output";
+    die "$label requires a git -C fixture command"
+        unless ref($command) eq 'ARRAY' && @$command >= 4
+            && $command->[0] eq 'git' && $command->[1] eq '-C';
+    my $result = run_fixture_git($command->[2], [@{$command}[3 .. $#$command]]);
+    if (!$result->{ok}) {
+        die "$label failed ($result->{status}): "
+            . $result->{stdout} . $result->{stderr};
     }
 }
 
 sub run_checker {
     my ($repo) = @_;
-    my $checker = File::Spec->catfile($repo, 'scripts', 'check_task_acceptance.sh');
-    my ($ok, undef, undef, $stdout, $stderr) = run(command => [$checker]);
-    my $output = join('', @{$stdout || []}, @{$stderr || []});
-    return ($ok ? 1 : 0, $output);
+    my $result = run_fixture_checker($repo);
+    my $output = $result->{stdout} . $result->{stderr};
+    return ($result->{ok} ? 1 : 0, $output);
 }

@@ -11,8 +11,10 @@ status: current
 tags: [verilator, tests, runtime, darwin, process-supervision, qualification]
 evidence: >-
   docs/decisions/0086-legacy-verilator-tests-use-one-bounded-test-runtime-supervisor.md;
+  docs/decisions/0087-test-subprocesses-use-shared-mechanism-and-sealed-policy-adapters.md;
   docs/tasks/DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.md;
   docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md;
+  t/lib/FSM/Test/ProcessSupervisor.pm;
   t/lib/FSM/Test/VerilatorRuntime.pm;
   t/data/darwin_inline_verilator_runtime_manifest.json;
   t/1668-darwin-inline-verilator-test-runtime.t;
@@ -52,6 +54,13 @@ generated-HDL/testbench/oracle remain unchanged. The focused hostile watcher
 validates the closed census manifest, independently scans the tracked tests,
 rejects new unbounded direct paths, and proves overflow, timeout, surviving-
 descendant, exec, signal, nonzero, guard, environment, and cleanup behavior.
+
+Decision `0087` later extracted the unchanged process mechanics into private
+`FSM::Test::ProcessSupervisor` so another bounded test domain could reuse them.
+`FSM::Test::VerilatorRuntime` remains the only policy owner for this surface:
+its schema, Darwin guard, stage admission, fixed bounds, path checks, and
+observable behavior are unchanged. A focused watcher rejects direct low-level
+use by non-policy helper modules.
 
 This is verification-test process supervision, not IASIM execution and not a
 new FSMGEN execution profile. It neither exposes nor replaces the private

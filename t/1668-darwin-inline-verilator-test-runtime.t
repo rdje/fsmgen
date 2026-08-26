@@ -26,6 +26,8 @@ use FSM::Test::VerilatorRuntime qw(
 );
 
 my $repo_root = abs_path(File::Spec->catdir($FindBin::Bin, '..'));
+my $perl = abs_path($^X)
+    or die "cannot resolve the current Perl interpreter: $!";
 my $workspace = tempdir(CLEANUP => 1);
 
 subtest 'Darwin qualification fails closed before invocation inspection' => sub {
@@ -67,8 +69,7 @@ subtest 'Darwin qualification fails closed before invocation inspection' => sub 
 subtest 'closed runtime result separates streams and preserves the environment' => sub {
     local $ENV{FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME} = '1';
     my $program = File::Spec->catfile($workspace, 'success-runtime');
-    write_executable($program, <<'PROGRAM');
-#!/usr/bin/env perl
+    write_executable($program, perl_program(<<'PROGRAM'));
 use strict;
 use warnings;
 print STDOUT "stdout-ready\n";
@@ -144,7 +145,7 @@ subtest 'invalid, exec, nonzero, and signal outcomes remain failed' => sub {
     );
 
     my $target = File::Spec->catfile($workspace, 'symlink-target');
-    write_executable($target, "#!/usr/bin/env perl\nexit 0;\n");
+    write_executable($target, perl_program("exit 0;\n"));
     my $link = File::Spec->catfile($workspace, 'symlink-runtime');
     symlink($target, $link) or die "cannot create runtime symlink: $!";
     my $symlink_result = run_generated_binary([$link]);
@@ -162,22 +163,21 @@ subtest 'invalid, exec, nonzero, and signal outcomes remain failed' => sub {
     ok($exec_result->{cleanup}{group_gone}, 'exec-failure group is gone');
 
     my $nonzero = File::Spec->catfile($workspace, 'nonzero-runtime');
-    write_executable($nonzero, "#!/usr/bin/env perl\nexit 7;\n");
+    write_executable($nonzero, perl_program("exit 7;\n"));
     my $nonzero_result = run_generated_binary([$nonzero]);
     is($nonzero_result->{status}, 'nonzero_exit', 'nonzero exit stays failed');
     is($nonzero_result->{exit_code}, 7, 'nonzero exit code is exact');
     ok($nonzero_result->{cleanup}{group_gone}, 'nonzero process group is gone');
 
     my $signal = File::Spec->catfile($workspace, 'signal-runtime');
-    write_executable($signal, "#!/usr/bin/env perl\nkill q{KILL}, \$\$;\n");
+    write_executable($signal, perl_program("kill q{KILL}, \$\$;\n"));
     my $signal_result = run_generated_binary([$signal]);
     is($signal_result->{status}, 'signaled', 'signal exit stays failed');
     is($signal_result->{signal}, 9, 'terminating signal is exact');
     ok($signal_result->{cleanup}{group_gone}, 'signaled process group is gone');
 
     my $orphaning = File::Spec->catfile($workspace, 'orphaning-runtime');
-    write_executable($orphaning, <<'PROGRAM');
-#!/usr/bin/env perl
+    write_executable($orphaning, perl_program(<<'PROGRAM'));
 use strict;
 use warnings;
 my $child = fork();
@@ -217,8 +217,7 @@ subtest 'capture overflow terminates once at the sealed version limit' => sub {
     my $fake_bin = File::Spec->catdir($workspace, 'overflow-bin');
     make_path($fake_bin);
     my $verilator = File::Spec->catfile($fake_bin, 'verilator');
-    write_executable($verilator, <<'PROGRAM');
-#!/usr/bin/env perl
+    write_executable($verilator, perl_program(<<'PROGRAM'));
 use strict;
 use warnings;
 print STDOUT 'x' x 70000;
@@ -240,8 +239,7 @@ subtest 'deadline kills a TERM-resistant descendant and proves zero group residu
     my $fake_bin = File::Spec->catdir($workspace, 'timeout-bin');
     make_path($fake_bin);
     my $verilator = File::Spec->catfile($fake_bin, 'verilator');
-    write_executable($verilator, <<'PROGRAM');
-#!/usr/bin/env perl
+    write_executable($verilator, perl_program(<<'PROGRAM'));
 use strict;
 use warnings;
 $SIG{TERM} = 'IGNORE';
@@ -280,6 +278,17 @@ PROGRAM
 };
 
 subtest 'tracked legacy launch census is completely helper-owned' => sub {
+    my $watcher_source = slurp(__FILE__);
+    my $env_perl_shebangs = () =
+        $watcher_source =~ /^#!\/usr\/bin\/env perl$/mg;
+    is(
+        $env_perl_shebangs, 1,
+        'only the prove-invoked watcher entrypoint retains an env shebang',
+    );
+    like(
+        $watcher_source, qr/return "#!\$perl\\n\$body";/,
+        'generated hostile fixtures use the canonical running interpreter',
+    );
     my $manifest_path = File::Spec->catfile(
         $repo_root,
         qw(t data darwin_inline_verilator_runtime_manifest.json),
@@ -392,6 +401,11 @@ sub write_executable {
     print {$fh} $content or die "cannot populate $path: $!";
     close $fh or die "cannot close $path: $!";
     chmod 0755, $path or die "cannot make $path executable: $!";
+}
+
+sub perl_program {
+    my ($body) = @_;
+    return "#!$perl\n$body";
 }
 
 sub slurp {

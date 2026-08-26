@@ -88,11 +88,11 @@ by that run.
   Commit: `pending`
 
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.1`
-  Status: `active`
+  Status: `done`
   Goal: `Diagnose and bound the newly exposed task-acceptance fixture subprocess before resuming complete CI.`
   Acceptance: `Preserve the interrupted first-failure truth; migrate and remove the exact off-volume sample with verified identity and residue census; audit the t1545 command surface and history; select and implement bounded shell-free supervision with process-tree cleanup and no retry; prove hostile pre-exec timeout/cleanup behavior and unchanged fixture results; synchronize durable evidence.`
-  Verification: `activation records the exact t1545/checker/_dyld_start boundary, migrates the sampler output with verified identity, and removes both off-volume and abandoned-fixture residue; implementation pending`
-  Commit: `pending`
+  Verification: `Decision 0087 extracts one private process mechanism behind sealed policy adapters. TaskAcceptanceFixtureRuntime restricts callers to the project-local fixture subtree and exact fixture-owned Git argument shapes, seals the canonical caller-selected Git and Bash executables at load time, and applies fixed 10-second plus 1,048,576/4,194,304-byte stage contracts. The original nine-subtest t1545 replay, same six-subtest Verilator watcher, and new four-subtest hostile/ownership watcher pass together under the RAM guard at Files=3/Tests=19; the watchers prove canonical-interpreter fixture execution, TERM/KILL descendant cleanup, and exactly two low-level policy owners. The failed /bin/bash 3.2 and generated-fixture env-handoff falsifications remain recorded, and no retry exists inside the adapter or tests.`
+  Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.1: bound task-acceptance fixture processes`
 
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2`
   Status: `pending`
@@ -108,8 +108,8 @@ by that run.
 | 1 | `.1` | `done` | The exact callsite census and decision `0086` select the bounded test-only contract. |
 | 2 | `.2` | `done` | The helper, hostile watcher, and exact 34-file migration are focused-green. |
 | 3 | `.3` | `active` | Parent for complete-CI repair, due push, and hosted qualification. |
-| 4 | `.3.1` | `active` | Bound the newly exposed t1545 fixture checker pre-main failure before resuming CI. |
-| 5 | `.3.2` | `pending` | Resume at t1545, push the clean revision, and consume hosted jobs. |
+| 4 | `.3.1` | `done` | The shared mechanism and sealed fixture adapter make every t1545 subprocess finite and cleanup-safe. |
+| 5 | `.3.2` | `pending` | Activate only after the `.3.1` implementation commit is clean, then resume at t1545 and complete push qualification. |
 
 ## Decisions
 
@@ -141,6 +141,22 @@ by that run.
   an independent unbounded subprocess in `t/1545`. Keep the failed attempt
   authoritative, repair it in child `.3.1`, and resume at the exact `t/1545`
   frontier in `.3.2`; do not retry or relabel the interrupted attempt.
+- `2026-08-26`: Decision `0087` extracts the already hostile-tested process
+  mechanism from the Verilator helper, while keeping bounds, command/path
+  admission, schema, and platform behavior in sealed domain adapters. A
+  watcher admits only `VerilatorRuntime` and `TaskAcceptanceFixtureRuntime` as
+  low-level helper owners; the hostile oracle may call the mechanism directly.
+- `2026-08-26`: Bypass the failed `/usr/bin/env` handoff by resolving the
+  caller-selected Git and Bash from absolute `PATH` entries once and invoking
+  their canonical executables directly. Do not substitute macOS `/bin/bash`: the
+  retained falsification replay fails immediately because version 3.2 cannot
+  execute the checker's empty-array loop under `set -u`. Git and Bash are explicit
+  read-only host dependency; project-owned data remains repository-local.
+- `2026-08-26`: The required rationale entry brings the largest root document
+  (`DEVELOPMENT_NOTES.md`) to 975 of its 1,200-line health target, crossing the
+  80% warning milestone. Declare `root_documents` as `warning_debt` without
+  changing any health target or enforcement ceiling; the existing bounded
+  rationale index and rotation contract remain the remediation authority.
 
 ## `.3` interrupted complete-CI evidence
 
@@ -160,6 +176,55 @@ matched by line count, byte count, SHA-256, and diagnostic content, then the
 exact sampler-created `/tmp` source was deleted and censused absent. The exact
 abandoned fixture repository was also deleted and censused absent. No
 `t/1545` or later test is classified as passing by this interrupted run.
+After the tracked hash, size, stack, and cleanup summary above became the
+durable evidence, the repository-volume diagnostic copy was consumed, deleted,
+and censused absent as well.
+
+## `.3.1` bounded task-acceptance fixture implementation
+
+The exact command surface is five fixture-setup Git invocations per repository
+plus one checker invocation per case, with later `git add` calls routed through
+the same helper. `t/1545` had two source-level direct `IPC::Cmd::run` sites:
+the common Git launcher and checker launcher. Both are removed.
+
+`FSM::Test::ProcessSupervisor` now contains the formerly Verilator-local
+mechanism: scalar shell-free argv, repository/same-volume cwd admission,
+separate aggregate-bounded streams, close-on-exec control, monotonic timing,
+one process group, and verified TERM/KILL cleanup. The Verilator adapter
+retains decision `0086` unchanged. The task-acceptance adapter admits only
+`.artifacts/tmp/task-acceptance-tests/fsmgen-*` repositories, exact fixture-
+owned init/local-config/relative-add/baseline-commit argument shapes, and the
+copied regular checker. Global config and unsafe paths fail before process
+creation. Git and Bash are canonicalized at adapter load, so later `PATH`
+mutation cannot replace either admitted executable. Git/checker calls have fixed ten-second walls and
+1,048,576/4,194,304-byte aggregate capture ceilings.
+
+The first post-edit replay using `/bin/bash` was finite but honestly failed all
+nine top-level subtests: macOS Bash 3.2 treated the empty `CHANGE_PATTERNS`
+array as unbound at checker line 52. The adapter was then corrected to resolve
+the environment-selected Bash binary once from absolute `PATH` entries,
+canonicalize it, and execute that binary directly. The next exact RAM-guarded
+`t/1545` run passed at `Files=1, Tests=9`; no retry was added to the test or
+adapter. The new hostile watcher initially reproduced the env pre-main
+boundary through its own shebang, so its mechanism probe now invokes the
+already-running absolute Perl interpreter and cannot confuse host-loader
+behavior with supervision behavior.
+
+A later combined gate honestly failed the Verilator watcher's nominal success
+fixture at its fixed 30-second wall after exec handoff but before first output.
+That fixture still generated `#!/usr/bin/env perl`, reproducing the same hidden
+env boundary. No retry occurred. Every generated Verilator-watcher program now
+uses a shebang containing the canonical already-running Perl interpreter, and
+the census subtest proves that only the prove-invoked watcher entrypoint retains
+an env shebang.
+
+The final combined RAM-guarded focused gate passes
+`t/1545`, `t/1668`, and `t/1669` at `Files=3, Tests=19`. The new watcher proves
+fixed adapter values and failure truth, rejects non-fixture paths and an
+unregistered Git command/global config before process creation, exercises
+direct Bash handoff and nonzero exit, kills a TERM-resistant
+leader/descendant group, and recomputes exactly two policy-module owners of
+the low-level mechanism.
 
 ## `.1` tracked launch audit
 
@@ -255,8 +320,14 @@ Verilator process.
 ## Acceptance Checklist (enforced) — `.3.1` activation
 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'run(command => [$checker])' -- t/1545-task-acceptance-doctrine.t` locates the unbounded fixture launch at `c636a458f`; live process inspection locates the blocked `/usr/bin/env bash` descendant, and its one-second sample derives 792/792 `_dyld_start` frames, a 96-KiB footprint, and no image map.
-- [x] **ADDRESSED (verified)** — The same-tree `.3.1` leaf owns exact sample migration/cleanup, command-surface audit, bounded supervision, hostile testing, and the deterministic `t/1545` replay before complete CI can resume. The 887-byte repository-volume copy matches the source's 32 lines and SHA-256; the exact off-volume source, failed process chain, and abandoned fixture repository are absent.
+- [x] **ADDRESSED (verified)** — The same-tree `.3.1` leaf owns exact sample migration/cleanup, command-surface audit, bounded supervision, hostile testing, and the deterministic `t/1545` replay before complete CI can resume. The 887-byte repository-volume copy matched the source's 32 lines and SHA-256 before consumption; both copies, the failed process chain, and the abandoned fixture repository are absent, while the tracked evidence summary remains.
 - [x] **NO REGRESSION** — `prove -Iperl t/1414-docs-relative-paths-audit.t` reports `All tests successful`; task-tree, Memory, claim, live-document, locality, diff, and staged doctrine gates pass with no containment-ceiling increase.
+
+## Acceptance Checklist (enforced) — `.3.1` bounded implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'run(command => [$checker])' -- t/1545-task-acceptance-doctrine.t` identifies `c636a458f` as the source of the unbounded checker handoff; the retained 792/792-frame sample and first fixture replay localize it to `/usr/bin/env bash` before user code. The separate `/bin/bash` replay fails all nine top-level cases at checker line 52, proving that a 3.2 substitution changes checker semantics rather than repairing launch supervision. A later combined gate reached exec handoff for t1668's generated `#!/usr/bin/env perl` success fixture but no first output before the sealed 30-second wall, independently exposing the same hidden env boundary in the watcher itself.
+- [x] **ADDRESSED (verified)** — Decision `0087` and `t/lib/FSM/Test/ProcessSupervisor.pm` establish one shared private mechanism; `TaskAcceptanceFixtureRuntime.pm` seals the fixture subtree, four Git operations, load-time canonical Git/Bash identity, direct Bash handoff, ten-second walls, two capture ceilings, closed result, and no retry. `t/1668` seals generated fixtures to the canonical running Perl interpreter and watches out env-shebang recurrence; `t/1669` proves TERM/KILL cleanup, mutable-`PATH` replacement resistance, path/command rejection, fixed values, first-failure truth, and exactly two policy-module owners.
+- [x] **NO REGRESSION** — The final RAM-guarded combined focused command reports `All tests successful` and `Files=3, Tests=19` for the same nine-case `t/1545` oracle, six-case Verilator hostile/census watcher, and four-case shared-engine/fixture watcher; the repaired t1668 also passes alone at `Files=1, Tests=6`. mdBook, Knowledge Map, task-tree, Memory, claim, live-document, locality, diff, and staged doctrine gates pass with no ceiling increase.
 
 ## Verification Log
 
@@ -266,3 +337,6 @@ Verilator process.
 | `2026-08-26` | `.1` selection | literal compile census; independent runtime census; exact file-set comparison; IPC timeout documentation; decision/card/book/task/doctrine checks | `37 compile + 37 runtime sites in 34 affected files; decision 0086 accepted; .2 active` |
 | `2026-08-26` | `.2` bounded implementation | closed census manifest; 34-file syntax gate; hostile helper/watcher; standard Darwin guard run; explicitly qualified original t1515; independent source scan | `37 compile + 37 runtime sites helper-owned; direct generated-binary IPC=0; Files=1/Tests=6 watcher and Files=1/Tests=3 qualified t1515 pass; .3 active` |
 | `2026-08-26` | `.3` interrupted suffix | RAM-guarded lexical t1515-tail run; live process tree; one-second sample; exact termination/residue census | `green/skipped through t1544; t1545 first fixture blocked in unbounded /usr/bin/env bash pre-main path with 792/792 _dyld_start frames; .3.1 active` |
+| `2026-08-26` | `.3.1` bounded implementation | exact command/history audit; direct /bin/bash falsification; shared-engine extraction; sealed adapter; hostile ownership watcher; RAM-guarded combined regression | `two direct IPC sites removed; Files=3/Tests=19 pass; TERM-resistant group gone; exactly two low-level policy owners; .3.2 next after clean commit` |
+| `2026-08-26` | `.3.1` watcher env falsification | combined RAM-guarded gate; exec-handoff/first-output evidence; generated-fixture source census; zero process residue | `t1545 and t1669 pass; t1668 nominal env-Perl fixture times out honestly after handoff; all generated fixtures switched to canonical Perl with recurrence watcher; no retry` |
+| `2026-08-26` | `.3.1` watcher env repair | focused repaired t1668; final three-file RAM-guarded cluster | `t1668 Files=1/Tests=6 pass; final t1545+t1668+t1669 Files=3/Tests=19 pass; generated env-Perl recurrence count held to entrypoint only` |

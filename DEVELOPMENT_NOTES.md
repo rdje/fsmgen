@@ -948,3 +948,37 @@ independent fail-closed guard inside the helper keep standard CI deterministic;
 non-Darwin simulation, generated HDL, testbench arguments, output oracles, and
 first-failure truth remain unchanged. A source watcher closes the recurrence
 path instead of relying on reviewer memory.
+
+## 2026-08-26: Test process mechanism is shared, but execution policy stays sealed
+
+The complete-CI suffix next stopped in `t/1545` while its first fixture entered
+the task-acceptance checker through an unbounded `IPC::Cmd` call. The sampled
+child was still `/usr/bin/env bash` at the retained Darwin pre-main boundary.
+Adding a local alarm would not establish descendant cleanup, while copying the
+Verilator process loop would create two implementations of the same difficult
+mechanism.
+
+Decision `0087` extracts that mechanism into private
+`FSM::Test::ProcessSupervisor` and leaves policy in narrow adapters. The
+low-level layer owns argv, handoff, streams, time, process groups, and cleanup;
+`FSM::Test::VerilatorRuntime` continues to own the exact decision `0086`
+contract. A new `FSM::Test::TaskAcceptanceFixtureRuntime` admits only the
+project-local fixture subtree and exact required Git argument shapes, uses
+fixed ten-second and capture bounds, and seals canonical caller-selected Git
+and Bash binaries at adapter load. The direct Bash handoff avoids the failed
+`env` process without switching to
+macOS Bash 3.2, whose nounset/empty-array behavior cannot run the checker.
+
+The distinction is intentional: reuse the safety mechanism, never delegate
+policy to arbitrary test callsites. A source watcher admits only the two policy
+modules as low-level owners, while hostile tests prove cleanup and rejection.
+The original task-acceptance expectations and Verilator contract remain
+unchanged and jointly pass under the RAM guard.
+
+The combined gate then exposed an env handoff inside the Verilator watcher
+itself: its generated success program completed exec handoff but produced no
+output before the fixed runtime wall. Retrying would hide the same defect just
+removed from t1545. Generated watcher programs therefore embed the canonical
+already-running Perl interpreter in their shebang, and a source assertion
+prevents `#!/usr/bin/env perl` from returning outside the prove-invoked test
+entrypoint.

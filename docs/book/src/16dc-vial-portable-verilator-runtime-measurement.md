@@ -354,6 +354,113 @@ also passes when explicitly qualified under the bounded helper. That passing
 observation does not erase the earlier pre-main stall or justify retry-based
 success; it proves that either future outcome is now finite and cleanup-safe.
 
+## Shared test-process mechanism and sealed policy adapters
+
+The next complete-CI suffix exposed the same class of infrastructure defect in
+a different domain. `t/1545-task-acceptance-doctrine.t` builds small Git
+repositories and executes the staged-index checker inside each fixture. Its
+two direct `IPC::Cmd` launch paths had no deadline, bounded capture, or
+whole-process-group cleanup. On the qualified Darwin host, the first checker
+stopped before Bash entered user code: the child remained at
+`/usr/bin/env bash`, and a one-second sample placed all 792 captured
+main-thread frames at `_dyld_start` with no image map.
+
+Decision `0087` makes the repair an architecture boundary rather than another
+copy of process code:
+
+```text
+test callsite
+  -> sealed domain adapter (commands, paths, bounds, schema)
+  -> private ProcessSupervisor (fork/exec, streams, deadline, cleanup)
+  -> one closed result
+```
+
+`FSM::Test::ProcessSupervisor` is private test infrastructure. It accepts a
+scalar argument vector without a shell, validates a repository-contained
+same-volume working directory, captures stdout and stderr separately under one
+aggregate byte ceiling, and uses a close-on-exec control pipe to distinguish a
+successful handoff from `chdir`, descriptor, containment, or `exec` failure.
+Monotonic timestamps identify spawn, handoff, first output, and completion.
+Every child owns one process group; timeout, overflow, handoff failure, or a
+surviving descendant triggers TERM, bounded grace, KILL when required, leader
+reaping, and a final group-disappearance check.
+
+The low-level module deliberately does not pick a command or a safety budget.
+Only sealed policy adapters in `t/lib/FSM/Test/` may call it, and
+`t/1669-task-acceptance-fixture-runtime.t` recomputes that owner set.
+`FSM::Test::VerilatorRuntime` remains decision `0086`'s adapter, so its Darwin
+guard, 10/120/30-second stages, capture limits, result schema, and callsite
+behavior are unchanged after the extraction.
+
+The helper's hostile watcher does not re-enter the env boundary while creating
+test programs. Each generated program embeds the canonical already-running
+Perl interpreter in its shebang. This is mechanically watched: the portable
+`#!/usr/bin/env perl` form may appear only on the watcher entrypoint that
+`prove` launches through Perl. The boundary is evidence-driven—a combined run
+completed exec handoff for the former env-Perl success fixture but received no
+first output before the fixed runtime wall, and that failure was not retried.
+
+`FSM::Test::TaskAcceptanceFixtureRuntime` is the separate `t/1545` policy. It
+accepts only repositories created below
+`.artifacts/tmp/task-acceptance-tests/`, rejects symlink ancestry and other
+repository paths, and admits only the fixture's exact quiet-init, two local
+identity-config, repository-relative add, and fixed baseline-commit argument
+shapes. A global config, an absolute/parent add path, or another option fails
+before process creation. Git and checker invocations each have a fixed
+ten-second wall. Their aggregate capture ceilings are 1,048,576 and 4,194,304
+bytes respectively. These values are selected by the adapter and cannot be
+overridden by the test.
+The adapter resolves `git` once from absolute inherited `PATH` entries and
+retains its canonical executable; changing `PATH` later cannot substitute a
+different tool for an already admitted Git operation.
+
+The checker still begins with `#!/usr/bin/env bash`, but the adapter does not
+execute that shebang. It similarly resolves `bash` once from absolute entries in the
+inherited `PATH`, canonicalizes the selected executable, validates it, and
+passes the repository-local checker path directly:
+
+```perl
+use FSM::Test::TaskAcceptanceFixtureRuntime qw(
+    run_fixture_checker
+    run_fixture_git
+);
+
+my $git = run_fixture_git($fixture, ['add', '--', 'README.md']);
+die $git->{diagnostic} unless $git->{ok};
+
+my $checked = run_fixture_checker($fixture);
+ok($checked->{ok}, 'bounded staged-index checker succeeds')
+    or diag($checked->{status}, $checked->{stdout}, $checked->{stderr});
+```
+
+This direct handoff preserves the Bash selected by the caller's toolchain
+while removing the failed `env` process. Selecting macOS `/bin/bash` instead
+was tested and rejected: version 3.2 fails the checker's empty-array loop under
+`set -u`. Git and Bash are therefore explicit read-only host/toolchain dependencies;
+project-owned fixture repositories, checker scratch space, streams, and
+diagnostics remain on the repository volume.
+
+The adapter returns
+`fsmgen.test.task_acceptance_fixture_result.v1`, with separate streams,
+exit/signal/timeout/limit/exec truth, selected bounds, monotonic timings, and
+closed cleanup evidence. There is no retry. A nonzero checker remains nonzero,
+a first timeout remains failed, and no later control can promote it. All nine
+original `t/1545` subtests pass unchanged under the adapter. The combined
+focused regression—original doctrine fixture, unchanged Verilator hostile
+watcher, and the new shared-engine/adapter watcher—passes at three files and
+19 top-level tests under the repository RAM guard.
+
+The quantitative statements above have three independent legs:
+
+- Re-derive the direct callsites and selected constants from `t/1545`, both
+  policy adapters, and the shared engine, then run the original doctrine test.
+- Falsify the interpreter choice with the retained macOS `/bin/bash` replay,
+  and exercise rejected paths/subcommands, nonzero exit, plus a TERM-resistant
+  descendant in the focused watcher.
+- Keep the result durable through decision `0087`, the owning task-tree,
+  Knowledge Map card `test-subprocess-policy-adapters`, the focused watcher,
+  and the work-unit Git commit.
+
 ## Selected authored runtime activity
 
 The runtime-stream axis measures the cost of producing, validating, and
