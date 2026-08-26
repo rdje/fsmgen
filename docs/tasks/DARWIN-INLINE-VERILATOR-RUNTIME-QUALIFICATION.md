@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `verification infrastructure / runtime qualification`
 - Created: `2026-08-26`
-- Last updated: `2026-08-26`
+- Last updated: `2026-08-27`
 - Owner: repo-local workflow
 
 ## Goal
@@ -103,11 +103,11 @@ by that run.
   Commit: `pending`
 
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Recover the host-pressure-interrupted t296 matrix without discarding completed work again.`
   Acceptance: `Preserve the first resumed-suffix guard interruption exactly; prove its host-wide rather than descendant-local cause; restart t296 at the same clean revision with the existing same-volume exact-revision checkpoint contract and unchanged RAM ceilings; consume the complete green t296 parent and lexical suffix through t999; then return to .3.2 push qualification without retrying any failed test unchanged.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `At clean revision 2dcfaa29715a, guarded checkpointed t296 recovery completed all 762 independently re-derived batches (287 pipeline/default, 94 CLI/default, 287 pipeline/strict, and 94 CLI/strict), then passed its parent at Files=1/Tests=10 in 22,210 wallclock seconds and self-cleared the exact-revision checkpoint. A separate guarded lexical selection independently derived 778 paths from t297 through t999 and passed all of them at Files=778/Tests=2,989 in 18,614 wallclock seconds. Neither run triggered a RAM-guard event; the checkpoint, test processes, and generated residue are absent. Together with the retained green t01-t1544 prefix and resumed green t1545-t295 evidence, this closes the complete-CI file set without relabeling either interruption as passing.`
+  Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.1: activate checkpointed t296 recovery; DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.1: complete checkpointed t296 recovery`
 
 ## Current Frontier
 
@@ -117,8 +117,8 @@ by that run.
 | 2 | `.2` | `done` | The helper, hostile watcher, and exact 34-file migration are focused-green. |
 | 3 | `.3` | `active` | Parent for complete-CI repair, due push, and hosted qualification. |
 | 4 | `.3.1` | `done` | The shared mechanism and sealed fixture adapter make every t1545 subprocess finite and cleanup-safe. |
-| 5 | `.3.2.1` | `active` | The exact t1545 suffix reached strict-CLI t296 before a host-wide 88.1% guard event; preserve it and use the existing exact-revision t296 checkpoint contract for bounded recovery. |
-| 6 | `.3.2` | `active` | Consume `.3.2.1`, complete the lexical tail, and finish push plus hosted qualification. |
+| 5 | `.3.2.1` | `done` | Exact-revision t296 recovery and the independently selected 778-file lexical tail are green; the checkpoint self-cleared and no guard event recurred. |
+| 6 | `.3.2` | `active` | Preserve the completed complete-CI evidence, validate locality and the mdBook, then finish the due push and hosted qualification. |
 
 ## Decisions
 
@@ -208,6 +208,17 @@ Recovery starts t296 again at the same clean revision with a safe
 synced and atomically retained; a later guard interruption may resume only
 those exact recorded batches. The full parent must still finish green before
 the checkpoint clears and before the lexical suffix can continue.
+
+Recovery completed at clean revision `2dcfaa29715a`. An independent list-only derivation counted 287 pipeline/default, 94 CLI/default, 287 pipeline/strict,
+and 94 CLI/strict batches: 762 total. The guarded parent consumed those exact batches, reported `Files=1, Tests=10` and `Result: PASS` after 22,210 wallclock
+seconds, and removed its checkpoint only after the parent succeeded. A separate lexical glob independently selected 778 paths from `t/297` through `t/999`;
+its guarded `prove` run reported `Files=778, Tests=2989` and `Result: PASS` after 18,614 wallclock seconds. No host or descendant RAM cutoff occurred in either
+recovery run, and the exact checkpoint, test-process tree, and runtime residue are absent.
+
+The completion claim has three distinct legs. Re-derivation is the list-only matrix mode count and pre-run lexical path count. Falsification is each parent's
+independent `prove` file/test summary, checkpoint self-removal only after all matrix batches and the parent pass, and the zero guard/process residue census.
+Durability is this owning task-tree verification plus the exact completion commit. The retained t01-t1544 prefix, resumed t1545-t295 success, fresh t296
+parent success, and fresh t297-t999 tail jointly cover the complete CI file set; neither interrupted attempt is itself credited as a pass.
 
 ## `.3` interrupted complete-CI evidence
 
@@ -392,6 +403,12 @@ Verilator process.
 - [x] **ADDRESSED (verified)** — Active child `.3.2.1` owns an exact-clean-HEAD restart of t296 with the existing safe `.artifacts/t296/*.json` checkpoint contract and unchanged 88% host/4,096-MiB descendant ceilings. The absent checkpoint is not invented, no interrupted batch is credited, and the full parent must still pass before its checkpoint is removed.
 - [x] **NO REGRESSION** — The guarded focused checkpoint, relative-path, and task-tree tests pass; the corrected canonical project-locality test reports `Files=1, Tests=20`; Knowledge Map generation/check/query parity passes at 1,153 facts, 6,113 unique questions, 6,280 answer occurrences, and 136 bounded shards, with the recovery question resolving to the existing canonical runtime card. The first combined command stopped after its three existing tests passed because it named nonexistent `t/1330-project-data-locality.t`; only the unreached checks were run with canonical `t/1527-project-data-locality.t`. Diff and staged doctrine checks remain required before commit.
 
+## Acceptance Checklist — `.3.2.1` checkpointed recovery completion
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The first resumed suffix was terminated solely by the RAM guard's host-wide 88.1% cutoff while its active FSMGEN generator remained below the independent 4-GiB descendant ceiling; no test assertion failed. The prior uncheckpointed t296 work is deliberately uncredited, and recovery starts t296 from its exact clean revision rather than hiding the interruption.
+- [x] **ADDRESSED (verified)** — The existing exact-revision repository-local checkpoint consumed all 762 independently counted t296 batches, the complete parent passed, and the checkpoint self-cleared. The separately derived 778-file lexical tail from t297 through t999 then passed, returning ownership to `.3.2` for locality, book, push, and hosted qualification.
+- [x] **NO REGRESSION** — Guarded t296 reports `Files=1, Tests=10` and guarded t297-t999 reports `Files=778, Tests=2989`, both with `All tests successful` and `Result: PASS`. Neither guard fired; the checkpoint and test processes are absent; Git remained clean throughout. Combined with retained t01-t295 evidence, every complete-CI file is covered without retrying or reclassifying a failed assertion.
+
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
@@ -405,3 +422,4 @@ Verilator process.
 | `2026-08-26` | `.3.1` watcher env repair | focused repaired t1668; final three-file RAM-guarded cluster | `t1668 Files=1/Tests=6 pass; final t1545+t1668+t1669 Files=3/Tests=19 pass; generated env-Perl recurrence count held to entrypoint only` |
 | `2026-08-26` | `.3.2` activation | clean-tree census; committed repair identity; frontier alignment | `d630261e6 clean; retained prefix through t1544; exact t1545 restart active` |
 | `2026-08-26` | `.3.2.1` host-pressure recovery activation | authoritative suffix; RAM-guard output; live PID/RSS census; post-cleanup process/memory/residue census; checkpoint-contract audit; focused t1597/t1414/t1549/t1527 and Knowledge Map checks | `green through t295; t296 interrupted after 4h48m by host 88.1% cutoff, not descendant 4-GiB cutoff; no checkpoint existed; exact-revision checkpointed recovery active; focused recovery checks pass` |
+| `2026-08-27` | `.3.2.1` checkpointed recovery completion | independent t296 matrix count; guarded exact-revision t296 parent; independent lexical-tail selection; guarded t297-t999 prove; checkpoint/process/residue census | `t296 Files=1/Tests=10 over all 762 batches; t297-t999 Files=778/Tests=2,989; both PASS with no guard event; checkpoint self-cleared; .3.2 active` |
