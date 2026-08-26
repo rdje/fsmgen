@@ -82,7 +82,22 @@ by that run.
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3`
   Status: `active`
   Goal: `Qualify the migrated runtime surface, resume complete CI, and close the due push follow-up.`
+  Children: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.1, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2`
   Acceptance: `Pass focused helper/callsite/runtime tests, resume the RAM-guarded complete-CI suffix at t/1515 through the lexical tail, validate the mdBook build and repository locality/cleanup, push the exact clean revision at the standing cadence, and consume every expected hosted workflow/job to terminal success with durable URLs and conclusions.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.1`
+  Status: `active`
+  Goal: `Diagnose and bound the newly exposed task-acceptance fixture subprocess before resuming complete CI.`
+  Acceptance: `Preserve the interrupted first-failure truth; migrate and remove the exact off-volume sample with verified identity and residue census; audit the t1545 command surface and history; select and implement bounded shell-free supervision with process-tree cleanup and no retry; prove hostile pre-exec timeout/cleanup behavior and unchanged fixture results; synchronize durable evidence.`
+  Verification: `activation records the exact t1545/checker/_dyld_start boundary, migrates the sampler output with verified identity, and removes both off-volume and abandoned-fixture residue; implementation pending`
+  Commit: `pending`
+
+- ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2`
+  Status: `pending`
+  Goal: `Resume the complete-CI suffix after t1545 repair, then push and consume hosted qualification.`
+  Acceptance: `Restart the authoritative suffix at the exact failed t1545 frontier, combine it with the retained green t01-t1544 evidence, validate locality/cleanup, push at the standing cadence, and consume every expected hosted workflow/job to terminal success with durable URLs and conclusions.`
   Verification: `pending`
   Commit: `pending`
 
@@ -92,7 +107,9 @@ by that run.
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | The exact callsite census and decision `0086` select the bounded test-only contract. |
 | 2 | `.2` | `done` | The helper, hostile watcher, and exact 34-file migration are focused-green. |
-| 3 | `.3` | `active` | Resume complete CI at the repaired t/1515 frontier, then push and consume hosted qualification. |
+| 3 | `.3` | `active` | Parent for complete-CI repair, due push, and hosted qualification. |
+| 4 | `.3.1` | `active` | Bound the newly exposed t1545 fixture checker pre-main failure before resuming CI. |
+| 5 | `.3.2` | `pending` | Resume at t1545, push the clean revision, and consume hosted jobs. |
 
 ## Decisions
 
@@ -120,6 +137,29 @@ by that run.
   hostile watcher consumes that manifest, freezes its cardinalities, and
   independently scans tracked tests, so published counts are re-derived,
   falsified, and kept durable by distinct evidence legs.
+- `2026-08-26`: Split `.3` after the first post-repair suffix attempt exposed
+  an independent unbounded subprocess in `t/1545`. Keep the failed attempt
+  authoritative, repair it in child `.3.1`, and resume at the exact `t/1545`
+  frontier in `.3.2`; do not retry or relabel the interrupted attempt.
+
+## `.3` interrupted complete-CI evidence
+
+The RAM-guarded suffix selected 1,072 lexical paths from `t/1515` through
+`t/999`. It remained green or contractually skipped through `t/1544`.
+`t/1545-task-acceptance-doctrine.t` then blocked in its first fixture's direct
+`IPC::Cmd::run(command => [$checker])` call. The exact descendant was
+`/usr/bin/env bash .../scripts/check_task_acceptance.sh`; after more than six
+minutes it had no child process. A one-second sample placed 792/792 main-thread
+frames at `_dyld_start`, reported a 96-KiB footprint, and had no binary-image
+description. The sample is 887 bytes with SHA-256
+`6851c9f6909f5003815ce82e9cc316ef0ac39a53ae631906b47534839de8f34c`.
+The exact checker/test/prove chain was terminated and verified absent. The
+sample was copied to the repository-volume diagnostic path
+`.artifacts/diagnostics/darwin-inline-verilator-runtime-qualification/t1545-env-premain.sample.txt`,
+matched by line count, byte count, SHA-256, and diagnostic content, then the
+exact sampler-created `/tmp` source was deleted and censused absent. The exact
+abandoned fixture repository was also deleted and censused absent. No
+`t/1545` or later test is classified as passing by this interrupted run.
 
 ## `.1` tracked launch audit
 
@@ -212,6 +252,12 @@ Verilator process.
 - [x] **ADDRESSED (verified)** — `t/lib/FSM/Test/VerilatorRuntime.pm` owns the sealed stage bounds, qualification, path/cwd admission, split aggregate-bounded capture, exec handoff, monotonic evidence, process group, first-failure status, and verified cleanup. The closed tracked census manifest independently names all 34 affected files and both 37-call totals. `t/1668-darwin-inline-verilator-test-runtime.t` proves hostile outcomes and recomputes the exact migration: 37/37 helper-owned callsites, zero direct generated-binary IPC launches, pre-discovery guard and project-local temp activation everywhere, and unchanged separate Icarus/vvp ownership.
 - [x] **NO REGRESSION** — All 34 migrated files report `syntax OK`; their ordinary Darwin run produces the exact pre-discovery skip for all 34 files; the hostile watcher passes at `Files=1, Tests=6`; explicitly qualified `t/1515` passes at `Files=1, Tests=3`; task-tree, Memory, Knowledge Map, mdBook, claim, live-document, locality, diff, and staged doctrine gates pass with no containment-ceiling increase.
 
+## Acceptance Checklist (enforced) — `.3.1` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'run(command => [$checker])' -- t/1545-task-acceptance-doctrine.t` locates the unbounded fixture launch at `c636a458f`; live process inspection locates the blocked `/usr/bin/env bash` descendant, and its one-second sample derives 792/792 `_dyld_start` frames, a 96-KiB footprint, and no image map.
+- [x] **ADDRESSED (verified)** — The same-tree `.3.1` leaf owns exact sample migration/cleanup, command-surface audit, bounded supervision, hostile testing, and the deterministic `t/1545` replay before complete CI can resume. The 887-byte repository-volume copy matches the source's 32 lines and SHA-256; the exact off-volume source, failed process chain, and abandoned fixture repository are absent.
+- [x] **NO REGRESSION** — `prove -Iperl t/1414-docs-relative-paths-audit.t` reports `All tests successful`; task-tree, Memory, claim, live-document, locality, diff, and staged doctrine gates pass with no containment-ceiling increase.
+
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
@@ -219,3 +265,4 @@ Verilator process.
 | `2026-08-26` | `.1` activation | pre-push CI prefix; live process census; one-second stack sample; timeout-source inspection | `t/01-t/1514 green; t/1515 has an unbounded direct launch and 804/804 _dyld_start frames; exact audit/selection now active` |
 | `2026-08-26` | `.1` selection | literal compile census; independent runtime census; exact file-set comparison; IPC timeout documentation; decision/card/book/task/doctrine checks | `37 compile + 37 runtime sites in 34 affected files; decision 0086 accepted; .2 active` |
 | `2026-08-26` | `.2` bounded implementation | closed census manifest; 34-file syntax gate; hostile helper/watcher; standard Darwin guard run; explicitly qualified original t1515; independent source scan | `37 compile + 37 runtime sites helper-owned; direct generated-binary IPC=0; Files=1/Tests=6 watcher and Files=1/Tests=3 qualified t1515 pass; .3 active` |
+| `2026-08-26` | `.3` interrupted suffix | RAM-guarded lexical t1515-tail run; live process tree; one-second sample; exact termination/residue census | `green/skipped through t1544; t1545 first fixture blocked in unbounded /usr/bin/env bash pre-main path with 792/792 _dyld_start frames; .3.1 active` |
