@@ -6,6 +6,9 @@ answers:
   - "why does standard Darwin CI skip inline Verilator runtimes?"
   - "which tests migrate to the bounded Verilator test runtime?"
   - "does the legacy Verilator test supervisor replace the VIAL lifecycle?"
+  - "how should t296 resume after a RAM guard interruption?"
+  - "does t296 support checkpointed corpus-matrix recovery?"
+  - "can an interrupted uncheckpointed t296 run be resumed?"
 date: 2026-08-26
 status: current
 tags: [verilator, tests, runtime, darwin, process-supervision, qualification]
@@ -18,10 +21,14 @@ evidence: >-
   t/lib/FSM/Test/VerilatorRuntime.pm;
   t/data/darwin_inline_verilator_runtime_manifest.json;
   t/1668-darwin-inline-verilator-test-runtime.t;
+  t/296-regression-corpus-supported-behavior.t;
+  t/lib/FSM/Test/T296Checkpoint.pm;
+  t/1597-t296-checkpoint.t;
   t/1498-ial2-ahb-requester-busy-insert.t;
   t/1559-vial-ahb-runtime-parity.t
 reverify: >-
-  prove -Iperl -It/lib t/1668-darwin-inline-verilator-test-runtime.t &&
+  prove -Iperl -It/lib t/1597-t296-checkpoint.t
+  t/1668-darwin-inline-verilator-test-runtime.t &&
   rg -n --glob 't/*.t' 'run_verilator_(?:compile|version)|run_generated_binary' t &&
   ! rg -n --glob 't/*.t' 'command\\s*=>\\s*\\[\\s*\\$binary(?:\\s*,|\\s*\\])' t
 ---
@@ -66,3 +73,14 @@ This is verification-test process supervision, not IASIM execution and not a
 new FSMGEN execution profile. It neither exposes nor replaces the private
 `FSM::VIAL::Backend::VerilatorLifecycle`; existing VIAL public, diagnostic,
 and measurement guards remain under decisions `0083`-`0085`.
+
+The long `t/296` corpus matrix has a separate opt-in continuity contract.
+Set `FSMGEN_T296_CHECKPOINT` to a safe relative
+`.artifacts/t296/<safe-name>.json` path before starting it under the RAM guard.
+Only green isolated batches completed after checkpointing was enabled receive
+credit. The checkpoint rejects a dirty or different revision, another volume,
+symlinks, malformed state, and another contract version; it is removed only
+after the complete parent passes. An uncheckpointed interruption has no
+reconstructable credit and must restart t296. A host-pressure interruption may
+resume the exact command with the same checkpoint after headroom returns; it
+does not justify raising either RAM ceiling or weakening the matrix.

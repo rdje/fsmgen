@@ -97,7 +97,15 @@ by that run.
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2`
   Status: `active`
   Goal: `Resume the complete-CI suffix after t1545 repair, then push and consume hosted qualification.`
+  Children: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.1`
   Acceptance: `Restart the authoritative suffix at the exact failed t1545 frontier, combine it with the retained green t01-t1544 evidence, validate locality/cleanup, push at the standing cadence, and consume every expected hosted workflow/job to terminal success with durable URLs and conclusions.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.1`
+  Status: `active`
+  Goal: `Recover the host-pressure-interrupted t296 matrix without discarding completed work again.`
+  Acceptance: `Preserve the first resumed-suffix guard interruption exactly; prove its host-wide rather than descendant-local cause; restart t296 at the same clean revision with the existing same-volume exact-revision checkpoint contract and unchanged RAM ceilings; consume the complete green t296 parent and lexical suffix through t999; then return to .3.2 push qualification without retrying any failed test unchanged.`
   Verification: `pending`
   Commit: `pending`
 
@@ -109,7 +117,8 @@ by that run.
 | 2 | `.2` | `done` | The helper, hostile watcher, and exact 34-file migration are focused-green. |
 | 3 | `.3` | `active` | Parent for complete-CI repair, due push, and hosted qualification. |
 | 4 | `.3.1` | `done` | The shared mechanism and sealed fixture adapter make every t1545 subprocess finite and cleanup-safe. |
-| 5 | `.3.2` | `active` | Clean commit `d630261e6` closes `.3.1`; resume at exact t1545 and complete push qualification. |
+| 5 | `.3.2.1` | `active` | The exact t1545 suffix reached strict-CLI t296 before a host-wide 88.1% guard event; preserve it and use the existing exact-revision t296 checkpoint contract for bounded recovery. |
+| 6 | `.3.2` | `active` | Consume `.3.2.1`, complete the lexical tail, and finish push plus hosted qualification. |
 
 ## Decisions
 
@@ -159,6 +168,46 @@ by that run.
   rationale index and rotation contract remain the remediation authority.
 - `2026-08-26`: Clean `.3.1` commit `d630261e6` authorizes `.3.2`; retain the
   earlier green/skipped prefix and restart only at exact `t/1545`.
+- `2026-08-26`: Preserve the resumed suffix's first guard result: it reached
+  the strict-CLI portion of `t/296`, then the unchanged RAM guard terminated
+  the complete process group when host occupancy reported 88.1% against its
+  88% cutoff. The active FSMGEN generator remained far below the independent
+  4-GiB descendant ceiling. Do not retry the uncheckpointed command unchanged;
+  child `.3.2.1` must use the existing exact-clean-HEAD, same-volume t296
+  checkpoint contract while retaining both RAM ceilings.
+
+## `.3.2.1` host-pressure interruption and recovery evidence
+
+The resumed suffix passed `t/1545` through `t/295`, including the full balanced
+portable composition, emission, runtime, measurement, portable-runtime, and
+new hostile process-supervision tests. `t/296` then ran isolated default and
+strict pipeline/CLI batches for 4 hours 48 minutes. During a strict-CLI AXI
+batch, `scripts/run_with_ram_guard.sh` reported `host memory 88.1% reached
+cutoff 88%` and terminated the exact prove/t296/worker/generator group. Its
+termination output did not report the 4,096-MiB descendant cutoff. The last
+pre-termination process census measured the active generator at 371,136 KiB;
+the enclosing worker was 79,936 KiB and the t296 parent 12,816 KiB. A
+post-cleanup host census found a sibling-project release compiler at 5,587,968
+KiB plus concurrent sibling-project test compilers; after they released
+pressure, `memory_pressure -Q` reported 65% free. The guard left no listed
+FSMGEN process alive, Git remained clean at the exact revision, and the
+repository-local VIAL recovery area was empty.
+
+Claim verification is explicit. Re-derivation is the guard's own independent
+host and descendant readings plus the live PID-tree census. Falsification is
+the absence of a descendant-cutoff message together with a descendant total
+far below 4 GiB and the separate sibling-process census. Durability is this
+task evidence plus `docs/knowledge/darwin-inline-verilator-test-runtime.md`;
+the focused contract remains re-runnable with `prove -Iperl -It/lib
+t/1597-t296-checkpoint.t`.
+
+The interrupted command did not set `FSMGEN_T296_CHECKPOINT`, and no checkpoint
+file exists, so its completed t296 batches cannot be reconstructed or credited.
+Recovery starts t296 again at the same clean revision with a safe
+`.artifacts/t296/*.json` checkpoint path. Each completed isolated batch is
+synced and atomically retained; a later guard interruption may resume only
+those exact recorded batches. The full parent must still finish green before
+the checkpoint clears and before the lexical suffix can continue.
 
 ## `.3` interrupted complete-CI evidence
 
@@ -337,6 +386,12 @@ Verilator process.
 - [x] **ADDRESSED (verified)** — Commit `d630261e6` is clean, the final focused cluster is green, and this leaf alone owns the exact t1545 restart, suffix completion, due push, and hosted qualification.
 - [x] **NO REGRESSION** — The activation changes only task-tree and bounded resume metadata; task-tree, Memory, diff, and doctrine checks must pass before its commit.
 
+## Acceptance Checklist — `.3.2.1` checkpointed recovery activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `scripts/run_with_ram_guard.sh` reported the exact host-capacity event, `host memory 88.1% reached cutoff 88%`, while the last `ps` census measured the active strict-CLI generator at 371,136 KiB and found a concurrent sibling-project compiler at 5,587,968 KiB. No descendant-cutoff message occurred, and the guard removed the exact prove/t296/worker/generator PID tree. Independent `git log -S'FSMGEN_T296_CHECKPOINT' --oneline -- t/296-regression-corpus-supported-behavior.t t/lib/FSM/Test/T296Checkpoint.pm t/1597-t296-checkpoint.t` history recovery identifies commit `c990583ac` as the existing checkpoint mechanism's introduction.
+- [x] **ADDRESSED (verified)** — Active child `.3.2.1` owns an exact-clean-HEAD restart of t296 with the existing safe `.artifacts/t296/*.json` checkpoint contract and unchanged 88% host/4,096-MiB descendant ceilings. The absent checkpoint is not invented, no interrupted batch is credited, and the full parent must still pass before its checkpoint is removed.
+- [x] **NO REGRESSION** — The guarded focused checkpoint, relative-path, and task-tree tests pass; the corrected canonical project-locality test reports `Files=1, Tests=20`; Knowledge Map generation/check/query parity passes at 1,153 facts, 6,113 unique questions, 6,280 answer occurrences, and 136 bounded shards, with the recovery question resolving to the existing canonical runtime card. The first combined command stopped after its three existing tests passed because it named nonexistent `t/1330-project-data-locality.t`; only the unreached checks were run with canonical `t/1527-project-data-locality.t`. Diff and staged doctrine checks remain required before commit.
+
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
@@ -349,3 +404,4 @@ Verilator process.
 | `2026-08-26` | `.3.1` watcher env falsification | combined RAM-guarded gate; exec-handoff/first-output evidence; generated-fixture source census; zero process residue | `t1545 and t1669 pass; t1668 nominal env-Perl fixture times out honestly after handoff; all generated fixtures switched to canonical Perl with recurrence watcher; no retry` |
 | `2026-08-26` | `.3.1` watcher env repair | focused repaired t1668; final three-file RAM-guarded cluster | `t1668 Files=1/Tests=6 pass; final t1545+t1668+t1669 Files=3/Tests=19 pass; generated env-Perl recurrence count held to entrypoint only` |
 | `2026-08-26` | `.3.2` activation | clean-tree census; committed repair identity; frontier alignment | `d630261e6 clean; retained prefix through t1544; exact t1545 restart active` |
+| `2026-08-26` | `.3.2.1` host-pressure recovery activation | authoritative suffix; RAM-guard output; live PID/RSS census; post-cleanup process/memory/residue census; checkpoint-contract audit; focused t1597/t1414/t1549/t1527 and Knowledge Map checks | `green through t295; t296 interrupted after 4h48m by host 88.1% cutoff, not descendant 4-GiB cutoff; no checkpoint existed; exact-revision checkpointed recovery active; focused recovery checks pass` |

@@ -1,12 +1,15 @@
 # Knowledge Map: `darwin-inline`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **4** uniquely owned question entries.
+> **1** facts · **7** uniquely owned question entries.
 
 ## Questions → facts
 
+- q="can an interrupted uncheckpointed t296 run be resumed?" · facts=[darwin-inline-verilator-test-runtime](../../docs/knowledge/darwin-inline-verilator-test-runtime.md)
+- q="does t296 support checkpointed corpus-matrix recovery?" · facts=[darwin-inline-verilator-test-runtime](../../docs/knowledge/darwin-inline-verilator-test-runtime.md)
 - q="does the legacy Verilator test supervisor replace the VIAL lifecycle?" · facts=[darwin-inline-verilator-test-runtime](../../docs/knowledge/darwin-inline-verilator-test-runtime.md)
 - q="how are legacy generated Verilator test executables supervised?" · facts=[darwin-inline-verilator-test-runtime](../../docs/knowledge/darwin-inline-verilator-test-runtime.md)
+- q="how should t296 resume after a RAM guard interruption?" · facts=[darwin-inline-verilator-test-runtime](../../docs/knowledge/darwin-inline-verilator-test-runtime.md)
 - q="which tests migrate to the bounded Verilator test runtime?" · facts=[darwin-inline-verilator-test-runtime](../../docs/knowledge/darwin-inline-verilator-test-runtime.md)
 - q="why does standard Darwin CI skip inline Verilator runtimes?" · facts=[darwin-inline-verilator-test-runtime](../../docs/knowledge/darwin-inline-verilator-test-runtime.md)
 
