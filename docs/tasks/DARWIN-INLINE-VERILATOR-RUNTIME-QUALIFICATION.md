@@ -95,7 +95,7 @@ by that run.
   Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.1: bound task-acceptance fixture processes`
 
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Resume the complete-CI suffix after t1545 repair, then push and consume hosted qualification.`
   Acceptance: `Restart the authoritative suffix at the exact failed t1545 frontier, combine it with the retained green t01-t1544 evidence, validate locality/cleanup, push at the standing cadence, and consume every expected hosted workflow/job to terminal success with durable URLs and conclusions.`
   Verification: `pending`
@@ -109,7 +109,7 @@ by that run.
 | 2 | `.2` | `done` | The helper, hostile watcher, and exact 34-file migration are focused-green. |
 | 3 | `.3` | `active` | Parent for complete-CI repair, due push, and hosted qualification. |
 | 4 | `.3.1` | `done` | The shared mechanism and sealed fixture adapter make every t1545 subprocess finite and cleanup-safe. |
-| 5 | `.3.2` | `pending` | Activate only after the `.3.1` implementation commit is clean, then resume at t1545 and complete push qualification. |
+| 5 | `.3.2` | `active` | Clean commit `d630261e6` closes `.3.1`; resume at exact t1545 and complete push qualification. |
 
 ## Decisions
 
@@ -157,6 +157,8 @@ by that run.
   80% warning milestone. Declare `root_documents` as `warning_debt` without
   changing any health target or enforcement ceiling; the existing bounded
   rationale index and rotation contract remain the remediation authority.
+- `2026-08-26`: Clean `.3.1` commit `d630261e6` authorizes `.3.2`; retain the
+  earlier green/skipped prefix and restart only at exact `t/1545`.
 
 ## `.3` interrupted complete-CI evidence
 
@@ -329,6 +331,12 @@ Verilator process.
 - [x] **ADDRESSED (verified)** — Decision `0087` and `t/lib/FSM/Test/ProcessSupervisor.pm` establish one shared private mechanism; `TaskAcceptanceFixtureRuntime.pm` seals the fixture subtree, four Git operations, load-time canonical Git/Bash identity, direct Bash handoff, ten-second walls, two capture ceilings, closed result, and no retry. `t/1668` seals generated fixtures to the canonical running Perl interpreter and watches out env-shebang recurrence; `t/1669` proves TERM/KILL cleanup, mutable-`PATH` replacement resistance, path/command rejection, fixed values, first-failure truth, and exactly two policy-module owners.
 - [x] **NO REGRESSION** — The final RAM-guarded combined focused command reports `All tests successful` and `Files=3, Tests=19` for the same nine-case `t/1545` oracle, six-case Verilator hostile/census watcher, and four-case shared-engine/fixture watcher; the repaired t1668 also passes alone at `Files=1, Tests=6`. mdBook, Knowledge Map, task-tree, Memory, claim, live-document, locality, diff, and staged doctrine gates pass with no ceiling increase.
 
+## Acceptance Checklist — `.3.2` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The authoritative suffix stopped at t1545's unbounded env handoff after retaining a green/skipped prefix through t1544; `.3.1` repaired that exact frontier without classifying later tests.
+- [x] **ADDRESSED (verified)** — Commit `d630261e6` is clean, the final focused cluster is green, and this leaf alone owns the exact t1545 restart, suffix completion, due push, and hosted qualification.
+- [x] **NO REGRESSION** — The activation changes only task-tree and bounded resume metadata; task-tree, Memory, diff, and doctrine checks must pass before its commit.
+
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
@@ -340,3 +348,4 @@ Verilator process.
 | `2026-08-26` | `.3.1` bounded implementation | exact command/history audit; direct /bin/bash falsification; shared-engine extraction; sealed adapter; hostile ownership watcher; RAM-guarded combined regression | `two direct IPC sites removed; Files=3/Tests=19 pass; TERM-resistant group gone; exactly two low-level policy owners; .3.2 next after clean commit` |
 | `2026-08-26` | `.3.1` watcher env falsification | combined RAM-guarded gate; exec-handoff/first-output evidence; generated-fixture source census; zero process residue | `t1545 and t1669 pass; t1668 nominal env-Perl fixture times out honestly after handoff; all generated fixtures switched to canonical Perl with recurrence watcher; no retry` |
 | `2026-08-26` | `.3.1` watcher env repair | focused repaired t1668; final three-file RAM-guarded cluster | `t1668 Files=1/Tests=6 pass; final t1545+t1668+t1669 Files=3/Tests=19 pass; generated env-Perl recurrence count held to entrypoint only` |
+| `2026-08-26` | `.3.2` activation | clean-tree census; committed repair identity; frontier alignment | `d630261e6 clean; retained prefix through t1544; exact t1545 restart active` |
