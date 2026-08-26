@@ -46,7 +46,7 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION` | `active` | `verification infrastructure / runtime qualification` | `.1` audits every tracked test-side Verilator launch and selects one central bounded Darwin-qualification contract | [task](docs/tasks/DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.md) |
+| `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION` | `active` | `verification infrastructure / runtime qualification` | `.1` selected decision `0086`; `.2` implements the test-only supervisor, watcher, and exact legacy migration | [task](docs/tasks/DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.md) |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.30` done; proposed `.29` owns node-field narration accretion | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.17.3.5.3.2` done; `.17.3.5.5` is the next proposed portable-runtime publication leaf | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `ISF-SPEC-TEST-INDEX-SYNC` | `active` | `R14` | `.3` exact post-partition transformation is green; commit it before resolving the remaining complete-CI findings | [task](docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md) |

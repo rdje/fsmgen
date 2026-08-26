@@ -268,10 +268,31 @@ launched its generated Verilator binary directly through `IPC::Cmd::run` with
 no timeout or Darwin qualification. A live sample matched the retained
 pre-main `_dyld_start` signature, so the run was stopped honestly; neither the
 current file nor the unrun suffix was promoted to success. Active task tree
-`DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION` now owns a complete callsite
-audit and one central bounded contract before any migration. This finding does
-not authorize a one-file skip, a retry, a larger product deadline, or a change
-to non-Darwin runtime behavior.
+`DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION` owns the complete callsite
+audit and migration. Decision `0086` has selected a test-only bounded
+supervisor; implementation is active and has not yet replaced the legacy
+calls. Until that migration lands, do not treat a direct legacy generated
+runtime as deadline-safe merely because an earlier invocation passed. This
+finding does not authorize a one-file skip, a retry, a larger product
+deadline, or a change to non-Darwin runtime behavior.
+
+The selected boundary deliberately does not borrow the private VIAL
+lifecycle. These IAL2/ISF tests compile handwritten harnesses and do not own
+VIAL ExecutionIR, artifact, or state-transition authority. Their test-only
+supervisor will instead apply the same mature process principles at the proper
+layer: scalar argument vectors without a shell, fixed version/compile/runtime
+walls, bounded stdout/stderr, close-on-exec handoff evidence, monotonic timing,
+and complete process-group cleanup. Every first timeout, nonzero exit, signal,
+capture overflow, handoff failure, or cleanup failure remains failed; no
+control or retry can promote it.
+
+On Darwin, the affected legacy runtime surface will require explicit
+`FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1` qualification before tool discovery.
+The helper will enforce the same boundary internally before it can launch a
+process, while non-Darwin execution remains ordinary. The earlier
+`FSMGEN_VIAL_DARWIN_RUNTIME_INTEGRATION` guard keeps its narrower public-VIAL
+scope. This is test-process supervision, not IASIM execution and not a VIAL
+execution profile.
 
 ## Selected authored runtime activity
 

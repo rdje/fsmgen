@@ -928,3 +928,23 @@ unchanged in-memory graph. The compact measurement projection carries exact
 artifact identities, actual commands, normalized command digests, transcripts,
 trace/result identities, and cleanup evidence without creating a second runner
 or a second artifact contract.
+
+## 2026-08-26: Legacy test runtimes need their own bounded process authority
+
+The pre-push stop at `t/1515` is not isolated to one fixture. A tracked-source
+census finds the same direct Verilator compile/generated-executable pattern
+across the legacy IAL2/ISF runtime suite. Most paths have no deadline; the one
+inline timeout uses `IPC::Cmd`'s alarm boundary without the repository's
+verified descendant-cleanup evidence. Patching only the observed test would
+move the indefinite-stop risk while leaving the architectural defect intact.
+
+Decision `0086` therefore selects a test-only supervisor rather than borrowing
+the caller-sealed VIAL lifecycle. The legacy harnesses do not own VIAL
+ExecutionIR, artifact, or staged-state authority, but they do need the same
+process invariants: fixed walls and capture ceilings, shell-free argv,
+close-on-exec handoff evidence, monotonic attribution, one owned process group,
+and verified TERM/KILL cleanup. A Darwin guard before tool discovery and an
+independent fail-closed guard inside the helper keep standard CI deterministic;
+non-Darwin simulation, generated HDL, testbench arguments, output oracles, and
+first-failure truth remain unchanged. A source watcher closes the recurrence
+path instead of relying on reviewer memory.
