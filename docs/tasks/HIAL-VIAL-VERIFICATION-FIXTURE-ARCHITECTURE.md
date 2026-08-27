@@ -697,11 +697,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.6: activate stale runtime claim-gap closure; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.6: close portable runtime claim gaps`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6`
-  Status: `proposed`
+  Status: `active`
   Goal: `Measure exact provider-free portable-VHDL generation, analysis, elaboration, run, trace validation, and result production with qualified GHDL.`
   Acceptance: `Use only the qualified GHDL profile and canonical runtime-stream inputs; perform one validation plus required measured repetitions in fresh owned staging; apply effective per-source analysis/elaboration/run limits and active guards; prove artifacts, source maps, checks, command identity, trace/result parity, deterministic rerun, raw evidence, publication, failure, and cleanup; and make no OSVVM, mixed-language, promoted-budget, support, or capacity claim.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean portable-Verilator closure d21089eb6 leaves this as the next roadmap dependency. The provider-free runtime constructor already owns all five portable-VHDL/GHDL roles and exact qualified tool/deadline/command expectations, but no current measurement adapter or published runtime matrix is assumed. First work is a query-first audit of the tracked GHDL qualifier, canonical runtime inputs, reusable common controller/lifecycle seams, and exact materialization gaps before selecting implementation children.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6: activate portable-VHDL runtime measurement`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7`
   Status: `proposed`
