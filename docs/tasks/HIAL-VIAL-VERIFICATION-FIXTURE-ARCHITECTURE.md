@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
-- Last updated: `2026-08-24`
+- Last updated: `2026-08-27`
 - Owner: repo-local workflow
 - Segment manifest: `docs/tasks/segments/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/manifest.jsonl`
 
@@ -561,7 +561,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Measure exact portable-SystemVerilog generation, compile, run, trace validation, and result production with qualified Verilator.`
   Acceptance: `Use only the qualified Verilator profile and canonical runtime-stream inputs; perform one validation plus required measured repetitions in fresh owned staging; apply effective qualified compile/run limits and active guards; prove artifact, source-map, command, trace closure, normalized result, deterministic rerun, raw-sample, transcript, publication, and cleanup oracles; reject identity drift or excluded samples explicitly; and make no full-SystemVerilog, UVM, mixed-language, promoted-budget, support, or capacity claim.`
-  Verification: `Clean structural-matrix closure 6c76b4c39 permits the pivot. Existing runtime-stream construction owned exact provider-free inputs and expectations but intentionally materialized no scale trace/result; the shipped Verilator Runner owns correct external execution as one atomic transaction rather than independently measurable shared stages. Completed selection child .1 and decision 0083 choose checked-in authored reset-sampling fixtures, exact 10,000/15,000 portable candidates, honest byte-cap dominance, and one content-addressed lifecycle shared by the public Runner and measurement workers. Completed child .2 binds the two tracked sources through the ordinary route and freezes exact schedule/emission/record-family/full-graph identities. Completed child .3 installs the sole shared lifecycle; completed .3.1 retains the intermittent macOS pre-main result through guarded qualification without a workaround. Completed child .4 routes reference validation, gate validation plus three repetitions, and qualification validation plus five repetitions through the common controller and sole lifecycle with complete raw-stage, command, transcript, graph, trace/result, and cleanup evidence. Child .5 is next and separately owns immutable matrix publication and independent reload. Source-text patching, output padding/truncation, duplicated tool execution, hidden public widening, borrowed support, and unproved record-count reachability remain inadmissible.`
+  Verification: `Clean structural-matrix closure 6c76b4c39 permits the pivot. Existing runtime-stream construction owned exact provider-free inputs and expectations but intentionally materialized no scale trace/result; the shipped Verilator Runner owns correct external execution as one atomic transaction rather than independently measurable shared stages. Completed selection child .1 and decision 0083 choose checked-in authored reset-sampling fixtures, exact 10,000/15,000 portable candidates, honest byte-cap dominance, and one content-addressed lifecycle shared by the public Runner and measurement workers. Completed child .2 binds the two tracked sources through the ordinary route and freezes exact schedule/emission/record-family/full-graph identities. Completed child .3 installs the sole shared lifecycle; completed .3.1 retains the intermittent macOS pre-main result through guarded qualification without a workaround. Completed child .4 routes reference validation, gate validation plus three repetitions, and qualification validation plus five repetitions through the common controller and sole lifecycle with complete raw-stage, command, transcript, graph, trace/result, and cleanup evidence. Active child .5 owns immutable publication/reload; source or output rewriting, duplicate execution, public widening, borrowed support, and unproved reachability remain forbidden.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5: activate portable-Verilator runtime measurement`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5`
 
@@ -638,11 +638,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.4: activate portable-Verilator runtime measurement; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.4: measure portable-Verilator runtime streams`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5`
-  Status: `proposed`
+  Status: `active`
   Goal: `Publish and independently reload the exact portable-Verilator runtime measurement matrix.`
   Acceptance: `Derive the complete profile/level order from producer ownership; isolate capture/reload lifecycles; atomically publish bounded immutable reports at one clean revision/host/tool/guard identity; resume only independently regenerated evidence; reject incomplete, reordered, mutated, mixed, collided, oversized, signalled, stale, or ambiguous state; retain every raw/excluded sample and dominance/nonclaim; and complete guarded capture plus fresh-process reload before closing .17.3.5.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean runtime measurement b5e975b24 and hosted closure e017709e0 permit activation; no behavior or claim changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5: activate portable runtime matrix publication`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6`
   Status: `proposed`
@@ -936,8 +936,8 @@ are complete and freeze the exact thirteen-emitted/seven-rejected profile
 partition. Completed runtime/balanced parent `.17.2.7` owns runtime-stream
 construction `.1`, balanced revision-2 composition and portable structural
 emission `.2`, and unified provider-free qualification `.3`; parent `.17.2`
-therefore closes deterministic generation. Measurement parent `.17.3` is now
-active. Recovery `.17.3.5.3.2` owns the movable first-executable timeout, preserves failure truth, and makes standard CI deterministic before `.17.3.5.5`.
+therefore closes deterministic generation. Measurement parent `.17.3` is
+active; completed `.17.3.5.4` supplies the reports now owned for publication/reload by `.17.3.5.5`.
 
 ## Decisions
 
