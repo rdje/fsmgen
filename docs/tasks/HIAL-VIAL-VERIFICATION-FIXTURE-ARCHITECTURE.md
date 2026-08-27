@@ -656,7 +656,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Seal and independently reload the complete clean-revision portable-runtime matrix.`
   Acceptance: `Run the exact guarded watcher from the committed publisher revision; require all five immutable profile reports, family/complete manifests, exact validation/three/five raw repetitions, two tool-free preflight profiles, one common identity, zero exclusions/residue, file/digest/byte census, real-largest-report bound falsification, and a separate fresh-process guarded reload of the same complete identity. Keep any timeout, signal, guard stop, collision, mismatch, or exclusion failed and resumable only at the exact clean identity.`
-  Verification: `Exact capture at clean implementation 9a534bc93 publishes reference and gate, then correctly rejects the five-sample qualification report because it exceeds the provisional 1,048,576-byte file ceiling. Child .1 repairs the falsified bound and actionable actual/ceiling diagnostics; proposed child .2 repeats the complete clean-revision capture only after that repair commits. No failed runtime sample is retried or relabelled.`
+  Verification: `Exact capture at clean implementation 9a534bc93 publishes reference and gate, then correctly rejects the five-sample qualification report because it exceeds the provisional 1,048,576-byte file ceiling. Child .1 repairs the falsified bound and actionable actual/ceiling diagnostics; active child .2 repeats the complete clean-revision capture from that committed repair. No failed runtime sample is retried or relabelled.`
   Commit: `pending`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2`
 
@@ -668,11 +668,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.1: repair portable runtime publication bound`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Repeat the complete guarded capture at the repaired clean revision and independently reload its exact aggregate identity.`
   Acceptance: `Remove only the exactly identified superseded portable-runtime publications after retaining their bytes/digests, then run one new clean-revision exact campaign. Require all parent .2 acceptance evidence, retain any Darwin pre-main stall as failed without retry or timeout widening, and close only after fresh-process reload and exact file/hash/staging census.`
-  Verification: `pending child .1 clean repair commit`
-  Commit: `pending`
+  Verification: `Clean bound repair 2681aa777 permits one exact campaign; no behavior, timeout, retry, support, performance, capacity, parity, or public-API claim changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2: activate repaired exact matrix capture`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6`
   Status: `proposed`
