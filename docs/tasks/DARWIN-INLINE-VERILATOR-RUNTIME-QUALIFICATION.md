@@ -125,11 +125,11 @@ by that run.
   Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.1: seal hosted OSVVM provider ownership`
 
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Make Linux architecture-scale host logical-core discovery portable and deterministic.`
   Acceptance: `Replace the unavailable setup-Perl POSIX constant path with a bounded Linux authority, validate its parser on representative and hostile inputs, preserve Darwin behavior and closed host-profile evidence, and replay t1656 plus the hosted routing watcher without weakening recovery-safety assertions.`
   Verification: `pending`
-  Commit: `pending activation`
+  Commit: `pending`
 
 ## Current Frontier
 
@@ -141,7 +141,7 @@ by that run.
 | 4 | `.3.1` | `done` | The shared mechanism and sealed fixture adapter make every t1545 subprocess finite and cleanup-safe. |
 | 5 | `.3.2.1` | `done` | Exact-revision t296 recovery and the independently selected 778-file lexical tail are green; the checkpoint self-cleared and no guard event recurred. |
 | 6 | `.3.2.2.1` | `done` | Five dedicated coordinates now give all three default OSVVM-backed tests exact isolated provider ownership; focused routing and real-provider proofs pass. |
-| 7 | `.3.2.2.2` | `proposed` | Exact pushed shards 14 and 15 share unavailable Linux logical-core discovery; activate only after the provider route commits cleanly. |
+| 7 | `.3.2.2.2` | `active` | Provider routing is committed cleanly; repair the shared unavailable Linux logical-core discovery proved by exact shards 14 and 15. |
 | 8 | `.3.2.2` | `active` | Consume every remaining job from the failed exact push while its ordered repair children commit independently. |
 | 9 | `.3.2` | `active` | Preserve complete-CI and green hosted evidence until an authorized exact repair revision is hosted-green. |
 
