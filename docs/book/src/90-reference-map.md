@@ -150,6 +150,13 @@ identity, VHDL generic maps, ATL and FIFO lowering, IAL2 response boundaries,
 and VIAL profile evidence remain independently executable. The complete book-
 example total now follows the lowering audit instead of a stale hand copy.
 
+`16dd-vial-portable-vhdl-runtime-measurement.md` is the user-facing selection
+contract for sampled portable-VHDL runtime scale. It explains why the existing
+v1 trace cannot scale by reset count, the versioned compact snapshot design,
+exact authored candidate equation, one shared staged GHDL lifecycle, unchanged
+earlier-cap authority, and the boundary from IASIM, OSVVM, support, and
+capacity claims.
+
 The implementation-blueprint, platform-intent, and reference review keeps the
 single Rust parity smoke and the current bounded AHB map on executable
 evidence. Chapter coordinates, declared policy caps, and immutable activation

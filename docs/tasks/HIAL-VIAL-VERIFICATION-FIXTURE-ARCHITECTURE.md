@@ -700,8 +700,44 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Measure exact provider-free portable-VHDL generation, analysis, elaboration, run, trace validation, and result production with qualified GHDL.`
   Acceptance: `Use only the qualified GHDL profile and canonical runtime-stream inputs; perform one validation plus required measured repetitions in fresh owned staging; apply effective per-source analysis/elaboration/run limits and active guards; prove artifacts, source maps, checks, command identity, trace/result parity, deterministic rerun, raw evidence, publication, failure, and cleanup; and make no OSVVM, mixed-language, promoted-budget, support, or capacity claim.`
-  Verification: `Clean portable-Verilator closure d21089eb6 leaves this as the next roadmap dependency. The provider-free runtime constructor already owns all five portable-VHDL/GHDL roles and exact qualified tool/deadline/command expectations, but no current measurement adapter or published runtime matrix is assumed. First work is a query-first audit of the tracked GHDL qualifier, canonical runtime inputs, reusable common controller/lifecycle seams, and exact materialization gaps before selecting implementation children.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6: activate portable-VHDL runtime measurement`
+  Verification: `Clean portable-Verilator closure d21089eb6 leaves this as the next roadmap dependency. The provider-free runtime constructor already owns all five portable-VHDL/GHDL roles and exact qualified tool/deadline/command expectations. Query-first source/history audit plus a fresh guarded exact GHDL rerun prove that the current v1 trace closes at 42 records but emits no record for its 34 real inactive-edge sample barriers; reset-count inflation alone therefore cannot reach the selected runtime-stream targets. Decision 0090 selects a versioned compact sample-snapshot trace, authored 9,927/99,927-cycle reset candidates, one shared staged GHDL lifecycle, exact earlier-cap authority, and five ordered implementation children. Child `.17.3.6.1` is active; no product behavior changes in selection.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6: activate portable-VHDL runtime measurement; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6: select sampled portable-VHDL runtime architecture`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.1`
+  Status: `active`
+  Goal: `Version portable-VHDL trace truth so every real inactive-edge sample barrier emits one compact validated observation snapshot.`
+  Acceptance: `Implement the decision-0090 v2 trace contract with an exact header observation catalog, one normalized snapshot per real barrier, closed record/order/time/run/catalog/normalization validation, and result projection shared by qualification and later measurement. Refresh portable-VHDL and impacted OSVVM generated evidence through canonical workflows; preserve logical outcomes, qualified tools, deadlines, public support boundaries, and v1 history; prove malformed/missing/duplicate/reordered/unknown-width/unknown-symbol records fail closed. Change no workload target, lifecycle, performance, capacity, support, mixed-language, or public API claim.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.2`
+  Status: `proposed`
+  Goal: `Materialize exact authored portable-VHDL runtime-stream candidates through the canonical source-to-emission route.`
+  Acceptance: `After .1 commits cleanly, add tracked gate and qualification VIAL sources whose only permitted semantic deltas are success reset count and matching scenario timeout. Require exact 10,000/100,000 v2 trace projections at reset counts 9,927/99,927, twice-rebuilt Parser/bridge/ExecutionIR/plan/emission identity, exact artifact/map/check inventories, byte-equal reruns, structural equivalence, limit/excess preflight, same-volume cleanup, and an honest stop plus superseding decision if the unchanged 64-MiB envelope dominates.`
+  Verification: `pending`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.3`
+  Status: `proposed`
+  Goal: `Implement one caller-sealed staged GHDL lifecycle for exact qualification and architecture-scale measurement.`
+  Acceptance: `After .2 commits cleanly, extract one backend process supervisor from the already qualified production mechanism and make both Verilator and GHDL callers use sealed containment policies without result drift. Implement content-addressed admitted/prepared/tool-verified/analyzed/elaborated/ran/trace-validated/result-produced/assembled/cleaned GHDL states; bind exact provider/source/command/tool identities, 10/120/60/30-second deadlines, 64-KiB/8-MiB/8-MiB/64-MiB captures, mutation/collision/resume/failure controls, whole-tree termination, and exact cleanup. Refactor the checked GHDL qualifier to use the shared fixture lifecycle while retaining its separate four-state provider probe and byte-identical report.`
+  Verification: `pending`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.4`
+  Status: `proposed`
+  Goal: `Measure applicable portable-VHDL runtime profiles through the common controller and shared GHDL lifecycle.`
+  Acceptance: `After .3 commits cleanly, reconstruct canonical authority in each isolated worker; map analyze, elaborate, run, trace validation, result production, publish, and cleanup to their exact lifecycle successors; retain one validation plus three gate or five qualification repetitions with raw 250-ms samples, effective inner/outer bounds, commands/transcripts/artifact/trace/result identities, exclusions and zero residue. Keep limit/excess tool-free and add no budget, support, capacity, parity, IASIM, or API claim.`
+  Verification: `pending`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5`
+  Status: `proposed`
+  Goal: `Publish and independently reload the complete immutable portable-VHDL runtime measurement set.`
+  Acceptance: `After .4 commits cleanly, derive the five-level inventory from producer ownership; atomically publish bounded raw reports plus compact manifests at one clean revision/host/tool/guard identity; reject incomplete, reordered, mutated, mixed, stale, collided, signalled, oversized, or ambiguous state; retain all raw/excluded samples, applicability, earlier-cap dominance, cleanup and nonclaims; complete guarded capture plus separate fresh-process reload before closing .17.3.6.`
+  Verification: `pending`
+  Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7`
   Status: `proposed`
@@ -7140,85 +7176,34 @@ raising an enforcement ceiling.
   Map, claim, task, containment, acceptance, and doctrine gates passed. Full CI
   remains deferred to the 200-commit push boundary.
 
-## Acceptance Checklist (enforced) — `.17.3.5.5.1` portable runtime matrix implementation
+## Terminal acceptance archive — `.17.3.5.5.1` through `.17.3.5.6`
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Clean producer commit `b5e975b24` owns
-  complete five-profile runtime reports but no durable complete-matrix owner;
-  `git log -S'_run_profile_process' --oneline --
-  perl/FSM/VIAL/ArchitectureScaleBackendEmissionMeasurementMatrix.pm` locates
-  proven isolated-publication origin `fdc6e6a1b`, while the same pickaxe over
-  the new runtime publisher has no committed origin before this slice.
-  Retaining complete reports in the coordinator would duplicate large evidence,
-  and preflight reports contain no controller record from which to invent a
-  revision/host/guard identity.
-- [x] **ADDRESSED (verified)** —
-  `ArchitectureScalePortableRuntimeMeasurementMatrix` derives five ordered
-  coordinates from producer `owned_shapes`, isolates capture and reload,
-  atomically publishes canonical same-volume profile/family/complete files,
-  returns only bounded compact entries, and requires one clean
-  revision/host/tool/guard identity. Reference establishes identity; gate and
-  qualification must match; tool-free limit/excess may inherit it only after
-  exact tool comparison. Full reports retain validation/eight raw repetition
-  identities, requested/validated trace and 12-artifact closure, exclusions,
-  cleanup, dominance, and nonclaims. The runner admits no caller profile,
-  report, manifest, family, or identity. A guarded independent producer
-  serialization re-derives the 74,735-byte reference observation; the selected
-  provisional 1,048,576-byte publication, 65,536-byte IPC, and 4,096-byte
-  error envelopes are distinct containment controls, not budgets or capacity
-  claims; child `.2.1` retains the later exact-capture falsification and repair.
-- [x] **NO REGRESSION** — Module/runner/test `syntax OK`; producer plus matrix
-  watchers report `All tests successful`, `Files=2, Tests=15`. Hostile
-  coverage rejects missing/duplicate/reordered samples, preflight execution or
-  forged inherited tool identity, mixed common identities, unguarded/open
-  requests, exception/exit/signal, malformed/noncanonical/oversized IPC,
-  oversized publication, immutable collision, and ambiguous staging while
-  recovering only exact crash bytes. mdBook, Knowledge Map, claim inventory,
-  task integrity, containment, staged acceptance, and `[doctrine] all doctrine
-  checks passed` close the implementation commit. Child `.17.3.5.5.2`
-  separately owns exact clean-revision capture and fresh-process reload; no
-  IASIM, support, performance, capacity, reached-boundary, parity, retry,
-  timeout, or public-API claim changes.
+The node records above and work-unit Git commits retain the exact matrix
+implementation, publication-bound repair, preflight-dispatch repair, clean
+matrix seal, and 17-gap claim-closure evidence. Focused summaries remain
+`Files=2, Tests=15`, `Files=2, Tests=14`, guarded `Files=2, Tests=15`, exact
+`Files=1, Tests=7`, and claim closure `Files=4, Tests=33`; the immutable matrix
+identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
 
-## Acceptance Checklist (enforced) — `.17.3.5.5.2.1` portable runtime publication-bound repair
+## Acceptance Checklist (enforced) — `.17.3.6` portable-VHDL runtime architecture selection
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Clean exact t1670 at `9a534bc93` runs 1,964 seconds, seals 75,883-byte reference and 848,468-byte three-sample gate publications, then reports the qualification failure at perl/FSM/VIAL/ArchitectureScalePortableRuntimeMeasurementMatrix.pm line 1153 because the provisional 1,048,576-byte ceiling came from a false linear reference-report projection. The absent qualification/aggregate files prove rejection preceded publication; exact hashes retain the accepted calibration inputs.
-- [x] **ADDRESSED (verified)** — The publisher now exposes the complete
-  calibration derivation: exact gate bytes, three/five repetitions,
-  10,000/15,000 workloads, the 2,121,170-byte conservative projection, and the
-  4,194,304-byte binary envelope. Publish/reload rejection discloses actual and
-  maximum bytes; 65,536/4,096-byte IPC/error limits remain unchanged. The
-  book/card/claim/task chain retains rederivation, oversize falsification,
-  durability, nonclaims, and the pending real-largest-report test.
-- [x] **NO REGRESSION** — `All tests successful`: default producer/publisher passes Files=2, Tests=14 and CI tier Files=1, Tests=12; all 56 book chapters test. Knowledge Map parity is 1,153 facts/6,116 questions/6,283 occurrences/136 shards; the 1,558-candidate join closes 40 claims/911 gates/590 reviews/17 gaps/zero open. Task integrity, relative paths, live containment with zero ceiling increase, staged acceptance, and doctrines must pass before commit. The independent qualification diagnostic's 30-second zero-output Darwin pre-main failure stays failed without retry, timeout widening, or performance/support/capacity/API claim.
-
-## Acceptance Checklist (enforced) — `.17.3.5.5.2.2.1` preflight dispatch repair
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Exact guarded t1670 at clean `80b07d6ee` runs 1,979 seconds, publishes three profiles, then the ternary at perl/FSM/VIAL/ArchitectureScalePortableRuntimeMeasurementMatrix.pm line 416 sends `preflight` to `measure_profile`; the producer diagnostic permits only gate and qualification. Default tests checked preflight reports and aggregates separately but not real dispatch.
-- [x] **ADDRESSED (verified)** — `_produce_profile_report` explicitly sends validation/preflight to `validate_profile`, measured modes to `measure_profile`, and rejects every unhandled mode. The real adapter proves both limit levels stay tool/controller-free without an active guard.
-- [x] **NO REGRESSION** — `All tests successful`: syntax passes; guarded producer+matrix reports Files=2, Tests=15; CI tier Files=1, Tests=12; relative paths Files=1, Tests=2; all 56 book chapters test; Knowledge Map is 1,153 facts/6,116 questions/6,283 occurrences/136 shards; claim inventory/dispositions close 1,558/1,558. Containment, staged acceptance, and all doctrines must pass before commit.
-
-## Acceptance Checklist (enforced) — `.17.3.5.5.2.2.2` exact matrix seal and claim closure
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — The previous clean exact campaign stopped
-  at the preflight dispatcher ` at perl/FSM/VIAL/ArchitectureScalePortableRuntimeMeasurementMatrix.pm line 416`; the committed explicit-route repair had no complete clean-revision publication, exact census, or standalone reload until this owned recapture.
-- [x] **ADDRESSED (verified)** — One admitted guarded campaign from clean
-  `5268f50e2` seals five profiles and both manifests; independent file/byte/hash
-  census and standalone guarded validation return the exact complete identity.
-  Book/card/task and a three-leg claim record publish only that evidence. The
-  parent stays active and proposed `.17.3.5.6` owns 17 stale durability gaps.
-- [x] **NO REGRESSION** — `All tests successful`: exact t1670 reports Files=1,
-  Tests=7; standalone guarded `--validate`, all 56 book chapters, relative
-  paths, `knowledge-map: OK`, 1,560/1,560 claim dispositions, containment,
-  staged acceptance, and `[doctrine] all doctrine checks passed` must close.
-
-## Acceptance Checklist (enforced) — `.17.3.5.6` runtime claim-gap closure
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` locates the 17 dispositions'
-  stale pre-materialization reason at selection/materialization commits; parent
-  closure found they still claim `.17.3.5.2` lacks tracked sources/watchers.
-- [x] **ADDRESSED (verified)** — Exact source mapping assigns four rationale
-  lines to the established derived gate, eleven book lines to the materializer
-  claim, and two book lines to the measurement claim; gaps fall from 17 to 0.
-- [x] **NO REGRESSION** — `All tests successful`, Files=4, Tests=33; guarded
-  seal reload succeeds; the 1,560/1,560 join reports 54 claims/916 gates/590
-  reviews/0 gaps/0 open, with no product or published-text change.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'fixture_execution =>'`
+  locates the exact GHDL qualifier at `a0e7149d5`; source inspection proves
+  `vial_inactive_barrier` samples before react but emits no trace record. A
+  fresh guarded `scripts/run_vial_vhdl_portable_ghdl_qualification.pl --check`
+  matches the checked 42-record report, and an independent same-volume GHDL
+  trace census reports exact 28/2/2/2/2/2 coverage/event/expectation/fault/
+  scoreboard and header/footer/scenario families; source/result/emitter census
+  independently derives the 34 real barriers.
+- [x] **ADDRESSED (verified)** — Decision `0090`, the five child nodes, mdBook
+  chapter, Knowledge Map card, task index, and bounded Memory pointer select
+  one versioned compact observation snapshot per real barrier, exact authored
+  9,927/99,927 reset candidates, unchanged 64-MiB earlier-cap authority, and
+  one staged GHDL lifecycle over a shared production process supervisor. The
+  bounded claim record owns all 22 book candidates and exposes `.17.3.6.1`'s
+  still-missing falsification controls.
+- [x] **NO REGRESSION** — Selection changes no product code, generated
+  artifact, tool, timeout, trace/result behavior, support, performance,
+  capacity, OSVVM, mixed-language, IASIM, or public API. `All tests successful`
+  from the fresh exact qualification, mdBook, Knowledge Map, task/relative-path,
+  containment, staged acceptance, diff, and doctrine gates close the slice.

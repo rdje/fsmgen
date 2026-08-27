@@ -52,6 +52,7 @@
   - [Balanced Portable Composition](16da-vial-balanced-portable-composition.md)
   - [Structural Backend-Emission Matrix](16db-vial-structural-backend-emission-matrix.md)
   - [Portable Verilator Runtime Measurement](16dc-vial-portable-verilator-runtime-measurement.md)
+  - [Portable VHDL Runtime Measurement](16dd-vial-portable-vhdl-runtime-measurement.md)
   - [NEXSIM Semantic API and MCP Agent-Consumer Requirements](16e-nexsim-api-mcp-consumer-requirements.md)
 - [Reference Map](90-reference-map.md)
 - [Live-Document Containment Adoption](91-live-document-containment-adoption.md)
