@@ -112,7 +112,7 @@ by that run.
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2`
   Status: `active`
   Goal: `Repair every exact first-push hosted failure without discarding the remaining job evidence.`
-  Children: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.1, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.2`
+  Children: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.1, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.2, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.3`
   Acceptance: `Consume every required job from exact pushed revision c7a222ac41db, partition each terminal failure by root cause, repair each under its own committed child with focused and routing oracles, preserve every green hosted result, and keep .3.2 active until an authorized exact repair revision is hosted-green.`
   Verification: `pending`
   Commit: `pending`
@@ -131,6 +131,13 @@ by that run.
   Verification: `Decision 0089 selects bounded sysfs online/kernel_max parsing plus an independently bounded procfs fallback. Exact parser oracles reject malformed, overlapping, descending, unsorted, ambiguous, out-of-range, duplicate, and missing authorities. t1656 and t1657 each pass at Files=1/Tests=6; hosted routing t1183 passes at Files=1/Tests=12; the host schema and Darwin branch are byte-unchanged.`
   Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.2: make Linux core discovery portable`
 
+- ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.3`
+  Status: `active`
+  Goal: `Consume every remaining exact-push job and close the complete hosted failure partition.`
+  Acceptance: `Wait for every required job in exact run 33023589424; preserve every green result; map each terminal failure to a committed repair root or create a new child before changing implementation; require the aggregate and all jobs terminal; record durable URLs/conclusions without retry, cancellation, or an unauthorized early push.`
+  Verification: `pending`
+  Commit: `pending`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
@@ -142,8 +149,9 @@ by that run.
 | 5 | `.3.2.1` | `done` | Exact-revision t296 recovery and the independently selected 778-file lexical tail are green; the checkpoint self-cleared and no guard event recurred. |
 | 6 | `.3.2.2.1` | `done` | Five dedicated coordinates now give all three default OSVVM-backed tests exact isolated provider ownership; focused routing and real-provider proofs pass. |
 | 7 | `.3.2.2.2` | `done` | Bounded kernel cpulist authority plus procfs fallback repairs both setup-Perl failures without schema or Darwin drift. |
-| 8 | `.3.2.2` | `active` | Consume every remaining job from the failed exact push while its ordered repair children commit independently. |
-| 9 | `.3.2` | `active` | Preserve complete-CI and green hosted evidence until an authorized exact repair revision is hosted-green. |
+| 8 | `.3.2.2.3` | `active` | Consume all remaining exact-push jobs and close their failure-root partition without retry or cancellation. |
+| 9 | `.3.2.2` | `active` | Keep the hosted repair parent open until the exact failed run is completely consumed. |
+| 10 | `.3.2` | `active` | Preserve complete-CI and green hosted evidence until an authorized exact repair revision is hosted-green. |
 
 ## Decisions
 
@@ -243,8 +251,8 @@ The due push transported exact revision `c7a222ac41db7b28d502accbb75fcdc6ed57975
 to zero. Tracked triggers require `Perl FSM Regression`, `Publish mdBook`, and `knowledge-map-gate`; Knowledge Map run `33023589413` and both Pages jobs in
 run `33023589417` are terminal-success, while regression run `33023589424` remains in flight (all under `https://github.com/rdje/fsmgen/actions/runs/`).
 
-Regression job `98359601960` fails only t1650: its provider-empty ordinary shard returns `VIAL_OSVVM_PROVIDER_MATERIALIZATION_ERROR` at `/dependency_root`;
-history and routing census show provider-backed t1648/t1650 postdate the closed dedicated set. Jobs `98359602070` and `98359602123` fail only t1656 and
+Regression jobs `98359601960` and `98359602065` fail only t1650 and t1648 respectively: both provider-empty ordinary shards return the same missing-provider
+evidence, and history/routing census show those tests postdate the closed dedicated set. Jobs `98359602070` and `98359602123` fail only t1656 and
 t1657 respectively: setup-Perl 5.32 cannot expose `POSIX::_SC_NPROCESSORS_ONLN`, so both abort at Linux host profiling before their intended oracles.
 Re-derivation is the tracked triggers plus CI-driver inventory; falsification is the exact-SHA raw logs; durability is this evidence and the child commits.
 
