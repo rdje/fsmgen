@@ -351,6 +351,54 @@ subtest 'tool-free profiles inherit but cannot forge capture identity' => sub {
         'preflight report cannot inherit a mismatched tool identity');
 };
 
+subtest 'real adapter dispatch keeps both preflight profiles tool-free' => sub {
+    local $ENV{FSMGEN_RAM_GUARD_ACTIVE};
+    local $ENV{FSMGEN_RAM_GUARD_EFFECTIVE_HOST_MAX_PCT};
+    local $ENV{FSMGEN_RAM_GUARD_EFFECTIVE_PROCESS_MAX_RSS_MB};
+    my $dispatch = $class->can('_produce_profile_report');
+    my $inventory = $class->inventory;
+
+    for my $level (qw(limit_v1 over_limit_v1)) {
+        my ($profile) = grep { $_->{level} eq $level } @$inventory;
+        my $report = $dispatch->($profile, {
+            repository_root => $repo_root,
+            level => $level,
+        });
+        FSM::VIAL::ArchitectureScalePortableRuntimeMeasurement
+            ->validate_report({
+                repository_root => $repo_root,
+                report => $report,
+            });
+        is($report->{level}, $level,
+            "$level dispatch preserves the producer-owned level");
+        is($report->{mode}, 'preflight',
+            "$level dispatch selects the real validation/preflight route");
+        is($report->{outcome}, 'preflight_dominated',
+            "$level remains an honest preflight-dominated outcome");
+        ok(!$report->{controller_applicability}{applicable},
+            "$level does not execute the common controller");
+        ok(!$report->{measurement_applicability}{applicable},
+            "$level does not become measurement-applicable");
+        ok(!defined($report->{validation_record}),
+            "$level retains no runtime validation record");
+        is(scalar(@{$report->{measurement_records}}), 0,
+            "$level retains no measured repetition");
+        is($report->{cleanup}{records_total}, 0,
+            "$level creates no lifecycle cleanup record");
+        is(scalar(@{$report->{cleanup}{residue}}), 0,
+            "$level leaves no runtime residue");
+    }
+
+    my $unrouted = {%{$inventory->[0]}, mode => 'unrouted'};
+    like(dies(sub {
+        $dispatch->($unrouted, {
+            repository_root => $repo_root,
+            level => $unrouted->{level},
+        });
+    }), qr/profile mode has no producer route/,
+        'an unhandled matrix mode fails closed before producer execution');
+};
+
 subtest 'aggregate manifests reject semantic partition drift' => sub {
     my $family_manifest = $class->can('_family_manifest');
     my $complete_manifest = $class->can('_complete_manifest');

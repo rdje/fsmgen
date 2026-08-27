@@ -413,9 +413,7 @@ sub _profile_worker_payload($raw) {
             repository_root => $repo_root,
             level => $profile->{level},
         };
-        my $report = $profile->{mode} eq 'validation'
-            ? $ADAPTER->validate_profile($request)
-            : $ADAPTER->measure_profile($request);
+        my $report = _produce_profile_report($profile, $request);
         $ADAPTER->validate_report({
             repository_root => $repo_root,
             report => $report,
@@ -460,6 +458,17 @@ sub _profile_worker_payload($raw) {
         common_identity => _clone($loaded_common),
         entry => $entry,
     };
+}
+
+sub _produce_profile_report($profile, $request) {
+    my $mode = ref($profile) eq 'HASH' ? $profile->{mode} : undef;
+    return $ADAPTER->validate_profile($request)
+        if defined($mode) && ($mode eq 'validation' || $mode eq 'preflight');
+    return $ADAPTER->measure_profile($request)
+        if defined($mode)
+            && ($mode eq 'gate_measurement'
+                || $mode eq 'qualification_measurement');
+    confess "portable-runtime profile mode has no producer route\n";
 }
 
 sub _run_isolated_profile_worker($raw) {

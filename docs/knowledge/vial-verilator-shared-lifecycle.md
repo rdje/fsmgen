@@ -138,7 +138,7 @@ collision, and staging drift. Exact capture at `9a534bc93` falsified one MiB
 after sealing 75,883/848,468-byte reference/gate reports. Child `.2.1` derives
 a 2,121,170-byte workload/repetition projection, rounds to four MiB, and retains
 65,536-byte compact IPC. Child `.2.2` owns clean recapture/reload; performance,
-support, capacity, parity, IASIM, and API claims remain closed.
+support, capacity, parity, IASIM, and API claims remain closed; explicit validation/preflight versus measurement dispatch is repaired before recapture.
 
 Related: [[vial-architecture-scale-proof]],
 [[hial-vial-verification-fixture-architecture]].

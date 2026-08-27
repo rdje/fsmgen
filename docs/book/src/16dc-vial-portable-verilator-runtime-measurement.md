@@ -831,9 +831,9 @@ engine; this adapter neither invokes it nor changes its contract.
 
 `FSM::VIAL::ArchitectureScalePortableRuntimeMeasurementMatrix` derives its
 five coordinates directly and in order from the measurement producer. It
-routes reference to correctness-only validation, gate and qualification to
-three and five measured repetitions, and limit/excess to tool-free preflight.
-Callers cannot supply a profile list, report, family, identity, or manifest.
+routes validation and preflight modes through `validate_profile`, while gate
+and qualification modes use `measure_profile`. An unknown mode fails before
+producer work; callers cannot supply profiles, reports, identities, or seals.
 
 Each coordinate runs in a separate close-on-exec child. The child reconstructs
 and validates the complete producer report, atomically publishes that raw
@@ -859,8 +859,8 @@ both repetition growth and workload growth, deliberately scaling fixed
 metadata twice, then rounds the 2,121,170-byte result up to a four-MiB binary
 containment envelope. Rejection diagnostics disclose actual and allowed bytes;
 the compact child IPC and error ceilings remain 65,536 and 4,096 bytes. A new
-clean exact campaign still has to falsify this projection with the real largest
-report before the matrix can close.
+second clean exact campaign fits the real largest report but remains unsealed
+after a later tool-free dispatch failure; clean full reload is still pending.
 
 Raw profile files, the family `matrix.json`, and the complete
 `complete-matrix.json` are immutable single-file publications. Byte-equal

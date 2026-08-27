@@ -671,16 +671,16 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Repeat the complete guarded capture at the repaired clean revision and independently reload its exact aggregate identity.`
   Acceptance: `Remove only the exactly identified superseded portable-runtime publications after retaining their bytes/digests, then run one new clean-revision exact campaign. Require all parent .2 acceptance evidence, retain any Darwin pre-main stall as failed without retry or timeout widening, and close only after fresh-process reload and exact file/hash/staging census.`
-  Verification: `Clean bound repair 2681aa777 permits exact capture. At 80b07d6ee, reference/gate/qualification publish as 75,883/847,861/1,730,744 bytes with SHA-256 3e572a7f2f628eefa933a3959bc2c809cc3fc9ef9c61865e7b615cadd1138902/6e15ca49731b5ad2fe1dfff16ccbbe1f86cf6f75ff5ae8c5124b5b1b5e92a8bc/ac6a513c0689b19b57cdef6f2b1b6022b5f9cf6315d511794eb307ada2a11def and zero staging or aggregate residue. Exact profile 4 fails because matrix line 416 routes preflight to measure_profile, which rejects every level except gate/qualification. Child .1 repairs/tests dispatch; proposed child .2 repeats capture from its clean commit.`
+  Verification: `Clean bound repair 2681aa777 permits exact capture. At 80b07d6ee, reference/gate/qualification publish as 75,883/847,861/1,730,744 bytes with SHA-256 3e572a7f2f628eefa933a3959bc2c809cc3fc9ef9c61865e7b615cadd1138902/6e15ca49731b5ad2fe1dfff16ccbbe1f86cf6f75ff5ae8c5124b5b1b5e92a8bc/ac6a513c0689b19b57cdef6f2b1b6022b5f9cf6315d511794eb307ada2a11def and zero staging or aggregate residue. Profile 4 exposes preflight misrouting. Child .1 repairs/tests explicit dispatch; proposed child .2 repeats capture after the clean repair commit.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2: activate repaired exact matrix capture`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Repair the exact-capture-exposed tool-free preflight dispatcher and close its missing real-adapter test seam.`
   Acceptance: `Route producer modes explicitly: validation and preflight through validate_profile, gate and qualification through measure_profile, and reject any unhandled mode. Add focused real-adapter regression evidence for both tool-free levels, retain inherited capture identity and zero controller/tool execution, preserve all immutable publication and failure contracts, and change no timeout, retry, support, performance, capacity, parity, or public API.`
-  Verification: `Exact guarded t1670 at clean 80b07d6ee runs 1,979 seconds and publishes reference/gate/qualification before profile 4 fails at matrix line 416. Producer validate_profile already owns the preflight-dominated route; measure_profile intentionally accepts only gate/qualification. Default tests validated those pieces separately but did not exercise real dispatcher selection.`
-  Commit: `pending`
+  Verification: `Exact guarded t1670 at clean 80b07d6ee runs 1,979 seconds and fails profile 4 at the validation-versus-measurement dispatcher. _produce_profile_report now routes validation/preflight to validate_profile, gate/qualification to measure_profile, and rejects unknown modes. A real-adapter default regression proves both limit levels remain preflight-dominated without guard, controller, validation record, measurement, cleanup record, or residue. Syntax passes; guarded producer+matrix passes Files=2/Tests=15; all 56 book chapters test; Knowledge Map and 1,558/1,558 claim dispositions remain exact.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.1: repair portable-runtime preflight dispatch`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2`
   Status: `proposed`
@@ -7241,3 +7241,9 @@ raising an enforcement ceiling.
   book/card/claim/task chain retains rederivation, oversize falsification,
   durability, nonclaims, and the pending real-largest-report test.
 - [x] **NO REGRESSION** — `All tests successful`: default producer/publisher passes Files=2, Tests=14 and CI tier Files=1, Tests=12; all 56 book chapters test. Knowledge Map parity is 1,153 facts/6,116 questions/6,283 occurrences/136 shards; the 1,558-candidate join closes 40 claims/911 gates/590 reviews/17 gaps/zero open. Task integrity, relative paths, live containment with zero ceiling increase, staged acceptance, and doctrines must pass before commit. The independent qualification diagnostic's 30-second zero-output Darwin pre-main failure stays failed without retry, timeout widening, or performance/support/capacity/API claim.
+
+## Acceptance Checklist (enforced) — `.17.3.5.5.2.2.1` preflight dispatch repair
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Exact guarded t1670 at clean `80b07d6ee` runs 1,979 seconds, publishes three profiles, then the ternary at perl/FSM/VIAL/ArchitectureScalePortableRuntimeMeasurementMatrix.pm line 416 sends `preflight` to `measure_profile`; the producer diagnostic permits only gate and qualification. Default tests checked preflight reports and aggregates separately but not real dispatch.
+- [x] **ADDRESSED (verified)** — `_produce_profile_report` explicitly sends validation/preflight to `validate_profile`, measured modes to `measure_profile`, and rejects every unhandled mode. The real adapter proves both limit levels stay tool/controller-free without an active guard.
+- [x] **NO REGRESSION** — `All tests successful`: syntax passes; guarded producer+matrix reports Files=2, Tests=15; CI tier Files=1, Tests=12; relative paths Files=1, Tests=2; all 56 book chapters test; Knowledge Map is 1,153 facts/6,116 questions/6,283 occurrences/136 shards; claim inventory/dispositions close 1,558/1,558. Containment, staged acceptance, and all doctrines must pass before commit.
