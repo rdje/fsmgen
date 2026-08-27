@@ -128,6 +128,8 @@ subtest 'portable source emits typed stimulus, scheduling, models, and declared 
         'runtime package owns typed diagnostic records');
     like($runtime, qr/type vial_diagnostic_array_t is array/,
         'runtime package owns the bounded diagnostic store');
+    like($runtime, qr/fsmgen\.vial_vhdl_runtime_trace\.v2/,
+        'runtime package atomically selects portable VHDL trace revision 2');
     my $metadata = artifact_by_role($emission, 'vhdl_fixture_metadata')->{content};
     like($metadata, qr/VIAL_INACTIVE_EDGE : string := "falling";/,
         'metadata freezes the selected inactive edge');
@@ -171,6 +173,21 @@ subtest 'portable source emits typed stimulus, scheduling, models, and declared 
         'procedural checking records unknown-value evidence');
     like($top, qr/vial_emit_trace\("footer"\)/,
         'trace has an explicit closure record');
+    like($top, qr/FSMGEN_VIAL_TRACE_V2/,
+        'trace records use the exact revision-2 prefix');
+    like($top,
+        qr/""catalog_digest"":""sha256\/f315169a60ab43d9abc747aa42a2ae5fbe2dadd303bc965f0eafb1bbd95989e9""/,
+        'header authenticates the exact four-entry 66-bit observation catalog');
+    like($top,
+        qr/sample\/endpoint\/HRDATA.*sample\/endpoint\/HREADYOUT.*sample\/endpoint\/HRESP.*sample\/probe\/reg_data_q/,
+        'catalog order is public outputs followed by declared probes');
+    is(scalar(() = $top =~ /^\s*vial_emit_sample_trace;/gm), 1,
+        'one sample-trace call exists inside the single barrier procedure');
+    my $sample_marker = index($top, '-- FSMGEN VIAL PHASE: SAMPLE');
+    my $sample_trace = index($top, 'vial_emit_sample_trace;', $sample_marker);
+    my $react_marker = index($top, '-- FSMGEN VIAL PHASE: REACT');
+    ok($sample_marker < $sample_trace && $sample_trace < $react_marker,
+        'snapshot is emitted after SAMPLE observations and before REACT');
     unlike($top, qr/\\"/,
         'generated JSON uses VHDL quote doubling rather than C-style escapes');
     like($runtime, qr/fsmgen\.verification_result_manifest\.v1/,
@@ -279,8 +296,8 @@ subtest 'static validation and negotiation fail closed on malformed inputs' => s
         'static result is closed');
     ok(!(grep { $_->{status} ne 'passed' } @{$static->{checks}}),
         'every selected structural check passes');
-    is(scalar(@{$static->{checks}}), 20,
-        'static validator runs the exact twenty semantic checks');
+    is(scalar(@{$static->{checks}}), 21,
+        'static validator runs the exact twenty-one semantic checks');
 
     my @source = map { clone($_) }
         grep { $_->{language} eq 'vhdl' } @{$emission->{artifacts}};
@@ -345,6 +362,12 @@ subtest 'static validation and negotiation fail closed on malformed inputs' => s
         =~ s/vial_emit_trace\("footer"\)/vial_emit_trace("open")/;
     static_failure(\@trace_closure, 'VIAL_VHDL_STATIC_TRACE_CLOSURE_ERROR',
         'trace non-closure');
+
+    my @sample_trace = map { clone($_) } @source;
+    artifact_in(\@sample_trace, 'vhdl_fixture_top')->{content}
+        =~ s/^\s*vial_emit_sample_trace;/      null;/m;
+    static_failure(\@sample_trace, 'VIAL_VHDL_STATIC_SAMPLE_TRACE_ERROR',
+        'missing sample-barrier snapshot');
 
     my @invalid_json_quote = map { clone($_) } @source;
     artifact_in(\@invalid_json_quote, 'vhdl_fixture_top')->{content}
@@ -441,7 +464,7 @@ subtest 'checked gallery and support discovery remain byte-exact and honest' => 
             $artifact->{content}, "gallery snapshot '$relative' matches exact emitted bytes");
     }
     my $readme = slurp_raw(File::Spec->catfile($gallery, 'README.md'));
-    like($readme, qr/plan\/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574/,
+    like($readme, qr/\Q$emission->{plan_id}\E/,
         'gallery names its exact deterministic plan');
     like($readme,
         qr/Separately, this snapshot passes\s+analysis, elaboration, bounded execution/,
@@ -456,7 +479,7 @@ subtest 'checked gallery and support discovery remain byte-exact and honest' => 
         'support state reports the exact six-source graph');
     is($contract->{limits}{source_map_entries}, 59,
         'support state reports the exact source-map count');
-    is($contract->{limits}{static_validation_checks}, 20,
+    is($contract->{limits}{static_validation_checks}, 21,
         'support state reports the exact static-check count');
     is($contract->{backend_stage_status}{analysis},
         'passed_exact_ghdl_6_0_0_llvm_jit',

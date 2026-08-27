@@ -23,7 +23,7 @@
       "typed_four_state_values",
       "typed_logical_time"
    ],
-   "emitter_revision" : 5,
+   "emitter_revision" : 6,
    "entrypoint_legend" : {
       "normal_source" : "normal public VIAL projection, derived compiler-owned intent, unavailable private preview, or exact unsupported boundary",
       "terse_source" : "terse public VIAL projection, derived compiler-owned intent, unavailable private preview, or exact unsupported boundary",
@@ -75,7 +75,7 @@
          "terse_source" : "derived_from_public_vial_v1",
          "typed_ir" : "compiler_owned_execution_ir",
          "unsupported_reason" : null,
-         "vhdl_realization" : "logical-time header/body/footer JSONL projection with explicit closure",
+         "vhdl_realization" : "catalog-authenticated logical-time JSONL with one normalized snapshot per sample barrier and explicit closure",
          "visual_review_status" : "pending"
       },
       {

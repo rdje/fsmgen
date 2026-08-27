@@ -135,7 +135,7 @@ subtest 'advanced negotiation and profile claims are exact and bounded' => sub {
     my $manifest = $emission->{backend_manifest};
     is($manifest->{schema}, 'fsmgen.vial_backend.vhdl_osvvm.v1',
         'advanced backend schema is exact');
-    is($manifest->{emitter_revision}, 3, 'advanced emitter revision is exact');
+    is($manifest->{emitter_revision}, 4, 'advanced emitter revision is exact');
     is($manifest->{profile_state}{materialization},
         'complete_recursive_verified', 'profile records complete provider graph');
     is($manifest->{profile_state}{qualification},

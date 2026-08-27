@@ -29,9 +29,10 @@ repository-local run confirms the 42-record trace families:
 | faults | 2 |
 | scoreboards | 2 |
 
-The emitter performs 34 real inactive-edge barriers: six authored reset
-cycles, sixteen active success cycles, and twelve active unsupported-size
-cycles. Every barrier samples bound endpoints and probes before react/check,
+The emitter performs 35 real inactive-edge barriers: six authored reset
+cycles, 28 transaction-active cycles, and one final unsupported-size response-
+settlement cycle after transaction-active coverage stops. Every barrier samples
+bound endpoints and probes before react/check,
 but v1 emits no trace record for that sample phase. Increasing reset cycles
 therefore leaves the trace count unchanged. Copying the portable-SystemVerilog
 reset recipe, patching generated VHDL, padding output, or multiplying scenarios
@@ -55,8 +56,8 @@ qualified probe continues to verify VHDL-symbol normalization.
 
 A dedicated validator admits only canonical LF JSONL with exact schema,
 closed keys and record vocabulary, one header/footer, contiguous sequence,
-known plan/run/scenario identities, monotonic logical time, catalog digest and
-ordering, exact normalized length, allowed symbols, scenario framing, and
+caller-sealed plan/run identities, non-regressing cycles, closed phase ranks,
+catalog digest and ordering, exact normalized length, allowed symbols, scenario framing, and
 expected family counts. It rejects missing, duplicate, reordered, malformed,
 unknown-width, unknown-symbol, or post-footer data before result production.
 The normalized result remains `fsmgen.verification_result_manifest.v1` and
@@ -67,16 +68,22 @@ qualification. It is not silently reinterpreted. The current portable profile
 switches to v2 atomically with its emitter, validator, galleries, qualification
 reports, support truth, Knowledge Map, and mdBook; there is no mixed v1/v2 run.
 
-The unchanged reference adds one genuine snapshot for each of its 34 barriers:
+Implementation under `.17.3.6.1` corrected one provisional selection count.
+The selection census had equated the 28 transaction-active coverage cycles
+with all non-reset barriers and omitted the unsupported-size scenario's final
+response-settlement barrier. A direct GHDL v2 trace independently proves 19
+success samples and 16 unsupported-size samples, hence 35 rather than 34.
+
+The unchanged reference adds one genuine snapshot for each of its 35 barriers:
 
 ```text
-reference_v2 = 42 + 34 = 76 records
-records(N) = 76 + (N - 3) = N + 73
+reference_v2 = 42 + 35 = 77 records
+records(N) = 77 + (N - 3) = N + 74
 ```
 
-The authored gate candidate uses success reset `N=9,927` and scenario timeout
+The authored gate candidate uses success reset `N=9,926` and scenario timeout
 16,384, producing exactly 10,000 records. The authored qualification candidate
-uses `N=99,927` and timeout 131,072, producing exactly 100,000 records. Those
+uses `N=99,926` and timeout 131,072, producing exactly 100,000 records. Those
 sources may change only the success reset and its enclosing timeout. Parser,
 bridge, ExecutionIR, plan, emitted loop, catalog, trace, and result evidence
 must independently bind the count end to end.
@@ -133,7 +140,8 @@ refreshes before the next activates.
 
 - **Re-derive:** rebuild the checked source through Parser, bridge,
   ExecutionIR, portable-VHDL emission, exact GHDL analysis/elaboration/run, and
-  independently census trace families, barrier count, normalized result, and
+  independently census the 42 pre-snapshot records, 19/16 scenario snapshot
+  partition, four-entry/66-bit observation catalog, normalized result, and
   cleanup.
 - **Falsify:** compare the unchanged reset-count trace, raw 42-record family
   census, malformed trace/catalog/order/value controls, provider/tool/command
@@ -146,8 +154,8 @@ refreshes before the next activates.
 ## Consequences
 
 - VHDL traces gain useful compact sample-phase evidence rather than benchmark
-  padding; the observation catalog is recorded once to keep large traces
-  bounded.
+  padding; the authenticated four-entry/66-bit observation catalog is recorded
+  once to keep large traces bounded.
 - Portable VHDL and OSVVM share the provider-free trace semantics, but `.17.3.6`
   makes no OSVVM runtime, mixed-language, support, budget, or capacity claim.
 - Exact GHDL qualification and measurement cannot drift into separate tool

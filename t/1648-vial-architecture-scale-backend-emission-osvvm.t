@@ -59,30 +59,30 @@ my @mapping_ids = qw(
 );
 my %expected = (
     reference_v1 => {
-        operations => 21, source_bytes => 120_911, source_maps => 66,
+        operations => 21, source_bytes => 122_415, source_maps => 66,
         metadata_bytes => 15_323,
         metadata_sha256 =>
             '59a4f9e1f8a2c9da6b8c5dd36f255ee1edb0b2bce57264906ab916a9141ba8bc',
     },
     gate_candidate_v1 => {
-        operations => 128, source_bytes => 179_280, source_maps => 173,
+        operations => 128, source_bytes => 180_784, source_maps => 173,
         metadata_bytes => 73_692,
         metadata_sha256 =>
             '922e1ab962d20c12cf24cdd8222a19b3f39fe958e934bcfb93b6a03974e0c9c9',
     },
     qualification_candidate_v1 => {
-        operations => 512, source_bytes => 391_248, source_maps => 557,
+        operations => 512, source_bytes => 392_752, source_maps => 557,
         metadata_bytes => 285_660,
         metadata_sha256 =>
             '9c77af56b8241f94c4ca2d9fc23ec73c6ad5582ae709dcb1318d0e6716502d7a',
     },
     limit_v1 => {
-        operations => 29_508, source_bytes => 16_781_090,
-        source_maps => 29_553, metadata_bytes => 16_675_502,
+        operations => 29_506, source_bytes => 16_781_458,
+        source_maps => 29_551, metadata_bytes => 16_674_366,
         metadata_sha256 =>
-            'b678833b74279814a3c5b008116546fe0353362296de32daa487352091a7ee06',
+            '321d67b4d78c8ff4c7921b709d8d156787b442f2a4334754860c80a07c7cb167',
     },
-    over_limit_v1 => {operations => 29_509},
+    over_limit_v1 => {operations => 29_507},
 );
 
 sub construction {
@@ -256,8 +256,8 @@ for my $level (@levels) {
                 'all twelve OSVVM structural checks pass');
             is_deeply($oracle->{static_check_identities}, \@static_checks,
                 'static-check identity and order are exact');
-            is($oracle->{portable_foundation_static_validation_checks}, 20,
-                'successful foundation retains twenty prerequisite checks');
+            is($oracle->{portable_foundation_static_validation_checks}, 21,
+                'successful foundation retains twenty-one prerequisite checks');
             is($oracle->{advanced_mapping_count}, 7,
                 'seven negotiated advanced mappings are exact');
             is_deeply($oracle->{mapping_identities}, \@mapping_ids,
@@ -374,9 +374,9 @@ sub expected_sources {
                 '7a7e3b4e81fd222e53e2098653fcf1131f1b58dbeba35698c1cfe67a4fab5b56',
         },
         {
-            relpath => $source_relpaths[3], bytes => 44_760,
+            relpath => $source_relpaths[3], bytes => 46_264,
             sha256 =>
-                '2570c6349752023e358785156e9739ce76a4dd14bc6d86ad71b1253783ca4b70',
+                'bc45987685e0e2fcf1adb5bbb0a20110dbdcc695ee1c556b1bee41c5b953f8d5',
         },
         {
             relpath => $source_relpaths[4], bytes => 47_670,
@@ -386,7 +386,7 @@ sub expected_sources {
         {
             relpath => $source_relpaths[5], bytes => 2_191,
             sha256 =>
-                '82cb0d22e03a661ff88aecbf5b94b89f91381801576d1c683d749ac02e258017',
+                'de60b5cdbcf2bd2efd9e9ac28938782e3a0df22ca4d7a14183481700f687e1b2',
         },
         {
             relpath => $source_relpaths[6], bytes => 6_025,

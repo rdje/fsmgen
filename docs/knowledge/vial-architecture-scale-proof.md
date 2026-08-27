@@ -119,7 +119,7 @@ reverify: >-
   rg -n '88%|4,096 MiB|pinned host|earliest authoritative cap|same-volume'
   docs/decisions/0056-vial-scale-measurements-use-pinned-evidence-and-bounded-failure.md
   docs/book/src/16d-hial-vial-verification-architecture.md &&
-  rg -n 'T=6,318|T=29,508|T=22|Durability'
+  rg -n 'T=6,318|T=29,506|T=22|Durability'
   docs/decisions/0075-backend-emission-scale-uses-profile-specific-anchored-routes.md &&
   rg -n 'balanced_portable_v2|private_nonportable|architecture_scale_probe|binding_count|SUPPORTED_CAPABILITY'
   perl/FSM/HIAL/VIALBridge/Builder.pm perl/FSM/VIAL/ExecutionBuilder.pm
@@ -209,7 +209,7 @@ are therefore measured identities, not an inferred adjustment to the probes.
 Completed `.17.2.1`-`.17.2.5` cover source through checking state. Decision
 `0075` selects checked-AHB backend routes: portable-SV oracle revision 2
 accepts `T=6,318` and rejects `6,319`; portable VHDL/OSVVM select
-`29,508/29,509`; native UVM emits
+`29,506/29,507` after the decision-0090 trace-v2 refinement; native UVM emits
 only `T=21` and rejects `T=22`. The closed `BackendEmissionAuthority`, repair
 parent `.17.2.6.2`, caller-sealed foundation `.17.2.6.3.1`, four profile
 ladders, and family closure `.17.2.6.3.6` preserve exact inventories, maps,

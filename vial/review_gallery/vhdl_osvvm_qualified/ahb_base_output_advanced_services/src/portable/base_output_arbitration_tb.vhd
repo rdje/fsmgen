@@ -150,13 +150,16 @@ begin
     variable vial_event_completed_count : natural := 0;
     variable vial_event_error_count : natural := 0;
 
-    procedure vial_emit_trace(constant record_kind : in string) is
+    procedure vial_emit_trace(
+      constant record_kind : in string;
+      constant normalized_bits : in string := ""
+    ) is
       variable trace_line : line;
     begin
       assert vial_trace_open and not vial_trace_closed
         report "FSMGen VIAL trace record outside the open trace interval"
         severity failure;
-      write(trace_line, string'("FSMGEN_VIAL_TRACE_V1"));
+      write(trace_line, string'("FSMGEN_VIAL_TRACE_V2"));
       write(trace_line, HT);
       write(trace_line, string'("{""payload"":{""logical_time"":{""cycle"":"));
       write(trace_line, vial_time.cycle);
@@ -166,7 +169,16 @@ begin
       write(trace_line, vial_phase_t'pos(vial_time.phase));
       write(trace_line, string'(",""static_rank"":"));
       write(trace_line, vial_time.static_rank);
-      write(trace_line, string'("}},""plan_id"":"""));
+      if record_kind = "header" then
+        write(trace_line, string'("},""observation_catalog"":{""catalog_digest"":""sha256/f315169a60ab43d9abc747aa42a2ae5fbe2dadd303bc965f0eafb1bbd95989e9"",""entries"":[{""sample_id"":""sample/endpoint/HRDATA"",""semantic_id"":""endpoint/HRDATA"",""width"":32},{""sample_id"":""sample/endpoint/HREADYOUT"",""semantic_id"":""endpoint/HREADYOUT"",""width"":1},{""sample_id"":""sample/endpoint/HRESP"",""semantic_id"":""endpoint/HRESP"",""width"":1},{""sample_id"":""sample/probe/reg_data_q"",""semantic_id"":""probe/reg_data_q"",""width"":32}],""schema"":""fsmgen.vial_vhdl_observation_catalog.v1"",""total_width"":66}}"));
+      elsif record_kind = "samples" then
+        write(trace_line, string'("},""normalized_bits"":"""));
+        write(trace_line, normalized_bits);
+        write(trace_line, string'("""}"));
+      else
+        write(trace_line, string'("}}"));
+      end if;
+      write(trace_line, string'(",""plan_id"":"""));
       write(trace_line, VIAL_PLAN_ID);
       write(trace_line, string'(""",""record_kind"":"""));
       write(trace_line, record_kind);
@@ -186,7 +198,7 @@ begin
       end if;
       write(trace_line, string'(",""schema"":"""));
       write(trace_line, VIAL_TRACE_SCHEMA);
-      write(trace_line, string'(""",""schema_version"":1,""sequence"":"));
+      write(trace_line, string'(""",""schema_version"":2,""sequence"":"));
       write(trace_line, vial_trace_sequence);
       write(trace_line, string'("}"));
       writeline(output, trace_line);
@@ -213,6 +225,17 @@ begin
         end case;
       end loop;
     end procedure vial_write_observation_bits;
+
+    procedure vial_emit_sample_trace is
+      variable sample_bits : line;
+    begin
+      vial_write_observation_bits(sample_bits, vial_sample_hrdata);
+      vial_write_observation_bits(sample_bits, vial_sample_hreadyout);
+      vial_write_observation_bits(sample_bits, vial_sample_hresp);
+      vial_write_observation_bits(sample_bits, vial_sample_probe_reg_data_q);
+      vial_emit_trace("samples", sample_bits.all);
+      deallocate(sample_bits);
+    end procedure vial_emit_sample_trace;
 
     procedure vial_write_observation_number(
       variable target : inout line;
@@ -510,6 +533,8 @@ begin
       vial_sample_rst_n := observe_vial_vector(std_logic_vector'(0 => rst_n));
       vial_sample_wait_cycles := observe_vial_vector(wait_cycles);
       vial_sample_probe_reg_data_q := observe_vial_vector(vial_probe_reg_data_q);
+
+      vial_emit_sample_trace;
 
       vial_time.phase := VIAL_REACT_PHASE;
       -- FSMGEN VIAL PHASE: REACT

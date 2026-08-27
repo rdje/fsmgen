@@ -360,8 +360,9 @@ sub _validate($raw) {
     _record_check(\@checks, 'bounded_diagnostics_and_unknown_evidence', $diagnostic_ok);
 
     my $trace_ok = $text{vhdl_runtime_package}
-            =~ /fsmgen\.vial_vhdl_runtime_trace\.v1/i
+            =~ /fsmgen\.vial_vhdl_runtime_trace\.v2/i
         && $text{vhdl_fixture_top} =~ /procedure\s+vial_emit_trace\b/i
+        && $text{vhdl_fixture_top} =~ /FSMGEN_VIAL_TRACE_V2/i
         && $text{vhdl_fixture_top} =~ /vial_emit_trace\("header"\)/i
         && $text{vhdl_fixture_top} =~ /vial_emit_trace\("footer"\)/i
         && $text{vhdl_fixture_top} =~ /phase_rank/i
@@ -372,6 +373,25 @@ sub _validate($raw) {
         'trace schema, header/footer, or exact closure proof is incomplete',
         '/roles/vhdl_fixture_top') unless $trace_ok;
     _record_check(\@checks, 'closed_trace_projection', $trace_ok);
+
+    my ($barrier) = $text{vhdl_fixture_top}
+        =~ /(procedure\s+vial_inactive_barrier\s+is\b.*?end\s+procedure\s+vial_inactive_barrier;)/is;
+    my $sample_trace_ok = defined($barrier)
+        && $text{vhdl_fixture_top}
+            =~ /fsmgen\.vial_vhdl_observation_catalog\.v1/i
+        && $text{vhdl_fixture_top}
+            =~ /procedure\s+vial_emit_sample_trace\s+is\b/i
+        && _count_matches($text{vhdl_fixture_top},
+            qr/^\s*vial_emit_sample_trace;/mi) == 1
+        && index($barrier, '-- FSMGEN VIAL PHASE: SAMPLE')
+            < index($barrier, 'vial_emit_sample_trace;')
+        && index($barrier, 'vial_emit_sample_trace;')
+            < index($barrier, '-- FSMGEN VIAL PHASE: REACT')
+        && $text{vhdl_fixture_top} =~ /""normalized_bits""/i;
+    _diagnose(\@diagnostics, 'VIAL_VHDL_STATIC_SAMPLE_TRACE_ERROR',
+        'one catalog-authenticated snapshot must occur between SAMPLE observation and REACT',
+        '/roles/vhdl_fixture_top') unless $sample_trace_ok;
+    _record_check(\@checks, 'one_catalogued_snapshot_per_sample_barrier', $sample_trace_ok);
 
     my @result_key = qw(
         backend_evidence backend_profile capability_evidence coverage

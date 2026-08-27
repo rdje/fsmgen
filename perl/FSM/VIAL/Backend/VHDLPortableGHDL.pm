@@ -240,7 +240,7 @@ sub _emit($raw) {
     my $review = FSM::VIAL::Backend::VHDLPortableReviewClosure->build({
         plan_id => $execution->{plan_id},
         fixture_id => $execution->{fixture}{fixture_id},
-        emitter_revision => 5,
+        emitter_revision => 6,
         source_artifacts => \@source_artifacts,
         review_gallery =>
             'vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics',
@@ -356,7 +356,7 @@ sub _emit($raw) {
         plan_id => $execution->{plan_id},
         fixture_id => $execution->{fixture}{fixture_id},
         generated_top => $top,
-        emitter_revision => 5,
+        emitter_revision => 6,
         execution_profile => $execution->{profile},
         standard_profile => {
             language => 'VHDL',
@@ -1020,7 +1020,7 @@ package fsmgen_vial_runtime_pkg is
 
   constant VIAL_SCOREBOARD_CAPACITY : positive := 4;
   constant VIAL_DIAGNOSTIC_CAPACITY : positive := 64;
-  constant VIAL_TRACE_SCHEMA : string := "fsmgen.vial_vhdl_runtime_trace.v1";
+  constant VIAL_TRACE_SCHEMA : string := "fsmgen.vial_vhdl_runtime_trace.v2";
   constant VIAL_RESULT_SCHEMA : string := "fsmgen.verification_result_manifest.v1";
 
   constant VIAL_INITIAL_LOGICAL_TIME : vial_logical_time_t := (
@@ -1212,6 +1212,28 @@ sub _render_fixture(%arg) {
         $sample_symbol{$item->{probe_id}}
             = 'vial_sample_probe_' . _vhdl_slug($item->{name});
     }
+    my @observation = (
+        (map { +{semantic_id => $_->{endpoint_id}, type_id => $_->{type_id}} }
+            grep { $_->{direction} eq 'output' } @{$bridge->{endpoints}}),
+        (map { +{semantic_id => $_->{probe_id}, type_id => $_->{type_id}} }
+            @{$bridge->{probes}}),
+    );
+    my @catalog_entry = map { +{
+        sample_id => "sample/$_->{semantic_id}",
+        semantic_id => $_->{semantic_id},
+        width => 0 + $type{$_->{type_id}}{width},
+    } } @observation;
+    my $catalog_width = 0;
+    $catalog_width += $_->{width} for @catalog_entry;
+    my $catalog_projection = {
+        entries => \@catalog_entry,
+        schema => 'fsmgen.vial_vhdl_observation_catalog.v1',
+        total_width => $catalog_width,
+    };
+    my $observation_catalog = {
+        catalog_digest => 'sha256/' . sha256_hex(_canonical_json($catalog_projection)),
+        %$catalog_projection,
+    };
     my $read_data_id = _endpoint_id_by_role($bridge, 'read_data');
     my $read_data_sample = $sample_symbol{$read_data_id};
     my ($storage_probe) = @{$bridge->{probes}};
@@ -1401,13 +1423,16 @@ sub _render_fixture(%arg) {
     }
     push @line,
         '',
-        '    procedure vial_emit_trace(constant record_kind : in string) is',
+        '    procedure vial_emit_trace(',
+        '      constant record_kind : in string;',
+        '      constant normalized_bits : in string := ""',
+        '    ) is',
         '      variable trace_line : line;',
         '    begin',
         '      assert vial_trace_open and not vial_trace_closed',
         '        report "FSMGen VIAL trace record outside the open trace interval"',
         '        severity failure;',
-        '      write(trace_line, string\'("FSMGEN_VIAL_TRACE_V1"));',
+        '      write(trace_line, string\'("FSMGEN_VIAL_TRACE_V2"));',
         '      write(trace_line, HT);',
         '      write(trace_line, string\'("{""payload"":{""logical_time"":{""cycle"":"));',
         '      write(trace_line, vial_time.cycle);',
@@ -1417,7 +1442,17 @@ sub _render_fixture(%arg) {
         '      write(trace_line, vial_phase_t\'pos(vial_time.phase));',
         '      write(trace_line, string\'(",""static_rank"":"));',
         '      write(trace_line, vial_time.static_rank);',
-        '      write(trace_line, string\'("}},""plan_id"":"""));',
+        '      if record_kind = "header" then',
+        _vhdl_textio_write('trace_line', '},"observation_catalog":'
+            . _canonical_json($observation_catalog) . '}', '        '),
+        '      elsif record_kind = "samples" then',
+        _vhdl_textio_write('trace_line', '},"normalized_bits":"', '        '),
+        '        write(trace_line, normalized_bits);',
+        _vhdl_textio_write('trace_line', '"}', '        '),
+        '      else',
+        _vhdl_textio_write('trace_line', '}}', '        '),
+        '      end if;',
+        '      write(trace_line, string\'(",""plan_id"":"""));',
         '      write(trace_line, VIAL_PLAN_ID);',
         '      write(trace_line, string\'(""",""record_kind"":"""));',
         '      write(trace_line, record_kind);',
@@ -1441,7 +1476,7 @@ sub _render_fixture(%arg) {
         '      end if;',
         '      write(trace_line, string\'(",""schema"":"""));',
         '      write(trace_line, VIAL_TRACE_SCHEMA);',
-        '      write(trace_line, string\'(""",""schema_version"":1,""sequence"":"));',
+        '      write(trace_line, string\'(""",""schema_version"":2,""sequence"":"));',
         '      write(trace_line, vial_trace_sequence);',
         '      write(trace_line, string\'("}"));',
         '      writeline(output, trace_line);',
@@ -1468,6 +1503,18 @@ sub _render_fixture(%arg) {
         '        end case;',
         '      end loop;',
         '    end procedure vial_write_observation_bits;',
+        '',
+        '    procedure vial_emit_sample_trace is',
+        '      variable sample_bits : line;',
+        '    begin',
+        ;
+    for my $item (@observation) {
+        push @line, "      vial_write_observation_bits(sample_bits, $sample_symbol{$item->{semantic_id}});";
+    }
+    push @line,
+        '      vial_emit_trace("samples", sample_bits.all);',
+        '      deallocate(sample_bits);',
+        '    end procedure vial_emit_sample_trace;',
         '',
         '    procedure vial_write_observation_number(',
         '      variable target : inout line;',
@@ -1739,6 +1786,8 @@ sub _render_fixture(%arg) {
     my $transfer_sample = $sample_symbol{_endpoint_id_by_role($bridge, 'transfer')};
     my $response_sample = $sample_symbol{_endpoint_id_by_role($bridge, 'response')};
     push @line,
+        '',
+        '      vial_emit_sample_trace;',
         '',
         '      vial_time.phase := VIAL_REACT_PHASE;',
         '      -- FSMGEN VIAL PHASE: REACT',

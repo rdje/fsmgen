@@ -16,6 +16,8 @@ use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
+use FSM::VIAL::Backend::VHDLPortableTraceValidator;
+
 my $JSON = JSON::PP->new->canonical(1);
 my $SCHEMA = 'fsmgen.vial_vhdl_portable_ghdl_qualification.v1';
 my $PROFILE = 'vhdl_portable_ghdl';
@@ -35,6 +37,8 @@ my $VERSION_OUTPUT = join("\n",
     'Copyright (C) 2003 - 2026 Tristan Gingold.',
     'GHDL is free software, covered by the GNU General Public License.  There is NO',
     'warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.');
+my $TRACE_AUTHORITY =
+    FSM::VIAL::Backend::VHDLPortableTraceValidator->checked_reference_authority;
 my @SOURCE = map { "$GALLERY/src/$_" } (
     'fsmgen_vial_types_pkg.vhd',
     'fsmgen_vial_runtime_pkg.vhd',
@@ -223,7 +227,7 @@ sub _qualify($raw) {
         schema => $SCHEMA,
         schema_version => 1,
         qualification_id => $qualification_id,
-        task_id => 'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.5',
+        task_id => 'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.1',
         status => 'qualified',
         backend_profile => $PROFILE,
         tool_profile => {
@@ -317,25 +321,27 @@ sub _validate_runtime_output($output) {
     my @trace;
     my @result;
     for my $line (split /\r?\n/, $output) {
-        push @trace, substr($line, length("FSMGEN_VIAL_TRACE_V1\t"))
-            if index($line, "FSMGEN_VIAL_TRACE_V1\t") == 0;
+        push @trace, $line
+            if index($line, "FSMGEN_VIAL_TRACE_V2\t") == 0;
         push @result, substr($line, length("FSMGEN_VIAL_RESULT_V1\t"))
             if index($line, "FSMGEN_VIAL_RESULT_V1\t") == 0;
     }
     _throw('VIAL_VHDL_QUALIFICATION_TRACE_ERROR',
         'runtime must emit exactly one normalized result record', '/result')
         unless @result == 1;
-    my @decoded_trace = map { _decode_json($_, '/trace') } @trace;
     my $decoded_result = _decode_json($result[0], '/result');
+    my $validated = FSM::VIAL::Backend::VHDLPortableTraceValidator->validate({
+        trace_text => join("\n", @trace) . "\n",
+        %$TRACE_AUTHORITY,
+        expected_record_counts => {
+            header => 1, scenario_start => 2, events => 2, samples => 35,
+            expectations => 2, scoreboards => 2, coverage => 28, faults => 2,
+            scenario_end => 2, footer => 1,
+        },
+    });
     _throw('VIAL_VHDL_QUALIFICATION_TRACE_ERROR',
-        'runtime trace must contain exactly 42 records', '/trace/record_count')
-        unless @decoded_trace == 42;
-    _throw('VIAL_VHDL_QUALIFICATION_TRACE_ERROR',
-        'runtime trace must open with one header and close with one footer', '/trace')
-        unless $decoded_trace[0]{record_kind} eq 'header'
-            && $decoded_trace[-1]{record_kind} eq 'footer'
-            && scalar(grep { $_->{record_kind} eq 'header' } @decoded_trace) == 1
-            && scalar(grep { $_->{record_kind} eq 'footer' } @decoded_trace) == 1;
+        $validated->{diagnostics}[0]{message}, $validated->{diagnostics}[0]{path})
+        unless $validated->{ok};
     _throw('VIAL_VHDL_QUALIFICATION_RESULT_ERROR',
         'runtime normalized result did not pass', '/result/status')
         unless ($decoded_result->{schema} // '') eq 'fsmgen.verification_result_manifest.v1'
@@ -382,13 +388,18 @@ sub _validate_runtime_output($output) {
     }
     return {
         trace => {
-            schema => 'fsmgen.vial_vhdl_runtime_trace.v1',
+            schema => $validated->{trace}{schema},
+            schema_version => $validated->{trace}{schema_version},
             status => 'closed_validated',
-            record_count => 0 + @decoded_trace,
+            record_count => $validated->{trace}{record_count},
+            record_counts => _clone($validated->{trace}{record_counts}),
             header_count => 1,
             footer_count => 1,
-            scenario_start_count => scalar(grep { $_->{record_kind} eq 'scenario_start' } @decoded_trace),
-            scenario_end_count => scalar(grep { $_->{record_kind} eq 'scenario_end' } @decoded_trace),
+            scenario_start_count => $validated->{trace}{record_counts}{scenario_start},
+            scenario_end_count => $validated->{trace}{record_counts}{scenario_end},
+            sample_count => $validated->{trace}{record_counts}{samples},
+            observation_catalog => _clone($validated->{trace}{observation_catalog}),
+            trace_sha256 => $validated->{trace}{trace_sha256},
             stdout_sha256 => sha256_hex($output),
         },
         result => {

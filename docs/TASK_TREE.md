@@ -48,7 +48,7 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 | --- | --- | --- | --- | --- |
 | `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION` | `active` | `verification infrastructure / runtime qualification` | `.3.2.2.3` done; `.3.2.2` retains the committed repairs until standing-cadence hosted requalification | [task](docs/tasks/DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.md) |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.30` done; proposed `.29` owns node-field narration accretion | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
-| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.17.3.6.1` active; implement the decision-0090 portable-VHDL sample-snapshot trace contract | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
+| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.17.3.6.2` active; materialize the exact authored portable-VHDL runtime candidates | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `ISF-SPEC-TEST-INDEX-SYNC` | `active` | `R14` | `.3` exact post-partition transformation is green; commit it before resolving the remaining complete-CI findings | [task](docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 completeness` | `.844` terminal | [task](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
 

@@ -74,7 +74,7 @@ package fsmgen_vial_runtime_pkg is
 
   constant VIAL_SCOREBOARD_CAPACITY : positive := 4;
   constant VIAL_DIAGNOSTIC_CAPACITY : positive := 64;
-  constant VIAL_TRACE_SCHEMA : string := "fsmgen.vial_vhdl_runtime_trace.v1";
+  constant VIAL_TRACE_SCHEMA : string := "fsmgen.vial_vhdl_runtime_trace.v2";
   constant VIAL_RESULT_SCHEMA : string := "fsmgen.verification_result_manifest.v1";
 
   constant VIAL_INITIAL_LOGICAL_TIME : vial_logical_time_t := (

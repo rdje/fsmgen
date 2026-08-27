@@ -3,7 +3,7 @@
    "cleanup" : {
       "removed" : true,
       "same_volume" : true,
-      "staging_identity" : ".artifacts/tmp/vial-ghdl-qualification/ade7cb32d24f37da3c926d44db967e4c80c215398dda65d7a4eeb2335109e0cc",
+      "staging_identity" : ".artifacts/tmp/vial-ghdl-qualification/5b99d2fe5b8e05471e8f0a0b0e80dee2ebb4158673f6d27b83c5cc07c7a7e884",
       "state" : "completed_removed"
    },
    "commands" : {
@@ -13,7 +13,7 @@
             "-a",
             "--std=08",
             "--work=fsmgen_vial",
-            "--workdir=.artifacts/tmp/vial-ghdl-qualification/ade7cb32d24f37da3c926d44db967e4c80c215398dda65d7a4eeb2335109e0cc/library",
+            "--workdir=.artifacts/tmp/vial-ghdl-qualification/5b99d2fe5b8e05471e8f0a0b0e80dee2ebb4158673f6d27b83c5cc07c7a7e884/library",
             "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/fsmgen_vial_types_pkg.vhd",
             "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/fsmgen_vial_runtime_pkg.vhd",
             "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/base_output_arbitration_metadata_pkg.vhd",
@@ -22,7 +22,7 @@
             "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/base_output_arbitration_probe_adapter.vhd",
             "vial/qualification/vhdl_portable_ghdl/ghdl_6_0_0_four_state_probe.vhd"
          ],
-         "command_digest" : "4cd954b92b864ca9084da0a1d8cc716df1bda4c5181bcbdca4c2f007cbec1647",
+         "command_digest" : "35c01aea2e40331d0509c8ed03ba0821bfff2886ebd2b0e2ddc0bab5bca10e40",
          "execution_status" : "passed",
          "working_directory" : "."
       },
@@ -32,10 +32,10 @@
             "-e",
             "--std=08",
             "--work=fsmgen_vial",
-            "--workdir=.artifacts/tmp/vial-ghdl-qualification/ade7cb32d24f37da3c926d44db967e4c80c215398dda65d7a4eeb2335109e0cc/library",
+            "--workdir=.artifacts/tmp/vial-ghdl-qualification/5b99d2fe5b8e05471e8f0a0b0e80dee2ebb4158673f6d27b83c5cc07c7a7e884/library",
             "base_output_arbitration_tb"
          ],
-         "command_digest" : "d8373b05447ecdd6aec8dc106b63c0a28b9213bb36e63e5543e2941998b67bfb",
+         "command_digest" : "59196ceb844ec9d84dd3e3b77e407882baea80829e53aa3711def40edbe29878",
          "execution_status" : "passed",
          "working_directory" : "."
       },
@@ -45,10 +45,10 @@
             "-e",
             "--std=08",
             "--work=fsmgen_vial",
-            "--workdir=.artifacts/tmp/vial-ghdl-qualification/ade7cb32d24f37da3c926d44db967e4c80c215398dda65d7a4eeb2335109e0cc/library",
+            "--workdir=.artifacts/tmp/vial-ghdl-qualification/5b99d2fe5b8e05471e8f0a0b0e80dee2ebb4158673f6d27b83c5cc07c7a7e884/library",
             "ghdl_6_0_0_four_state_probe"
          ],
-         "command_digest" : "a9ee1492585818d00e8d6727ab8a34dd1575830423bfe2e88d073a98fb1456bd",
+         "command_digest" : "591491a392ca83262b7e31ef393893823dc2ce370020aba97b2b43de9a2a89e2",
          "execution_status" : "passed",
          "working_directory" : "."
       },
@@ -58,11 +58,11 @@
             "-r",
             "--std=08",
             "--work=fsmgen_vial",
-            "--workdir=.artifacts/tmp/vial-ghdl-qualification/ade7cb32d24f37da3c926d44db967e4c80c215398dda65d7a4eeb2335109e0cc/library",
+            "--workdir=.artifacts/tmp/vial-ghdl-qualification/5b99d2fe5b8e05471e8f0a0b0e80dee2ebb4158673f6d27b83c5cc07c7a7e884/library",
             "base_output_arbitration_tb",
             "--assert-level=error"
          ],
-         "command_digest" : "b32a20d7ef7cca8b05abaaff4ee92ec0b18f1ba051f797bd3fc759644c93a3fa",
+         "command_digest" : "6c42f927be65eae88b8ad79febfbe65262a91953689bf45f9776749c356ebebd",
          "execution_status" : "passed",
          "working_directory" : "."
       },
@@ -72,18 +72,18 @@
             "-r",
             "--std=08",
             "--work=fsmgen_vial",
-            "--workdir=.artifacts/tmp/vial-ghdl-qualification/ade7cb32d24f37da3c926d44db967e4c80c215398dda65d7a4eeb2335109e0cc/library",
+            "--workdir=.artifacts/tmp/vial-ghdl-qualification/5b99d2fe5b8e05471e8f0a0b0e80dee2ebb4158673f6d27b83c5cc07c7a7e884/library",
             "ghdl_6_0_0_four_state_probe",
             "--assert-level=error"
          ],
-         "command_digest" : "3c8b223522d31eed3a95ccf43d32580b2fe5c67865af350e85b5ba6bc18d5967",
+         "command_digest" : "cbd125a50b54620e80c7e0259a7bf62d69d1e665ec884e7881c44aa69d454aa4",
          "execution_status" : "passed",
          "working_directory" : "."
       }
    },
    "deterministic_rerun" : {
       "fixture_stdout_identical" : true,
-      "fixture_stdout_sha256" : "910540922c4df5735210620da77f279861282e433af10fadba1f68564c092c11",
+      "fixture_stdout_sha256" : "425ed621b5076232ed93e956341a2fdbcb3cd9d190fc9992aa972232a7738478",
       "four_state_stdout_identical" : true,
       "four_state_stdout_sha256" : "ec08f35b66013e85449928a29cac765d95751465a846a1c8f61a8cdc6b1cfbc9",
       "status" : "passed"
@@ -160,7 +160,7 @@
       "release_url" : "https://github.com/ghdl/ghdl/releases/tag/v6.0.0",
       "root" : ".artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64"
    },
-   "qualification_id" : "qualification/ade7cb32d24f37da3c926d44db967e4c80c215398dda65d7a4eeb2335109e0cc",
+   "qualification_id" : "qualification/5b99d2fe5b8e05471e8f0a0b0e80dee2ebb4158673f6d27b83c5cc07c7a7e884",
    "resource_controls" : {
       "analysis_timeout_seconds" : 120,
       "descendant_rss_limit_mib" : 4096,
@@ -215,7 +215,7 @@
       {
          "bytes" : 2191,
          "relpath" : "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/fsmgen_vial_runtime_pkg.vhd",
-         "sha256" : "82cb0d22e03a661ff88aecbf5b94b89f91381801576d1c683d749ac02e258017"
+         "sha256" : "de60b5cdbcf2bd2efd9e9ac28938782e3a0df22ca4d7a14183481700f687e1b2"
       },
       {
          "bytes" : 15323,
@@ -228,9 +228,9 @@
          "sha256" : "8d93b0ade4d9561d19fdd12ab10b4d8ba1a3dc06de9f911d1c0d8d1bf18518cf"
       },
       {
-         "bytes" : 44758,
+         "bytes" : 46262,
          "relpath" : "vial/review_gallery/vhdl_portable_ghdl/ahb_base_output_portable_semantics/src/base_output_arbitration_tb.vhd",
-         "sha256" : "4a3665cb0e14b599962a3a29bafb2ff99787cc8cb332b0f35e50b75583a6666b"
+         "sha256" : "b327edab233200bc9b8ff1b8e6a22588505749f47363b7bc9c4a0380394f16b3"
       },
       {
          "bytes" : 591,
@@ -244,7 +244,7 @@
       }
    ],
    "status" : "qualified",
-   "task_id" : "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.5",
+   "task_id" : "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.1",
    "tool_profile" : {
       "backend" : "llvm_jit",
       "build_commit" : "e589c698c351369ac5bcfe7abe1f1152ac5d4727",
@@ -258,11 +258,37 @@
    "trace" : {
       "footer_count" : 1,
       "header_count" : 1,
-      "record_count" : 42,
+      "observation_catalog" : {
+         "catalog_digest" : "sha256/f315169a60ab43d9abc747aa42a2ae5fbe2dadd303bc965f0eafb1bbd95989e9",
+         "sample_ids" : [
+            "sample/endpoint/HRDATA",
+            "sample/endpoint/HREADYOUT",
+            "sample/endpoint/HRESP",
+            "sample/probe/reg_data_q"
+         ],
+         "schema" : "fsmgen.vial_vhdl_observation_catalog.v1",
+         "total_width" : 66
+      },
+      "record_count" : 77,
+      "record_counts" : {
+         "coverage" : 28,
+         "events" : 2,
+         "expectations" : 2,
+         "faults" : 2,
+         "footer" : 1,
+         "header" : 1,
+         "samples" : 35,
+         "scenario_end" : 2,
+         "scenario_start" : 2,
+         "scoreboards" : 2
+      },
+      "sample_count" : 35,
       "scenario_end_count" : 2,
       "scenario_start_count" : 2,
-      "schema" : "fsmgen.vial_vhdl_runtime_trace.v1",
+      "schema" : "fsmgen.vial_vhdl_runtime_trace.v2",
+      "schema_version" : 2,
       "status" : "closed_validated",
-      "stdout_sha256" : "910540922c4df5735210620da77f279861282e433af10fadba1f68564c092c11"
+      "stdout_sha256" : "425ed621b5076232ed93e956341a2fdbcb3cd9d190fc9992aa972232a7738478",
+      "trace_sha256" : "8e88953eac1352e54471b65cdcf6d6517fc929fb9a43a9ad8652e92f9a890c91"
    }
 }

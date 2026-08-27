@@ -108,7 +108,7 @@ my @MAPPING_DEFINITION = (
         'derived_from_public_vial_v1', 'derived_from_public_vial_v1',
         'compiler_owned_execution_ir',
         [qw(vhdl_runtime_package vhdl_fixture_top)],
-        'logical-time header/body/footer JSONL projection with explicit closure'),
+        'catalog-authenticated logical-time JSONL with one normalized snapshot per sample barrier and explicit closure'),
     _definition('normalized_result_projection', 'compiler_owned_from_public_vial',
         'derived_from_public_vial_v1', 'derived_from_public_vial_v1',
         'compiler_owned_execution_ir',
@@ -182,9 +182,9 @@ sub _build($raw) {
     confess 'fixture_id is malformed'
         unless defined($raw->{fixture_id}) && !ref($raw->{fixture_id})
             && length($raw->{fixture_id});
-    confess 'emitter_revision must be 5'
+    confess 'emitter_revision must be 6'
         unless defined($raw->{emitter_revision}) && !ref($raw->{emitter_revision})
-            && $raw->{emitter_revision} == 5;
+            && $raw->{emitter_revision} == 6;
     confess 'source_artifacts must be a non-empty array'
         unless ref($raw->{source_artifacts}) eq 'ARRAY' && @{$raw->{source_artifacts}};
     confess 'review_gallery must be a safe repository-relative path'

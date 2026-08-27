@@ -37,14 +37,14 @@
          ]
       },
       {
-         "byte_length" : 44758,
+         "byte_length" : 46262,
          "kind" : "vhdl_source",
          "language" : "vhdl",
          "relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
          "role" : "portable_vhdl_fixture_top",
-         "sha256" : "4a3665cb0e14b599962a3a29bafb2ff99787cc8cb332b0f35e50b75583a6666b",
+         "sha256" : "b327edab233200bc9b8ff1b8e6a22588505749f47363b7bc9c4a0380394f16b3",
          "source_ids" : [
-            "4a3665cb0e14b599962a3a29bafb2ff99787cc8cb332b0f35e50b75583a6666b",
+            "b327edab233200bc9b8ff1b8e6a22588505749f47363b7bc9c4a0380394f16b3",
             "plan/e236297c8b434a9b374d1800112841e00327bdbd5d8d9130440bd20681fbed6e"
          ]
       },
@@ -66,9 +66,9 @@
          "language" : "vhdl",
          "relpath" : "backends/vhdl_osvvm_qualified/src/portable/fsmgen_vial_runtime_pkg.vhd",
          "role" : "portable_vhdl_runtime_package",
-         "sha256" : "82cb0d22e03a661ff88aecbf5b94b89f91381801576d1c683d749ac02e258017",
+         "sha256" : "de60b5cdbcf2bd2efd9e9ac28938782e3a0df22ca4d7a14183481700f687e1b2",
          "source_ids" : [
-            "82cb0d22e03a661ff88aecbf5b94b89f91381801576d1c683d749ac02e258017",
+            "de60b5cdbcf2bd2efd9e9ac28938782e3a0df22ca4d7a14183481700f687e1b2",
             "plan/e236297c8b434a9b374d1800112841e00327bdbd5d8d9130440bd20681fbed6e"
          ]
       },
@@ -319,7 +319,7 @@
             "/backend_bindings"
          ],
          "generated_end_column" : 37,
-         "generated_end_line" : 810,
+         "generated_end_line" : 835,
          "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
          "generated_start_column" : 1,
          "generated_start_line" : 1,
@@ -1523,7 +1523,7 @@
             "/domains/0"
          ],
          "generated_end_column" : 30,
-         "generated_end_line" : 809,
+         "generated_end_line" : 834,
          "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
          "generated_start_column" : 1,
          "generated_start_line" : 68,
@@ -1554,10 +1554,10 @@
       {
          "bridge_fact_paths" : [],
          "generated_end_column" : 50,
-         "generated_end_line" : 261,
+         "generated_end_line" : 284,
          "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
          "generated_start_column" : 1,
-         "generated_start_line" : 261,
+         "generated_start_line" : 284,
          "generated_symbol" : "vial_scoreboard_enqueue_expected",
          "plan_paths" : [
             "/scoreboards"
@@ -1582,10 +1582,10 @@
       {
          "bridge_fact_paths" : [],
          "generated_end_column" : 72,
-         "generated_end_line" : 273,
+         "generated_end_line" : 296,
          "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
          "generated_start_column" : 1,
-         "generated_start_line" : 273,
+         "generated_start_line" : 296,
          "generated_symbol" : "vial_scoreboard_compare",
          "plan_paths" : [
             "/scoreboards"
@@ -1666,10 +1666,10 @@
       {
          "bridge_fact_paths" : [],
          "generated_end_column" : 38,
-         "generated_end_line" : 231,
+         "generated_end_line" : 254,
          "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
          "generated_start_column" : 1,
-         "generated_start_line" : 231,
+         "generated_start_line" : 254,
          "generated_symbol" : "vial_record_diagnostic",
          "plan_paths" : [
             "/operation_graph/operations"
@@ -1702,7 +1702,7 @@
       },
       {
          "bridge_fact_paths" : [],
-         "generated_end_column" : 67,
+         "generated_end_column" : 31,
          "generated_end_line" : 153,
          "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
          "generated_start_column" : 1,
@@ -1732,10 +1732,10 @@
       {
          "bridge_fact_paths" : [],
          "generated_end_column" : 53,
-         "generated_end_line" : 290,
+         "generated_end_line" : 313,
          "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
          "generated_start_column" : 1,
-         "generated_start_line" : 290,
+         "generated_start_line" : 313,
          "generated_symbol" : "vial_close_trace_and_project_result",
          "plan_paths" : [
             "/fixture",
@@ -1764,10 +1764,10 @@
       {
          "bridge_fact_paths" : [],
          "generated_end_column" : 14,
-         "generated_end_line" : 554,
+         "generated_end_line" : 579,
          "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
          "generated_start_column" : 1,
-         "generated_start_line" : 551,
+         "generated_start_line" : 576,
          "generated_symbol" : "vial_model_00_count",
          "plan_paths" : [
             "/models/0"
@@ -1792,10 +1792,10 @@
       {
          "bridge_fact_paths" : [],
          "generated_end_column" : 14,
-         "generated_end_line" : 558,
+         "generated_end_line" : 583,
          "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
          "generated_start_column" : 1,
-         "generated_start_line" : 555,
+         "generated_start_line" : 580,
          "generated_symbol" : "vial_model_01_count",
          "plan_paths" : [
             "/models/1"

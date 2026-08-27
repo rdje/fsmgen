@@ -700,22 +700,22 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Measure exact provider-free portable-VHDL generation, analysis, elaboration, run, trace validation, and result production with qualified GHDL.`
   Acceptance: `Use only the qualified GHDL profile and canonical runtime-stream inputs; perform one validation plus required measured repetitions in fresh owned staging; apply effective per-source analysis/elaboration/run limits and active guards; prove artifacts, source maps, checks, command identity, trace/result parity, deterministic rerun, raw evidence, publication, failure, and cleanup; and make no OSVVM, mixed-language, promoted-budget, support, or capacity claim.`
-  Verification: `Clean portable-Verilator closure d21089eb6 leaves this as the next roadmap dependency. The provider-free runtime constructor already owns all five portable-VHDL/GHDL roles and exact qualified tool/deadline/command expectations. Query-first source/history audit plus a fresh guarded exact GHDL rerun prove that the current v1 trace closes at 42 records but emits no record for its 34 real inactive-edge sample barriers; reset-count inflation alone therefore cannot reach the selected runtime-stream targets. Decision 0090 selects a versioned compact sample-snapshot trace, authored 9,927/99,927-cycle reset candidates, one shared staged GHDL lifecycle, exact earlier-cap authority, and five ordered implementation children. Child `.17.3.6.1` is active; no product behavior changes in selection.`
+  Verification: `Clean portable-Verilator closure d21089eb6 leaves this as the next roadmap dependency. The provider-free runtime constructor already owns all five portable-VHDL/GHDL roles and exact qualified tool/deadline/command expectations. Query-first source/history audit plus a fresh guarded exact GHDL rerun prove that the historical v1 trace closes at 42 records but emits no sample record. Selection provisionally counted 34 barriers and chose reset candidates 9,927/99,927; child .1's direct v2 GHDL trace corrects the omitted final unsupported-size settlement barrier, proving 35 samples and therefore 9,926/99,926 candidates. Decision 0090 retains that transparent correction, one shared staged GHDL lifecycle, exact earlier-cap authority, and five ordered implementation children. Child `.17.3.6.1` is active.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6: activate portable-VHDL runtime measurement; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6: select sampled portable-VHDL runtime architecture`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.1`
-  Status: `active`
+  Status: `done`
   Goal: `Version portable-VHDL trace truth so every real inactive-edge sample barrier emits one compact validated observation snapshot.`
   Acceptance: `Implement the decision-0090 v2 trace contract with an exact header observation catalog, one normalized snapshot per real barrier, closed record/order/time/run/catalog/normalization validation, and result projection shared by qualification and later measurement. Refresh portable-VHDL and impacted OSVVM generated evidence through canonical workflows; preserve logical outcomes, qualified tools, deadlines, public support boundaries, and v1 history; prove malformed/missing/duplicate/reordered/unknown-width/unknown-symbol records fail closed. Change no workload target, lifecycle, performance, capacity, support, mixed-language, or public API claim.`
-  Verification: `pending`
-  Commit: `pending implementation`
+  Verification: `Emitter revision 6 and one dedicated closed validator atomically replace trace v1 with canonical-LF JSONL trace v2. The header authenticates the ordered HRDATA/HREADYOUT/HRESP/reg_data_q catalog at 32/1/1/32 bits; all 35 real SAMPLE barriers emit one normalized 66-bit snapshot before REACT. Caller authority seals plan, ordered run, catalog, family counts, schema, and limits; malformed/noncanonical/prefix/sequence/count/framing/time/phase/plan/run/catalog/digest/width/symbol/footer mutations fail closed. Direct GHDL proves 19 success plus 16 unsupported-size samples and corrects selection's omitted final settlement barrier: the reference is 77 records and records(N)=N+74, so .2 owns 9,926/99,926 resets. Portable and OSVVM reports/galleries refresh through canonical workflows with unchanged two-scenario outcomes, qualified tools, commands, deadlines, and provider evidence. The fixed 1,504-byte emitter growth rederives the exact structural boundary as accepted T=29,506 at 16,777,107 portable bytes/29,544 maps and rejected T=29,507 at 16,777,675 rendered bytes; OSVVM retains its fixed 4,351-byte adapter. A stale gallery README plan literal is corrected to the emitted identity and guarded by a dynamic equality watcher. Real guarded qualifications pass; focused trace/emitter/qualification/authority tests pass Files=7/Tests=82; guarded portable/OSVVM exact scale tests pass Files=2/Tests=14 and family closure passes. Decision 0090, decision 0075, book, cards, claim, and exact evidence retain the correction and all runtime-capacity/support/performance/IASIM/public-API nonclaims.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.1: implement authenticated portable-VHDL trace v2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Materialize exact authored portable-VHDL runtime-stream candidates through the canonical source-to-emission route.`
-  Acceptance: `After .1 commits cleanly, add tracked gate and qualification VIAL sources whose only permitted semantic deltas are success reset count and matching scenario timeout. Require exact 10,000/100,000 v2 trace projections at reset counts 9,927/99,927, twice-rebuilt Parser/bridge/ExecutionIR/plan/emission identity, exact artifact/map/check inventories, byte-equal reruns, structural equivalence, limit/excess preflight, same-volume cleanup, and an honest stop plus superseding decision if the unchanged 64-MiB envelope dominates.`
-  Verification: `pending`
+  Acceptance: `After .1 commits cleanly, add tracked gate and qualification VIAL sources whose only permitted semantic deltas are success reset count and matching scenario timeout. Require exact 10,000/100,000 v2 trace projections at reset counts 9,926/99,926, twice-rebuilt Parser/bridge/ExecutionIR/plan/emission identity, exact artifact/map/check inventories, byte-equal reruns, structural equivalence, limit/excess preflight, same-volume cleanup, and an honest stop plus superseding decision if the unchanged 64-MiB envelope dominates.`
+  Verification: `Activated by the completed trace-v2 truth slice; the corrected records(N)=N+74 equation owns reset candidates 9,926/99,926 and no source exists yet.`
   Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.3`
@@ -7081,59 +7081,18 @@ raising an enforcement ceiling.
   SemanticIR, bridge, ExecutionIR, backend, Runner, trace/result, limit,
   support, performance, capacity, parity, or public-API behavior changes.
 
-## Acceptance Checklist (enforced) — `.17.3.5.2` authored runtime materialization activation
+## Compact acceptance archive — `.17.3.5.2` materialization and `.17.3.5.3` activation
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Clean selection commit `769df71d5`
-  closes decision `0083` and leaves `.17.3.5.2` as the sole dependency-ready
-  implementation child. `git log -S` identifies `0e2140791` as the commit that
-  first introduced the proposed child beneath active portable-Verilator
-  measurement; no later commit activated it before this continuity slice.
-- [x] **ADDRESSED (verified)** — Only continuity and its exact governance
-  projections now mark `.17.3.5.2` active: the owning task node, parent
-  frontier, task index, bounded Memory pointer, mdBook status sentence,
-  canonical fact card/Knowledge Map, claim inventory, and live-document
-  transition authority. Product, source, test, fixture, oracle, emitter,
-  Runner, trace, result, and public contract behavior remain unchanged.
-- [x] **NO REGRESSION** — The guarded relative-path/task/Knowledge Map suite
-  reports `All tests successful` at `Files=3, Tests=47`; all 54 mdBook chapters
-  test. Task integrity remains three trees/996 nodes; Knowledge Map parity is
-  1,150 facts/6,096 questions/6,263 occurrences/133 shards; claims remain
-  closed at 1,506 candidates plus 2,172 current/615 original constants with
-  the same 21 explicit implementation-owned durability gaps. Final live-
-  document, diff, staged acceptance, and doctrine gates are recorded by this
-  commit workflow with zero ceiling increase and no external process,
-  runtime, support, performance, capacity, or reached-boundary claim.
-
-## Terminal acceptance archive — `.17.3.5.2` authored runtime materialization implementation
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Git pickaxe locates the provider-free unmaterialized/100,000-record boundary at `3c1f0b411` and the authored-cycle selection at `769df71d5`; tracked-path public runs independently derive 32,098,531/47,505,049-byte graphs rather than assuming a temporary-path offset.
-- [x] **ADDRESSED (verified)** — Two reviewed 5,064-byte VIAL sources, the exact-class caller-sealed materializer, and duplicate canonical reconstruction freeze 1,948/2,948 reset cycles, 4,096-cycle windows, 10,000/15,000 trace families, all source/schedule/stage/loop/artifact/map/report identities, sibling 100,000 roles, tool-free preflight, hostile rejection, and same-volume cleanup.
-- [x] **NO REGRESSION** — Syntax and default materialization pass Files=2/Tests=18; guarded public Runner passes 1/18 with both 19-artifact graphs, record families, results/scenarios, and zero residue; broader guarded sets pass 6/45 and 1/4. All 54 book chapters, 1,150-fact Knowledge Map, 1,532-candidate/zero-open claim join, task/containment/acceptance/doctrines pass with zero ceiling increase and unchanged external-tool/support/performance/capacity/parity/API nonclaims.
-
-## Acceptance Checklist (enforced) — `.17.3.5.3` shared lifecycle activation
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Clean materialization commit `bd5c0e628`
-  closes `.17.3.5.2` and leaves the already selected lifecycle as the sole
-  dependency-ready child. `git log -S` identifies `0e2140791` as the commit
-  that first introduced proposed child `.17.3.5.3`; no later commit activated
-  it before this continuity slice.
-- [x] **ADDRESSED (verified)** — The owning node, parent frontier, task index,
-  bounded Memory pointer, mdBook status sentence, canonical fact card,
-  generated Knowledge Map, claim inventory, and live-document transition
-  authority alone mark `.17.3.5.3` active. Decision `0083` remains the closed
-  implementation contract. Product source, tests, fixtures, lifecycle,
-  Runner, trace, result, support, limits, and public behavior are unchanged.
-- [x] **NO REGRESSION** — The guarded relative-path/task/Knowledge Map suite
-  reports `All tests successful` at `Files=3, Tests=47`; all 54 mdBook chapters
-  test under the unchanged 88%-host/4,096-MiB-descendant guard. Task integrity
-  remains three trees/996 nodes; Knowledge Map parity remains 1,150 facts/
-  6,098 questions/6,265 occurrences/133 shards; and the claim join remains
-  closed at 1,532 candidates as 27 claim records/900 derived gates/588
-  reviewed records/17 later-owned gaps/zero open candidates. Final live-
-  document, relative-path, diff, staged-acceptance, and doctrine evidence is
-  recorded by this commit workflow with zero ceiling increase. No external
-  tool, runtime, support, performance, capacity, reached-boundary, retry, or
-  timeout-widening claim is authorized.
+The exact node records and commits `769df71d5`, `bd5c0e628`, and `ff0edde7a`
+retain selection, activation, and checks. Materialization owns reviewed
+10,000/15,000-record sources, duplicate canonical reconstruction, exact
+32,098,531/47,505,049-byte graphs, public Runner parity, tool-free sibling
+preflight, hostile rejection, and same-volume cleanup. Its focused/default,
+guarded Runner, and broader suites passed; all book, Knowledge Map, claim,
+task, containment, acceptance, and doctrine gates closed without changing
+external-tool/support/performance/capacity/parity/API claims. The subsequent
+lifecycle activation changed only task/index/Memory/book/card/claim continuity;
+decision `0083` remained its implementation contract.
 
 ## Terminal acceptance archive — `.17.3.5.3` shared lifecycle implementation
 
@@ -7194,11 +7153,13 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   matches the checked 42-record report, and an independent same-volume GHDL
   trace census reports exact 28/2/2/2/2/2 coverage/event/expectation/fault/
   scoreboard and header/footer/scenario families; source/result/emitter census
-  independently derives the 34 real barriers.
+  provisionally derived 34 barriers. Child `.17.3.6.1` later proves and records
+  the omitted final settlement barrier, for 35 total.
 - [x] **ADDRESSED (verified)** — Decision `0090`, the five child nodes, mdBook
   chapter, Knowledge Map card, task index, and bounded Memory pointer select
-  one versioned compact observation snapshot per real barrier, exact authored
-  9,927/99,927 reset candidates, unchanged 64-MiB earlier-cap authority, and
+  one versioned compact observation snapshot per real barrier, provisional
+  9,927/99,927 reset candidates (corrected by `.17.3.6.1` to 9,926/99,926),
+  unchanged 64-MiB earlier-cap authority, and
   one staged GHDL lifecycle over a shared production process supervisor. The
   bounded claim record owns all 22 book candidates and exposes `.17.3.6.1`'s
   still-missing falsification controls.
@@ -7207,3 +7168,34 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   capacity, OSVVM, mixed-language, IASIM, or public API. `All tests successful`
   from the fresh exact qualification, mdBook, Knowledge Map, task/relative-path,
   containment, staged acceptance, diff, and doctrine gates close the slice.
+
+## Acceptance Checklist (enforced) — `.17.3.6.1` authenticated portable-VHDL trace v2
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Trace v1's 42 activity/framing records
+  omitted `vial_inactive_barrier`, preventing runtime-work measurement. The
+  provisional census mistook 28 active cycles for all non-reset barriers and
+  missed the final unsupported-size settlement sample; direct v2 GHDL proves
+  19 + 16 = 35. The gallery README also froze an obsolete plan literal.
+  `git log -S` locates trace v1 at `033c72f88` and that plan at `ab8b1af24`.
+- [x] **ADDRESSED (verified)** — Emitter revision 6, validator
+  `VHDLPortableTraceValidator`, and both qualification routes require canonical
+  trace-v2 framing, exact caller-sealed plan/run/catalog/count authority, one
+  66-bit normalized snapshot at each of 35 SAMPLE barriers, and a four-entry
+  catalog whose digest authenticates order, semantic IDs, roles, and widths.
+  Portable and OSVVM galleries/reports are canonically regenerated; decision
+  `0090` transparently corrects the reference to 77 and `records(N)=N+74`.
+  Decision `0075` and its exact watchers retain the resulting fixed 1,504-byte
+  source growth and refined 29,506/29,507 portable-foundation boundary. README
+  plan identity now follows the emitted plan dynamically.
+- [x] **NO REGRESSION** — Guarded real portable and OSVVM GHDL qualifications
+  pass with unchanged two-scenario results, tools, commands, deadlines,
+  four-state/provider evidence, and zero staging residue. Hostile and impacted
+  trace/emitter/qualification/authority tests pass `Files=7, Tests=82`; guarded
+  exact portable/OSVVM scale oracles pass `Files=2, Tests=14`, and family
+  closure passes. All 56 mdBook chapters test and its inspected 92-file/
+  19,564-KiB repository-local render is removed. The claim join closes all
+  1,589 candidates with zero gaps, and the exact claim record has all three
+  legs. Knowledge Map, task/inventory/containment/relative-path/staged-acceptance,
+  diff, and doctrine gates must be green before commit; no workload source,
+  lifecycle, runtime capacity, performance budget, support, mixed-language,
+  IASIM, or public-API claim changes.

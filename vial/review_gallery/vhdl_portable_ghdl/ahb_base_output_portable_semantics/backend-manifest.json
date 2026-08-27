@@ -5,7 +5,7 @@
          "kind" : "source_map",
          "relpath" : "backends/vhdl_portable_ghdl/backend-source-map.json",
          "role" : "backend_source_map",
-         "sha256" : "8757e25981325659f2f32619647598f86e3a4325c424a8298ad85fb94c6461c4"
+         "sha256" : "eebf1972970f16b87c83d6578b9eb1fe58d968052e07fe8bd1a92491810e14b0"
       },
       {
          "bytes" : 2990,
@@ -40,14 +40,14 @@
          "kind" : "review_workflow",
          "relpath" : "backends/vhdl_portable_ghdl/evidence/review-workflow.json",
          "role" : "review_workflow",
-         "sha256" : "4be8e099e38840bd5af70dee32bff3072e3720b3bb097563269c2485dcd57ca6"
+         "sha256" : "c543f3b2f9d621846d9a6f6e310991d63fff500c69474f6c7e6988b6d3f44690"
       },
       {
-         "bytes" : 21036,
+         "bytes" : 21075,
          "kind" : "mapping_matrix",
          "relpath" : "backends/vhdl_portable_ghdl/evidence/selected-mapping-matrix.json",
          "role" : "selected_mapping_matrix",
-         "sha256" : "1663ce6b99b2847ab386c21cfcae069378b632defda0083ff595a48657ba10c3"
+         "sha256" : "580f87e67dd7713f1c520d47bf4690edb02a3657b52168f70014ab908197b4a4"
       },
       {
          "bytes" : 683,
@@ -57,11 +57,11 @@
          "sha256" : "535ed351481921720b71924d7131fa3401ed6c63022f3906a2615ff60ce58e79"
       },
       {
-         "bytes" : 3831,
+         "bytes" : 3942,
          "kind" : "static_validation",
          "relpath" : "backends/vhdl_portable_ghdl/evidence/static-validation.json",
          "role" : "vhdl_static_validation",
-         "sha256" : "e92539b47b52b9de4b0919c33940d5a219fae0c7326826cc92ff0b8d3b6a9f0e"
+         "sha256" : "cf0ea650acbf97fd364ac21e5937011334610f8e956a5fd0e5572749bee0caba"
       },
       {
          "bytes" : 1138,
@@ -85,11 +85,11 @@
          "sha256" : "7a7e3b4e81fd222e53e2098653fcf1131f1b58dbeba35698c1cfe67a4fab5b56"
       },
       {
-         "bytes" : 44758,
+         "bytes" : 46262,
          "kind" : "vhdl_source",
          "relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_tb.vhd",
          "role" : "vhdl_fixture_top",
-         "sha256" : "4a3665cb0e14b599962a3a29bafb2ff99787cc8cb332b0f35e50b75583a6666b"
+         "sha256" : "b327edab233200bc9b8ff1b8e6a22588505749f47363b7bc9c4a0380394f16b3"
       },
       {
          "bytes" : 47670,
@@ -103,7 +103,7 @@
          "kind" : "vhdl_source",
          "relpath" : "backends/vhdl_portable_ghdl/src/fsmgen_vial_runtime_pkg.vhd",
          "role" : "vhdl_runtime_package",
-         "sha256" : "82cb0d22e03a661ff88aecbf5b94b89f91381801576d1c683d749ac02e258017"
+         "sha256" : "de60b5cdbcf2bd2efd9e9ac28938782e3a0df22ca4d7a14183481700f687e1b2"
       },
       {
          "bytes" : 6025,
@@ -171,7 +171,7 @@
       }
    ],
    "diagnostics" : [],
-   "emitter_revision" : 5,
+   "emitter_revision" : 6,
    "execution_profile" : "core_directed_single_clock_execution_v1",
    "fixture_id" : "ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration",
    "generated_top" : "base_output_arbitration_tb",
@@ -196,7 +196,7 @@
       "mapping_count" : 24,
       "relpath" : "backends/vhdl_portable_ghdl/evidence/selected-mapping-matrix.json",
       "schema" : "fsmgen.vial_vhdl_selected_mapping_matrix.v1",
-      "sha256" : "1663ce6b99b2847ab386c21cfcae069378b632defda0083ff595a48657ba10c3",
+      "sha256" : "580f87e67dd7713f1c520d47bf4690edb02a3657b52168f70014ab908197b4a4",
       "unsupported_count" : 4
    },
    "migration" : {
@@ -228,7 +228,7 @@
       "check_count" : 7,
       "relpath" : "backends/vhdl_portable_ghdl/evidence/review-workflow.json",
       "schema" : "fsmgen.vial_vhdl_review_workflow.v1",
-      "sha256" : "4be8e099e38840bd5af70dee32bff3072e3720b3bb097563269c2485dcd57ca6",
+      "sha256" : "c543f3b2f9d621846d9a6f6e310991d63fff500c69474f6c7e6988b6d3f44690",
       "stage_count" : 7
    },
    "schema" : "fsmgen.vial_backend.vhdl_portable.v1",
@@ -237,7 +237,7 @@
       "entry_count" : 59,
       "relpath" : "backends/vhdl_portable_ghdl/backend-source-map.json",
       "schema" : "fsmgen.vial_vhdl_backend_source_map.v1",
-      "sha256" : "8757e25981325659f2f32619647598f86e3a4325c424a8298ad85fb94c6461c4"
+      "sha256" : "eebf1972970f16b87c83d6578b9eb1fe58d968052e07fe8bd1a92491810e14b0"
    },
    "source_order" : {
       "library" : "fsmgen_vial",

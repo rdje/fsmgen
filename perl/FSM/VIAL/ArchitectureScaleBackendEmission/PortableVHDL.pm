@@ -78,34 +78,35 @@ my @STATIC_CHECKS = qw(
     procedural_property_checks_without_psl
     bounded_diagnostics_and_unknown_evidence
     closed_trace_projection
+    one_catalogued_snapshot_per_sample_barrier
     normalized_result_manifest_projection
 );
 my %EXPECTED = (
     reference_v1 => {
-        operations => 21, source_bytes => 116_560, source_maps => 59,
+        operations => 21, source_bytes => 118_064, source_maps => 59,
         metadata_bytes => 15_323,
         metadata_sha256 =>
             '59a4f9e1f8a2c9da6b8c5dd36f255ee1edb0b2bce57264906ab916a9141ba8bc',
     },
     gate_candidate_v1 => {
-        operations => 128, source_bytes => 174_929, source_maps => 166,
+        operations => 128, source_bytes => 176_433, source_maps => 166,
         metadata_bytes => 73_692,
         metadata_sha256 =>
             '922e1ab962d20c12cf24cdd8222a19b3f39fe958e934bcfb93b6a03974e0c9c9',
     },
     qualification_candidate_v1 => {
-        operations => 512, source_bytes => 386_897, source_maps => 550,
+        operations => 512, source_bytes => 388_401, source_maps => 550,
         metadata_bytes => 285_660,
         metadata_sha256 =>
             '9c77af56b8241f94c4ca2d9fc23ec73c6ad5582ae709dcb1318d0e6716502d7a',
     },
     limit_v1 => {
-        operations => 29_508, source_bytes => 16_776_739,
-        source_maps => 29_546, metadata_bytes => 16_675_502,
+        operations => 29_506, source_bytes => 16_777_107,
+        source_maps => 29_544, metadata_bytes => 16_674_366,
         metadata_sha256 =>
-            'b678833b74279814a3c5b008116546fe0353362296de32daa487352091a7ee06',
+            '321d67b4d78c8ff4c7921b709d8d156787b442f2a4334754860c80a07c7cb167',
     },
-    over_limit_v1 => {operations => 29_509},
+    over_limit_v1 => {operations => 29_507},
 );
 
 sub profile($class) {
@@ -449,9 +450,9 @@ sub _expected_sources($expected) {
                 '7a7e3b4e81fd222e53e2098653fcf1131f1b58dbeba35698c1cfe67a4fab5b56',
         },
         {
-            relpath => $SOURCE_RELPATHS[2], bytes => 44_760,
+            relpath => $SOURCE_RELPATHS[2], bytes => 46_264,
             sha256 =>
-                '2570c6349752023e358785156e9739ce76a4dd14bc6d86ad71b1253783ca4b70',
+                'bc45987685e0e2fcf1adb5bbb0a20110dbdcc695ee1c556b1bee41c5b953f8d5',
         },
         {
             relpath => $SOURCE_RELPATHS[3], bytes => 47_670,
@@ -461,7 +462,7 @@ sub _expected_sources($expected) {
         {
             relpath => $SOURCE_RELPATHS[4], bytes => 2_191,
             sha256 =>
-                '82cb0d22e03a661ff88aecbf5b94b89f91381801576d1c683d749ac02e258017',
+                'de60b5cdbcf2bd2efd9e9ac28938782e3a0df22ca4d7a14183481700f687e1b2',
         },
         {
             relpath => $SOURCE_RELPATHS[5], bytes => 6_025,

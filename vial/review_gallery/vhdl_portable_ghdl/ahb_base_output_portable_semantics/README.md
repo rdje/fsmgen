@@ -4,7 +4,7 @@ This gallery is the byte-locked output of the private `vhdl_portable_ghdl`
 emitter for
 `vial/ahb_subordinate_base_output_arbitration.vial` bound to
 `ppif/ahb_lite_subordinate.ppif`. Its immutable execution identity is
-`plan/038c968edbd7782d36f49af5092dd4301ca95989914eeba73250f9b609525574`.
+`plan/e236297c8b434a9b374d1800112841e00327bdbd5d8d9130440bd20681fbed6e`.
 
 The six sources show the generated HIAL VHDL DUT, provider-free typed value
 and logical-time packages, exact operation/scenario/fiber/model metadata, a
@@ -13,8 +13,8 @@ testbench emits strong four-state drivers, samplers that preserve the original
 `std_logic` symbol, one inactive-edge scheduler, bounded scenario/fiber state,
 deterministic event-counter models, one capacity-four scoreboard, two portable
 coverage counters, a one-cycle substitution-fault seam, procedural checks,
-bounded diagnostic records, closed trace framing, and a normalized-result
-projection.
+bounded diagnostics, v2 trace framing, a 66-bit authenticated observation
+catalog, one snapshot per inactive-edge barrier, and normalized results.
 
 The generated scheduler alone owns VIAL sample, react, check, and next-drive
 ordering. The clock process supplies time but has no semantic authority;
@@ -31,7 +31,7 @@ native-provider requests are rejected.
 
 The JSON files preserve the closed backend manifest, complete portable-checking
 source map, ordered source list, ordinary-emission GHDL 6.0.0 command shapes,
-twenty-check static validation, 24-row selected mapping matrix, seven-stage
+21-check static validation, 24-row selected mapping matrix, seven-stage
 review workflow, and migration/separation proof. Twenty mapping rows have emitted
 role evidence. The OSVVM-native, PSL, distinct-nine-state, and multi-clock or
 asynchronous boundaries are not emitted and each has one exact reason.

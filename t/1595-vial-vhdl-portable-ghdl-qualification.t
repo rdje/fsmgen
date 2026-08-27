@@ -41,6 +41,14 @@ subtest 'checked qualification report is closed and records the exact profile' =
     is($report->{execution}{fixture_execution}, 'passed',
         'fixture execution passed');
     is($report->{trace}{status}, 'closed_validated', 'trace is closed and validated');
+    is($report->{trace}{schema}, 'fsmgen.vial_vhdl_runtime_trace.v2',
+        'portable runtime trace schema is exact revision 2');
+    is($report->{trace}{record_count}, 77,
+        'portable runtime trace contains all 35 sample barriers and 42 control records');
+    is($report->{trace}{sample_count}, 35,
+        'portable runtime trace contains one sample record per observed barrier');
+    is($report->{trace}{observation_catalog}{total_width}, 66,
+        'portable runtime trace catalog authenticates the exact 66-bit snapshot width');
     is($report->{result}{status}, 'pass', 'normalized result passed');
     ok($report->{deterministic_rerun}{fixture_stdout_identical},
         'fixture rerun is byte-identical');

@@ -14,28 +14,33 @@ evidence: >-
   docs/decisions/0090-portable-vhdl-runtime-scale-uses-sample-snapshots-and-one-shared-ghdl-lifecycle.md;
   perl/FSM/VIAL/Backend/VHDLPortableGHDL.pm;
   perl/FSM/VIAL/Backend/VHDLPortableGHDLQualification.pm;
+  perl/FSM/VIAL/Backend/VHDLPortableTraceValidator.pm;
   perl/FSM/VIAL/ArchitectureScaleRuntimeStream.pm;
   vial/qualification/vhdl_portable_ghdl/ghdl-6.0.0-qualification.json;
   t/1595-vial-vhdl-portable-ghdl-qualification.t;
+  t/1671-vial-vhdl-portable-trace-v2.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16dd-vial-portable-vhdl-runtime-measurement.md
 reverify: >-
   scripts/run_with_ram_guard.sh --
   scripts/run_vial_vhdl_portable_ghdl_qualification.pl --check &&
-  rg -n 'vial_inactive_barrier|vial_emit_trace|record_count|N \+ 73|9,927|99,927|admitted|prepared|tool_verified'
+  rg -n 'vial_inactive_barrier|vial_emit_sample_trace|record_count|N \+ 74|9,926|99,926|admitted|prepared|tool_verified'
   perl/FSM/VIAL/Backend/VHDLPortableGHDL.pm
   vial/qualification/vhdl_portable_ghdl/ghdl-6.0.0-qualification.json
   docs/decisions/0090-portable-vhdl-runtime-scale-uses-sample-snapshots-and-one-shared-ghdl-lifecycle.md
   docs/book/src/16dd-vial-portable-vhdl-runtime-measurement.md
 ---
 
-The checked portable-VHDL/GHDL trace has 42 records but crosses 34 real
-inactive-edge sample barriers. Reset barriers sample endpoints and probes but
-v1 emits no corresponding record, so reset inflation alone cannot reach the
-runtime-stream targets. Decision `0090` selects a v2 trace whose header freezes
-one ordered observation catalog and whose every real barrier emits one compact
-normalized snapshot. The reference becomes 76 records and
-`records(N)=N+73`; authored reset candidates 9,927 and 99,927 target exact
+The historical portable-VHDL/GHDL v1 trace has 42 records. Trace-v2
+implementation independently proves 35 real inactive-edge sample barriers:
+19 in success and 16 in unsupported-size, including one final response-
+settlement barrier omitted by the provisional selection census. Reset barriers
+sample endpoints and probes but v1 emitted no corresponding record, so reset
+inflation alone could not reach the runtime-stream targets. Decision `0090`
+and `.17.3.6.1` implement a v2 trace whose header authenticates one ordered
+four-entry/66-bit observation catalog and whose every real barrier emits one
+compact normalized snapshot. The reference is 77 records and
+`records(N)=N+74`; authored reset candidates 9,926 and 99,926 target exact
 10,000 and 100,000 records. The unchanged 64-MiB envelope remains authoritative
 and may honestly dominate the larger candidate.
 

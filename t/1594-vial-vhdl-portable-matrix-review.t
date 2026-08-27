@@ -228,16 +228,16 @@ subtest 'legacy bytes/schema and HIAL successor separation are exact' => sub {
 };
 
 subtest 'artifact graph, manifest references, and gallery evidence are byte exact' => sub {
-    is($emission->{backend_manifest}{emitter_revision}, 5,
-        'matrix/review closure is emitter revision five');
+    is($emission->{backend_manifest}{emitter_revision}, 6,
+        'matrix/review closure is emitter revision six');
     is(scalar(@{$emission->{artifacts}}), 17,
         'artifact graph contains seventeen artifacts');
     is(scalar(grep { $_->{language} eq 'vhdl' } @{$emission->{artifacts}}), 6,
         'artifact graph retains six generated VHDL sources');
     is(scalar(@{$emission->{source_map}{entries}}), 59,
         'source map retains fifty-nine selected entries');
-    is(scalar(@{$emission->{static_validation}{checks}}), 20,
-        'static validator retains twenty structure checks');
+    is(scalar(@{$emission->{static_validation}{checks}}), 21,
+        'static validator retains twenty-one structure checks');
     is($emission->{backend_manifest}{review_workflow}{check_count}, 7,
         'manifest records seven review-closure invariants');
 
@@ -272,7 +272,7 @@ subtest 'artifact graph, manifest references, and gallery evidence are byte exac
     close $check_fh;
     is($? >> 8, 0, 'non-mutating portable VHDL gallery check succeeds');
     like($check_output,
-        qr/\Aportable VHDL semantics gallery current: 6 VHDL sources; 11 evidence artifacts; 59 source-map entries; 20 static checks; 24 mappings; 7 review-closure checks\n\z/,
+        qr/\Aportable VHDL semantics gallery current: 6 VHDL sources; 11 evidence artifacts; 59 source-map entries; 21 static checks; 24 mappings; 7 review-closure checks\n\z/,
         'gallery check reports the exact closed evidence counts');
 };
 
@@ -283,7 +283,7 @@ subtest 'review-closure API rejects malformed or incomplete evidence fail closed
     my $base = {
         plan_id => $emission->{plan_id},
         fixture_id => $emission->{backend_manifest}{fixture_id},
-        emitter_revision => 5,
+        emitter_revision => 6,
         source_artifacts => \@source,
         review_gallery => $gallery_rel,
         hial_source_identity => {
@@ -310,7 +310,7 @@ subtest 'review-closure API rejects malformed or incomplete evidence fail closed
 
     my $revision = clone($base);
     $revision->{emitter_revision} = 3;
-    review_failure($revision, qr/emitter_revision must be 5/,
+    review_failure($revision, qr/emitter_revision must be 6/,
         'substituted emitter revision');
 
     my $digest = clone($base);

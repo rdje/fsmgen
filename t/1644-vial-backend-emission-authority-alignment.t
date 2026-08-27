@@ -41,7 +41,7 @@ subtest 'backend-emission catalog carries exact profile-local authorities' => su
             total_artifacts => 17,
             generated_source_bytes => 16_777_216,
             reference_source_map_entries => 59,
-            static_validation_checks => 20,
+            static_validation_checks => 21,
         },
         'portable VHDL names its complete structural authority',
     );
@@ -57,7 +57,7 @@ subtest 'backend-emission catalog carries exact profile-local authorities' => su
             wrapper_adapter_source_map_entries => 7,
             reference_source_map_entries => 66,
             wrapper_static_validation_checks => 12,
-            portable_foundation_static_validation_checks => 20,
+            portable_foundation_static_validation_checks => 21,
             provider_materialization => 'external_exact_osvvm_2026_05',
         },
         'OSVVM separates its portable foundation, wrapper adapter, and provider',
@@ -104,7 +104,7 @@ subtest 'support contracts project the same OSVVM and native-UVM authorities' =>
             osvvm_wrapper_adapter_source_map_entries => 7,
             osvvm_source_map_entries => 66,
             osvvm_static_validation_checks => 12,
-            osvvm_portable_foundation_static_validation_checks => 20,
+            osvvm_portable_foundation_static_validation_checks => 21,
         },
         'VHDL discovery publishes the repaired OSVVM authority without ambiguity',
     );

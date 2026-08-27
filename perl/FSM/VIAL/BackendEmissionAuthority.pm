@@ -23,7 +23,7 @@ my $AUTHORITIES = {
         total_artifacts => 17,
         generated_source_bytes => 16_777_216,
         reference_source_map_entries => 59,
-        static_validation_checks => 20,
+        static_validation_checks => 21,
     },
     vhdl_osvvm_qualified => {
         portable_foundation_source_artifacts => 6,
@@ -35,7 +35,7 @@ my $AUTHORITIES = {
         wrapper_adapter_source_map_entries => 7,
         reference_source_map_entries => 66,
         wrapper_static_validation_checks => 12,
-        portable_foundation_static_validation_checks => 20,
+        portable_foundation_static_validation_checks => 21,
         provider_materialization => 'external_exact_osvvm_2026_05',
     },
     'sv_uvm_emit.accellera_2020_3_1' => {

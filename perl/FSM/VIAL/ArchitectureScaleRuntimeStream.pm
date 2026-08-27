@@ -76,10 +76,10 @@ my %PROFILE_CONTRACT = (
         qualified_version => '6.0.0',
         provider => 'none',
         backend_schema => 'fsmgen.vial_backend.vhdl_portable.v1',
-        trace_schema => 'fsmgen.vial_vhdl_runtime_trace.v1',
+        trace_schema => 'fsmgen.vial_vhdl_runtime_trace.v2',
         trace_projection_schema => undef,
         trace_authority =>
-            'FSM::VIAL::Backend::VHDLPortableGHDLQualification',
+            'FSM::VIAL::Backend::VHDLPortableTraceValidator',
         result_authority =>
             'FSM::VIAL::Backend::VHDLPortableGHDLQualification',
         compile_command_authorities => [
@@ -98,10 +98,10 @@ my %PROFILE_CONTRACT = (
         qualified_version => '6.0.0',
         provider => 'OSVVM 2026.05',
         backend_schema => 'fsmgen.vial_backend.vhdl_osvvm.v1',
-        trace_schema => 'fsmgen.vial_vhdl_runtime_trace.v1',
+        trace_schema => 'fsmgen.vial_vhdl_runtime_trace.v2',
         trace_projection_schema => undef,
         trace_authority =>
-            'FSM::VIAL::Backend::VHDLOSVVMGHDLQualification',
+            'FSM::VIAL::Backend::VHDLPortableTraceValidator',
         result_authority =>
             'FSM::VIAL::Backend::VHDLOSVVMGHDLQualification',
         compile_command_authorities => [

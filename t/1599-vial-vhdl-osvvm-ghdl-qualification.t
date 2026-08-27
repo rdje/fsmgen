@@ -73,8 +73,14 @@ subtest 'checked qualification report closes the exact combined profile' => sub 
         'generated fixture executed');
     is($report->{trace}{status}, 'closed_validated',
         'portable trace is closed and validated');
-    is($report->{trace}{record_count}, 42,
-        'portable trace retains its exact record count');
+    is($report->{trace}{schema}, 'fsmgen.vial_vhdl_runtime_trace.v2',
+        'portable trace retains exact revision-2 identity');
+    is($report->{trace}{record_count}, 77,
+        'portable trace retains its 42 control and 35 sample records');
+    is($report->{trace}{sample_count}, 35,
+        'portable trace retains one record per inactive-edge sample barrier');
+    is($report->{trace}{observation_catalog}{total_width}, 66,
+        'portable trace retains the exact 66-bit observation catalog');
     is($report->{result}{status}, 'pass',
         'normalized semantic result passed');
     ok($report->{deterministic_rerun}{fixture_stdout_identical},
