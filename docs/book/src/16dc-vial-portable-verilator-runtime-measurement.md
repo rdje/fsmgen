@@ -824,7 +824,7 @@ engine; this adapter neither invokes it nor changes its contract.
 - Claim: The exact guarded common-controller watcher accepts one 274-record reference validation, one 10,000-record gate validation plus three measured repetitions, and one 15,000-record qualification validation plus five measured repetitions; every accepted runtime returns the exact 12-artifact graph, all selected measured-stage samples, zero exclusions, and zero cleanup residue.
 - Re-derive: Run guarded `t/1667-vial-architecture-scale-portable-runtime-measurement.t`; the adapter independently reconstructs repository construction, route, emission, tool, lifecycle, trace/result, artifact, and cleanup authority for every isolated stage and reloads the completed report.
 - Falsify: Run the default preflight/caller-seal/guard/schema/failure-evidence tests, the exact compact-descriptor fresh-resume watcher, and the guarded full watcher; require tool-free limit/excess, typed command identities, exact state/trace/result/artifact closure, and keep every host timeout, guard trip, or exclusion failed.
-- Durability: Retain the tracked adapter, sole lifecycle, materializer seam, default and guarded watchers, task/decision/book/card/claim records, doctrine gates, and Git history. Raw performance values remain unpublished until child `.17.3.5.5` seals and independently reloads the matrix.
+- Durability: Retain the tracked adapter, sole lifecycle, materializer seam, default and guarded watchers, task/decision/book/card/claim records, doctrine gates, and Git history. Raw wall-time, CPU, and RSS values remain unpublished; the separately claimed matrix seal retains exact sample and lifecycle evidence without promoting a performance budget.
 <!-- CLAIM-VERIFICATION:END vial-portable-runtime-measurement-v1 -->
 
 ## Immutable runtime matrix publication
@@ -860,7 +860,15 @@ metadata twice, then rounds the 2,121,170-byte result up to a four-MiB binary
 containment envelope. Rejection diagnostics disclose actual and allowed bytes;
 the compact child IPC and error ceilings remain 65,536 and 4,096 bytes. A new
 second clean exact campaign fits the real largest report but remains unsealed
-after a later tool-free dispatch failure; clean full reload is still pending.
+after a later tool-free dispatch failure. The explicit dispatcher repair and
+one subsequent clean campaign now seal and independently reload the full set.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-portable-runtime-matrix-seal-5268f50e2-v1 -->
+- Claim: Clean revision `5268f50e2118900af5b7da13867a449350993fa6` seals the five-profile portable-runtime matrix as seven immutable files totaling 2,674,079 bytes; the largest profile is 1,722,758 bytes, the accepted aggregate retains three validation-route and two measured-route profiles, eight raw and zero excluded records, two preflight-dominated profiles, eleven cleanup and zero residue records, and a separate guarded reload returns complete identity `portable-runtime-matrix/7673f6be149be57d7963c8ba14fb03dba8604ad523c055de5beb0d8717050426`.
+- Re-derive: Run guarded `--validate`, census only the five portable-runtime profile publications plus family and complete manifests independently with `find` and `wc`, and hash all seven files with `shasum -a 256`.
+- Falsify: Run exact guarded t1670 from an empty namespace and require rejection for any profile, manifest, common-identity, route, sample, exclusion, dominance, checksum, collision, cleanup, or staging disagreement.
+- Durability: Preserve the content-addressed profile publications plus family/complete manifests on the repository volume, and retain the exact task, book, Knowledge Map, watcher, claim record, and Git closure chain.
+<!-- CLAIM-VERIFICATION:END vial-portable-runtime-matrix-seal-5268f50e2-v1 -->
 
 Raw profile files, the family `matrix.json`, and the complete
 `complete-matrix.json` are immutable single-file publications. Byte-equal
@@ -900,8 +908,8 @@ FSMGEN_VIAL_PORTABLE_RUNTIME_MATRIX_EXACT=1 \
 ```
 
 The reference and gate observations calibrate serialization containment; they
-are not performance results. No raw wall/CPU/RSS value is published until
-the clean matrix seal closes, and no bound here claims backend support,
+are not performance results. The clean seal publishes no raw wall/CPU/RSS
+value, and no bound here claims backend support,
 performance, capacity, a reached record boundary, cross-backend parity, IASIM
 execution, or a public API change.
 

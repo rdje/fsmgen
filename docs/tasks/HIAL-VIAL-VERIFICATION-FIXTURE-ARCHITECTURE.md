@@ -561,9 +561,9 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Measure exact portable-SystemVerilog generation, compile, run, trace validation, and result production with qualified Verilator.`
   Acceptance: `Use only the qualified Verilator profile and canonical runtime-stream inputs; perform one validation plus required measured repetitions in fresh owned staging; apply effective qualified compile/run limits and active guards; prove artifact, source-map, command, trace closure, normalized result, deterministic rerun, raw-sample, transcript, publication, and cleanup oracles; reject identity drift or excluded samples explicitly; and make no full-SystemVerilog, UVM, mixed-language, promoted-budget, support, or capacity claim.`
-  Verification: `Clean structural closure 6c76b4c39 permits this lane. Decision 0083 selects authored reset-sampling fixtures, exact 10,000/15,000 portable candidates, honest byte dominance, and one content-addressed lifecycle shared by Runner and measurement workers. Children .2/.3 freeze the ordinary route and sole 10/120/30-second tool lifecycle while controller work stays within 900/300-second envelopes. Child .4 retains reference validation, gate validation plus three repetitions, qualification validation plus five repetitions, all 12 artifacts, raw stage/command/transcript/graph/trace/result evidence, exclusions, and cleanup over 274/10,000/15,000 records. Development failures remain failed: two known 30-second Darwin pre-main stalls, one compact-descriptor mismatch, one RAM stop, and one verified ownerless root removal. Final guarded completion passes Files=1/Tests=8 in 1,947 seconds; default lifecycle/adapter passes Files=2/Tests=23. Active child .5 owns immutable publication/reload; no retry, timeout, source/output rewrite, duplicate execution, public widening, borrowed support, or reachability claim.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5: activate portable-Verilator runtime measurement`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5`
+  Verification: `Decision 0083's authored 274/10,000/15,000-record route uses the sole qualified lifecycle and common controller. Child .4 retains one/three/five validations or repetitions, raw evidence, zero exclusions, and cleanup. Child .5 seals five profiles plus both manifests from clean 5268f50e2; exact t1670 passes Files=1/Tests=7 in 2,142 seconds and a separate guarded reload returns the same complete identity. Parent closure exposes 17 stale durability-gap dispositions whose reason still says child .2 is pending although it is done; proposed child .6 owns exact retirement before this parent can close. Historical failures and all performance/support/capacity/parity/IASIM/API nonclaims remain explicit.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5: activate portable-Verilator runtime measurement; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2: seal clean portable runtime matrix`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.6`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1`
   Status: `done`
@@ -638,11 +638,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.4: activate portable-Verilator runtime measurement; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.4: measure portable-Verilator runtime streams`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5`
-  Status: `active`
+  Status: `done`
   Goal: `Publish and independently reload the exact portable-Verilator runtime measurement matrix.`
   Acceptance: `Derive the complete profile/level order from producer ownership; isolate capture/reload lifecycles; atomically publish bounded immutable reports at one clean revision/host/tool/guard identity; resume only independently regenerated evidence; reject incomplete, reordered, mutated, mixed, collided, oversized, signalled, stale, or ambiguous state; retain every raw/excluded sample and dominance/nonclaim; and complete guarded capture plus fresh-process reload before closing .17.3.5.`
-  Verification: `Clean runtime measurement b5e975b24 and hosted closure e017709e0 permit activation. Child .1 implements the closed isolated publisher and default hostile watcher; active child .2 owns exact clean-revision capture and fresh-process reload before this parent closes.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5: activate portable runtime matrix publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.1: implement portable runtime matrix publication`
+  Verification: `Child .1 implements the closed isolated publisher and hostile watcher. Child .2 retains both falsified captures, the four-MiB bound and dispatcher repairs, then seals the complete clean 5268f50e2 matrix with exact census and guarded reload.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5: activate portable runtime matrix publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.1: implement portable runtime matrix publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2: seal clean portable runtime matrix`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.1`
@@ -653,11 +653,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.1: implement portable runtime matrix publication`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2`
-  Status: `active`
+  Status: `done`
   Goal: `Seal and independently reload the complete clean-revision portable-runtime matrix.`
   Acceptance: `Run the exact guarded watcher from the committed publisher revision; require all five immutable profile reports, family/complete manifests, exact validation/three/five raw repetitions, two tool-free preflight profiles, one common identity, zero exclusions/residue, file/digest/byte census, real-largest-report bound falsification, and a separate fresh-process guarded reload of the same complete identity. Keep any timeout, signal, guard stop, collision, mismatch, or exclusion failed and resumable only at the exact clean identity.`
-  Verification: `Exact capture at clean implementation 9a534bc93 publishes reference and gate, then correctly rejects the five-sample qualification report because it exceeds the provisional 1,048,576-byte file ceiling. Child .1 repairs the bound. Clean exact capture 80b07d6ee publishes reference, gate, and qualification, proving the real 1,730,744-byte largest report fits the 4,194,304-byte ceiling, then fails profile 4 because preflight is misrouted to the measurable-only producer entrypoint. Child .2.2 owns repair and one later clean recapture; no failed sample is retried or relabelled.`
-  Commit: `pending`
+  Verification: `Clean 9a534bc93 rejects qualification above the provisional one-MiB ceiling; child .1 selects the derived four-MiB envelope. Clean 80b07d6ee fits the real largest report but exposes preflight dispatch; child .2.2 repairs explicit routing and seals all five profiles plus both manifests at clean 5268f50e2. No failed sample is retried or relabelled.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2: seal clean portable runtime matrix`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.1`
@@ -668,11 +668,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.1: repair portable runtime publication bound`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Repeat the complete guarded capture at the repaired clean revision and independently reload its exact aggregate identity.`
   Acceptance: `Remove only the exactly identified superseded portable-runtime publications after retaining their bytes/digests, then run one new clean-revision exact campaign. Require all parent .2 acceptance evidence, retain any Darwin pre-main stall as failed without retry or timeout widening, and close only after fresh-process reload and exact file/hash/staging census.`
-  Verification: `Clean bound repair 2681aa777 permits exact capture. At 80b07d6ee, reference/gate/qualification publish as 75,883/847,861/1,730,744 bytes with SHA-256 3e572a7f2f628eefa933a3959bc2c809cc3fc9ef9c61865e7b615cadd1138902/6e15ca49731b5ad2fe1dfff16ccbbe1f86cf6f75ff5ae8c5124b5b1b5e92a8bc/ac6a513c0689b19b57cdef6f2b1b6022b5f9cf6315d511794eb307ada2a11def and zero staging or aggregate residue. Profile 4 exposes preflight misrouting. Child .1 repairs/tests explicit dispatch; active child .2 repeats capture from clean repair 5e76e6905.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2: activate repaired exact matrix capture`
+  Verification: `At 80b07d6ee, reference/gate/qualification publish as 75,883/847,861/1,730,744 bytes before profile 4 exposes preflight misrouting. Child .1 repairs explicit dispatch. Child .2 re-censuses and removes exactly those three files, then seals/reloads the repaired clean matrix with no retry, timeout widening, exclusion, or residue.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2: activate repaired exact matrix capture; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2: seal clean portable runtime matrix`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.1`
@@ -683,11 +683,18 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.1: repair portable-runtime preflight dispatch`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Repeat exact capture at the clean dispatcher-repair revision and independently reload the complete aggregate.`
   Acceptance: `Remove only the three exactly censused superseded publications after retaining their bytes/digests; run one guarded exact campaign; require all five profiles, family/complete manifests, fresh-process reload, exact census, zero staging/residue/exclusions, and retain any failure without retry or timeout widening.`
-  Verification: `Clean repair 5e76e6905 is committed; the retained three-profile census precedes exact removal and one guarded recapture.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2: activate clean repaired matrix recapture`
+  Verification: `The retained 75,883/847,861/1,730,744-byte files exactly re-match SHA-256 3e572a7f2f628eefa933a3959bc2c809cc3fc9ef9c61865e7b615cadd1138902/6e15ca49731b5ad2fe1dfff16ccbbe1f86cf6f75ff5ae8c5124b5b1b5e92a8bc/ac6a513c0689b19b57cdef6f2b1b6022b5f9cf6315d511794eb307ada2a11def before exact removal. The first sandbox admission refusal starts no test or profile. From clean 5268f50e2, the real guard admits one campaign and exact t1670 passes Files=1/Tests=7 in 2,142 seconds. Ordered profile sizes/hashes are 75,883/469949f701edce8bd5d17ba625ee54e0e692fb47bf9a1f20a1a74dc061398f12, 849,418/d8f4adf7b31cd34583b233a8b47735d0687463ea8de00967cac408ad97eb9570, 1,722,758/27004018dbe61b287211bfa8bbc9df895a862728dd2869c912cbe71666818959, 6,714/19648a89f652c6da9abf7fc057443ef8017d95abc5d02428dd3b0250f4b468d3, and 6,724/4c97d351fa7c16ba3966dab1e6040dd28051217fa1d043caf96934877ff2d566. Family is 9,832 bytes/960772cf4a6c00be4a6403ece6fc29710d1062ad6b3a5265fdf2c0f619b0d370; complete is 2,750 bytes/0f23f52fccc5d1c8d829aa1f35ef078340dcba0607b8552dc22f9a25f7b208d6. Seven files total 2,674,079 bytes at complete identity portable-runtime-matrix/7673f6be149be57d7963c8ba14fb03dba8604ad523c055de5beb0d8717050426 with five profiles, eight raw/zero excluded records, two preflights, 11 cleanup/zero residue. Separate guarded --validate returns the exact identity; staging and Git remain clean.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2: activate clean repaired matrix recapture; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2: seal clean portable runtime matrix`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.6`
+  Status: `proposed`
+  Goal: `Retire the stale published-runtime durability gaps now satisfied by the completed materialization, measurement, and immutable matrix chain.`
+  Acceptance: `Independently map every .17.3.5-owned gap candidate to its current source line and exact re-derivation, falsification, and durability evidence. Replace a gap only when tracked producers and watchers now supply its missing leg; retain any genuinely missing leg under a precise live child. Require a regenerated inventory, complete disposition join, zero open migration owner, and task/book/claim/doctrine continuity without weakening or rewording the published behavior.`
+  Verification: `Parent-closure falsification finds 17 existing owned_gap records whose identical reason says final source identity and rerunnable structural/runtime watchers are pending until child .17.3.5.2; that child and the later common-controller/matrix chain are now done. The exact candidate-by-source audit and disposition repair remain pending after the clean matrix-seal commit.`
+  Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6`
   Status: `proposed`
@@ -5998,24 +6005,9 @@ raising an enforcement ceiling.
   bridge measurements do not include construction cost. The guarded exact watcher passes at
   `Files=1, Tests=5`; syntax and `git diff --check` pass. This slice does not
   claim completion of the still-pending full selected profile matrix.
-- [x] **NO REGRESSION** — The common exact measurement/guard suite passes at
-  `All tests successful` with `Files=2, Tests=8`, and the adjacent
-  bridge/adapter suite passes at
-  `Files=2, Tests=11`; the unchanged canonical semantic/bridge suite passes at
-  `Files=2, Tests=10`, and CI inventory passes at `Files=1, Tests=12`. All 54
-  mdBook chapters test, and the inspected 88-file/19,147,173-byte same-volume
-  render is removed exactly. Knowledge Map parity covers 1,150 facts/6,065
-  questions/6,232 occurrences/133 shards; the claim join closes 1,464
-  candidates plus 2,110 current/615 original constants as 875 derived gates,
-  589 reviewed records, and zero gaps. Task integrity, project-data locality,
-  live-document containment, relative-path, staged implementation acceptance,
-  diff, and final doctrine gates pass in this commit. A failed local
-  disposition-reorder attempt was
-  recovered byte-exact from Git before the intended one-row patch was applied;
-  the complete bounded disposition join then passed. No family producer,
-  parser, SemanticIR, bridge,
-  manifest, sampler, external process, public API, performance budget, support,
-  capacity, reached-boundary, or product behavior contract changes.
+- [x] **NO REGRESSION** — exact/common/adjacent/CI, mdBook, Knowledge Map,
+  claim, task, locality, containment, acceptance, and doctrine gates pass. The
+  terminal `.17.3.1` node and Git chain retain exact censuses and nonclaims.
 
 ## Acceptance Checklist (enforced) — `.17.3.2` resumable matrix publication
 
@@ -6039,25 +6031,10 @@ raising an enforcement ceiling.
   isolated probe proves publish/reload/idempotence/collision behavior and
   removes its operation-owned temporary root. The clean guarded full capture
   remains intentionally unclaimed until this implementation commit is clean.
-- [x] **NO REGRESSION** — module, watcher, and operator report `syntax OK`;
-  inventory mode reports exactly 108 profiles; `git diff --check` passes; and
-  the focused matrix watcher plus adjacent adapter report
-  `All tests successful` at `Files=2, Tests=8`. The first adjacent invocation
-  was blocked only because the sandbox denied read-only Darwin `sysctl`; the
-  qualified read-only-host-observation rerun passed. The unchanged canonical
-  family suite reports `Files=2, Tests=10`, and CI inventory reports
-  `Files=1, Tests=12`. Task integrity remains three trees/978 nodes;
-  `knowledge-map: OK` covers 1,150 facts/6,066 questions/6,233 occurrences/133
-  shards. Claim inventory/disposition closes 1,466 candidates plus 2,112
-  current/615 original constants as 877 derived gates/589 reviewed records/zero
-  gaps. All 54 mdBook chapters test; its inspected 89-file/19,159,393-byte
-  repository-local render is removed exactly. The 54-file maintained book is
-  51,532 lines/2,733,996 bytes, a zero-file/+25-line/+1,693-byte bounded change
-  under its refreshed authority. Final containment, relative-path, staged
-  implementation acceptance, and doctrine evidence close in this commit. No
-  canonical family producer, parser, SemanticIR, bridge manifest, measurement
-  sample, external tool, performance budget, support, capacity,
-  reached-boundary, or product behavior contract changes.
+- [x] **NO REGRESSION** — syntax, the exact 108-profile inventory, focused,
+  adjacent, family, CI, task, Knowledge Map, claim, mdBook, containment,
+  acceptance, and doctrine gates pass. The terminal publisher node and Git
+  chain retain exact censuses, the sandbox admission note, and nonclaims.
 
 ## Acceptance Checklist (enforced) — `.17.3.2` exact matrix/adapter mode alignment
 
@@ -6075,19 +6052,9 @@ raising an enforcement ceiling.
   modes. A guarded first-profile boundary check reports identical
   `gate_measurement` inventory/report modes, three retained samples, and
   `status=accepted`; the full clean-revision matrix remains the next slice.
-- [x] **NO REGRESSION** — module and watcher syntax pass; the focused matrix
-  plus adjacent adapter report `All tests successful` at `Files=2, Tests=8`;
-  the failed run left no qualification publication or staging residue. Task
-  integrity remains three trees/978 nodes; `knowledge-map: OK` covers 1,150
-  facts/6,066 questions/6,233 occurrences/133 shards. Claim inventory closes
-  all 1,466 candidates and 2,112 current/615 original constants as 877 derived
-  gates/589 reviewed records/zero gaps. All 54 mdBook chapters test; the
-  inspected 89-file/19,160,997-byte repository-local render is removed exactly,
-  while the 54-file source remains 51,532 lines/2,734,218 bytes under a
-  zero-file/zero-line/+222-byte authority. Final containment, relative-path,
-  staged acceptance, diff, and doctrine gates close in this commit. No
-  adapter, family, sampling, support, capacity, reached-boundary, or product
-  behavior contract is widened.
+- [x] **NO REGRESSION** — `Files=2, Tests=8`, exact cleanup, task/Knowledge
+  Map/claim/mdBook/containment/doctrine gates, and nonclaims pass. The terminal
+  `.17.3.2` node plus its Git commit retain the exact historical censuses.
 
 ## Acceptance Checklist (enforced) — `.17.3.2.1` truthful boundary measurement repair
 
@@ -6109,28 +6076,10 @@ raising an enforcement ceiling.
   use exact linear translations and binary pack/unpack. Adapter validation
   fully rederives successful stages but validates rejected/not-run stages as
   zero-output failure evidence tied to the original foundation diagnostic.
-- [x] **NO REGRESSION** — module and watcher syntax pass. Focused parser,
-  semantic, adapter, bridge, and family coverage reports `Files=6, Tests=39`;
-  the broader core VIAL chain reports `Files=6, Tests=46`; the guarded exact
-  70-profile semantic proof reports `Files=1, Tests=4` in 83 seconds; and the
-  guarded exact adapter proof reports `Files=1, Tests=6` in 7 seconds. Direct
-  guarded profile-55 validation accepts in 42.596013 seconds below the
-  unchanged 120-second ceiling with one 4,514-byte artifact, no timeout or
-  signal, and exact staging cleanup. Task integrity is three trees/979 nodes;
-  Knowledge Map parity covers 1,150 facts/6,068 questions/6,235 occurrences/
-  133 shards. The claim join closes all 1,466 candidates plus 2,112 current/
-  615 original constants as 877 derived gates/589 reviewed records/zero gaps.
-  Documentation audits pass `Files=3/Tests=308`; all 54 mdBook chapters test,
-  and its inspected 89-file/19,167,192-byte repository-local render is removed
-  exactly. The maintained book remains 54 files/51,532 lines/2,735,155 bytes:
-  zero lines/+937 bytes under exact aggregate authority, with no ceiling
-  increase. Rationale-ledger reconstruction closes 2,878 entries; live-
-  document containment and diff checks pass. Staged implementation acceptance
-  and final doctrines close below. Post-commit closure re-censuses and removes
-  the exact old-revision incomplete publication, then accepts profile 55 at
-  clean `514761a4e` with independent regeneration and exact cleanup. No invalid
-  profile, timeout/fixture/API/budget, provider/tool execution,
-  support, capacity, reached-boundary, or product-behavior claim is added.
+- [x] **NO REGRESSION** — focused/core/exact/profile-55, documentation,
+  Knowledge Map, claim, containment, acceptance, and doctrine gates pass under
+  unchanged limits with exact cleanup. The terminal `.17.3.2.1` node and Git
+  chain retain every historical timing, byte, census, and nonclaim value.
 
 ## Acceptance Checklist (enforced) — `.17.3.2` exact semantic/bridge matrix completion
 
@@ -7247,3 +7196,17 @@ raising an enforcement ceiling.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Exact guarded t1670 at clean `80b07d6ee` runs 1,979 seconds, publishes three profiles, then the ternary at perl/FSM/VIAL/ArchitectureScalePortableRuntimeMeasurementMatrix.pm line 416 sends `preflight` to `measure_profile`; the producer diagnostic permits only gate and qualification. Default tests checked preflight reports and aggregates separately but not real dispatch.
 - [x] **ADDRESSED (verified)** — `_produce_profile_report` explicitly sends validation/preflight to `validate_profile`, measured modes to `measure_profile`, and rejects every unhandled mode. The real adapter proves both limit levels stay tool/controller-free without an active guard.
 - [x] **NO REGRESSION** — `All tests successful`: syntax passes; guarded producer+matrix reports Files=2, Tests=15; CI tier Files=1, Tests=12; relative paths Files=1, Tests=2; all 56 book chapters test; Knowledge Map is 1,153 facts/6,116 questions/6,283 occurrences/136 shards; claim inventory/dispositions close 1,558/1,558. Containment, staged acceptance, and all doctrines must pass before commit.
+
+## Acceptance Checklist (enforced) — `.17.3.5.5.2.2.2` exact matrix seal and claim closure
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The previous clean exact campaign stopped
+  at the preflight dispatcher ` at perl/FSM/VIAL/ArchitectureScalePortableRuntimeMeasurementMatrix.pm line 416`; the committed explicit-route repair had no complete clean-revision publication, exact census, or standalone reload until this owned recapture.
+- [x] **ADDRESSED (verified)** — One admitted guarded campaign from clean
+  `5268f50e2` seals five profiles and both manifests; independent file/byte/hash
+  census and standalone guarded validation return the exact complete identity.
+  Book/card/task and a three-leg claim record publish only that evidence. The
+  parent stays active and proposed `.17.3.5.6` owns 17 stale durability gaps.
+- [x] **NO REGRESSION** — `All tests successful`: exact t1670 reports Files=1,
+  Tests=7; standalone guarded `--validate`, all 56 book chapters, relative
+  paths, `knowledge-map: OK`, 1,560/1,560 claim dispositions, containment,
+  staged acceptance, and `[doctrine] all doctrine checks passed` must close.
