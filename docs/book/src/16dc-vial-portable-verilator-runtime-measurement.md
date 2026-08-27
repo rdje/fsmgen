@@ -9,8 +9,9 @@ caller-sealed structural qualifier, and an exact public-Runner watcher bind the
 The shared lifecycle, guarded host qualification, and common-controller
 measurement adapter are implemented. Exact guarded qualification covers one
 correctness-only reference, one validation plus three measured gate runs, and
-one validation plus five measured qualification runs; immutable matrix
-publication remains the next separately owned step.
+one validation plus five measured qualification runs. The immutable matrix
+publisher and its default hostile watcher are implemented; clean-revision
+capture and separate fresh-process reload are the remaining closure step.
 
 This “execution” means external execution of generated portable SystemVerilog
 with the already qualified Verilator profile. It is not IASIM execution and it
@@ -825,6 +826,73 @@ engine; this adapter neither invokes it nor changes its contract.
 - Falsify: Run the default preflight/caller-seal/guard/schema/failure-evidence tests, the exact compact-descriptor fresh-resume watcher, and the guarded full watcher; require tool-free limit/excess, typed command identities, exact state/trace/result/artifact closure, and keep every host timeout, guard trip, or exclusion failed.
 - Durability: Retain the tracked adapter, sole lifecycle, materializer seam, default and guarded watchers, task/decision/book/card/claim records, doctrine gates, and Git history. Raw performance values remain unpublished until child `.17.3.5.5` seals and independently reloads the matrix.
 <!-- CLAIM-VERIFICATION:END vial-portable-runtime-measurement-v1 -->
+
+## Immutable runtime matrix publication
+
+`FSM::VIAL::ArchitectureScalePortableRuntimeMeasurementMatrix` derives its
+five coordinates directly and in order from the measurement producer. It
+routes reference to correctness-only validation, gate and qualification to
+three and five measured repetitions, and limit/excess to tool-free preflight.
+Callers cannot supply a profile list, report, family, identity, or manifest.
+
+Each coordinate runs in a separate close-on-exec child. The child reconstructs
+and validates the complete producer report, atomically publishes that raw
+report below the repository-derived same-volume qualification root, and sends
+only a closed compact entry across a nonblocking bounded pipe. The coordinator
+admits one clean Git revision plus one host, exact Verilator tool, and enforced
+guard identity. Because preflight reports intentionally have no controller
+record, they may inherit only the identity already established by the earlier
+reference/gate/qualification coordinates; they cannot originate or alter it.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-portable-runtime-matrix-bounds-v1 -->
+- Claim: The portable-runtime publisher derives five profiles from producer ownership, limits each canonical publication to 1,048,576 bytes, and limits each compact child result to 65,536 bytes; its guarded 74,735-byte reference calibration and six-record qualification projection leave positive publication headroom.
+- Re-derive: Compare producer `owned_shapes` with runner `--inventory`, query `publication_limits`, and independently serialize one guarded canonical reference report with the producer; do not infer the report size from the publisher constant.
+- Falsify: Run the default t1670 watcher mutations for order, duplicate/missing samples, forged preflight execution/identity, oversized IPC/publications, signals, collisions, and exact-versus-ambiguous crash staging; the closing guarded capture must also fit and reload the real largest report.
+- Durability: Retain the tracked producer, publisher, runner, watcher, task/book/card/claim records, doctrine gates, and Git chain; rerun the bound watcher when any participant changes.
+<!-- CLAIM-VERIFICATION:END vial-portable-runtime-matrix-bounds-v1 -->
+
+Raw profile files, the family `matrix.json`, and the complete
+`complete-matrix.json` are immutable single-file publications. Byte-equal
+resume is accepted; different content collides. Exact crash staging may be
+recovered only when its single canonical file is byte-identical. Malformed,
+extra, symlinked, cross-volume, partial, stale, reordered, mixed-identity, or
+oversized state fails before an aggregate seal is visible. The aggregate
+retains validation and measurement identities, requested/validated trace
+counts, artifact counts, exclusions, cleanup, dominance, and nonclaims.
+
+Inventory is tool-free and needs no guard. Capture and independent reload use
+the repository guard; capture additionally requires a clean revision:
+
+```sh
+scripts/run_vial_portable_runtime_measurement_matrix.pl --inventory
+scripts/run_with_ram_guard.sh -- \
+  scripts/run_vial_portable_runtime_measurement_matrix.pl
+scripts/run_with_ram_guard.sh -- \
+  scripts/run_vial_portable_runtime_measurement_matrix.pl --validate
+```
+
+The default watcher is fast and does not create qualification evidence:
+
+```sh
+prove -Iperl \
+  t/1670-vial-architecture-scale-portable-runtime-measurement-matrix.t
+```
+
+The exact watcher is deliberately opt-in because it executes every selected
+runtime repetition and then starts a fresh validator process:
+
+```sh
+FSMGEN_VIAL_PORTABLE_RUNTIME_MATRIX_EXACT=1 \
+  scripts/run_with_ram_guard.sh -- \
+  prove -Iperl \
+    t/1670-vial-architecture-scale-portable-runtime-measurement-matrix.t
+```
+
+The reference-size observation calibrates serialization containment; it is
+not a performance result. No raw wall/CPU/RSS value is published until
+the clean matrix seal closes, and no bound here claims backend support,
+performance, capacity, a reached record boundary, cross-backend parity, IASIM
+execution, or a public API change.
 
 ## Intended ownership sequence
 

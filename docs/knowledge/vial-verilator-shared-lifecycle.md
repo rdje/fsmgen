@@ -7,6 +7,7 @@ answers:
   - "why can portable Verilator time out before generated main on macOS?"
   - "what did the macOS pre-main qualification conclude?"
   - "what work follows completed common-controller portable Verilator measurement?"
+  - "how is the portable Verilator runtime matrix published and reloaded?"
 date: 2026-08-25
 status: current
 tags: [vial, verilator, lifecycle, runner, scalability, macos]
@@ -17,12 +18,15 @@ evidence: >-
   perl/FSM/VIAL/Backend/VerilatorLifecycle.pm;
   perl/FSM/VIAL/Backend/Runner.pm;
   perl/FSM/VIAL/ArchitectureScalePortableRuntimeMeasurement.pm;
+  perl/FSM/VIAL/ArchitectureScalePortableRuntimeMeasurementMatrix.pm;
   t/1640-vial-runner-capture-limits.t;
   t/1558-vial-verilator-run-integration.t;
   t/1664-vial-verilator-shared-lifecycle.t;
   t/1665-vial-macos-premain-qualification.t;
   t/1666-vial-macos-premain-evidence.t;
   t/1667-vial-architecture-scale-portable-runtime-measurement.t;
+  t/1670-vial-architecture-scale-portable-runtime-measurement-matrix.t;
+  scripts/run_vial_portable_runtime_measurement_matrix.pl;
   vial/qualification/sv_portable_verilator/macos-premain-qualification-2026-08-24.json;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md
@@ -35,7 +39,9 @@ reverify: >-
   t/1665-vial-macos-premain-qualification.t
   t/1664-vial-verilator-shared-lifecycle.t
   t/1666-vial-macos-premain-evidence.t
-  t/1667-vial-architecture-scale-portable-runtime-measurement.t &&
+  t/1667-vial-architecture-scale-portable-runtime-measurement.t
+  t/1670-vial-architecture-scale-portable-runtime-measurement-matrix.t &&
+  scripts/run_vial_portable_runtime_measurement_matrix.pl --inventory &&
   FSMGEN_VIAL_PORTABLE_RUNTIME_MEASUREMENT_EXACT=1
   scripts/run_with_ram_guard.sh --
   prove -Iperl t/1667-vial-architecture-scale-portable-runtime-measurement.t
@@ -124,9 +130,15 @@ graph, trace/result identities, required raw samples, zero exclusions, and
 exact cleanup. Nominal record limit/excess shapes remain tool-free. Compact
 assembled state stores a graph descriptor rather than the full graph; a
 separate exact watcher proves fresh-process reconstruction and cleanup.
-Child `.17.3.5.5` is next and separately owns immutable matrix publication and
-independent reload. No performance budget, support, capacity, reached-boundary,
-parity, or public API claim is added.
+Child `.17.3.5.5.1` implements the producer-derived five-profile immutable
+publisher. Separate children reconstruct complete reports and publish them
+before returning bounded compact entries. Family/complete seals require one
+clean revision/host/tool/guard identity; tool-free limit/excess may only inherit
+that already established identity. The default watcher rejects process,
+envelope, order, sample, preflight, collision, and staging drift. Child
+`.17.3.5.5.2` next owns exact clean capture plus fresh-process reload. No
+performance budget, support, capacity, reached-boundary, parity, IASIM, or
+public API claim is added.
 
 Related: [[vial-architecture-scale-proof]],
 [[hial-vial-verification-fixture-architecture]].

@@ -641,8 +641,23 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Publish and independently reload the exact portable-Verilator runtime measurement matrix.`
   Acceptance: `Derive the complete profile/level order from producer ownership; isolate capture/reload lifecycles; atomically publish bounded immutable reports at one clean revision/host/tool/guard identity; resume only independently regenerated evidence; reject incomplete, reordered, mutated, mixed, collided, oversized, signalled, stale, or ambiguous state; retain every raw/excluded sample and dominance/nonclaim; and complete guarded capture plus fresh-process reload before closing .17.3.5.`
-  Verification: `Clean runtime measurement b5e975b24 and hosted closure e017709e0 permit activation; no behavior or claim changes.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5: activate portable runtime matrix publication`
+  Verification: `Clean runtime measurement b5e975b24 and hosted closure e017709e0 permit activation. Child .1 implements the closed isolated publisher and default hostile watcher; active child .2 owns exact clean-revision capture and fresh-process reload before this parent closes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5: activate portable runtime matrix publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.1: implement portable runtime matrix publication`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.1`
+  Status: `done`
+  Goal: `Implement the bounded immutable portable-runtime matrix publisher and its hostile default watcher.`
+  Acceptance: `Derive all profiles and mode routes from producer ownership; publish full reports in isolated close-on-exec children before bounded compact return; require one clean revision/host/tool/guard identity; let tool-free preflight inherit but never originate that identity; atomically publish canonical same-volume single-file profile/family/complete records; and reject caller injection, process/envelope failure, mutation, collision, and ambiguous staging without weakening runtime or claims.`
+  Verification: `ArchitectureScalePortableRuntimeMeasurementMatrix derives the ordered five-profile inventory, uses separate 1,048,576-byte raw and 65,536-byte compact envelopes, preserves exact validation/eight-repetition identities and cleanup/dominance/nonclaims, and withholds aggregate seals until complete. Default t1667+t1670 pass Files=2/Tests=15; t1670 covers guard/caller closure, 64-MiB child-only state, exception/exit/signal/malformed/noncanonical/oversized results, immutable collision, exact recovery, ambiguous-stage preservation, preflight identity/tool rejection, mixed identity, reorder, missing/duplicate samples, and forged preflight execution. A guarded independent producer probe re-derives the 74,735-byte reference calibration. Exact qualification remains child .2.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.1: implement portable runtime matrix publication`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2`
+  Status: `active`
+  Goal: `Seal and independently reload the complete clean-revision portable-runtime matrix.`
+  Acceptance: `Run the exact guarded watcher from the committed publisher revision; require all five immutable profile reports, family/complete manifests, exact validation/three/five raw repetitions, two tool-free preflight profiles, one common identity, zero exclusions/residue, file/digest/byte census, real-largest-report bound falsification, and a separate fresh-process guarded reload of the same complete identity. Keep any timeout, signal, guard stop, collision, mismatch, or exclusion failed and resumable only at the exact clean identity.`
+  Verification: `pending clean implementation commit`
+  Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6`
   Status: `proposed`
@@ -7194,128 +7209,75 @@ raising an enforcement ceiling.
   closes the commit workflow. Full unrelated CI remains deferred to push by
   policy.
 
-## Acceptance Checklist (enforced) — `.17.3.5.3.1` macOS pre-main qualification activation
+## Terminal acceptance archive — `.17.3.5.3.1` macOS pre-main qualification
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'Qualify macOS pre-main
-  loader-policy stalls' -- docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`
-  locates the child at clean lifecycle implementation `037c962fd`. That commit
-  retains the exact shared timing/cleanup authority but deliberately leaves
-  causality unresolved after a successful exec handoff, a sampled pre-main
-  stack, and only correlated platform-policy/compiler activity.
-- [x] **ADDRESSED (verified)** — The existing child alone is now active for
-  recorded host/OS/tool/binary-metadata, quiet-host, and unaffected-control
-  qualification. Task index, bounded Memory, mdBook, canonical Knowledge card,
-  generated Knowledge Map, claim inventory, and containment authority agree.
-  Product code, tests, tools, platform security, signing, retry, deadlines,
-  successful outputs, support, and public behavior are unchanged.
-- [x] **NO REGRESSION** — Focused relative-path/task/Knowledge Map checks report
-  `All tests successful` at `Files=4, Tests=50`; all 56 mdBook chapters test,
-  and the inspected 91-file/19,569,002-byte repository-local render is removed
-  exactly. Staged task acceptance and `[doctrine] all doctrine checks passed`
-  close the activation workflow with exact maintained-reference authority, no
-  ceiling increase, and no generated-book or lifecycle residue. Full unrelated
-  CI remains deferred to push by policy.
-
-## Acceptance Checklist (enforced) — `.17.3.5.3.1` macOS pre-main qualification
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Clean lifecycle commit `037c962fd`
-  preserves three 30-second zero-output failures after 3.7-4.1-ms `exec`
-  handoff and one 2,389/2,389 `_dyld_start` stack sample, but only correlated
-  compiler/policy activity. `git log -S 'package
-  FSM::VIAL::Backend::VerilatorLifecycle' --
-  perl/FSM/VIAL/Backend/VerilatorLifecycle.pm` independently locates that
-  lifecycle introduction at `037c962fd`. The new guarded watcher reconstructs
-  the canonical route and separately records host, process, generated Mach-O,
-  provenance, linker signature, primary timing, delayed read-only sample,
-  controls, and cleanup. A concurrent-link primary passes at 391.195 ms while
-  `syspolicyd` is 49.0% CPU; two natural zero-compiler primaries pass at
-  311.167/345.101 ms. The exact quiet-primary four-second policy window has
-  zero `syspolicyd` events, and the formerly failing repeated-direct-drive
-  public route passes in the quiet condition. This falsifies each initial
-  candidate as an individually sufficient deterministic cause; it does not
-  erase the intermittent host stall or invent a more specific cause.
-- [x] **ADDRESSED (verified)** — Decision `0084` selects a host-qualification
-  diagnostic and no backend workaround. Guarded `t/1665` fails closed on a
-  false condition label, executes the primary once, leaves a timeout failed,
-  uses byte-identical different-path/fresh minimal C++/platform binaries only
-  as counterfactual controls, samples only a still-live primary, and writes
-  closed canonical new-file evidence below same-device non-symlink ancestors.
-  Partial attempts strand no sample and records expose no absolute host path.
-  The bounded retained record and default `t/1666` watcher seal exact producer,
-  historical evidence, controlled projections, conclusion, prohibited
-  workarounds, and all three claim legs. Parent `.17.3.5.3` and child `.3.1`
-  close without changing lifecycle, Runner, deadline, capture, signing,
-  security, unrelated workloads, public behavior, support, or API authority.
-- [x] **NO REGRESSION** — Syntax, bounded/quiet qualification, and quiet full integration pass Files=2/50, 1/27, and 1/7 with deterministic API/CLI/phase/direct-drive cleanup. Final docs/claims/doctrines close 1,535 candidates as 30 claims, 900 gates, 588 reviews, 17 gaps, zero open, and reconstruct 2,888 rationale entries; full CI remains pre-push.
-
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S '/usr/bin/sample'` and
+  lifecycle timing locate three historical zero-output stalls after 3.7–4.1-ms
+  exec handoff, one 2,389/2,389 `_dyld_start` sample, and only correlated
+  compiler/policy activity.
+- [x] **ADDRESSED (verified)** — Decision `0084`, guarded t1665, and bounded
+  t1666 retain primary/control/host/binary/policy/cleanup evidence, keep every
+  timeout failed, run no retry or security/signing/deadline workaround, and
+  distinguish refuted individual causes from unknown intermittent causality.
+- [x] **NO REGRESSION** — Bounded/quiet qualification and quiet full integration
+  pass `Files=2, Tests=50`, `Files=1, Tests=27`, and `Files=1, Tests=7`;
+  claims, book, Knowledge Map, task, containment, and doctrines passed.
 ## Acceptance Checklist (enforced) — `.17.3.5.3.2` pre-main CI recovery
 - [x] **ROOT CAUSE (WHY + WHERE)** — CI/isolated t1558 fail different first executions; later routes pass. Fresh evidence reaches exec in 3.653 ms, fails zero-output at 30.058109 seconds, and samples 895/895 `_dyld_start`; controls pass. `git log -S '/usr/bin/sample'` locates the unqualified 992-byte off-volume call at `95ef93f0d`.
 - [x] **ADDRESSED (verified)** — Decision 0085 makes Darwin t1558 explicit before discovery, preserves non-Darwin/first-timeout truth, and retains t1665/t1666 as producer/oracle. A prevalidated repository `sample -file` sidecar replaces the default; the equal-hash old copy is verified, consumed, deleted, and censused absent. Contracts/claims/nonclaims agree.
 - [x] **NO REGRESSION** — Syntax/default pass Files=3, Tests=79; runtime impact passes Files=7/111; docs/claims pass Files=6/47 plus task/containment gates; all 55 book chapters test and its 91-file build is removed. The 1,548-candidate join closes 36 claims/907 gates/588 reviews/17 gaps/zero open; locality/raw/book/temp censuses are empty; complete CI remains pre-push.
 
-## Acceptance Checklist (enforced) — `.17.3.5.4` common-controller measurement activation
+## Terminal acceptance archive — `.17.3.5.4` portable runtime measurement
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'Measure each applicable
-  portable-Verilator runtime-stream profile' --oneline --
-  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md` independently
-  locates proposed child `.17.3.5.4` at `0e2140791`. Clean predecessor
-  `95ef93f0d` closes the shared lifecycle and guarded macOS qualification, so
-  the decision-0083 common-controller route is the first dependency-ready
-  portable runtime-measurement leaf.
-- [x] **ADDRESSED (verified)** — Continuity alone marks `.17.3.5.4` active in
-  its owning node, parent verification, task index, bounded Memory pointer,
-  mdBook status, canonical fact card, generated Knowledge Map, claim inventory,
-  and live-document authority. Product source, tests, fixtures, controller,
-  lifecycle, Runner, tool commands, limits, guards, support, and public
-  behavior remain unchanged.
-- [x] **NO REGRESSION** — Focused task, relative-path, Knowledge Map, claim,
-  and history checks report `All tests successful` at `Files=4, Tests=50`;
-  all 55 mdBook chapters test, and the inspected 91-file/39,175,530-byte
-  repository-local render is removed exactly. Knowledge Map parity is 1,151
-  facts/6,102 questions/6,269 occurrences/134 shards, and the claim inventory
-  retains 1,535 candidates with zero open migration owners. Final containment,
-  staged task acceptance, and `[doctrine] all doctrine checks passed` evidence
-  closes this activation commit with no ceiling increase or generated residue.
-  Full unrelated CI remains deferred to the push boundary.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Decision `0083` and `git log -S
+  'ArchitectureScalePortableRuntimeMeasurement'` locate the formerly missing
+  common-controller owner plus the compact-descriptor and typed-workspace
+  validation REDs.
+- [x] **ADDRESSED (verified)** — Commit `b5e975b24` reconstructs the selected
+  workload/tool/lifecycle route, keeps limit/excess tool-free, and seals one
+  reference validation, gate validation plus three repetitions, qualification
+  validation plus five repetitions, exact 12-artifact/trace/result evidence,
+  zero exclusions/residue, and no retry or deadline/public-contract change.
+- [x] **NO REGRESSION** — Default lifecycle/measurement reports `Files=2,
+  Tests=23`; exact fresh resume reports `Files=1, Tests=15`; exact guarded
+  measurement reports `Files=1, Tests=8` in 1,947 seconds; all book, Knowledge
+  Map, claim, task, containment, acceptance, and doctrine gates passed. Full CI
+  remains deferred to the 200-commit push boundary.
 
-## Acceptance Checklist (enforced) — `.17.3.5.4` common-controller portable-Verilator measurement
+## Acceptance Checklist (enforced) — `.17.3.5.5.1` portable runtime matrix implementation
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Decision `0083`, the completed materializer,
-  and the sole shared lifecycle leave one deliberate gap: no common-controller
-  owner reconstructs the selected runtime authorities, applies the validation
-  plus three/five repetition policy, or retains stage-level external-tool and
-  semantic evidence. Exact development runs also expose two implementation
-  disagreements rather than hiding them: assembled-state validation still
-  expects the former full graph after measurement adopts a compact descriptor,
-  and report validation expects a bare command digest although the lifecycle
-  correctly returns the typed `workspace-command/<digest>` identity. The two
-  REDs name their concrete loci as `sealed measurement assembly descriptor
-  changed at perl/FSM/VIAL/Backend/VerilatorLifecycle.pm line 1879` and
-  `portable runtime workspace command identity is invalid at
-  perl/FSM/VIAL/ArchitectureScalePortableRuntimeMeasurement.pm line 1160`.
-- [x] **ADDRESSED (verified)** — The caller-sealed portable-runtime adapter now
-  derives only the exact reference/gate/qualification/limit/excess shapes from
-  repository anchors and routes applicable work through the common controller
-  and sole lifecycle. The lifecycle independently rebuilds compact assembled
-  descriptors, supports fresh completion, and writes the exact 12-artifact
-  runtime graph once. The adapter independently validates stage plans,
-  10/120/30-second lifecycle tool boundaries, 900/300-second whole-worker
-  envelopes, actual and typed workspace commands, transcripts, predecessor
-  closure, trace/result identities, all required raw samples, exclusions, and
-  cleanup. Limit/excess remain tool-free. Historical host timeouts and the RAM
-  guard termination remain failed; their owned roots are absent and no retry,
-  timeout widening, or success fabrication is introduced.
-- [x] **NO REGRESSION** — Perl syntax checks pass for all four participating
-  modules. Default lifecycle plus measurement coverage passes at `Files=2,
-  Tests=23`; exact fresh-resume lifecycle coverage passes at `Files=1,
-  Tests=15` in 30 seconds; and the final compiler-free guarded campaign passes
-  at `Files=1, Tests=8` in 1,947 seconds across reference validation, gate
-  validation plus three repetitions, and qualification validation plus five
-  repetitions. The focused producer/controller/lifecycle/adapter suite passes
-  at `Files=4, Tests=42` in 75 seconds, and all 56 mdBook chapters test. The
-  inspected 91-file/19,627,082-byte repository-local render is removed exactly.
-  Knowledge Map parity remains 1,151 facts/6,102 questions/6,269 occurrences/
-  134 shards; the 1,544-candidate claim join closes with zero open candidates;
-  and `[doctrine] all doctrine checks passed`. Raw performance values stay
-  unpublished for child `.17.3.5.5`; full unrelated CI remains deferred only
-  to the required 200-commit push boundary.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Clean producer commit `b5e975b24` owns
+  complete five-profile runtime reports but no durable complete-matrix owner;
+  `git log -S'_run_profile_process' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleBackendEmissionMeasurementMatrix.pm` locates
+  proven isolated-publication origin `fdc6e6a1b`, while the same pickaxe over
+  the new runtime publisher has no committed origin before this slice.
+  Retaining complete reports in the coordinator would duplicate large evidence,
+  and preflight reports contain no controller record from which to invent a
+  revision/host/guard identity.
+- [x] **ADDRESSED (verified)** —
+  `ArchitectureScalePortableRuntimeMeasurementMatrix` derives five ordered
+  coordinates from producer `owned_shapes`, isolates capture and reload,
+  atomically publishes canonical same-volume profile/family/complete files,
+  returns only bounded compact entries, and requires one clean
+  revision/host/tool/guard identity. Reference establishes identity; gate and
+  qualification must match; tool-free limit/excess may inherit it only after
+  exact tool comparison. Full reports retain validation/eight raw repetition
+  identities, requested/validated trace and 12-artifact closure, exclusions,
+  cleanup, dominance, and nonclaims. The runner admits no caller profile,
+  report, manifest, family, or identity. A guarded independent producer
+  serialization re-derives the 74,735-byte reference observation; the selected
+  1,048,576-byte publication, 65,536-byte IPC, and 4,096-byte error envelopes
+  are distinct containment controls, not budgets or capacity claims.
+- [x] **NO REGRESSION** — Module/runner/test `syntax OK`; producer plus matrix
+  watchers report `All tests successful`, `Files=2, Tests=15`. Hostile
+  coverage rejects missing/duplicate/reordered samples, preflight execution or
+  forged inherited tool identity, mixed common identities, unguarded/open
+  requests, exception/exit/signal, malformed/noncanonical/oversized IPC,
+  oversized publication, immutable collision, and ambiguous staging while
+  recovering only exact crash bytes. mdBook, Knowledge Map, claim inventory,
+  task integrity, containment, staged acceptance, and `[doctrine] all doctrine
+  checks passed` close the implementation commit. Child `.17.3.5.5.2`
+  separately owns exact clean-revision capture and fresh-process reload; no
+  IASIM, support, performance, capacity, reached-boundary, parity, retry,
+  timeout, or public-API claim changes.
