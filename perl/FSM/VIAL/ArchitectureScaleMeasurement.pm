@@ -113,6 +113,9 @@ my @RSS_KEYS = qw(
     peak_process_tree_bytes peak_single_descendant_bytes unsupported_reason
 );
 my @PROCESS_KEYS = qw(exit_code signal timed_out);
+my $LINUX_CPU_INDEX_MAX = 2_147_483_647;
+my $LINUX_CPU_LIST_MAX_BYTES = 1_048_576;
+my $LINUX_CPUINFO_MAX_BYTES = 67_108_864;
 my @DIAGNOSTIC_KEYS = qw(
     code severity message source_locations semantic_path related notes hints
 );
@@ -2325,11 +2328,105 @@ sub _linux_cpu_model() {
 }
 
 sub _linux_logical_cores() {
-    my $value = eval {
-        require POSIX;
-        POSIX::sysconf(POSIX::_SC_NPROCESSORS_ONLN());
-    };
-    return defined($value) && $value > 0 ? 0 + $value : undef;
+    my $online = _read_bounded_system_text(
+        '/sys/devices/system/cpu/online', $LINUX_CPU_LIST_MAX_BYTES,
+    );
+    my $kernel_max = _read_bounded_system_text(
+        '/sys/devices/system/cpu/kernel_max', 64,
+    );
+    my $count = _linux_cpu_list_count($online, $kernel_max);
+    return $count if defined $count;
+    my $cpuinfo = _read_bounded_system_text(
+        '/proc/cpuinfo', $LINUX_CPUINFO_MAX_BYTES,
+    );
+    return _linux_cpuinfo_logical_core_count($cpuinfo);
+}
+
+sub _linux_logical_cores_from_text($online, $kernel_max, $cpuinfo) {
+    my $count = _linux_cpu_list_count($online, $kernel_max);
+    return $count if defined $count;
+    return _linux_cpuinfo_logical_core_count($cpuinfo);
+}
+
+sub _linux_cpu_list_count($text, $kernel_max_text) {
+    return undef unless defined($text) && !ref($text)
+        && bytes::length($text) <= $LINUX_CPU_LIST_MAX_BYTES;
+    my $kernel_max = _linux_kernel_cpu_max($kernel_max_text);
+    return undef unless defined $kernel_max;
+    $text =~ s/\A\s+|\s+\z//g;
+    return undef unless length $text;
+
+    my $last_end = -1;
+    my $count = 0;
+    for my $item (split /,/, $text, -1) {
+        return undef unless $item =~ /\A([0-9]+)(?:-([0-9]+))?\z/;
+        my ($start_text, $end_text) = ($1, $2);
+        my $start = _linux_cpu_index($start_text, $kernel_max);
+        my $end = defined($end_text)
+            ? _linux_cpu_index($end_text, $kernel_max) : $start;
+        return undef unless defined($start) && defined($end)
+            && $start <= $end && $start > $last_end;
+        $count += $end - $start + 1;
+        $last_end = $end;
+    }
+    return $count > 0 ? $count : undef;
+}
+
+sub _linux_kernel_cpu_max($text) {
+    return undef unless defined($text) && !ref($text)
+        && bytes::length($text) <= 64;
+    $text =~ s/\A\s+|\s+\z//g;
+    return undef unless $text =~ /\A(?:0|[1-9][0-9]{0,9})\z/;
+    my $value = 0 + $text;
+    return $value <= $LINUX_CPU_INDEX_MAX ? $value : undef;
+}
+
+sub _linux_cpu_index($text, $kernel_max) {
+    return undef unless defined($text) && !ref($text)
+        && $text =~ /\A(?:0|[1-9][0-9]{0,9})\z/;
+    my $value = 0 + $text;
+    return $value <= $kernel_max ? $value : undef;
+}
+
+sub _linux_cpuinfo_logical_core_count($text) {
+    return undef unless defined($text) && !ref($text)
+        && bytes::length($text) <= $LINUX_CPUINFO_MAX_BYTES;
+    my %seen;
+    for my $line (split /\n/, $text, -1) {
+        next unless $line =~ /\A\s*processor\s*:/;
+        return undef unless $line =~ /\A\s*processor\s*:\s*([0-9]+)\s*\z/;
+        my $cpu = _linux_cpu_index($1, $LINUX_CPU_INDEX_MAX);
+        return undef unless defined($cpu) && !$seen{$cpu}++;
+    }
+    my $count = scalar keys %seen;
+    return $count > 0 ? $count : undef;
+}
+
+sub _read_bounded_system_text($path, $max_bytes) {
+    open my $fh, '<:raw', $path or return undef;
+    my $text = '';
+    while (1) {
+        my $remaining = $max_bytes - bytes::length($text);
+        if ($remaining < 0) {
+            close $fh;
+            return undef;
+        }
+        my $chunk = '';
+        my $request = $remaining < 65_535 ? $remaining + 1 : 65_536;
+        my $read = sysread($fh, $chunk, $request);
+        if (!defined $read) {
+            close $fh;
+            return undef;
+        }
+        last if $read == 0;
+        $text .= $chunk;
+        if (bytes::length($text) > $max_bytes) {
+            close $fh;
+            return undef;
+        }
+    }
+    return undef unless close $fh;
+    return $text;
 }
 
 sub _linux_physical_memory() {

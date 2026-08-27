@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **49** uniquely owned question entries.
+> **1** facts · **50** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -12,6 +12,7 @@
 - q="how are VIAL runtime-stream measurement inputs constructed without tools?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how are VIAL scale performance budgets selected?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how does VIAL architecture scale measurement work?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="how does VIAL measure Linux logical cores without a Perl POSIX constant?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how does portable SystemVerilog implement a direct endpoint drive?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how does portable SystemVerilog schedule a check-to-react successor?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how does portable runtime-stream activity reach exactly 10,000 records?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
@@ -61,5 +62,5 @@
 
 _VIAL architecture scale is proved by orthogonal families with stage-local oracles, not capacity claims_
 
-- **date:** 2026-08-24 · **status:** current
+- **date:** 2026-08-27 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-architecture-scale-proof.md`](../../docs/knowledge/vial-architecture-scale-proof.md)

@@ -15,6 +15,7 @@ answers:
   - "how was the balanced portable bridge blocker resolved?"
   - "what closes deterministic VIAL scale generation before measurement?"
   - "how does VIAL architecture scale measurement work?"
+  - "how does VIAL measure Linux logical cores without a Perl POSIX constant?"
   - "where are VIAL scale measurement artifacts staged and published?"
   - "does the VIAL measurement foundation execute external tools?"
   - "which VIAL scale families are measured first?"
@@ -51,7 +52,7 @@ answers:
   - "why is portable qualification 15,000 records instead of 100,000?"
   - "where are the authored portable runtime qualification sources and structural oracle?"
   - "what are the final tracked portable runtime artifact graph sizes?"
-date: 2026-08-24
+date: 2026-08-27
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
 evidence: >-
@@ -64,6 +65,7 @@ evidence: >-
   docs/decisions/0080-portable-systemverilog-rolls-backward-successors-by-logical-phase.md;
   docs/decisions/0081-portable-systemverilog-direct-drive-uses-root-owned-zero-duration-driver-slots.md;
   docs/decisions/0083-portable-systemverilog-runtime-scale-uses-authored-cycle-sampling-and-one-shared-staged-lifecycle.md;
+  docs/decisions/0089-linux-logical-core-discovery-uses-bounded-kernel-authorities.md;
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/VIAL/ArchitectureScaleWorkload.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission.pm; perl/FSM/VIAL/ArchitectureScaleRuntimeStream.pm;
   perl/FSM/VIAL/ArchitectureScaleBalancedPortable.pm;
@@ -125,6 +127,8 @@ reverify: >-
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md &&
   rg -n 'vial_architecture_scale_measurement|SAMPLER_INTERVAL_NS|STAGING_BASE|PUBLICATION_BASE|measured runs require'
   perl/FSM/VIAL/ArchitectureScaleMeasurement.pm &&
+  rg -n '_linux_logical_cores|_linux_cpu_list_count|_linux_cpuinfo_logical_core_count|kernel_max'
+  perl/FSM/VIAL/ArchitectureScaleMeasurement.pm t/1656-vial-architecture-scale-measurement-foundation.t &&
   rg -n 'vial_architecture_scale_semantic_bridge_measurement_set|measurement_evidence_projection|semantic_path|canonical family'
   perl/FSM/VIAL/ArchitectureScaleSemanticBridgeMeasurement.pm &&
   rg -n 'utf8::downgrade|pack.*B\*|validation_rejected|prior_stage_failed'
@@ -227,6 +231,10 @@ measurement, 250-ms controller/descendant sampling, smaller-of timeouts,
 disjoint artifact census, same-volume atomic publication, and exact cleanup;
 the guard wrapper remains enforcement authority. t/1656 falsifies identity,
 path, timeout, ordinal, stage, output, collision, and failure substitutions.
+Linux host identity now derives logical cores from the bounded kernel online
+CPU mask and `kernel_max`, with strict canonical parsing and an independently
+bounded `/proc/cpuinfo` fallback. Missing or hostile authorities fail closed;
+Darwin profiling and the closed evidence schema are unchanged.
 `.17.3.2` adds caller-sealed semantic/bridge reconstruction, independent stage
 reruns, and a collision-checked `path` to `semantic_path` evidence projection
 while retaining original evaluation JSON as an artifact. Accepted gate and

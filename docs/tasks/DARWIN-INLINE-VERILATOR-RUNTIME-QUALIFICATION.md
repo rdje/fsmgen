@@ -125,11 +125,11 @@ by that run.
   Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.1: seal hosted OSVVM provider ownership`
 
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Make Linux architecture-scale host logical-core discovery portable and deterministic.`
   Acceptance: `Replace the unavailable setup-Perl POSIX constant path with a bounded Linux authority, validate its parser on representative and hostile inputs, preserve Darwin behavior and closed host-profile evidence, and replay t1656 plus the hosted routing watcher without weakening recovery-safety assertions.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Decision 0089 selects bounded sysfs online/kernel_max parsing plus an independently bounded procfs fallback. Exact parser oracles reject malformed, overlapping, descending, unsorted, ambiguous, out-of-range, duplicate, and missing authorities. t1656 and t1657 each pass at Files=1/Tests=6; hosted routing t1183 passes at Files=1/Tests=12; the host schema and Darwin branch are byte-unchanged.`
+  Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.2: make Linux core discovery portable`
 
 ## Current Frontier
 
@@ -141,11 +141,17 @@ by that run.
 | 4 | `.3.1` | `done` | The shared mechanism and sealed fixture adapter make every t1545 subprocess finite and cleanup-safe. |
 | 5 | `.3.2.1` | `done` | Exact-revision t296 recovery and the independently selected 778-file lexical tail are green; the checkpoint self-cleared and no guard event recurred. |
 | 6 | `.3.2.2.1` | `done` | Five dedicated coordinates now give all three default OSVVM-backed tests exact isolated provider ownership; focused routing and real-provider proofs pass. |
-| 7 | `.3.2.2.2` | `active` | Provider routing is committed cleanly; repair the shared unavailable Linux logical-core discovery proved by exact shards 14 and 15. |
+| 7 | `.3.2.2.2` | `done` | Bounded kernel cpulist authority plus procfs fallback repairs both setup-Perl failures without schema or Darwin drift. |
 | 8 | `.3.2.2` | `active` | Consume every remaining job from the failed exact push while its ordered repair children commit independently. |
 | 9 | `.3.2` | `active` | Preserve complete-CI and green hosted evidence until an authorized exact repair revision is hosted-green. |
 
 ## Decisions
+
+- `2026-08-27`: The added decision/card crosses rationale to 80.8% and Knowledge Map cards to 90.5% of target. Re-derive the exact predecessor rationale baseline,
+  retain one declared ratchet step under the active containment owner, advance warning/rollover state, and compact the optional duplicate verification log; raise no ceiling.
+
+- `2026-08-27`: Decision `0089` replaces the unavailable Perl POSIX constant with bounded Linux kernel cpulist authority and an independent procfs fallback;
+  strict canonical parsing fails closed, while the host-profile schema and Darwin branch remain unchanged.
 
 - `2026-08-27`: Decision `0088` refines decision `0063`: five dedicated coordinates carry explicit Boolean prerequisite metadata; exactly t1598, t1648,
   and t1650 receive immutable OSVVM 2026.05, while ordinary shards remain provider-free and complete.
@@ -391,18 +397,8 @@ Verilator process.
 - [x] **ADDRESSED (verified)** — Decision `0088`, `bin/ci-regression`, and the workflow define five closed coordinates. Explicit matrix flags give only t1436 pinned HDL tools and exactly t1598/t1648/t1650 the immutable repository-local provider. The watcher independently closes all 1,656 tracked tests as 1,647 ordinary plus nine separate owners and rejects bad coordinates.
 - [x] **NO REGRESSION** — `t/1183` reports `Files=1, Tests=12` PASS; the guarded exact-provider run of t1598/t1648/t1650 reports `Files=3, Tests=22` PASS in 331 seconds. Driver syntax, five dry-run coordinates, provider HEAD, mdBook, Knowledge Map, task/decision structure, locality, live-document, claim, diff, and staged doctrine gates are required green for commit.
 
-## Verification Log
+## Acceptance Checklist — `.3.2.2.2` Linux logical-core authority
 
-| Date | Leaf | Checks | Result |
-| --- | --- | --- | --- |
-| `2026-08-26` | `.1` activation | pre-push CI prefix; live process census; one-second stack sample; timeout-source inspection | `t/01-t/1514 green; t/1515 has an unbounded direct launch and 804/804 _dyld_start frames; exact audit/selection now active` |
-| `2026-08-26` | `.1` selection | literal compile census; independent runtime census; exact file-set comparison; IPC timeout documentation; decision/card/book/task/doctrine checks | `37 compile + 37 runtime sites in 34 affected files; decision 0086 accepted; .2 active` |
-| `2026-08-26` | `.2` bounded implementation | closed census manifest; 34-file syntax gate; hostile helper/watcher; standard Darwin guard run; explicitly qualified original t1515; independent source scan | `37 compile + 37 runtime sites helper-owned; direct generated-binary IPC=0; Files=1/Tests=6 watcher and Files=1/Tests=3 qualified t1515 pass; .3 active` |
-| `2026-08-26` | `.3` interrupted suffix | RAM-guarded lexical t1515-tail run; live process tree; one-second sample; exact termination/residue census | `green/skipped through t1544; t1545 first fixture blocked in unbounded /usr/bin/env bash pre-main path with 792/792 _dyld_start frames; .3.1 active` |
-| `2026-08-26` | `.3.1` bounded implementation | exact command/history audit; direct /bin/bash falsification; shared-engine extraction; sealed adapter; hostile ownership watcher; RAM-guarded combined regression | `two direct IPC sites removed; Files=3/Tests=19 pass; TERM-resistant group gone; exactly two low-level policy owners; .3.2 next after clean commit` |
-| `2026-08-26` | `.3.1` watcher env falsification | combined RAM-guarded gate; exec-handoff/first-output evidence; generated-fixture source census; zero process residue | `t1545 and t1669 pass; t1668 nominal env-Perl fixture times out honestly after handoff; all generated fixtures switched to canonical Perl with recurrence watcher; no retry` |
-| `2026-08-26` | `.3.1` watcher env repair | focused repaired t1668; final three-file RAM-guarded cluster | `t1668 Files=1/Tests=6 pass; final t1545+t1668+t1669 Files=3/Tests=19 pass; generated env-Perl recurrence count held to entrypoint only` |
-| `2026-08-26` | `.3.2` activation | clean-tree census; committed repair identity; frontier alignment | `d630261e6 clean; retained prefix through t1544; exact t1545 restart active` |
-| `2026-08-26` | `.3.2.1` host-pressure recovery activation | authoritative suffix; RAM-guard output; live PID/RSS census; post-cleanup process/memory/residue census; checkpoint-contract audit; focused t1597/t1414/t1549/t1527 and Knowledge Map checks | `green through t295; t296 interrupted after 4h48m by host 88.1% cutoff, not descendant 4-GiB cutoff; no checkpoint existed; exact-revision checkpointed recovery active; focused recovery checks pass` |
-| `2026-08-27` | `.3.2.1` checkpointed recovery completion | independent t296 matrix count; guarded exact-revision t296 parent; independent lexical-tail selection; guarded t297-t999 prove; checkpoint/process/residue census | `t296 Files=1/Tests=10 over all 762 batches; t297-t999 Files=778/Tests=2,989; both PASS with no guard event; checkpoint self-cleared; .3.2 active` |
-| `2026-08-27` | `.3.2.2.1` provider ownership | exact hosted failure; source/history census; five-coordinate driver/workflow; closed watcher; guarded real-provider replay | `t1650 fails only without provider; 1,656 paths close as 1,647 ordinary + 9 separate; t1183 Files=1/Tests=12 and provider trio Files=3/Tests=22 PASS` |
+- [x] **ROOT CAUSE (WHY + WHERE)** — Exact-SHA jobs `98359602070` and `98359602123` both abort in `ArchitectureScaleMeasurement::_linux_logical_cores`; `git log -S 'POSIX::_SC_NPROCESSORS_ONLN'` locates the optional-constant dependency at `3946bf101`, while setup-Perl 5.32 does not export it.
+- [x] **ADDRESSED (verified)** — Decision `0089` and the module use bounded `online`/`kernel_max` kernel authority with strict canonical cpulist parsing, then an independently bounded exact procfs-identity fallback; focused hostile cases reject overlap, ordering, ambiguity, range, duplicate, malformed, and missing evidence without changing schema or Darwin code.
+- [x] **NO REGRESSION** — `t/1656` and `t/1657` each report `Files=1, Tests=6` PASS; `t/1183` reports `Files=1, Tests=12` PASS; mdBook, Knowledge Map, task/decision, locality, live-document, claim, diff, and doctrine checks pass with no ceiling increase.

@@ -3771,9 +3771,16 @@ to fresh same-volume staging and atomically renames the complete directory to
 republication is unchanged; different bytes collide; a failed atomic commit
 rolls back both staging and any newly created empty parent directories.
 
-The foundation's Darwin `sysctl`/`mount`/`ps` and Linux procfs/`ps` reads are
-read-only operating-system observations used to describe the host and sample
-the process tree. They never hold project output. Persisted paths remain
+The foundation's Darwin `sysctl`/`mount`/`ps` and Linux sysfs/procfs/`ps` reads
+are read-only operating-system observations used to describe the host and
+sample the process tree. Linux logical-core identity comes first from the
+kernel's bounded online-CPU cpulist plus `kernel_max`; strict canonical range
+parsing rejects overlap, reordering, ambiguity, and impossible CPU IDs. A
+separately bounded `/proc/cpuinfo` processor-ID count is the fail-closed
+fallback, so measurement does not depend on a Perl build exposing
+`_SC_NPROCESSORS_ONLN` and never invents a default. Darwin profiling and the
+closed host-profile schema remain unchanged. These observations never hold
+project output. Persisted paths remain
 repository-relative, diagnostics are sanitized, worker result capture is
 bounded, timeout termination targets both the worker process group and its
 direct PID, and cleanup records exact residue if removal itself fails.

@@ -94,6 +94,53 @@ subtest 'foundation authorities are exact and defensive' => sub {
         'authority callers receive defensive arrays');
 };
 
+subtest 'Linux logical-core discovery follows bounded kernel authorities' => sub {
+    my $derive =
+        \&FSM::VIAL::ArchitectureScaleMeasurement::_linux_logical_cores_from_text;
+    my $cpulist =
+        \&FSM::VIAL::ArchitectureScaleMeasurement::_linux_cpu_list_count;
+    my $cpuinfo =
+        \&FSM::VIAL::ArchitectureScaleMeasurement::_linux_cpuinfo_logical_core_count;
+
+    is($derive->("0-3,8,10-11\n", "127\n", "processor : invalid\n"), 7,
+        'stable sysfs online mask is the primary logical-core authority');
+    is($derive->("0-3,3-4\n", "127\n", <<'CPUINFO'), 3,
+processor : 0
+model name : hosted probe
+processor : 2
+processor : 7
+CPUINFO
+        'malformed sysfs data falls back to distinct procfs processor IDs');
+    is($derive->(undef, undef, "processor : 4\n"), 1,
+        'procfs remains an independent fallback when sysfs is unavailable');
+    ok(!defined($derive->(undef, undef, undef)),
+        'missing kernel authorities fail closed');
+
+    is($cpulist->("0\n", "0\n"), 1,
+        'single online CPU and zero kernel maximum are valid');
+    for my $case (
+        ['', '127'],
+        ['0,,1', '127'],
+        ['0-3,3-4', '127'],
+        ['3-1', '127'],
+        ['2,0', '127'],
+        ['0-3', '2'],
+        ['0-1', '2147483648'],
+        ['00', '127'],
+    ) {
+        ok(!defined($cpulist->($case->[0] . "\n", $case->[1] . "\n")),
+            "hostile cpulist '$case->[0]' with kernel max '$case->[1]' rejects");
+    }
+    is($cpuinfo->("processor : 1\nprocessor : 9\n"), 2,
+        'procfs fallback counts distinct non-contiguous processor IDs');
+    ok(!defined($cpuinfo->("processor : 1\nprocessor : 1\n")),
+        'duplicate procfs processor identity rejects');
+    ok(!defined($cpuinfo->("processor : unknown\n")),
+        'malformed procfs processor identity rejects');
+    ok(!defined($cpuinfo->("model name : no processor record\n")),
+        'procfs content without processor records rejects');
+};
+
 subtest 'a validated interrupted stage is recovered under exact ownership' => sub {
     my $stage_relative = validation_stage_relative($construction);
     my $stage_root = repo_path($stage_relative);
