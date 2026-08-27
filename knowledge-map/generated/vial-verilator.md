@@ -18,5 +18,5 @@
 
 _One caller-sealed lifecycle owns public and scale Verilator execution_
 
-- **date:** 2026-08-25 · **status:** current
+- **date:** 2026-08-27 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-verilator-shared-lifecycle.md`](../../docs/knowledge/vial-verilator-shared-lifecycle.md)

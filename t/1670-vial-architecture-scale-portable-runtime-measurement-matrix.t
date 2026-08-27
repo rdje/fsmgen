@@ -66,11 +66,20 @@ subtest 'producer-owned inventory closes all portable-runtime profiles' => sub {
     my $limits = $class->publication_limits;
     is($limits->{reference_calibration_bytes}, 74_735,
         'publication bound names its guarded reference calibration');
-    is($limits->{qualification_record_projection}, 6,
-        'bound rationale retains the largest selected record multiplicity');
+    is($limits->{gate_calibration_publication_bytes}, 848_468,
+        'bound names the exact accepted three-sample gate publication');
+    is($limits->{gate_calibration_measurement_records}, 3,
+        'bound derives from the exact gate repetition count');
+    is($limits->{gate_calibration_trace_records}, 10_000,
+        'bound derives from the exact gate workload count');
+    is($limits->{qualification_measurement_records}, 5,
+        'bound scales to the selected qualification repetition count');
+    is($limits->{qualification_trace_records}, 15_000,
+        'bound scales to the selected qualification workload count');
+    is($limits->{qualification_projection_bytes}, 2_121_170,
+        'bound conservatively scales the complete gate publication twice');
     cmp_ok($limits->{maximum_publication_bytes}, '>',
-        $limits->{reference_calibration_bytes}
-            * $limits->{qualification_record_projection},
+        $limits->{qualification_projection_bytes},
         'publication bound retains positive projected headroom');
     cmp_ok($limits->{maximum_worker_result_bytes}, '<',
         $limits->{reference_calibration_bytes},
@@ -235,9 +244,13 @@ subtest 'profile isolation and publication are bounded and immutable' => sub {
             root_device => $root_stat[0],
             profile_id => 'synthetic-oversized-publication-v1',
             filename => 'measurement-publication.json',
-            value => {payload => 'x' x 1_048_577},
+            value => {
+                payload => 'x' x
+                    ($class->publication_limits
+                        ->{maximum_publication_bytes} + 1),
+            },
         });
-    }), qr/exceeds its calibrated ceiling/,
+    }), qr/exceeds its calibrated ceiling \(actual=\d+ bytes, maximum=4194304 bytes\)/,
         'oversized publication bytes fail before staging begins');
 
     my $recovery_id = 'synthetic-recoverable-publication-v1';

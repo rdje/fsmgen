@@ -982,3 +982,21 @@ removed from t1545. Generated watcher programs therefore embed the canonical
 already-running Perl interpreter in their shebang, and a source assertion
 prevents `#!/usr/bin/env perl` from returning outside the prove-invoked test
 entrypoint.
+
+## 2026-08-27: Publication containment scales the complete observed shape
+
+The first clean portable-runtime matrix capture falsified its provisional
+one-MiB file ceiling only after producing valid reference and gate reports.
+The mistake was architectural: multiplying a small validation report by the
+number of retained records ignored each measured record's stage samples and
+evidence projection. A larger constant without a derivation would merely move
+the same uncertainty.
+
+The replacement treats the exact accepted gate publication as the complete
+observed serialization shape. It scales that whole file by both selected
+growth dimensions—the gate-to-qualification repetition ratio and trace-workload
+ratio—then rounds containment up to the next binary envelope. Scaling fixed
+metadata twice is intentionally conservative. Compact IPC remains unchanged,
+and any file rejection now states actual and maximum bytes. The next clean
+capture must still fit and independently reload the real qualification report
+before this becomes complete-matrix evidence.

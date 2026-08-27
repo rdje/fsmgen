@@ -656,7 +656,22 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Seal and independently reload the complete clean-revision portable-runtime matrix.`
   Acceptance: `Run the exact guarded watcher from the committed publisher revision; require all five immutable profile reports, family/complete manifests, exact validation/three/five raw repetitions, two tool-free preflight profiles, one common identity, zero exclusions/residue, file/digest/byte census, real-largest-report bound falsification, and a separate fresh-process guarded reload of the same complete identity. Keep any timeout, signal, guard stop, collision, mismatch, or exclusion failed and resumable only at the exact clean identity.`
-  Verification: `pending clean implementation commit`
+  Verification: `Exact capture at clean implementation 9a534bc93 publishes reference and gate, then correctly rejects the five-sample qualification report because it exceeds the provisional 1,048,576-byte file ceiling. Child .1 repairs the falsified bound and actionable actual/ceiling diagnostics; proposed child .2 repeats the complete clean-revision capture only after that repair commits. No failed runtime sample is retried or relabelled.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.1`
+  Status: `done`
+  Goal: `Repair the exact-capture-falsified portable-runtime publication ceiling without weakening compact IPC or runtime truth.`
+  Acceptance: `Retain the failed 1-MiB exact-capture outcome and independently census the accepted 75,883-byte reference and 848,468-byte three-sample gate publications. Derive a conservative qualification envelope from exact gate bytes, the producer-owned three-to-five repetition change, and the 10,000-to-15,000 trace-record change; select a binary containment ceiling above that projection; expose the derivation through the closed API; report actual and allowed bytes on rejection; keep 65,536/4,096-byte compact IPC/error bounds; and update hostile tests plus task/book/card/claim truth before a new clean-revision capture.`
+  Verification: `Clean implementation 9a534bc93 exact t1670 runs 1,964 seconds, publishes canonical 75,883-byte reference and 848,468-byte three-sample gate files with hashes 02ffff64...315/f8a645de...844, then rejects qualification before writing an oversized file or aggregate. The repaired publisher scales the entire gate file by five/three repetitions and 15,000/10,000 records to 2,121,170 bytes, rounds to 4,194,304, retains 65,536/4,096 IPC/error bounds, and reports actual/maximum bytes. The independent qualification diagnostic later hits the already qualified 30-second Darwin pre-main boundary and remains failed without retry or timeout change. Syntax and producer/publisher tests pass Files=2/Tests=14; CI tier passes Files=1/Tests=12; all 56 book chapters test; Knowledge Map is 1,153 facts/6,116 questions/6,283 occurrences/136 shards; claim inventory closes 1,558/1,558 with 40 claims/911 gates/590 reviews/17 gaps/zero open. Task/containment/acceptance/doctrine closure is recorded by the commit workflow with no ceiling increase.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.1: repair portable runtime publication bound`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2`
+  Status: `proposed`
+  Goal: `Repeat the complete guarded capture at the repaired clean revision and independently reload its exact aggregate identity.`
+  Acceptance: `Remove only the exactly identified superseded portable-runtime publications after retaining their bytes/digests, then run one new clean-revision exact campaign. Require all parent .2 acceptance evidence, retain any Darwin pre-main stall as failed without retry or timeout widening, and close only after fresh-process reload and exact file/hash/staging census.`
+  Verification: `pending child .1 clean repair commit`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6`
@@ -7089,54 +7104,11 @@ raising an enforcement ceiling.
   commit workflow with zero ceiling increase and no external process,
   runtime, support, performance, capacity, or reached-boundary claim.
 
-## Acceptance Checklist (enforced) — `.17.3.5.2` authored runtime materialization implementation
+## Terminal acceptance archive — `.17.3.5.2` authored runtime materialization implementation
 
-- [x] **ROOT CAUSE (WHY + WHERE; rederived public boundary)** — The original
-  provider-free producer deliberately reports runtime trace/result as
-  unmaterialized and gives every backend the common 100,000-record
-  qualification role. `git log -S'ArchitectureScaleRuntimeStream' --oneline --
-  perl/FSM/VIAL/ArchitectureScaleRuntimeStream.pm` locates that boundary at
-  `3c1f0b411`; `git log -S'records(N)' --oneline -- docs/decisions/0083-portable-systemverilog-runtime-scale-uses-authored-cycle-sampling-and-one-shared-staged-lifecycle.md`
-  locates the independently probed repair contract at selection commit
-  `769df71d5`. The final tracked-path public runs then rederive complete graphs
-  of 32,098,531/47,505,049 bytes, distinguishing real source provenance from
-  the selection-time temporary-path observations without assuming a constant
-  offset.
-- [x] **ADDRESSED (verified)** — Two reviewed 5,064-byte VIAL files author the
-  selected 1,948/2,948 reset cycles, 4,096-cycle timeout/windows, and terminal
-  post-scoreboard expectation. The exact-class caller-sealed materializer
-  reads those files as inputs, uses a reference projection only as a hostile-
-  mutation oracle, and reconstructs Parser through portable emission twice.
-  It freezes source/schedule/stage/loop/artifact/map/report identities and the
-  exact 10,000/15,000 record families. Only the portable qualification
-  specification becomes 15,000; stable roles and VHDL/OSVVM's 100,000 remain.
-  Limit/excess and 20,000/25,000/100,000 falsifiers create no tool-eligible
-  route or staging. Source, report, invocant, route, relocation, consumer, and
-  preflight mutations fail closed with exact repository-volume cleanup.
-- [x] **NO REGRESSION** — Changed Perl files report `syntax OK`; the default
-  construction/materialization watcher reports `All tests successful` at
-  `Files=2, Tests=18` in 116 seconds. The separately opted-in public Runner
-  watcher, nested under the unchanged repository RAM guard, reports `All tests
-  successful` at `Files=1, Tests=18` in 123 seconds and independently matches
-  both 19-artifact inventories, final graph sizes, every record family, passing
-  result, two scenarios, and zero runtime residue. The broader guarded focused
-  set reports `All tests successful` at `Files=6, Tests=45` in 161 seconds;
-  the separately expensive sixteen-member runtime/balanced consumer reports
-  `All tests successful` at `Files=1, Tests=4` in 713 seconds, preserving all
-  three backend profiles and the balanced bridge. Final mdBook, Knowledge Map,
-  task, claim, containment, relative-path, diff, staged acceptance, and
-  doctrine evidence is recorded by this commit workflow: all 54 mdBook
-  chapters test; Knowledge Map parity is 1,150 facts/6,098 questions/6,265
-  occurrences/133 shards; task integrity remains three trees/996 nodes; the
-  claim join closes 1,532 candidates as 27 claim records/900 derived gates/588
-  reviewed records/17 later-owned gaps/zero open candidates; the rationale
-  ledger reconstructs 2,886 entries; and all 22 live-document surfaces pass
-  with one exact maintained-reference change and zero ceiling increases. Per
-  CI policy no
-  unrelated full CI runs before push. The structural materializer itself runs
-  no external tool and adds no lifecycle, support, performance budget,
-  capacity, reached-boundary, parity, full-SystemVerilog, methodology, or
-  public-API claim.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Git pickaxe locates the provider-free unmaterialized/100,000-record boundary at `3c1f0b411` and the authored-cycle selection at `769df71d5`; tracked-path public runs independently derive 32,098,531/47,505,049-byte graphs rather than assuming a temporary-path offset.
+- [x] **ADDRESSED (verified)** — Two reviewed 5,064-byte VIAL sources, the exact-class caller-sealed materializer, and duplicate canonical reconstruction freeze 1,948/2,948 reset cycles, 4,096-cycle windows, 10,000/15,000 trace families, all source/schedule/stage/loop/artifact/map/report identities, sibling 100,000 roles, tool-free preflight, hostile rejection, and same-volume cleanup.
+- [x] **NO REGRESSION** — Syntax and default materialization pass Files=2/Tests=18; guarded public Runner passes 1/18 with both 19-artifact graphs, record families, results/scenarios, and zero residue; broader guarded sets pass 6/45 and 1/4. All 54 book chapters, 1,150-fact Knowledge Map, 1,532-candidate/zero-open claim join, task/containment/acceptance/doctrines pass with zero ceiling increase and unchanged external-tool/support/performance/capacity/parity/API nonclaims.
 
 ## Acceptance Checklist (enforced) — `.17.3.5.3` shared lifecycle activation
 
@@ -7163,51 +7135,11 @@ raising an enforcement ceiling.
   tool, runtime, support, performance, capacity, reached-boundary, retry, or
   timeout-widening claim is authorized.
 
-## Acceptance Checklist (enforced) — `.17.3.5.3` shared lifecycle implementation
+## Terminal acceptance archive — `.17.3.5.3` shared lifecycle implementation
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'package
-  FSM::VIAL::Backend::Runner' -- perl/FSM/VIAL/Backend/Runner.pm` locates the
-  original atomic private executor at `dfe87f536`; decision `0083` and clean
-  activation `ff0edde7a` require one staged owner shared with isolated scale
-  workers. The former executor exposed only one runtime-wall result, so it
-  could not distinguish process-group creation, successful exec handoff,
-  first output, and process exit. Implementation-time lifecycle evidence then
-  localized three zero-output observations after millisecond exec handoff,
-  while a read-only stack sample localized one live executable to pre-main
-  `_dyld_start`; proposed child `.17.3.5.3.1` owns causality rather than this
-  extraction inventing a retry or deadline change.
-- [x] **ADDRESSED (verified)** — One caller-sealed
-  `FSM::VIAL::Backend::VerilatorLifecycle` now owns the exact nine-state chain
-  for public and measurement consumers. It independently validates closed
-  state/object/predecessor inventories, storage and cleanup authority,
-  prepared source and executable bytes, actual and workspace-normalized
-  commands, process containment, launch/output/exit timing, aggregate capture,
-  and every terminal cleanup. Skips, replay, mutation, collision, symlink,
-  partial state, launch error, exit, signal, timeout, and overflow fail closed.
-  Runner remains a thin total-function adapter: private exceptions and
-  malformed projections become sanitized host errors with no artifacts or
-  untrusted cleanup claim. No successful public bytes, timeouts, capture
-  ceilings, retry policy, platform security, signing, support, or public API
-  authority changes.
-- [x] **NO REGRESSION** — Changed Perl/test files report `syntax OK`. The
-  default capture/lifecycle pair reports `All tests successful` at `Files=2,
-  Tests=18`; the elevated focused lifecycle set reports `All tests successful`
-  at `Files=4, Tests=43`; guarded exact t1664 traverses every real state and
-  cleans at `Files=1, Tests=15`; and independent guarded AHB parity reports
-  `All tests successful` at `Files=1, Tests=4`. The broader guarded t1558
-  watcher honestly retains one failed repeated-direct-drive subtest after six
-  top-level passes and a passing first byte-identical execution; `.17.3.5.3.1`
-  owns that pre-main platform result without retry or reclassification. The
-  support/CI inventory set passes at `Files=3, Tests=7110`; documentation/task/
-  Knowledge Map regressions pass at `Files=4, Tests=50`; all 56 mdBook chapters
-  test; and the inspected 91-file/19,569,135-byte repository-local render is
-  removed exactly. Knowledge Map parity is 1,151 facts/6,100 questions/6,267
-  occurrences/134 shards; the claim join closes all 1,532 candidates as 27
-  claim records/900 gates/588 reviewed records/17 later-owned gaps/zero open.
-  Final live-document, maintained-reference, task-integrity, relative-path,
-  diff, staged-acceptance, and `[doctrine] all doctrine checks passed` evidence
-  closes the commit workflow. Full unrelated CI remains deferred to push by
-  policy.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Git pickaxe locates Runner's atomic private executor at `dfe87f536`; decision `0083`/activation `ff0edde7a` require one staged public/measurement owner with distinct containment, exec, first-output, and exit evidence. Three post-exec zero-output stalls and one `_dyld_start` sample route causality to `.17.3.5.3.1`, not to retry/deadline invention.
+- [x] **ADDRESSED (verified)** — Caller-sealed `VerilatorLifecycle` owns and independently validates the nine-state chain, objects/predecessors, storage, prepared inputs/executable, actual/normalized commands, process containment/timing/capture, and cleanup. Skip/replay/mutation/collision/symlink/partial/launch/exit/signal/timeout/overflow fail closed; Runner remains a sanitized total-function adapter with unchanged bytes, limits, retry, security/signing, support, and API authority.
+- [x] **NO REGRESSION** — Syntax passes; default/elevated lifecycle pass Files=2/Tests=18 and 4/43; guarded exact lifecycle/AHB parity pass 1/15 and 1/4; the broader watcher honestly retains the separately owned pre-main failure. Support/CI and docs pass 3/7,110 and 4/50; all 56 chapters, the removed 91-file render, 1,151-fact Knowledge Map, 1,532-candidate/zero-open claims, containment, acceptance, and doctrines close without unrelated pre-push CI.
 
 ## Terminal acceptance archive — `.17.3.5.3.1` macOS pre-main qualification
 
@@ -7267,8 +7199,9 @@ raising an enforcement ceiling.
   cleanup, dominance, and nonclaims. The runner admits no caller profile,
   report, manifest, family, or identity. A guarded independent producer
   serialization re-derives the 74,735-byte reference observation; the selected
-  1,048,576-byte publication, 65,536-byte IPC, and 4,096-byte error envelopes
-  are distinct containment controls, not budgets or capacity claims.
+  provisional 1,048,576-byte publication, 65,536-byte IPC, and 4,096-byte
+  error envelopes are distinct containment controls, not budgets or capacity
+  claims; child `.2.1` retains the later exact-capture falsification and repair.
 - [x] **NO REGRESSION** — Module/runner/test `syntax OK`; producer plus matrix
   watchers report `All tests successful`, `Files=2, Tests=15`. Hostile
   coverage rejects missing/duplicate/reordered samples, preflight execution or
@@ -7281,3 +7214,15 @@ raising an enforcement ceiling.
   separately owns exact clean-revision capture and fresh-process reload; no
   IASIM, support, performance, capacity, reached-boundary, parity, retry,
   timeout, or public-API claim changes.
+
+## Acceptance Checklist (enforced) — `.17.3.5.5.2.1` portable runtime publication-bound repair
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Clean exact t1670 at `9a534bc93` runs 1,964 seconds, seals 75,883-byte reference and 848,468-byte three-sample gate publications, then reports the qualification failure at perl/FSM/VIAL/ArchitectureScalePortableRuntimeMeasurementMatrix.pm line 1153 because the provisional 1,048,576-byte ceiling came from a false linear reference-report projection. The absent qualification/aggregate files prove rejection preceded publication; exact hashes retain the accepted calibration inputs.
+- [x] **ADDRESSED (verified)** — The publisher now exposes the complete
+  calibration derivation: exact gate bytes, three/five repetitions,
+  10,000/15,000 workloads, the 2,121,170-byte conservative projection, and the
+  4,194,304-byte binary envelope. Publish/reload rejection discloses actual and
+  maximum bytes; 65,536/4,096-byte IPC/error limits remain unchanged. The
+  book/card/claim/task chain retains rederivation, oversize falsification,
+  durability, nonclaims, and the pending real-largest-report test.
+- [x] **NO REGRESSION** — `All tests successful`: default producer/publisher passes Files=2, Tests=14 and CI tier Files=1, Tests=12; all 56 book chapters test. Knowledge Map parity is 1,153 facts/6,116 questions/6,283 occurrences/136 shards; the 1,558-candidate join closes 40 claims/911 gates/590 reviews/17 gaps/zero open. Task integrity, relative paths, live containment with zero ceiling increase, staged acceptance, and doctrines must pass before commit. The independent qualification diagnostic's 30-second zero-output Darwin pre-main failure stays failed without retry, timeout widening, or performance/support/capacity/API claim.

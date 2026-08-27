@@ -845,11 +845,22 @@ record, they may inherit only the identity already established by the earlier
 reference/gate/qualification coordinates; they cannot originate or alter it.
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-portable-runtime-matrix-bounds-v1 -->
-- Claim: The portable-runtime publisher derives five profiles from producer ownership, limits each canonical publication to 1,048,576 bytes, and limits each compact child result to 65,536 bytes; its guarded 74,735-byte reference calibration and six-record qualification projection leave positive publication headroom.
-- Re-derive: Compare producer `owned_shapes` with runner `--inventory`, query `publication_limits`, and independently serialize one guarded canonical reference report with the producer; do not infer the report size from the publisher constant.
+- Claim: The portable-runtime publisher derives five profiles from producer ownership, limits each canonical publication to 4,194,304 bytes, and limits each compact child result to 65,536 bytes; its exact 848,468-byte three-sample/10,000-record gate publication scales under the selected five-sample/15,000-record qualification route to a conservative 2,121,170-byte projection, leaving 2,073,134 bytes before the binary ceiling.
+- Re-derive: Compare producer `owned_shapes` with runner `--inventory`, independently census the accepted canonical gate publication, query `publication_limits`, and recompute `848,468 * (5/3) * (15,000/10,000)`; do not infer the calibration or projection from the ceiling.
 - Falsify: Run the default t1670 watcher mutations for order, duplicate/missing samples, forged preflight execution/identity, oversized IPC/publications, signals, collisions, and exact-versus-ambiguous crash staging; the closing guarded capture must also fit and reload the real largest report.
 - Durability: Retain the tracked producer, publisher, runner, watcher, task/book/card/claim records, doctrine gates, and Git chain; rerun the bound watcher when any participant changes.
 <!-- CLAIM-VERIFICATION:END vial-portable-runtime-matrix-bounds-v1 -->
+
+The first clean exact campaign falsified the provisional one-MiB bound after
+successfully sealing a 75,883-byte reference file and an 848,468-byte gate
+file containing all three raw repetitions. No oversized qualification file or
+aggregate seal was written. The repair scales the entire gate publication by
+both repetition growth and workload growth, deliberately scaling fixed
+metadata twice, then rounds the 2,121,170-byte result up to a four-MiB binary
+containment envelope. Rejection diagnostics disclose actual and allowed bytes;
+the compact child IPC and error ceilings remain 65,536 and 4,096 bytes. A new
+clean exact campaign still has to falsify this projection with the real largest
+report before the matrix can close.
 
 Raw profile files, the family `matrix.json`, and the complete
 `complete-matrix.json` are immutable single-file publications. Byte-equal
@@ -888,8 +899,8 @@ FSMGEN_VIAL_PORTABLE_RUNTIME_MATRIX_EXACT=1 \
     t/1670-vial-architecture-scale-portable-runtime-measurement-matrix.t
 ```
 
-The reference-size observation calibrates serialization containment; it is
-not a performance result. No raw wall/CPU/RSS value is published until
+The reference and gate observations calibrate serialization containment; they
+are not performance results. No raw wall/CPU/RSS value is published until
 the clean matrix seal closes, and no bound here claims backend support,
 performance, capacity, a reached record boundary, cross-backend parity, IASIM
 execution, or a public API change.

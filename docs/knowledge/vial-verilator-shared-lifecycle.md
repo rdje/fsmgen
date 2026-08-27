@@ -8,7 +8,7 @@ answers:
   - "what did the macOS pre-main qualification conclude?"
   - "what work follows completed common-controller portable Verilator measurement?"
   - "how is the portable Verilator runtime matrix published and reloaded?"
-date: 2026-08-25
+date: 2026-08-27
 status: current
 tags: [vial, verilator, lifecycle, runner, scalability, macos]
 evidence: >-
@@ -131,14 +131,14 @@ exact cleanup. Nominal record limit/excess shapes remain tool-free. Compact
 assembled state stores a graph descriptor rather than the full graph; a
 separate exact watcher proves fresh-process reconstruction and cleanup.
 Child `.17.3.5.5.1` implements the producer-derived five-profile immutable
-publisher. Separate children reconstruct complete reports and publish them
-before returning bounded compact entries. Family/complete seals require one
-clean revision/host/tool/guard identity; tool-free limit/excess may only inherit
-that already established identity. The default watcher rejects process,
-envelope, order, sample, preflight, collision, and staging drift. Child
-`.17.3.5.5.2` next owns exact clean capture plus fresh-process reload. No
-performance budget, support, capacity, reached-boundary, parity, IASIM, or
-public API claim is added.
+publisher. Separate children publish complete reports before returning compact
+entries; aggregate seals require one clean revision/host/tool/guard identity.
+The default watcher rejects process, envelope, order, sample, preflight,
+collision, and staging drift. Exact capture at `9a534bc93` falsified one MiB
+after sealing 75,883/848,468-byte reference/gate reports. Child `.2.1` derives
+a 2,121,170-byte workload/repetition projection, rounds to four MiB, and retains
+65,536-byte compact IPC. Child `.2.2` owns clean recapture/reload; performance,
+support, capacity, parity, IASIM, and API claims remain closed.
 
 Related: [[vial-architecture-scale-proof]],
 [[hial-vial-verification-fixture-architecture]].

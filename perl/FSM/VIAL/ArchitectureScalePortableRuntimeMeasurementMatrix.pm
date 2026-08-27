@@ -41,14 +41,29 @@ my $REPORT_FILENAME = 'measurement-publication.json';
 my $MATRIX_FILENAME = 'matrix.json';
 my $COMPLETE_FILENAME = 'complete-matrix.json';
 
-# The guarded reference report is 74,735 canonical bytes.  The selected
-# qualification route retains one validation plus five measured records, so a
-# 1-MiB raw-publication ceiling leaves more than twice the linear six-record
-# projection.  The closing exact capture must falsify this bound with the real
-# largest report.  Workers return only compact entries through a separate
-# 64-KiB IPC ceiling; neither bound is a performance or capacity claim.
+# The guarded reference report is 74,735 canonical bytes.  Exact capture then
+# falsified the original linear-reference projection: its accepted three-sample
+# gate publication is 848,468 bytes.  Conservatively scale that complete file
+# by both selected repetition growth (5/3) and workload growth (15,000/10,000)
+# to 2,121,170 bytes, then round the containment envelope up to 4 MiB.  This
+# deliberately scales fixed metadata twice and therefore does not depend on a
+# compact-report assumption.  The closing exact capture must still falsify the
+# projection with the real largest report.  Workers return only compact entries
+# through a separate 64-KiB IPC ceiling; neither bound is a performance or
+# capacity claim.
 my $REFERENCE_CALIBRATION_BYTES = 74_735;
-my $MAX_PUBLICATION_BYTES = 1_048_576;
+my $GATE_CALIBRATION_PUBLICATION_BYTES = 848_468;
+my $GATE_CALIBRATION_MEASUREMENT_RECORDS = 3;
+my $GATE_CALIBRATION_TRACE_RECORDS = 10_000;
+my $QUALIFICATION_MEASUREMENT_RECORDS = 5;
+my $QUALIFICATION_TRACE_RECORDS = 15_000;
+my $QUALIFICATION_PROJECTION_BYTES =
+    $GATE_CALIBRATION_PUBLICATION_BYTES
+        * $QUALIFICATION_MEASUREMENT_RECORDS
+        * $QUALIFICATION_TRACE_RECORDS
+        / ($GATE_CALIBRATION_MEASUREMENT_RECORDS
+            * $GATE_CALIBRATION_TRACE_RECORDS);
+my $MAX_PUBLICATION_BYTES = 4_194_304;
 my $MAX_PROFILE_WORKER_RESULT_BYTES = 65_536;
 my $MAX_PROFILE_WORKER_ERROR_BYTES = 4_096;
 my $ADAPTER = 'FSM::VIAL::ArchitectureScalePortableRuntimeMeasurement';
@@ -146,7 +161,18 @@ sub publication_limits($class) {
     _exact_invocant($class, 'publication_limits');
     return {
         reference_calibration_bytes => $REFERENCE_CALIBRATION_BYTES,
-        qualification_record_projection => 6,
+        gate_calibration_publication_bytes =>
+            $GATE_CALIBRATION_PUBLICATION_BYTES,
+        gate_calibration_measurement_records =>
+            $GATE_CALIBRATION_MEASUREMENT_RECORDS,
+        gate_calibration_trace_records =>
+            $GATE_CALIBRATION_TRACE_RECORDS,
+        qualification_measurement_records =>
+            $QUALIFICATION_MEASUREMENT_RECORDS,
+        qualification_trace_records =>
+            $QUALIFICATION_TRACE_RECORDS,
+        qualification_projection_bytes =>
+            $QUALIFICATION_PROJECTION_BYTES,
         maximum_publication_bytes => $MAX_PUBLICATION_BYTES,
         maximum_worker_result_bytes => $MAX_PROFILE_WORKER_RESULT_BYTES,
         maximum_worker_error_bytes => $MAX_PROFILE_WORKER_ERROR_BYTES,
@@ -1150,8 +1176,10 @@ sub _require_capture_revision($common, $git_revision) {
 
 sub _publish_json($raw) {
     my $encoded = _canonical_json($raw->{value}) . "\n";
-    confess "portable-runtime matrix publication exceeds its calibrated ceiling\n"
-        if bytes::length($encoded) > $MAX_PUBLICATION_BYTES;
+    my $encoded_bytes = bytes::length($encoded);
+    confess "portable-runtime matrix publication exceeds its calibrated ceiling "
+        . "(actual=$encoded_bytes bytes, maximum=$MAX_PUBLICATION_BYTES bytes)\n"
+        if $encoded_bytes > $MAX_PUBLICATION_BYTES;
     my $digest = sha256_hex($encoded);
     my $target_rel = join('/',
         $PUBLICATION_BASE, $raw->{profile_id},
@@ -1289,7 +1317,8 @@ sub _publication_metadata($raw) {
     my @stat = stat($artifact_abs);
     confess "portable-runtime publication crossed repository volume\n"
         unless @stat && $stat[0] == $raw->{root_device};
-    confess "portable-runtime publication exceeds its calibrated ceiling\n"
+    confess "portable-runtime publication exceeds its calibrated ceiling "
+        . "(actual=$stat[7] bytes, maximum=$MAX_PUBLICATION_BYTES bytes)\n"
         unless $stat[7] > 0 && $stat[7] <= $MAX_PUBLICATION_BYTES;
     open my $fh, '<:raw', $artifact_abs
         or confess "cannot read portable-runtime publication artifact\n";
