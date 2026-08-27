@@ -671,7 +671,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Repeat the complete guarded capture at the repaired clean revision and independently reload its exact aggregate identity.`
   Acceptance: `Remove only the exactly identified superseded portable-runtime publications after retaining their bytes/digests, then run one new clean-revision exact campaign. Require all parent .2 acceptance evidence, retain any Darwin pre-main stall as failed without retry or timeout widening, and close only after fresh-process reload and exact file/hash/staging census.`
-  Verification: `Clean bound repair 2681aa777 permits exact capture. At 80b07d6ee, reference/gate/qualification publish as 75,883/847,861/1,730,744 bytes with SHA-256 3e572a7f2f628eefa933a3959bc2c809cc3fc9ef9c61865e7b615cadd1138902/6e15ca49731b5ad2fe1dfff16ccbbe1f86cf6f75ff5ae8c5124b5b1b5e92a8bc/ac6a513c0689b19b57cdef6f2b1b6022b5f9cf6315d511794eb307ada2a11def and zero staging or aggregate residue. Profile 4 exposes preflight misrouting. Child .1 repairs/tests explicit dispatch; proposed child .2 repeats capture after the clean repair commit.`
+  Verification: `Clean bound repair 2681aa777 permits exact capture. At 80b07d6ee, reference/gate/qualification publish as 75,883/847,861/1,730,744 bytes with SHA-256 3e572a7f2f628eefa933a3959bc2c809cc3fc9ef9c61865e7b615cadd1138902/6e15ca49731b5ad2fe1dfff16ccbbe1f86cf6f75ff5ae8c5124b5b1b5e92a8bc/ac6a513c0689b19b57cdef6f2b1b6022b5f9cf6315d511794eb307ada2a11def and zero staging or aggregate residue. Profile 4 exposes preflight misrouting. Child .1 repairs/tests explicit dispatch; active child .2 repeats capture from clean repair 5e76e6905.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2: activate repaired exact matrix capture`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2`
 
@@ -683,11 +683,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.1: repair portable-runtime preflight dispatch`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Repeat exact capture at the clean dispatcher-repair revision and independently reload the complete aggregate.`
   Acceptance: `Remove only the three exactly censused superseded publications after retaining their bytes/digests; run one guarded exact campaign; require all five profiles, family/complete manifests, fresh-process reload, exact census, zero staging/residue/exclusions, and retain any failure without retry or timeout widening.`
-  Verification: `pending child .1 clean repair commit`
-  Commit: `pending`
+  Verification: `Clean repair 5e76e6905 is committed; the retained three-profile census precedes exact removal and one guarded recapture.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2: activate clean repaired matrix recapture`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6`
   Status: `proposed`
