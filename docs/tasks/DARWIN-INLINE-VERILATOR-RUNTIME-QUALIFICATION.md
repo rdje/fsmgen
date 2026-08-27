@@ -132,11 +132,11 @@ by that run.
   Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.2: make Linux core discovery portable`
 
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Consume every remaining exact-push job and close the complete hosted failure partition.`
   Acceptance: `Wait for every required job in exact run 33023589424; preserve every green result; map each terminal failure to a committed repair root or create a new child before changing implementation; require the aggregate and all jobs terminal; record durable URLs/conclusions without retry, cancellation, or an unauthorized early push.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Exact-SHA run 33023589424 is terminal-failure: 138/138 jobs, 133 success, four repaired file-shard failures, and aggregate 98398411364 failing only on perl-files. Provider jobs 98359601960/98359602065 map to .1; Linux jobs 98359602070/98359602123 map to .2. No retry, cancellation, new root, or early push occurred.`
+  Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.3: close exact-run failure partition`
 
 ## Current Frontier
 
@@ -149,8 +149,8 @@ by that run.
 | 5 | `.3.2.1` | `done` | Exact-revision t296 recovery and the independently selected 778-file lexical tail are green; the checkpoint self-cleared and no guard event recurred. |
 | 6 | `.3.2.2.1` | `done` | Five dedicated coordinates now give all three default OSVVM-backed tests exact isolated provider ownership; focused routing and real-provider proofs pass. |
 | 7 | `.3.2.2.2` | `done` | Bounded kernel cpulist authority plus procfs fallback repairs both setup-Perl failures without schema or Darwin drift. |
-| 8 | `.3.2.2.3` | `active` | Consume all remaining exact-push jobs and close their failure-root partition without retry or cancellation. |
-| 9 | `.3.2.2` | `active` | Keep the hosted repair parent open until the exact failed run is completely consumed. |
+| 8 | `.3.2.2.3` | `done` | All 138 jobs are terminal; four prerequisite failures map exactly to committed repairs and the aggregate adds no root cause. |
+| 9 | `.3.2.2` | `active` | Retain the repairs until a standing-cadence exact repair push is hosted-green. |
 | 10 | `.3.2` | `active` | Preserve complete-CI and green hosted evidence until an authorized exact repair revision is hosted-green. |
 
 ## Decisions
@@ -248,13 +248,19 @@ parent success, and fresh t297-t999 tail jointly cover the complete CI file set;
 ## `.3.2.2` first hosted-push failure evidence
 
 The due push transported exact revision `c7a222ac41db7b28d502accbb75fcdc6ed579754`; local HEAD, `origin/main`, and `git ls-remote` matched, and ahead count reset
-to zero. Tracked triggers require `Perl FSM Regression`, `Publish mdBook`, and `knowledge-map-gate`; Knowledge Map run `33023589413` and both Pages jobs in
-run `33023589417` are terminal-success, while regression run `33023589424` remains in flight (all under `https://github.com/rdje/fsmgen/actions/runs/`).
+to zero. Knowledge Map `33023589413` and Pages `33023589417` succeed. Regression `33023589424` is terminal: 138/138 jobs, 133 success, four repaired failures,
+and aggregate `98398411364` failing only on `perl-files`; doctrines, book, dedicated, corpus, and dynamic succeed (runs under `https://github.com/rdje/fsmgen/actions/runs/`).
 
 Regression jobs `98359601960` and `98359602065` fail only t1650 and t1648 respectively: both provider-empty ordinary shards return the same missing-provider
 evidence, and history/routing census show those tests postdate the closed dedicated set. Jobs `98359602070` and `98359602123` fail only t1656 and
 t1657 respectively: setup-Perl 5.32 cannot expose `POSIX::_SC_NPROCESSORS_ONLN`, so both abort at Linux host profiling before their intended oracles.
 Re-derivation is the tracked triggers plus CI-driver inventory; falsification is the exact-SHA raw logs; durability is this evidence and the child commits.
+
+## Acceptance Checklist — `.3.2.2.3` exact-run completion
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — All 138 jobs are terminal; only four prerequisites fail, matching two committed roots. Aggregate `98398411364` reports only `perl-files=failure`.
+- [x] **ADDRESSED (verified)** — Provider jobs `98359601960/98359602065` map to `.1`; Linux jobs `98359602070/98359602123` map to `.2`; 133 jobs succeed and no new child is needed.
+- [x] **NO REGRESSION** — No retry, cancellation, relabel, or early push occurred; run/job URLs, SHA, outcomes, repairs, and cadence requalification are durable.
 
 ## `.3` interrupted complete-CI evidence
 
