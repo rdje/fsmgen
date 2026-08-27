@@ -97,7 +97,7 @@ by that run.
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2`
   Status: `active`
   Goal: `Resume the complete-CI suffix after t1545 repair, then push and consume hosted qualification.`
-  Children: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.1`
+  Children: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.1, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2`
   Acceptance: `Restart the authoritative suffix at the exact failed t1545 frontier, combine it with the retained green t01-t1544 evidence, validate locality/cleanup, push at the standing cadence, and consume every expected hosted workflow/job to terminal success with durable URLs and conclusions.`
   Verification: `pending`
   Commit: `pending`
@@ -109,6 +109,28 @@ by that run.
   Verification: `At clean revision 2dcfaa29715a, guarded checkpointed t296 recovery completed all 762 independently re-derived batches (287 pipeline/default, 94 CLI/default, 287 pipeline/strict, and 94 CLI/strict), then passed its parent at Files=1/Tests=10 in 22,210 wallclock seconds and self-cleared the exact-revision checkpoint. A separate guarded lexical selection independently derived 778 paths from t297 through t999 and passed all of them at Files=778/Tests=2,989 in 18,614 wallclock seconds. Neither run triggered a RAM-guard event; the checkpoint, test processes, and generated residue are absent. Together with the retained green t01-t1544 prefix and resumed green t1545-t295 evidence, this closes the complete-CI file set without relabeling either interruption as passing.`
   Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.1: activate checkpointed t296 recovery; DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.1: complete checkpointed t296 recovery`
 
+- ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2`
+  Status: `active`
+  Goal: `Repair every exact first-push hosted failure without discarding the remaining job evidence.`
+  Children: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.1, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.2`
+  Acceptance: `Consume every required job from exact pushed revision c7a222ac41db, partition each terminal failure by root cause, repair each under its own committed child with focused and routing oracles, preserve every green hosted result, and keep .3.2 active until an authorized exact repair revision is hosted-green.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.1`
+  Status: `active`
+  Goal: `Give every default provider-backed OSVVM test explicit isolated hosted ownership.`
+  Acceptance: `Audit the complete default provider-backed test set and its history; remove t1648 and t1650 from provider-empty ordinary shards; add isolated dedicated coordinates that materialize and verify exact OSVVM 2026.05 before either test; update the closed shard/inventory/workflow watcher; prove disjoint complete routing, exact prerequisites, focused provider-backed success, and no weakened skip or product claim.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.2`
+  Status: `proposed`
+  Goal: `Make Linux architecture-scale host logical-core discovery portable and deterministic.`
+  Acceptance: `Replace the unavailable setup-Perl POSIX constant path with a bounded Linux authority, validate its parser on representative and hostile inputs, preserve Darwin behavior and closed host-profile evidence, and replay t1656 plus the hosted routing watcher without weakening recovery-safety assertions.`
+  Verification: `pending`
+  Commit: `pending activation`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
@@ -118,9 +140,15 @@ by that run.
 | 3 | `.3` | `active` | Parent for complete-CI repair, due push, and hosted qualification. |
 | 4 | `.3.1` | `done` | The shared mechanism and sealed fixture adapter make every t1545 subprocess finite and cleanup-safe. |
 | 5 | `.3.2.1` | `done` | Exact-revision t296 recovery and the independently selected 778-file lexical tail are green; the checkpoint self-cleared and no guard event recurred. |
-| 6 | `.3.2` | `active` | Preserve the completed complete-CI evidence, validate locality and the mdBook, then finish the due push and hosted qualification. |
+| 6 | `.3.2.2.1` | `active` | Exact pushed shard 8 proves provider-backed t1650 ran in a provider-empty ordinary shard; audit and seal the complete provider route first. |
+| 7 | `.3.2.2.2` | `proposed` | Exact pushed shard 14 proves setup-Perl cannot expose `_SC_NPROCESSORS_ONLN`; repair Linux host profiling after the provider route commits cleanly. |
+| 8 | `.3.2.2` | `active` | Consume every remaining job from the failed exact push while its ordered repair children commit independently. |
+| 9 | `.3.2` | `active` | Preserve complete-CI and green hosted evidence until an authorized exact repair revision is hosted-green. |
 
 ## Decisions
+
+- `2026-08-27`: Preserve exact push `c7a222ac41db` and all still-running jobs. Repair its provider-routing and Linux host-profile failures as separate `.3.2.2`
+  children; do not retry, cancel, weaken provider qualification, or relabel the aggregate while any required job remains unconsumed.
 
 - `2026-08-26`: Open a separate cross-cutting defect tree rather than append a
   one-off `t/1515` workaround to completed HIAL/VIAL child `.17.3.5.3.2`.
@@ -178,36 +206,16 @@ by that run.
 
 ## `.3.2.1` host-pressure interruption and recovery evidence
 
-The resumed suffix passed `t/1545` through `t/295`, including the full balanced
-portable composition, emission, runtime, measurement, portable-runtime, and
-new hostile process-supervision tests. `t/296` then ran isolated default and
-strict pipeline/CLI batches for 4 hours 48 minutes. During a strict-CLI AXI
-batch, `scripts/run_with_ram_guard.sh` reported `host memory 88.1% reached
-cutoff 88%` and terminated the exact prove/t296/worker/generator group. Its
-termination output did not report the 4,096-MiB descendant cutoff. The last
-pre-termination process census measured the active generator at 371,136 KiB;
-the enclosing worker was 79,936 KiB and the t296 parent 12,816 KiB. A
-post-cleanup host census found a sibling-project release compiler at 5,587,968
-KiB plus concurrent sibling-project test compilers; after they released
-pressure, `memory_pressure -Q` reported 65% free. The guard left no listed
-FSMGEN process alive, Git remained clean at the exact revision, and the
-repository-local VIAL recovery area was empty.
+The resumed suffix passed `t/1545` through `t/295`, including the balanced portable and new process-supervision surfaces. `t/296` then ran isolated default
+and strict pipeline/CLI batches for 4 hours 48 minutes before `scripts/run_with_ram_guard.sh` reported `host memory 88.1% reached cutoff 88%` and terminated
+the exact process group. No 4,096-MiB descendant cutoff was reported: the last census measured generator/worker/t296 at 371,136/79,936/12,816 KiB, while a
+sibling-project compiler held 5,587,968 KiB. After sibling pressure released, `memory_pressure -Q` reported 65% free; no FSMGEN process or VIAL recovery
+residue remained, and Git stayed clean. Re-derivation is the guard readings plus live PID census; falsification is the absent descendant event, sub-4-GiB
+descendant total, and sibling census; durability is this evidence and `docs/knowledge/darwin-inline-verilator-test-runtime.md`, with `prove -Iperl -It/lib
+t/1597-t296-checkpoint.t` retaining the focused contract.
 
-Claim verification is explicit. Re-derivation is the guard's own independent
-host and descendant readings plus the live PID-tree census. Falsification is
-the absence of a descendant-cutoff message together with a descendant total
-far below 4 GiB and the separate sibling-process census. Durability is this
-task evidence plus `docs/knowledge/darwin-inline-verilator-test-runtime.md`;
-the focused contract remains re-runnable with `prove -Iperl -It/lib
-t/1597-t296-checkpoint.t`.
-
-The interrupted command did not set `FSMGEN_T296_CHECKPOINT`, and no checkpoint
-file exists, so its completed t296 batches cannot be reconstructed or credited.
-Recovery starts t296 again at the same clean revision with a safe
-`.artifacts/t296/*.json` checkpoint path. Each completed isolated batch is
-synced and atomically retained; a later guard interruption may resume only
-those exact recorded batches. The full parent must still finish green before
-the checkpoint clears and before the lexical suffix can continue.
+The interrupted command set no checkpoint, so none of its t296 batches is credited. Recovery therefore started t296 at the same clean revision with the safe
+`.artifacts/t296/*.json` contract; only synced atomic exact-revision batches could resume, and the checkpoint could clear only after the complete parent passed.
 
 Recovery completed at clean revision `2dcfaa29715a`. An independent list-only derivation counted 287 pipeline/default, 94 CLI/default, 287 pipeline/strict,
 and 94 CLI/strict batches: 762 total. The guarded parent consumed those exact batches, reported `Files=1, Tests=10` and `Result: PASS` after 22,210 wallclock
@@ -220,73 +228,38 @@ independent `prove` file/test summary, checkpoint self-removal only after all ma
 Durability is this owning task-tree verification plus the exact completion commit. The retained t01-t1544 prefix, resumed t1545-t295 success, fresh t296
 parent success, and fresh t297-t999 tail jointly cover the complete CI file set; neither interrupted attempt is itself credited as a pass.
 
+## `.3.2.2` first hosted-push failure evidence
+
+The due push transported exact revision `c7a222ac41db7b28d502accbb75fcdc6ed579754`; local HEAD, `origin/main`, and `git ls-remote` matched, and ahead count reset
+to zero. Tracked triggers require `Perl FSM Regression`, `Publish mdBook`, and `knowledge-map-gate`; Knowledge Map run `33023589413` and both Pages jobs in
+run `33023589417` are terminal-success, while regression run `33023589424` remains in flight (all under `https://github.com/rdje/fsmgen/actions/runs/`).
+
+Regression job `98359601960` fails only t1650: its provider-empty ordinary shard returns `VIAL_OSVVM_PROVIDER_MATERIALIZATION_ERROR` at `/dependency_root`;
+history and routing census show provider-backed t1648/t1650 postdate the closed dedicated set. Job `98359602070` fails only t1656: setup-Perl 5.32 cannot
+expose `POSIX::_SC_NPROCESSORS_ONLN`, so Linux host profiling aborts before recovery-safety oracles. Re-derivation is the tracked triggers plus CI-driver
+inventory/shard calculation; falsification is GitHub's exact-SHA job inventory/raw logs; durability is this evidence, exact IDs, and forthcoming child commits.
+
 ## `.3` interrupted complete-CI evidence
 
-The RAM-guarded suffix selected 1,072 lexical paths from `t/1515` through
-`t/999`. It remained green or contractually skipped through `t/1544`.
-`t/1545-task-acceptance-doctrine.t` then blocked in its first fixture's direct
-`IPC::Cmd::run(command => [$checker])` call. The exact descendant was
-`/usr/bin/env bash .../scripts/check_task_acceptance.sh`; after more than six
-minutes it had no child process. A one-second sample placed 792/792 main-thread
-frames at `_dyld_start`, reported a 96-KiB footprint, and had no binary-image
-description. The sample is 887 bytes with SHA-256
-`6851c9f6909f5003815ce82e9cc316ef0ac39a53ae631906b47534839de8f34c`.
-The exact checker/test/prove chain was terminated and verified absent. The
-sample was copied to the repository-volume diagnostic path
-`.artifacts/diagnostics/darwin-inline-verilator-runtime-qualification/t1545-env-premain.sample.txt`,
-matched by line count, byte count, SHA-256, and diagnostic content, then the
-exact sampler-created `/tmp` source was deleted and censused absent. The exact
-abandoned fixture repository was also deleted and censused absent. No
-`t/1545` or later test is classified as passing by this interrupted run.
-After the tracked hash, size, stack, and cleanup summary above became the
-durable evidence, the repository-volume diagnostic copy was consumed, deleted,
-and censused absent as well.
+The guarded 1,072-path suffix stayed green/skipped from `t/1515` through `t/1544`, then t1545 blocked in direct `IPC::Cmd::run(command => [$checker])`.
+Its `/usr/bin/env bash .../scripts/check_task_acceptance.sh` descendant had no child after six minutes; a one-second sample placed 792/792 frames at
+`_dyld_start`, with 96 KiB and no image map. The 887-byte sample has SHA-256 `6851c9f6909f5003815ce82e9cc316ef0ac39a53ae631906b47534839de8f34c`.
+The process chain was terminated and absent. Copy/line/byte/hash/content verification used the repository-local diagnostic path before the exact `/tmp`
+source, abandoned fixture repository, and consumed diagnostic copy were deleted and censused absent. This interrupted run credits no t1545-or-later pass.
 
 ## `.3.1` bounded task-acceptance fixture implementation
 
-The exact command surface is five fixture-setup Git invocations per repository
-plus one checker invocation per case, with later `git add` calls routed through
-the same helper. `t/1545` had two source-level direct `IPC::Cmd::run` sites:
-the common Git launcher and checker launcher. Both are removed.
+The exact surface is five fixture Git calls per repository plus one checker call per case; both direct `IPC::Cmd::run` launchers are removed.
+`FSM::Test::ProcessSupervisor` owns scalar shell-free argv, repository/same-volume cwd, bounded streams, close-on-exec, monotonic timing, one process group,
+and verified TERM/KILL cleanup. The adapter admits only its project-local fixture roots, exact init/config/add/commit shapes, and copied regular checker;
+unsafe paths/global config fail pre-fork. Load-time canonical Git/Bash identity resists later `PATH` mutation; calls use ten-second and
+1,048,576/4,194,304-byte bounds, while decision `0086` remains unchanged.
 
-`FSM::Test::ProcessSupervisor` now contains the formerly Verilator-local
-mechanism: scalar shell-free argv, repository/same-volume cwd admission,
-separate aggregate-bounded streams, close-on-exec control, monotonic timing,
-one process group, and verified TERM/KILL cleanup. The Verilator adapter
-retains decision `0086` unchanged. The task-acceptance adapter admits only
-`.artifacts/tmp/task-acceptance-tests/fsmgen-*` repositories, exact fixture-
-owned init/local-config/relative-add/baseline-commit argument shapes, and the
-copied regular checker. Global config and unsafe paths fail before process
-creation. Git and Bash are canonicalized at adapter load, so later `PATH`
-mutation cannot replace either admitted executable. Git/checker calls have fixed ten-second walls and
-1,048,576/4,194,304-byte aggregate capture ceilings.
-
-The first post-edit replay using `/bin/bash` was finite but honestly failed all
-nine top-level subtests: macOS Bash 3.2 treated the empty `CHANGE_PATTERNS`
-array as unbound at checker line 52. The adapter was then corrected to resolve
-the environment-selected Bash binary once from absolute `PATH` entries,
-canonicalize it, and execute that binary directly. The next exact RAM-guarded
-`t/1545` run passed at `Files=1, Tests=9`; no retry was added to the test or
-adapter. The new hostile watcher initially reproduced the env pre-main
-boundary through its own shebang, so its mechanism probe now invokes the
-already-running absolute Perl interpreter and cannot confuse host-loader
-behavior with supervision behavior.
-
-A later combined gate honestly failed the Verilator watcher's nominal success
-fixture at its fixed 30-second wall after exec handoff but before first output.
-That fixture still generated `#!/usr/bin/env perl`, reproducing the same hidden
-env boundary. No retry occurred. Every generated Verilator-watcher program now
-uses a shebang containing the canonical already-running Perl interpreter, and
-the census subtest proves that only the prove-invoked watcher entrypoint retains
-an env shebang.
-
-The final combined RAM-guarded focused gate passes
-`t/1545`, `t/1668`, and `t/1669` at `Files=3, Tests=19`. The new watcher proves
-fixed adapter values and failure truth, rejects non-fixture paths and an
-unregistered Git command/global config before process creation, exercises
-direct Bash handoff and nonzero exit, kills a TERM-resistant
-leader/descendant group, and recomputes exactly two policy-module owners of
-the low-level mechanism.
+Direct `/bin/bash` made all nine cases fail honestly because macOS Bash 3.2 treats empty `CHANGE_PATTERNS` as unbound; resolving/canonicalizing the selected
+Bash once restored t1545 (`Files=1, Tests=9`) with no retry. The watcher then exposed the same env pre-main boundary in generated env-Perl shebangs, so every
+generated probe invokes canonical running Perl and a census permits an env shebang only on prove's watcher entrypoint. Final guarded t1545+t1668+t1669
+passes `Files=3, Tests=19`, proving fixed values/failure truth, pre-fork rejection, direct Bash/nonzero behavior, TERM-resistant group cleanup, and exactly two
+low-level policy owners.
 
 ## `.1` tracked launch audit
 
