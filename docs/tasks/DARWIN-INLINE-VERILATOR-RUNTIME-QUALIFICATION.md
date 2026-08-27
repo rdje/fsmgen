@@ -118,11 +118,11 @@ by that run.
   Commit: `pending`
 
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Give every default provider-backed OSVVM test explicit isolated hosted ownership.`
   Acceptance: `Audit the complete default provider-backed test set and its history; remove t1648 and t1650 from provider-empty ordinary shards; add isolated dedicated coordinates that materialize and verify exact OSVVM 2026.05 before either test; update the closed shard/inventory/workflow watcher; prove disjoint complete routing, exact prerequisites, focused provider-backed success, and no weakened skip or product claim.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Decision 0088 refines the closed hosted contract to five explicit dedicated coordinates and Boolean prerequisite metadata. The tracked-test census derives 1,656 paths: 1,647 ordinary plus nine separate owners; all 16 ordinary shards are complete/disjoint and exclude the five dedicated tests. t1183 passes at Files=1/Tests=12; a guarded real-provider replay of t1598/t1648/t1650 passes at Files=3/Tests=22 against exact OSVVM root 2f7c391051dfb11890fa4bdbda9918d1db492250.`
+  Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.1: seal hosted OSVVM provider ownership`
 
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.2`
   Status: `proposed`
@@ -140,12 +140,15 @@ by that run.
 | 3 | `.3` | `active` | Parent for complete-CI repair, due push, and hosted qualification. |
 | 4 | `.3.1` | `done` | The shared mechanism and sealed fixture adapter make every t1545 subprocess finite and cleanup-safe. |
 | 5 | `.3.2.1` | `done` | Exact-revision t296 recovery and the independently selected 778-file lexical tail are green; the checkpoint self-cleared and no guard event recurred. |
-| 6 | `.3.2.2.1` | `active` | Exact pushed shard 8 proves provider-backed t1650 ran in a provider-empty ordinary shard; audit and seal the complete provider route first. |
-| 7 | `.3.2.2.2` | `proposed` | Exact pushed shard 14 proves setup-Perl cannot expose `_SC_NPROCESSORS_ONLN`; repair Linux host profiling after the provider route commits cleanly. |
+| 6 | `.3.2.2.1` | `done` | Five dedicated coordinates now give all three default OSVVM-backed tests exact isolated provider ownership; focused routing and real-provider proofs pass. |
+| 7 | `.3.2.2.2` | `proposed` | Exact pushed shards 14 and 15 share unavailable Linux logical-core discovery; activate only after the provider route commits cleanly. |
 | 8 | `.3.2.2` | `active` | Consume every remaining job from the failed exact push while its ordered repair children commit independently. |
 | 9 | `.3.2` | `active` | Preserve complete-CI and green hosted evidence until an authorized exact repair revision is hosted-green. |
 
 ## Decisions
+
+- `2026-08-27`: Decision `0088` refines decision `0063`: five dedicated coordinates carry explicit Boolean prerequisite metadata; exactly t1598, t1648,
+  and t1650 receive immutable OSVVM 2026.05, while ordinary shards remain provider-free and complete.
 
 - `2026-08-27`: Preserve exact push `c7a222ac41db` and all still-running jobs. Repair its provider-routing and Linux host-profile failures as separate `.3.2.2`
   children; do not retry, cancel, weaken provider qualification, or relabel the aggregate while any required job remains unconsumed.
@@ -235,9 +238,9 @@ to zero. Tracked triggers require `Perl FSM Regression`, `Publish mdBook`, and `
 run `33023589417` are terminal-success, while regression run `33023589424` remains in flight (all under `https://github.com/rdje/fsmgen/actions/runs/`).
 
 Regression job `98359601960` fails only t1650: its provider-empty ordinary shard returns `VIAL_OSVVM_PROVIDER_MATERIALIZATION_ERROR` at `/dependency_root`;
-history and routing census show provider-backed t1648/t1650 postdate the closed dedicated set. Job `98359602070` fails only t1656: setup-Perl 5.32 cannot
-expose `POSIX::_SC_NPROCESSORS_ONLN`, so Linux host profiling aborts before recovery-safety oracles. Re-derivation is the tracked triggers plus CI-driver
-inventory/shard calculation; falsification is GitHub's exact-SHA job inventory/raw logs; durability is this evidence, exact IDs, and forthcoming child commits.
+history and routing census show provider-backed t1648/t1650 postdate the closed dedicated set. Jobs `98359602070` and `98359602123` fail only t1656 and
+t1657 respectively: setup-Perl 5.32 cannot expose `POSIX::_SC_NPROCESSORS_ONLN`, so both abort at Linux host profiling before their intended oracles.
+Re-derivation is the tracked triggers plus CI-driver inventory; falsification is the exact-SHA raw logs; durability is this evidence and the child commits.
 
 ## `.3` interrupted complete-CI evidence
 
@@ -382,6 +385,12 @@ Verilator process.
 - [x] **ADDRESSED (verified)** — The existing exact-revision repository-local checkpoint consumed all 762 independently counted t296 batches, the complete parent passed, and the checkpoint self-cleared. The separately derived 778-file lexical tail from t297 through t999 then passed, returning ownership to `.3.2` for locality, book, push, and hosted qualification.
 - [x] **NO REGRESSION** — Guarded t296 reports `Files=1, Tests=10` and guarded t297-t999 reports `Files=778, Tests=2989`, both with `All tests successful` and `Result: PASS`. Neither guard fired; the checkpoint and test processes are absent; Git remained clean throughout. Combined with retained t01-t295 evidence, every complete-CI file is covered without retrying or reclassifying a failed assertion.
 
+## Acceptance Checklist — `.3.2.2.1` hosted provider ownership
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Exact-SHA job `98359601960` runs t1650 in provider-empty ordinary shard 8 and fails at `/dependency_root`; `git log -S 'HOSTED_DEDICATED_TEST_2' --oneline -- bin/ci-regression` identifies `ded0520c4` as the three-coordinate list's origin. The source/call-path census derives t1598, t1648, and t1650 as the complete default real-provider set while separating mocked, installed-tool-conditional, and explicit opt-in tests.
+- [x] **ADDRESSED (verified)** — Decision `0088`, `bin/ci-regression`, and the workflow define five closed coordinates. Explicit matrix flags give only t1436 pinned HDL tools and exactly t1598/t1648/t1650 the immutable repository-local provider. The watcher independently closes all 1,656 tracked tests as 1,647 ordinary plus nine separate owners and rejects bad coordinates.
+- [x] **NO REGRESSION** — `t/1183` reports `Files=1, Tests=12` PASS; the guarded exact-provider run of t1598/t1648/t1650 reports `Files=3, Tests=22` PASS in 331 seconds. Driver syntax, five dry-run coordinates, provider HEAD, mdBook, Knowledge Map, task/decision structure, locality, live-document, claim, diff, and staged doctrine gates are required green for commit.
+
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
@@ -396,3 +405,4 @@ Verilator process.
 | `2026-08-26` | `.3.2` activation | clean-tree census; committed repair identity; frontier alignment | `d630261e6 clean; retained prefix through t1544; exact t1545 restart active` |
 | `2026-08-26` | `.3.2.1` host-pressure recovery activation | authoritative suffix; RAM-guard output; live PID/RSS census; post-cleanup process/memory/residue census; checkpoint-contract audit; focused t1597/t1414/t1549/t1527 and Knowledge Map checks | `green through t295; t296 interrupted after 4h48m by host 88.1% cutoff, not descendant 4-GiB cutoff; no checkpoint existed; exact-revision checkpointed recovery active; focused recovery checks pass` |
 | `2026-08-27` | `.3.2.1` checkpointed recovery completion | independent t296 matrix count; guarded exact-revision t296 parent; independent lexical-tail selection; guarded t297-t999 prove; checkpoint/process/residue census | `t296 Files=1/Tests=10 over all 762 batches; t297-t999 Files=778/Tests=2,989; both PASS with no guard event; checkpoint self-cleared; .3.2 active` |
+| `2026-08-27` | `.3.2.2.1` provider ownership | exact hosted failure; source/history census; five-coordinate driver/workflow; closed watcher; guarded real-provider replay | `t1650 fails only without provider; 1,656 paths close as 1,647 ordinary + 9 separate; t1183 Files=1/Tests=12 and provider trio Files=3/Tests=22 PASS` |

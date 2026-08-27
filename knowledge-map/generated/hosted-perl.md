@@ -1,7 +1,7 @@
 # Knowledge Map: `hosted-perl`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **9** uniquely owned question entries.
+> **1** facts · **10** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -12,7 +12,8 @@
 - q="how does hosted CI install and checksum mdBook without actions-mdbook?" · facts=[hosted-perl-regression-sharding](../../docs/knowledge/hosted-perl-regression-sharding.md)
 - q="how is the full Perl regression sharded on GitHub Actions?" · facts=[hosted-perl-regression-sharding](../../docs/knowledge/hosted-perl-regression-sharding.md)
 - q="how many hosted Perl regression shards are there?" · facts=[hosted-perl-regression-sharding](../../docs/knowledge/hosted-perl-regression-sharding.md)
-- q="why are t1436 t1437 and t1598 dedicated GitHub jobs?" · facts=[hosted-perl-regression-sharding](../../docs/knowledge/hosted-perl-regression-sharding.md)
+- q="which hosted tests materialize OSVVM 2026.05?" · facts=[hosted-perl-regression-sharding](../../docs/knowledge/hosted-perl-regression-sharding.md)
+- q="why are t1436 t1437 t1598 t1648 and t1650 dedicated GitHub jobs?" · facts=[hosted-perl-regression-sharding](../../docs/knowledge/hosted-perl-regression-sharding.md)
 - q="why does hosted CI separate t/1438?" · facts=[hosted-perl-regression-sharding](../../docs/knowledge/hosted-perl-regression-sharding.md)
 
 ## Facts
@@ -21,5 +22,5 @@
 
 _Hosted regression uses closed Perl partitions and checksummed mdBook tooling_
 
-- **date:** 2026-08-11 · **status:** current
+- **date:** 2026-08-27 · **status:** current
 - **source and verification:** [`docs/knowledge/hosted-perl-regression-sharding.md`](../../docs/knowledge/hosted-perl-regression-sharding.md)

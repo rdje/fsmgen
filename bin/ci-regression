@@ -17,10 +17,12 @@ HOSTED_DEDICATED_SHARD=""
 HOSTED_DYNAMIC_SHARD=""
 HOSTED_CORPUS_SHARD=""
 
-HOSTED_DEDICATED_COUNT=3
+HOSTED_DEDICATED_COUNT=5
 HOSTED_DEDICATED_TEST_0="t/1436-ial2-ppif-parser-cli.t"
 HOSTED_DEDICATED_TEST_1="t/1437-axi-ial2-manager-capacity-status-generator.t"
 HOSTED_DEDICATED_TEST_2="t/1598-vial-vhdl-osvvm-emission.t"
+HOSTED_DEDICATED_TEST_3="t/1648-vial-architecture-scale-backend-emission-osvvm.t"
+HOSTED_DEDICATED_TEST_4="t/1650-vial-architecture-scale-backend-emission-family-qualification.t"
 HOSTED_DYNAMIC_TEST="t/1438-axi-ial2-manager-dynamic-transaction-id-focused.t"
 HOSTED_CORPUS_TEST_296="t/296-regression-corpus-supported-behavior.t"
 HOSTED_CORPUS_TEST_301="t/301-check-json-supported-corpus.t"
@@ -60,7 +62,7 @@ Options:
   --dry-run                     Print selected steps without executing them.
   --hosted-file-shard I/N       Run file shard I of N, excluding the separately
                                 scheduled dedicated, corpus, and dynamic tests.
-  --hosted-dedicated-shard I/3  Run one exact long/provider-dependent test.
+  --hosted-dedicated-shard I/5  Run one exact long/provider-dependent test.
   --hosted-dynamic-shard I/N    Run case shard I of N from the dynamic
                                 transaction-ID focused test.
   --hosted-corpus-shard T:I/N   Run entry shard I of N from supported-corpus
@@ -173,6 +175,8 @@ hosted_dedicated_test_file() {
     0) printf '%s\n' "$HOSTED_DEDICATED_TEST_0" ;;
     1) printf '%s\n' "$HOSTED_DEDICATED_TEST_1" ;;
     2) printf '%s\n' "$HOSTED_DEDICATED_TEST_2" ;;
+    3) printf '%s\n' "$HOSTED_DEDICATED_TEST_3" ;;
+    4) printf '%s\n' "$HOSTED_DEDICATED_TEST_4" ;;
     *)
       printf 'ci-regression: unknown hosted dedicated test index: %s\n' "$1" >&2
       exit 2
@@ -185,6 +189,8 @@ is_separately_hosted_test() {
     "$HOSTED_DEDICATED_TEST_0"|\
     "$HOSTED_DEDICATED_TEST_1"|\
     "$HOSTED_DEDICATED_TEST_2"|\
+    "$HOSTED_DEDICATED_TEST_3"|\
+    "$HOSTED_DEDICATED_TEST_4"|\
     "$HOSTED_DYNAMIC_TEST"|\
     "$HOSTED_CORPUS_TEST_296"|\
     "$HOSTED_CORPUS_TEST_301"|\
@@ -293,7 +299,7 @@ while (($#)); do
       ;;
     --hosted-dedicated-shard)
       if (($# < 2)); then
-        printf 'ci-regression: --hosted-dedicated-shard requires I/3\n' >&2
+        printf 'ci-regression: --hosted-dedicated-shard requires I/5\n' >&2
         exit 2
       fi
       HOSTED_DEDICATED_SHARD="$2"

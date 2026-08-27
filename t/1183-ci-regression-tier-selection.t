@@ -12,6 +12,8 @@ my %dedicated_relpath = (
     0 => 't/1436-ial2-ppif-parser-cli.t',
     1 => 't/1437-axi-ial2-manager-capacity-status-generator.t',
     2 => 't/1598-vial-vhdl-osvvm-emission.t',
+    3 => 't/1648-vial-architecture-scale-backend-emission-osvvm.t',
+    4 => 't/1650-vial-architecture-scale-backend-emission-family-qualification.t',
 );
 my $dynamic_relpath = 't/1438-axi-ial2-manager-dynamic-transaction-id-focused.t';
 my $dynamic_test = File::Spec->catfile(
@@ -258,8 +260,8 @@ subtest 'hosted file shards form one exact disjoint full-suite inventory' => sub
 
     is(
         scalar(keys %separately_hosted_relpath),
-        7,
-        'seven exact tests have non-ordinary hosted ownership',
+        9,
+        'nine exact tests have non-ordinary hosted ownership',
     );
     is_deeply(
         [sort(@expected, keys(%separately_hosted_relpath))],
@@ -298,27 +300,27 @@ subtest 'hosted file shards form one exact disjoint full-suite inventory' => sub
     }
 };
 
-subtest 'hosted dedicated shards select the three exact outlier/provider tests' => sub {
+subtest 'hosted dedicated shards select the five exact outlier/provider tests' => sub {
     my @selected;
-    for my $index (0 .. 2) {
+    for my $index (0 .. 4) {
         my $result = run_ci(
             'full',
             '--no-book',
-            "--hosted-dedicated-shard=$index/3",
+            "--hosted-dedicated-shard=$index/5",
             '--dry-run',
         );
-        ok($result->{success}, "hosted dedicated shard $index/3 dry-run succeeds");
-        is($result->{stderr}, '', "hosted dedicated shard $index/3 keeps stderr clean");
+        ok($result->{success}, "hosted dedicated shard $index/5 dry-run succeeds");
+        is($result->{stderr}, '', "hosted dedicated shard $index/5 keeps stderr clean");
         like(
             $result->{stdout},
-            qr/==> Perl dedicated test \Q$index\/3\E/,
-            "hosted dedicated shard $index/3 identifies itself",
+            qr/==> Perl dedicated test \Q$index\/5\E/,
+            "hosted dedicated shard $index/5 identifies itself",
         );
         my @test_files = $result->{stdout} =~ m{\b(t/[^\s]+\.t)\b}g;
         is_deeply(
             \@test_files,
             [$dedicated_relpath{$index}],
-            "hosted dedicated shard $index/3 selects its exact test",
+            "hosted dedicated shard $index/5 selects its exact test",
         );
         push @selected, @test_files;
     }
@@ -326,7 +328,7 @@ subtest 'hosted dedicated shards select the three exact outlier/provider tests' 
     is_deeply(
         [sort @selected],
         [sort values %dedicated_relpath],
-        'dedicated coordinates cover all three outlier/provider tests exactly once',
+        'dedicated coordinates cover all five outlier/provider tests exactly once',
     );
 };
 
@@ -456,26 +458,26 @@ subtest 'hosted shard arguments fail closed' => sub {
     my $dedicated_outside = run_ci(
         'full',
         '--no-book',
-        '--hosted-dedicated-shard=3/3',
+        '--hosted-dedicated-shard=5/5',
         '--dry-run',
     );
     ok(!$dedicated_outside->{success}, 'out-of-range dedicated shard fails');
     like(
         $dedicated_outside->{stderr},
-        qr/--hosted-dedicated-shard index 3 is outside shard count 3/,
+        qr/--hosted-dedicated-shard index 5 is outside shard count 5/,
         'out-of-range dedicated diagnostic is exact',
     );
 
     my $dedicated_wrong_count = run_ci(
         'full',
         '--no-book',
-        '--hosted-dedicated-shard=0/4',
+        '--hosted-dedicated-shard=0/6',
         '--dry-run',
     );
     ok(!$dedicated_wrong_count->{success}, 'wrong dedicated shard count fails');
     like(
         $dedicated_wrong_count->{stderr},
-        qr/--hosted-dedicated-shard requires I\/3: 0\/4/,
+        qr/--hosted-dedicated-shard requires I\/5: 0\/6/,
         'dedicated count diagnostic locks the exact closed coordinate set',
     );
 
@@ -601,13 +603,13 @@ subtest 'hosted workflow runs every shard family to a terminal aggregate' => sub
     );
     like(
         $dedicated_job || '',
-        qr/shard:\s+\[0, 1, 2\]/,
-        'workflow schedules all three exact dedicated coordinates',
+        qr/include:\s*\n\s+- shard:\s+0.*?- shard:\s+1.*?- shard:\s+2.*?- shard:\s+3.*?- shard:\s+4/s,
+        'workflow schedules all five exact dedicated coordinates',
     );
     like(
         $dedicated_job || '',
-        qr/Install dedicated HDL validation tools.*?if:\s+\$\{\{ matrix\.shard == 0 \}\}.*?verilator=.*?yosys=/s,
-        'only dedicated t1436 installs its required pinned HDL tools',
+        qr/- shard:\s+0\s+install_hdl_tools:\s+true.*?- shard:\s+1\s+install_hdl_tools:\s+false.*?- shard:\s+2\s+install_hdl_tools:\s+false.*?- shard:\s+3\s+install_hdl_tools:\s+false.*?- shard:\s+4\s+install_hdl_tools:\s+false.*?Install dedicated HDL validation tools.*?if:\s+\$\{\{ matrix\.install_hdl_tools \}\}.*?verilator=.*?yosys=/s,
+        'only dedicated t1436 receives its required pinned HDL tools',
     );
     like(
         $dedicated_job || '',
@@ -616,8 +618,8 @@ subtest 'hosted workflow runs every shard family to a terminal aggregate' => sub
     );
     like(
         $dedicated_job || '',
-        qr/Materialize exact OSVVM 2026\.05.*?if:\s+\$\{\{ matrix\.shard == 2 \}\}.*?git clone --recursive --branch 2026\.05 --single-branch\s+https:\/\/github\.com\/OSVVM\/OsvvmLibraries\.git\s+\.artifacts\/cache\/providers\/osvvm\/2026\.05\/source/s,
-        'only dedicated t1598 materializes the exact repository-local OSVVM provider',
+        qr/- shard:\s+0.*?materialize_osvvm:\s+false.*?- shard:\s+1.*?materialize_osvvm:\s+false.*?- shard:\s+2.*?materialize_osvvm:\s+true.*?- shard:\s+3.*?materialize_osvvm:\s+true.*?- shard:\s+4.*?materialize_osvvm:\s+true.*?Materialize exact OSVVM 2026\.05.*?if:\s+\$\{\{ matrix\.materialize_osvvm \}\}.*?git clone --recursive --branch 2026\.05 --single-branch\s+https:\/\/github\.com\/OSVVM\/OsvvmLibraries\.git\s+\.artifacts\/cache\/providers\/osvvm\/2026\.05\/source/s,
+        'exactly t1598, t1648, and t1650 materialize the repository-local OSVVM provider',
     );
     like(
         $dedicated_job || '',

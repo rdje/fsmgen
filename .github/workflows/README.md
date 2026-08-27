@@ -7,14 +7,13 @@ This directory documents the public FSMGen repository's hosted automation.
 `regression.yml` runs the repository gate on `main` pushes, pull requests, and
 manual `workflow_dispatch` requests.
 
-Six families are required: doctrine enforcement, mdBook, 16 ordinary Perl file
-shards, three dedicated outlier/provider tests, 48 supported-corpus entry
-shards, and 68 cases from the large dynamic transaction-ID test. All four Perl
+Six required families cover doctrine, mdBook, 16 ordinary Perl shards, five
+dedicated tests, 48 corpus-entry shards, and 68 dynamic cases. All four Perl
 matrices disable fail-fast, each long shard has a five-hour timeout, and final
 `build` succeeds only when every family succeeds.
 
-File shards partition every tracked `t/*.t` except seven tests with separate
-ownership. `t/1436`, `t/1437`, and provider-dependent `t/1598` run as dedicated
+File shards partition every tracked `t/*.t` except nine separately owned tests.
+`t/1436`, `t/1437`, `t/1598`, `t/1648`, and `t/1650` run as dedicated
 coordinates. Each of `t/296`, `t/301`, and `t/303` has 16 complete/disjoint
 entry shards. `t/1438` runs its 68 canonical cases one per job, with four shared
 checks only in shard zero. `t/1183` locks the complete file inventory and every
@@ -25,9 +24,9 @@ Ordinary shards pin `ubuntu-24.04`, `iverilog=12.0-2build2`,
 revisions and print tool versions before compile/runtime, lint, synthesis, and
 harness tests. They also fetch complete repository history because
 retained-document and doctrine tests verify exact historical objects. The
-dedicated `t/1436` retains its exact Verilator/Yosys pair. Only dedicated
-`t/1598` recursively materializes OSVVM 2026.05 beneath the repository-local
-provider cache and verifies root commit
+dedicated `t/1436` retains its exact Verilator/Yosys pair. Dedicated `t/1598`,
+`t/1648`, and `t/1650` recursively materialize OSVVM 2026.05 in isolated local
+provider caches and verify root commit
 `2f7c391051dfb11890fa4bdbda9918d1db492250`. Corpus and dynamic shards stay
 Perl-only with shallow checkouts. The OS packages are ephemeral runner
 dependencies; provider bytes remain repository-local project data for that

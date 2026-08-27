@@ -99,7 +99,7 @@ jobs:
       run: ./bin/ci-regression full --no-book --hosted-file-shard "${{ matrix.shard }}/16"
 
   perl_dedicated:
-    name: Perl dedicated ${{ matrix.shard }}/3
+    name: Perl dedicated ${{ matrix.shard }}/5
     runs-on: ubuntu-24.04
     timeout-minutes: 300
     env:
@@ -108,7 +108,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [0, 1, 2]
+        include:
+          - shard: 0
+            install_hdl_tools: true
+            materialize_osvvm: false
+          - shard: 1
+            install_hdl_tools: false
+            materialize_osvvm: false
+          - shard: 2
+            install_hdl_tools: false
+            materialize_osvvm: true
+          - shard: 3
+            install_hdl_tools: false
+            materialize_osvvm: true
+          - shard: 4
+            install_hdl_tools: false
+            materialize_osvvm: true
     steps:
     - name: Check out repository
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -119,7 +134,7 @@ jobs:
         perl-version: '5.32'
 
     - name: Install dedicated HDL validation tools
-      if: ${{ matrix.shard == 0 }}
+      if: ${{ matrix.install_hdl_tools }}
       run: |
         sudo apt-get update
         sudo apt-get install --yes --no-install-recommends \
@@ -133,7 +148,7 @@ jobs:
         yosys -V
 
     - name: Materialize exact OSVVM 2026.05
-      if: ${{ matrix.shard == 2 }}
+      if: ${{ matrix.materialize_osvvm }}
       run: |
         mkdir -p .artifacts/cache/providers/osvvm/2026.05
         git clone --recursive --branch 2026.05 --single-branch https://github.com/OSVVM/OsvvmLibraries.git .artifacts/cache/providers/osvvm/2026.05/source
@@ -141,7 +156,7 @@ jobs:
           2f7c391051dfb11890fa4bdbda9918d1db492250
 
     - name: Run dedicated outlier/provider test
-      run: ./bin/ci-regression full --no-book --hosted-dedicated-shard "${{ matrix.shard }}/3"
+      run: ./bin/ci-regression full --no-book --hosted-dedicated-shard "${{ matrix.shard }}/5"
 
   perl_corpus:
     name: Perl corpus ${{ matrix.test }} shard ${{ matrix.shard }}/16
