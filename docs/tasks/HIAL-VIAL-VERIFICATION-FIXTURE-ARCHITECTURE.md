@@ -558,11 +558,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4.2: activate structural measurement matrix publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4.2: implement structural measurement matrix publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4.2: seal clean structural measurement matrix`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5`
-  Status: `active`
+  Status: `done`
   Goal: `Measure exact portable-SystemVerilog generation, compile, run, trace validation, and result production with qualified Verilator.`
   Acceptance: `Use only the qualified Verilator profile and canonical runtime-stream inputs; perform one validation plus required measured repetitions in fresh owned staging; apply effective qualified compile/run limits and active guards; prove artifact, source-map, command, trace closure, normalized result, deterministic rerun, raw-sample, transcript, publication, and cleanup oracles; reject identity drift or excluded samples explicitly; and make no full-SystemVerilog, UVM, mixed-language, promoted-budget, support, or capacity claim.`
-  Verification: `Decision 0083's authored 274/10,000/15,000-record route uses the sole qualified lifecycle and common controller. Child .4 retains one/three/five validations or repetitions, raw evidence, zero exclusions, and cleanup. Child .5 seals five profiles plus both manifests from clean 5268f50e2; exact t1670 passes Files=1/Tests=7 in 2,142 seconds and a separate guarded reload returns the same complete identity. Parent closure exposes 17 stale durability-gap dispositions whose reason still says child .2 is pending although it is done; proposed child .6 owns exact retirement before this parent can close. Historical failures and all performance/support/capacity/parity/IASIM/API nonclaims remain explicit.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5: activate portable-Verilator runtime measurement; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2: seal clean portable runtime matrix`
+  Verification: `Decision 0083's authored 274/10,000/15,000-record route uses the sole qualified lifecycle and common controller. Child .4 retains one/three/five validations or repetitions; child .5 seals five profiles plus both manifests from clean 5268f50e2. Child .6 maps every stale gap to its now-durable materialization/measurement evidence, leaving 1,560/1,560 dispositions, zero gaps/open candidates, and unchanged book behavior. Historical failures and all performance/support/capacity/parity/IASIM/API nonclaims remain explicit.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5: activate portable-Verilator runtime measurement; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2: seal clean portable runtime matrix; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.6: close portable runtime claim gaps`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.6`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1`
@@ -690,11 +690,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2: activate clean repaired matrix recapture; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2: seal clean portable runtime matrix`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.6`
-  Status: `active`
+  Status: `done`
   Goal: `Retire the stale published-runtime durability gaps now satisfied by the completed materialization, measurement, and immutable matrix chain.`
   Acceptance: `Independently map every .17.3.5-owned gap candidate to its current source line and exact re-derivation, falsification, and durability evidence. Replace a gap only when tracked producers and watchers now supply its missing leg; retain any genuinely missing leg under a precise live child. Require a regenerated inventory, complete disposition join, zero open migration owner, and task/book/claim/doctrine continuity without weakening or rewording the published behavior.`
-  Verification: `Parent-closure falsification finds 17 existing owned_gap records whose identical reason says final source identity and rerunnable structural/runtime watchers are pending until child .17.3.5.2; that child and the later common-controller/matrix chain are done. Clean seal c1b07514e permits an exact candidate-by-source audit before any disposition changes.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.6: activate stale runtime claim-gap closure`
+  Verification: `All 17 candidates retain their exact source lines: four rationale-ledger candidates use the adjacent established three-leg derived gate; eleven book candidates join the materialization claim and two join the measurement claim. Guarded t1651/t1663/t1667/t1670 pass Files=4/Tests=33; guarded matrix reload returns the clean 5268f50e2 seal. The regenerated 1,560-candidate join has 54 claim records, 916 gates, 590 reviews, zero gaps/open candidates, and no published-text change.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.6: activate stale runtime claim-gap closure; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.6: close portable runtime claim gaps`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6`
   Status: `proposed`
@@ -7210,3 +7210,15 @@ raising an enforcement ceiling.
   Tests=7; standalone guarded `--validate`, all 56 book chapters, relative
   paths, `knowledge-map: OK`, 1,560/1,560 claim dispositions, containment,
   staged acceptance, and `[doctrine] all doctrine checks passed` must close.
+
+## Acceptance Checklist (enforced) — `.17.3.5.6` runtime claim-gap closure
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` locates the 17 dispositions'
+  stale pre-materialization reason at selection/materialization commits; parent
+  closure found they still claim `.17.3.5.2` lacks tracked sources/watchers.
+- [x] **ADDRESSED (verified)** — Exact source mapping assigns four rationale
+  lines to the established derived gate, eleven book lines to the materializer
+  claim, and two book lines to the measurement claim; gaps fall from 17 to 0.
+- [x] **NO REGRESSION** — `All tests successful`, Files=4, Tests=33; guarded
+  seal reload succeeds; the 1,560/1,560 join reports 54 claims/916 gates/590
+  reviews/0 gaps/0 open, with no product or published-text change.
