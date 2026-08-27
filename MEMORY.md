@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2` (`done`; exact portable-Verilator runtime matrix sealed)
-- next_action: commit exact matrix closure, then activate proposed `.17.3.5.6`
-  to retire the stale runtime-claim durability gaps exposed by parent closure.
-- in_flight_uncommitted: closure docs/claims/checks await commit.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.6` (`active`; stale runtime-claim durability-gap closure)
+- next_action: map all 17 owned gaps to current source lines and independently
+  prove or retain each missing evidence leg before disposition changes.
+- in_flight_uncommitted: none; activation is the current docs-only slice.
 - in_flight_background: none; regression 33023589424, Pages 33023589417, and
   Knowledge Map 33023589413 are terminal.
-- blockers: none; exact capture and standalone guarded reload pass.
+- blockers: none; matrix seal `c1b07514e` is the clean predecessor.

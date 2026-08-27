@@ -690,11 +690,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2: activate clean repaired matrix recapture; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.5.2.2.2: seal clean portable runtime matrix`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.6`
-  Status: `proposed`
+  Status: `active`
   Goal: `Retire the stale published-runtime durability gaps now satisfied by the completed materialization, measurement, and immutable matrix chain.`
   Acceptance: `Independently map every .17.3.5-owned gap candidate to its current source line and exact re-derivation, falsification, and durability evidence. Replace a gap only when tracked producers and watchers now supply its missing leg; retain any genuinely missing leg under a precise live child. Require a regenerated inventory, complete disposition join, zero open migration owner, and task/book/claim/doctrine continuity without weakening or rewording the published behavior.`
-  Verification: `Parent-closure falsification finds 17 existing owned_gap records whose identical reason says final source identity and rerunnable structural/runtime watchers are pending until child .17.3.5.2; that child and the later common-controller/matrix chain are now done. The exact candidate-by-source audit and disposition repair remain pending after the clean matrix-seal commit.`
-  Commit: `pending activation`
+  Verification: `Parent-closure falsification finds 17 existing owned_gap records whose identical reason says final source identity and rerunnable structural/runtime watchers are pending until child .17.3.5.2; that child and the later common-controller/matrix chain are done. Clean seal c1b07514e permits an exact candidate-by-source audit before any disposition changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.6: activate stale runtime claim-gap closure`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6`
   Status: `proposed`
