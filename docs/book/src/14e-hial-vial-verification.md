@@ -104,13 +104,13 @@ bounded exact-tool evidence without implying PSL or methodology support.
 
 Implementation parent `.15` is active and split along those evidence
 boundaries. Completed `.15.1-.15.4` ship a 17-artifact provider-free VHDL
-review profile: six sources, 59 source maps, 20 static checks, a 24-row selected
+review profile: six sources, 59 source maps, 21 static checks, a 24-row selected
 mapping matrix, deterministic checking/scoreboard/coverage/fault/result
 structures, and a seven-stage review/defect workflow.
 
 Completed `.15.5` separately qualifies this exact canonical graph under the
 repository-local GHDL 6.0.0 LLVM-JIT backend: analysis, elaboration, bounded
-execution, timed `0/1/X/Z`, one closed 42-record trace, a passing normalized
+execution, timed `0/1/X/Z`, one closed 77-record trace-v2 stream (42 control records plus 35 authenticated samples), a passing normalized
 result, deterministic reruns, and nineteen applicable portable-SV parity paths
 pass. Completed `.15.6` now installs and recursively verifies exact OSVVM
 2026.05, then emits its isolated seven-service adapter beside six
@@ -119,9 +119,10 @@ portable mappings under their wrapper artifact paths and identities after its
 seven unchanged adapter mappings, for 66 ordered entries rather than six
 whole-file placeholders. Completed `.15.7` qualifies the combined
 exact provider/tool tuple: 61 provider sources compile in selected order, the
-and fixture analyze, both fixture and provider probe execute twice, the
-unchanged trace/result retains nineteen portable parity paths, and four OSVVM
-reports repeat byte-identically. Complete VHDL breadth, PSL, general OSVVM
+adapter and fixture analyze, both fixture and provider probe execute twice,
+the closed trace-v2 stream and result retain nineteen portable parity paths,
+and four OSVVM reports repeat byte-identically. Complete VHDL breadth, PSL,
+general OSVVM
 breadth, UVVM, another simulator, mixed-language behavior, general parity, and
 scale remain unclaimed.
 

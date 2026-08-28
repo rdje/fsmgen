@@ -21,7 +21,7 @@ answers:
   - "how do I rerun the exact portable VHDL GHDL qualification?"
   - "why is GHDL LLVM AOT not qualified for portable VIAL?"
   - "does portable VIAL VHDL consume the legacy observation package?"
-date: 2026-08-10
+date: 2026-08-28
 status: current
 tags: [hial, vial, vhdl, ghdl, review-gallery, simulator-profile, verification]
 evidence: >-
@@ -62,11 +62,11 @@ rejected structurally.
 The closed provider-free profile has 17 artifacts: a 24-row matrix with 20
 emitted and four exactly unsupported boundaries, a seven-stage deterministic
 review/defect workflow, and exact inert-legacy/HIAL separation evidence
-alongside its six sources, 59 maps, and 20 static checks. It is emitted and
+alongside its six sources, 59 maps, and 21 static checks. It is emitted and
 structurally reviewed; visual review remains pending.
 
 Completed `.15.1-.15.5` ship and qualify the profile. Its 17 artifacts retain
-six sources, 59 maps, 20 checks, exact HIAL identity, typed `std_logic`
+six sources, 59 maps, 21 checks, exact HIAL identity, typed `std_logic`
 observation, one inactive-edge scheduler, bounded scenarios/models/checking,
 declared-probe-only hierarchy, and closed results. Run `perl
 scripts/refresh_vial_vhdl_portable_gallery.pl --check` for the byte-locked

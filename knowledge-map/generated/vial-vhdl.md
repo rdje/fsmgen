@@ -19,7 +19,7 @@
 - q="how are portable VHDL review defects tracked?" · facts=[vial-vhdl-portable-profile](../../docs/knowledge/vial-vhdl-portable-profile.md)
 - q="how are portable VHDL source maps preserved in the OSVVM wrapper?" · facts=[vial-vhdl-osvvm-qualified-tier](../../docs/knowledge/vial-vhdl-osvvm-qualified-tier.md)
 - q="how are six VHDL sources 59 source maps and 24 mappings verified?" · facts=[vial-vhdl-provider-claim-evidence](../../docs/knowledge/vial-vhdl-provider-claim-evidence.md)
-- q="how are the 42-record VHDL trace and 19 parity paths verified?" · facts=[vial-vhdl-provider-claim-evidence](../../docs/knowledge/vial-vhdl-provider-claim-evidence.md)
+- q="how are the 77-record VHDL trace-v2 stream and 19 parity paths verified?" · facts=[vial-vhdl-provider-claim-evidence](../../docs/knowledge/vial-vhdl-provider-claim-evidence.md)
 - q="how are the Chapter 16d portable VHDL and OSVVM claims verified?" · facts=[vial-vhdl-provider-claim-evidence](../../docs/knowledge/vial-vhdl-provider-claim-evidence.md)
 - q="how do I regenerate or check the portable VHDL review gallery?" · facts=[vial-vhdl-portable-profile](../../docs/knowledge/vial-vhdl-portable-profile.md)
 - q="how do I rerun the exact portable VHDL GHDL qualification?" · facts=[vial-vhdl-portable-profile](../../docs/knowledge/vial-vhdl-portable-profile.md)
@@ -55,12 +55,12 @@ _OSVVM 2026.05 is a separately qualified advanced VHDL provider above the portab
 
 _Portable VIAL VHDL is a provider-free IEEE 1076-2008 profile qualified on exact GHDL 6.0.0_
 
-- **date:** 2026-08-10 · **status:** current
+- **date:** 2026-08-28 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-vhdl-portable-profile.md`](../../docs/knowledge/vial-vhdl-portable-profile.md)
 
 ### vial-vhdl-provider-claim-evidence
 
 _Portable VHDL and OSVVM claims retain provider-qualified evidence_
 
-- **date:** 2026-08-21 · **status:** current
+- **date:** 2026-08-28 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-vhdl-provider-claim-evidence.md`](../../docs/knowledge/vial-vhdl-provider-claim-evidence.md)

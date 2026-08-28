@@ -147,6 +147,9 @@ subtest 'advanced negotiation and profile claims are exact and bounded' => sub {
     is($manifest->{capability_evidence}{runtime},
         'passed_bounded_fixture_and_provider_probe',
         'manifest records exact bounded execution');
+    is($manifest->{capability_evidence}{trace},
+        'passed_closed_seventy_seven_record_trace_v2',
+        'manifest records the exact closed trace-v2 result');
     is($manifest->{capability_evidence}{result}, 'produced_normalized_pass',
         'manifest records the normalized runtime result');
     is($manifest->{capability_evidence}{product_support},

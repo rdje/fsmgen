@@ -139,11 +139,11 @@ by that run.
   Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.3: close exact-run failure partition`
 
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.4`
-  Status: `active`
+  Status: `done`
   Goal: `Restore exact trace-v2 and portable-VHDL scale truth across every dependent executable and durable surface before the authorized repair push.`
   Acceptance: `Preserve the interrupted pre-push evidence exactly; update t1641 and t1651 to the governing decisions 0075/0090 and current production contracts; audit and align every current-facing review, gallery, mdBook, Knowledge Map, and claim-disposition surface that still asserts trace-v1 or pre-v2 scale values; add durable executable alignment oracles that prevent those contracts drifting again; annotate the originating HIAL/VIAL leaf's past-change audit; pass focused affected tests, claims, book, Knowledge Map, task acceptance, and doctrines; then resume the complete pre-push gate without crediting the interrupted t303 parent.`
-  Verification: `Activation preserves two exact local failures: t1641 retains pre-v2 source sizes, 20 checks, and the 29,508/29,509 boundary while decisions 0075/0090 require 118,064/176,433/388,401 bytes, 21 checks, and 29,506/29,507; t1651 expects trace schema v1 and the old composite validator while production emits schema v2 through FSM::VIAL::Backend::VHDLPortableTraceValidator. The guarded suffix is green through completed t302 except those two files; interrupted t303 is uncredited. Source audit also identifies stale current-facing 20-check/42-record prose in the portable review closure, generated galleries, mdBook, Knowledge Map, and claim dispositions. No product change begins before this activation commit.`
-  Commit: `pending`
+  Verification: `The two exact failures now consume decisions 0075/0090: t1641 requires 118,064/176,433/388,401 bytes, 21 checks, and the guarded 29,506/29,507 boundary; t1651 requires trace schema v2 and VHDLPortableTraceValidator for both VHDL profiles. Support status, review workflow, canonical galleries, architecture audit, mdBook, Knowledge Map, and six affected claim dispositions align to 77 total records (42 control plus 35 authenticated samples), 21 checks, and current scale values. Focused construction/emission/trace tests pass Files=6/Tests=81; exact GHDL qualifications pass 2/6; the boundary passes 1/5; support/claim/profile-family tests pass 7/48. All 56 book chapters test, its 92-file/19,568-KiB disposable build is removed, Knowledge Map parity is 1,154 facts/6,121 questions/6,288 occurrences/136 shards, and the claim join closes 1,589/1,589 with zero gaps. Interrupted t303 remains uncredited.`
+  Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.4: align trace-v2 dependent truth`
 
 ## Current Frontier
 
@@ -157,8 +157,8 @@ by that run.
 | 6 | `.3.2.2.1` | `done` | Five dedicated coordinates now give all three default OSVVM-backed tests exact isolated provider ownership; focused routing and real-provider proofs pass. |
 | 7 | `.3.2.2.2` | `done` | Bounded kernel cpulist authority plus procfs fallback repairs both setup-Perl failures without schema or Darwin drift. |
 | 8 | `.3.2.2.3` | `done` | All 138 jobs are terminal; four prerequisite failures map exactly to committed repairs and the aggregate adds no root cause. |
-| 9 | `.3.2.2.4` | `active` | Align every trace-v2/scale dependent surface, lock the cross-surface contract with executable oracles, and resume the interrupted pre-push gate. |
-| 10 | `.3.2.2` | `active` | Retain all repairs until the authorized exact repair push is hosted-green. |
+| 9 | `.3.2.2.4` | `done` | Trace-v2/scale tests, support projections, galleries, book, cards, and claims now share exact executable authority. |
+| 10 | `.3.2.2` | `active` | Resume the complete pre-push gate, then retain all repairs until the authorized exact repair push is hosted-green. |
 | 11 | `.3.2` | `active` | Preserve complete-CI and green hosted evidence until the authorized exact repair revision is hosted-green. |
 
 ## Decisions
@@ -400,14 +400,31 @@ Verilator process.
 - [x] **ADDRESSED (verified)** — Commit `d630261e6` is clean, the final focused cluster is green, and this leaf alone owns the exact t1545 restart, suffix completion, due push, and hosted qualification.
 - [x] **NO REGRESSION** — The activation changes only task-tree and bounded resume metadata; task-tree, Memory, diff, and doctrine checks must pass before its commit.
 
-## Acceptance Checklist — `.3.2.1` checkpointed recovery activation
+## Compact checkpoint-recovery archive — `.3.2.1`
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `scripts/run_with_ram_guard.sh` reported the exact host-capacity event, `host memory 88.1% reached cutoff 88%`, while the last `ps` census measured the active strict-CLI generator at 371,136 KiB and found a concurrent sibling-project compiler at 5,587,968 KiB. No descendant-cutoff message occurred, and the guard removed the exact prove/t296/worker/generator PID tree. Independent `git log -S'FSMGEN_T296_CHECKPOINT' --oneline -- t/296-regression-corpus-supported-behavior.t t/lib/FSM/Test/T296Checkpoint.pm t/1597-t296-checkpoint.t` history recovery identifies commit `c990583ac` as the existing checkpoint mechanism's introduction.
-- [x] **ADDRESSED (verified)** — Active child `.3.2.1` owns an exact-clean-HEAD restart of t296 with the existing safe `.artifacts/t296/*.json` checkpoint contract and unchanged 88% host/4,096-MiB descendant ceilings. The absent checkpoint is not invented, no interrupted batch is credited, and the full parent must still pass before its checkpoint is removed.
-- [x] **NO REGRESSION** — The guarded focused checkpoint, relative-path, and task-tree tests pass; the corrected canonical project-locality test reports `Files=1, Tests=20`; Knowledge Map generation/check/query parity passes at 1,153 facts, 6,113 unique questions, 6,280 answer occurrences, and 136 bounded shards, with the recovery question resolving to the existing canonical runtime card. The first combined command stopped after its three existing tests passed because it named nonexistent `t/1330-project-data-locality.t`; only the unreached checks were run with canonical `t/1527-project-data-locality.t`. Diff and staged doctrine checks remain required before commit.
+The node record and commits `5737669f7/2dcfaa297` retain activation and
+completion: an 88.1% host-only guard event with sub-4-GiB FSMGEN descendants,
+exact-revision recovery of all 762 t296 batches, parent `Files=1/Tests=10`,
+independently derived t297-t999 `Files=778/Tests=2,989`, checkpoint self-removal,
+zero residue, and no interrupted-work pass credit. Git pickaxe and the guarded
+oracles remain the exact root/re-derivation/falsification/durability evidence.
 
-## Acceptance Checklist — `.3.2.1` checkpointed recovery completion
+## Acceptance Checklist (enforced) — `.3.2.2.4` trace-v2 dependent-truth repair
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — The first resumed suffix was terminated solely by the RAM guard's host-wide 88.1% cutoff while its active FSMGEN generator remained below the independent 4-GiB descendant ceiling; no test assertion failed. The prior uncheckpointed t296 work is deliberately uncredited, and recovery starts t296 from its exact clean revision rather than hiding the interruption.
-- [x] **ADDRESSED (verified)** — The existing exact-revision repository-local checkpoint consumed all 762 independently counted t296 batches, the complete parent passed, and the checkpoint self-cleared. The separately derived 778-file lexical tail from t297 through t999 then passed, returning ownership to `.3.2` for locality, book, push, and hosted qualification.
-- [x] **NO REGRESSION** — Guarded t296 reports `Files=1, Tests=10` and guarded t297-t999 reports `Files=778, Tests=2989`, both with `All tests successful` and `Result: PASS`. Neither guard fired; the checkpoint and test processes are absent; Git remained clean throughout. Combined with retained t01-t295 evidence, every complete-CI file is covered without retrying or reclassifying a failed assertion.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Exact failures locate t1641's stale
+  pre-v2 bytes/checks/boundary and t1651's stale schema/validator projection.
+  `git log -S` maps those literals to `c3810ba8a/a0e7149d5/0074b369e`, while
+  `git log -S 'fsmgen.vial_vhdl_runtime_trace.v2'` identifies `3c58233b7` as
+  the correct product revision whose dependent-surface fanout was incomplete.
+- [x] **ADDRESSED (verified)** — t1641 and t1651 now project decisions
+  0075/0090; support and generated manifests name 21 checks and the 77-record
+  trace-v2 stream; producer-derived gallery refreshes, book, Knowledge Map,
+  audit, inventory, and dispositions agree. Direct stale-literal censuses are
+  empty outside intentional v1 history, and dedicated tests lock each code
+  projection rather than relying on prose.
+- [x] **NO REGRESSION** — `All tests successful`: focused trace/emission/
+  construction `Files=6, Tests=81`; exact GHDL `Files=2, Tests=6`; boundary
+  `Files=1, Tests=5`; support/claims/profile family `Files=7, Tests=48`.
+  mdBook tests all 56 chapters and builds 92 files; `knowledge-map: OK` at
+  1,154 facts/6,121 questions/6,288 occurrences/136 shards; the 1,589-candidate
+  claim join has zero gaps. The staged doctrine gate remains mandatory.

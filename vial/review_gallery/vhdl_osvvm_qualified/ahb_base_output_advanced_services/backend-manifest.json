@@ -192,7 +192,7 @@
       "source_map" : "passed_seven_adapter_and_complete_portable_translation",
       "static_validation" : "passed_structural_only",
       "supplementary_provider_reports" : "passed_four_deterministic_osvvm_reports",
-      "trace" : "passed_closed_forty_two_records"
+      "trace" : "passed_closed_seventy_seven_record_trace_v2"
    },
    "cleanup" : {
       "staging_identity" : ".artifacts/tmp/vial/op-e1fd49660d329f8170e7d0cf1674785d35263860b877e9246b9c84b874d548e7",

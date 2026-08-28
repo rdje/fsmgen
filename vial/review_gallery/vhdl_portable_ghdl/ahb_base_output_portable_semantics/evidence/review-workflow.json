@@ -89,7 +89,7 @@
       {
          "authority" : "static_validator",
          "command" : null,
-         "evidence" : "twenty deterministic provider-free source-shape checks",
+         "evidence" : "twenty-one deterministic provider-free source-shape checks",
          "stage_id" : "static_shape",
          "status" : "passed_structural_only"
       },

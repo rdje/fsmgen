@@ -1376,13 +1376,15 @@ randomization to `RandomPkg`, supplementary coverage to `CoveragePkg`,
 scoreboarding to `ScoreboardGenericPkg` through `ScoreboardPkg_slv`, reporting
 to `AlertLogPkg`, coordination to `TbUtilPkg`, provider memory to `MemoryPkg`,
 and address-bus verification components to
-`osvvm_common.AddressBusTransactionPkg`. Thirteen source-map entries, twelve
-structural checks, six explicit unchanged-semantic guards, a qualification
+`osvvm_common.AddressBusTransactionPkg`. Sixty-six source-map entries—seven
+adapter entries followed by 59 translated portable entries—twelve structural
+checks, six explicit unchanged-semantic guards, a qualification
 reference, and a deterministic sixteen-artifact gallery preserve exact scope.
 Completed `.15.7` compiles 44 OSVVM core and 17 Common sources in selected
 VHDL-2008 order, analyzes the adapter and generated fixture, and executes both
-the fixture and provider probe twice. The unchanged 42-record trace, passing
-normalized result, and nineteen portable parity paths remain authoritative.
+the fixture and provider probe twice. The closed 77-record trace-v2 stream
+(42 control records plus 35 authenticated samples), passing normalized result,
+and nineteen portable parity paths remain authoritative.
 Four deterministic OSVVM reports record three clean affirmations, one of four
 coverage bins sampled, and one scoreboard item checked with zero errors.
 

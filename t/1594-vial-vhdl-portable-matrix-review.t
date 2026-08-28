@@ -151,6 +151,9 @@ subtest 'review workflow is deterministic, durable, and qualification-honest' =>
     }
     is($stage{static_shape}{status}, 'passed_structural_only',
         'structural evidence remains narrower than analyzer evidence');
+    is($stage{static_shape}{evidence},
+        'twenty-one deterministic provider-free source-shape checks',
+        'review workflow names the complete trace-v2 structural check set');
     is($stage{visual_review}{status}, 'pending', 'visual judgment remains pending');
     is($stage{migration_separation}{status}, 'passed_regression_contract',
         'legacy and HIAL separation have an exact regression contract');

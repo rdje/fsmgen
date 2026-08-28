@@ -315,7 +315,7 @@ sub _build($raw) {
             _stage('byte_compare', 'ready', 'gallery_check', $check,
                 'reject missing, extra, or byte-drifted gallery snapshots'),
             _stage('static_shape', 'passed_structural_only', 'static_validator', undef,
-                'twenty deterministic provider-free source-shape checks'),
+                'twenty-one deterministic provider-free source-shape checks'),
             _stage('visual_review', 'pending', 'director_or_delegate', undef,
                 'readability, intent fidelity, and VHDL engineering judgment'),
             _stage('defect_capture', 'ready', 'task_tree', undef,

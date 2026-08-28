@@ -7,13 +7,13 @@ answers:
   - "how are OSVVM licence and notice counts verified?"
   - "how is the 16-artifact OSVVM adapter graph verified?"
   - "how are 44 OSVVM and 17 Common sources verified?"
-  - "how are the 42-record VHDL trace and 19 parity paths verified?"
+  - "how are the 77-record VHDL trace-v2 stream and 19 parity paths verified?"
   - "how is the exact GHDL 6.0.0 LLVM-JIT archive verified?"
   - "how are portable VHDL operation scenario fiber and model counts verified?"
   - "how are six VHDL sources 59 source maps and 24 mappings verified?"
   - "how is the inert 976-byte legacy VHDL package verified?"
   - "why is Decision 0043 not an extra VHDL capability gate?"
-date: 2026-08-21
+date: 2026-08-28
 status: current
 tags: [claim-verification, vial, vhdl, osvvm, ghdl, provider, qualification, parity, migration, evidence]
 evidence: >-
@@ -26,6 +26,7 @@ evidence: >-
   perl/FSM/VIAL/Backend/VHDLPortableGHDL.pm;
   perl/FSM/VIAL/Backend/VHDLPortableReviewClosure.pm;
   perl/FSM/VIAL/Backend/VHDLPortableGHDLQualification.pm;
+  perl/FSM/VIAL/Backend/VHDLPortableTraceValidator.pm;
   vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json;
   vial/qualification/vhdl_portable_ghdl/ghdl-6.0.0-qualification.json;
   vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services;
@@ -35,6 +36,7 @@ evidence: >-
   t/1595-vial-vhdl-portable-ghdl-qualification.t;
   t/1598-vial-vhdl-osvvm-emission.t;
   t/1599-vial-vhdl-osvvm-ghdl-qualification.t;
+  t/1671-vial-vhdl-portable-trace-v2.t;
   t/1638-claim-verification-dispositions.t;
   docs/tasks/CLAIM-VERIFICATION-ADOPTION.md
 reverify: >-
@@ -45,6 +47,7 @@ reverify: >-
   t/1595-vial-vhdl-portable-ghdl-qualification.t
   t/1598-vial-vhdl-osvvm-emission.t
   t/1599-vial-vhdl-osvvm-ghdl-qualification.t &&
+  prove -Iperl t/1671-vial-vhdl-portable-trace-v2.t &&
   prove -Iperl t/1638-claim-verification-dispositions.t
   t/248-regression-corpus-accounting.t t/297-capability-manifest.t
 ---
@@ -69,8 +72,9 @@ The OSVVM evidence remains factored by authority:
   and six semantic-preservation guards; and
 - exact combined qualification reconstructs and executes 44 OSVVM core plus
   17 compatible Common sources, yielding 61 provider analysis commands. It
-  double-runs the fixture and provider probe, preserves a closed 42-record
-  trace, passing normalized result, nineteen applicable parity paths, and four
+  double-runs the fixture and provider probe, preserves a closed 77-record
+  trace-v2 stream with 42 control records and 35 authenticated samples, a
+  passing normalized result, nineteen applicable parity paths, and four
   supplementary provider reports.
 
 The provider-free evidence is separately bounded:
@@ -83,19 +87,17 @@ The provider-free evidence is separately bounded:
   runtime, trace, result, rerun, nineteen-path parity, and cleanup;
 - VHDL metadata derives all 21 operation identities/ranks, two 256-cycle
   scenarios, four fibers, and two deterministic model instances;
-- the review graph retains six VHDL sources, 59 source-map entries, 20 static
+- the review graph retains six VHDL sources, 59 source-map entries, 21 static
   checks, and a 24-row matrix split into 20 emitted responsibilities and four
   exact unsupported boundaries; and
 - the migration proof freshly reproduces the inert legacy package at 976
   bytes plus its package/manifest digests, proves it is unconsumed, and keeps
   the HIAL successor byte-identical to the private handoff.
 
-The guarded exact OSVVM collection passes at `Files=3, Tests=60`, including
-translated-map mutation rejection, installed provider/tool reruns, sealed
-provider reuse, and same-volume cleanup. The
-support/disposition collection passes at `Files=3, Tests=7107`. The current
-registry therefore closes 24 of 288 verification-architecture candidates:
-21 gates and three reviewed outcomes across `.5.6.1` and `.5.6.2`.
+The guarded exact provider collection covers translated-map mutation
+rejection, installed provider/tool reruns, sealed provider reuse, authenticated
+trace-v2 mutation rejection, and same-volume cleanup. The claim-disposition
+doctrine keeps every current candidate joined to its three-leg evidence.
 
 Decision `0043` and the version-1 label identify the immutable architecture
 selection. They are not a second support promise: current portable emission,

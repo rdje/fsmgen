@@ -481,6 +481,14 @@ subtest 'checked gallery and support discovery remain byte-exact and honest' => 
         'support state reports the exact source-map count');
     is($contract->{limits}{static_validation_checks}, 21,
         'support state reports the exact static-check count');
+    is($contract->{backend_stage_status}{static_validation},
+        'shipped_twenty_one_structural_checks',
+        'support state names the exact twenty-one-check structural contract');
+    is($contract->{limits}{qualification_trace_records}, 77,
+        'support state reports the exact trace-v2 record total');
+    is($contract->{backend_stage_status}{trace},
+        'passed_closed_seventy_seven_record_runtime_trace_v2',
+        'support state names the exact closed trace-v2 contract');
     is($contract->{backend_stage_status}{analysis},
         'passed_exact_ghdl_6_0_0_llvm_jit',
         'support state records the separately checked exact GHDL analysis qualification');

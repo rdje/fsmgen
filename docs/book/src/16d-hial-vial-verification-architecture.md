@@ -1031,7 +1031,7 @@ combined report; structure alone is still not execution evidence.
 Completed `.15.7` resolves the exact provider order to 44 OSVVM core and 17
 VHDL-2008-compatible Common sources. It analyzes the adapter and generated
 fixture, elaborates and runs the fixture and provider probe twice, validates
-the unchanged closed 42-record trace, passing normalized result, and nineteen
+the closed 77-record trace-v2 stream (42 control records plus 35 authenticated samples), passing normalized result, and nineteen
 portable parity paths, then compares four OSVVM YAML reports byte-for-byte.
 The probe runtime-exercises randomization, coverage, scoreboard, reporting,
 memory, and barrier mappings. The Common address-bus type is analysis-only;
@@ -1150,7 +1150,7 @@ under its repository-derived dependency root before provider compilation.
 The checked qualification runner analyzes all six gallery sources plus a
 standalone timed four-state probe, elaborates both tops, runs the fixture and
 probe twice, and removes its exact same-volume work library. The fixture emits
-one closed 42-record trace and a passing normalized result. Its success and
+one closed 77-record trace-v2 stream with 42 control records and 35 authenticated samples, plus a passing normalized result. Its success and
 unsupported-size scenarios match nineteen applicable paths in the already
 qualified portable-SV AHB oracle; the `0/1/X/Z` probe also repeats
 byte-identically. Run the checked proof from the repository root:
@@ -1229,7 +1229,7 @@ bridge-declared `reg_data_q` probe. Generated hierarchy is forbidden anywhere
 else; ordinary DUT access remains through public named ports.
 
 Completed `.15.4` changes the manifest and machine-readable capability state
-to `emitted_structurally_reviewed_unqualified`. Twenty static checks prove the
+to `emitted_structurally_reviewed_unqualified`. Twenty-one static checks prove the
 closed graph, deterministic provider-neutral source, typed value handling,
 single inactive-edge authority, phase order, exact ranks, bounded scenario and
 fiber metadata, deterministic model updates, and declared-probe-only

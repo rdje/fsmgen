@@ -33,9 +33,9 @@ The checked `.15.7` qualification now proves the exact combined OSVVM 2026.05
 plus GHDL 6.0.0 LLVM-JIT profile for this bounded fixture. It compiles the 44
 OSVVM core and 17 Common sources in their exact selected VHDL-2008 order,
 analyzes this adapter and generated fixture, elaborates and executes the
-fixture plus a provider probe twice, preserves the closed 42-record trace and
-normalized result across 19 applicable portable parity paths, and validates
-four byte-identical supplementary OSVVM reports. Rerun it under the repository
+fixture and provider probe twice, preserves the closed 77-record trace-v2 stream
+(42 control plus 35 authenticated samples) and normalized result across 19
+portable parity paths, and validates four byte-identical OSVVM reports. Rerun it under the repository
 RAM guard with:
 
 ```text
