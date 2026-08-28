@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `verification infrastructure / runtime qualification`
 - Created: `2026-08-26`
-- Last updated: `2026-08-27`
+- Last updated: `2026-08-28`
 - Owner: repo-local workflow
 
 ## Goal
@@ -112,7 +112,7 @@ by that run.
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2`
   Status: `active`
   Goal: `Repair every exact first-push hosted failure without discarding the remaining job evidence.`
-  Children: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.1, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.2, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.3`
+  Children: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.1, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.2, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.3, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.4`
   Acceptance: `Consume every required job from exact pushed revision c7a222ac41db, partition each terminal failure by root cause, repair each under its own committed child with focused and routing oracles, preserve every green hosted result, and keep .3.2 active until an authorized exact repair revision is hosted-green.`
   Verification: `pending`
   Commit: `pending`
@@ -138,6 +138,13 @@ by that run.
   Verification: `Exact-SHA run 33023589424 is terminal-failure: 138/138 jobs, 133 success, four repaired file-shard failures, and aggregate 98398411364 failing only on perl-files. Provider jobs 98359601960/98359602065 map to .1; Linux jobs 98359602070/98359602123 map to .2. No retry, cancellation, new root, or early push occurred.`
   Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.3: close exact-run failure partition`
 
+- ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.4`
+  Status: `active`
+  Goal: `Restore exact trace-v2 and portable-VHDL scale truth across every dependent executable and durable surface before the authorized repair push.`
+  Acceptance: `Preserve the interrupted pre-push evidence exactly; update t1641 and t1651 to the governing decisions 0075/0090 and current production contracts; audit and align every current-facing review, gallery, mdBook, Knowledge Map, and claim-disposition surface that still asserts trace-v1 or pre-v2 scale values; add durable executable alignment oracles that prevent those contracts drifting again; annotate the originating HIAL/VIAL leaf's past-change audit; pass focused affected tests, claims, book, Knowledge Map, task acceptance, and doctrines; then resume the complete pre-push gate without crediting the interrupted t303 parent.`
+  Verification: `Activation preserves two exact local failures: t1641 retains pre-v2 source sizes, 20 checks, and the 29,508/29,509 boundary while decisions 0075/0090 require 118,064/176,433/388,401 bytes, 21 checks, and 29,506/29,507; t1651 expects trace schema v1 and the old composite validator while production emits schema v2 through FSM::VIAL::Backend::VHDLPortableTraceValidator. The guarded suffix is green through completed t302 except those two files; interrupted t303 is uncredited. Source audit also identifies stale current-facing 20-check/42-record prose in the portable review closure, generated galleries, mdBook, Knowledge Map, and claim dispositions. No product change begins before this activation commit.`
+  Commit: `pending`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
@@ -150,10 +157,15 @@ by that run.
 | 6 | `.3.2.2.1` | `done` | Five dedicated coordinates now give all three default OSVVM-backed tests exact isolated provider ownership; focused routing and real-provider proofs pass. |
 | 7 | `.3.2.2.2` | `done` | Bounded kernel cpulist authority plus procfs fallback repairs both setup-Perl failures without schema or Darwin drift. |
 | 8 | `.3.2.2.3` | `done` | All 138 jobs are terminal; four prerequisite failures map exactly to committed repairs and the aggregate adds no root cause. |
-| 9 | `.3.2.2` | `active` | Retain the repairs until a standing-cadence exact repair push is hosted-green. |
-| 10 | `.3.2` | `active` | Preserve complete-CI and green hosted evidence until an authorized exact repair revision is hosted-green. |
+| 9 | `.3.2.2.4` | `active` | Align every trace-v2/scale dependent surface, lock the cross-surface contract with executable oracles, and resume the interrupted pre-push gate. |
+| 10 | `.3.2.2` | `active` | Retain all repairs until the authorized exact repair push is hosted-green. |
+| 11 | `.3.2` | `active` | Preserve complete-CI and green hosted evidence until the authorized exact repair revision is hosted-green. |
 
 ## Decisions
+
+- `2026-08-28`: The guarded pre-push suffix exposes two deterministic dependent-contract failures after authenticated portable-VHDL trace v2, plus stale
+  current-facing review/book/card/claim prose. Activate `.3.2.2.4` before changing those surfaces, preserve the interrupted t303 parent as uncredited,
+  and require one complete audited synchronization plus durable executable alignment checks before resuming the user-authorized exceptional repair push.
 
 - `2026-08-27`: The added decision/card crosses rationale to 80.8% and Knowledge Map cards to 90.5% of target. Re-derive the exact predecessor rationale baseline,
   retain one declared ratchet step under the active containment owner, advance warning/rollover state, and compact the optional duplicate verification log; raise no ceiling.
@@ -245,22 +257,17 @@ independent `prove` file/test summary, checkpoint self-removal only after all ma
 Durability is this owning task-tree verification plus the exact completion commit. The retained t01-t1544 prefix, resumed t1545-t295 success, fresh t296
 parent success, and fresh t297-t999 tail jointly cover the complete CI file set; neither interrupted attempt is itself credited as a pass.
 
-## `.3.2.2` first hosted-push failure evidence
+## Compact hosted-repair archive — `.3.2.2.1` through `.3.2.2.3`
 
-The due push transported exact revision `c7a222ac41db7b28d502accbb75fcdc6ed579754`; local HEAD, `origin/main`, and `git ls-remote` matched, and ahead count reset
-to zero. Knowledge Map `33023589413` and Pages `33023589417` succeed. Regression `33023589424` is terminal: 138/138 jobs, 133 success, four repaired failures,
-and aggregate `98398411364` failing only on `perl-files`; doctrines, book, dedicated, corpus, and dynamic succeed (runs under `https://github.com/rdje/fsmgen/actions/runs/`).
-
-Regression jobs `98359601960` and `98359602065` fail only t1650 and t1648 respectively: both provider-empty ordinary shards return the same missing-provider
-evidence, and history/routing census show those tests postdate the closed dedicated set. Jobs `98359602070` and `98359602123` fail only t1656 and
-t1657 respectively: setup-Perl 5.32 cannot expose `POSIX::_SC_NPROCESSORS_ONLN`, so both abort at Linux host profiling before their intended oracles.
-Re-derivation is the tracked triggers plus CI-driver inventory; falsification is the exact-SHA raw logs; durability is this evidence and the child commits.
-
-## Acceptance Checklist — `.3.2.2.3` exact-run completion
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — All 138 jobs are terminal; only four prerequisites fail, matching two committed roots. Aggregate `98398411364` reports only `perl-files=failure`.
-- [x] **ADDRESSED (verified)** — Provider jobs `98359601960/98359602065` map to `.1`; Linux jobs `98359602070/98359602123` map to `.2`; 133 jobs succeed and no new child is needed.
-- [x] **NO REGRESSION** — No retry, cancellation, relabel, or early push occurred; run/job URLs, SHA, outcomes, repairs, and cadence requalification are durable.
+Exact push `c7a222ac41db7b28d502accbb75fcdc6ed579754` matched local, upstream, and
+remote authority. Runs `33023589413/33023589417` succeeded; regression
+`33023589424` closed 138/138 jobs as 133 success, four repaired prerequisite
+failures, and the derivative `perl-files` aggregate failure. Jobs
+`98359601960/98359602065` map to the provider ownership repair in `.1`, and
+`98359602070/98359602123` map to the Linux core-authority repair in `.2`.
+The node records and exact work-unit commits retain the root, focused proof,
+and no-retry/no-cancellation evidence; tracked triggers re-derive the set,
+exact-SHA logs falsify completeness, and this archive supplies durability.
 
 ## `.3` interrupted complete-CI evidence
 
@@ -404,15 +411,3 @@ Verilator process.
 - [x] **ROOT CAUSE (WHY + WHERE)** — The first resumed suffix was terminated solely by the RAM guard's host-wide 88.1% cutoff while its active FSMGEN generator remained below the independent 4-GiB descendant ceiling; no test assertion failed. The prior uncheckpointed t296 work is deliberately uncredited, and recovery starts t296 from its exact clean revision rather than hiding the interruption.
 - [x] **ADDRESSED (verified)** — The existing exact-revision repository-local checkpoint consumed all 762 independently counted t296 batches, the complete parent passed, and the checkpoint self-cleared. The separately derived 778-file lexical tail from t297 through t999 then passed, returning ownership to `.3.2` for locality, book, push, and hosted qualification.
 - [x] **NO REGRESSION** — Guarded t296 reports `Files=1, Tests=10` and guarded t297-t999 reports `Files=778, Tests=2989`, both with `All tests successful` and `Result: PASS`. Neither guard fired; the checkpoint and test processes are absent; Git remained clean throughout. Combined with retained t01-t295 evidence, every complete-CI file is covered without retrying or reclassifying a failed assertion.
-
-## Acceptance Checklist — `.3.2.2.1` hosted provider ownership
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Exact-SHA job `98359601960` runs t1650 in provider-empty ordinary shard 8 and fails at `/dependency_root`; `git log -S 'HOSTED_DEDICATED_TEST_2' --oneline -- bin/ci-regression` identifies `ded0520c4` as the three-coordinate list's origin. The source/call-path census derives t1598, t1648, and t1650 as the complete default real-provider set while separating mocked, installed-tool-conditional, and explicit opt-in tests.
-- [x] **ADDRESSED (verified)** — Decision `0088`, `bin/ci-regression`, and the workflow define five closed coordinates. Explicit matrix flags give only t1436 pinned HDL tools and exactly t1598/t1648/t1650 the immutable repository-local provider. The watcher independently closes all 1,656 tracked tests as 1,647 ordinary plus nine separate owners and rejects bad coordinates.
-- [x] **NO REGRESSION** — `t/1183` reports `Files=1, Tests=12` PASS; the guarded exact-provider run of t1598/t1648/t1650 reports `Files=3, Tests=22` PASS in 331 seconds. Driver syntax, five dry-run coordinates, provider HEAD, mdBook, Knowledge Map, task/decision structure, locality, live-document, claim, diff, and staged doctrine gates are required green for commit.
-
-## Acceptance Checklist — `.3.2.2.2` Linux logical-core authority
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Exact-SHA jobs `98359602070` and `98359602123` both abort in `ArchitectureScaleMeasurement::_linux_logical_cores`; `git log -S 'POSIX::_SC_NPROCESSORS_ONLN'` locates the optional-constant dependency at `3946bf101`, while setup-Perl 5.32 does not export it.
-- [x] **ADDRESSED (verified)** — Decision `0089` and the module use bounded `online`/`kernel_max` kernel authority with strict canonical cpulist parsing, then an independently bounded exact procfs-identity fallback; focused hostile cases reject overlap, ordering, ambiguity, range, duplicate, malformed, and missing evidence without changing schema or Darwin code.
-- [x] **NO REGRESSION** — `t/1656` and `t/1657` each report `Files=1, Tests=6` PASS; `t/1183` reports `Files=1, Tests=12` PASS; mdBook, Knowledge Map, task/decision, locality, live-document, claim, diff, and doctrine checks pass with no ceiling increase.

@@ -46,7 +46,7 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION` | `active` | `verification infrastructure / runtime qualification` | `.3.2.2.3` done; `.3.2.2` retains the committed repairs until standing-cadence hosted requalification | [task](docs/tasks/DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.md) |
+| `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION` | `active` | `verification infrastructure / runtime qualification` | `.3.2.2.4` active; align trace-v2/scale dependent truth before the authorized exceptional repair push | [task](docs/tasks/DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.md) |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.30` done; proposed `.29` owns node-field narration accretion | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.17.3.6.2` active; materialize the exact authored portable-VHDL runtime candidates | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `ISF-SPEC-TEST-INDEX-SYNC` | `active` | `R14` | `.3` exact post-partition transformation is green; commit it before resolving the remaining complete-CI findings | [task](docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md) |
