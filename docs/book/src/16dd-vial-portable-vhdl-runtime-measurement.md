@@ -249,9 +249,10 @@ scripts/run_with_ram_guard.sh -- \
 The default `t/1675-vial-architecture-scale-portable-vhdl-runtime-measurement-matrix.t`
 controls producer order, mode routing, tool-free dominance, process isolation,
 bounded canonical IPC, immutable collision/recovery, aggregate partition drift,
-and staging cleanup without running the exact campaign. Its guarded exact mode
-owns capture, aggregate sealing, and fresh-process identity equality after this
-implementation commits cleanly.
+and staging cleanup without running the exact campaign. Its guarded
+`FSMGEN_VIAL_PORTABLE_VHDL_RUNTIME_MATRIX_EXACT=1` mode owns capture, aggregate
+sealing, and fresh-process identity equality after this implementation commits
+cleanly; the similarly named portable-Verilator trigger cannot activate it.
 
 ## Nonclaims
 

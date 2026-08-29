@@ -7267,3 +7267,24 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   locality, containment, staged acceptance, diff, and all doctrine checks must
   pass before the implementation commit. Full CI, exact GHDL capture, reload,
   and push remain deferred to their policy boundaries.
+
+## Acceptance Checklist (enforced) — `.17.3.6.5` exact-trigger isolation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Clean implementation revision
+  `e4f4a295e` retains the copied
+  `FSMGEN_VIAL_PORTABLE_RUNTIME_MATRIX_EXACT` name in t1675. `git log -S
+  'FSMGEN_VIAL_PORTABLE_RUNTIME_MATRIX_EXACT' --oneline --
+  t/1675-vial-architecture-scale-portable-vhdl-runtime-measurement-matrix.t`
+  locates that introduction. The name is already owned by t1670's
+  portable-Verilator campaign, so requesting one exact watcher could
+  unintentionally activate both backends.
+- [x] **ADDRESSED (verified)** — t1675 now admits exact work only through
+  `FSMGEN_VIAL_PORTABLE_VHDL_RUNTIME_MATRIX_EXACT`; its subtest and mdBook name
+  the same closed trigger. The portable-Verilator variable remains unchanged
+  and backend-specific.
+- [x] **NO REGRESSION** — With only the old portable-Verilator trigger set,
+  t1675 reports `All tests successful` and does not require a guard or create a
+  VHDL publication. Default t1670+t1675 report `Files=2, Tests=14`; syntax,
+  mdBook, Knowledge Map, claims, task, containment, acceptance, diff, and all
+  doctrine gates must pass before the repair commit. Exact GHDL capture remains
+  deferred to the immediately following clean revision.

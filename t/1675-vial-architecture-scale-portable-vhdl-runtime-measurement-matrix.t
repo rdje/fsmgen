@@ -506,10 +506,10 @@ subtest 'aggregate manifests reject semantic partition drift' => sub {
         'aggregate validation rejects forged preflight execution');
 };
 
-subtest 'guarded capture seals all portable runtime evidence' => sub {
+subtest 'guarded capture seals all portable-VHDL runtime evidence' => sub {
     plan skip_all =>
-        'set FSMGEN_VIAL_PORTABLE_RUNTIME_MATRIX_EXACT=1 under the RAM guard'
-        unless $ENV{FSMGEN_VIAL_PORTABLE_RUNTIME_MATRIX_EXACT};
+        'set FSMGEN_VIAL_PORTABLE_VHDL_RUNTIME_MATRIX_EXACT=1 under the RAM guard'
+        unless $ENV{FSMGEN_VIAL_PORTABLE_VHDL_RUNTIME_MATRIX_EXACT};
     is($ENV{FSMGEN_RAM_GUARD_ACTIVE}, 1,
         'complete matrix executes below the repository guard');
 
