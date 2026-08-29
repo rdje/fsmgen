@@ -105,6 +105,8 @@ mappings, six preserved portable sources/guards, and the exact provider
 census. The seven-source totals are 122,413/122,426/122,438 bytes; t1676
 re-derives and falsifies these identities, while the module, task tree, and
 this card retain them durably. Limit/excess are provider-, route-, staging-,
-and tool-free. `.17.3.7.2` execution-plan extraction is next; no GHDL runtime,
-measurement, publication, support, performance, capacity, provider-generality,
-mixed-language, or public-API claim follows from materialization.
+and tool-free. Clean materializer commit `90c4d9abd` activates `.17.3.7.2` only
+to extract the caller-sealed provider/generated-source/fixture/probe/report
+execution plan while the checked qualifier remains the executable oracle. No
+GHDL runtime, measurement, publication, support, performance, capacity,
+provider-generality, mixed-language, or public-API claim follows.

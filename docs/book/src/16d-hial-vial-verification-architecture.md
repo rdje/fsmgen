@@ -4046,9 +4046,10 @@ die "unexpected external execution"
     if $report->{claims}{external_tool_executed};
 ```
 
-Execution-plan extraction in `.17.3.7.2` is next. This completed materializer
-does not yet alter the shared lifecycle, invoke GHDL, measure a sample, or
-publish a matrix.
+From clean materializer commit `90c4d9abd`, `.17.3.7.2` is active solely to
+extract the caller-sealed OSVVM/GHDL execution plan. The checked qualifier
+remains the executable oracle; no shared-lifecycle change, GHDL invocation,
+measurement sample, or matrix publication is active in this extraction slice.
 
 The same real RAM guard is mandatory for correctness validation, measurement,
 and independent report regeneration. The focused exact proof is:

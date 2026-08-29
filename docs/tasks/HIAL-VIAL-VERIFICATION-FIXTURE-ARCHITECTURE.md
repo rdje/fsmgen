@@ -755,11 +755,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.1: activate exact OSVVM runtime materialization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.1: implement exact OSVVM runtime materialization`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Extract one closed OSVVM/GHDL provider, generated-source, fixture, probe, and report execution-plan authority.`
   Acceptance: `Derive the exact qualified source order, generated settings, libraries, provider/generated analyses, fixture/probe elaboration and run commands, report inventory, normalized identities, deadlines, capture limits, repository-relative paths, and provider/tool/source seals from current authorities; reject caller substitution and retain the checked qualifier as executable oracle without running a second implementation route.`
-  Verification: `pending after .1`
-  Commit: `pending activation`
+  Verification: `Clean materialization implementation 90c4d9abd closes .1 with the exact authored-source/provider/emission graph and no external tool execution. Source/history audit finds no separate OSVVM/GHDL runtime execution-plan owner: the checked qualifier currently embeds provider order, generated settings, libraries, commands, limits, and report inventory inside one monolithic execution route. Decision 0092 therefore orders this caller-sealed extraction before lifecycle reuse, tool execution, measurement, or publication; activation changes none of those behaviors or claims.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.2: activate exact OSVVM execution-plan extraction`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.3`
   Status: `proposed`
@@ -7507,3 +7507,28 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   provider-owned validated-result logs and finds no disposable binary, render,
   or materializer staging residue. Per policy, full CI and push remain deferred
   to the batch boundary.
+
+## Acceptance Checklist (enforced) — `.17.3.7.2` execution-plan activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Knowledge Map query plus `rg` and
+  `git log -S` find no separate OSVVM/GHDL runtime execution-plan authority.
+  `VHDLOSVVMGHDLQualification` embeds provider/generated source order,
+  generated settings, libraries, commands, deadlines, capture limits, and
+  supplementary reports in the monolithic executable qualifier, while
+  decision `0092` requires one caller-sealed plan before lifecycle reuse.
+- [x] **ADDRESSED (verified)** — From clean materializer commit `90c4d9abd`,
+  `.17.3.7.2` is the sole active implementation frontier and owns exact plan
+  derivation, normalized identities, caller-substitution rejection, and
+  qualifier-oracle preservation. Lifecycle, tool execution, measurement,
+  publication, and product claims remain outside this activation.
+- [x] **NO REGRESSION** — Focused relative-path, locality, task-tree,
+  containment-authority, Knowledge Map, and claim coverage reports `All tests
+  successful` at `Files=9, Tests=110`. All 56 mdBook chapters test; the
+  inspected repository-local render contains 92 files/20,008,224 bytes before
+  exact removal. Knowledge Map parity holds at 1,155 facts/6,125 questions/
+  6,297 occurrences/136 shards, while 1,627 claim candidates remain completely
+  joined as 118 claim records/916 gates/593 reviews/zero gaps. Production
+  containment accepts all 22 surfaces and exact 57-file/53,007-line/
+  2,838,613-byte book authority, a one-line/134-byte activation delta with zero
+  ceiling increase. Staged-result, diff, acceptance, and complete doctrines
+  must pass before commit; full CI and push remain deferred by policy.
