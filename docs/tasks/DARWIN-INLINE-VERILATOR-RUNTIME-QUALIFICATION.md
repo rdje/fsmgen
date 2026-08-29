@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `verification infrastructure / runtime qualification`
 - Created: `2026-08-26`
-- Last updated: `2026-08-28`
+- Last updated: `2026-08-29`
 - Owner: repo-local workflow
 
 ## Goal
@@ -112,7 +112,7 @@ by that run.
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2`
   Status: `active`
   Goal: `Repair every exact first-push hosted failure without discarding the remaining job evidence.`
-  Children: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.1, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.2, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.3, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.4`
+  Children: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.1, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.2, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.3, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.4, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.5`
   Acceptance: `Consume every required job from exact pushed revision c7a222ac41db, partition each terminal failure by root cause, repair each under its own committed child with focused and routing oracles, preserve every green hosted result, and keep .3.2 active until an authorized exact repair revision is hosted-green.`
   Verification: `pending`
   Commit: `pending`
@@ -145,6 +145,13 @@ by that run.
   Verification: `The two exact failures now consume decisions 0075/0090: t1641 requires 118,064/176,433/388,401 bytes, 21 checks, and the guarded 29,506/29,507 boundary; t1651 requires trace schema v2 and VHDLPortableTraceValidator for both VHDL profiles. Support status, review workflow, canonical galleries, architecture audit, mdBook, Knowledge Map, and six affected claim dispositions align to 77 total records (42 control plus 35 authenticated samples), 21 checks, and current scale values. Focused construction/emission/trace tests pass Files=6/Tests=81; exact GHDL qualifications pass 2/6; the boundary passes 1/5; support/claim/profile-family tests pass 7/48. All 56 book chapters test, its 92-file/19,568-KiB disposable build is removed, Knowledge Map parity is 1,154 facts/6,121 questions/6,288 occurrences/136 shards, and the claim join closes 1,589/1,589 with zero gaps. Interrupted t303 remains uncredited.`
   Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.4: align trace-v2 dependent truth`
 
+- ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.5`
+  Status: `active`
+  Goal: `Close pre-push recovery, exact generated-artifact cleanup, the authorized exceptional repair push, and hosted qualification.`
+  Acceptance: `Preserve each guard interruption as non-passing operational evidence; combine the retained green t01-t1436 prefix only with one fresh exact t1437-t999 suffix; require a guarded mdBook build; remove and census only exact project-owned generated outputs; commit the clean pre-push evidence; push the exact revision under the director's one-time authorization without changing the standing 200-commit cadence; require local, upstream, and remote SHA identity plus every expected push workflow and required job terminal-success; durably record URLs and conclusions before closing the parents.`
+  Verification: `Activation follows one fresh guarded exact suffix at the committed repair revision: 1,163 independently counted paths from t1437 through t999 passed at Files=1,163/Tests=12,175 after unrelated sibling-project release-LTO pressure had interrupted earlier attempts without a test assertion failure. The retained t01-t1436 prefix supplies the disjoint earlier range. A separate guarded mdBook build produced the expected repository-local 92-file/19,568-KiB disposable output. Exact cleanup, closure gates, commit, push, and hosted results remain pending.`
+  Commit: `pending`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
@@ -158,8 +165,9 @@ by that run.
 | 7 | `.3.2.2.2` | `done` | Bounded kernel cpulist authority plus procfs fallback repairs both setup-Perl failures without schema or Darwin drift. |
 | 8 | `.3.2.2.3` | `done` | All 138 jobs are terminal; four prerequisite failures map exactly to committed repairs and the aggregate adds no root cause. |
 | 9 | `.3.2.2.4` | `done` | Trace-v2/scale tests, support projections, galleries, book, cards, and claims now share exact executable authority. |
-| 10 | `.3.2.2` | `active` | Resume the complete pre-push gate, then retain all repairs until the authorized exact repair push is hosted-green. |
-| 11 | `.3.2` | `active` | Preserve complete-CI and green hosted evidence until the authorized exact repair revision is hosted-green. |
+| 10 | `.3.2.2.5` | `active` | Clean exact generated residue, commit complete pre-push evidence, perform the authorized exceptional push, and consume every hosted result. |
+| 11 | `.3.2.2` | `active` | Retain all repairs until the authorized exact repair push is hosted-green. |
+| 12 | `.3.2` | `active` | Preserve complete-CI and green hosted evidence until the authorized exact repair revision is hosted-green. |
 
 ## Decisions
 
