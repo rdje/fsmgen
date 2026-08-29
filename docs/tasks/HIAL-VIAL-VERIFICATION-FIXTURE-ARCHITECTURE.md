@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
-- Last updated: `2026-08-27`
+- Last updated: `2026-08-30`
 - Owner: repo-local workflow
 - Segment manifest: `docs/tasks/segments/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/manifest.jsonl`
 
@@ -736,8 +736,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Publish and independently reload the complete immutable portable-VHDL runtime measurement set.`
   Acceptance: `After .4 commits cleanly, derive the five-level inventory from producer ownership; atomically publish bounded raw reports plus compact manifests at one clean revision/host/tool/guard identity; reject incomplete, reordered, mutated, mixed, stale, collided, signalled, oversized, or ambiguous state; retain all raw/excluded samples, applicability, earlier-cap dominance, cleanup and nonclaims; complete guarded capture plus separate fresh-process reload before closing .17.3.6.`
-  Verification: `Clean predecessor e7203c278 supplies the exact five-shape producer, 11 accepted runtime records across reference/gate/qualification, tool-free limit/excess reports, complete raw evidence and cleanup, and the decision-0090 publication contract. Activation commit a4ed37ae3 makes this leaf the sole owner. The implemented producer-derived matrix isolates capture/reload per profile, publishes complete canonical reports before bounded compact IPC, inherits common identity for tool-free profiles only after executable evidence, atomically seals family/complete manifests, and rejects incomplete/order/sample/identity/process/publication/staging drift. Default publisher plus impacted portable-runtime/materializer/lifecycle/adapter coverage passes Files=5/Tests=37; runner inventory returns the exact five ordered modes. A clean implementation commit is required before the exact guarded capture and separate reload can close the leaf.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: activate portable-VHDL measurement publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: implement portable-VHDL measurement publication`
+  Verification: `Clean predecessor e7203c278 supplies the exact five-shape producer, 11 accepted runtime records across reference/gate/qualification, tool-free limit/excess reports, complete raw evidence and cleanup, and the decision-0090 publication contract. Activation commit a4ed37ae3 makes this leaf the sole owner. The implemented producer-derived matrix isolates capture/reload per profile, publishes complete canonical reports before bounded compact IPC, inherits common identity for tool-free profiles only after executable evidence, atomically seals family/complete manifests, and rejects incomplete/order/sample/identity/process/publication/staging drift. Default publisher plus impacted portable-runtime/materializer/lifecycle/adapter coverage passes Files=5/Tests=37; runner inventory returns the exact five ordered modes. The first clean exact capture at 07875ea75 failed closed because the cloned aggregate validator still required the portable-Verilator six-artifact graph instead of the producer-authoritative portable-VHDL seventeen-artifact graph. A focused seventeen-artifact fixture reproduces that mismatch before the validator repair; the corrected adapter/publication pair passes Files=2/Tests=15. The repair must commit cleanly before one fresh guarded capture and separate reload can close the leaf.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: activate portable-VHDL measurement publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: implement portable-VHDL measurement publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: isolate portable-VHDL exact trigger; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: repair portable-VHDL artifact cardinality`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7`
   Status: `proposed`
@@ -7288,3 +7288,50 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   mdBook, Knowledge Map, claims, task, containment, acceptance, diff, and all
   doctrine gates must pass before the repair commit. Exact GHDL capture remains
   deferred to the immediately following clean revision.
+
+## Acceptance Checklist (enforced) — `.17.3.6.5` VHDL artifact cardinality
+
+- [x] **ROOT CAUSE (WHY + WHERE; executable RED)** — The first guarded exact
+  t1675 campaign on clean `07875ea75` exits 75 after its seven default subtests:
+  the reference profile's accepted terminal lifecycle reports the canonical
+  seventeen-artifact portable-VHDL emission, while copied matrix checks at
+  lines 934/991 still require portable-Verilator's six artifacts. No profile,
+  aggregate, staging, or worker process remains. Changing the synthetic
+  aggregate fixture alone from six to the producer-authoritative seventeen
+  independently makes default t1675 fail at `entry terminal evidence changed`.
+  The captured producer failure is `portable-vhdl-runtime record lacks terminal
+  lifecycle evidence at perl/FSM/VIAL/ArchitectureScalePortableVHDLRuntimeMeasurementMatrix.pm line 993`.
+- [x] **ADDRESSED (verified)** — The matrix now names one
+  `VHDL_EMISSION_ARTIFACT_COUNT` authority of 17 and applies it to both raw
+  terminal-lifecycle and compact-entry validation; the aggregate fixture also
+  requires 17. Publication identity, schema, limits, profile routing, capture,
+  process isolation, cleanup, and the underlying correct VHDL report do not
+  change.
+- [x] **NO REGRESSION** — Matrix syntax reports `syntax OK`; default t1674 and
+  t1675 report `All tests successful`, `Files=2, Tests=15` in nine seconds.
+  The active task, Memory, Knowledge card, and mdBook retain the exact failed
+  clean revision and corrected producer authority. Independent `find`/`wc`
+  re-derivation measures the Knowledge-card collection at 3,413,142 bytes,
+  exact delta 57,826 from its 3,355,316-byte baseline; the existing 57,428-byte
+  transition allowance is therefore falsified by 398 bytes and ratcheted to
+  exact delta plus its declared 4,096-byte step, 61,922. The containment
+  checker independently falsifies drift and the task/config diff durably owns
+  the adjustment. The first staged driver also measures task evidence three
+  lines above its old allowance; exact final delta plus the declared 100-line
+  ratchet owns that transition repair. Neither change raises a health or
+  enforcement ceiling. Claim, task, relative-path,
+  locality, containment, staged acceptance, diff, mdBook, Knowledge Map, and
+  complete doctrine checks must pass before the repair commit. Independent
+  `find`/`wc` also re-derives the maintained book at 57 files/52,896 lines/
+  2,830,460 bytes, exactly 0/+8/+531 from clean trigger authority; its
+  aggregate contract and checker provide the falsification and durable legs
+  without a ceiling change. All 56 chapters test; the inspected repository-
+  local render contains 92 files/19,926,567 bytes and is removed exactly.
+  Focused relative-path, locality, task/acceptance, containment, maintained-
+  reference, and claim-doctrine coverage reports `Files=10, Tests=133`;
+  task integrity holds at four trees/1,014 nodes, Knowledge Map parity remains
+  1,155 facts/6,124 questions/6,296 occurrences/136 shards, the 1,609-candidate
+  claim join closes with zero gaps, and publication staging/log/render residue
+  is absent. Staged acceptance and diff checks pass, and `[doctrine] all
+  doctrine checks passed` closes the final commit gate. Exact capture is deferred to the resulting clean revision;
+  full CI and push remain at their policy boundaries.

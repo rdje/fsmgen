@@ -439,7 +439,7 @@ subtest 'aggregate manifests reject semantic partition drift' => sub {
                 ? undef : 'synthetic-validation',
             validation_trace_records => $preflight
                 ? undef : $records{$profile->{level}},
-            validation_artifact_count => $preflight ? 0 : 6,
+            validation_artifact_count => $preflight ? 0 : 17,
             measurement_identities => \@measurement_ids,
             measured_samples => $samples,
             excluded_measurement_identities => [],

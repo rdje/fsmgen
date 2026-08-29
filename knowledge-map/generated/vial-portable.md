@@ -37,5 +37,5 @@ _VIAL portable SystemVerilog uses deterministic inactive-edge scheduling and an 
 
 _Portable VHDL runtime scale uses compact sample snapshots and one staged GHDL lifecycle_
 
-- **date:** 2026-08-29 · **status:** current
+- **date:** 2026-08-30 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-portable-vhdl-runtime-scale.md`](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)

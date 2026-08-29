@@ -8,7 +8,7 @@ answers:
   - "how will exact GHDL qualification and scale measurement share execution?"
   - "what exact portable VHDL profiles have been measured with GHDL?"
   - "does portable VHDL runtime measurement mean IASIM execution?"
-date: 2026-08-29
+date: 2026-08-30
 status: current
 tags: [vial, vhdl, ghdl, runtime, trace, scalability]
 evidence: >-
@@ -22,6 +22,8 @@ evidence: >-
   perl/FSM/VIAL/ArchitectureScaleRuntimeStream.pm;
   perl/FSM/VIAL/ArchitectureScalePortableVHDLRuntimeMaterialization.pm;
   perl/FSM/VIAL/ArchitectureScalePortableVHDLRuntimeMeasurement.pm;
+  perl/FSM/VIAL/ArchitectureScalePortableVHDLRuntimeMeasurementMatrix.pm;
+  scripts/run_vial_portable_vhdl_runtime_measurement_matrix.pl;
   vial/qualification/vhdl_portable_ghdl_runtime_gate.vial;
   vial/qualification/vhdl_portable_ghdl_runtime_qualification.vial;
   vial/qualification/vhdl_portable_ghdl/ghdl-6.0.0-qualification.json;
@@ -31,12 +33,14 @@ evidence: >-
   t/1672-vial-architecture-scale-portable-vhdl-runtime-materialization.t;
   t/1673-vial-ghdl-shared-lifecycle.t;
   t/1674-vial-architecture-scale-portable-vhdl-runtime-measurement.t;
+  t/1675-vial-architecture-scale-portable-vhdl-runtime-measurement-matrix.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16dd-vial-portable-vhdl-runtime-measurement.md
 reverify: >-
   prove -Iperl t/1595-vial-vhdl-portable-ghdl-qualification.t
   t/1664-vial-verilator-shared-lifecycle.t
-  t/1673-vial-ghdl-shared-lifecycle.t &&
+  t/1673-vial-ghdl-shared-lifecycle.t
+  t/1675-vial-architecture-scale-portable-vhdl-runtime-measurement-matrix.t &&
   FSMGEN_VIAL_PORTABLE_VHDL_RUNTIME_MEASUREMENT_EXACT=1
   scripts/run_with_ram_guard.sh --
   prove -Iperl t/1674-vial-architecture-scale-portable-vhdl-runtime-measurement.t &&
@@ -94,8 +98,13 @@ new producer-derived publisher isolates every profile, retains raw canonical
 reports before returning compact coordinator entries, seals only one clean
 Git/host/GHDL/guard identity, and rejects collision, ambiguity, mutation,
 oversize, signal, or incomplete state. It reuses the earlier runtime-capture
-byte authority as a conservative file ceiling; no published set exists until
-the clean implementation revision completes atomic capture and separate reload.
+byte authority as a conservative file ceiling. Its first clean exact attempt
+failed closed before publication because a copied aggregate check required the
+portable-Verilator six-artifact graph; the underlying accepted portable-VHDL
+lifecycle correctly retained seventeen. Raw and compact validators now share
+that exact producer authority, with an executable seventeen-artifact manifest
+control. No published set exists until the clean repaired revision completes
+atomic capture and separate reload.
 
 Related: [[vial-architecture-scale-proof]],
 [[hial-vial-verification-fixture-architecture]].

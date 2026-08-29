@@ -51,6 +51,7 @@ my $COMPLETE_FILENAME = 'complete-matrix.json';
 my $AUTHORITATIVE_RUNTIME_CAPTURE_BYTES = 67_108_864;
 my $GATE_TRACE_RECORDS = 10_000;
 my $QUALIFICATION_TRACE_RECORDS = 100_000;
+my $VHDL_EMISSION_ARTIFACT_COUNT = 17;
 my $MAX_PUBLICATION_BYTES = $AUTHORITATIVE_RUNTIME_CAPTURE_BYTES;
 my $MAX_PROFILE_WORKER_RESULT_BYTES = 65_536;
 my $MAX_PROFILE_WORKER_ERROR_BYTES = 4_096;
@@ -931,7 +932,8 @@ sub _validate_profile_entry($entry, $profile) {
         confess "portable-vhdl-runtime entry terminal evidence changed\n"
             unless $entry->{validation_trace_records}
                     == $entry->{requested_trace_records}
-                && $entry->{validation_artifact_count} == 6
+                && $entry->{validation_artifact_count}
+                    == $VHDL_EMISSION_ARTIFACT_COUNT
                 && $entry->{cleanup_records}
                     == 1 + $entry->{measured_samples};
     }
@@ -988,7 +990,8 @@ sub _terminal_runtime_evidence($record) {
             && $publish->{evidence}{trace_record_count} > 0
             && ref($publish->{evidence}{artifact_identity}) eq 'HASH'
             && $publish->{evidence}{artifact_identity}
-                {emission_artifact_count} == 6
+                {emission_artifact_count}
+                    == $VHDL_EMISSION_ARTIFACT_COUNT
             && $record->{cleanup}{ephemeral_removed}
             && !@{$record->{cleanup}{residue}};
     return $publish->{evidence};

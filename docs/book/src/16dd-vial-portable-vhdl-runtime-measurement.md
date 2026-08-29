@@ -254,6 +254,14 @@ and staging cleanup without running the exact campaign. Its guarded
 sealing, and fresh-process identity equality after this implementation commits
 cleanly; the similarly named portable-Verilator trigger cannot activate it.
 
+Every executable profile must carry the producer-authoritative seventeen-
+artifact portable-VHDL emission graph. The first clean exact publication
+attempt exposed and failed closed on a copied six-artifact portable-Verilator
+expectation in the new aggregate validator. The matrix now applies one exact
+seventeen-artifact authority to both the raw terminal lifecycle and its compact
+manifest entry; a focused synthetic manifest would fail if that backend-
+specific cardinality drift returned. No malformed aggregate was published.
+
 ## Nonclaims
 
 Selection does not claim OSVVM runtime, another simulator, complete VHDL-2008,
