@@ -743,8 +743,44 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Measure exact OSVVM methodology generation, analysis, elaboration, run, trace validation, and result production with the qualified provider and GHDL.`
   Acceptance: `Verify exact provider commit/tree/manifest/licence/notice identity before work; consume only the qualified OSVVM plus GHDL profile and canonical runtime inputs; perform validation and measured repetitions with qualified limits and guards; retain separate provider-verification, FSMGen, and external-tool stages; prove adapter/portable artifacts, mappings, trace/result semantics, raw evidence, deterministic rerun, atomic publication, failure, and cleanup; and make no provider-generality, mixed-language, promoted-budget, support, or capacity claim.`
-  Verification: `Clean portable-VHDL publication closure 09bdca8cc leaves OSVVM runtime measurement as the next roadmap dependency. Query-first cards and decisions 0051/0088 bind it to the exact OSVVM 2026.05 commit 2f7c391051dfb11890fa4bdbda9918d1db492250, tree bd4fdc594f2c26d564cf8907ff599578b9a39e22, checked recursive manifest/licence/notice census, and qualified GHDL 6.0.0 LLVM-JIT profile. Source/history audit finds no existing ArchitectureScaleOSVVMRuntimeMeasurement owner: runtime-stream expectations, callback-scoped provider verification/adapter emission, and the historical provider/tool qualifier remain separate authorities. This activation changes no code, provider data, generated artifact, runtime, trace/result, timeout, support, performance, budget, capacity, mixed-language, or public-API claim; exact decomposition is the next action.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7: activate OSVVM runtime measurement`
+  Verification: `Clean activation 402ccada5 owns selection. Query-first cards and decisions 0051/0056/0088/0090 bind the exact provider/tool and measurement contracts. Direct live verification accepts OSVVM commit 2f7c391051dfb11890fa4bdbda9918d1db492250, tree bd4fdc594f2c26d564cf8907ff599578b9a39e22, and the checked 14-repository/13-gitlink/14-licence/zero-notice census; a guarded exact OSVVM/GHDL qualifier matches its checked report and its empty parent stage is removed. Source/history audit finds no measurement owner and proves the existing runtime expectations, callback-scoped provider/emission route, monolithic qualifier, and portable single-command lifecycle cannot substitute for one another. Decision 0092 reuses the exact authored VHDL runtime sources, selects a profile-specific materializer, extracts one closed provider/tool execution plan, versions the shared lifecycle by sealed role, and orders five implementation children through measurement and publication without changing any provider/tool/runtime/product claim.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7: activate OSVVM runtime measurement; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7: select provider-aware OSVVM runtime measurement`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.5`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.1`
+  Status: `proposed`
+  Goal: `Materialize the exact OSVVM runtime profiles through the authored VHDL source-to-wrapper route.`
+  Acceptance: `Reuse the decision-0090 tracked reference/gate/qualification sources without duplication; construct the OSVVM workload identity; rebuild semantic/bridge/plan authority twice; perform one callback-scoped exact provider verification; prove seven sources, portable byte identity, adapter/mapping/source-map/check/guard closure, trace projections, deterministic emission, mutation rejection, and same-volume cleanup; keep limit/excess provider-free and tool-free.`
+  Verification: `pending clean activation`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.2`
+  Status: `proposed`
+  Goal: `Extract one closed OSVVM/GHDL provider, generated-source, fixture, probe, and report execution-plan authority.`
+  Acceptance: `Derive the exact qualified source order, generated settings, libraries, provider/generated analyses, fixture/probe elaboration and run commands, report inventory, normalized identities, deadlines, capture limits, repository-relative paths, and provider/tool/source seals from current authorities; reject caller substitution and retain the checked qualifier as executable oracle without running a second implementation route.`
+  Verification: `pending after .1`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.3`
+  Status: `proposed`
+  Goal: `Add the provider-aware role to the shared GHDL lifecycle and refactor exact OSVVM qualification onto it.`
+  Acceptance: `Preserve portable lifecycle/report bytes while admitting only the sealed OSVVM plan; execute ordered provider/generated analysis plus fixture/probe elaboration/run through the shared process supervisor; retain per-command captures, supplementary reports, portable trace/result authority, content-addressed forward states, timeout/signal/capture/mutation/collision controls, pre/post provider identity, and exact cleanup; require the checked qualifier report to remain byte-identical.`
+  Verification: `pending after .2`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.4`
+  Status: `proposed`
+  Goal: `Measure applicable OSVVM runtime profiles through the common controller and provider-aware lifecycle.`
+  Acceptance: `Reconstruct canonical source/provider/emission/plan authority in every worker; map all decision-0056 stages to the selected lifecycle; retain reference validation, gate validation plus three records, qualification validation plus five records, exact provider/FSMGen/tool evidence, commands/transcripts/reports/trace/result identities, exclusions, active guards, failure, and both cleanup domains; keep limit/excess preflight-only.`
+  Verification: `pending after .3`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.5`
+  Status: `proposed`
+  Goal: `Publish and independently reload the complete immutable OSVVM runtime measurement set.`
+  Acceptance: `Derive all five roles from producer ownership; isolate capture and reload; bind one clean revision/host/provider/tool/guard identity; retain raw/excluded samples, provider applicability, dominance, supplementary evidence, cleanup, and nonclaims; reject incomplete/reordered/mixed/stale/collided/signalled/oversized/ambiguous state; complete guarded capture plus distinct fresh-process reload before closing .17.3.7.`
+  Verification: `pending after .4`
+  Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8`
   Status: `proposed`
@@ -7382,3 +7418,31 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   19,966,982-byte render is removed. Knowledge Map, claim, task, locality,
   containment, zero ceiling increase, diff, staged acceptance, and doctrines
   pass before commit; full CI and push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.3.7` OSVVM measurement selection
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Knowledge Map, source, and history audit
+  plus `git log -S 'ArchitectureScaleOSVVMRuntimeMeasurement' --oneline --all
+  -- perl scripts t` find no existing OSVVM runtime-measurement owner. The current shared GHDL
+  lifecycle accepts one generated-source analysis command and one top, while
+  the checked qualifier owns ordered provider analyses plus separate fixture
+  and probe elaboration/run lanes; neither can truthfully substitute for the
+  other.
+- [x] **ADDRESSED (verified)** — Direct provider materialization verifies the
+  exact qualified commit/tree and checked repository/gitlink/licence/notice
+  census, and a guarded qualifier run matches the checked report. Decision
+  0092 reuses the authored VHDL runtime sources and selects one profile
+  materializer, one extracted sealed execution plan, one provider-aware shared
+  lifecycle role, common measurement, and immutable publication as five
+  ordered children. Task/index/Memory/book/Knowledge Map surfaces agree.
+- [x] **NO REGRESSION** — The focused relative-path, locality, task,
+  containment, ceiling/reference-authority, Knowledge Map, and claim `prove`
+  command reports `All tests successful` at `Files=8, Tests=105`. All 56 mdBook chapters test; the
+  inspected repository-local render contains 92 files/19,970,027 bytes and is
+  removed exactly. Task integrity holds at four trees/1,019 nodes; Knowledge
+  Map parity remains 1,155 facts/6,124 questions/6,296 occurrences/136 shards;
+  the 1,619-candidate claim join closes with 110 claim records/zero gaps.
+  Independent live-document census accepts the exact task, rationale, and book
+  transition authorities across all 22 surfaces with zero ceiling increase.
+  Staged acceptance, resulting-tree, diff, and complete doctrine checks must
+  pass before commit; full CI and push remain at their policy boundaries.

@@ -85,7 +85,9 @@ claim.
 Related: [[vial-vhdl-portable-profile]],
 [[hial-vial-verification-fixture-architecture]].
 
-Scale leaf `.17.3.7` is active only to select exact OSVVM runtime-measurement
-ownership. It must reuse this qualified provider/tool tuple and keep provider
-verification, FSMGen stages, and external-tool stages distinct; activation
-adds no runtime measurement or promoted product claim.
+Decision `0092` selects `.17.3.7` as a five-leaf runtime-measurement chain. It
+reuses the tracked portable-VHDL runtime sources, adds a profile-specific
+OSVVM materializer, extracts one caller-sealed provider/tool plan, and admits
+that plan through a provider-aware role of the shared GHDL lifecycle before
+measurement and publication. Provider verification, FSMGen work, and external
+tool stages remain distinct; selection adds no measurement or promoted claim.

@@ -3962,11 +3962,22 @@ applicable, read-only, and included in `emit`, while
 `external_verification_tool` remains false. No compiler, simulator, external
 process, HDL runtime, trace, or result producer is started.
 
-With the portable-VHDL runtime matrix sealed, `.17.3.7` is now the active
-OSVVM runtime-measurement frontier. Activation reuses the exact qualified
-provider/tool tuple and existing semantic authorities; it first selects the
-provider/FSMGen/external-tool stage decomposition and adds no measurement,
-budget, support, capacity, mixed-language, or public-API claim by itself.
+With the portable-VHDL runtime matrix sealed, `.17.3.7` selects a five-leaf
+OSVVM runtime-measurement architecture. It reuses the tracked portable-VHDL
+runtime sources instead of creating OSVVM-only VIAL inputs. A profile-specific
+materializer binds those sources to the callback-scoped provider verification
+and wrapper emitter. One extracted, caller-sealed execution plan then carries
+the exact provider analyses, generated-source analyses, and fixture/probe
+elaboration and runs into a new provider-aware role of the shared GHDL
+lifecycle; the checked qualifier remains the executable compatibility oracle.
+
+The common measurement controller keeps provider verification inside `emit`
+as a read-only prerequisite, measures external GHDL work in `compile_analyze`,
+`elaborate`, and `run`, and leaves portable trace validation and result
+production authoritative. The ordered children own materialization, plan
+extraction, lifecycle/qualifier reuse, measurement, and immutable publication.
+Selection itself adds no measurement, budget, support, capacity,
+provider-generality, mixed-language, or public-API claim.
 
 The same real RAM guard is mandatory for correctness validation, measurement,
 and independent report regeneration. The focused exact proof is:
