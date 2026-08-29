@@ -715,8 +715,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Materialize exact authored portable-VHDL runtime-stream candidates through the canonical source-to-emission route.`
   Acceptance: `After .1 commits cleanly, add tracked gate and qualification VIAL sources whose only permitted semantic deltas are success reset count and matching scenario timeout. Require exact 10,000/100,000 v2 trace projections at reset counts 9,926/99,926, twice-rebuilt Parser/bridge/ExecutionIR/plan/emission identity, exact artifact/map/check inventories, byte-equal reruns, structural equivalence, limit/excess preflight, same-volume cleanup, and an honest stop plus superseding decision if the unchanged 64-MiB envelope dominates.`
-  Verification: `Trace-v2 truth owns records(N)=N+74 and reset candidates 9,926/99,926; no source exists. The 2026-08-29 scan found VerilatorLifecycle and BackendEmissionAuthority missing from the saved 254/253 baseline; live closure is 256/255. Task integrity (4 trees/1,014 nodes), 15-line Memory, containment, relative paths, and diff hygiene pass. Repair before source work.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.2: record import-map repair prerequisite`
+  Verification: `Import-map repair is complete with three-leg evidence in the current checklist below; source work is next.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.2: prerequisite + import-map refresh`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.3`
   Status: `proposed`
@@ -7169,15 +7169,16 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   from the fresh exact qualification, mdBook, Knowledge Map, task/relative-path,
   containment, staged acceptance, diff, and doctrine gates close the slice.
 
-## Acceptance Checklist (enforced) — `.17.3.6.1` authenticated portable-VHDL trace v2
+## Acceptance Checklist (enforced) — `.17.3.6.1` trace v2 + `.17.3.6.2` import-map repair
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Trace v1's 42 activity/framing records
+- [x] **ROOT CAUSE (WHY + WHERE; refreshed for `.17.3.6.2`)** — Trace v1's 42 activity/framing records
   omitted `vial_inactive_barrier`, preventing runtime-work measurement. The
   provisional census mistook 28 active cycles for all non-reset barriers and
   missed the final unsupported-size settlement sample; direct v2 GHDL proves
   19 + 16 = 35. The gallery README also froze an obsolete plan literal.
   `git log -S` locates trace v1 at `033c72f88` and that plan at `ab8b1af24`.
-- [x] **ADDRESSED (verified)** — Emitter revision 6, validator
+  For `.2`, the live scan disproved the saved 254/253 closure at exact 256/255.
+- [x] **ADDRESSED (verified; refreshed for `.17.3.6.2`)** — Emitter revision 6, validator
   `VHDLPortableTraceValidator`, and both qualification routes require canonical
   trace-v2 framing, exact caller-sealed plan/run/catalog/count authority, one
   66-bit normalized snapshot at each of 35 SAMPLE barriers, and a four-entry
@@ -7187,7 +7188,8 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   Decision `0075` and its exact watchers retain the resulting fixed 1,504-byte
   source growth and refined 29,506/29,507 portable-foundation boundary. README
   plan identity now follows the emitted plan dynamically.
-- [x] **NO REGRESSION** — Guarded real portable and OSVVM GHDL qualifications
+  The map/card now have 255 exact links, 76 current counts, and the new owners.
+- [x] **NO REGRESSION (refreshed for `.17.3.6.2`)** — Guarded real portable and OSVVM GHDL qualifications
   pass with unchanged two-scenario results, tools, commands, deadlines,
   four-state/provider evidence, and zero staging residue. Hostile and impacted
   trace/emitter/qualification/authority tests pass `Files=7, Tests=82`; guarded
@@ -7199,3 +7201,5 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   diff, and doctrine gates must be green before commit; no workload source,
   lifecycle, runtime capacity, performance budget, support, mixed-language,
   IASIM, or public-API claim changes.
+  Current `bin/fsmgen syntax OK`; `All tests successful`; `knowledge-map: OK`;
+  mdBook output and doctrine scratch are removed.

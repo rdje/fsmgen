@@ -14,22 +14,26 @@ answers:
   - "does bin/fsmgen reach public VIAL planning artifacts?"
   - "does bin/fsmgen reach public VIAL run and result tooling?"
   - "which VIAL backend packages are reachable from bin/fsmgen?"
-date: 2026-08-11
+  - "does bin/fsmgen reach the shared Verilator lifecycle?"
+  - "does bin/fsmgen reach the shared backend-emission authority?"
+date: 2026-08-29
 status: current
 tags: [bootstrap, architecture, import-tree, bin-fsmgen, semantic-introspection, ial2, ppif, vial]
-evidence: docs/BIN_FSMGEN_IMPORT_TREE.md; docs/tasks/STARTUP-INTEGRITY-REPAIR-AUG09.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; bin/fsmgen; perl/FSM/VIAL/ToolCLI.pm; perl/FSM/VIAL/Tool.pm; perl/FSM/VIAL/PlanBuilder.pm; perl/FSM/VIAL/ArtifactTransaction.pm; perl/FSM/VIAL/Backend/SVPortableVerilator.pm; perl/FSM/VIAL/Backend/Runner.pm; perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/VIAL/Backend/ResultProducer.pm; perl/FSM/Support/VIALNativeUVMEmissionContract.pm; perl/FSM/Support/VIALVHDLEmissionContract.pm
+evidence: docs/BIN_FSMGEN_IMPORT_TREE.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; bin/fsmgen; perl/FSM/VIAL/ToolCLI.pm; perl/FSM/VIAL/Tool.pm; perl/FSM/VIAL/PlanBuilder.pm; perl/FSM/VIAL/ArtifactTransaction.pm; perl/FSM/VIAL/Backend/SVPortableVerilator.pm; perl/FSM/VIAL/Backend/Runner.pm; perl/FSM/VIAL/Backend/VerilatorLifecycle.pm; perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/VIAL/Backend/ResultProducer.pm; perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/Support/VIALNativeUVMEmissionContract.pm; perl/FSM/Support/VIALVHDLEmissionContract.pm
 reverify: perl -Iperl -MModule::ScanDeps=scan_deps -E 'my $d=scan_deps(files=>["bin/fsmgen"], recurse=>1); my @pm=grep { /(?:^|\/)FSM\/.*\.pm\z/ } keys %$d; say "total=".(scalar(@pm)+1); say "pm=".scalar(@pm); say "support=".scalar(grep { /(?:^|\/)FSM\/Support\// } @pm); say "ial2=".scalar(grep { /(?:^|\/)FSM\/IAL2\// } @pm); say "vial=".scalar(grep { /(?:^|\/)FSM\/VIAL\// } @pm); say "hial=".scalar(grep { /(?:^|\/)FSM\/HIAL\// } @pm);'
 ---
 
 `docs/BIN_FSMGEN_IMPORT_TREE.md` is the canonical live maintainer-facing
 architecture note for the `bin/fsmgen` runtime spine.
 
-As of the 2026-08-11 refresh, the closure is `254` project files: `253`
-packages plus `bin/fsmgen`, including `19` IAL2, `17` VIAL, and `3` HIAL
+As of the 2026-08-29 refresh, the closure is `256` project files: `255`
+packages plus `bin/fsmgen`, including `19` IAL2, `19` VIAL, and `3` HIAL
 packages. It covers the `.isf` and `.ppif` front doors, shipped protocol-intent
 families, HDL backends, semantic/tool support, and repository-local data owner.
-Public VIAL runtime owns qualified portable-SystemVerilog emission, exact
-Verilator execution, closed-trace validation, and normalized results.
+Public VIAL runtime owns qualified portable-SystemVerilog emission, thin Runner
+adaptation over the shared exact Verilator lifecycle, closed-trace validation,
+and normalized results. Reachable support contracts share exact backend-
+emission limits through `BackendEmissionAuthority`.
 Native-UVM remains review-only. The portable-VHDL contract records exact GHDL
 6.0.0/OSVVM 2026.05 private-fixture qualification without making its backend
 public or reachable. The canonical note owns inventory, counts, spines, and
