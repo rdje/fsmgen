@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.2`
-  (`done` in this slice; authored portable-VHDL runtime candidates)
-- next_action: after the clean `.2` commit, activate `.17.3.6.3` and implement
-  the one sealed GHDL lifecycle selected by decision `0090`.
-- in_flight_uncommitted: none after this slice commits.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.3`
+  (`active`; shared process supervisor and sealed GHDL lifecycle)
+- next_action: audit the checked GHDL qualifier and Verilator lifecycle process
+  mechanism, then implement their one policy-sealed common supervisor.
+- in_flight_uncommitted: none after this activation commits.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none.

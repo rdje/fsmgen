@@ -719,11 +719,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.2: materialize portable-VHDL runtime candidates`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement one caller-sealed staged GHDL lifecycle for exact qualification and architecture-scale measurement.`
   Acceptance: `After .2 commits cleanly, extract one backend process supervisor from the already qualified production mechanism and make both Verilator and GHDL callers use sealed containment policies without result drift. Implement content-addressed admitted/prepared/tool-verified/analyzed/elaborated/ran/trace-validated/result-produced/assembled/cleaned GHDL states; bind exact provider/source/command/tool identities, 10/120/60/30-second deadlines, 64-KiB/8-MiB/8-MiB/64-MiB captures, mutation/collision/resume/failure controls, whole-tree termination, and exact cleanup. Refactor the checked GHDL qualifier to use the shared fixture lifecycle while retaining its separate four-state provider probe and byte-identical report.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean predecessor 580be53f5 closes both authored candidates and their exact ordinary source-to-emission route. Decision 0090 and this acceptance now own the shared process-supervisor extraction, one sealed GHDL lifecycle, checked-qualifier refactor, failure controls, and unchanged public evidence.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.3: activate shared GHDL lifecycle`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.4`
   Status: `proposed`
