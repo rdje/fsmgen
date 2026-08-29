@@ -6,10 +6,9 @@ selects the missing trace and lifecycle architecture. Trace-v2 truth is
 implemented under `.17.3.6.1`, and `.17.3.6.2` now materializes both authored
 scale sources through the canonical structural route. `.17.3.6.3` now provides
 the shared GHDL lifecycle and process supervisor. `.17.3.6.4` now measures the
-applicable profiles through the common controller. `.17.3.6.5` now implements
-immutable-set publication and independent reload; the clean-revision guarded
-capture remains the closing step. This chapter does not make a performance,
-capacity, or support claim.
+applicable profiles through the common controller. `.17.3.6.5` now seals and
+independently reloads the complete immutable set, closing `.17.3.6`. This
+chapter does not make a performance, capacity, or support claim.
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-portable-vhdl-runtime-selection-v1 -->
 - Claim: The checked portable-VHDL v2 fixture produces 77 trace records across 35 real inactive-edge observation barriers; its authenticated four-entry/66-bit catalog and one snapshot per barrier establish `records(N)=N+74`, reset/timeout candidates 9,926/16,384 and 99,926/131,072 for 10,000/100,000 records, and unchanged GHDL deadline/capture pairs 10/65,536, 120/8,388,608, 60/8,388,608, and 30/67,108,864.
@@ -251,8 +250,8 @@ controls producer order, mode routing, tool-free dominance, process isolation,
 bounded canonical IPC, immutable collision/recovery, aggregate partition drift,
 and staging cleanup without running the exact campaign. Its guarded
 `FSMGEN_VIAL_PORTABLE_VHDL_RUNTIME_MATRIX_EXACT=1` mode owns capture, aggregate
-sealing, and fresh-process identity equality after this implementation commits
-cleanly; the similarly named portable-Verilator trigger cannot activate it.
+sealing, and fresh-process identity equality. The similarly named portable-
+Verilator trigger cannot activate it.
 
 Every executable profile must carry the producer-authoritative seventeen-
 artifact portable-VHDL emission graph. The first clean exact publication
@@ -261,6 +260,29 @@ expectation in the new aggregate validator. The matrix now applies one exact
 seventeen-artifact authority to both the raw terminal lifecycle and its compact
 manifest entry; a focused synthetic manifest would fail if that backend-
 specific cardinality drift returned. No malformed aggregate was published.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-portable-vhdl-runtime-matrix-seal-d85256aa8-v1 -->
+- Claim: Clean revision `d85256aa806a8dbdcf89c0e14b6bad9521521168` seals the five-profile portable-VHDL runtime matrix as seven immutable files totaling 1,354,895 bytes; the largest profile is 787,082 bytes, the accepted aggregate retains three validation-route and two measured-route profiles, eight raw and zero excluded records, two preflight-dominated profiles, eleven cleanup and zero residue records, and a separate guarded reload returns complete identity `portable-vhdl-runtime-matrix/cf0844de188b3a07ec7ed8026dcdfd95551cf7202b3df528659456da6e00e329`.
+- Re-derive: Run guarded `--validate`, census only the five portable-VHDL runtime profile publications plus family and complete manifests independently with `find` and `wc`, hash all seven files with `shasum -a 256`, and project common identity/dominance with `jq`.
+- Falsify: Run exact guarded t1675 from an empty namespace and require rejection for any producer order, route, artifact cardinality, sample, exclusion, dominance, common identity, checksum, collision, process result, cleanup, or staging disagreement.
+- Durability: Preserve the content-addressed profile publications plus family/complete manifests on the repository volume, and retain the exact task, book, Knowledge Map, publisher, runner, watcher, claim record, and Git closure chain.
+<!-- CLAIM-VERIFICATION:END vial-portable-vhdl-runtime-matrix-seal-d85256aa8-v1 -->
+
+The exact file census is:
+
+| Publication | Bytes | SHA-256 |
+| --- | ---: | --- |
+| reference | 96,509 | `595fa131eff99fa757a3525b527a9501532f6552267016c72235ddc7a6e3b82f` |
+| gate candidate | 444,601 | `69645cdaf83b266af90067c0050d9a5ef1defc6660b257f59ae2998b63946e87` |
+| qualification candidate | 787,082 | `9281d49f449373ac957880f1082651838ddaaabcdd6b4166aefae67986682def` |
+| limit preflight | 6,723 | `95239333b5ea49af1549280d200a1e960844c13f6a553a05c005314dc47ed004` |
+| over-limit preflight | 6,733 | `691dad9e2bd7a43f8526f073c9fabf6291eb18ffb6015602556b9c8773394743` |
+| family manifest | 10,201 | `51f0dd36a5d2aa39c7f23b4f5e65df3e9580c0feafff2814757dca57949dd835` |
+| complete manifest | 3,046 | `17963981c274a83c62278065c5a1d704628e63bab97298d584ac9105e0a212b0` |
+
+The largest file remains 66,321,782 bytes below the unchanged 67,108,864-byte
+containment ceiling. That headroom is publication containment evidence, not a
+runtime performance budget or an architecture-capacity claim.
 
 ## Nonclaims
 

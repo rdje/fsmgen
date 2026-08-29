@@ -41,6 +41,8 @@ reverify: >-
   t/1664-vial-verilator-shared-lifecycle.t
   t/1673-vial-ghdl-shared-lifecycle.t
   t/1675-vial-architecture-scale-portable-vhdl-runtime-measurement-matrix.t &&
+  scripts/run_with_ram_guard.sh --
+  scripts/run_vial_portable_vhdl_runtime_measurement_matrix.pl --validate &&
   FSMGEN_VIAL_PORTABLE_VHDL_RUNTIME_MEASUREMENT_EXACT=1
   scripts/run_with_ram_guard.sh --
   prove -Iperl t/1674-vial-architecture-scale-portable-vhdl-runtime-measurement.t &&
@@ -103,8 +105,15 @@ failed closed before publication because a copied aggregate check required the
 portable-Verilator six-artifact graph; the underlying accepted portable-VHDL
 lifecycle correctly retained seventeen. Raw and compact validators now share
 that exact producer authority, with an executable seventeen-artifact manifest
-control. No published set exists until the clean repaired revision completes
-atomic capture and separate reload.
+control. Clean revision `d85256aa806a8dbdcf89c0e14b6bad9521521168` now
+seals five profiles plus family/complete manifests as seven files totaling
+1,354,895 bytes. The largest is 787,082 bytes. A separate guarded reload returns
+complete identity
+`portable-vhdl-runtime-matrix/cf0844de188b3a07ec7ed8026dcdfd95551cf7202b3df528659456da6e00e329`;
+the aggregate retains three validations, eight raw/zero excluded records, two
+preflights, 11 cleanup/zero residue, one common GHDL/host/guard identity, and no
+staging. The retained 66,321,782-byte ceiling headroom is containment evidence,
+not a performance, capacity, support, parity, OSVVM, IASIM, or API claim.
 
 Related: [[vial-architecture-scale-proof]],
 [[hial-vial-verification-fixture-architecture]].

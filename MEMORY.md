@@ -7,9 +7,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5`
-  (`active`; immutable portable-VHDL/GHDL measurement-set publication)
-- next_action: run one exact guarded capture from the clean artifact-cardinality
-  repair revision, then independently reload and seal its measured evidence.
-- in_flight_uncommitted: none after the artifact-cardinality repair commit.
+  (`done`; exact portable-VHDL/GHDL measurement set sealed)
+- next_action: from the clean closure revision, activate `.17.3.7` and select
+  the exact OSVVM runtime-measurement decomposition before implementation.
+- in_flight_uncommitted: none after the publication-seal closure commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none.

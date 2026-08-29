@@ -697,10 +697,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.6: activate stale runtime claim-gap closure; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.6: close portable runtime claim gaps`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6`
-  Status: `active`
+  Status: `done`
   Goal: `Measure exact provider-free portable-VHDL generation, analysis, elaboration, run, trace validation, and result production with qualified GHDL.`
   Acceptance: `Use only the qualified GHDL profile and canonical runtime-stream inputs; perform one validation plus required measured repetitions in fresh owned staging; apply effective per-source analysis/elaboration/run limits and active guards; prove artifacts, source maps, checks, command identity, trace/result parity, deterministic rerun, raw evidence, publication, failure, and cleanup; and make no OSVVM, mixed-language, promoted-budget, support, or capacity claim.`
-  Verification: `Clean portable-Verilator closure d21089eb6 leaves this as the next roadmap dependency. The provider-free runtime constructor already owns all five portable-VHDL/GHDL roles and exact qualified tool/deadline/command expectations. Query-first source/history audit plus a fresh guarded exact GHDL rerun prove that the historical v1 trace closes at 42 records but emits no sample record. Selection provisionally counted 34 barriers and chose reset candidates 9,927/99,927; child .1's direct v2 GHDL trace corrects the omitted final unsupported-size settlement barrier, proving 35 samples and therefore 9,926/99,926 candidates. Decision 0090 retains that transparent correction, one shared staged GHDL lifecycle, exact earlier-cap authority, and five ordered implementation children. Children `.17.3.6.1` through `.17.3.6.4` are done; clean measurement commit e7203c278 permits immutable-set publication `.17.3.6.5`, which is active.`
+  Verification: `Clean portable-Verilator closure d21089eb6 leaves this as the next roadmap dependency. The provider-free runtime constructor owns all five portable-VHDL/GHDL roles and exact qualified tool/deadline/command expectations. Query-first source/history audit plus guarded GHDL execution prove that the historical v1 trace closes at 42 records but emits no sample record. Selection provisionally counted 34 barriers and chose reset candidates 9,927/99,927; child .1's direct v2 GHDL trace corrects the omitted final unsupported-size settlement barrier, proving 35 samples and therefore 9,926/99,926 candidates. Decision 0090 retains that transparent correction, one shared staged GHDL lifecycle, exact earlier-cap authority, and five ordered implementation children. Children `.17.3.6.1` through `.17.3.6.4` implement and measure the complete route. Final `.17.3.6.5` seals five profile reports plus family/complete manifests at clean d85256aa8, independently reloads the exact aggregate, and closes zero exclusions/residue without promoting a budget, support, capacity, parity, IASIM, OSVVM, or API claim.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6: activate portable-VHDL runtime measurement; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6: select sampled portable-VHDL runtime architecture`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5`
 
@@ -733,11 +733,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.4: activate portable-VHDL runtime measurement; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.4: implement portable-VHDL runtime measurement`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5`
-  Status: `active`
+  Status: `done`
   Goal: `Publish and independently reload the complete immutable portable-VHDL runtime measurement set.`
   Acceptance: `After .4 commits cleanly, derive the five-level inventory from producer ownership; atomically publish bounded raw reports plus compact manifests at one clean revision/host/tool/guard identity; reject incomplete, reordered, mutated, mixed, stale, collided, signalled, oversized, or ambiguous state; retain all raw/excluded samples, applicability, earlier-cap dominance, cleanup and nonclaims; complete guarded capture plus separate fresh-process reload before closing .17.3.6.`
-  Verification: `Clean predecessor e7203c278 supplies the exact five-shape producer, 11 accepted runtime records across reference/gate/qualification, tool-free limit/excess reports, complete raw evidence and cleanup, and the decision-0090 publication contract. Activation commit a4ed37ae3 makes this leaf the sole owner. The implemented producer-derived matrix isolates capture/reload per profile, publishes complete canonical reports before bounded compact IPC, inherits common identity for tool-free profiles only after executable evidence, atomically seals family/complete manifests, and rejects incomplete/order/sample/identity/process/publication/staging drift. Default publisher plus impacted portable-runtime/materializer/lifecycle/adapter coverage passes Files=5/Tests=37; runner inventory returns the exact five ordered modes. The first clean exact capture at 07875ea75 failed closed because the cloned aggregate validator still required the portable-Verilator six-artifact graph instead of the producer-authoritative portable-VHDL seventeen-artifact graph. A focused seventeen-artifact fixture reproduces that mismatch before the validator repair; the corrected adapter/publication pair passes Files=2/Tests=15. The repair must commit cleanly before one fresh guarded capture and separate reload can close the leaf.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: activate portable-VHDL measurement publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: implement portable-VHDL measurement publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: isolate portable-VHDL exact trigger; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: repair portable-VHDL artifact cardinality`
+  Verification: `Clean predecessor e7203c278 supplies the exact five-shape producer, 11 accepted runtime records across reference/gate/qualification, tool-free limit/excess reports, complete raw evidence and cleanup, and the decision-0090 publication contract. Activation a4ed37ae3, implementation e4f4a295e, exact-trigger repair 07875ea75, and artifact-cardinality repair d85256aa8 close the implementation chain. The final guarded t1675 campaign passes Files=1/Tests=7 in 656 seconds and seals seven immutable files totaling 1,354,895 bytes at clean d85256aa806a8dbdcf89c0e14b6bad9521521168. Ordered reference/gate/qualification/limit/over-limit files are 96,509/444,601/787,082/6,723/6,733 bytes with SHA-256 595fa131eff99fa757a3525b527a9501532f6552267016c72235ddc7a6e3b82f/69645cdaf83b266af90067c0050d9a5ef1defc6660b257f59ae2998b63946e87/9281d49f449373ac957880f1082651838ddaaabcdd6b4166aefae67986682def/95239333b5ea49af1549280d200a1e960844c13f6a553a05c005314dc47ed004/691dad9e2bd7a43f8526f073c9fabf6291eb18ffb6015602556b9c8773394743. Family is 10,201 bytes/51f0dd36a5d2aa39c7f23b4f5e65df3e9580c0feafff2814757dca57949dd835; complete is 3,046 bytes/17963981c274a83c62278065c5a1d704628e63bab97298d584ac9105e0a212b0. A separate guarded `--validate` returns complete identity portable-vhdl-runtime-matrix/cf0844de188b3a07ec7ed8026dcdfd95551cf7202b3df528659456da6e00e329. Independent `find`/`wc`/`shasum`/`jq` confirms five profiles, three validations, eight raw/zero excluded records, two preflights, 11 cleanup/zero residue, 17 artifacts for every executable profile, common GHDL 6.0.0 LLVM-JIT/M4 Pro/APFS/active-guard identity, 66,321,782 bytes below the unchanged file ceiling, and absent staging/log residue with clean Git.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: activate portable-VHDL measurement publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: implement portable-VHDL measurement publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: isolate portable-VHDL exact trigger; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: repair portable-VHDL artifact cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: seal portable-VHDL measurement publication`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7`
   Status: `proposed`
@@ -7335,3 +7335,36 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   is absent. Staged acceptance and diff checks pass, and `[doctrine] all
   doctrine checks passed` closes the final commit gate. Exact capture is deferred to the resulting clean revision;
   full CI and push remain at their policy boundaries.
+
+## Acceptance Checklist (enforced) — `.17.3.6.5` publication seal
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'VHDL_EMISSION_ARTIFACT_COUNT'
+  --oneline -- perl/FSM/VIAL/ArchitectureScalePortableVHDLRuntimeMeasurementMatrix.pm`
+  identifies clean repair `d85256aa8` as the first revision able to accept the
+  producer-authoritative seventeen-artifact lifecycle. The leaf contract still
+  required one no-retry guarded capture plus a distinct fresh-process reload;
+  implementation/default tests alone could not supply immutable measured-set
+  durability.
+- [x] **ADDRESSED (verified)** — One guarded exact t1675 campaign from clean
+  `d85256aa806a8dbdcf89c0e14b6bad9521521168` publishes all five profiles then
+  family/complete manifests. A separately invoked guarded runner `--validate`
+  reloads complete identity `portable-vhdl-runtime-matrix/cf0844de188b3a07ec7ed8026dcdfd95551cf7202b3df528659456da6e00e329`.
+  Independent census/hash/JSON projections prove seven files/1,354,895 bytes,
+  exact per-file identities, common clean host/tool/guard authority, closed
+  dominance, and zero staging/log residue.
+- [x] **NO REGRESSION** — Exact t1675 reports `All tests successful`,
+  `Files=1, Tests=7` in 656 seconds. Independent guarded reload exits zero;
+  five executable/preflight roles, 3 validation/8 raw/0 excluded records,
+  2 preflights, 11 cleanup/0 residue, and exact 17-artifact executable graphs
+  reload canonically. Default t1675 independently passes `Files=1, Tests=7`;
+  focused relative-path/locality/task/claim coverage passes `Files=6,
+  Tests=94`. Claim verification closes 12 records/11 published, and the
+  1,619-candidate join closes with 110 claim records/zero gaps. All 56 mdBook
+  chapters test; the inspected 92-file/19,964,438-byte repository-local render
+  contains the complete identity and qualification hash before exact removal.
+  Task integrity holds at four trees/1,014 nodes; Knowledge Map parity remains
+  1,155 facts/6,124 questions/6,296 occurrences/136 shards; live-document
+  containment accepts the exact 0-file/+22-line/+2,396-byte book authority with
+  no ceiling change. Staged acceptance and diff pass, and `[doctrine] all
+  doctrine checks passed` closes the final commit gate. Git is dirty only with this durable closure slice;
+  full CI and push remain deferred by policy.
