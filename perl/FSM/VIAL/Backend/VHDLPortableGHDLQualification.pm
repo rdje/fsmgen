@@ -68,6 +68,22 @@ sub default_provider_root($class) {
     return $PROVIDER_ROOT;
 }
 
+sub _measurement_provider_authority($class) {
+    _exact_class($class, '_measurement_provider_authority');
+    confess "GHDL provider authority is private to the exact measurement adapter\n"
+        unless caller eq
+            'FSM::VIAL::ArchitectureScalePortableVHDLRuntimeMeasurement';
+    return {
+        root => $PROVIDER_ROOT,
+        archive => $ARCHIVE,
+        archive_bytes => 37_155_806,
+        archive_sha256 => $ARCHIVE_SHA256,
+        binary => $BINARY,
+        binary_sha256 => $BINARY_SHA256,
+        version_output => $VERSION_OUTPUT,
+    };
+}
+
 sub qualify($class, @args) {
     return _failure('VIAL_VHDL_QUALIFICATION_INVOCATION_ERROR',
         'qualify requires the exact qualification class invocant', '/')

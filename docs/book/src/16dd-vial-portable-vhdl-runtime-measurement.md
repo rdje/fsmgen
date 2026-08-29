@@ -5,9 +5,10 @@ construction and the structural backend-emission matrix. Decision `0090`
 selects the missing trace and lifecycle architecture. Trace-v2 truth is
 implemented under `.17.3.6.1`, and `.17.3.6.2` now materializes both authored
 scale sources through the canonical structural route. `.17.3.6.3` now provides
-the shared GHDL lifecycle and process supervisor; common-controller measurement
-and publication remain owned by `.17.3.6.4` and `.17.3.6.5`. This chapter does
-not make a performance, capacity, or support claim.
+the shared GHDL lifecycle and process supervisor. `.17.3.6.4` now measures the
+applicable profiles through the common controller; immutable-set publication
+remains owned by `.17.3.6.5`. This chapter does not make a performance,
+capacity, or support claim.
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-portable-vhdl-runtime-selection-v1 -->
 - Claim: The checked portable-VHDL v2 fixture produces 77 trace records across 35 real inactive-edge observation barriers; its authenticated four-entry/66-bit catalog and one snapshot per barrier establish `records(N)=N+74`, reset/timeout candidates 9,926/16,384 and 99,926/131,072 for 10,000/100,000 records, and unchanged GHDL deadline/capture pairs 10/65,536, 120/8,388,608, 60/8,388,608, and 30/67,108,864.
@@ -22,6 +23,13 @@ not make a performance, capacity, or support claim.
 - Falsify: Mutate a source byte, report claim/count, non-selected scenario value, await window, route, artifact inventory, map/check result, or cap; exact source identities, structural comparison, closed report regeneration, and focused controls reject it.
 - Durability: Retain both tracked candidate sources, the sealed materializer and watcher, decision 0090, task .17.3.6.2, this chapter, Knowledge Map card, bounded claim record, and work-unit Git chain.
 <!-- CLAIM-VERIFICATION:END vial-portable-vhdl-runtime-structural-materialization-v1 -->
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-portable-vhdl-runtime-measurement-v1 -->
+- Claim: The guarded exact GHDL adapter accepts one 77-record reference validation, one validation plus three retained 10,000-record gate measurements, and one validation plus five retained 100,000-record qualification measurements; all 11 controller/lifecycle roots clean without residue, while limit and over-limit remain tool-free.
+- Re-derive: Run `FSMGEN_VIAL_PORTABLE_VHDL_RUNTIME_MEASUREMENT_EXACT=1 scripts/run_with_ram_guard.sh -- prove -Iperl t/1674-vial-architecture-scale-portable-vhdl-runtime-measurement.t`; independently reload every report and reconstruct its materializer, controller, provider, source, command, transcript, trace, result, predecessor, and cleanup identities.
+- Falsify: Direct callers, absent guards, foreign levels/keys, changed applicability, malformed lifecycle authority, rejected captures, source/command/transcript/trace/result identity drift, wrong repetition counts, and retained residue fail closed; the shared-lifecycle watcher separately proves collision, replay, mutation, timeout/failure evidence, and cleanup controls.
+- Durability: Retain the private adapter, materializer/provider seams, common controller and lifecycle, t/1673 and t/1674, decision 0090, task .17.3.6.4, this chapter, Knowledge Map card, bounded claim inventory, and work-unit Git chain.
+<!-- CLAIM-VERIFICATION:END vial-portable-vhdl-runtime-measurement-v1 -->
 
 This “execution” is external execution of generated VHDL-2008 with the exact
 qualified GHDL 6.0.0 LLVM-JIT profile. It is not IASIM execution. IASIM's
@@ -129,10 +137,11 @@ each emission has 17 artifacts, six VHDL sources, 59 emitted source maps, and
 | gate candidate | 238,901 | 118,075 | 46,273 |
 | qualification candidate | 239,318 | 118,087 | 46,284 |
 
-This closes source-to-emission structure, not external execution. The later
-GHDL lifecycle must still make the emitted loop, sample snapshots, validator
-projection, and normalized result agree. Until that measured run exists,
-actual trace bytes remain deliberately unset.
+The materialization report alone closes source-to-emission structure, not
+external execution. The measurement adapter now independently makes the
+emitted loop, sample snapshots, validator projection, and normalized result
+agree under GHDL. It authenticates trace content instead of promoting an
+unowned trace-byte budget.
 
 An exact candidate remains subject to the existing 64-MiB runtime and artifact
 envelopes. If 100,000 genuine records do not fit, that earlier cap wins and a
@@ -173,6 +182,31 @@ The common measurement controller adds its independent host/RAM and worker
 envelopes. Accepted gate and qualification sets require correctness validation
 before three and five retained samples respectively. Limit/excess shapes remain
 tool-free when an earlier structural or byte authority dominates.
+
+## Common-controller measurement
+
+The private portable-VHDL adapter reconstructs the canonical materializer,
+blessed route, emitted six-source compiler order, and qualified GHDL provider
+inside every isolated worker. The common stages map onto the lifecycle without
+adding a second executor: emit admits; compile/analyze prepares, verifies, and
+analyzes; elaborate, run, trace validation, and result production each advance
+one state; publish assembles and cleans.
+
+The exact guarded proof retains 11 accepted records:
+
+| Profile | Correctness validations | Measured repetitions | Trace records per run |
+| --- | ---: | ---: | ---: |
+| reference | 1 | 0 | 77 |
+| gate candidate | 1 | 3 | 10,000 |
+| qualification candidate | 1 | 5 | 100,000 |
+
+Measured records retain the common controller's raw 250-ms observations for
+all eleven stages. Published correctness evidence binds the six-source graph,
+four exact GHDL commands and transcript identities, complete predecessor chain,
+validated trace and normalized result, exclusions, and both lifecycle and
+outer-controller cleanup. The exact campaign excludes no sample and leaves no
+owned staging residue. Limit and over-limit reports execute neither controller
+nor GHDL because their earlier materialization authority already dominates.
 
 ## Nonclaims
 

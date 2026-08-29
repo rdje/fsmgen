@@ -74,10 +74,10 @@ my %EVIDENCE_KEYS = (
         version_sha256 capture workspace_files workspace_sha256
     )],
     analyzed => [qw(
-        command_digest capture workspace_files workspace_sha256
+        command_digest output_sha256 capture workspace_files workspace_sha256
     )],
     elaborated => [qw(
-        command_digest capture workspace_files workspace_sha256
+        command_digest output_sha256 capture workspace_files workspace_sha256
     )],
     ran => [qw(
         command_digest captures output_sha256 deterministic
@@ -387,7 +387,7 @@ sub _validated_storage($raw, $role) {
         ],
         architecture_scale_measurement => [
             'architecture_scale_measurement', 'outer_worker_process_group',
-            qr{\A[.]artifacts/tmp/vial-scale/[0-9a-f]{64}/validation/[0-9]{2}/lifecycle\z},
+            qr{\A[.]artifacts/tmp/vial-scale/[0-9a-f]{64}/(?:validation|gate_measurement|qualification_measurement)/[0-9]{2}/lifecycle\z},
         ],
     );
     my ($mode, $containment, $pattern) = @{$expected{$role}};
@@ -583,6 +583,7 @@ sub _phase_analyzed($session) {
     );
     return {
         command_digest => _command_digest($session->{commands}{analyze}),
+        output_sha256 => sha256_hex($capture->{output}),
         capture => _capture_evidence($capture),
         _workspace_evidence($session),
     };
@@ -597,6 +598,7 @@ sub _phase_elaborated($session) {
     );
     return {
         command_digest => _command_digest($session->{commands}{elaborate}),
+        output_sha256 => sha256_hex($capture->{output}),
         capture => _capture_evidence($capture),
         _workspace_evidence($session),
     };
@@ -1279,6 +1281,7 @@ sub _stage_evidence($session) {
         push @evidence, {
             state => $state->{state}, ordinal => $state->{ordinal},
             state_identity => $state->{state_identity},
+            predecessor_identity => $state->{predecessor_identity},
             evidence => _clone($state->{evidence}),
         };
     }
@@ -1360,7 +1363,12 @@ sub _slurp($path) {
 
 sub _process_summary($capture) {
     my $summary = length($capture->{output})
-        ? $capture->{output} : ($capture->{exec_error} // 'unknown failure');
+        ? $capture->{output} : ($capture->{exec_error} // '');
+    $summary = sprintf(
+        'exit=%d signal=%d exec_failed=%d timed_out=%d output_limited=%d',
+        map { 0 + ($capture->{$_} // 0) }
+            qw(exit_code signal exec_failed timed_out output_limited),
+    ) unless length $summary;
     $summary =~ s/[\r\n\t]+/ /g;
     $summary =~ s/\s+/ /g;
     return length($summary) > 1_024 ? substr($summary, 0, 1_024) : $summary;

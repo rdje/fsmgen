@@ -700,7 +700,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Measure exact provider-free portable-VHDL generation, analysis, elaboration, run, trace validation, and result production with qualified GHDL.`
   Acceptance: `Use only the qualified GHDL profile and canonical runtime-stream inputs; perform one validation plus required measured repetitions in fresh owned staging; apply effective per-source analysis/elaboration/run limits and active guards; prove artifacts, source maps, checks, command identity, trace/result parity, deterministic rerun, raw evidence, publication, failure, and cleanup; and make no OSVVM, mixed-language, promoted-budget, support, or capacity claim.`
-  Verification: `Clean portable-Verilator closure d21089eb6 leaves this as the next roadmap dependency. The provider-free runtime constructor already owns all five portable-VHDL/GHDL roles and exact qualified tool/deadline/command expectations. Query-first source/history audit plus a fresh guarded exact GHDL rerun prove that the historical v1 trace closes at 42 records but emits no sample record. Selection provisionally counted 34 barriers and chose reset candidates 9,927/99,927; child .1's direct v2 GHDL trace corrects the omitted final unsupported-size settlement barrier, proving 35 samples and therefore 9,926/99,926 candidates. Decision 0090 retains that transparent correction, one shared staged GHDL lifecycle, exact earlier-cap authority, and five ordered implementation children. Child `.17.3.6.1` is active.`
+  Verification: `Clean portable-Verilator closure d21089eb6 leaves this as the next roadmap dependency. The provider-free runtime constructor already owns all five portable-VHDL/GHDL roles and exact qualified tool/deadline/command expectations. Query-first source/history audit plus a fresh guarded exact GHDL rerun prove that the historical v1 trace closes at 42 records but emits no sample record. Selection provisionally counted 34 barriers and chose reset candidates 9,927/99,927; child .1's direct v2 GHDL trace corrects the omitted final unsupported-size settlement barrier, proving 35 samples and therefore 9,926/99,926 candidates. Decision 0090 retains that transparent correction, one shared staged GHDL lifecycle, exact earlier-cap authority, and five ordered implementation children. Children `.17.3.6.1` through `.17.3.6.4` are done; immutable-set publication `.17.3.6.5` is next after the clean commit boundary.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6: activate portable-VHDL runtime measurement; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6: select sampled portable-VHDL runtime architecture`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5`
 
@@ -726,11 +726,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.3: activate shared GHDL lifecycle; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.3: implement shared GHDL lifecycle`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.4`
-  Status: `active`
+  Status: `done`
   Goal: `Measure applicable portable-VHDL runtime profiles through the common controller and shared GHDL lifecycle.`
   Acceptance: `After .3 commits cleanly, reconstruct canonical authority in each isolated worker; map analyze, elaborate, run, trace validation, result production, publish, and cleanup to their exact lifecycle successors; retain one validation plus three gate or five qualification repetitions with raw 250-ms samples, effective inner/outer bounds, commands/transcripts/artifact/trace/result identities, exclusions and zero residue. Keep limit/excess tool-free and add no budget, support, capacity, parity, IASIM, or API claim.`
-  Verification: `Clean predecessor aa02474e0 closes the shared lifecycle. Decision 0090 and this acceptance own common-controller portable-VHDL measurement through it.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.4: activate portable-VHDL runtime measurement`
+  Verification: `The caller-sealed adapter reconstructs canonical materializer, route, six-source compiler order, provider, common-controller and lifecycle authority in every worker; reference accepts one validation, gate one validation plus three retained 10,000-record repetitions, and qualification one validation plus five retained 100,000-record repetitions. All 11 records bind exact command/transcript/source/emission/predecessor/trace/result identities and lifecycle/controller cleanup; limit/excess remain tool-free. Exact guarded t1674 passes Files=1/Tests=8 in 490 seconds; final guarded impacted qualification/controller/lifecycle/adapter coverage passes Files=10/Tests=72. The shared-lifecycle watcher replaces a Darwin shebang-loader stall and signed-binary relocation control with a repository-local compiled native fixture, preserves primary failure without cascading, and reports empty-output exit/signal evidence. Syntax, mdBook, Knowledge Map, claims, task, containment, locality, cleanup, staged acceptance, and doctrines pass; no full CI or push occurs at this ordinary slice.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.4: activate portable-VHDL runtime measurement; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.4: implement portable-VHDL runtime measurement`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5`
   Status: `proposed`
@@ -7169,15 +7169,44 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   from the fresh exact qualification, mdBook, Knowledge Map, task/relative-path,
   containment, staged acceptance, diff, and doctrine gates close the slice.
 
-## Acceptance Checklist (enforced) — `.17.3.6.3` shared GHDL lifecycle
+## Acceptance Checklist (enforced) — `.17.3.6.4` portable-VHDL measurement
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'sub _capture_process'` names
-  `037c962fd` as the bounded supervisor origin; `git log -S'use IPC::Cmd'` names
-  `a0e7149d5` as the qualifier's post-hoc capture. No shared lifecycle existed.
-- [x] **ADDRESSED (verified)** — One supervisor serves unchanged Verilator, the
-  ten-state GHDL lifecycle, qualifier, and probe with sealed identities/policies,
-  containment, hostile controls, trace/result assembly, and exact cleanup.
-- [x] **NO REGRESSION** — Focused lifecycle/qualification passes `Files=4,
-  Tests=36`; public Verilator passes `Files=1, Tests=7`; exact GHDL remains
-  byte-identical and residue-free. Syntax, import, book, Knowledge Map, claim,
-  task, containment, acceptance, diff, and doctrines pass with no claim drift.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'package
+  FSM::VIAL::ArchitectureScalePortableVHDLRuntimeMeasurement'` finds no adapter.
+  The common controller admits only its SystemVerilog caller and Verilator
+  profile; the VHDL materializer has no sealed lifecycle-input seam, while the
+  GHDL measurement storage pattern admits validation workers only. Focused
+  regression also proves `t/1673`'s repository-local shebang fake provider can
+  stall in Darwin's dynamic-loader start for the complete ten-second version
+  deadline (`/usr/bin/env perl` and `/bin/sh` both reproduce it), then cascade
+  through an absent success handle instead of preserving the primary failure;
+  copying Darwin's signed `/bin/test` into the owned root is then killed by the
+  platform with signal 9. The lifecycle also collapses that empty-output native
+  failure to the non-actionable text `unknown failure`.
+- [x] **ADDRESSED (verified)** — The caller-sealed adapter extends the common
+  controller with the exact qualified multiline GHDL profile, reconstructs the
+  canonical blessed route and emitted six-source compiler order per worker,
+  and maps its 11 stages onto the sole ten-state lifecycle. Reference retains
+  one validation; gate and qualification retain one validation plus three/five
+  measured repetitions at exact 77/10,000/100,000 trace counts. Every accepted
+  record authenticates provider, source/emission, four commands/transcripts,
+  predecessor chain, trace/result, exclusions, and both cleanup domains;
+  limit/excess remain tool-free. `t/1673` now compiles its tiny native provider
+  inside repository-local staging with repository-local compiler temporaries,
+  stops safely after a failed transition, and the lifecycle reports bounded
+  exit/signal flags instead of `unknown failure`.
+- [x] **NO REGRESSION** — All changed modules and tests report `syntax OK`.
+  The exact guarded adapter reports `All tests successful` at `Files=1,
+  Tests=8` in 490 seconds, and the final guarded qualification/controller/
+  lifecycle/adapter matrix reports `All tests successful` at `Files=10,
+  Tests=72` in 101 seconds. All 56 mdBook chapters test; the inspected
+  repository-local render contains 92 files/19,904,200 bytes and is removed
+  exactly. Knowledge Map parity holds at 1,155 facts/6,124 questions/6,296
+  occurrences/136 shards; the 1,609-candidate claim join has 100 claim records,
+  916 gates, 593 reviews, and zero gaps/open candidates. Task integrity,
+  relative paths, project locality, all 22 live surfaces, exact +34-line/
+  +2,837-byte book authority, zero ceiling increases, diff, staged acceptance,
+  and `scripts/check_doctrines.sh` pass. No staging residue remains; provider-
+  owned OSVVM validated-result logs are retained. Per CI policy, full CI and
+  push remain deferred to the batch boundary, and no budget, support, capacity,
+  reached-boundary, parity, IASIM, OSVVM, or public-API claim is added.

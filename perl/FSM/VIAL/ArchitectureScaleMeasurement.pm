@@ -57,6 +57,10 @@ my %RUN_ORDINAL_MAX = (
     gate_measurement => 3,
     qualification_measurement => 5,
 );
+my %EXTERNAL_MEASUREMENT_CALLER = map { $_ => 1 } qw(
+    FSM::VIAL::ArchitectureScalePortableRuntimeMeasurement
+    FSM::VIAL::ArchitectureScalePortableVHDLRuntimeMeasurement
+);
 my @NONCLAIMS = qw(
     architecture_scale_capacity whole_product_big whole_product_really_big
     multi_unit multi_domain mixed_language native_uvm_runtime full_language
@@ -185,8 +189,7 @@ sub measure($class, @args) {
     if (exists $args[0]{tool_profile}) {
         my $caller = caller;
         confess "external-tool measurement is private to the selected runtime adapter\n"
-            unless defined($caller) && $caller eq
-                'FSM::VIAL::ArchitectureScalePortableRuntimeMeasurement';
+            unless defined($caller) && $EXTERNAL_MEASUREMENT_CALLER{$caller};
         push @keys, 'tool_profile';
     }
     _exact_keys($args[0], \@keys, 'measurement invocation');
@@ -799,8 +802,7 @@ sub _selected_tool_profile($specification, $supplied) {
     confess "runtime measurement requires one closed selected tool profile\n"
         unless ref($supplied) eq 'HASH' && !blessed($supplied);
     _validate_tool_profile($supplied);
-    my $expected = $selected eq 'verilator_5_046'
-        ? {
+    my $expected = $selected eq 'verilator_5_046' ? {
             applicability => 'qualified_runtime',
             logical_name => 'verilator',
             reported_version =>
@@ -811,6 +813,25 @@ sub _selected_tool_profile($specification, $supplied) {
                 --binary --timing --assert --threads 1 -j 1
                 --x-initial 0 --x-assign 0
             )],
+            thread_count => 1,
+            job_count => 1,
+            external_verification_tool => JSON::PP::true,
+        }
+        : $selected eq 'ghdl_6_0_0_llvm_jit' ? {
+            applicability => 'qualified_runtime',
+            logical_name => 'ghdl',
+            reported_version => join("\n",
+                'GHDL 6.0.0 (6.0.0.r0.ge589c698c) [Dunoon edition]',
+                ' Compiled with GNAT Version: 14.2.0',
+                ' static elaboration, LLVM JIT code generator',
+                'Written by Tristan Gingold.',
+                '',
+                'Copyright (C) 2003 - 2026 Tristan Gingold.',
+                'GHDL is free software, covered by the GNU General Public License.  There is NO',
+                'warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.'),
+            build => '6.0.0-llvm-jit',
+            provider_identity => 'qualified_ghdl_6_0_0_llvm_jit',
+            arguments => [qw(--std=08 --work=fsmgen_vial)],
             thread_count => 1,
             job_count => 1,
             external_verification_tool => JSON::PP::true,
@@ -1779,10 +1800,14 @@ sub _validate_tool_profile($profile) {
         confess "measurement tool $key is invalid\n"
             unless _safe_token($profile->{$key});
     }
-    for my $key (qw(reported_version build)) {
-        confess "measurement tool $key is invalid\n"
-            unless _nonempty_scalar($profile->{$key});
-    }
+    confess "measurement tool reported_version is invalid\n"
+        unless defined($profile->{reported_version})
+            && !ref($profile->{reported_version})
+            && length($profile->{reported_version})
+            && length($profile->{reported_version}) <= 65_536
+            && $profile->{reported_version} !~ /[\x00\r]/;
+    confess "measurement tool build is invalid\n"
+        unless _nonempty_scalar($profile->{build});
     confess "measurement tool arguments must be an array\n"
         unless ref($profile->{arguments}) eq 'ARRAY';
     for my $argument (@{$profile->{arguments}}) {

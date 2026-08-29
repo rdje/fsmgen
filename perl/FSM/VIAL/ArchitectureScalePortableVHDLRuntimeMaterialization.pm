@@ -167,6 +167,41 @@ sub with_staging($class, @args) {
     });
 }
 
+# The exact measurement adapter needs the canonical blessed route and emission
+# so the shared lifecycle remains the sole GHDL executor.  Keep this seam
+# caller-sealed and rederive every input from tracked repository authority.
+sub _measurement_inputs($class, @args) {
+    _exact_invocant($class, '_measurement_inputs');
+    confess "portable-VHDL measurement inputs are private to the exact adapter\n"
+        unless caller eq
+            'FSM::VIAL::ArchitectureScalePortableVHDLRuntimeMeasurement';
+    my $raw = _request(
+        '_measurement_inputs', \@args,
+        [qw(repository_root level artifact_root)],
+    );
+    my $repo_root = _repository_root($raw->{repository_root});
+    _selected_level($raw->{level});
+    confess "preflight-dominated portable-VHDL shapes have no lifecycle inputs\n"
+        unless exists $MATERIALIZED{$raw->{level}};
+    my $artifact_root = _safe_relative_path($raw->{artifact_root});
+    my $construction = _canonical_construction($repo_root, $raw->{level});
+    my $source = _source_input($construction);
+    my $route = _canonical_route(
+        $source->{relative_path}, $source->{content},
+        _hial_input($construction)->{content},
+    );
+    my $emission = _emit($route, $artifact_root);
+    my $oracle = _emission_oracle(
+        $raw->{level}, $emission, $artifact_root,
+    );
+    return {
+        construction => _clone($construction),
+        route => $route,
+        emission => $emission,
+        emission_oracle => $oracle,
+    };
+}
+
 sub _evaluate($repo_root, $level) {
     my $first_construction = _canonical_construction($repo_root, $level);
     my $second_construction = _canonical_construction($repo_root, $level);

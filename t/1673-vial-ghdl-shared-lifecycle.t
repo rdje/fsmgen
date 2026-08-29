@@ -3,12 +3,14 @@
 use strict;
 use warnings;
 
+use Config ();
 use Digest::SHA qw(sha256_hex);
 use File::Basename qw(dirname);
 use File::Path qw(make_path remove_tree);
 use File::Spec;
 use FindBin;
 use JSON::PP ();
+use Text::ParseWords qw(shellwords);
 use Test::More;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
@@ -199,6 +201,7 @@ subtest 'sealed process policy and failure cleanup are phase exact' => sub {
         $current = lifecycle_advance($request, $current->{handle});
         diag($json->encode($current->{diagnostics})) unless $current->{ok};
         ok($current->{ok}, "fake provider advances through $state");
+        return unless $current->{ok};
     }
     my $capture = $current->{stage_evidence}[-1]{evidence}{capture};
     is($capture->{containment}, 'lifecycle_process_group',
@@ -230,6 +233,7 @@ subtest 'outer worker owns the distinct measurement containment policy' => sub {
         $current = measurement_advance($request, $current->{handle});
         diag($json->encode($current->{diagnostics})) unless $current->{ok};
         ok($current->{ok}, "measurement lifecycle advances through $state");
+        return unless $current->{ok};
     }
     my $capture = $current->{stage_evidence}[-1]{evidence}{capture};
     is($capture->{containment}, 'outer_worker_process_group',
@@ -300,20 +304,34 @@ sub fake_request {
     my $provider_root = "$fake_root_rel/provider";
     my $binary = "$provider_root/bin/ghdl";
     my $archive = "$provider_root/ghdl.tar.gz";
+    my $program_source = "$provider_root/fake-ghdl.c";
     my $source = "$fake_root_rel/source/input.vhd";
     write_raw(repo_path($archive), "fake archive\n");
-    my $program = <<'PERL';
-#!/usr/bin/env perl
-use strict;
-use warnings;
-if (($ARGV[0] // '') eq '--version') {
-    print "fake GHDL 1\n";
-    exit 0;
+    write_raw(repo_path($program_source), <<'C');
+#include <stdio.h>
+#include <string.h>
+
+int main(int argc, char **argv) {
+    int index;
+    if (argc == 2 && strcmp(argv[1], "--version") == 0) {
+        fputs("fake GHDL 1\n", stdout);
+        return 0;
+    }
+    for (index = 1; index < argc; index++) {
+        if (strcmp(argv[index], "--fail-analysis") == 0) {
+            return 7;
+        }
+    }
+    return 0;
 }
-exit 7 if grep { $_ eq '--fail-analysis' } @ARGV;
-exit 0;
-PERL
-    write_raw(repo_path($binary), $program);
+C
+    my $compiler_tmp = repo_path("$fake_root_rel/compiler-tmp");
+    make_path($compiler_tmp);
+    make_path(dirname(repo_path($binary)));
+    local $ENV{TMPDIR} = $compiler_tmp;
+    my @compiler = shellwords($Config::Config{cc} // 'cc');
+    system @compiler, repo_path($program_source), '-o', repo_path($binary);
+    die "cannot compile native fake provider\n" unless $? == 0;
     chmod 0700, repo_path($binary) or die "cannot chmod fake provider: $!";
     write_raw(repo_path($source), "entity input is end entity;\n");
     my $stage = '.artifacts/tmp/vial-ghdl-qualification/'
