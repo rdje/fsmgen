@@ -715,8 +715,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Materialize exact authored portable-VHDL runtime-stream candidates through the canonical source-to-emission route.`
   Acceptance: `After .1 commits cleanly, add tracked gate and qualification VIAL sources whose only permitted semantic deltas are success reset count and matching scenario timeout. Require exact 10,000/100,000 v2 trace projections at reset counts 9,926/99,926, twice-rebuilt Parser/bridge/ExecutionIR/plan/emission identity, exact artifact/map/check inventories, byte-equal reruns, structural equivalence, limit/excess preflight, same-volume cleanup, and an honest stop plus superseding decision if the unchanged 64-MiB envelope dominates.`
-  Verification: `Activated by the completed trace-v2 truth slice; the corrected records(N)=N+74 equation owns reset candidates 9,926/99,926 and no source exists yet.`
-  Commit: `pending activation`
+  Verification: `Trace-v2 truth owns records(N)=N+74 and reset candidates 9,926/99,926; no source exists. The 2026-08-29 scan found VerilatorLifecycle and BackendEmissionAuthority missing from the saved 254/253 baseline; live closure is 256/255. Task integrity (4 trees/1,014 nodes), 15-line Memory, containment, relative paths, and diff hygiene pass. Repair before source work.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.2: record import-map repair prerequisite`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.3`
   Status: `proposed`
