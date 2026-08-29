@@ -594,6 +594,60 @@ PERL
     );
     unlink($containment_abs)
         or die "cannot remove containment sentinel: $!";
+
+    my $residue_program = <<'PERL';
+use strict;
+use warnings;
+use Fcntl qw(O_APPEND O_CREAT O_WRONLY);
+my $sentinel = shift @ARGV;
+pipe(my $ready_reader, my $ready_writer)
+    or die "cannot create residue-ready pipe: $!";
+my $child = fork();
+die "cannot fork residual descendant: $!" unless defined $child;
+if ($child == 0) {
+    close $ready_reader;
+    close STDOUT;
+    close STDERR;
+    my $append = sub {
+        my ($text) = @_;
+        sysopen(my $fh, $sentinel, O_WRONLY | O_CREAT | O_APPEND, 0600)
+            or die "cannot open residue sentinel: $!";
+        print {$fh} $text or die "cannot write residue sentinel: $!";
+        close $fh or die "cannot close residue sentinel: $!";
+    };
+    $SIG{TERM} = sub { $append->("residue-term\n"); exit 0 };
+    $append->("residue-ready\n");
+    syswrite($ready_writer, "1", 1) == 1
+        or die "cannot signal residual readiness: $!";
+    close $ready_writer;
+    sleep 10;
+    exit 0;
+}
+close $ready_writer;
+my $ready = '';
+sysread($ready_reader, $ready, 1) == 1
+    or die "cannot receive residual readiness: $!";
+close $ready_reader;
+exit 0;
+PERL
+    my $residue_rejected = eval {
+        FSM::VIAL::Backend::VerilatorLifecycle::_capture_process(
+            $session, [$^X, '-e', $residue_program, $containment_rel],
+            5, 4_096,
+        );
+        1;
+    };
+    ok(!$residue_rejected,
+        'successful leader cannot leave one pipe-closing descendant');
+    like("$@", qr/retained a descendant/,
+        'residual process group has one explicit containment failure');
+    my $residue_sentinel = slurp_raw($containment_abs);
+    like($residue_sentinel, qr/^residue-ready$/m,
+        'residual descendant existed before supervisor cleanup');
+    like($residue_sentinel, qr/^residue-term$/m,
+        'supervisor terminates the residual descendant');
+    unlink($containment_abs)
+        or die "cannot remove residue sentinel: $!";
 };
 
 subtest 'exact tool traverses every sealed state and cleans atomically' => sub {

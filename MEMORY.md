@@ -7,9 +7,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.3`
-  (`active`; shared process supervisor and sealed GHDL lifecycle)
-- next_action: audit the checked GHDL qualifier and Verilator lifecycle process
-  mechanism, then implement their one policy-sealed common supervisor.
-- in_flight_uncommitted: none after this activation commits.
+  (`done`; shared process supervisor and sealed GHDL lifecycle)
+- next_action: commit this verified implementation, then activate
+  `.17.3.6.4` for common-controller portable-VHDL runtime measurement.
+- in_flight_uncommitted: implementation and synchronized evidence in this commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none.

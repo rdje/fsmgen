@@ -21,13 +21,13 @@ Current baseline:
   backend owners, the shared portable HDL instance-identifier policy, public
   VIAL capabilities/check/normal-terse source tooling, canonical
   HIAL-routed planning, the shared backend-emission limit authority, and the
-  qualified portable-SystemVerilog run/result lifecycle. The project-owned closure now
-  reaches `256` project files total / `255` `.pm`
-  packages, including `19` packages under `FSM/IAL2`.
+  qualified portable-SystemVerilog run/result lifecycle and its shared sealed
+  process supervisor. The project-owned closure now reaches `257` project
+  files total / `256` `.pm` packages, including `19` packages under `FSM/IAL2`.
   Selected line-count measurements below were refreshed from source.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
-- Static trace from [bin/fsmgen](bin/fsmgen) currently reaches `256` project files total, `255` `.pm` packages.
+- Static trace from [bin/fsmgen](bin/fsmgen) currently reaches `257` project files total, `256` `.pm` packages.
 - The R14 `.isf` front door is reachable from [bin/fsmgen](bin/fsmgen)
   through conditional runtime requires of [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm)
   and [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm). That path lowers
@@ -361,8 +361,8 @@ This is the current static measurement view behind the qualitative assessment
 above.
 
 Reachable package-family counts from [bin/fsmgen](bin/fsmgen):
-- total reachable project files: `256`
-- reachable `.pm` packages: `255`
+- total reachable project files: `257`
+- reachable `.pm` packages: `256`
 - `Support`: `76`
 - `Composition`: `36`
 - `HDL`: `33`
@@ -378,7 +378,7 @@ Reachable package-family counts from [bin/fsmgen](bin/fsmgen):
 - `IAL2`: `19`
 - `HIAL`: `3`
 - `VerificationOutput`: `2`
-- `VIAL`: `19`
+- `VIAL`: `20`
 - singleton support surfaces: `CoreAST.pm`, `Debug.pm`, `ExpressionNamer.pm`, `ParameterValueSupport.pm`, `ProjectDataLocality.pm`, `SourceClassifier.pm`, `SourcePathResolver.pm`
 
 Current thin-coordinator / public-surface assembler line counts:
@@ -427,7 +427,8 @@ Current thin-coordinator / public-surface assembler line counts:
 - [perl/FSM/VIAL/ArtifactTransaction.pm](perl/FSM/VIAL/ArtifactTransaction.pm): `334`
 - [perl/FSM/VIAL/Backend/SVPortableVerilator.pm](perl/FSM/VIAL/Backend/SVPortableVerilator.pm): `3073`
 - [perl/FSM/VIAL/Backend/Runner.pm](perl/FSM/VIAL/Backend/Runner.pm): `143`
-- [perl/FSM/VIAL/Backend/VerilatorLifecycle.pm](perl/FSM/VIAL/Backend/VerilatorLifecycle.pm): `3072`
+- [perl/FSM/VIAL/Backend/VerilatorLifecycle.pm](perl/FSM/VIAL/Backend/VerilatorLifecycle.pm): `2814`
+- [perl/FSM/VIAL/Backend/ProcessSupervisor.pm](perl/FSM/VIAL/Backend/ProcessSupervisor.pm): `403`
 - [perl/FSM/VIAL/Backend/TraceValidator.pm](perl/FSM/VIAL/Backend/TraceValidator.pm): `509`
 - [perl/FSM/VIAL/Backend/ResultProducer.pm](perl/FSM/VIAL/Backend/ResultProducer.pm): `371`
 - [perl/FSM/VIAL/BackendEmissionAuthority.pm](perl/FSM/VIAL/BackendEmissionAuthority.pm): `103`
@@ -442,7 +443,7 @@ Current largest reachable files by line count (complete at `>= 1400` lines):
 - [perl/FSM/Adapter/IAL2/PPIF.pm](perl/FSM/Adapter/IAL2/PPIF.pm): `4626`
 - [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm): `3906`
 - [perl/FSM/VIAL/Backend/SVPortableVerilator.pm](perl/FSM/VIAL/Backend/SVPortableVerilator.pm): `3073`
-- [perl/FSM/VIAL/Backend/VerilatorLifecycle.pm](perl/FSM/VIAL/Backend/VerilatorLifecycle.pm): `3072`
+- [perl/FSM/VIAL/Backend/VerilatorLifecycle.pm](perl/FSM/VIAL/Backend/VerilatorLifecycle.pm): `2814`
 - [perl/FSM/VIAL/ExecutionBuilder.pm](perl/FSM/VIAL/ExecutionBuilder.pm): `2789`
 - [perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm](perl/FSM/IAL2/ProtocolIntent/ApbComposition.pm): `2517`
 - [perl/FSM/CoreAST.pm](perl/FSM/CoreAST.pm): `2431`
@@ -609,6 +610,7 @@ bin/fsmgen
      -> Backend::SVPortableVerilator
      -> Backend::Runner
         -> Backend::VerilatorLifecycle
+           -> Backend::ProcessSupervisor
            -> Backend::TraceValidator
            -> Backend::ResultProducer
   -> FSM::VIAL::ArtifactTransaction
@@ -749,6 +751,7 @@ Important distinction:
 - [perl/FSM/VIAL/Backend/SVPortableVerilator.pm](perl/FSM/VIAL/Backend/SVPortableVerilator.pm)
 - [perl/FSM/VIAL/Backend/Runner.pm](perl/FSM/VIAL/Backend/Runner.pm)
 - [perl/FSM/VIAL/Backend/VerilatorLifecycle.pm](perl/FSM/VIAL/Backend/VerilatorLifecycle.pm)
+- [perl/FSM/VIAL/Backend/ProcessSupervisor.pm](perl/FSM/VIAL/Backend/ProcessSupervisor.pm)
 - [perl/FSM/VIAL/Backend/TraceValidator.pm](perl/FSM/VIAL/Backend/TraceValidator.pm)
 - [perl/FSM/VIAL/Backend/ResultProducer.pm](perl/FSM/VIAL/Backend/ResultProducer.pm)
 - [perl/FSM/VIAL/BackendEmissionAuthority.pm](perl/FSM/VIAL/BackendEmissionAuthority.pm)
@@ -761,7 +764,8 @@ Source actions remain no-write. `plan` routes HIAL through canonical review
 artifacts and exposes only sanitized JSON-safe projections. `run` additionally
 selects the exact qualified Verilator 5.046 profile, emits portable
 SystemVerilog, delegates bounded repository-local execution and cleanup to the
-shared lifecycle, validates the closed trace, and produces normalized
+shared lifecycle and its sealed process supervisor, validates the closed trace,
+and produces normalized
 result/output manifests. The shared backend-emission authority supplies exact
 contract limits without making private backends public. The API returns
 an ordered caller-owned graph; the CLI atomically publishes the same graph.

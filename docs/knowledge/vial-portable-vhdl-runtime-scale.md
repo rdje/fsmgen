@@ -14,6 +14,9 @@ evidence: >-
   docs/decisions/0090-portable-vhdl-runtime-scale-uses-sample-snapshots-and-one-shared-ghdl-lifecycle.md;
   perl/FSM/VIAL/Backend/VHDLPortableGHDL.pm;
   perl/FSM/VIAL/Backend/VHDLPortableGHDLQualification.pm;
+  perl/FSM/VIAL/Backend/GHDLLifecycle.pm;
+  perl/FSM/VIAL/Backend/ProcessSupervisor.pm;
+  perl/FSM/VIAL/Backend/VerilatorLifecycle.pm;
   perl/FSM/VIAL/Backend/VHDLPortableTraceValidator.pm;
   perl/FSM/VIAL/ArchitectureScaleRuntimeStream.pm;
   perl/FSM/VIAL/ArchitectureScalePortableVHDLRuntimeMaterialization.pm;
@@ -21,12 +24,16 @@ evidence: >-
   vial/qualification/vhdl_portable_ghdl_runtime_qualification.vial;
   vial/qualification/vhdl_portable_ghdl/ghdl-6.0.0-qualification.json;
   t/1595-vial-vhdl-portable-ghdl-qualification.t;
+  t/1664-vial-verilator-shared-lifecycle.t;
   t/1671-vial-vhdl-portable-trace-v2.t;
   t/1672-vial-architecture-scale-portable-vhdl-runtime-materialization.t;
+  t/1673-vial-ghdl-shared-lifecycle.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16dd-vial-portable-vhdl-runtime-measurement.md
 reverify: >-
-  prove -Iperl t/1672-vial-architecture-scale-portable-vhdl-runtime-materialization.t &&
+  prove -Iperl t/1595-vial-vhdl-portable-ghdl-qualification.t
+  t/1664-vial-verilator-shared-lifecycle.t
+  t/1673-vial-ghdl-shared-lifecycle.t &&
   rg -n 'vial_inactive_barrier|vial_emit_sample_trace|record_count|N \+ 74|9,926|99,926|admitted|prepared|tool_verified'
   perl/FSM/VIAL/ArchitectureScalePortableVHDLRuntimeMaterialization.pm
   perl/FSM/VIAL/Backend/VHDLPortableGHDL.pm
@@ -54,10 +61,13 @@ tool-free. The unchanged 64-MiB envelope remains authoritative, actual runtime
 bytes remain unclaimed, and later GHDL measurement may honestly reject the
 larger candidate.
 
-One caller-sealed GHDL lifecycle will own provider verification, preparation,
+One caller-sealed GHDL lifecycle now owns provider verification, preparation,
 analysis, elaboration, run, trace validation, result production, assembly, and
-cleanup for both exact qualification and common-controller measurement. The
-separate four-state probe remains qualification evidence. This external GHDL
+cleanup for exact qualification and the next common-controller measurement
+adapter. It reloads content-addressed state/object chains and uses the same
+sealed process supervisor extracted from the byte-stable Verilator lifecycle.
+The qualifier's separate four-state probe uses that supervisor and the fresh
+exact rerun remains byte-identical to its checked report. This external GHDL
 execution is not IASIM execution and adds no OSVVM, support, budget, or capacity
 claim.
 

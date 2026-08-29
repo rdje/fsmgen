@@ -4,9 +4,10 @@ Portable-VHDL runtime measurement follows the provider-free runtime-stream
 construction and the structural backend-emission matrix. Decision `0090`
 selects the missing trace and lifecycle architecture. Trace-v2 truth is
 implemented under `.17.3.6.1`, and `.17.3.6.2` now materializes both authored
-scale sources through the canonical structural route. Shared GHDL execution,
-measurement, and publication remain owned by `.17.3.6.3` through `.17.3.6.5`.
-This chapter does not make a performance, capacity, or support claim.
+scale sources through the canonical structural route. `.17.3.6.3` now provides
+the shared GHDL lifecycle and process supervisor; common-controller measurement
+and publication remain owned by `.17.3.6.4` and `.17.3.6.5`. This chapter does
+not make a performance, capacity, or support claim.
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-portable-vhdl-runtime-selection-v1 -->
 - Claim: The checked portable-VHDL v2 fixture produces 77 trace records across 35 real inactive-edge observation barriers; its authenticated four-entry/66-bit catalog and one snapshot per barrier establish `records(N)=N+74`, reset/timeout candidates 9,926/16,384 and 99,926/131,072 for 10,000/100,000 records, and unchanged GHDL deadline/capture pairs 10/65,536, 120/8,388,608, 60/8,388,608, and 30/67,108,864.
@@ -151,7 +152,9 @@ Every transition reloads and validates its complete content-addressed
 predecessor chain. Source, emission, provider, binary, command, output, trace,
 result, and cleanup identities stay below one repository-derived same-volume
 root. The four-state provider probe remains a distinct qualification oracle;
-fixture execution has only this lifecycle.
+fixture execution has only this lifecycle. The checked qualifier now consumes
+that lifecycle, runs its distinct probe through the same supervisor, and still
+reproduces the checked qualification report byte for byte.
 
 The shared production process supervisor records containment, spawn, successful
 `exec`, first output, exit, timeout/capture status, signal, and complete process-

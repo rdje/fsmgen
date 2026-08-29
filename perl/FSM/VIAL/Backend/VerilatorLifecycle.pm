@@ -7,23 +7,20 @@ use bytes ();
 use Carp qw(confess);
 use Cwd qw(abs_path getcwd);
 use Digest::SHA qw(sha256_hex);
-use Errno qw(EINTR);
 use Fcntl qw(
-    FD_CLOEXEC F_GETFD F_GETFL F_SETFD F_SETFL
-    O_CREAT O_EXCL O_NOFOLLOW O_NONBLOCK O_WRONLY
+    O_CREAT O_EXCL O_NOFOLLOW O_WRONLY
 );
 use File::Basename qw(dirname);
 use File::Path qw(make_path remove_tree);
 use File::Spec;
-use IO::Select;
 use JSON::PP ();
-use POSIX qw(WNOHANG _exit setpgid);
 use Scalar::Util qw(blessed);
-use Time::HiRes qw(CLOCK_MONOTONIC clock_gettime sleep time);
+use Time::HiRes qw(time);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
 use FSM::VIAL::Backend::ResultProducer;
+use FSM::VIAL::Backend::ProcessSupervisor;
 use FSM::VIAL::Backend::TraceValidator;
 
 my $BASE = 'backends/sv_portable_verilator';
@@ -2572,225 +2569,23 @@ sub _command_mdir($compile) {
 }
 
 sub _capture_process($session, $argv, $timeout, $limit) {
-    _throw(
-        'VIAL_RUN_TOOL_ERROR',
-        'selected tool command is not one non-empty scalar argument vector',
-        '/tool',
-    ) unless ref($argv) eq 'ARRAY' && @$argv
-        && !grep { !defined($_) || ref($_) || /\x00/ } @$argv;
-    my ($stdin_reader, $stdin_writer);
-    my ($output_reader, $output_writer);
-    my ($control_reader, $control_writer);
-    pipe($stdin_reader, $stdin_writer)
-        or _throw(
-            'VIAL_RUN_HOST_ERROR',
-            'cannot create selected-tool stdin pipe', '/tool',
+    my $capture = eval {
+        my $policy = FSM::VIAL::Backend::ProcessSupervisor->policy(
+            $session->{storage_context}{containment}, $timeout, $limit,
         );
-    pipe($output_reader, $output_writer)
-        or _throw(
-            'VIAL_RUN_HOST_ERROR',
-            'cannot create selected-tool output pipe', '/tool',
-        );
-    pipe($control_reader, $control_writer)
-        or _throw(
-            'VIAL_RUN_HOST_ERROR',
-            'cannot create selected-tool exec-control pipe', '/tool',
-        );
-    my $control_flags = fcntl($control_writer, F_GETFD, 0);
-    _throw(
-        'VIAL_RUN_HOST_ERROR',
-        'cannot inspect selected-tool exec-control pipe', '/tool',
-    ) unless defined $control_flags;
-    _throw(
-        'VIAL_RUN_HOST_ERROR',
-        'cannot seal selected-tool exec-control pipe close-on-exec', '/tool',
-    ) unless fcntl(
-        $control_writer, F_SETFD, $control_flags | FD_CLOEXEC,
-    );
-
-    my $started = clock_gettime(CLOCK_MONOTONIC);
-    my $pid = fork();
-    _throw(
-        'VIAL_RUN_HOST_ERROR',
-        'cannot fork the selected tool', '/tool',
-    ) unless defined $pid;
-    if ($pid == 0) {
-        close $stdin_writer;
-        close $output_reader;
-        close $control_reader;
-        if ($session->{storage_context}{containment}
-                eq 'lifecycle_process_group') {
-            unless (eval { setpgid(0, 0); 1 }) {
-                _write_child_control(
-                    $control_writer,
-                    "process-group containment failed: $!",
-                );
-                _exit(126);
-            }
-        }
-        unless (chdir($session->{repo_root})) {
-            _write_child_control(
-                $control_writer,
-                "repository working-directory handoff failed: $!",
-            );
-            _exit(126);
-        }
-        unless (open STDIN, '<&', $stdin_reader) {
-            _write_child_control(
-                $control_writer, "stdin handoff failed: $!",
-            );
-            _exit(126);
-        }
-        unless (open STDOUT, '>&', $output_writer) {
-            _write_child_control(
-                $control_writer, "stdout handoff failed: $!",
-            );
-            _exit(126);
-        }
-        unless (open STDERR, '>&', $output_writer) {
-            _write_child_control(
-                $control_writer, "stderr handoff failed: $!",
-            );
-            _exit(126);
-        }
-        close $stdin_reader;
-        close $output_writer;
-        {
-            no warnings 'exec';
-            exec {$argv->[0]} @$argv;
-        }
-        _write_child_control($control_writer, "exec failed: $!");
-        _exit(127);
-    }
-
-    close $stdin_reader;
-    close $output_writer;
-    close $control_writer;
-    close $stdin_writer;
-    eval { setpgid($pid, $pid); 1 }
-        if $session->{storage_context}{containment}
-            eq 'lifecycle_process_group';
-    for my $fh ($output_reader, $control_reader) {
-        my $flags = fcntl($fh, F_GETFL, 0);
-        fcntl($fh, F_SETFL, $flags | O_NONBLOCK)
-            if defined $flags;
-    }
-    my $output_fileno = fileno($output_reader);
-    my $control_fileno = fileno($control_reader);
-    my $select = IO::Select->new($control_reader, $output_reader);
-    my ($output, $exec_error) = ('', '');
-    my ($timed_out, $limited) = (0, 0);
-    my ($exec_handoff, $first_output);
-    while ($select->count) {
-        my $now = clock_gettime(CLOCK_MONOTONIC);
-        if ($now - $started > $timeout) {
-            $timed_out = 1;
-            last;
-        }
-        my @ready = sort {
-            (fileno($a) == $control_fileno ? 0 : 1)
-                <=> (fileno($b) == $control_fileno ? 0 : 1)
-        } $select->can_read(0.05);
-        for my $fh (@ready) {
-            my $chunk = '';
-            my $read = sysread($fh, $chunk, 65_536);
-            if (defined($read) && $read > 0) {
-                if (fileno($fh) == $output_fileno) {
-                    $first_output //= clock_gettime(CLOCK_MONOTONIC);
-                    $output .= $chunk;
-                    if (bytes::length($output) > $limit) {
-                        $limited = 1;
-                        last;
-                    }
-                }
-                elsif (fileno($fh) == $control_fileno) {
-                    $exec_error .= $chunk;
-                }
-            }
-            elsif (defined($read) && $read == 0) {
-                $exec_handoff //= clock_gettime(CLOCK_MONOTONIC)
-                    if fileno($fh) == $control_fileno
-                        && !length($exec_error);
-                $select->remove($fh);
-                close $fh;
-            }
-        }
-        last if $limited;
-    }
-    my $status;
-    if ($timed_out || $limited) {
-        $select->remove($_) for $select->handles;
-        close $_ for grep { defined(fileno($_)) }
-            ($output_reader, $control_reader);
-        my $owns_group =
-            $session->{storage_context}{containment}
-                eq 'lifecycle_process_group';
-        $status = _terminate_process($pid, $owns_group);
-    }
-    else {
-        while (1) {
-            my $waited = waitpid($pid, WNOHANG);
-            if ($waited == $pid || $waited == -1) {
-                $status = $?;
-                last;
-            }
-            if (clock_gettime(CLOCK_MONOTONIC) - $started > $timeout) {
-                $timed_out = 1;
-                my $owns_group =
-                    $session->{storage_context}{containment}
-                        eq 'lifecycle_process_group';
-                $status = _terminate_process($pid, $owns_group);
-                last;
-            }
-            sleep(0.01);
-        }
-    }
-    my $finished = clock_gettime(CLOCK_MONOTONIC);
-    $exec_handoff //= $finished unless length $exec_error;
-    $exec_error =~ s/[\r\n\t]+/ /g;
-    $exec_error =~ s/\s+/ /g;
-    $exec_error = substr($exec_error, 0, 2_048)
-        if length($exec_error) > 2_048;
-    my $started_ns = int($started * 1_000_000_000);
-    my $exec_handoff_ns = defined($exec_handoff)
-        ? int($exec_handoff * 1_000_000_000) : undef;
-    my $first_output_ns = defined($first_output)
-        ? int($first_output * 1_000_000_000) : undef;
-    my $finished_ns = int($finished * 1_000_000_000);
-    return {
-        ok => (!$timed_out && !$limited && !length($exec_error)
-                && ($status & 127) == 0)
-            ? JSON::PP::true : JSON::PP::false,
-        exit_code => ($status & 127)
-            ? 128 + ($status & 127) : ($status >> 8),
-        signal => $status & 127,
-        output => $output,
-        timed_out => $timed_out
-            ? JSON::PP::true : JSON::PP::false,
-        output_limited => $limited
-            ? JSON::PP::true : JSON::PP::false,
-        exec_failed => length($exec_error)
-            ? JSON::PP::true : JSON::PP::false,
-        exec_error => length($exec_error) ? $exec_error : undef,
-        started_monotonic_ns => $started_ns,
-        exec_handoff_monotonic_ns => $exec_handoff_ns,
-        first_output_monotonic_ns => $first_output_ns,
-        finished_monotonic_ns => $finished_ns,
-        spawn_to_exec_ns => defined($exec_handoff_ns)
-            ? $exec_handoff_ns - $started_ns : undef,
-        execution_ns => defined($exec_handoff_ns)
-            ? $finished_ns - $exec_handoff_ns : undef,
-        exec_to_first_output_ns =>
-            defined($exec_handoff_ns) && defined($first_output_ns)
-                ? $first_output_ns - $exec_handoff_ns
-                : undef,
-        first_output_to_exit_ns => defined($first_output_ns)
-            ? $finished_ns - $first_output_ns : undef,
-        containment => $session->{storage_context}{containment},
-        timeout_seconds => $timeout,
-        capture_limit_bytes => $limit,
-        output_bytes => bytes::length($output),
+        FSM::VIAL::Backend::ProcessSupervisor->capture({
+            working_directory => $session->{repo_root},
+            argv => $argv,
+            policy => $policy,
+        });
     };
+    return $capture if defined $capture;
+    my $error = $@;
+    my $message = blessed($error)
+        && $error->isa(q{FSM::VIAL::Backend::ProcessSupervisor::Failure})
+        ? $error->{message}
+        : _sanitize_exception($error);
+    _throw(q{VIAL_RUN_HOST_ERROR}, $message, q{/tool});
 }
 
 sub _capture_evidence($capture) {
@@ -2803,61 +2598,8 @@ sub _capture_evidence($capture) {
     )};
 }
 
-sub _write_child_control($fh, $message) {
-    $message = substr($message, 0, 2_048);
-    my $offset = 0;
-    while ($offset < bytes::length($message)) {
-        my $written = syswrite(
-            $fh, $message, bytes::length($message) - $offset, $offset,
-        );
-        next if !defined($written) && $! == EINTR;
-        last unless defined($written) && $written > 0;
-        $offset += $written;
-    }
-    return;
-}
-
 sub _process_succeeded($process) {
     return $process->{ok} && $process->{exit_code} == 0;
-}
-
-sub _terminate_process($pid, $process_group) {
-    my $target = $process_group ? -$pid : $pid;
-    kill 'TERM', $target;
-    my $deadline = time() + 2;
-    my ($leader_reaped, $leader_status) = (0, undef);
-    while (time() < $deadline) {
-        unless ($leader_reaped) {
-            my $waited = waitpid($pid, WNOHANG);
-            if ($waited == $pid || $waited == -1) {
-                $leader_reaped = 1;
-                $leader_status = $?;
-            }
-        }
-        my $domain_alive = $process_group
-            ? kill(0, -$pid)
-            : (!$leader_reaped && kill(0, $pid));
-        return defined($leader_status) ? $leader_status : 0
-            if $leader_reaped && !$domain_alive;
-        select undef, undef, undef, 0.02;
-    }
-    kill 'KILL', $target;
-    unless ($leader_reaped) {
-        waitpid($pid, 0);
-        $leader_status = $?;
-    }
-    if ($process_group) {
-        my $kill_deadline = time() + 2;
-        while (kill(0, -$pid) && time() < $kill_deadline) {
-            select undef, undef, undef, 0.02;
-        }
-        _throw(
-            'VIAL_RUN_HOST_ERROR',
-            'selected-tool process group survived TERM/KILL containment',
-            '/tool',
-        ) if kill(0, -$pid);
-    }
-    return defined($leader_status) ? $leader_status : 0;
 }
 
 sub _extract_trace($output) {

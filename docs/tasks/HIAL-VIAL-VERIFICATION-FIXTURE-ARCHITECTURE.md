@@ -719,11 +719,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.2: materialize portable-VHDL runtime candidates`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.3`
-  Status: `active`
+  Status: `done`
   Goal: `Implement one caller-sealed staged GHDL lifecycle for exact qualification and architecture-scale measurement.`
   Acceptance: `After .2 commits cleanly, extract one backend process supervisor from the already qualified production mechanism and make both Verilator and GHDL callers use sealed containment policies without result drift. Implement content-addressed admitted/prepared/tool-verified/analyzed/elaborated/ran/trace-validated/result-produced/assembled/cleaned GHDL states; bind exact provider/source/command/tool identities, 10/120/60/30-second deadlines, 64-KiB/8-MiB/8-MiB/64-MiB captures, mutation/collision/resume/failure controls, whole-tree termination, and exact cleanup. Refactor the checked GHDL qualifier to use the shared fixture lifecycle while retaining its separate four-state provider probe and byte-identical report.`
-  Verification: `Clean predecessor 580be53f5 closes both authored candidates and their exact ordinary source-to-emission route. Decision 0090 and this acceptance now own the shared process-supervisor extraction, one sealed GHDL lifecycle, checked-qualifier refactor, failure controls, and unchanged public evidence.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.3: activate shared GHDL lifecycle`
+  Verification: `The extracted supervisor leaves Verilator behavior unchanged. GHDLLifecycle seals the ten states, authority, phase policies, containment, hostile controls, trace/result assembly, and cleanup. The qualifier and separate probe share it; the exact report remains byte-identical. Focused Verilator/GHDL/qualification tests pass.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.3: activate shared GHDL lifecycle; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.3: implement shared GHDL lifecycle`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.4`
   Status: `proposed`
@@ -7169,22 +7169,25 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   from the fresh exact qualification, mdBook, Knowledge Map, task/relative-path,
   containment, staged acceptance, diff, and doctrine gates close the slice.
 
-## Acceptance Checklist (enforced) — `.17.3.6.2` authored portable-VHDL candidates
+## Acceptance Checklist (enforced) — `.17.3.6.3` shared GHDL lifecycle
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` for
-  `ArchitectureScalePortableVHDLRuntimeMaterialization` returns no historical
-  owner while the runtime catalog already selects portable-VHDL 10,000 and
-  100,000 roles; only the 4,986-byte reference source existed, so neither role
-  could traverse an exact authored source-to-emission route.
-- [x] **ADDRESSED (verified)** — Two tracked 4,991/4,993-byte sources change
-  only success timeout/reset. The new sealed materializer proves N+74 at exact
-  10,000/100,000 records, twice-identical canonical stages and emission, exact
-  21/39 and 17/6/59/21 operation/map/artifact/source/map/check inventories,
-  unchanged sibling/await semantics, limit/excess preflight, report/source
-  mutation rejection, and same-volume success/failure cleanup. Runtime bytes
-  remain unmeasured and the unchanged 67,108,864-byte cap remains authoritative.
-- [x] **NO REGRESSION** — `All tests successful`; focused materialization is
-  `Files=1, Tests=5`, impacted route/trace/backend tests and syntax are green,
-  and book, Knowledge Map, claim, task, containment, acceptance, diff, and
-  doctrine gates pass. No GHDL, OSVVM, support, performance, capacity,
-  mixed-language, IASIM, or public API claim changes.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'sub _capture_process'`
+  finds the bounded supervisor at `037c962fd` in
+  `VerilatorLifecycle`; `git log -S'use IPC::Cmd'` locates the checked GHDL
+  qualifier's post-hoc capture at `a0e7149d5`. The latter remained one
+  monolithic transaction, so exact qualification/measurement had no common
+  sealed state, process, resume, containment, or cleanup authority.
+- [x] **ADDRESSED (verified)** — One caller-sealed production supervisor now
+  serves unchanged Verilator execution, the ten-state content-addressed GHDL
+  lifecycle, and the qualifier's distinct four-state probe. GHDL states seal
+  provider/source/emission/command/workspace/object identities, exact 10/120/60/30-
+  second and 64-KiB/8-MiB/8-MiB/64-MiB policies, lifecycle/outer-worker
+  containment, trace/result assembly, hostile mutation/replay/collision/failure
+  controls, whole-tree termination, and exact cleanup.
+- [x] **NO REGRESSION** — The focused lifecycle/qualification/measurement suite
+  passes `Files=4, Tests=36`; guarded public Verilator passes `Files=1, Tests=7`;
+  exact GHDL is byte-identical with zero residue.
+  Module::ScanDeps and an independent walker agree on the sole reachable
+  addition. Syntax, book, Knowledge Map, claim, task, containment, acceptance,
+  diff, and doctrines pass. No timeout, cap, retry, OSVVM, support, performance,
+  capacity, mixed-language, IASIM, or public-API change is claimed.

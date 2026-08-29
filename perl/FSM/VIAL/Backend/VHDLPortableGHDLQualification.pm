@@ -3,19 +3,17 @@ package FSM::VIAL::Backend::VHDLPortableGHDLQualification;
 use v5.20;
 use strict;
 use warnings;
-use bytes ();
 use Carp qw(confess);
 use Cwd qw(abs_path);
 use Digest::SHA qw(sha256_hex);
-use File::Basename qw(dirname);
-use File::Path qw(make_path remove_tree);
 use File::Spec;
-use IPC::Cmd qw(run);
 use JSON::PP ();
 use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
+use FSM::VIAL::Backend::GHDLLifecycle;
+use FSM::VIAL::Backend::ProcessSupervisor;
 use FSM::VIAL::Backend::VHDLPortableTraceValidator;
 
 my $JSON = JSON::PP->new->canonical(1);
@@ -155,7 +153,6 @@ sub _qualify($raw) {
         if -e $stage_abs || -l $stage_abs;
 
     my $library_rel = "$stage_rel/library";
-    my $library_abs = _repo_path($repo_root, $library_rel);
     my @analyze = ($BINARY, '-a', '--std=08', '--work=fsmgen_vial',
         "--workdir=$library_rel", @SOURCE, $PROBE);
     my @elaborate_fixture = ($BINARY, '-e', '--std=08', '--work=fsmgen_vial',
@@ -167,43 +164,101 @@ sub _qualify($raw) {
     my @run_probe = ($BINARY, '-r', '--std=08', '--work=fsmgen_vial',
         "--workdir=$library_rel", 'ghdl_6_0_0_four_state_probe', '--assert-level=error');
 
-    my ($version, $analysis, $elaboration, $run_one, $run_two,
-        $probe_elaboration, $probe_one, $probe_two, $workflow_error);
-    my $stage_created = 0;
-    my $workflow_ok = eval {
-        make_path($library_abs);
-        $stage_created = 1;
-        $version = _capture($repo_root, [$BINARY, '--version'], 10, 65_536, 'version');
-        my $normalized_version = $version->{output};
-        $normalized_version =~ s/[\r\n]+\z//;
-        _throw('VIAL_VHDL_QUALIFICATION_TOOL_ERROR',
-            'installed GHDL identity does not match the exact 6.0.0 LLVM-JIT profile',
-            '/tool_profile/version_output')
-            unless $normalized_version eq $VERSION_OUTPUT;
-        $analysis = _capture($repo_root, \@analyze, 120, 8_388_608, 'analysis');
-        $elaboration = _capture($repo_root, \@elaborate_fixture, 60, 8_388_608,
-            'fixture elaboration');
-        $run_one = _capture($repo_root, \@run_fixture, 30, 67_108_864,
-            'fixture execution');
-        $run_two = _capture($repo_root, \@run_fixture, 30, 67_108_864,
-            'fixture deterministic rerun');
-        $probe_elaboration = _capture($repo_root, \@elaborate_probe, 60, 8_388_608,
-            'four-state probe elaboration');
-        $probe_one = _capture($repo_root, \@run_probe, 30, 8_388_608,
-            'four-state probe execution');
-        $probe_two = _capture($repo_root, \@run_probe, 30, 8_388_608,
-            'four-state probe deterministic rerun');
+    my $source_identity =
+        'source/' . sha256_hex($JSON->encode(\@source_set));
+    my $lifecycle_request = {
+        repo_root => $repo_root,
+        provider => {
+            root => $PROVIDER_ROOT,
+            archive => $ARCHIVE,
+            archive_bytes => 37_155_806,
+            archive_sha256 => $ARCHIVE_SHA256,
+            binary => $BINARY,
+            binary_sha256 => $BINARY_SHA256,
+            version_output => $VERSION_OUTPUT,
+        },
+        source_set => \@source_set,
+        source_identity => $source_identity,
+        emission_identity => 'emission/' . sha256_hex($JSON->encode({
+            qualification_id => $qualification_id,
+            source_identity => $source_identity,
+            commands => {
+                version => [$BINARY, '--version'],
+                analyze => \@analyze,
+                elaborate => \@elaborate_fixture,
+                run => \@run_fixture,
+            },
+        })),
+        commands => {
+            version => [$BINARY, '--version'],
+            analyze => \@analyze,
+            elaborate => \@elaborate_fixture,
+            run => \@run_fixture,
+        },
+        validation => {
+            expected_record_counts => {
+                header => 1, scenario_start => 2, events => 2, samples => 35,
+                expectations => 2, scoreboards => 2, coverage => 28, faults => 2,
+                scenario_end => 2, footer => 1,
+            },
+            %$TRACE_AUTHORITY,
+            run_repetitions => 2,
+        },
+        storage_context => {
+            schema => 'fsmgen.vial_ghdl_lifecycle_storage.v1',
+            schema_version => 1,
+            mode => 'qualification',
+            staging_identity => $stage_rel,
+            containment => 'lifecycle_process_group',
+        },
+    };
+    my $current = FSM::VIAL::Backend::GHDLLifecycle->begin_session(
+        $lifecycle_request,
+    );
+    _lifecycle_succeeded($current, 'admission');
+    for my $target (qw(
+        prepared tool_verified analyzed elaborated ran trace_validated
+        result_produced
+    )) {
+        $current = FSM::VIAL::Backend::GHDLLifecycle->advance_session({
+            %$lifecycle_request, handle => $current->{handle},
+        });
+        _lifecycle_succeeded($current, $target);
+    }
+
+    my ($probe_elaboration, $probe_one, $probe_two);
+    my $probe_ok = eval {
+        $probe_elaboration = _capture(
+            $repo_root, \@elaborate_probe, 60, 8_388_608,
+            'four-state probe elaboration',
+        );
+        $probe_one = _capture(
+            $repo_root, \@run_probe, 30, 8_388_608,
+            'four-state probe execution',
+        );
+        $probe_two = _capture(
+            $repo_root, \@run_probe, 30, 8_388_608,
+            'four-state probe deterministic rerun',
+        );
         1;
     };
-    $workflow_error = $@ unless $workflow_ok;
-    if ($stage_created && -d $stage_abs && !-l $stage_abs) {
-        my $errors;
-        remove_tree($stage_abs, {error => \$errors});
-        _throw('VIAL_VHDL_QUALIFICATION_CLEANUP_ERROR',
-            "cannot remove qualification staging root '$stage_rel'", '/cleanup')
-            if $errors && @$errors;
+    unless ($probe_ok) {
+        my $error = $@;
+        FSM::VIAL::Backend::GHDLLifecycle->abort_session({
+            %$lifecycle_request, handle => $current->{handle},
+        });
+        die $error;
     }
-    die $workflow_error unless $workflow_ok;
+    $current = FSM::VIAL::Backend::GHDLLifecycle->advance_session({
+        %$lifecycle_request, handle => $current->{handle},
+    });
+    _lifecycle_succeeded($current, 'assembled');
+    my $finished = FSM::VIAL::Backend::GHDLLifecycle->finish_session({
+        %$lifecycle_request, handle => $current->{handle},
+    });
+    _lifecycle_succeeded($finished, 'cleaned');
+    my ($run_one, $run_two) = map {{output => $_}}
+        @{$finished->{assembled_result}{runtime_outputs}};
     _throw('VIAL_VHDL_QUALIFICATION_CLEANUP_ERROR',
         "qualification staging root '$stage_rel' remains after execution", '/cleanup')
         if -e $stage_abs || -l $stage_abs;
@@ -428,18 +483,46 @@ sub _validate_runtime_output($output) {
 sub _capture($repo_root, $argv, $timeout, $limit, $label) {
     my @absolute = @$argv;
     $absolute[0] = _repo_path($repo_root, $absolute[0]);
-    my ($ok, $error, undef, $stdout, $stderr) = run(
-        command => \@absolute,
-        timeout => $timeout,
-    );
-    my $output = join('', @{$stdout || []}, @{$stderr || []});
+    my $capture = eval {
+        my $policy = FSM::VIAL::Backend::ProcessSupervisor->policy(
+            'lifecycle_process_group', $timeout, $limit,
+        );
+        FSM::VIAL::Backend::ProcessSupervisor->capture({
+            working_directory => $repo_root,
+            argv => \@absolute,
+            policy => $policy,
+        });
+    };
+    unless (defined $capture) {
+        my $error = $@;
+        my $message = blessed($error)
+            && $error->isa('FSM::VIAL::Backend::ProcessSupervisor::Failure')
+            ? $error->{message} : _sanitize_exception($error);
+        _throw('VIAL_VHDL_QUALIFICATION_HOST_ERROR', $message, '/execution');
+    }
     _throw('VIAL_VHDL_QUALIFICATION_LIMIT_ERROR',
         "$label output exceeded its exact byte limit", '/resource_controls')
-        if bytes::length($output) > $limit;
+        if $capture->{output_limited};
     _throw('VIAL_VHDL_QUALIFICATION_EXECUTION_ERROR',
-        "$label failed: " . _process_summary($output, $error), '/execution')
-        unless $ok;
-    return {output => $output, output_bytes => bytes::length($output)};
+        "$label failed: "
+            . _process_summary($capture->{output}, $capture->{exec_error}),
+        '/execution') unless $capture->{ok} && $capture->{exit_code} == 0;
+    return {
+        output => $capture->{output},
+        output_bytes => $capture->{output_bytes},
+    };
+}
+
+sub _lifecycle_succeeded($result, $phase) {
+    return 1 if ref($result) eq 'HASH' && $result->{ok};
+    my $diagnostic = ref($result) eq 'HASH'
+        && ref($result->{diagnostics}) eq 'ARRAY'
+        && @{$result->{diagnostics}}
+        ? $result->{diagnostics}[0] : {};
+    _throw('VIAL_VHDL_QUALIFICATION_EXECUTION_ERROR',
+        "shared GHDL lifecycle $phase failed: "
+            . ($diagnostic->{message} // 'unknown lifecycle failure'),
+        '/execution');
 }
 
 sub _command_record($argv) {
