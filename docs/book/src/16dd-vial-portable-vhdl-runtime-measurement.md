@@ -7,7 +7,7 @@ implemented under `.17.3.6.1`, and `.17.3.6.2` now materializes both authored
 scale sources through the canonical structural route. `.17.3.6.3` now provides
 the shared GHDL lifecycle and process supervisor. `.17.3.6.4` now measures the
 applicable profiles through the common controller; immutable-set publication
-remains owned by `.17.3.6.5`. This chapter does not make a performance,
+is active under `.17.3.6.5`. This chapter does not make a performance,
 capacity, or support claim.
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-portable-vhdl-runtime-selection-v1 -->

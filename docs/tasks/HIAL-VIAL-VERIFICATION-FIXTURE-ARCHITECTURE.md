@@ -700,7 +700,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Measure exact provider-free portable-VHDL generation, analysis, elaboration, run, trace validation, and result production with qualified GHDL.`
   Acceptance: `Use only the qualified GHDL profile and canonical runtime-stream inputs; perform one validation plus required measured repetitions in fresh owned staging; apply effective per-source analysis/elaboration/run limits and active guards; prove artifacts, source maps, checks, command identity, trace/result parity, deterministic rerun, raw evidence, publication, failure, and cleanup; and make no OSVVM, mixed-language, promoted-budget, support, or capacity claim.`
-  Verification: `Clean portable-Verilator closure d21089eb6 leaves this as the next roadmap dependency. The provider-free runtime constructor already owns all five portable-VHDL/GHDL roles and exact qualified tool/deadline/command expectations. Query-first source/history audit plus a fresh guarded exact GHDL rerun prove that the historical v1 trace closes at 42 records but emits no sample record. Selection provisionally counted 34 barriers and chose reset candidates 9,927/99,927; child .1's direct v2 GHDL trace corrects the omitted final unsupported-size settlement barrier, proving 35 samples and therefore 9,926/99,926 candidates. Decision 0090 retains that transparent correction, one shared staged GHDL lifecycle, exact earlier-cap authority, and five ordered implementation children. Children `.17.3.6.1` through `.17.3.6.4` are done; immutable-set publication `.17.3.6.5` is next after the clean commit boundary.`
+  Verification: `Clean portable-Verilator closure d21089eb6 leaves this as the next roadmap dependency. The provider-free runtime constructor already owns all five portable-VHDL/GHDL roles and exact qualified tool/deadline/command expectations. Query-first source/history audit plus a fresh guarded exact GHDL rerun prove that the historical v1 trace closes at 42 records but emits no sample record. Selection provisionally counted 34 barriers and chose reset candidates 9,927/99,927; child .1's direct v2 GHDL trace corrects the omitted final unsupported-size settlement barrier, proving 35 samples and therefore 9,926/99,926 candidates. Decision 0090 retains that transparent correction, one shared staged GHDL lifecycle, exact earlier-cap authority, and five ordered implementation children. Children `.17.3.6.1` through `.17.3.6.4` are done; clean measurement commit e7203c278 permits immutable-set publication `.17.3.6.5`, which is active.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6: activate portable-VHDL runtime measurement; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6: select sampled portable-VHDL runtime architecture`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5`
 
@@ -733,11 +733,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.4: activate portable-VHDL runtime measurement; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.4: implement portable-VHDL runtime measurement`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5`
-  Status: `proposed`
+  Status: `active`
   Goal: `Publish and independently reload the complete immutable portable-VHDL runtime measurement set.`
   Acceptance: `After .4 commits cleanly, derive the five-level inventory from producer ownership; atomically publish bounded raw reports plus compact manifests at one clean revision/host/tool/guard identity; reject incomplete, reordered, mutated, mixed, stale, collided, signalled, oversized, or ambiguous state; retain all raw/excluded samples, applicability, earlier-cap dominance, cleanup and nonclaims; complete guarded capture plus separate fresh-process reload before closing .17.3.6.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean predecessor e7203c278 supplies the exact five-shape producer, 11 accepted runtime records across reference/gate/qualification, tool-free limit/excess reports, complete raw evidence and cleanup, and the decision-0090 publication contract. This leaf alone now owns immutable publication and independent reload.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: activate portable-VHDL measurement publication`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7`
   Status: `proposed`
@@ -7210,3 +7210,27 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   owned OSVVM validated-result logs are retained. Per CI policy, full CI and
   push remain deferred to the batch boundary, and no budget, support, capacity,
   reached-boundary, parity, IASIM, OSVVM, or public-API claim is added.
+
+## Acceptance Checklist (enforced) — `.17.3.6.5` publication activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'"lines_total":821' --oneline --
+  doctrine/live_document_size/surfaces.jsonl` locates selection commit
+  `7de1e309c`, whose bounded Knowledge Card transition allowance predates this
+  leaf's four-line durable activation fact. The common containment checker
+  consequently reports exact total 46,171 above baseline 45,347 plus allowance
+  821 by three lines; changing its transition metadata and the mdBook aggregate
+  authority makes activation a staged implementation slice.
+- [x] **ADDRESSED (verified)** — The existing `.17.3.6.5` leaf now activates
+  only after clean measurement commit `e7203c278`; its task/index/Memory/book/
+  Knowledge Map projections agree. The knowledge-card transition allowance is
+  ratcheted to exact current delta 824 plus the declared 50-line step (874),
+  while the book records exact zero-line/minus-one-byte aggregate movement and
+  no containment ceiling changes.
+- [x] **NO REGRESSION** — All 56 mdBook chapters test with `All tests
+  successful`; the inspected render contains 92 files/19,904,227 bytes and is
+  removed exactly. `knowledge-map: OK` reports 1,155 facts/6,124 questions/
+  6,296 occurrences/136 shards. Claim, task-tree, relative-path, locality,
+  maintained-reference, zero-ceiling-increase, and all 22 live-surface checks
+  pass; the final staged diff and complete doctrine driver verify this exact
+  activation before commit. Full CI and push remain deferred to the batch
+  boundary because product behavior is unchanged.

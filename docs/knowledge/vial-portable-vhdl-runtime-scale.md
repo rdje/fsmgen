@@ -88,5 +88,9 @@ over-limit shapes remain controller- and tool-free under the earlier structural
 authority; the measurement creates no promoted budget, support, capacity,
 parity, IASIM, or public-API claim.
 
+Clean measurement commit `e7203c278` activates `.17.3.6.5` as the sole owner of
+five-profile immutable publication and independent fresh-process reload. No
+published set exists until that leaf completes its atomic capture and reload.
+
 Related: [[vial-architecture-scale-proof]],
 [[hial-vial-verification-fixture-architecture]].
