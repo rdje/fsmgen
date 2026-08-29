@@ -84,3 +84,8 @@ claim.
 
 Related: [[vial-vhdl-portable-profile]],
 [[hial-vial-verification-fixture-architecture]].
+
+Scale leaf `.17.3.7` is active only to select exact OSVVM runtime-measurement
+ownership. It must reuse this qualified provider/tool tuple and keep provider
+verification, FSMGen stages, and external-tool stages distinct; activation
+adds no runtime measurement or promoted product claim.

@@ -3962,6 +3962,12 @@ applicable, read-only, and included in `emit`, while
 `external_verification_tool` remains false. No compiler, simulator, external
 process, HDL runtime, trace, or result producer is started.
 
+With the portable-VHDL runtime matrix sealed, `.17.3.7` is now the active
+OSVVM runtime-measurement frontier. Activation reuses the exact qualified
+provider/tool tuple and existing semantic authorities; it first selects the
+provider/FSMGen/external-tool stage decomposition and adds no measurement,
+budget, support, capacity, mixed-language, or public-API claim by itself.
+
 The same real RAM guard is mandatory for correctness validation, measurement,
 and independent report regeneration. The focused exact proof is:
 

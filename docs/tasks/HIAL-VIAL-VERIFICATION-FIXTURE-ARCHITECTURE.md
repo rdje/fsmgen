@@ -457,7 +457,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Measure portable backend generation, compile, execution, result, and artifact scaling.`
   Acceptance: `Run the selected workload profiles under active RAM/time controls for every applicable qualified backend, collect normalized wall/CPU/descendant-RSS/artifact/compile/run/result evidence, prove deterministic reruns and semantic outcomes, and distinguish tool cost from architecture cost without generalizing beyond measured profiles.`
-  Verification: `Clean unified provider-free qualification commit 490c35cc5 closes deterministic generation before any measured process or tool execution. Decision 0056 freezes the measurement schema, stage boundaries, raw-sample contract, repetitions, 250-ms sampling interval, exact host/tool identities, smaller-of timeouts, 88%-host/4,096-MiB descendant guard, repository-volume staging/publication, exclusion policy, budget formulas, and nonclaims. Completed foundation .1 implements the closed record, validation-before-measurement controller, fork-isolated stage workers, process-tree sampler, effective timeout enforcement, active-guard evidence handoff, defensive validation, and same-volume publication/cleanup. Completed .2-.4 retain accepted semantic/bridge, execution/checking, and structural-emission matrices. Active .5 begins qualified-Verilator runtime measurement with contract selection before implementation; VHDL/OSVVM execution, balanced measurement, calibration closure, remaining cap repair, and promotion remain separately owned.`
+  Verification: `Clean unified provider-free qualification commit 490c35cc5 closes deterministic generation before any measured process or tool execution. Decision 0056 freezes the measurement schema, stage boundaries, raw-sample contract, repetitions, 250-ms sampling interval, exact host/tool identities, smaller-of timeouts, 88%-host/4,096-MiB descendant guard, repository-volume staging/publication, exclusion policy, budget formulas, and nonclaims. Completed foundation .1 implements the closed record, validation-before-measurement controller, fork-isolated stage workers, process-tree sampler, effective timeout enforcement, active-guard evidence handoff, defensive validation, and same-volume publication/cleanup. Completed .2-.6 retain accepted semantic/bridge, execution/checking, structural-emission, portable-Verilator, and portable-VHDL matrices. Active .7 owns exact OSVVM runtime-measurement selection before implementation; balanced measurement, calibration closure, remaining cap repair, and promotion remain separately owned.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3: activate scale measurement foundation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9`
 
@@ -740,11 +740,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: activate portable-VHDL measurement publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: implement portable-VHDL measurement publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: isolate portable-VHDL exact trigger; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: repair portable-VHDL artifact cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: seal portable-VHDL measurement publication`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7`
-  Status: `proposed`
+  Status: `active`
   Goal: `Measure exact OSVVM methodology generation, analysis, elaboration, run, trace validation, and result production with the qualified provider and GHDL.`
   Acceptance: `Verify exact provider commit/tree/manifest/licence/notice identity before work; consume only the qualified OSVVM plus GHDL profile and canonical runtime inputs; perform validation and measured repetitions with qualified limits and guards; retain separate provider-verification, FSMGen, and external-tool stages; prove adapter/portable artifacts, mappings, trace/result semantics, raw evidence, deterministic rerun, atomic publication, failure, and cleanup; and make no provider-generality, mixed-language, promoted-budget, support, or capacity claim.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean portable-VHDL publication closure 09bdca8cc leaves OSVVM runtime measurement as the next roadmap dependency. Query-first cards and decisions 0051/0088 bind it to the exact OSVVM 2026.05 commit 2f7c391051dfb11890fa4bdbda9918d1db492250, tree bd4fdc594f2c26d564cf8907ff599578b9a39e22, checked recursive manifest/licence/notice census, and qualified GHDL 6.0.0 LLVM-JIT profile. Source/history audit finds no existing ArchitectureScaleOSVVMRuntimeMeasurement owner: runtime-stream expectations, callback-scoped provider verification/adapter emission, and the historical provider/tool qualifier remain separate authorities. This activation changes no code, provider data, generated artifact, runtime, trace/result, timeout, support, performance, budget, capacity, mixed-language, or public-API claim; exact decomposition is the next action.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7: activate OSVVM runtime measurement`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8`
   Status: `proposed`
@@ -7368,3 +7368,17 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   no ceiling change. Staged acceptance and diff pass, and `[doctrine] all
   doctrine checks passed` closes the final commit gate. Git is dirty only with this durable closure slice;
   full CI and push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.3.7` OSVVM measurement activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Source and `git log -S
+  'ArchitectureScaleOSVVMRuntimeMeasurement'` find no measurement owner;
+  runtime expectations, provider/emission, and old qualification are separate.
+- [x] **ADDRESSED (verified)** — The leaf now owns decomposition from clean
+  `09bdca8cc`; cards/decisions bind the exact provider/tool identities, and
+  task/index/Memory/book/Knowledge Map agree on the active non-code frontier.
+- [x] **NO REGRESSION** — Focused doctrine-facing coverage reports `All tests
+  successful` at `Files=8, Tests=116`; all 56 mdBook chapters test, and its inspected 92-file/
+  19,966,982-byte render is removed. Knowledge Map, claim, task, locality,
+  containment, zero ceiling increase, diff, staged acceptance, and doctrines
+  pass before commit; full CI and push remain deferred by policy.
