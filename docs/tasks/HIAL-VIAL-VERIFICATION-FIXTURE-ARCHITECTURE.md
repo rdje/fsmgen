@@ -712,11 +712,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.1: implement authenticated portable-VHDL trace v2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.2`
-  Status: `active`
+  Status: `done`
   Goal: `Materialize exact authored portable-VHDL runtime-stream candidates through the canonical source-to-emission route.`
   Acceptance: `After .1 commits cleanly, add tracked gate and qualification VIAL sources whose only permitted semantic deltas are success reset count and matching scenario timeout. Require exact 10,000/100,000 v2 trace projections at reset counts 9,926/99,926, twice-rebuilt Parser/bridge/ExecutionIR/plan/emission identity, exact artifact/map/check inventories, byte-equal reruns, structural equivalence, limit/excess preflight, same-volume cleanup, and an honest stop plus superseding decision if the unchanged 64-MiB envelope dominates.`
-  Verification: `Import-map repair is complete with three-leg evidence in the current checklist below; source work is next.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.2: prerequisite + import-map refresh`
+  Verification: `The two tracked sources differ from the reference only at the success timeout/reset literals: 16,384/9,926 and 131,072/99,926. The caller-sealed materializer rebuilds construction, Parser, bridge, ExecutionIR, backend inputs, plan, and portable-VHDL emission twice; it freezes exact 21-operation/39-ExecutionIR-map and 17-artifact/six-source/59-emission-map/21-check inventories, 10,000/100,000 N+74 family projections, unchanged sibling reset/timeout and await windows, source/emission/report identities, 64-MiB authority without invented runtime bytes, limit/excess tool-free preflight, hostile mutation rejection, relocation, and success/failure cleanup. Focused and impacted checks pass; GHDL execution remains owned by .3/.4.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.2: materialize portable-VHDL runtime candidates`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.3`
   Status: `proposed`
@@ -7169,37 +7169,22 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   from the fresh exact qualification, mdBook, Knowledge Map, task/relative-path,
   containment, staged acceptance, diff, and doctrine gates close the slice.
 
-## Acceptance Checklist (enforced) — `.17.3.6.1` trace v2 + `.17.3.6.2` import-map repair
+## Acceptance Checklist (enforced) — `.17.3.6.2` authored portable-VHDL candidates
 
-- [x] **ROOT CAUSE (WHY + WHERE; refreshed for `.17.3.6.2`)** — Trace v1's 42 activity/framing records
-  omitted `vial_inactive_barrier`, preventing runtime-work measurement. The
-  provisional census mistook 28 active cycles for all non-reset barriers and
-  missed the final unsupported-size settlement sample; direct v2 GHDL proves
-  19 + 16 = 35. The gallery README also froze an obsolete plan literal.
-  `git log -S` locates trace v1 at `033c72f88` and that plan at `ab8b1af24`.
-  For `.2`, the live scan disproved the saved 254/253 closure at exact 256/255.
-- [x] **ADDRESSED (verified; refreshed for `.17.3.6.2`)** — Emitter revision 6, validator
-  `VHDLPortableTraceValidator`, and both qualification routes require canonical
-  trace-v2 framing, exact caller-sealed plan/run/catalog/count authority, one
-  66-bit normalized snapshot at each of 35 SAMPLE barriers, and a four-entry
-  catalog whose digest authenticates order, semantic IDs, roles, and widths.
-  Portable and OSVVM galleries/reports are canonically regenerated; decision
-  `0090` transparently corrects the reference to 77 and `records(N)=N+74`.
-  Decision `0075` and its exact watchers retain the resulting fixed 1,504-byte
-  source growth and refined 29,506/29,507 portable-foundation boundary. README
-  plan identity now follows the emitted plan dynamically.
-  The map/card now have 255 exact links, 76 current counts, and the new owners.
-- [x] **NO REGRESSION (refreshed for `.17.3.6.2`)** — Guarded real portable and OSVVM GHDL qualifications
-  pass with unchanged two-scenario results, tools, commands, deadlines,
-  four-state/provider evidence, and zero staging residue. Hostile and impacted
-  trace/emitter/qualification/authority tests pass `Files=7, Tests=82`; guarded
-  exact portable/OSVVM scale oracles pass `Files=2, Tests=14`, and family
-  closure passes. All 56 mdBook chapters test and its inspected 92-file/
-  19,564-KiB repository-local render is removed. The claim join closes all
-  1,589 candidates with zero gaps, and the exact claim record has all three
-  legs. Knowledge Map, task/inventory/containment/relative-path/staged-acceptance,
-  diff, and doctrine gates must be green before commit; no workload source,
-  lifecycle, runtime capacity, performance budget, support, mixed-language,
-  IASIM, or public-API claim changes.
-  Current `bin/fsmgen syntax OK`; `All tests successful`; `knowledge-map: OK`;
-  mdBook output and doctrine scratch are removed.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` for
+  `ArchitectureScalePortableVHDLRuntimeMaterialization` returns no historical
+  owner while the runtime catalog already selects portable-VHDL 10,000 and
+  100,000 roles; only the 4,986-byte reference source existed, so neither role
+  could traverse an exact authored source-to-emission route.
+- [x] **ADDRESSED (verified)** — Two tracked 4,991/4,993-byte sources change
+  only success timeout/reset. The new sealed materializer proves N+74 at exact
+  10,000/100,000 records, twice-identical canonical stages and emission, exact
+  21/39 and 17/6/59/21 operation/map/artifact/source/map/check inventories,
+  unchanged sibling/await semantics, limit/excess preflight, report/source
+  mutation rejection, and same-volume success/failure cleanup. Runtime bytes
+  remain unmeasured and the unchanged 67,108,864-byte cap remains authoritative.
+- [x] **NO REGRESSION** — `All tests successful`; focused materialization is
+  `Files=1, Tests=5`, impacted route/trace/backend tests and syntax are green,
+  and book, Knowledge Map, claim, task, containment, acceptance, diff, and
+  doctrine gates pass. No GHDL, OSVVM, support, performance, capacity,
+  mixed-language, IASIM, or public API claim changes.

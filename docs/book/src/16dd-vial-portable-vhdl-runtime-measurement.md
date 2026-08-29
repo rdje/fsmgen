@@ -3,9 +3,10 @@
 Portable-VHDL runtime measurement follows the provider-free runtime-stream
 construction and the structural backend-emission matrix. Decision `0090`
 selects the missing trace and lifecycle architecture. Trace-v2 truth is
-implemented under `.17.3.6.1`; authored scale sources and the shared lifecycle
-remain owned by `.17.3.6.2` through `.17.3.6.5`. This chapter does not make a
-performance, capacity, or support claim.
+implemented under `.17.3.6.1`, and `.17.3.6.2` now materializes both authored
+scale sources through the canonical structural route. Shared GHDL execution,
+measurement, and publication remain owned by `.17.3.6.3` through `.17.3.6.5`.
+This chapter does not make a performance, capacity, or support claim.
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-portable-vhdl-runtime-selection-v1 -->
 - Claim: The checked portable-VHDL v2 fixture produces 77 trace records across 35 real inactive-edge observation barriers; its authenticated four-entry/66-bit catalog and one snapshot per barrier establish `records(N)=N+74`, reset/timeout candidates 9,926/16,384 and 99,926/131,072 for 10,000/100,000 records, and unchanged GHDL deadline/capture pairs 10/65,536, 120/8,388,608, 60/8,388,608, and 30/67,108,864.
@@ -13,6 +14,13 @@ performance, capacity, or support claim.
 - Falsify: Hostile controls mutate canonical encoding, schema, framing, sequence, catalog identity/order/digest/width, sample identity/phase/width/symbols, logical time, counts, footer closure, and checked qualification evidence; every mutation fails closed before result production.
 - Durability: Retain decision 0090, the exact task frontier, this chapter, its Knowledge Map card, the bounded claim record, checked portable/OSVVM reports and galleries, doctrine watcher, and work-unit Git chain.
 <!-- CLAIM-VERIFICATION:END vial-portable-vhdl-runtime-selection-v1 -->
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-portable-vhdl-runtime-structural-materialization-v1 -->
+- Claim: The tracked 10,000/100,000-record portable-VHDL candidates preserve 21 operations and 39 ExecutionIR maps, and emit exact 17-artifact/six-source/59-map graphs with 21 passing structural checks while retaining the unchanged 67,108,864-byte runtime envelope.
+- Re-derive: Run prove -Iperl t/1672-vial-architecture-scale-portable-vhdl-runtime-materialization.t; independently diff each candidate against the reference and rebuild Parser, bridge, ExecutionIR, plan, and portable-VHDL emission twice.
+- Falsify: Mutate a source byte, report claim/count, non-selected scenario value, await window, route, artifact inventory, map/check result, or cap; exact source identities, structural comparison, closed report regeneration, and focused controls reject it.
+- Durability: Retain both tracked candidate sources, the sealed materializer and watcher, decision 0090, task .17.3.6.2, this chapter, Knowledge Map card, bounded claim record, and work-unit Git chain.
+<!-- CLAIM-VERIFICATION:END vial-portable-vhdl-runtime-structural-materialization-v1 -->
 
 This “execution” is external execution of generated VHDL-2008 with the exact
 qualified GHDL 6.0.0 LLVM-JIT profile. It is not IASIM execution. IASIM's
@@ -81,7 +89,7 @@ Its total is 66 normalized bits. The catalog digest authenticates schema,
 ordered identities, roles, semantic paths, and widths; changing any entry or
 reordering the four entries invalidates the trace before result projection.
 
-## Authored candidate equation
+## Authored candidate materialization
 
 The unchanged reference adds 35 snapshots to its existing 42 records. The
 provisional 34-barrier selection omitted the final unsupported-size response-
@@ -100,8 +108,31 @@ Only the success scenario's authored reset and matching timeout may differ:
 | gate candidate | 9,926 | 16,384 | 10,000 |
 | qualification candidate | 99,926 | 131,072 | 100,000 |
 
-The source, SemanticIR reset operation, ExecutionIR/source map, emitted loop,
-sample snapshots, validator projection, and normalized result must all agree.
+The gate source is
+`vial/qualification/vhdl_portable_ghdl_runtime_gate.vial`; the qualification
+source is
+`vial/qualification/vhdl_portable_ghdl_runtime_qualification.vial`. They are
+4,991 and 4,993 bytes. Exact projection from the 4,986-byte reference proves
+that only the success timeout and reset literals differ; both 256-cycle await
+windows and the complete unsupported-size scenario remain byte-identical.
+
+The private materializer reconstructs each source through Parser, bridge,
+ExecutionIR, backend inputs, target-neutral plan, and portable-VHDL emission
+twice. Both candidates retain 21 operations and 39 ExecutionIR source maps;
+each emission has 17 artifacts, six VHDL sources, 59 emitted source maps, and
+21 passing structural checks:
+
+| Level | Complete artifact bytes | VHDL source bytes | Fixture bytes |
+| --- | ---: | ---: | ---: |
+| reference | 238,618 | 118,062 | 46,262 |
+| gate candidate | 238,901 | 118,075 | 46,273 |
+| qualification candidate | 239,318 | 118,087 | 46,284 |
+
+This closes source-to-emission structure, not external execution. The later
+GHDL lifecycle must still make the emitted loop, sample snapshots, validator
+projection, and normalized result agree. Until that measured run exists,
+actual trace bytes remain deliberately unset.
+
 An exact candidate remains subject to the existing 64-MiB runtime and artifact
 envelopes. If 100,000 genuine records do not fit, that earlier cap wins and a
 new decision selects any backend-specific revision. Output is never truncated
