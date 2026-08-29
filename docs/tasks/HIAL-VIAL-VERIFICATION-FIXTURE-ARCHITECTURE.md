@@ -748,11 +748,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.5`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.1`
-  Status: `proposed`
+  Status: `active`
   Goal: `Materialize the exact OSVVM runtime profiles through the authored VHDL source-to-wrapper route.`
   Acceptance: `Reuse the decision-0090 tracked reference/gate/qualification sources without duplication; construct the OSVVM workload identity; rebuild semantic/bridge/plan authority twice; perform one callback-scoped exact provider verification; prove seven sources, portable byte identity, adapter/mapping/source-map/check/guard closure, trace projections, deterministic emission, mutation rejection, and same-volume cleanup; keep limit/excess provider-free and tool-free.`
-  Verification: `pending clean activation`
-  Commit: `pending activation`
+  Verification: `Clean selection 40db785ee selects decision 0092 and orders this first child before any execution-plan, lifecycle, tool, measurement, or publication change. This activation owns exact source-to-wrapper materialization from the tracked decision-0090 VHDL runtime sources through the callback-scoped qualified OSVVM emitter; implementation, provider access, generated artifacts, runtime behavior, and product claims remain unchanged until the next slice.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.1: activate exact OSVVM runtime materialization`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.2`
   Status: `proposed`
@@ -7446,3 +7446,25 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   transition authorities across all 22 surfaces with zero ceiling increase.
   Staged acceptance, resulting-tree, diff, and complete doctrine checks must
   pass before commit; full CI and push remain at their policy boundaries.
+
+## Acceptance Checklist (enforced) — `.17.3.7.1` materialization activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S
+  'ArchitectureScaleOSVVMRuntimeMaterialization' --oneline --all -- perl
+  scripts t` and source search find no existing OSVVM runtime materializer;
+  decision 0092 requires the authored-source route before execution-plan work.
+- [x] **ADDRESSED (verified)** — From clean selection `40db785ee`, `.17.3.7.1`
+  is the sole active implementation frontier and owns the exact tracked-source,
+  callback-provider, wrapper-graph, mutation, and cleanup contract.
+- [x] **NO REGRESSION** — Direct production containment accepts all 22 surfaces
+  with zero ceiling increase; the remaining focused relative-path, locality,
+  task, authority, Knowledge Map, and claim `prove` command reports `All tests
+  successful` at `Files=7, Tests=87`. All 56 mdBook chapters test, and its
+  inspected 92-file/19,971,430-byte repository-local render is removed exactly.
+  The unchanged t/1554 checker self-test was stopped only after process
+  inspection found its generated one-line `/bin/sh` fixture stalled before its
+  first instruction in the host dynamic loader; both exact fixtures were
+  removed, while the production gate and the preceding clean selection run of
+  t/1554 are green. Knowledge Map, claims, task integrity, staged acceptance,
+  resulting-tree, diff, and complete doctrines must pass before commit; no
+  full CI or push is due.

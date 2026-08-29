@@ -91,3 +91,6 @@ OSVVM materializer, extracts one caller-sealed provider/tool plan, and admits
 that plan through a provider-aware role of the shared GHDL lifecycle before
 measurement and publication. Provider verification, FSMGen work, and external
 tool stages remain distinct; selection adds no measurement or promoted claim.
+
+Clean selection `40db785ee` activates `.17.3.7.1` to implement only the exact
+authored-VHDL-to-OSVVM runtime materializer before any provider/tool plan.

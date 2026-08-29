@@ -3979,6 +3979,10 @@ extraction, lifecycle/qualifier reuse, measurement, and immutable publication.
 Selection itself adds no measurement, budget, support, capacity,
 provider-generality, mixed-language, or public-API claim.
 
+The first ordered child, `.17.3.7.1`, is active from clean selection
+`40db785ee`. It owns only exact authored-VHDL-to-OSVVM materialization; no
+execution-plan, lifecycle, tool, measurement, or publication change is active.
+
 The same real RAM guard is mandatory for correctness validation, measurement,
 and independent report regeneration. The focused exact proof is:
 
