@@ -46,6 +46,7 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `PUSH-CADENCE-300-ADOPTION` | `active` | `infra/continuity` | `.1` active; supersede the standing cadence and synchronize current policy | [task](docs/tasks/PUSH-CADENCE-300-ADOPTION.md) |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.30` done; proposed `.29` owns node-field narration accretion | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.17.3.6.2` active; materialize the exact authored portable-VHDL runtime candidates | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `ISF-SPEC-TEST-INDEX-SYNC` | `active` | `R14` | `.3` exact post-partition transformation is green; commit it before resolving the remaining complete-CI findings | [task](docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md) |
