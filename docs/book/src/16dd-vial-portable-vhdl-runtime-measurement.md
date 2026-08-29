@@ -6,8 +6,9 @@ selects the missing trace and lifecycle architecture. Trace-v2 truth is
 implemented under `.17.3.6.1`, and `.17.3.6.2` now materializes both authored
 scale sources through the canonical structural route. `.17.3.6.3` now provides
 the shared GHDL lifecycle and process supervisor. `.17.3.6.4` now measures the
-applicable profiles through the common controller; immutable-set publication
-is active under `.17.3.6.5`. This chapter does not make a performance,
+applicable profiles through the common controller. `.17.3.6.5` now implements
+immutable-set publication and independent reload; the clean-revision guarded
+capture remains the closing step. This chapter does not make a performance,
 capacity, or support claim.
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-portable-vhdl-runtime-selection-v1 -->
@@ -207,6 +208,50 @@ validated trace and normalized result, exclusions, and both lifecycle and
 outer-controller cleanup. The exact campaign excludes no sample and leaves no
 owned staging residue. Limit and over-limit reports execute neither controller
 nor GHDL because their earlier materialization authority already dominates.
+
+## Immutable publication and independent reload
+
+`FSM::VIAL::ArchitectureScalePortableVHDLRuntimeMeasurementMatrix` derives its
+closed order directly from the measurement producer. The reference, gate, and
+qualification profiles execute in separate guard-visible child lifecycles;
+limit and over-limit follow afterward and may only inherit the common capture
+identity established by executable evidence. A child publishes its complete
+canonical report before returning a separately bounded compact entry to the
+coordinator, so the parent never transports or retains the raw report through
+its IPC envelope.
+
+Publication is repository-relative and same-volume. Each content-addressed
+profile directory contains one immutable report. Only after every profile
+reloads with the same clean Git revision, host, qualified GHDL tool, and active
+guard identity may the family manifest and complete manifest appear. Byte-equal
+crash staging is recoverable; a conflicting target, malformed or ambiguous
+stage, changed digest/size/order/sample/identity, signal, nonzero exit, or
+oversized child result fails closed without an aggregate seal. The conservative
+file ceiling reuses the already-authoritative GHDL runtime-capture byte limit;
+it does not promote a budget or claim that the qualification candidate fits.
+
+Inspect the producer-owned inventory without executing GHDL:
+
+```console
+scripts/run_vial_portable_vhdl_runtime_measurement_matrix.pl --inventory
+```
+
+Capture only from a clean revision under the real repository guard, then use a
+separate guarded process to reload the immutable result:
+
+```console
+scripts/run_with_ram_guard.sh -- \
+  scripts/run_vial_portable_vhdl_runtime_measurement_matrix.pl
+scripts/run_with_ram_guard.sh -- \
+  scripts/run_vial_portable_vhdl_runtime_measurement_matrix.pl --validate
+```
+
+The default `t/1675-vial-architecture-scale-portable-vhdl-runtime-measurement-matrix.t`
+controls producer order, mode routing, tool-free dominance, process isolation,
+bounded canonical IPC, immutable collision/recovery, aggregate partition drift,
+and staging cleanup without running the exact campaign. Its guarded exact mode
+owns capture, aggregate sealing, and fresh-process identity equality after this
+implementation commits cleanly.
 
 ## Nonclaims
 

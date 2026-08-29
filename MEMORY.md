@@ -8,8 +8,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5`
   (`active`; immutable portable-VHDL/GHDL measurement-set publication)
-- next_action: audit the portable-runtime matrix precedent and implement exact
-  five-profile atomic publication plus separate fresh-process reload.
-- in_flight_uncommitted: activation metadata in this commit.
+- next_action: commit the verified producer-derived publication implementation,
+  then run exact guarded capture and separate fresh-process reload from clean.
+- in_flight_uncommitted: implementation module, runner, watcher, and live sync.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none.

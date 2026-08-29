@@ -89,8 +89,13 @@ authority; the measurement creates no promoted budget, support, capacity,
 parity, IASIM, or public-API claim.
 
 Clean measurement commit `e7203c278` activates `.17.3.6.5` as the sole owner of
-five-profile immutable publication and independent fresh-process reload. No
-published set exists until that leaf completes its atomic capture and reload.
+five-profile immutable publication and independent fresh-process reload. The
+new producer-derived publisher isolates every profile, retains raw canonical
+reports before returning compact coordinator entries, seals only one clean
+Git/host/GHDL/guard identity, and rejects collision, ambiguity, mutation,
+oversize, signal, or incomplete state. It reuses the earlier runtime-capture
+byte authority as a conservative file ceiling; no published set exists until
+the clean implementation revision completes atomic capture and separate reload.
 
 Related: [[vial-architecture-scale-proof]],
 [[hial-vial-verification-fixture-architecture]].

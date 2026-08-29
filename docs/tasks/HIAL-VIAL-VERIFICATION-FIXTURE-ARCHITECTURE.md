@@ -736,8 +736,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Publish and independently reload the complete immutable portable-VHDL runtime measurement set.`
   Acceptance: `After .4 commits cleanly, derive the five-level inventory from producer ownership; atomically publish bounded raw reports plus compact manifests at one clean revision/host/tool/guard identity; reject incomplete, reordered, mutated, mixed, stale, collided, signalled, oversized, or ambiguous state; retain all raw/excluded samples, applicability, earlier-cap dominance, cleanup and nonclaims; complete guarded capture plus separate fresh-process reload before closing .17.3.6.`
-  Verification: `Clean predecessor e7203c278 supplies the exact five-shape producer, 11 accepted runtime records across reference/gate/qualification, tool-free limit/excess reports, complete raw evidence and cleanup, and the decision-0090 publication contract. This leaf alone now owns immutable publication and independent reload.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: activate portable-VHDL measurement publication`
+  Verification: `Clean predecessor e7203c278 supplies the exact five-shape producer, 11 accepted runtime records across reference/gate/qualification, tool-free limit/excess reports, complete raw evidence and cleanup, and the decision-0090 publication contract. Activation commit a4ed37ae3 makes this leaf the sole owner. The implemented producer-derived matrix isolates capture/reload per profile, publishes complete canonical reports before bounded compact IPC, inherits common identity for tool-free profiles only after executable evidence, atomically seals family/complete manifests, and rejects incomplete/order/sample/identity/process/publication/staging drift. Default publisher plus impacted portable-runtime/materializer/lifecycle/adapter coverage passes Files=5/Tests=37; runner inventory returns the exact five ordered modes. A clean implementation commit is required before the exact guarded capture and separate reload can close the leaf.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: activate portable-VHDL measurement publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.5: implement portable-VHDL measurement publication`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7`
   Status: `proposed`
@@ -7234,3 +7234,36 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   pass; the final staged diff and complete doctrine driver verify this exact
   activation before commit. Full CI and push remain deferred to the batch
   boundary because product behavior is unchanged.
+
+## Acceptance Checklist (enforced) — `.17.3.6.5` publication implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE; executable RED)** — The first focused
+  `prove -Iperl t/1675-vial-architecture-scale-portable-vhdl-runtime-measurement-matrix.t`
+  fails its sole assertion because
+  `FSM::VIAL::ArchitectureScalePortableVHDLRuntimeMeasurementMatrix` is absent.
+  `git log -S'_capture_family' --oneline --
+  perl/FSM/VIAL/ArchitectureScalePortableRuntimeMeasurementMatrix.pm` locates
+  clean precedent `9a534bc93`; it is sealed specifically to the Verilator
+  producer, identities, artifact schema, 15,000-record qualification shape,
+  calibration, and publication IDs, so the GHDL adapter cannot reuse it or
+  safely share its aggregate namespace.
+- [x] **ADDRESSED (verified)** — The new exact-class publisher and runner
+  derive all five ordered VHDL roles from producer ownership, explicitly route
+  validation/preflight versus gate/qualification measurement, isolate each
+  capture/reload, publish the complete canonical report before returning only
+  a compact entry, and bind profile/family/complete identities to one clean
+  revision/host/GHDL/guard tuple. Closed validators retain all validation/raw/
+  exclusion/applicability/dominance/cleanup/nonclaim evidence and reject
+  malformed, reordered, incomplete, duplicated, mixed, stale, collided,
+  signalled, nonzero, oversized, symlinked, or ambiguous state. The existing
+  67,108,864-byte runtime authority bounds publications without promoting it;
+  the clean exact campaign remains intentionally pending after this commit.
+- [x] **NO REGRESSION** — All changed Perl files report `syntax OK`. Default
+  publisher plus impacted portable-runtime matrix, materializer, shared GHDL
+  lifecycle, and VHDL adapter coverage report `All tests successful`,
+  `Files=5, Tests=37` in 71 seconds; runner inventory independently returns
+  reference validation, gate/qualification measurement, and limit/over-limit
+  preflight in producer order. mdBook, Knowledge Map, claim, task,
+  locality, containment, staged acceptance, diff, and all doctrine checks must
+  pass before the implementation commit. Full CI, exact GHDL capture, reload,
+  and push remain deferred to their policy boundaries.
