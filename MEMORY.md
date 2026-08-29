@@ -6,11 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.5`
-  (`active`; pre-push closure and hosted requalification)
-- next_action: commit the complete pre-push evidence, then perform the
-  authorized exceptional repair push and consume every expected hosted result.
-- in_flight_uncommitted: none after the pre-push evidence commit; the exact
-  candidate is ready for the authorized exceptional push.
-- in_flight_background: none; the guarded suffix and mdBook build are terminal.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.2`
+  (`active`; authored portable-VHDL runtime candidates)
+- next_action: author exact 10,000/100,000 v2 trace candidates at reset counts
+  9,926/99,926, then prove twice-rebuilt route/emission identity and limits.
+- in_flight_uncommitted: none after the hosted-recovery closure commit.
+- in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none.

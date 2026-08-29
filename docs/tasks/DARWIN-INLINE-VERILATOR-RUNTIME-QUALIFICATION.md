@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `verification infrastructure / runtime qualification`
 - Created: `2026-08-26`
 - Last updated: `2026-08-29`
@@ -61,7 +61,7 @@ by that run.
 ## Task Tree
 
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION`
-  Status: `active`
+  Status: `done`
   Goal: `Bound and explicitly qualify every legacy test-side Verilator runtime launch.`
   Children: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.1, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.2, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3`
 
@@ -80,12 +80,12 @@ by that run.
   Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.2: bound legacy Verilator test processes`
 
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify the migrated runtime surface, resume complete CI, and close the due push follow-up.`
   Children: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.1, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2`
   Acceptance: `Pass focused helper/callsite/runtime tests, resume the RAM-guarded complete-CI suffix at t/1515 through the lexical tail, validate the mdBook build and repository locality/cleanup, push the exact clean revision at the standing cadence, and consume every expected hosted workflow/job to terminal success with durable URLs and conclusions.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Completed through .3.2; child .3.2.2.5 retains the exact complete-CI, cleanup, push-identity, and hosted terminal-success evidence.`
+  Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.5: close hosted recovery qualification`
 
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.1`
   Status: `done`
@@ -95,12 +95,12 @@ by that run.
   Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.1: bound task-acceptance fixture processes`
 
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Resume the complete-CI suffix after t1545 repair, then push and consume hosted qualification.`
   Children: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.1, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2`
   Acceptance: `Restart the authoritative suffix at the exact failed t1545 frontier, combine it with the retained green t01-t1544 evidence, validate locality/cleanup, push at the standing cadence, and consume every expected hosted workflow/job to terminal success with durable URLs and conclusions.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The exact recovered complete-CI partition and authorized repair revision are locally and hosted green as recorded by child .3.2.2.5.`
+  Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.5: close hosted recovery qualification`
 
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.1`
   Status: `done`
@@ -110,12 +110,12 @@ by that run.
   Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.1: activate checkpointed t296 recovery; DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.1: complete checkpointed t296 recovery`
 
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Repair every exact first-push hosted failure without discarding the remaining job evidence.`
   Children: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.1, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.2, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.3, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.4, DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.5`
   Acceptance: `Consume every required job from exact pushed revision c7a222ac41db, partition each terminal failure by root cause, repair each under its own committed child with focused and routing oracles, preserve every green hosted result, and keep .3.2 active until an authorized exact repair revision is hosted-green.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `All five repair children are done; exact repair SHA 2879275abc7f38f4675e7c7384810d3cc1467673 is hosted green under the complete expected workflow and job set recorded by child .5.`
+  Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.5: close hosted recovery qualification`
 
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.1`
   Status: `done`
@@ -146,11 +146,11 @@ by that run.
   Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.4: align trace-v2 dependent truth`
 
 - ID: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.5`
-  Status: `active`
+  Status: `done`
   Goal: `Close pre-push recovery, exact generated-artifact cleanup, the authorized exceptional repair push, and hosted qualification.`
   Acceptance: `Preserve each guard interruption as non-passing operational evidence; combine the retained green t01-t1436 prefix only with one fresh exact t1437-t999 suffix; require a guarded mdBook build; remove and census only exact project-owned generated outputs; commit the clean pre-push evidence; push the exact revision under the director's one-time authorization without changing the standing 200-commit cadence; require local, upstream, and remote SHA identity plus every expected push workflow and required job terminal-success; durably record URLs and conclusions before closing the parents.`
-  Verification: `The current committed census partitions all 1,658 tests into a 495-file t01-t1436 prefix and 1,163-file t1437-t999 suffix. The guarded full run retained the green prefix; after unrelated sibling-project release-LTO pressure ended, one fresh guarded exact suffix passed Files=1,163/Tests=12,175 with Result: PASS. Interrupted attempts remain uncredited. A separate guarded mdBook build passed with 92 files/19,568 KiB. Exact generated-output census and deletion removed that book, 177 test-temp children containing 229 files/96,312 KiB, and the remaining five disposable tmp files/4,700 KiB; docs/book/book and .artifacts/tmp are absent, no gate process remains, and Git is clean. The authorized push and hosted results remain pending.`
-  Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.5: activate pre-push closure; DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.5: seal pre-push recovery evidence`
+  Verification: `The committed 495/1,163 disjoint partition covers all 1,658 tests; the fresh suffix passed Files=1,163/Tests=12,175, the separate guarded mdBook build passed, and exact disposable outputs were removed. Local HEAD, upstream, and remote main all equal 2879275abc7f38f4675e7c7384810d3cc1467673. All three derived push workflows are completed/success: regression 140/140 required jobs, Pages 2/2, and Knowledge Map 1/1, with no non-success. The one-time repair push is consumed; standing cadence remains 200.`
+  Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.5: activate pre-push closure; DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.5: seal pre-push recovery evidence; DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.5: close hosted recovery qualification`
 
 ## Current Frontier
 
@@ -158,16 +158,16 @@ by that run.
 | --- | --- | --- | --- |
 | 1 | `.1` | `done` | The exact callsite census and decision `0086` select the bounded test-only contract. |
 | 2 | `.2` | `done` | The helper, hostile watcher, and exact 34-file migration are focused-green. |
-| 3 | `.3` | `active` | Parent for complete-CI repair, due push, and hosted qualification. |
+| 3 | `.3` | `done` | Complete-CI repair, exact push identity, and hosted qualification are closed. |
 | 4 | `.3.1` | `done` | The shared mechanism and sealed fixture adapter make every t1545 subprocess finite and cleanup-safe. |
 | 5 | `.3.2.1` | `done` | Exact-revision t296 recovery and the independently selected 778-file lexical tail are green; the checkpoint self-cleared and no guard event recurred. |
 | 6 | `.3.2.2.1` | `done` | Five dedicated coordinates now give all three default OSVVM-backed tests exact isolated provider ownership; focused routing and real-provider proofs pass. |
 | 7 | `.3.2.2.2` | `done` | Bounded kernel cpulist authority plus procfs fallback repairs both setup-Perl failures without schema or Darwin drift. |
 | 8 | `.3.2.2.3` | `done` | All 138 jobs are terminal; four prerequisite failures map exactly to committed repairs and the aggregate adds no root cause. |
 | 9 | `.3.2.2.4` | `done` | Trace-v2/scale tests, support projections, galleries, book, cards, and claims now share exact executable authority. |
-| 10 | `.3.2.2.5` | `active` | Pre-push test/book/cleanup evidence is green; commit the exact candidate, perform the authorized exceptional push, and consume every hosted result. |
-| 11 | `.3.2.2` | `active` | Retain all repairs until the authorized exact repair push is hosted-green. |
-| 12 | `.3.2` | `active` | Preserve complete-CI and green hosted evidence until the authorized exact repair revision is hosted-green. |
+| 10 | `.3.2.2.5` | `done` | Exact SHA identity and all three required hosted workflows/jobs are terminal-successful. |
+| 11 | `.3.2.2` | `done` | All repair children and the authorized exact repair qualification are closed. |
+| 12 | `.3.2` | `done` | Recovered complete-CI and hosted repair evidence are durable and green. |
 
 ## Decisions
 
@@ -254,13 +254,17 @@ Cleanup censused then removed exactly the 92-file book, 177 direct `tmp/tests` c
 KiB under the disposable `.artifacts/tmp` authority. `docs/book/book` and `.artifacts/tmp` are absent; persistent `.artifacts/cache`, gallery, qualification,
 and other non-temp roots were untouched; no suite/book process remains; Git is clean. Re-derivation is the committed lexical glob partition plus pre-delete
 file/disk censuses. Falsification is the exact `prove`/mdBook terminal output, zero residue/process census, and deliberate non-credit for both guard events.
-Durability is this task-tree evidence and the exact pre-push commit; push SHA identity and hosted terminal results remain the final missing leg.
+Durability is this task-tree evidence plus the exact pre-push and closure commits.
 
-## Acceptance Checklist — `.3.2.2.5` pre-push closure
+The authorized exceptional push advanced `main` from `c7a222ac41db7b28d502accbb75fcdc6ed579754` to
+`2879275abc7f38f4675e7c7384810d3cc1467673`; local HEAD, configured upstream, and `git ls-remote` agreed on the latter full SHA. Tracked push triggers derived exactly three workflows. Regression run
+`33256389744` completed successfully with 140/140 jobs: doctrine 1, mdBook 1, file shards 16, dedicated shards 5, corpus shards 48, dynamic shards 68, and aggregate 1; aggregate job `99137359173` succeeded and the non-success set was empty. Pages run `33256389748` completed successfully with build `99110769741` and deploy `99110793841`. Knowledge Map run `33256389747` completed successfully with job `99110769746`. The exceptional push is consumed; the standing cadence remains 200.
+
+## Acceptance Checklist — `.3.2.2.5` recovery closure
 
 - [x] **ROOT CAUSE (WHY + WHERE)** — Two earlier suffix attempts were interrupted by unrelated sibling-project release-LTO host pressure, not a failed FSMGEN assertion; each interruption remains uncredited, and the retained prefix is bounded by exact lexical endpoints.
-- [x] **ADDRESSED (verified)** — The independently counted 1,163-file suffix passed 12,175 tests, the separate guarded 92-file mdBook build passed, and exact project-owned disposable outputs were censused and removed.
-- [x] **NO REGRESSION** — The disjoint 495/1,163 partition covers all 1,658 tracked tests; both generated roots and all gate processes are absent; persistent artifact roots remain; doctrines and clean-state checks gate the exact pre-push commit.
+- [x] **ADDRESSED (verified)** — The independently counted 1,163-file suffix passed 12,175 tests, the separate guarded 92-file mdBook build passed, exact disposable outputs were removed, all three SHA authorities matched, and every derived hosted workflow completed successfully.
+- [x] **NO REGRESSION** — The disjoint partition covers all 1,658 tests; regression is 140/140 green with exact 1/1/16/5/48/68/1 family counts, Pages is 2/2 green, Knowledge Map is 1/1 green, both generated roots are absent, persistent artifacts remain, and cadence returns to 200.
 
 ## Compact hosted-repair archive — `.3.2.2.1` through `.3.2.2.3`
 
