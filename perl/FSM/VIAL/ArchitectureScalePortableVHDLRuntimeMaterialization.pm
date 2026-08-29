@@ -22,6 +22,8 @@ my $SCHEMA =
 my $FAMILY = 'runtime_stream_v1';
 my $PROFILE = 'vhdl_portable_ghdl';
 my $TOOL_PROFILE = 'ghdl_6_0_0_llvm_jit';
+my $OSVVM_PROFILE = 'vhdl_osvvm_qualified';
+my $OSVVM_TOOL_PROFILE = 'osvvm_2026_05_ghdl_6_0_0_llvm_jit';
 my $PRIMARY_AXIS = 'runtime_trace_records';
 my $HIAL_PATH = 'ppif/ahb_lite_subordinate.ppif';
 my $HIAL_BYTES = 1_326;
@@ -202,6 +204,77 @@ sub _measurement_inputs($class, @args) {
     };
 }
 
+# The provider-aware runtime materializer must use these exact authored VIAL
+# sources and the same ordinary parser/PlanBuilder route.  Keep both seams
+# private to that one consumer so no caller can inject alternate source, IR,
+# profile, or tool identities through the shared portable authority.
+sub _osvvm_runtime_construction($class, @args) {
+    _exact_invocant($class, '_osvvm_runtime_construction');
+    confess "OSVVM runtime construction is private to the exact materializer\n"
+        unless caller eq
+            'FSM::VIAL::ArchitectureScaleOSVVMRuntimeMaterialization';
+    my $raw = _request(
+        '_osvvm_runtime_construction', \@args,
+        [qw(repository_root level)],
+    );
+    my $repo_root = _repository_root($raw->{repository_root});
+    return _canonical_construction_for(
+        $repo_root, $raw->{level}, $OSVVM_PROFILE, $OSVVM_TOOL_PROFILE,
+    );
+}
+
+sub _osvvm_runtime_route_inputs($class, @args) {
+    _exact_invocant($class, '_osvvm_runtime_route_inputs');
+    confess "OSVVM runtime route inputs are private to the exact materializer\n"
+        unless caller eq
+            'FSM::VIAL::ArchitectureScaleOSVVMRuntimeMaterialization';
+    my $raw = _request(
+        '_osvvm_runtime_route_inputs', \@args,
+        [qw(repository_root level)],
+    );
+    my $repo_root = _repository_root($raw->{repository_root});
+    my $level = $raw->{level};
+    my $first_construction = _canonical_construction_for(
+        $repo_root, $level, $OSVVM_PROFILE, $OSVVM_TOOL_PROFILE,
+    );
+    my $second_construction = _canonical_construction_for(
+        $repo_root, $level, $OSVVM_PROFILE, $OSVVM_TOOL_PROFILE,
+    );
+    confess "OSVVM runtime construction is nondeterministic\n"
+        unless _canonical_json($first_construction)
+            eq _canonical_json($second_construction);
+    my $portable_report = _evaluate($repo_root, $level);
+    return {
+        construction => _clone($first_construction),
+        portable_report => $portable_report,
+        first_route => undef,
+        second_route => undef,
+    } unless exists $MATERIALIZED{$level};
+
+    my $source = _source_input($first_construction);
+    my $hial = _hial_input($first_construction)->{content};
+    my $first_route = _canonical_route(
+        $source->{relative_path}, $source->{content}, $hial,
+    );
+    my $second_route = _canonical_route(
+        $source->{relative_path}, $source->{content}, $hial,
+    );
+    my $first_projection = _route_projection($first_route);
+    my $second_projection = _route_projection($second_route);
+    confess "OSVVM runtime route is nondeterministic\n"
+        unless _canonical_json($first_projection)
+            eq _canonical_json($second_projection);
+    confess "OSVVM runtime route departed from portable semantic authority\n"
+        unless _canonical_json(_stage_identities($first_projection))
+            eq _canonical_json($portable_report->{stage_identities});
+    return {
+        construction => _clone($first_construction),
+        portable_report => $portable_report,
+        first_route => $first_route,
+        second_route => $second_route,
+    };
+}
+
 sub _evaluate($repo_root, $level) {
     my $first_construction = _canonical_construction($repo_root, $level);
     my $second_construction = _canonical_construction($repo_root, $level);
@@ -334,6 +407,14 @@ sub _evaluate($repo_root, $level) {
 }
 
 sub _canonical_construction($repo_root, $level) {
+    return _canonical_construction_for(
+        $repo_root, $level, $PROFILE, $TOOL_PROFILE,
+    );
+}
+
+sub _canonical_construction_for(
+    $repo_root, $level, $backend_profile, $tool_profile
+) {
     _selected_level($level);
     my $hial = _read_exact_repository_file(
         $repo_root, $HIAL_PATH, $HIAL_BYTES, $HIAL_SHA256,
@@ -348,8 +429,8 @@ sub _canonical_construction($repo_root, $level) {
         family => $FAMILY,
         level => $level,
         primary_axis => $PRIMARY_AXIS,
-        backend_profile => $PROFILE,
-        tool_profile => $TOOL_PROFILE,
+        backend_profile => $backend_profile,
+        tool_profile => $tool_profile,
         inputs => [
             _input($HIAL_PATH, 'hial_source', $hial),
             _input($source_contract->{path}, 'vial_source', $source),

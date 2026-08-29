@@ -6,11 +6,11 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.1`
-  (`active`; exact OSVVM runtime materialization)
-- next_action: implement and falsify the caller-sealed authored-VHDL-to-OSVVM
-  runtime materializer before any execution-plan, lifecycle, tool,
-  measurement, or publication change.
-- in_flight_uncommitted: none after the activation commit.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7`
+  (`active`; `.17.3.7.1` exact OSVVM runtime materialization done)
+- next_action: activate `.17.3.7.2` to extract the exact caller-sealed
+  OSVVM/GHDL execution-plan authority before any lifecycle, tool,
+  measurement, or publication implementation.
+- in_flight_uncommitted: none after the `.17.3.7.1` implementation commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none.

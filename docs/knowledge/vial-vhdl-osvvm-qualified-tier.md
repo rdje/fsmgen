@@ -8,7 +8,8 @@ answers:
   - "has OSVVM 2026.05 plus GHDL 6.0.0 been qualified?"
   - "how is exact OSVVM provider verification reused safely?"
   - "how are portable VHDL source maps preserved in the OSVVM wrapper?"
-date: 2026-08-21
+  - "how are authored portable VHDL runtime sources materialized through OSVVM?"
+date: 2026-08-30
 status: current
 tags: [hial, vial, vhdl, osvvm, ghdl, review-gallery, verification]
 evidence: >-
@@ -19,6 +20,7 @@ evidence: >-
   perl/FSM/VIAL/Backend/VHDLOSVVMStaticValidator.pm;
   perl/FSM/VIAL/Backend/VHDLOSVVMGHDLQualification.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission/OSVVM.pm;
+  perl/FSM/VIAL/ArchitectureScaleOSVVMRuntimeMaterialization.pm;
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/Support/VIALVHDLEmissionContract.pm;
   scripts/refresh_vial_vhdl_osvvm_gallery.pl;
   scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl;
@@ -26,6 +28,7 @@ evidence: >-
   t/1599-vial-vhdl-osvvm-ghdl-qualification.t;
   t/1642-vial-vhdl-osvvm-provider-evaluation.t; t/1644-vial-backend-emission-authority-alignment.t;
   t/1648-vial-architecture-scale-backend-emission-osvvm.t;
+  t/1676-vial-architecture-scale-osvvm-runtime-materialization.t;
   vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json;
   vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/README.md;
   vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/evidence/provider-materialization.json;
@@ -39,7 +42,8 @@ reverify: >-
   t/1599-vial-vhdl-osvvm-ghdl-qualification.t
   t/1642-vial-vhdl-osvvm-provider-evaluation.t
   t/1644-vial-backend-emission-authority-alignment.t
-  t/1648-vial-architecture-scale-backend-emission-osvvm.t &&
+  t/1648-vial-architecture-scale-backend-emission-osvvm.t
+  t/1676-vial-architecture-scale-osvvm-runtime-materialization.t &&
   perl scripts/refresh_vial_vhdl_osvvm_gallery.pl --check &&
   perl scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl --check
 ---
@@ -92,5 +96,15 @@ that plan through a provider-aware role of the shared GHDL lifecycle before
 measurement and publication. Provider verification, FSMGen work, and external
 tool stages remain distinct; selection adds no measurement or promoted claim.
 
-Clean selection `40db785ee` activates `.17.3.7.1` to implement only the exact
-authored-VHDL-to-OSVVM runtime materializer before any provider/tool plan.
+Child `.17.3.7.1` now materializes the exact authored portable-VHDL reference,
+10,000-record gate, and 100,000-record qualification sources through the
+qualified OSVVM wrapper. Each role stays at 21 operations and 39 ExecutionIR
+maps, verifies the pinned provider once for two byte-identical emissions, and
+closes 16 artifacts, seven sources, 66 maps, twelve checks, seven advanced
+mappings, six preserved portable sources/guards, and the exact provider
+census. The seven-source totals are 122,413/122,426/122,438 bytes; t1676
+re-derives and falsifies these identities, while the module, task tree, and
+this card retain them durably. Limit/excess are provider-, route-, staging-,
+and tool-free. `.17.3.7.2` execution-plan extraction is next; no GHDL runtime,
+measurement, publication, support, performance, capacity, provider-generality,
+mixed-language, or public-API claim follows from materialization.

@@ -748,11 +748,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.5`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.1`
-  Status: `active`
+  Status: `done`
   Goal: `Materialize the exact OSVVM runtime profiles through the authored VHDL source-to-wrapper route.`
   Acceptance: `Reuse the decision-0090 tracked reference/gate/qualification sources without duplication; construct the OSVVM workload identity; rebuild semantic/bridge/plan authority twice; perform one callback-scoped exact provider verification; prove seven sources, portable byte identity, adapter/mapping/source-map/check/guard closure, trace projections, deterministic emission, mutation rejection, and same-volume cleanup; keep limit/excess provider-free and tool-free.`
-  Verification: `Clean selection 40db785ee selects decision 0092 and orders this first child before any execution-plan, lifecycle, tool, measurement, or publication change. This activation owns exact source-to-wrapper materialization from the tracked decision-0090 VHDL runtime sources through the callback-scoped qualified OSVVM emitter; implementation, provider access, generated artifacts, runtime behavior, and product claims remain unchanged until the next slice.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.1: activate exact OSVVM runtime materialization`
+  Verification: `Clean selection 40db785ee and activation 004723562 precede one caller-sealed implementation. The exact OSVVM workload reuses the decision-0090 reference/gate/qualification sources and portable semantic/stage/report authority, then one callback verifies the pinned provider once for two byte-identical emissions. Each materialized role retains 21 operations, 39 ExecutionIR maps, 16 artifacts, seven VHDL sources, 66 emitted maps, twelve OSVVM checks, seven advanced mappings, six byte-identical portable sources/guards, and exact 14/13/14/0 provider repository/gitlink/licence/notice census. Reference/gate/qualification source totals are 122,413/122,426/122,438 bytes and complete graph identities are frozen. Limit/excess construct exact OSVVM identities but remain provider-free, route-free, staging-free, and tool-free. Hostile source/report/seam/invocant/relocation/staging controls fail closed; existing portable and OSVVM backend-emission reports remain byte-identical; no external tool, runtime, trace/result, support, performance, capacity, boundary, provider-generality, mixed-language, or API claim is added.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.1: activate exact OSVVM runtime materialization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.1: implement exact OSVVM runtime materialization`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.2`
   Status: `proposed`
@@ -7468,3 +7468,42 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   t/1554 are green. Knowledge Map, claims, task integrity, staged acceptance,
   resulting-tree, diff, and complete doctrines must pass before commit; no
   full CI or push is due.
+
+## Acceptance Checklist (enforced) — `.17.3.7.1` materialization implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S
+  'ArchitectureScaleOSVVMRuntimeMaterialization' --oneline --all -- perl
+  scripts t` finds no prior owner. Source inspection locates the exact authored
+  source/route authority in
+  `ArchitectureScalePortableVHDLRuntimeMaterialization`, while the existing
+  OSVVM artifact oracle owns backend-emission operation axes rather than the
+  21-operation runtime trace axis; neither can truthfully substitute for this
+  caller-sealed profile materializer.
+- [x] **ADDRESSED (verified)** — The new exact-class materializer constructs
+  only `vhdl_osvvm_qualified` plus
+  `osvvm_2026_05_ghdl_6_0_0_llvm_jit`, reuses the authored portable sources
+  and their byte-stable semantic/stage/report proof, and admits exact runtime
+  expectations into the qualified OSVVM callback/oracle behind two caller
+  seals. One provider verification serves both emissions. Closed reports freeze
+  the 16-artifact/seven-source/66-map/12-check/seven-mapping/six-preservation
+  graph and provider census; nominal and adjacent limits terminate before
+  route, provider, staging, or tool work.
+- [x] **NO REGRESSION** — All changed Perl files and t1676 report `syntax OK`.
+  The focused materializer reports `All tests successful` at `Files=1,
+  Tests=5` in 46 seconds; pre-change identities are independently protected by
+  green t1672 plus t1648 at `Files=2, Tests=12`. The final focused doctrine,
+  mdBook, Knowledge Map, task, claim, containment, locality, cleanup, staged
+  acceptance, resulting-tree, diff, and complete doctrine gates pass before
+  commit. Impacted CI inventory/provider/emitter/portable-authority/
+  materializer coverage reports `All tests successful` at `Files=5, Tests=79`
+  in 152 seconds; focused doctrine-facing coverage passes `Files=9, Tests=110`.
+  All 56 mdBook chapters test, and its inspected repository-local render
+  contains 92 files/20,007,134 bytes before exact removal. Knowledge Map parity
+  holds at 1,155 facts/6,125 questions/6,297 occurrences/136 shards. The claim
+  join closes 1,627 candidates as 118 claim records/916 gates/593 reviews/zero
+  gaps. The maintained-book authority re-derives 57 files/53,006 lines/
+  2,838,479 bytes, exact 0/+67/+4,285 from clean activation, and changes no
+  health target or enforcement ceiling. Artifact census retains only pinned
+  provider-owned validated-result logs and finds no disposable binary, render,
+  or materializer staging residue. Per policy, full CI and push remain deferred
+  to the batch boundary.

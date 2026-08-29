@@ -198,6 +198,72 @@ sub evaluate($class, @args) {
     });
 }
 
+# Runtime materialization owns a different scale axis from backend-emission
+# qualification.  Reuse the same provider callback and complete structural
+# oracle, but accept its exact runtime-sized source contract only from the one
+# caller-sealed materializer.
+sub _runtime_evaluate($class, @args) {
+    confess "OSVVM runtime evaluation is caller-sealed\n"
+        unless caller eq
+            'FSM::VIAL::ArchitectureScaleOSVVMRuntimeMaterialization';
+    _exact_invocant($class, '_runtime_evaluate');
+    confess __PACKAGE__ . "->_runtime_evaluate expects one closed hash\n"
+        unless @args == 1 && ref($args[0]) eq 'HASH'
+            && !blessed($args[0]);
+    my $raw = $args[0];
+    _exact_keys($raw,
+        [qw(level first_route second_route artifact_root expected)],
+        'OSVVM runtime evaluation');
+    _selected_level($raw->{level});
+    confess "OSVVM runtime evaluation cannot emit a preflight shape\n"
+        if $raw->{level} =~ /\A(?:limit|over_limit)_v1\z/;
+    _exact_keys($raw->{expected},
+        [qw(operations source_bytes source_maps sources)],
+        'OSVVM runtime expected graph');
+    confess "OSVVM runtime expected source identities must be one array\n"
+        unless ref($raw->{expected}{sources}) eq 'ARRAY';
+    confess "OSVVM runtime expected graph shape is invalid\n"
+        unless ($raw->{expected}{operations} // -1) == 21
+            && ($raw->{expected}{source_maps} // -1) == 66
+            && ($raw->{expected}{source_bytes} // -1) > 0
+            && @{$raw->{expected}{sources}} == 7;
+    my $artifact_root = _safe_relative_path($raw->{artifact_root})
+        ? $raw->{artifact_root}
+        : confess "OSVVM runtime artifact root is unsafe\n";
+    my $first_args = _backend_args($raw->{first_route}, $artifact_root);
+    my $second_args = _backend_args($raw->{second_route}, $artifact_root);
+
+    my $second;
+    my $first = FSM::VIAL::Backend::VHDLOSVVM2026_05
+        ->with_provider_evaluation({
+            dependency_root => $DEPENDENCY_ROOT,
+            consumer => sub ($evaluation) {
+                my $first_result = $evaluation->emit($first_args);
+                $second = $evaluation->emit($second_args);
+                return $first_result;
+            },
+        });
+    my $byte_equal = defined($second)
+        && _canonical_json($first) eq _canonical_json($second);
+    my ($oracle, $diagnostics) = _artifact_oracle(
+        $raw->{level}, $raw->{first_route}{execution_ir}->as_hashref,
+        $first, $artifact_root, $byte_equal,
+        {expected => $raw->{expected}, rejected => 0,
+            schema =>
+                'fsmgen.vial_architecture_scale_osvvm_runtime_materialization_oracle.v1'},
+    );
+    push @$diagnostics, _diagnostic(
+        'VIAL_SCALE_BACKEND_EMISSION_DETERMINISM_ERROR',
+        'callback-scoped OSVVM runtime emissions were not byte-identical',
+        '/artifact_oracle/osvvm_runtime',
+    ) unless $byte_equal;
+    return {
+        byte_equal => $byte_equal ? JSON::PP::true : JSON::PP::false,
+        diagnostics => $diagnostics,
+        oracle => $oracle,
+    };
+}
+
 sub _backend_args($route, $artifact_root) {
     confess "OSVVM route must be one hash\n"
         unless ref($route) eq 'HASH' && !blessed($route);
@@ -212,9 +278,16 @@ sub _backend_args($route, $artifact_root) {
     };
 }
 
-sub _artifact_oracle($level, $execution, $emission, $artifact_root, $byte_equal) {
-    my $expected = $EXPECTED{$level};
-    my $rejected = $level eq 'over_limit_v1';
+sub _artifact_oracle(
+    $level, $execution, $emission, $artifact_root, $byte_equal,
+    $runtime_contract = undef
+) {
+    my $expected = defined($runtime_contract)
+        ? $runtime_contract->{expected} : $EXPECTED{$level};
+    my $rejected = defined($runtime_contract)
+        ? $runtime_contract->{rejected} : $level eq 'over_limit_v1';
+    my $oracle_schema = defined($runtime_contract)
+        ? $runtime_contract->{schema} : $ORACLE_SCHEMA;
     my @diagnostics;
     my $add = sub ($message, $path) {
         push @diagnostics, _diagnostic(
@@ -296,7 +369,8 @@ sub _artifact_oracle($level, $execution, $emission, $artifact_root, $byte_equal)
             relpath => $_->{relpath}, bytes => bytes::length($_->{content}),
             sha256 => sha256_hex($_->{content}),
         }} @sources;
-        my @expected_sources = _expected_sources($expected);
+        my @expected_sources = exists($expected->{sources})
+            ? @{$expected->{sources}} : _expected_sources($expected);
         $add->('OSVVM source identities changed', '/emission/artifacts')
             unless _canonical_json(\@source_identities)
                 eq _canonical_json(\@expected_sources);
@@ -373,7 +447,7 @@ sub _artifact_oracle($level, $execution, $emission, $artifact_root, $byte_equal)
     }
 
     return ({
-        schema => $ORACLE_SCHEMA,
+        schema => $oracle_schema,
         schema_version => 1,
         backend_profile => $PROFILE,
         level => $level,

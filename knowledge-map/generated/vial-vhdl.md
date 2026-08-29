@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-vhdl`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **36** uniquely owned question entries.
+> **3** facts · **37** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -14,6 +14,7 @@
 - q="how are 44 OSVVM and 17 Common sources verified?" · facts=[vial-vhdl-provider-claim-evidence](../../docs/knowledge/vial-vhdl-provider-claim-evidence.md)
 - q="how are OSVVM licence and notice counts verified?" · facts=[vial-vhdl-provider-claim-evidence](../../docs/knowledge/vial-vhdl-provider-claim-evidence.md)
 - q="how are VIAL scenarios fibers and models emitted in VHDL?" · facts=[vial-vhdl-portable-profile](../../docs/knowledge/vial-vhdl-portable-profile.md)
+- q="how are authored portable VHDL runtime sources materialized through OSVVM?" · facts=[vial-vhdl-osvvm-qualified-tier](../../docs/knowledge/vial-vhdl-osvvm-qualified-tier.md)
 - q="how are declared HIAL probes accessed from portable VHDL?" · facts=[vial-vhdl-portable-profile](../../docs/knowledge/vial-vhdl-portable-profile.md)
 - q="how are portable VHDL operation scenario fiber and model counts verified?" · facts=[vial-vhdl-provider-claim-evidence](../../docs/knowledge/vial-vhdl-provider-claim-evidence.md)
 - q="how are portable VHDL review defects tracked?" · facts=[vial-vhdl-portable-profile](../../docs/knowledge/vial-vhdl-portable-profile.md)
@@ -48,7 +49,7 @@
 
 _OSVVM 2026.05 is a separately qualified advanced VHDL provider above the portable core_
 
-- **date:** 2026-08-21 · **status:** current
+- **date:** 2026-08-30 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-vhdl-osvvm-qualified-tier.md`](../../docs/knowledge/vial-vhdl-osvvm-qualified-tier.md)
 
 ### vial-vhdl-portable-profile

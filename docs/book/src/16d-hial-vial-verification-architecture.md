@@ -3979,9 +3979,76 @@ extraction, lifecycle/qualifier reuse, measurement, and immutable publication.
 Selection itself adds no measurement, budget, support, capacity,
 provider-generality, mixed-language, or public-API claim.
 
-The first ordered child, `.17.3.7.1`, is active from clean selection
-`40db785ee`. It owns only exact authored-VHDL-to-OSVVM materialization; no
-execution-plan, lifecycle, tool, measurement, or publication change is active.
+<!-- CLAIM-VERIFICATION:BEGIN vial-osvvm-runtime-materialization-v1 -->
+- Claim: The exact OSVVM runtime materializer preserves 21 operations and 39 ExecutionIR maps across the 77/10,000/100,000-record reference/gate/qualification roles; each accepted graph has 16 artifacts, seven VHDL sources, 66 maps, twelve OSVVM checks, seven advanced mappings, and six preserved portable sources/guards, with exact 122,413/122,426/122,438-byte source totals and the listed complete graph SHA-256 identities.
+- Re-derive: Run prove -Iperl t/1676-vial-architecture-scale-osvvm-runtime-materialization.t; independently rebuild the authored portable source route twice, verify the pinned provider once inside the callback, emit twice, and census every source, map, check, mapping, guard, provider field, and graph digest.
+- Falsify: Mutate an authored source or canonical report; bypass the construction, route, provider, or invocant seal; substitute provider access into limit/excess; relocate the source root; and force staging failure. Every control must reject before widening authority and remove owned residue.
+- Durability: Retain the tracked authored sources, caller-sealed materializer and callback/oracle seam, t1676, task .17.3.7.1, this chapter, Knowledge Map card, bounded claim record, doctrine watcher, and work-unit Git chain.
+<!-- CLAIM-VERIFICATION:END vial-osvvm-runtime-materialization-v1 -->
+
+The first ordered child, `.17.3.7.1`, now implements one exact-class
+`ArchitectureScaleOSVVMRuntimeMaterialization`. Its `construct`, `evaluate`,
+`validate_report`, and `with_staging` entrypoints own only the five
+`runtime_stream_v1` roles under `vhdl_osvvm_qualified` and
+`osvvm_2026_05_ghdl_6_0_0_llvm_jit`. Caller-sealed seams reconstruct the
+authored portable-VHDL source route twice and prove that its SemanticIR,
+bridge, ExecutionIR, backend inputs, and plan identities still match the
+portable semantic authority. No OSVVM-only VIAL source or duplicated parser
+route exists.
+
+For reference, gate, and qualification, one callback verifies the exact pinned
+OSVVM provider once and supplies defensive evidence to two emissions. Each
+accepted graph contains 16 artifacts, seven VHDL sources (the six portable
+sources byte-for-byte plus one 4,351-byte adapter), 66 maps, twelve passed
+OSVVM checks, seven advanced mappings, and six semantic-preservation guards.
+The authored runtime axis retains 21 operations and 39 ExecutionIR maps at all
+three roles; only the selected reset/timeout literals change generated fixture
+and metadata bytes.
+
+| Role | Projected trace records | Seven-source bytes | Complete graph SHA-256 |
+| --- | ---: | ---: | --- |
+| reference | 77 | 122,413 | `236f430941682884ba2cd77858cb43fc2bc1dbc6b568ec75759cf4b1561047ea` |
+| gate | 10,000 | 122,426 | `58eddfc1a4a1d0f7fd04c479604b8402a6bf87dc6d3ad8b3dfc70df176f09c91` |
+| qualification | 100,000 | 122,438 | `21fecffec8f130b8f09be3be62f0270f91ff1b5234a791101b786d2fadfc6226` |
+
+The nominal and adjacent limits still construct exact OSVVM workload
+identities, but the earlier trace envelope dominates before route generation,
+provider verification, staging, or any external tool. The materializer remains
+structural: it does not analyze, elaborate, run, create a trace/result, measure
+performance, establish capacity, or make a product-support or provider-
+generality claim.
+
+The quantitative evidence has three explicit legs. Re-derivation is the
+materializer's closed report and exact source/artifact oracles. Falsification
+in t1676 covers source mutation, report substitution, seam and invocant bypass,
+provider access from preflight, relocation, and staging failure/cleanup.
+Durability is the frozen module/test contract plus this task-tree and Knowledge
+Map record. The focused proof is:
+
+```bash
+prove -Iperl \
+  t/1676-vial-architecture-scale-osvvm-runtime-materialization.t
+```
+
+For example, a caller can reconstruct the gate graph without starting GHDL:
+
+```perl
+use FSM::VIAL::ArchitectureScaleOSVVMRuntimeMaterialization;
+
+my $report =
+    FSM::VIAL::ArchitectureScaleOSVVMRuntimeMaterialization->evaluate({
+        repository_root => '.',
+        level => 'gate_candidate_v1',
+    });
+
+# provider_structurally_qualified; 10_000 projected records; no runtime
+die "unexpected external execution"
+    if $report->{claims}{external_tool_executed};
+```
+
+Execution-plan extraction in `.17.3.7.2` is next. This completed materializer
+does not yet alter the shared lifecycle, invoke GHDL, measure a sample, or
+publish a matrix.
 
 The same real RAM guard is mandatory for correctness validation, measurement,
 and independent report regeneration. The focused exact proof is:
