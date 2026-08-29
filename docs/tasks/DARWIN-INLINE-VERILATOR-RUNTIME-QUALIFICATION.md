@@ -149,8 +149,8 @@ by that run.
   Status: `active`
   Goal: `Close pre-push recovery, exact generated-artifact cleanup, the authorized exceptional repair push, and hosted qualification.`
   Acceptance: `Preserve each guard interruption as non-passing operational evidence; combine the retained green t01-t1436 prefix only with one fresh exact t1437-t999 suffix; require a guarded mdBook build; remove and census only exact project-owned generated outputs; commit the clean pre-push evidence; push the exact revision under the director's one-time authorization without changing the standing 200-commit cadence; require local, upstream, and remote SHA identity plus every expected push workflow and required job terminal-success; durably record URLs and conclusions before closing the parents.`
-  Verification: `Activation follows one fresh guarded exact suffix at the committed repair revision: 1,163 independently counted paths from t1437 through t999 passed at Files=1,163/Tests=12,175 after unrelated sibling-project release-LTO pressure had interrupted earlier attempts without a test assertion failure. The retained t01-t1436 prefix supplies the disjoint earlier range. A separate guarded mdBook build produced the expected repository-local 92-file/19,568-KiB disposable output. Exact cleanup, closure gates, commit, push, and hosted results remain pending.`
-  Commit: `pending`
+  Verification: `The current committed census partitions all 1,658 tests into a 495-file t01-t1436 prefix and 1,163-file t1437-t999 suffix. The guarded full run retained the green prefix; after unrelated sibling-project release-LTO pressure ended, one fresh guarded exact suffix passed Files=1,163/Tests=12,175 with Result: PASS. Interrupted attempts remain uncredited. A separate guarded mdBook build passed with 92 files/19,568 KiB. Exact generated-output census and deletion removed that book, 177 test-temp children containing 229 files/96,312 KiB, and the remaining five disposable tmp files/4,700 KiB; docs/book/book and .artifacts/tmp are absent, no gate process remains, and Git is clean. The authorized push and hosted results remain pending.`
+  Commit: `DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.5: activate pre-push closure; DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.3.2.2.5: seal pre-push recovery evidence`
 
 ## Current Frontier
 
@@ -165,7 +165,7 @@ by that run.
 | 7 | `.3.2.2.2` | `done` | Bounded kernel cpulist authority plus procfs fallback repairs both setup-Perl failures without schema or Darwin drift. |
 | 8 | `.3.2.2.3` | `done` | All 138 jobs are terminal; four prerequisite failures map exactly to committed repairs and the aggregate adds no root cause. |
 | 9 | `.3.2.2.4` | `done` | Trace-v2/scale tests, support projections, galleries, book, cards, and claims now share exact executable authority. |
-| 10 | `.3.2.2.5` | `active` | Clean exact generated residue, commit complete pre-push evidence, perform the authorized exceptional push, and consume every hosted result. |
+| 10 | `.3.2.2.5` | `active` | Pre-push test/book/cleanup evidence is green; commit the exact candidate, perform the authorized exceptional push, and consume every hosted result. |
 | 11 | `.3.2.2` | `active` | Retain all repairs until the authorized exact repair push is hosted-green. |
 | 12 | `.3.2` | `active` | Preserve complete-CI and green hosted evidence until the authorized exact repair revision is hosted-green. |
 
@@ -241,29 +241,26 @@ by that run.
   child `.3.2.1` must use the existing exact-clean-HEAD, same-volume t296
   checkpoint contract while retaining both RAM ceilings.
 
-## `.3.2.1` host-pressure interruption and recovery evidence
+## `.3.2.2.5` pre-push recovery evidence
 
-The resumed suffix passed `t/1545` through `t/295`, including the balanced portable and new process-supervision surfaces. `t/296` then ran isolated default
-and strict pipeline/CLI batches for 4 hours 48 minutes before `scripts/run_with_ram_guard.sh` reported `host memory 88.1% reached cutoff 88%` and terminated
-the exact process group. No 4,096-MiB descendant cutoff was reported: the last census measured generator/worker/t296 at 371,136/79,936/12,816 KiB, while a
-sibling-project compiler held 5,587,968 KiB. After sibling pressure released, `memory_pressure -Q` reported 65% free; no FSMGEN process or VIAL recovery
-residue remained, and Git stayed clean. Re-derivation is the guard readings plus live PID census; falsification is the absent descendant event, sub-4-GiB
-descendant total, and sibling census; durability is this evidence and `docs/knowledge/darwin-inline-verilator-test-runtime.md`, with `prove -Iperl -It/lib
-t/1597-t296-checkpoint.t` retaining the focused contract.
+The current committed lexical census derives 1,658 test paths as a disjoint 495-file prefix from `t/01-regression.t` through
+`t/1436-ial2-ppif-parser-cli.t` and a 1,163-file suffix from `t/1437-axi-ial2-manager-capacity-status-generator.t` through
+`t/999-capability-manifest-cli-full-surface-owner-parity-audit.t`. The first guarded full run passed that complete prefix. Earlier suffix attempts were
+terminated only after unrelated sibling-project release-LTO pressure reached the unchanged host guard; they credit no suffix file. After that process exited,
+one fresh guarded exact suffix reported `Files=1163, Tests=12175` and `Result: PASS`. A separate guarded `mdbook build docs/book` passed and produced 92
+files using 19,568 KiB under the repository-local ignored output root.
 
-The interrupted command set no checkpoint, so none of its t296 batches is credited. Recovery therefore started t296 at the same clean revision with the safe
-`.artifacts/t296/*.json` contract; only synced atomic exact-revision batches could resume, and the checkpoint could clear only after the complete parent passed.
+Cleanup censused then removed exactly the 92-file book, 177 direct `tmp/tests` children containing 229 files/96,312 KiB, and the remaining five files/4,700
+KiB under the disposable `.artifacts/tmp` authority. `docs/book/book` and `.artifacts/tmp` are absent; persistent `.artifacts/cache`, gallery, qualification,
+and other non-temp roots were untouched; no suite/book process remains; Git is clean. Re-derivation is the committed lexical glob partition plus pre-delete
+file/disk censuses. Falsification is the exact `prove`/mdBook terminal output, zero residue/process census, and deliberate non-credit for both guard events.
+Durability is this task-tree evidence and the exact pre-push commit; push SHA identity and hosted terminal results remain the final missing leg.
 
-Recovery completed at clean revision `2dcfaa29715a`. An independent list-only derivation counted 287 pipeline/default, 94 CLI/default, 287 pipeline/strict,
-and 94 CLI/strict batches: 762 total. The guarded parent consumed those exact batches, reported `Files=1, Tests=10` and `Result: PASS` after 22,210 wallclock
-seconds, and removed its checkpoint only after the parent succeeded. A separate lexical glob independently selected 778 paths from `t/297` through `t/999`;
-its guarded `prove` run reported `Files=778, Tests=2989` and `Result: PASS` after 18,614 wallclock seconds. No host or descendant RAM cutoff occurred in either
-recovery run, and the exact checkpoint, test-process tree, and runtime residue are absent.
+## Acceptance Checklist — `.3.2.2.5` pre-push closure
 
-The completion claim has three distinct legs. Re-derivation is the list-only matrix mode count and pre-run lexical path count. Falsification is each parent's
-independent `prove` file/test summary, checkpoint self-removal only after all matrix batches and the parent pass, and the zero guard/process residue census.
-Durability is this owning task-tree verification plus the exact completion commit. The retained t01-t1544 prefix, resumed t1545-t295 success, fresh t296
-parent success, and fresh t297-t999 tail jointly cover the complete CI file set; neither interrupted attempt is itself credited as a pass.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Two earlier suffix attempts were interrupted by unrelated sibling-project release-LTO host pressure, not a failed FSMGEN assertion; each interruption remains uncredited, and the retained prefix is bounded by exact lexical endpoints.
+- [x] **ADDRESSED (verified)** — The independently counted 1,163-file suffix passed 12,175 tests, the separate guarded 92-file mdBook build passed, and exact project-owned disposable outputs were censused and removed.
+- [x] **NO REGRESSION** — The disjoint 495/1,163 partition covers all 1,658 tracked tests; both generated roots and all gate processes are absent; persistent artifact roots remain; doctrines and clean-state checks gate the exact pre-push commit.
 
 ## Compact hosted-repair archive — `.3.2.2.1` through `.3.2.2.3`
 
@@ -277,27 +274,12 @@ The node records and exact work-unit commits retain the root, focused proof,
 and no-retry/no-cancellation evidence; tracked triggers re-derive the set,
 exact-SHA logs falsify completeness, and this archive supplies durability.
 
-## `.3` interrupted complete-CI evidence
+## Compact `.3`/`.3.1` interruption and repair archive
 
-The guarded 1,072-path suffix stayed green/skipped from `t/1515` through `t/1544`, then t1545 blocked in direct `IPC::Cmd::run(command => [$checker])`.
-Its `/usr/bin/env bash .../scripts/check_task_acceptance.sh` descendant had no child after six minutes; a one-second sample placed 792/792 frames at
-`_dyld_start`, with 96 KiB and no image map. The 887-byte sample has SHA-256 `6851c9f6909f5003815ce82e9cc316ef0ac39a53ae631906b47534839de8f34c`.
-The process chain was terminated and absent. Copy/line/byte/hash/content verification used the repository-local diagnostic path before the exact `/tmp`
-source, abandoned fixture repository, and consumed diagnostic copy were deleted and censused absent. This interrupted run credits no t1545-or-later pass.
-
-## `.3.1` bounded task-acceptance fixture implementation
-
-The exact surface is five fixture Git calls per repository plus one checker call per case; both direct `IPC::Cmd::run` launchers are removed.
-`FSM::Test::ProcessSupervisor` owns scalar shell-free argv, repository/same-volume cwd, bounded streams, close-on-exec, monotonic timing, one process group,
-and verified TERM/KILL cleanup. The adapter admits only its project-local fixture roots, exact init/config/add/commit shapes, and copied regular checker;
-unsafe paths/global config fail pre-fork. Load-time canonical Git/Bash identity resists later `PATH` mutation; calls use ten-second and
-1,048,576/4,194,304-byte bounds, while decision `0086` remains unchanged.
-
-Direct `/bin/bash` made all nine cases fail honestly because macOS Bash 3.2 treats empty `CHANGE_PATTERNS` as unbound; resolving/canonicalizing the selected
-Bash once restored t1545 (`Files=1, Tests=9`) with no retry. The watcher then exposed the same env pre-main boundary in generated env-Perl shebangs, so every
-generated probe invokes canonical running Perl and a census permits an env shebang only on prove's watcher entrypoint. Final guarded t1545+t1668+t1669
-passes `Files=3, Tests=19`, proving fixed values/failure truth, pre-fork rejection, direct Bash/nonzero behavior, TERM-resistant group cleanup, and exactly two
-low-level policy owners.
+The `.3.1` node, decisions `0086`/`0087`, its acceptance checklists, and commit `d630261e6` retain the exact t1545 boundary: the uncredited run stopped at the
+unbounded checker handoff; its 887-byte sample showed 792/792 `_dyld_start` frames at 96 KiB and SHA-256
+`6851c9f6909f5003815ce82e9cc316ef0ac39a53ae631906b47534839de8f34c`. The bounded shared supervisor and sealed fixture adapter removed both direct launchers,
+preserved first-failure truth, and passed guarded t1545/t1668/t1669 at `Files=3, Tests=19`; exact off-volume, process, fixture, and diagnostic residue is absent.
 
 ## `.1` tracked launch audit
 
