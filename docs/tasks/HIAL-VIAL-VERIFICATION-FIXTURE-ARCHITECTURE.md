@@ -7133,7 +7133,7 @@ decision `0083` remained its implementation contract.
   Tests=23`; exact fresh resume reports `Files=1, Tests=15`; exact guarded
   measurement reports `Files=1, Tests=8` in 1,947 seconds; all book, Knowledge
   Map, claim, task, containment, acceptance, and doctrine gates passed. Full CI
-  remains deferred to the 200-commit push boundary.
+  remains deferred to the 300-commit push boundary.
 
 ## Terminal acceptance archive — `.17.3.5.5.1` through `.17.3.5.6`
 

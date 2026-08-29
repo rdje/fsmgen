@@ -33,16 +33,16 @@ Ignoring it is not a style issue; it is a project-safety failure.
 ## Push cadence
 - Commit and push are separate continuity layers. Complete and commit every
   finished slice immediately; do not push every commit.
-- The normal automatic cadence is one push after **200 accumulated local
+- The normal automatic cadence is one push after **300 accumulated local
   commits** since the previous successful push. Derive the live count from Git
   with `git rev-list --count @{upstream}..HEAD`; do not maintain a handwritten
   shadow counter.
-- After the 200th committed slice has completed this workflow and the worktree
+- After the 300th committed slice has completed this workflow and the worktree
   is clean, push the current branch to its configured upstream. A
   transport-successful push must leave the derived count at zero and start
-  the next 200-commit interval; it does not by itself prove hosted CI passed.
-- Before 200 commits, push only when the user explicitly directs an earlier
-  push. A successful user-directed early push also starts a fresh 200-commit
+  the next 300-commit interval; it does not by itself prove hosted CI passed.
+- Before 300 commits, push only when the user explicitly directs an earlier
+  push. A successful user-directed early push also starts a fresh 300-commit
   interval, but it does not change the standing cadence.
 - A failed or incomplete push does not reset the count. Preserve the local
   commits, diagnose the exact failure, and treat any unresolved remote state
@@ -83,7 +83,7 @@ push, consume the GitHub result before treating the push follow-up as complete:
    skipped, timed-out, stale, startup-failed, action-required, or neutral
    required result successful.
 6. Hosted failure remediation does not silently authorize an early push.
-   Follow the standing 200-commit cadence unless the user explicitly directs
+   Follow the standing 300-commit cadence unless the user explicitly directs
    an earlier repair push. Keep hosted requalification as an active task-tree
    frontier until an authorized push proves the repaired exact SHA green.
 

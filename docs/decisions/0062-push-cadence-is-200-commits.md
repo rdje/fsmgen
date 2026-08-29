@@ -8,17 +8,17 @@ answers:
   - "does an explicitly requested early push change the normal cadence?"
   - "how is the push cadence counter calculated and reset?"
 date: 2026-08-10
-status: current
+status: superseded
 tags: [git, push, commit-workflow, continuity, governance]
 evidence: COMMIT.md; docs/tasks/PUSH-CADENCE-GOVERNANCE.md
-reverify: rg -n '200 accumulated local|rev-list --count|early push' COMMIT.md
+reverify: rg -n 'superseded by.*0091' docs/decisions/0062-push-cadence-is-200-commits.md
 ---
 
 # 0062 — Push cadence is 200 commits
 
 - Date: 2026-08-10
 - Type: feedback/governance
-- Status: accepted (supersedes [0005](0005-push-only-on-explicit-request.md))
+- Status: superseded by [0091](0091-push-cadence-is-300-commits.md)
 - Owner: `PUSH-CADENCE-GOVERNANCE.1`
 
 ## Context

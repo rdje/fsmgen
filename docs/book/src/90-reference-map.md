@@ -275,6 +275,15 @@ or task-scoped activity must close with that workflow before the next work
 starts, so crash recovery and agent handoff can resume from task-scoped
 commits instead of a dirty worktree.
 
+The standing publish interval is 300 accumulated local commits beyond the
+configured upstream. Git is the sole counter; every slice is still committed
+immediately, an explicitly directed early push resets the interval without
+changing its standing length, and every successful transport remains open
+until exact hosted qualification is consumed. This separates local recovery
+from less frequent remote publication without shadow state. [Decision
+0091](../../decisions/0091-push-cadence-is-300-commits.md) records the rationale
+and supersedes the former 200-commit interval.
+
 Tracked raw standards PDFs under `docs/vendor/` are local reference artifacts
 for future task-tree-owned evidence or design probes. The current set includes
 the Arm AMBA AXI specification plus Accellera SystemRDL 2.0, Portable Test and
