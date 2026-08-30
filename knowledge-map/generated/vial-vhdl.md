@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-vhdl`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **37** uniquely owned question entries.
+> **3** facts · **38** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -29,6 +29,7 @@
 - q="how is exact OSVVM provider verification reused safely?" · facts=[vial-vhdl-osvvm-qualified-tier](../../docs/knowledge/vial-vhdl-osvvm-qualified-tier.md)
 - q="how is the 16-artifact OSVVM adapter graph verified?" · facts=[vial-vhdl-provider-claim-evidence](../../docs/knowledge/vial-vhdl-provider-claim-evidence.md)
 - q="how is the exact GHDL 6.0.0 LLVM-JIT archive verified?" · facts=[vial-vhdl-provider-claim-evidence](../../docs/knowledge/vial-vhdl-provider-claim-evidence.md)
+- q="how is the exact OSVVM GHDL execution plan sealed?" · facts=[vial-vhdl-osvvm-qualified-tier](../../docs/knowledge/vial-vhdl-osvvm-qualified-tier.md)
 - q="how is the inert 976-byte legacy VHDL package verified?" · facts=[vial-vhdl-provider-claim-evidence](../../docs/knowledge/vial-vhdl-provider-claim-evidence.md)
 - q="how is the recursive OSVVM provider graph verified?" · facts=[vial-vhdl-provider-claim-evidence](../../docs/knowledge/vial-vhdl-provider-claim-evidence.md)
 - q="how is the recursive OSVVM provider identity verified?" · facts=[vial-vhdl-osvvm-qualified-tier](../../docs/knowledge/vial-vhdl-osvvm-qualified-tier.md)

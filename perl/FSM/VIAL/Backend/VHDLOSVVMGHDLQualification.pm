@@ -18,117 +18,30 @@ no warnings 'experimental::signatures';
 use FSM::VIAL::Backend::VHDLPortableTraceValidator;
 
 use FSM::VIAL::Backend::OSVVM2026_05Materialization;
+use FSM::VIAL::ArchitectureScaleOSVVMRuntimeExecutionPlan;
 
 my $JSON = JSON::PP->new->canonical(1);
 my $SCHEMA = 'fsmgen.vial_vhdl_osvvm_ghdl_qualification.v1';
 my $PROFILE = 'vhdl_osvvm_qualified';
 my $TASK_ID = 'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6.1';
-my $GALLERY = 'vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services';
-my $GHDL_ROOT = '.artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64';
-my $GHDL_ARCHIVE = '.artifacts/cache/providers/ghdl/6.0.0/llvm-jit-archive/ghdl-llvm-jit-6.0.0-macos15-aarch64.tar.gz';
-my $GHDL_BINARY = "$GHDL_ROOT/bin/ghdl";
-my $OSVVM_ROOT = '.artifacts/cache/providers/osvvm/2026.05/source';
-my $PROBE = 'vial/qualification/vhdl_osvvm_ghdl/osvvm_2026_05_runtime_probe.vhd';
-my $ARCHIVE_SHA256 = 'c21312d5a0cc5833e6d8690d8c4343e67f4fc32f070c07343816cd11a31c7769';
-my $BINARY_SHA256 = '38a99c1cc18b04dfae128b118c7344910e08b8ba6eeb9c1e67f950a84bca3c3d';
-my $VERSION_OUTPUT = join("\n",
-    'GHDL 6.0.0 (6.0.0.r0.ge589c698c) [Dunoon edition]',
-    ' Compiled with GNAT Version: 14.2.0',
-    ' static elaboration, LLVM JIT code generator',
-    'Written by Tristan Gingold.',
-    '',
-    'Copyright (C) 2003 - 2026 Tristan Gingold.',
-    'GHDL is free software, covered by the GNU General Public License.  There is NO',
-    'warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.');
+my $EXECUTION_PLAN_AUTHORITY =
+    FSM::VIAL::ArchitectureScaleOSVVMRuntimeExecutionPlan
+        ->_qualification_authority;
+my $GHDL_ROOT = $EXECUTION_PLAN_AUTHORITY->{ghdl_root};
+my $GHDL_ARCHIVE = $EXECUTION_PLAN_AUTHORITY->{ghdl_archive};
+my $GHDL_BINARY = $EXECUTION_PLAN_AUTHORITY->{ghdl_binary};
+my $OSVVM_ROOT = $EXECUTION_PLAN_AUTHORITY->{osvvm_root};
+my $ARCHIVE_BYTES = $EXECUTION_PLAN_AUTHORITY->{archive_bytes};
+my $ARCHIVE_SHA256 = $EXECUTION_PLAN_AUTHORITY->{archive_sha256};
+my $BINARY_SHA256 = $EXECUTION_PLAN_AUTHORITY->{binary_sha256};
+my $VERSION_OUTPUT = $EXECUTION_PLAN_AUTHORITY->{version_output};
 my $TRACE_AUTHORITY =
     FSM::VIAL::Backend::VHDLPortableTraceValidator->checked_reference_authority;
 
-my @GENERATED_SOURCE = (
-    "$GALLERY/src/portable/fsmgen_vial_types_pkg.vhd",
-    "$GALLERY/src/portable/fsmgen_vial_runtime_pkg.vhd",
-    "$GALLERY/src/portable/base_output_arbitration_metadata_pkg.vhd",
-    "$GALLERY/src/portable/dut/ahb_lite_subordinate.vhd",
-    "$GALLERY/src/portable/base_output_arbitration_tb.vhd",
-    "$GALLERY/src/portable/base_output_arbitration_probe_adapter.vhd",
-    "$GALLERY/src/fsmgen_vial_osvvm_adapter_pkg.vhd",
-    $PROBE,
-);
-
-# Exact GHDL/VHDL-2008 resolution of OSVVM 2026.05 osvvm/osvvm.pro.
-my @OSVVM_SOURCE = qw(
-    IfElsePkg.vhd
-    OsvvmTypesPkg.vhd
-    OsvvmScriptSettingsPkg.vhd
-    OsvvmSettingsPkg.vhd
-    __FSMGEN_GENERATED_SETTINGS__
-    OsvvmSettingsPkg_default.vhd
-    TextUtilPkg.vhd
-    FileUtilPkg.vhd
-    ResolutionPkg.vhd
-    NamePkg.vhd
-    OsvvmGlobalPkg.vhd
-    CoverageVendorApiPkg_default.vhd
-    TranscriptPkg.vhd
-    deprecated/LanguageSupport2019Pkg_c.vhd
-    deprecated/FileLinePathPkg_c.vhd
-    deprecated/AssertApiPkg_c.vhd
-    AlertLogPkg.vhd
-    IdFifoPtPkg.vhd
-    TbUtilPkg.vhd
-    NameStorePkg.vhd
-    MessageListPkg.vhd
-    SortListPkg_int.vhd
-    RandomBasePkg.vhd
-    RandomPkg.vhd
-    RandomProcedurePkg.vhd
-    CoveragePkg.vhd
-    CoveragePtPkg.vhd
-    DelayCoveragePkg.vhd
-    ClockResetPkg.vhd
-    ResizePkg.vhd
-    deprecated/DynamicVectorPkg_IntV_c.vhd
-    deprecated/DynamicVectorPkg_slv_c.vhd
-    ScoreboardGenericPkg.vhd
-    ScoreboardPkg_IntV.vhd
-    ScoreboardPkg_slv.vhd
-    ScoreboardPkg_int.vhd
-    ScoreboardPkg_signed.vhd
-    ScoreboardPkg_unsigned.vhd
-    MemorySupportPkg.vhd
-    MemoryGenericPkg.vhd
-    MemoryPkg.vhd
-    ReportPkg.vhd
-    deprecated/RandomPkg2019_c.vhd
-    OsvvmContext.vhd
-);
-
-# Exact GHDL/VHDL-2008 resolution of OSVVM 2026.05 Common/build.pro.
-my @COMMON_SOURCE = qw(
-    ModelParametersPtPkg.vhd
-    ModelParametersSingletonPkg.vhd
-    FifoFillPkg_slv.vhd
-    deprecated/StreamTransactionPkg.vhd
-    deprecated/StreamTransactionArrayPkg.vhd
-    deprecated/AddressBusTransactionPkg.vhd
-    deprecated/AddressBusTransactionArrayPkg.vhd
-    deprecated/AddressBusResponderTransactionPkg.vhd
-    deprecated/AddressBusResponderTransactionArrayPkg.vhd
-    AddressBusVersionCompatibilityPkg.vhd
-    InterruptGlobalSignalPkg.vhd
-    deprecated/InterruptHandler_c.vhd
-    deprecated/InterruptHandlerComponentPkg_c.vhd
-    InterruptGeneratorBit.vhd
-    InterruptGeneratorBitVti.vhd
-    InterruptGeneratorComponentPkg.vhd
-    OsvvmCommonContext.vhd
-);
-
-my @PROVIDER_REPORT = qw(
-    OsvvmRun.yml
-    AlertLogTop_alerts.yml
-    AlertLogTop_cov.yml
-    AlertLogTop_sb_slv.yml
-);
+my @GENERATED_SOURCE = @{$EXECUTION_PLAN_AUTHORITY->{generated_source}};
+my @OSVVM_SOURCE = @{$EXECUTION_PLAN_AUTHORITY->{osvvm_source}};
+my @COMMON_SOURCE = @{$EXECUTION_PLAN_AUTHORITY->{common_source}};
+my @PROVIDER_REPORT = @{$EXECUTION_PLAN_AUTHORITY->{provider_report}};
 
 my @RESULT_KEYS = qw(ok status report content diagnostics cleanup);
 my @REPORT_KEYS = qw(
@@ -221,7 +134,7 @@ sub _qualify($raw) {
     _throw('VIAL_OSVVM_GHDL_QUALIFICATION_TOOL_ERROR',
         'official GHDL archive byte size differs from the selected release asset',
         '/tool_profile/archive_bytes')
-        unless (-s $archive_abs) == 37_155_806;
+        unless (-s $archive_abs) == $ARCHIVE_BYTES;
     _throw('VIAL_OSVVM_GHDL_QUALIFICATION_TOOL_ERROR',
         'official GHDL archive digest differs from the selected release asset',
         '/tool_profile/archive_sha256')
@@ -273,64 +186,33 @@ sub _qualify($raw) {
         '/cleanup/staging_identity')
         if -e $stage_abs || -l $stage_abs;
 
-    my $library_rel = "$stage_rel/libraries";
+    my $execution_plan =
+        FSM::VIAL::ArchitectureScaleOSVVMRuntimeExecutionPlan
+            ->_qualification_plan({staging_identity => $stage_rel});
+    my $library_rel = $execution_plan->{libraries}{root};
     my $library_abs = _repo_path($repo_root, $library_rel);
-    my $osvvm_work_rel = "$library_rel/osvvm/v08";
+    my $osvvm_work_rel = $execution_plan->{libraries}{osvvm};
     my $osvvm_work_abs = _repo_path($repo_root, $osvvm_work_rel);
-    my $common_work_rel = "$library_rel/osvvm_common/v08";
+    my $common_work_rel = $execution_plan->{libraries}{osvvm_common};
     my $common_work_abs = _repo_path($repo_root, $common_work_rel);
-    my $fixture_work_rel = "$library_rel/fsmgen_vial/v08";
+    my $fixture_work_rel = $execution_plan->{libraries}{fsmgen_vial};
     my $fixture_work_abs = _repo_path($repo_root, $fixture_work_rel);
     my $reports_rel = "$stage_rel/provider_reports";
     my $reports_abs = _repo_path($repo_root, $reports_rel);
-    my $settings_rel = "$stage_rel/OsvvmScriptSettingsPkg_generated.vhd";
+    my $settings_rel = $execution_plan->{generated_settings_relpath};
     my $settings_abs = _repo_path($repo_root, $settings_rel);
-
-    my @provider_commands;
-    my @osvvm_resolved = map {
-        $_ eq '__FSMGEN_GENERATED_SETTINGS__'
-            ? $settings_rel : "$OSVVM_ROOT/osvvm/$_"
-    } @OSVVM_SOURCE;
-    my @common_resolved = map { "$OSVVM_ROOT/Common/src/$_" } @COMMON_SOURCE;
-    for my $source (@osvvm_resolved) {
-        push @provider_commands, [
-            $GHDL_BINARY, '-a', '--std=08', '-Wno-library', '-Wno-hide',
-            '--work=osvvm', "--workdir=$osvvm_work_rel", "-P$library_rel",
-            $source,
-        ];
-    }
-    for my $source (@common_resolved) {
-        push @provider_commands, [
-            $GHDL_BINARY, '-a', '--std=08', '-Wno-library', '-Wno-hide',
-            '--work=osvvm_common', "--workdir=$common_work_rel", "-P$library_rel",
-            $source,
-        ];
-    }
-    my @analyze_generated = (
-        $GHDL_BINARY, '-a', '--std=08', '-Wno-library', '-Wno-hide',
-        '--work=fsmgen_vial', "--workdir=$fixture_work_rel", "-P$library_rel",
-        @GENERATED_SOURCE,
-    );
-    my @elaborate_fixture = (
-        $GHDL_BINARY, '-e', '--std=08', '--work=fsmgen_vial',
-        "--workdir=$fixture_work_rel", "-P$library_rel",
-        'base_output_arbitration_tb',
-    );
-    my @run_fixture = (
-        $GHDL_BINARY, '-r', '--std=08', '--work=fsmgen_vial',
-        "--workdir=$fixture_work_rel", "-P$library_rel",
-        'base_output_arbitration_tb', '--assert-level=error',
-    );
-    my @elaborate_probe = (
-        $GHDL_BINARY, '-e', '--std=08', '--work=fsmgen_vial',
-        "--workdir=$fixture_work_rel", "-P$library_rel",
-        'fsmgen_vial_osvvm_runtime_probe',
-    );
-    my @run_probe = (
-        $GHDL_BINARY, '-r', '--std=08', '--work=fsmgen_vial',
-        "--workdir=$fixture_work_rel", "-P$library_rel",
-        'fsmgen_vial_osvvm_runtime_probe', '--assert-level=error',
-    );
+    my $resource = $execution_plan->{resource_controls};
+    my @provider_commands = map { [@$_] }
+        @{$execution_plan->{commands}{provider_analyze}};
+    my @version_command = @{$execution_plan->{commands}{version}};
+    my @analyze_generated =
+        @{$execution_plan->{commands}{analyze_generated}};
+    my @elaborate_fixture =
+        @{$execution_plan->{commands}{elaborate_fixture}};
+    my @run_fixture = @{$execution_plan->{commands}{run_fixture}};
+    my @elaborate_probe =
+        @{$execution_plan->{commands}{elaborate_provider_probe}};
+    my @run_probe = @{$execution_plan->{commands}{run_provider_probe}};
 
     my ($version, $generated_analysis, $fixture_elaboration, $fixture_one,
         $fixture_two, $probe_elaboration, $probe_one, $probe_two,
@@ -341,11 +223,13 @@ sub _qualify($raw) {
         $stage_created = 1;
         make_path($osvvm_work_abs, $common_work_abs, $fixture_work_abs,
             $reports_abs);
-        _write_temp_file($settings_abs,
-            _settings_package_body($stage_rel, $reports_rel));
+        _write_temp_file(
+            $settings_abs, $execution_plan->{generated_settings_content},
+        );
         $settings_sha256 = _file_sha256($settings_abs);
-        $version = _capture($repo_root, [$GHDL_BINARY, '--version'],
-            10, 65_536, 'version');
+        $version = _capture($repo_root, \@version_command,
+            $resource->{version_timeout_seconds},
+            $resource->{version_capture_limit_bytes}, 'version');
         my $normalized_version = $version->{output};
         $normalized_version =~ s/[\r\n]+\z//;
         _throw('VIAL_OSVVM_GHDL_QUALIFICATION_TOOL_ERROR',
@@ -356,25 +240,39 @@ sub _qualify($raw) {
         $provider_output_bytes = 0;
         for my $index (0 .. $#provider_commands) {
             my $capture = _capture($repo_root, $provider_commands[$index],
-                120, 8_388_608, "provider analysis $index");
+                $resource->{provider_analysis_timeout_seconds_per_source},
+                $resource->{provider_capture_limit_bytes},
+                "provider analysis $index");
             $provider_output_bytes += $capture->{output_bytes};
         }
         $generated_analysis = _capture($repo_root, \@analyze_generated,
-            120, 8_388_608, 'adapter and generated-fixture analysis');
+            $resource->{generated_analysis_timeout_seconds},
+            $resource->{provider_capture_limit_bytes},
+            'adapter and generated-fixture analysis');
         $fixture_elaboration = _capture($repo_root, \@elaborate_fixture,
-            60, 8_388_608, 'fixture elaboration');
+            $resource->{elaboration_timeout_seconds},
+            $resource->{provider_capture_limit_bytes}, 'fixture elaboration');
         $fixture_one = _capture($repo_root, \@run_fixture,
-            30, 67_108_864, 'fixture execution');
+            $resource->{execution_timeout_seconds},
+            $resource->{fixture_capture_limit_bytes}, 'fixture execution');
         $fixture_two = _capture($repo_root, \@run_fixture,
-            30, 67_108_864, 'fixture deterministic rerun');
+            $resource->{execution_timeout_seconds},
+            $resource->{fixture_capture_limit_bytes},
+            'fixture deterministic rerun');
         $probe_elaboration = _capture($repo_root, \@elaborate_probe,
-            60, 8_388_608, 'provider probe elaboration');
+            $resource->{elaboration_timeout_seconds},
+            $resource->{provider_capture_limit_bytes},
+            'provider probe elaboration');
         $probe_one = _capture($repo_root, \@run_probe,
-            30, 8_388_608, 'provider probe execution');
+            $resource->{execution_timeout_seconds},
+            $resource->{provider_capture_limit_bytes},
+            'provider probe execution');
         $reports_one = _snapshot_provider_reports($reports_abs, $reports_rel);
         _remove_provider_reports($reports_abs);
         $probe_two = _capture($repo_root, \@run_probe,
-            30, 8_388_608, 'provider probe deterministic rerun');
+            $resource->{execution_timeout_seconds},
+            $resource->{provider_capture_limit_bytes},
+            'provider probe deterministic rerun');
         $reports_two = _snapshot_provider_reports($reports_abs, $reports_rel);
         1;
     };
@@ -437,7 +335,7 @@ sub _qualify($raw) {
             binary => $GHDL_BINARY,
             binary_sha256 => $BINARY_SHA256,
             archive => $GHDL_ARCHIVE,
-            archive_bytes => 37_155_806,
+            archive_bytes => $ARCHIVE_BYTES,
             archive_sha256 => $ARCHIVE_SHA256,
             version_output => $VERSION_OUTPUT,
             selection_status => 'executed_qualified',
@@ -513,16 +411,24 @@ sub _qualify($raw) {
             product_support => 'qualified_private_fixture_profile_not_public_api',
         },
         resource_controls => {
-            outer_guard => 'scripts/run_with_ram_guard.sh --process-max-rss-mb 4096',
-            descendant_rss_limit_mib => 4096,
-            host_occupied_cutoff_percent => 88,
-            version_timeout_seconds => 10,
-            provider_analysis_timeout_seconds_per_source => 120,
-            generated_analysis_timeout_seconds => 120,
-            elaboration_timeout_seconds => 60,
-            execution_timeout_seconds => 30,
-            maximum_fixture_output_bytes => 67_108_864,
-            maximum_provider_output_bytes => 8_388_608,
+            outer_guard => $resource->{outer_guard},
+            descendant_rss_limit_mib =>
+                $resource->{descendant_rss_limit_mib},
+            host_occupied_cutoff_percent =>
+                $resource->{host_occupied_cutoff_percent},
+            version_timeout_seconds => $resource->{version_timeout_seconds},
+            provider_analysis_timeout_seconds_per_source =>
+                $resource->{provider_analysis_timeout_seconds_per_source},
+            generated_analysis_timeout_seconds =>
+                $resource->{generated_analysis_timeout_seconds},
+            elaboration_timeout_seconds =>
+                $resource->{elaboration_timeout_seconds},
+            execution_timeout_seconds =>
+                $resource->{execution_timeout_seconds},
+            maximum_fixture_output_bytes =>
+                $resource->{fixture_capture_limit_bytes},
+            maximum_provider_output_bytes =>
+                $resource->{provider_capture_limit_bytes},
         },
         cleanup => {
             staging_identity => $stage_rel,
@@ -549,25 +455,6 @@ sub _qualify($raw) {
         diagnostics => [],
         cleanup => _clone($report->{cleanup}),
     });
-}
-
-sub _settings_package_body($stage_rel, $reports_rel) {
-    return join("\n",
-        '-- Generated only inside the digest-named FSMGEN qualification stage.',
-        'package body OsvvmScriptSettingsPkg is',
-        qq{  constant OSVVM_HOME_DIRECTORY : string := "$OSVVM_ROOT" ;},
-        qq{  constant OSVVM_TEMP_OUTPUT_DIRECTORY : string := "$reports_rel/" ;},
-        qq{  constant OSVVM_BASE_DIRECTORY : string := "$stage_rel/" ;},
-        qq{  constant OSVVM_BUILD_YAML_FILE : string := "$reports_rel/OsvvmRun.yml" ;},
-        qq{  constant OSVVM_TRANSCRIPT_YAML_FILE : string := "$reports_rel/OSVVM_transcript.yml" ;},
-        '  constant OSVVM_REVISION : string := "2026.05" ;',
-        '  constant OSVVM_SETTINGS_REVISION : string := "2026.05" ;',
-        '  constant ALERT_YAML_VERSION : string := "0.1" ;',
-        '  constant SCOREBOARD_YAML_VERSION : string := "0.1" ;',
-        '  constant COVERAGE_YAML_VERSION : string := "0.1" ;',
-        '  constant REQUIREMENTS_YAML_VERSION : string := "0.1" ;',
-        'end package body OsvvmScriptSettingsPkg ;',
-        '');
 }
 
 sub _snapshot_provider_reports($reports_abs, $reports_rel) {

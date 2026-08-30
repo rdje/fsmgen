@@ -9,6 +9,7 @@ answers:
   - "how is exact OSVVM provider verification reused safely?"
   - "how are portable VHDL source maps preserved in the OSVVM wrapper?"
   - "how are authored portable VHDL runtime sources materialized through OSVVM?"
+  - "how is the exact OSVVM GHDL execution plan sealed?"
 date: 2026-08-30
 status: current
 tags: [hial, vial, vhdl, osvvm, ghdl, review-gallery, verification]
@@ -20,7 +21,7 @@ evidence: >-
   perl/FSM/VIAL/Backend/VHDLOSVVMStaticValidator.pm;
   perl/FSM/VIAL/Backend/VHDLOSVVMGHDLQualification.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission/OSVVM.pm;
-  perl/FSM/VIAL/ArchitectureScaleOSVVMRuntimeMaterialization.pm;
+  perl/FSM/VIAL/ArchitectureScaleOSVVMRuntimeMaterialization.pm; perl/FSM/VIAL/ArchitectureScaleOSVVMRuntimeExecutionPlan.pm;
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/Support/VIALVHDLEmissionContract.pm;
   scripts/refresh_vial_vhdl_osvvm_gallery.pl;
   scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl;
@@ -29,6 +30,7 @@ evidence: >-
   t/1642-vial-vhdl-osvvm-provider-evaluation.t; t/1644-vial-backend-emission-authority-alignment.t;
   t/1648-vial-architecture-scale-backend-emission-osvvm.t;
   t/1676-vial-architecture-scale-osvvm-runtime-materialization.t;
+  t/1677-vial-architecture-scale-osvvm-runtime-execution-plan.t;
   vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json;
   vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/README.md;
   vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/evidence/provider-materialization.json;
@@ -36,14 +38,15 @@ evidence: >-
   vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/evidence/semantic-preservation.json;
   vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/evidence/qualification-reference.json;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
-  docs/book/src/16d-hial-vial-verification-architecture.md
+  docs/book/src/16d-hial-vial-verification-architecture.md; docs/book/src/16de-vial-osvvm-runtime-execution-plan.md
 reverify: >-
   prove -Iperl t/1598-vial-vhdl-osvvm-emission.t
   t/1599-vial-vhdl-osvvm-ghdl-qualification.t
   t/1642-vial-vhdl-osvvm-provider-evaluation.t
   t/1644-vial-backend-emission-authority-alignment.t
   t/1648-vial-architecture-scale-backend-emission-osvvm.t
-  t/1676-vial-architecture-scale-osvvm-runtime-materialization.t &&
+  t/1676-vial-architecture-scale-osvvm-runtime-materialization.t
+  t/1677-vial-architecture-scale-osvvm-runtime-execution-plan.t &&
   perl scripts/refresh_vial_vhdl_osvvm_gallery.pl --check &&
   perl scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl --check
 ---
@@ -105,8 +108,6 @@ mappings, six preserved portable sources/guards, and the exact provider
 census. The seven-source totals are 122,413/122,426/122,438 bytes; t1676
 re-derives and falsifies these identities, while the module, task tree, and
 this card retain them durably. Limit/excess are provider-, route-, staging-,
-and tool-free. Clean materializer commit `90c4d9abd` activates `.17.3.7.2` only
-to extract the caller-sealed provider/generated-source/fixture/probe/report
-execution plan while the checked qualifier remains the executable oracle. No
-GHDL runtime, measurement, publication, support, performance, capacity,
-provider-generality, mixed-language, or public-API claim follows.
+and tool-free.
+
+Child `.17.3.7.2` seals three in-memory OSVVM/GHDL plans: each binds 61 provider analyses, seven emitted sources plus the checked probe, separate fixture/probe commands, four reports, exact tool/resource authority, and repository-relative storage. t1677 re-derives the full identities and falsifies widening; the qualifier consumes the same private authority and stays byte-identical to its checked 74,976-byte executable oracle. Evaluation creates no stage or process, limit/excess stay plan-free, all runtime/product nonclaims remain, and `.17.3.7.3` next owns lifecycle admission.

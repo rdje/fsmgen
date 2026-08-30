@@ -4046,10 +4046,8 @@ die "unexpected external execution"
     if $report->{claims}{external_tool_executed};
 ```
 
-From clean materializer commit `90c4d9abd`, `.17.3.7.2` is active solely to
-extract the caller-sealed OSVVM/GHDL execution plan. The checked qualifier
-remains the executable oracle; no shared-lifecycle change, GHDL invocation,
-measurement sample, or matrix publication is active in this extraction slice.
+The exact plan identities, authority closure, falsification, and structural
+example are in [OSVVM Runtime Execution Plan](16de-vial-osvvm-runtime-execution-plan.md).
 
 The same real RAM guard is mandatory for correctness validation, measurement,
 and independent report regeneration. The focused exact proof is:

@@ -53,6 +53,7 @@
   - [Structural Backend-Emission Matrix](16db-vial-structural-backend-emission-matrix.md)
   - [Portable Verilator Runtime Measurement](16dc-vial-portable-verilator-runtime-measurement.md)
   - [Portable VHDL Runtime Measurement](16dd-vial-portable-vhdl-runtime-measurement.md)
+  - [OSVVM Runtime Execution Plan](16de-vial-osvvm-runtime-execution-plan.md)
   - [NEXSIM Semantic API and MCP Agent-Consumer Requirements](16e-nexsim-api-mcp-consumer-requirements.md)
 - [Reference Map](90-reference-map.md)
 - [Live-Document Containment Adoption](91-live-document-containment-adoption.md)
