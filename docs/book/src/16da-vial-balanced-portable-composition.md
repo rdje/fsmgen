@@ -214,9 +214,9 @@ checked-anchor construction, exact-caller rejection, and guard thresholds. The
 opt-in path constructs the real validation and three raw records, regenerates
 the report independently, mutates canonical emission and applicability, forces
 a worker failure, and requires zero staging residue. Publication is a separate
-lifecycle below; no immutable set exists until clean capture and independent
-reload both pass. This adapter alone adds no performance budget, capacity,
-support, parity, public-API, or runtime claim.
+lifecycle below; the clean capture and independent reload recorded there now
+seal the immutable set. This adapter alone adds no performance budget,
+capacity, support, parity, public-API, or runtime claim.
 
 ## Immutable publication and reload lifecycle
 
@@ -267,8 +267,31 @@ bounded IPC, atomic publication and exact crash recovery, collision and
 ambiguity rejection, aggregate drift, fresh runner isolation, and cleanup
 without running the exact campaign. The 64-MiB file ceiling is conservative
 containment, not a performance, capacity, support, execution, or reached-boundary
-claim. An immutable set remains pending until guarded capture and the separate
-reload both succeed.
+claim.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-balanced-portable-measurement-matrix-seal-118b3bfb6-v1 -->
+- Claim: Clean revision `118b3bfb68902c9479ca4c83a714b23ebb50501a` seals the one-profile balanced-portable matrix as three immutable files totaling 1,280,699 bytes; the accepted aggregate retains one validation, three raw and zero excluded measurements, one external-execution-inapplicable profile, four cleaned records, zero residue, and a fresh-process complete identity `balanced-portable-matrix/d0619d4cce4d8eebb6b486d70bc41368d9d5f379ce54f87c6843f931ca462900`.
+- Re-derive: Run guarded exact t1682 or guarded runner `--validate`; independently census only the balanced-portable profile, family, and complete publications with `find` and `wc`, hash all three with `shasum -a 256`, and project common identity and dominance with `jq`.
+- Falsify: Start exact t1682 from an empty balanced namespace and require rejection for any producer/profile, applicability, structural count, measurement identity, sample/exclusion, common identity, aggregate, checksum, collision, child, cleanup, or staging disagreement.
+- Durability: Preserve the three content-addressed publications on the repository volume and retain the exact task, chapter, Knowledge Map card, publisher, runner, watcher, bounded claim record, doctrine gate, and work-unit Git chain.
+<!-- CLAIM-VERIFICATION:END vial-balanced-portable-measurement-matrix-seal-118b3bfb6-v1 -->
+
+The guarded exact watcher passed `Files=1, Tests=6` in 5,575 seconds. It
+published the profile and both manifests, reloaded exact bytes in the parent,
+then launched a fresh runner that returned the same complete identity. The
+independent file census is:
+
+| Publication | Bytes | SHA-256 |
+| --- | ---: | --- |
+| profile | 1,273,744 | `f1b3890205a1f9a5fc6495b421a58ce07b3b80d2d3d4606eda7d96a0e91e2951` |
+| family | 4,280 | `beeb203cfdfca21bcd1ae0858ab6b33da35851df2ab549186defc3ae4d11c18f` |
+| complete | 2,675 | `f33f0144060ca4ebb5e043f7f116ea787206f71bd4fd9fab73dc57429f0923fc` |
+
+All three files bind the clean revision, recorded M4 Pro/APFS host, internal
+Perl worker, and active repository guard. The profile retains the accepted
+private revision-2 structural evidence and explicitly keeps external execution
+inapplicable. The seal adds no performance, capacity, support, parity, public-
+API, or reached-runtime-boundary claim.
 
 ## Repository-root example
 

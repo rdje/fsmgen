@@ -7,9 +7,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8.2`
-  (`active`; immutable balanced measurement-set publication)
-- next_action: from the clean `.17.3.8.2` implementation commit, run the exact
-  guarded capture and then validate its immutable bytes in a distinct process.
-- in_flight_uncommitted: none after the `.17.3.8.2` implementation commit.
+  (`done`; immutable balanced measurement-set seal)
+- next_action: activate `.17.3.9` from the clean seal commit to close measured
+  families, derived views, and pinned-host/tool candidate budgets.
+- in_flight_uncommitted: none after the `.17.3.8.2` seal commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none.

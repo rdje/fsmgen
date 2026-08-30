@@ -389,12 +389,12 @@ staging, or tool eligibility. A guarded opt-in public Runner test independently
 executes both tracked candidates and verifies their complete graph and exact
 trace families; the default test remains tool-free.
 
-`.17.3.8.1` seals the sole balanced gate: six prerequisites feed one validation and three raw construct-through-emit
-records without stage contamination. It retains the private revision-2 bridge, 2,048 bindings, 1,024 operations, eight
-artifacts, three sources, 503,279 source bytes, and 3,605 maps; runtime remains inapplicable. `.17.3.8.2` adds an exact
-publisher whose child validates and atomically publishes the full report before bounded IPC; aggregates bind one clean
-revision, host, internal-tool, and guard. t1682 rejects caller evidence, drift, collision, process/size/path/staging
-failure, and forgery; immutable capture/reload and runtime, budget, capacity, support, parity, or API claims remain pending.
+`.17.3.8.1` seals one validation and three raw structural records for the sole balanced gate, retaining its private
+revision-2 bridge, 2,048 bindings, 1,024 operations, eight artifacts, three sources, 503,279 bytes, and 3,605 maps.
+Clean `118b3bfb68902c9479ca4c83a714b23ebb50501a` then seals `.17.3.8.2` as three immutable files/1,280,699 bytes.
+Guarded exact t1682 passes six tests in 5,575 seconds and a fresh runner returns complete identity `balanced-portable-
+matrix/d0619d4cce4d8eebb6b486d70bc41368d9d5f379ce54f87c6843f931ca462900`: one validation, three raw/zero excluded,
+four cleaned/zero residue records, and execution inapplicable. No runtime, budget, capacity, support, parity, or API claim follows.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

@@ -783,10 +783,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.5: activate OSVVM measurement publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.5: implement OSVVM measurement publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.5: seal OSVVM measurement publication`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8`
-  Status: `active`
+  Status: `done`
   Goal: `Measure the caller-sealed revision-2 balanced portable composition without widening any public contract.`
   Acceptance: `Run the exact decision-0077 balanced source-to-portable-SystemVerilog route through the common measurement foundation; prove all six fresh prerequisite gates, bridge/ExecutionIR/binding/operation/artifact/map identities, deterministic bytes, stage-local costs, raw samples, effective guard/timeouts, atomic publication, failure, and cleanup; measure external execution only if its separately qualified route is applicable; and preserve all public AHB/revision-1/support/performance/capacity nonclaims.`
-  Verification: `Clean OSVVM seal 9fde163ae closes the preceding roadmap leaf before this pivot. Query-first audit of decision 0077, the balanced composer/emitter, unified provider-free qualifier, book, card, and source history finds one exact owned shape and no balanced measurement adapter or publisher. The balanced emitter's canonical report explicitly stops after structural emission and records compile/runtime/trace/result as not run; no separate runtime qualification admits its private revision-2 bridge. This parent therefore owns two ordered children: guarded common-controller structural measurement, then immutable raw publication plus independent reload. Clean child implementation 91ceaf9eb from activation f5706713e adds the exact adapter, producer-sealed stage seams, guarded validation plus three raw measurements, structural-only applicability, fail-closed timeout/failure evidence, and cleanup without widening public behavior. Publication/reload child `.2` is active.`
+  Verification: `Clean OSVVM seal 9fde163ae closes the preceding roadmap leaf before this pivot. Query-first audit of decision 0077, the balanced composer/emitter, unified provider-free qualifier, book, card, and source history finds one exact owned shape and no balanced measurement adapter or publisher. The balanced emitter stops after structural emission and no separate runtime qualification admits its private revision-2 bridge. Child `.1` implementation 91ceaf9eb adds the exact guarded adapter, one validation plus three raw records, producer-sealed stage seams, structural-only applicability, failure evidence, and cleanup. Child `.2` implementation 118b3bfb6 adds isolated immutable publication; guarded exact t1682 then passes from that clean revision in 5,575 seconds and independently reloads the three-file/1,280,699-byte accepted set with zero exclusions/residue and unchanged runtime/product nonclaims.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8: activate balanced portable measurement`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8.2`
 
@@ -798,11 +798,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8.1: implement balanced portable measurement`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8.2`
-  Status: `active`
+  Status: `done`
   Goal: `Publish and independently reload the immutable balanced portable measurement set.`
   Acceptance: `Derive the one balanced gate role from producer ownership; isolate capture and reload; atomically retain the complete validation plus three raw reports before bounded coordinator IPC; bind one clean revision/host/internal-tool/guard identity; preserve applicability, exact structural evidence, exclusions, cleanup, and nonclaims; reject incomplete, reordered, mixed, stale, collided, signalled, oversized, symlinked, or ambiguous state; and complete guarded capture plus a distinct fresh-process reload before closing .17.3.8.`
-  Verification: `Clean predecessor 91ceaf9eb supplies the sole member, four structural records, closed applicability/nonclaims, failure/cleanup evidence, and zero residue. Knowledge Map and history find no balanced publisher, runner, watcher, or namespace; the three existing publishers are sealed to other producers/reports/tools/namespaces. The exact-class implementation now derives the one role, isolates capture/reload, publishes the complete canonical report before bounded coordinator IPC, atomically seals profile/family/complete layers at one clean revision/host/internal-tool/guard identity, and rejects caller evidence, drift, collision, child failure, unsafe paths, and ambiguous staging. Syntax and default t1680/t1681/t1682 pass; clean guarded capture plus distinct reload remain pending before closure. No runtime, budget, capacity, support, parity, provider, or public-API claim is added.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8.2: activate balanced measurement publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8.2: implement balanced measurement publication`
+  Verification: `Clean predecessor 91ceaf9eb supplies the sole member, four structural records, closed applicability/nonclaims, failure/cleanup evidence, and zero residue. Knowledge Map and history find no balanced publisher, runner, watcher, or namespace; the three existing publishers are sealed elsewhere. Clean implementation 118b3bfb6 derives the one role, isolates capture/reload, publishes the canonical report before bounded IPC, atomically seals profile/family/complete layers at one clean identity, and rejects caller evidence, drift, collision, child failure, unsafe paths, and ambiguous staging. Guarded exact t1682 passes Files=1/Tests=6 in 5,575 seconds, including a fresh runner identity check. Independent census seals three files/1,280,699 bytes with exact hashes, one validation, three raw/zero excluded samples, four cleanup/zero residue records, external execution inapplicable, absent staging, and clean Git. No runtime, budget, capacity, support, parity, provider, or public-API claim is added.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8.2: activate balanced measurement publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8.2: implement balanced measurement publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8.2: seal balanced measurement publication`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9`
   Status: `proposed`
@@ -7531,42 +7531,9 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
 
 ## Acceptance Checklist (enforced) — `.17.3.7.4` measurement implementation
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S
-  'ArchitectureScalePortableVHDLRuntimeMeasurement' --oneline -- perl scripts
-  t` identifies portable origin `e7203c278`, while Knowledge Map and source
-  search find no OSVVM measurement owner. The portable adapter seals six
-  generated sources and one top; the committed OSVVM authority instead
-  requires provider verification, 61 ordered provider analyses, seven
-  generated sources plus probe, separate fixture/probe elaboration and run,
-  four supplementary reports, and provider-aware cleanup.
-- [x] **ADDRESSED (verified)** — The exact-class adapter now reconstructs
-  authored route/materialization/plan authority per worker, normalizes only the
-  caller-selected root-bound graph identity, materializes the canonical seven-
-  source order, admits the exact 68-source lifecycle request, retains every
-  provider/generated command capture and report identity, validates portable
-  trace/result truth, re-verifies provider identity after execution, publishes
-  bounded evidence, and removes both lifecycle and controller roots. Reference
-  uses one validation; gate and qualification use one validation plus three or
-  five independently measured records. Limit/excess remain preflight-only.
-- [x] **NO REGRESSION** — Changed Perl/test syntax and diff checks pass. The
-  exact guarded t1679 proof reports `All tests successful` at `Files=1,
-  Tests=8` with 305 guarded sub-assertions in 2,041 seconds: all eleven records
-  accept exact 77/10,000/100,000 traces, 61 provider-analysis captures, 68
-  sources, two elaborations, one fixture/probe execution pair, four reports,
-  zero exclusions, and zero residue. The guarded qualification/controller/
-  lifecycle/materializer/plan/adapter impact reports `All tests successful` at
-  `Files=9, Tests=50` in 254 seconds; focused CI-inventory coverage passes at
-  `Files=1, Tests=12`. All 57 mdBook chapters test, and the inspected
-  repository-local render contains 93 files/20,116,994 bytes before exact
-  removal. `knowledge-map: OK` covers 1,155 facts/6,128 questions/6,300
-  occurrences/136 shards. The claim join closes all 1,638 candidates as 129
-  claim records/916 gates/593 reviews/zero gaps, and task integrity remains
-  four trees/1,019 nodes. Production containment accepts exact 58-file/
-  53,161-line/2,849,583-byte book authority (+0/+38/+3,877) with zero ceiling
-  increase. Final locality, cleanup, staged acceptance, resulting-tree, diff,
-  and `[doctrine] all doctrine checks passed` evidence is recorded before
-  commit; only pinned provider-owned validation logs remain. Full CI and push
-  remain deferred by policy.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Portable origin `e7203c278` owns six sources/one top, but no OSVVM measurement owner reconstructs the committed provider verification, 61 analyses, seven generated sources plus probe, dual tops/runs, four reports, and provider-aware cleanup.
+- [x] **ADDRESSED (verified)** — The exact adapter reconstructs authored route/materialization/plan authority per worker, runs the 68-source lifecycle, retains provider/generated commands, reports, trace/result and post-provider identity, and cleans both roots. Reference validates once; gate/qualification add three/five measurements; limit/excess remain preflight-only.
+- [x] **NO REGRESSION** — Guarded t1679 passes `Files=1, Tests=8`/305 sub-assertions in 2,041 seconds across eleven exact 77/10,000/100,000-record captures; impact passes `Files=9, Tests=50`/254 seconds and inventory `Files=1, Tests=12`. All 57 chapters, removed 93-file/20,116,994-byte render, Knowledge Map `1,155/6,128/6,300/136`, claims `1,638/129/916/593/0`, containment, task, locality, cleanup, staged acceptance, resulting-tree, diff, and doctrines pass; full CI/push remain deferred.
 
 ## Acceptance Checklist (enforced) — `.17.3.7.5` publication activation
 
@@ -7609,6 +7576,12 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Knowledge Map query is empty and `git log -S'BalancedPortableMeasurementMatrix' -- perl scripts t` finds no predecessor owner; existing matrix origins bind incompatible producer, report, tool, namespace, and aggregate contracts.
 - [x] **ADDRESSED (verified)** — The exact publisher/runner/watcher derive one producer-owned role, isolate profile work, publish canonical raw evidence before 65,536-byte IPC, bind atomic profile/family/complete publications to one clean identity, and reject caller evidence, drift, collision, failure, unsafe paths, symlinks, oversized state, and ambiguous staging. No immutable set is claimed before guarded capture and distinct reload.
 - [x] **NO REGRESSION** — Perl syntax and default t1680/t1681/t1682 pass `Files=3, Tests=19`; all 57 book chapters test and the inspected/removed render is 93 files/20,249,161 bytes. Knowledge Map is `1,155/6,130/6,302/136`; claims close `1,665/154/918/593/0`. Containment accepts the 58-file/53,389-line/2,866,910-byte book and 111,399-line task surface with zero ceiling increase. Path, locality, task, staged acceptance, resulting-tree, diff, and `[doctrine] all doctrine checks passed`; full CI, exact capture/reload, and push remain at policy boundaries.
+
+## Acceptance Checklist (enforced) — `.17.3.8.2` publication seal
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'BalancedPortableMeasurementMatrix' -- perl scripts t` names clean `118b3bfb6` as the publisher implementation, but the pre-capture `find` census is empty; an immutable-set claim requires guarded capture from that exact clean revision and a fresh process returning the same complete identity.
+- [x] **ADDRESSED (verified)** — Guarded exact t1682 passes `Files=1, Tests=6` in 5,575 seconds and freshly reloads complete identity `balanced-portable-matrix/d0619d4cce4d8eebb6b486d70bc41368d9d5f379ce54f87c6843f931ca462900`. Independent `find`/`wc`/`shasum`/`jq` seals three files/1,280,699 bytes, exact hashes, one validation, three raw/zero excluded samples, external execution inapplicable, four cleanup/zero residue records, one clean revision/host/internal-tool/guard identity, and absent staging.
+- [x] **NO REGRESSION** — Git remained clean and `git_message_brief.txt` empty after capture/reload. Default t1682 passes `Files=1, Tests=6`; all 57 book chapters test and the inspected/removed render is 93 files/20,273,947 bytes. Knowledge Map parity is `1,155/6,130/6,302/136`; claims close `1,671/160/918/593/0`. Containment accepts the exact 58-file/53,412-line/2,869,189-byte book authority, 111,372-line task surface, and zero ceiling increase. Registry validation also exposed and repairs the pre-existing t1594 watcher-path typo against the tracked filename. Final task, path, locality, cleanup, staged acceptance, resulting-tree, diff, and doctrine evidence is recorded before commit. No code or performance/capacity/support/parity/runtime/API claim changes; full CI and push remain at policy boundaries.
 
 ## Acceptance Checklist (enforced) — `.17.3.7.2` execution-plan implementation
 
