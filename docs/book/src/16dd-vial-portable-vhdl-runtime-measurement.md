@@ -253,6 +253,13 @@ and staging cleanup without running the exact campaign. Its guarded
 sealing, and fresh-process identity equality. The similarly named portable-
 Verilator trigger cannot activate it.
 
+The provider-qualified OSVVM route deliberately uses a separate matrix class,
+schemas, profile IDs, staging namespace, runner, and aggregate identities. It
+reuses this publication pattern but binds the pinned provider inside its common
+tool identity and retains the larger provider/source/report evidence in each
+raw profile publication. See [OSVVM Runtime Execution and Measurement](16de-vial-osvvm-runtime-execution-plan.md)
+for its exact implementation and pending guarded-capture boundary.
+
 Every executable profile must carry the producer-authoritative seventeen-
 artifact portable-VHDL emission graph. The first clean exact publication
 attempt exposed and failed closed on a copied six-artifact portable-Verilator

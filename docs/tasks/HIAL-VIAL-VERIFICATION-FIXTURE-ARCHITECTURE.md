@@ -778,9 +778,9 @@ decomposes the architecture needed to move beyond that bounded foundation.
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.5`
   Status: `active`
   Goal: `Publish and independently reload the complete immutable OSVVM runtime measurement set.`
-  Acceptance: `Derive all five roles from producer ownership; isolate capture and reload; bind one clean revision/host/provider/tool/guard identity; retain raw/excluded samples, provider applicability, dominance, supplementary evidence, cleanup, and nonclaims; reject incomplete/reordered/mixed/stale/collided/signalled/oversized/ambiguous state; complete guarded capture plus distinct fresh-process reload before closing .17.3.7.`
-  Verification: `Clean predecessor 03292cd1e supplies the exact five-role producer, eleven accepted runtime records across reference/gate/qualification, provider/plan/controller/tool-free limit and excess reports, complete raw/provider/report/trace/result evidence, and both cleanup domains. Query-first source/history audit finds no OSVVM matrix owner; portable-Verilator origin 9a534bc93 and portable-VHDL origin e4f4a295e are each sealed to their producer, profile, report schema, tool tuple, publication namespace, and aggregate identities. This leaf alone now owns an OSVVM-specific publisher, runner, hostile watcher, guarded capture, and independent fresh-process reload without adding a budget, support, capacity, provider-generality, parity, mixed-language, or public-API claim.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.5: activate OSVVM measurement publication`
+  Acceptance: `Derive all five roles from producer ownership; isolate capture and reload; bind one clean revision/host/provider/tool/guard identity; retain raw/excluded samples, provider applicability, dominance, supplementary evidence, cleanup, and nonclaims; reject incomplete/reordered/mixed/stale/collided/signalled/oversized/ambiguous state; repair the impacted Darwin lifecycle watcher's same-volume native fixture if linker-signature execution stalls block focused signoff; complete guarded capture plus distinct fresh-process reload before closing .17.3.7.`
+  Verification: `Clean predecessor 03292cd1e supplies the exact five-role producer, eleven accepted runtime records across reference/gate/qualification, provider/plan/controller/tool-free limit and excess reports, complete raw/provider/report/trace/result evidence, and both cleanup domains. Query-first source/history audit finds no OSVVM matrix owner; portable-Verilator origin 9a534bc93 and portable-VHDL origin e4f4a295e are each sealed to their producer, profile, report schema, tool tuple, publication namespace, and aggregate identities. Clean activation 2f48bf26a precedes one OSVVM-specific implementation that derives producer order, isolates capture/reload children, publishes raw canonical reports before bounded compact entries, and seals family/complete manifests only over one clean revision/host/provider/tool/guard identity. Hostile watcher coverage rejects guard/caller/mode/IPC/signal/collision/recovery/ambiguity/preflight-identity/order/sample/common-identity drift. Focused signoff also root-causes a Darwin external-volume linker-signature stall in t1678's generated fake GHDL and explicitly ad-hoc signs only that test binary; the pinned production GHDL is unchanged. Default t1676-t1680 pass Files=5/Tests=30 in 144 seconds. Guarded exact capture and independent reload remain pending after the implementation commits cleanly; no budget, support, capacity, provider-generality, parity, mixed-language, or public-API claim is added.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.5: activate OSVVM measurement publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.5: implement OSVVM measurement publication`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8`
   Status: `proposed`
@@ -7579,6 +7579,42 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   diff, and `[doctrine] all doctrine checks passed` evidence is recorded before
   commit; only pinned provider-owned validation logs remain. Full CI and push
   remain deferred by policy because activation changes no product behavior.
+
+## Acceptance Checklist (enforced) — `.17.3.7.5` publication implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE; executable RED)** — The first focused t1680
+  run fails before tests because the exact OSVVM matrix module is absent.
+  Query-first audit plus `git log -S'_capture_family' --oneline --
+  perl/FSM/VIAL/ArchitectureScalePortableRuntimeMeasurementMatrix.pm
+  perl/FSM/VIAL/ArchitectureScalePortableVHDLRuntimeMeasurementMatrix.pm`
+  locate portable-Verilator origin `9a534bc93` and portable-VHDL origin
+  `e4f4a295e`; both are sealed to different producer/report/tool/namespace/
+  aggregate identities. During
+  focused signoff, t1678 independently exposes `VIAL_GHDL_LIFECYCLE_TIMEOUT`:
+  its freshly compiled fake GHDL hangs on direct `--version` execution from
+  the external APFS repository, while replacing the valid linker signature
+  with explicit Darwin ad-hoc signing makes the same bytes execute immediately.
+- [x] **ADDRESSED (verified)** — The new exact-class publisher and runner derive
+  all five OSVVM roles from producer ownership, isolate capture and reload,
+  publish complete canonical reports before compact coordinator entries, bind
+  one clean revision/host/pinned-provider/tool/guard tuple, inherit rather than
+  originate preflight identity, and reject incomplete/reordered/duplicated/
+  mixed/stale/collided/signalled/oversized/symlinked/ambiguous state. t1678 now
+  explicitly ad-hoc signs only its Darwin fake provider binary after compile;
+  production provider/tool identities and behavior do not change. Exact guarded
+  capture and distinct reload intentionally remain pending from a clean commit.
+- [x] **NO REGRESSION** — All changed Perl files report `syntax OK`; the clean
+  focused materialization/plan/lifecycle/measurement/publication chain reports
+  `Files=5, Tests=30` in 144 seconds. All 57 mdBook chapters test, and the
+  inspected then exactly removed render contains 93 files/20,149,201 bytes.
+  Knowledge Map closure is 1,155 facts/6,129 questions/6,301 occurrences/136
+  shards; task integrity is four trees/1,019 nodes. Claims close all 1,640
+  candidates as 131 claim records/916 gates/593 reviews/zero gaps. Production
+  containment accepts the exact 58-file/53,236-line/2,854,991-byte book
+  authority (+0/+74/+5,311) with zero ceiling increase. Final locality,
+  cleanup, staged acceptance, resulting-tree, diff, and `[doctrine] all
+  doctrine checks passed` evidence is recorded before commit. Full CI, exact
+  capture/reload, and push remain deferred to their policy boundaries.
 
 ## Acceptance Checklist (enforced) — `.17.3.7.2` execution-plan implementation
 

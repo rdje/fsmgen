@@ -21,6 +21,13 @@ qualified GHDL route. Neither step starts GHDL.
 - Durability: Retain the caller-sealed measurement adapter, common controller and provider-aware lifecycle admissions, t1679, task .17.3.7.4, this chapter, the OSVVM Knowledge Map card, bounded claim record, doctrine gate, and work-unit Git chain; rerun the guarded exact watcher whenever any participant changes.
 <!-- CLAIM-VERIFICATION:END vial-osvvm-runtime-measurement-v1 -->
 
+<!-- CLAIM-VERIFICATION:BEGIN vial-osvvm-runtime-publication-implementation-v1 -->
+- Claim: The OSVVM-specific matrix publisher derives exactly five ordered roles from producer ownership, isolates every capture or reload in a child process, publishes each complete canonical report before returning a compact coordinator entry, and permits family/complete manifests only at one clean Git revision, host, pinned provider/tool, and active-guard identity. The implementation does not claim that an immutable measurement set exists before its later guarded capture and independent reload both pass.
+- Re-derive: Run prove -Iperl t/1680-vial-architecture-scale-osvvm-runtime-measurement-matrix.t and scripts/run_vial_osvvm_runtime_measurement_matrix.pl --inventory; independently compare the returned order and modes with ArchitectureScaleOSVVMRuntimeMeasurement->owned_shapes and inspect the report-before-entry publication path.
+- Falsify: Remove the guard, introduce a caller-selected role, mutate or reorder a profile, mix common identities, repeat a measurement identity, collide with an immutable target, leave incomplete or ambiguous staging, exceed a file or IPC ceiling, signal a child, or let a preflight role originate provider/tool identity. The watcher must reject every control without an aggregate seal.
+- Durability: Retain the exact-class matrix module, runner, t1680, task .17.3.7.5, this chapter, the OSVVM Knowledge Map card, bounded claim record, doctrine gate, and work-unit Git chain; replace the explicit pending-capture boundary only after clean guarded capture plus distinct fresh-process reload.
+<!-- CLAIM-VERIFICATION:END vial-osvvm-runtime-publication-implementation-v1 -->
+
 ## Closed authority
 
 `ArchitectureScaleOSVVMRuntimeExecutionPlan` owns only the materialized
@@ -111,7 +118,10 @@ assembly. Live qualification still reproduces the checked report byte-for-byte;
 the checked portable qualifier is also unchanged. Hostile controls cover
 alternate resource policy, generated-settings mutation, absent reports,
 caller widening, state/object/source/provider mutation, collision, process
-failure, and cleanup.
+failure, and cleanup. On Darwin, the watcher explicitly applies an ad-hoc
+signature to its freshly compiled repository-local fake GHDL executable before
+testing this path; that prevents external-volume linker-signature stalls and
+does not modify or substitute the pinned production GHDL binary.
 
 ## Common-controller measurement
 
@@ -147,9 +157,66 @@ Limit and over-limit stop at materialization preflight: they acquire no plan,
 provider callback, common controller, lifecycle, or external tool. This work
 publishes measurement evidence only. It does not promote a performance budget,
 product-support statement, capacity boundary, provider-generality,
-mixed-language, or public-API claim. Immutable matrix publication and fresh-
-process reload are active under `.17.3.7.5`; no immutable set exists until
-that leaf completes both its guarded capture and distinct reload.
+mixed-language, or public-API claim.
+
+## Immutable publication implementation
+
+`ArchitectureScaleOSVVMRuntimeMeasurementMatrix` is a separate exact-class
+publisher. It cannot inherit the portable-VHDL matrix or share that matrix's
+schemas, profile identities, staging namespace, or aggregate identities. Its
+five-role order comes directly from the OSVVM measurement producer:
+
+| Role | Publisher route |
+| --- | --- |
+| reference | correctness-only validation |
+| gate candidate | validation plus three measured records |
+| qualification candidate | validation plus five measured records |
+| limit | preflight-dominated, inheriting the executable capture identity |
+| over-limit | preflight-dominated, inheriting the executable capture identity |
+
+Each role executes or reloads in its own child. The child first validates and
+atomically publishes the complete canonical report in its content-addressed
+profile directory. Only a separately bounded compact manifest entry crosses
+the coordinator pipe. Thus the long-lived coordinator neither transports nor
+retains the raw provider, command, transcript, report, trace, result, sample,
+and cleanup evidence through its IPC envelope.
+
+All five entries must bind one clean Git revision, host profile, exact pinned
+OSVVM/GHDL tool profile, and active resource guard. Tool-free limit and excess
+reports may inherit that tuple only after executable evidence establishes it;
+they cannot originate or change it. Family and complete manifests appear only
+after ordered reload validates every report, artifact digest and size, sample
+count, dominance count, nonclaim, and common identity. Conflicting immutable
+targets, incomplete or reordered profiles, mixed or stale identity, repeated
+samples, child failure or signal, oversized report/IPC, unsafe paths, symlinks,
+and malformed or ambiguous crash staging fail closed. Byte-exact abandoned
+staging alone may be recovered. The conservative 67,108,864-byte publication
+ceiling reuses an existing GHDL runtime-capture authority; it is containment,
+not a performance or capacity claim.
+
+Inspect the immutable inventory without starting provider or tool work:
+
+```console
+scripts/run_vial_osvvm_runtime_measurement_matrix.pl --inventory
+```
+
+After this implementation is committed cleanly, exact capture and independent
+reload run as separate guarded processes:
+
+```console
+scripts/run_with_ram_guard.sh -- \
+  scripts/run_vial_osvvm_runtime_measurement_matrix.pl
+scripts/run_with_ram_guard.sh -- \
+  scripts/run_vial_osvvm_runtime_measurement_matrix.pl --validate
+```
+
+The default `t/1680-vial-architecture-scale-osvvm-runtime-measurement-matrix.t`
+checks producer ownership, routing, guard enforcement, child isolation,
+canonical bounded IPC, immutable publication/recovery, collision and ambiguity,
+preflight identity inheritance, aggregate drift, raw-evidence expectations,
+runner isolation, and cleanup without launching the exact campaign. No
+immutable OSVVM measurement set is claimed until the later clean guarded
+capture and distinct fresh-process reload both pass.
 
 See [HIAL/VIAL Verification Architecture](16d-hial-vial-verification-architecture.md)
 for the parent architecture and [Portable VHDL Runtime Measurement](16dd-vial-portable-vhdl-runtime-measurement.md)

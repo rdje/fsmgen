@@ -237,6 +237,11 @@ C
     die "cannot compile native fake OSVVM provider\n" unless $? == 0;
     chmod 0700, repo_path($binary)
         or die "cannot chmod fake OSVVM provider: $!";
+    if ($^O eq 'darwin') {
+        system '/usr/bin/codesign', '--force', '--sign', '-',
+            repo_path($binary);
+        die "cannot ad-hoc sign fake OSVVM provider\n" unless $? == 0;
+    }
     write_raw(repo_path($provider_source), "entity provider is end entity;\n");
     write_raw(repo_path($generated_source), "entity generated is end entity;\n");
 

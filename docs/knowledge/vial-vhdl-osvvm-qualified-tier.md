@@ -12,6 +12,7 @@ answers:
   - "how is the exact OSVVM GHDL execution plan sealed?"
   - "how does the provider-aware GHDL lifecycle execute the exact OSVVM plan?"
   - "how are OSVVM runtime reference gate and qualification records measured?"
+  - "how is the complete OSVVM runtime measurement matrix published and reloaded?"
 date: 2026-08-30
 status: current
 tags: [hial, vial, vhdl, osvvm, ghdl, review-gallery, verification]
@@ -23,10 +24,11 @@ evidence: >-
   perl/FSM/VIAL/Backend/VHDLOSVVMStaticValidator.pm;
   perl/FSM/VIAL/Backend/GHDLLifecycle.pm; perl/FSM/VIAL/Backend/VHDLOSVVMGHDLQualification.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission/OSVVM.pm;
-  perl/FSM/VIAL/ArchitectureScaleOSVVMRuntimeMaterialization.pm; perl/FSM/VIAL/ArchitectureScaleOSVVMRuntimeExecutionPlan.pm; perl/FSM/VIAL/ArchitectureScaleOSVVMRuntimeMeasurement.pm;
+  perl/FSM/VIAL/ArchitectureScaleOSVVMRuntimeMaterialization.pm; perl/FSM/VIAL/ArchitectureScaleOSVVMRuntimeExecutionPlan.pm; perl/FSM/VIAL/ArchitectureScaleOSVVMRuntimeMeasurement.pm; perl/FSM/VIAL/ArchitectureScaleOSVVMRuntimeMeasurementMatrix.pm;
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/Support/VIALVHDLEmissionContract.pm;
   scripts/refresh_vial_vhdl_osvvm_gallery.pl;
   scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl;
+  scripts/run_vial_osvvm_runtime_measurement_matrix.pl;
   t/1598-vial-vhdl-osvvm-emission.t;
   t/1599-vial-vhdl-osvvm-ghdl-qualification.t;
   t/1642-vial-vhdl-osvvm-provider-evaluation.t; t/1644-vial-backend-emission-authority-alignment.t;
@@ -35,6 +37,7 @@ evidence: >-
   t/1677-vial-architecture-scale-osvvm-runtime-execution-plan.t;
   t/1678-vial-ghdl-provider-aware-lifecycle.t;
   t/1679-vial-architecture-scale-osvvm-runtime-measurement.t;
+  t/1680-vial-architecture-scale-osvvm-runtime-measurement-matrix.t;
   vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json;
   vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/README.md;
   vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/evidence/provider-materialization.json;
@@ -51,7 +54,8 @@ reverify: >-
   t/1648-vial-architecture-scale-backend-emission-osvvm.t
   t/1676-vial-architecture-scale-osvvm-runtime-materialization.t
   t/1677-vial-architecture-scale-osvvm-runtime-execution-plan.t &&
-  prove -Iperl t/1678-vial-ghdl-provider-aware-lifecycle.t &&
+  prove -Iperl t/1678-vial-ghdl-provider-aware-lifecycle.t
+  t/1680-vial-architecture-scale-osvvm-runtime-measurement-matrix.t &&
   scripts/run_with_ram_guard.sh -- env
   FSMGEN_VIAL_OSVVM_RUNTIME_MEASUREMENT_EXACT=1 prove -Iperl
   t/1679-vial-architecture-scale-osvvm-runtime-measurement.t &&
@@ -112,4 +116,10 @@ Child `.17.3.7.4` maps that exact authority onto the common controller without a
 
 Clean measurement commit `03292cd1e` activates `.17.3.7.5` as the sole owner
 of OSVVM-specific immutable five-role publication and independent fresh-
-process reload. No aggregate is claimed until both operations complete.
+process reload. The exact-class publisher now derives producer order, isolates
+profile workers, publishes full canonical reports before bounded compact
+entries, and binds only one clean revision/host/provider/tool/guard identity.
+Its runner and t1680 reject mixed, reordered, incomplete, collided, signalled,
+oversized, or ambiguous state. The implementation is present, but no aggregate
+is claimed until clean guarded capture and a distinct fresh-process reload both
+complete.

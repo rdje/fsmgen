@@ -8,8 +8,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.5`
   (`active`; immutable OSVVM runtime measurement-set publication)
-- next_action: audit the two existing runtime-matrix publishers, then implement
-  exact five-role atomic publication plus separate fresh-process reload.
-- in_flight_uncommitted: none.
+- next_action: commit the verified OSVVM matrix publisher implementation, then
+  run exact guarded capture and separate fresh-process reload from that clean revision.
+- in_flight_uncommitted: publisher, runner, watcher, Darwin fixture repair, and
+  synchronized task/book/card/doctrine evidence.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none.
