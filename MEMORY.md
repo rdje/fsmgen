@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9`
-  (`active`; measured-family calibration closure)
-- next_action: activate `.17.3.9.2` for atomic closure publication and
-  independent fresh-process reload.
-- in_flight_uncommitted: none after the `.17.3.9.1` derivation seal.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9.2`
+  (`active`; atomic measured-family closure publication)
+- next_action: author executable RED t1684 for caller-sealed atomic publication
+  and independent fresh-process reload.
+- in_flight_uncommitted: none after the `.17.3.9.2` activation commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
-- blockers: none; `.17.3.9.2` remains proposed until the clean pivot.
+- blockers: none; the absent publisher/runner/watcher is the owned RED state.
