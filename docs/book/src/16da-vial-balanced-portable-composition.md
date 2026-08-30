@@ -151,36 +151,72 @@ invocants fail closed. `with_staging` nests one representative runtime stage and
 the balanced stage so the consumer sees both simultaneously; both exact
 repository-volume trees are removed after success or consumer failure.
 
-## Measurement activation
+## Structural measurement lifecycle
 
-<!-- CLAIM-VERIFICATION:BEGIN vial-balanced-portable-measurement-activation-v1 -->
-- Claim: Active `.17.3.8` contains exactly two ordered children: `.1` owns one validation plus three raw measurements of the sole `balanced_portable_v1/sv_portable_verilator/gate_candidate_v1` structural member, and `.2` owns immutable publication plus fresh-process reload; compile through result remains inapplicable because no separately qualified runtime route admits the private revision-2 bridge. Activation itself creates no measurement or publication.
-- Re-derive: Inspect decision `0077`, `ArchitectureScaleRuntimeBalancedQualification->owned_shapes`, the balanced composer/emitter stage and claim projections, and the `.17.3.8` task nodes; require one balanced member, structural emission only, and no executed compile/runtime/trace/result stage.
-- Falsify: Run t1653, t1654, and t1655 and require rejection of a public/revision-1 bypass, changed gate/report/bridge/ExecutionIR/backend evidence, a second balanced member, or any forged external-execution claim.
-- Durability: Retain decision `0077`, the two owning task children, this chapter, the architecture-scale Knowledge Map card, the bounded claim record, existing composer/emitter/qualifier watchers, and the activation Git commit.
-<!-- CLAIM-VERIFICATION:END vial-balanced-portable-measurement-activation-v1 -->
+<!-- CLAIM-VERIFICATION:BEGIN vial-balanced-portable-measurement-adapter-v1 -->
+- Claim: `ArchitectureScaleBalancedPortableMeasurement` derives only `balanced_portable_v1/sv_portable_verilator/gate_candidate_v1`, seals six fresh prerequisite reports, and uses the common controller to retain one validation plus three guarded raw records of `construct`, `parse_validate`, `bridge`, `bind_plan`, and `emit`; every compile-through-result stage is inapplicable because no separately qualified runtime route admits the private revision-2 bridge.
+- Re-derive: Query `ArchitectureScaleRuntimeBalancedQualification->owned_shapes`, inspect the exact adapter and its composer/emitter seams, and regenerate its report from the checked repository anchors; require one member, five FSMGen-owned stages, exact canonical composition/emission evidence, one validation, and three ordered raw records.
+- Falsify: Run guarded exact t1681 plus focused t1653, t1654, and t1655; require timeout/failure cleanup and reject caller-created stage products, public/revision-1 bypass, changed gate/report/bridge/ExecutionIR/backend evidence, missing or reordered records, a second member, or forged external-execution applicability.
+- Durability: Retain decision `0077`, the adapter and exact watcher, producer-sealed seams, this chapter, the architecture-scale Knowledge Map card, bounded claim record, owning `.17.3.8.1` task, and its implementation commit.
+<!-- CLAIM-VERIFICATION:END vial-balanced-portable-measurement-adapter-v1 -->
 
-Task `.17.3.8` now owns measurement without widening the private qualification
-route. The closed producer partition contains one member only:
-`balanced_portable_v1/sv_portable_verilator/gate_candidate_v1`. Child
-`.17.3.8.1` must reconstruct all six prerequisite gates plus the canonical
-composer and emitter inside every isolated common-controller worker. One
-correctness validation must precede three retained measurements of `construct`,
-`parse_validate`, `bridge`, `bind_plan`, and `emit`; the report must preserve
-the exact revision-2 bridge, 2,048 bindings, 1,024 operations, eight artifacts,
-three sources, 503,279 source bytes, and 3,605 source maps already owned by the
-structural qualifier.
+The measurement adapter closes one producer-owned member only:
+`balanced_portable_v1/sv_portable_verilator/gate_candidate_v1`. It reads the
+checked AHB HIAL and VIAL anchors from the repository, reconstructs all six
+fresh prerequisite reports, and seals the canonical composition and structural
+emission before invoking the common measurement controller. Caller-provided
+source, SemanticIR, bridge, ExecutionIR, plan, emission, member, or tool data
+has no entry point.
 
-The generated compile/run command descriptions do not establish an executable
-qualification. Decision `0077` and the current emitter stop at structural
-emission, and no separately qualified runtime route admits the private
-revision-2 bridge. Therefore `compile_analyze`, `elaborate`, `run`,
-`trace_validate`, and `result_produce` remain explicitly inapplicable in this
-measurement leaf. They cannot borrow the ordinary public portable-Verilator
-runtime gate. Child `.17.3.8.2` will publish the complete validation plus three
-raw records and require a distinct fresh-process reload before the parent can
-close. Activation itself creates no measurement or publication and promotes no
-performance, capacity, support, parity, public-API, or runtime claim.
+The lifecycle is validation first, then measurement:
+
+1. One correctness-only record executes `construct`, `parse_validate`,
+   `bridge`, `bind_plan`, and `emit` in separate worker processes.
+2. Only an accepted validation record admits three ordered
+   `gate_measurement` records.
+3. Every measured stage retains monotonic wall time, CPU/RSS support status,
+   raw 250-ms process-tree samples, exact command/input/output counts, a
+   stage-local correctness oracle, and repository-local artifact identities.
+4. Each record removes its exact staging root. A timeout, signal, worker
+   exception, oracle mismatch, or cleanup failure stops later stages and is
+   retained rather than converted into a timing sample.
+
+Stage boundaries matter. The six prerequisite reports are sealed once as the
+correctness authority; they are not repeatedly charged to parse, bridge, or
+bind-plan time. The composer exposes an exact-caller stage-product seam, while
+the emitter exposes an exact-caller structural-emission seam that requires the
+already accepted composition identity. Both reject direct callers. Public
+composition and emission APIs still perform their complete qualification.
+This separation is enforced by the common controller's 120-second bridge and
+300-second emit limits: implementations that fold prerequisite qualification
+back into either stage fail closed.
+
+Every accepted report preserves the private revision-2 negotiation, 2,048
+bindings, 1,024 mapped operations, eight artifacts, three generated sources,
+503,279 generated source bytes, and 3,605 source-map entries. It also records
+that `compile_analyze`, `elaborate`, `run`, `trace_validate`, and
+`result_produce` are not applicable. Generated command descriptions do not
+constitute execution, and the adapter cannot borrow the public revision-1
+portable-Verilator runtime gate.
+
+Run the exact adapter regression from the repository root under the standard
+RAM guard:
+
+```bash
+scripts/run_with_ram_guard.sh -- env \
+  FSMGEN_VIAL_SCALE_BALANCED_PORTABLE_MEASUREMENT_EXACT=1 \
+  prove -Iperl \
+  t/1681-vial-architecture-scale-balanced-portable-measurement.t
+```
+
+The default test is tool-free and checks the closed API, sole-member authority,
+checked-anchor construction, exact-caller rejection, and guard thresholds. The
+opt-in path constructs the real validation and three raw records, regenerates
+the report independently, mutates canonical emission and applicability, forces
+a worker failure, and requires zero staging residue. Immutable publication and
+fresh-process reload remain separately owned by `.17.3.8.2`; this adapter alone
+adds no performance budget, capacity, support, parity, public-API, or runtime
+claim.
 
 ## Repository-root example
 

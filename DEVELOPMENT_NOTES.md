@@ -1000,3 +1000,20 @@ metadata twice is intentionally conservative. Compact IPC remains unchanged,
 and any file rejection now states actual and maximum bytes. The next clean
 capture must still fit and independently reload the real qualification report
 before this becomes complete-matrix evidence.
+
+## 2026-08-30: Measurement stages consume sealed prerequisites without recharging them
+
+The first balanced-portable adapter implementation honestly failed the common
+controller twice: rebuilding all six qualification gates inside the bridge
+worker exceeded its 120-second limit, and invoking the public full evaluator
+inside emit exceeded its 300-second limit. Raising either limit would have
+hidden a classification error by timing prerequisite qualification as stage
+work.
+
+The adapter now reconstructs the complete six-gate composition once as its
+validation authority. Exact-caller producer seams then recreate only the stage
+product being measured, and structural emit requires that sealed composition
+before building the route and artifacts. Public composition/emission behavior
+is unchanged. This keeps stage costs meaningful, preserves fail-closed timeout
+evidence, and prevents private revision-2 measurement seams from becoming
+public planning or backend APIs.

@@ -19,6 +19,8 @@ my $SCHEMA =
 my $BACKEND_PROFILE = 'sv_portable_verilator';
 my $COMPOSER = 'FSM::VIAL::ArchitectureScaleBalancedPortable';
 my $EMITTER = 'FSM::VIAL::Backend::SVPortableVerilator';
+my $MEASUREMENT_ADAPTER =
+    'FSM::VIAL::ArchitectureScaleBalancedPortableMeasurement';
 my @EVALUATE_KEYS = qw(construction);
 my @VALIDATE_KEYS = qw(construction report);
 my @STAGING_KEYS = qw(construction repository_root consumer);
@@ -109,6 +111,56 @@ sub _evaluate($construction) {
         $construction, 'composition_prerequisite_failure', $composition,
         $composition->{diagnostics},
     ) unless $composition->{ok};
+
+    return _evaluate_with_composition($construction, $composition);
+}
+
+# The measurement adapter has already reconstructed and accepted the complete
+# six-gate composition authority. This exact-caller seam measures structural
+# emission without silently charging that prerequisite work to the emit stage.
+sub _measurement_evaluate($class, @args) {
+    _exact_invocant($class, '_measurement_evaluate');
+    my $caller = caller;
+    confess "balanced portable-emission measurement is private to the exact adapter\n"
+        unless defined($caller) && $caller eq $MEASUREMENT_ADAPTER;
+    confess __PACKAGE__ . "->_measurement_evaluate expects one closed hash\n"
+        unless @args == 1 && ref($args[0]) eq 'HASH'
+            && !blessed($args[0]);
+    _exact_keys(
+        $args[0], [qw(construction composition)],
+        'balanced portable-emission measurement',
+    );
+    my $composition = $args[0]{composition};
+    _exact_keys(
+        $composition, $COMPOSER->report_keys,
+        'balanced portable-emission composition authority',
+    );
+    confess "balanced portable-emission composition authority is not accepted\n"
+        unless $composition->{ok}
+            && ($composition->{status} // '')
+                eq 'canonical_composition_validated'
+            && ($composition->{schema} // '')
+                eq 'fsmgen.vial_architecture_scale_balanced_portable_report.v1'
+            && ($composition->{schema_version} // -1) == 1
+            && ($composition->{report_identity} // '')
+                =~ /\Abalanced-composition\/[0-9a-f]{64}\z/
+            && ref($composition->{gate_evidence}) eq 'ARRAY'
+            && @{$composition->{gate_evidence}} == 6
+            && $composition->{claims}{all_six_gate_reports_consumed}
+            && $composition->{claims}{canonical_execution_constructed}
+            && ref($composition->{diagnostics}) eq 'ARRAY'
+            && !@{$composition->{diagnostics}};
+    my $workload_identity = $args[0]{construction}{workload}
+        {workload_identity};
+    confess "balanced portable-emission composition workload changed\n"
+        unless ($composition->{workload_identity} // '')
+            eq ($workload_identity // '');
+    return _evaluate_with_composition(
+        $args[0]{construction}, $composition,
+    );
+}
+
+sub _evaluate_with_composition($construction, $composition) {
 
     my $first_route = $COMPOSER->_build_emission_route({
         construction => $construction,

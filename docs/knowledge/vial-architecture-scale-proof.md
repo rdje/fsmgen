@@ -389,13 +389,14 @@ staging, or tool eligibility. A guarded opt-in public Runner test independently
 executes both tracked candidates and verifies their complete graph and exact
 trace families; the default test remains tool-free.
 
-Clean OSVVM seal `9fde163ae` activates `.17.3.8` as a two-child balanced measurement closure. `.17.3.8.1`
-owns one validation plus three guarded raw records for the sole `balanced_portable_v1/sv_portable_verilator/gate_candidate_v1`
-member across five structural stages. It reconstructs six prerequisites and retains the private revision-2 bridge,
-2,048 bindings, 1,024 operations, eight artifacts, three sources, 503,279 source bytes, and 3,605 maps. Compile through
-result is inapplicable because decision `0077` and the checked emitter qualify structural emission only; the public
-runtime gate cannot admit the private bridge. `.17.3.8.2` owns immutable publication/reload. Activation adds no
-measurement, runtime, budget, capacity, support, parity, or public API.
+Clean implementation from activation `f5706713e` closes `.17.3.8.1` with a guarded adapter for the sole
+`balanced_portable_v1/sv_portable_verilator/gate_candidate_v1` member. It seals six fresh prerequisite reports once,
+then the common controller retains one validation plus three raw records across construct, parse/validate, bridge,
+bind/plan, and structural emit. Exact-caller seams keep prerequisite work outside stage-local costs and reject public
+use. The report preserves the private revision-2 bridge, 2,048 bindings, 1,024 operations, eight artifacts, three
+sources, 503,279 source bytes, and 3,605 maps; compile through result remains inapplicable because no qualified private-
+bridge runtime route exists. Guarded t1681 passes five tests in 3,545 seconds with failure cleanup and zero residue.
+`.17.3.8.2` owns immutable publication/reload; no runtime, budget, capacity, support, parity, or public API is promoted.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

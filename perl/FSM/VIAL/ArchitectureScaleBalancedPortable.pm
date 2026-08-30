@@ -46,6 +46,8 @@ my $REFERENCE_VIAL_SHA256 =
     '2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd';
 my $EMISSION_QUALIFIER =
     'FSM::VIAL::ArchitectureScaleBalancedPortableEmission';
+my $MEASUREMENT_ADAPTER =
+    'FSM::VIAL::ArchitectureScaleBalancedPortableMeasurement';
 my @CONSTRUCT_KEYS = qw(reference_hial_text reference_vial_text);
 my @CONSTRUCTION_KEYS = qw(
     ok status schema schema_version workload reference_sources diagnostics
@@ -187,6 +189,63 @@ sub _build_emission_route($class, @args) {
         plan => $route->{plan},
         diagnostics => [],
     };
+}
+
+# Structural measurement needs producer-created stage products, never
+# caller-created SemanticIR, bridge, ExecutionIR, or plan objects. The adapter
+# seals the six fresh prerequisite reports before it starts the common
+# controller; keep this stage-local projection private to that exact adapter so
+# the seam cannot become a second public composition or backend route.
+sub _measurement_inputs($class, @args) {
+    _exact_invocant($class, '_measurement_inputs');
+    my $caller = caller;
+    confess "balanced-portable measurement inputs are private to the exact adapter\n"
+        unless defined($caller) && $caller eq $MEASUREMENT_ADAPTER;
+    confess __PACKAGE__ . "->_measurement_inputs expects one closed hash\n"
+        unless @args == 1 && ref($args[0]) eq 'HASH'
+            && !blessed($args[0]);
+    _confess_exact_keys(
+        $args[0], [qw(construction stage)],
+        'balanced-portable measurement inputs',
+    );
+    my $construction = _validated_construction($args[0]{construction});
+    my $stage = $args[0]{stage};
+    confess "balanced-portable measurement stage is not selected\n"
+        unless defined($stage) && !ref($stage)
+            && $stage =~ /\A(?:parse_validate|bridge|bind_plan)\z/;
+
+    my $vial = _role_input($construction->{workload}, 'vial_source');
+    my $semantic_ir = FSM::VIAL::Parser->parse_source({
+        text => $vial->{content},
+        source_name => $vial->{relative_path},
+        source_catalog => {},
+    });
+    my $source = {
+        relative_path => $vial->{relative_path},
+        bytes => bytes::length($vial->{content}),
+        sha256 => sha256_hex($vial->{content}),
+    };
+    return _clone({
+        source => $source,
+        semantic_ir => $semantic_ir->as_hashref,
+    }) if $stage eq 'parse_validate';
+
+    my $route = _canonical_route($construction->{workload});
+    confess "canonical balanced-portable measurement route was rejected\n"
+        unless $route->{ok};
+    my $projection = _route_projection($route);
+    return _clone({
+        source => $source,
+        semantic_ir => $projection->{semantic_ir},
+        bridge_manifest => $projection->{bridge_manifest},
+    }) if $stage eq 'bridge';
+    return _clone({
+        source => $source,
+        semantic_ir => $projection->{semantic_ir},
+        bridge_manifest => $projection->{bridge_manifest},
+        execution_ir => $projection->{execution_ir},
+        plan => $projection->{plan},
+    });
 }
 
 sub _construct($raw) {
