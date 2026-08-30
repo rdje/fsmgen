@@ -41,6 +41,7 @@ my $STAGING_BASE =
 my $REPORT_FILENAME = 'measurement-publication.json';
 my $MATRIX_FILENAME = 'matrix.json';
 my $COMPLETE_FILENAME = 'complete-matrix.json';
+my $PUBLICATION_REVISION = 'portable_sv_oracle_revision_2';
 
 # The largest independently captured canonical report measured 334,757 bytes.
 # A 512-KiB file ceiling leaves 56.6% headroom without making the envelope an
@@ -141,6 +142,7 @@ sub explicit_nonclaims($class) {
 sub publication_limits($class) {
     _exact_invocant($class, 'publication_limits');
     return {
+        publication_revision => $PUBLICATION_REVISION,
         calibrated_canonical_report_bytes => 334_757,
         maximum_publication_bytes => $MAX_PUBLICATION_BYTES,
         maximum_worker_result_bytes => $MAX_PROFILE_WORKER_RESULT_BYTES,
@@ -1509,15 +1511,16 @@ sub _profile_id($profile, $level) {
         . sha256_hex(_canonical_json({
             backend_profile => $profile,
             level => $level,
+            publication_revision => $PUBLICATION_REVISION,
         }));
 }
 
 sub _matrix_profile_id() {
-    return 'backend-emission-matrix-v1';
+    return 'backend-emission-matrix-v2';
 }
 
 sub _complete_profile_id() {
-    return 'backend-emission-complete-matrix-v1';
+    return 'backend-emission-complete-matrix-v2';
 }
 
 sub _require_active_guard() {

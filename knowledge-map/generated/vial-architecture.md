@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **51** uniquely owned question entries.
+> **1** facts · **52** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -56,6 +56,7 @@
 - q="why does the isolated execution checking matrix still stop at operations total over limit?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="why is portable SystemVerilog direct drive a separate prerequisite?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="why is portable qualification 15,000 records instead of 100,000?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="why must backend emission measurement use a revision 2 publication namespace?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 
 ## Facts
 

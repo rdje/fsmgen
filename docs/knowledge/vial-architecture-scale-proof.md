@@ -47,6 +47,7 @@ answers:
   - "why are portable direct drives limited to input carriers and root fibers?"
   - "what Runner timeout risk was found before portable runtime measurement?"
   - "why did the portable SystemVerilog scale oracle move to revision 2?"
+  - "why must backend emission measurement use a revision 2 publication namespace?"
   - "what is the portable SystemVerilog 16 MiB boundary after scheduler repair?"
   - "how does portable runtime-stream activity reach exactly 10,000 records?"
   - "why is portable qualification 15,000 records instead of 100,000?"
@@ -78,6 +79,7 @@ evidence: >-
   perl/FSM/VIAL/ArchitectureScaleExecutionCheckingMeasurementMatrix.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmissionMeasurement.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmissionMeasurementMatrix.pm;
+  perl/FSM/VIAL/ArchitectureScaleCalibrationClosure.pm;
   perl/FSM/VIAL/ArchitectureScalePortableRuntimeMaterialization.pm;
   perl/FSM/VIAL/Parser.pm; perl/FSM/VIAL/SemanticBuilder.pm;
   scripts/run_vial_semantic_bridge_measurement_matrix.pl;
@@ -102,6 +104,7 @@ evidence: >-
   t/1558-vial-verilator-run-integration.t;
   t/1662-vial-architecture-scale-backend-emission-measurement-matrix.t;
   t/1663-vial-architecture-scale-portable-runtime-materialization.t;
+  t/1683-vial-architecture-scale-calibration-closure.t;
   vial/qualification/sv_portable_verilator_runtime_gate.vial;
   vial/qualification/sv_portable_verilator_runtime_qualification.vial;
   docs/knowledge/vial-execution-scale-reachability.md;
@@ -361,33 +364,17 @@ decision `0077`: it qualifies structural emission only, claims no runtime
 execution of its reset-child fibers, and retains its exact private shape gate
 and public-bypass rejection.
 
-The compatibility sweep independently reproduced a pre-existing portable
-backend-emission oracle drift at clean predecessor `87684237a`. Completed
-`.17.3.5.1.4` regenerates every level twice and selects a versioned resolution:
-reference/gate/qualification total 164,507/2,803,857/10,910,865 source bytes;
-`T=6,318` emits 16,774,723 bytes and 6,351 maps; pre-cap `T=6,319` renders
-16,777,362 bytes and rejects atomically under the unchanged 16-MiB cap. The
-portable artifact discriminator and schema are revision 2, while shared level
-role labels remain stable for the other profiles. Different 414/532-byte
-deltas falsify fixed padding. Conditional rollover is already topology-scoped,
-and the expanded route needs it, so neither semantic rollback nor cosmetic
-146-byte shaving is admitted. The exact source identities, byte-equal reruns,
-mutation rejection, family and balanced-prerequisite watchers provide the
-rederive/falsify/durability closure without support, performance, or capacity
-claims.
-Completed `.17.3.5.2` replaces only portable-SystemVerilog qualification's
-unrepresentable 100,000-record candidate with 15,000; the stable role remains
-unchanged and VHDL/OSVVM retain their separately owned 100,000 candidates. Two
-5,064-byte authored sources retain exact reset counts 1,948/2,948, a 4,096-cycle
-timeout/window envelope, and one terminal expectation after the scoreboard.
-The caller-sealed materializer reads those sources as the real inputs, uses an
-exact reference projection only as an oracle, rebuilds Parser through portable
-emission twice, and freezes the generated loop, artifacts, source maps, stage
-identities, and 10,000/15,000 record-family partitions. The nominal limit and
-excess reject from minimum structural trace evidence without emission,
-staging, or tool eligibility. A guarded opt-in public Runner test independently
-executes both tracked candidates and verifies their complete graph and exact
-trace families; the default test remains tool-free.
+Portable-SV oracle revision 2 is the versioned result of `.17.3.5.1.4`: exact
+T=6,318 emits 16,774,723 bytes/6,351 maps and T=6,319 rejects before the
+unchanged 16-MiB cap. `.17.3.5.2` separately selects authored 10,000/15,000-
+record runtime candidates; VHDL/OSVVM remain separately owned. Calibration
+closure then found the durability gap: backend-emission matrix v1 was sealed
+at `fdc6e6a1b` before oracle-v2 commit `eb8967271`, so current regeneration
+correctly rejects its v1 canonical evaluation. The publisher now hashes
+`portable_sv_oracle_revision_2` into profile IDs and uses v2 aggregate
+directories, preserving v1 without collision. Clean v2 capture/reload is a
+hard prerequisite for `.17.3.9.1`; no support, performance, or capacity claim
+is promoted.
 
 `.17.3.8.1` measures the sole balanced structural gate; clean `118b3bfb68902c9479ca4c83a714b23ebb50501a` seals `.2`
 as three immutable files/1,280,699 bytes and complete identity `balanced-portable-matrix/d0619d4cce4d8eebb6b486d70bc41368d9d5f379ce54f87c6843f931ca462900`.

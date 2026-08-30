@@ -62,6 +62,9 @@ subtest 'producer-owned inventory closes all backend-emission profiles' => sub {
     )], 'family manifest is closed');
 
     my $limits = $class->publication_limits;
+    is($limits->{publication_revision},
+        'portable_sv_oracle_revision_2',
+        'publication namespace is pinned to the current portable-SV oracle');
     is($limits->{calibrated_canonical_report_bytes}, 334_757,
         'publication bound names its observed calibration input');
     cmp_ok($limits->{maximum_publication_bytes}, '>',

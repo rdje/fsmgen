@@ -3696,15 +3696,15 @@ identity, and raw samples. The repository RAM guard retains its 88% host and
 4,096-MiB descendant ceilings. A promoted pinned-host budget is frozen from
 clean calibration with explicit headroom; unknown hosts run correctness,
 determinism, safety, and cleanup without flaky performance failure. Measurement
-is active under `.17.3`. The common foundation and the semantic/bridge,
-execution/checking, structural-emission, portable-Verilator, portable-VHDL,
-OSVVM, and balanced capture/publication leaves are complete. `.17.3.9` is now
-active: it independently reloads those immutable raw publications, proves the
-required validation and repetition evidence, retains every raw or excluded
-sample, and derives minimum/median/maximum/MAD plus exact pinned-host/tool
-candidate budgets. Those candidates are evidence, not enforced or public
-budgets: `.17.4` still owns resource-cap implementation and `.17.5` alone owns
-promotion. An inapplicable external-tool route remains inapplicable rather than borrowing evidence from another profile.
+is active under `.17.3`. The common foundation and seven capture/publication
+families are complete. `.17.3.9` independently reloads them, requires exact
+validation plus three/five accepted records, retains raw references and
+exclusions, partitions FSMGen/external-tool/artifact costs, and derives
+minimum/median/maximum/MAD plus integer decision-0056 candidates. Its first
+exact join correctly rejected backend-emission v1 after the portable-SV oracle
+moved to revision 2; the publisher now selects non-colliding v2 profile and
+aggregate names while preserving v1 history, and clean recapture is pending.
+Candidates remain evidence only: `.17.4` owns caps and `.17.5` promotion. Inapplicable routes never borrow another profile's evidence.
 
 ### Architecture-scale measurement foundation
 
