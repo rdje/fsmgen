@@ -106,10 +106,11 @@ alternate resource policy, generated-settings mutation, absent reports,
 caller widening, state/object/source/provider mutation, collision, process
 failure, and cleanup.
 
-This child does not measure or publish architecture-scale OSVVM records.
-Common-controller measurement remains the next task. No product-support,
-performance, capacity, mixed-language, provider-generality, or public-API
-claim follows from lifecycle admission.
+From clean lifecycle commit `f76431606`, `.17.3.7.4` is active solely to map
+the exact OSVVM authority onto the common controller's validation and measured
+records. Activation changes no runtime, measurement, publication,
+product-support, performance, capacity, mixed-language, provider-generality,
+or public-API claim.
 
 See [HIAL/VIAL Verification Architecture](16d-hial-vial-verification-architecture.md)
 for the parent architecture and [Portable VHDL Runtime Measurement](16dd-vial-portable-vhdl-runtime-measurement.md)
