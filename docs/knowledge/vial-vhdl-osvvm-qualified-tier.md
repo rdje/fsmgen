@@ -38,6 +38,8 @@ evidence: >-
   t/1678-vial-ghdl-provider-aware-lifecycle.t;
   t/1679-vial-architecture-scale-osvvm-runtime-measurement.t;
   t/1680-vial-architecture-scale-osvvm-runtime-measurement-matrix.t;
+  .artifacts/qualification/vial-scale/v1/osvvm-runtime-matrix-v1/matrix.json;
+  .artifacts/qualification/vial-scale/v1/osvvm-runtime-complete-matrix-v1/complete-matrix.json;
   vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json;
   vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/README.md;
   vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/evidence/provider-materialization.json;
@@ -59,6 +61,8 @@ reverify: >-
   scripts/run_with_ram_guard.sh -- env
   FSMGEN_VIAL_OSVVM_RUNTIME_MEASUREMENT_EXACT=1 prove -Iperl
   t/1679-vial-architecture-scale-osvvm-runtime-measurement.t &&
+  scripts/run_with_ram_guard.sh --
+  scripts/run_vial_osvvm_runtime_measurement_matrix.pl --validate &&
   perl scripts/refresh_vial_vhdl_osvvm_gallery.pl --check &&
   perl scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl --check
 ---
@@ -121,5 +125,18 @@ profile workers, publishes full canonical reports before bounded compact
 entries, and binds only one clean revision/host/provider/tool/guard identity.
 Its runner and t1680 reject mixed, reordered, incomplete, collided, signalled,
 oversized, or ambiguous state. The implementation is present, but no aggregate
-is claimed until clean guarded capture and a distinct fresh-process reload both
-complete.
+was claimed until clean guarded capture and a distinct fresh-process reload
+both completed.
+
+Clean revision `ef10332d6610df717de1471d12d3a8f0a678aebf` now seals the
+five-role OSVVM matrix as seven immutable files totaling 6,105,680 bytes. The
+largest profile is 3,398,045 bytes; family dominance retains three validations,
+eight raw and zero excluded measurements, two preflight-dominated profiles,
+eleven cleanups, and zero residue. Every executable profile retains the exact
+16-artifact, 61-provider-analysis, 68-source, four-report evidence graph. A
+separate guarded process revalidates complete identity
+`osvvm-runtime-matrix/5429888419a848d28ff4250833e6bd60e31d583d3054a7929d1df3e21420e219`
+under the pinned provider/GHDL tuple, Apple M4 Pro/APFS host identity, and active
+repository guard. The publication remains evidence for these measured profiles
+only; it promotes no budget, capacity, support, parity, or provider-generality
+claim.

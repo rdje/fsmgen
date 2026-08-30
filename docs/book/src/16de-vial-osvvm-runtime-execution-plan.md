@@ -6,6 +6,10 @@ reference, gate, and qualification sources through the qualified OSVVM
 wrapper. Child `.17.3.7.2` then binds those graphs to the exact provider,
 tool, source order, commands, reports, and resource controls needed by the
 qualified GHDL route. Neither step starts GHDL.
+Children `.17.3.7.3` and `.17.3.7.4` then execute and measure that authority,
+and `.17.3.7.5` now closes the chain with one clean guarded immutable capture
+plus an independent fresh-process reload. This chapter makes no promoted
+performance, capacity, support, or provider-generality claim.
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-osvvm-runtime-execution-plan-v1 -->
 - Claim: The exact OSVVM/GHDL execution-plan authority closes three in-memory plans over 61 provider-analysis inputs and commands, seven generated sources plus one checked probe, separate fixture/probe elaboration and run commands, and four supplementary reports; reference, gate, and qualification have the listed exact plan identities, while the existing 74,976-byte qualifier report remains a byte-exact executable oracle.
@@ -215,8 +219,37 @@ checks producer ownership, routing, guard enforcement, child isolation,
 canonical bounded IPC, immutable publication/recovery, collision and ambiguity,
 preflight identity inheritance, aggregate drift, raw-evidence expectations,
 runner isolation, and cleanup without launching the exact campaign. No
-immutable OSVVM measurement set is claimed until the later clean guarded
-capture and distinct fresh-process reload both pass.
+immutable OSVVM measurement set was claimed until the clean guarded capture
+and distinct fresh-process reload both passed.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-osvvm-runtime-matrix-seal-ef10332d6-v1 -->
+- Claim: Clean revision `ef10332d6610df717de1471d12d3a8f0a678aebf` seals the five-profile OSVVM runtime matrix as seven immutable files totaling 6,105,680 bytes; the largest profile is 3,398,045 bytes, the accepted aggregate retains three validation-route and two measured-route profiles, eight raw and zero excluded records, two preflight-dominated profiles, eleven cleanup and zero residue records, and a separate guarded reload returns complete identity `osvvm-runtime-matrix/5429888419a848d28ff4250833e6bd60e31d583d3054a7929d1df3e21420e219`.
+- Re-derive: Run guarded `--validate`, census only the five OSVVM runtime profile publications plus family and complete manifests independently with `find` and `wc`, hash all seven files with `shasum -a 256`, and project common identity/dominance with `jq`.
+- Falsify: Run exact guarded t1680 from an empty OSVVM namespace and require rejection for any producer order, route, artifact cardinality, provider/tool tuple, sample, exclusion, dominance, common identity, checksum, collision, process result, cleanup, or staging disagreement.
+- Durability: Preserve the content-addressed profile publications plus family/complete manifests on the repository volume, and retain the exact task, book, Knowledge Map, publisher, runner, watcher, claim record, and Git closure chain.
+<!-- CLAIM-VERIFICATION:END vial-osvvm-runtime-matrix-seal-ef10332d6-v1 -->
+
+The exact file census is:
+
+| Publication | Bytes | SHA-256 |
+| --- | ---: | --- |
+| reference | 482,870 | `af1a8dc41f81bc58d1e166028eb07b56dc1c953b45a1aaa5201c48f1b87ce6a7` |
+| gate candidate | 2,196,439 | `cb6fa2e79821ce3d620263c1bd03877a806b6ace000058cae5157cc8c2194c85` |
+| qualification candidate | 3,398,045 | `3dd5ba46f0ad4bb9e521cca3072a8d821e9a0aab28b577af90f285a7a514c482` |
+| limit preflight | 7,497 | `fe2a3041bf24638d46284d0f0a7ea0ae9180a2957f0b6435ebbd834a655a1c63` |
+| over-limit preflight | 7,507 | `a44c96ffe9770174c5020db6ecf4d18e652f18c4fe030f94a43a94e4c04282bf` |
+| family manifest | 10,173 | `80528f35ca636e1835b211ef75482109f4bb98be3cb6705fc09e5bf6f18f6d1f` |
+| complete manifest | 3,149 | `38ff11efc768d651df2cf1dd245efdcf13593d4d7d5d678f5db472287779e22d` |
+
+The common identity is clean revision `ef10332d6`, Apple M4 Pro on APFS,
+the exact `qualified_osvvm_2026_05_ghdl_6_0_0_llvm_jit` provider/tool tuple,
+and the active 88%-host/4,096-MiB repository guard. The three executable
+profiles each retain the producer-authoritative 16-artifact graph; reference,
+gate, and qualification preserve exact 77/10,000/100,000 trace counts and all
+61 provider analyses, 68 lifecycle sources, and four supplementary reports per
+accepted record. The largest publication remains 63,710,819 bytes below the
+unchanged 67,108,864-byte ceiling. That headroom is publication containment
+evidence, not a performance budget or architecture-capacity claim.
 
 See [HIAL/VIAL Verification Architecture](16d-hial-vial-verification-architecture.md)
 for the parent architecture and [Portable VHDL Runtime Measurement](16dd-vial-portable-vhdl-runtime-measurement.md)

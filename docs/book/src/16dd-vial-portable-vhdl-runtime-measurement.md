@@ -258,7 +258,8 @@ schemas, profile IDs, staging namespace, runner, and aggregate identities. It
 reuses this publication pattern but binds the pinned provider inside its common
 tool identity and retains the larger provider/source/report evidence in each
 raw profile publication. See [OSVVM Runtime Execution and Measurement](16de-vial-osvvm-runtime-execution-plan.md)
-for its exact implementation and pending guarded-capture boundary.
+for its now-sealed clean guarded capture, independent reload, exact seven-file
+census, and provider-bound complete identity.
 
 Every executable profile must carry the producer-authoritative seventeen-
 artifact portable-VHDL emission graph. The first clean exact publication
