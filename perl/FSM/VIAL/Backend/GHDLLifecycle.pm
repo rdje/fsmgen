@@ -23,6 +23,11 @@ my $JSON = JSON::PP->new->canonical(1);
 my $LIFECYCLE_SCHEMA = 'fsmgen.vial_ghdl_lifecycle.v1';
 my $STATE_SCHEMA = 'fsmgen.vial_ghdl_lifecycle_state.v1';
 my $HANDLE_SCHEMA = 'fsmgen.vial_ghdl_lifecycle_handle.v1';
+my $OSVVM_LIFECYCLE_SCHEMA = 'fsmgen.vial_ghdl_lifecycle.v2';
+my $OSVVM_STATE_SCHEMA = 'fsmgen.vial_ghdl_lifecycle_state.v2';
+my $OSVVM_HANDLE_SCHEMA = 'fsmgen.vial_ghdl_lifecycle_handle.v2';
+my $OSVVM_COMMAND_SCHEMA =
+    'fsmgen.vial_ghdl_lifecycle_osvvm_command_plan.v2';
 my $STORAGE_SCHEMA = 'fsmgen.vial_ghdl_lifecycle_storage.v1';
 my $OWNER_SCHEMA = 'fsmgen.vial_ghdl_lifecycle_owner.v1';
 my @STATE_ORDER = qw(
@@ -49,6 +54,25 @@ my @PROVIDER_KEYS = qw(
     version_output
 );
 my @COMMAND_KEYS = qw(version analyze elaborate run);
+my @OSVVM_COMMAND_KEYS = qw(
+    schema schema_version version provider_analyze analyze_generated
+    elaborate_fixture elaborate_provider_probe run_fixture run_provider_probe
+    generated_settings libraries provider_reports resource_controls
+);
+my @OSVVM_SETTINGS_KEYS = qw(relpath content bytes sha256);
+my @OSVVM_LIBRARY_KEYS = qw(root osvvm osvvm_common fsmgen_vial);
+my @OSVVM_REPORT_KEYS = qw(name relpath);
+my @OSVVM_RESOURCE_KEYS = qw(
+    outer_guard descendant_rss_limit_mib host_occupied_cutoff_percent
+    version_timeout_seconds provider_analysis_timeout_seconds_per_source
+    generated_analysis_timeout_seconds elaboration_timeout_seconds
+    execution_timeout_seconds version_capture_limit_bytes
+    provider_capture_limit_bytes fixture_capture_limit_bytes
+);
+my @OSVVM_REPORT_NAMES = qw(
+    OsvvmRun.yml AlertLogTop_alerts.yml AlertLogTop_cov.yml
+    AlertLogTop_sb_slv.yml
+);
 my @VALIDATION_KEYS = qw(
     expected_record_counts expected_plan_id expected_run_ids
     expected_observation_catalog run_repetitions
@@ -96,6 +120,8 @@ my %EVIDENCE_KEYS = (
 );
 my %AUTHORIZED_CALLER = (
     'FSM::VIAL::Backend::VHDLPortableGHDLQualification' => 'qualification',
+    'FSM::VIAL::Backend::VHDLOSVVMGHDLQualification' =>
+        'osvvm_qualification',
     'FSM::VIAL::ArchitectureScalePortableVHDLRuntimeMeasurement' =>
         'architecture_scale_measurement',
 );
@@ -210,8 +236,9 @@ sub _session_with_handle($raw, $role, $session_out) {
     $session->{handle} = $handle;
     _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
         'lifecycle handle schema or authority differs', '/handle')
-        unless ($handle->{schema} // '') eq $HANDLE_SCHEMA
-            && ($handle->{schema_version} // 0) == 1
+        unless ($handle->{schema} // '') eq $session->{handle_schema}
+            && ($handle->{schema_version} // 0)
+                == $session->{schema_version}
             && ($handle->{lifecycle_identity} // '')
                 eq $session->{lifecycle_identity}
             && _canonical($handle->{storage_context})
@@ -231,6 +258,9 @@ sub _session_with_handle($raw, $role, $session_out) {
     $session->{cleanup_on_error} = 1;
     _validate_current_provider($session);
     _validate_current_sources($session);
+    _validate_osvvm_settings($session)
+        if $session->{role} eq 'osvvm_qualification'
+            && $handle->{ordinal} >= $STATE_ORDINAL{prepared};
     _load_chain($session, $handle);
     return $session;
 }
@@ -273,12 +303,14 @@ sub _session($raw, $role, $validate_inputs = 1) {
     my $storage = _validated_storage($raw->{storage_context}, $role);
     my $commands = _validated_commands(
         $raw->{commands}, $provider->{binary}, $storage->{staging_identity},
-        $source_set,
+        $source_set, $role,
     );
     my $validation = _validated_validation($raw->{validation});
+    my $schema_version = $role eq 'osvvm_qualification' ? 2 : 1;
     my $authority = {
-        schema => $LIFECYCLE_SCHEMA,
-        schema_version => 1,
+        schema => $schema_version == 2
+            ? $OSVVM_LIFECYCLE_SCHEMA : $LIFECYCLE_SCHEMA,
+        schema_version => $schema_version,
         role => $role,
         provider => $provider,
         source_set => $source_set,
@@ -294,6 +326,12 @@ sub _session($raw, $role, $validate_inputs = 1) {
         repo_root => $repo_root,
         root_device => $root_stat[0],
         authority => $authority,
+        role => $role,
+        schema_version => $schema_version,
+        state_schema => $schema_version == 2
+            ? $OSVVM_STATE_SCHEMA : $STATE_SCHEMA,
+        handle_schema => $schema_version == 2
+            ? $OSVVM_HANDLE_SCHEMA : $HANDLE_SCHEMA,
         lifecycle_identity => $lifecycle_identity,
         provider => $provider,
         source_set => $source_set,
@@ -302,8 +340,13 @@ sub _session($raw, $role, $validate_inputs = 1) {
         storage_context => $storage,
         stage_rel => $stage_rel,
         stage_abs => _repo_path($repo_root, $stage_rel),
-        library_rel => "$stage_rel/library",
-        library_abs => _repo_path($repo_root, "$stage_rel/library"),
+        library_rel => $role eq 'osvvm_qualification'
+            ? $commands->{libraries}{root} : "$stage_rel/library",
+        library_abs => _repo_path(
+            $repo_root,
+            $role eq 'osvvm_qualification'
+                ? $commands->{libraries}{root} : "$stage_rel/library",
+        ),
         objects => [],
         state => undef,
         handle => undef,
@@ -385,6 +428,10 @@ sub _validated_storage($raw, $role) {
             'qualification', 'lifecycle_process_group',
             qr{\A[.]artifacts/tmp/vial-ghdl-qualification/[0-9a-f]{64}\z},
         ],
+        osvvm_qualification => [
+            'osvvm_qualification', 'lifecycle_process_group',
+            qr{\A[.]artifacts/tmp/vial-osvvm-ghdl-qualification/[0-9a-f]{64}\z},
+        ],
         architecture_scale_measurement => [
             'architecture_scale_measurement', 'outer_worker_process_group',
             qr{\A[.]artifacts/tmp/vial-scale/[0-9a-f]{64}/(?:validation|gate_measurement|qualification_measurement)/[0-9]{2}/lifecycle\z},
@@ -403,7 +450,10 @@ sub _validated_storage($raw, $role) {
     return _clone($raw);
 }
 
-sub _validated_commands($raw, $binary, $stage_rel, $source_set) {
+sub _validated_commands($raw, $binary, $stage_rel, $source_set, $role) {
+    return _validated_osvvm_commands(
+        $raw, $binary, $stage_rel, $source_set,
+    ) if $role eq 'osvvm_qualification';
     _closed($raw, \@COMMAND_KEYS, 'GHDL command authority');
     my %mode = (version => '--version', analyze => '-a',
         elaborate => '-e', run => '-r');
@@ -451,6 +501,186 @@ sub _validated_commands($raw, $binary, $stage_rel, $source_set) {
             && $raw->{run}[-2] eq $top
             && $raw->{run}[-1] eq '--assert-level=error';
     return _clone($raw);
+}
+
+sub _validated_osvvm_commands($raw, $binary, $stage_rel, $source_set) {
+    _closed($raw, \@OSVVM_COMMAND_KEYS,
+        'OSVVM/GHDL multi-command authority');
+    _throw('VIAL_GHDL_LIFECYCLE_COMMAND_ERROR',
+        'OSVVM/GHDL command-plan schema is not exact', '/commands/schema')
+        unless ($raw->{schema} // '') eq $OSVVM_COMMAND_SCHEMA
+            && ($raw->{schema_version} // 0) == 2;
+
+    _closed($raw->{generated_settings}, \@OSVVM_SETTINGS_KEYS,
+        'OSVVM generated settings authority');
+    my $settings = $raw->{generated_settings};
+    my $settings_rel = "$stage_rel/OsvvmScriptSettingsPkg_generated.vhd";
+    _throw('VIAL_GHDL_LIFECYCLE_COMMAND_ERROR',
+        'OSVVM generated settings identity is not exact',
+        '/commands/generated_settings')
+        unless ($settings->{relpath} // '') eq $settings_rel
+            && defined($settings->{content}) && !ref($settings->{content})
+            && ($settings->{bytes} // -1)
+                == bytes::length($settings->{content})
+            && ($settings->{sha256} // '')
+                eq sha256_hex($settings->{content});
+
+    _closed($raw->{libraries}, \@OSVVM_LIBRARY_KEYS,
+        'OSVVM/GHDL library authority');
+    my $libraries = $raw->{libraries};
+    my $library_root = "$stage_rel/libraries";
+    my %expected_library = (
+        root => $library_root,
+        osvvm => "$library_root/osvvm/v08",
+        osvvm_common => "$library_root/osvvm_common/v08",
+        fsmgen_vial => "$library_root/fsmgen_vial/v08",
+    );
+    for my $name (@OSVVM_LIBRARY_KEYS) {
+        _throw('VIAL_GHDL_LIFECYCLE_COMMAND_ERROR',
+            "OSVVM/GHDL $name library identity is not exact",
+            "/commands/libraries/$name")
+            unless ($libraries->{$name} // '') eq $expected_library{$name};
+    }
+
+    _throw('VIAL_GHDL_LIFECYCLE_COMMAND_ERROR',
+        'OSVVM/GHDL provider analysis plan is not one nonempty command list',
+        '/commands/provider_analyze')
+        unless ref($raw->{provider_analyze}) eq 'ARRAY'
+            && @{$raw->{provider_analyze}};
+    my @analysis_source;
+    for my $index (0 .. $#{$raw->{provider_analyze}}) {
+        my $argv = $raw->{provider_analyze}[$index];
+        _osvvm_argv($argv, $binary, '-a',
+            "/commands/provider_analyze/$index");
+        _throw('VIAL_GHDL_LIFECYCLE_COMMAND_ERROR',
+            'OSVVM provider analysis command shape is not exact',
+            "/commands/provider_analyze/$index") unless @$argv == 9;
+        my ($work) = map { substr($_, length('--work=')) }
+            grep { index($_, '--work=') == 0 } @$argv;
+        my %workdir = (
+            osvvm => $libraries->{osvvm},
+            osvvm_common => $libraries->{osvvm_common},
+        );
+        _throw('VIAL_GHDL_LIFECYCLE_COMMAND_ERROR',
+            'OSVVM provider analysis library is not exact',
+            "/commands/provider_analyze/$index")
+            unless defined($work) && exists($workdir{$work})
+                && grep({ $_ eq "--workdir=$workdir{$work}" } @$argv) == 1
+                && grep({ $_ eq "-P$libraries->{root}" } @$argv) == 1;
+        push @analysis_source, $argv->[-1]
+            unless $argv->[-1] eq $settings_rel;
+    }
+
+    my $generated = $raw->{analyze_generated};
+    _osvvm_argv($generated, $binary, '-a',
+        '/commands/analyze_generated');
+    _throw('VIAL_GHDL_LIFECYCLE_COMMAND_ERROR',
+        'OSVVM generated-source analysis authority is not exact',
+        '/commands/analyze_generated') unless @$generated >= 9
+            && grep({ $_ eq '--work=fsmgen_vial' } @$generated) == 1
+            && grep({ $_ eq "--workdir=$libraries->{fsmgen_vial}" }
+                @$generated) == 1
+            && grep({ $_ eq "-P$libraries->{root}" } @$generated) == 1;
+    push @analysis_source, @$generated[8 .. $#$generated];
+    my @expected_source = map { $_->{relpath} } @$source_set;
+    _throw('VIAL_GHDL_LIFECYCLE_COMMAND_ERROR',
+        'OSVVM analysis commands do not bind the exact ordered source set',
+        '/commands') unless _canonical(\@analysis_source)
+            eq _canonical(\@expected_source);
+
+    _osvvm_top_command(
+        $raw->{elaborate_fixture}, $binary, '-e', $libraries,
+        'base_output_arbitration_tb', '/commands/elaborate_fixture',
+    );
+    _osvvm_top_command(
+        $raw->{elaborate_provider_probe}, $binary, '-e', $libraries,
+        'fsmgen_vial_osvvm_runtime_probe',
+        '/commands/elaborate_provider_probe',
+    );
+    _osvvm_top_command(
+        $raw->{run_fixture}, $binary, '-r', $libraries,
+        'base_output_arbitration_tb', '/commands/run_fixture',
+    );
+    _osvvm_top_command(
+        $raw->{run_provider_probe}, $binary, '-r', $libraries,
+        'fsmgen_vial_osvvm_runtime_probe', '/commands/run_provider_probe',
+    );
+    _throw('VIAL_GHDL_LIFECYCLE_COMMAND_ERROR',
+        'OSVVM runtime assertion policy is not exact', '/commands')
+        unless $raw->{run_fixture}[-1] eq '--assert-level=error'
+            && $raw->{run_provider_probe}[-1] eq '--assert-level=error';
+
+    _throw('VIAL_GHDL_LIFECYCLE_COMMAND_ERROR',
+        'OSVVM version command is not exact', '/commands/version')
+        unless ref($raw->{version}) eq 'ARRAY'
+            && @{$raw->{version}} == 2
+            && $raw->{version}[0] eq $binary
+            && $raw->{version}[1] eq '--version';
+
+    _throw('VIAL_GHDL_LIFECYCLE_COMMAND_ERROR',
+        'OSVVM provider report inventory is not one exact ordered list',
+        '/commands/provider_reports')
+        unless ref($raw->{provider_reports}) eq 'ARRAY'
+            && @{$raw->{provider_reports}} == @OSVVM_REPORT_NAMES;
+    for my $index (0 .. $#OSVVM_REPORT_NAMES) {
+        my $report = $raw->{provider_reports}[$index];
+        _closed($report, \@OSVVM_REPORT_KEYS,
+            "OSVVM provider report $index");
+        _throw('VIAL_GHDL_LIFECYCLE_COMMAND_ERROR',
+            'OSVVM provider report identity is not exact',
+            "/commands/provider_reports/$index")
+            unless ($report->{name} // '') eq $OSVVM_REPORT_NAMES[$index]
+                && ($report->{relpath} // '') eq
+                    "$stage_rel/provider_reports/$OSVVM_REPORT_NAMES[$index]";
+    }
+
+    _closed($raw->{resource_controls}, \@OSVVM_RESOURCE_KEYS,
+        'OSVVM/GHDL resource controls');
+    my $expected_resource = {
+        outer_guard =>
+            'scripts/run_with_ram_guard.sh --process-max-rss-mb 4096',
+        descendant_rss_limit_mib => 4_096,
+        host_occupied_cutoff_percent => 88,
+        version_timeout_seconds => 10,
+        provider_analysis_timeout_seconds_per_source => 120,
+        generated_analysis_timeout_seconds => 120,
+        elaboration_timeout_seconds => 60,
+        execution_timeout_seconds => 30,
+        version_capture_limit_bytes => 65_536,
+        provider_capture_limit_bytes => 8_388_608,
+        fixture_capture_limit_bytes => 67_108_864,
+    };
+    _throw('VIAL_GHDL_LIFECYCLE_COMMAND_ERROR',
+        'OSVVM/GHDL resource controls differ from the qualified plan',
+        '/commands/resource_controls') unless
+            _canonical($raw->{resource_controls})
+                eq _canonical($expected_resource);
+    return _clone($raw);
+}
+
+sub _osvvm_argv($argv, $binary, $mode, $path) {
+    _throw('VIAL_GHDL_LIFECYCLE_COMMAND_ERROR',
+        'OSVVM/GHDL command is not one scalar argument vector', $path)
+        unless ref($argv) eq 'ARRAY' && @$argv >= 2
+            && !grep { !defined($_) || ref($_) || /\x00/ } @$argv;
+    _throw('VIAL_GHDL_LIFECYCLE_COMMAND_ERROR',
+        'OSVVM/GHDL command executable, mode, or language differs', $path)
+        unless $argv->[0] eq $binary && $argv->[1] eq $mode
+            && grep({ $_ eq '--std=08' } @$argv) == 1;
+}
+
+sub _osvvm_top_command($argv, $binary, $mode, $libraries, $top, $path) {
+    _osvvm_argv($argv, $binary, $mode, $path);
+    my $expected_length = $mode eq '-r' ? 8 : 7;
+    my $top_index = $mode eq '-r' ? -2 : -1;
+    _throw('VIAL_GHDL_LIFECYCLE_COMMAND_ERROR',
+        'OSVVM/GHDL top command authority is not exact', $path)
+        unless @$argv == $expected_length
+            && grep({ $_ eq '--work=fsmgen_vial' } @$argv) == 1
+            && grep({ $_ eq "--workdir=$libraries->{fsmgen_vial}" }
+                @$argv) == 1
+            && grep({ $_ eq "-P$libraries->{root}" } @$argv) == 1
+            && $argv->[$top_index] eq $top;
 }
 
 sub _validated_validation($raw) {
@@ -541,6 +771,8 @@ sub _advance($session, $target) {
 }
 
 sub _phase_prepared($session) {
+    return _phase_osvvm_prepared($session)
+        if $session->{role} eq 'osvvm_qualification';
     make_path($session->{library_abs});
     my @stat = stat($session->{library_abs});
     _throw('VIAL_GHDL_LIFECYCLE_PATH_ERROR',
@@ -555,7 +787,45 @@ sub _phase_prepared($session) {
     };
 }
 
+sub _phase_osvvm_prepared($session) {
+    my $commands = $session->{commands};
+    for my $relative (
+        @{$commands->{libraries}}{qw(osvvm osvvm_common fsmgen_vial)},
+        "$session->{stage_rel}/provider_reports",
+    ) {
+        my $absolute = _repo_path($session->{repo_root}, $relative);
+        make_path($absolute);
+        my @stat = stat($absolute);
+        _throw('VIAL_GHDL_LIFECYCLE_PATH_ERROR',
+            'OSVVM/GHDL workspace is not one same-volume owned directory',
+            '/prepared/libraries') unless @stat && -d _ && !-l $absolute
+                && $stat[0] == $session->{root_device};
+    }
+    my $settings = $commands->{generated_settings};
+    my $settings_abs = _repo_path(
+        $session->{repo_root}, $settings->{relpath},
+    );
+    _write_atomic($settings_abs, $settings->{content});
+    chmod 0600, $settings_abs or _throw(
+        'VIAL_GHDL_LIFECYCLE_HOST_ERROR',
+        'cannot seal generated OSVVM settings permissions',
+        '/prepared/generated_settings',
+    );
+    _validate_osvvm_settings($session);
+    push @{$session->{objects}}, _write_object(
+        $session, 'generated_settings', $settings->{content}, 0,
+    );
+    return {
+        library_identities => _clone($commands->{libraries}),
+        source_count => scalar(@{$session->{source_set}}),
+        settings_sha256 => $settings->{sha256},
+        _workspace_evidence($session),
+    };
+}
+
 sub _phase_tool_verified($session) {
+    _validate_osvvm_execution_inputs($session)
+        if $session->{role} eq 'osvvm_qualification';
     my $capture = _run_phase($session, 'tool_verified',
         $session->{commands}{version});
     my $normalized = $capture->{output};
@@ -575,6 +845,8 @@ sub _phase_tool_verified($session) {
 }
 
 sub _phase_analyzed($session) {
+    return _phase_osvvm_analyzed($session)
+        if $session->{role} eq 'osvvm_qualification';
     my $capture = _run_phase(
         $session, 'analyzed', $session->{commands}{analyze},
     );
@@ -589,7 +861,51 @@ sub _phase_analyzed($session) {
     };
 }
 
+sub _phase_osvvm_analyzed($session) {
+    _validate_osvvm_execution_inputs($session);
+    my $resource = $session->{commands}{resource_controls};
+    my (@captures, @digests, @outputs);
+    for my $index (0 .. $#{$session->{commands}{provider_analyze}}) {
+        my $argv = $session->{commands}{provider_analyze}[$index];
+        my $capture = _run_command(
+            $session, 'analyzed', $argv,
+            $resource->{provider_analysis_timeout_seconds_per_source},
+            $resource->{provider_capture_limit_bytes},
+            "provider analysis $index",
+        );
+        push @captures, _capture_evidence($capture);
+        push @digests, _command_digest($argv);
+        push @outputs, sha256_hex($capture->{output});
+        push @{$session->{objects}}, _write_object(
+            $session, sprintf('provider_analysis_output_%02d', $index),
+            $capture->{output}, 0,
+        );
+    }
+    my $generated_argv = $session->{commands}{analyze_generated};
+    my $generated_capture = _run_command(
+        $session, 'analyzed', $generated_argv,
+        $resource->{generated_analysis_timeout_seconds},
+        $resource->{provider_capture_limit_bytes},
+        'adapter and generated-fixture analysis',
+    );
+    push @{$session->{objects}}, _write_object(
+        $session, 'generated_analysis_output',
+        $generated_capture->{output}, 0,
+    );
+    return {
+        command_digests => \@digests,
+        captures => \@captures,
+        output_sha256 => \@outputs,
+        generated_command_digest => _command_digest($generated_argv),
+        generated_capture => _capture_evidence($generated_capture),
+        generated_output_sha256 => sha256_hex($generated_capture->{output}),
+        _workspace_evidence($session),
+    };
+}
+
 sub _phase_elaborated($session) {
+    return _phase_osvvm_elaborated($session)
+        if $session->{role} eq 'osvvm_qualification';
     my $capture = _run_phase(
         $session, 'elaborated', $session->{commands}{elaborate},
     );
@@ -604,7 +920,41 @@ sub _phase_elaborated($session) {
     };
 }
 
+sub _phase_osvvm_elaborated($session) {
+    _validate_osvvm_execution_inputs($session);
+    my $resource = $session->{commands}{resource_controls};
+    my @spec = (
+        [fixture => $session->{commands}{elaborate_fixture}],
+        [provider_probe =>
+            $session->{commands}{elaborate_provider_probe}],
+    );
+    my (@captures, @digests, @outputs);
+    for my $entry (@spec) {
+        my ($name, $argv) = @$entry;
+        my $capture = _run_command(
+            $session, 'elaborated', $argv,
+            $resource->{elaboration_timeout_seconds},
+            $resource->{provider_capture_limit_bytes},
+            "$name elaboration",
+        );
+        push @captures, _capture_evidence($capture);
+        push @digests, _command_digest($argv);
+        push @outputs, sha256_hex($capture->{output});
+        push @{$session->{objects}}, _write_object(
+            $session, "${name}_elaboration_output", $capture->{output}, 0,
+        );
+    }
+    return {
+        command_digests => \@digests,
+        captures => \@captures,
+        output_sha256 => \@outputs,
+        _workspace_evidence($session),
+    };
+}
+
 sub _phase_ran($session) {
+    return _phase_osvvm_ran($session)
+        if $session->{role} eq 'osvvm_qualification';
     my (@captures, @digests);
     for my $index (0 .. $session->{validation}{run_repetitions} - 1) {
         my $capture = _run_phase(
@@ -629,8 +979,77 @@ sub _phase_ran($session) {
     };
 }
 
+sub _phase_osvvm_ran($session) {
+    _validate_osvvm_execution_inputs($session);
+    my $resource = $session->{commands}{resource_controls};
+    my $repetitions = $session->{validation}{run_repetitions};
+    my (@fixture_captures, @fixture_sha256);
+    for my $index (0 .. $repetitions - 1) {
+        my $capture = _run_command(
+            $session, 'ran', $session->{commands}{run_fixture},
+            $resource->{execution_timeout_seconds},
+            $resource->{fixture_capture_limit_bytes},
+            $index ? 'fixture deterministic rerun' : 'fixture execution',
+        );
+        push @fixture_captures, _capture_evidence($capture);
+        push @fixture_sha256, sha256_hex($capture->{output});
+        push @{$session->{objects}}, _write_object(
+            $session, "fixture_runtime_output_$index",
+            $capture->{output}, 0,
+        );
+    }
+
+    my (@provider_captures, @provider_sha256, @report_sha256);
+    for my $index (0 .. $repetitions - 1) {
+        my $capture = _run_command(
+            $session, 'ran', $session->{commands}{run_provider_probe},
+            $resource->{execution_timeout_seconds},
+            $resource->{provider_capture_limit_bytes},
+            $index ? 'provider probe deterministic rerun'
+                : 'provider probe execution',
+        );
+        push @provider_captures, _capture_evidence($capture);
+        push @provider_sha256, sha256_hex($capture->{output});
+        push @{$session->{objects}}, _write_object(
+            $session, "provider_runtime_output_$index",
+            $capture->{output}, 0,
+        );
+        my $reports = _snapshot_osvvm_reports($session, $index);
+        push @report_sha256, sha256_hex(_canonical($reports));
+        _clear_osvvm_reports($session);
+    }
+    _throw('VIAL_GHDL_LIFECYCLE_DETERMINISM_ERROR',
+        'identical OSVVM fixture runtime repetitions differ', '/ran/fixture')
+        if @fixture_sha256 == 2
+            && $fixture_sha256[0] ne $fixture_sha256[1];
+    _throw('VIAL_GHDL_LIFECYCLE_DETERMINISM_ERROR',
+        'identical OSVVM provider runtime repetitions differ',
+        '/ran/provider_probe') if @provider_sha256 == 2
+            && $provider_sha256[0] ne $provider_sha256[1];
+    _throw('VIAL_GHDL_LIFECYCLE_DETERMINISM_ERROR',
+        'identical OSVVM provider reports differ', '/ran/provider_reports')
+        if @report_sha256 == 2 && $report_sha256[0] ne $report_sha256[1];
+    return {
+        command_digests => {
+            fixture => _command_digest($session->{commands}{run_fixture}),
+            provider_probe =>
+                _command_digest($session->{commands}{run_provider_probe}),
+        },
+        fixture_captures => \@fixture_captures,
+        provider_captures => \@provider_captures,
+        fixture_output_sha256 => \@fixture_sha256,
+        provider_output_sha256 => \@provider_sha256,
+        provider_report_sha256 => \@report_sha256,
+        deterministic => $repetitions == 2
+            ? JSON::PP::true : JSON::PP::false,
+        _workspace_evidence($session),
+    };
+}
+
 sub _phase_trace_validated($session) {
-    my $output = _object_content($session, 'runtime_output_0');
+    my $runtime_kind = $session->{role} eq 'osvvm_qualification'
+        ? 'fixture_runtime_output_0' : 'runtime_output_0';
+    my $output = _object_content($session, $runtime_kind);
     my @trace = grep { index($_, "FSMGEN_VIAL_TRACE_V2\t") == 0 }
         split /\r?\n/, $output;
     my $trace_text = @trace ? join("\n", @trace) . "\n" : '';
@@ -658,7 +1077,9 @@ sub _phase_trace_validated($session) {
 }
 
 sub _phase_result_produced($session) {
-    my $output = _object_content($session, 'runtime_output_0');
+    my $runtime_kind = $session->{role} eq 'osvvm_qualification'
+        ? 'fixture_runtime_output_0' : 'runtime_output_0';
+    my $output = _object_content($session, $runtime_kind);
     my @result = map {
         substr($_, length("FSMGEN_VIAL_RESULT_V1\t"))
     } grep { index($_, "FSMGEN_VIAL_RESULT_V1\t") == 0 }
@@ -688,6 +1109,8 @@ sub _phase_result_produced($session) {
 }
 
 sub _phase_assembled($session) {
+    return _phase_osvvm_assembled($session)
+        if $session->{role} eq 'osvvm_qualification';
     my $assembly = {
         schema => 'fsmgen.vial_ghdl_lifecycle_assembly.v1',
         schema_version => 1,
@@ -709,9 +1132,55 @@ sub _phase_assembled($session) {
     };
 }
 
+sub _phase_osvvm_assembled($session) {
+    my $repetitions = $session->{validation}{run_repetitions};
+    my $assembly = {
+        schema => 'fsmgen.vial_ghdl_lifecycle_osvvm_assembly.v2',
+        schema_version => 2,
+        lifecycle_identity => $session->{lifecycle_identity},
+        fixture_runtime_output_sha256 => [map {
+            _object_by_kind(
+                $session->{objects}, "fixture_runtime_output_$_",
+            )->{sha256}
+        } 0 .. $repetitions - 1],
+        provider_runtime_output_sha256 => [map {
+            _object_by_kind(
+                $session->{objects}, "provider_runtime_output_$_",
+            )->{sha256}
+        } 0 .. $repetitions - 1],
+        provider_report_sha256 => [map {
+            my $run = $_;
+            [map {
+                _object_by_kind(
+                    $session->{objects}, "provider_report_${run}_$_",
+                )->{sha256}
+            } 0 .. $#{$session->{commands}{provider_reports}}]
+        } 0 .. $repetitions - 1],
+        trace_validation_sha256 =>
+            _object_by_kind($session->{objects}, 'validated_trace')->{sha256},
+        normalized_result_sha256 =>
+            _object_by_kind($session->{objects}, 'normalized_result')->{sha256},
+    };
+    push @{$session->{objects}}, _write_object(
+        $session, 'assembly_payload', _canonical($assembly) . "\n", 0,
+    );
+    return {
+        assembly_sha256 => sha256_hex(_canonical($assembly)),
+        object_count => scalar(@{$session->{objects}}),
+        _workspace_evidence($session),
+    };
+}
+
 sub _run_phase($session, $phase, $argv) {
-    _validate_current_sources($session);
+    _validate_current_sources($session)
+        unless $session->{role} eq 'osvvm_qualification';
     my ($timeout, $limit) = @{$PHASE_POLICY{$phase}};
+    return _run_command(
+        $session, $phase, $argv, $timeout, $limit, "GHDL $phase",
+    );
+}
+
+sub _run_command($session, $phase, $argv, $timeout, $limit, $label) {
     my @actual = @$argv;
     $actual[0] = _repo_path($session->{repo_root}, $actual[0]);
     my $capture = eval {
@@ -732,16 +1201,22 @@ sub _run_phase($session, $phase, $argv) {
         _throw('VIAL_GHDL_LIFECYCLE_HOST_ERROR', $message, "/$phase");
     }
     _throw('VIAL_GHDL_LIFECYCLE_TIMEOUT',
-        "GHDL $phase exceeded its exact deadline", "/$phase")
+        "$label exceeded its exact deadline", "/$phase")
         if $capture->{timed_out};
     _throw('VIAL_GHDL_LIFECYCLE_LIMIT_ERROR',
-        "GHDL $phase exceeded its exact capture ceiling", "/$phase")
+        "$label exceeded its exact capture ceiling", "/$phase")
         if $capture->{output_limited};
     _throw('VIAL_GHDL_LIFECYCLE_EXECUTION_ERROR',
-        "GHDL $phase failed: " . _process_summary($capture), "/$phase")
+        "$label failed: " . _process_summary($capture), "/$phase")
         unless $capture->{ok} && $capture->{exit_code} == 0
             && $capture->{signal} == 0;
     return $capture;
+}
+
+sub _validate_osvvm_execution_inputs($session) {
+    _validate_current_provider($session);
+    _validate_current_sources($session);
+    _validate_osvvm_settings($session);
 }
 
 sub _finish($session) {
@@ -749,7 +1224,8 @@ sub _finish($session) {
         'only the exact assembled state may finish', '/handle/state')
         unless $session->{handle}{state} eq 'assembled'
             && ($session->{handle}{next_state} // '') eq 'cleaned';
-    my $assembled = {
+    my $assembled = $session->{role} eq 'osvvm_qualification'
+        ? _osvvm_assembled_result($session) : {
         runtime_outputs => [map {
             _object_content($session, "runtime_output_$_")
         } 0 .. $session->{validation}{run_repetitions} - 1],
@@ -762,8 +1238,8 @@ sub _finish($session) {
     };
     _remove_owned_root($session);
     my $cleaned = {
-        schema => $HANDLE_SCHEMA,
-        schema_version => 1,
+        schema => $session->{handle_schema},
+        schema_version => $session->{schema_version},
         lifecycle_identity => $session->{lifecycle_identity},
         state => 'cleaned', ordinal => $STATE_ORDINAL{cleaned},
         state_identity => 'state/' . sha256_hex(_canonical({
@@ -780,11 +1256,58 @@ sub _finish($session) {
     });
 }
 
+sub _osvvm_assembled_result($session) {
+    my $repetitions = $session->{validation}{run_repetitions};
+    my @reports;
+    for my $run (0 .. $repetitions - 1) {
+        my @snapshot;
+        for my $index (0 .. $#{$session->{commands}{provider_reports}}) {
+            my $authority = $session->{commands}{provider_reports}[$index];
+            my $content = _object_content(
+                $session, "provider_report_${run}_$index",
+            );
+            push @snapshot, {
+                relpath => $authority->{relpath},
+                name => $authority->{name},
+                bytes => bytes::length($content),
+                sha256 => sha256_hex($content),
+                content => $content,
+            };
+        }
+        push @reports, \@snapshot;
+    }
+    my $provider_output_bytes = 0;
+    for my $index (0 .. $#{$session->{commands}{provider_analyze}}) {
+        $provider_output_bytes += _object_by_kind(
+            $session->{objects},
+            sprintf('provider_analysis_output_%02d', $index),
+        )->{bytes};
+    }
+    return {
+        fixture_runtime_outputs => [map {
+            _object_content($session, "fixture_runtime_output_$_")
+        } 0 .. $repetitions - 1],
+        provider_runtime_outputs => [map {
+            _object_content($session, "provider_runtime_output_$_")
+        } 0 .. $repetitions - 1],
+        provider_reports => \@reports,
+        provider_compiler_output_bytes => $provider_output_bytes,
+        generated_settings_sha256 =>
+            $session->{commands}{generated_settings}{sha256},
+        trace_validation => $JSON->decode(
+            _object_content($session, 'validated_trace'),
+        ),
+        normalized_result => $JSON->decode(
+            _object_content($session, 'normalized_result'),
+        ),
+    };
+}
+
 sub _persist($session, $state_name, $predecessor, $evidence) {
     my $ordinal = $STATE_ORDINAL{$state_name};
     my $record = {
-        schema => $STATE_SCHEMA,
-        schema_version => 1,
+        schema => $session->{state_schema},
+        schema_version => $session->{schema_version},
         lifecycle_identity => $session->{lifecycle_identity},
         state => $state_name,
         ordinal => $ordinal,
@@ -812,8 +1335,8 @@ sub _persist($session, $state_name, $predecessor, $evidence) {
     _write_atomic($absolute, _canonical($record) . "\n");
     $session->{state} = $record;
     $session->{handle} = {
-        schema => $HANDLE_SCHEMA,
-        schema_version => 1,
+        schema => $session->{handle_schema},
+        schema_version => $session->{schema_version},
         lifecycle_identity => $session->{lifecycle_identity},
         state => $state_name,
         ordinal => $ordinal,
@@ -911,8 +1434,9 @@ sub _read_state($session, $relative) {
     _closed($record, \@STATE_KEYS, 'GHDL lifecycle state');
     _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
         'GHDL lifecycle state schema or authority changed', '/state')
-        unless ($record->{schema} // '') eq $STATE_SCHEMA
-            && ($record->{schema_version} // 0) == 1
+        unless ($record->{schema} // '') eq $session->{state_schema}
+            && ($record->{schema_version} // 0)
+                == $session->{schema_version}
             && ($record->{lifecycle_identity} // '')
                 eq $session->{lifecycle_identity}
             && _canonical($record->{authority})
@@ -937,35 +1461,21 @@ sub _validate_state_shape($session, $record) {
         'GHDL lifecycle state object inventory is invalid', '/objects')
         unless ref($record->{objects}) eq 'ARRAY';
     _closed(
-        $record->{evidence}, $EVIDENCE_KEYS{$state},
+        $record->{evidence}, _evidence_keys($session, $state),
         "GHDL $state evidence",
     );
-    my @expected = qw(lifecycle_authority);
-    push @expected, 'tool_version_output'
-        if $STATE_ORDINAL{$state} >= $STATE_ORDINAL{tool_verified};
-    push @expected, 'analysis_output'
-        if $STATE_ORDINAL{$state} >= $STATE_ORDINAL{analyzed};
-    push @expected, 'elaboration_output'
-        if $STATE_ORDINAL{$state} >= $STATE_ORDINAL{elaborated};
-    if ($STATE_ORDINAL{$state} >= $STATE_ORDINAL{ran}) {
-        push @expected, map { "runtime_output_$_" }
-            0 .. $session->{validation}{run_repetitions} - 1;
-    }
-    push @expected, 'validated_trace'
-        if $STATE_ORDINAL{$state} >= $STATE_ORDINAL{trace_validated};
-    push @expected, 'normalized_result'
-        if $STATE_ORDINAL{$state} >= $STATE_ORDINAL{result_produced};
-    push @expected, 'assembly_payload'
-        if $STATE_ORDINAL{$state} >= $STATE_ORDINAL{assembled};
+    my @expected = _expected_objects($session, $state);
     my @actual = map { $_->{kind} } @{$record->{objects}};
     _throw('VIAL_GHDL_LIFECYCLE_OBJECT_ERROR',
         'GHDL state object inventory is not exact', '/objects')
         unless _canonical(\@actual) eq _canonical(\@expected);
-    if ($state =~ /\A(?:tool_verified|analyzed|elaborated)\z/) {
+    if ($state eq 'tool_verified'
+            || ($session->{role} ne 'osvvm_qualification'
+                && $state =~ /\A(?:analyzed|elaborated)\z/)) {
         _closed($record->{evidence}{capture}, \@CAPTURE_KEYS,
             "GHDL $state capture");
     }
-    if ($state eq 'ran') {
+    if ($state eq 'ran' && $session->{role} ne 'osvvm_qualification') {
         _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
             'GHDL run capture cardinality is not exact', '/evidence/captures')
             unless ref($record->{evidence}{captures}) eq 'ARRAY'
@@ -973,6 +1483,132 @@ sub _validate_state_shape($session, $record) {
                     == $session->{validation}{run_repetitions};
         _closed($_, \@CAPTURE_KEYS, 'GHDL run capture')
             for @{$record->{evidence}{captures}};
+    }
+    if ($session->{role} eq 'osvvm_qualification') {
+        _validate_osvvm_capture_shape($session, $record);
+    }
+}
+
+sub _evidence_keys($session, $state) {
+    return $EVIDENCE_KEYS{$state}
+        unless $session->{role} eq 'osvvm_qualification';
+    my %keys = (
+        admitted => [qw(
+            authority_sha256 workspace_files workspace_sha256
+        )],
+        prepared => [qw(
+            library_identities source_count settings_sha256
+            workspace_files workspace_sha256
+        )],
+        tool_verified => [qw(
+            version_sha256 capture workspace_files workspace_sha256
+        )],
+        analyzed => [qw(
+            command_digests captures output_sha256
+            generated_command_digest generated_capture
+            generated_output_sha256 workspace_files workspace_sha256
+        )],
+        elaborated => [qw(
+            command_digests captures output_sha256
+            workspace_files workspace_sha256
+        )],
+        ran => [qw(
+            command_digests fixture_captures provider_captures
+            fixture_output_sha256 provider_output_sha256
+            provider_report_sha256 deterministic
+            workspace_files workspace_sha256
+        )],
+        trace_validated => $EVIDENCE_KEYS{trace_validated},
+        result_produced => $EVIDENCE_KEYS{result_produced},
+        assembled => $EVIDENCE_KEYS{assembled},
+    );
+    return $keys{$state};
+}
+
+sub _expected_objects($session, $state) {
+    my @expected = qw(lifecycle_authority);
+    if ($session->{role} eq 'osvvm_qualification') {
+        push @expected, 'generated_settings'
+            if $STATE_ORDINAL{$state} >= $STATE_ORDINAL{prepared};
+        push @expected, 'tool_version_output'
+            if $STATE_ORDINAL{$state} >= $STATE_ORDINAL{tool_verified};
+        if ($STATE_ORDINAL{$state} >= $STATE_ORDINAL{analyzed}) {
+            push @expected, map { sprintf('provider_analysis_output_%02d', $_) }
+                0 .. $#{$session->{commands}{provider_analyze}};
+            push @expected, 'generated_analysis_output';
+        }
+        if ($STATE_ORDINAL{$state} >= $STATE_ORDINAL{elaborated}) {
+            push @expected, qw(
+                fixture_elaboration_output
+                provider_probe_elaboration_output
+            );
+        }
+        if ($STATE_ORDINAL{$state} >= $STATE_ORDINAL{ran}) {
+            my $repetitions = $session->{validation}{run_repetitions};
+            push @expected, map { "fixture_runtime_output_$_" }
+                0 .. $repetitions - 1;
+            for my $run (0 .. $repetitions - 1) {
+                push @expected, "provider_runtime_output_$run";
+                push @expected, map { "provider_report_${run}_$_" }
+                    0 .. $#{$session->{commands}{provider_reports}};
+            }
+        }
+    }
+    else {
+        push @expected, 'tool_version_output'
+            if $STATE_ORDINAL{$state} >= $STATE_ORDINAL{tool_verified};
+        push @expected, 'analysis_output'
+            if $STATE_ORDINAL{$state} >= $STATE_ORDINAL{analyzed};
+        push @expected, 'elaboration_output'
+            if $STATE_ORDINAL{$state} >= $STATE_ORDINAL{elaborated};
+        if ($STATE_ORDINAL{$state} >= $STATE_ORDINAL{ran}) {
+            push @expected, map { "runtime_output_$_" }
+                0 .. $session->{validation}{run_repetitions} - 1;
+        }
+    }
+    push @expected, 'validated_trace'
+        if $STATE_ORDINAL{$state} >= $STATE_ORDINAL{trace_validated};
+    push @expected, 'normalized_result'
+        if $STATE_ORDINAL{$state} >= $STATE_ORDINAL{result_produced};
+    push @expected, 'assembly_payload'
+        if $STATE_ORDINAL{$state} >= $STATE_ORDINAL{assembled};
+    return @expected;
+}
+
+sub _validate_osvvm_capture_shape($session, $record) {
+    my $state = $record->{state};
+    if ($state eq 'analyzed') {
+        my $count = scalar(@{$session->{commands}{provider_analyze}});
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            'OSVVM provider-analysis capture cardinality is not exact',
+            '/evidence/captures')
+            unless ref($record->{evidence}{captures}) eq 'ARRAY'
+                && @{$record->{evidence}{captures}} == $count;
+        _closed($_, \@CAPTURE_KEYS, 'OSVVM provider-analysis capture')
+            for @{$record->{evidence}{captures}};
+        _closed($record->{evidence}{generated_capture}, \@CAPTURE_KEYS,
+            'OSVVM generated-analysis capture');
+    }
+    elsif ($state eq 'elaborated') {
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            'OSVVM elaboration capture cardinality is not exact',
+            '/evidence/captures')
+            unless ref($record->{evidence}{captures}) eq 'ARRAY'
+                && @{$record->{evidence}{captures}} == 2;
+        _closed($_, \@CAPTURE_KEYS, 'OSVVM elaboration capture')
+            for @{$record->{evidence}{captures}};
+    }
+    elsif ($state eq 'ran') {
+        my $count = $session->{validation}{run_repetitions};
+        for my $name (qw(fixture_captures provider_captures)) {
+            _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+                'OSVVM runtime capture cardinality is not exact',
+                "/evidence/$name")
+                unless ref($record->{evidence}{$name}) eq 'ARRAY'
+                    && @{$record->{evidence}{$name}} == $count;
+            _closed($_, \@CAPTURE_KEYS, 'OSVVM runtime capture')
+                for @{$record->{evidence}{$name}};
+        }
     }
 }
 
@@ -1060,6 +1696,73 @@ sub _object_content($session, $kind) {
         unless bytes::length($content) == $object->{bytes}
             && sha256_hex($content) eq $object->{sha256};
     return $content;
+}
+
+sub _snapshot_osvvm_reports($session, $run_index) {
+    my $reports_rel = "$session->{stage_rel}/provider_reports";
+    my $reports_abs = _repo_path($session->{repo_root}, $reports_rel);
+    opendir my $dh, $reports_abs or _throw(
+        'VIAL_GHDL_LIFECYCLE_OBJECT_ERROR',
+        'cannot inspect OSVVM provider reports', '/ran/provider_reports',
+    );
+    my @actual = sort grep { $_ ne '.' && $_ ne '..' } readdir $dh;
+    closedir $dh;
+    my @expected = sort map { $_->{name} }
+        @{$session->{commands}{provider_reports}};
+    _throw('VIAL_GHDL_LIFECYCLE_OBJECT_ERROR',
+        'OSVVM provider report inventory is not exact',
+        '/ran/provider_reports') unless _canonical(\@actual)
+            eq _canonical(\@expected);
+    my @snapshot;
+    for my $index (0 .. $#{$session->{commands}{provider_reports}}) {
+        my $authority = $session->{commands}{provider_reports}[$index];
+        my $absolute = _repo_path(
+            $session->{repo_root}, $authority->{relpath},
+        );
+        _regular_same_volume(
+            $absolute, $authority->{relpath}, $session->{root_device},
+        );
+        my $content = _slurp($absolute);
+        push @{$session->{objects}}, _write_object(
+            $session, "provider_report_${run_index}_$index", $content, 0,
+        );
+        push @snapshot, {
+            name => $authority->{name},
+            bytes => bytes::length($content),
+            sha256 => sha256_hex($content),
+        };
+    }
+    return \@snapshot;
+}
+
+sub _clear_osvvm_reports($session) {
+    for my $authority (@{$session->{commands}{provider_reports}}) {
+        my $absolute = _repo_path(
+            $session->{repo_root}, $authority->{relpath},
+        );
+        _regular_same_volume(
+            $absolute, $authority->{relpath}, $session->{root_device},
+        );
+        unlink $absolute or _throw(
+            'VIAL_GHDL_LIFECYCLE_CLEANUP_ERROR',
+            'cannot remove one sealed OSVVM report between executions',
+            '/ran/provider_reports',
+        );
+    }
+}
+
+sub _validate_osvvm_settings($session) {
+    my $settings = $session->{commands}{generated_settings};
+    my $absolute = _repo_path($session->{repo_root}, $settings->{relpath});
+    _regular_same_volume(
+        $absolute, $settings->{relpath}, $session->{root_device},
+    );
+    _throw('VIAL_GHDL_LIFECYCLE_OBJECT_ERROR',
+        'generated OSVVM settings changed after preparation',
+        '/commands/generated_settings')
+        unless -s $absolute == $settings->{bytes}
+            && _file_sha256($absolute) eq $settings->{sha256}
+            && _slurp($absolute) eq $settings->{content};
 }
 
 sub _workspace_evidence($session) {

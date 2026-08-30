@@ -67,11 +67,49 @@ die "unexpected execution"
         || $plan->{claims}{external_tool_executed};
 ```
 
-From clean plan commit `89c33b96e`, `.17.3.7.3` is active solely to admit the
-sealed OSVVM plan through a provider-aware role of the shared GHDL lifecycle
-and refactor the exact qualifier onto it. Activation changes no lifecycle,
-runtime, report, provider/tool, measurement, product-support, performance,
-capacity, mixed-language, provider-generality, or public-API behavior.
+## Provider-aware lifecycle execution
+
+The shared GHDL lifecycle now has a distinct caller-sealed OSVVM authority.
+Portable qualification and measurement retain their original lifecycle
+schema, request shape, state bytes, command family, storage policy, and result
+projection. The OSVVM qualifier alone receives the versioned multi-command
+authority; an ordinary caller, subclass, or portable role cannot acquire it.
+
+The provider-aware role prepares the generated OSVVM settings, the `osvvm`,
+`osvvm_common`, and `fsmgen_vial` libraries, and the supplementary-report
+directory beneath one content-addressed repository-volume stage. It then uses
+the same production process supervisor and forward-only state chain for:
+
+| Lifecycle state | Sealed OSVVM work |
+| --- | --- |
+| `tool_verified` | exact qualified GHDL version |
+| `analyzed` | every provider command in order, then generated sources and probe |
+| `elaborated` | separate fixture and provider-probe commands |
+| `ran` | separate fixture and provider-probe executions and report snapshots |
+| `trace_validated` | portable trace-v2 validation from fixture output only |
+| `result_produced` | portable normalized-result validation from fixture output only |
+| `assembled` / `cleaned` | sealed private evidence followed by exact owned removal |
+
+Every command has its own supervisor capture. Resumption revalidates the GHDL
+archive and binary, the complete ordered repository source set, generated
+settings, predecessor states, content objects, and work libraries. Provider
+reports are copied into sealed objects after each probe execution and removed
+from the raw report directory before the next state. They remain supplementary
+evidence and cannot replace portable trace or normalized-result truth.
+
+The checked qualifier no longer has a second process implementation. It
+reconstructs the private execution plan, admits that plan to the lifecycle,
+advances every state, and builds the existing public report from the cleaned
+assembly. Live qualification still reproduces the checked report byte-for-byte;
+the checked portable qualifier is also unchanged. Hostile controls cover
+alternate resource policy, generated-settings mutation, absent reports,
+caller widening, state/object/source/provider mutation, collision, process
+failure, and cleanup.
+
+This child does not measure or publish architecture-scale OSVVM records.
+Common-controller measurement remains the next task. No product-support,
+performance, capacity, mixed-language, provider-generality, or public-API
+claim follows from lifecycle admission.
 
 See [HIAL/VIAL Verification Architecture](16d-hial-vial-verification-architecture.md)
 for the parent architecture and [Portable VHDL Runtime Measurement](16dd-vial-portable-vhdl-runtime-measurement.md)

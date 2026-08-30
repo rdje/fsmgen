@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-vhdl`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **38** uniquely owned question entries.
+> **3** facts · **39** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -26,6 +26,7 @@
 - q="how do I rerun the exact portable VHDL GHDL qualification?" · facts=[vial-vhdl-portable-profile](../../docs/knowledge/vial-vhdl-portable-profile.md)
 - q="how does portable VHDL preserve original std_logic symbols?" · facts=[vial-vhdl-portable-profile](../../docs/knowledge/vial-vhdl-portable-profile.md)
 - q="how does portable VHDL prove legacy and HIAL separation?" · facts=[vial-vhdl-portable-profile](../../docs/knowledge/vial-vhdl-portable-profile.md)
+- q="how does the provider-aware GHDL lifecycle execute the exact OSVVM plan?" · facts=[vial-vhdl-osvvm-qualified-tier](../../docs/knowledge/vial-vhdl-osvvm-qualified-tier.md)
 - q="how is exact OSVVM provider verification reused safely?" · facts=[vial-vhdl-osvvm-qualified-tier](../../docs/knowledge/vial-vhdl-osvvm-qualified-tier.md)
 - q="how is the 16-artifact OSVVM adapter graph verified?" · facts=[vial-vhdl-provider-claim-evidence](../../docs/knowledge/vial-vhdl-provider-claim-evidence.md)
 - q="how is the exact GHDL 6.0.0 LLVM-JIT archive verified?" · facts=[vial-vhdl-provider-claim-evidence](../../docs/knowledge/vial-vhdl-provider-claim-evidence.md)

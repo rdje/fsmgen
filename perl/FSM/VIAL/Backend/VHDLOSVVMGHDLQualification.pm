@@ -7,9 +7,7 @@ use bytes ();
 use Carp qw(confess);
 use Cwd qw(abs_path);
 use Digest::SHA qw(sha256_hex);
-use File::Path qw(make_path remove_tree);
 use File::Spec;
-use IPC::Cmd qw(run);
 use JSON::PP ();
 use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
@@ -17,6 +15,7 @@ no warnings 'experimental::signatures';
 
 use FSM::VIAL::Backend::VHDLPortableTraceValidator;
 
+use FSM::VIAL::Backend::GHDLLifecycle;
 use FSM::VIAL::Backend::OSVVM2026_05Materialization;
 use FSM::VIAL::ArchitectureScaleOSVVMRuntimeExecutionPlan;
 
@@ -189,18 +188,8 @@ sub _qualify($raw) {
     my $execution_plan =
         FSM::VIAL::ArchitectureScaleOSVVMRuntimeExecutionPlan
             ->_qualification_plan({staging_identity => $stage_rel});
-    my $library_rel = $execution_plan->{libraries}{root};
-    my $library_abs = _repo_path($repo_root, $library_rel);
-    my $osvvm_work_rel = $execution_plan->{libraries}{osvvm};
-    my $osvvm_work_abs = _repo_path($repo_root, $osvvm_work_rel);
-    my $common_work_rel = $execution_plan->{libraries}{osvvm_common};
-    my $common_work_abs = _repo_path($repo_root, $common_work_rel);
-    my $fixture_work_rel = $execution_plan->{libraries}{fsmgen_vial};
-    my $fixture_work_abs = _repo_path($repo_root, $fixture_work_rel);
     my $reports_rel = "$stage_rel/provider_reports";
-    my $reports_abs = _repo_path($repo_root, $reports_rel);
     my $settings_rel = $execution_plan->{generated_settings_relpath};
-    my $settings_abs = _repo_path($repo_root, $settings_rel);
     my $resource = $execution_plan->{resource_controls};
     my @provider_commands = map { [@$_] }
         @{$execution_plan->{commands}{provider_analyze}};
@@ -214,77 +203,111 @@ sub _qualify($raw) {
         @{$execution_plan->{commands}{elaborate_provider_probe}};
     my @run_probe = @{$execution_plan->{commands}{run_provider_probe}};
 
-    my ($version, $generated_analysis, $fixture_elaboration, $fixture_one,
-        $fixture_two, $probe_elaboration, $probe_one, $probe_two,
-        $reports_one, $reports_two, $provider_output_bytes, $settings_sha256,
-        $workflow_error);
-    my $stage_created = 0;
-    my $workflow_ok = eval {
-        $stage_created = 1;
-        make_path($osvvm_work_abs, $common_work_abs, $fixture_work_abs,
-            $reports_abs);
-        _write_temp_file(
-            $settings_abs, $execution_plan->{generated_settings_content},
-        );
-        $settings_sha256 = _file_sha256($settings_abs);
-        $version = _capture($repo_root, \@version_command,
-            $resource->{version_timeout_seconds},
-            $resource->{version_capture_limit_bytes}, 'version');
-        my $normalized_version = $version->{output};
-        $normalized_version =~ s/[\r\n]+\z//;
-        _throw('VIAL_OSVVM_GHDL_QUALIFICATION_TOOL_ERROR',
-            'installed GHDL identity does not match the exact 6.0.0 LLVM-JIT profile',
-            '/tool_profile/version_output')
-            unless $normalized_version eq $VERSION_OUTPUT;
-
-        $provider_output_bytes = 0;
-        for my $index (0 .. $#provider_commands) {
-            my $capture = _capture($repo_root, $provider_commands[$index],
-                $resource->{provider_analysis_timeout_seconds_per_source},
-                $resource->{provider_capture_limit_bytes},
-                "provider analysis $index");
-            $provider_output_bytes += $capture->{output_bytes};
-        }
-        $generated_analysis = _capture($repo_root, \@analyze_generated,
-            $resource->{generated_analysis_timeout_seconds},
-            $resource->{provider_capture_limit_bytes},
-            'adapter and generated-fixture analysis');
-        $fixture_elaboration = _capture($repo_root, \@elaborate_fixture,
-            $resource->{elaboration_timeout_seconds},
-            $resource->{provider_capture_limit_bytes}, 'fixture elaboration');
-        $fixture_one = _capture($repo_root, \@run_fixture,
-            $resource->{execution_timeout_seconds},
-            $resource->{fixture_capture_limit_bytes}, 'fixture execution');
-        $fixture_two = _capture($repo_root, \@run_fixture,
-            $resource->{execution_timeout_seconds},
-            $resource->{fixture_capture_limit_bytes},
-            'fixture deterministic rerun');
-        $probe_elaboration = _capture($repo_root, \@elaborate_probe,
-            $resource->{elaboration_timeout_seconds},
-            $resource->{provider_capture_limit_bytes},
-            'provider probe elaboration');
-        $probe_one = _capture($repo_root, \@run_probe,
-            $resource->{execution_timeout_seconds},
-            $resource->{provider_capture_limit_bytes},
-            'provider probe execution');
-        $reports_one = _snapshot_provider_reports($reports_abs, $reports_rel);
-        _remove_provider_reports($reports_abs);
-        $probe_two = _capture($repo_root, \@run_probe,
-            $resource->{execution_timeout_seconds},
-            $resource->{provider_capture_limit_bytes},
-            'provider probe deterministic rerun');
-        $reports_two = _snapshot_provider_reports($reports_abs, $reports_rel);
-        1;
-    };
-    $workflow_error = $@ unless $workflow_ok;
-    if ($stage_created && -d $stage_abs && !-l $stage_abs) {
-        my $errors;
-        remove_tree($stage_abs, {error => \$errors});
-        _throw('VIAL_OSVVM_GHDL_QUALIFICATION_CLEANUP_ERROR',
-            "cannot remove qualification staging root '$stage_rel'", '/cleanup')
-            if $errors && @$errors;
+    my @lifecycle_source_relpaths = (
+        (map { $_->[-1] }
+            grep { $_->[-1] ne $settings_rel } @provider_commands),
+        @GENERATED_SOURCE,
+    );
+    my @lifecycle_source_set;
+    for my $rel (@lifecycle_source_relpaths) {
+        my $abs = _repo_path($repo_root, $rel);
+        _regular_same_volume($abs, $rel, $root_stat[0]);
+        push @lifecycle_source_set, {
+            relpath => $rel,
+            bytes => 0 + (-s $abs),
+            sha256 => _file_sha256($abs),
+        };
     }
-    die $workflow_error unless $workflow_ok;
+    my $lifecycle_source_identity = 'source/'
+        . sha256_hex($JSON->encode(\@lifecycle_source_set));
+    my $lifecycle_commands = {
+        schema => 'fsmgen.vial_ghdl_lifecycle_osvvm_command_plan.v2',
+        schema_version => 2,
+        version => \@version_command,
+        provider_analyze => \@provider_commands,
+        analyze_generated => \@analyze_generated,
+        elaborate_fixture => \@elaborate_fixture,
+        elaborate_provider_probe => \@elaborate_probe,
+        run_fixture => \@run_fixture,
+        run_provider_probe => \@run_probe,
+        generated_settings => {
+            relpath => $settings_rel,
+            content => $execution_plan->{generated_settings_content},
+            bytes => bytes::length(
+                $execution_plan->{generated_settings_content},
+            ),
+            sha256 => sha256_hex(
+                $execution_plan->{generated_settings_content},
+            ),
+        },
+        libraries => _clone($execution_plan->{libraries}),
+        provider_reports => [map {{
+            name => $_, relpath => "$reports_rel/$_",
+        }} @PROVIDER_REPORT],
+        resource_controls => _clone($resource),
+    };
+    my $lifecycle_request = {
+        repo_root => $repo_root,
+        provider => {
+            root => $GHDL_ROOT,
+            archive => $GHDL_ARCHIVE,
+            archive_bytes => $ARCHIVE_BYTES,
+            archive_sha256 => $ARCHIVE_SHA256,
+            binary => $GHDL_BINARY,
+            binary_sha256 => $BINARY_SHA256,
+            version_output => $VERSION_OUTPUT,
+        },
+        source_set => \@lifecycle_source_set,
+        source_identity => $lifecycle_source_identity,
+        emission_identity => 'emission/' . sha256_hex($JSON->encode({
+            qualification_id => $qualification_id,
+            source_identity => $lifecycle_source_identity,
+            commands => $lifecycle_commands,
+        })),
+        commands => $lifecycle_commands,
+        validation => {
+            expected_record_counts => {
+                header => 1, scenario_start => 2, events => 2, samples => 35,
+                expectations => 2, scoreboards => 2, coverage => 28, faults => 2,
+                scenario_end => 2, footer => 1,
+            },
+            %$TRACE_AUTHORITY,
+            run_repetitions => 2,
+        },
+        storage_context => {
+            schema => 'fsmgen.vial_ghdl_lifecycle_storage.v1',
+            schema_version => 1,
+            mode => 'osvvm_qualification',
+            staging_identity => $stage_rel,
+            containment => 'lifecycle_process_group',
+        },
+    };
+    my $current = FSM::VIAL::Backend::GHDLLifecycle->begin_session(
+        $lifecycle_request,
+    );
+    _lifecycle_succeeded($current, 'admission');
+    for my $target (qw(
+        prepared tool_verified analyzed elaborated ran trace_validated
+        result_produced assembled
+    )) {
+        $current = FSM::VIAL::Backend::GHDLLifecycle->advance_session({
+            %$lifecycle_request, handle => $current->{handle},
+        });
+        _lifecycle_succeeded($current, $target);
+    }
+    my $finished = FSM::VIAL::Backend::GHDLLifecycle->finish_session({
+        %$lifecycle_request, handle => $current->{handle},
+    });
+    _lifecycle_succeeded($finished, 'cleaned');
+    my $assembled = $finished->{assembled_result};
+    my ($fixture_one, $fixture_two) = map {{output => $_}}
+        @{$assembled->{fixture_runtime_outputs}};
+    my ($probe_one, $probe_two) = map {{output => $_}}
+        @{$assembled->{provider_runtime_outputs}};
+    my ($reports_one, $reports_two) = @{$assembled->{provider_reports}};
+    my $provider_output_bytes =
+        $assembled->{provider_compiler_output_bytes};
+    my $settings_sha256 = $assembled->{generated_settings_sha256};
     _throw('VIAL_OSVVM_GHDL_QUALIFICATION_CLEANUP_ERROR',
         "qualification staging root '$stage_rel' remains after execution", '/cleanup')
         if -e $stage_abs || -l $stage_abs;
@@ -457,39 +480,6 @@ sub _qualify($raw) {
     });
 }
 
-sub _snapshot_provider_reports($reports_abs, $reports_rel) {
-    my @snapshot;
-    for my $name (@PROVIDER_REPORT) {
-        my $path = File::Spec->catfile($reports_abs, $name);
-        _throw('VIAL_OSVVM_GHDL_QUALIFICATION_PROVIDER_REPORT_ERROR',
-            "supplementary provider report '$name' was not produced",
-            '/supplementary_provider_reports')
-            unless -f $path && !-l $path;
-        my $content = _slurp_raw($path);
-        push @snapshot, {
-            relpath => "$reports_rel/$name",
-            name => $name,
-            bytes => bytes::length($content),
-            sha256 => sha256_hex($content),
-            content => $content,
-        };
-    }
-    return \@snapshot;
-}
-
-sub _remove_provider_reports($reports_abs) {
-    for my $name (@PROVIDER_REPORT) {
-        my $path = File::Spec->catfile($reports_abs, $name);
-        _throw('VIAL_OSVVM_GHDL_QUALIFICATION_CLEANUP_ERROR',
-            "supplementary provider report '$name' changed type before rerun",
-            '/cleanup')
-            unless -f $path && !-l $path;
-        unlink($path) or _throw('VIAL_OSVVM_GHDL_QUALIFICATION_CLEANUP_ERROR',
-            "cannot remove supplementary provider report '$name' before rerun",
-            '/cleanup');
-    }
-}
-
 sub _validate_provider_evidence($output, $reports) {
     _throw('VIAL_OSVVM_GHDL_QUALIFICATION_PROVIDER_RUNTIME_ERROR',
         'provider probe did not produce its exact deterministic pass marker',
@@ -655,23 +645,6 @@ sub _validate_runtime_output($output) {
     };
 }
 
-sub _capture($repo_root, $argv, $timeout, $limit, $label) {
-    my @absolute = @$argv;
-    $absolute[0] = _repo_path($repo_root, $absolute[0]);
-    my ($ok, $error, undef, $stdout, $stderr) = run(
-        command => \@absolute,
-        timeout => $timeout,
-    );
-    my $output = join('', @{$stdout || []}, @{$stderr || []});
-    _throw('VIAL_OSVVM_GHDL_QUALIFICATION_LIMIT_ERROR',
-        "$label output exceeded its exact byte limit", '/resource_controls')
-        if bytes::length($output) > $limit;
-    _throw('VIAL_OSVVM_GHDL_QUALIFICATION_EXECUTION_ERROR',
-        "$label failed: " . _process_summary($output, $error), '/execution')
-        unless $ok;
-    return {output => $output, output_bytes => bytes::length($output)};
-}
-
 sub _command_record($argv) {
     return {
         working_directory => '.',
@@ -681,19 +654,13 @@ sub _command_record($argv) {
     };
 }
 
-sub _write_temp_file($path, $content) {
-    open my $fh, '>:raw', $path
-        or _throw('VIAL_OSVVM_GHDL_QUALIFICATION_HOST_ERROR',
-            'cannot create generated provider settings in the staging root',
-            '/provider_compilation');
-    print {$fh} $content
-        or _throw('VIAL_OSVVM_GHDL_QUALIFICATION_HOST_ERROR',
-            'cannot populate generated provider settings in the staging root',
-            '/provider_compilation');
-    close $fh
-        or _throw('VIAL_OSVVM_GHDL_QUALIFICATION_HOST_ERROR',
-            'cannot close generated provider settings in the staging root',
-            '/provider_compilation');
+sub _lifecycle_succeeded($result, $phase) {
+    return 1 if $result->{ok};
+    my $diagnostic = $result->{diagnostics}[0] // {};
+    _throw('VIAL_OSVVM_GHDL_QUALIFICATION_LIFECYCLE_ERROR',
+        "GHDL lifecycle $phase failed: "
+            . ($diagnostic->{message} // 'unknown lifecycle failure'),
+        $diagnostic->{path} // "/execution/$phase");
 }
 
 sub _regular_same_volume($path, $identity, $root_device) {
@@ -741,17 +708,6 @@ sub _file_sha256($path) {
     return $sha->hexdigest;
 }
 
-sub _slurp_raw($path) {
-    open my $fh, '<:raw', $path
-        or _throw('VIAL_OSVVM_GHDL_QUALIFICATION_HOST_ERROR',
-            'cannot read one generated provider report',
-            '/supplementary_provider_reports');
-    local $/;
-    my $content = <$fh>;
-    close $fh;
-    return $content;
-}
-
 sub _decode_json($text, $path) {
     my $value = eval { JSON::PP->new->decode($text) };
     _throw('VIAL_OSVVM_GHDL_QUALIFICATION_RESULT_ERROR',
@@ -764,14 +720,6 @@ sub _json_text($value) {
     my $text = JSON::PP->new->ascii->canonical->pretty->encode($value);
     $text .= "\n" unless $text =~ /\n\z/;
     return $text;
-}
-
-sub _process_summary($output, $error) {
-    my $summary = length($output) ? $output : ($error // 'unknown process failure');
-    $summary =~ s/[\r\n\t]+/ /g;
-    $summary =~ s/\s+/ /g;
-    $summary = substr($summary, 0, 1_024) if length($summary) > 1_024;
-    return $summary;
 }
 
 sub _closed_record($value, $keys, $label) {

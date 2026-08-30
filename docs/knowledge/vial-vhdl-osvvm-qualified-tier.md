@@ -10,6 +10,7 @@ answers:
   - "how are portable VHDL source maps preserved in the OSVVM wrapper?"
   - "how are authored portable VHDL runtime sources materialized through OSVVM?"
   - "how is the exact OSVVM GHDL execution plan sealed?"
+  - "how does the provider-aware GHDL lifecycle execute the exact OSVVM plan?"
 date: 2026-08-30
 status: current
 tags: [hial, vial, vhdl, osvvm, ghdl, review-gallery, verification]
@@ -19,7 +20,7 @@ evidence: >-
   perl/FSM/VIAL/Backend/OSVVM2026_05Materialization.pm;
   perl/FSM/VIAL/Backend/VHDLOSVVM2026_05.pm;
   perl/FSM/VIAL/Backend/VHDLOSVVMStaticValidator.pm;
-  perl/FSM/VIAL/Backend/VHDLOSVVMGHDLQualification.pm;
+  perl/FSM/VIAL/Backend/GHDLLifecycle.pm; perl/FSM/VIAL/Backend/VHDLOSVVMGHDLQualification.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission/OSVVM.pm;
   perl/FSM/VIAL/ArchitectureScaleOSVVMRuntimeMaterialization.pm; perl/FSM/VIAL/ArchitectureScaleOSVVMRuntimeExecutionPlan.pm;
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/Support/VIALVHDLEmissionContract.pm;
@@ -31,6 +32,7 @@ evidence: >-
   t/1648-vial-architecture-scale-backend-emission-osvvm.t;
   t/1676-vial-architecture-scale-osvvm-runtime-materialization.t;
   t/1677-vial-architecture-scale-osvvm-runtime-execution-plan.t;
+  t/1678-vial-ghdl-provider-aware-lifecycle.t;
   vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json;
   vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/README.md;
   vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/evidence/provider-materialization.json;
@@ -47,6 +49,7 @@ reverify: >-
   t/1648-vial-architecture-scale-backend-emission-osvvm.t
   t/1676-vial-architecture-scale-osvvm-runtime-materialization.t
   t/1677-vial-architecture-scale-osvvm-runtime-execution-plan.t &&
+  prove -Iperl t/1678-vial-ghdl-provider-aware-lifecycle.t &&
   perl scripts/refresh_vial_vhdl_osvvm_gallery.pl --check &&
   perl scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl --check
 ---
@@ -92,22 +95,10 @@ claim.
 Related: [[vial-vhdl-portable-profile]],
 [[hial-vial-verification-fixture-architecture]].
 
-Decision `0092` selects `.17.3.7` as a five-leaf runtime-measurement chain. It
-reuses the tracked portable-VHDL runtime sources, adds a profile-specific
-OSVVM materializer, extracts one caller-sealed provider/tool plan, and admits
-that plan through a provider-aware role of the shared GHDL lifecycle before
-measurement and publication. Provider verification, FSMGen work, and external
-tool stages remain distinct; selection adds no measurement or promoted claim.
+Decision `0092` selects `.17.3.7` as a five-leaf runtime-measurement chain. It reuses the tracked portable-VHDL runtime sources, adds a profile-specific OSVVM materializer, extracts one caller-sealed provider/tool plan, and admits that plan through a provider-aware role of the shared GHDL lifecycle before measurement and publication. Provider verification, FSMGen work, and external tool stages remain distinct; selection adds no measurement or promoted claim.
 
-Child `.17.3.7.1` now materializes the exact authored portable-VHDL reference,
-10,000-record gate, and 100,000-record qualification sources through the
-qualified OSVVM wrapper. Each role stays at 21 operations and 39 ExecutionIR
-maps, verifies the pinned provider once for two byte-identical emissions, and
-closes 16 artifacts, seven sources, 66 maps, twelve checks, seven advanced
-mappings, six preserved portable sources/guards, and the exact provider
-census. The seven-source totals are 122,413/122,426/122,438 bytes; t1676
-re-derives and falsifies these identities, while the module, task tree, and
-this card retain them durably. Limit/excess are provider-, route-, staging-,
-and tool-free.
+Child `.17.3.7.1` materializes the exact authored portable-VHDL reference, 10,000-record gate, and 100,000-record qualification sources through the qualified OSVVM wrapper. Each role stays at 21 operations and 39 ExecutionIR maps, verifies the pinned provider once for two byte-identical emissions, and closes 16 artifacts, seven sources, 66 maps, twelve checks, seven advanced mappings, six preserved portable sources/guards, and the exact provider census. The seven-source totals are 122,413/122,426/122,438 bytes; t1676 re-derives and falsifies these identities, while the module, task tree, and this card retain them durably. Limit/excess are provider-, route-, staging-, and tool-free.
 
-Child `.17.3.7.2` seals three in-memory OSVVM/GHDL plans: each binds 61 provider analyses, seven emitted sources plus the checked probe, separate fixture/probe commands, four reports, exact tool/resource authority, and repository-relative storage. t1677 re-derives the full identities and falsifies widening; the qualifier consumes the same private authority and stays byte-identical to its checked 74,976-byte executable oracle. Evaluation creates no stage or process and limit/excess stay plan-free. From clean plan commit `89c33b96e`, `.17.3.7.3` alone is active to add the provider-aware shared-lifecycle role and qualifier refactor; activation changes no runtime or product claim.
+Child `.17.3.7.2` seals three in-memory OSVVM/GHDL plans: each binds 61 provider analyses, seven emitted sources plus the checked probe, separate fixture/probe commands, four reports, exact tool/resource authority, and repository-relative storage. t1677 re-derives the full identities and falsifies widening; the qualifier consumes the same private authority and stays byte-identical to its checked 74,976-byte executable oracle. Evaluation creates no stage or process and limit/excess stay plan-free.
+
+Child `.17.3.7.3` admits only that plan through a distinct provider-aware role of the shared GHDL lifecycle. The role preserves portable v1 authority, uses the same supervisor and forward state/object/cleanup implementation, records ordered provider/generated captures plus separate fixture/probe evidence, seals supplementary reports, revalidates tool/source/settings authority, and leaves both checked qualifier reports byte-identical. t1678 owns hostile plan/settings/report/caller/cleanup controls. Measurement and product claims remain deferred.
