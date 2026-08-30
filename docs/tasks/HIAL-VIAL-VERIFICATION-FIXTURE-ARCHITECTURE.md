@@ -801,8 +801,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Publish and independently reload the immutable balanced portable measurement set.`
   Acceptance: `Derive the one balanced gate role from producer ownership; isolate capture and reload; atomically retain the complete validation plus three raw reports before bounded coordinator IPC; bind one clean revision/host/internal-tool/guard identity; preserve applicability, exact structural evidence, exclusions, cleanup, and nonclaims; reject incomplete, reordered, mixed, stale, collided, signalled, oversized, symlinked, or ambiguous state; and complete guarded capture plus a distinct fresh-process reload before closing .17.3.8.`
-  Verification: `Clean predecessor 91ceaf9eb supplies the sole member, four structural records, closed applicability/nonclaims, failure/cleanup evidence, and zero residue. Knowledge Map and history find no balanced publisher, runner, watcher, or namespace; the three existing publishers are sealed to other producers/reports/tools/namespaces. This leaf alone owns balanced publication, hostile validation, guarded capture, and distinct reload without adding runtime, budget, capacity, support, parity, provider, or public-API claims.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8.2: activate balanced measurement publication`
+  Verification: `Clean predecessor 91ceaf9eb supplies the sole member, four structural records, closed applicability/nonclaims, failure/cleanup evidence, and zero residue. Knowledge Map and history find no balanced publisher, runner, watcher, or namespace; the three existing publishers are sealed to other producers/reports/tools/namespaces. The exact-class implementation now derives the one role, isolates capture/reload, publishes the complete canonical report before bounded coordinator IPC, atomically seals profile/family/complete layers at one clean revision/host/internal-tool/guard identity, and rejects caller evidence, drift, collision, child failure, unsafe paths, and ambiguous staging. Syntax and default t1680/t1681/t1682 pass; clean guarded capture plus distinct reload remain pending before closure. No runtime, budget, capacity, support, parity, provider, or public-API claim is added.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8.2: activate balanced measurement publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8.2: implement balanced measurement publication`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9`
   Status: `proposed`
@@ -7570,42 +7570,21 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
 
 ## Acceptance Checklist (enforced) — `.17.3.7.5` publication activation
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Knowledge Map query and source search find
-  no OSVVM matrix publisher, runner, or watcher. `git log -S'_capture_family'
-  --oneline -- perl/FSM/VIAL/ArchitectureScalePortableRuntimeMeasurementMatrix.pm
-  perl/FSM/VIAL/ArchitectureScalePortableVHDLRuntimeMeasurementMatrix.pm`
-  locates portable-Verilator origin `9a534bc93` and portable-VHDL origin
-  `e4f4a295e`; both are exact-class implementations sealed to their producer,
-  profile, report schema, tool tuple, namespace, and aggregate identities.
-- [x] **ADDRESSED (verified)** — From clean measurement commit `03292cd1e`,
-  `.17.3.7.5` alone is active to derive all five OSVVM roles, atomically retain
-  raw reports plus bounded manifests, bind one clean revision/host/provider/
-  tool/guard identity, and require a distinct fresh-process reload. Activation
-  adds no publication, runtime, budget, support, capacity, provider-generality,
-  parity, mixed-language, or public-API claim.
-- [x] **NO REGRESSION** — All 57 mdBook chapters test, and the inspected
-  repository-local render contains 93 files/20,117,547 bytes before exact
-  removal. `knowledge-map: OK` covers 1,155 facts/6,128 questions/6,300
-  occurrences/136 shards. Claims close all 1,638 candidates as 129 claim
-  records/916 gates/593 reviews/zero gaps, and task integrity remains four
-  trees/1,019 nodes. Production containment accepts exact 58-file/53,162-line/
-  2,849,680-byte book authority (+0/+1/+97) with zero ceiling increase. Final
-  memory, relative-path, locality, cleanup, staged acceptance, resulting-tree,
-  diff, and `[doctrine] all doctrine checks passed` evidence is recorded before
-  commit; only pinned provider-owned validation logs remain. Full CI and push
-  remain deferred by policy because activation changes no product behavior.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Knowledge Map/source find no OSVVM publisher; history locates portable-Verilator `9a534bc93` and portable-VHDL `e4f4a295e`, each exact-class and sealed to incompatible producer/report/tool/namespace contracts.
+- [x] **ADDRESSED (verified)** — From clean `03292cd1e`, `.17.3.7.5` alone owns five-role raw publication, bounded manifests, one clean revision/host/provider/tool/guard identity, and distinct reload without product claims.
+- [x] **NO REGRESSION** — All 57 chapters and the removed 93-file/20,117,547-byte render pass; Knowledge Map `1,155/6,128/6,300/136`, claims `1,638/129/916/593/0`, task, containment, memory, path, locality, cleanup, staged acceptance, resulting-tree, diff, and doctrines pass. Full CI/push remain deferred.
 
 ## Acceptance Checklist (enforced) — `.17.3.7.5` publication implementation
 
-- [x] **ROOT CAUSE (WHY + WHERE; executable RED)** — First focused t1680 fails because the OSVVM matrix module is absent. Query-first audit and `git log -S'_capture_family'` locate distinct portable-Verilator `9a534bc93` and portable-VHDL `e4f4a295e` producer/report/tool/namespace/aggregate seals. Focused t1678 also exposes `VIAL_GHDL_LIFECYCLE_TIMEOUT`: its new fake GHDL hangs on external-APFS `--version`, while explicit Darwin ad-hoc signing makes identical bytes execute.
-- [x] **ADDRESSED (verified)** — The exact-class publisher/runner derive five OSVVM roles, isolate capture/reload, publish canonical reports before bounded IPC, bind one clean revision/host/pinned-provider/tool/guard tuple, inherit preflight identity, and reject incomplete/reordered/duplicated/mixed/stale/collided/signalled/oversized/symlinked/ambiguous state. t1678 ad-hoc signs only its Darwin fake provider after compile; production identities/behavior are unchanged, and exact capture/reload remains pending from a clean commit.
-- [x] **NO REGRESSION** — All changed Perl files report `syntax OK`; the clean materialization/plan/lifecycle/measurement/publication chain passes `Files=5, Tests=30` in 144 seconds. All 57 mdBook chapters and the inspected/removed 93-file/20,149,201-byte render pass. Knowledge Map closure is 1,155 facts/6,129 questions/6,301 occurrences/136 shards; task integrity is four trees/1,019 nodes; claims close 1,640 candidates as 131 claim records/916 gates/593 reviews/zero gaps. Containment accepts the 58-file/53,236-line/2,854,991-byte book authority (+0/+74/+5,311) with zero ceiling increase; locality, cleanup, staged acceptance, resulting-tree, diff, and `[doctrine] all doctrine checks passed` are recorded. Full CI, exact capture/reload, and push remain deferred to their policy boundaries.
+- [x] **ROOT CAUSE (WHY + WHERE; executable RED)** — t1680 first finds no OSVVM matrix; history locates incompatible portable publishers. t1678 also isolates an unsigned external-APFS fake-GHDL startup hang that explicit Darwin ad-hoc signing removes.
+- [x] **ADDRESSED (verified)** — The exact publisher derives five roles, publishes raw reports before bounded IPC, binds one clean revision/host/provider/tool/guard tuple, and rejects profile, identity, process, path, size, collision, and staging drift. Only t1678's fake provider is signed; production is unchanged.
+- [x] **NO REGRESSION** — Syntax and the five-layer chain pass `Files=5, Tests=30` in 144 seconds; all 57 book chapters and the removed 93-file/20,149,201-byte render pass. Knowledge Map, task, claims (`1,640/131/916/593/0`), containment, locality, cleanup, staged acceptance, resulting-tree, diff, and doctrines pass; exact capture, full CI, and push remain deferred.
 
 ## Acceptance Checklist (enforced) — `.17.3.7.5` publication seal
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_capture_family'` locates the publisher implementation at clean `ef10332d6`, while the pre-capture `find` census confirms an empty OSVVM namespace; the durable claim cannot move from implemented publisher to immutable evidence until an exact capture starts from that clean revision and a distinct process reloads the published bytes.
-- [x] **ADDRESSED (verified)** — RAM-guarded exact t1680 publishes five producer-owned roles plus family/complete manifests from clean `ef10332d6610df717de1471d12d3a8f0a678aebf` and passes `Files=1, Tests=8` in 2,974 seconds. A separate guarded `--validate` exits zero with complete identity `osvvm-runtime-matrix/5429888419a848d28ff4250833e6bd60e31d583d3054a7929d1df3e21420e219`; independent `find`/`wc`/`shasum`/`jq` derives seven files/6,105,680 bytes, exact hashes, three validations, eight raw/zero excluded records, two preflights, eleven cleanups, zero residue, the common pinned provider/GHDL/M4 Pro/APFS/active-guard identity, and a largest 3,398,045-byte profile 63,710,819 bytes below the unchanged ceiling.
-- [x] **NO REGRESSION** — All seven immutable publications remain on the repository volume; staging is absent, Git stayed clean after capture/reload, and `git_message_brief.txt` stayed empty. Default t1680 passes `Files=1, Tests=8`; all 57 mdBook chapters and the inspected/removed 93-file/20,192,752-byte render pass. Knowledge Map parity is 1,155 facts/6,129 questions/6,301 occurrences/136 shards; claims close all 1,655 candidates as 146 claim records/916 gates/593 reviews/zero gaps. Containment accepts the exact 58-file/53,270-line/2,858,270-byte book authority (+0/+34/+3,279) with zero ceiling increase; task, memory, path, locality, and cleanup gates pass. No code or budget/capacity/support/parity/provider-generality/mixed-language/API claim changes. Staged acceptance passes with `root=git_history, no-regression=prove_summary`; resulting-tree and diff pass, and `[doctrine] all doctrine checks passed` is recorded before the seal commit. Full CI and push remain at policy boundaries.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Clean `ef10332d6` implements the publisher, but the empty-namespace census proves no immutable evidence exists until guarded capture and distinct reload.
+- [x] **ADDRESSED (verified)** — Exact t1680 passes `Files=1, Tests=8` in 2,974 seconds from `ef10332d6610df717de1471d12d3a8f0a678aebf`; separate `--validate` returns `osvvm-runtime-matrix/5429888419a848d28ff4250833e6bd60e31d583d3054a7929d1df3e21420e219`. Independent census seals seven files/6,105,680 bytes, five roles, three validations, eight raw/zero excluded records, two preflights, eleven cleanups, zero residue, and one provider/GHDL/M4 Pro/APFS/guard identity.
+- [x] **NO REGRESSION** — Publications stay repository-local with no staging residue and clean Git. Default t1680, all 57 chapters, the removed 93-file/20,192,752-byte render, Knowledge Map, claims (`1,655/146/916/593/0`), containment, task, memory, path, locality, cleanup, staged acceptance, resulting-tree, diff, and doctrines pass; no code/product claim changes, full CI, or push.
 
 ## Acceptance Checklist (enforced) — `.17.3.8` balanced measurement activation
 
@@ -7624,6 +7603,12 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Knowledge Map/source/history find no balanced publisher, runner, or watcher. `git log -S'_capture_family'` locates portable-Verilator `9a534bc93`, portable-VHDL `e4f4a295e`, and OSVVM `ef10332d6`, each sealed to another producer/report/tool/namespace.
 - [x] **ADDRESSED (verified)** — From clean `91ceaf9eb`, `.17.3.8.2` alone owns one-role atomic publication, one revision/host/internal-tool/guard identity, and distinct fresh-process reload. No immutable set or new product claim exists yet.
 - [x] **NO REGRESSION** — Only task, memory, card, and mdBook status change. All 57 chapters and the removed 93-file/20,225,500-byte render pass; Knowledge Map is 1,155/6,130/6,302/136; claims close 1,663 as 152/918/593/zero gaps. Containment accepts the 58-file/53,337-line/2,862,999-byte book and 111,414-line task surface with zero ceiling increase. Path/locality/task/resulting-tree/diff pass, then `[doctrine] all doctrine checks passed`; full CI and push remain at policy boundaries.
+
+## Acceptance Checklist (enforced) — `.17.3.8.2` publication implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Knowledge Map query is empty and `git log -S'BalancedPortableMeasurementMatrix' -- perl scripts t` finds no predecessor owner; existing matrix origins bind incompatible producer, report, tool, namespace, and aggregate contracts.
+- [x] **ADDRESSED (verified)** — The exact publisher/runner/watcher derive one producer-owned role, isolate profile work, publish canonical raw evidence before 65,536-byte IPC, bind atomic profile/family/complete publications to one clean identity, and reject caller evidence, drift, collision, failure, unsafe paths, symlinks, oversized state, and ambiguous staging. No immutable set is claimed before guarded capture and distinct reload.
+- [x] **NO REGRESSION** — Perl syntax and default t1680/t1681/t1682 pass `Files=3, Tests=19`; all 57 book chapters test and the inspected/removed render is 93 files/20,249,161 bytes. Knowledge Map is `1,155/6,130/6,302/136`; claims close `1,665/154/918/593/0`. Containment accepts the 58-file/53,389-line/2,866,910-byte book and 111,399-line task surface with zero ceiling increase. Path, locality, task, staged acceptance, resulting-tree, diff, and `[doctrine] all doctrine checks passed`; full CI, exact capture/reload, and push remain at policy boundaries.
 
 ## Acceptance Checklist (enforced) — `.17.3.7.2` execution-plan implementation
 

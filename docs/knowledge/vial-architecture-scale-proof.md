@@ -69,7 +69,7 @@ evidence: >-
   docs/decisions/0089-linux-logical-core-discovery-uses-bounded-kernel-authorities.md;
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/VIAL/ArchitectureScaleWorkload.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission.pm; perl/FSM/VIAL/ArchitectureScaleRuntimeStream.pm;
-  perl/FSM/VIAL/ArchitectureScaleBalancedPortable.pm;
+  perl/FSM/VIAL/ArchitectureScaleBalancedPortable.pm; perl/FSM/VIAL/ArchitectureScaleBalancedPortableMeasurement.pm; perl/FSM/VIAL/ArchitectureScaleBalancedPortableMeasurementMatrix.pm;
   perl/FSM/VIAL/ArchitectureScaleRuntimeBalancedQualification.pm;
   perl/FSM/VIAL/ArchitectureScaleMeasurement.pm;
   perl/FSM/VIAL/ArchitectureScaleSemanticBridgeMeasurement.pm;
@@ -389,14 +389,12 @@ staging, or tool eligibility. A guarded opt-in public Runner test independently
 executes both tracked candidates and verifies their complete graph and exact
 trace families; the default test remains tool-free.
 
-Clean implementation from activation `f5706713e` closes `.17.3.8.1` with a guarded adapter for the sole
-`balanced_portable_v1/sv_portable_verilator/gate_candidate_v1` member. It seals six fresh prerequisite reports once,
-then the common controller retains one validation plus three raw records across construct, parse/validate, bridge,
-bind/plan, and structural emit. Exact-caller seams keep prerequisite work outside stage-local costs and reject public
-use. The report preserves the private revision-2 bridge, 2,048 bindings, 1,024 operations, eight artifacts, three
-sources, 503,279 source bytes, and 3,605 maps; compile through result remains inapplicable because no qualified private-
-bridge runtime route exists. Guarded t1681 passes five tests in 3,545 seconds with failure cleanup and zero residue.
-`.17.3.8.2` is active for publication/reload; no runtime, budget, capacity, support, parity, or public API is promoted.
+`.17.3.8.1` seals the sole balanced gate: six prerequisites feed one validation and three raw construct-through-emit
+records without stage contamination. It retains the private revision-2 bridge, 2,048 bindings, 1,024 operations, eight
+artifacts, three sources, 503,279 source bytes, and 3,605 maps; runtime remains inapplicable. `.17.3.8.2` adds an exact
+publisher whose child validates and atomically publishes the full report before bounded IPC; aggregates bind one clean
+revision, host, internal-tool, and guard. t1682 rejects caller evidence, drift, collision, process/size/path/staging
+failure, and forgery; immutable capture/reload and runtime, budget, capacity, support, parity, or API claims remain pending.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

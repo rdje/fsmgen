@@ -8,8 +8,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8.2`
   (`active`; immutable balanced measurement-set publication)
-- next_action: implement exact one-role atomic publication, hostile validation,
-  and a distinct fresh-process reload over the `.17.3.8.1` producer.
-- in_flight_uncommitted: none after the `.17.3.8.2` activation commit.
+- next_action: from the clean `.17.3.8.2` implementation commit, run the exact
+  guarded capture and then validate its immutable bytes in a distinct process.
+- in_flight_uncommitted: none after the `.17.3.8.2` implementation commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none.

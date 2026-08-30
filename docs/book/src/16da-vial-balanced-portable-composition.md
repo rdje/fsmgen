@@ -213,10 +213,62 @@ The default test is tool-free and checks the closed API, sole-member authority,
 checked-anchor construction, exact-caller rejection, and guard thresholds. The
 opt-in path constructs the real validation and three raw records, regenerates
 the report independently, mutates canonical emission and applicability, forces
-a worker failure, and requires zero staging residue. Immutable publication and
-fresh-process reload are active under `.17.3.8.2`; no set exists until both finish. This adapter alone
-adds no performance budget, capacity, support, parity, public-API, or runtime
-claim.
+a worker failure, and requires zero staging residue. Publication is a separate
+lifecycle below; no immutable set exists until clean capture and independent
+reload both pass. This adapter alone adds no performance budget, capacity,
+support, parity, public-API, or runtime claim.
+
+## Immutable publication and reload lifecycle
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-balanced-portable-measurement-publication-v1 -->
+- Claim: The balanced-portable publisher derives exactly one ordered profile from measurement-producer ownership, isolates capture and reload in a child process, publishes the complete canonical report before returning a compact coordinator entry, caps a canonical publication at 67,108,864 bytes and the child result at 65,536 bytes, and admits family and complete manifests only at one clean Git revision, host, internal-tool, and active-guard identity. It does not claim that an immutable set exists before later clean guarded capture and independent reload both pass.
+- Re-derive: Run `prove -Iperl t/1682-vial-architecture-scale-balanced-portable-measurement-matrix.t` and `scripts/run_vial_balanced_portable_measurement_matrix.pl --inventory`; independently compare the inventory with `ArchitectureScaleBalancedPortableMeasurement->member_authority`, query `publication_limits`, and inspect the report-before-entry path.
+- Falsify: Remove the guard, inject a caller-selected profile or report, alter applicability, counts, identities, samples, or aggregate dominance, collide with an immutable target, leave ambiguous staging, exceed either byte ceiling, or fail or signal a child. The watcher must reject every control without an aggregate seal.
+- Durability: Retain the exact-class publisher, runner, t1682, owning `.17.3.8.2` task, this chapter, the architecture-scale Knowledge Map card, bounded claim record, doctrine gate, and work-unit Git chain; replace the explicit pending-capture boundary only after guarded capture plus distinct fresh-process reload.
+<!-- CLAIM-VERIFICATION:END vial-balanced-portable-measurement-publication-v1 -->
+
+`ArchitectureScaleBalancedPortableMeasurementMatrix` derives the sole
+`balanced_portable_v1/sv_portable_verilator/gate_candidate_v1` role directly
+from the measurement adapter. Its capture lifecycle is deliberately ordered:
+
+1. An isolated child constructs and independently validates the complete
+   validation-plus-three-measurement report.
+2. The child atomically publishes those canonical raw bytes in a
+   content-addressed profile directory. Only then may its bounded summary cross
+   the coordinator pipe.
+3. The coordinator reloads the profile, binds one clean revision, host,
+   internal-tool, and active-guard identity, and publishes family and complete
+   manifests. Collision, unsafe path, symlink, mixed identity, incomplete or
+   reordered evidence, child failure, oversized data, and ambiguous crash
+   staging fail closed; only byte-exact abandoned staging may recover.
+4. A distinct process reloads the immutable profile, family, and complete
+   publications, recomputes their digests, identities, applicability,
+   structural counts, raw-sample census, cleanup, dominance, and nonclaims,
+   without re-running measurement.
+
+Inventory inspection is tool-free and needs no RAM guard:
+
+```console
+scripts/run_vial_balanced_portable_measurement_matrix.pl --inventory
+```
+
+After this implementation is committed cleanly, capture and reload run under
+the standard repository guard as separate processes:
+
+```console
+scripts/run_with_ram_guard.sh -- \
+  scripts/run_vial_balanced_portable_measurement_matrix.pl
+scripts/run_with_ram_guard.sh -- \
+  scripts/run_vial_balanced_portable_measurement_matrix.pl --validate
+```
+
+The default t1682 watcher checks ownership, guard enforcement, child isolation,
+bounded IPC, atomic publication and exact crash recovery, collision and
+ambiguity rejection, aggregate drift, fresh runner isolation, and cleanup
+without running the exact campaign. The 64-MiB file ceiling is conservative
+containment, not a performance, capacity, support, execution, or reached-boundary
+claim. An immutable set remains pending until guarded capture and the separate
+reload both succeed.
 
 ## Repository-root example
 
