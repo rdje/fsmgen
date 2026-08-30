@@ -392,7 +392,7 @@ trace families; the default test remains tool-free.
 `.17.3.8.1` measures the sole balanced structural gate; clean `118b3bfb68902c9479ca4c83a714b23ebb50501a` seals `.2`
 as three immutable files/1,280,699 bytes and complete identity `balanced-portable-matrix/d0619d4cce4d8eebb6b486d70bc41368d9d5f379ce54f87c6843f931ca462900`.
 Exact t1682 plus fresh reload retain one validation, three raw/zero excluded and four cleaned/zero-residue records; execution
-remains inapplicable. `.17.3.9` now owns independent statistics/candidate-budget derivation then atomic closure publication;
+remains inapplicable. `.17.3.9.1` is active for independent statistics/candidate-budget derivation; `.2` owns atomic publication;
 `.17.4`/`.17.5` retain cap enforcement/promotion. No runtime, capacity, support, parity, or API claim follows.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],

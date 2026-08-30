@@ -813,11 +813,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9.1`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the independent measured-family derivation and candidate-budget authority.`
   Acceptance: `Derive the complete measured member set from canonical workload and matrix producers; independently reload and validate every immutable profile/family/complete publication; require one validation plus three accepted gate records or five accepted qualification records; preserve raw and excluded records; derive minimum/median/maximum/MAD and decision-0056 wall/CPU/RSS candidates with exact integer rounding; partition FSMGen, external-tool, and artifact cost; retain exact revision/host/tool/guard applicability, dominant caps, cleanup, and nonclaims; and reject missing, duplicated, reordered, mutated, mixed-identity, unsupported, or caller-supplied evidence without promoting a budget.`
-  Verification: `pending`
-  Commit: `pending activation after .17.3.9`
+  Verification: `Clean parent activation 586417c6a precedes this leaf. Audit confirms each sealed matrix class exposes producer-owned inventory and complete-publication validation, but schemas, applicability, tool identities, and namespaces differ and no shared authority derives raw completeness, statistics, or decision-0056 candidates. This leaf owns one exact-class read-only closure adapter and focused hostile-input watcher; publication remains .2.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9.1: activate measured-family derivation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9.2`
   Status: `proposed`
