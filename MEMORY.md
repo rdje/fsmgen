@@ -6,11 +6,11 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7`
-  (`active`; exact OSVVM runtime-measurement chain; `.17.3.7.2` done)
-- next_action: from the clean `.17.3.7.2` implementation, activate `.17.3.7.3`
-  to admit only the sealed OSVVM plan through the shared GHDL lifecycle and
-  refactor the exact qualifier onto that role.
-- in_flight_uncommitted: none after the `.17.3.7.2` implementation commit.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.3`
+  (`active`; provider-aware shared-GHDL lifecycle role and qualifier refactor)
+- next_action: version the shared lifecycle for only the sealed OSVVM plan,
+  preserve its portable role, then refactor the exact qualifier onto that role
+  with byte-identical checked output and complete failure/cleanup controls.
+- in_flight_uncommitted: none after the `.17.3.7.3` activation commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none.

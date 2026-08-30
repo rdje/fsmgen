@@ -67,11 +67,11 @@ die "unexpected execution"
         || $plan->{claims}{external_tool_executed};
 ```
 
-No shared-lifecycle admission, new GHDL execution, measurement sample, matrix
-publication, support, performance, capacity, provider-generality,
-mixed-language, or public-API claim follows. The next clean child,
-`.17.3.7.3`, separately owns shared-lifecycle role admission and qualifier
-refactoring.
+From clean plan commit `89c33b96e`, `.17.3.7.3` is active solely to admit the
+sealed OSVVM plan through a provider-aware role of the shared GHDL lifecycle
+and refactor the exact qualifier onto it. Activation changes no lifecycle,
+runtime, report, provider/tool, measurement, product-support, performance,
+capacity, mixed-language, provider-generality, or public-API behavior.
 
 See [HIAL/VIAL Verification Architecture](16d-hial-vial-verification-architecture.md)
 for the parent architecture and [Portable VHDL Runtime Measurement](16dd-vial-portable-vhdl-runtime-measurement.md)

@@ -762,11 +762,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.2: activate exact OSVVM execution-plan extraction; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.2: implement exact OSVVM execution-plan authority`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Add the provider-aware role to the shared GHDL lifecycle and refactor exact OSVVM qualification onto it.`
   Acceptance: `Preserve portable lifecycle/report bytes while admitting only the sealed OSVVM plan; execute ordered provider/generated analysis plus fixture/probe elaboration/run through the shared process supervisor; retain per-command captures, supplementary reports, portable trace/result authority, content-addressed forward states, timeout/signal/capture/mutation/collision controls, pre/post provider identity, and exact cleanup; require the checked qualifier report to remain byte-identical.`
-  Verification: `pending after .2`
-  Commit: `pending activation`
+  Verification: `Clean execution-plan implementation 89c33b96e closes .2. Decision 0092 plus source/test inspection show GHDLLifecycle v1 is caller-sealed to portable qualification and measurement, admits one version/analyze/elaborate/run command family over the fsmgen_vial library and one top, owns portable trace/result production and role-specific storage, and has no provider-aware multi-command role; the exact OSVVM qualifier now consumes the sealed plan authority but still executes its own route. This leaf alone is active to version and admit the OSVVM plan through the shared supervisor before measurement; activation changes no lifecycle, qualifier, runtime, report, provider, tool, product, support, performance, capacity, or API behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.3: activate provider-aware GHDL lifecycle role`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.4`
   Status: `proposed`
@@ -7508,30 +7508,11 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   or materializer staging residue. Per policy, full CI and push remain deferred
   to the batch boundary.
 
-## Acceptance Checklist (enforced) — `.17.3.7.2` execution-plan activation
+## Acceptance Checklist (enforced) — `.17.3.7.3` lifecycle-role activation
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Knowledge Map query plus `rg` and
-  `git log -S` find no separate OSVVM/GHDL runtime execution-plan authority.
-  `VHDLOSVVMGHDLQualification` embeds provider/generated source order,
-  generated settings, libraries, commands, deadlines, capture limits, and
-  supplementary reports in the monolithic executable qualifier, while
-  decision `0092` requires one caller-sealed plan before lifecycle reuse.
-- [x] **ADDRESSED (verified)** — From clean materializer commit `90c4d9abd`,
-  `.17.3.7.2` is the sole active implementation frontier and owns exact plan
-  derivation, normalized identities, caller-substitution rejection, and
-  qualifier-oracle preservation. Lifecycle, tool execution, measurement,
-  publication, and product claims remain outside this activation.
-- [x] **NO REGRESSION** — Focused relative-path, locality, task-tree,
-  containment-authority, Knowledge Map, and claim coverage reports `All tests
-  successful` at `Files=9, Tests=110`. All 56 mdBook chapters test; the
-  inspected repository-local render contains 92 files/20,008,224 bytes before
-  exact removal. Knowledge Map parity holds at 1,155 facts/6,125 questions/
-  6,297 occurrences/136 shards, while 1,627 claim candidates remain completely
-  joined as 118 claim records/916 gates/593 reviews/zero gaps. Production
-  containment accepts all 22 surfaces and exact 57-file/53,007-line/
-  2,838,613-byte book authority, a one-line/134-byte activation delta with zero
-  ceiling increase. Staged-result, diff, acceptance, and complete doctrines
-  must pass before commit; full CI and push remain deferred by policy.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'my %AUTHORIZED_CALLER' --oneline -- perl/FSM/VIAL/Backend/GHDLLifecycle.pm` and the `my @COMMAND_KEYS` pickaxe name `aa02474e0` as the portable-only lifecycle origin; source inspection confirms two portable callers, four singular commands, one fsmgen_vial library/top path, and no sealed provider-aware multi-command role.
+- [x] **ADDRESSED (verified)** — From clean plan commit `89c33b96e`, `.17.3.7.3` alone is active to version the shared lifecycle for the exact OSVVM plan and refactor its qualifier, while preserving the portable role, checked report bytes, trace/result authority, process supervisor, state/cleanup contract, and all behavior/nonclaims.
+- [x] **NO REGRESSION** — The focused doctrine-facing suite reports `All tests successful` at `Files=9, Tests=115`; all 57 mdBook chapters and the inspected/removed 93-file/20,078,136-byte render pass; Knowledge Map is 1,155/6,126/6,298/136 and claims close 1,631 as 122/916/593/zero gaps; production containment accepts the exact 58-file/53,084-line/2,843,453-byte book authority (0/0/+77), staged acceptance and complete doctrines pass with no ceiling increase, residue, full CI, or push.
 
 ## Acceptance Checklist (enforced) — `.17.3.7.2` execution-plan implementation
 
