@@ -457,7 +457,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Measure portable backend generation, compile, execution, result, and artifact scaling.`
   Acceptance: `Run the selected workload profiles under active RAM/time controls for every applicable qualified backend, collect normalized wall/CPU/descendant-RSS/artifact/compile/run/result evidence, prove deterministic reruns and semantic outcomes, and distinguish tool cost from architecture cost without generalizing beyond measured profiles.`
-  Verification: `Clean unified provider-free qualification commit 490c35cc5 closes deterministic generation before any measured process or tool execution. Decision 0056 freezes the measurement schema, stage boundaries, raw-sample contract, repetitions, 250-ms sampling interval, exact host/tool identities, smaller-of timeouts, 88%-host/4,096-MiB descendant guard, repository-volume staging/publication, exclusion policy, budget formulas, and nonclaims. Completed foundation .1 implements the closed record, validation-before-measurement controller, fork-isolated stage workers, process-tree sampler, effective timeout enforcement, active-guard evidence handoff, defensive validation, and same-volume publication/cleanup. Completed .2-.7 retain accepted semantic/bridge, execution/checking, structural-emission, portable-Verilator, portable-VHDL, and exact provider-aware OSVVM matrices. Proposed .8 owns balanced portable measurement next; calibration closure, remaining cap repair, and promotion remain separately owned.`
+  Verification: `Clean unified provider-free qualification commit 490c35cc5 closes deterministic generation before any measured process or tool execution. Decision 0056 freezes the measurement schema, stage boundaries, raw-sample contract, repetitions, 250-ms sampling interval, exact host/tool identities, smaller-of timeouts, 88%-host/4,096-MiB descendant guard, repository-volume staging/publication, exclusion policy, budget formulas, and nonclaims. Completed foundation .1 implements the closed record, validation-before-measurement controller, fork-isolated stage workers, process-tree sampler, effective timeout enforcement, active-guard evidence handoff, defensive validation, and same-volume publication/cleanup. Completed .2-.7 retain accepted semantic/bridge, execution/checking, structural-emission, portable-Verilator, portable-VHDL, and exact provider-aware OSVVM matrices. Active .8 owns balanced portable structural measurement and publication; calibration closure, remaining cap repair, and promotion remain separately owned.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3: activate scale measurement foundation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9`
 
@@ -783,10 +783,25 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.5: activate OSVVM measurement publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.5: implement OSVVM measurement publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.5: seal OSVVM measurement publication`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8`
-  Status: `proposed`
+  Status: `active`
   Goal: `Measure the caller-sealed revision-2 balanced portable composition without widening any public contract.`
   Acceptance: `Run the exact decision-0077 balanced source-to-portable-SystemVerilog route through the common measurement foundation; prove all six fresh prerequisite gates, bridge/ExecutionIR/binding/operation/artifact/map identities, deterministic bytes, stage-local costs, raw samples, effective guard/timeouts, atomic publication, failure, and cleanup; measure external execution only if its separately qualified route is applicable; and preserve all public AHB/revision-1/support/performance/capacity nonclaims.`
-  Verification: `pending`
+  Verification: `Clean OSVVM seal 9fde163ae closes the preceding roadmap leaf before this pivot. Query-first audit of decision 0077, the balanced composer/emitter, unified provider-free qualifier, book, card, and source history finds one exact owned shape and no balanced measurement adapter or publisher. The balanced emitter's canonical report explicitly stops after structural emission and records compile/runtime/trace/result as not run; no separate runtime qualification admits its private revision-2 bridge. This parent therefore owns two ordered children: guarded common-controller structural measurement, then immutable raw publication plus independent reload. Activation changes no source, measurement, provider/tool execution, runtime, budget, support, capacity, parity, public bridge, revision-1, or API claim.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8: activate balanced portable measurement`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8.1`
+  Status: `active`
+  Goal: `Measure the exact balanced portable structural route through the common controller.`
+  Acceptance: `Derive only balanced_portable_v1/sv_portable_verilator/gate_candidate_v1 from the unified qualification owner; reconstruct all six fresh gate reports and canonical composer/emitter authority inside every isolated worker; map construct, parse_validate, bridge, bind_plan, and emit onto the common measurement foundation; retain one correctness validation plus three raw measured records, exact checked sources, revision-2 bridge, 2,048 bindings, 1,024 operations, eight artifacts, three sources, 503,279 source bytes, 3,605 maps, deterministic bytes, active guard/timeouts, atomic failure, and cleanup; mark compile_analyze through result_produce inapplicable because no separately qualified private-revision-2 runtime route exists; reject caller evidence and preserve every public/revision-1/support/performance/capacity nonclaim.`
+  Verification: `pending implementation from clean activation`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.8.2`
+  Status: `proposed`
+  Goal: `Publish and independently reload the immutable balanced portable measurement set.`
+  Acceptance: `Derive the one balanced gate role from producer ownership; isolate capture and reload; atomically retain the complete validation plus three raw reports before bounded coordinator IPC; bind one clean revision/host/internal-tool/guard identity; preserve applicability, exact structural evidence, exclusions, cleanup, and nonclaims; reject incomplete, reordered, mixed, stale, collided, signalled, oversized, symlinked, or ambiguous state; and complete guarded capture plus a distinct fresh-process reload before closing .17.3.8.`
+  Verification: `pending .17.3.8.1`
   Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9`
@@ -7603,24 +7618,19 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   explicitly ad-hoc signs only its Darwin fake provider binary after compile;
   production provider/tool identities and behavior do not change. Exact guarded
   capture and distinct reload intentionally remain pending from a clean commit.
-- [x] **NO REGRESSION** — All changed Perl files report `syntax OK`; the clean
-  focused materialization/plan/lifecycle/measurement/publication chain reports
-  `Files=5, Tests=30` in 144 seconds. All 57 mdBook chapters test, and the
-  inspected then exactly removed render contains 93 files/20,149,201 bytes.
-  Knowledge Map closure is 1,155 facts/6,129 questions/6,301 occurrences/136
-  shards; task integrity is four trees/1,019 nodes. Claims close all 1,640
-  candidates as 131 claim records/916 gates/593 reviews/zero gaps. Production
-  containment accepts the exact 58-file/53,236-line/2,854,991-byte book
-  authority (+0/+74/+5,311) with zero ceiling increase. Final locality,
-  cleanup, staged acceptance, resulting-tree, diff, and `[doctrine] all
-  doctrine checks passed` evidence is recorded before commit. Full CI, exact
-  capture/reload, and push remain deferred to their policy boundaries.
+- [x] **NO REGRESSION** — All changed Perl files report `syntax OK`; the clean materialization/plan/lifecycle/measurement/publication chain passes `Files=5, Tests=30` in 144 seconds. All 57 mdBook chapters and the inspected/removed 93-file/20,149,201-byte render pass. Knowledge Map closure is 1,155 facts/6,129 questions/6,301 occurrences/136 shards; task integrity is four trees/1,019 nodes; claims close 1,640 candidates as 131 claim records/916 gates/593 reviews/zero gaps. Containment accepts the 58-file/53,236-line/2,854,991-byte book authority (+0/+74/+5,311) with zero ceiling increase; locality, cleanup, staged acceptance, resulting-tree, diff, and `[doctrine] all doctrine checks passed` are recorded. Full CI, exact capture/reload, and push remain deferred to their policy boundaries.
 
 ## Acceptance Checklist (enforced) — `.17.3.7.5` publication seal
 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_capture_family'` locates the publisher implementation at clean `ef10332d6`, while the pre-capture `find` census confirms an empty OSVVM namespace; the durable claim cannot move from implemented publisher to immutable evidence until an exact capture starts from that clean revision and a distinct process reloads the published bytes.
 - [x] **ADDRESSED (verified)** — RAM-guarded exact t1680 publishes five producer-owned roles plus family/complete manifests from clean `ef10332d6610df717de1471d12d3a8f0a678aebf` and passes `Files=1, Tests=8` in 2,974 seconds. A separate guarded `--validate` exits zero with complete identity `osvvm-runtime-matrix/5429888419a848d28ff4250833e6bd60e31d583d3054a7929d1df3e21420e219`; independent `find`/`wc`/`shasum`/`jq` derives seven files/6,105,680 bytes, exact hashes, three validations, eight raw/zero excluded records, two preflights, eleven cleanups, zero residue, the common pinned provider/GHDL/M4 Pro/APFS/active-guard identity, and a largest 3,398,045-byte profile 63,710,819 bytes below the unchanged ceiling.
 - [x] **NO REGRESSION** — All seven immutable publications remain on the repository volume; staging is absent, Git stayed clean after capture/reload, and `git_message_brief.txt` stayed empty. Default t1680 passes `Files=1, Tests=8`; all 57 mdBook chapters and the inspected/removed 93-file/20,192,752-byte render pass. Knowledge Map parity is 1,155 facts/6,129 questions/6,301 occurrences/136 shards; claims close all 1,655 candidates as 146 claim records/916 gates/593 reviews/zero gaps. Containment accepts the exact 58-file/53,270-line/2,858,270-byte book authority (+0/+34/+3,279) with zero ceiling increase; task, memory, path, locality, and cleanup gates pass. No code or budget/capacity/support/parity/provider-generality/mixed-language/API claim changes. Staged acceptance passes with `root=git_history, no-regression=prove_summary`; resulting-tree and diff pass, and `[doctrine] all doctrine checks passed` is recorded before the seal commit. Full CI and push remain at policy boundaries.
+
+## Acceptance Checklist (enforced) — `.17.3.8` balanced measurement activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'ArchitectureScaleBalancedPortable' --oneline -- perl scripts t` locates the completed composer/emitter/qualifier chain but no balanced measurement adapter or publisher; source audit proves its only member is the private revision-2 structural gate and its canonical compile/runtime/trace/result stages are not run.
+- [x] **ADDRESSED (verified)** — From clean OSVVM seal `9fde163ae`, `.17.3.8` alone is active and decomposed into `.1` guarded common-controller structural measurement plus `.2` immutable publication/reload. `.1` owns one validation/three records for the single balanced gate; external execution remains inapplicable absent a separately qualified private-revision-2 route.
+- [x] **NO REGRESSION** — RAM-guarded composer/emitter/qualifier falsification passes `Files=3, Tests=12` in 1,805 seconds. All 57 mdBook chapters and the inspected/removed 93-file/20,212,596-byte render pass. Knowledge Map closure is 1,155 facts/6,130 questions/6,302 occurrences/136 shards; task integrity is four trees/1,021 nodes; claims close all 1,658 candidates as 149 claim records/916 gates/593 reviews/zero gaps. Containment accepts the exact 58-file/53,301-line/2,861,116-byte book authority (+0/+31/+2,846) with zero ceiling increase and task evidence at 111,421 total/7,639 largest lines. Activation changes no implementation, measurement, provider/tool execution, runtime, support, budget, capacity, parity, public bridge, revision-1 contract, or API claim. Final locality, cleanup, staged acceptance, resulting-tree, diff, and doctrine gates are recorded before commit; full CI and push remain at policy boundaries.
 
 ## Acceptance Checklist (enforced) — `.17.3.7.2` execution-plan implementation
 

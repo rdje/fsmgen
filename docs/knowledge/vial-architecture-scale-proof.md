@@ -52,6 +52,7 @@ answers:
   - "why is portable qualification 15,000 records instead of 100,000?"
   - "where are the authored portable runtime qualification sources and structural oracle?"
   - "what are the final tracked portable runtime artifact graph sizes?"
+  - "how is balanced portable measurement scoped?"
 date: 2026-08-27
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -387,6 +388,14 @@ excess reject from minimum structural trace evidence without emission,
 staging, or tool eligibility. A guarded opt-in public Runner test independently
 executes both tracked candidates and verifies their complete graph and exact
 trace families; the default test remains tool-free.
+
+Clean OSVVM seal `9fde163ae` activates `.17.3.8` as a two-child balanced measurement closure. `.17.3.8.1`
+owns one validation plus three guarded raw records for the sole `balanced_portable_v1/sv_portable_verilator/gate_candidate_v1`
+member across five structural stages. It reconstructs six prerequisites and retains the private revision-2 bridge,
+2,048 bindings, 1,024 operations, eight artifacts, three sources, 503,279 source bytes, and 3,605 maps. Compile through
+result is inapplicable because decision `0077` and the checked emitter qualify structural emission only; the public
+runtime gate cannot admit the private bridge. `.17.3.8.2` owns immutable publication/reload. Activation adds no
+measurement, runtime, budget, capacity, support, parity, or public API.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

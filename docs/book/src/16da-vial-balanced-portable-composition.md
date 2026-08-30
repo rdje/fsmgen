@@ -151,6 +151,37 @@ invocants fail closed. `with_staging` nests one representative runtime stage and
 the balanced stage so the consumer sees both simultaneously; both exact
 repository-volume trees are removed after success or consumer failure.
 
+## Measurement activation
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-balanced-portable-measurement-activation-v1 -->
+- Claim: Active `.17.3.8` contains exactly two ordered children: `.1` owns one validation plus three raw measurements of the sole `balanced_portable_v1/sv_portable_verilator/gate_candidate_v1` structural member, and `.2` owns immutable publication plus fresh-process reload; compile through result remains inapplicable because no separately qualified runtime route admits the private revision-2 bridge. Activation itself creates no measurement or publication.
+- Re-derive: Inspect decision `0077`, `ArchitectureScaleRuntimeBalancedQualification->owned_shapes`, the balanced composer/emitter stage and claim projections, and the `.17.3.8` task nodes; require one balanced member, structural emission only, and no executed compile/runtime/trace/result stage.
+- Falsify: Run t1653, t1654, and t1655 and require rejection of a public/revision-1 bypass, changed gate/report/bridge/ExecutionIR/backend evidence, a second balanced member, or any forged external-execution claim.
+- Durability: Retain decision `0077`, the two owning task children, this chapter, the architecture-scale Knowledge Map card, the bounded claim record, existing composer/emitter/qualifier watchers, and the activation Git commit.
+<!-- CLAIM-VERIFICATION:END vial-balanced-portable-measurement-activation-v1 -->
+
+Task `.17.3.8` now owns measurement without widening the private qualification
+route. The closed producer partition contains one member only:
+`balanced_portable_v1/sv_portable_verilator/gate_candidate_v1`. Child
+`.17.3.8.1` must reconstruct all six prerequisite gates plus the canonical
+composer and emitter inside every isolated common-controller worker. One
+correctness validation must precede three retained measurements of `construct`,
+`parse_validate`, `bridge`, `bind_plan`, and `emit`; the report must preserve
+the exact revision-2 bridge, 2,048 bindings, 1,024 operations, eight artifacts,
+three sources, 503,279 source bytes, and 3,605 source maps already owned by the
+structural qualifier.
+
+The generated compile/run command descriptions do not establish an executable
+qualification. Decision `0077` and the current emitter stop at structural
+emission, and no separately qualified runtime route admits the private
+revision-2 bridge. Therefore `compile_analyze`, `elaborate`, `run`,
+`trace_validate`, and `result_produce` remain explicitly inapplicable in this
+measurement leaf. They cannot borrow the ordinary public portable-Verilator
+runtime gate. Child `.17.3.8.2` will publish the complete validation plus three
+raw records and require a distinct fresh-process reload before the parent can
+close. Activation itself creates no measurement or publication and promotes no
+performance, capacity, support, parity, public-API, or runtime claim.
+
 ## Repository-root example
 
 Run this diagnostic from the repository root. It supplies no intermediate
