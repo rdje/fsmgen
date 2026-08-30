@@ -3702,9 +3702,9 @@ Its first exact join rejected backend-emission v1 after the portable-SV oracle m
 - Durability: Preserve every sealed profile/family/complete publication, the read-only closure module and exact watcher, task/book/Knowledge Map/claim records, doctrine gate, and work-unit Git chain; `.17.3.9.2` separately owns durable atomic closure publication and fresh-process reload.
 <!-- CLAIM-VERIFICATION:END vial-architecture-scale-calibration-closure-v1 -->
 
-Candidates remain evidence only: `.17.3.9.2` owns atomic publication/fresh
-reload, `.17.4` owns caps, and `.17.5` owns promotion. Inapplicable routes never
-borrow another profile's evidence.
+Candidates remain evidence only. `.17.3.9.2` provides a separate exact-class publication authority that accepts only the repository root: it derives inside an isolated child, requires the RAM guard and a clean unchanged revision, and atomically renames one same-volume directory containing the full canonical report plus a compact manifest. Only the manifest crosses bounded IPC. Reload runs in another child and checks the exact two-file census, canonical JSON, schemas, identities, report hash/size, authority/family/profile/raw-record/exclusion/candidate/cleanup/dominance/nonclaim partitions, and rejects partial, stale, mixed, collided, signalled, oversized, symlinked, or ambiguous state.
+Run `scripts/run_vial_calibration_closure_publication.pl --limits` without capture to inspect the fixed envelopes. From a clean revision, capture with `scripts/run_with_ram_guard.sh -- scripts/run_vial_calibration_closure_publication.pl`, then reload from a fresh process with the same command plus `--validate`.
+The implementation and fast hostile watcher are present; immutable exact capture remains pending until they are committed and executed from that clean revision. `.17.4` owns caps, `.17.5` owns promotion, and inapplicable routes never borrow another profile's evidence.
 
 ### Architecture-scale measurement foundation
 

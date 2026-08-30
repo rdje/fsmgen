@@ -1017,3 +1017,23 @@ before building the route and artifacts. Public composition/emission behavior
 is unchanged. This keeps stage costs meaningful, preserves fail-closed timeout
 evidence, and prevents private revision-2 measurement seams from becoming
 public planning or backend APIs.
+
+## 2026-08-30: Calibration closure publication separates proof from immutable reload
+
+The derivation authority proves current producer membership and statistics;
+the publication authority preserves that already-proved result. Re-running
+every measurement-matrix validator during each later reload would conflate an
+immutable historical artifact with current producer qualification and would
+recharge the entire long-running derivation merely to read sealed bytes.
+
+The publisher therefore accepts no report argument. At capture, one isolated
+child invokes the derivation authority from a clean unchanged revision and
+atomically renames a same-volume directory containing the complete canonical
+report plus a compact manifest; only the manifest crosses the coordinator
+pipe. A distinct reload child validates both files, their canonical schemas,
+content identities, complete census and partitions, hash, size, candidate-only
+formula, and nonclaims without silently substituting a new derivation.
+
+Later producer evolution must select a new publication namespace rather than
+reinterpret this file set. Cap enforcement and budget promotion remain later,
+separate lifecycle authorities; durable publication alone grants neither.

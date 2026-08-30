@@ -8,8 +8,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9.2`
   (`active`; atomic measured-family closure publication)
-- next_action: author executable RED t1684 for caller-sealed atomic publication
-  and independent fresh-process reload.
-- in_flight_uncommitted: none after the `.17.3.9.2` activation commit.
+- next_action: from the clean implementation commit, run guarded exact t1684
+  to capture and freshly reload the immutable two-file closure publication.
+- in_flight_uncommitted: none after the `.17.3.9.2` implementation commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
-- blockers: none; the absent publisher/runner/watcher is the owned RED state.
+- blockers: none; exact clean-revision capture remains pending.
