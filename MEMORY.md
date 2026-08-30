@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9.2`
-  (`active`; atomic measured-family closure publication)
-- next_action: from the clean implementation commit, run guarded exact t1684
-  to capture and freshly reload the immutable two-file closure publication.
-- in_flight_uncommitted: none after the `.17.3.9.2` implementation commit.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4`
+  (`proposed`; explicit architecture resource caps and bounded failure)
+- next_action: after committing the `.17.3.9.2` exact publication seal, activate
+  `.17.4` and select its first earliest-authority cap-enforcement slice.
+- in_flight_uncommitted: none after the `.17.3.9.2` seal commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
-- blockers: none; exact clean-revision capture remains pending.
+- blockers: none; `.17.3` measurement and immutable closure are complete.

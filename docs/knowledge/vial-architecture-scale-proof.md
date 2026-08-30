@@ -391,11 +391,12 @@ Exact t1682 plus fresh reload retain one validation, three raw/zero excluded and
 remains inapplicable. `.17.3.9.1` seals independent statistics/candidate-budget derivation; `.2` owns atomic publication;
 `.17.4`/`.17.5` retain cap enforcement/promotion. No runtime, capacity, support, parity, or API claim follows.
 
-`.17.3.9.2` has an exact-class publisher, fixed runner, and hostile watcher. An
-isolated child derives through the closure authority and atomically publishes
-the full report plus compact manifest; another child validates reload. Fast
-process/path/identity/collision checks and a read-only corpus replay are green.
-Exact capture awaits a clean implementation commit.
+Clean `b66de5ce6` exact t1684 passes in 7,353 seconds; fresh reload accepts two
+files/1,376,483 bytes. Report: 1,374,728 bytes/SHA-256
+`1a060b166d6b7d88582ee1fec9ae0f255fc3859ef16918227670e095b99e10e0`;
+manifest: 1,755 bytes/SHA-256
+`ae5c11ac9848f47bfe3f06905f7a059399e07f25c827dd85b900896c14d175ef`
+and its identity is `calibration-closure-publication/1316d11a6dfa008515fcb23aa132e30a72e7961d9e9e6eeba82ae0bf42546ac8`.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

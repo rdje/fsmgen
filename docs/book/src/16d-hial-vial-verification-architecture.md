@@ -1,12 +1,6 @@
 # HIAL/VIAL Verification Architecture
 
-FSMGen has selected the architecture for its verification-intent language and
-future generated executable fixtures. This chapter explains the shipped
-semantic frontend and public tooling, the shipped private HIAL bridge producer,
-the shipped portable-SystemVerilog/Verilator execution path, and the
-compatibility boundary. Public `run`, exact external compilation, simulation,
-closed runtime traces, and normalized results now ship for the bounded
-`sv_portable_verilator` profile. The selected AHB fixture now has bounded
+FSMGen has selected the architecture for its verification-intent language and future generated executable fixtures. This chapter explains the shipped semantic frontend and public tooling, the shipped private HIAL bridge producer, the shipped portable-SystemVerilog/Verilator execution path, and the compatibility boundary. Public `run`, exact external compilation, simulation, closed runtime traces, and normalized results now ship for the bounded `sv_portable_verilator` profile. The selected AHB fixture now has bounded
 runtime parity with its handwritten oracle; general cross-backend parity does
 **not** ship yet. Native UVM now has an exact open-source-first architecture
 and deterministic emission of the selected topology, lifecycle,
@@ -62,8 +56,7 @@ The current shipped verification-output targets remain deliberately narrow:
 - neither target drives a DUT, samples a transaction stream, runs a scenario,
   compares expected outcomes, scoreboards, covers behavior, or injects faults.
 
-The selected architecture closes that gap in exact later slices while keeping
-the current IAL routes stable.
+The selected architecture closes that gap in exact later slices while keeping the current IAL routes stable.
 
 ## Two peer intent systems
 
@@ -3704,7 +3697,14 @@ Its first exact join rejected backend-emission v1 after the portable-SV oracle m
 
 Candidates remain evidence only. `.17.3.9.2` provides a separate exact-class publication authority that accepts only the repository root: it derives inside an isolated child, requires the RAM guard and a clean unchanged revision, and atomically renames one same-volume directory containing the full canonical report plus a compact manifest. Only the manifest crosses bounded IPC. Reload runs in another child and checks the exact two-file census, canonical JSON, schemas, identities, report hash/size, authority/family/profile/raw-record/exclusion/candidate/cleanup/dominance/nonclaim partitions, and rejects partial, stale, mixed, collided, signalled, oversized, symlinked, or ambiguous state.
 Run `scripts/run_vial_calibration_closure_publication.pl --limits` without capture to inspect the fixed envelopes. From a clean revision, capture with `scripts/run_with_ram_guard.sh -- scripts/run_vial_calibration_closure_publication.pl`, then reload from a fresh process with the same command plus `--validate`.
-The implementation and fast hostile watcher are present; immutable exact capture remains pending until they are committed and executed from that clean revision. `.17.4` owns caps, `.17.5` owns promotion, and inapplicable routes never borrow another profile's evidence.
+<!-- CLAIM-VERIFICATION:BEGIN vial-architecture-scale-calibration-closure-publication-v1 -->
+- Claim: Clean revision `b66de5ce630b2a37ddb8614e6fb1bf5a290642ba` passes guarded exact t1684 in 7,353 seconds and atomically publishes plus freshly reloads exactly two same-volume files totaling 1,376,483 bytes. The 1,374,728-byte report has SHA-256 `1a060b166d6b7d88582ee1fec9ae0f255fc3859ef16918227670e095b99e10e0`; the 1,755-byte manifest has SHA-256 `ae5c11ac9848f47bfe3f06905f7a059399e07f25c827dd85b900896c14d175ef` and publication identity `calibration-closure-publication/1316d11a6dfa008515fcb23aa132e30a72e7961d9e9e6eeba82ae0bf42546ac8`. It retains the seven-authority, nine-family, 216-profile, 356-raw, zero-exclusion, 92-candidate, and 124-noncandidate closure without promoting a budget.
+- Re-derive: From a clean revision under the RAM guard, run `FSMGEN_VIAL_SCALE_CALIBRATION_PUBLICATION_EXACT=1 prove -Iperl t/1684-vial-architecture-scale-calibration-closure-publication.t`; independently require the declared directory census, same repository device, declared and actual byte counts/SHA-256 values, manifest revision/closure/publication identities and summary, then invoke a fresh `--validate` runner.
+- Falsify: Run t1684's hostile mutations and require rejection for caller evidence, dirty or changing revision, report/manifest/census/schema/identity/summary drift, oversized state, collision, partial or ambiguous staging, symlink, exception, signal, or malformed/oversized IPC.
+- Durability: Preserve the immutable repository-volume files, publisher, fixed runner, exact watcher, task/book/Knowledge Map/claim records, doctrine gate, and work-unit Git chain; a later incompatible publication must use a new non-colliding namespace.
+<!-- CLAIM-VERIFICATION:END vial-architecture-scale-calibration-closure-publication-v1 -->
+
+This closes `.17.3`; `.17.4` owns caps, `.17.5` owns promotion, and inapplicable routes never borrow another profile's evidence.
 
 ### Architecture-scale measurement foundation
 
