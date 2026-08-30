@@ -124,6 +124,8 @@ my %AUTHORIZED_CALLER = (
         'osvvm_qualification',
     'FSM::VIAL::ArchitectureScalePortableVHDLRuntimeMeasurement' =>
         'architecture_scale_measurement',
+    'FSM::VIAL::ArchitectureScaleOSVVMRuntimeMeasurement' =>
+        'osvvm_architecture_scale_measurement',
 );
 my %PHASE_POLICY = (
     tool_verified => [10, 65_536],
@@ -223,6 +225,11 @@ sub _authorized_role($class, $method, $caller) {
     return $AUTHORIZED_CALLER{$caller};
 }
 
+sub _is_osvvm_role($role) {
+    return defined($role) && !ref($role)
+        && $role =~ /\Aosvvm_(?:qualification|architecture_scale_measurement)\z/;
+}
+
 sub _session_with_handle($raw, $role, $session_out) {
     _closed($raw, [qw(
         repo_root provider source_set source_identity emission_identity
@@ -259,7 +266,7 @@ sub _session_with_handle($raw, $role, $session_out) {
     _validate_current_provider($session);
     _validate_current_sources($session);
     _validate_osvvm_settings($session)
-        if $session->{role} eq 'osvvm_qualification'
+        if _is_osvvm_role($session->{role})
             && $handle->{ordinal} >= $STATE_ORDINAL{prepared};
     _load_chain($session, $handle);
     return $session;
@@ -306,7 +313,7 @@ sub _session($raw, $role, $validate_inputs = 1) {
         $source_set, $role,
     );
     my $validation = _validated_validation($raw->{validation});
-    my $schema_version = $role eq 'osvvm_qualification' ? 2 : 1;
+    my $schema_version = _is_osvvm_role($role) ? 2 : 1;
     my $authority = {
         schema => $schema_version == 2
             ? $OSVVM_LIFECYCLE_SCHEMA : $LIFECYCLE_SCHEMA,
@@ -340,11 +347,11 @@ sub _session($raw, $role, $validate_inputs = 1) {
         storage_context => $storage,
         stage_rel => $stage_rel,
         stage_abs => _repo_path($repo_root, $stage_rel),
-        library_rel => $role eq 'osvvm_qualification'
+        library_rel => _is_osvvm_role($role)
             ? $commands->{libraries}{root} : "$stage_rel/library",
         library_abs => _repo_path(
             $repo_root,
-            $role eq 'osvvm_qualification'
+            _is_osvvm_role($role)
                 ? $commands->{libraries}{root} : "$stage_rel/library",
         ),
         objects => [],
@@ -432,6 +439,11 @@ sub _validated_storage($raw, $role) {
             'osvvm_qualification', 'lifecycle_process_group',
             qr{\A[.]artifacts/tmp/vial-osvvm-ghdl-qualification/[0-9a-f]{64}\z},
         ],
+        osvvm_architecture_scale_measurement => [
+            'osvvm_architecture_scale_measurement',
+            'outer_worker_process_group',
+            qr{\A[.]artifacts/tmp/vial-scale/[0-9a-f]{64}/(?:validation|gate_measurement|qualification_measurement)/[0-9]{2}/lifecycle\z},
+        ],
         architecture_scale_measurement => [
             'architecture_scale_measurement', 'outer_worker_process_group',
             qr{\A[.]artifacts/tmp/vial-scale/[0-9a-f]{64}/(?:validation|gate_measurement|qualification_measurement)/[0-9]{2}/lifecycle\z},
@@ -453,7 +465,7 @@ sub _validated_storage($raw, $role) {
 sub _validated_commands($raw, $binary, $stage_rel, $source_set, $role) {
     return _validated_osvvm_commands(
         $raw, $binary, $stage_rel, $source_set,
-    ) if $role eq 'osvvm_qualification';
+    ) if _is_osvvm_role($role);
     _closed($raw, \@COMMAND_KEYS, 'GHDL command authority');
     my %mode = (version => '--version', analyze => '-a',
         elaborate => '-e', run => '-r');
@@ -772,7 +784,7 @@ sub _advance($session, $target) {
 
 sub _phase_prepared($session) {
     return _phase_osvvm_prepared($session)
-        if $session->{role} eq 'osvvm_qualification';
+        if _is_osvvm_role($session->{role});
     make_path($session->{library_abs});
     my @stat = stat($session->{library_abs});
     _throw('VIAL_GHDL_LIFECYCLE_PATH_ERROR',
@@ -825,7 +837,7 @@ sub _phase_osvvm_prepared($session) {
 
 sub _phase_tool_verified($session) {
     _validate_osvvm_execution_inputs($session)
-        if $session->{role} eq 'osvvm_qualification';
+        if _is_osvvm_role($session->{role});
     my $capture = _run_phase($session, 'tool_verified',
         $session->{commands}{version});
     my $normalized = $capture->{output};
@@ -846,7 +858,7 @@ sub _phase_tool_verified($session) {
 
 sub _phase_analyzed($session) {
     return _phase_osvvm_analyzed($session)
-        if $session->{role} eq 'osvvm_qualification';
+        if _is_osvvm_role($session->{role});
     my $capture = _run_phase(
         $session, 'analyzed', $session->{commands}{analyze},
     );
@@ -905,7 +917,7 @@ sub _phase_osvvm_analyzed($session) {
 
 sub _phase_elaborated($session) {
     return _phase_osvvm_elaborated($session)
-        if $session->{role} eq 'osvvm_qualification';
+        if _is_osvvm_role($session->{role});
     my $capture = _run_phase(
         $session, 'elaborated', $session->{commands}{elaborate},
     );
@@ -954,7 +966,7 @@ sub _phase_osvvm_elaborated($session) {
 
 sub _phase_ran($session) {
     return _phase_osvvm_ran($session)
-        if $session->{role} eq 'osvvm_qualification';
+        if _is_osvvm_role($session->{role});
     my (@captures, @digests);
     for my $index (0 .. $session->{validation}{run_repetitions} - 1) {
         my $capture = _run_phase(
@@ -1047,7 +1059,7 @@ sub _phase_osvvm_ran($session) {
 }
 
 sub _phase_trace_validated($session) {
-    my $runtime_kind = $session->{role} eq 'osvvm_qualification'
+    my $runtime_kind = _is_osvvm_role($session->{role})
         ? 'fixture_runtime_output_0' : 'runtime_output_0';
     my $output = _object_content($session, $runtime_kind);
     my @trace = grep { index($_, "FSMGEN_VIAL_TRACE_V2\t") == 0 }
@@ -1077,7 +1089,7 @@ sub _phase_trace_validated($session) {
 }
 
 sub _phase_result_produced($session) {
-    my $runtime_kind = $session->{role} eq 'osvvm_qualification'
+    my $runtime_kind = _is_osvvm_role($session->{role})
         ? 'fixture_runtime_output_0' : 'runtime_output_0';
     my $output = _object_content($session, $runtime_kind);
     my @result = map {
@@ -1110,7 +1122,7 @@ sub _phase_result_produced($session) {
 
 sub _phase_assembled($session) {
     return _phase_osvvm_assembled($session)
-        if $session->{role} eq 'osvvm_qualification';
+        if _is_osvvm_role($session->{role});
     my $assembly = {
         schema => 'fsmgen.vial_ghdl_lifecycle_assembly.v1',
         schema_version => 1,
@@ -1173,7 +1185,7 @@ sub _phase_osvvm_assembled($session) {
 
 sub _run_phase($session, $phase, $argv) {
     _validate_current_sources($session)
-        unless $session->{role} eq 'osvvm_qualification';
+        unless _is_osvvm_role($session->{role});
     my ($timeout, $limit) = @{$PHASE_POLICY{$phase}};
     return _run_command(
         $session, $phase, $argv, $timeout, $limit, "GHDL $phase",
@@ -1224,7 +1236,7 @@ sub _finish($session) {
         'only the exact assembled state may finish', '/handle/state')
         unless $session->{handle}{state} eq 'assembled'
             && ($session->{handle}{next_state} // '') eq 'cleaned';
-    my $assembled = $session->{role} eq 'osvvm_qualification'
+    my $assembled = _is_osvvm_role($session->{role})
         ? _osvvm_assembled_result($session) : {
         runtime_outputs => [map {
             _object_content($session, "runtime_output_$_")
@@ -1470,12 +1482,12 @@ sub _validate_state_shape($session, $record) {
         'GHDL state object inventory is not exact', '/objects')
         unless _canonical(\@actual) eq _canonical(\@expected);
     if ($state eq 'tool_verified'
-            || ($session->{role} ne 'osvvm_qualification'
+            || (!_is_osvvm_role($session->{role})
                 && $state =~ /\A(?:analyzed|elaborated)\z/)) {
         _closed($record->{evidence}{capture}, \@CAPTURE_KEYS,
             "GHDL $state capture");
     }
-    if ($state eq 'ran' && $session->{role} ne 'osvvm_qualification') {
+    if ($state eq 'ran' && !_is_osvvm_role($session->{role})) {
         _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
             'GHDL run capture cardinality is not exact', '/evidence/captures')
             unless ref($record->{evidence}{captures}) eq 'ARRAY'
@@ -1484,14 +1496,14 @@ sub _validate_state_shape($session, $record) {
         _closed($_, \@CAPTURE_KEYS, 'GHDL run capture')
             for @{$record->{evidence}{captures}};
     }
-    if ($session->{role} eq 'osvvm_qualification') {
+    if (_is_osvvm_role($session->{role})) {
         _validate_osvvm_capture_shape($session, $record);
     }
 }
 
 sub _evidence_keys($session, $state) {
     return $EVIDENCE_KEYS{$state}
-        unless $session->{role} eq 'osvvm_qualification';
+        unless _is_osvvm_role($session->{role});
     my %keys = (
         admitted => [qw(
             authority_sha256 workspace_files workspace_sha256
@@ -1527,7 +1539,7 @@ sub _evidence_keys($session, $state) {
 
 sub _expected_objects($session, $state) {
     my @expected = qw(lifecycle_authority);
-    if ($session->{role} eq 'osvvm_qualification') {
+    if (_is_osvvm_role($session->{role})) {
         push @expected, 'generated_settings'
             if $STATE_ORDINAL{$state} >= $STATE_ORDINAL{prepared};
         push @expected, 'tool_version_output'

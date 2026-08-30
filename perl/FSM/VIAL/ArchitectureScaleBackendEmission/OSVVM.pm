@@ -260,6 +260,7 @@ sub _runtime_evaluate($class, @args) {
     return {
         byte_equal => $byte_equal ? JSON::PP::true : JSON::PP::false,
         diagnostics => $diagnostics,
+        emission => $first,
         oracle => $oracle,
     };
 }

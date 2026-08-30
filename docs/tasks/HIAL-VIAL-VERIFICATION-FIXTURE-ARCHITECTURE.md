@@ -769,11 +769,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.3: activate provider-aware GHDL lifecycle role; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.3: implement provider-aware GHDL lifecycle role`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.4`
-  Status: `active`
+  Status: `done`
   Goal: `Measure applicable OSVVM runtime profiles through the common controller and provider-aware lifecycle.`
   Acceptance: `Reconstruct canonical source/provider/emission/plan authority in every worker; map all decision-0056 stages to the selected lifecycle; retain reference validation, gate validation plus three records, qualification validation plus five records, exact provider/FSMGen/tool evidence, commands/transcripts/reports/trace/result identities, exclusions, active guards, failure, and both cleanup domains; keep limit/excess preflight-only.`
-  Verification: `Clean lifecycle implementation f76431606 closes .3. Knowledge Map query, source search, and history audit find no OSVVM runtime-measurement owner. The portable precedent e7203c278 alone maps the fixed common-controller stages to a caller-sealed six-source/single-top lifecycle; it cannot represent the OSVVM plan's provider verification, 61 ordered provider analyses, seven generated sources plus probe, separate fixture/probe elaboration and runs, four supplementary reports, or provider-aware cleanup. This leaf alone is active to consume the committed OSVVM materializer/plan/lifecycle through one validation and three/five independent measured records; activation changes no runtime, measurement, publication, support, performance, capacity, boundary, provider-generality, mixed-language, or public-API claim.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.4: activate common-controller OSVVM runtime measurement`
+  Verification: `Clean lifecycle implementation f76431606 and activation c3aba3976 precede one caller-sealed common-controller adapter. The adapter reconstructs canonical authored route/materialization/plan authority in every isolated worker, verifies and emits the provider graph at emit, relocates seven generated sources into the exact 68-source lifecycle plan, and maps provider/generated analysis, dual elaboration, one fixture plus one provider-probe execution, portable trace/result validation, post-provider verification, publication, and both cleanup domains onto the fixed controller stages. Guarded exact t1679 passes Files=1/Tests=8 with 305 guarded sub-assertions in 2,041 seconds: reference accepts one 77-record validation, gate accepts validation plus three 10,000-record measurements, and qualification accepts validation plus five 100,000-record measurements. All eleven records retain 61 provider-analysis captures, two elaboration captures, one fixture/probe capture pair, four reports, exact commands/transcripts/source/provider/trace/result identities, zero exclusions, and zero residue. Limit/excess remain provider/plan/controller/lifecycle/tool-free; hostile caller/guard/selection/report/oracle/failure controls reject. The guarded focused impact passes Files=9/Tests=50 in 254 seconds. No publication, support, performance, capacity, boundary, provider-generality, mixed-language, or public-API claim is added.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.4: activate common-controller OSVVM runtime measurement; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.4: implement common-controller OSVVM runtime measurement`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.5`
   Status: `proposed`
@@ -7513,6 +7513,45 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Knowledge Map query plus `rg` and `git log -S ArchitectureScalePortableVHDLRuntimeMeasurement --oneline -- perl scripts t` find no OSVVM measurement owner. Portable origin `e7203c278` binds the common controller to six sources and one top, while the committed OSVVM plan/lifecycle additionally own provider verification, 61 provider analyses, seven generated sources plus probe, two tops/runs, reports, and provider-aware cleanup.
 - [x] **ADDRESSED (verified)** — From clean lifecycle commit `f76431606`, `.17.3.7.4` alone is active to reconstruct exact OSVVM authority in every worker and retain one correctness validation plus three/five independent records through the fixed controller stages and provider-aware lifecycle. Limit/excess remain preflight-only; activation changes no behavior or claim.
 - [x] **NO REGRESSION** — All 57 mdBook chapters test; the inspected 93-file/20,092,099-byte repository-local render is removed exactly. `knowledge-map: OK` covers 1,155 facts/6,127 questions/6,299 occurrences/136 shards; claims close 1,631 candidates as 122 claim records/916 gates/593 reviews/zero gaps; task integrity holds at four trees/1,019 nodes. Production containment accepts exact 58-file/53,123-line/2,845,706-byte book authority (+0/+1/+60) with zero ceiling increase. Focused memory, relative-path, locality, task, containment, Knowledge Map, claim, cleanup, diff, staged-acceptance, resulting-tree, and complete-doctrine gates pass before commit; only pinned provider-owned validation logs remain. Full CI and push are deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.3.7.4` measurement implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S
+  'ArchitectureScalePortableVHDLRuntimeMeasurement' --oneline -- perl scripts
+  t` identifies portable origin `e7203c278`, while Knowledge Map and source
+  search find no OSVVM measurement owner. The portable adapter seals six
+  generated sources and one top; the committed OSVVM authority instead
+  requires provider verification, 61 ordered provider analyses, seven
+  generated sources plus probe, separate fixture/probe elaboration and run,
+  four supplementary reports, and provider-aware cleanup.
+- [x] **ADDRESSED (verified)** — The exact-class adapter now reconstructs
+  authored route/materialization/plan authority per worker, normalizes only the
+  caller-selected root-bound graph identity, materializes the canonical seven-
+  source order, admits the exact 68-source lifecycle request, retains every
+  provider/generated command capture and report identity, validates portable
+  trace/result truth, re-verifies provider identity after execution, publishes
+  bounded evidence, and removes both lifecycle and controller roots. Reference
+  uses one validation; gate and qualification use one validation plus three or
+  five independently measured records. Limit/excess remain preflight-only.
+- [x] **NO REGRESSION** — Changed Perl/test syntax and diff checks pass. The
+  exact guarded t1679 proof reports `All tests successful` at `Files=1,
+  Tests=8` with 305 guarded sub-assertions in 2,041 seconds: all eleven records
+  accept exact 77/10,000/100,000 traces, 61 provider-analysis captures, 68
+  sources, two elaborations, one fixture/probe execution pair, four reports,
+  zero exclusions, and zero residue. The guarded qualification/controller/
+  lifecycle/materializer/plan/adapter impact reports `All tests successful` at
+  `Files=9, Tests=50` in 254 seconds; focused CI-inventory coverage passes at
+  `Files=1, Tests=12`. All 57 mdBook chapters test, and the inspected
+  repository-local render contains 93 files/20,116,994 bytes before exact
+  removal. `knowledge-map: OK` covers 1,155 facts/6,128 questions/6,300
+  occurrences/136 shards. The claim join closes all 1,638 candidates as 129
+  claim records/916 gates/593 reviews/zero gaps, and task integrity remains
+  four trees/1,019 nodes. Production containment accepts exact 58-file/
+  53,161-line/2,849,583-byte book authority (+0/+38/+3,877) with zero ceiling
+  increase. Final locality, cleanup, staged acceptance, resulting-tree, diff,
+  and `[doctrine] all doctrine checks passed` evidence is recorded before
+  commit; only pinned provider-owned validation logs remain. Full CI and push
+  remain deferred by policy.
 
 ## Acceptance Checklist (enforced) — `.17.3.7.2` execution-plan implementation
 

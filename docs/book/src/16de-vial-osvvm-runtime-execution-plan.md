@@ -1,4 +1,4 @@
-# OSVVM Runtime Execution Plan
+# OSVVM Runtime Execution and Measurement
 
 The exact OSVVM runtime path separates structural planning from external tool
 execution. Child `.17.3.7.1` first materializes the authored portable-VHDL
@@ -13,6 +13,13 @@ qualified GHDL route. Neither step starts GHDL.
 - Falsify: Mutate a command or report, request a preflight-dominated level, add an invocation key, call a private qualifier seam directly, use a subclass invocant, or change any source/tool/oracle identity. Every control must fail before staging or tool execution.
 - Durability: Retain the caller-sealed plan module, qualifier consumer, t1677 and t1599, task .17.3.7.2, this chapter, Knowledge Map card, bounded claim record, checked qualifier, doctrine watcher, and work-unit Git chain.
 <!-- CLAIM-VERIFICATION:END vial-osvvm-runtime-execution-plan-v1 -->
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-osvvm-runtime-measurement-v1 -->
+- Claim: Under the active repository RAM guard, the common-controller OSVVM runtime adapter accepts exactly eleven independent records: one 77-record reference validation, one validation plus three measured 10,000-record gate records, and one validation plus five measured 100,000-record qualification records. Every record retains 61 provider-analysis captures, 68 provider/generated lifecycle sources, separate fixture/probe elaborations, one fixture and one provider-probe execution, four supplementary reports, exact trace/result authority, stable pre/post provider identity, and zero controller/lifecycle residue; limit and over-limit remain provider-, tool-, and controller-free.
+- Re-derive: Run scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_OSVVM_RUNTIME_MEASUREMENT_EXACT=1 prove -Iperl t/1679-vial-architecture-scale-osvvm-runtime-measurement.t; independently reload each returned report and census its validation/measured records, lifecycle states, source set, captures, report identities, trace counts, exclusions, and cleanup.
+- Falsify: Remove the RAM guard, request an unselected or non-measurable role, call a private route/emission/plan/lifecycle seam directly, mutate a record oracle, command, provider identity, source, report, predecessor, deadline, or cleanup field, or admit provider/tool work to limit and over-limit. The focused watcher must reject every control and remove owned residue.
+- Durability: Retain the caller-sealed measurement adapter, common controller and provider-aware lifecycle admissions, t1679, task .17.3.7.4, this chapter, the OSVVM Knowledge Map card, bounded claim record, doctrine gate, and work-unit Git chain; rerun the guarded exact watcher whenever any participant changes.
+<!-- CLAIM-VERIFICATION:END vial-osvvm-runtime-measurement-v1 -->
 
 ## Closed authority
 
@@ -106,11 +113,42 @@ alternate resource policy, generated-settings mutation, absent reports,
 caller widening, state/object/source/provider mutation, collision, process
 failure, and cleanup.
 
-From clean lifecycle commit `f76431606`, `.17.3.7.4` is active solely to map
-the exact OSVVM authority onto the common controller's validation and measured
-records. Activation changes no runtime, measurement, publication,
-product-support, performance, capacity, mixed-language, provider-generality,
-or public-API claim.
+## Common-controller measurement
+
+`ArchitectureScaleOSVVMRuntimeMeasurement` now maps the exact plan and
+provider-aware lifecycle onto the fixed common-controller stages. Construct,
+parse/validate, bridge, and bind-plan rebuild the ordinary authored VIAL route.
+Emit performs callback-scoped provider verification, emits the qualified
+OSVVM wrapper graph, materializes the seven generated sources in canonical
+plan order, and admits a relocated 68-source lifecycle request. The three
+external controller stages retain every provider/generated analysis capture,
+both elaboration captures, and separate fixture/provider-probe captures.
+Trace and normalized-result truth still come only from the portable fixture.
+
+Each executable role uses one lifecycle execution per controller record. The
+reference role has one correctness-only validation. Gate has one validation
+and three independently measured records; qualification has one validation
+and five independently measured records. Each record executes the fixture
+once and the provider probe once, snapshots four supplementary provider
+reports, verifies provider identity again after execution, publishes bounded
+identity/report evidence, and removes both the lifecycle and outer controller
+roots. The single executions deliberately make no intra-record deterministic-
+rerun claim; independence comes from the controller's separate records.
+
+The guarded exact watcher accepts all eleven records with no exclusions or
+residue. Validated trace counts are exactly 77 for reference, 10,000 for every
+gate record, and 100,000 for every qualification record. Every record retains
+61 provider-analysis captures, one generated-analysis capture, two elaboration
+captures, one fixture capture, one provider-probe capture, four reports, 68
+source identities, the complete lifecycle predecessor chain, and stable
+pre/post OSVVM commit/tree/manifest authority.
+
+Limit and over-limit stop at materialization preflight: they acquire no plan,
+provider callback, common controller, lifecycle, or external tool. This work
+publishes measurement evidence only. It does not promote a performance budget,
+product-support statement, capacity boundary, provider-generality,
+mixed-language, or public-API claim. Immutable matrix publication and fresh-
+process reload remain owned by `.17.3.7.5`.
 
 See [HIAL/VIAL Verification Architecture](16d-hial-vial-verification-architecture.md)
 for the parent architecture and [Portable VHDL Runtime Measurement](16dd-vial-portable-vhdl-runtime-measurement.md)

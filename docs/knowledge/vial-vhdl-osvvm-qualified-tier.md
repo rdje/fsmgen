@@ -11,6 +11,7 @@ answers:
   - "how are authored portable VHDL runtime sources materialized through OSVVM?"
   - "how is the exact OSVVM GHDL execution plan sealed?"
   - "how does the provider-aware GHDL lifecycle execute the exact OSVVM plan?"
+  - "how are OSVVM runtime reference gate and qualification records measured?"
 date: 2026-08-30
 status: current
 tags: [hial, vial, vhdl, osvvm, ghdl, review-gallery, verification]
@@ -22,7 +23,7 @@ evidence: >-
   perl/FSM/VIAL/Backend/VHDLOSVVMStaticValidator.pm;
   perl/FSM/VIAL/Backend/GHDLLifecycle.pm; perl/FSM/VIAL/Backend/VHDLOSVVMGHDLQualification.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission/OSVVM.pm;
-  perl/FSM/VIAL/ArchitectureScaleOSVVMRuntimeMaterialization.pm; perl/FSM/VIAL/ArchitectureScaleOSVVMRuntimeExecutionPlan.pm;
+  perl/FSM/VIAL/ArchitectureScaleOSVVMRuntimeMaterialization.pm; perl/FSM/VIAL/ArchitectureScaleOSVVMRuntimeExecutionPlan.pm; perl/FSM/VIAL/ArchitectureScaleOSVVMRuntimeMeasurement.pm;
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/Support/VIALVHDLEmissionContract.pm;
   scripts/refresh_vial_vhdl_osvvm_gallery.pl;
   scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl;
@@ -33,6 +34,7 @@ evidence: >-
   t/1676-vial-architecture-scale-osvvm-runtime-materialization.t;
   t/1677-vial-architecture-scale-osvvm-runtime-execution-plan.t;
   t/1678-vial-ghdl-provider-aware-lifecycle.t;
+  t/1679-vial-architecture-scale-osvvm-runtime-measurement.t;
   vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json;
   vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/README.md;
   vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services/evidence/provider-materialization.json;
@@ -50,6 +52,9 @@ reverify: >-
   t/1676-vial-architecture-scale-osvvm-runtime-materialization.t
   t/1677-vial-architecture-scale-osvvm-runtime-execution-plan.t &&
   prove -Iperl t/1678-vial-ghdl-provider-aware-lifecycle.t &&
+  scripts/run_with_ram_guard.sh -- env
+  FSMGEN_VIAL_OSVVM_RUNTIME_MEASUREMENT_EXACT=1 prove -Iperl
+  t/1679-vial-architecture-scale-osvvm-runtime-measurement.t &&
   perl scripts/refresh_vial_vhdl_osvvm_gallery.pl --check &&
   perl scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl --check
 ---
@@ -101,4 +106,6 @@ Child `.17.3.7.1` materializes the exact authored portable-VHDL reference, 10,00
 
 Child `.17.3.7.2` seals three in-memory OSVVM/GHDL plans: each binds 61 provider analyses, seven emitted sources plus the checked probe, separate fixture/probe commands, four reports, exact tool/resource authority, and repository-relative storage. t1677 re-derives the full identities and falsifies widening; the qualifier consumes the same private authority and stays byte-identical to its checked 74,976-byte executable oracle. Evaluation creates no stage or process and limit/excess stay plan-free.
 
-Child `.17.3.7.3` admits only that plan through a distinct provider-aware role of the shared GHDL lifecycle. The role preserves portable v1 authority, uses the same supervisor and forward state/object/cleanup implementation, records ordered provider/generated captures plus separate fixture/probe evidence, seals supplementary reports, revalidates tool/source/settings authority, and leaves both checked qualifier reports byte-identical. t1678 owns hostile plan/settings/report/caller/cleanup controls. From clean lifecycle commit `f76431606`, `.17.3.7.4` alone is active to add common-controller measurement; activation adds no runtime or product claim.
+Child `.17.3.7.3` admits only that plan through a distinct provider-aware role of the shared GHDL lifecycle. The role preserves portable v1 authority, uses the same supervisor and forward state/object/cleanup implementation, records ordered provider/generated captures plus separate fixture/probe evidence, seals supplementary reports, revalidates tool/source/settings authority, and leaves both checked qualifier reports byte-identical. t1678 owns hostile plan/settings/report/caller/cleanup controls.
+
+Child `.17.3.7.4` maps that exact authority onto the common controller without adding a competing process path. Guarded t1679 accepts eleven independent records: reference validation, gate validation plus three measured records, and qualification validation plus five measured records. Every record retains 61 provider-analysis captures, 68 lifecycle sources, separate fixture/probe elaborations, one fixture and one provider-probe run, four reports, portable trace/result truth, stable provider identity, and zero controller/lifecycle residue. Exact trace counts are 77/10,000/100,000; limit/excess remain provider-, plan-, controller-, lifecycle-, and tool-free. Publication, performance, support, capacity, provider-generality, mixed-language, and public-API claims remain deferred.

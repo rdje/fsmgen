@@ -60,6 +60,7 @@ my %RUN_ORDINAL_MAX = (
 my %EXTERNAL_MEASUREMENT_CALLER = map { $_ => 1 } qw(
     FSM::VIAL::ArchitectureScalePortableRuntimeMeasurement
     FSM::VIAL::ArchitectureScalePortableVHDLRuntimeMeasurement
+    FSM::VIAL::ArchitectureScaleOSVVMRuntimeMeasurement
 );
 my @NONCLAIMS = qw(
     architecture_scale_capacity whole_product_big whole_product_really_big
@@ -817,7 +818,9 @@ sub _selected_tool_profile($specification, $supplied) {
             job_count => 1,
             external_verification_tool => JSON::PP::true,
         }
-        : $selected eq 'ghdl_6_0_0_llvm_jit' ? {
+        : $selected eq 'ghdl_6_0_0_llvm_jit'
+                || $selected eq
+                    'osvvm_2026_05_ghdl_6_0_0_llvm_jit' ? {
             applicability => 'qualified_runtime',
             logical_name => 'ghdl',
             reported_version => join("\n",
@@ -830,8 +833,15 @@ sub _selected_tool_profile($specification, $supplied) {
                 'GHDL is free software, covered by the GNU General Public License.  There is NO',
                 'warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.'),
             build => '6.0.0-llvm-jit',
-            provider_identity => 'qualified_ghdl_6_0_0_llvm_jit',
-            arguments => [qw(--std=08 --work=fsmgen_vial)],
+            provider_identity => $selected eq 'ghdl_6_0_0_llvm_jit'
+                ? 'qualified_ghdl_6_0_0_llvm_jit'
+                : 'qualified_osvvm_2026_05_ghdl_6_0_0_llvm_jit',
+            arguments => $selected eq 'ghdl_6_0_0_llvm_jit'
+                ? [qw(--std=08 --work=fsmgen_vial)]
+                : [qw(
+                    --std=08 -Wno-library -Wno-hide
+                    --work=fsmgen_vial -P<lifecycle-library-root>
+                )],
             thread_count => 1,
             job_count => 1,
             external_verification_tool => JSON::PP::true,

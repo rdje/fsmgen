@@ -227,6 +227,158 @@ sub _qualification_plan($class, @args) {
     );
 }
 
+# The measurement adapter already holds one independently rebuilt canonical
+# plan report.  This seam relocates that closed authority into the exact outer
+# controller record without rerunning provider verification in tool stages.
+sub _measurement_plan($class, @args) {
+    _exact_invocant($class, '_measurement_plan');
+    confess "OSVVM/GHDL measurement plan is caller-sealed\n"
+        unless (scalar caller) eq
+            'FSM::VIAL::ArchitectureScaleOSVVMRuntimeMeasurement';
+    my $raw = _request(
+        '_measurement_plan', \@args,
+        [qw(level staging_identity canonical_plan generated_source_set)],
+    );
+    _selected_level($raw->{level});
+    my $stage = $raw->{staging_identity};
+    confess "OSVVM/GHDL measurement staging identity is not exact\n"
+        unless defined($stage) && !ref($stage)
+            && $stage =~ m{\A[.]artifacts/tmp/vial-scale/[0-9a-f]{64}/(?:validation|gate_measurement|qualification_measurement)/[0-9]{2}/lifecycle\z};
+
+    my $canonical = $raw->{canonical_plan};
+    _validate_report_shape($canonical);
+    confess "OSVVM/GHDL measurement plan level changed\n"
+        unless $canonical->{level} eq $raw->{level};
+    my $generated = $raw->{generated_source_set};
+    confess "OSVVM/GHDL measurement generated source set is not exact\n"
+        unless ref($generated) eq 'ARRAY'
+            && @$generated == @GENERATED_SUFFIX;
+    my $expected = $canonical->{source_authority}{generated_sources};
+    (my $controller_stage = $stage) =~ s{/lifecycle\z}{};
+    for my $index (0 .. $#GENERATED_SUFFIX) {
+        my $actual = $generated->[$index];
+        _exact_keys($actual, [qw(relpath bytes sha256)],
+            "OSVVM/GHDL measurement generated source $index");
+        my $source_artifact = $expected->[$index]{source_artifact_relpath};
+        confess "OSVVM/GHDL measurement generated source identity changed\n"
+            unless $actual->{relpath} eq
+                    "$controller_stage/outputs/emit/source-graph/$source_artifact"
+                && $actual->{bytes} == $expected->[$index]{bytes}
+                && $actual->{sha256} eq $expected->[$index]{sha256};
+    }
+
+    my $probe = $canonical->{source_authority}{provider_probe};
+    my @analysis_source = (
+        (map { $_->{relpath} } @$generated), $probe->{relpath},
+    );
+    my $instantiated = _instantiated_plan($stage, \@analysis_source);
+    my $actual_records = _command_records(
+        $stage, $instantiated->{commands},
+    );
+    my $canonical_stage =
+        $canonical->{storage_authority}{staging_identity};
+    my %relocated_source = map {
+        $generated->[$_]{relpath} => $expected->[$_]{relpath}
+    } 0 .. $#GENERATED_SUFFIX;
+    for my $name (sort keys %$actual_records) {
+        my @actual = $name eq 'provider_analyze'
+            ? @{$actual_records->{$name}} : ($actual_records->{$name});
+        my @sealed = $name eq 'provider_analyze'
+            ? @{$canonical->{commands}{$name}}
+            : ($canonical->{commands}{$name});
+        confess "OSVVM/GHDL normalized command cardinality changed\n"
+            unless @actual == @sealed;
+        for my $index (0 .. $#actual) {
+            my $actual_argv = _clone($actual[$index]{argv});
+            for my $argument (@$actual_argv) {
+                $argument = $relocated_source{$argument}
+                    if exists $relocated_source{$argument};
+                $argument =~ s/\Q$stage\E/$canonical_stage/g;
+            }
+            confess "OSVVM/GHDL normalized command authority changed\n"
+                unless _canonical($actual_argv)
+                        eq _canonical($sealed[$index]{argv})
+                    && $actual[$index]{timeout_seconds}
+                        == $sealed[$index]{timeout_seconds}
+                    && $actual[$index]{capture_limit_bytes}
+                        == $sealed[$index]{capture_limit_bytes}
+                    && $actual[$index]{working_directory}
+                        eq $sealed[$index]{working_directory}
+                    && $actual[$index]{command_sha256}
+                        eq sha256_hex(_canonical($actual[$index]{argv}))
+                    && $sealed[$index]{command_sha256}
+                        eq sha256_hex(_canonical($sealed[$index]{argv}));
+        }
+    }
+
+    my $canonical_settings = $canonical->{generated_settings}{relpath};
+    my @provider_source = grep {
+        $_->{relpath} ne $canonical_settings
+    } @{$canonical->{provider_authority}{provider_sources}};
+    my @source_set = (
+        (map {{
+            relpath => $_->{relpath}, bytes => 0 + $_->{bytes},
+            sha256 => $_->{sha256},
+        }} @provider_source),
+        (map { _clone($_) } @$generated),
+        {
+            relpath => $probe->{relpath}, bytes => 0 + $probe->{bytes},
+            sha256 => $probe->{sha256},
+        },
+    );
+    confess "OSVVM/GHDL measurement lifecycle source count changed\n"
+        unless @source_set == 68;
+    my $tool = $canonical->{tool_authority};
+    my $commands = {
+        schema => 'fsmgen.vial_ghdl_lifecycle_osvvm_command_plan.v2',
+        schema_version => 2,
+        version => _clone($instantiated->{commands}{version}),
+        provider_analyze =>
+            _clone($instantiated->{commands}{provider_analyze}),
+        analyze_generated =>
+            _clone($instantiated->{commands}{analyze_generated}),
+        elaborate_fixture =>
+            _clone($instantiated->{commands}{elaborate_fixture}),
+        elaborate_provider_probe =>
+            _clone($instantiated->{commands}{elaborate_provider_probe}),
+        run_fixture => _clone($instantiated->{commands}{run_fixture}),
+        run_provider_probe =>
+            _clone($instantiated->{commands}{run_provider_probe}),
+        generated_settings => {
+            relpath => $instantiated->{generated_settings_relpath},
+            content => $instantiated->{generated_settings_content},
+            bytes => bytes::length(
+                $instantiated->{generated_settings_content},
+            ),
+            sha256 => sha256_hex(
+                $instantiated->{generated_settings_content},
+            ),
+        },
+        libraries => _clone($instantiated->{libraries}),
+        provider_reports => [map {{
+            name => $_, relpath => "$stage/provider_reports/$_",
+        }} @PROVIDER_REPORT],
+        resource_controls => _resource_controls(),
+    };
+    return {
+        plan_identity => $canonical->{plan_identity},
+        provider_authority => _clone($canonical->{provider_authority}),
+        provider => {
+            root => $tool->{root},
+            archive => $tool->{archive}{relpath},
+            archive_bytes => 0 + $tool->{archive}{bytes},
+            archive_sha256 => $tool->{archive}{sha256},
+            binary => $tool->{binary}{relpath},
+            binary_sha256 => $tool->{binary}{sha256},
+            version_output => $tool->{version_output},
+        },
+        source_set => \@source_set,
+        source_identity =>
+            'source/' . sha256_hex(_canonical(\@source_set)),
+        commands => $commands,
+    };
+}
+
 sub _evaluate($repo_root, $level) {
     my $materialization =
         FSM::VIAL::ArchitectureScaleOSVVMRuntimeMaterialization->evaluate({

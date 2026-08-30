@@ -144,6 +144,73 @@ sub with_staging($class, @args) {
     });
 }
 
+# Measurement needs the canonical blessed route in every isolated worker and
+# the exact callback-scoped provider emission only at the emit boundary.  Both
+# seams rederive tracked authority and reject every caller except the selected
+# OSVVM measurement adapter.
+sub _measurement_route_inputs($class, @args) {
+    _exact_invocant($class, '_measurement_route_inputs');
+    confess "OSVVM measurement route is private to the exact adapter\n"
+        unless caller eq
+            'FSM::VIAL::ArchitectureScaleOSVVMRuntimeMeasurement';
+    my $raw = _request(
+        '_measurement_route_inputs', \@args,
+        [qw(repository_root level)],
+    );
+    return _measurement_route_inputs_impl($raw);
+}
+
+sub _measurement_inputs($class, @args) {
+    _exact_invocant($class, '_measurement_inputs');
+    confess "OSVVM measurement inputs are private to the exact adapter\n"
+        unless caller eq
+            'FSM::VIAL::ArchitectureScaleOSVVMRuntimeMeasurement';
+    my $raw = _request(
+        '_measurement_inputs', \@args,
+        [qw(repository_root level artifact_root)],
+    );
+    my $artifact_root = $raw->{artifact_root};
+    confess "OSVVM measurement artifact root is unsafe\n"
+        unless defined($artifact_root) && !ref($artifact_root)
+            && $artifact_root =~ m{\A[.]artifacts/tmp/vial-scale/[0-9a-f]{64}/(?:validation|gate_measurement|qualification_measurement)/[0-9]{2}/outputs/emit/source-graph\z};
+    my $inputs = _measurement_route_inputs_impl($raw);
+    my $evaluated =
+        FSM::VIAL::ArchitectureScaleBackendEmission::OSVVM
+            ->_runtime_evaluate({
+                level => $raw->{level},
+                first_route => $inputs->{first_route},
+                second_route => $inputs->{second_route},
+                artifact_root => $artifact_root,
+                expected => $EXPECTED{$raw->{level}},
+            });
+    confess "OSVVM measurement emission failed its exact oracle\n"
+        if @{$evaluated->{diagnostics}};
+    confess "OSVVM measurement emission is nondeterministic\n"
+        unless $evaluated->{byte_equal};
+    return {
+        construction => _clone($inputs->{construction}),
+        portable_report => _clone($inputs->{portable_report}),
+        route => $inputs->{first_route},
+        emission => $evaluated->{emission},
+        emission_oracle => _clone($evaluated->{oracle}),
+    };
+}
+
+sub _measurement_route_inputs_impl($raw) {
+    my $repo_root = _repository_root($raw->{repository_root});
+    _selected_level($raw->{level});
+    confess "preflight-dominated OSVVM shapes have no measurement route\n"
+        unless $MATERIALIZED{$raw->{level}};
+    my $inputs =
+        FSM::VIAL::ArchitectureScalePortableVHDLRuntimeMaterialization
+            ->_osvvm_runtime_route_inputs({
+                repository_root => $repo_root, level => $raw->{level},
+            });
+    confess "OSVVM measurement route authority is incomplete\n"
+        unless $inputs->{first_route} && $inputs->{second_route};
+    return $inputs;
+}
+
 sub _evaluate($repo_root, $level) {
     my $inputs =
         FSM::VIAL::ArchitectureScalePortableVHDLRuntimeMaterialization
