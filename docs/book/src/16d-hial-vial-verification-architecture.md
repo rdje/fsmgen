@@ -3701,9 +3701,9 @@ families are complete. `.17.3.9` independently reloads them, requires exact
 validation plus three/five accepted records, retains raw references and
 exclusions, partitions FSMGen/external-tool/artifact costs, and derives
 minimum/median/maximum/MAD plus integer decision-0056 candidates. Its first
-exact join correctly rejected backend-emission v1 after the portable-SV oracle
-moved to revision 2; the publisher now selects non-colliding v2 profile and
-aggregate names while preserving v1 history, and clean recapture is pending.
+exact join correctly rejected backend-emission v1 after the portable-SV oracle moved to revision 2.
+The publisher selects non-colliding v2 names while preserving v1 history; clean exact capture and
+fresh reload now seal that current prerequisite, so exact cross-family replay is next.
 Candidates remain evidence only: `.17.4` owns caps and `.17.5` promotion. Inapplicable routes never borrow another profile's evidence.
 
 ### Architecture-scale measurement foundation

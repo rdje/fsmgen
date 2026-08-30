@@ -54,7 +54,7 @@ answers:
   - "where are the authored portable runtime qualification sources and structural oracle?"
   - "what are the final tracked portable runtime artifact graph sizes?"
   - "how is balanced portable measurement scoped?"
-date: 2026-08-27
+date: 2026-08-30
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
 evidence: >-
@@ -372,9 +372,13 @@ closure then found the durability gap: backend-emission matrix v1 was sealed
 at `fdc6e6a1b` before oracle-v2 commit `eb8967271`, so current regeneration
 correctly rejects its v1 canonical evaluation. The publisher now hashes
 `portable_sv_oracle_revision_2` into profile IDs and uses v2 aggregate
-directories, preserving v1 without collision. Clean v2 capture/reload is a
-hard prerequisite for `.17.3.9.1`; no support, performance, or capacity claim
-is promoted.
+directories, preserving v1 without collision. Clean `4487f0fe3` exact t1662
+now captures and independently reloads 22 same-volume files/2,252,381 bytes in
+13,146 seconds; complete identity is
+`backend-emission-matrix/9d634e6a898cc58a3566e6f52c846c19ea1b06c509961338a57c3322840c4fe1`.
+All 20 referenced profile byte counts and hashes reverify independently with
+no staging residue. Exact t1683 is next; no support, performance, or capacity
+claim is promoted.
 
 `.17.3.8.1` measures the sole balanced structural gate; clean `118b3bfb68902c9479ca4c83a714b23ebb50501a` seals `.2`
 as three immutable files/1,280,699 bytes and complete identity `balanced-portable-matrix/d0619d4cce4d8eebb6b486d70bc41368d9d5f379ce54f87c6843f931ca462900`.
