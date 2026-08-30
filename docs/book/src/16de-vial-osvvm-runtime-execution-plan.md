@@ -148,7 +148,8 @@ provider callback, common controller, lifecycle, or external tool. This work
 publishes measurement evidence only. It does not promote a performance budget,
 product-support statement, capacity boundary, provider-generality,
 mixed-language, or public-API claim. Immutable matrix publication and fresh-
-process reload remain owned by `.17.3.7.5`.
+process reload are active under `.17.3.7.5`; no immutable set exists until
+that leaf completes both its guarded capture and distinct reload.
 
 See [HIAL/VIAL Verification Architecture](16d-hial-vial-verification-architecture.md)
 for the parent architecture and [Portable VHDL Runtime Measurement](16dd-vial-portable-vhdl-runtime-measurement.md)

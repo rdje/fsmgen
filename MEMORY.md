@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7`
-  (`active`; exact OSVVM runtime measurement chain)
-- next_action: activate `.17.3.7.5`, then publish and independently reload the
-  complete immutable five-role OSVVM runtime measurement set.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.7.5`
+  (`active`; immutable OSVVM runtime measurement-set publication)
+- next_action: audit the two existing runtime-matrix publishers, then implement
+  exact five-role atomic publication plus separate fresh-process reload.
 - in_flight_uncommitted: none.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none.
