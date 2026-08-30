@@ -377,13 +377,18 @@ now captures and independently reloads 22 same-volume files/2,252,381 bytes in
 13,146 seconds; complete identity is
 `backend-emission-matrix/9d634e6a898cc58a3566e6f52c846c19ea1b06c509961338a57c3322840c4fe1`.
 All 20 referenced profile byte counts and hashes reverify independently with
-no staging residue. Exact t1683 is next; no support, performance, or capacity
-claim is promoted.
+no staging residue. Guarded exact t1683 then passes Files=1/Tests=2 in 14,954
+seconds and closes seven authorities/nine families/216 profiles/356 raw and
+zero excluded records as 92 candidate/124 noncandidate profiles. Its read-only
+1,374,727-byte report has SHA-256 `f6cc10c3a4c198d856470783cb7a836ee0d7e84c57a15bf7ae0f1208ef390d7c`
+and identity `calibration-closure/92ef0a203e18ce8de8b17cf819f36b73fe0889f00fdcb4def8b2b0e9eeb9dcc5`;
+an independent census verifies all 232 referenced same-volume artifacts/
+28,398,586 bytes and declared hashes with zero errors.
 
 `.17.3.8.1` measures the sole balanced structural gate; clean `118b3bfb68902c9479ca4c83a714b23ebb50501a` seals `.2`
 as three immutable files/1,280,699 bytes and complete identity `balanced-portable-matrix/d0619d4cce4d8eebb6b486d70bc41368d9d5f379ce54f87c6843f931ca462900`.
 Exact t1682 plus fresh reload retain one validation, three raw/zero excluded and four cleaned/zero-residue records; execution
-remains inapplicable. `.17.3.9.1` is active for independent statistics/candidate-budget derivation; `.2` owns atomic publication;
+remains inapplicable. `.17.3.9.1` seals independent statistics/candidate-budget derivation; `.2` owns atomic publication;
 `.17.4`/`.17.5` retain cap enforcement/promotion. No runtime, capacity, support, parity, or API claim follows.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],

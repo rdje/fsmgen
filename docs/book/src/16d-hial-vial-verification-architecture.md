@@ -3688,23 +3688,23 @@ reports, and equal plan identity on rerun. High-count construction is preflighte
 against minimum representation and runs only under the repository RAM guard;
 a killed or exhausted host is never accepted as a cap result.
 
-Performance never substitutes for correctness. One validation plus three
-measured gate runs, or one plus five qualification runs, must first pass every
-stage oracle. Measurements retain wall and CPU time, peak process-tree and
-single-descendant RSS, files/lines/bytes, semantic counts, exact tool/host
-identity, and raw samples. The repository RAM guard retains its 88% host and
-4,096-MiB descendant ceilings. A promoted pinned-host budget is frozen from
-clean calibration with explicit headroom; unknown hosts run correctness,
-determinism, safety, and cleanup without flaky performance failure. Measurement
-is active under `.17.3`. The common foundation and seven capture/publication
-families are complete. `.17.3.9` independently reloads them, requires exact
-validation plus three/five accepted records, retains raw references and
-exclusions, partitions FSMGen/external-tool/artifact costs, and derives
-minimum/median/maximum/MAD plus integer decision-0056 candidates. Its first
-exact join correctly rejected backend-emission v1 after the portable-SV oracle moved to revision 2.
-The publisher selects non-colliding v2 names while preserving v1 history; clean exact capture and
-fresh reload now seal that current prerequisite, so exact cross-family replay is next.
-Candidates remain evidence only: `.17.4` owns caps and `.17.5` promotion. Inapplicable routes never borrow another profile's evidence.
+Performance never substitutes for correctness. One validation plus three measured gate runs, or one plus five qualification runs, must first pass every stage oracle.
+Measurements retain wall/CPU time, process-tree/single-descendant RSS, files/lines/bytes, semantic counts, exact tool/host identity, and raw samples.
+The RAM guard retains its 88% host and 4,096-MiB descendant ceilings; unknown hosts run correctness, determinism, safety, and cleanup without flaky performance failure.
+Measurement is active under `.17.3`; the common foundation and seven capture/publication authorities are complete.
+`.17.3.9.1` reloads them, requires exact validation plus three/five accepted records, retains raw references/exclusions, and partitions FSMGen/external-tool/artifact costs.
+It derives minimum/median/maximum/MAD and integer decision-0056 candidates; promotion still requires separate clean calibration with explicit headroom.
+Its first exact join rejected backend-emission v1 after the portable-SV oracle moved to revision 2; non-colliding v2 names preserve that historical evidence.
+<!-- CLAIM-VERIFICATION:BEGIN vial-architecture-scale-calibration-closure-v1 -->
+- Claim: Guarded exact t1683 closes seven independently sealed authorities, nine families, 216 profiles, and 356 raw/zero excluded measurement records as 92 candidate and 124 noncandidate profiles. Its read-only canonical 1,374,727-byte report has SHA-256 `f6cc10c3a4c198d856470783cb7a836ee0d7e84c57a15bf7ae0f1208ef390d7c` and identity `calibration-closure/92ef0a203e18ce8de8b17cf819f36b73fe0889f00fdcb4def8b2b0e9eeb9dcc5`; an independent census verifies all 232 referenced same-volume artifacts totaling 28,398,586 bytes. Decision-0056 candidate ranges are 2,000,000,000–442,474,000,000 wall ns, 2,000,000,000–285,675,000,000 CPU ns, and 268,435,456–3,456,106,496 RSS bytes, without promoting a performance budget.
+- Re-derive: Run `FSMGEN_VIAL_SCALE_CALIBRATION_CLOSURE_EXACT=1 scripts/run_with_ram_guard.sh -- prove -Iperl t/1683-vial-architecture-scale-calibration-closure.t`; independently enumerate the seven complete manifests, nine referenced family matrices, and 216 profile publications, verify same-device placement plus every declared byte count and SHA-256, then derive and validate the canonical report again from those immutable inputs.
+- Falsify: Run exact t1683 and require failure for any missing, duplicate, reordered, or mutated profile, changed statistic or applicability identity, promoted candidate, caller evidence, stale authority, changed artifact bytes/hash/device, or disagreement between independent derivations.
+- Durability: Preserve every sealed profile/family/complete publication, the read-only closure module and exact watcher, task/book/Knowledge Map/claim records, doctrine gate, and work-unit Git chain; `.17.3.9.2` separately owns durable atomic closure publication and fresh-process reload.
+<!-- CLAIM-VERIFICATION:END vial-architecture-scale-calibration-closure-v1 -->
+
+Candidates remain evidence only: `.17.3.9.2` owns atomic publication/fresh
+reload, `.17.4` owns caps, and `.17.5` owns promotion. Inapplicable routes never
+borrow another profile's evidence.
 
 ### Architecture-scale measurement foundation
 
