@@ -396,7 +396,7 @@ bind/plan, and structural emit. Exact-caller seams keep prerequisite work outsid
 use. The report preserves the private revision-2 bridge, 2,048 bindings, 1,024 operations, eight artifacts, three
 sources, 503,279 source bytes, and 3,605 maps; compile through result remains inapplicable because no qualified private-
 bridge runtime route exists. Guarded t1681 passes five tests in 3,545 seconds with failure cleanup and zero residue.
-`.17.3.8.2` owns immutable publication/reload; no runtime, budget, capacity, support, parity, or public API is promoted.
+`.17.3.8.2` is active for publication/reload; no runtime, budget, capacity, support, parity, or public API is promoted.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

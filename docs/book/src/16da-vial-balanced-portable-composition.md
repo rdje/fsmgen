@@ -214,7 +214,7 @@ checked-anchor construction, exact-caller rejection, and guard thresholds. The
 opt-in path constructs the real validation and three raw records, regenerates
 the report independently, mutates canonical emission and applicability, forces
 a worker failure, and requires zero staging residue. Immutable publication and
-fresh-process reload remain separately owned by `.17.3.8.2`; this adapter alone
+fresh-process reload are active under `.17.3.8.2`; no set exists until both finish. This adapter alone
 adds no performance budget, capacity, support, parity, public-API, or runtime
 claim.
 
