@@ -3696,11 +3696,15 @@ identity, and raw samples. The repository RAM guard retains its 88% host and
 4,096-MiB descendant ceilings. A promoted pinned-host budget is frozen from
 clean calibration with explicit headroom; unknown hosts run correctness,
 determinism, safety, and cleanup without flaky performance failure. Measurement
-is active under `.17.3`. The common `.17.3.1` foundation is complete; later
-leaves own exact-tool runs, `.17.3.9` owns candidate calibration closure, and
-`.17.5` alone owns promotion. Semantic/bridge measurement is complete under
-`.17.3.2`; execution/checking measurement is active under `.17.3.3`. Neither
-authorizes an external verification-tool run.
+is active under `.17.3`. The common foundation and the semantic/bridge,
+execution/checking, structural-emission, portable-Verilator, portable-VHDL,
+OSVVM, and balanced capture/publication leaves are complete. `.17.3.9` is now
+active: it independently reloads those immutable raw publications, proves the
+required validation and repetition evidence, retains every raw or excluded
+sample, and derives minimum/median/maximum/MAD plus exact pinned-host/tool
+candidate budgets. Those candidates are evidence, not enforced or public
+budgets: `.17.4` still owns resource-cap implementation and `.17.5` alone owns
+promotion. An inapplicable external-tool route remains inapplicable rather than borrowing evidence from another profile.
 
 ### Architecture-scale measurement foundation
 
