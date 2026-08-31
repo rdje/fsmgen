@@ -139,9 +139,14 @@ my $GROUPS = {
     ),
     semantic_action_shape => _group(
         'FSM::VIAL::SemanticBuilder', 'parse_validate', ['VIAL_LIMIT_ERROR'],
-        'action or fiber semantic path', 'at_recursive_shape_admission',
-        'no_semantic_ir_or_artifact', 'verify_existing_early_boundary',
-        '.17.4.2', ['t/1601-vial-architecture-scale-semantic-catalog.t'],
+        'action or fiber semantic path',
+        'parallel_depth_and_fiber_count_before_join_value_resolution',
+        'no_semantic_ir_or_artifact',
+        'retain_shape_preflight_before_semantic_resolution',
+        '.17.4.2', [
+            't/1601-vial-architecture-scale-semantic-catalog.t',
+            't/1688-vial-semantic-parallel-fiber-cap-order.t',
+        ],
     ),
     semantic_type_shape => _group(
         'FSM::VIAL::SemanticBuilder', 'parse_validate', ['VIAL_LIMIT_ERROR'],

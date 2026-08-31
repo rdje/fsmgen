@@ -1140,12 +1140,12 @@ sub _action {
         _shape($items, 4, undef, $node, $path, $head);
         _fail('VIAL_LIMIT_ERROR', 'limit', 'parallel nesting exceeds 16 levels', $node->{span}, $path)
             if $parallel_depth >= MAX_PARALLEL_DEPTH;
-        my $join = _identifier($items->[1], "$path/join", 0);
-        _fail('VIAL_SEMANTIC_ERROR', 'semantic', "unknown parallel join '$join'", $items->[1]{span}, "$path/join")
-            unless $join eq 'all' || $join eq 'any';
         my @fiber_nodes = @{$items}[2 .. $#{$items}];
         _fail('VIAL_LIMIT_ERROR', 'limit', 'parallel exceeds 256 fibers', $node->{span}, $path)
             if @fiber_nodes > MAX_PARALLEL_FIBERS;
+        my $join = _identifier($items->[1], "$path/join", 0);
+        _fail('VIAL_SEMANTIC_ERROR', 'semantic', "unknown parallel join '$join'", $items->[1]{span}, "$path/join")
+            unless $join eq 'all' || $join eq 'any';
         my (%fiber_names, @fibers);
         $state->{fiber_count} += scalar @fiber_nodes;
         for my $fiber_index (0 .. $#fiber_nodes) {

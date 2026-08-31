@@ -19,12 +19,14 @@ evidence: >-
   t/1687-vial-parser-direct-import-cap-order.t;
   perl/FSM/VIAL/SemanticBuilder.pm;
   t/1686-vial-semantic-action-cap-order.t;
+  t/1688-vial-semantic-parallel-fiber-cap-order.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
   prove -Iperl t/1685-vial-architecture-scale-cap-policy.t
   t/1687-vial-parser-direct-import-cap-order.t
   t/1686-vial-semantic-action-cap-order.t
+  t/1688-vial-semantic-parallel-fiber-cap-order.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -48,3 +50,7 @@ additional copies are admitted with division-before-multiplication arithmetic.
 Crossing the cap therefore retains the established scenario-level diagnostic
 and cannot be masked by malformed later syntax or leak a partial semantic
 report; exact-boundary accepted behavior is unchanged.
+
+Parallel depth and fiber count are admitted before join-value resolution.
+Known fiber excess therefore retains its action-level limit diagnostic even
+when the join value is invalid; accepted boundary identities are unchanged.

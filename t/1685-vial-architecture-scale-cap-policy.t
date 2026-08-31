@@ -67,6 +67,16 @@ is(
     'retain_early_preflight_and_per_edge_terminal_defense',
     'parser policy retains both direct preflight and terminal edge defense',
 );
+is(
+    $policy->{groups}{semantic_action_shape}{current_enforcement},
+    'parallel_depth_and_fiber_count_before_join_value_resolution',
+    'action-shape policy records parallel cap admission before join resolution',
+);
+is(
+    $policy->{groups}{semantic_action_shape}{selected_treatment},
+    'retain_shape_preflight_before_semantic_resolution',
+    'action-shape policy retains structural preflight before semantic resolution',
+);
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;
 my @catalog_axes;

@@ -2547,6 +2547,15 @@ nested large repeat counts cannot overflow while deciding the boundary. The
 terminal scenario check remains as defense in depth, and accepted scenarios at
 the exact boundary retain their existing semantic identity and execution path.
 
+### Parallel-fiber cap admission order
+
+After parsing a `parallel` form, the semantic builder checks its nesting depth
+and fiber count before resolving the join value. A malformed join therefore
+cannot mask an already-known fiber excess. The result remains one
+`VIAL_LIMIT_ERROR`, phase `limit`, message `parallel exceeds 256 fibers`, at
+the parallel action path, with no partial semantic report or `SemanticIR`.
+Exact-boundary inputs retain their projection, report, and execution meaning.
+
 ```perl
 use FSM::VIAL::ArchitectureScaleExecutionGraph;
 

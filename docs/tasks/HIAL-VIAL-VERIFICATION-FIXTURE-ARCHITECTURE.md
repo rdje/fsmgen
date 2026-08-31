@@ -844,8 +844,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Enforce the selected source, parser, and SemanticIR resource caps at their earliest authoritative stages.`
   Acceptance: `Implement only the .17.4.1-selected semantic/parser contract; reject boundary excess before dependent expansion with stable diagnostics and paths, unchanged accepted SemanticIR, and no partial result or residue. Prove every semantic_catalog_v1 boundary and interaction, including literal-repeat versus expanded-action dominance, with focused default and guarded exact tests.`
-  Verification: `Clean selection commit 951720257d727e79f9e0986955655c8d330e0079 closes .17.4.1 before this pivot. Activation commit 93adfbd82 owns only source/parser/SemanticIR earliest-cap hardening under decision 0093. The first implementation slice reserves scenario action capacity before inspecting a next node and admits repeat copies with overflow-safe arithmetic; t1686 proves over-limit and exact-full precedence with no partial report, while t1550/t1601/t1620/t1621 retain accepted and established boundary behavior. The direct-import slice preflights an already-visible 65th edge before recursive imported-source parsing; t1687 proves malformed imported bytes cannot mask the exact diagnostic and pins accepted 64-import projection/report identities. Remaining parser/semantic cap audit stays active; bridge and later layers remain proposed.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: activate semantic cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: enforce action cap before further construction; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: preflight direct import fan-out before recursion`
+  Verification: `Clean selection commit 951720257d727e79f9e0986955655c8d330e0079 closes .17.4.1 before this pivot. Activation commit 93adfbd82 owns only source/parser/SemanticIR earliest-cap hardening under decision 0093. The first implementation slice reserves scenario action capacity before inspecting a next node and admits repeat copies with overflow-safe arithmetic; t1686 proves over-limit and exact-full precedence with no partial report, while t1550/t1601/t1620/t1621 retain accepted and established boundary behavior. The direct-import slice preflights an already-visible 65th edge before recursive imported-source parsing; t1687 proves malformed imported bytes cannot mask the exact diagnostic and pins accepted 64-import projection/report identities. The parallel-fiber slice admits the known 257-fiber excess before join-value resolution; t1688 proves an invalid join cannot mask the exact diagnostic and pins accepted 256-fiber projection/report identities. Remaining parser/semantic cap audit stays active; bridge and later layers remain proposed.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: activate semantic cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: enforce action cap before further construction; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: preflight direct import fan-out before recursion; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: admit parallel fiber cap before join resolution`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3`
   Status: `proposed`
   Goal: `Enforce the selected HIAL-to-VIAL bridge resource caps before avoidable manifest materialization.`
@@ -7667,6 +7667,27 @@ The completed node records above and their named Git commits remain the canonica
   stopped after green t1550 because the selected `t/1554-vial-source-projection.t`
   path does not exist. The corrected guarded parser/source/catalog/policy set
   reports `All tests successful` at `Files=5, Tests=60`; `Parser.pm` is syntax
+  clean. mdBook, Knowledge Map, claims, task integrity, locality, containment,
+  staged-result, diff, and `[doctrine] all doctrine checks passed` close the
+  slice; full CI/push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.2` parallel-fiber admission
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'parallel exceeds 256 fibers'
+  --oneline -- perl/FSM/VIAL/SemanticBuilder.pm` identifies `be9c74163` as the
+  original implementation. `_action` resolved and validated the join value
+  before counting an already-parsed parallel form's fiber children, so an
+  invalid join masked a known structural excess.
+- [x] **ADDRESSED (verified)** — RED t1688 reports `Failed 1/15` because the
+  invalid join returned its `/join` semantic diagnostic instead of the parallel
+  limit. The builder now checks depth and fiber count before join resolution.
+  The first repaired run correctly reached the limit but exposed a test-only
+  source-span shift from the longer hostile spelling; a byte-length-preserving
+  `bad` mutation removes that confound. t1688 pins the exact diagnostic, no
+  partial report, and accepted 256-fiber projection/report identities; t1685
+  pins matching policy metadata.
+- [x] **NO REGRESSION** — Guarded core/catalog/policy/order coverage reports
+  `All tests successful` at `Files=4, Tests=56`; `SemanticBuilder.pm` is syntax
   clean. mdBook, Knowledge Map, claims, task integrity, locality, containment,
   staged-result, diff, and `[doctrine] all doctrine checks passed` close the
   slice; full CI/push remain deferred by policy.
