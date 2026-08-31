@@ -856,8 +856,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Enforce the selected checking-state resource caps before avoidable state-service materialization.`
   Acceptance: `Implement only the .17.4.1-selected checking contract for models, scalar cells, scoreboards and capacity, coverage, faults, and random occurrences. Preserve exact accepted checking semantics and replay while proving earliest deterministic rejection, no partial checking result, bounded construction, and guarded checking_state_v1 boundaries.`
-  Verification: `Model/scalar and scoreboard instance/aggregate counts now preflight compact SemanticIR before normalization with terminal defense, exact diagnostics, and stable accepted plans. t1631/t1685/t1690/t1712 pass Files=4/Tests=102. Coverage admission is next.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: activate checking cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight model cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight scoreboard cardinality`
+  Verification: `Model/scalar, scoreboard, and coverage counts now preflight compact SemanticIR before normalization, retain terminal agreement/defense, and preserve diagnostics and accepted plans. t1632/t1685/t1691/t1713 pass Files=4/Tests=106. Fault admission is next.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: activate checking cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight model cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight scoreboard cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight coverage cardinality`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6`
   Status: `proposed`
   Goal: `Enforce the selected backend-emission resource caps before partial artifact publication.`
@@ -7791,8 +7791,8 @@ The completed node records above and their named Git commits remain the canonica
 - [x] **ADDRESSED (verified)** — RED t1624/t1625 entered `_index_bridge` three times per excess; GREEN `Files=3, Tests=53` preflights both measures, retains diagnostics/accepted and later-plan-cap identities, and keeps terminal checks.
 - [x] **NO REGRESSION** — The focused set reports `Files=7, Tests=75`; syntax, mdBook, Knowledge Map, claims, containment, and doctrines pass. Full CI/push remain deferred.
 
-## Acceptance Checklist (enforced) — `.17.4.5` scoreboard-cardinality preflight
+## Acceptance Checklist (enforced) — `.17.4.5` coverage-cardinality preflight
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'scalar_semantic_admission_then_instance_normalization' -- perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` identifies `951720257`; `_build_scoreboards` normalized every record before instance and aggregate checks.
-- [x] **ADDRESSED (verified)** — Compact execution preflight admits both counts before `_build_scoreboards`, retains terminal defenses/count agreement, and preserves the earlier semantic scalar authority; t1690/t1712 pin both layers.
-- [x] **NO REGRESSION** — Scoreboard/policy coverage reports `All tests successful` at `Files=4, Tests=102`; syntax, mdBook, Knowledge Map, claims, task, locality, containment, staged diff, and doctrines close the slice. Full CI/push remain deferred.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_coverage_materialization_count' -- perl/FSM/VIAL/ExecutionBuilder.pm` identifies `44dbecd1a`; coverage normalization preceded both compact counts.
+- [x] **ADDRESSED (verified)** — Saturating compact preflight now precedes `_build_coverage`; normalized counts must agree and both terminal caps remain. t1691/t1713 preserve layered authorities.
+- [x] **NO REGRESSION** — Focused coverage passes `Files=4, Tests=106`; broader checking/core passes `Files=11, Tests=163`, and all book chapters, Knowledge Map, claims, containment, staged diff, and doctrines close the slice. Full CI/push remain deferred.

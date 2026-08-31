@@ -331,10 +331,14 @@ my $GROUPS = {
         'FSM::Support::VIALExecutionContract', 'parse_validate_or_bind_plan',
         ['VIAL_LIMIT_ERROR', 'VIAL_EXECUTION_LIMIT_ERROR'],
         'coverage declaration, source, or normalized path',
-        'mixed_semantic_normalization_and_lower_source_authority',
+        'semantic_scalar_then_compact_execution_preflight_with_terminal_defense_and_lower_source_authority',
         'no_execution_ir_plan_or_checking_result',
-        'classify_layered_route_and_harden_local_check', '.17.4.5',
-        ['t/1632-vial-architecture-scale-checking-coverage.t'],
+        'retain_layered_preflight_route_authority_and_terminal_defense',
+        '.17.4.5', [
+            't/1632-vial-architecture-scale-checking-coverage.t',
+            't/1691-vial-semantic-cross-max-bins-order.t',
+            't/1713-vial-execution-coverage-cardinality-preflight.t',
+        ],
     ),
     checking_faults => _group(
         'FSM::Support::VIALExecutionContract', 'bind_plan',

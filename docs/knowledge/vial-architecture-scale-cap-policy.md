@@ -17,6 +17,7 @@ answers:
   - "when is the VIAL serialized-plan byte cap enforced?"
   - "when are VIAL model-instance and scalar-state-cell caps enforced?"
   - "when are VIAL scoreboard-instance and aggregate-capacity caps enforced?"
+  - "when are VIAL coverpoint and bin-cross aggregate caps enforced?"
 date: 2026-08-31
 status: current
 tags: [vial, architecture-scale, limits, bounded-failure, route-authority]
@@ -58,6 +59,7 @@ evidence: >-
   t/1634-vial-architecture-scale-checking-random-replay.t;
   t/1711-vial-execution-model-cardinality-preflight.t;
   t/1712-vial-execution-scoreboard-cardinality-preflight.t;
+  t/1713-vial-execution-coverage-cardinality-preflight.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -92,6 +94,7 @@ reverify: >-
   t/1634-vial-architecture-scale-checking-random-replay.t
   t/1711-vial-execution-model-cardinality-preflight.t
   t/1712-vial-execution-scoreboard-cardinality-preflight.t
+  t/1713-vial-execution-coverage-cardinality-preflight.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -157,8 +160,12 @@ unchanged.
 Before model normalization, checking admission counts instances and
 saturating-adds each referenced definition's scalar cells. Both excesses retain
 `/models` and create no model records; accepted terminal counts must equal
-preflight, with the scalar terminal check retained. Other checking groups and
-later layers keep their separate owners and nonclaims. Scoreboard definitions
+preflight, with the scalar terminal check retained. Scoreboard definitions
 retain earlier semantic scalar admission; execution then preflights instance
 count and aggregate admitted capacity before scoreboard normalization, with
 terminal count agreement and the same `/scoreboards` failure surface.
+Coverage preflights coverpoints and a saturating bins-plus-cross-tuples total
+before normalization, then requires the normalized counts to agree while
+retaining terminal caps. Semantic cross `max_bins` and the coverpoint route's
+parser byte cap remain earlier authorities; both local excesses retain
+`/coverage`. Fault and random groups keep their separate owner and nonclaims.

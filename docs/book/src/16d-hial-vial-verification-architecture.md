@@ -3833,6 +3833,15 @@ and both original post-construction caps remain terminal defense. Consequently,
 instance or aggregate excess creates no scoreboard records and changes neither
 the established `/scoreboards` diagnostic nor accepted plan/checking semantics.
 
+Coverage execution admission likewise checks coverpoint count before
+normalization, then derives authored bins plus static cross tuples with
+saturating addition and multiplication from the compact graph. Cross
+`max_bins` remains an earlier semantic authority, and the parser byte cap
+remains the selected coverpoint route authority. Both the adjacent public
+static-domain excess and defensive coverpoint excess stop before coverage
+normalization with the same `/coverage` diagnostics. Accepted normalized counts
+must equal preflight, and both terminal caps remain defense in depth.
+
 Instance 4,097 returns only `VIAL_EXECUTION_LIMIT_ERROR` at `/scoreboards`,
 with semantic/bridge but no downstream identity. Capacity 1,000,001 returns
 parser `VIAL_LIMIT_ERROR` at `/packages/0/scoreboards/0/capacity` with no stage

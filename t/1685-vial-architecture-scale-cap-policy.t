@@ -316,6 +316,22 @@ ok(
     } @{$policy->{groups}{checking_scoreboards}{evidence}}),
     'checking scoreboard policy cites the earlier semantic-capacity witness',
 );
+is(
+    $policy->{groups}{checking_coverage}{current_enforcement},
+    'semantic_scalar_then_compact_execution_preflight_with_terminal_defense_and_lower_source_authority',
+    'checking coverage policy records every layered admission authority',
+);
+is(
+    $policy->{groups}{checking_coverage}{selected_treatment},
+    'retain_layered_preflight_route_authority_and_terminal_defense',
+    'checking coverage policy retains all local and route defenses',
+);
+ok(
+    scalar(grep {
+        $_ eq 't/1713-vial-execution-coverage-cardinality-preflight.t'
+    } @{$policy->{groups}{checking_coverage}{evidence}}),
+    'checking coverage policy cites the exact normalization-seam witness',
+);
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;
 my @catalog_axes;

@@ -277,11 +277,21 @@ sub _build($raw, $qualification_profile = undef) {
                 == $scoreboard_cardinality->{scoreboard_instances}
             && $scoreboard_capacity
                 == $scoreboard_cardinality->{scoreboard_declared_capacity};
-    my $coverage = _normalize_node($ctx, $fixture->{coverage});
+    my $coverage_cardinality =
+        _preflight_coverage_cardinality($fixture->{coverage});
+    my $coverage = _build_coverage($ctx);
+    my $coverage_materialization =
+        _coverage_materialization_count($coverage);
+    _limit('coverpoints', scalar(@{$coverage->{coverpoints}}), '/coverage');
+    _limit('coverage_bins_and_cross_tuples',
+        $coverage_materialization, '/coverage');
+    _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+        'coverage cardinality changed after compact preflight', '/coverage')
+        unless scalar(@{$coverage->{coverpoints}})
+                == $coverage_cardinality->{coverpoints}
+            && $coverage_materialization
+                == $coverage_cardinality->{coverage_bins_and_cross_tuples};
     my $faults = _normalize_node($ctx, $fixture->{faults});
-    my $coverage_materialization = _coverage_materialization_count($fixture->{coverage});
-    _limit('coverpoints', scalar(@{$fixture->{coverage}{coverpoints}}), '/coverage');
-    _limit('coverage_bins_and_cross_tuples', $coverage_materialization, '/coverage');
     _limit('faults', scalar(@{$fixture->{faults}}), '/faults');
 
     my $capability_ledger = _capability_ledger(
@@ -2536,18 +2546,45 @@ sub _build_scoreboards($ctx) {
     return (\@records, $capacity);
 }
 
+sub _preflight_coverage_cardinality($coverage) {
+    my $coverpoints = scalar(@{$coverage->{coverpoints}});
+    _limit('coverpoints', $coverpoints, '/coverage');
+    my $coverage_materialization =
+        _coverage_materialization_count($coverage);
+    _limit('coverage_bins_and_cross_tuples',
+        $coverage_materialization, '/coverage');
+    return {
+        coverpoints => $coverpoints,
+        coverage_bins_and_cross_tuples => $coverage_materialization,
+    };
+}
+
+sub _build_coverage($ctx) {
+    return _normalize_node($ctx, $ctx->{fixture}{coverage});
+}
+
 sub _coverage_materialization_count($coverage) {
     my %bins_by_point = map {
         $_->{semantic_id} => scalar(@{$_->{bins}})
     } @{$coverage->{coverpoints}};
-    my $total = Math::BigInt->new(0);
-    $total->badd(scalar(@{$_->{bins}})) for @{$coverage->{coverpoints}};
+    my $ceiling = $LIMIT{coverage_bins_and_cross_tuples};
+    my $total = 0;
+    $total = _bounded_count_add(
+        $total, scalar(@{$_->{bins}}), $ceiling,
+    ) for @{$coverage->{coverpoints}};
     for my $cross (@{$coverage->{crosses}}) {
-        my $product = Math::BigInt->new(1);
-        $product->bmul($bins_by_point{$_}) for @{$cross->{point_ids}};
-        $total->badd($product);
+        my $product = 1;
+        for my $point_id (@{$cross->{point_ids}}) {
+            _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+                'coverage cross references no normalized coverpoint',
+                '/coverage') unless exists $bins_by_point{$point_id};
+            $product = _bounded_count_multiply(
+                $product, $bins_by_point{$point_id}, $ceiling,
+            );
+        }
+        $total = _bounded_count_add($total, $product, $ceiling);
     }
-    return $total->numify;
+    return $total;
 }
 
 sub _execution_transactions($ctx, $bindings) {
