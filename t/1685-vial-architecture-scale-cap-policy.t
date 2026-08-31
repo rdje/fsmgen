@@ -114,8 +114,8 @@ is(
 );
 is(
     $policy->{groups}{bridge_normalized_collections}{current_enforcement},
-    'configuration_endpoint_and_observation_cardinality_before_normalization_remaining_collections_terminal',
-    'bridge policy records configuration/endpoint/observation preflight and remaining checks',
+    'configuration_endpoint_observation_and_probe_cardinality_before_normalization_remaining_collections_terminal',
+    'bridge policy records configuration/endpoint/observation/probe preflight and remaining checks',
 );
 ok(
     scalar(grep { $_ eq 't/1694-hial-vial-bridge-configuration-cap-order.t' }
@@ -131,6 +131,11 @@ ok(
     scalar(grep { $_ eq 't/1696-hial-vial-bridge-observation-cap-order.t' }
         @{$policy->{groups}{bridge_normalized_collections}{evidence}}),
     'bridge policy cites the exact observation-admission witness',
+);
+ok(
+    scalar(grep { $_ eq 't/1697-hial-vial-bridge-probe-cap-order.t' }
+        @{$policy->{groups}{bridge_normalized_collections}{evidence}}),
+    'bridge policy cites the exact probe-admission witness',
 );
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;

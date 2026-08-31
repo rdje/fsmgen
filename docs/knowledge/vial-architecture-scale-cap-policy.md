@@ -29,6 +29,7 @@ evidence: >-
   t/1694-hial-vial-bridge-configuration-cap-order.t;
   t/1695-hial-vial-bridge-endpoint-cap-order.t;
   t/1696-hial-vial-bridge-observation-cap-order.t;
+  t/1697-hial-vial-bridge-probe-cap-order.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -44,6 +45,7 @@ reverify: >-
   t/1694-hial-vial-bridge-configuration-cap-order.t
   t/1695-hial-vial-bridge-endpoint-cap-order.t
   t/1696-hial-vial-bridge-observation-cap-order.t
+  t/1697-hial-vial-bridge-probe-cap-order.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -100,6 +102,8 @@ collections before any individual endpoint width is validated or its type and
 normalized endpoint record are constructed.
 Observation cardinality is admitted before individual monitor roles or their
 endpoint references are validated and normalized.
+Probe cardinality is admitted before access, source, and backing-storage
+validation and normalized probe construction.
 
 The guarded exact semantic-catalog matrix now closes every selected
 qualification, boundary, excess, and declared cap interaction through the
