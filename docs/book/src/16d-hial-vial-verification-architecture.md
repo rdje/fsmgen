@@ -2498,14 +2498,14 @@ unchanged public binder returns exactly one `VIAL_EXECUTION_LIMIT_ERROR`, phase
 `limit`, message `serialized_plan_bytes exceeds the limit 16777216`, at
 `/plan`, with no partial `VIALExecutionIR` and no partial plan.
 
-That result is reported, never rounded off. The evaluation classifies the
-outcome as `expected_rejection` and records one `VIAL_SCALE_LIMIT_INTERACTION`
-contract discrepancy at `/requested_counts/operations_total`, naming
-`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4` as the repair owner. Read it
-as a statement about the axis rather than about one level: with the plan cap
-authoritative well below the selected qualification count, the total-operation
-axis currently has **no nominal operating point above its 1,024-operation
-gate**, and no total-operation capacity beyond that gate is claimed as proved.
+That result is reported, never rounded off. [Decision `0093`](../../decisions/0093-architecture-scale-caps-are-component-ceilings-with-explicit-route-authority.md)
+keeps every selected number as its declaring component's hard ceiling, not as
+a promise that every route can reach it. Evidence separately names the
+component ceiling, the route's actual earliest deciding authority, and any
+measured reachable boundary. No lower layer is raised and no workload level is
+rewritten merely to reach a later cap. Stage-specific hardening may move a
+known count check before avoidable same-layer materialization, but accepted
+profile bytes and the absence of a total-operation capacity claim stay fixed.
 
 ```perl
 use FSM::VIAL::ArchitectureScaleExecutionGraph;

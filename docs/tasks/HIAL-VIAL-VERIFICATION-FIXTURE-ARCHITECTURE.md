@@ -831,15 +831,15 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Goal: `Implement and prove explicit architecture resource caps and graceful bounded failure.`
   Acceptance: `Apply the selected caps at the earliest authoritative stages with deterministic diagnostics, atomic no-partial-output behavior, same-volume cleanup, boundary/over-bound tests, and unchanged accepted-profile semantics; host exhaustion and external-tool crashes are not accepted as product limit enforcement.`
   Verification: `Clean predecessor b441e7a8b closes measured-family publication before this pivot. Query-first audit of decisions 0056/0059/0072, the immutable calibration closure, current contracts/builders, focused tests, and Git history separates limit interaction, measured route-boundary, and preflight-dominance evidence. The work is partitioned by authoritative stage so policy selection cannot be hidden inside a mechanism repair and accepted measurement levels remain unchanged until .17.4.1 selects the cross-layer contract. No parser, IR, bridge, execution, backend, runtime, support, capacity, budget, or public-API behavior changes in activation.`
-  Commit: `pending activation`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4: activate architecture cap hardening`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.1`
-  Status: `active`
+  Status: `done`
   Goal: `Select the reconciled cross-layer architecture resource-cap and bounded-failure contract from immutable evidence before changing enforcement.`
   Acceptance: `Inventory every selected semantic/parser, bridge, execution, checking, backend-emission, runtime-stream, transcript, result, timeout, publication, and cleanup boundary against its declared contract, actual earliest decider, diagnostic/path, construction order, atomicity, and existing boundary proof. Resolve every unreachable or dominated declared cap under decisions 0056 and 0072; choose deliberate layering, a higher lower-layer limit, or a lower public declaration with explicit compatibility and rollback analysis. Preserve selected workload levels and all support/capacity/performance nonclaims. Record the selection in a decision, Knowledge Map, mdBook, task evidence, and focused executable contract tests without changing product behavior.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Decision 0093 retains component-local ceilings and selected levels while separating earliest route authority and measured boundary. The versioned ArchitectureScaleCapPolicy joins every live catalog axis to one stage owner, validates declared values/profiles/envelopes, and rejects missing-axis or re-levelled mutations in t1685. The mdBook and Knowledge Map carry the same no-capacity/no-behavior-change rule; .17.4.2 remains the next proposed leaf until a clean activation commit.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.1: select layered architecture cap policy`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2`
   Status: `proposed`
   Goal: `Enforce the selected source, parser, and SemanticIR resource caps at their earliest authoritative stages.`
@@ -7603,3 +7603,35 @@ The completed node records above and their named Git commits remain the canonica
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4' -- perl t docs` finds only producer-time discrepancy routing and no activated cross-layer selection/enforcement owner; decisions `0056` and `0072` require the policy choice before mechanism repair.
 - [x] **ADDRESSED (verified)** — `.17.4` is active with `.1` selecting declared-versus-earliest authority and `.2`-`.8` separately owning semantic/parser, bridge, execution, checking, backend, runtime/result, and cross-family atomicity work; the mdBook and bounded resume/index pointers match and no product behavior changes.
 - [x] **NO REGRESSION** — `mdbook test docs/book` passes all chapters; task integrity reports the active `.17.4.1` frontier; Knowledge Map, claim inventory/dispositions, maintained-reference authority, and live containment are current; `[doctrine] all doctrine checks passed`. No parser, IR, bridge, execution, backend, runtime, support, budget, capacity, or API behavior changes.
+
+## Acceptance Checklist (enforced) — `.17.4.1` layered cap-policy selection
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Query-first Knowledge Map review plus
+  decisions `0056`, `0059`, and `0072`, the immutable calibration closure,
+  catalog/contracts, focused tests, and `git log -S
+  'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4' -- perl t docs` show
+  honest dominated/unreachable outcomes but no cross-layer policy authority.
+  Lowering to one content-dependent measured route, raising an earlier layer,
+  or rewriting the selected probe levels would each create a different and
+  unqualified contract rather than reconcile the existing evidence.
+- [x] **ADDRESSED (verified)** — Decision `0093` selects component-local hard
+  ceilings plus distinct earliest-route and measured-boundary truth, with no
+  numeric or selected-level change. The versioned
+  `ArchitectureScaleCapPolicy` joins every live catalog axis to one exact
+  authority/treatment leaf, checks live parser/semantic/bridge/execution/
+  backend declarations and profile/envelope membership, and fails closed for
+  missing-axis and re-levelled mutations. RED t1685 first failed for the absent
+  module and now passes all twelve assertions. The Knowledge Map, task/index,
+  bounded Memory, decision index, and mdBook expose the same selection; the
+  book remains 58 files/53,425 lines and its exact +85-byte transition is
+  authority-owned.
+- [x] **NO REGRESSION** — Guarded cross-layer coverage passes `Files=8,
+  Tests=42`; doctrine-facing coverage passes `Files=10, Tests=119`; all mdBook
+  chapters test. Task integrity holds at four trees/1,031 nodes; Knowledge Map
+  parity holds at 1,156 facts/6,137 questions/6,309 occurrences/136 shards;
+  the claim join closes 1,674 candidates with zero gaps/open owners. All 22
+  live-document surfaces, the maintained-reference authority, exact
+  decision/card/task-evidence transition ratchets, project locality, and zero ceiling
+  increases pass. No parser, IR, bridge, execution, backend, runtime, artifact,
+  support, performance, capacity, or public-API behavior changes.
+  Staged acceptance, resulting-tree, diff, and complete doctrines close the commit gate.

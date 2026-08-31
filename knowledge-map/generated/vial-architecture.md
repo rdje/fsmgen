@@ -1,12 +1,14 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **52** uniquely owned question entries.
+> **2** facts · **58** uniquely owned question entries.
 
 ## Questions → facts
 
+- q="are VIAL declared resource limits public capacity claims?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="are VIAL scale gate and qualification candidates supported capacity?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="does VIAL architecture scale prove whole product big and really big designs?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="does architecture scale cap hardening raise or lower existing limits?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="does the VIAL measurement foundation execute external tools?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how are VIAL execution and checking stages measured?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how are VIAL runtime-stream measurement inputs constructed without tools?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
@@ -37,10 +39,13 @@
 - q="what do the backend emission publication and IPC ceilings mean?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="what does semantic and bridge scale measurement claim?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="what exact workloads prove VIAL backend emission scale?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="what happens when an earlier VIAL layer rejects before a selected limit?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
+- q="what is the VIAL architecture scale cap policy?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="what is the portable SystemVerilog 16 MiB boundary after scheduler repair?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="where are VIAL scale measurement artifacts staged and published?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="where are the VIAL portable backend source byte boundaries?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="where are the authored portable runtime qualification sources and structural oracle?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="where is the machine checked VIAL resource cap inventory?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="where is the revision e4b95dbd execution checking prefix archived?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="where must the VIAL total operation cap be enforced?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="which VIAL scale families are measured first?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
@@ -50,6 +55,7 @@
 - q="why did execution checking matrix resume stop before profile twenty?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="why did portable Verilator runtime reachability expose a phase-order defect?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="why did the portable SystemVerilog scale oracle move to revision 2?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="why does VIAL keep a cap that a canonical route cannot reach?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="why does native UVM reject the portable backend scale ladder?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="why does source-free VIAL scale have no measurement record?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="why does the backend emission matrix isolate every profile in a child?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
@@ -59,6 +65,13 @@
 - q="why must backend emission measurement use a revision 2 publication namespace?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 
 ## Facts
+
+### vial-architecture-scale-cap-policy
+
+_VIAL architecture-scale caps are component ceilings with explicit route authority_
+
+- **date:** 2026-08-31 · **status:** current
+- **source and verification:** [`docs/knowledge/vial-architecture-scale-cap-policy.md`](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 
 ### vial-architecture-scale-proof
 
