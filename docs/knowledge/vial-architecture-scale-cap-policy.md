@@ -17,6 +17,7 @@ evidence: >-
   t/1685-vial-architecture-scale-cap-policy.t;
   perl/FSM/VIAL/Parser.pm;
   t/1687-vial-parser-direct-import-cap-order.t;
+  t/1693-vial-parser-source-byte-cap-order.t;
   perl/FSM/VIAL/SemanticBuilder.pm;
   t/1686-vial-semantic-action-cap-order.t;
   t/1688-vial-semantic-parallel-fiber-cap-order.t;
@@ -29,6 +30,7 @@ evidence: >-
 reverify: >-
   prove -Iperl t/1685-vial-architecture-scale-cap-policy.t
   t/1687-vial-parser-direct-import-cap-order.t
+  t/1693-vial-parser-source-byte-cap-order.t
   t/1686-vial-semantic-action-cap-order.t
   t/1688-vial-semantic-parallel-fiber-cap-order.t
   t/1689-vial-semantic-declaration-cap-order.t
@@ -51,6 +53,11 @@ is rejected at the first overflowing direct edge before recursive catalog
 source parsing. Malformed imported bytes cannot mask the established import
 limit, while accepted depth-first ordering, semantic identities, and the
 per-edge nested-import defense remain unchanged.
+
+Per-source and combined imported-source bytes are admitted before lexing each
+affected source. Malformed token bytes cannot mask either established byte
+limit, while exact-boundary source order and semantic identities remain
+unchanged.
 
 Scenario action accounting now reserves the 65,536-expanded-action ceiling
 before inspecting the next action node. Repeat bodies are checked once, then

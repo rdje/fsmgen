@@ -67,6 +67,11 @@ is(
     'retain_early_preflight_and_per_edge_terminal_defense',
     'parser policy retains both direct preflight and terminal edge defense',
 );
+ok(
+    scalar(grep { $_ eq 't/1693-vial-parser-source-byte-cap-order.t' }
+        @{$policy->{groups}{semantic_parser_admission}{evidence}}),
+    'parser policy cites the exact source-byte admission witness',
+);
 is(
     $policy->{groups}{semantic_action_shape}{current_enforcement},
     'parallel_depth_and_fiber_count_before_join_value_resolution',

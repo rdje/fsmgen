@@ -2508,6 +2508,17 @@ known count check before avoidable same-layer materialization, but accepted
 profile bytes and the absence of a total-operation capacity claim stay fixed;
 source/parser/SemanticIR enforcement hardening is now the active leaf.
 
+### Source-byte cap admission order
+
+The parser measures each source's encoded byte representation before lexing or
+parsing it. It rejects an oversized source immediately, then adds every
+admitted source size to the traversal total and rejects a combined-byte excess
+before lexing that source. Malformed token bytes in either an oversized root or
+the source that crosses the combined limit therefore cannot mask the established
+`VIAL_LIMIT_ERROR`. No partial semantic report or `SemanticIR` escapes, while
+exact per-source and combined-byte boundaries retain their source order,
+projection identity, and report identity.
+
 ### Direct import-cap admission order
 
 The parser enforces the 64-source import ceiling as soon as one parsed source

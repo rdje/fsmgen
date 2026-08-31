@@ -118,6 +118,7 @@ my $GROUPS = {
         '.17.4.2', [
             't/1601-vial-architecture-scale-semantic-catalog.t',
             't/1687-vial-parser-direct-import-cap-order.t',
+            't/1693-vial-parser-source-byte-cap-order.t',
         ],
     ),
     semantic_declaration_cardinality => _group(
