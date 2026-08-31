@@ -483,6 +483,9 @@ sub _build_semantic_model($actor, $layer, $backend_names, $sources, $artifacts,
             ? 'architecture_scale_balanced_portable'
             : 'architecture_scale')
         : $bridge ? 'ahb' : 'plain';
+    _validate_collection_count(
+        'configurations', scalar(@{$actor->{params} || []}),
+    );
     my $domain_name = $bridge ? $bridge->{domain} : 'default';
     my $domain_id = "domain/$domain_name";
     my (%types_by_key, @types, @endpoints);
@@ -1521,9 +1524,14 @@ sub _source_map_entry($fact_path, $field_path, $semantic_id, $sources) {
 sub _validate_limits($manifest) {
     for my $family (qw(sources review_artifacts units domains configurations types endpoints transactions events protocols observations probes backend_bindings unsupported_residue source_map)) {
         my $count = @{$manifest->{$family} || []};
-        _throw('HIAL_VIAL_BRIDGE_LIMIT_ERROR', 'limit', "$family count $count exceeds limit $LIMIT{$family}", "/$family")
-            if $count > $LIMIT{$family};
+        _validate_collection_count($family, $count);
     }
+}
+
+sub _validate_collection_count($family, $count) {
+    _throw('HIAL_VIAL_BRIDGE_LIMIT_ERROR', 'limit',
+        "$family count $count exceeds limit $LIMIT{$family}", "/$family")
+        if $count > $LIMIT{$family};
 }
 
 sub _validate_unique_semantic_ids($manifest) {

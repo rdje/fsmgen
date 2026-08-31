@@ -850,8 +850,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Enforce the selected HIAL-to-VIAL bridge resource caps before avoidable manifest materialization.`
   Acceptance: `Implement only the .17.4.1-selected bridge contract; count bounded normalized families at the earliest reliable producer points, retain terminal defenses, and reject structural or serialized-manifest excess with deterministic diagnostics, no manifest/report, and exact cleanup. Prove every bridge_fanout_v1 boundary without changing accepted manifests or public route semantics.`
-  Verification: `Clean predecessor 3ded0157f8378548be3c56c7ab556af302df9f05 closes every selected source/parser/SemanticIR cap before this pivot. This activation owns only bridge-profile, normalized-collection, and serialized-manifest earliest-authority hardening under decision 0093; execution and later leaves remain proposed, and no product behavior changes before the focused bridge audit.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: activate bridge cap hardening`
+  Verification: `Clean predecessor 3ded0157f8378548be3c56c7ab556af302df9f05 closes every selected source/parser/SemanticIR cap before this pivot. Activation owns only bridge-profile, normalized-collection, and serialized-manifest earliest-authority hardening under decision 0093. The first bridge slice admits the known actor-parameter cardinality before configuration type/value normalization; RED t1694 proves an invalid 4,097th value cannot mask the exact collection diagnostic, returns no manifest/report, and freezes the accepted 256-configuration manifest identity. t1551/t1602/t1685 retain the public bridge, selected matrix, and machine-policy contracts; execution and later leaves remain proposed.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: activate bridge cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit configurations before normalization`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4`
   Status: `proposed`
   Goal: `Enforce the selected execution-graph resource caps before avoidable graph, random, source-map, or plan materialization.`
@@ -7800,3 +7800,22 @@ The completed node records above and their named Git commits remain the canonica
   `Files=10, Tests=119`; all mdBook chapters and
   `[doctrine] all doctrine checks passed` close activation, while full CI/push
   remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.3` configuration admission
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_validate_limits' --oneline --
+  perl/FSM/HIAL/VIALBridge/Builder.pm` identifies `51434a2ae` as the original
+  terminal bridge-limit implementation. `_build_semantic_model` passes every
+  actor parameter through type creation and arbitrary-width value normalization
+  before `_validate_limits` observes the already-known configuration count.
+- [x] **ADDRESSED (verified)** — RED t1694 first reports `Failed 4/13` because
+  the invalid 4,097th value wins at `/actor/params`. The builder now admits raw
+  parameter cardinality before configuration type/value normalization, retains
+  terminal manifest validation, returns no partial output, and preserves the
+  accepted 256-configuration manifest/report identity. Machine policy, fact,
+  claims, and mdBook expose the same boundary.
+- [x] **NO REGRESSION** — Focused bridge/policy/order coverage reports
+  `All tests successful` at `Files=4, Tests=54`; both modules and t1694 are
+  syntax clean, and all mdBook chapters test. Knowledge Map, claim, task,
+  locality, containment, staged acceptance, diff, and complete doctrine gates
+  close the slice; full CI/push remain deferred by policy.

@@ -112,6 +112,16 @@ is(
     'retain_shape_preflight_before_recursive_resolution',
     'type-shape policy retains preflight before recursive resolution',
 );
+is(
+    $policy->{groups}{bridge_normalized_collections}{current_enforcement},
+    'configuration_cardinality_before_normalization_remaining_collections_terminal',
+    'bridge policy records configuration preflight and remaining terminal checks',
+);
+ok(
+    scalar(grep { $_ eq 't/1694-hial-vial-bridge-configuration-cap-order.t' }
+        @{$policy->{groups}{bridge_normalized_collections}{evidence}}),
+    'bridge policy cites the exact configuration-admission witness',
+);
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;
 my @catalog_axes;

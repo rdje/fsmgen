@@ -3061,6 +3061,12 @@ measurement evidence with parser/semantic, bridge, execution/checking, backend,
 and runtime/result authorities before any cap change; later leaves own those
 layers separately, while decision `0072` forbids hiding an unreachable declared cap by rewriting selected measurement levels.
 
+Bridge normalization now admits the raw actor parameter count against the
+4,096-configuration ceiling before constructing configuration values or their
+types. Thus an invalid 4,097th value cannot mask the stable
+`HIAL_VIAL_BRIDGE_LIMIT_ERROR` at `/configurations`; accepted manifests and the
+terminal whole-manifest limit pass remain byte-identical.
+
 The binding ladder is the first axis authored under that rule. Its three levels
 above the gate generate 1,933,429, 3,866,741, and 3,866,800 direct-IAL1 bytes —
 one genuine `(event bridge_event_XXXXXXXX …)` record per binding above the fixed
