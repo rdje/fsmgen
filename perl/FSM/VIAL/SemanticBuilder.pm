@@ -113,24 +113,29 @@ sub _declare_packages {
         my @section_names = qw(imports types transactions models scoreboards fixtures);
         my %sections;
         for my $offset (0 .. $#section_names) {
+            my $section = $section_names[$offset];
+            my $section_path = "/packages/$package_index/$section";
             my $node = $package_items->[$offset + 2];
-            my $items = _form($node, $section_names[$offset], 1, undef, "/packages/$package_index/$section_names[$offset]");
-            $sections{$section_names[$offset]} = { node => $node, items => [@{$items}[1 .. $#{$items}]] };
-        }
-        for my $section (qw(types transactions models scoreboards)) {
-            if (@{$sections{$section}{items}} > MAX_DECLARATIONS) {
+            my $items = _form($node, $section, 1, undef, $section_path);
+            $sections{$section} = {
+                node => $node,
+                items => [@{$items}[1 .. $#{$items}]],
+            };
+            if ($section =~ /\A(?:types|transactions|models|scoreboards)\z/
+                && @{$sections{$section}{items}} > MAX_DECLARATIONS) {
                 _fail(
                     'VIAL_LIMIT_ERROR', 'limit',
                     "package section '$section' exceeds 4096 declarations",
-                    $sections{$section}{node}{span}, "/packages/$package_index/$section",
+                    $node->{span}, $section_path,
                 );
             }
-        }
-        if (@{$sections{fixtures}{items}} > MAX_FIXTURES) {
-            _fail(
-                'VIAL_LIMIT_ERROR', 'limit', 'package exceeds 1024 fixtures',
-                $sections{fixtures}{node}{span}, "/packages/$package_index/fixtures",
-            );
+            if ($section eq 'fixtures'
+                && @{$sections{$section}{items}} > MAX_FIXTURES) {
+                _fail(
+                    'VIAL_LIMIT_ERROR', 'limit', 'package exceeds 1024 fixtures',
+                    $node->{span}, $section_path,
+                );
+            }
         }
         if (!@{$sections{fixtures}{items}}) {
             _fail(

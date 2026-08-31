@@ -77,6 +77,16 @@ is(
     'retain_shape_preflight_before_semantic_resolution',
     'action-shape policy retains structural preflight before semantic resolution',
 );
+is(
+    $policy->{groups}{semantic_declaration_cardinality}{current_enforcement},
+    'per_section_before_later_section_shape_parsing',
+    'declaration policy records per-section admission before later shapes',
+);
+is(
+    $policy->{groups}{semantic_declaration_cardinality}{selected_treatment},
+    'retain_per_section_preflight_before_dependent_parsing',
+    'declaration policy retains per-section preflight before dependent parsing',
+);
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;
 my @catalog_axes;

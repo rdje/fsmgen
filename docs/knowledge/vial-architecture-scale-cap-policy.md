@@ -20,6 +20,7 @@ evidence: >-
   perl/FSM/VIAL/SemanticBuilder.pm;
   t/1686-vial-semantic-action-cap-order.t;
   t/1688-vial-semantic-parallel-fiber-cap-order.t;
+  t/1689-vial-semantic-declaration-cap-order.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -27,6 +28,7 @@ reverify: >-
   t/1687-vial-parser-direct-import-cap-order.t
   t/1686-vial-semantic-action-cap-order.t
   t/1688-vial-semantic-parallel-fiber-cap-order.t
+  t/1689-vial-semantic-declaration-cap-order.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -54,3 +56,7 @@ report; exact-boundary accepted behavior is unchanged.
 Parallel depth and fiber count are admitted before join-value resolution.
 Known fiber excess therefore retains its action-level limit diagnostic even
 when the join value is invalid; accepted boundary identities are unchanged.
+
+Each declaration family is admitted immediately after its section shape is
+parsed. Known excess therefore wins before malformed later package sections,
+with unchanged exact-boundary projection and report identities.

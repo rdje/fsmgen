@@ -2556,6 +2556,15 @@ cannot mask an already-known fiber excess. The result remains one
 the parallel action path, with no partial semantic report or `SemanticIR`.
 Exact-boundary inputs retain their projection, report, and execution meaning.
 
+### Declaration-section cap admission order
+
+The semantic builder admits each declaration family immediately after parsing
+that section's shape and before parsing any later package section. A malformed
+later section cannot mask a known declaration excess. The established
+`VIAL_LIMIT_ERROR` names the over-limit family and its package path, exposes no
+partial semantic report or `SemanticIR`, and leaves exact-boundary projection
+and report identities unchanged.
+
 ```perl
 use FSM::VIAL::ArchitectureScaleExecutionGraph;
 

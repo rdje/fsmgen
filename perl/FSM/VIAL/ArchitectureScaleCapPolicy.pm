@@ -122,9 +122,14 @@ my $GROUPS = {
     ),
     semantic_declaration_cardinality => _group(
         'FSM::VIAL::SemanticBuilder', 'parse_validate', ['VIAL_LIMIT_ERROR'],
-        'package declaration collection', 'before_dependent_record_build',
-        'no_semantic_ir_or_artifact', 'verify_existing_early_boundary',
-        '.17.4.2', ['t/1601-vial-architecture-scale-semantic-catalog.t'],
+        'package declaration collection',
+        'per_section_before_later_section_shape_parsing',
+        'no_semantic_ir_or_artifact',
+        'retain_per_section_preflight_before_dependent_parsing',
+        '.17.4.2', [
+            't/1601-vial-architecture-scale-semantic-catalog.t',
+            't/1689-vial-semantic-declaration-cap-order.t',
+        ],
     ),
     semantic_action_cardinality => _group(
         'FSM::VIAL::SemanticBuilder', 'parse_validate', ['VIAL_LIMIT_ERROR'],
