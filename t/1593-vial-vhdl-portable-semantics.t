@@ -17,6 +17,7 @@ use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::VIAL::ArtifactTransaction;
 use FSM::VIAL::Backend::ResultProducer;
 use FSM::VIAL::Backend::VHDLPortableGHDL;
+use FSM::VIAL::Backend::VHDLResultSchema;
 use FSM::VIAL::Backend::VHDLPortableStaticValidator;
 use FSM::VIAL::Backend::VHDLPortableTraceValidator;
 use FSM::VIAL::Parser;
@@ -43,6 +44,32 @@ subtest 'checked lifecycle result authority is derived from the canonical plan' 
     is($authority->{expected_domain_id},
         $execution->{domains}[0]{domain_id},
         'checked domain identity equals the selected plan domain');
+    is_deeply($authority->{expected_diagnostic_codes}, [map {
+            $_->{name} eq 'success'
+                ? 'VIAL_EXPECT_SUCCESS' : 'VIAL_EXPECT_ERROR'
+        } @{$execution->{scenarios}}],
+        'checked diagnostic codes equal the selected scenario projection');
+    my @terminal_rank = map {
+        my $scenario = $_;
+        my $scenario_id = $scenario->{scenario_id};
+        my @parallel = grep {
+            $_->{scenario_id} eq $scenario_id && $_->{kind} eq 'parallel'
+        } @{$execution->{operation_graph}{operations}};
+        my @root_await = grep {
+            $_->{scenario_id} eq $scenario_id && $_->{kind} eq 'await'
+                && $_->{fiber_id} eq $scenario->{root_fiber_id}
+        } @{$execution->{operation_graph}{operations}};
+        @parallel == 1 ? $parallel[0]{static_rank}
+            : @root_await ? $root_await[-1]{static_rank} : undef;
+    } @{$execution->{scenarios}};
+    is_deeply(\@terminal_rank, [3, 3],
+        'canonical plan independently fixes both diagnostic static ranks');
+    my $contract = FSM::VIAL::Backend::VHDLResultSchema
+        ->runtime_result_contract;
+    is_deeply([map { $contract->{$_} } qw(
+            diagnostic_local_index diagnostic_phase_rank diagnostic_static_rank
+        )], [0, 3, 3],
+        'result contract matches the independently derived diagnostic time ranks');
     is($authority->{expected_random_decisions_sha256},
         sha256_hex($json->encode($execution->{randomness}{decisions})),
         'checked decision digest covers the exact canonical plan projection');

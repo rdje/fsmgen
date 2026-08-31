@@ -81,6 +81,18 @@ subtest 'result plan-value authorities are sealed at admission' => sub {
             $domain_request->{storage_context}{staging_identity},
         ), 'malformed domain authority creates no lifecycle root');
 
+    my $diagnostic_request = fake_request('malformed-result-diagnostic-authority');
+    $diagnostic_request->{validation}{expected_diagnostic_codes} =
+        ['VIAL_EXPECT_SUCCESS', "VIAL_BAD\n"];
+    my $diagnostic = lifecycle_begin($diagnostic_request);
+    ok(!$diagnostic->{ok}, 'malformed diagnostic authority rejects');
+    is($diagnostic->{diagnostics}[0]{path},
+        '/validation/expected_diagnostic_codes/1',
+        'malformed diagnostic authority has the exact path');
+    ok(!-e repo_path(
+            $diagnostic_request->{storage_context}{staging_identity},
+        ), 'malformed diagnostic authority creates no lifecycle root');
+
     my $fixture_request = fake_request('foreign-result-fixture-authority');
     $fixture_request->{validation}{expected_fixture_id} = 'fixture/foreign';
     my $fixture = lifecycle_begin($fixture_request);

@@ -79,6 +79,9 @@ my $RUNTIME_RESULT_CONTRACT = {
     scoreboard_capacity => 4,
     diagnostic_record_keys => [qw(code logical_time outcome severity)],
     diagnostic_time_keys => [qw(cycle local_index phase_rank static_rank)],
+    diagnostic_local_index => 0,
+    diagnostic_phase_rank => 3,
+    diagnostic_static_rank => 3,
 };
 
 sub parity_schema($class) {

@@ -1,13 +1,14 @@
 # Knowledge Map: `vial-portable`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **25** uniquely owned question entries.
+> **2** facts · **26** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="does Verilator success prove full SystemVerilog or UVM support?" · facts=[vial-portable-systemverilog-backend-v1](../../docs/knowledge/vial-portable-systemverilog-backend-v1.md)
 - q="does portable VHDL runtime measurement mean IASIM execution?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)
 - q="does the portable Verilator backend preserve X and Z?" · facts=[vial-portable-systemverilog-backend-v1](../../docs/knowledge/vial-portable-systemverilog-backend-v1.md)
+- q="how are GHDL passing diagnostic codes and logical times bound to VHDL emitter behavior?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)
 - q="how are GHDL result fixture and random decisions bound to plan authority?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)
 - q="how are GHDL scenario expectation diagnostic and cancelled fiber identities admitted?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)
 - q="how are VIAL verification probes accessed in SystemVerilog?" · facts=[vial-portable-systemverilog-backend-v1](../../docs/knowledge/vial-portable-systemverilog-backend-v1.md)

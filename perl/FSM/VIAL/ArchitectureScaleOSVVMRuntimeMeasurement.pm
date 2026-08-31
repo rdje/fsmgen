@@ -551,6 +551,10 @@ sub _lifecycle_request($raw, $route_authority, $instantiated) {
             expected_record_counts => _clone(
                 $raw->{materialization}{trace_projection}{record_families},
             ),
+            expected_diagnostic_codes => [map {
+                $_->{name} eq 'success'
+                    ? 'VIAL_EXPECT_SUCCESS' : 'VIAL_EXPECT_ERROR'
+            } @{$execution->{scenarios}}],
             expected_domain_id => $execution->{domains}[0]{domain_id},
             expected_fixture_id => $execution->{fixture}{fixture_id},
             expected_plan_id => $execution->{plan_id},

@@ -19,6 +19,7 @@ my $json = JSON::PP->new->canonical(1);
 my $expected_plan_id = 'plan/' . ('a' x 64);
 my $expected_fixture_id = 'fixture/reference';
 my $expected_domain_id = 'domain/main';
+my @expected_diagnostic_code = qw(VIAL_EXPECT_SUCCESS VIAL_EXPECT_ERROR);
 my @scenario_id = qw(fixture::scenario::one fixture::scenario::two);
 my @expected_run_id = map { "run/$expected_plan_id/$_" } @scenario_id;
 my $manifest = {map { $_ => undef }
@@ -68,11 +69,10 @@ $manifest->{faults} = [{
     fault_id => 'fault/unsupported_size',
     kind => 'substitution',
 }];
-$manifest->{diagnostics} = [];
 $manifest->{metrics} = {
     coverage_not_stalled => 2,
     coverage_stalled => 0,
-    diagnostic_records => 0,
+    diagnostic_records => 2,
     fault_applications => 0,
     scoreboard_comparisons => 0,
     scoreboard_mismatches => 0,
@@ -101,6 +101,16 @@ $manifest->{scenario_results} = [map {
         diagnostic_ids => [],
         cancelled_fiber_ids => [],
         logical_cycle_count => 1,
+    }
+} 0 .. $#scenario_id];
+$manifest->{diagnostics} = [map {
+    {
+        code => $expected_diagnostic_code[$_],
+        logical_time => {
+            cycle => $manifest->{scenario_results}[$_]{end_time}{cycle},
+            local_index => 0, phase_rank => 3, static_rank => 3,
+        },
+        outcome => 'pass', severity => 'info',
     }
 } 0 .. $#scenario_id];
 $manifest->{parity_projection} = {
@@ -303,6 +313,9 @@ subtest 'VHDL parity vocabulary has one defensive schema authority' => sub {
         'runtime-result schema authority is exact');
     is($contract->{backend_profile}{id}, 'vhdl_portable_ghdl',
         'runtime backend-profile authority is exact');
+    is_deeply([map { $contract->{$_} } qw(
+            diagnostic_local_index diagnostic_phase_rank diagnostic_static_rank
+        )], [0, 3, 3], 'runtime diagnostic-time ranks are exact');
     delete $contract->{backend_profile}{id};
     is(FSM::VIAL::Backend::VHDLResultSchema
             ->runtime_result_contract->{backend_profile}{id},
@@ -574,6 +587,46 @@ subtest 'top-level result values and aggregate totals are closed' => sub {
         '/result_produced/metrics/diagnostic_records',
         'diagnostic metric must equal collection cardinality');
 
+    my $missing_diagnostic = clone($manifest);
+    pop @{$missing_diagnostic->{diagnostics}};
+    $missing_diagnostic->{metrics}{diagnostic_records} = 1;
+    is(top_level_failure($missing_diagnostic)->{path},
+        '/result_produced/diagnostics',
+        'missing emitted diagnostic rejects at its collection path');
+
+    my $extra_diagnostic = clone($manifest);
+    push @{$extra_diagnostic->{diagnostics}},
+        clone($extra_diagnostic->{diagnostics}[0]);
+    $extra_diagnostic->{metrics}{diagnostic_records} = 3;
+    is(top_level_failure($extra_diagnostic)->{path},
+        '/result_produced/diagnostics',
+        'extra emitted diagnostic rejects at its collection path');
+
+    my $reordered_diagnostic = clone($manifest);
+    @{$reordered_diagnostic->{diagnostics}} =
+        reverse @{$reordered_diagnostic->{diagnostics}};
+    is(top_level_failure($reordered_diagnostic)->{path},
+        '/result_produced/diagnostics/0/code',
+        'reordered diagnostic rejects at its first displaced code');
+
+    my $foreign_diagnostic = clone($manifest);
+    $foreign_diagnostic->{diagnostics}[0]{code} = 'VIAL_FOREIGN';
+    is(top_level_failure($foreign_diagnostic)->{path},
+        '/result_produced/diagnostics/0/code',
+        'foreign safe diagnostic code rejects at its exact path');
+
+    for my $case (
+        [cycle => 1], [local_index => 1],
+        [phase_rank => 2], [static_rank => 4],
+    ) {
+        my ($field, $value) = @$case;
+        my $mistimed = clone($manifest);
+        $mistimed->{diagnostics}[0]{logical_time}{$field} = $value;
+        is(top_level_failure($mistimed)->{path},
+            "/result_produced/diagnostics/0/logical_time/$field",
+            "mistimed diagnostic $field rejects at its exact path");
+    }
+
     my $fault_total = clone($manifest);
     $fault_total->{faults}[0]{applications} = 1;
     is(top_level_failure($fault_total)->{path},
@@ -775,7 +828,7 @@ sub validate_outcome_values {
 sub validate_top_level_values {
     FSM::VIAL::Backend::GHDLLifecycle::_validate_runtime_result_top_level_values(
         $_[0], $expected_record_counts, $expected_fixture_id,
-        $expected_random_decisions_sha256,
+        $expected_random_decisions_sha256, \@expected_diagnostic_code,
     );
 }
 

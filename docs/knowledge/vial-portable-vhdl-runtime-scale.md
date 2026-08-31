@@ -14,6 +14,7 @@ answers:
   - "how are GHDL result fixture and random decisions bound to plan authority?"
   - "how are GHDL scenario expectation diagnostic and cancelled fiber identities admitted?"
   - "how is the GHDL scenario logical-time domain bound to plan authority?"
+  - "how are GHDL passing diagnostic codes and logical times bound to VHDL emitter behavior?"
   - "how do fake GHDL lifecycle providers avoid host executable admission?"
 date: 2026-08-31
 status: current
@@ -147,6 +148,8 @@ logical-time domain, and SHA-256 of canonical decisions; fixed authority is
 independently plan-derived, dynamic callers derive from ExecutionIR, and result
 mismatches reject before persistence. Both scenario timestamp domains must equal
 that sealed domain, so even an internally consistent foreign pair rejects.
+Passing diagnostics are ordered `VIAL_EXPECT_SUCCESS` or
+`VIAL_EXPECT_ERROR` at each scenario end cycle with ranks `0/3/3`; mismatches reject.
 Portable VHDL emits no scenario-owned expectation, diagnostic, or cancelled-fiber
 records, so each corresponding identity array must be exactly empty; this
 VHDL-specific admission does not narrow richer trace-backed ResultProducer

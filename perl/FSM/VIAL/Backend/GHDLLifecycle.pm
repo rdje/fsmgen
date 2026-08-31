@@ -76,8 +76,8 @@ my @OSVVM_REPORT_NAMES = qw(
     AlertLogTop_sb_slv.yml
 );
 my @VALIDATION_KEYS = qw(
-    expected_record_counts expected_domain_id expected_fixture_id expected_plan_id
-    expected_random_decisions_sha256 expected_run_ids
+    expected_record_counts expected_diagnostic_codes expected_domain_id
+    expected_fixture_id expected_plan_id expected_random_decisions_sha256 expected_run_ids
     expected_observation_catalog run_repetitions
 );
 my @STORAGE_KEYS = qw(
@@ -722,6 +722,21 @@ sub _validated_validation($raw) {
         '/validation/expected_domain_id')
         unless _runtime_result_identity($raw->{expected_domain_id});
     _throw('VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
+        'GHDL expected diagnostic codes must match the scenario count',
+        '/validation/expected_diagnostic_codes')
+        unless ref($raw->{expected_diagnostic_codes}) eq 'ARRAY'
+            && @{$raw->{expected_diagnostic_codes}}
+                == @{$raw->{expected_run_ids}};
+    for my $index (0 .. $#{$raw->{expected_diagnostic_codes}}) {
+        _throw('VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
+            'GHDL expected diagnostic code is outside the emitted vocabulary',
+            "/validation/expected_diagnostic_codes/$index")
+            unless defined($raw->{expected_diagnostic_codes}[$index])
+                && !ref($raw->{expected_diagnostic_codes}[$index])
+                && $raw->{expected_diagnostic_codes}[$index]
+                    =~ /\AVIAL_EXPECT_(?:SUCCESS|ERROR)\z/;
+    }
+    _throw('VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
         'GHDL expected fixture identity is not one bounded safe identity',
         '/validation/expected_fixture_id')
         unless _runtime_result_identity($raw->{expected_fixture_id});
@@ -1164,6 +1179,7 @@ sub _phase_result_produced($session) {
         $decoded, $session->{validation}{expected_record_counts},
         $session->{validation}{expected_fixture_id},
         $session->{validation}{expected_random_decisions_sha256},
+        $session->{validation}{expected_diagnostic_codes},
     );
     push @{$session->{objects}}, _write_object(
         $session, 'normalized_result', _canonical($decoded) . "\n", 0,
@@ -1383,7 +1399,7 @@ sub _require_runtime_result_keys($value, $expected, $path, $label) {
 
 sub _validate_runtime_result_top_level_values(
     $decoded, $expected_counts, $expected_fixture_id,
-    $expected_random_decisions_sha256,
+    $expected_random_decisions_sha256, $expected_diagnostic_codes,
 ) {
     die "GHDL runtime expected record counts are invalid\n"
         unless ref($expected_counts) eq 'HASH' && !blessed($expected_counts)
@@ -1477,8 +1493,9 @@ sub _validate_runtime_result_top_level_values(
     my $coverage = _validate_runtime_result_coverage($decoded, $contract);
     my $fault = _validate_runtime_result_fault($decoded, $contract);
     my $scoreboard = _validate_runtime_result_scoreboard($decoded, $contract);
-    my $diagnostics =
-        _validate_runtime_result_diagnostics($decoded, $contract);
+    my $diagnostics = _validate_runtime_result_diagnostics(
+        $decoded, $contract, $expected_diagnostic_codes,
+    );
 
     _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
         'GHDL runtime coverage metrics differ from their coverage record',
@@ -1605,8 +1622,15 @@ sub _validate_runtime_result_scoreboard($decoded, $contract) {
     return $record;
 }
 
-sub _validate_runtime_result_diagnostics($decoded, $contract) {
+sub _validate_runtime_result_diagnostics(
+    $decoded, $contract, $expected_diagnostic_codes,
+) {
     my $diagnostics = $decoded->{diagnostics};
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime diagnostic count differs from emitted scenario authority',
+        '/result_produced/diagnostics')
+        unless @$diagnostics == @$expected_diagnostic_codes
+            && @$diagnostics == @{$decoded->{scenario_results}};
     for my $index (0 .. $#$diagnostics) {
         my $path = "/result_produced/diagnostics/$index";
         my $diagnostic = $diagnostics->[$index];
@@ -1619,8 +1643,10 @@ sub _validate_runtime_result_diagnostics($decoded, $contract) {
             "$path/logical_time", 'diagnostic logical time',
         );
         _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
-            'GHDL runtime diagnostic code is unsafe', "$path/code")
-            unless _runtime_result_identity($diagnostic->{code});
+            'GHDL runtime diagnostic code differs from emitted scenario authority',
+            "$path/code")
+            unless _runtime_result_identity($diagnostic->{code})
+                && $diagnostic->{code} eq $expected_diagnostic_codes->[$index];
         for my $field (@{$contract->{diagnostic_time_keys}}) {
             _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
                 'GHDL runtime diagnostic time value is not a nonnegative integer',
@@ -1633,6 +1659,19 @@ sub _validate_runtime_result_diagnostics($decoded, $contract) {
             'GHDL runtime diagnostic phase rank is unsupported',
             "$path/logical_time/phase_rank")
             if $diagnostic->{logical_time}{phase_rank} > 3;
+        my $expected_time = {
+            cycle => $decoded->{scenario_results}[$index]{end_time}{cycle},
+            local_index => $contract->{diagnostic_local_index},
+            phase_rank => $contract->{diagnostic_phase_rank},
+            static_rank => $contract->{diagnostic_static_rank},
+        };
+        for my $field (@{$contract->{diagnostic_time_keys}}) {
+            _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+                'GHDL runtime diagnostic time differs from scenario authority',
+                "$path/logical_time/$field")
+                unless $diagnostic->{logical_time}{$field}
+                    == $expected_time->{$field};
+        }
         _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
             'GHDL runtime passing diagnostic has a foreign outcome or severity',
             $path)
