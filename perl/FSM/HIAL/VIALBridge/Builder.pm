@@ -666,6 +666,7 @@ sub _ensure_logic_type($by_key, $types, $width, $signed) {
         unless defined($width) && !ref($width) && "$width" =~ /\A[1-9][0-9]*\z/;
     my $key = ($signed ? 's' : 'u') . (0 + $width);
     return $by_key->{$key} if $by_key->{$key};
+    _validate_collection_count('types', scalar(@$types) + 1);
     my $name = 'logic_' . $key;
     my $id = "type/$name";
     push @$types, {

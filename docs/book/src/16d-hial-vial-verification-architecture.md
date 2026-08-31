@@ -3073,6 +3073,8 @@ Observation cardinality is also admitted before monitor roles and referenced
 endpoints are validated into normalized records.
 Probe cardinality is admitted before per-probe access, source, and backing-
 storage validation or normalized probe construction.
+Each distinct derived type is admitted immediately before its normalized
+record is created and before its dependent configuration value is normalized.
 
 The binding ladder is the first axis authored under that rule. Its three levels
 above the gate generate 1,933,429, 3,866,741, and 3,866,800 direct-IAL1 bytes —
