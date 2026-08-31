@@ -1527,6 +1527,8 @@ sub _register_type($ctx, $shape, $semantic_id = undef) {
     my $canonical = _canonical_json($shape);
     my $entry = $ctx->{type_by_shape}{$canonical};
     if (!$entry) {
+        _limit('execution_types', scalar(@{$ctx->{type_entries}}) + 1,
+            '/type_table');
         my $type_id = 'execution-type/' . sha256_hex($canonical);
         $entry = {
             type_id => $type_id,

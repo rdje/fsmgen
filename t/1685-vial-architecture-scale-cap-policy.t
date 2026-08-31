@@ -211,6 +211,21 @@ ok(
     'execution operation policy cites the per-scenario admission witness',
 );
 is(
+    $policy->{groups}{execution_route_collections}{current_enforcement},
+    'type_preinsert_and_terminal_bindings_and_maps_layered_terminal',
+    'execution route policy records type pre-insertion and layered terminal checks',
+);
+is(
+    $policy->{groups}{execution_route_collections}{selected_treatment},
+    'retain_type_defenses_and_classify_remaining_layered_routes',
+    'execution route policy retains type defenses while remaining routes are classified',
+);
+ok(
+    scalar(grep { $_ eq 't/1707-vial-execution-type-cap-order.t' }
+        @{$policy->{groups}{execution_route_collections}{evidence}}),
+    'execution route policy cites the exact type-table insertion witness',
+);
+is(
     $policy->{groups}{execution_fiber_cardinality}{current_enforcement},
     'compact_preflight_before_execution_context_and_terminal_defense',
     'execution fiber policy records compact preflight plus terminal defense',

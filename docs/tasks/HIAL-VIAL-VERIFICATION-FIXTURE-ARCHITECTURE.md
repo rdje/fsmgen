@@ -850,8 +850,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Enforce the selected execution-graph resource caps before avoidable graph, random, source-map, or plan materialization.`
   Acceptance: `Implement only the .17.4.1-selected execution contract; preserve the existing compact total-operation and serialized-plan preflights, repair remaining late checks, and reconcile binding/type/map limits with lower bridge and byte authorities. Prove deterministic diagnostics, no partial ExecutionIR/plan/replay, unchanged accepted plans, and guarded execution_graph_v1 boundaries.`
-  Verification: `Segment fe8d16354a8ab20cfc88625d6eb7fc53fedd68a4a06cb4317db740c03d550a7e retains .17.4.3. Decision 0093 confines this node to execution hardening. t1624/t1625 preflight compact fibers; t1705 admits unit/domain profile shape before context. t1706 now admits declared and independently derived per-scenario operations before the existing saturating total preflight. All retain terminal defense, accepted identities, layered route authority, and atomic failure. Later layers, semantics, levels, and claims are unchanged.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: activate execution cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: preflight execution fiber cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: preflight execution profile cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: preflight per-scenario operation cardinality`
+  Verification: `Segment fe8d16354a8ab20cfc88625d6eb7fc53fedd68a4a06cb4317db740c03d550a7e retains .17.4.3; decision 0093 confines execution hardening. t1624/t1625 preflight fibers, t1705 profile shape, t1706 operations, and t1707 a novel type before clone/cache/insertion while duplicates remain reusable at the ceiling. Terminal defenses, accepted identities, layered route authority, and atomic failure remain. Binding/map/random/plan checks are next.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: activate execution cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: preflight execution fiber cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: preflight execution profile cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: preflight per-scenario operation cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: admit execution type before insertion`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5`
   Status: `proposed`
   Goal: `Enforce the selected checking-state resource caps before avoidable state-service materialization.`
@@ -7791,11 +7791,11 @@ The completed node records above and their named Git commits remain the canonica
 - [x] **ADDRESSED (verified)** — RED t1624/t1625 entered `_index_bridge` three times per excess; GREEN `Files=3, Tests=53` preflights both measures, retains diagnostics/accepted and later-plan-cap identities, and keeps terminal checks.
 - [x] **NO REGRESSION** — The focused set reports `Files=7, Tests=75`; syntax, every mdBook chapter, Knowledge Map (1,156 facts/6,139 questions), claims, task, locality, containment, staged-result, diff, ceiling, and doctrine gates pass. Full CI/push remain deferred.
 
-## Acceptance Checklist (enforced) — `.17.4.4` per-scenario operation preflight
+## Acceptance Checklist (enforced) — `.17.4.4` execution type-table admission
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — operation preflight:
-  `git log -S` identifies `44dbecd1a`'s post-emission per-scenario check and `14c619367`'s total preflight. RED t1706 proved both declared and compact-derived excess were misclassified as internal invariant failures before bridge indexing.
-- [x] **ADDRESSED (verified)** — operation preflight:
-  The compact pass now admits declared count, derived count, then aggregate total. GREEN t1706 returns the established per-scenario resource diagnostic before hostile action inspection or bridge indexing, with no ExecutionIR/plan; terminal checks remain.
-- [x] **NO REGRESSION** — operation preflight:
-  `All tests successful`: operation boundaries report `Files=3, Tests=17`, and execution foundation/policy/precedence report `Files=4, Tests=72`. Syntax and every mdBook chapter pass; Knowledge Map verifies 1,156 facts/6,142 questions, claims close 1,682 candidates, and rationale/reference gates pass. Full CI/push remain deferred.
+- [x] **ROOT CAUSE (WHY + WHERE)** — type-table admission:
+  `git log -S` identifies `44dbecd1a` as the type-limit origin. RED t1707 proved a novel one-over shape was cloned, cached, and appended before rejection, leaving 65,537 entries and two cache keys.
+- [x] **ADDRESSED (verified)** — type-table admission:
+  A novel canonical shape now admits its prospective count before clone/cache/insertion; the post-insert check remains terminal defense. GREEN t1707 pins exact-boundary insertion, full-table duplicate reuse, exact diagnostic, and atomic one-over state.
+- [x] **NO REGRESSION** — type-table admission:
+  `All tests successful` at `Files=5, Tests=81`; both modules are syntax clean. mdBook, Knowledge Map, claims, task, locality, containment, staged-result, diff, ceiling, and doctrine gates close the slice; full CI/push remain deferred.

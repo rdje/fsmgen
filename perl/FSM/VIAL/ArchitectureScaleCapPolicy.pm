@@ -268,13 +268,14 @@ my $GROUPS = {
         'FSM::Support::VIALExecutionContract', 'bind_plan',
         ['VIAL_EXECUTION_LIMIT_ERROR', 'HIAL_VIAL_BRIDGE_LIMIT_ERROR'],
         'binding, type-table, source-map, bridge, or plan path',
-        'mixed_terminal_and_lower_layer_authority',
+        'type_preinsert_and_terminal_bindings_and_maps_layered_terminal',
         'no_execution_ir_plan_or_replay',
-        'classify_layered_route_and_harden_local_check', '.17.4.4',
+        'retain_type_defenses_and_classify_remaining_layered_routes', '.17.4.4',
         [
             't/1607-vial-architecture-scale-execution-source-maps.t',
             't/1627-vial-architecture-scale-execution-type-qualification.t',
             't/1628-vial-architecture-scale-execution-binding-limits.t',
+            't/1707-vial-execution-type-cap-order.t',
         ],
     ),
     execution_random_attempts => _group(

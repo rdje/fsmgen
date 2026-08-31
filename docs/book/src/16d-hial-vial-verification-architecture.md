@@ -3147,6 +3147,21 @@ In particular, the legal total-fiber boundary still reaches and is rejected by
 the later serialized-plan authority; moving the fiber check earlier does not
 turn the component ceiling into a route-capacity claim.
 
+### Execution type-table admission order
+
+Execution types are deduplicated by their canonical semantic shape. For a
+novel shape, the execution builder now admits the prospective table count
+before cloning the shape, caching its entry, or appending it to the table. The
+existing post-insertion check remains terminal defense. A shape already in the
+table remains reusable when the table is full and continues to accumulate its
+semantic identities without consuming another slot.
+
+The execution-type ceiling remains a component-local defense, not a canonical
+route capacity claim. Parser declarations and the serialized bridge manifest
+remain the earlier normal-route authorities documented below. The local check
+protects internally constructed inputs, preserves the exact execution limit
+diagnostic, and leaves accepted plan identities unchanged.
+
 The binding ladder is the first axis authored under that rule. Its three levels
 above the gate generate 1,933,429, 3,866,741, and 3,866,800 direct-IAL1 bytes —
 one genuine `(event bridge_event_XXXXXXXX …)` record per binding above the fixed

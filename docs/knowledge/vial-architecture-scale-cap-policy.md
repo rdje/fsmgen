@@ -10,7 +10,7 @@ answers:
   - "where is the machine checked VIAL resource cap inventory?"
   - "when are VIAL execution fiber caps enforced?"
   - "how are total and simultaneous VIAL fibers counted before materialization?"
-  - "when is VIAL execution profile cardinality enforced?"
+  - "when are VIAL execution profile and type cardinality enforced?"
   - "does VIAL recheck selected unit and domain cardinality after SemanticIR and bridge validation?"
   - "when is the VIAL execution operations-per-scenario cap enforced?"
 date: 2026-08-31
@@ -47,6 +47,7 @@ evidence: >-
   t/1625-vial-architecture-scale-execution-total-fiber-limit.t;
   t/1705-vial-execution-selected-domain-cap-order.t;
   t/1706-vial-execution-operation-cardinality-cap-order.t;
+  t/1707-vial-execution-type-cap-order.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -74,6 +75,7 @@ reverify: >-
   t/1625-vial-architecture-scale-execution-total-fiber-limit.t
   t/1705-vial-execution-selected-domain-cap-order.t
   t/1706-vial-execution-operation-cardinality-cap-order.t
+  t/1707-vial-execution-type-cap-order.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -156,11 +158,12 @@ the original post-emission checks remain terminal defense. Exact excess
 diagnostics, accepted plan identities, and the legal 65,536-total-fiber
 workload's later serialized-plan rejection remain unchanged.
 
-Execution admission checks scenario count and selected fixture shape, then each
-scenario's declared and compact-derived operation counts and their saturating
-aggregate, before context construction. SemanticIR and bridge remain the
+Execution admission checks scenario count, fixture shape, per-scenario declared
+and compact-derived operations, and their aggregate before context construction.
+Novel execution types are admitted before cloning, caching, or insertion; a
+duplicate shape stays reusable at the ceiling. SemanticIR and bridge remain
 earlier normal-route authorities; execution checks defend internal inputs.
-Binding and post-emission checks remain terminal defenses, with lower-layer
+Binding, type, and post-emission checks remain terminal defenses, with
 diagnostics and accepted plan identity unchanged.
 
 The guarded exact semantic-catalog and bridge-fanout matrices close every
