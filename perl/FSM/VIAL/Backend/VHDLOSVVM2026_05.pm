@@ -26,6 +26,10 @@ my $QUALIFICATION_SHA256 =
     'e83c1a346c31cde5b516e1b6d19696f0c63e05902a31f945f011f23e2268f1fa';
 my $JSON = JSON::PP->new->canonical(1);
 my $PRETTY_JSON = JSON::PP->new->canonical(1)->pretty(1);
+my $PORTABLE_SOURCE_ARTIFACT_COUNT = 6;
+my $ADAPTER_SOURCE_BYTES = 4_351;
+my $ADAPTER_SOURCE_MAP_ENTRY_COUNT = 7;
+my $TOTAL_ARTIFACT_COUNT = 16;
 my @REQUIREMENT_IDS = qw(
     advanced_coverage advanced_data_structure advanced_randomization
     advanced_reporting advanced_scoreboard advanced_synchronization
@@ -82,15 +86,6 @@ sub _with_provider_evaluation($raw) {
     confess "provider evaluation consumer must be one callback\n"
         unless ref($raw->{consumer}) eq 'CODE';
 
-    my $provider = FSM::VIAL::Backend::OSVVM2026_05Materialization->verify({
-        dependency_root => $raw->{dependency_root},
-    });
-    return _failure('VIAL_OSVVM_PROVIDER_MATERIALIZATION_ERROR',
-        $provider->{diagnostics}[0]{message}, '/dependency_root')
-        unless $provider->{ok};
-    my $protected_provider = _clone_json($provider);
-    my $provider_identity = _provider_identity(
-        $raw->{dependency_root}, $protected_provider);
     my $token_id = ++$NEXT_PROVIDER_EVALUATION_ID;
     my $evaluation = bless \$token_id,
         'FSM::VIAL::Backend::VHDLOSVVM2026_05::ProviderEvaluation';
@@ -99,8 +94,8 @@ sub _with_provider_evaluation($raw) {
         token => $evaluation,
         token_id => $token_id,
         dependency_root => $raw->{dependency_root},
-        provider => $protected_provider,
-        provider_identity => $provider_identity,
+        provider => undef,
+        provider_identity => undef,
     };
 
     my $result = eval { $raw->{consumer}->($evaluation) };
@@ -144,23 +139,18 @@ sub _provider_evaluation_emit($evaluation, @args) {
         '/provider_evaluation')
         unless defined($raw->{dependency_root}) && !ref($raw->{dependency_root})
             && $raw->{dependency_root} eq $context->{dependency_root};
-    return _failure('VIAL_OSVVM_PROVIDER_EVALUATION_ERROR',
-        'provider evaluation evidence identity drifted',
-        '/provider_evaluation')
-        unless _provider_identity($context->{dependency_root},
-                $context->{provider}) eq $context->{provider_identity};
-    return _run_emit($raw, _clone_json($context->{provider}));
+    return _run_emit($raw, $context);
 }
 
-sub _run_emit($raw, $verified_provider = undef) {
-    my $result = eval { _emit($raw, $verified_provider) };
+sub _run_emit($raw, $provider_context = undef) {
+    my $result = eval { _emit($raw, $provider_context) };
     return $result if defined $result;
     my $error = $@ || 'unknown OSVVM backend error';
     $error =~ s/\s+\z//;
     return _failure('VIAL_OSVVM_BACKEND_HOST_ERROR', $error, '/');
 }
 
-sub _emit($raw, $verified_provider = undef) {
+sub _emit($raw, $provider_context = undef) {
     _require_keys($raw, [qw(
         execution_ir bridge_manifest backend_inputs artifact_root
         backend_profile dependency_root advanced_requirements
@@ -176,16 +166,6 @@ sub _emit($raw, $verified_provider = undef) {
     my @requirements = @{$raw->{advanced_requirements}};
     confess "advanced_requirements must contain seven unique sorted exact requirements\n"
         unless join("\0", @requirements) eq join("\0", @REQUIREMENT_IDS);
-
-    my $provider = defined($verified_provider)
-        ? $verified_provider
-        : FSM::VIAL::Backend::OSVVM2026_05Materialization->verify({
-            dependency_root => $raw->{dependency_root},
-        });
-    return _failure('VIAL_OSVVM_PROVIDER_MATERIALIZATION_ERROR',
-        $provider->{diagnostics}[0]{message}, '/dependency_root')
-        unless $provider->{ok};
-    my $qualification = _load_qualification_report();
 
     my $portable = FSM::VIAL::Backend::VHDLPortableGHDL->emit({
         execution_ir => $raw->{execution_ir},
@@ -226,19 +206,16 @@ sub _emit($raw, $verified_provider = undef) {
             byte_identical => JSON::PP::true,
         };
     }
-    confess "portable foundation did not provide six VHDL sources\n"
-        unless @portable_source == 6;
+    return _failure('VIAL_OSVVM_BACKEND_LIMIT_EXCEEDED',
+        'OSVVM wrapper emitted an unexpected source or artifact inventory',
+        '/artifacts')
+        unless @portable_source == $PORTABLE_SOURCE_ARTIFACT_COUNT;
 
     my $adapter_text = _render_adapter();
-    my $adapter = _artifact(
-        "$BASE/src/fsmgen_vial_osvvm_adapter_pkg.vhd",
-        'vhdl_osvvm_adapter_package',
-        'vhdl_source',
-        'vhdl',
-        $adapter_text,
-        [$provider->{manifest}{root_commit}, $portable->{plan_id}],
-    );
-    my @source_artifacts = (@portable_source, $adapter);
+    return _failure('VIAL_OSVVM_BACKEND_LIMIT_EXCEEDED',
+        'OSVVM wrapper emitted an unexpected source or artifact inventory',
+        '/artifacts')
+        unless bytes::length($adapter_text) == $ADAPTER_SOURCE_BYTES;
 
     my $semantic_preservation = {
         schema => 'fsmgen.vial_vhdl_osvvm_semantic_preservation.v1',
@@ -267,12 +244,53 @@ sub _emit($raw, $verified_provider = undef) {
     return _failure('VIAL_OSVVM_SOURCE_MAP_TRANSLATION_ERROR',
         $translated->{diagnostic}, '/portable_foundation/source_map')
         unless $translated->{ok};
+    my $source_map_entry_count = $ADAPTER_SOURCE_MAP_ENTRY_COUNT
+        + scalar(@{$translated->{entries}});
+
+    my $provider;
+    if (defined($provider_context) && defined($provider_context->{provider})) {
+        return _failure('VIAL_OSVVM_PROVIDER_EVALUATION_ERROR',
+            'provider evaluation evidence identity drifted',
+            '/provider_evaluation')
+            unless _provider_identity($provider_context->{dependency_root},
+                    $provider_context->{provider})
+                eq $provider_context->{provider_identity};
+        $provider = _clone_json($provider_context->{provider});
+    }
+    else {
+        $provider = FSM::VIAL::Backend::OSVVM2026_05Materialization->verify({
+            dependency_root => $raw->{dependency_root},
+        });
+        return _failure('VIAL_OSVVM_PROVIDER_MATERIALIZATION_ERROR',
+            $provider->{diagnostics}[0]{message}, '/dependency_root')
+            unless $provider->{ok};
+        if (defined($provider_context)) {
+            $provider_context->{provider} = _clone_json($provider);
+            $provider_context->{provider_identity} = _provider_identity(
+                $provider_context->{dependency_root},
+                $provider_context->{provider});
+            $provider = _clone_json($provider_context->{provider});
+        }
+    }
+    my $qualification = _load_qualification_report();
+
+    my $adapter = _artifact(
+        "$BASE/src/fsmgen_vial_osvvm_adapter_pkg.vhd",
+        'vhdl_osvvm_adapter_package',
+        'vhdl_source',
+        'vhdl',
+        $adapter_text,
+        [$provider->{manifest}{root_commit}, $portable->{plan_id}],
+    );
+    my @source_artifacts = (@portable_source, $adapter);
     my $source_map = _source_map(
         plan_id => $portable->{plan_id},
         source_artifacts => \@source_artifacts,
         mapping_matrix => $mapping_matrix,
         portable_entries => $translated->{entries},
     );
+    confess "OSVVM source-map preflight disagrees with materialization\n"
+        unless @{$source_map->{entries}} == $source_map_entry_count;
     my $static = FSM::VIAL::Backend::VHDLOSVVMStaticValidator->validate({
         artifacts => \@source_artifacts,
         materialization => $provider->{manifest},
@@ -443,6 +461,10 @@ sub _emit($raw, $verified_provider = undef) {
         [$portable->{plan_id}, $provider->{manifest}{root_commit}]);
     my @artifacts = sort { $a->{relpath} cmp $b->{relpath} }
         (@source_artifacts, @support_artifacts, $manifest_artifact);
+    return _failure('VIAL_OSVVM_BACKEND_LIMIT_EXCEEDED',
+        'OSVVM wrapper emitted an unexpected source or artifact inventory',
+        '/artifacts')
+        unless @artifacts == $TOTAL_ARTIFACT_COUNT;
 
     return {
         ok => JSON::PP::true,

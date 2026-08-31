@@ -862,8 +862,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Enforce the selected backend-emission resource caps before partial artifact publication.`
   Acceptance: `Implement only the .17.4.1-selected profile-specific generated-byte, artifact, and source-map boundaries for portable SystemVerilog, portable VHDL, OSVVM, and native-UVM emission. Reject before final artifact graphs or provider/tool use when authority is already known; preserve accepted artifact bytes, ordering, identities, provider boundaries, atomic staging, and backend nonclaims.`
-  Verification: `Clean df5129126 closes .17.4.5 and activation f6b2f8504 confines this leaf to four profile-local pure emitters. Portable SystemVerilog retains exact rendered-byte precedence, compact map-cap preflight, accepted equality, and terminal defense. Portable VHDL likewise retains exact byte-first authority, preflights its fixed source/total artifact inventory, independently censuses maps without inventing a map cap, requires accepted equality, and retains the terminal graph defense. RED-to-green t1716/t1717, policy, shipped-emitter regressions, and guarded exact profile oracles preserve diagnostics, atomic failure, accepted identities, and nonclaims. OSVVM admission is next.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6: activate backend-emission cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6: preflight portable-SV source maps; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6: preflight portable-VHDL artifact inventory`
+  Verification: `Clean df5129126 closes .17.4.5 and activation f6b2f8504 confines this leaf to four profile-local pure emitters. Portable SystemVerilog retains exact byte precedence, compact map-cap preflight, equality, and terminal defense. Portable VHDL retains byte-first authority, fixed inventory preflight, map census without a map cap, equality, and terminal defense. OSVVM now completes portable emission, source/adapter admission, and map translation before lazy provider verification; accepted callback emissions reuse one sealed result, no-emission or known-rejection paths never verify, and wrapper map/artifact censuses remain terminal. RED-to-green t1716-t1718, policy, shipped regressions, and guarded exact oracles preserve diagnostics, accepted identities, and nonclaims. Native UVM admission is next.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6: activate backend-emission cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6: preflight portable-SV source maps; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6: preflight portable-VHDL artifact inventory; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6: admit OSVVM provider after portable foundation`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
   Status: `proposed`
   Goal: `Enforce the selected runtime-stream, transcript, trace, result, timeout, and external-tool envelopes through the shared lifecycle.`
@@ -7630,11 +7630,11 @@ The completed node records above and their named Git commits remain the canonica
   support, performance, capacity, or public-API behavior changes.
   Staged acceptance, resulting-tree, diff, and complete doctrines close the commit gate.
 
-## Acceptance Checklist (enforced) — `.17.4.2` semantic-cap activation
+## Compact acceptance history — `.17.4.2` semantic-cap activation
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'ArchitectureScaleCapPolicy' --oneline -- perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` identifies clean selection commit `951720257`; `.17.4.2` remained proposed and therefore could not own source/parser/SemanticIR RED controls or enforcement work.
-- [x] **ADDRESSED (verified)** — `.17.4.2` alone is active for source/parser/SemanticIR earliest-cap hardening; bridge and later leaves remain proposed, while task/index/Memory/mdBook agree and this activation changes no product behavior.
-- [x] **NO REGRESSION** — Focused task/path/Knowledge Map/claim/locality/containment/reference coverage reports `All tests successful` at `Files=9, Tests=110`; all mdBook chapters test, staged-result/diff and `[doctrine] all doctrine checks passed` close the commit, while full CI/push remain at policy boundaries.
+The exact ownership, synchronization, focused verification, and doctrine
+evidence remain canonical in commit `93adfbd82`; `git show 93adfbd82` recovers
+the superseded checklist text byte-for-byte.
 
 ## Acceptance Checklist (enforced) — `.17.4.2` action-cap implementation
 
@@ -7660,24 +7660,11 @@ The exact RED, repair, accepted identities, focused verification, and doctrine
 evidence remain canonical in commit `e9679effb`; `git show e9679effb` recovers
 the superseded checklist text byte-for-byte.
 
-## Acceptance Checklist (enforced) — `.17.4.2` service-scalar admission
+## Compact acceptance history — `.17.4.2` service-scalar admission
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'MAX_SCOREBOARD_CAPACITY'` and
-  `git log -S'MAX_CROSS_BINS'` both identify `be9c74163` as the original
-  implementation. Scoreboard construction resolved its transaction and key,
-  while cross construction resolved points and multiplied bins, before either
-  already-parsed service scalar was admitted.
-- [x] **ADDRESSED (verified)** — RED t1690 and t1691 each report `Failed 1/15`:
-  unresolved transaction and coverpoint diagnostics masked the respective
-  scalar limits. The builder now admits scoreboard capacity and cross max_bins
-  before dependent reference resolution. Both tests pin the established limit,
-  atomic no-report result, and accepted one-million projection/report
-  identities; t1685 pins the matching machine-policy metadata.
-- [x] **NO REGRESSION** — Guarded core/catalog/policy/order coverage reports
-  `All tests successful` at `Files=5, Tests=75`; `SemanticBuilder.pm` is syntax
-  clean. mdBook, Knowledge Map, claims, task integrity, locality, containment,
-  staged-result, diff, and `[doctrine] all doctrine checks passed` close the
-  slice; full CI/push remain deferred by policy.
+The exact RED, repair, accepted identities, focused verification, and doctrine
+evidence remain canonical in commit `543a1baed`; `git show 543a1baed` recovers
+the superseded checklist text byte-for-byte.
 
 ## Acceptance Checklist (enforced) — `.17.4.2` type-shape admission proof
 
@@ -7762,3 +7749,9 @@ the superseded checklist text byte-for-byte.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'generated VHDL exceeds the 16 MiB backend cap' --oneline -- perl/FSM/VIAL/Backend/VHDLPortableGHDL.pm` identifies byte-first emitter commit `3291217e8`; `git log -S'portable VHDL review closure emitted an unexpected artifact count'` locates terminal-only inventory commit `0074b369e`. The fixed inventory was checked only after validation, maps, review, commands, support artifacts, and manifest construction, while accepted map cardinality had no independent compact equality proof.
 - [x] **ADDRESSED (verified)** — RED t1717 failed 6/26 assertions. Exact rendered bytes remain first; accepted source/total inventory is preflighted before dependent construction and rechecked terminally; compact operations/scenarios/fibers/models/endpoints/checking/probes independently derive map cardinality and must equal materialization. `BackendEmissionAuthority` still declares no portable-VHDL map cap, so no ceiling or capacity claim was invented.
 - [x] **NO REGRESSION** — Focused policy/order/emitter/review coverage reports `All tests successful` at `Files=7, Tests=148`; guarded exact t1647 reports `Files=1, Tests=7` in 137 seconds. The module is syntax clean; mdBook, Knowledge Map, claims, task integrity, containment, staged diff, and complete doctrines close the slice; full CI/push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.6` OSVVM provider admission
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'OSVVM2026_05Materialization->verify' --oneline -- perl/FSM/VIAL/Backend/VHDLOSVVM2026_05.pm` identifies `4f350f29c` and `189cec95e`: standalone and callback-scoped paths verified the provider before portable emission, so known portable byte, inventory, adapter, or map-translation rejection still accessed provider state.
+- [x] **ADDRESSED (verified)** — RED t1718 failed 4/26 corrected assertions. Portable emission, six-source/fixed-adapter admission, and complete map translation now precede provider verification. The first accepted callback emission lazily seals one defensive provider result, the second reuses it, no-emission callbacks and known rejections verify zero times, accepted map count must equal its compact census, and final artifacts retain the terminal exact-inventory defense.
+- [x] **NO REGRESSION** — Focused provider/emitter/policy/order coverage reports `All tests successful` at `Files=6, Tests=204`; guarded exact t1648 reports `Files=1, Tests=7` in 188 seconds. The backend is syntax clean; mdBook, Knowledge Map, claims, task integrity, containment, staged diff, and complete doctrines close the slice; full CI/push remain deferred by policy.

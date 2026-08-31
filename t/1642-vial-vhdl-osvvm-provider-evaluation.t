@@ -152,8 +152,8 @@ my ($leaked_evaluation, $first_snapshot);
     ok($standalone->{ok}, 'standalone emission still verifies and succeeds');
     is($json->encode($standalone), $json->encode($first_snapshot),
         'standalone and evaluation-local emission remain byte-identical');
-    is($verify_calls, 4,
-        'later evaluations and standalone emission each verify independently');
+    is($verify_calls, 2,
+        'only emitting evaluation and standalone paths verify the provider');
 }
 
 done_testing;

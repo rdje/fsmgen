@@ -2562,6 +2562,28 @@ unchanged.
 prove -Iperl t/1717-vial-backend-portable-vhdl-cap-order.t
 ```
 
+### OSVVM provider admission order
+
+The qualified OSVVM wrapper now completes its portable-VHDL foundation before
+it verifies or exposes provider evidence. It then checks the fixed portable
+source inventory, the byte-locked adapter, and complete portable source-map
+translation before touching the repository-local provider cache. A known
+portable byte, inventory, adapter, or translation rejection therefore performs
+no provider verification and returns no partial wrapper graph.
+
+Provider-evaluation objects remain callback-scoped and unforgeable, but their
+verification is lazy. The first accepted emission verifies and seals one exact
+provider result; a second accepted emission in the callback defensively reuses
+it. A callback that never emits never verifies the provider. After admission,
+the wrapper requires its map materialization and final artifact inventory to
+match their independent censuses. These are integrity checks, not new map,
+artifact-capacity, support, or runtime claims; accepted bytes and identities are
+unchanged.
+
+```sh
+prove -Iperl t/1718-vial-backend-osvvm-provider-admission-order.t
+```
+
 ### Source-byte cap admission order
 
 The parser measures each source's encoded byte representation before lexing or
