@@ -165,6 +165,12 @@ fixture execution has only this lifecycle. The checked qualifier now consumes
 that lifecycle, runs its distinct probe through the same supervisor, and still
 reproduces the checked qualification report byte for byte.
 
+That distinct probe also preserves deadline authority: a supervisor
+`timed_out` result reports `VIAL_VHDL_QUALIFICATION_TIMEOUT` at
+`/resource_controls` before capture overflow or generic execution handling.
+The probe is never retried, and its selected timeout and capture values do not
+change.
+
 The shared production process supervisor records containment, spawn, successful
 `exec`, first output, exit, timeout/capture status, signal, and complete process-
 tree cleanup. Lifecycle-owned public work and outer-worker-owned measurement
@@ -213,6 +219,7 @@ unchanged.
 ```sh
 prove -Iperl t/1725-vial-ghdl-cleanup-diagnostic-authority.t \
   t/1726-vial-ghdl-admission-cleanup-evidence.t \
+  t/1727-vial-ghdl-probe-timeout-diagnostic-authority.t \
   t/1673-vial-ghdl-shared-lifecycle.t \
   t/1678-vial-ghdl-provider-aware-lifecycle.t
 ```

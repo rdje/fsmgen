@@ -37,6 +37,7 @@ evidence: >-
   t/1678-vial-ghdl-provider-aware-lifecycle.t;
   t/1725-vial-ghdl-cleanup-diagnostic-authority.t;
   t/1726-vial-ghdl-admission-cleanup-evidence.t;
+  t/1727-vial-ghdl-probe-timeout-diagnostic-authority.t;
   t/1674-vial-architecture-scale-portable-vhdl-runtime-measurement.t;
   t/1675-vial-architecture-scale-portable-vhdl-runtime-measurement-matrix.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
@@ -48,6 +49,7 @@ reverify: >-
   t/1678-vial-ghdl-provider-aware-lifecycle.t
   t/1725-vial-ghdl-cleanup-diagnostic-authority.t
   t/1726-vial-ghdl-admission-cleanup-evidence.t
+  t/1727-vial-ghdl-probe-timeout-diagnostic-authority.t
   t/1675-vial-architecture-scale-portable-vhdl-runtime-measurement-matrix.t &&
   scripts/run_with_ram_guard.sh --
   scripts/run_vial_portable_vhdl_runtime_measurement_matrix.pl --validate &&
@@ -119,6 +121,13 @@ predecessor passes and three full seven-file passes retain real supervisor,
 process-group, failure, report, and cleanup coverage; no launch crosses the
 two-second sampling threshold, no phase is retried, and the ten-second product
 deadline is unchanged.
+
+The qualifier's distinct four-state probe uses the same supervisor but retains
+its own error translation. A timed-out probe now reports
+`VIAL_VHDL_QUALIFICATION_TIMEOUT` at `/resource_controls` before capture-limit
+or generic execution handling. Focused timeout-only and combined
+timeout-plus-overflow controls prove that precedence; capture-only, nonzero
+exit, successful output, and the live checked qualification remain unchanged.
 
 The guarded exact adapter accepts one 77-record reference validation, one gate
 validation plus three retained 10,000-record measurements, and one

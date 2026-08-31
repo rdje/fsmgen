@@ -516,6 +516,9 @@ sub _capture($repo_root, $argv, $timeout, $limit, $label) {
             ? $error->{message} : _sanitize_exception($error);
         _throw('VIAL_VHDL_QUALIFICATION_HOST_ERROR', $message, '/execution');
     }
+    _throw('VIAL_VHDL_QUALIFICATION_TIMEOUT',
+        "$label exceeded its exact deadline", '/resource_controls')
+        if $capture->{timed_out};
     _throw('VIAL_VHDL_QUALIFICATION_LIMIT_ERROR',
         "$label output exceeded its exact byte limit", '/resource_controls')
         if $capture->{output_limited};
