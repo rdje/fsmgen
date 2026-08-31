@@ -841,11 +841,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `Decision 0093 retains component-local ceilings and selected levels while separating earliest route authority and measured boundary. The versioned ArchitectureScaleCapPolicy joins every live catalog axis to one stage owner, validates declared values/profiles/envelopes, and rejects missing-axis or re-levelled mutations in t1685. The mdBook and Knowledge Map carry the same no-capacity/no-behavior-change rule; .17.4.2 remains the next proposed leaf until a clean activation commit.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.1: select layered architecture cap policy`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Enforce the selected source, parser, and SemanticIR resource caps at their earliest authoritative stages.`
   Acceptance: `Implement only the .17.4.1-selected semantic/parser contract; reject boundary excess before dependent expansion with stable diagnostics and paths, unchanged accepted SemanticIR, and no partial result or residue. Prove every semantic_catalog_v1 boundary and interaction, including literal-repeat versus expanded-action dominance, with focused default and guarded exact tests.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean selection commit 951720257d727e79f9e0986955655c8d330e0079 closes .17.4.1 before this pivot. This activation owns only source/parser/SemanticIR earliest-cap hardening under decision 0093; bridge and later layers remain proposed, and no parser, SemanticIR, diagnostic, accepted-profile, capability, support, performance, or capacity behavior changes yet.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: activate semantic cap hardening`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3`
   Status: `proposed`
   Goal: `Enforce the selected HIAL-to-VIAL bridge resource caps before avoidable manifest materialization.`
@@ -7635,3 +7635,9 @@ The completed node records above and their named Git commits remain the canonica
   increases pass. No parser, IR, bridge, execution, backend, runtime, artifact,
   support, performance, capacity, or public-API behavior changes.
   Staged acceptance, resulting-tree, diff, and complete doctrines close the commit gate.
+
+## Acceptance Checklist (enforced) — `.17.4.2` semantic-cap activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'ArchitectureScaleCapPolicy' --oneline -- perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` identifies clean selection commit `951720257`; `.17.4.2` remained proposed and therefore could not own source/parser/SemanticIR RED controls or enforcement work.
+- [x] **ADDRESSED (verified)** — `.17.4.2` alone is active for source/parser/SemanticIR earliest-cap hardening; bridge and later leaves remain proposed, while task/index/Memory/mdBook agree and this activation changes no product behavior.
+- [x] **NO REGRESSION** — Focused task/path/Knowledge Map/claim/locality/containment/reference coverage reports `All tests successful` at `Files=9, Tests=110`; all mdBook chapters test, staged-result/diff and `[doctrine] all doctrine checks passed` close the commit, while full CI/push remain at policy boundaries.

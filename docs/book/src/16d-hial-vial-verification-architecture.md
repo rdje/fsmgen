@@ -2505,7 +2505,8 @@ component ceiling, the route's actual earliest deciding authority, and any
 measured reachable boundary. No lower layer is raised and no workload level is
 rewritten merely to reach a later cap. Stage-specific hardening may move a
 known count check before avoidable same-layer materialization, but accepted
-profile bytes and the absence of a total-operation capacity claim stay fixed.
+profile bytes and the absence of a total-operation capacity claim stay fixed;
+source/parser/SemanticIR enforcement hardening is now the active leaf.
 
 ```perl
 use FSM::VIAL::ArchitectureScaleExecutionGraph;
