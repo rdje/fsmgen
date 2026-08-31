@@ -9,6 +9,7 @@ answers:
   - "what exact portable VHDL profiles have been measured with GHDL?"
   - "does portable VHDL runtime measurement mean IASIM execution?"
   - "which diagnostic wins when a portable VHDL phase and cleanup both fail?"
+  - "how do fake GHDL lifecycle providers avoid host executable admission?"
 date: 2026-08-31
 status: current
 tags: [vial, vhdl, ghdl, runtime, trace, scalability]
@@ -33,6 +34,7 @@ evidence: >-
   t/1671-vial-vhdl-portable-trace-v2.t;
   t/1672-vial-architecture-scale-portable-vhdl-runtime-materialization.t;
   t/1673-vial-ghdl-shared-lifecycle.t;
+  t/1678-vial-ghdl-provider-aware-lifecycle.t;
   t/1725-vial-ghdl-cleanup-diagnostic-authority.t;
   t/1726-vial-ghdl-admission-cleanup-evidence.t;
   t/1674-vial-architecture-scale-portable-vhdl-runtime-measurement.t;
@@ -43,6 +45,7 @@ reverify: >-
   prove -Iperl t/1595-vial-vhdl-portable-ghdl-qualification.t
   t/1664-vial-verilator-shared-lifecycle.t
   t/1673-vial-ghdl-shared-lifecycle.t
+  t/1678-vial-ghdl-provider-aware-lifecycle.t
   t/1725-vial-ghdl-cleanup-diagnostic-authority.t
   t/1726-vial-ghdl-admission-cleanup-evidence.t
   t/1675-vial-architecture-scale-portable-vhdl-runtime-measurement-matrix.t &&
@@ -103,10 +106,19 @@ later admission write failed. Successful removal retains the triggering
 diagnostic and reports removal with zero residue; removal failure becomes the
 cleanup diagnostic with the exact residual staging identity. This authority
 does not infer ownership from an owner file that may not yet have been written.
-Repeated adjacent lifecycle-suite runs also exposed intermittent exact-deadline
-timeouts in newly compiled fake-provider version probes; identical reruns pass,
-but `.17.4.7` retains that instability as its next diagnosis rather than
-widening the ten-second product deadline.
+Adjacent lifecycle-suite runs exposed intermittent exact-deadline timeouts in
+fake-provider version probes. Native doubles produced AMFI `-423` traffic, but
+`env perl`, configured-absolute Perl, and a stable tracked Perl script also
+timed out. Three compact captures place successful `exec` handoff at
+1.421–2.080 milliseconds followed by 10.034–10.053 seconds with zero output
+before TERM, falsifying native signing, ambient path lookup, fresh inode
+identity, containment mode, and parent capture scheduling as sufficient causes.
+The final fixtures use one stable tracked POSIX-shell provider when `/bin/sh`
+exists and retain configured Perl only as a portability fallback. Five guarded
+predecessor passes and three full seven-file passes retain real supervisor,
+process-group, failure, report, and cleanup coverage; no launch crosses the
+two-second sampling threshold, no phase is retried, and the ten-second product
+deadline is unchanged.
 
 The guarded exact adapter accepts one 77-record reference validation, one gate
 validation plus three retained 10,000-record measurements, and one

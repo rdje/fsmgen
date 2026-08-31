@@ -1170,3 +1170,18 @@ created root and passes it to the common failure formatter. It reports success
 only when the path is absent after an error-free removal; any error, path
 replacement, or residue promotes cleanup as the primary diagnostic. Later
 resume/advance failures continue to use the stronger persisted owner proof.
+
+## 2026-08-31: Process tests should not manufacture host admission work
+
+The GHDL lifecycle tests must cross the real supervisor, but their doubles are
+not under qualification. Fresh native doubles manufactured compiler, signing,
+and host-admission work. Environment-based, absolute, and then stable tracked
+Perl doubles still intermittently completed `exec` but emitted nothing for the
+sealed wall. This falsifies signing, path lookup, inode identity, containment,
+and parent scheduling as individually sufficient causes; the owning task
+retains the exact evidence.
+
+The tests therefore use one stable tracked POSIX-shell provider when `/bin/sh`
+exists and configured Perl only as a fallback. Real fork/exec, process-group,
+capture, failure, report, deadline, and cleanup coverage remains; failure-only
+timing stays armed and no timeout is retried or widened.

@@ -1,0 +1,47 @@
+#!/bin/sh
+
+if [ "$#" -eq 1 ] && [ "$1" = "--version" ]; then
+    printf '%s\n' 'fake GHDL 1'
+    exit 0
+fi
+
+mode=''
+stage=''
+previous=''
+current=''
+for argument in "$@"; do
+    previous=$current
+    current=$argument
+    case "$argument" in
+        --fail-analysis)
+            exit 7
+            ;;
+        -a|-e|-r)
+            mode=$argument
+            ;;
+        --workdir=*)
+            stage=${argument#--workdir=}
+            stage=${stage%%/libraries/*}
+            ;;
+    esac
+done
+
+if [ "$mode" = '-r' ]; then
+    if [ "$previous" = 'fsmgen_vial_osvvm_runtime_probe' ]; then
+        report_index=0
+        for report in \
+            OsvvmRun.yml \
+            AlertLogTop_alerts.yml \
+            AlertLogTop_cov.yml \
+            AlertLogTop_sb_slv.yml
+        do
+            printf 'deterministic report %s\n' "$report_index" \
+                > "$stage/provider_reports/$report" || exit 9
+            report_index=$((report_index + 1))
+        done
+        printf '%s\n' 'fake provider probe'
+    else
+        printf '%s\n' 'fake fixture'
+    fi
+fi
+exit 0

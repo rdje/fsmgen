@@ -10,19 +10,31 @@ use File::Path qw(make_path remove_tree);
 use File::Spec;
 use FindBin;
 use JSON::PP ();
-use Text::ParseWords qw(shellwords);
 use Test::More;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::VIAL::Backend::GHDLLifecycle;
+use FSM::VIAL::Backend::ProcessSupervisor;
 use FSM::VIAL::Backend::VHDLPortableTraceValidator;
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my $json = JSON::PP->new->canonical(1);
+my $fake_shebang = fake_shebang();
 my $fake_root_rel = ".artifacts/test/vial-ghdl-osvvm-lifecycle-$$";
 my $fake_root_abs = repo_path($fake_root_rel);
 my @owned_stage;
+my @supervisor_observation;
+my $capture_engine = \&FSM::VIAL::Backend::ProcessSupervisor::_capture;
+
+{
+    no warnings 'redefine';
+    *FSM::VIAL::Backend::ProcessSupervisor::_capture = sub {
+        my $capture = $capture_engine->(@_);
+        push @supervisor_observation, compact_capture($capture);
+        return $capture;
+    };
+}
 
 END {
     for my $relative (@owned_stage) {
@@ -42,9 +54,15 @@ is($unsealed->{diagnostics}[0]{code},
 
 subtest 'v2 plan records every provider-aware phase in exact order' => sub {
     my $request = fake_request('complete');
+    my $provider_shebang = provider_shebang($request);
+    is(file_prefix(
+            repo_path($request->{provider}{binary}), length($provider_shebang),
+        ), $provider_shebang,
+        'fake OSVVM provider uses one exact script interpreter without native admission');
     my $current = lifecycle_begin($request);
     diag($json->encode($current->{diagnostics})) unless $current->{ok};
     ok($current->{ok}, 'sealed OSVVM qualification caller admits');
+    return unless $current->{ok};
     is($current->{handle}{schema},
         'fsmgen.vial_ghdl_lifecycle_handle.v2',
         'OSVVM handle has a distinct versioned identity');
@@ -52,14 +70,18 @@ subtest 'v2 plan records every provider-aware phase in exact order' => sub {
         'OSVVM handle schema version is exact');
 
     $current = lifecycle_advance($request, $current->{handle});
+    diag($json->encode($current->{diagnostics})) unless $current->{ok};
     ok($current->{ok}, 'generated settings and three libraries prepare');
+    return unless $current->{ok};
     is($current->{status}, 'prepared', 'prepared state is exact');
     is($current->{stage_evidence}[-1]{evidence}{settings_sha256},
         $request->{commands}{generated_settings}{sha256},
         'prepared evidence seals generated settings bytes');
 
     $current = lifecycle_advance($request, $current->{handle});
+    diag($json->encode($current->{diagnostics})) unless $current->{ok};
     ok($current->{ok}, 'tool identity verifies through shared supervisor');
+    return unless $current->{ok};
     my $tool_capture = $current->{stage_evidence}[-1]{evidence}{capture};
     is($tool_capture->{containment}, 'lifecycle_process_group',
         'OSVVM role owns the sealed lifecycle process group');
@@ -71,6 +93,7 @@ subtest 'v2 plan records every provider-aware phase in exact order' => sub {
     $current = lifecycle_advance($request, $current->{handle});
     diag($json->encode($current->{diagnostics})) unless $current->{ok};
     ok($current->{ok}, 'ordered provider and generated analyses pass');
+    return unless $current->{ok};
     my $analysis = $current->{stage_evidence}[-1]{evidence};
     is(scalar(@{$analysis->{captures}}), 2,
         'every provider analysis has one ordered capture');
@@ -82,13 +105,16 @@ subtest 'v2 plan records every provider-aware phase in exact order' => sub {
         'generated analysis capture ceiling is exact');
 
     $current = lifecycle_advance($request, $current->{handle});
+    diag($json->encode($current->{diagnostics})) unless $current->{ok};
     ok($current->{ok}, 'fixture and provider-probe elaborations pass');
+    return unless $current->{ok};
     is(scalar(@{$current->{stage_evidence}[-1]{evidence}{captures}}), 2,
         'fixture and probe retain separate elaboration captures');
 
     $current = lifecycle_advance($request, $current->{handle});
     diag($json->encode($current->{diagnostics})) unless $current->{ok};
     ok($current->{ok}, 'fixture and provider-probe reruns pass');
+    return unless $current->{ok};
     my $ran = $current->{stage_evidence}[-1]{evidence};
     is(scalar(@{$ran->{fixture_captures}}), 2,
         'fixture retains two exact captures');
@@ -166,82 +192,63 @@ done_testing();
 sub fake_request {
     my ($label, $binary_name) = @_;
     $binary_name //= 'ghdl';
-    remove_tree($fake_root_abs)
-        if -d $fake_root_abs && !-l $fake_root_abs;
-    my $provider_root = "$fake_root_rel/provider";
+    my $dynamic_provider = !-x '/bin/sh';
+    my $provider_root = $dynamic_provider
+        ? "$fake_root_rel/provider"
+        : 't/data/vial_fake_ghdl_provider';
     my $binary = "$provider_root/bin/$binary_name";
     my $archive = "$provider_root/ghdl.tar.gz";
-    my $program_source = "$provider_root/fake-ghdl.c";
     my $provider_source = "$fake_root_rel/source/provider.vhd";
     my $generated_source = "$fake_root_rel/source/generated.vhd";
-    write_raw(repo_path($archive), "fake archive\n");
-    write_raw(repo_path($program_source), <<'C');
-#include <stdio.h>
-#include <string.h>
+    if ($dynamic_provider) {
+        write_raw(repo_path($archive), "fake archive\n");
+        write_raw(repo_path($binary), $fake_shebang . <<'PERL');
+use strict;
+use warnings;
 
-int main(int argc, char **argv) {
-    int index;
-    const char *mode = "";
-    const char *top = "";
-    char stage[4096] = "";
-    char path[4608];
-    const char *reports[] = {
-        "OsvvmRun.yml", "AlertLogTop_alerts.yml", "AlertLogTop_cov.yml",
-        "AlertLogTop_sb_slv.yml"
-    };
-    if (argc == 2 && strcmp(argv[1], "--version") == 0) {
-        fputs("fake OSVVM GHDL 1\n", stdout);
-        return 0;
-    }
-    for (index = 1; index < argc; index++) {
-        if (strcmp(argv[index], "-a") == 0 || strcmp(argv[index], "-e") == 0
-                || strcmp(argv[index], "-r") == 0) {
-            mode = argv[index];
-        }
-        if (strncmp(argv[index], "--workdir=", 10) == 0) {
-            char *libraries;
-            snprintf(stage, sizeof(stage), "%s", argv[index] + 10);
-            libraries = strstr(stage, "/libraries/");
-            if (libraries != NULL) {
-                *libraries = '\0';
-            }
-        }
-    }
-    if (strcmp(mode, "-r") == 0 && argc >= 3) {
-        top = argv[argc - 2];
-        if (strcmp(top, "fsmgen_vial_osvvm_runtime_probe") == 0) {
-            if (strstr(argv[0], "no-reports") == NULL) {
-                for (index = 0; index < 4; index++) {
-                    FILE *report;
-                    snprintf(path, sizeof(path), "%s/provider_reports/%s",
-                        stage, reports[index]);
-                    report = fopen(path, "wb");
-                    if (report == NULL) return 9;
-                    fprintf(report, "deterministic report %d\n", index);
-                    if (fclose(report) != 0) return 10;
-                }
-            }
-            fputs("fake provider probe\n", stdout);
-        } else {
-            fputs("fake fixture\n", stdout);
-        }
-    }
-    return 0;
+if (@ARGV == 1 && $ARGV[0] eq '--version') {
+    print "fake GHDL 1\n";
+    exit 0;
 }
-C
-    my $compiler_tmp = repo_path("$fake_root_rel/compiler-tmp");
-    make_path($compiler_tmp, dirname(repo_path($binary)));
-    local $ENV{TMPDIR} = $compiler_tmp;
-    my @compiler = shellwords($Config::Config{cc} // 'cc');
-    system @compiler, repo_path($program_source), '-o', repo_path($binary);
-    die "cannot compile native fake OSVVM provider\n" unless $? == 0;
-    chmod 0700, repo_path($binary)
-        or die "cannot chmod fake OSVVM provider: $!";
-    if ($^O eq 'darwin') {
-        system '/usr/bin/codesign', '--force', '--sign', '-',
-            repo_path($binary);
-        die "cannot ad-hoc sign fake OSVVM provider\n" unless $? == 0;
+
+my ($mode, $stage) = ('', '');
+for my $argument (@ARGV) {
+    $mode = $argument if $argument =~ /\A-[aer]\z/;
+    if ($argument =~ /\A--workdir=(.+)\z/) {
+        $stage = $1;
+        $stage =~ s{/libraries/.*\z}{};
     }
+}
+if ($mode eq '-r' && @ARGV >= 2) {
+    my $top = $ARGV[-2];
+    if ($top eq 'fsmgen_vial_osvvm_runtime_probe') {
+        unless ($0 =~ /no-reports/) {
+            my @report = qw(
+                OsvvmRun.yml AlertLogTop_alerts.yml AlertLogTop_cov.yml
+                AlertLogTop_sb_slv.yml
+            );
+            for my $index (0 .. $#report) {
+                my $path = "$stage/provider_reports/$report[$index]";
+                open my $fh, '>:raw', $path or exit 9;
+                print {$fh} "deterministic report $index\n" or exit 9;
+                close $fh or exit 10;
+            }
+        }
+        print "fake provider probe\n";
+    }
+    else {
+        print "fake fixture\n";
+    }
+}
+exit 0;
+PERL
+        chmod 0700, repo_path($binary)
+            or die "cannot chmod fake OSVVM provider: $!";
+    }
+    die "stable fake OSVVM provider is unavailable\n"
+        unless -f repo_path($archive) && !-l repo_path($archive)
+            && -f repo_path($binary) && !-l repo_path($binary)
+            && -x repo_path($binary);
     write_raw(repo_path($provider_source), "entity provider is end entity;\n");
     write_raw(repo_path($generated_source), "entity generated is end entity;\n");
 
@@ -340,7 +347,7 @@ C
             archive_sha256 => file_sha256(repo_path($archive)),
             binary => $binary,
             binary_sha256 => file_sha256(repo_path($binary)),
-            version_output => 'fake OSVVM GHDL 1',
+            version_output => 'fake GHDL 1',
         },
         source_set => $source_set,
         source_identity => $source_identity,
@@ -374,9 +381,12 @@ sub lifecycle_begin {
 
 sub lifecycle_advance {
     my ($request, $handle) = @_;
-    return FSM::VIAL::Backend::VHDLOSVVMGHDLQualification::_ghdl_lifecycle_advance_for_test({
-            %$request, handle => clone($handle),
-        });
+    my $observation_start = scalar @supervisor_observation;
+    my $result = FSM::VIAL::Backend::VHDLOSVVMGHDLQualification::_ghdl_lifecycle_advance_for_test({
+        %$request, handle => clone($handle),
+    });
+    report_timed_out_capture($result, $observation_start);
+    return $result;
 }
 
 sub lifecycle_abort {
@@ -425,8 +435,54 @@ sub file_sha256 {
     return $sha->hexdigest;
 }
 
+sub file_prefix {
+    my ($path, $length) = @_;
+    open my $fh, '<:raw', $path or die "cannot read $path: $!";
+    my $prefix = '';
+    my $read = read($fh, $prefix, $length);
+    die "cannot read prefix from $path: $!" unless defined $read;
+    close $fh or die "cannot close $path: $!";
+    return $prefix;
+}
+
+sub fake_shebang {
+    my $interpreter = $Config::Config{perlpath};
+    die "configured Perl interpreter is not one absolute safe path\n"
+        unless defined($interpreter) && !ref($interpreter)
+            && File::Spec->file_name_is_absolute($interpreter)
+            && index($interpreter, "\0") < 0
+            && index($interpreter, "\n") < 0;
+    return "#!$interpreter\n";
+}
+
+sub provider_shebang {
+    my ($request) = @_;
+    return $request->{provider}{root} eq 't/data/vial_fake_ghdl_provider'
+        ? "#!/bin/sh\n" : $fake_shebang;
+}
+
 sub clone {
     return JSON::PP->new->decode($json->encode($_[0]));
+}
+
+sub compact_capture {
+    my ($capture) = @_;
+    return {map { $_ => $capture->{$_} } qw(
+        ok exit_code signal timed_out output_limited exec_failed exec_error
+        started_monotonic_ns exec_handoff_monotonic_ns
+        first_output_monotonic_ns finished_monotonic_ns spawn_to_exec_ns
+        execution_ns exec_to_first_output_ns first_output_to_exit_ns
+        containment timeout_seconds capture_limit_bytes output_bytes
+    )};
+}
+
+sub report_timed_out_capture {
+    my ($result, $start) = @_;
+    return if $result->{ok};
+    my @timed_out = grep { $_->{timed_out} }
+        @supervisor_observation[$start .. $#supervisor_observation];
+    diag('timed-out supervisor capture: ' . $json->encode($_))
+        for @timed_out;
 }
 
 package FSM::VIAL::Backend::VHDLOSVVMGHDLQualification;

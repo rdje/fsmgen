@@ -10,7 +10,6 @@ use File::Path qw(make_path remove_tree);
 use File::Spec;
 use FindBin;
 use JSON::PP ();
-use Text::ParseWords qw(shellwords);
 use Test::More;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
@@ -21,9 +20,21 @@ use FSM::VIAL::Backend::VHDLPortableTraceValidator;
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my $json = JSON::PP->new->canonical(1);
+my $fake_shebang = fake_shebang();
 my $fake_root_rel = ".artifacts/test/vial-ghdl-lifecycle-$$";
 my $fake_root_abs = repo_path($fake_root_rel);
 my @owned_stage;
+my @supervisor_observation;
+my $capture_engine = \&FSM::VIAL::Backend::ProcessSupervisor::_capture;
+
+{
+    no warnings 'redefine';
+    *FSM::VIAL::Backend::ProcessSupervisor::_capture = sub {
+        my $capture = $capture_engine->(@_);
+        push @supervisor_observation, compact_capture($capture);
+        return $capture;
+    };
+}
 
 END {
     for my $relative (@owned_stage) {
@@ -60,6 +71,11 @@ ok(!$supervisor_unsealed, 'common production process supervisor is caller-sealed
 
 subtest 'admission is content-addressed, resumable, and abortable' => sub {
     my $request = fake_request('admission');
+    my $provider_shebang = provider_shebang($request);
+    is(file_prefix(
+            repo_path($request->{provider}{binary}), length($provider_shebang),
+        ), $provider_shebang,
+        'fake provider uses one exact script interpreter without native admission');
     my $begin = lifecycle_begin($request);
     diag($json->encode($begin->{diagnostics})) unless $begin->{ok};
     ok($begin->{ok}, 'sealed qualification caller admits one GHDL lifecycle');
@@ -110,7 +126,7 @@ subtest 'collision and mutated handle preserve the proven owner' => sub {
     $request = fake_request('symlink-provider');
     my $provider_root = $request->{provider}{root};
     my $linked_root = "$fake_root_rel/provider-link";
-    symlink('provider', repo_path($linked_root))
+    symlink(repo_path($provider_root), repo_path($linked_root))
         or die "cannot create provider symlink control: $!";
     $request->{provider}{root} = $linked_root;
     $request->{provider}{archive} =~ s/\Q$provider_root\E/$linked_root/;
@@ -299,40 +315,37 @@ done_testing();
 
 sub fake_request {
     my ($label, $analysis_failure) = @_;
-    remove_tree($fake_root_abs)
-        if -d $fake_root_abs && !-l $fake_root_abs;
-    my $provider_root = "$fake_root_rel/provider";
+    my $dynamic_provider = $label eq 'provider-mutation' || !-x '/bin/sh';
+    my $provider_root = $dynamic_provider
+        ? "$fake_root_rel/provider"
+        : 't/data/vial_fake_ghdl_provider';
     my $binary = "$provider_root/bin/ghdl";
     my $archive = "$provider_root/ghdl.tar.gz";
-    my $program_source = "$provider_root/fake-ghdl.c";
     my $source = "$fake_root_rel/source/input.vhd";
-    write_raw(repo_path($archive), "fake archive\n");
-    write_raw(repo_path($program_source), <<'C');
-#include <stdio.h>
-#include <string.h>
+    my $linked_root = "$fake_root_rel/provider-link";
+    unlink repo_path($linked_root) if -l repo_path($linked_root);
+    die "fake provider-link path is not test-owned\n"
+        if -e repo_path($linked_root);
+    if ($dynamic_provider) {
+        write_raw(repo_path($archive), "fake archive\n");
+        write_raw(repo_path($binary), $fake_shebang . <<'PERL');
+use strict;
+use warnings;
 
-int main(int argc, char **argv) {
-    int index;
-    if (argc == 2 && strcmp(argv[1], "--version") == 0) {
-        fputs("fake GHDL 1\n", stdout);
-        return 0;
-    }
-    for (index = 1; index < argc; index++) {
-        if (strcmp(argv[index], "--fail-analysis") == 0) {
-            return 7;
-        }
-    }
-    return 0;
+if (@ARGV == 1 && $ARGV[0] eq '--version') {
+    print "fake GHDL 1\n";
+    exit 0;
 }
-C
-    my $compiler_tmp = repo_path("$fake_root_rel/compiler-tmp");
-    make_path($compiler_tmp);
-    make_path(dirname(repo_path($binary)));
-    local $ENV{TMPDIR} = $compiler_tmp;
-    my @compiler = shellwords($Config::Config{cc} // 'cc');
-    system @compiler, repo_path($program_source), '-o', repo_path($binary);
-    die "cannot compile native fake provider\n" unless $? == 0;
-    chmod 0700, repo_path($binary) or die "cannot chmod fake provider: $!";
+exit 7 if grep { $_ eq '--fail-analysis' } @ARGV;
+exit 0;
+PERL
+        chmod 0700, repo_path($binary)
+            or die "cannot chmod fake provider: $!";
+    }
+    die "stable fake provider is unavailable\n"
+        unless -f repo_path($archive) && !-l repo_path($archive)
+            && -f repo_path($binary) && !-l repo_path($binary)
+            && -x repo_path($binary);
     write_raw(repo_path($source), "entity input is end entity;\n");
     my $stage = '.artifacts/tmp/vial-ghdl-qualification/'
         . sha256_hex("fsmgen-ghdl-test-$label-$$");
@@ -484,9 +497,12 @@ sub lifecycle_begin {
 
 sub lifecycle_advance {
     my ($request, $handle) = @_;
-    return FSM::VIAL::Backend::VHDLPortableGHDLQualification::_ghdl_lifecycle_advance_for_test({
+    my $observation_start = scalar @supervisor_observation;
+    my $result = FSM::VIAL::Backend::VHDLPortableGHDLQualification::_ghdl_lifecycle_advance_for_test({
             %$request, handle => clone($handle),
         });
+    report_timed_out_capture($result, $observation_start);
+    return $result;
 }
 
 sub lifecycle_abort {
@@ -509,9 +525,12 @@ sub measurement_begin {
 
 sub measurement_advance {
     my ($request, $handle) = @_;
-    return FSM::VIAL::ArchitectureScalePortableVHDLRuntimeMeasurement::_ghdl_lifecycle_advance_for_test({
+    my $observation_start = scalar @supervisor_observation;
+    my $result = FSM::VIAL::ArchitectureScalePortableVHDLRuntimeMeasurement::_ghdl_lifecycle_advance_for_test({
         %$request, handle => clone($handle),
     });
+    report_timed_out_capture($result, $observation_start);
+    return $result;
 }
 
 sub measurement_abort {
@@ -558,8 +577,54 @@ sub file_sha256 {
     return $sha->hexdigest;
 }
 
+sub file_prefix {
+    my ($path, $length) = @_;
+    open my $fh, '<:raw', $path or die "cannot read $path: $!";
+    my $prefix = '';
+    my $read = read($fh, $prefix, $length);
+    die "cannot read prefix from $path: $!" unless defined $read;
+    close $fh or die "cannot close $path: $!";
+    return $prefix;
+}
+
+sub fake_shebang {
+    my $interpreter = $Config::Config{perlpath};
+    die "configured Perl interpreter is not one absolute safe path\n"
+        unless defined($interpreter) && !ref($interpreter)
+            && File::Spec->file_name_is_absolute($interpreter)
+            && index($interpreter, "\0") < 0
+            && index($interpreter, "\n") < 0;
+    return "#!$interpreter\n";
+}
+
+sub provider_shebang {
+    my ($request) = @_;
+    return $request->{provider}{root} eq 't/data/vial_fake_ghdl_provider'
+        ? "#!/bin/sh\n" : $fake_shebang;
+}
+
 sub clone {
     return JSON::PP->new->decode($json->encode($_[0]));
+}
+
+sub compact_capture {
+    my ($capture) = @_;
+    return {map { $_ => $capture->{$_} } qw(
+        ok exit_code signal timed_out output_limited exec_failed exec_error
+        started_monotonic_ns exec_handoff_monotonic_ns
+        first_output_monotonic_ns finished_monotonic_ns spawn_to_exec_ns
+        execution_ns exec_to_first_output_ns first_output_to_exit_ns
+        containment timeout_seconds capture_limit_bytes output_bytes
+    )};
+}
+
+sub report_timed_out_capture {
+    my ($result, $start) = @_;
+    return if $result->{ok};
+    my @timed_out = grep { $_->{timed_out} }
+        @supervisor_observation[$start .. $#supervisor_observation];
+    diag('timed-out supervisor capture: ' . $json->encode($_))
+        for @timed_out;
 }
 
 package FSM::VIAL::Backend::VHDLPortableGHDLQualification;

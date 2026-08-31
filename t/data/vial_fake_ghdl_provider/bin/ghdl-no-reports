@@ -1,0 +1,27 @@
+#!/bin/sh
+
+if [ "$#" -eq 1 ] && [ "$1" = "--version" ]; then
+    printf '%s\n' 'fake GHDL 1'
+    exit 0
+fi
+
+mode=''
+previous=''
+current=''
+for argument in "$@"; do
+    previous=$current
+    current=$argument
+    case "$argument" in
+        -a|-e|-r)
+            mode=$argument
+            ;;
+    esac
+done
+if [ "$mode" = '-r' ]; then
+    if [ "$previous" = 'fsmgen_vial_osvvm_runtime_probe' ]; then
+        printf '%s\n' 'fake provider probe'
+    else
+        printf '%s\n' 'fake fixture'
+    fi
+fi
+exit 0

@@ -198,6 +198,18 @@ content reports the cleanup diagnostic and the exact staging identity as
 residue; it never claims proof from an owner file that may not have been
 written.
 
+The lifecycle regressions still cross the real shared process supervisor, but
+their fake GHDL providers do not compile transient host-native executables.
+On hosts with `/bin/sh`, both tests use one stable, tracked repository-local
+POSIX provider; a configured-Perl script remains the fallback where that shell
+is absent. The stable provider avoids compiler, code-sign, ambient `PATH`, and
+intermittent Apple-Perl pre-main work while retaining version output, nonzero
+analysis, provider reports, process-group containment, capture, deadline, and
+cleanup coverage. If a supervised phase times out, the tests also print its
+bounded spawn/`exec`/first-output/finish evidence. They never retry the failed
+phase. The production GHDL provider and its ten-second version deadline are
+unchanged.
+
 ```sh
 prove -Iperl t/1725-vial-ghdl-cleanup-diagnostic-authority.t \
   t/1726-vial-ghdl-admission-cleanup-evidence.t \
