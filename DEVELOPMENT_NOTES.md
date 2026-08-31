@@ -1068,3 +1068,8 @@ The execution layer now admits both cardinalities immediately after fixture
 and scenario selection, before its context exists. The original binding-path
 checks remain terminal defense. This preserves lower-layer route authority and
 accepted plans while making the execution component independently bounded.
+
+## 2026-08-31: Compact operation admission distinguishes excess from inconsistency
+
+The compact preflight admits declared and compact-derived counts before equality: excess gets the limit diagnostic,
+in-bound disagreement stays internal, and aggregate/terminal defenses and accepted plan bytes remain unchanged.

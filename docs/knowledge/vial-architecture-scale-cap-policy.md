@@ -12,6 +12,7 @@ answers:
   - "how are total and simultaneous VIAL fibers counted before materialization?"
   - "when is VIAL execution profile cardinality enforced?"
   - "does VIAL recheck selected unit and domain cardinality after SemanticIR and bridge validation?"
+  - "when is the VIAL execution operations-per-scenario cap enforced?"
 date: 2026-08-31
 status: current
 tags: [vial, architecture-scale, limits, bounded-failure, route-authority]
@@ -45,6 +46,7 @@ evidence: >-
   t/1624-vial-architecture-scale-execution-live-fiber-limit.t;
   t/1625-vial-architecture-scale-execution-total-fiber-limit.t;
   t/1705-vial-execution-selected-domain-cap-order.t;
+  t/1706-vial-execution-operation-cardinality-cap-order.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -71,6 +73,7 @@ reverify: >-
   t/1624-vial-architecture-scale-execution-live-fiber-limit.t
   t/1625-vial-architecture-scale-execution-total-fiber-limit.t
   t/1705-vial-execution-selected-domain-cap-order.t
+  t/1706-vial-execution-operation-cardinality-cap-order.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -153,13 +156,12 @@ the original post-emission checks remain terminal defense. Exact excess
 diagnostics, accepted plan identities, and the legal 65,536-total-fiber
 workload's later serialized-plan rejection remain unchanged.
 
-Execution-profile selection admits the requested scenario count at invocation,
-then checks the selected fixture's one-unit and one-domain shape before
-execution-context construction. Public SemanticIR and bridge construction
-remain the earlier normal-route authorities for their own profile shapes; the
-execution check is an independent defense for internally constructed inputs.
-The terminal binding checks remain, while exact accepted plan identity and
-lower-layer diagnostics are unchanged.
+Execution admission checks scenario count and selected fixture shape, then each
+scenario's declared and compact-derived operation counts and their saturating
+aggregate, before context construction. SemanticIR and bridge remain the
+earlier normal-route authorities; execution checks defend internal inputs.
+Binding and post-emission checks remain terminal defenses, with lower-layer
+diagnostics and accepted plan identity unchanged.
 
 The guarded exact semantic-catalog and bridge-fanout matrices close every
 selected parser/SemanticIR and bridge qualification, boundary, excess, and cap

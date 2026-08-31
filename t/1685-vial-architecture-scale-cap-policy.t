@@ -195,6 +195,22 @@ ok(
     'execution profile policy cites the exact unit/domain admission witness',
 );
 is(
+    $policy->{groups}{execution_operation_cardinality}{current_enforcement},
+    'compact_per_scenario_and_total_preflight_with_terminal_defense',
+    'execution operation policy records both compact preflights and terminal defense',
+);
+is(
+    $policy->{groups}{execution_operation_cardinality}{selected_treatment},
+    'retain_compact_preflights_and_terminal_defense',
+    'execution operation policy retains all three enforcement points',
+);
+ok(
+    scalar(grep {
+        $_ eq 't/1706-vial-execution-operation-cardinality-cap-order.t'
+    } @{$policy->{groups}{execution_operation_cardinality}{evidence}}),
+    'execution operation policy cites the per-scenario admission witness',
+);
+is(
     $policy->{groups}{execution_fiber_cardinality}{current_enforcement},
     'compact_preflight_before_execution_context_and_terminal_defense',
     'execution fiber policy records compact preflight plus terminal defense',

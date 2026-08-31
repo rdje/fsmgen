@@ -664,17 +664,23 @@ sub _preflight_expanded_operations_total($scenarios) {
     my $scenario_limit = $LIMIT{expanded_operations_per_scenario};
     my $total_limit = $LIMIT{expanded_operations_total};
     for my $scenario (@$scenarios) {
-        my $expected = _bounded_canonical_count(
-            $scenario->{action_count}, $scenario_limit,
-        );
         _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
             'selected scenario action_count is outside its validated bound',
             $scenario->{semantic_path}, $scenario->{source_span})
-            if $expected == 0 || $expected > $scenario_limit;
+            unless defined($scenario->{action_count})
+                && !ref($scenario->{action_count})
+                && "$scenario->{action_count}" =~ /\A[1-9][0-9]*\z/;
+        my $expected = _bounded_canonical_count(
+            $scenario->{action_count}, $scenario_limit,
+        );
+        _limit('expanded_operations_per_scenario', $expected,
+            $scenario->{semantic_path});
 
         my $derived = _expanded_operation_count(
-            $scenario->{actions}, $expected, $scenario,
+            $scenario->{actions}, $scenario_limit, $scenario,
         );
+        _limit('expanded_operations_per_scenario', $derived,
+            $scenario->{semantic_path});
         _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
             'selected scenario action_count disagrees with its compact action tree',
             $scenario->{semantic_path}, $scenario->{source_span})

@@ -244,12 +244,13 @@ my $GROUPS = {
         'FSM::Support::VIALExecutionContract', 'bind_plan',
         ['VIAL_EXECUTION_LIMIT_ERROR', 'VIAL_LIMIT_ERROR'],
         'scenario or operation-graph path',
-        'compact_total_preflight_and_per_scenario_terminal_defense',
+        'compact_per_scenario_and_total_preflight_with_terminal_defense',
         'no_execution_ir_plan_or_replay',
-        'retain_preflight_and_move_remaining_same_layer_checks', '.17.4.4',
+        'retain_compact_preflights_and_terminal_defense', '.17.4.4',
         [
             't/1620-vial-architecture-scale-execution-operation-limit.t',
             't/1626-vial-architecture-scale-execution-total-operation-limit.t',
+            't/1706-vial-execution-operation-cardinality-cap-order.t',
         ],
     ),
     execution_fiber_cardinality => _group(

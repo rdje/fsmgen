@@ -3109,6 +3109,24 @@ returns no partial ExecutionIR or plan. The existing checks in the binding
 path remain terminal defense. Exact accepted plan bytes and identities are
 unchanged, as are the component ceilings and the lower-layer route authorities.
 
+### Execution operation-cap admission order
+
+The execution builder independently re-derives each selected scenario's
+expanded operation count from its compact action tree. It now admits both the
+declared per-scenario count and that independent derivation against the
+established per-scenario ceiling before adding the scenario to the aggregate
+total. The aggregate total retains its existing saturating preflight. All of
+these checks run before execution-context construction or bridge indexing.
+
+Ordinary SemanticIR construction already applies its own expanded-action
+ceiling, so that semantic diagnostic remains the normal route authority. The
+execution checks are independent defense for internally constructed IR: a
+declared excess wins before compact-tree inspection, while a compact repeat or
+parallel shape whose derived count crosses the ceiling receives the resource
+diagnostic rather than an internal-consistency diagnostic. The original
+post-emission per-scenario and aggregate checks remain terminal defense, and
+accepted plans are byte-identical.
+
 ### Execution fiber-cap admission order
 
 After fixture/scenario selection, the execution builder walks the compact
