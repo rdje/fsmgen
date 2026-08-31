@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **69** uniquely owned question entries.
+> **2** facts · **70** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -52,6 +52,7 @@
 - q="when does VIAL random-attempt exhaustion stop plan construction?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="when is the VIAL execution operations-per-scenario cap enforced?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="when is the VIAL fault collection cap enforced?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
+- q="when is the VIAL random-occurrence cap enforced?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="when is the VIAL serialized-plan byte cap enforced?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="where are VIAL scale measurement artifacts staged and published?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="where are the VIAL portable backend source byte boundaries?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)

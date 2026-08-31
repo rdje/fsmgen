@@ -253,9 +253,15 @@ sub _build($raw, $qualification_profile = undef) {
     _validate_balanced_portable_bindings($bindings)
         if ($qualification_profile // '') eq 'balanced_portable_v2';
     _index_scenario_handle_bindings($ctx);
+    my $random_occurrence_preflight =
+        _preflight_random_occurrence_count($ctx);
     my ($operation_graph, $scenario_records) = _build_operations($ctx);
     my $random_occurrences = _random_occurrence_count($ctx);
     _limit('random_occurrences', $random_occurrences, '/randomness/decisions');
+    _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+        'random occurrence count changed after compact preflight',
+        '/randomness/decisions')
+        unless $random_occurrences == $random_occurrence_preflight;
     my $random_projection = _project_random_plan_arrays(
         $ctx, $raw->{replay_manifest}, $semantic_identity, $bridge_identity,
         $random_occurrences,
@@ -1951,6 +1957,19 @@ sub _random_occurrence_count($ctx) {
             } @$operations;
         }
     }
+    return $count;
+}
+
+sub _preflight_random_occurrence_count($ctx) {
+    my $count = 0;
+    for my $scenario (@{$ctx->{scenarios}}) {
+        for my $choice (@{$ctx->{fixture}{randomness}{choices}}) {
+            ++$count if _contains_scalar(
+                $scenario->{actions}, $choice->{semantic_id},
+            );
+        }
+    }
+    _limit('random_occurrences', $count, '/randomness/decisions');
     return $count;
 }
 

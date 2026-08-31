@@ -353,10 +353,13 @@ my $GROUPS = {
     checking_randomness => _group(
         'FSM::Support::VIALExecutionContract', 'bind_plan',
         ['VIAL_EXECUTION_LIMIT_ERROR'], 'random decisions or plan path',
-        'count_then_plan_preflight_before_decision_materialization',
+        'compact_occurrence_preflight_before_operation_graph_with_terminal_count_then_plan_preflight_before_decision_materialization',
         'no_execution_ir_plan_replay_or_checking_result',
-        'retain_preflight_and_move_remaining_same_layer_checks', '.17.4.5',
-        ['t/1634-vial-architecture-scale-checking-random-replay.t'],
+        'retain_occurrence_preflights_plan_preflight_and_terminal_bytes',
+        '.17.4.5', [
+            't/1634-vial-architecture-scale-checking-random-replay.t',
+            't/1715-vial-execution-random-occurrence-preflight.t',
+        ],
     ),
     backend_artifact_graph => _group(
         'FSM::VIAL::BackendEmissionAuthority', 'emit',

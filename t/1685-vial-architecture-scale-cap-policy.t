@@ -348,6 +348,22 @@ ok(
     } @{$policy->{groups}{checking_faults}{evidence}}),
     'checking fault policy cites the exact normalization-seam witness',
 );
+is(
+    $policy->{groups}{checking_randomness}{current_enforcement},
+    'compact_occurrence_preflight_before_operation_graph_with_terminal_count_then_plan_preflight_before_decision_materialization',
+    'checking random policy records occurrence and plan preflights',
+);
+is(
+    $policy->{groups}{checking_randomness}{selected_treatment},
+    'retain_occurrence_preflights_plan_preflight_and_terminal_bytes',
+    'checking random policy retains preflights and terminal byte defense',
+);
+ok(
+    scalar(grep {
+        $_ eq 't/1715-vial-execution-random-occurrence-preflight.t'
+    } @{$policy->{groups}{checking_randomness}{evidence}}),
+    'checking random policy cites the compact operation-graph seam witness',
+);
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;
 my @catalog_axes;

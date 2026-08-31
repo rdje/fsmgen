@@ -19,6 +19,7 @@ answers:
   - "when are VIAL scoreboard-instance and aggregate-capacity caps enforced?"
   - "when are VIAL coverpoint and bin-cross aggregate caps enforced?"
   - "when is the VIAL fault collection cap enforced?"
+  - "when is the VIAL random-occurrence cap enforced?"
 date: 2026-08-31
 status: current
 tags: [vial, architecture-scale, limits, bounded-failure, route-authority]
@@ -62,6 +63,7 @@ evidence: >-
   t/1712-vial-execution-scoreboard-cardinality-preflight.t;
   t/1713-vial-execution-coverage-cardinality-preflight.t;
   t/1714-vial-execution-fault-cardinality-preflight.t;
+  t/1715-vial-execution-random-occurrence-preflight.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -98,6 +100,7 @@ reverify: >-
   t/1712-vial-execution-scoreboard-cardinality-preflight.t
   t/1713-vial-execution-coverage-cardinality-preflight.t
   t/1714-vial-execution-fault-cardinality-preflight.t
+  t/1715-vial-execution-random-occurrence-preflight.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -109,41 +112,14 @@ terminal defenses, but no limit increase, decrease, re-levelling, support,
 budget, capacity, or accepted-profile change. Decision [[vial-execution-scale-axis-outcomes]]
 retains the reachability evidence; decision `0093` is the rationale authority.
 
-Direct import fan-out that cannot fit the remaining 64-source import ceiling
-is rejected at the first overflowing direct edge before recursive catalog
-source parsing. Malformed imported bytes cannot mask the established import
-limit, while accepted depth-first ordering, semantic identities, and the
-per-edge nested-import defense remain unchanged.
+Parser admission checks each source's bytes before lexing and direct import
+fan-out before recursion. Malformed imported syntax cannot mask either limit;
+accepted ordering and identities plus the nested-edge defense remain.
 
-Per-source and combined imported-source bytes are admitted before lexing each
-affected source. Malformed token bytes cannot mask either established byte
-limit, while exact-boundary source order and semantic identities remain
-unchanged.
-
-Scenario action accounting now reserves the 65,536-expanded-action ceiling
-before inspecting the next action node. Repeat bodies are checked once, then
-additional copies are admitted with division-before-multiplication arithmetic.
-Crossing the cap therefore retains the established scenario-level diagnostic
-and cannot be masked by malformed later syntax or leak a partial semantic
-report; exact-boundary accepted behavior is unchanged.
-
-Parallel depth and fiber count are admitted before join-value resolution.
-Known fiber excess therefore retains its action-level limit diagnostic even
-when the join value is invalid; accepted boundary identities are unchanged.
-
-Each declaration family is admitted immediately after its section shape is
-parsed. Known excess therefore wins before malformed later package sections,
-with unchanged exact-boundary projection and report identities.
-
-Scoreboard capacity and coverage-cross `max_bins` are admitted before
-dependent transaction or coverpoint resolution. Known scalar excess therefore
-retains its established limit diagnostic and atomic failure even when a later
-reference is invalid; admitted declarations retain every reference, type,
-domain, key, and Cartesian-product validation.
-
-List length, record field count, and aggregate depth are admitted before
-recursive inner-type resolution. Invalid inner types cannot mask any known
-outer-shape excess, while exact-boundary semantic identities remain unchanged.
+Semantic admission reserves action/repeat capacity overflow-safely and checks
+parallel shape, declarations, scoreboard/cross scalars, and type shape before
+dependent parsing or resolution. Exact diagnostics, atomic failure, and
+accepted identities remain.
 
 Before dependent validation, normalization, or record materialization, the
 bridge admits actor parameters, endpoints, observations, probes, distinct
@@ -173,4 +149,6 @@ retaining terminal caps. Semantic cross `max_bins` and the coverpoint route's
 parser byte cap remain earlier authorities; both local excesses retain
 `/coverage`. Fault count preflights record normalization with terminal
 agreement; excess retains `/faults` and creates no records. Randomness keeps
-its owner and nonclaims.
+its owner and nonclaims: compact occurrence count preflights operation-graph
+emission, terminal recount must agree, and serialized-plan projection still
+precedes decision materialization with terminal byte defense.

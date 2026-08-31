@@ -856,8 +856,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Enforce the selected checking-state resource caps before avoidable state-service materialization.`
   Acceptance: `Implement only the .17.4.1-selected checking contract for models, scalar cells, scoreboards and capacity, coverage, faults, and random occurrences. Preserve exact accepted checking semantics and replay while proving earliest deterministic rejection, no partial checking result, bounded construction, and guarded checking_state_v1 boundaries.`
-  Verification: `Model/scalar, scoreboard, coverage, and fault counts now preflight compact SemanticIR before normalization with terminal agreement/defense and stable accepted plans. t1633/t1685/t1714 pass Files=3/Tests=87. Random admission is next.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: activate checking cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight model cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight scoreboard cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight coverage cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight fault cardinality`
+  Verification: `All selected checking counts now preflight compact SemanticIR before dependent normalization or operation-graph construction, with terminal agreement/defense and stable accepted plans. t1634/t1685/t1715 pass Files=3/Tests=90; the guarded exact checking matrix is the remaining closure step.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: activate checking cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight model cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight scoreboard cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight coverage cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight fault cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight random occurrence cardinality`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6`
   Status: `proposed`
   Goal: `Enforce the selected backend-emission resource caps before partial artifact publication.`
@@ -7787,12 +7787,12 @@ The completed node records above and their named Git commits remain the canonica
 
 ## Acceptance Checklist (enforced) — `.17.4.4` fiber-cardinality preflight
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — History identifies `44dbecd1a`: both fiber limits followed `_emit_sequence` even though compact SemanticIR already determines them.
-- [x] **ADDRESSED (verified)** — RED t1624/t1625 entered `_index_bridge` three times per excess; GREEN `Files=3, Tests=53` preflights both measures, retains diagnostics/accepted and later-plan-cap identities, and keeps terminal checks.
-- [x] **NO REGRESSION** — The focused set reports `Files=7, Tests=75`; syntax, mdBook, Knowledge Map, claims, containment, and doctrines pass. Full CI/push remain deferred.
+- [x] **ROOT CAUSE (WHY + WHERE)** — History identifies `44dbecd1a`; both fiber limits followed `_emit_sequence` although compact SemanticIR determines them.
+- [x] **ADDRESSED (verified)** — t1624/t1625 prove both compact preflights, stable outcomes, and retained terminal checks.
+- [x] **NO REGRESSION** — Focused coverage passed `Files=7, Tests=75`; docs and doctrines passed; full CI/push remain deferred.
 
-## Acceptance Checklist (enforced) — `.17.4.5` fault-cardinality preflight
+## Acceptance Checklist (enforced) — `.17.4.5` random-occurrence preflight
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S"_limit('faults'" -- perl/FSM/VIAL/ExecutionBuilder.pm` identifies `44dbecd1a`; normalization preceded count admission.
-- [x] **ADDRESSED (verified)** — Compact preflight now precedes `_build_faults`; normalized count agreement and terminal defense remain. t1633/t1714 pin both paths.
-- [x] **NO REGRESSION** — Focused fault/policy coverage passes `Files=3, Tests=87`; broader checking/core passes `Files=12, Tests=175`, and all book chapters, Knowledge Map, claims, containment, staged diff, and doctrines close the slice. Full CI/push remain deferred.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_random_occurrence_count' -- perl/FSM/VIAL/ExecutionBuilder.pm` identifies `44dbecd1a`; occurrence admission followed operation-graph construction.
+- [x] **ADDRESSED (verified)** — Compact scenario/choice preflight now precedes `_build_operations`; terminal recount, projected-plan preflight, and terminal byte defense remain. t1634/t1715 pin both authorities.
+- [x] **NO REGRESSION** — Focused random/policy coverage passes `Files=3, Tests=90`; broader checking/core passes `Files=13, Tests=187`. Syntax, every book chapter, Knowledge Map, claims, and containment pass; staged diff and doctrines close the slice. Full CI/push remain deferred.

@@ -3867,6 +3867,13 @@ The random renderer reuses a bounded palette of 128 Boolean choices. Each refere
 
 Higher selected levels preserve the earliest real authority. The full 32,768 route counts all occurrences in SemanticIR and returns only `VIAL_EXECUTION_LIMIT_ERROR` at `/plan`. The 65,536 level is explicitly `preflight_dominated` / `not_materialized`, publishes no stage identity, and does not claim the nominal occurrence count. The 65,537 route reaches only the exact `/randomness/decisions` diagnostic. Opt-in evidence accepts 8,440 occurrences at 16,775,415 plan bytes and rejects adjacent 8,441 at the 16,777,216-byte cap before the final decision list, ExecutionIR, or report; accepted terminal serialization must equal the projection and remains defense in depth. These are exact checking outcomes, not supported-capacity or runtime-throughput claims.
 
+Random occurrence count is derived from compact selected scenario actions and
+choice identities after binding validation but before operation-graph emission.
+The post-graph recount must agree. Adjacent occurrence excess therefore creates
+no operations, while the lower serialized-plan projection still rejects its
+route boundary before decision, ExecutionIR, or report materialization;
+accepted terminal bytes and replay semantics remain unchanged.
+
 The frozen foundation route uses the checked AHB VIAL content as a deliberately
 non-axis-evaluated source witness. Its workload identity is
 `workload/7a125500c716e333ac8849ca5594849dc52e34380f0ba0ec416a2e12975247c7`;
