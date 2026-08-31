@@ -289,6 +289,7 @@ my $GROUPS = {
         [
             't/1614-vial-architecture-scale-execution-random-limit.t',
             't/1615-vial-architecture-scale-execution-random-over-limit.t',
+            't/1710-vial-execution-random-attempt-authority.t',
         ],
     ),
     execution_serialized_plan => _group(

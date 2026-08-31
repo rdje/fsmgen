@@ -246,6 +246,22 @@ is(
     'retain_compact_preflight_and_terminal_defense',
     'execution fiber policy retains both enforcement layers',
 );
+is(
+    $policy->{groups}{execution_random_attempts}{current_enforcement},
+    'bounded_generation_before_plan_materialization',
+    'execution random policy records bounded projection-time generation',
+);
+is(
+    $policy->{groups}{execution_random_attempts}{selected_treatment},
+    'verify_existing_early_boundary',
+    'execution random policy retains the intrinsic search authority',
+);
+ok(
+    scalar(grep {
+        $_ eq 't/1710-vial-execution-random-attempt-authority.t'
+    } @{$policy->{groups}{execution_random_attempts}{evidence}}),
+    'execution random policy cites the final-materialization seam witness',
+);
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;
 my @catalog_axes;

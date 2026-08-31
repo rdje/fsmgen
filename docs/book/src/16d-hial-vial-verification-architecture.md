@@ -3428,7 +3428,7 @@ die "unexpected random construction\n"
 ```
 
 Evaluation performs two independent generated builds and a strict
-`fsmgen.vial_replay.v1` build through the unchanged public binder. Generated
+`fsmgen.vial_replay.v1` build through the unchanged public binder. Attempt exhaustion is authoritative inside projection: plan-byte preflight, the final decision list, ExecutionIR, and report are not entered. Generated
 and replayed decision records are byte-equal after removing `origin`; the only
 permitted values are `generated` and `replayed`. The derived plan identity also
 changes, while every other plan field is equal. The generated/replayed plans
