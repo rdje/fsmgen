@@ -8,8 +8,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3`
   (`active`; HIAL-to-VIAL bridge-cap hardening under decision `0093`)
-- next_action: audit serialized-manifest byte authority and add the final bridge
-  earliest-authority proof before changing its canonical byte enforcement.
-- in_flight_uncommitted: none after the source-map admission commit.
+- next_action: run the guarded exact t1602 matrix and close `.17.4.3` if every
+  selected bridge boundary remains green.
+- in_flight_uncommitted: serialized-manifest terminal-authority proof pending
+  focused gates and commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none; immutable `.17.3` evidence is the selection input.

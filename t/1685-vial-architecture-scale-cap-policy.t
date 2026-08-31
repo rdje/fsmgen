@@ -167,6 +167,18 @@ ok(
         @{$policy->{groups}{bridge_normalized_collections}{evidence}}),
     'bridge policy cites the exact source-map admission witness',
 );
+is($policy->{groups}{bridge_serialized_manifest}{current_enforcement},
+    'after_canonical_encoding',
+    'bridge byte policy records exact terminal canonical encoding');
+is($policy->{groups}{bridge_serialized_manifest}{selected_treatment},
+    'retain_terminal_canonical_byte_check',
+    'bridge byte policy retains its exact terminal authority');
+ok(
+    scalar(grep {
+        $_ eq 't/1704-hial-vial-bridge-serialized-manifest-terminal-authority.t'
+    } @{$policy->{groups}{bridge_serialized_manifest}{evidence}}),
+    'bridge byte policy cites the exact terminal-authority witness',
+);
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;
 my @catalog_axes;

@@ -36,6 +36,7 @@ evidence: >-
   t/1701-hial-vial-bridge-residue-cap-order.t;
   t/1702-hial-vial-bridge-backend-binding-cap-order.t;
   t/1703-hial-vial-bridge-source-map-cap-order.t;
+  t/1704-hial-vial-bridge-serialized-manifest-terminal-authority.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -58,6 +59,7 @@ reverify: >-
   t/1701-hial-vial-bridge-residue-cap-order.t
   t/1702-hial-vial-bridge-backend-binding-cap-order.t
   t/1703-hial-vial-bridge-source-map-cap-order.t
+  t/1704-hial-vial-bridge-serialized-manifest-terminal-authority.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -128,6 +130,8 @@ Backend-binding cardinality is derived and admitted before either backend's
 mapping lookup or any normalized binding-record construction.
 Each projected source-map entry is admitted before record construction, so the
 65,537th entry is never materialized and the terminal defense remains intact.
+Exact serialized-manifest bytes remain terminal because only canonical encoding
+decides size; boundary acceptance and adjacent valid excess are both frozen.
 
 The guarded exact semantic-catalog matrix now closes every selected
 qualification, boundary, excess, and declared cap interaction through the

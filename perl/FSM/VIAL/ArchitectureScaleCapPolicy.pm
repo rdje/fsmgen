@@ -221,7 +221,10 @@ my $GROUPS = {
         ['HIAL_VIAL_BRIDGE_LIMIT_ERROR'], 'manifest root path',
         'after_canonical_encoding', 'no_manifest_or_report',
         'retain_terminal_canonical_byte_check', '.17.4.3',
-        ['t/1602-vial-architecture-scale-bridge-fanout.t'],
+        [
+            't/1602-vial-architecture-scale-bridge-fanout.t',
+            't/1704-hial-vial-bridge-serialized-manifest-terminal-authority.t',
+        ],
     ),
     execution_profile_selection => _group(
         'FSM::Support::VIALExecutionContract', 'bind_plan',
