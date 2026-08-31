@@ -850,8 +850,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Enforce the selected execution-graph resource caps before avoidable graph, random, source-map, or plan materialization.`
   Acceptance: `Implement only the .17.4.1-selected execution contract; preserve the existing compact total-operation and serialized-plan preflights, repair remaining late checks, and reconcile binding/type/map limits with lower bridge and byte authorities. Prove deterministic diagnostics, no partial ExecutionIR/plan/replay, unchanged accepted plans, and guarded execution_graph_v1 boundaries.`
-  Verification: `Segment fe8d16354a8ab20cfc88625d6eb7fc53fedd68a4a06cb4317db740c03d550a7e retains .17.4.3; decision 0093 confines execution hardening. t1624/t1625 preflight fibers, t1705 profile shape, t1706 operations, and t1707 a novel type before clone/cache/insertion while duplicates remain reusable at the ceiling. Terminal defenses, accepted identities, layered route authority, and atomic failure remain. Binding/map/random/plan checks are next.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: activate execution cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: preflight execution fiber cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: preflight execution profile cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: preflight per-scenario operation cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: admit execution type before insertion`
+  Verification: `Segment fe8d16354a8ab20cfc88625d6eb7fc53fedd68a4a06cb4317db740c03d550a7e retains .17.4.3; decision 0093 confines execution hardening. t1624/t1625 preflight fibers, t1705 profile, t1706 operations, t1707 novel types, and t1708 each base source map before payload materialization. Terminal defenses, accepted identities, layered route authority, and atomic failure remain. Binding/random/plan checks are next.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: activate execution cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: preflight execution fiber cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: preflight execution profile cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: preflight per-scenario operation cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: admit execution type before insertion; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: admit source map before insertion`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5`
   Status: `proposed`
   Goal: `Enforce the selected checking-state resource caps before avoidable state-service materialization.`
@@ -7791,11 +7791,11 @@ The completed node records above and their named Git commits remain the canonica
 - [x] **ADDRESSED (verified)** — RED t1624/t1625 entered `_index_bridge` three times per excess; GREEN `Files=3, Tests=53` preflights both measures, retains diagnostics/accepted and later-plan-cap identities, and keeps terminal checks.
 - [x] **NO REGRESSION** — The focused set reports `Files=7, Tests=75`; syntax, every mdBook chapter, Knowledge Map (1,156 facts/6,139 questions), claims, task, locality, containment, staged-result, diff, ceiling, and doctrine gates pass. Full CI/push remain deferred.
 
-## Acceptance Checklist (enforced) — `.17.4.4` execution type-table admission
+## Acceptance Checklist (enforced) — `.17.4.4` execution source-map admission
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — type-table admission:
-  `git log -S` identifies `44dbecd1a` as the type-limit origin. RED t1707 proved a novel one-over shape was cloned, cached, and appended before rejection, leaving 65,537 entries and two cache keys.
-- [x] **ADDRESSED (verified)** — type-table admission:
-  A novel canonical shape now admits its prospective count before clone/cache/insertion; the post-insert check remains terminal defense. GREEN t1707 pins exact-boundary insertion, full-table duplicate reuse, exact diagnostic, and atomic one-over state.
-- [x] **NO REGRESSION** — type-table admission:
-  `All tests successful` at `Files=5, Tests=81`; both modules are syntax clean. mdBook, Knowledge Map, claims, task, locality, containment, staged-result, diff, ceiling, and doctrine gates close the slice; full CI/push remain deferred.
+- [x] **ROOT CAUSE (WHY + WHERE)** — source-map admission:
+  `git log -S` identifies `44dbecd1a` as `_add_source_map` and the terminal count's origin. RED t1708 proved a one-over record was cloned/appended without local rejection, leaving 1,000,001 records.
+- [x] **ADDRESSED (verified)** — source-map admission:
+  Each base record now admits its prospective count before location clone or append; the later base-plus-random and realized-count defenses remain. GREEN t1708 pins exact boundary, diagnostic, and atomic state.
+- [x] **NO REGRESSION** — source-map admission:
+  `All tests successful` at `Files=5, Tests=80`; both modules are syntax clean. mdBook, Knowledge Map, claims, task, locality, containment, staged-result, diff, ceiling, and doctrine gates close the slice; full CI/push remain deferred.

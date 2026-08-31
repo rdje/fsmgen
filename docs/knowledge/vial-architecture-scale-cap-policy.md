@@ -10,7 +10,7 @@ answers:
   - "where is the machine checked VIAL resource cap inventory?"
   - "when are VIAL execution fiber caps enforced?"
   - "how are total and simultaneous VIAL fibers counted before materialization?"
-  - "when are VIAL execution profile and type cardinality enforced?"
+  - "when are VIAL execution profile, type, and source-map caps enforced?"
   - "does VIAL recheck selected unit and domain cardinality after SemanticIR and bridge validation?"
   - "when is the VIAL execution operations-per-scenario cap enforced?"
 date: 2026-08-31
@@ -48,6 +48,7 @@ evidence: >-
   t/1705-vial-execution-selected-domain-cap-order.t;
   t/1706-vial-execution-operation-cardinality-cap-order.t;
   t/1707-vial-execution-type-cap-order.t;
+  t/1708-vial-execution-source-map-cap-order.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -76,6 +77,7 @@ reverify: >-
   t/1705-vial-execution-selected-domain-cap-order.t
   t/1706-vial-execution-operation-cardinality-cap-order.t
   t/1707-vial-execution-type-cap-order.t
+  t/1708-vial-execution-source-map-cap-order.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -123,31 +125,12 @@ List length, record field count, and aggregate depth are admitted before
 recursive inner-type resolution. Invalid inner types cannot mask any known
 outer-shape excess, while exact-boundary semantic identities remain unchanged.
 
-The bridge admits actor-parameter cardinality against the 4,096-configuration
-ceiling before type creation or arbitrary-width value normalization. A malformed
-overflowing parameter therefore cannot mask the established collection limit;
-the terminal whole-manifest defense and accepted manifest bytes remain intact.
-Endpoint cardinality is likewise admitted from the clock, reset, and interface
-collections before any individual endpoint width is validated or its type and
-normalized endpoint record are constructed.
-Observation cardinality is admitted before individual monitor roles or their
-endpoint references are validated and normalized.
-Probe cardinality is admitted before access, source, and backing-storage
-validation and normalized probe construction.
-Each newly discovered distinct type is admitted immediately before its record
-is materialized and before its dependent configuration value is normalized.
-Combined ordinary-actor and fixed bridge transaction cardinality is admitted
-before transaction-family shape and clause validation or record construction.
-Combined bridge-declared events and event-producing ordinary clauses are
-admitted before event-family shape, expression, or record normalization.
-Retained-residue cardinality is admitted before ordinal, ownership/detail,
-required-capability, or normalized residue-record construction.
-Backend-binding cardinality is derived and admitted before either backend's
-mapping lookup or any normalized binding-record construction.
-Each projected source-map entry is admitted before record construction, so the
-65,537th entry is never materialized and the terminal defense remains intact.
-Exact serialized-manifest bytes remain terminal because only canonical encoding
-decides size; boundary acceptance and adjacent valid excess are both frozen.
+Before dependent validation, normalization, or record materialization, the
+bridge admits actor parameters, endpoints, observations, probes, distinct
+types, combined transactions/events, retained residue, backend bindings, and
+each projected source map. Terminal collection defenses and accepted manifest
+bytes remain intact. Exact manifest bytes stay terminal because canonical
+encoding alone decides size; boundary acceptance and adjacent excess are frozen.
 
 Execution total and maximum-live fiber cardinality is now admitted from the
 selected compact action trees before execution-context construction or bridge
@@ -161,10 +144,11 @@ workload's later serialized-plan rejection remain unchanged.
 Execution admission checks scenario count, fixture shape, per-scenario declared
 and compact-derived operations, and their aggregate before context construction.
 Novel execution types are admitted before cloning, caching, or insertion; a
-duplicate shape stays reusable at the ceiling. SemanticIR and bridge remain
-earlier normal-route authorities; execution checks defend internal inputs.
-Binding, type, and post-emission checks remain terminal defenses, with
-diagnostics and accepted plan identity unchanged.
+duplicate shape stays reusable at the ceiling. Base source maps are admitted
+before location cloning or append; later base-plus-random and exact-plan checks
+retain authority. SemanticIR and bridge remain earlier normal-route authorities;
+execution checks defend internal inputs, with diagnostics and accepted plan
+identity unchanged.
 
 The guarded exact semantic-catalog and bridge-fanout matrices close every
 selected parser/SemanticIR and bridge qualification, boundary, excess, and cap

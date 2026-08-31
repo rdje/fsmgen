@@ -2784,6 +2784,8 @@ sub _resource_summary($ctx, $bindings, $models, $scoreboards, $coverage, $faults
 }
 
 sub _add_source_map($ctx, $plan_path, $semantic_path, $bridge_paths, $location) {
+    _limit('source_map_records', scalar(@{$ctx->{source_map}}) + 1,
+        '/source_map');
     push @{$ctx->{source_map}}, {
         plan_path => $plan_path,
         semantic_path => $semantic_path,

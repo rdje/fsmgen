@@ -3162,6 +3162,11 @@ remain the earlier normal-route authorities documented below. The local check
 protects internally constructed inputs, preserves the exact execution limit
 diagnostic, and leaves accepted plan identities unchanged.
 
+### Execution source-map admission order
+
+Each base source map is admitted before location cloning or append, so one-over input stays atomic; later base-plus-random and realized-count checks retain authority.
+Exact plan-byte authority and accepted identity remain, while the measured boundary below distinguishes this defense from route capacity.
+
 The binding ladder is the first axis authored under that rule. Its three levels
 above the gate generate 1,933,429, 3,866,741, and 3,866,800 direct-IAL1 bytes —
 one genuine `(event bridge_event_XXXXXXXX …)` record per binding above the fixed
