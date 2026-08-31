@@ -10,7 +10,7 @@ answers:
   - "where is the machine checked VIAL resource cap inventory?"
   - "when are VIAL execution fiber caps enforced?"
   - "how are total and simultaneous VIAL fibers counted before materialization?"
-  - "when are VIAL execution profile, type, and source-map caps enforced?"
+  - "when are VIAL execution profile, binding, type, and source-map caps enforced?"
   - "does VIAL recheck selected unit and domain cardinality after SemanticIR and bridge validation?"
   - "when is the VIAL execution operations-per-scenario cap enforced?"
 date: 2026-08-31
@@ -49,6 +49,7 @@ evidence: >-
   t/1706-vial-execution-operation-cardinality-cap-order.t;
   t/1707-vial-execution-type-cap-order.t;
   t/1708-vial-execution-source-map-cap-order.t;
+  t/1709-vial-execution-binding-cardinality-preflight.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -78,6 +79,7 @@ reverify: >-
   t/1706-vial-execution-operation-cardinality-cap-order.t
   t/1707-vial-execution-type-cap-order.t
   t/1708-vial-execution-source-map-cap-order.t
+  t/1709-vial-execution-binding-cardinality-preflight.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -143,6 +145,8 @@ workload's later serialized-plan rejection remain unchanged.
 
 Execution admission checks scenario count, fixture shape, per-scenario declared
 and compact-derived operations, and their aggregate before context construction.
+After bridge indexing, compact binding cardinality is admitted before binding
+records; the terminal count remains defense and accepted counts agree exactly.
 Novel execution types are admitted before cloning, caching, or insertion; a
 duplicate shape stays reusable at the ceiling. Base source maps are admitted
 before location cloning or append; later base-plus-random and exact-plan checks

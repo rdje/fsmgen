@@ -248,6 +248,7 @@ sub _build($raw, $qualification_profile = undef) {
         operation_by_scenario => {},
     };
     _index_bridge($ctx);
+    _preflight_binding_cardinality($ctx);
     my $bindings = _bind_fixture($ctx);
     _validate_balanced_portable_bindings($bindings)
         if ($qualification_profile // '') eq 'balanced_portable_v2';
@@ -911,6 +912,129 @@ sub _index_bridge($ctx) {
         }
         $ctx->{"bridge_$family"} = \%index;
     }
+}
+
+sub _preflight_binding_cardinality($ctx) {
+    my $dut = $ctx->{fixture}{dut};
+    my $transactions = $ctx->{package}{transactions};
+    return unless ref($dut) eq 'HASH'
+        && ref($dut->{domains}) eq 'ARRAY'
+        && ref($dut->{endpoints}) eq 'ARRAY'
+        && ref($dut->{transaction_bindings}) eq 'ARRAY'
+        && ref($transactions) eq 'ARRAY';
+
+    my $ceiling = $LIMIT{bindings};
+    my $count = 1;
+    for my $records (
+        $dut->{domains}, $dut->{endpoints}, $dut->{transaction_bindings},
+    ) {
+        $count = _bounded_count_add($count, scalar(@$records), $ceiling);
+        _limit('bindings', $count, '/bindings');
+    }
+
+    my %bound_endpoint_id;
+    for my $endpoint (@{$dut->{endpoints}}) {
+        return unless ref($endpoint) eq 'HASH';
+        next if ($endpoint->{access} // '') eq 'verification_probe';
+        my $entry = $ctx->{bridge_endpoints}{$endpoint->{bridge_ref} // ''};
+        return unless ref($entry) eq 'HASH'
+            && ref($entry->{record}) eq 'HASH'
+            && defined($entry->{record}{endpoint_id})
+            && !ref($entry->{record}{endpoint_id});
+        $bound_endpoint_id{$entry->{record}{endpoint_id}} = 1;
+    }
+
+    my %semantic_transaction;
+    for my $transaction (@$transactions) {
+        return unless ref($transaction) eq 'HASH'
+            && defined($transaction->{semantic_id})
+            && !ref($transaction->{semantic_id});
+        $semantic_transaction{$transaction->{semantic_id}} = $transaction;
+    }
+
+    for my $binding (@{$dut->{transaction_bindings}}) {
+        return unless ref($binding) eq 'HASH';
+        my $semantic = $semantic_transaction{$binding->{transaction_id} // ''};
+        my $entry = $ctx->{bridge_transactions}{$binding->{bridge_ref} // ''};
+        return unless ref($semantic) eq 'HASH'
+            && ref($semantic->{fields}) eq 'ARRAY'
+            && ref($semantic->{events}) eq 'ARRAY'
+            && ref($entry) eq 'HASH'
+            && ref($entry->{record}) eq 'HASH';
+        my $carrier = $entry->{record};
+        return unless ref($carrier->{fields}) eq 'ARRAY'
+            && ref($carrier->{event_ids}) eq 'ARRAY';
+
+        $count = _bounded_count_add(
+            $count, scalar(@{$semantic->{fields}}), $ceiling,
+        );
+        _limit('bindings', $count, '/bindings');
+        $count = _bounded_count_add(
+            $count, scalar(@{$semantic->{events}}), $ceiling,
+        );
+        _limit('bindings', $count, '/bindings');
+
+        # Process the compact carrier endpoints in the same transaction order
+        # as _bind_fixture so later event-input uniqueness is exact. Field
+        # pairing/content remains the binder's concern when this count admits.
+        for my $field (@{$carrier->{fields}}) {
+            return unless ref($field) eq 'HASH'
+                && defined($field->{endpoint_id})
+                && !ref($field->{endpoint_id});
+            $bound_endpoint_id{$field->{endpoint_id}} = 1;
+        }
+
+        my %carrier_event;
+        for my $event_id (@{$carrier->{event_ids}}) {
+            return unless defined($event_id) && !ref($event_id);
+            my $event_entry = $ctx->{bridge_events}{$event_id};
+            return unless ref($event_entry) eq 'HASH'
+                && ref($event_entry->{record}) eq 'HASH'
+                && defined($event_entry->{record}{name})
+                && !ref($event_entry->{record}{name});
+            return if exists $carrier_event{$event_entry->{record}{name}};
+            $carrier_event{$event_entry->{record}{name}} = $event_entry->{record};
+        }
+
+        for my $semantic_event (@{$semantic->{events}}) {
+            return unless ref($semantic_event) eq 'HASH'
+                && defined($semantic_event->{name})
+                && !ref($semantic_event->{name});
+            my $carrier_event = $carrier_event{$semantic_event->{name}};
+            return unless ref($carrier_event) eq 'HASH'
+                && ref($carrier_event->{required_endpoint_ids}) eq 'ARRAY';
+            for my $endpoint_id (@{$carrier_event->{required_endpoint_ids}}) {
+                return unless defined($endpoint_id) && !ref($endpoint_id);
+                next if $bound_endpoint_id{$endpoint_id};
+                return unless ref($ctx->{bridge_endpoints}{$endpoint_id}) eq 'HASH';
+                $bound_endpoint_id{$endpoint_id} = 1;
+                $count = _bounded_count_add($count, 1, $ceiling);
+                _limit('bindings', $count, '/bindings');
+            }
+            if (_bridge_expression_uses_storage($carrier_event->{expression})) {
+                $count = _bounded_count_add($count, 1, $ceiling);
+                _limit('bindings', $count, '/bindings');
+            }
+        }
+        return unless keys(%carrier_event) == @{$semantic->{events}};
+    }
+
+    # _bind_fixture retains its terminal count as defense-in-depth.
+    return $count;
+}
+
+sub _bridge_expression_uses_storage($value) {
+    return 0 unless ref($value);
+    if (ref($value) eq 'HASH') {
+        return 1 if ($value->{kind} // '') eq 'reference'
+            && ($value->{reference_kind} // '') eq 'storage';
+        return scalar grep {
+            _bridge_expression_uses_storage($value->{$_})
+        } keys %$value;
+    }
+    return scalar grep { _bridge_expression_uses_storage($_) } @$value
+        if ref($value) eq 'ARRAY';
+    return 0;
 }
 
 sub _bind_fixture($ctx) {

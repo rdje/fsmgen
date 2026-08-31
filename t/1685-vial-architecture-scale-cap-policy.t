@@ -212,13 +212,13 @@ ok(
 );
 is(
     $policy->{groups}{execution_route_collections}{current_enforcement},
-    'type_and_map_preinsert_with_terminal_binding_and_layered_authorities',
-    'execution route policy records type/map pre-insertion and layered checks',
+    'binding_preflight_type_and_map_preinsert_with_terminal_and_layered_authorities',
+    'execution route policy records binding preflight, type/map insertion, and layered checks',
 );
 is(
     $policy->{groups}{execution_route_collections}{selected_treatment},
-    'retain_type_map_defenses_and_classify_binding_route',
-    'execution route policy retains local defenses while bindings are classified',
+    'retain_local_defenses_and_layered_route_authorities',
+    'execution route policy retains local defenses and earlier route authorities',
 );
 ok(
     scalar(grep { $_ eq 't/1707-vial-execution-type-cap-order.t' }
@@ -229,6 +229,12 @@ ok(
     scalar(grep { $_ eq 't/1708-vial-execution-source-map-cap-order.t' }
         @{$policy->{groups}{execution_route_collections}{evidence}}),
     'execution route policy cites the exact source-map insertion witness',
+);
+ok(
+    scalar(grep {
+        $_ eq 't/1709-vial-execution-binding-cardinality-preflight.t'
+    } @{$policy->{groups}{execution_route_collections}{evidence}}),
+    'execution route policy cites the exact binding-cardinality witness',
 );
 is(
     $policy->{groups}{execution_fiber_cardinality}{current_enforcement},
