@@ -862,8 +862,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Enforce the selected backend-emission resource caps before partial artifact publication.`
   Acceptance: `Implement only the .17.4.1-selected profile-specific generated-byte, artifact, and source-map boundaries for portable SystemVerilog, portable VHDL, OSVVM, and native-UVM emission. Reject before final artifact graphs or provider/tool use when authority is already known; preserve accepted artifact bytes, ordering, identities, provider boundaries, atomic staging, and backend nonclaims.`
-  Verification: `Clean df5129126 closes .17.4.5. Decisions 0093/0075 confine this activation to four profile-local pure emitters; portable-SystemVerilog byte/map admission is next. No behavior changes.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6: activate backend-emission cap hardening`
+  Verification: `Clean df5129126 closes .17.4.5 and activation f6b2f8504 confines this leaf to four profile-local pure emitters. Portable SystemVerilog retains exact rendered-byte precedence before support/final-graph construction, compactly preflights exact map cardinality before commands or entry allocation, requires accepted materialization equality, and retains the terminal defense. RED-to-green t1716 plus policy and shipped-emitter regressions preserve exact diagnostics, atomic failure, accepted artifacts, and nonclaims. Portable VHDL admission is next.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6: activate backend-emission cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6: preflight portable-SV source maps`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
   Status: `proposed`
   Goal: `Enforce the selected runtime-stream, transcript, trace, result, timeout, and external-tool envelopes through the shared lifecycle.`
@@ -7642,28 +7642,11 @@ The completed node records above and their named Git commits remain the canonica
 - [x] **ADDRESSED (verified)** — RED t1686 first reports eight wrong-precedence assertions, then four after the initial reservation repair exposed the remaining pre-form gap. The builder now reserves each node before form inspection, checks repeat copies by division before multiplication, retains the terminal defense and exact scenario diagnostic, and returns no partial semantic report.
 - [x] **NO REGRESSION** — Focused guarded semantic/execution coverage reports `All tests successful` at `Files=6, Tests=66`; exact-boundary t1620, adjacent-excess t1621, core t1550, semantic-catalog t1601, policy t1685, and order/atomicity t1686 remain the declared set. The policy assertions pin the hardened action-admission and bounded-repeat enforcement metadata. mdBook, Knowledge Map, claim, task, locality, containment, staged-result, diff, and `[doctrine] all doctrine checks passed` close the slice; full CI/push remain deferred by policy.
 
-## Acceptance Checklist (enforced) — `.17.4.2` direct-import admission
+## Compact acceptance history — `.17.4.2` direct-import admission
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'import_count' --oneline --
-  perl/FSM/VIAL/Parser.pm` identifies `be9c74163` as the original import-edge
-  implementation. Its loop counted and recursively parsed each earlier catalog
-  source before it reached an already-visible 65th direct edge, so malformed
-  imported token bytes could mask the declared import limit.
-- [x] **ADDRESSED (verified)** — The first `(broken)` probe correctly exposed
-  that semantic invalidity occurs after import traversal; refining the source
-  to the lexically incomplete `(` produced RED t1687 at `Failed 1/16` with
-  `unterminated '(' list` instead of the limit. The parser now compares the
-  parsed direct list with the remaining budget, reports the first overflowing
-  edge before recursion, and retains the per-edge nested-import defense. t1687
-  pins the exact diagnostic, no partial report, and both accepted 64-import
-  semantic identities; t1685 pins matching machine-policy metadata.
-- [x] **NO REGRESSION** — The first guarded aggregate invocation honestly
-  stopped after green t1550 because the selected `t/1554-vial-source-projection.t`
-  path does not exist. The corrected guarded parser/source/catalog/policy set
-  reports `All tests successful` at `Files=5, Tests=60`; `Parser.pm` is syntax
-  clean. mdBook, Knowledge Map, claims, task integrity, locality, containment,
-  staged-result, diff, and `[doctrine] all doctrine checks passed` close the
-  slice; full CI/push remain deferred by policy.
+The exact RED, repair, accepted identities, focused verification, and doctrine
+evidence remain canonical in commit `a622325c7`; `git show a622325c7` recovers
+the superseded checklist text byte-for-byte.
 
 ## Acceptance Checklist (enforced) — `.17.4.2` parallel-fiber admission
 
@@ -7796,3 +7779,9 @@ The completed node records above and their named Git commits remain the canonica
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'backend_artifact_graph' --oneline -- perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` identifies `951720257`; decision `0093` assigns profile-local emission hardening to `.17.4.6`.
 - [x] **ADDRESSED (verified)** — Only `.17.4.6` is active; task/index/Memory and mdBook select portable-SystemVerilog byte/map admission next. No product code changed.
 - [x] **NO REGRESSION** — Policy t1685 reports `All tests successful` at `Files=1, Tests=76`; every book chapter, Knowledge Map, claims, task integrity, containment, staged diff, and doctrines pass. Full CI/push remain deferred.
+
+## Acceptance Checklist (enforced) — `.17.4.6` portable-SystemVerilog cap order
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'backend source map exceeds its record cap' --oneline -- perl/FSM/VIAL/Backend/SVPortableVerilator.pm` locates both portable-SV terminal caps at emitter commit `201590d84`. Exact generated bytes already preceded support-graph construction, but `_source_map_entries` allocated every entry before the already-known cardinality reached its one-million-record check.
+- [x] **ADDRESSED (verified)** — RED t1716 failed 8/19 assertions. The emitter now preserves byte-first precedence, compactly counts renderer specs plus two fixed and seven semantic families before commands/entries, rejects known excess atomically, requires accepted preflight/materialization equality, and retains the terminal defense.
+- [x] **NO REGRESSION** — Focused policy/order/shipped-emitter coverage plus the guarded five-level artifact oracle report `All tests successful` across `Files=4, Tests=114`; the backend module is syntax clean. mdBook, Knowledge Map, claims, task integrity, containment, staged diff, and complete doctrines close the slice; full CI/push remain deferred by policy.

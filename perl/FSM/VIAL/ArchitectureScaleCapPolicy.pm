@@ -365,10 +365,13 @@ my $GROUPS = {
         'FSM::VIAL::BackendEmissionAuthority', 'emit',
         ['profile_specific_backend_limit_error'],
         'backend artifact graph or generated source path',
-        'profile_specific_preflight_and_terminal_validation',
+        'portable_sv_exact_generated_bytes_before_support_graph_then_compact_source_map_preflight_with_terminal_validation',
         'no_partial_final_artifact_graph',
         'retain_profile_specific_component_ceilings', '.17.4.6',
-        ['t/1650-vial-architecture-scale-backend-emission-family-qualification.t'],
+        [
+            't/1650-vial-architecture-scale-backend-emission-family-qualification.t',
+            't/1716-vial-backend-portable-sv-cap-order.t',
+        ],
     ),
     runtime_stream_envelopes => _group(
         'FSM::Support::VIALExecutionContract', 'run',

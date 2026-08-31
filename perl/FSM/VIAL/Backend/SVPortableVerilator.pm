@@ -18,6 +18,8 @@ my $SOURCE_MAP_SCHEMA = 'fsmgen.vial_backend_source_map.v1';
 my $TRACE_SCHEMA = 'fsmgen.vial_sv_runtime_trace.v1';
 my $BASE = 'backends/sv_portable_verilator';
 my $JSON = JSON::PP->new->canonical(1);
+my $GENERATED_SOURCE_BYTES_LIMIT = 16_777_216;
+my $SOURCE_MAP_ENTRY_LIMIT = 1_000_000;
 my $BALANCED_PORTABLE_CAPABILITY =
     'hial_vial.bridge_qualification.balanced_portable_v2';
 my $BALANCED_PORTABLE_CALLER =
@@ -228,7 +230,12 @@ sub _emit($raw, $qualification_profile = undef) {
     my $source_bytes = 0;
     $source_bytes += bytes::length($_->{content}) for @source_artifacts;
     _throw('VIAL_BACKEND_LIMIT_EXCEEDED', 'generated SystemVerilog exceeds the 16 MiB backend cap', '/artifacts')
-        if $source_bytes > 16_777_216;
+        if $source_bytes > $GENERATED_SOURCE_BYTES_LIMIT;
+
+    my $source_map_entry_count =
+        _preflight_source_map_entry_count($execution, $map_specs);
+    _throw('VIAL_BACKEND_LIMIT_EXCEEDED', 'backend source map exceeds its record cap', '/source_map/entries')
+        if $source_map_entry_count > $SOURCE_MAP_ENTRY_LIMIT;
 
     my $compile = _command_record(
         logical_executable => 'verilator',
@@ -284,7 +291,9 @@ sub _emit($raw, $qualification_profile = undef) {
         entries => _source_map_entries($execution, $bridge, $map_specs, $runtime_rel, $dut_rel),
     };
     _throw('VIAL_BACKEND_LIMIT_EXCEEDED', 'backend source map exceeds its record cap', '/source_map/entries')
-        if @{$source_map->{entries}} > 1_000_000;
+        if @{$source_map->{entries}} > $SOURCE_MAP_ENTRY_LIMIT;
+    confess "portable SystemVerilog source-map preflight disagrees with materialization\n"
+        unless @{$source_map->{entries}} == $source_map_entry_count;
 
     my @support_artifacts = (
         _artifact("$BASE/backend-source-map.json", 'source_map', 'json', 'backend_source_map',
@@ -2746,6 +2755,24 @@ sub _render_property($node, $bridge, $backend) {
     return '1';
 }
 
+sub _preflight_source_map_entry_count($execution, $specs) {
+    my $count = @$specs + 2;
+    $count += @{$_->[1]} for _source_map_families($execution);
+    return $count;
+}
+
+sub _source_map_families($execution) {
+    return (
+        [events => $execution->{events}],
+        [models => $execution->{models}],
+        [scoreboards => $execution->{scoreboards}],
+        [coverpoints => $execution->{coverage}{coverpoints}],
+        [crosses => $execution->{coverage}{crosses}],
+        [faults => $execution->{faults}],
+        [transactions => $execution->{transactions}],
+    );
+}
+
 sub _source_map_entries($execution, $bridge, $specs, $runtime_rel, $dut_rel) {
     my @spec = @$specs;
     push @spec, _map_spec(
@@ -2761,16 +2788,7 @@ sub _source_map_entries($execution, $bridge, $specs, $runtime_rel, $dut_rel) {
         plan_paths => [], semantic_paths => [$bridge->{units}[0]{unit_id}],
         bridge_paths => ['/units/0'], locations => [],
     );
-    my @family = (
-        [events => $execution->{events}],
-        [models => $execution->{models}],
-        [scoreboards => $execution->{scoreboards}],
-        [coverpoints => $execution->{coverage}{coverpoints}],
-        [crosses => $execution->{coverage}{crosses}],
-        [faults => $execution->{faults}],
-        [transactions => $execution->{transactions}],
-    );
-    for my $family (@family) {
+    for my $family (_source_map_families($execution)) {
         my ($name, $items) = @$family;
         for my $index (0 .. $#$items) {
             my $item = $items->[$index];

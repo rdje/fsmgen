@@ -364,6 +364,22 @@ ok(
     } @{$policy->{groups}{checking_randomness}{evidence}}),
     'checking random policy cites the compact operation-graph seam witness',
 );
+is(
+    $policy->{groups}{backend_artifact_graph}{current_enforcement},
+    'portable_sv_exact_generated_bytes_before_support_graph_then_compact_source_map_preflight_with_terminal_validation',
+    'backend policy records portable-SV byte precedence and map preflight',
+);
+is(
+    $policy->{groups}{backend_artifact_graph}{selected_treatment},
+    'retain_profile_specific_component_ceilings',
+    'backend policy retains profile-local component ceilings',
+);
+ok(
+    scalar(grep {
+        $_ eq 't/1716-vial-backend-portable-sv-cap-order.t'
+    } @{$policy->{groups}{backend_artifact_graph}{evidence}}),
+    'backend policy cites the portable-SV admission-order witness',
+);
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;
 my @catalog_axes;
