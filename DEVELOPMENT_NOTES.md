@@ -1126,3 +1126,19 @@ Both therefore enforce the same count and byte contract over their exact local
 scope. The lifecycle rejects its completed backend graph before Runner return;
 the Tool retains the later complete transaction check. This is defense in depth
 without a second cap or an inferred whole-route formula.
+
+## 2026-08-31: Process supervision errors retain lifecycle-phase ownership
+
+The shared supervisor deliberately owns mechanism rather than lifecycle
+policy. Its exceptions therefore identify process mechanics, while the
+Verilator lifecycle must retain whether the failed invocation was tool
+verification, compilation, or generated execution. Collapsing all such
+exceptions onto a generic tool path obscured the actionable phase even though
+atomic staging cleanup remained correct.
+
+Each lifecycle call site now supplies its own public diagnostic path to the
+private capture adapter. The adapter still sanitizes the low-level exception
+and returns the existing host-error family; the existing exception boundary
+still removes only the proven-owned repository-local stage. This changes no
+deadline, capture budget, retry policy, process containment, or accepted
+runtime behavior.

@@ -2649,14 +2649,22 @@ uses `VIAL_RUN_LIMIT_EXCEEDED` at `/artifacts`. The Tool subsequently validates
 the larger plan-plus-backend graph, so neither boundary substitutes for the
 other.
 
-The next slice audits compile/run capture, timeout, and cleanup closure; later
-slices retain the separate VHDL and OSVVM profile authorities.
+Low-level process-supervisor exceptions now retain their owning lifecycle
+phase. Tool-version failures identify `/tool_profile`, compiler failures
+identify `/compile`, and generated-runtime failures identify `/run`; each
+becomes the existing sanitized host-error result and triggers exact cleanup of
+the proven-owned repository-local stage. Returned timeout, output-limit,
+nonzero-exit, signal, capture, and deadline behavior is unchanged. This closes
+the portable-SystemVerilog envelope without widening a limit or retrying a
+failed process. The next slice audits the separate portable-VHDL authority;
+OSVVM remains later.
 
 ```sh
 prove -Iperl t/1720-vial-runtime-structural-artifact-preflight.t \
   t/1721-vial-runtime-trace-artifact-preflight.t \
   t/1722-vial-runtime-result-artifact-preflight.t \
-  t/1723-vial-runtime-final-artifact-graph.t
+  t/1723-vial-runtime-final-artifact-graph.t \
+  t/1724-vial-runtime-process-envelope.t
 ```
 
 ### Source-byte cap admission order

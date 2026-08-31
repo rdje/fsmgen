@@ -640,6 +640,7 @@ sub _phase_prepare($session) {
 sub _phase_tool_verify($session) {
     my $capture = _capture_process(
         $session, ['verilator', '--version'], 10, 65_536,
+        '/tool_profile',
     );
     $session->{pending_stage_evidence} = {
         state => 'tool_verified',
@@ -686,7 +687,7 @@ sub _phase_compile($session) {
             $session->{compile}{logical_executable},
             @{$session->{compile}{arguments}},
         ],
-        120, 8_388_608,
+        120, 8_388_608, '/compile',
     );
     $session->{pending_stage_evidence} = {
         state => 'compiled',
@@ -753,7 +754,7 @@ sub _phase_run($session) {
     ) unless _file_sha256($expected_abs) eq $executable->{sha256};
     my $capture = _capture_process(
         $session, [$session->{compile}{expected_outputs}[0]],
-        30, 67_108_864,
+        30, 67_108_864, '/run',
     );
     $session->{pending_stage_evidence} = {
         state => 'ran',
@@ -2640,7 +2641,7 @@ sub _command_mdir($compile) {
     _throw('VIAL_RUN_COMMAND_ERROR', 'compile command has no object directory', '/compile/arguments');
 }
 
-sub _capture_process($session, $argv, $timeout, $limit) {
+sub _capture_process($session, $argv, $timeout, $limit, $path = '/process') {
     my $capture = eval {
         my $policy = FSM::VIAL::Backend::ProcessSupervisor->policy(
             $session->{storage_context}{containment}, $timeout, $limit,
@@ -2657,7 +2658,7 @@ sub _capture_process($session, $argv, $timeout, $limit) {
         && $error->isa(q{FSM::VIAL::Backend::ProcessSupervisor::Failure})
         ? $error->{message}
         : _sanitize_exception($error);
-    _throw(q{VIAL_RUN_HOST_ERROR}, $message, q{/tool});
+    _throw(q{VIAL_RUN_HOST_ERROR}, $message, $path);
 }
 
 sub _capture_evidence($capture) {

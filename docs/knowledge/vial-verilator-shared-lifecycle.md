@@ -8,7 +8,8 @@ answers:
   - "what did the macOS pre-main qualification conclude?"
   - "what work follows completed common-controller portable Verilator measurement?"
   - "how is the portable Verilator runtime matrix published and reloaded?"
-date: 2026-08-27
+  - "how are Verilator supervisor failures attributed to lifecycle phases?"
+date: 2026-08-31
 status: current
 tags: [vial, verilator, lifecycle, runner, scalability, macos]
 evidence: >-
@@ -26,6 +27,7 @@ evidence: >-
   t/1666-vial-macos-premain-evidence.t;
   t/1667-vial-architecture-scale-portable-runtime-measurement.t;
   t/1670-vial-architecture-scale-portable-runtime-measurement-matrix.t;
+  t/1724-vial-runtime-process-envelope.t;
   scripts/run_vial_portable_runtime_measurement_matrix.pl;
   vial/qualification/sv_portable_verilator/macos-premain-qualification-2026-08-24.json;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
@@ -38,6 +40,7 @@ reverify: >-
   t/1558-vial-verilator-run-integration.t
   t/1665-vial-macos-premain-qualification.t
   t/1664-vial-verilator-shared-lifecycle.t
+  t/1724-vial-runtime-process-envelope.t
   t/1666-vial-macos-premain-evidence.t
   t/1667-vial-architecture-scale-portable-runtime-measurement.t
   t/1670-vial-architecture-scale-portable-runtime-measurement-matrix.t &&
@@ -71,6 +74,12 @@ capture budget, a deadline that remains active after output-pipe closure, and
 whole-process-group TERM/KILL verification. Source-text patching, padded or
 truncated output, duplicated execution semantics, hidden public widening, and
 borrowed runtime, support, performance, or capacity claims remain rejected.
+Supervisor exceptions retain the lifecycle call site: tool verification,
+compile, and run map to their exact public diagnostic paths before the atomic
+failure adapter removes the proven-owned repository-local stage. The focused
+process-envelope oracle injects each low-level failure and separately proves
+compile-phase diagnostic retention, removal, and zero residue. Returned
+timeout, output-limit, exit, signal, and capture behavior does not change.
 
 Repeated guarded full integration attempts timed out different baseline/direct
 executions at Runner's fixed 30-second run wall while byte-identical executions

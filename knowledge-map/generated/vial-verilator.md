@@ -1,10 +1,11 @@
 # Knowledge Map: `vial-verilator`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **6** uniquely owned question entries.
+> **1** facts · **7** uniquely owned question entries.
 
 ## Questions → facts
 
+- q="how are Verilator supervisor failures attributed to lifecycle phases?" · facts=[vial-verilator-shared-lifecycle](../../docs/knowledge/vial-verilator-shared-lifecycle.md)
 - q="how does the shared Verilator lifecycle preserve state and cleanup authority?" · facts=[vial-verilator-shared-lifecycle](../../docs/knowledge/vial-verilator-shared-lifecycle.md)
 - q="how is the portable Verilator runtime matrix published and reloaded?" · facts=[vial-verilator-shared-lifecycle](../../docs/knowledge/vial-verilator-shared-lifecycle.md)
 - q="how will the Runner and scale measurement share Verilator stages?" · facts=[vial-verilator-shared-lifecycle](../../docs/knowledge/vial-verilator-shared-lifecycle.md)
@@ -18,5 +19,5 @@
 
 _One caller-sealed lifecycle owns public and scale Verilator execution_
 
-- **date:** 2026-08-27 · **status:** current
+- **date:** 2026-08-31 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-verilator-shared-lifecycle.md`](../../docs/knowledge/vial-verilator-shared-lifecycle.md)
