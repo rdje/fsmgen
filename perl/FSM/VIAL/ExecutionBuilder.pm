@@ -291,8 +291,12 @@ sub _build($raw, $qualification_profile = undef) {
                 == $coverage_cardinality->{coverpoints}
             && $coverage_materialization
                 == $coverage_cardinality->{coverage_bins_and_cross_tuples};
-    my $faults = _normalize_node($ctx, $fixture->{faults});
-    _limit('faults', scalar(@{$fixture->{faults}}), '/faults');
+    my $fault_cardinality = _preflight_fault_cardinality($fixture->{faults});
+    my $faults = _build_faults($ctx);
+    _limit('faults', scalar(@$faults), '/faults');
+    _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+        'fault cardinality changed after compact preflight', '/faults')
+        unless scalar(@$faults) == $fault_cardinality;
 
     my $capability_ledger = _capability_ledger(
         $semantic, $bridge, $qualification_profile,
@@ -2585,6 +2589,16 @@ sub _coverage_materialization_count($coverage) {
         $total = _bounded_count_add($total, $product, $ceiling);
     }
     return $total;
+}
+
+sub _preflight_fault_cardinality($faults) {
+    my $count = scalar(@$faults);
+    _limit('faults', $count, '/faults');
+    return $count;
+}
+
+sub _build_faults($ctx) {
+    return _normalize_node($ctx, $ctx->{fixture}{faults});
 }
 
 sub _execution_transactions($ctx, $bindings) {

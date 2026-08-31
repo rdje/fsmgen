@@ -3857,6 +3857,12 @@ length-delimited lifecycle records per fault, so 4,096 faults prove 16,384 trans
 digest `4042b666…` without a 4,096-entry report array. Armed reinjection, active overlap,
 substitute/order/source/report mutation fail closed. Fault 4,097 returns only `VIAL_EXECUTION_LIMIT_ERROR` at `/faults` and no execution/plan identity. Guarded default Files=5/Tests=29 and exact Files=1/Tests=5 pass.
 
+Execution admits the compact fault collection before normalizing any fault
+record or source span. Accepted normalized cardinality must equal that
+preflight, and the original terminal cap remains defense in depth. The adjacent
+excess therefore retains the exact `/faults` diagnostic, creates no fault
+records, and returns no partial ExecutionIR or plan.
+
 The random renderer reuses a bounded palette of 128 Boolean choices. Each referenced `(scenario, choice)` pair is one real occurrence, so the 1,024 gate contains eight scenarios and its canonical plan is exactly 2,073,805 bytes. The oracle generates all keyed values twice, creates and strictly replays the canonical manifest, and requires byte-equal origin-free decision sequences and plans. Keyed-value and order mutations fail closed.
 
 Higher selected levels preserve the earliest real authority. The full 32,768 route counts all occurrences in SemanticIR and returns only `VIAL_EXECUTION_LIMIT_ERROR` at `/plan`. The 65,536 level is explicitly `preflight_dominated` / `not_materialized`, publishes no stage identity, and does not claim the nominal occurrence count. The 65,537 route reaches only the exact `/randomness/decisions` diagnostic. Opt-in evidence accepts 8,440 occurrences at 16,775,415 plan bytes and rejects adjacent 8,441 at the 16,777,216-byte cap before the final decision list, ExecutionIR, or report; accepted terminal serialization must equal the projection and remains defense in depth. These are exact checking outcomes, not supported-capacity or runtime-throughput claims.

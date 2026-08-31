@@ -332,6 +332,22 @@ ok(
     } @{$policy->{groups}{checking_coverage}{evidence}}),
     'checking coverage policy cites the exact normalization-seam witness',
 );
+is(
+    $policy->{groups}{checking_faults}{current_enforcement},
+    'compact_preflight_before_fault_normalization_with_terminal_defense',
+    'checking fault policy records compact preflight plus terminal defense',
+);
+is(
+    $policy->{groups}{checking_faults}{selected_treatment},
+    'retain_compact_preflight_and_terminal_defense',
+    'checking fault policy retains both enforcement points',
+);
+ok(
+    scalar(grep {
+        $_ eq 't/1714-vial-execution-fault-cardinality-preflight.t'
+    } @{$policy->{groups}{checking_faults}{evidence}}),
+    'checking fault policy cites the exact normalization-seam witness',
+);
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;
 my @catalog_axes;

@@ -343,9 +343,12 @@ my $GROUPS = {
     checking_faults => _group(
         'FSM::Support::VIALExecutionContract', 'bind_plan',
         ['VIAL_EXECUTION_LIMIT_ERROR'], 'faults path',
-        'after_fault_normalization', 'no_execution_ir_plan_or_checking_result',
-        'move_same_layer_check_before_avoidable_materialization', '.17.4.5',
-        ['t/1633-vial-architecture-scale-checking-faults.t'],
+        'compact_preflight_before_fault_normalization_with_terminal_defense',
+        'no_execution_ir_plan_or_checking_result',
+        'retain_compact_preflight_and_terminal_defense', '.17.4.5', [
+            't/1633-vial-architecture-scale-checking-faults.t',
+            't/1714-vial-execution-fault-cardinality-preflight.t',
+        ],
     ),
     checking_randomness => _group(
         'FSM::Support::VIALExecutionContract', 'bind_plan',

@@ -18,6 +18,7 @@ answers:
   - "when are VIAL model-instance and scalar-state-cell caps enforced?"
   - "when are VIAL scoreboard-instance and aggregate-capacity caps enforced?"
   - "when are VIAL coverpoint and bin-cross aggregate caps enforced?"
+  - "when is the VIAL fault collection cap enforced?"
 date: 2026-08-31
 status: current
 tags: [vial, architecture-scale, limits, bounded-failure, route-authority]
@@ -60,6 +61,7 @@ evidence: >-
   t/1711-vial-execution-model-cardinality-preflight.t;
   t/1712-vial-execution-scoreboard-cardinality-preflight.t;
   t/1713-vial-execution-coverage-cardinality-preflight.t;
+  t/1714-vial-execution-fault-cardinality-preflight.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -95,6 +97,7 @@ reverify: >-
   t/1711-vial-execution-model-cardinality-preflight.t
   t/1712-vial-execution-scoreboard-cardinality-preflight.t
   t/1713-vial-execution-coverage-cardinality-preflight.t
+  t/1714-vial-execution-fault-cardinality-preflight.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -168,4 +171,6 @@ Coverage preflights coverpoints and a saturating bins-plus-cross-tuples total
 before normalization, then requires the normalized counts to agree while
 retaining terminal caps. Semantic cross `max_bins` and the coverpoint route's
 parser byte cap remain earlier authorities; both local excesses retain
-`/coverage`. Fault and random groups keep their separate owner and nonclaims.
+`/coverage`. Fault count preflights record normalization with terminal
+agreement; excess retains `/faults` and creates no records. Randomness keeps
+its owner and nonclaims.
