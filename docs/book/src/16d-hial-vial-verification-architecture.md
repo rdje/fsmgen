@@ -3069,6 +3069,8 @@ terminal whole-manifest limit pass remain byte-identical.
 The same preflight admits endpoint cardinality from the clock, reset, inputs,
 and outputs before individual endpoint widths are validated or normalized type
 and endpoint records are constructed.
+Observation cardinality is also admitted before monitor roles and referenced
+endpoints are validated into normalized records.
 
 The binding ladder is the first axis authored under that rule. Its three levels
 above the gate generate 1,933,429, 3,866,741, and 3,866,800 direct-IAL1 bytes —

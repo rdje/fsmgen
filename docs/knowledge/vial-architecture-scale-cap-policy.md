@@ -28,6 +28,7 @@ evidence: >-
   perl/FSM/HIAL/VIALBridge/Builder.pm;
   t/1694-hial-vial-bridge-configuration-cap-order.t;
   t/1695-hial-vial-bridge-endpoint-cap-order.t;
+  t/1696-hial-vial-bridge-observation-cap-order.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -42,6 +43,7 @@ reverify: >-
   t/1692-vial-semantic-type-shape-cap-order.t
   t/1694-hial-vial-bridge-configuration-cap-order.t
   t/1695-hial-vial-bridge-endpoint-cap-order.t
+  t/1696-hial-vial-bridge-observation-cap-order.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -96,6 +98,8 @@ the terminal whole-manifest defense and accepted manifest bytes remain intact.
 Endpoint cardinality is likewise admitted from the clock, reset, and interface
 collections before any individual endpoint width is validated or its type and
 normalized endpoint record are constructed.
+Observation cardinality is admitted before individual monitor roles or their
+endpoint references are validated and normalized.
 
 The guarded exact semantic-catalog matrix now closes every selected
 qualification, boundary, excess, and declared cap interaction through the
