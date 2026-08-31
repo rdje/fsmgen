@@ -2632,12 +2632,22 @@ a lower bound. Exact equality with 67,108,864 bytes is admitted; one extra byte
 returns `VIAL_RUN_LIMIT_EXCEEDED` at `/artifacts`. Assembly and the Tool's
 complete-graph checks remain independent terminal defenses.
 
-The next slice audits the result-payload/assembly boundary; later slices retain
-the separate VHDL and OSVVM profile authorities.
+After successful result production, a third lower bound adds every exact
+final-form member already known: the replacement tool profile, normalized
+compile and run transcripts, trace, result manifest, and immutable emitted
+artifacts. Equality still passes; adjacent excess rejects before the large
+result-payload object is persisted or assembly begins. `ResultProducer` runs
+once because its content must exist before this bound is knowable. The final
+backend manifest and Tool-owned plan layer remain excluded until their exact
+later boundaries.
+
+The next slice audits the complete lifecycle backend graph before Runner
+return; later slices retain the separate VHDL and OSVVM profile authorities.
 
 ```sh
 prove -Iperl t/1720-vial-runtime-structural-artifact-preflight.t \
-  t/1721-vial-runtime-trace-artifact-preflight.t
+  t/1721-vial-runtime-trace-artifact-preflight.t \
+  t/1722-vial-runtime-result-artifact-preflight.t
 ```
 
 ### Source-byte cap admission order

@@ -8,8 +8,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
   (`active`; runtime-stream cap hardening under decisions `0093`/`0083`)
-- next_action: audit the portable-SystemVerilog result-payload/public-graph
-  lower bound before assembly in `.17.4.7`.
-- in_flight_uncommitted: none after the runtime trace-byte preflight commit.
+- next_action: audit the portable-SystemVerilog final lifecycle backend graph
+  before Runner return in `.17.4.7`.
+- in_flight_uncommitted: none after the result-ready byte preflight commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none; immutable `.17.3` evidence is the selection input.

@@ -1099,3 +1099,16 @@ emitted artifacts. That subset is necessarily contained in the final public
 graph, so exceeding the existing graph cap is conclusive while equality stays
 admissible. Result and assembly growth remain owned by later checks, and the
 complete Tool validation remains the terminal authority.
+
+## 2026-08-31: Result-ready admission uses final-form content, not payload size
+
+The lifecycle's persisted result payload contains validation structures and
+other private reconstruction data that do not become public artifacts. Using
+that object's encoded size as a proxy would therefore reject valid routes and
+would couple the public cap to an internal storage format.
+
+Admission instead counts only exact final-form members: immutable emission,
+the replacement tool profile, both normalized transcripts, normalized trace,
+and the produced result manifest. The backend manifest and Tool plan layer are
+still unknown and remain for terminal checks. This preserves a sound lower
+bound while preventing avoidable large payload persistence and assembly.
