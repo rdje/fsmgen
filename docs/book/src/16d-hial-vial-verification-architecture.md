@@ -3824,6 +3824,15 @@ corruption. At one million entries it makes 6,000,000 comparisons over exactly
 4,000,000 bytes (`a515ca39…`), reaches expected/actual depths 1,000,000/1, and
 ends with zero pending entries.
 
+Scoreboard instance count and aggregate declared capacity are now admitted from
+compact SemanticIR before any scoreboard record or definition is normalized.
+Each definition's own capacity still belongs to the earlier semantic stage;
+the execution preflight saturating-adds only already-admitted capacities in
+authored instance order. Accepted construction must equal that compact result,
+and both original post-construction caps remain terminal defense. Consequently,
+instance or aggregate excess creates no scoreboard records and changes neither
+the established `/scoreboards` diagnostic nor accepted plan/checking semantics.
+
 Instance 4,097 returns only `VIAL_EXECUTION_LIMIT_ERROR` at `/scoreboards`,
 with semantic/bridge but no downstream identity. Capacity 1,000,001 returns
 parser `VIAL_LIMIT_ERROR` at `/packages/0/scoreboards/0/capacity` with no stage

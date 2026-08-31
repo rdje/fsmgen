@@ -294,6 +294,28 @@ ok(
     } @{$policy->{groups}{checking_models}{evidence}}),
     'checking model policy cites the exact normalization-seam witness',
 );
+is(
+    $policy->{groups}{checking_scoreboards}{current_enforcement},
+    'scalar_semantic_admission_then_compact_execution_preflight_with_terminal_defense',
+    'checking scoreboard policy records its layered preflights and defense',
+);
+is(
+    $policy->{groups}{checking_scoreboards}{selected_treatment},
+    'retain_layered_preflight_and_terminal_defense',
+    'checking scoreboard policy retains every enforcement layer',
+);
+ok(
+    scalar(grep {
+        $_ eq 't/1712-vial-execution-scoreboard-cardinality-preflight.t'
+    } @{$policy->{groups}{checking_scoreboards}{evidence}}),
+    'checking scoreboard policy cites the exact normalization-seam witness',
+);
+ok(
+    scalar(grep {
+        $_ eq 't/1690-vial-semantic-scoreboard-capacity-order.t'
+    } @{$policy->{groups}{checking_scoreboards}{evidence}}),
+    'checking scoreboard policy cites the earlier semantic-capacity witness',
+);
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;
 my @catalog_axes;

@@ -268,11 +268,18 @@ sub _build($raw, $qualification_profile = undef) {
         'model cardinality changed after compact preflight', '/models')
         unless scalar(@$models) == $model_cardinality->{model_instances}
             && $scalar_state_cells == $model_cardinality->{scalar_state_cells};
+    my $scoreboard_cardinality = _preflight_scoreboard_cardinality($ctx);
     my ($scoreboards, $scoreboard_capacity) = _build_scoreboards($ctx);
+    _limit('scoreboard_instances', scalar(@$scoreboards), '/scoreboards');
+    _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+        'scoreboard cardinality changed after compact preflight', '/scoreboards')
+        unless scalar(@$scoreboards)
+                == $scoreboard_cardinality->{scoreboard_instances}
+            && $scoreboard_capacity
+                == $scoreboard_cardinality->{scoreboard_declared_capacity};
     my $coverage = _normalize_node($ctx, $fixture->{coverage});
     my $faults = _normalize_node($ctx, $fixture->{faults});
     my $coverage_materialization = _coverage_materialization_count($fixture->{coverage});
-    _limit('scoreboard_instances', scalar(@{$fixture->{instances}{scoreboard_instances}}), '/scoreboards');
     _limit('coverpoints', scalar(@{$fixture->{coverage}{coverpoints}}), '/coverage');
     _limit('coverage_bins_and_cross_tuples', $coverage_materialization, '/coverage');
     _limit('faults', scalar(@{$fixture->{faults}}), '/faults');
@@ -2479,6 +2486,35 @@ sub _build_models($ctx) {
     } @{$ctx->{fixture}{instances}{model_instances}};
     _limit('scalar_state_cells', $scalar_state_cells, '/models');
     return (\@models, $scalar_state_cells);
+}
+
+sub _preflight_scoreboard_cardinality($ctx) {
+    my $instances = $ctx->{fixture}{instances}{scoreboard_instances};
+    my $scoreboard_instances = scalar(@$instances);
+    _limit('scoreboard_instances', $scoreboard_instances, '/scoreboards');
+
+    my %capacity_by_scoreboard = map {
+        $_->{semantic_id} => $_->{capacity}
+    } @{$ctx->{package}{scoreboards}};
+    my $scoreboard_declared_capacity = 0;
+    my $ceiling = $LIMIT{scoreboard_declared_capacity};
+    for my $instance (@$instances) {
+        my $scoreboard_id = $instance->{scoreboard_id};
+        _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+            'scoreboard instance references no normalized definition',
+            '/scoreboards')
+            unless exists $capacity_by_scoreboard{$scoreboard_id};
+        $scoreboard_declared_capacity = _bounded_count_add(
+            $scoreboard_declared_capacity,
+            $capacity_by_scoreboard{$scoreboard_id}, $ceiling,
+        );
+        _limit('scoreboard_declared_capacity',
+            $scoreboard_declared_capacity, '/scoreboards');
+    }
+    return {
+        scoreboard_instances => $scoreboard_instances,
+        scoreboard_declared_capacity => $scoreboard_declared_capacity,
+    };
 }
 
 sub _build_scoreboards($ctx) {

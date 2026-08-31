@@ -8,8 +8,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5`
   (`active`; checking-state cap hardening under decision `0093`)
-- next_action: audit scoreboard-instance and declared-capacity admission, then
-  implement the earliest safe `.17.4.5` slice.
-- in_flight_uncommitted: none after the model-cardinality preflight commit.
+- next_action: audit coverpoint and bin/cross admission, then implement the
+  earliest safe `.17.4.5` slice.
+- in_flight_uncommitted: none after the scoreboard-cardinality preflight commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none; immutable `.17.3` evidence is the selection input.

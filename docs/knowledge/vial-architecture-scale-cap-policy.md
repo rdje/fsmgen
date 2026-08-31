@@ -16,6 +16,7 @@ answers:
   - "when does VIAL random-attempt exhaustion stop plan construction?"
   - "when is the VIAL serialized-plan byte cap enforced?"
   - "when are VIAL model-instance and scalar-state-cell caps enforced?"
+  - "when are VIAL scoreboard-instance and aggregate-capacity caps enforced?"
 date: 2026-08-31
 status: current
 tags: [vial, architecture-scale, limits, bounded-failure, route-authority]
@@ -56,6 +57,7 @@ evidence: >-
   t/1710-vial-execution-random-attempt-authority.t;
   t/1634-vial-architecture-scale-checking-random-replay.t;
   t/1711-vial-execution-model-cardinality-preflight.t;
+  t/1712-vial-execution-scoreboard-cardinality-preflight.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -89,6 +91,7 @@ reverify: >-
   t/1710-vial-execution-random-attempt-authority.t
   t/1634-vial-architecture-scale-checking-random-replay.t
   t/1711-vial-execution-model-cardinality-preflight.t
+  t/1712-vial-execution-scoreboard-cardinality-preflight.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -143,33 +146,19 @@ each projected source map. Terminal collection defenses and accepted manifest
 bytes remain intact. Exact manifest bytes stay terminal because canonical
 encoding alone decides size; boundary acceptance and adjacent excess are frozen.
 
-Execution total and maximum-live fiber cardinality is now admitted from the
-selected compact action trees before execution-context construction or bridge
-indexing. Parallel actions allocate direct and nested descendants; repeat
-multiplies allocations but not simultaneous liveness; each scenario adds one
-root. Saturating arithmetic preserves total-before-live diagnostic order, and
-the original post-emission checks remain terminal defense. Exact excess
-diagnostics, accepted plan identities, and the legal 65,536-total-fiber
-workload's later serialized-plan rejection remain unchanged.
-
-Execution admission checks scenario count, fixture shape, per-scenario declared
-and compact-derived operations, and their aggregate before context construction.
-After bridge indexing, compact binding cardinality is admitted before binding
-records; the terminal count remains defense and accepted counts agree exactly.
-Random exhaustion is decided during projection before plan-byte preflight or
-final decision, ExecutionIR, and report materialization.
-Serialized-plan bytes are admitted from the exact compact projection before
-those final materializers; accepted terminal canonical bytes must agree and
-the terminal cap remains defense in depth.
-Novel execution types are admitted before cloning, caching, or insertion; a
-duplicate shape stays reusable at the ceiling. Base source maps are admitted
-before location cloning or append; later base-plus-random and exact-plan checks
-retain authority. SemanticIR and bridge remain earlier normal-route authorities;
-execution checks defend internal inputs, with diagnostics and accepted plan
-identity unchanged.
+Compact execution admission covers profile/scenario/operation/fiber counts
+before context construction, bindings after bridge indexing but before record
+construction, and novel types/source maps before insertion. Random exhaustion
+and exact projected plan bytes stop final decision, ExecutionIR, and report
+materialization. Saturating arithmetic, terminal defenses, earlier
+SemanticIR/bridge authorities, diagnostics, and accepted plan identities remain
+unchanged.
 
 Before model normalization, checking admission counts instances and
 saturating-adds each referenced definition's scalar cells. Both excesses retain
 `/models` and create no model records; accepted terminal counts must equal
 preflight, with the scalar terminal check retained. Other checking groups and
-later layers keep their separate owners and nonclaims.
+later layers keep their separate owners and nonclaims. Scoreboard definitions
+retain earlier semantic scalar admission; execution then preflights instance
+count and aggregate admitted capacity before scoreboard normalization, with
+terminal count agreement and the same `/scoreboards` failure surface.

@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **66** uniquely owned question entries.
+> **2** facts · **67** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -47,6 +47,7 @@
 - q="when are VIAL execution fiber caps enforced?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="when are VIAL execution profile, binding, type, and source-map caps enforced?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="when are VIAL model-instance and scalar-state-cell caps enforced?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
+- q="when are VIAL scoreboard-instance and aggregate-capacity caps enforced?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="when does VIAL random-attempt exhaustion stop plan construction?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="when is the VIAL execution operations-per-scenario cap enforced?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="when is the VIAL serialized-plan byte cap enforced?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)

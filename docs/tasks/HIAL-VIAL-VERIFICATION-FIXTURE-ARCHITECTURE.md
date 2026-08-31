@@ -856,8 +856,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Enforce the selected checking-state resource caps before avoidable state-service materialization.`
   Acceptance: `Implement only the .17.4.1-selected checking contract for models, scalar cells, scoreboards and capacity, coverage, faults, and random occurrences. Preserve exact accepted checking semantics and replay while proving earliest deterministic rejection, no partial checking result, bounded construction, and guarded checking_state_v1 boundaries.`
-  Verification: `Clean 5b3860fc0 closes .17.4.4. Model/scalar cardinality now preflights compact SemanticIR before normalization, retains terminal defense, exact diagnostics, and accepted plan identity; t1630/t1685/t1711 pass Files=3/Tests=83. Scoreboard admission is next.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: activate checking cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight model cardinality`
+  Verification: `Model/scalar and scoreboard instance/aggregate counts now preflight compact SemanticIR before normalization with terminal defense, exact diagnostics, and stable accepted plans. t1631/t1685/t1690/t1712 pass Files=4/Tests=102. Coverage admission is next.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: activate checking cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight model cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight scoreboard cardinality`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6`
   Status: `proposed`
   Goal: `Enforce the selected backend-emission resource caps before partial artifact publication.`
@@ -7789,10 +7789,10 @@ The completed node records above and their named Git commits remain the canonica
 
 - [x] **ROOT CAUSE (WHY + WHERE)** — History identifies `44dbecd1a`: both fiber limits followed `_emit_sequence` even though compact SemanticIR already determines them.
 - [x] **ADDRESSED (verified)** — RED t1624/t1625 entered `_index_bridge` three times per excess; GREEN `Files=3, Tests=53` preflights both measures, retains diagnostics/accepted and later-plan-cap identities, and keeps terminal checks.
-- [x] **NO REGRESSION** — The focused set reports `Files=7, Tests=75`; syntax, every mdBook chapter, Knowledge Map (1,156 facts/6,139 questions), claims, task, locality, containment, staged-result, diff, ceiling, and doctrine gates pass. Full CI/push remain deferred.
+- [x] **NO REGRESSION** — The focused set reports `Files=7, Tests=75`; syntax, mdBook, Knowledge Map, claims, containment, and doctrines pass. Full CI/push remain deferred.
 
-## Acceptance Checklist (enforced) — `.17.4.5` model-cardinality preflight
+## Acceptance Checklist (enforced) — `.17.4.5` scoreboard-cardinality preflight
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'after_model_normalization' -- perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` identifies `951720257`; `_build_models` normalized every model record before either known count was admitted.
-- [x] **ADDRESSED (verified)** — Compact preflight now saturating-counts instance references before `_build_models`; accepted terminal counts must agree, the scalar terminal defense remains, and t1711 pins both one-over diagnostics plus the accepted plan identity.
-- [x] **NO REGRESSION** — Model/policy coverage reports `All tests successful` at `Files=3, Tests=83`; syntax, mdBook, Knowledge Map, claims, task, locality, containment, staged diff, and doctrines close the slice. Full CI/push remain deferred.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'scalar_semantic_admission_then_instance_normalization' -- perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` identifies `951720257`; `_build_scoreboards` normalized every record before instance and aggregate checks.
+- [x] **ADDRESSED (verified)** — Compact execution preflight admits both counts before `_build_scoreboards`, retains terminal defenses/count agreement, and preserves the earlier semantic scalar authority; t1690/t1712 pin both layers.
+- [x] **NO REGRESSION** — Scoreboard/policy coverage reports `All tests successful` at `Files=4, Tests=102`; syntax, mdBook, Knowledge Map, claims, task, locality, containment, staged diff, and doctrines close the slice. Full CI/push remain deferred.

@@ -318,10 +318,14 @@ my $GROUPS = {
         'FSM::Support::VIALExecutionContract', 'parse_validate_or_bind_plan',
         ['VIAL_LIMIT_ERROR', 'VIAL_EXECUTION_LIMIT_ERROR'],
         'scoreboard declaration or normalized path',
-        'scalar_semantic_admission_then_instance_normalization',
+        'scalar_semantic_admission_then_compact_execution_preflight_with_terminal_defense',
         'no_execution_ir_plan_or_checking_result',
-        'move_same_layer_check_before_avoidable_materialization', '.17.4.5',
-        ['t/1631-vial-architecture-scale-checking-scoreboards.t'],
+        'retain_layered_preflight_and_terminal_defense', '.17.4.5',
+        [
+            't/1631-vial-architecture-scale-checking-scoreboards.t',
+            't/1690-vial-semantic-scoreboard-capacity-order.t',
+            't/1712-vial-execution-scoreboard-cardinality-preflight.t',
+        ],
     ),
     checking_coverage => _group(
         'FSM::Support::VIALExecutionContract', 'parse_validate_or_bind_plan',
