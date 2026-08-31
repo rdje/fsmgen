@@ -609,23 +609,15 @@ sub _build_scoreboard {
     my $transaction_items = _form($items->[2], 'transaction', 2, 2, "$stub->{path}/transaction");
     my $policy_items = _form($items->[3], 'policy', 2, 2, "$stub->{path}/policy");
     my $transaction_spelling = _identifier($transaction_items->[1], "$stub->{path}/transaction", 1);
-    my ($target_context, $transaction_stub) = $self->_resolve_stub($context, 'transactions', $transaction_spelling, $transaction_items->[1], "$stub->{path}/transaction");
-    my $transaction = $self->_build_transaction($target_context, $transaction_stub);
     my $policy = _identifier($policy_items->[1], "$stub->{path}/policy", 0);
     _fail('VIAL_SEMANTIC_ERROR', 'semantic', "unknown scoreboard policy '$policy'", $policy_items->[1]{span}, "$stub->{path}/policy")
         unless $policy eq 'in_order' || $policy eq 'keyed';
 
-    my ($key, $capacity_node);
+    my ($key, $key_items, $capacity_node);
     if ($policy eq 'keyed') {
         _shape($items, 6, 6, $stub->{node}, $stub->{path}, 'scoreboard');
-        my $key_items = _form($items->[4], 'key', 2, 2, "$stub->{path}/key");
+        $key_items = _form($items->[4], 'key', 2, 2, "$stub->{path}/key");
         $key = _identifier($key_items->[1], "$stub->{path}/key", 0);
-        my $field = _find_named($transaction->{fields}, $key);
-        _fail('VIAL_REFERENCE_ERROR', 'resolve', "unknown scoreboard key field '$key'", $key_items->[1]{span}, "$stub->{path}/key")
-            unless $field;
-        my $resolved = $self->_resolved_type($field->{type});
-        _fail('VIAL_TYPE_ERROR', 'type', 'scoreboard key field must be scalar', $key_items->[1]{span}, "$stub->{path}/key")
-            unless $resolved->{kind} eq 'scalar' || $resolved->{kind} eq 'enum';
         $capacity_node = $items->[5];
     }
     else {
@@ -634,6 +626,19 @@ sub _build_scoreboard {
     }
     my $capacity_items = _form($capacity_node, 'capacity', 2, 2, "$stub->{path}/capacity");
     my $capacity = _positive_integer($capacity_items->[1], "$stub->{path}/capacity", 1, MAX_SCOREBOARD_CAPACITY);
+    my ($target_context, $transaction_stub) = $self->_resolve_stub(
+        $context, 'transactions', $transaction_spelling,
+        $transaction_items->[1], "$stub->{path}/transaction",
+    );
+    my $transaction = $self->_build_transaction($target_context, $transaction_stub);
+    if ($policy eq 'keyed') {
+        my $field = _find_named($transaction->{fields}, $key);
+        _fail('VIAL_REFERENCE_ERROR', 'resolve', "unknown scoreboard key field '$key'", $key_items->[1]{span}, "$stub->{path}/key")
+            unless $field;
+        my $resolved = $self->_resolved_type($field->{type});
+        _fail('VIAL_TYPE_ERROR', 'type', 'scoreboard key field must be scalar', $key_items->[1]{span}, "$stub->{path}/key")
+            unless $resolved->{kind} eq 'scalar' || $resolved->{kind} eq 'enum';
+    }
     my $record = {
         %{$self->_meta($stub->{path}, $stub->{node})},
         semantic_id => $stub->{semantic_id}, name => $stub->{name},
@@ -946,6 +951,8 @@ sub _build_coverage {
         my $name = _identifier($cross_items->[1], "$item_path/name", 0);
         _unique_name(\%names, $name, $cross_items->[1], $item_path, 'coverage item');
         my $points_items = _form($cross_items->[2], 'points', 3, undef, "$item_path/points");
+        my $max_items = _form($cross_items->[3], 'max_bins', 2, 2, "$item_path/max_bins");
+        my $max_bins = _positive_integer($max_items->[1], "$item_path/max_bins", 1, MAX_CROSS_BINS);
         my (%point_names, @point_ids);
         my $product = Math::BigInt->new(1);
         my $domain_id;
@@ -960,8 +967,6 @@ sub _build_coverage {
             push @point_ids, $point->{semantic_id};
             $product->bmul(scalar @{$point->{bins}});
         }
-        my $max_items = _form($cross_items->[3], 'max_bins', 2, 2, "$item_path/max_bins");
-        my $max_bins = _positive_integer($max_items->[1], "$item_path/max_bins", 1, MAX_CROSS_BINS);
         _fail('VIAL_LIMIT_ERROR', 'limit', 'coverage cross Cartesian product exceeds max_bins', $cross_node->{span}, $item_path)
             if $product->bcmp($max_bins) > 0;
         push @crosses, {

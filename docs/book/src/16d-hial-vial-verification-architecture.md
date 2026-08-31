@@ -2565,6 +2565,18 @@ later section cannot mask a known declaration excess. The established
 partial semantic report or `SemanticIR`, and leaves exact-boundary projection
 and report identities unchanged.
 
+### Service-scalar cap admission order
+
+Scoreboard `capacity` and coverage-cross `max_bins` are admitted from their
+already-parsed declaration forms before dependent references are resolved. An
+over-limit scoreboard therefore reports its capacity boundary before resolving
+its transaction, and an over-limit cross reports its `max_bins` boundary before
+resolving coverpoints or calculating their Cartesian product. Both retain the
+established `VIAL_LIMIT_ERROR`, scalar semantic path, and atomic no-report
+failure. Exact-boundary inputs retain their projection and report identities;
+valid admitted inputs still undergo all transaction, key, coverpoint, domain,
+and Cartesian-product checks.
+
 ```perl
 use FSM::VIAL::ArchitectureScaleExecutionGraph;
 

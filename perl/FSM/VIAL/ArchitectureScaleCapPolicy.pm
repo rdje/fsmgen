@@ -161,9 +161,15 @@ my $GROUPS = {
     ),
     semantic_service_scalar => _group(
         'FSM::VIAL::SemanticBuilder', 'parse_validate', ['VIAL_LIMIT_ERROR'],
-        'service declaration scalar path', 'at_scalar_admission',
-        'no_semantic_ir_or_artifact', 'verify_existing_early_boundary',
-        '.17.4.2', ['t/1601-vial-architecture-scale-semantic-catalog.t'],
+        'service declaration scalar path',
+        'before_dependent_reference_resolution',
+        'no_semantic_ir_or_artifact',
+        'retain_scalar_preflight_before_dependent_resolution',
+        '.17.4.2', [
+            't/1601-vial-architecture-scale-semantic-catalog.t',
+            't/1690-vial-semantic-scoreboard-capacity-order.t',
+            't/1691-vial-semantic-cross-max-bins-order.t',
+        ],
     ),
     semantic_repeat_layering => _group(
         'FSM::VIAL::SemanticBuilder', 'parse_validate', ['VIAL_LIMIT_ERROR'],

@@ -21,6 +21,8 @@ evidence: >-
   t/1686-vial-semantic-action-cap-order.t;
   t/1688-vial-semantic-parallel-fiber-cap-order.t;
   t/1689-vial-semantic-declaration-cap-order.t;
+  t/1690-vial-semantic-scoreboard-capacity-order.t;
+  t/1691-vial-semantic-cross-max-bins-order.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -29,6 +31,8 @@ reverify: >-
   t/1686-vial-semantic-action-cap-order.t
   t/1688-vial-semantic-parallel-fiber-cap-order.t
   t/1689-vial-semantic-declaration-cap-order.t
+  t/1690-vial-semantic-scoreboard-capacity-order.t
+  t/1691-vial-semantic-cross-max-bins-order.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -60,3 +64,9 @@ when the join value is invalid; accepted boundary identities are unchanged.
 Each declaration family is admitted immediately after its section shape is
 parsed. Known excess therefore wins before malformed later package sections,
 with unchanged exact-boundary projection and report identities.
+
+Scoreboard capacity and coverage-cross `max_bins` are admitted before
+dependent transaction or coverpoint resolution. Known scalar excess therefore
+retains its established limit diagnostic and atomic failure even when a later
+reference is invalid; admitted declarations retain every reference, type,
+domain, key, and Cartesian-product validation.

@@ -87,6 +87,16 @@ is(
     'retain_per_section_preflight_before_dependent_parsing',
     'declaration policy retains per-section preflight before dependent parsing',
 );
+is(
+    $policy->{groups}{semantic_service_scalar}{current_enforcement},
+    'before_dependent_reference_resolution',
+    'service-scalar policy records admission before dependent resolution',
+);
+is(
+    $policy->{groups}{semantic_service_scalar}{selected_treatment},
+    'retain_scalar_preflight_before_dependent_resolution',
+    'service-scalar policy retains scalar preflight before dependent resolution',
+);
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;
 my @catalog_axes;
