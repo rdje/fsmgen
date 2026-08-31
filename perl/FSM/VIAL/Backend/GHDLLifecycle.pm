@@ -1127,6 +1127,9 @@ sub _phase_result_produced($session) {
     );
     _validate_runtime_result_shapes($decoded);
     _validate_runtime_result_scenario_values($decoded);
+    _validate_runtime_result_outcome_values(
+        $decoded, $session->{validation}{expected_observation_catalog},
+    );
     push @{$session->{objects}}, _write_object(
         $session, 'normalized_result', _canonical($decoded) . "\n", 0,
     );
@@ -1430,6 +1433,101 @@ sub _validate_runtime_result_scenario_values($decoded) {
                     $item_path) if $seen{$identity}++;
             }
         }
+    }
+    return;
+}
+
+sub _validate_runtime_result_outcome_values($decoded, $catalog) {
+    die "GHDL runtime expected observation catalog is invalid\n"
+        unless ref($catalog) eq 'HASH' && !blessed($catalog)
+            && ref($catalog->{entries}) eq 'ARRAY'
+            && !blessed($catalog->{entries});
+    my %catalog_width;
+    for my $entry (@{$catalog->{entries}}) {
+        die "GHDL runtime expected observation catalog entry is invalid\n"
+            unless ref($entry) eq 'HASH' && !blessed($entry)
+                && _runtime_result_identity($entry->{semantic_id})
+                && _runtime_result_positive_integer($entry->{width})
+                && !exists($catalog_width{$entry->{semantic_id}});
+        $catalog_width{$entry->{semantic_id}} = 0 + $entry->{width};
+    }
+
+    my $scalar_binding =
+        FSM::VIAL::Backend::VHDLResultSchema->parity_scalar_catalog_bindings;
+    my $bit_binding =
+        FSM::VIAL::Backend::VHDLResultSchema->parity_bit_catalog_bindings;
+    for my $field (sort keys %$scalar_binding) {
+        my $semantic_id = $scalar_binding->{$field};
+        die "GHDL runtime expected scalar observation is not one catalog bit\n"
+            unless ($catalog_width{$semantic_id} // 0) == 1;
+    }
+    for my $field (sort keys %$bit_binding) {
+        my $semantic_id = $bit_binding->{$field};
+        die "GHDL runtime expected vector observation is absent from the catalog\n"
+            unless ($catalog_width{$semantic_id} // 0) >= 1;
+    }
+
+    my $outcomes = $decoded->{parity_projection}{outcomes};
+    my $scenario_results = $decoded->{scenario_results};
+    die "GHDL runtime result outcome/scenario collections are invalid\n"
+        unless ref($outcomes) eq 'ARRAY' && !blessed($outcomes)
+            && ref($scenario_results) eq 'ARRAY'
+            && !blessed($scenario_results)
+            && @$outcomes == @$scenario_results;
+    my $counter_keys =
+        FSM::VIAL::Backend::VHDLResultSchema->parity_counter_keys;
+    my $scalar_keys =
+        FSM::VIAL::Backend::VHDLResultSchema->parity_scalar_keys;
+    for my $index (0 .. $#$outcomes) {
+        my $path = "/result_produced/parity_projection/outcomes/$index";
+        my $outcome = $outcomes->[$index];
+        my $cycle_count = $scenario_results->[$index]{logical_cycle_count};
+        die "GHDL runtime validated scenario cycle count is invalid\n"
+            unless _runtime_result_positive_integer($cycle_count);
+        for my $field (@$counter_keys) {
+            _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+                'GHDL runtime parity counter is not a nonnegative integer',
+                "$path/$field")
+                unless _runtime_result_nonnegative_integer($outcome->{$field});
+            _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+                'GHDL runtime parity counter exceeds its scenario cycle count',
+                "$path/$field") if $outcome->{$field} > $cycle_count;
+        }
+        for my $field (@$scalar_keys) {
+            _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+                'GHDL runtime passing parity scalar is not zero or one',
+                "$path/$field")
+                unless defined($outcome->{$field}) && !ref($outcome->{$field})
+                    && $outcome->{$field} =~ /\A[01]\z/;
+        }
+        for my $field (sort keys %$bit_binding) {
+            my $bits = $outcome->{$field};
+            _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+                'GHDL runtime parity bits use a foreign normalized alphabet',
+                "$path/$field")
+                unless defined($bits) && !ref($bits)
+                    && $bits =~ /\A[01XZ]+\z/;
+            my $expected_width =
+                $catalog_width{$bit_binding->{$field}};
+            _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+                'GHDL runtime parity bit width differs from its observation catalog entry',
+                "$path/$field") unless length($bits) == $expected_width;
+        }
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime final nonzero read data has no counted nonzero cycle',
+            "$path/nonzero_read_data_cycles")
+            if $outcome->{final_read_data_bits} =~ /1/
+                && $outcome->{nonzero_read_data_cycles} == 0;
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime asserted final response has no counted error cycle',
+            "$path/response_error_cycles")
+            if $outcome->{final_response} == 1
+                && $outcome->{response_error_cycles} == 0;
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime deasserted final ready has no counted ready-low cycle',
+            "$path/ready_low_cycles")
+            if $outcome->{final_ready} == 0
+                && $outcome->{ready_low_cycles} == 0;
     }
     return;
 }

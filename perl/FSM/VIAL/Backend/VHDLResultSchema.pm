@@ -15,6 +15,19 @@ my @PARITY_OUTCOME_KEYS = qw(
     nonzero_read_data_cycles ready_low_cycles response_error_cycles
     scenario_id status storage_bits
 );
+my @PARITY_COUNTER_KEYS = qw(
+    bus_accepts nonzero_read_data_cycles ready_low_cycles
+    response_error_cycles
+);
+my @PARITY_SCALAR_KEYS = qw(final_ready final_response);
+my %PARITY_SCALAR_CATALOG_BINDINGS = (
+    final_ready => 'endpoint/HREADYOUT',
+    final_response => 'endpoint/HRESP',
+);
+my %PARITY_BIT_CATALOG_BINDINGS = (
+    final_read_data_bits => 'endpoint/HRDATA',
+    storage_bits => 'probe/reg_data_q',
+);
 
 sub parity_schema($class) {
     _exact_class($class, 'parity_schema');
@@ -34,6 +47,26 @@ sub parity_projection_keys($class) {
 sub parity_outcome_keys($class) {
     _exact_class($class, 'parity_outcome_keys');
     return [@PARITY_OUTCOME_KEYS];
+}
+
+sub parity_counter_keys($class) {
+    _exact_class($class, 'parity_counter_keys');
+    return [@PARITY_COUNTER_KEYS];
+}
+
+sub parity_scalar_keys($class) {
+    _exact_class($class, 'parity_scalar_keys');
+    return [@PARITY_SCALAR_KEYS];
+}
+
+sub parity_scalar_catalog_bindings($class) {
+    _exact_class($class, 'parity_scalar_catalog_bindings');
+    return {%PARITY_SCALAR_CATALOG_BINDINGS};
+}
+
+sub parity_bit_catalog_bindings($class) {
+    _exact_class($class, 'parity_bit_catalog_bindings');
+    return {%PARITY_BIT_CATALOG_BINDINGS};
 }
 
 sub _exact_class($class, $method) {

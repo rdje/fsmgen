@@ -61,6 +61,21 @@ $manifest->{parity_projection} = {
         storage_bits => '00000000',
     }} @scenario_id],
 };
+my $expected_observation_catalog = {
+    schema => 'fsmgen.vial_vhdl_observation_catalog.v1',
+    catalog_digest => 'sha256/' . ('c' x 64),
+    total_width => 18,
+    entries => [
+        {sample_id => 'sample/endpoint/HRDATA',
+            semantic_id => 'endpoint/HRDATA', width => 8},
+        {sample_id => 'sample/endpoint/HREADYOUT',
+            semantic_id => 'endpoint/HREADYOUT', width => 1},
+        {sample_id => 'sample/endpoint/HRESP',
+            semantic_id => 'endpoint/HRESP', width => 1},
+        {sample_id => 'sample/probe/reg_data_q',
+            semantic_id => 'probe/reg_data_q', width => 8},
+    ],
+};
 my $encoded = $json->encode($manifest);
 
 subtest 'canonical result is admitted at the exact byte boundary' => sub {
@@ -194,6 +209,34 @@ subtest 'VHDL parity vocabulary has one defensive schema authority' => sub {
     pop @$mutable;
     is(scalar @{FSM::VIAL::Backend::VHDLResultSchema->parity_outcome_keys}, 10,
         'callers cannot mutate the schema authority');
+    my $counter_keys =
+        FSM::VIAL::Backend::VHDLResultSchema->parity_counter_keys;
+    is_deeply($counter_keys,
+        [qw(bus_accepts nonzero_read_data_cycles ready_low_cycles
+            response_error_cycles)],
+        'counter vocabulary is exact');
+    is_deeply(FSM::VIAL::Backend::VHDLResultSchema->parity_scalar_keys,
+        [qw(final_ready final_response)],
+        'scalar vocabulary is exact');
+    is_deeply(FSM::VIAL::Backend::VHDLResultSchema->parity_scalar_catalog_bindings,
+        {
+            final_ready => 'endpoint/HREADYOUT',
+            final_response => 'endpoint/HRESP',
+        }, 'scalar fields bind to exact one-bit catalog semantics');
+    is_deeply(FSM::VIAL::Backend::VHDLResultSchema->parity_bit_catalog_bindings,
+        {
+            final_read_data_bits => 'endpoint/HRDATA',
+            storage_bits => 'probe/reg_data_q',
+        }, 'bit-vector fields bind to exact catalog semantics');
+    pop @$counter_keys;
+    is(scalar @{FSM::VIAL::Backend::VHDLResultSchema->parity_counter_keys}, 4,
+        'callers cannot mutate the counter authority');
+    my $scalar_bindings =
+        FSM::VIAL::Backend::VHDLResultSchema->parity_scalar_catalog_bindings;
+    delete $scalar_bindings->{final_ready};
+    is(scalar keys
+        %{FSM::VIAL::Backend::VHDLResultSchema->parity_scalar_catalog_bindings},
+        2, 'callers cannot mutate the catalog bindings');
 };
 
 subtest 'nested result vocabularies and statuses remain closed' => sub {
@@ -353,6 +396,72 @@ subtest 'scenario values obey the shared passing-result contract' => sub {
         'duplicate scenario-owned identity rejects at its second index');
 };
 
+subtest 'parity outcome values bind to cycles and the observation catalog' => sub {
+    my $valid = eval {
+        validate_outcome_values(clone($manifest));
+        1;
+    };
+    ok($valid, 'closed parity values are admitted');
+
+    my $negative_counter = clone($manifest);
+    $negative_counter->{parity_projection}{outcomes}[0]{bus_accepts} = -1;
+    is(outcome_failure($negative_counter)->{path},
+        '/result_produced/parity_projection/outcomes/0/bus_accepts',
+        'negative counter rejects at its exact path');
+
+    my $oversized_counter = clone($manifest);
+    $oversized_counter->{parity_projection}{outcomes}[0]{ready_low_cycles} = 2;
+    is(outcome_failure($oversized_counter)->{path},
+        '/result_produced/parity_projection/outcomes/0/ready_low_cycles',
+        'counter cannot exceed its scenario cycle count');
+
+    my $foreign_scalar = clone($manifest);
+    $foreign_scalar->{parity_projection}{outcomes}[0]{final_ready} = 2;
+    is(outcome_failure($foreign_scalar)->{path},
+        '/result_produced/parity_projection/outcomes/0/final_ready',
+        'foreign scalar flag rejects at its exact path');
+
+    my $foreign_bits = clone($manifest);
+    $foreign_bits->{parity_projection}{outcomes}[0]{storage_bits} = '0000000x';
+    is(outcome_failure($foreign_bits)->{path},
+        '/result_produced/parity_projection/outcomes/0/storage_bits',
+        'foreign normalized-bit alphabet rejects at its exact path');
+
+    my $wrong_read_width = clone($manifest);
+    $wrong_read_width->{parity_projection}{outcomes}[0]{final_read_data_bits} =
+        '0000000';
+    is(outcome_failure($wrong_read_width)->{path},
+        '/result_produced/parity_projection/outcomes/0/final_read_data_bits',
+        'read-data width must equal its catalog entry');
+
+    my $wrong_storage_width = clone($manifest);
+    $wrong_storage_width->{parity_projection}{outcomes}[0]{storage_bits} =
+        '000000000';
+    is(outcome_failure($wrong_storage_width)->{path},
+        '/result_produced/parity_projection/outcomes/0/storage_bits',
+        'storage width must equal its catalog entry');
+
+    my $impossible_read_count = clone($manifest);
+    $impossible_read_count->{parity_projection}{outcomes}[0]
+        {final_read_data_bits} = '00000001';
+    is(outcome_failure($impossible_read_count)->{path},
+        '/result_produced/parity_projection/outcomes/0/nonzero_read_data_cycles',
+        'known nonzero final read data requires a counted nonzero cycle');
+
+    my $impossible_response_count = clone($manifest);
+    $impossible_response_count->{parity_projection}{outcomes}[0]
+        {final_response} = 1;
+    is(outcome_failure($impossible_response_count)->{path},
+        '/result_produced/parity_projection/outcomes/0/response_error_cycles',
+        'asserted final response requires a counted response-error cycle');
+
+    my $impossible_ready_count = clone($manifest);
+    $impossible_ready_count->{parity_projection}{outcomes}[0]{final_ready} = 0;
+    is(outcome_failure($impossible_ready_count)->{path},
+        '/result_produced/parity_projection/outcomes/0/ready_low_cycles',
+        'deasserted final ready requires a counted ready-low cycle');
+};
+
 subtest 'record cardinality and JSON shape remain fail closed' => sub {
     my $duplicate = decode_failure(
         "$encoded\nFSMGEN_VIAL_RESULT_V1\t$encoded",
@@ -448,6 +557,24 @@ sub value_failure {
         1;
     };
     ok(!$ok, 'invalid scenario value rejects');
+    my $error = $@;
+    isa_ok($error, 'FSM::VIAL::Backend::GHDLLifecycle::Failure');
+    return ref($error) ? $error : {};
+}
+
+sub validate_outcome_values {
+    FSM::VIAL::Backend::GHDLLifecycle::_validate_runtime_result_outcome_values(
+        $_[0], $expected_observation_catalog,
+    );
+}
+
+sub outcome_failure {
+    my ($candidate) = @_;
+    my $ok = eval {
+        validate_outcome_values($candidate);
+        1;
+    };
+    ok(!$ok, 'invalid parity outcome value rejects');
     my $error = $@;
     isa_ok($error, 'FSM::VIAL::Backend::GHDLLifecycle::Failure');
     return ref($error) ? $error : {};

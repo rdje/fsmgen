@@ -211,6 +211,24 @@ passes; one excess byte or a semantically identical noncanonical spelling
 rejects without a result object. The surrounding run-capture ceiling remains
 an independent earlier defense.
 
+Parity outcomes are value-closed before persistence too. All four counters are
+nonnegative and no greater than the matching scenario cycle count; passing
+ready/response scalars are exactly zero or one; read-data and storage strings
+use only `0/1/X/Z` and match their authenticated observation-catalog widths.
+A known nonzero final read, asserted final response, or deasserted final ready
+also requires the corresponding nonzero counter. The checked two-scenario
+projection remains:
+
+| Scenario | Accepts | Ready-low | Response-error | Nonzero-read | Final ready/response | Final read data | Final storage |
+| --- | ---: | ---: | ---: | ---: | --- | --- | --- |
+| `success` | 1 | 15 | 0 | 0 | `1/0` | 32 zero bits | `11001010111111101011101010111110` |
+| `unsupported_size` | 1 | 11 | 2 | 0 | `1/0` | 32 zero bits | 32 zero bits |
+
+Those values stay canonical in each checked qualification report and are shown
+here for bounded reviewer visibility. The compact OSVVM gallery reference keeps
+only the report path, identity, and digest: copying the nested projection there
+would create a second value authority rather than improve verification.
+
 The 127 fixed source bytes also refine the structural emission boundary. The
 unchanged 16-MiB cap now accepts the complete `T=29,505` portable graph at
 16,776,666 bytes and 29,543 maps; adjacent `T=29,506` renders 16,777,234 bytes

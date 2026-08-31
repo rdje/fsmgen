@@ -106,25 +106,19 @@ the original timeout/execution diagnostic and reports zero residue. This
 changes no GHDL command, deadline, capture ceiling, accepted output, provider
 role, or scale claim.
 
-Admission cleanup is exact before an owner marker exists. The lifecycle
-directly remembers whether it removed the absent root it just created after a
-later admission write failed. Successful removal retains the triggering
-diagnostic and reports removal with zero residue; removal failure becomes the
-cleanup diagnostic with the exact residual staging identity. This authority
-does not infer ownership from an owner file that may not yet have been written.
-Adjacent lifecycle-suite runs exposed intermittent exact-deadline timeouts in
-fake-provider version probes. Native doubles produced AMFI `-423` traffic, but
-`env perl`, configured-absolute Perl, and a stable tracked Perl script also
-timed out. Three compact captures place successful `exec` handoff at
-1.421–2.080 milliseconds followed by 10.034–10.053 seconds with zero output
-before TERM, falsifying native signing, ambient path lookup, fresh inode
-identity, containment mode, and parent capture scheduling as sufficient causes.
-The final fixtures use one stable tracked POSIX-shell provider when `/bin/sh`
-exists and retain configured Perl only as a portability fallback. Five guarded
-predecessor passes and three full seven-file passes retain real supervisor,
-process-group, failure, report, and cleanup coverage; no launch crosses the
-two-second sampling threshold, no phase is retried, and the ten-second product
-deadline is unchanged.
+Before an owner marker exists, admission remembers whether it removed the root
+it created. Success preserves the triggering diagnostic with zero residue;
+failure becomes the cleanup diagnostic with the exact staging identity, never
+inferring ownership from an unwritten marker. Adjacent suites exposed
+intermittent exact-deadline fake-provider probe timeouts. Native doubles emitted
+AMFI `-423`, but `env perl`, absolute Perl, and a tracked Perl script also timed
+out. Three captures show `exec` handoff at 1.421–2.080 ms, then no output until
+TERM at 10.034–10.053 s, falsifying signing, path lookup, fresh inode identity,
+containment, and parent scheduling as sufficient causes. Fixtures now prefer
+one tracked POSIX-shell provider, with configured Perl as the no-`/bin/sh`
+fallback. Five guarded predecessor and three full seven-file passes preserve
+supervisor/process-group/failure/report/cleanup coverage; no launch crosses the
+two-second sampler, no retry was added, and the ten-second deadline is fixed.
 
 The qualifier's distinct four-state probe uses the same supervisor but retains
 its own error translation. A timed-out probe now reports
@@ -138,9 +132,10 @@ preserves the original probe failure; failed, malformed, or unexpectedly
 throwing aborts become the qualifier cleanup diagnostic at `/cleanup` with a
 sanitized reason. No probe is retried and its process policy is unchanged.
 
-Normalized result admission applies the selected 67,108,864-byte ceiling, shared top-level/scenario and VHDL projection/outcome vocabularies, one parity schema/version, sealed plan identity, and ordered trace run/scenario identities.
-Closure repaired omitted `samples`/projection-plan members. Scenario times are exact `domain_id/cycle/phase/ordinal` records: start is cycle zero/drive/ordinal zero; end keeps the domain, uses check/ordinal zero, and equals positive count minus one.
-Passing completion is `completed`; identity collections are unique safe-ID arrays. This exposed and repaired the VHDL one-based end-cycle defect. Missing, foreign, duplicate, reordered, non-pass, excess, noncanonical, or malformed records reject.
+Normalized result admission applies the selected 67,108,864-byte ceiling, exact shared/VHDL vocabularies, one parity schema/version, sealed plan identity, and ordered trace identities. Closure added omitted `samples`/projection-plan members, unique safe-ID collections, and `completed` status.
+Scenario times are exact `domain_id/cycle/phase/ordinal` records: zero/drive/zero start; same-domain check/zero end at positive count minus one. This repaired the VHDL one-based end-cycle defect. Missing, foreign, duplicate, reordered, non-pass, excess, noncanonical, or malformed records reject.
+Parity counters are nonnegative and cycle-bounded; scalars are `0|1`; vectors use `0/1/X/Z` at authenticated HRDATA/reg-data widths. Known nonzero final read data, asserted response, or deasserted ready requires its nonzero counter.
+The mdBook shows the canonical two-outcome projection; the compact OSVVM gallery keeps only checked report path/identity/digest to avoid a second value authority.
 The 127 fixed source bytes also move the unchanged 16-MiB portable/OSVVM structural boundary to accepted `T=29,505` at 16,776,666 portable bytes and adjacent rejected `T=29,506`; both graph oracles are v2.
 
 The guarded exact adapter accepts one 77-record reference validation, one gate
