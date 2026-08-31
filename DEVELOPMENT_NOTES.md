@@ -1073,3 +1073,16 @@ accepted plans while making the execution component independently bounded.
 
 The compact preflight admits declared and compact-derived counts before equality: excess gets the limit diagnostic,
 in-bound disagreement stays internal, and aggregate/terminal defenses and accepted plan bytes remain unchanged.
+
+## 2026-08-31: Runtime structural admission uses exact materialized artifacts
+
+Portable runtime scale has measured full-graph points, but those points are
+route evidence rather than a universal byte formula. The public run path can
+still reject an earlier, exact lower bound: its plan artifacts and successful
+backend emission are both fully materialized before Runner eligibility.
+
+The run path now validates that combined set with the existing public graph
+contract before starting the shared lifecycle. This moves known count, byte,
+and path-collision failure ahead of external execution without estimating
+future trace or result size. Post-runtime checks remain as terminal defenses;
+validated-trace and result admission need their own sound later bounds.

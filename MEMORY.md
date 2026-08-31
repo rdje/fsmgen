@@ -8,8 +8,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
   (`active`; runtime-stream cap hardening under decisions `0093`/`0083`)
-- next_action: audit portable-SystemVerilog structural, capture, trace, result,
-  and lifecycle admission for the first safe `.17.4.7` slice.
-- in_flight_uncommitted: none after the `.17.4.7` activation commit.
+- next_action: audit the portable-SystemVerilog validated-trace/result/public-
+  graph byte lower bound before result production in `.17.4.7`.
+- in_flight_uncommitted: none after the runtime structural-graph preflight
+  commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none; immutable `.17.3` evidence is the selection input.

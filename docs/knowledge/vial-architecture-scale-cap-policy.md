@@ -175,5 +175,8 @@ change.
 Leaf `.17.4.7` owns executable portable-SystemVerilog, portable-VHDL, and OSVVM
 runtime streams plus transcript/timeout and trace/result/publication envelopes.
 Portable SystemVerilog is audited first through the shared same-volume
-lifecycle; native UVM remains emission-only. Activation changes no behavior or
-claim.
+lifecycle; native UVM remains emission-only. Its first slice applies the
+existing public graph validator to the exact plan-plus-emission artifact set
+before Runner eligibility. Known count, byte, or collision excess therefore
+starts no tool and publishes no partial graph; later terminal validations stay
+in place. This exact materialized lower bound changes no cap or claim.

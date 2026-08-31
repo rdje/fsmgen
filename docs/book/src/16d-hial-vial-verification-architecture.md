@@ -2612,12 +2612,22 @@ together with their transcript, timeout, trace, result, and public-artifact
 envelopes. Native UVM remains emission-only and is not promoted into this
 runtime scope.
 
-The first audit follows portable SystemVerilog from structural/complete-graph
-preflight through shared same-volume lifecycle admission. Later slices retain
-the separate VHDL and OSVVM profile authorities. Activation changes no cap,
-accepted runtime behavior, tool qualification, support statement, capacity
-claim, or public artifact; implementation evidence is added only slice by
-slice.
+The first portable-SystemVerilog slice now applies the existing public graph
+validator to the exact plan artifacts plus successful backend emission before
+Runner eligibility. A known combined count, byte, or path collision therefore
+cannot start Verilator or create lifecycle staging. The check excludes the
+plan-time tool manifest because run rebuilds it, and the existing post-runtime
+checks remain terminal defenses over the result and final manifests.
+
+This is an exact materialized lower bound, not a projection from measured
+scale points. Accepted runtime behavior, caps, identities, tool qualification,
+support statements, capacity nonclaims, and public artifacts remain unchanged.
+The next slice audits the first sound validated-trace/result byte lower bound;
+later slices retain the separate VHDL and OSVVM profile authorities.
+
+```sh
+prove -Iperl t/1720-vial-runtime-structural-artifact-preflight.t
+```
 
 ### Source-byte cap admission order
 

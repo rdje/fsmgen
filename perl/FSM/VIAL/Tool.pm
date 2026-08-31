@@ -336,6 +336,21 @@ sub _execute_run_action {
         diagnostics => [_backend_diagnostics($emission->{diagnostics})],
     ) unless $emission->{ok};
 
+    my @structural_artifact = grep {
+        $_->{relpath} ne 'vial-tool-manifest.json'
+    } @{$args{normal_artifacts}};
+    push @structural_artifact, @{$emission->{artifacts}};
+    @structural_artifact = sort {
+        $a->{relpath} cmp $b->{relpath}
+    } @structural_artifact;
+    if (my $diagnostic =
+            _plan_artifact_graph_diagnostic(\@structural_artifact)) {
+        return _plan_error_result(
+            action => 'run', source_style => $args{source_style},
+            diagnostics => [$diagnostic],
+        );
+    }
+
     my $executed = FSM::VIAL::Backend::Runner->run({
         repo_root => $args{validated}{repository_root},
         execution_ir => $args{built}{execution_ir},
