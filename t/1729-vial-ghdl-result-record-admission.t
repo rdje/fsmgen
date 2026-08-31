@@ -452,18 +452,18 @@ subtest 'scenario values obey the shared passing-result contract' => sub {
         '/result_produced/scenario_results/0/expectation_ids',
         'scenario ID collection must remain an array');
 
-    my $unsafe_id = clone($manifest);
-    $unsafe_id->{scenario_results}[0]{diagnostic_ids} = ["diagnostic/bad\n"];
-    is(value_failure($unsafe_id)->{path},
-        '/result_produced/scenario_results/0/diagnostic_ids/0',
-        'unsafe scenario-owned identity rejects at its exact index');
-
-    my $duplicate_id = clone($manifest);
-    $duplicate_id->{scenario_results}[0]{cancelled_fiber_ids} =
-        [qw(fiber/one fiber/one)];
-    is(value_failure($duplicate_id)->{path},
-        '/result_produced/scenario_results/0/cancelled_fiber_ids/1',
-        'duplicate scenario-owned identity rejects at its second index');
+    for my $case (
+        [expectation_ids => 'expectation/foreign'],
+        [diagnostic_ids => 'diagnostic/foreign'],
+        [cancelled_fiber_ids => 'fiber/foreign'],
+    ) {
+        my ($collection, $identity) = @$case;
+        my $nonempty = clone($manifest);
+        $nonempty->{scenario_results}[0]{$collection} = [$identity];
+        is(value_failure($nonempty)->{path},
+            "/result_produced/scenario_results/0/$collection",
+            "non-empty $collection rejects at its exact collection path");
+    }
 };
 
 subtest 'top-level result values and aggregate totals are closed' => sub {

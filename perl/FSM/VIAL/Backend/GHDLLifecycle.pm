@@ -1722,17 +1722,9 @@ sub _validate_runtime_result_scenario_values($decoded) {
                 'GHDL runtime scenario identity collection is not one array',
                 "$path/$collection_name")
                 unless ref($collection) eq 'ARRAY' && !blessed($collection);
-            my %seen;
-            for my $item_index (0 .. $#$collection) {
-                my $item_path = "$path/$collection_name/$item_index";
-                my $identity = $collection->[$item_index];
-                _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
-                    'GHDL runtime scenario-owned identity is unsafe', $item_path)
-                    unless _runtime_result_identity($identity);
-                _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
-                    'GHDL runtime scenario-owned identity is duplicated',
-                    $item_path) if $seen{$identity}++;
-            }
+            _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+                'GHDL runtime scenario identity projection is not empty',
+                "$path/$collection_name") if @$collection;
         }
     }
     return;

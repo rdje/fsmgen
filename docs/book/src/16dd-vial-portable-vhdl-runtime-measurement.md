@@ -237,8 +237,12 @@ of canonical plan-owned random decisions. Fixed qualification authority is
 independently reproduced from the canonical plan; dynamic measurement callers
 derive both from ExecutionIR. A foreign fixture or any decision-projection
 mutation rejects before persistence without copying the nested decision object
-into lifecycle state. Scenario-owned identity collections remain the next
-value-closure boundary.
+into lifecycle state. The portable-VHDL producer emits no scenario-owned
+expectation, diagnostic, or cancelled-fiber records, so each matching identity
+projection must be exactly `[]`; any non-empty array rejects at its collection
+path. This restriction is VHDL-projection-specific: trace-backed result
+production for richer backends still derives these arrays from authenticated
+expectation and fiber records.
 
 Those values stay canonical in each checked qualification report and are shown
 here for bounded reviewer visibility. The compact OSVVM gallery reference keeps

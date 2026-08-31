@@ -12,6 +12,7 @@ answers:
   - "which diagnostic wins when the separate GHDL probe and its abort both fail?"
   - "how does the GHDL lifecycle admit normalized result bytes?"
   - "how are GHDL result fixture and random decisions bound to plan authority?"
+  - "how are GHDL scenario expectation diagnostic and cancelled fiber identities admitted?"
   - "how do fake GHDL lifecycle providers avoid host executable admission?"
 date: 2026-08-31
 status: current
@@ -133,11 +134,11 @@ preserves the original probe failure; failed, malformed, or unexpectedly
 throwing aborts become the qualifier cleanup diagnostic at `/cleanup` with a
 sanitized reason. No probe is retried and its process policy is unchanged.
 
-Normalized result admission applies the selected 67,108,864-byte ceiling, exact shared/VHDL vocabularies, one parity schema/version, sealed plan identity, and ordered trace identities. Closure added omitted `samples`/projection-plan members, unique safe-ID collections, and `completed` status.
+Normalized result admission applies the selected 67,108,864-byte ceiling, exact shared/VHDL vocabularies, one parity schema/version, sealed plan identity, and ordered trace identities. Closure added omitted `samples`/projection-plan members and `completed` status.
 Scenario times are exact `domain_id/cycle/phase/ordinal` records: zero/drive/zero start; same-domain check/zero end at positive count minus one. This repaired the VHDL one-based end-cycle defect. Missing, foreign, duplicate, reordered, non-pass, excess, noncanonical, or malformed records reject.
 Parity counters are nonnegative and cycle-bounded; scalars are `0|1`; vectors use `0/1/X/Z` at authenticated HRDATA/reg-data widths. Known nonzero final read data, asserted response, or deasserted ready requires its nonzero counter.
 The mdBook shows the canonical two-outcome projection; the compact OSVVM gallery keeps only checked report path/identity/digest to avoid a second value authority.
-Fixed schema/profile/evidence/flags, projection collections, aggregates, and diagnostic records are closed; metrics equal records/cardinalities, zero passing mismatches, and authenticated trace coverage (reset barriers are sampled cycles, not coverage events). Lifecycle authority seals the plan fixture and SHA-256 of canonical decisions; fixed authority is independently plan-derived, dynamic callers derive from ExecutionIR, and result mismatches reject before persistence. Scenario-owned identity collections are next.
+Fixed schema/profile/evidence/flags, projection collections, aggregates, and diagnostic records are closed; metrics equal records/cardinalities, zero passing mismatches, and authenticated trace coverage (reset barriers are sampled cycles, not coverage events). Lifecycle authority seals the plan fixture and SHA-256 of canonical decisions; fixed authority is independently plan-derived, dynamic callers derive from ExecutionIR, and result mismatches reject before persistence. Portable VHDL emits no scenario-owned expectation, diagnostic, or cancelled-fiber records, so each corresponding identity array must be exactly empty; this VHDL-specific admission does not narrow richer trace-backed ResultProducer behavior.
 The 127 fixed source bytes also move the unchanged 16-MiB portable/OSVVM structural boundary to accepted `T=29,505` at 16,776,666 portable bytes and adjacent rejected `T=29,506`; both graph oracles are v2.
 
 The guarded exact adapter retains one 77-record reference, three gate
