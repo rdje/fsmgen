@@ -3087,6 +3087,8 @@ Each projected source-map entry is admitted before its record is constructed,
 so entry 65,537 is never materialized; terminal manifest validation remains.
 Serialized-manifest bytes deliberately remain terminal: canonical encoding is
 the exact authority, with boundary acceptance and adjacent excess both frozen.
+The RAM-guarded exact bridge matrix closes every selected bridge qualification,
+limit, excess, identity, interaction, atomicity, staging, and cleanup contract.
 
 The binding ladder is the first axis authored under that rule. Its three levels
 above the gate generate 1,933,429, 3,866,741, and 3,866,800 direct-IAL1 bytes —

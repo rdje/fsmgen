@@ -133,7 +133,7 @@ Each projected source-map entry is admitted before record construction, so the
 Exact serialized-manifest bytes remain terminal because only canonical encoding
 decides size; boundary acceptance and adjacent valid excess are both frozen.
 
-The guarded exact semantic-catalog matrix now closes every selected
-qualification, boundary, excess, and declared cap interaction through the
-canonical oracle. This completes parser/SemanticIR hardening only; bridge and
-later layers retain their separate task owners and nonclaims.
+The guarded exact semantic-catalog and bridge-fanout matrices close every
+selected parser/SemanticIR and bridge qualification, boundary, excess, and cap
+interaction through canonical oracles. Execution and later layers retain their
+separate task owners and nonclaims.
