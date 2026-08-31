@@ -15,13 +15,21 @@ use FSM::VIAL::Backend::ResultProducer;
 
 my $json = JSON::PP->new->canonical(1);
 my $expected_plan_id = 'plan/' . ('a' x 64);
+my @scenario_id = qw(fixture::scenario::one fixture::scenario::two);
+my @expected_run_id = map { "run/$expected_plan_id/$_" } @scenario_id;
 my $manifest = {map { $_ => undef }
     @{FSM::VIAL::Backend::ResultProducer->manifest_keys}};
 $manifest->{schema} = 'fsmgen.verification_result_manifest.v1';
 $manifest->{schema_version} = 1;
 $manifest->{status} = 'pass';
 $manifest->{plan_id} = $expected_plan_id;
-$manifest->{parity_projection} = {plan_id => $expected_plan_id};
+$manifest->{scenario_results} = [map {
+    {run_id => $expected_run_id[$_], scenario_id => $scenario_id[$_]}
+} 0 .. $#scenario_id];
+$manifest->{parity_projection} = {
+    plan_id => $expected_plan_id,
+    outcomes => [map {{scenario_id => $_}} @scenario_id],
+};
 my $encoded = $json->encode($manifest);
 
 subtest 'canonical result is admitted at the exact byte boundary' => sub {
@@ -97,6 +105,45 @@ subtest 'result plan identities match the sealed trace authority' => sub {
         'non-object parity projection has the exact path');
 };
 
+subtest 'result scenario identities match ordered trace runs' => sub {
+    my $valid = eval {
+        validate_scenario_identities(clone($manifest));
+        1;
+    };
+    ok($valid, 'closed ordered result identities are admitted');
+
+    my $omitted = clone($manifest);
+    pop @{$omitted->{scenario_results}};
+    is(scenario_failure($omitted)->{path}, '/result_produced/scenario_results',
+        'omitted scenario result rejects at the collection');
+
+    my $duplicate = clone($manifest);
+    $duplicate->{scenario_results}[1]{run_id} = $expected_run_id[0];
+    is(scenario_failure($duplicate)->{path},
+        '/result_produced/scenario_results/1/run_id',
+        'duplicate run identity rejects at its ordered slot');
+
+    my $reordered = clone($manifest);
+    @{$reordered->{scenario_results}} =
+        reverse @{$reordered->{scenario_results}};
+    is(scenario_failure($reordered)->{path},
+        '/result_produced/scenario_results/0/run_id',
+        'reordered scenario results reject at the first mismatch');
+
+    my $missing_outcome = clone($manifest);
+    pop @{$missing_outcome->{parity_projection}{outcomes}};
+    is(scenario_failure($missing_outcome)->{path},
+        '/result_produced/parity_projection/outcomes',
+        'omitted parity outcome rejects at the collection');
+
+    my $foreign_outcome = clone($manifest);
+    $foreign_outcome->{parity_projection}{outcomes}[0]{scenario_id} =
+        'fixture::scenario::foreign';
+    is(scenario_failure($foreign_outcome)->{path},
+        '/result_produced/parity_projection/outcomes/0/scenario_id',
+        'foreign parity scenario rejects at its ordered slot');
+};
+
 subtest 'record cardinality and JSON shape remain fail closed' => sub {
     my $duplicate = decode_failure(
         "$encoded\nFSMGEN_VIAL_RESULT_V1\t$encoded",
@@ -140,6 +187,24 @@ sub identity_failure {
         1;
     };
     ok(!$ok, 'foreign result identity rejects');
+    my $error = $@;
+    isa_ok($error, 'FSM::VIAL::Backend::GHDLLifecycle::Failure');
+    return ref($error) ? $error : {};
+}
+
+sub validate_scenario_identities {
+    FSM::VIAL::Backend::GHDLLifecycle::_validate_runtime_result_scenario_identities(
+        $_[0], $expected_plan_id, \@expected_run_id,
+    );
+}
+
+sub scenario_failure {
+    my ($candidate) = @_;
+    my $ok = eval {
+        validate_scenario_identities($candidate);
+        1;
+    };
+    ok(!$ok, 'invalid result scenario identity rejects');
     my $error = $@;
     isa_ok($error, 'FSM::VIAL::Backend::GHDLLifecycle::Failure');
     return ref($error) ? $error : {};

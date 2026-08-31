@@ -139,10 +139,10 @@ throwing aborts become the qualifier cleanup diagnostic at `/cleanup` with a
 sanitized reason. No probe is retried and its process policy is unchanged.
 
 Normalized result admission applies the selected 67,108,864-byte ceiling,
-exact shared ResultProducer top-level keys, and the sealed trace plan identity
-for both result and parity projection before persistence. Closure repaired the
-producer's omitted `samples` and projection plan members; foreign identity,
-keys, excess, noncanonical, duplicate, or malformed records reject.
+shared top-level keys, sealed plan identity, and ordered trace run/scenario
+identities across result entries and parity outcomes before persistence.
+Closure repaired omitted `samples`/projection-plan members; missing, duplicate,
+reordered, foreign, excess, noncanonical, or malformed records reject.
 
 The guarded exact adapter accepts one 77-record reference validation, one gate
 validation plus three retained 10,000-record measurements, and one

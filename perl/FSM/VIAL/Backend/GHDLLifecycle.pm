@@ -1120,6 +1120,10 @@ sub _phase_result_produced($session) {
     _validate_runtime_result_plan_identity(
         $decoded, $session->{validation}{expected_plan_id},
     );
+    _validate_runtime_result_scenario_identities(
+        $decoded, $session->{validation}{expected_plan_id},
+        $session->{validation}{expected_run_ids},
+    );
     push @{$session->{objects}}, _write_object(
         $session, 'normalized_result', _canonical($decoded) . "\n", 0,
     );
@@ -1191,6 +1195,70 @@ sub _validate_runtime_result_plan_identity($decoded, $expected_plan_id) {
         '/result_produced/parity_projection/plan_id')
         unless defined($projection->{plan_id}) && !ref($projection->{plan_id})
             && $projection->{plan_id} eq $expected_plan_id;
+    return;
+}
+
+sub _validate_runtime_result_scenario_identities(
+    $decoded, $expected_plan_id, $expected_run_ids,
+) {
+    die "GHDL runtime expected run identities are invalid\n"
+        unless ref($expected_run_ids) eq 'ARRAY'
+            && !blessed($expected_run_ids) && @$expected_run_ids;
+    my $run_prefix = "run/$expected_plan_id/";
+    my @scenario_id;
+    for my $run_id (@$expected_run_ids) {
+        die "GHDL runtime expected run identity is invalid\n"
+            unless defined($run_id) && !ref($run_id)
+                && index($run_id, $run_prefix) == 0
+                && length($run_id) > length($run_prefix);
+        push @scenario_id, substr($run_id, length($run_prefix));
+    }
+
+    my $scenario_results = $decoded->{scenario_results};
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime scenario-result count differs from trace authority',
+        '/result_produced/scenario_results')
+        unless ref($scenario_results) eq 'ARRAY'
+            && !blessed($scenario_results)
+            && @$scenario_results == @$expected_run_ids;
+    for my $index (0 .. $#$expected_run_ids) {
+        my $entry = $scenario_results->[$index];
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime scenario result is not one object',
+            "/result_produced/scenario_results/$index")
+            unless ref($entry) eq 'HASH' && !blessed($entry);
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime result run identity differs from trace authority',
+            "/result_produced/scenario_results/$index/run_id")
+            unless defined($entry->{run_id}) && !ref($entry->{run_id})
+                && $entry->{run_id} eq $expected_run_ids->[$index];
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime result scenario identity differs from trace authority',
+            "/result_produced/scenario_results/$index/scenario_id")
+            unless defined($entry->{scenario_id})
+                && !ref($entry->{scenario_id})
+                && $entry->{scenario_id} eq $scenario_id[$index];
+    }
+
+    my $outcomes = $decoded->{parity_projection}{outcomes};
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime parity-outcome count differs from trace authority',
+        '/result_produced/parity_projection/outcomes')
+        unless ref($outcomes) eq 'ARRAY' && !blessed($outcomes)
+            && @$outcomes == @$expected_run_ids;
+    for my $index (0 .. $#scenario_id) {
+        my $outcome = $outcomes->[$index];
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime parity outcome is not one object',
+            "/result_produced/parity_projection/outcomes/$index")
+            unless ref($outcome) eq 'HASH' && !blessed($outcome);
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime parity scenario identity differs from trace authority',
+            "/result_produced/parity_projection/outcomes/$index/scenario_id")
+            unless defined($outcome->{scenario_id})
+                && !ref($outcome->{scenario_id})
+                && $outcome->{scenario_id} eq $scenario_id[$index];
+    }
     return;
 }
 

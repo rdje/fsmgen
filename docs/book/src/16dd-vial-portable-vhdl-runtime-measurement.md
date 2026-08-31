@@ -189,9 +189,13 @@ qualification reports now carry the repaired complete manifest. The outer
 result and its VHDL parity projection must also carry the exact plan identity
 already sealed for trace validation. Adding that check exposed a missing plan
 identity in the projection producer; producer and authenticated evidence are
-repaired together. Exact equality passes; one excess byte or a semantically
-identical noncanonical spelling rejects without a result object. The
-surrounding run-capture ceiling remains an independent earlier defense.
+repaired together. The ordered result scenarios must then match every sealed
+trace run and its derived scenario identity, while the ordered parity outcomes
+must name those same scenarios. Omission, duplication, reordering, or foreign
+identity rejects before persistence. Exact equality passes; one excess byte or
+a semantically identical noncanonical spelling rejects without a result
+object. The surrounding run-capture ceiling remains an independent earlier
+defense.
 
 The shared production process supervisor records containment, spawn, successful
 `exec`, first output, exit, timeout/capture status, signal, and complete process-
