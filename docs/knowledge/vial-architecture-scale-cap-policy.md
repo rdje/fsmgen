@@ -27,6 +27,8 @@ answers:
   - "does a rejected OSVVM portable foundation touch the provider cache?"
   - "when does native UVM admit its fixed source and artifact inventories?"
   - "does native UVM preflight source-map capacity before entry materialization?"
+  - "which task leaf owns runtime-stream and transcript envelope hardening?"
+  - "is native UVM included in the executable runtime-stream cap scope?"
 date: 2026-08-31
 status: current
 tags: [vial, architecture-scale, limits, bounded-failure, route-authority]
@@ -140,20 +142,14 @@ parallel shape, declarations, scoreboard/cross scalars, and type shape before
 dependent parsing or resolution. Exact diagnostics, atomic failure, and
 accepted identities remain.
 
-Before dependent validation, normalization, or record materialization, the
-bridge admits actor parameters, endpoints, observations, probes, distinct
-types, combined transactions/events, retained residue, backend bindings, and
-each projected source map. Terminal collection defenses and accepted manifest
-bytes remain intact. Exact manifest bytes stay terminal because canonical
-encoding alone decides size; boundary acceptance and adjacent excess are frozen.
+Bridge admission covers parameters, endpoints, observations, probes, types,
+transactions/events, residue, bindings, and maps before dependent construction.
+Terminal collections remain, while exact manifest bytes stay terminal because
+canonical encoding decides size.
 
-Compact execution admission covers profile/scenario/operation/fiber counts
-before context construction, bindings after bridge indexing but before record
-construction, and novel types/source maps before insertion. Random exhaustion
-and exact projected plan bytes stop final decision, ExecutionIR, and report
-materialization. Saturating arithmetic, terminal defenses, earlier
-SemanticIR/bridge authorities, diagnostics, and accepted plan identities remain
-unchanged.
+Execution preflights profile/scenario/operation/fiber counts, then bindings and
+novel types/maps before insertion; random and plan bytes stop final projection.
+Earlier authorities, diagnostics, accepted identities, and defenses remain.
 
 Checking-state preflights models/cells, scoreboard capacity, coverage, faults,
 and random occurrences before dependent work. Accepted counts, prior
@@ -175,3 +171,9 @@ and compact map-spec preflight before map materialization, static validation,
 or review closure. Accepted map and artifact materializations must equal those
 preflights, with terminal defenses retained; identities and nonclaims do not
 change.
+
+Leaf `.17.4.7` owns executable portable-SystemVerilog, portable-VHDL, and OSVVM
+runtime streams plus transcript/timeout and trace/result/publication envelopes.
+Portable SystemVerilog is audited first through the shared same-volume
+lifecycle; native UVM remains emission-only. Activation changes no behavior or
+claim.

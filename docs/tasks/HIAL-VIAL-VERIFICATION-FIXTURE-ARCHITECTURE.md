@@ -865,11 +865,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `Clean df5129126 closes .17.4.5 and activation f6b2f8504 confines this leaf to four profile-local pure emitters. Portable SystemVerilog retains byte-first map-cap preflight; portable VHDL retains byte-first fixed inventory plus map census without a map cap; OSVVM admits its portable foundation and translated map before lazy provider verification; native UVM retains selected-shape negotiation, then byte-first fixed inventory and map-cap preflight. Every accepted map/inventory agrees with materialization and every terminal defense remains. RED-to-green t1716-t1719, policy, shipped regressions, and guarded exact profile oracles preserve diagnostics, accepted identities, provider/tool boundaries, atomicity, and nonclaims. All four profiles are closed; .17.4.7 remains proposed until a clean activation pivot.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6: activate backend-emission cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6: preflight portable-SV source maps; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6: preflight portable-VHDL artifact inventory; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6: admit OSVVM provider after portable foundation; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6: close native-UVM emission admission`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
-  Status: `proposed`
+  Status: `active`
   Goal: `Enforce the selected runtime-stream, transcript, trace, result, timeout, and external-tool envelopes through the shared lifecycle.`
   Acceptance: `Implement only the .17.4.1-selected runtime contract; preflight known structural and complete-graph excess before tool eligibility, bound compile/run capture and time, validate trace/result record and byte ceilings, and withhold partial public graphs. Preserve accepted runtime semantics, qualified tool profiles, shared same-volume lifecycle, stable sanitized diagnostics, and exact success/failure cleanup.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean 2a47761a5 closes all four backend-emission profiles in .17.4.6. Decision 0093 and selection 951720257 assign this leaf the portable-SystemVerilog, portable-VHDL, and OSVVM runtime-stream group plus transcript/timeout and trace/result/publication envelopes; native UVM remains emission-only. Activation changes no product behavior, cap, support, or claim. Portable-SystemVerilog structural, capture, trace, result, and lifecycle admission is the first audit slice.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7: activate runtime-stream cap hardening`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8`
   Status: `proposed`
   Goal: `Prove cross-family cap consistency, atomic failure, cleanup, and durable closeout before promotion.`
@@ -7672,41 +7672,17 @@ The exact diagnosis, three boundary witnesses, accepted identities, focused
 verification, and doctrine evidence remain canonical in commit `52ddb9cf3`;
 `git show 52ddb9cf3` recovers the superseded checklist text byte-for-byte.
 
-## Acceptance Checklist (enforced) — `.17.4.2` source-byte admission proof
+## Compact acceptance history — `.17.4.2` source-byte admission
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'MAX_SOURCE_BYTES' --oneline --
-  perl/FSM/VIAL/Parser.pm` plus blame of `_visit_source` identifies `be9c74163`
-  as the current per-source and combined-byte check origin. Query-first
-  inspection found both checks before lexing, but only terminal boundary
-  outcomes were pinned.
-- [x] **ADDRESSED (verified)** — First-run guarded t1693 passes its per-source
-  and combined-source witnesses. Each replaces one opening byte with malformed
-  token syntax behind a known excess, retains the exact limit and atomic
-  no-report result, and pins the accepted boundary projection/report identity;
-  t1685 now cites that witness in machine policy.
-- [x] **NO REGRESSION** — Guarded core/catalog/policy/import/source-byte coverage
-  reports `All tests successful` at `Files=5, Tests=66`; parser and policy
-  modules are syntax clean. mdBook, Knowledge Map, claims, task integrity,
-  locality, containment, staged-result, diff, and
-  `[doctrine] all doctrine checks passed` close the slice; full CI/push remain
-  deferred by policy.
+The exact diagnosis, per-source and combined-byte witnesses, accepted
+identities, focused verification, and doctrine evidence remain canonical in
+commit `273678c6b`; `git show 273678c6b` recovers the superseded checklist text.
 
-## Acceptance Checklist (enforced) — `.17.4.2` semantic-cap closure
+## Compact acceptance history — `.17.4.2` semantic-cap closure
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'ArchitectureScaleCapPolicy'
-  --oneline -- perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` retains selection
-  commit `951720257`; the task node and exact-test opt-in were the remaining
-  authorities for deciding whether every selected semantic group was exhausted.
-- [x] **ADDRESSED (verified)** — Guarded exact t1601 accepts or rejects every
-  selected qualification, limit, and over-limit route and preserves the
-  declared repeat/action interaction. All focused order witnesses t1686-t1693
-  are already green, so `.17.4.2` is marked done without broadening bridge or
-  later-layer authority.
-- [x] **NO REGRESSION** — Exact semantic-catalog proof reports
-  `All tests successful` at `Files=1, Tests=4` in 84 seconds under the RAM
-  guard. All mdBook chapters, claims, task integrity, locality, containment,
-  staged-result, diff, and `[doctrine] all doctrine checks passed` close the
-  leaf; full CI/push remain deferred by policy.
+The exact exhaustion decision, guarded catalog proof, focused witnesses, and
+doctrine evidence remain canonical in commit `3ded0157f`; `git show 3ded0157f`
+recovers the superseded checklist text.
 
 ## Acceptance Checklist (enforced) — `.17.4.4` bounded activation
 
@@ -7749,3 +7725,9 @@ verification, and doctrine evidence remain canonical in commit `52ddb9cf3`;
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'native UVM source map exceeds its record cap' --oneline -- perl/FSM/VIAL/Backend/SVUVMAccellera2020_3_1.pm` identifies `5a1805f52`; `git log -S'sixteen-artifact matrix/review contract'` identifies `7725789a4`. Map capacity was checked only after entry materialization and fixed inventory only after validation, review, support, and manifest work; selected-shape negotiation from `9c92b27f9` was already early.
 - [x] **ADDRESSED (verified)** — RED t1719 failed 13/38 assertions. Selected-shape negotiation remains first; exact rendered bytes retain precedence; fixed source/total inventory and compact map-spec capacity now preflight before map materialization, validation, or review. Accepted map/artifact counts must equal preflight, and the established terminal defenses and diagnostics remain.
 - [x] **NO REGRESSION** — Focused native-UVM negotiation/emitter/policy/order coverage reports `All tests successful` at `Files=10, Tests=169`; guarded exact t1649 reports `Files=1, Tests=8` in 40 seconds. The backend is syntax clean; mdBook, Knowledge Map, claims, task integrity, containment, staged diff, and complete doctrines close the leaf; full CI/push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.7` bounded activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'runtime_stream_envelopes' --oneline -- perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` and the matching transcript-envelope query identify selection commit `951720257`; `.17.4.7` remained proposed after clean `.17.4.6` closure `2a47761a5`.
+- [x] **ADDRESSED (verified)** — Only `.17.4.7` is activated for the three executable runtime profiles and the selected transcript/timeout plus trace/result/publication envelopes. Task/index/Memory, Knowledge Map, and mdBook select portable-SystemVerilog lifecycle admission first; native UVM remains emission-only, and no product behavior or claim changes.
+- [x] **NO REGRESSION** — Policy and relative-path verification report `All tests successful` at `Files=2, Tests=84`; task-tree integrity is green. Every book chapter, Knowledge Map, claims, containment, staged diff, and complete doctrines close the activation; full CI/push remain deferred by policy.

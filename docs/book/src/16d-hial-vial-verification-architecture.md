@@ -2604,6 +2604,21 @@ unchanged.
 prove -Iperl t/1719-vial-backend-native-uvm-cap-order.t
 ```
 
+### Runtime-stream cap-hardening frontier
+
+Task-tree leaf `.17.4.7` now owns the next bounded-failure layer: executable
+portable-SystemVerilog, portable-VHDL, and qualified-OSVVM runtime streams,
+together with their transcript, timeout, trace, result, and public-artifact
+envelopes. Native UVM remains emission-only and is not promoted into this
+runtime scope.
+
+The first audit follows portable SystemVerilog from structural/complete-graph
+preflight through shared same-volume lifecycle admission. Later slices retain
+the separate VHDL and OSVVM profile authorities. Activation changes no cap,
+accepted runtime behavior, tool qualification, support statement, capacity
+claim, or public artifact; implementation evidence is added only slice by
+slice.
+
 ### Source-byte cap admission order
 
 The parser measures each source's encoded byte representation before lexing or
