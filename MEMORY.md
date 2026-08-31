@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4`
-  (`active`; execution-cap hardening under decision `0093`)
-- next_action: close execution-cap hardening and activate the next
-  roadmap-aligned checking-state slice.
-- in_flight_uncommitted: none after the serialized-plan authority commit.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5`
+  (`active`; checking-state cap hardening under decision `0093`)
+- next_action: audit model-instance and scalar-cell admission, then implement
+  the earliest safe `.17.4.5` slice.
+- in_flight_uncommitted: none after the checking-cap activation commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none; immutable `.17.3` evidence is the selection input.
