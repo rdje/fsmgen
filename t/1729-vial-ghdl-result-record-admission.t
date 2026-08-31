@@ -29,8 +29,14 @@ $manifest->{scenario_results} = [map {
         run_id => $expected_run_id[$_],
         scenario_id => $scenario_id[$_],
         status => 'pass',
-        start_time => {},
-        end_time => {},
+        start_time => {
+            domain_id => 'domain/main', cycle => 0,
+            phase => 'drive', ordinal => 0,
+        },
+        end_time => {
+            domain_id => 'domain/main', cycle => 0,
+            phase => 'check', ordinal => 0,
+        },
         completion_reason => 'completed',
         expectation_ids => [],
         diagnostic_ids => [],
@@ -259,6 +265,94 @@ subtest 'nested result vocabularies and statuses remain closed' => sub {
         'non-pass parity outcome rejects beneath a passing result');
 };
 
+subtest 'scenario values obey the shared passing-result contract' => sub {
+    my $valid = eval {
+        validate_scenario_values(clone($manifest));
+        1;
+    };
+    ok($valid, 'closed scenario values are admitted');
+
+    my $missing_time = clone($manifest);
+    delete $missing_time->{scenario_results}[0]{start_time}{ordinal};
+    is(value_failure($missing_time)->{path},
+        '/result_produced/scenario_results/0/start_time/ordinal',
+        'missing logical-time member rejects at its exact path');
+
+    my $foreign_time = clone($manifest);
+    $foreign_time->{scenario_results}[0]{end_time}{host_tick} = 1;
+    is(value_failure($foreign_time)->{path},
+        '/result_produced/scenario_results/0/end_time/host_tick',
+        'foreign logical-time member rejects at its exact path');
+
+    my $domain_drift = clone($manifest);
+    $domain_drift->{scenario_results}[0]{end_time}{domain_id} = 'domain/foreign';
+    is(value_failure($domain_drift)->{path},
+        '/result_produced/scenario_results/0/end_time/domain_id',
+        'end domain must equal the scenario start domain');
+
+    my $late_start = clone($manifest);
+    $late_start->{scenario_results}[0]{start_time}{cycle} = 1;
+    is(value_failure($late_start)->{path},
+        '/result_produced/scenario_results/0/start_time/cycle',
+        'scenario start must retain the zero cycle origin');
+
+    my $wrong_start_phase = clone($manifest);
+    $wrong_start_phase->{scenario_results}[0]{start_time}{phase} = 'sample';
+    is(value_failure($wrong_start_phase)->{path},
+        '/result_produced/scenario_results/0/start_time/phase',
+        'scenario start must use the drive phase');
+
+    my $wrong_end_phase = clone($manifest);
+    $wrong_end_phase->{scenario_results}[0]{end_time}{phase} = 'react';
+    is(value_failure($wrong_end_phase)->{path},
+        '/result_produced/scenario_results/0/end_time/phase',
+        'scenario end must use the check phase');
+
+    my $foreign_ordinal = clone($manifest);
+    $foreign_ordinal->{scenario_results}[0]{end_time}{ordinal} = 1;
+    is(value_failure($foreign_ordinal)->{path},
+        '/result_produced/scenario_results/0/end_time/ordinal',
+        'scenario boundary ordinal must remain zero');
+
+    my $zero_count = clone($manifest);
+    $zero_count->{scenario_results}[0]{logical_cycle_count} = 0;
+    is(value_failure($zero_count)->{path},
+        '/result_produced/scenario_results/0/logical_cycle_count',
+        'logical cycle count must be positive');
+
+    my $off_by_one = clone($manifest);
+    $off_by_one->{scenario_results}[0]{end_time}{cycle} = 1;
+    is(value_failure($off_by_one)->{path},
+        '/result_produced/scenario_results/0/end_time/cycle',
+        'end cycle must equal logical cycle count minus one');
+
+    my $wrong_completion = clone($manifest);
+    $wrong_completion->{scenario_results}[0]{completion_reason} =
+        'expectation_failed';
+    is(value_failure($wrong_completion)->{path},
+        '/result_produced/scenario_results/0/completion_reason',
+        'passing scenario must complete normally');
+
+    my $wrong_collection = clone($manifest);
+    $wrong_collection->{scenario_results}[0]{expectation_ids} = {};
+    is(value_failure($wrong_collection)->{path},
+        '/result_produced/scenario_results/0/expectation_ids',
+        'scenario ID collection must remain an array');
+
+    my $unsafe_id = clone($manifest);
+    $unsafe_id->{scenario_results}[0]{diagnostic_ids} = ["diagnostic/bad\n"];
+    is(value_failure($unsafe_id)->{path},
+        '/result_produced/scenario_results/0/diagnostic_ids/0',
+        'unsafe scenario-owned identity rejects at its exact index');
+
+    my $duplicate_id = clone($manifest);
+    $duplicate_id->{scenario_results}[0]{cancelled_fiber_ids} =
+        [qw(fiber/one fiber/one)];
+    is(value_failure($duplicate_id)->{path},
+        '/result_produced/scenario_results/0/cancelled_fiber_ids/1',
+        'duplicate scenario-owned identity rejects at its second index');
+};
+
 subtest 'record cardinality and JSON shape remain fail closed' => sub {
     my $duplicate = decode_failure(
         "$encoded\nFSMGEN_VIAL_RESULT_V1\t$encoded",
@@ -336,6 +430,24 @@ sub shape_failure {
         1;
     };
     ok(!$ok, 'invalid nested result shape rejects');
+    my $error = $@;
+    isa_ok($error, 'FSM::VIAL::Backend::GHDLLifecycle::Failure');
+    return ref($error) ? $error : {};
+}
+
+sub validate_scenario_values {
+    FSM::VIAL::Backend::GHDLLifecycle::_validate_runtime_result_scenario_values(
+        $_[0],
+    );
+}
+
+sub value_failure {
+    my ($candidate) = @_;
+    my $ok = eval {
+        validate_scenario_values($candidate);
+        1;
+    };
+    ok(!$ok, 'invalid scenario value rejects');
     my $error = $@;
     isa_ok($error, 'FSM::VIAL::Backend::GHDLLifecycle::Failure');
     return ref($error) ? $error : {};

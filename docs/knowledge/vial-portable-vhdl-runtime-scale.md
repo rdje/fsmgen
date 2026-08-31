@@ -138,11 +138,10 @@ preserves the original probe failure; failed, malformed, or unexpectedly
 throwing aborts become the qualifier cleanup diagnostic at `/cleanup` with a
 sanitized reason. No probe is retried and its process policy is unchanged.
 
-Normalized result admission applies the selected 67,108,864-byte ceiling,
-shared top-level/scenario and VHDL projection/outcome vocabularies, one parity
-schema/version, sealed plan identity, and ordered trace run/scenario identities.
-Closure repaired omitted `samples`/projection-plan members; missing, foreign,
-duplicate, reordered, non-pass, excess, noncanonical, or malformed records reject.
+Normalized result admission applies the selected 67,108,864-byte ceiling, shared top-level/scenario and VHDL projection/outcome vocabularies, one parity schema/version, sealed plan identity, and ordered trace run/scenario identities.
+Closure repaired omitted `samples`/projection-plan members. Scenario times are exact `domain_id/cycle/phase/ordinal` records: start is cycle zero/drive/ordinal zero; end keeps the domain, uses check/ordinal zero, and equals positive count minus one.
+Passing completion is `completed`; identity collections are unique safe-ID arrays. This exposed and repaired the VHDL one-based end-cycle defect. Missing, foreign, duplicate, reordered, non-pass, excess, noncanonical, or malformed records reject.
+The 127 fixed source bytes also move the unchanged 16-MiB portable/OSVVM structural boundary to accepted `T=29,505` at 16,776,666 portable bytes and adjacent rejected `T=29,506`; both graph oracles are v2.
 
 The guarded exact adapter accepts one 77-record reference validation, one gate
 validation plus three retained 10,000-record measurements, and one

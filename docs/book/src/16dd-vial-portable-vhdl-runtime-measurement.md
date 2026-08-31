@@ -133,9 +133,9 @@ each emission has 17 artifacts, six VHDL sources, 59 emitted source maps, and
 
 | Level | Complete artifact bytes | VHDL source bytes | Fixture bytes |
 | --- | ---: | ---: | ---: |
-| reference | 238,618 | 118,062 | 46,262 |
-| gate candidate | 238,901 | 118,075 | 46,273 |
-| qualification candidate | 239,318 | 118,087 | 46,284 |
+| reference | 238,745 | 118,189 | 46,389 |
+| gate candidate | 239,028 | 118,202 | 46,400 |
+| qualification candidate | 239,445 | 118,214 | 46,411 |
 
 The materialization report alone closes source-to-emission structure, not
 external execution. The measurement adapter now independently makes the
@@ -199,9 +199,25 @@ vocabularies; the emitter consumes its schema identity and lifecycle admission
 consumes its closed keys. Because the outer result already claims `pass`, every
 scenario and parity outcome must also say `pass`. Missing or foreign nested
 members, schema drift, or status drift rejects at the exact field path. Exact
-equality passes; one excess byte or a semantically identical noncanonical
-spelling rejects without a result object. The surrounding run-capture ceiling
-remains an independent earlier defense.
+scenario values are closed as well: both times have exactly
+`domain_id/cycle/phase/ordinal`; start is cycle zero, `drive`, ordinal zero;
+end is the same domain, `check`, ordinal zero, and cycle
+`logical_cycle_count - 1`; the count is positive; passing completion is
+`completed`; and all three identity collections are arrays of unique safe IDs.
+This exposed a producer defect: generated VHDL used its one-based final sample
+counter as both end cycle and count. It now stores `vial_time.cycle + 1` as the
+count and serializes `count - 1` as the zero-based end cycle. Exact equality
+passes; one excess byte or a semantically identical noncanonical spelling
+rejects without a result object. The surrounding run-capture ceiling remains
+an independent earlier defense.
+
+The 127 fixed source bytes also refine the structural emission boundary. The
+unchanged 16-MiB cap now accepts the complete `T=29,505` portable graph at
+16,776,666 bytes and 29,543 maps; adjacent `T=29,506` renders 16,777,234 bytes
+and rejects before artifacts. OSVVM inherits that portable-foundation boundary
+and adds its fixed adapter only after successful portable emission. Both scale
+oracles publish revision-2 identities; this changes evidence compatibility,
+not the cap or a runtime/support/capacity claim.
 
 The shared production process supervisor records containment, spawn, successful
 `exec`, first output, exit, timeout/capture status, signal, and complete process-

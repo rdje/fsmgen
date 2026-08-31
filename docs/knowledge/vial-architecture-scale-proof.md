@@ -212,8 +212,8 @@ are therefore measured identities, not an inferred adjustment to the probes.
 
 Completed `.17.2.1`-`.17.2.5` cover source through checking state. Decision
 `0075` selects checked-AHB backend routes: portable-SV oracle revision 2
-accepts `T=6,318` and rejects `6,319`; portable VHDL/OSVVM select
-`29,506/29,507` after the decision-0090 trace-v2 refinement; native UVM emits
+accepts `T=6,318` and rejects `6,319`; portable VHDL/OSVVM v2 selects
+`29,505/29,506` after trace-v2/result-contract refinements; native UVM emits
 only `T=21` and rejects `T=22`. The closed `BackendEmissionAuthority`, repair
 parent `.17.2.6.2`, caller-sealed foundation `.17.2.6.3.1`, four profile
 ladders, and family closure `.17.2.6.3.6` preserve exact inventories, maps,

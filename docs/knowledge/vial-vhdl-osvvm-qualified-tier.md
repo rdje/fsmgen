@@ -94,11 +94,11 @@ to the portable six-source foundation. Reference discovery reports 16 total
 artifacts, 66 maps, twelve wrapper checks, and 21 prerequisite portable
 checks. Unknown, missing, stale, or contradictory fields fail closed.
 
-The caller-sealed architecture-scale profile owns T=21/128/512/29,506 plus
-adjacent portable-foundation T=29,507 rejection. One provider verification is
+The caller-sealed architecture-scale profile owns T=21/128/512/29,505 plus
+adjacent portable-foundation T=29,506 rejection. One provider verification is
 reused only inside its callback for two defensive emissions. Accepted source
-totals are 122,415/180,784/392,752/16,781,458 bytes with
-66/173/557/29,551 complete maps; every wrapper map, provider/source identity,
+totals are 122,542/180,911/392,879/16,781,017 bytes with
+66/173/557/29,550 complete maps; every wrapper map, provider/source identity,
 mapping status, semantic guard, and evidence encoding is checked before the
 content-addressed report is accepted. The adjacent excess publishes no
 partial provider evidence or graph. This generator proof executes no external

@@ -29,30 +29,30 @@ my %LEVEL = map { $_ => 1 } @LEVELS;
 my %MATERIALIZED = map { $_ => 1 } @LEVELS[0 .. 2];
 my %EXPECTED = (
     reference_v1 => {
-        operations => 21, source_bytes => 122_413, source_maps => 66,
+        operations => 21, source_bytes => 122_540, source_maps => 66,
         sources => _expected_sources(
             15_323,
             '2ba00d6481361b3e2d876ff3fffd63b6f5c07417717e4f53f4be24950e142bb3',
-            46_262,
-            'b327edab233200bc9b8ff1b8e6a22588505749f47363b7bc9c4a0380394f16b3',
+            46_389,
+            '7c2144ffa06ab57528839f2935b16ca621580e2848e26b6c688ebe4692636122',
         ),
     },
     gate_candidate_v1 => {
-        operations => 21, source_bytes => 122_426, source_maps => 66,
+        operations => 21, source_bytes => 122_553, source_maps => 66,
         sources => _expected_sources(
             15_325,
             '25abc4e88f8426c092111709247046cdef0c1bd9e2eaadf02e8206b61c93c1e9',
-            46_273,
-            '4a1cc43d625ec6d352c63a6a0e9b2a2e56a3ae41ea26cf480c9979b21dee2513',
+            46_400,
+            'a42ad383cadf78285d914cb737e0f75794a15288514aaf4e80b3f9a06930e196',
         ),
     },
     qualification_candidate_v1 => {
-        operations => 21, source_bytes => 122_438, source_maps => 66,
+        operations => 21, source_bytes => 122_565, source_maps => 66,
         sources => _expected_sources(
             15_326,
             'c9da2684f6077c260d4b1650e1f29db126331af864b17f858cf47b04c7ee92da',
-            46_284,
-            '9e0f2f69389e5bd5e3264dc1aadd220d2bbfa9bf9f35360f2ba692f6ca662b10',
+            46_411,
+            'bfc0e94279b9f2b4a71e24fa992d2116cf8dfbf76e28005b350dadb3f7f8c05d',
         ),
     },
 );

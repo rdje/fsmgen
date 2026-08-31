@@ -504,7 +504,7 @@ sub _evaluate_portable_vhdl(
         $construction, $first_route, $second_route, $first_projection,
         $stage_identities, $rerun_identity, $route_diagnostics,
         $PORTABLE_VHDL_CLASS, $PORTABLE_VHDL_PROFILE,
-        'portable_vhdl', 'portable_vhdl_artifact_graph_v1',
+        'portable_vhdl', 'portable_vhdl_artifact_graph_v2',
     );
 }
 
@@ -516,7 +516,7 @@ sub _evaluate_osvvm(
         $construction, $first_route, $second_route, $first_projection,
         $stage_identities, $rerun_identity, $route_diagnostics,
         $OSVVM_CLASS, $OSVVM_PROFILE,
-        'osvvm', 'vhdl_osvvm_qualified_artifact_graph_v1',
+        'osvvm', 'vhdl_osvvm_qualified_artifact_graph_v2',
     );
 }
 

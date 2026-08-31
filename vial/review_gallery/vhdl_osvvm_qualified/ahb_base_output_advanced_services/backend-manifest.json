@@ -6,7 +6,7 @@
          "language" : "json",
          "relpath" : "backends/vhdl_osvvm_qualified/backend-source-map.json",
          "role" : "backend_source_map",
-         "sha256" : "6d1eb7ec00a4ec29f6685bb1410f1961ea44f4d2c8d803a3a4bbfefb9b3bc223",
+         "sha256" : "7001dc674ece4c16741f0b3b196f8187604ebc34dbe48debf885ccccfccafba0",
          "source_ids" : [
             "plan/e236297c8b434a9b374d1800112841e00327bdbd5d8d9130440bd20681fbed6e"
          ]
@@ -39,9 +39,9 @@
          "language" : "json",
          "relpath" : "backends/vhdl_osvvm_qualified/evidence/qualification-reference.json",
          "role" : "combined_qualification_reference",
-         "sha256" : "85bf6de4694045d82133d87360d94fb5f1690d102bd7cbcb80714f950428d4a9",
+         "sha256" : "f003c8a5319c7da1562dcbf91e51d40ce0d6fcba7991b800085c589b998a15e6",
          "source_ids" : [
-            "qualification/cc8c863b2bae169c8b5ffc08fa4ae15193c3655d35e860a4c03329f8a20da58e"
+            "qualification/1b55ef7d1c6c6e61dd025f7d52b06356b10611aa675973d30673c98e887a016a"
          ]
       },
       {
@@ -50,7 +50,7 @@
          "language" : "json",
          "relpath" : "backends/vhdl_osvvm_qualified/evidence/semantic-preservation.json",
          "role" : "semantic_preservation",
-         "sha256" : "0347bd7d9ed42669b063065e7aadbc9d4e72e535d7e3e22e088cab1a8ff83f2e",
+         "sha256" : "442abf52cddcae7639aa9533aa9e1ce41234bc5cae1c10c0b3d5bc542723bc3b",
          "source_ids" : [
             "plan/e236297c8b434a9b374d1800112841e00327bdbd5d8d9130440bd20681fbed6e"
          ]
@@ -83,7 +83,7 @@
          "language" : "json",
          "relpath" : "backends/vhdl_osvvm_qualified/evidence/tool-profile.json",
          "role" : "tool_profile",
-         "sha256" : "0377db4a09508dd563f040546d5177969793332e667f4c1c1fdb0692437094c1",
+         "sha256" : "ecba4605d585bdbf178acf5208fc43aea2f4b51a3aa50a5decdaf5f0f96d15ce",
          "source_ids" : [
             "2f7c391051dfb11890fa4bdbda9918d1db492250"
          ]
@@ -125,14 +125,14 @@
          ]
       },
       {
-         "byte_length" : 46373,
+         "byte_length" : 46389,
          "kind" : "vhdl_source",
          "language" : "vhdl",
          "relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
          "role" : "portable_vhdl_fixture_top",
-         "sha256" : "ee482c162829f44ee5319818d1c09001e8e1e9d1b0a969ab7c232778e9fd0c7c",
+         "sha256" : "7c2144ffa06ab57528839f2935b16ca621580e2848e26b6c688ebe4692636122",
          "source_ids" : [
-            "ee482c162829f44ee5319818d1c09001e8e1e9d1b0a969ab7c232778e9fd0c7c",
+            "7c2144ffa06ab57528839f2935b16ca621580e2848e26b6c688ebe4692636122",
             "plan/e236297c8b434a9b374d1800112841e00327bdbd5d8d9130440bd20681fbed6e"
          ]
       },
@@ -248,7 +248,7 @@
       "provider_commit" : "2f7c391051dfb11890fa4bdbda9918d1db492250",
       "provider_version" : "2026.05",
       "qualification_report" : "vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json",
-      "qualification_report_sha256" : "78a6c925b241d7a501770ac277c8c533075d86574b0a584dd120ab8756e2f3f2",
+      "qualification_report_sha256" : "498f505128c67151ca2176b1d744ba98e15fa50bdcc7d3adf4a98c5e61c62347",
       "schema" : "fsmgen.vial_backend_tool_profile.v1",
       "schema_version" : 1,
       "standard" : "IEEE 1076-2008",
@@ -260,7 +260,7 @@
    },
    "result" : {
       "relpath" : "vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json",
-      "result_record_sha256" : "d70b47bff17a027336c77ec426ded5a805627b009d4f6b34b54853e3666743e6",
+      "result_record_sha256" : "2968549679a8b90e6256978aa9ba5340c38ec5b71535795c2ab93ae900a593bd",
       "schema" : "fsmgen.verification_result_manifest.v1",
       "status" : "pass"
    },
@@ -270,7 +270,7 @@
       "entry_count" : 66,
       "relpath" : "backends/vhdl_osvvm_qualified/backend-source-map.json",
       "schema" : "fsmgen.vial_vhdl_osvvm_source_map.v1",
-      "sha256" : "6d1eb7ec00a4ec29f6685bb1410f1961ea44f4d2c8d803a3a4bbfefb9b3bc223"
+      "sha256" : "7001dc674ece4c16741f0b3b196f8187604ebc34dbe48debf885ccccfccafba0"
    },
    "source_order" : {
       "generated_sources" : [

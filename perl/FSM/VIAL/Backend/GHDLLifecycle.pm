@@ -1126,6 +1126,7 @@ sub _phase_result_produced($session) {
         $session->{validation}{expected_run_ids},
     );
     _validate_runtime_result_shapes($decoded);
+    _validate_runtime_result_scenario_values($decoded);
     push @{$session->{objects}}, _write_object(
         $session, 'normalized_result', _canonical($decoded) . "\n", 0,
     );
@@ -1340,6 +1341,113 @@ sub _require_runtime_result_keys($value, $expected, $path, $label) {
         "GHDL runtime $label is missing key '$missing[0]'",
         "$path/$missing[0]") if @missing;
     return;
+}
+
+sub _validate_runtime_result_scenario_values($decoded) {
+    my $time_keys = FSM::VIAL::Backend::ResultProducer->logical_time_keys;
+    for my $index (0 .. $#{$decoded->{scenario_results}}) {
+        my $entry = $decoded->{scenario_results}[$index];
+        my $path = "/result_produced/scenario_results/$index";
+        my $start = $entry->{start_time};
+        my $end = $entry->{end_time};
+        _require_runtime_result_keys(
+            $start, $time_keys, "$path/start_time", 'scenario start time',
+        );
+        _require_runtime_result_keys(
+            $end, $time_keys, "$path/end_time", 'scenario end time',
+        );
+        for my $time_name (qw(start_time end_time)) {
+            my $time = $entry->{$time_name};
+            _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+                'GHDL runtime scenario domain identity is unsafe',
+                "$path/$time_name/domain_id")
+                unless _runtime_result_identity($time->{domain_id});
+            _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+                'GHDL runtime scenario cycle is not a nonnegative integer',
+                "$path/$time_name/cycle")
+                unless _runtime_result_nonnegative_integer($time->{cycle});
+            _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+                'GHDL runtime scenario ordinal is not a nonnegative integer',
+                "$path/$time_name/ordinal")
+                unless _runtime_result_nonnegative_integer($time->{ordinal});
+        }
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime scenario end domain differs from its start domain',
+            "$path/end_time/domain_id")
+            unless $end->{domain_id} eq $start->{domain_id};
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime scenario start does not use cycle-zero drive origin',
+            "$path/start_time/cycle") unless $start->{cycle} == 0;
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime scenario start does not use the drive phase',
+            "$path/start_time/phase")
+            unless defined($start->{phase}) && !ref($start->{phase})
+                && $start->{phase} eq 'drive';
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime scenario end does not use the check phase',
+            "$path/end_time/phase")
+            unless defined($end->{phase}) && !ref($end->{phase})
+                && $end->{phase} eq 'check';
+        for my $time_name (qw(start_time end_time)) {
+            _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+                'GHDL runtime scenario boundary ordinal is not zero',
+                "$path/$time_name/ordinal")
+                unless $entry->{$time_name}{ordinal} == 0;
+        }
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime scenario logical cycle count is not positive',
+            "$path/logical_cycle_count")
+            unless _runtime_result_positive_integer(
+                $entry->{logical_cycle_count},
+            );
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime scenario end cycle differs from its cycle count',
+            "$path/end_time/cycle")
+            unless $end->{cycle} == $entry->{logical_cycle_count} - 1;
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime passing scenario has a foreign completion reason',
+            "$path/completion_reason")
+            unless defined($entry->{completion_reason})
+                && !ref($entry->{completion_reason})
+                && $entry->{completion_reason} eq 'completed';
+        for my $collection_name (qw(
+            expectation_ids diagnostic_ids cancelled_fiber_ids
+        )) {
+            my $collection = $entry->{$collection_name};
+            _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+                'GHDL runtime scenario identity collection is not one array',
+                "$path/$collection_name")
+                unless ref($collection) eq 'ARRAY' && !blessed($collection);
+            my %seen;
+            for my $item_index (0 .. $#$collection) {
+                my $item_path = "$path/$collection_name/$item_index";
+                my $identity = $collection->[$item_index];
+                _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+                    'GHDL runtime scenario-owned identity is unsafe', $item_path)
+                    unless _runtime_result_identity($identity);
+                _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+                    'GHDL runtime scenario-owned identity is duplicated',
+                    $item_path) if $seen{$identity}++;
+            }
+        }
+    }
+    return;
+}
+
+sub _runtime_result_identity($value) {
+    return defined($value) && !ref($value)
+        && length($value) >= 1 && length($value) <= 4_096
+        && $value =~ /\A[A-Za-z0-9_.:\/-]+\z/;
+}
+
+sub _runtime_result_nonnegative_integer($value) {
+    return defined($value) && !ref($value)
+        && $value =~ /\A(?:0|[1-9][0-9]*)\z/;
+}
+
+sub _runtime_result_positive_integer($value) {
+    return defined($value) && !ref($value)
+        && $value =~ /\A[1-9][0-9]*\z/;
 }
 
 sub _phase_assembled($session) {

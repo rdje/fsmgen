@@ -25,6 +25,7 @@ my @SCENARIO_KEYS = qw(
     run_id scenario_id status start_time end_time completion_reason
     expectation_ids diagnostic_ids cancelled_fiber_ids logical_cycle_count
 );
+my @LOGICAL_TIME_KEYS = qw(domain_id cycle phase ordinal);
 my %TRACE_FAMILY = map { $_ => 1 } qw(
     events drives samples transactions expectations models scoreboards coverage
     faults fibers
@@ -54,6 +55,12 @@ sub scenario_keys($class) {
     confess __PACKAGE__ . "->scenario_keys requires the exact class invocant\n"
         unless defined($class) && !ref($class) && $class eq __PACKAGE__;
     return [@SCENARIO_KEYS];
+}
+
+sub logical_time_keys($class) {
+    confess __PACKAGE__ . "->logical_time_keys requires the exact class invocant\n"
+        unless defined($class) && !ref($class) && $class eq __PACKAGE__;
+    return [@LOGICAL_TIME_KEYS];
 }
 
 sub produce($class, @args) {

@@ -37,11 +37,11 @@ my %expected = (
         source_bytes => 4_986,
         source_sha =>
             '2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd',
-        emitted_source_bytes => 122_413,
+        emitted_source_bytes => 122_540,
         graph =>
-            '236f430941682884ba2cd77858cb43fc2bc1dbc6b568ec75759cf4b1561047ea',
+            '9686057a11966ffec43afbb48f0bce63c3e1fb0713aa1560537834c866296568',
         report =>
-            'osvvm-runtime-materialization/6ce4f9a16327c11b18e82052d525b6a534b69494456c955ee8496a5356a8551e',
+            'osvvm-runtime-materialization/c8da336d4d962b7cdf37d00ab227e13a9628216bb47bfb14dd2e8d212b453b4c',
     },
     gate_candidate_v1 => {
         status => 'provider_structurally_qualified', records => 10_000,
@@ -50,11 +50,11 @@ my %expected = (
         source_bytes => 4_991,
         source_sha =>
             'ce1374f97dcf992e823273d70ebcf1014813ff926a103fea53800797cf304959',
-        emitted_source_bytes => 122_426,
+        emitted_source_bytes => 122_553,
         graph =>
-            '58eddfc1a4a1d0f7fd04c479604b8402a6bf87dc6d3ad8b3dfc70df176f09c91',
+            'f27e794a424c8364d75315c759ef8e0240874691e800f7972e7506d1b63fb654',
         report =>
-            'osvvm-runtime-materialization/df695752247a5c005d5c4b1d653915bd7a2d6e61396e7679862381d1b06a69ad',
+            'osvvm-runtime-materialization/f885110d3bf42ae52f04f6e031d54d5ff3ba156cd29aceabbc0b259a9b460dfe',
     },
     qualification_candidate_v1 => {
         status => 'provider_structurally_qualified', records => 100_000,
@@ -63,11 +63,11 @@ my %expected = (
         source_bytes => 4_993,
         source_sha =>
             'cbf752abb62d0b88e5411cde979d0e6eb91a5f0e23a1b2eece8c633edad4b7ca',
-        emitted_source_bytes => 122_438,
+        emitted_source_bytes => 122_565,
         graph =>
-            '21fecffec8f130b8f09be3be62f0270f91ff1b5234a791101b786d2fadfc6226',
+            '41aea4c4c8c1d226bccf6729810506d2a548b439ba5efd24125e1c0e36cbd1f2',
         report =>
-            'osvvm-runtime-materialization/3e1359c0d1c985bbf78f67371a60072c7fa2be3d3d9ba2cec766939a48dcdc8f',
+            'osvvm-runtime-materialization/33191caf505d7dc0eaea38a2d86a8bd0ffee7d6e3a5d35e63a1de84699694444',
     },
     limit_v1 => {
         status => 'preflight_dominated', records => 8_000_002,

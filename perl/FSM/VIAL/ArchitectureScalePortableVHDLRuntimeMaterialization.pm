@@ -46,11 +46,11 @@ my %MATERIALIZED = (
         reset_cycles => 3,
         timeout_cycles => 256,
         trace_records => 77,
-        artifact_bytes => 238_618,
-        source_bytes => 118_062,
-        fixture_bytes => 46_262,
+        artifact_bytes => 238_745,
+        source_bytes => 118_189,
+        fixture_bytes => 46_389,
         fixture_sha256 =>
-            'b327edab233200bc9b8ff1b8e6a22588505749f47363b7bc9c4a0380394f16b3',
+            '7c2144ffa06ab57528839f2935b16ca621580e2848e26b6c688ebe4692636122',
     },
     gate_candidate_v1 => {
         path => 'vial/qualification/vhdl_portable_ghdl_runtime_gate.vial',
@@ -60,11 +60,11 @@ my %MATERIALIZED = (
         reset_cycles => 9_926,
         timeout_cycles => 16_384,
         trace_records => 10_000,
-        artifact_bytes => 238_901,
-        source_bytes => 118_075,
-        fixture_bytes => 46_273,
+        artifact_bytes => 239_028,
+        source_bytes => 118_202,
+        fixture_bytes => 46_400,
         fixture_sha256 =>
-            '4a1cc43d625ec6d352c63a6a0e9b2a2e56a3ae41ea26cf480c9979b21dee2513',
+            'a42ad383cadf78285d914cb737e0f75794a15288514aaf4e80b3f9a06930e196',
     },
     qualification_candidate_v1 => {
         path =>
@@ -75,11 +75,11 @@ my %MATERIALIZED = (
         reset_cycles => 99_926,
         timeout_cycles => 131_072,
         trace_records => 100_000,
-        artifact_bytes => 239_318,
-        source_bytes => 118_087,
-        fixture_bytes => 46_284,
+        artifact_bytes => 239_445,
+        source_bytes => 118_214,
+        fixture_bytes => 46_411,
         fixture_sha256 =>
-            '9e0f2f69389e5bd5e3264dc1aadd220d2bbfa9bf9f35360f2ba692f6ca662b10',
+            'bfc0e94279b9f2b4a71e24fa992d2116cf8dfbf76e28005b350dadb3f7f8c05d',
     },
 );
 my $OPERATIONS = 21;

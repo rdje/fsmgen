@@ -2,11 +2,12 @@
 
 - Date: 2026-08-21
 - Type: verification architecture/scalability
-- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.1`; portable-SystemVerilog evidence revised by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.4`
+- Status: selected by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.1`; portable-SystemVerilog evidence revised by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.4`; portable-VHDL/OSVVM evidence revised by `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
 - Refines: [0055](0055-vial-scale-proof-uses-orthogonal-workloads-and-stage-local-oracles.md), [0056](0056-vial-scale-measurements-use-pinned-evidence-and-bounded-failure.md), [0072](0072-an-unreachable-declared-cap-is-a-result-not-a-level-to-rewrite.md)
 - Repair owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.2`
 - Generator owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.6.3`
 - Portable-SystemVerilog revision-2 owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.5.1.4`
+- Portable-VHDL/OSVVM revision-2 owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
 
 ## Context
 
@@ -34,8 +35,8 @@ is `artifacts/sources, source bytes, source-map entries, visible static checks`.
 | Profile | Reference | Gate candidate | Qualification candidate | Limit | First excess |
 | --- | --- | --- | --- | --- | --- |
 | portable SystemVerilog (oracle revision 2) | `T=21`: `8/3, 164,507, 54, 0` | `T=1,024`: `8/3, 2,803,857, 1,057, 0` | `T=4,096`: `8/3, 10,910,865, 4,129, 0` | `T=6,318`: `8/3, 16,774,723, 6,351, 0` | `T=6,319`: `VIAL_BACKEND_LIMIT_EXCEEDED` at `/artifacts`, no artifacts; pre-cap size `16,777,362` |
-| portable VHDL | `T=21`: `17/6, 118,064, 59, 21` | `T=128`: `17/6, 176,433, 166, 21` | `T=512`: `17/6, 388,401, 550, 21` | `T=29,506`: `17/6, 16,777,107, 29,544, 21` | `T=29,507`: `VIAL_VHDL_BACKEND_LIMIT_EXCEEDED` at `/artifacts`, rendered size 16,777,675 |
-| OSVVM 2026.05 | `T=21`: selected `16/7, 122,415, 66, 12+21` after repairs | `T=128`: selected `16/7, 180,784, 173, 12+21` | `T=512`: selected `16/7, 392,752, 557, 12+21` | `T=29,506`: selected `16/7, 16,781,458, 29,551, 12+21` | `T=29,507`: portable-foundation byte rejection, no wrapper artifacts |
+| portable VHDL (oracle revision 2) | `T=21`: `17/6, 118,191, 59, 21` | `T=128`: `17/6, 176,560, 166, 21` | `T=512`: `17/6, 388,528, 550, 21` | `T=29,505`: `17/6, 16,776,666, 29,543, 21` | `T=29,506`: `VIAL_VHDL_BACKEND_LIMIT_EXCEEDED` at `/artifacts`, rendered size 16,777,234 |
+| OSVVM 2026.05 (oracle revision 2) | `T=21`: selected `16/7, 122,542, 66, 12+21` after repairs | `T=128`: selected `16/7, 180,911, 173, 12+21` | `T=512`: selected `16/7, 392,879, 557, 12+21` | `T=29,505`: selected `16/7, 16,781,017, 29,550, 12+21` | `T=29,506`: portable-foundation byte rejection, no wrapper artifacts |
 | native UVM review profile | `T=21`: `16/10, 138,345, 75, 14` | `T=22`: selected negotiation rejection after repair | preflight-dominated by `T=22` | preflight-dominated; backend byte/map caps are unreachable in the selected matrix | preflight-dominated; no artifact graph |
 
 ### Portable-SystemVerilog oracle revision 2 (2026-08-24)
@@ -77,7 +78,7 @@ OSVVM, and native UVM share them; the versioned profile oracle carries the
 portable evidence compatibility break.
 
 The portable-VHDL reference above uses the selected generated scale source name.
-The checked repository fixture itself emits 118,062 bytes; the two-byte
+The checked repository fixture itself emits 118,189 bytes; the two-byte
 difference is source-location text, not semantic or renderer instability. The
 OSVVM source totals add its fixed 4,351-byte adapter to those six portable
 sources. Its `12+21` check notation means twelve wrapper checks are visible in
@@ -98,6 +99,28 @@ foundation boundary and adds its unchanged 4,351-byte adapter only after that
 foundation succeeds. This is a versioned structural-oracle refinement, not a
 performance, runtime-capacity, or support regression.
 
+### Portable-VHDL result-contract refinement (2026-08-31)
+
+Result-value admission found that the generated VHDL projected its final
+one-based sample counter as both `end_time.cycle` and `logical_cycle_count`,
+while the shared result producer defines zero-based end time and a positive
+count. The semantic repair records the count as `vial_time.cycle + 1` and the
+end cycle as `count - 1`. Its 127 fixed source bytes do not grow with anchored
+operations, but the previous `T=29,506` witness was only 109 bytes below the
+unchanged 16-MiB cap. Fresh all-level regeneration therefore selects
+`T=29,505` at 16,776,666 bytes and 29,543 maps; adjacent `T=29,506` renders
+16,777,234 bytes and rejects atomically, 18 bytes over the cap. OSVVM inherits
+that foundation boundary and adds its unchanged 4,351-byte adapter only after
+portable emission succeeds.
+
+The compatibility break is explicit: portable VHDL now publishes
+`portable_vhdl_artifact_graph_v2` with the `.v2` profile-oracle schema, and
+OSVVM publishes `vhdl_osvvm_qualified_artifact_graph_v2` with its `.v2`
+schema. Ordinary Parser/PlanBuilder emission, byte-equal reruns, the complete
+five-level portable and OSVVM watchers, and the family aggregate independently
+prove the revised identities and adjacent rejection. The cap, runtime
+semantics, public support, performance, and capacity claims do not change.
+
 Selection found four defects that had to be repaired before the table could be
 consumed:
 
@@ -110,8 +133,8 @@ consumed:
    metadata source; the accepted emission would otherwise move from one
    quadratic blocker to another. The same repair leaf therefore owns bounded
    single-pass metadata and line-anchor indexes.
-   Direct use of the trace-v2 renderer proves 29,506/29,507 as the adjacent
-   byte boundary, and the actual emitter rejects 29,507 before static
+   At trace-v2 selection, direct renderer use proved 29,506/29,507 as the
+   adjacent byte boundary and the emitter rejected 29,507 before static
    validation. The accepted boundary must be rerun after the validator is made
    linear without weakening its now-21-check structural contract.
 2. The OSVVM wrapper copies six portable source files to new relative paths but
@@ -119,7 +142,7 @@ consumed:
    entries are seven adapter mappings plus six whole-file placeholders. The
    selected complete closure is every translated portable entry plus the seven
    adapter entries: 66 at reference, 173 at gate, 557 at qualification, and
-   29,551 at the selected limit.
+   29,550 at the current selected limit.
 3. Every OSVVM emission recursively re-verifies fourteen provider repositories
    across a current 2,122-file materialization before entering the portable emitter. Repeating
    that immutable prerequisite for every level exceeded the same 300-second
@@ -144,8 +167,9 @@ seven-source wrapper total, which may exceed it by the fixed adapter size.
 
 Repair leaf `.17.2.6.2.1` closes item 1 with one exact metadata index and one
 source-line/end-column index per emitted source. Its guarded executable watcher
-accepts `T=29,506` twice at 16,777,107 source bytes/29,544 maps with all 21
-checks passing and retains the exact atomic `T=29,507` rejection. Leaf
+accepted `T=29,506` twice at 16,777,107 source bytes/29,544 maps with all 21
+checks at its trace-v2 closure; the result-contract refinement above now
+supersedes that historical boundary with 29,505/29,506. Leaf
 `.17.2.6.2.2` closes item 3 with one callback-scoped lexical capability: entry
 verifies the exact provider root once, matching local emissions receive
 defensive result clones, and callback completion invalidates every retained
@@ -182,7 +206,7 @@ fail closed. The guarded five-repair family passes before generator activation.
    consistency, and a byte-equal independent rerun. “Generated bytes” always
    names the precise source set to which a cap applies.
 3. **Keep the earliest authority.** Portable SV revision 2 rejects at 6,319 operations;
-   VHDL and OSVVM reject at the portable six-source boundary of 29,507;
+   VHDL and OSVVM reject at the portable six-source boundary of 29,506;
    native UVM rejects negotiation at 22. An over-limit result must contain the
    exact diagnostic and no artifacts, operation identity, or staging residue.
    An earlier result is not relabelled as a backend capacity measurement.
@@ -213,7 +237,7 @@ fail closed. The guarded five-repair family passes before generator activation.
   source-map censuses, private-renderer boundary calculation where the known
   validator defect prevents completion, and exact source inspection for each
   defect.
-- **Falsification:** adjacent 6,318/6,319, 29,506/29,507, 128/129-byte
+- **Falsification:** adjacent 6,318/6,319, 29,505/29,506, 128/129-byte
   identifier, and native-UVM 21/22 witnesses challenge the selected boundary.
   The 48,274/48,275 native-UVM plan route additionally disproves any claim that
   its generated byte or map cap was reached.

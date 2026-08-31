@@ -201,6 +201,10 @@ subtest 'portable source emits typed stimulus, scheduling, models, and declared 
         'normalized result emits the samples member in its canonical slot');
     like($top, qr/\],""plan_id"":""/,
         'parity projection carries its authenticated plan identity');
+    like($top, qr/vial_scenario_00_cycles := vial_time\.cycle \+ 1;/,
+        'scenario cycle count includes the zero-based final logical cycle');
+    like($top, qr/write\(result_line, vial_scenario_00_cycles - 1\);/,
+        'scenario end time projects the zero-based final logical cycle');
     like($top, qr/sha256_counter_rejection_v1/,
         'normalized result projection preserves the exact plan-time random decision');
     my @phase = map { index($top, "-- FSMGEN VIAL PHASE: $_") }

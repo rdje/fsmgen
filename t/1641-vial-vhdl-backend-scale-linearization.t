@@ -55,10 +55,10 @@ if ($ENV{FSMGEN_VIAL_VHDL_LINEAR_SOURCE_ONLY}) {
 }
 
 my %expected = (
-    21 => {source_bytes => 118_064, source_maps => 59},
-    128 => {source_bytes => 176_433, source_maps => 166},
-    512 => {source_bytes => 388_401, source_maps => 550},
-    29_506 => {source_bytes => 16_777_107, source_maps => 29_544},
+    21 => {source_bytes => 118_191, source_maps => 59},
+    128 => {source_bytes => 176_560, source_maps => 166},
+    512 => {source_bytes => 388_528, source_maps => 550},
+    29_505 => {source_bytes => 16_776_666, source_maps => 29_543},
 );
 
 for my $total (512, 21, 128) {
@@ -82,23 +82,23 @@ for my $total (512, 21, 128) {
 
 if ($ENV{FSMGEN_VIAL_VHDL_SCALE_EXACT}) {
     subtest 'selected accepted and adjacent portable VHDL byte boundary is exact' => sub {
-        my $accepted_plan = build_plan(29_506);
+        my $accepted_plan = build_plan(29_505);
         my ($accepted, $accepted_seconds) =
-            emit_with_ceiling($accepted_plan, 29_506, 300);
-        ok($accepted->{ok}, 'T=29,506 succeeds inside the selected emission ceiling');
+            emit_with_ceiling($accepted_plan, 29_505, 300);
+        ok($accepted->{ok}, 'T=29,505 succeeds inside the selected emission ceiling');
         diag($json->encode($accepted->{diagnostics})) unless $accepted->{ok};
-        assert_emission($accepted, 29_506);
+        assert_emission($accepted, 29_505);
 
         my ($rerun, $rerun_seconds) =
-            emit_with_ceiling($accepted_plan, 29_506, 300);
+            emit_with_ceiling($accepted_plan, 29_505, 300);
         ok($rerun->{ok}, 'accepted boundary rerun succeeds');
         is($json->encode($rerun), $json->encode($accepted),
             'accepted boundary rerun is byte-identical');
 
-        my $excess_plan = build_plan(29_507);
+        my $excess_plan = build_plan(29_506);
         my ($excess, $excess_seconds) =
-            emit_with_ceiling($excess_plan, 29_507, 300);
-        ok(!$excess->{ok}, 'adjacent T=29,507 rejects');
+            emit_with_ceiling($excess_plan, 29_506, 300);
+        ok(!$excess->{ok}, 'adjacent T=29,506 rejects');
         is_deeply($excess->{diagnostics}, [{
             code => 'VIAL_VHDL_BACKEND_LIMIT_EXCEEDED',
             severity => 'error',
@@ -116,7 +116,7 @@ if ($ENV{FSMGEN_VIAL_VHDL_SCALE_EXACT}) {
     };
 }
 else {
-    note('set FSMGEN_VIAL_VHDL_SCALE_EXACT=1 for the T=29,506/29,507 boundary proof');
+    note('set FSMGEN_VIAL_VHDL_SCALE_EXACT=1 for the T=29,505/29,506 boundary proof');
 }
 
 done_testing;

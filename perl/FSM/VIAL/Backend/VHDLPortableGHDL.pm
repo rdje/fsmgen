@@ -1747,7 +1747,7 @@ sub _render_fixture(%arg) {
             _vhdl_textio_write('result_line', 'expectation_failed', '        '),
             '      end if;',
             _vhdl_textio_write('result_line', '","diagnostic_ids":[],"end_time":{"cycle":'),
-            "      write(result_line, vial_scenario_${tag}_cycles);",
+            "      write(result_line, vial_scenario_${tag}_cycles - 1);",
             _vhdl_textio_write('result_line', ',"domain_id":"'),
             '      write(result_line, VIAL_DOMAIN_ID);',
             _vhdl_textio_write('result_line', '","ordinal":0,"phase":"check"},"expectation_ids":[],"logical_cycle_count":'),
@@ -2105,7 +2105,7 @@ sub _render_fixture(%arg) {
             '          vial_scenario_' . sprintf('%02d', $scenario_index)
                 . '_timed_out := vial_scenario_status = VIAL_SCENARIO_TIMED_OUT;',
             '          vial_scenario_' . sprintf('%02d', $scenario_index)
-                . '_cycles := vial_time.cycle;',
+                . '_cycles := vial_time.cycle + 1;',
             '          vial_scenario_' . sprintf('%02d', $scenario_index)
                 . '_accepts := vial_event_accepted_count;',
             '          vial_scenario_' . sprintf('%02d', $scenario_index)

@@ -44,18 +44,19 @@ Evaluation is purely structural: it creates no stage and starts no process.
 
 | Role | Plan identity | Generated/probe source identity |
 | --- | --- | --- |
-| reference | `osvvm-ghdl-execution-plan/3639c39639ca5dbbdc5a715dd919617137beebdec13c37ee28011628c6981483` | `source/d479aeca91f41ee74d2572d1324e771aa922911b37b0ae4389ed215eac57ec53` |
-| gate | `osvvm-ghdl-execution-plan/3adc10d1d81888b4d6c920413411f3e554bceaab2e6ce8cb0f10efbbed3f075e` | `source/5eba85abfc7ea62f3a959bef724f8b11dc5bb94b42845b8a9d4c3c633ee13463` |
-| qualification | `osvvm-ghdl-execution-plan/7e35cfc36d528327535648026d382455148cc55ca370d3e540f53b8a576f6307` | `source/d4450e0b195c095f1927891bf6ee8a0aebeffc3c102e0d0bb40850392a44aa69` |
+| reference | `osvvm-ghdl-execution-plan/be78cf018f259a28f22ca9195a10267d1014551390b54af39a823e68f5153cc4` | `source/c0732601bd4ccd902120369a11122d5a2a3fad7552cc2907e487a60f92f2cd09` |
+| gate | `osvvm-ghdl-execution-plan/cb30bee9c824346da8f4991dfa6bc263b2e91ab87a339b26075274112a64c235` | `source/fe3915cfc16d139531703bf045107ca875dd1a65626e7020464706d691809156` |
+| qualification | `osvvm-ghdl-execution-plan/65fd2ed80a992268e0049c75126b9d13d91f849099cc8abb8678b3448ad2e002` | `source/64802c307fa4426732613ab0d6ca54c9a0b5cd20ff02e740b70e3ea24ba565f5` |
 
 Every plan contains 61 ordered provider analyses, one ordered analysis over
 the seven emitted VHDL sources plus the checked provider probe, separate
 fixture/probe elaboration and run commands, and four OSVVM supplementary
 reports. The qualifier consumes that same private authority rather than
 maintaining a competing command, source, or resource list. A live rerun still
-matches the checked 74,976-byte report and qualification identity byte-for-
-byte. Limit and over-limit cannot acquire a plan and fail before provider or
-tool access.
+matches the checked 74,976-byte report and qualification identity
+`qualification/1b55ef7d1c6c6e61dd025f7d52b06356b10611aa675973d30673c98e887a016a`
+byte for byte. Limit and over-limit cannot acquire a plan and fail before
+provider or tool access.
 
 ## Reproduction and use
 

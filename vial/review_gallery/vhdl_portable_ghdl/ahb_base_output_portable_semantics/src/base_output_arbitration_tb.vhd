@@ -457,7 +457,7 @@ begin
         write(result_line, string'("expectation_failed"));
       end if;
       write(result_line, string'(""",""diagnostic_ids"":[],""end_time"":{""cycle"":"));
-      write(result_line, vial_scenario_00_cycles);
+      write(result_line, vial_scenario_00_cycles - 1);
       write(result_line, string'(",""domain_id"":"""));
       write(result_line, VIAL_DOMAIN_ID);
       write(result_line, string'(""",""ordinal"":0,""phase"":""check""},""expectation_ids"":[],""logical_cycle_count"":"));
@@ -484,7 +484,7 @@ begin
         write(result_line, string'("expectation_failed"));
       end if;
       write(result_line, string'(""",""diagnostic_ids"":[],""end_time"":{""cycle"":"));
-      write(result_line, vial_scenario_01_cycles);
+      write(result_line, vial_scenario_01_cycles - 1);
       write(result_line, string'(",""domain_id"":"""));
       write(result_line, VIAL_DOMAIN_ID);
       write(result_line, string'(""",""ordinal"":0,""phase"":""check""},""expectation_ids"":[],""logical_cycle_count"":"));
@@ -746,7 +746,7 @@ begin
             vial_scenario_status := VIAL_SCENARIO_STIMULUS_COMPLETED;
           end if;
           vial_scenario_00_timed_out := vial_scenario_status = VIAL_SCENARIO_TIMED_OUT;
-          vial_scenario_00_cycles := vial_time.cycle;
+          vial_scenario_00_cycles := vial_time.cycle + 1;
           vial_scenario_00_accepts := vial_event_accepted_count;
           vial_scenario_00_ready_low_cycles := vial_event_held_count;
           vial_scenario_00_response_error_cycles := vial_event_error_count;
@@ -807,7 +807,7 @@ begin
             vial_scenario_status := VIAL_SCENARIO_STIMULUS_COMPLETED;
           end if;
           vial_scenario_01_timed_out := vial_scenario_status = VIAL_SCENARIO_TIMED_OUT;
-          vial_scenario_01_cycles := vial_time.cycle;
+          vial_scenario_01_cycles := vial_time.cycle + 1;
           vial_scenario_01_accepts := vial_event_accepted_count;
           vial_scenario_01_ready_low_cycles := vial_event_held_count;
           vial_scenario_01_response_error_cycles := vial_event_error_count;
