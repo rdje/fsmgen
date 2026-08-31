@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-portable`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **20** uniquely owned question entries.
+> **2** facts · **21** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -24,6 +24,7 @@
 - q="what is the first executable VIAL backend?" · facts=[vial-portable-systemverilog-backend-v1](../../docs/knowledge/vial-portable-systemverilog-backend-v1.md)
 - q="what owns VIAL backend implementation next?" · facts=[vial-portable-systemverilog-backend-v1](../../docs/knowledge/vial-portable-systemverilog-backend-v1.md)
 - q="which diagnostic wins when a portable VHDL phase and cleanup both fail?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)
+- q="which diagnostic wins when the separate GHDL probe and its abort both fail?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)
 - q="why can portable VHDL not copy the portable SystemVerilog reset recipe?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)
 
 ## Facts

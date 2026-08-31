@@ -171,6 +171,13 @@ That distinct probe also preserves deadline authority: a supervisor
 The probe is never retried, and its selected timeout and capture values do not
 change.
 
+Probe failure cleanup has separate authority. The qualifier accepts an abort
+only when the lifecycle reports `aborted_cleaned`, exact removal, zero residue,
+and zero diagnostics. A failed or malformed abort instead reports
+`VIAL_VHDL_QUALIFICATION_CLEANUP_ERROR` at `/cleanup` with a bounded, sanitized
+lifecycle reason. An exact successful abort rethrows the original probe error
+unchanged; it does not retry the probe or alter any deadline or capture limit.
+
 The shared production process supervisor records containment, spawn, successful
 `exec`, first output, exit, timeout/capture status, signal, and complete process-
 tree cleanup. Lifecycle-owned public work and outer-worker-owned measurement
@@ -220,6 +227,7 @@ unchanged.
 prove -Iperl t/1725-vial-ghdl-cleanup-diagnostic-authority.t \
   t/1726-vial-ghdl-admission-cleanup-evidence.t \
   t/1727-vial-ghdl-probe-timeout-diagnostic-authority.t \
+  t/1728-vial-ghdl-probe-abort-cleanup-authority.t \
   t/1673-vial-ghdl-shared-lifecycle.t \
   t/1678-vial-ghdl-provider-aware-lifecycle.t
 ```

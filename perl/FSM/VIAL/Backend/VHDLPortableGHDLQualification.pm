@@ -260,10 +260,9 @@ sub _qualify($raw) {
     };
     unless ($probe_ok) {
         my $error = $@;
-        FSM::VIAL::Backend::GHDLLifecycle->abort_session({
-            %$lifecycle_request, handle => $current->{handle},
-        });
-        die $error;
+        _abort_probe_session(
+            $lifecycle_request, $current->{handle}, $error,
+        );
     }
     $current = FSM::VIAL::Backend::GHDLLifecycle->advance_session({
         %$lifecycle_request, handle => $current->{handle},
@@ -530,6 +529,43 @@ sub _capture($repo_root, $argv, $timeout, $limit, $label) {
         output => $capture->{output},
         output_bytes => $capture->{output_bytes},
     };
+}
+
+sub _abort_probe_session($request, $handle, $probe_error) {
+    my $aborted;
+    my $abort_ok = eval {
+        $aborted = FSM::VIAL::Backend::GHDLLifecycle->abort_session({
+            %$request, handle => $handle,
+        });
+        1;
+    };
+    my $abort_exception = $@;
+    my $cleanup_proved = $abort_ok
+        && ref($aborted) eq 'HASH'
+        && $aborted->{ok}
+        && defined($aborted->{status})
+        && $aborted->{status} eq 'aborted_cleaned'
+        && ref($aborted->{diagnostics}) eq 'ARRAY'
+        && !@{$aborted->{diagnostics}}
+        && ref($aborted->{cleanup}) eq 'HASH'
+        && $aborted->{cleanup}{removed}
+        && ref($aborted->{cleanup}{residue}) eq 'ARRAY'
+        && !@{$aborted->{cleanup}{residue}};
+    unless ($cleanup_proved) {
+        my $diagnostic = ref($aborted) eq 'HASH'
+            && ref($aborted->{diagnostics}) eq 'ARRAY'
+            && @{$aborted->{diagnostics}}
+            && ref($aborted->{diagnostics}[0]) eq 'HASH'
+            ? $aborted->{diagnostics}[0] : {};
+        my $reason = !$abort_ok
+            ? _sanitize_exception($abort_exception)
+            : defined($diagnostic->{message}) && !ref($diagnostic->{message})
+                ? _sanitize_exception($diagnostic->{message})
+                : 'abort result did not prove exact staging removal';
+        _throw('VIAL_VHDL_QUALIFICATION_CLEANUP_ERROR',
+            "shared GHDL lifecycle probe abort failed: $reason", '/cleanup');
+    }
+    die $probe_error;
 }
 
 sub _lifecycle_succeeded($result, $phase) {

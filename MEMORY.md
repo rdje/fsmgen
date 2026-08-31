@@ -8,8 +8,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
   (`active`; runtime-stream cap hardening under decisions `0093`/`0083`)
-- next_action: prove and repair the distinct qualifier probe's discarded
-  `abort_session` cleanup result in `.17.4.7`.
-- in_flight_uncommitted: none after qualifier-probe timeout authority repair.
+- next_action: audit portable-VHDL lifecycle trace/result/publication admission,
+  beginning at the trace-validation boundary in `.17.4.7`.
+- in_flight_uncommitted: none after qualifier-probe abort cleanup authority repair.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none; immutable `.17.3` evidence is the selection input.
