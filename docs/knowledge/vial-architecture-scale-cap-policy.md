@@ -31,6 +31,7 @@ evidence: >-
   t/1696-hial-vial-bridge-observation-cap-order.t;
   t/1697-hial-vial-bridge-probe-cap-order.t;
   t/1698-hial-vial-bridge-type-cap-order.t;
+  t/1699-hial-vial-bridge-transaction-cap-order.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -48,6 +49,7 @@ reverify: >-
   t/1696-hial-vial-bridge-observation-cap-order.t
   t/1697-hial-vial-bridge-probe-cap-order.t
   t/1698-hial-vial-bridge-type-cap-order.t
+  t/1699-hial-vial-bridge-transaction-cap-order.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -108,6 +110,8 @@ Probe cardinality is admitted before access, source, and backing-storage
 validation and normalized probe construction.
 Each newly discovered distinct type is admitted immediately before its record
 is materialized and before its dependent configuration value is normalized.
+Combined ordinary-actor and fixed bridge transaction cardinality is admitted
+before transaction-family shape and clause validation or record construction.
 
 The guarded exact semantic-catalog matrix now closes every selected
 qualification, boundary, excess, and declared cap interaction through the

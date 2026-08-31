@@ -209,6 +209,7 @@ my $GROUPS = {
             't/1696-hial-vial-bridge-observation-cap-order.t',
             't/1697-hial-vial-bridge-probe-cap-order.t',
             't/1698-hial-vial-bridge-type-cap-order.t',
+            't/1699-hial-vial-bridge-transaction-cap-order.t',
         ],
     ),
     bridge_serialized_manifest => _group(

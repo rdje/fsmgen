@@ -499,6 +499,10 @@ sub _build_semantic_model($actor, $layer, $backend_names, $sources, $artifacts,
         'probes',
         scalar(@{($bridge || {})->{probes} || []}),
     );
+    _validate_collection_count(
+        'transactions',
+        scalar(@{$actor->{transactions} || []}) + ($bridge ? 1 : 0),
+    );
     my $domain_name = $bridge ? $bridge->{domain} : 'default';
     my $domain_id = "domain/$domain_name";
     my (%types_by_key, @types, @endpoints);
