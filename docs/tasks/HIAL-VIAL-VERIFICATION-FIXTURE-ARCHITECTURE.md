@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
-- Last updated: `2026-08-30`
+- Last updated: `2026-08-31`
 - Owner: repo-local workflow
 - Segment manifest: `docs/tasks/segments/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/manifest.jsonl`
 
@@ -846,18 +846,12 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Implement only the .17.4.1-selected semantic/parser contract; reject boundary excess before dependent expansion with stable diagnostics and paths, unchanged accepted SemanticIR, and no partial result or residue. Prove every semantic_catalog_v1 boundary and interaction, including literal-repeat versus expanded-action dominance, with focused default and guarded exact tests.`
   Verification: `Clean selection commit 951720257d727e79f9e0986955655c8d330e0079 closes .17.4.1 before this pivot. Activation commit 93adfbd82 owns only source/parser/SemanticIR earliest-cap hardening under decision 0093. The first implementation slice reserves scenario action capacity before inspecting a next node and admits repeat copies with overflow-safe arithmetic; t1686 proves over-limit and exact-full precedence with no partial report, while t1550/t1601/t1620/t1621 retain accepted and established boundary behavior. The direct-import slice preflights an already-visible 65th edge before recursive imported-source parsing; t1687 proves malformed imported bytes cannot mask the exact diagnostic and pins accepted 64-import projection/report identities. The parallel-fiber slice admits the known 257-fiber excess before join-value resolution; t1688 proves an invalid join cannot mask the exact diagnostic and pins accepted 256-fiber projection/report identities. The declaration slice admits each known section excess before later package-section shape parsing; t1689 proves a malformed later section cannot mask the exact diagnostic and pins accepted 4,096-declaration projection/report identities. The service-scalar slice admits scoreboard capacity before transaction resolution and cross max_bins before coverpoint resolution/product calculation; t1690/t1691 prove hostile references cannot mask either exact limit and pin accepted one-million projection/report identities. The type-shape slice proves existing list length, record field count, and aggregate depth admission before inner-type resolution; t1692 pins hostile-inner precedence and all three exact-boundary identities without a product-code change. The source-byte slice proves per-source and combined bytes are admitted before lexing each affected source; t1693 pins malformed-byte precedence and exact 1-MiB/16-MiB identities without a product-code change. The guarded exact t1601 matrix passes every selected qualification, limit, over-limit, and repeat/action interaction in 84 seconds; focused precedence, docs, claims, containment, and complete doctrines are green. `.17.4.2` is exhausted; bridge and later layers retain their separate proposed owners.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: activate semantic cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: enforce action cap before further construction; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: preflight direct import fan-out before recursion; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: admit parallel fiber cap before join resolution; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: admit declaration caps before later sections; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: admit service scalars before reference resolution; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: prove type-shape preflight order; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: prove source-byte admission order; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: close semantic cap hardening`
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3`
-  Status: `done`
-  Goal: `Enforce the selected HIAL-to-VIAL bridge resource caps before avoidable manifest materialization.`
-  Acceptance: `Implement only the .17.4.1-selected bridge contract; count bounded normalized families at the earliest reliable producer points, retain terminal defenses, and reject structural or serialized-manifest excess with deterministic diagnostics, no manifest/report, and exact cleanup. Prove every bridge_fanout_v1 boundary without changing accepted manifests or public route semantics.`
-  Verification: `Clean predecessor 3ded0157f8378548be3c56c7ab556af302df9f05 closes every selected source/parser/SemanticIR cap before this pivot. Activation owns only bridge-profile, normalized-collection, and serialized-manifest earliest-authority hardening under decision 0093. Bridge slices admit known actor-parameter, endpoint, observation, probe, combined transaction/event, retained-residue, and derived backend-binding cardinality before per-record normalization, each newly discovered distinct type before record materialization, and each projected source-map entry before record construction; RED t1694-t1703 prove malformed overflowing members or an overproducing projection cannot mask exact collection diagnostics, return no manifest/report, and freeze accepted manifest identities. Guarded t1704 proves exact serialized bytes deliberately remain terminal after complete structural validation, freezes exact boundary/adjacent excess and accepted identity, and requires no product-code change. The RAM-guarded exact t1602 matrix passes all thirteen axes at qualification, declared-limit, and adjacent-excess levels with 305 nested exact assertions and exact staging cleanup. Focused precedence, policy, docs, claims, containment, and complete doctrines are green; `.17.4.3` is exhausted and execution/later leaves retain separate owners.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: activate bridge cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit configurations before normalization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit endpoints before normalization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit observations before normalization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit probes before normalization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit distinct types before materialization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit transactions before normalization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit events before normalization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit retained residue before normalization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit backend bindings before materialization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit source map before materialization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: prove serialized manifest terminal authority; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: close bridge cap hardening`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Enforce the selected execution-graph resource caps before avoidable graph, random, source-map, or plan materialization.`
   Acceptance: `Implement only the .17.4.1-selected execution contract; preserve the existing compact total-operation and serialized-plan preflights, repair remaining late checks, and reconcile binding/type/map limits with lower bridge and byte authorities. Prove deterministic diagnostics, no partial ExecutionIR/plan/replay, unchanged accepted plans, and guarded execution_graph_v1 boundaries.`
-  Verification: `pending clean activation after the sealed .17.4.3 evidence is moved into a bounded task segment; the root task is at 7,986 of 8,000 lines and must not accept another append-only implementation series.`
-  Commit: `pending activation`
+  Verification: `Clean predecessor a1773fce49decf9c623111b678abe9d8b48345aa closes bridge-cap hardening before this pivot. The exact terminal .17.4.3 node and all thirteen acceptance records are retained at source revision a1773fce49decf9c623111b678abe9d8b48345aa in content-addressed segment fe8d16354a8ab20cfc88625d6eb7fc53fedd68a4a06cb4317db740c03d550a7e; the bounded manifest and integrity checker reconstruct one authoritative graph. Activation owns only execution-graph earliest-cap hardening under decision 0093; checking and later layers remain proposed, and product behavior is unchanged.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: activate execution cap hardening`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5`
   Status: `proposed`
   Goal: `Enforce the selected checking-state resource caps before avoidable state-service materialization.`
@@ -7785,202 +7779,23 @@ The completed node records above and their named Git commits remain the canonica
   staged-result, diff, and `[doctrine] all doctrine checks passed` close the
   leaf; full CI/push remain deferred by policy.
 
-## Acceptance Checklist (enforced) — `.17.4.3` bridge-cap activation
+## Acceptance Checklist (enforced) — `.17.4.4` bounded activation
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'bridge_normalized_collections'
-  --oneline -- perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` traces the selected
-  bridge group to clean decision-0093 policy commit `951720257`; predecessor
-  `3ded0157f` closes `.17.4.2`, so no dirty-tree pivot remains.
-- [x] **ADDRESSED (verified)** — `.17.4.3` alone is active for bridge-profile,
-  normalized-collection, and serialized-manifest earliest-cap hardening. Task
-  index, Memory, and mdBook agree; execution and later leaves remain proposed,
-  and activation changes no product behavior.
-- [x] **NO REGRESSION** — Focused task/path/Knowledge Map/claim/locality/
-  containment/reference coverage reports `All tests successful` at
-  `Files=10, Tests=119`; all mdBook chapters and
-  `[doctrine] all doctrine checks passed` close activation, while full CI/push
-  remain deferred by policy.
-
-## Acceptance Checklist (enforced) — `.17.4.3` configuration admission
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_validate_limits' --oneline --
-  perl/FSM/HIAL/VIALBridge/Builder.pm` identifies `51434a2ae` as the original
-  terminal bridge-limit implementation. `_build_semantic_model` passes every
-  actor parameter through type creation and arbitrary-width value normalization
-  before `_validate_limits` observes the already-known configuration count.
-- [x] **ADDRESSED (verified)** — RED t1694 first reports `Failed 4/13` because
-  the invalid 4,097th value wins at `/actor/params`. The builder now admits raw
-  parameter cardinality before configuration type/value normalization, retains
-  terminal manifest validation, returns no partial output, and preserves the
-  accepted 256-configuration manifest/report identity. Machine policy, fact,
-  claims, and mdBook expose the same boundary.
-- [x] **NO REGRESSION** — Focused bridge/policy/order coverage reports
-  `All tests successful` at `Files=4, Tests=54`; both modules and t1694 are
-  syntax clean, and all mdBook chapters test. Knowledge Map, claim, task,
-  locality, containment, staged acceptance, diff, and complete doctrine gates
-  close the slice; full CI/push remain deferred by policy.
-
-## Acceptance Checklist (enforced) — `.17.4.3` endpoint admission
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_validate_limits' --oneline --
-  perl/FSM/HIAL/VIALBridge/Builder.pm` retains original terminal commit
-  `51434a2ae`. The builder validates every interface width and constructs every
-  endpoint/type before admitting the already-known endpoint cardinality.
-- [x] **ADDRESSED (verified)** — RED t1695 reports `Failed 4/13` because the
-  invalid overflowing width wins. Raw clock/reset/interface cardinality now
-  precedes endpoint width/type/record work; terminal defense, atomic failure,
-  exact diagnostic, and accepted endpoint manifest identity remain intact.
-- [x] **NO REGRESSION** — Focused bridge/policy/order coverage reports
-  `Files=5, Tests=68`; modules/t1695 are syntax clean and every mdBook chapter
-  tests. Claims, Knowledge Map, containment, staged acceptance, diff, and all
-  doctrines pass; full CI/push remain deferred by policy.
-
-## Acceptance Checklist (enforced) — `.17.4.3` observation admission
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_validate_limits' --oneline --
-  perl/FSM/HIAL/VIALBridge/Builder.pm` retains terminal commit `51434a2ae`.
-  Observation roles and endpoint references are resolved into complete records
-  before the already-known observation count is admitted.
-- [x] **ADDRESSED (verified)** — RED t1696 reports `Failed 4/13` when a hostile
-  role masks the excess. Raw observation count now precedes role/reference
-  work; terminal defense, atomic failure, exact diagnostic, and accepted
-  observation manifest identity remain intact.
-- [x] **NO REGRESSION** — Focused bridge/policy/order coverage reports
-  `Files=6, Tests=82`; modules/t1696 are syntax clean and every mdBook chapter
-  tests. Claims, Knowledge Map, containment, staged acceptance, diff, and all
-  doctrines pass; full CI/push remain deferred by policy.
-
-## Acceptance Checklist (enforced) — `.17.4.3` probe admission
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_validate_limits' --oneline --
-  perl/FSM/HIAL/VIALBridge/Builder.pm` retains terminal commit `51434a2ae`.
-  Architecture-scale access/source/storage validation walks every probe before
-  the already-known probe count reaches terminal manifest validation.
-- [x] **ADDRESSED (verified)** — RED t1697 reports `Failed 4/13` because hostile
-  overflowing access wins at probe index 256. Raw probe count now precedes
-  access/source/storage work; terminal defense, atomic failure, exact
-  diagnostic, and accepted probe manifest identity remain intact.
-- [x] **NO REGRESSION** — Focused bridge/policy/order coverage reports
-  `Files=7, Tests=96`; modules/t1697 are syntax clean and every mdBook chapter
-  tests. Claims, Knowledge Map, containment, staged acceptance, diff, and all
-  doctrines pass; full CI/push remain deferred by policy.
-
-## Acceptance Checklist (enforced) — `.17.4.3` type admission
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_validate_limits' --oneline --
-  perl/FSM/HIAL/VIALBridge/Builder.pm` retains terminal commit `51434a2ae`.
-  `_ensure_logic_type` materializes each newly discovered distinct type before
-  terminal manifest validation admits the derived type cardinality.
-- [x] **ADDRESSED (verified)** — RED t1698 reports `Failed 4/13` because the
-  hostile 4,096th configuration value wins after creating the 4,097th type.
-  The distinct-type producer now admits before record/value materialization;
-  terminal defense, exact diagnostic, atomicity, and accepted identity remain.
-- [x] **NO REGRESSION** — Focused bridge/policy/order coverage reports
-  `Files=8, Tests=110`; modules/t1698 are syntax clean and every mdBook chapter
-  tests. Claims, Knowledge Map, containment, staged acceptance, diff, and all
-  doctrines pass; full CI/push remain deferred by policy.
-
-## Acceptance Checklist (enforced) — `.17.4.3` transaction admission
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_validate_limits' --oneline --
-  perl/FSM/HIAL/VIALBridge/Builder.pm` retains terminal commit `51434a2ae`.
-  Bridge-profile validation walks every ordinary transaction before the known
-  actor count plus fixed bridge transaction reaches terminal validation.
-- [x] **ADDRESSED (verified)** — RED t1699 reports `Failed 4/13` because a
-  hostile 256th ordinary transaction wins before the fixed bridge record makes
-  total cardinality 257. Combined raw count now precedes shape/clause work;
-  terminal defense, exact diagnostic, atomicity, and accepted identity remain.
-- [x] **NO REGRESSION** — Focused bridge/policy/order coverage reports
-  `Files=9, Tests=124`; modules/t1699 are syntax clean and every mdBook chapter
-  tests. Claims, Knowledge Map, containment, staged acceptance, diff, and all
-  doctrines pass; full CI/push remain deferred by policy.
-
-## Acceptance Checklist (enforced) — `.17.4.3` event admission
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_validate_limits' --oneline --
-  perl/FSM/HIAL/VIALBridge/Builder.pm` retains terminal commit `51434a2ae`.
-  Bridge-profile validation walks each declared event before its known count,
-  plus event-producing ordinary clauses, reaches terminal validation.
-- [x] **ADDRESSED (verified)** — RED t1700 reports `Failed 4/13` because the
-  hostile 2,049th bridge-event kind wins before terminal admission. Combined
-  bridge-event and ordinary event-clause count now precedes shape/expression
-  work; terminal defense, exact diagnostic, atomicity, and identity remain.
-- [x] **NO REGRESSION** — Focused bridge/policy/order coverage reports
-  `Files=10, Tests=138`; modules/t1700 are syntax clean and every mdBook chapter
-  tests. Claims, Knowledge Map, containment, staged acceptance, diff, and all
-  doctrines pass; full CI/push remain deferred by policy.
-
-## Acceptance Checklist (enforced) — `.17.4.3` retained-residue admission
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_validate_limits' --oneline --
-  perl/FSM/HIAL/VIALBridge/Builder.pm` retains terminal commit `51434a2ae`.
-  Bridge-profile validation walks each residue ordinal before its known count
-  reaches normalized ownership/detail construction and terminal validation.
-- [x] **ADDRESSED (verified)** — RED t1701 reports `Failed 4/13` because the
-  hostile 4,097th residue identifier wins before terminal admission. Raw count
-  now precedes ordinal/ownership/detail work; terminal defense, exact
-  diagnostic, atomicity, and accepted residue identity remain intact.
-- [x] **NO REGRESSION** — Focused bridge/policy/order coverage reports
-  `Files=11, Tests=152`; modules/t1701 are syntax clean and every mdBook chapter
-  tests. Claims, Knowledge Map, containment, staged acceptance, diff, and all
-  doctrines pass; full CI/push remain deferred by policy.
-
-## Acceptance Checklist (enforced) — `.17.4.3` backend-binding admission
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_validate_limits' --oneline --
-  perl/FSM/HIAL/VIALBridge/Builder.pm` retains terminal commit `51434a2ae`.
-  Both backend passes materialize unit, endpoint, configuration, and probe
-  bindings before their exact derived cardinality reaches terminal validation.
-- [x] **ADDRESSED (verified)** — RED t1702 reports `Failed 4/13` because a
-  missing late VHDL mapping wins after avoidable binding construction. Exact
-  two-backend arithmetic now admits before either mapping pass; terminal
-  defense, exact diagnostic, atomicity, and accepted identity remain intact.
-- [x] **NO REGRESSION** — Focused bridge/policy/order coverage reports
-  `Files=12, Tests=166`; modules/t1702 are syntax clean and every mdBook chapter
-  tests. Claims, Knowledge Map, containment, staged acceptance, diff, and all
-  doctrines pass; full CI/push remain deferred by policy.
-
-## Acceptance Checklist (enforced) — `.17.4.3` source-map admission
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_validate_limits' --oneline --
-  perl/FSM/HIAL/VIALBridge/Builder.pm` retains terminal commit `51434a2ae`.
-  `_source_map_walk` materializes and sorts the complete projection before the
-  known source-map count reaches terminal manifest validation.
-- [x] **ADDRESSED (verified)** — RED t1703 reports `Failed 5/14` because its
-  producer spy crosses the cap and masks the limit as an internal error. Each
-  entry is now admitted before record construction; terminal defense, exact
-  diagnostic, atomicity, and accepted source-map identity remain intact.
-- [x] **NO REGRESSION** — Focused bridge/policy/order coverage reports
-  `Files=13, Tests=181`; modules/t1703 are syntax clean and every mdBook chapter
-  tests. Claims, Knowledge Map, containment, staged acceptance, diff, and all
-  doctrines pass; full CI/push remain deferred by policy.
-
-## Acceptance Checklist (enforced) — `.17.4.3` serialized-manifest terminal authority
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'my $encoded = JSON::PP->new->canonical->encode'
-  --oneline -- perl/FSM/HIAL/VIALBridge/Builder.pm` identifies original terminal
-  byte-check commit `51434a2ae`. Decision `0093` requires that exact canonical
-  authority to follow complete manifest construction and structural defenses.
-- [x] **ADDRESSED (verified)** — Guarded t1704 proves the accepted canonical
-  boundary and first complete valid excess each encode exactly once, after
-  terminal structural and semantic-identity checks. It freezes exact bytes,
-  diagnostic/path, atomicity, and accepted identity without product-code change.
-- [x] **NO REGRESSION** — RAM-guarded focused bridge/policy/terminal-authority
-  coverage reports `Files=14, Tests=200` in 75 seconds. Modules/t1704 are syntax
-  clean and every mdBook chapter tests; claims, Knowledge Map, containment,
-  staged acceptance, diff, and all doctrines pass. Full CI/push remain deferred.
-
-## Acceptance Checklist (enforced) — `.17.4.3` bridge-cap closure
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'FSMGEN_VIAL_SCALE_EXACT'
-  --oneline -- t/1602-vial-architecture-scale-bridge-fanout.t` identifies
-  matrix-introduction commit `97dda148d`. All individual hardening slices are
-  committed, but the opt-in qualification/limit/excess matrix is not yet fresh.
-- [x] **ADDRESSED (verified)** — RAM-guarded exact t1602 exercises every selected
-  bridge axis at qualification, declared-limit, and adjacent-excess levels. Its
-  exact subtest passes 305 nested assertions with authoritative interactions,
-  deterministic identities, atomic rejection, and exact staging cleanup.
-- [x] **NO REGRESSION** — RAM-guarded exact t1602 reports `Files=1, Tests=6`
-  in 119 seconds with 305 nested exact assertions. Every mdBook chapter tests;
-  claims, Knowledge Map, containment, staged acceptance, diff, and all doctrines
-  pass. Full CI/push remain deferred by policy.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'"lines_each":8000'
+  --oneline -- doctrine/live_document_size/surfaces.jsonl` identifies
+  containment-contract commit `9bd081935`. Its checker measured the live
+  HIAL/VIAL task root at 7,986 of 8,000 lines after `.17.4.3` closure;
+  appending an execution-hardening series would violate the bounded live-root
+  contract before the work could finish.
+- [x] **ADDRESSED (verified)** — The exact terminal `.17.4.3` node and all
+  thirteen acceptance records are copied byte-for-byte from clean revision
+  `a1773fce49decf9c623111b678abe9d8b48345aa` into digest-named segment
+  `fe8d16354a8ab20cfc88625d6eb7fc53fedd68a4a06cb4317db740c03d550a7e`.
+  The bounded manifest retains source revision, path, count, and required-history
+  contract; the live root alone activates `.17.4.4` and retains every ancestor.
+- [x] **NO REGRESSION** — Exact segment/source retrieval reports
+  `Files=1, Tests=41`; task integrity reconstructs 1,031 nodes across three
+  segments. Every mdBook chapter tests; Knowledge Map, claims, locality,
+  containment across 22 surfaces, staged-result agreement, diff, and all
+  doctrines pass with zero enforcement-ceiling increases. Full CI/push remain
+  deferred by policy.

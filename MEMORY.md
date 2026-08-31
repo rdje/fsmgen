@@ -7,9 +7,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4`
-  (`proposed`; execution-cap hardening under decision `0093`)
-- next_action: move sealed `.17.4.3` evidence into a bounded task segment, then
-  activate `.17.4.4` without exceeding the root task's containment ceiling.
-- in_flight_uncommitted: none after the bridge-cap closure commit.
+  (`active`; execution-cap hardening under decision `0093`)
+- next_action: audit the execution_graph_v1 producers and focused boundary
+  tests, then choose the first earliest-authority implementation slice.
+- in_flight_uncommitted: none after the bounded activation commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none; immutable `.17.3` evidence is the selection input.
