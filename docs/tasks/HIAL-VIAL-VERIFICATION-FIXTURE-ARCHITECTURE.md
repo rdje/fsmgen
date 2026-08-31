@@ -850,8 +850,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Enforce the selected HIAL-to-VIAL bridge resource caps before avoidable manifest materialization.`
   Acceptance: `Implement only the .17.4.1-selected bridge contract; count bounded normalized families at the earliest reliable producer points, retain terminal defenses, and reject structural or serialized-manifest excess with deterministic diagnostics, no manifest/report, and exact cleanup. Prove every bridge_fanout_v1 boundary without changing accepted manifests or public route semantics.`
-  Verification: `Clean predecessor 3ded0157f8378548be3c56c7ab556af302df9f05 closes every selected source/parser/SemanticIR cap before this pivot. Activation owns only bridge-profile, normalized-collection, and serialized-manifest earliest-authority hardening under decision 0093. The first bridge slice admits the known actor-parameter cardinality before configuration type/value normalization; RED t1694 proves an invalid 4,097th value cannot mask the exact collection diagnostic, returns no manifest/report, and freezes the accepted 256-configuration manifest identity. t1551/t1602/t1685 retain the public bridge, selected matrix, and machine-policy contracts; execution and later leaves remain proposed.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: activate bridge cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit configurations before normalization`
+  Verification: `Clean predecessor 3ded0157f8378548be3c56c7ab556af302df9f05 closes every selected source/parser/SemanticIR cap before this pivot. Activation owns only bridge-profile, normalized-collection, and serialized-manifest earliest-authority hardening under decision 0093. The first bridge slices admit known actor-parameter and endpoint cardinality before configuration type/value or endpoint width/type/record normalization; RED t1694/t1695 prove invalid 4,097th members cannot mask either exact collection diagnostic, return no manifest/report, and freeze accepted 256-record manifest identities. t1551/t1602/t1685 retain the public bridge, selected matrix, and machine-policy contracts; execution and later leaves remain proposed.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: activate bridge cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit configurations before normalization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit endpoints before normalization`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4`
   Status: `proposed`
   Goal: `Enforce the selected execution-graph resource caps before avoidable graph, random, source-map, or plan materialization.`
@@ -7819,3 +7819,18 @@ The completed node records above and their named Git commits remain the canonica
   syntax clean, and all mdBook chapters test. Knowledge Map, claim, task,
   locality, containment, staged acceptance, diff, and complete doctrine gates
   close the slice; full CI/push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.3` endpoint admission
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_validate_limits' --oneline --
+  perl/FSM/HIAL/VIALBridge/Builder.pm` retains original terminal commit
+  `51434a2ae`. The builder validates every interface width and constructs every
+  endpoint/type before admitting the already-known endpoint cardinality.
+- [x] **ADDRESSED (verified)** — RED t1695 reports `Failed 4/13` because the
+  invalid overflowing width wins. Raw clock/reset/interface cardinality now
+  precedes endpoint width/type/record work; terminal defense, atomic failure,
+  exact diagnostic, and accepted endpoint manifest identity remain intact.
+- [x] **NO REGRESSION** — Focused bridge/policy/order coverage reports
+  `Files=5, Tests=68`; modules/t1695 are syntax clean and every mdBook chapter
+  tests. Claims, Knowledge Map, containment, staged acceptance, diff, and all
+  doctrines pass; full CI/push remain deferred by policy.

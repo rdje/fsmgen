@@ -486,6 +486,11 @@ sub _build_semantic_model($actor, $layer, $backend_names, $sources, $artifacts,
     _validate_collection_count(
         'configurations', scalar(@{$actor->{params} || []}),
     );
+    _validate_collection_count(
+        'endpoints',
+        2 + scalar(@{$actor->{interface}{inputs} || []})
+            + scalar(@{$actor->{interface}{outputs} || []}),
+    );
     my $domain_name = $bridge ? $bridge->{domain} : 'default';
     my $domain_id = "domain/$domain_name";
     my (%types_by_key, @types, @endpoints);

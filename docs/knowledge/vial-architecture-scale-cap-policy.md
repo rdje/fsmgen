@@ -27,6 +27,7 @@ evidence: >-
   t/1692-vial-semantic-type-shape-cap-order.t;
   perl/FSM/HIAL/VIALBridge/Builder.pm;
   t/1694-hial-vial-bridge-configuration-cap-order.t;
+  t/1695-hial-vial-bridge-endpoint-cap-order.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -40,6 +41,7 @@ reverify: >-
   t/1691-vial-semantic-cross-max-bins-order.t
   t/1692-vial-semantic-type-shape-cap-order.t
   t/1694-hial-vial-bridge-configuration-cap-order.t
+  t/1695-hial-vial-bridge-endpoint-cap-order.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -91,6 +93,9 @@ The bridge admits actor-parameter cardinality against the 4,096-configuration
 ceiling before type creation or arbitrary-width value normalization. A malformed
 overflowing parameter therefore cannot mask the established collection limit;
 the terminal whole-manifest defense and accepted manifest bytes remain intact.
+Endpoint cardinality is likewise admitted from the clock, reset, and interface
+collections before any individual endpoint width is validated or its type and
+normalized endpoint record are constructed.
 
 The guarded exact semantic-catalog matrix now closes every selected
 qualification, boundary, excess, and declared cap interaction through the
