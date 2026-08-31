@@ -76,7 +76,7 @@ my @OSVVM_REPORT_NAMES = qw(
     AlertLogTop_sb_slv.yml
 );
 my @VALIDATION_KEYS = qw(
-    expected_record_counts expected_fixture_id expected_plan_id
+    expected_record_counts expected_domain_id expected_fixture_id expected_plan_id
     expected_random_decisions_sha256 expected_run_ids
     expected_observation_catalog run_repetitions
 );
@@ -718,6 +718,10 @@ sub _validated_validation($raw) {
         $probe->{diagnostics}[0]{message}, '/validation')
         if $probe->{diagnostics}[0]{code} =~ /(?:INVOCATION|SHAPE|CATALOG)/;
     _throw('VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
+        'GHDL expected domain identity is not one bounded safe identity',
+        '/validation/expected_domain_id')
+        unless _runtime_result_identity($raw->{expected_domain_id});
+    _throw('VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
         'GHDL expected fixture identity is not one bounded safe identity',
         '/validation/expected_fixture_id')
         unless _runtime_result_identity($raw->{expected_fixture_id});
@@ -1150,7 +1154,9 @@ sub _phase_result_produced($session) {
         $session->{validation}{expected_run_ids},
     );
     _validate_runtime_result_shapes($decoded);
-    _validate_runtime_result_scenario_values($decoded);
+    _validate_runtime_result_scenario_values(
+        $decoded, $session->{validation}{expected_domain_id},
+    );
     _validate_runtime_result_outcome_values(
         $decoded, $session->{validation}{expected_observation_catalog},
     );
@@ -1647,7 +1653,7 @@ sub _require_runtime_result_exact($actual, $expected, $path, $label) {
     return;
 }
 
-sub _validate_runtime_result_scenario_values($decoded) {
+sub _validate_runtime_result_scenario_values($decoded, $expected_domain_id) {
     my $time_keys = FSM::VIAL::Backend::ResultProducer->logical_time_keys;
     for my $index (0 .. $#{$decoded->{scenario_results}}) {
         my $entry = $decoded->{scenario_results}[$index];
@@ -1666,6 +1672,10 @@ sub _validate_runtime_result_scenario_values($decoded) {
                 'GHDL runtime scenario domain identity is unsafe',
                 "$path/$time_name/domain_id")
                 unless _runtime_result_identity($time->{domain_id});
+            _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+                'GHDL runtime scenario domain differs from plan authority',
+                "$path/$time_name/domain_id")
+                unless $time->{domain_id} eq $expected_domain_id;
             _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
                 'GHDL runtime scenario cycle is not a nonnegative integer',
                 "$path/$time_name/cycle")

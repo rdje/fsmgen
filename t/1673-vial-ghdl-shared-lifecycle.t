@@ -69,7 +69,18 @@ my $supervisor_unsealed = eval {
 };
 ok(!$supervisor_unsealed, 'common production process supervisor is caller-sealed');
 
-subtest 'result fixture and decision authorities are sealed at admission' => sub {
+subtest 'result plan-value authorities are sealed at admission' => sub {
+    my $domain_request = fake_request('malformed-result-domain-authority');
+    $domain_request->{validation}{expected_domain_id} = "domain/bad\n";
+    my $domain = lifecycle_begin($domain_request);
+    ok(!$domain->{ok}, 'malformed domain authority rejects');
+    is($domain->{diagnostics}[0]{path},
+        '/validation/expected_domain_id',
+        'malformed domain authority has the exact path');
+    ok(!-e repo_path(
+            $domain_request->{storage_context}{staging_identity},
+        ), 'malformed domain authority creates no lifecycle root');
+
     my $fixture_request = fake_request('foreign-result-fixture-authority');
     $fixture_request->{validation}{expected_fixture_id} = 'fixture/foreign';
     my $fixture = lifecycle_begin($fixture_request);

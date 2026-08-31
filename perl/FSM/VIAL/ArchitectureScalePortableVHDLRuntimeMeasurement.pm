@@ -651,6 +651,7 @@ sub _lifecycle_request($raw, $authority, $context) {
             expected_record_counts => _clone(
                 $raw->{materialization}{trace_projection}{record_families},
             ),
+            expected_domain_id => $execution->{domains}[0]{domain_id},
             expected_fixture_id => $execution->{fixture}{fixture_id},
             expected_plan_id => $execution->{plan_id},
             expected_random_decisions_sha256 =>

@@ -40,6 +40,9 @@ subtest 'checked lifecycle result authority is derived from the canonical plan' 
     is($authority->{expected_fixture_id},
         $execution->{fixture}{fixture_id},
         'checked fixture identity equals the selected plan fixture');
+    is($authority->{expected_domain_id},
+        $execution->{domains}[0]{domain_id},
+        'checked domain identity equals the selected plan domain');
     is($authority->{expected_random_decisions_sha256},
         sha256_hex($json->encode($execution->{randomness}{decisions})),
         'checked decision digest covers the exact canonical plan projection');

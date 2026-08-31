@@ -18,6 +18,7 @@ use FSM::VIAL::Backend::VHDLResultSchema;
 my $json = JSON::PP->new->canonical(1);
 my $expected_plan_id = 'plan/' . ('a' x 64);
 my $expected_fixture_id = 'fixture/reference';
+my $expected_domain_id = 'domain/main';
 my @scenario_id = qw(fixture::scenario::one fixture::scenario::two);
 my @expected_run_id = map { "run/$expected_plan_id/$_" } @scenario_id;
 my $manifest = {map { $_ => undef }
@@ -403,6 +404,15 @@ subtest 'scenario values obey the shared passing-result contract' => sub {
         '/result_produced/scenario_results/0/end_time/domain_id',
         'end domain must equal the scenario start domain');
 
+    my $foreign_domain = clone($manifest);
+    $foreign_domain->{scenario_results}[0]{start_time}{domain_id} =
+        'domain/foreign';
+    $foreign_domain->{scenario_results}[0]{end_time}{domain_id} =
+        'domain/foreign';
+    is(value_failure($foreign_domain)->{path},
+        '/result_produced/scenario_results/0/start_time/domain_id',
+        'internally consistent foreign domain rejects against plan authority');
+
     my $late_start = clone($manifest);
     $late_start->{scenario_results}[0]{start_time}{cycle} = 1;
     is(value_failure($late_start)->{path},
@@ -740,7 +750,7 @@ sub shape_failure {
 
 sub validate_scenario_values {
     FSM::VIAL::Backend::GHDLLifecycle::_validate_runtime_result_scenario_values(
-        $_[0],
+        $_[0], $expected_domain_id,
     );
 }
 

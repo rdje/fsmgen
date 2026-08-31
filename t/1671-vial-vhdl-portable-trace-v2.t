@@ -40,7 +40,7 @@ my $catalog = {
 my $checked_authority =
     FSM::VIAL::Backend::VHDLPortableTraceValidator->checked_reference_authority;
 is_deeply([sort keys %$checked_authority], [sort qw(
-    expected_fixture_id expected_observation_catalog expected_plan_id
+    expected_domain_id expected_fixture_id expected_observation_catalog expected_plan_id
     expected_random_decisions_sha256 expected_run_ids
 )], 'checked reference authority has one closed caller contract');
 is($checked_authority->{expected_plan_id},
@@ -52,6 +52,8 @@ is($checked_authority->{expected_observation_catalog}{catalog_digest},
 is($checked_authority->{expected_fixture_id},
     'ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration',
     'checked reference authority retains the selected fixture identity');
+is($checked_authority->{expected_domain_id}, 'domain/ahb_bus',
+    'checked reference authority retains the selected plan domain identity');
 is($checked_authority->{expected_random_decisions_sha256},
     'eae7108383c875bde35ef072e5762ac9923996a69bcd6c455ae6cc5bfab9c0e2',
     'checked reference authority retains the canonical decision projection');
@@ -59,6 +61,7 @@ my $checked_snapshot = clone($checked_authority);
 $checked_authority->{expected_plan_id} = 'plan/mutated';
 $checked_authority->{expected_run_ids}[0] = 'run/mutated';
 $checked_authority->{expected_fixture_id} = 'fixture/mutated';
+$checked_authority->{expected_domain_id} = 'domain/mutated';
 is_deeply(
     FSM::VIAL::Backend::VHDLPortableTraceValidator->checked_reference_authority,
     $checked_snapshot,

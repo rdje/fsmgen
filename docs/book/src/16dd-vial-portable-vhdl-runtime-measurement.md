@@ -237,7 +237,11 @@ of canonical plan-owned random decisions. Fixed qualification authority is
 independently reproduced from the canonical plan; dynamic measurement callers
 derive both from ExecutionIR. A foreign fixture or any decision-projection
 mutation rejects before persistence without copying the nested decision object
-into lifecycle state. The portable-VHDL producer emits no scenario-owned
+into lifecycle state. The authority also seals the plan's single logical-time
+domain: both scenario timestamp domains must equal it, so even an internally
+consistent foreign start/end pair rejects. Fixed qualification reproduces that
+domain from the canonical plan, while dynamic callers select it from ExecutionIR.
+The portable-VHDL producer emits no scenario-owned
 expectation, diagnostic, or cancelled-fiber records, so each matching identity
 projection must be exactly `[]`; any non-empty array rejects at its collection
 path. This restriction is VHDL-projection-specific: trace-backed result
