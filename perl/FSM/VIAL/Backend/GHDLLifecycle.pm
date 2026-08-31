@@ -752,9 +752,29 @@ sub _begin($session) {
     };
     unless ($ok) {
         my $error = $@;
-        if ($created && -d $session->{stage_abs} && !-l $session->{stage_abs}) {
-            my $errors;
-            remove_tree($session->{stage_abs}, {error => \$errors});
+        if ($created) {
+            my ($errors, $removed);
+            if (-d $session->{stage_abs} && !-l $session->{stage_abs}) {
+                remove_tree($session->{stage_abs}, {error => \$errors});
+                $removed = !($errors && @$errors)
+                    && !-e $session->{stage_abs}
+                    && !-l $session->{stage_abs};
+            }
+            else {
+                $removed = !-e $session->{stage_abs}
+                    && !-l $session->{stage_abs};
+            }
+            $session->{failure_cleanup} = {
+                removed => $removed
+                    ? JSON::PP::true : JSON::PP::false,
+                residue => $removed ? [] : [$session->{stage_rel}],
+            };
+            $error = bless {
+                code => 'VIAL_GHDL_LIFECYCLE_CLEANUP_ERROR',
+                message => 'GHDL lifecycle admission cleanup failed',
+                path => '/cleanup',
+            }, 'FSM::VIAL::Backend::GHDLLifecycle::Failure'
+                unless $removed;
         }
         die $error;
     }
@@ -1922,7 +1942,8 @@ sub _exception($error, $session) {
             && $error->isa('FSM::VIAL::Backend::GHDLLifecycle::Failure')) {
         ($code, $message, $path) = @{$error}{qw(code message path)};
     }
-    my $cleanup;
+    my $cleanup = defined($session)
+        ? $session->{failure_cleanup} : undef;
     if (defined($session) && $session->{cleanup_on_error}
             && _owner_matches($session)) {
         my $removed = eval { _remove_owned_root($session); 1 };

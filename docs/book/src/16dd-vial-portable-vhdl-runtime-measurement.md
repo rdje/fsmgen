@@ -190,8 +190,17 @@ staging identity as residue. It does not hide the integrity failure behind the
 earlier timeout or execution diagnostic. When cleanup succeeds, the original
 phase diagnostic remains authoritative and the residue list is empty.
 
+Admission uses the same rule even before an owner marker exists. The lifecycle
+knows it created an absent repository-local root, so a later owner/state write
+failure carries the direct removal outcome into the failure result. Successful
+removal reports `removed=true`. Removal error, path replacement, or retained
+content reports the cleanup diagnostic and the exact staging identity as
+residue; it never claims proof from an owner file that may not have been
+written.
+
 ```sh
 prove -Iperl t/1725-vial-ghdl-cleanup-diagnostic-authority.t \
+  t/1726-vial-ghdl-admission-cleanup-evidence.t \
   t/1673-vial-ghdl-shared-lifecycle.t \
   t/1678-vial-ghdl-provider-aware-lifecycle.t
 ```

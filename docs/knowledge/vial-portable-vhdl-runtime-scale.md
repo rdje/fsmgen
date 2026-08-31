@@ -34,6 +34,7 @@ evidence: >-
   t/1672-vial-architecture-scale-portable-vhdl-runtime-materialization.t;
   t/1673-vial-ghdl-shared-lifecycle.t;
   t/1725-vial-ghdl-cleanup-diagnostic-authority.t;
+  t/1726-vial-ghdl-admission-cleanup-evidence.t;
   t/1674-vial-architecture-scale-portable-vhdl-runtime-measurement.t;
   t/1675-vial-architecture-scale-portable-vhdl-runtime-measurement-matrix.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
@@ -43,6 +44,7 @@ reverify: >-
   t/1664-vial-verilator-shared-lifecycle.t
   t/1673-vial-ghdl-shared-lifecycle.t
   t/1725-vial-ghdl-cleanup-diagnostic-authority.t
+  t/1726-vial-ghdl-admission-cleanup-evidence.t
   t/1675-vial-architecture-scale-portable-vhdl-runtime-measurement-matrix.t &&
   scripts/run_with_ram_guard.sh --
   scripts/run_vial_portable_vhdl_runtime_measurement_matrix.pl --validate &&
@@ -94,6 +96,17 @@ fallback for unexpected host exceptions. Successful cleanup still preserves
 the original timeout/execution diagnostic and reports zero residue. This
 changes no GHDL command, deadline, capture ceiling, accepted output, provider
 role, or scale claim.
+
+Admission cleanup is exact before an owner marker exists. The lifecycle
+directly remembers whether it removed the absent root it just created after a
+later admission write failed. Successful removal retains the triggering
+diagnostic and reports removal with zero residue; removal failure becomes the
+cleanup diagnostic with the exact residual staging identity. This authority
+does not infer ownership from an owner file that may not yet have been written.
+Repeated adjacent lifecycle-suite runs also exposed intermittent exact-deadline
+timeouts in newly compiled fake-provider version probes; identical reruns pass,
+but `.17.4.7` retains that instability as its next diagnosis rather than
+widening the ten-second product deadline.
 
 The guarded exact adapter accepts one 77-record reference validation, one gate
 validation plus three retained 10,000-record measurements, and one

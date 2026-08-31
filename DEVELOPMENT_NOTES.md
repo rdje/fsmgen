@@ -1157,3 +1157,16 @@ sanitized cleanup error. It retains the triggering phase diagnostic only when
 cleanup succeeds. This matches the portable-SystemVerilog lifecycle's
 authority rule without sharing profile-specific codes, and changes no process
 policy or successful execution.
+
+## 2026-08-31: Admission cleanup evidence precedes the owner marker
+
+Lifecycle admission has a short interval after creating an absent staging root
+but before atomically writing its owner marker. A failure in that interval
+cannot use the normal marker-based cleanup proof, yet the admission operation
+still has exact direct knowledge that it created the root.
+
+The admission catch therefore records the outcome of removing that newly
+created root and passes it to the common failure formatter. It reports success
+only when the path is absent after an error-free removal; any error, path
+replacement, or residue promotes cleanup as the primary diagnostic. Later
+resume/advance failures continue to use the stronger persisted owner proof.
