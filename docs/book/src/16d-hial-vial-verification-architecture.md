@@ -2511,8 +2511,8 @@ semantic-catalog matrix accepts or rejects every selected qualification,
 boundary, and excess level through its canonical oracle. Focused precedence
 witnesses cover each selected cap group, and the literal-repeat/action
 interaction retains its explicitly reported earlier authority. Bridge-cap
-hardening is complete, execution-graph hardening is now active, and later
-layers remain separate work and gain no claim from either activation.
+hardening, execution-graph hardening, and checking-state hardening are complete.
+Backend-emission hardening is now active; later layers remain separate work.
 
 ### Source-byte cap admission order
 
@@ -3089,8 +3089,8 @@ Serialized-manifest bytes deliberately remain terminal: canonical encoding is
 the exact authority, with boundary acceptance and adjacent excess both frozen.
 The RAM-guarded exact bridge matrix closes every selected bridge qualification,
 limit, excess, identity, interaction, atomicity, staging, and cleanup contract.
-Execution-graph cap hardening is complete; checking-state cap hardening is now
-active. The transition changes no product behavior or selected matrix level.
+Execution-graph and checking-state cap hardening are complete; backend-emission
+cap hardening is now active. No product behavior or matrix level changes.
 
 ### Execution-profile admission order
 

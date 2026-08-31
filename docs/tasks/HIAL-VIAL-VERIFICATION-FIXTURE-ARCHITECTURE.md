@@ -857,13 +857,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Goal: `Enforce the selected checking-state resource caps before avoidable state-service materialization.`
   Acceptance: `Implement only the .17.4.1-selected checking contract for models, scalar cells, scoreboards and capacity, coverage, faults, and random occurrences. Preserve exact accepted checking semantics and replay while proving earliest deterministic rejection, no partial checking result, bounded construction, and guarded checking_state_v1 boundaries.`
   Verification: `Commit f49dd3e99 completes all selected compact preflights with terminal defenses and stable accepted plans. Guarded exact t1630-t1634 passes every checking boundary at Files=5/Tests=28 in 561 seconds; .17.4.5 is exhausted.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: activate checking cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight model cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight scoreboard cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight coverage cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight fault cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight random occurrence cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: close checking cap hardening`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: activate checking cap hardening; same work-unit: preflight model, scoreboard, coverage, fault, and random-occurrence cardinality; same work-unit: close checking cap hardening`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6`
-  Status: `proposed`
+  Status: `active`
   Goal: `Enforce the selected backend-emission resource caps before partial artifact publication.`
   Acceptance: `Implement only the .17.4.1-selected profile-specific generated-byte, artifact, and source-map boundaries for portable SystemVerilog, portable VHDL, OSVVM, and native-UVM emission. Reject before final artifact graphs or provider/tool use when authority is already known; preserve accepted artifact bytes, ordering, identities, provider boundaries, atomic staging, and backend nonclaims.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean df5129126 closes .17.4.5. Decisions 0093/0075 confine this activation to four profile-local pure emitters; portable-SystemVerilog byte/map admission is next. No behavior changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6: activate backend-emission cap hardening`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
   Status: `proposed`
   Goal: `Enforce the selected runtime-stream, transcript, trace, result, timeout, and external-tool envelopes through the shared lifecycle.`
@@ -7791,8 +7791,8 @@ The completed node records above and their named Git commits remain the canonica
 - [x] **ADDRESSED (verified)** — t1624/t1625 prove both compact preflights, stable outcomes, and retained terminal checks.
 - [x] **NO REGRESSION** — Focused coverage passed `Files=7, Tests=75`; docs and doctrines passed; full CI/push remain deferred.
 
-## Acceptance Checklist (enforced) — `.17.4.5` closure
+## Acceptance Checklist (enforced) — `.17.4.6` bounded activation
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Files=5/Tests=27' --oneline -- docs/book/src/16d-hial-vial-verification-architecture.md` identifies `74cc7c7f6`; the fresh exact run changed that governed claim identity.
-- [x] **ADDRESSED (verified)** — The guarded matrix passes every selected checking boundary at `Files=5, Tests=28` in 561 seconds. Task/index/Memory, the mdBook result, and its claim disposition now agree.
-- [x] **NO REGRESSION** — Exact proof reports `All tests successful` at `Files=5, Tests=28`; every book chapter, task integrity, claims, containment, staged diff, and doctrines pass. Full CI/push remain deferred.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'backend_artifact_graph' --oneline -- perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` identifies `951720257`; decision `0093` assigns profile-local emission hardening to `.17.4.6`.
+- [x] **ADDRESSED (verified)** — Only `.17.4.6` is active; task/index/Memory and mdBook select portable-SystemVerilog byte/map admission next. No product code changed.
+- [x] **NO REGRESSION** — Policy t1685 reports `All tests successful` at `Files=1, Tests=76`; every book chapter, Knowledge Map, claims, task integrity, containment, staged diff, and doctrines pass. Full CI/push remain deferred.
