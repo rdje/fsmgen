@@ -827,9 +827,59 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9.2: activate measured-family closure publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9.2: implement measured-family closure publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9.2: seal measured-family closure publication`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement and prove explicit architecture resource caps and graceful bounded failure.`
   Acceptance: `Apply the selected caps at the earliest authoritative stages with deterministic diagnostics, atomic no-partial-output behavior, same-volume cleanup, boundary/over-bound tests, and unchanged accepted-profile semantics; host exhaustion and external-tool crashes are not accepted as product limit enforcement.`
+  Verification: `Clean predecessor b441e7a8b closes measured-family publication before this pivot. Query-first audit of decisions 0056/0059/0072, the immutable calibration closure, current contracts/builders, focused tests, and Git history separates limit interaction, measured route-boundary, and preflight-dominance evidence. The work is partitioned by authoritative stage so policy selection cannot be hidden inside a mechanism repair and accepted measurement levels remain unchanged until .17.4.1 selects the cross-layer contract. No parser, IR, bridge, execution, backend, runtime, support, capacity, budget, or public-API behavior changes in activation.`
+  Commit: `pending activation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.1`
+  Status: `active`
+  Goal: `Select the reconciled cross-layer architecture resource-cap and bounded-failure contract from immutable evidence before changing enforcement.`
+  Acceptance: `Inventory every selected semantic/parser, bridge, execution, checking, backend-emission, runtime-stream, transcript, result, timeout, publication, and cleanup boundary against its declared contract, actual earliest decider, diagnostic/path, construction order, atomicity, and existing boundary proof. Resolve every unreachable or dominated declared cap under decisions 0056 and 0072; choose deliberate layering, a higher lower-layer limit, or a lower public declaration with explicit compatibility and rollback analysis. Preserve selected workload levels and all support/capacity/performance nonclaims. Record the selection in a decision, Knowledge Map, mdBook, task evidence, and focused executable contract tests without changing product behavior.`
+  Verification: `pending`
+  Commit: `pending activation`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2`
+  Status: `proposed`
+  Goal: `Enforce the selected source, parser, and SemanticIR resource caps at their earliest authoritative stages.`
+  Acceptance: `Implement only the .17.4.1-selected semantic/parser contract; reject boundary excess before dependent expansion with stable diagnostics and paths, unchanged accepted SemanticIR, and no partial result or residue. Prove every semantic_catalog_v1 boundary and interaction, including literal-repeat versus expanded-action dominance, with focused default and guarded exact tests.`
+  Verification: `pending`
+  Commit: `pending activation`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3`
+  Status: `proposed`
+  Goal: `Enforce the selected HIAL-to-VIAL bridge resource caps before avoidable manifest materialization.`
+  Acceptance: `Implement only the .17.4.1-selected bridge contract; count bounded normalized families at the earliest reliable producer points, retain terminal defenses, and reject structural or serialized-manifest excess with deterministic diagnostics, no manifest/report, and exact cleanup. Prove every bridge_fanout_v1 boundary without changing accepted manifests or public route semantics.`
+  Verification: `pending`
+  Commit: `pending activation`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4`
+  Status: `proposed`
+  Goal: `Enforce the selected execution-graph resource caps before avoidable graph, random, source-map, or plan materialization.`
+  Acceptance: `Implement only the .17.4.1-selected execution contract; preserve the existing compact total-operation and serialized-plan preflights, repair remaining late checks, and reconcile binding/type/map limits with lower bridge and byte authorities. Prove deterministic diagnostics, no partial ExecutionIR/plan/replay, unchanged accepted plans, and guarded execution_graph_v1 boundaries.`
+  Verification: `pending`
+  Commit: `pending activation`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5`
+  Status: `proposed`
+  Goal: `Enforce the selected checking-state resource caps before avoidable state-service materialization.`
+  Acceptance: `Implement only the .17.4.1-selected checking contract for models, scalar cells, scoreboards and capacity, coverage, faults, and random occurrences. Preserve exact accepted checking semantics and replay while proving earliest deterministic rejection, no partial checking result, bounded construction, and guarded checking_state_v1 boundaries.`
+  Verification: `pending`
+  Commit: `pending activation`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6`
+  Status: `proposed`
+  Goal: `Enforce the selected backend-emission resource caps before partial artifact publication.`
+  Acceptance: `Implement only the .17.4.1-selected profile-specific generated-byte, artifact, and source-map boundaries for portable SystemVerilog, portable VHDL, OSVVM, and native-UVM emission. Reject before final artifact graphs or provider/tool use when authority is already known; preserve accepted artifact bytes, ordering, identities, provider boundaries, atomic staging, and backend nonclaims.`
+  Verification: `pending`
+  Commit: `pending activation`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
+  Status: `proposed`
+  Goal: `Enforce the selected runtime-stream, transcript, trace, result, timeout, and external-tool envelopes through the shared lifecycle.`
+  Acceptance: `Implement only the .17.4.1-selected runtime contract; preflight known structural and complete-graph excess before tool eligibility, bound compile/run capture and time, validate trace/result record and byte ceilings, and withhold partial public graphs. Preserve accepted runtime semantics, qualified tool profiles, shared same-volume lifecycle, stable sanitized diagnostics, and exact success/failure cleanup.`
+  Verification: `pending`
+  Commit: `pending activation`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8`
+  Status: `proposed`
+  Goal: `Prove cross-family cap consistency, atomic failure, cleanup, and durable closeout before promotion.`
+  Acceptance: `Independently enumerate every selected cap and owning stage; require boundary and adjacent excess evidence, stable diagnostic family/path/requested/allowed data where safe, no partial final output, no external-tool invocation behind known excess, exact repository-local cleanup, and unchanged accepted-profile identities. Revalidate all immutable calibration publications or version them explicitly after intentional behavior changes, synchronize task/decision/Knowledge Map/mdBook truth, and close .17.4 without promoting budgets, support, or capacity.`
   Verification: `pending`
   Commit: `pending activation`
 
@@ -7538,50 +7588,18 @@ identity and exact report sizes/hashes remain in `.17.3.5.5.2.2.2`.
   or materializer staging residue. Per policy, full CI and push remain deferred
   to the batch boundary.
 
-## Acceptance Checklist (enforced) — `.17.3.7.4` measurement implementation
+## Compact acceptance history — `.17.3.7.4` through `.17.3.8.2`
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Portable origin `e7203c278` owns six sources/one top, but no OSVVM measurement owner reconstructs the committed provider verification, 61 analyses, seven generated sources plus probe, dual tops/runs, four reports, and provider-aware cleanup.
-- [x] **ADDRESSED (verified)** — The exact adapter reconstructs authored route/materialization/plan authority per worker, runs the 68-source lifecycle, retains provider/generated commands, reports, trace/result and post-provider identity, and cleans both roots. Reference validates once; gate/qualification add three/five measurements; limit/excess remain preflight-only.
-- [x] **NO REGRESSION** — Guarded t1679 passes `Files=1, Tests=8`/305 sub-assertions in 2,041 seconds across eleven exact 77/10,000/100,000-record captures; impact passes `Files=9, Tests=50`/254 seconds and inventory `Files=1, Tests=12`. All 57 chapters, removed 93-file/20,116,994-byte render, Knowledge Map `1,155/6,128/6,300/136`, claims `1,638/129/916/593/0`, containment, task, locality, cleanup, staged acceptance, resulting-tree, diff, and doctrines pass; full CI/push remain deferred.
-
-## Acceptance Checklist (enforced) — `.17.3.7.5` publication implementation
-
-- [x] **ROOT CAUSE (WHY + WHERE; executable RED)** — t1680 first finds no OSVVM matrix; history locates incompatible portable publishers. t1678 also isolates an unsigned external-APFS fake-GHDL startup hang that explicit Darwin ad-hoc signing removes.
-- [x] **ADDRESSED (verified)** — The exact publisher derives five roles, publishes raw reports before bounded IPC, binds one clean revision/host/provider/tool/guard tuple, and rejects profile, identity, process, path, size, collision, and staging drift. Only t1678's fake provider is signed; production is unchanged.
-- [x] **NO REGRESSION** — Syntax and the five-layer chain pass `Files=5, Tests=30` in 144 seconds; all 57 book chapters and the removed 93-file/20,149,201-byte render pass. Knowledge Map, task, claims (`1,640/131/916/593/0`), containment, locality, cleanup, staged acceptance, resulting-tree, diff, and doctrines pass; exact capture, full CI, and push remain deferred.
-
-## Acceptance Checklist (enforced) — `.17.3.7.5` publication seal
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Clean `ef10332d6` implements the publisher, but the empty-namespace census proves no immutable evidence exists until guarded capture and distinct reload.
-- [x] **ADDRESSED (verified)** — Exact t1680 passes `Files=1, Tests=8` in 2,974 seconds from `ef10332d6610df717de1471d12d3a8f0a678aebf`; separate `--validate` returns `osvvm-runtime-matrix/5429888419a848d28ff4250833e6bd60e31d583d3054a7929d1df3e21420e219`. Independent census seals seven files/6,105,680 bytes, five roles, three validations, eight raw/zero excluded records, two preflights, eleven cleanups, zero residue, and one provider/GHDL/M4 Pro/APFS/guard identity.
-- [x] **NO REGRESSION** — Publications stay repository-local with no staging residue and clean Git. Default t1680, all 57 chapters, the removed 93-file/20,192,752-byte render, Knowledge Map, claims (`1,655/146/916/593/0`), containment, task, memory, path, locality, cleanup, staged acceptance, resulting-tree, diff, and doctrines pass; no code/product claim changes, full CI, or push.
-
-## Acceptance Checklist (enforced) — `.17.3.8` balanced measurement activation
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'ArchitectureScaleBalancedPortable' -- perl scripts t` finds the completed private revision-2 structural composer/emitter/qualifier but no balanced measurement or publication owner; runtime stages remain inapplicable.
-- [x] **ADDRESSED (verified)** — Clean OSVVM seal `9fde163ae` activates only `.17.3.8`, ordered as `.1` common-controller structural measurement then `.2` immutable publication/reload, without admitting external execution.
-- [x] **NO REGRESSION** — Guarded impact passes `Files=3, Tests=12`/1,805 seconds; all 57 chapters, removed 93-file render, Knowledge Map, claims, containment, task, locality, cleanup, staged acceptance, resulting-tree, diff, and doctrines pass. No product/runtime/budget/capacity/support/API claim changes; full CI/push remain deferred.
-
-## Acceptance Checklist (enforced) — `.17.3.8.1` balanced measurement implementation
-
-- [x] **ROOT CAUSE (WHY + WHERE; executable RED)** — t1681 first finds no adapter; guarded attempts then locate duplicated prerequisite work at bridge and repeated public composition at emit as the 120/300-second timeout causes.
-- [x] **ADDRESSED (verified)** — The exact adapter seals one producer-owned member/six fresh gates once, isolates only structural stages, retains validation plus three raw records, and rejects caller evidence; producer seams remove both duplicated costs without changing public evaluation.
-- [x] **NO REGRESSION** — Guarded exact t1681 passes `Files=1, Tests=5`/3,545 seconds; guarded public impact passes `Files=4, Tests=17`/1,672 seconds. Syntax, all 57 chapters, removed render, Knowledge Map, claims, containment, task, locality, cleanup, staged acceptance, resulting-tree, diff, and `[doctrine] all doctrine checks passed`; publication/full CI/push remain deferred.
-
-## Acceptance Checklist (enforced) — `.17.3.8.2` publication implementation
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Knowledge Map and `git log -S'BalancedPortableMeasurementMatrix' -- perl scripts t` find no predecessor; other matrices have incompatible producer/report/tool/namespace contracts.
-- [x] **ADDRESSED (verified)** — The exact publisher/runner/watcher isolate the one role, publish raw evidence before bounded IPC, atomically seal three layers, and reject identity/process/path/size/collision/staging drift; capture remains separately owned.
-- [x] **NO REGRESSION** — Syntax/default impact passes `Files=3, Tests=19`; all 57 chapters, removed render, Knowledge Map, claims, containment, task, locality, cleanup, staged acceptance, resulting-tree, diff, and doctrines pass; exact capture/full CI/push remain deferred.
-
-## Acceptance Checklist (enforced) — `.17.3.8.2` publication seal
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'BalancedPortableMeasurementMatrix' -- perl scripts t` names clean `118b3bfb6`, while the pre-capture `find` census is empty; the immutable claim requires capture plus fresh reload.
-- [x] **ADDRESSED (verified)** — Exact t1682 passes `Files=1, Tests=6`/5,575 seconds and fresh reload returns `balanced-portable-matrix/d0619d4cce4d8eebb6b486d70bc41368d9d5f379ce54f87c6843f931ca462900`; the three-file/1,280,699-byte set retains exact hashes, validation/raw/exclusion/applicability/cleanup identity, and zero residue.
-- [x] **NO REGRESSION** — Default t1682, all 57 chapters, removed render, Knowledge Map, claims, containment, task, path/locality, cleanup, staged acceptance, resulting-tree, diff, and doctrines pass; the t1594 registry typo is repaired. No product/performance/capacity/support/runtime/API claim changes; full CI/push remain deferred.
+The completed node records above and their named Git commits remain the canonical measurement, publication, exact-capture, reload, regression, and cleanup evidence. Their superseded fresh-index checklist copies are compacted after closure; `git log --grep='HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.[78]'` recovers every exact version.
 
 ## Acceptance Checklist (enforced) — `.17.3.9.2` closure-publication seal
 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'CalibrationClosurePublication' -- perl scripts t` names clean implementation `b66de5ce6`, but the immutable publication claim requires a guarded exact derivation, atomic two-file capture, and distinct fresh-process reload rather than the pre-commit read-only corpus replay.
 - [x] **ADDRESSED (verified)** — Guarded exact t1684 passes `Files=1, Tests=6` in 7,353 seconds and fresh reload returns `calibration-closure-publication/1316d11a6dfa008515fcb23aa132e30a72e7961d9e9e6eeba82ae0bf42546ac8`. Independent same-device census seals exactly two files/1,376,483 bytes with report SHA-256 `1a060b166d6b7d88582ee1fec9ae0f255fc3859ef16918227670e095b99e10e0`, manifest SHA-256 `ae5c11ac9848f47bfe3f06905f7a059399e07f25c827dd85b900896c14d175ef`, zero staging residue, and clean Git.
 - [x] **NO REGRESSION** — Default and exact t1684 report `All tests successful` at `Files=1, Tests=6`; mdBook, Knowledge Map, claims, containment, task integrity, locality, staged acceptance/resulting tree, diff, and doctrines pass before commit. The seven-authority/nine-family/216-profile/356-raw/zero-exclusion closure and every budget/capacity/support/API nonclaim remain unchanged; full CI/push remain deferred.
+
+## Acceptance Checklist (enforced) — `.17.4` activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4' -- perl t docs` finds only producer-time discrepancy routing and no activated cross-layer selection/enforcement owner; decisions `0056` and `0072` require the policy choice before mechanism repair.
+- [x] **ADDRESSED (verified)** — `.17.4` is active with `.1` selecting declared-versus-earliest authority and `.2`-`.8` separately owning semantic/parser, bridge, execution, checking, backend, runtime/result, and cross-family atomicity work; the mdBook and bounded resume/index pointers match and no product behavior changes.
+- [x] **NO REGRESSION** — `mdbook test docs/book` passes all chapters; task integrity reports the active `.17.4.1` frontier; Knowledge Map, claim inventory/dispositions, maintained-reference authority, and live containment are current; `[doctrine] all doctrine checks passed`. No parser, IR, bridge, execution, backend, runtime, support, budget, capacity, or API behavior changes.

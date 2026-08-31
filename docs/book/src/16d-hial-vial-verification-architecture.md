@@ -2958,10 +2958,10 @@ stage identity, and records both a `VIAL_SCALE_LIMIT_INTERACTION` and a
 `VIAL_SCALE_ROUTE_BOUNDARY` routed to `.17.4` — the same shape
 `preflight_dominated` already uses for a level that is deliberately not run.
 
-The cap inconsistency itself belongs to `.17.4`, which owns explicit architecture
-resource caps and graceful bounded failure, and which will decide whether the
-execution caps come down to what the stack reaches, the lower layers go up, or
-the layering is documented as deliberate.
+Cap hardening is now active under `.17.4`. Its first leaf reconciles the closed
+measurement evidence with parser/semantic, bridge, execution/checking, backend,
+and runtime/result authorities before any cap change; later leaves own those
+layers separately, while decision `0072` forbids hiding an unreachable declared cap by rewriting selected measurement levels.
 
 The binding ladder is the first axis authored under that rule. Its three levels
 above the gate generate 1,933,429, 3,866,741, and 3,866,800 direct-IAL1 bytes —
