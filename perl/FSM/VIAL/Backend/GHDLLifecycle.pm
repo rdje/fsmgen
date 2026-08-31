@@ -1926,6 +1926,22 @@ sub _exception($error, $session) {
     if (defined($session) && $session->{cleanup_on_error}
             && _owner_matches($session)) {
         my $removed = eval { _remove_owned_root($session); 1 };
+        my $cleanup_error = $@;
+        if (!$removed) {
+            if (blessed($cleanup_error)
+                    && $cleanup_error->isa(
+                        'FSM::VIAL::Backend::GHDLLifecycle::Failure'
+                    )) {
+                ($code, $message, $path) =
+                    @{$cleanup_error}{qw(code message path)};
+            }
+            else {
+                ($code, $message, $path) = (
+                    'VIAL_GHDL_LIFECYCLE_CLEANUP_ERROR',
+                    _sanitize($cleanup_error), '/cleanup',
+                );
+            }
+        }
         $cleanup = {
             removed => $removed ? JSON::PP::true : JSON::PP::false,
             residue => $removed ? [] : [$session->{stage_rel}],

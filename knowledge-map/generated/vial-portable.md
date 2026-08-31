@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-portable`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **18** uniquely owned question entries.
+> **2** facts · **19** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -22,6 +22,7 @@
 - q="what is the VIAL SystemVerilog runtime trace?" · facts=[vial-portable-systemverilog-backend-v1](../../docs/knowledge/vial-portable-systemverilog-backend-v1.md)
 - q="what is the first executable VIAL backend?" · facts=[vial-portable-systemverilog-backend-v1](../../docs/knowledge/vial-portable-systemverilog-backend-v1.md)
 - q="what owns VIAL backend implementation next?" · facts=[vial-portable-systemverilog-backend-v1](../../docs/knowledge/vial-portable-systemverilog-backend-v1.md)
+- q="which diagnostic wins when a portable VHDL phase and cleanup both fail?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)
 - q="why can portable VHDL not copy the portable SystemVerilog reset recipe?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)
 
 ## Facts
@@ -37,5 +38,5 @@ _VIAL portable SystemVerilog uses deterministic inactive-edge scheduling and an 
 
 _Portable VHDL runtime scale uses compact sample snapshots and one staged GHDL lifecycle_
 
-- **date:** 2026-08-30 · **status:** current
+- **date:** 2026-08-31 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-portable-vhdl-runtime-scale.md`](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)

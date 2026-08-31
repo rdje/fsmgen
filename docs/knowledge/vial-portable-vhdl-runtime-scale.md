@@ -8,7 +8,8 @@ answers:
   - "how will exact GHDL qualification and scale measurement share execution?"
   - "what exact portable VHDL profiles have been measured with GHDL?"
   - "does portable VHDL runtime measurement mean IASIM execution?"
-date: 2026-08-30
+  - "which diagnostic wins when a portable VHDL phase and cleanup both fail?"
+date: 2026-08-31
 status: current
 tags: [vial, vhdl, ghdl, runtime, trace, scalability]
 evidence: >-
@@ -32,6 +33,7 @@ evidence: >-
   t/1671-vial-vhdl-portable-trace-v2.t;
   t/1672-vial-architecture-scale-portable-vhdl-runtime-materialization.t;
   t/1673-vial-ghdl-shared-lifecycle.t;
+  t/1725-vial-ghdl-cleanup-diagnostic-authority.t;
   t/1674-vial-architecture-scale-portable-vhdl-runtime-measurement.t;
   t/1675-vial-architecture-scale-portable-vhdl-runtime-measurement-matrix.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
@@ -40,6 +42,7 @@ reverify: >-
   prove -Iperl t/1595-vial-vhdl-portable-ghdl-qualification.t
   t/1664-vial-verilator-shared-lifecycle.t
   t/1673-vial-ghdl-shared-lifecycle.t
+  t/1725-vial-ghdl-cleanup-diagnostic-authority.t
   t/1675-vial-architecture-scale-portable-vhdl-runtime-measurement-matrix.t &&
   scripts/run_with_ram_guard.sh --
   scripts/run_vial_portable_vhdl_runtime_measurement_matrix.pl --validate &&
@@ -82,6 +85,15 @@ The qualifier's separate four-state probe uses that supervisor and the fresh
 exact rerun remains byte-identical to its checked report. This external GHDL
 execution is not IASIM execution and adds no OSVVM, support, budget, or capacity
 claim.
+
+The `.17.4.7` cleanup audit found that the shared GHDL exception boundary
+recorded failed removal and exact residue but retained the earlier phase
+diagnostic. Cleanup failure now becomes the authoritative
+`VIAL_GHDL_LIFECYCLE_CLEANUP_ERROR` at `/cleanup`, including a sanitized
+fallback for unexpected host exceptions. Successful cleanup still preserves
+the original timeout/execution diagnostic and reports zero residue. This
+changes no GHDL command, deadline, capture ceiling, accepted output, provider
+role, or scale claim.
 
 The guarded exact adapter accepts one 77-record reference validation, one gate
 validation plus three retained 10,000-record measurements, and one

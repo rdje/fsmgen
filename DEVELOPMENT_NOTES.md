@@ -1142,3 +1142,18 @@ and returns the existing host-error family; the existing exception boundary
 still removes only the proven-owned repository-local stage. This changes no
 deadline, capture budget, retry policy, process containment, or accepted
 runtime behavior.
+
+## 2026-08-31: Cleanup failure supersedes the triggering GHDL phase
+
+A failure result can faithfully report only one primary diagnostic. When the
+triggering GHDL phase fails and exact owned-root removal then also fails,
+cleanup is the later and more immediate repository-integrity condition: the
+phase failure no longer explains why residue remains or what the operator must
+repair.
+
+The shared GHDL exception boundary therefore promotes a structured cleanup
+failure to its exact diagnostic, or maps an unexpected cleanup exception to a
+sanitized cleanup error. It retains the triggering phase diagnostic only when
+cleanup succeeds. This matches the portable-SystemVerilog lifecycle's
+authority rule without sharing profile-specific codes, and changes no process
+policy or successful execution.

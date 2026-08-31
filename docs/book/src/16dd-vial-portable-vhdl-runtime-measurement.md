@@ -183,6 +183,19 @@ envelopes. Accepted gate and qualification sets require correctness validation
 before three and five retained samples respectively. Limit/excess shapes remain
 tool-free when an earlier structural or byte authority dominates.
 
+Failure cleanup has its own diagnostic authority. If a GHDL phase fails and
+the lifecycle then cannot remove its proven-owned staging root, the result
+reports `VIAL_GHDL_LIFECYCLE_CLEANUP_ERROR` at `/cleanup` and names that exact
+staging identity as residue. It does not hide the integrity failure behind the
+earlier timeout or execution diagnostic. When cleanup succeeds, the original
+phase diagnostic remains authoritative and the residue list is empty.
+
+```sh
+prove -Iperl t/1725-vial-ghdl-cleanup-diagnostic-authority.t \
+  t/1673-vial-ghdl-shared-lifecycle.t \
+  t/1678-vial-ghdl-provider-aware-lifecycle.t
+```
+
 ## Common-controller measurement
 
 The private portable-VHDL adapter reconstructs the canonical materializer,
