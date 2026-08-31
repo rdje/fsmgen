@@ -503,6 +503,7 @@ sub _build_semantic_model($actor, $layer, $backend_names, $sources, $artifacts,
         'transactions',
         scalar(@{$actor->{transactions} || []}) + ($bridge ? 1 : 0),
     );
+    _validate_collection_count('events', _raw_event_count($actor, $bridge));
     my $domain_name = $bridge ? $bridge->{domain} : 'default';
     my $domain_id = "domain/$domain_name";
     my (%types_by_key, @types, @endpoints);
@@ -663,6 +664,25 @@ sub _build_semantic_model($actor, $layer, $backend_names, $sources, $artifacts,
         required_capabilities => [sort @capabilities],
         unsupported_residue => \@residue,
     };
+}
+
+sub _raw_event_count($actor, $bridge) {
+    my $bridge_transaction = $bridge
+        && ref($bridge->{transaction}) eq 'HASH'
+        ? $bridge->{transaction} : {};
+    my $bridge_events = ref($bridge_transaction->{events}) eq 'ARRAY'
+        ? $bridge_transaction->{events} : [];
+    my $count = scalar(@$bridge_events);
+    for my $transaction (@{$actor->{transactions} || []}) {
+        for my $clause (@{$transaction->{clauses} || []}) {
+            $count++ if ref($clause) eq 'ARRAY'
+                && @$clause >= 2
+                && defined($clause->[0])
+                && !ref($clause->[0])
+                && ($clause->[0] eq 'on' || $clause->[0] eq 'complete');
+        }
+    }
+    return $count;
 }
 
 sub _ensure_logic_type($by_key, $types, $width, $signed) {

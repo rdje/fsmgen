@@ -147,6 +147,11 @@ ok(
         @{$policy->{groups}{bridge_normalized_collections}{evidence}}),
     'bridge policy cites the exact transaction-admission witness',
 );
+ok(
+    scalar(grep { $_ eq 't/1700-hial-vial-bridge-event-cap-order.t' }
+        @{$policy->{groups}{bridge_normalized_collections}{evidence}}),
+    'bridge policy cites the exact event-admission witness',
+);
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;
 my @catalog_axes;

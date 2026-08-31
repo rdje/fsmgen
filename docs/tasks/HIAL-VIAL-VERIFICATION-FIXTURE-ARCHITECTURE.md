@@ -850,8 +850,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Enforce the selected HIAL-to-VIAL bridge resource caps before avoidable manifest materialization.`
   Acceptance: `Implement only the .17.4.1-selected bridge contract; count bounded normalized families at the earliest reliable producer points, retain terminal defenses, and reject structural or serialized-manifest excess with deterministic diagnostics, no manifest/report, and exact cleanup. Prove every bridge_fanout_v1 boundary without changing accepted manifests or public route semantics.`
-  Verification: `Clean predecessor 3ded0157f8378548be3c56c7ab556af302df9f05 closes every selected source/parser/SemanticIR cap before this pivot. Activation owns only bridge-profile, normalized-collection, and serialized-manifest earliest-authority hardening under decision 0093. Bridge slices admit known actor-parameter, endpoint, observation, probe, and combined transaction cardinality before per-record normalization, plus each newly discovered distinct type before record materialization; RED t1694-t1699 prove malformed overflowing members cannot mask exact collection diagnostics, return no manifest/report, and freeze accepted manifest identities. t1551/t1602/t1685 retain the public bridge, selected matrix, and machine-policy contracts; execution and later leaves remain proposed.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: activate bridge cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit configurations before normalization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit endpoints before normalization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit observations before normalization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit probes before normalization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit distinct types before materialization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit transactions before normalization`
+  Verification: `Clean predecessor 3ded0157f8378548be3c56c7ab556af302df9f05 closes every selected source/parser/SemanticIR cap before this pivot. Activation owns only bridge-profile, normalized-collection, and serialized-manifest earliest-authority hardening under decision 0093. Bridge slices admit known actor-parameter, endpoint, observation, probe, combined transaction, and combined event cardinality before per-record normalization, plus each newly discovered distinct type before record materialization; RED t1694-t1700 prove malformed overflowing members cannot mask exact collection diagnostics, return no manifest/report, and freeze accepted manifest identities. t1551/t1602/t1685 retain the public bridge, selected matrix, and machine-policy contracts; execution and later leaves remain proposed.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: activate bridge cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit configurations before normalization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit endpoints before normalization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit observations before normalization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit probes before normalization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit distinct types before materialization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit transactions before normalization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: admit events before normalization`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4`
   Status: `proposed`
   Goal: `Enforce the selected execution-graph resource caps before avoidable graph, random, source-map, or plan materialization.`
@@ -7892,5 +7892,20 @@ The completed node records above and their named Git commits remain the canonica
   terminal defense, exact diagnostic, atomicity, and accepted identity remain.
 - [x] **NO REGRESSION** — Focused bridge/policy/order coverage reports
   `Files=9, Tests=124`; modules/t1699 are syntax clean and every mdBook chapter
+  tests. Claims, Knowledge Map, containment, staged acceptance, diff, and all
+  doctrines pass; full CI/push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.3` event admission
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_validate_limits' --oneline --
+  perl/FSM/HIAL/VIALBridge/Builder.pm` retains terminal commit `51434a2ae`.
+  Bridge-profile validation walks each declared event before its known count,
+  plus event-producing ordinary clauses, reaches terminal validation.
+- [x] **ADDRESSED (verified)** — RED t1700 reports `Failed 4/13` because the
+  hostile 2,049th bridge-event kind wins before terminal admission. Combined
+  bridge-event and ordinary event-clause count now precedes shape/expression
+  work; terminal defense, exact diagnostic, atomicity, and identity remain.
+- [x] **NO REGRESSION** — Focused bridge/policy/order coverage reports
+  `Files=10, Tests=138`; modules/t1700 are syntax clean and every mdBook chapter
   tests. Claims, Knowledge Map, containment, staged acceptance, diff, and all
   doctrines pass; full CI/push remain deferred by policy.
