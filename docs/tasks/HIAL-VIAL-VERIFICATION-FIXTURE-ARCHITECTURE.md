@@ -847,11 +847,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `Clean selection commit 951720257d727e79f9e0986955655c8d330e0079 closes .17.4.1 before this pivot. Activation commit 93adfbd82 owns only source/parser/SemanticIR earliest-cap hardening under decision 0093. The first implementation slice reserves scenario action capacity before inspecting a next node and admits repeat copies with overflow-safe arithmetic; t1686 proves over-limit and exact-full precedence with no partial report, while t1550/t1601/t1620/t1621 retain accepted and established boundary behavior. The direct-import slice preflights an already-visible 65th edge before recursive imported-source parsing; t1687 proves malformed imported bytes cannot mask the exact diagnostic and pins accepted 64-import projection/report identities. The parallel-fiber slice admits the known 257-fiber excess before join-value resolution; t1688 proves an invalid join cannot mask the exact diagnostic and pins accepted 256-fiber projection/report identities. The declaration slice admits each known section excess before later package-section shape parsing; t1689 proves a malformed later section cannot mask the exact diagnostic and pins accepted 4,096-declaration projection/report identities. The service-scalar slice admits scoreboard capacity before transaction resolution and cross max_bins before coverpoint resolution/product calculation; t1690/t1691 prove hostile references cannot mask either exact limit and pin accepted one-million projection/report identities. The type-shape slice proves existing list length, record field count, and aggregate depth admission before inner-type resolution; t1692 pins hostile-inner precedence and all three exact-boundary identities without a product-code change. The source-byte slice proves per-source and combined bytes are admitted before lexing each affected source; t1693 pins malformed-byte precedence and exact 1-MiB/16-MiB identities without a product-code change. The guarded exact t1601 matrix passes every selected qualification, limit, over-limit, and repeat/action interaction in 84 seconds; focused precedence, docs, claims, containment, and complete doctrines are green. `.17.4.2` is exhausted; bridge and later layers retain their separate proposed owners.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: activate semantic cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: enforce action cap before further construction; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: preflight direct import fan-out before recursion; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: admit parallel fiber cap before join resolution; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: admit declaration caps before later sections; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: admit service scalars before reference resolution; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: prove type-shape preflight order; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: prove source-byte admission order; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: close semantic cap hardening`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Enforce the selected HIAL-to-VIAL bridge resource caps before avoidable manifest materialization.`
   Acceptance: `Implement only the .17.4.1-selected bridge contract; count bounded normalized families at the earliest reliable producer points, retain terminal defenses, and reject structural or serialized-manifest excess with deterministic diagnostics, no manifest/report, and exact cleanup. Prove every bridge_fanout_v1 boundary without changing accepted manifests or public route semantics.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean predecessor 3ded0157f8378548be3c56c7ab556af302df9f05 closes every selected source/parser/SemanticIR cap before this pivot. This activation owns only bridge-profile, normalized-collection, and serialized-manifest earliest-authority hardening under decision 0093; execution and later leaves remain proposed, and no product behavior changes before the focused bridge audit.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3: activate bridge cap hardening`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4`
   Status: `proposed`
   Goal: `Enforce the selected execution-graph resource caps before avoidable graph, random, source-map, or plan materialization.`
@@ -7784,3 +7784,19 @@ The completed node records above and their named Git commits remain the canonica
   guard. All mdBook chapters, claims, task integrity, locality, containment,
   staged-result, diff, and `[doctrine] all doctrine checks passed` close the
   leaf; full CI/push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.3` bridge-cap activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'bridge_normalized_collections'
+  --oneline -- perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` traces the selected
+  bridge group to clean decision-0093 policy commit `951720257`; predecessor
+  `3ded0157f` closes `.17.4.2`, so no dirty-tree pivot remains.
+- [x] **ADDRESSED (verified)** — `.17.4.3` alone is active for bridge-profile,
+  normalized-collection, and serialized-manifest earliest-cap hardening. Task
+  index, Memory, and mdBook agree; execution and later leaves remain proposed,
+  and activation changes no product behavior.
+- [x] **NO REGRESSION** — Focused task/path/Knowledge Map/claim/locality/
+  containment/reference coverage reports `All tests successful` at
+  `Files=10, Tests=119`; all mdBook chapters and
+  `[doctrine] all doctrine checks passed` close activation, while full CI/push
+  remain deferred by policy.

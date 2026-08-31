@@ -2510,8 +2510,9 @@ source/parser/SemanticIR enforcement hardening is complete. The guarded exact
 semantic-catalog matrix accepts or rejects every selected qualification,
 boundary, and excess level through its canonical oracle. Focused precedence
 witnesses cover each selected cap group, and the literal-repeat/action
-interaction retains its explicitly reported earlier authority. Bridge and later
-layers remain separate work and gain no claim from this closure.
+interaction retains its explicitly reported earlier authority. Bridge-cap
+hardening is now the active leaf; later layers remain separate work and gain no
+claim from this activation.
 
 ### Source-byte cap admission order
 
