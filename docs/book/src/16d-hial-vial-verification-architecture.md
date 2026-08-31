@@ -3092,6 +3092,23 @@ limit, excess, identity, interaction, atomicity, staging, and cleanup contract.
 Execution-graph cap hardening is now the active layer; its activation changes
 no product behavior or selected matrix level.
 
+### Execution-profile admission order
+
+The first execution profile selects one fixture by scalar identifier, admits
+the requested scenario count at invocation, and requires one bridge unit and
+one fixture domain. The public SemanticIR and bridge builders already enforce
+their own one-domain and one-unit profiles; those earlier authorities remain
+the normal route diagnostics. The execution builder nevertheless keeps its
+own defensive profile boundary for internally constructed inputs.
+
+After resolving the selected fixture and scenario identifiers, that local
+boundary now checks unit and domain cardinality before creating the execution
+context. A known profile mismatch therefore cannot begin bridge indexing,
+binding construction, type registration, or source-map construction, and it
+returns no partial ExecutionIR or plan. The existing checks in the binding
+path remain terminal defense. Exact accepted plan bytes and identities are
+unchanged, as are the component ceilings and the lower-layer route authorities.
+
 ### Execution fiber-cap admission order
 
 After fixture/scenario selection, the execution builder walks the compact

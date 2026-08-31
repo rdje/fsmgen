@@ -180,6 +180,21 @@ ok(
     'bridge byte policy cites the exact terminal-authority witness',
 );
 is(
+    $policy->{groups}{execution_profile_selection}{current_enforcement},
+    'invocation_count_and_fixture_bridge_cardinality_before_execution_context_with_terminal_defense',
+    'execution profile policy records pre-context cardinality admission plus terminal defense',
+);
+is(
+    $policy->{groups}{execution_profile_selection}{selected_treatment},
+    'retain_layered_route_and_profile_preflight_and_terminal_defense',
+    'execution profile policy retains layered route authority and both local defenses',
+);
+ok(
+    scalar(grep { $_ eq 't/1705-vial-execution-selected-domain-cap-order.t' }
+        @{$policy->{groups}{execution_profile_selection}{evidence}}),
+    'execution profile policy cites the exact unit/domain admission witness',
+);
+is(
     $policy->{groups}{execution_fiber_cardinality}{current_enforcement},
     'compact_preflight_before_execution_context_and_terminal_defense',
     'execution fiber policy records compact preflight plus terminal defense',

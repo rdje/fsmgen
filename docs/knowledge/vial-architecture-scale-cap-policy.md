@@ -10,6 +10,8 @@ answers:
   - "where is the machine checked VIAL resource cap inventory?"
   - "when are VIAL execution fiber caps enforced?"
   - "how are total and simultaneous VIAL fibers counted before materialization?"
+  - "when is VIAL execution profile cardinality enforced?"
+  - "does VIAL recheck selected unit and domain cardinality after SemanticIR and bridge validation?"
 date: 2026-08-31
 status: current
 tags: [vial, architecture-scale, limits, bounded-failure, route-authority]
@@ -42,6 +44,7 @@ evidence: >-
   perl/FSM/VIAL/ExecutionBuilder.pm;
   t/1624-vial-architecture-scale-execution-live-fiber-limit.t;
   t/1625-vial-architecture-scale-execution-total-fiber-limit.t;
+  t/1705-vial-execution-selected-domain-cap-order.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -67,6 +70,7 @@ reverify: >-
   t/1704-hial-vial-bridge-serialized-manifest-terminal-authority.t
   t/1624-vial-architecture-scale-execution-live-fiber-limit.t
   t/1625-vial-architecture-scale-execution-total-fiber-limit.t
+  t/1705-vial-execution-selected-domain-cap-order.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -148,6 +152,14 @@ root. Saturating arithmetic preserves total-before-live diagnostic order, and
 the original post-emission checks remain terminal defense. Exact excess
 diagnostics, accepted plan identities, and the legal 65,536-total-fiber
 workload's later serialized-plan rejection remain unchanged.
+
+Execution-profile selection admits the requested scenario count at invocation,
+then checks the selected fixture's one-unit and one-domain shape before
+execution-context construction. Public SemanticIR and bridge construction
+remain the earlier normal-route authorities for their own profile shapes; the
+execution check is an independent defense for internally constructed inputs.
+The terminal binding checks remain, while exact accepted plan identity and
+lower-layer diagnostics are unchanged.
 
 The guarded exact semantic-catalog and bridge-fanout matrices close every
 selected parser/SemanticIR and bridge qualification, boundary, excess, and cap

@@ -228,11 +228,17 @@ my $GROUPS = {
     ),
     execution_profile_selection => _group(
         'FSM::Support::VIALExecutionContract', 'bind_plan',
-        ['VIAL_EXECUTION_LIMIT_ERROR', 'VIAL_CAPABILITY_ERROR'],
-        'invocation or bridge-profile path', 'before_execution_context_build',
+        [qw(VIAL_EXECUTION_LIMIT_ERROR VIAL_CAPABILITY_ERROR VIAL_BIND_REFERENCE_ERROR)],
+        'invocation or bridge-profile path',
+        'invocation_count_and_fixture_bridge_cardinality_before_execution_context_with_terminal_defense',
         'no_execution_ir_plan_or_replay',
-        'classify_layered_route_and_harden_local_check', '.17.4.4',
-        ['t/1616-vial-architecture-scale-execution-scenario-qualification.t'],
+        'retain_layered_route_and_profile_preflight_and_terminal_defense',
+        '.17.4.4',
+        [
+            't/1616-vial-architecture-scale-execution-scenario-qualification.t',
+            't/1618-vial-architecture-scale-execution-scenario-over-limit.t',
+            't/1705-vial-execution-selected-domain-cap-order.t',
+        ],
     ),
     execution_operation_cardinality => _group(
         'FSM::Support::VIALExecutionContract', 'bind_plan',

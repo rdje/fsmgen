@@ -1054,3 +1054,17 @@ fibers are admitted before maximum live fibers, preserving the terminal graph
 check's diagnostic precedence. The terminal checks remain independent defense,
 and exact accepted plan identities prove the compact derivation did not alter
 execution semantics.
+
+## 2026-08-31: Execution profile cardinality is admitted before context construction
+
+The public semantic and bridge layers already enforce one domain and one unit,
+but the execution builder also owns a defensive copy of those profile
+requirements. Keeping that defense after bridge indexing and binding-record
+construction made an internally constructed mismatch spend work before a
+known rejection, and allowed a hostile later reference to mask the profile
+diagnostic.
+
+The execution layer now admits both cardinalities immediately after fixture
+and scenario selection, before its context exists. The original binding-path
+checks remain terminal defense. This preserves lower-layer route authority and
+accepted plans while making the execution component independently bounded.

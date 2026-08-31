@@ -850,8 +850,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Enforce the selected execution-graph resource caps before avoidable graph, random, source-map, or plan materialization.`
   Acceptance: `Implement only the .17.4.1-selected execution contract; preserve the existing compact total-operation and serialized-plan preflights, repair remaining late checks, and reconcile binding/type/map limits with lower bridge and byte authorities. Prove deterministic diagnostics, no partial ExecutionIR/plan/replay, unchanged accepted plans, and guarded execution_graph_v1 boundaries.`
-  Verification: `Clean predecessor a1773fce49decf9c623111b678abe9d8b48345aa closes bridge-cap hardening before this pivot. The exact terminal .17.4.3 node and all thirteen acceptance records are retained at source revision a1773fce49decf9c623111b678abe9d8b48345aa in content-addressed segment fe8d16354a8ab20cfc88625d6eb7fc53fedd68a4a06cb4317db740c03d550a7e; the bounded manifest and integrity checker reconstruct one authoritative graph. Activation owns only execution-graph earliest-cap hardening under decision 0093; checking and later layers remain proposed. Compact total/live-fiber preflight now rejects before bridge indexing; exact t1624/t1625 retain accepted identities, diagnostics, the later 65,536-fiber plan-cap interaction, and terminal defense. Semantics, levels, and claims stay unchanged; .17.4.4 remains active.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: activate execution cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: preflight execution fiber cardinality`
+  Verification: `Segment fe8d16354a8ab20cfc88625d6eb7fc53fedd68a4a06cb4317db740c03d550a7e retains the exact .17.4.3 predecessor. Decision 0093 limits this active node to execution-graph hardening. Compact t1624/t1625 fiber preflight rejects before bridge indexing while preserving terminal checks and the later plan-cap interaction. t1705 moves unit/domain profile admission before context, index, binding, and source-map construction while retaining accepted plan identity, layered route authority, terminal defense, and atomic failure. Checking and later layers remain proposed; semantics, levels, and claims are unchanged.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: activate execution cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: preflight execution fiber cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: preflight execution profile cardinality`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5`
   Status: `proposed`
   Goal: `Enforce the selected checking-state resource caps before avoidable state-service materialization.`
@@ -7781,40 +7781,21 @@ The completed node records above and their named Git commits remain the canonica
 
 ## Acceptance Checklist (enforced) — `.17.4.4` bounded activation
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'"lines_each":8000'
-  --oneline -- doctrine/live_document_size/surfaces.jsonl` identifies
-  containment-contract commit `9bd081935`. Its checker measured the live
-  HIAL/VIAL task root at 7,986 of 8,000 lines after `.17.4.3` closure;
-  appending an execution-hardening series would violate the bounded live-root
-  contract before the work could finish.
-- [x] **ADDRESSED (verified)** — The exact terminal `.17.4.3` node and all
-  thirteen acceptance records are copied byte-for-byte from clean revision
-  `a1773fce49decf9c623111b678abe9d8b48345aa` into digest-named segment
-  `fe8d16354a8ab20cfc88625d6eb7fc53fedd68a4a06cb4317db740c03d550a7e`.
-  The bounded manifest retains source revision, path, count, and required-history
-  contract; the live root alone activates `.17.4.4` and retains every ancestor.
-- [x] **NO REGRESSION** — Exact segment/source retrieval reports
-  `Files=1, Tests=41`; task integrity reconstructs 1,031 nodes across three
-  segments. Every mdBook chapter tests; Knowledge Map, claims, locality,
-  containment across 22 surfaces, staged-result agreement, diff, and all
-  doctrines pass with zero enforcement-ceiling increases. Full CI/push remain
-  deferred by policy.
+- [x] **ROOT CAUSE (WHY + WHERE)** — History identifies containment commit `9bd081935`; after `.17.4.3`, the live task root occupied 7,986 of 8,000 lines and could not hold the execution series.
+- [x] **ADDRESSED (verified)** — Revision `a1773fce49decf9c623111b678abe9d8b48345aa`'s exact terminal node and thirteen acceptance records moved byte-for-byte to segment `fe8d16354a8ab20cfc88625d6eb7fc53fedd68a4a06cb4317db740c03d550a7e`; its manifest retains exact recovery while the root activates `.17.4.4`.
+- [x] **NO REGRESSION** — Segment/source retrieval reports `Files=1, Tests=41`; task integrity reconstructs 1,031 nodes/three segments, and book, Knowledge Map, claims, locality, containment, staged-result, diff, ceiling, and doctrine gates pass. Full CI/push remain deferred.
 
 ## Acceptance Checklist (enforced) — `.17.4.4` fiber-cardinality preflight
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S"_limit('total_fibers'"
-  --oneline -- perl/FSM/VIAL/ExecutionBuilder.pm` and the matching
-  `_maximum_live_descendants` history identify `44dbecd1a`: both fiber limits
-  were introduced only after `_emit_sequence` materializes the selected
-  operation/fiber graph, even though compact SemanticIR already determines
-  both counts.
-- [x] **ADDRESSED (verified)** — RED t1624/t1625 entered `_index_bridge` three
-  times per exact excess. GREEN `Files=3, Tests=53` derives both measures first,
-  retains exact diagnostics and accepted/later-plan-cap identities, and keeps
-  the original post-emission limits as terminal defense.
-- [x] **NO REGRESSION** — The focused execution foundation/fiber/operation/
-  policy set reports `Files=7, Tests=75`; both changed modules are syntax clean.
-  Every mdBook chapter tests, the Knowledge Map regenerates and verifies 1,156
-  facts/6,139 questions, and `scripts/check_doctrines.sh` covers claims, task
-  integrity, locality, containment, staged-result agreement, and diff before
-  commit. Full CI/push remain deferred by policy.
+- [x] **ROOT CAUSE (WHY + WHERE)** — History identifies `44dbecd1a`: both fiber limits followed `_emit_sequence` even though compact SemanticIR already determines them.
+- [x] **ADDRESSED (verified)** — RED t1624/t1625 entered `_index_bridge` three times per excess; GREEN `Files=3, Tests=53` preflights both measures, retains diagnostics/accepted and later-plan-cap identities, and keeps terminal checks.
+- [x] **NO REGRESSION** — The focused set reports `Files=7, Tests=75`; syntax, every mdBook chapter, Knowledge Map (1,156 facts/6,139 questions), claims, task, locality, containment, staged-result, diff, ceiling, and doctrine gates pass. Full CI/push remain deferred.
+
+## Acceptance Checklist (enforced) — `.17.4.4` execution-profile preflight
+
+- [x] **ROOT CAUSE (WHY + WHERE)** —
+  `git log -S` identifies `44dbecd1a`: unit admission followed `_index_bridge`, while domain admission followed binding/map construction. RED t1705 observed one index or map call, and hostile references masked both profile diagnostics.
+- [x] **ADDRESSED (verified)** —
+  `_preflight_execution_profile_cardinality` now admits unit/domain shape after selection but before context construction. GREEN t1705 returns the established diagnostics with zero index/map calls and no ExecutionIR/plan; binding checks remain terminal defense.
+- [x] **NO REGRESSION** —
+  `All tests successful` at `Files=6, Tests=76`; both modules are syntax clean, every mdBook chapter tests, Knowledge Map verifies 1,156 facts/6,141 questions, claims close 1,682 candidates, the rationale ledger reconstructs 2,896 entries, and task/locality/reference/containment/ceiling gates pass. Full CI/push remain deferred.

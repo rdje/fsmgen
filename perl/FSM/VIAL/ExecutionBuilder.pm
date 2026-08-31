@@ -208,6 +208,7 @@ sub _build($raw, $qualification_profile = undef) {
 
     my ($package, $fixture) = _find_fixture($semantic, $raw->{fixture_id});
     my @selected_scenarios = _select_scenarios($fixture, $raw->{scenario_ids});
+    _preflight_execution_profile_cardinality($fixture, $bridge);
     _preflight_expanded_operations_total(\@selected_scenarios);
     _preflight_fiber_cardinality(\@selected_scenarios);
     my $semantic_ir_id = 'semantic/' . sha256_hex(_canonical_json($semantic));
@@ -644,6 +645,18 @@ sub _select_scenarios($fixture, $requested) {
         'scenario_ids must preserve authored scenario order', '/scenario_ids')
         unless join("\0", map { $_->{semantic_id} } @selected) eq join("\0", @$requested);
     return @selected;
+}
+
+sub _preflight_execution_profile_cardinality($fixture, $bridge) {
+    my $dut = $fixture->{dut};
+    _throw('VIAL_BIND_REFERENCE_ERROR', 'bind',
+        'the first execution profile requires exactly one bridge unit',
+        $dut->{semantic_path}, $dut->{source_span}, ['/units'])
+        unless @{$bridge->{units}} == 1;
+    _throw('VIAL_EXECUTION_LIMIT_ERROR', 'limit',
+        'the first execution profile requires exactly one selected domain',
+        $dut->{semantic_path}, $dut->{source_span})
+        unless @{$dut->{domains}} == 1;
 }
 
 sub _preflight_expanded_operations_total($scenarios) {

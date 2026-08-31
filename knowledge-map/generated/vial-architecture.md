@@ -1,13 +1,14 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **60** uniquely owned question entries.
+> **2** facts · **62** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="are VIAL declared resource limits public capacity claims?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="are VIAL scale gate and qualification candidates supported capacity?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="does VIAL architecture scale prove whole product big and really big designs?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="does VIAL recheck selected unit and domain cardinality after SemanticIR and bridge validation?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="does architecture scale cap hardening raise or lower existing limits?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="does the VIAL measurement foundation execute external tools?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how are VIAL execution and checking stages measured?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
@@ -44,6 +45,7 @@
 - q="what is the VIAL architecture scale cap policy?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="what is the portable SystemVerilog 16 MiB boundary after scheduler repair?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="when are VIAL execution fiber caps enforced?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
+- q="when is VIAL execution profile cardinality enforced?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="where are VIAL scale measurement artifacts staged and published?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="where are the VIAL portable backend source byte boundaries?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="where are the authored portable runtime qualification sources and structural oracle?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
