@@ -853,11 +853,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `The named commits and t1624/t1625/t1705-t1710/t1634 close every selected execution group with early or layered authority, terminal defense, stable accepted identities and diagnostics, atomic failure, and green doctrines.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: activate execution cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: preflight execution fiber cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: preflight execution profile cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: preflight per-scenario operation cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: admit execution type before insertion; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: admit source map before insertion; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: preflight execution binding cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: prove random-attempt authority; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: prove serialized-plan authority`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5`
-  Status: `active`
+  Status: `done`
   Goal: `Enforce the selected checking-state resource caps before avoidable state-service materialization.`
   Acceptance: `Implement only the .17.4.1-selected checking contract for models, scalar cells, scoreboards and capacity, coverage, faults, and random occurrences. Preserve exact accepted checking semantics and replay while proving earliest deterministic rejection, no partial checking result, bounded construction, and guarded checking_state_v1 boundaries.`
-  Verification: `All selected checking counts now preflight compact SemanticIR before dependent normalization or operation-graph construction, with terminal agreement/defense and stable accepted plans. t1634/t1685/t1715 pass Files=3/Tests=90; the guarded exact checking matrix is the remaining closure step.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: activate checking cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight model cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight scoreboard cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight coverage cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight fault cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight random occurrence cardinality`
+  Verification: `Commit f49dd3e99 completes all selected compact preflights with terminal defenses and stable accepted plans. Guarded exact t1630-t1634 passes every checking boundary at Files=5/Tests=28 in 561 seconds; .17.4.5 is exhausted.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: activate checking cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight model cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight scoreboard cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight coverage cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight fault cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight random occurrence cardinality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: close checking cap hardening`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6`
   Status: `proposed`
   Goal: `Enforce the selected backend-emission resource caps before partial artifact publication.`
@@ -7791,8 +7791,8 @@ The completed node records above and their named Git commits remain the canonica
 - [x] **ADDRESSED (verified)** — t1624/t1625 prove both compact preflights, stable outcomes, and retained terminal checks.
 - [x] **NO REGRESSION** — Focused coverage passed `Files=7, Tests=75`; docs and doctrines passed; full CI/push remain deferred.
 
-## Acceptance Checklist (enforced) — `.17.4.5` random-occurrence preflight
+## Acceptance Checklist (enforced) — `.17.4.5` closure
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_random_occurrence_count' -- perl/FSM/VIAL/ExecutionBuilder.pm` identifies `44dbecd1a`; occurrence admission followed operation-graph construction.
-- [x] **ADDRESSED (verified)** — Compact scenario/choice preflight now precedes `_build_operations`; terminal recount, projected-plan preflight, and terminal byte defense remain. t1634/t1715 pin both authorities.
-- [x] **NO REGRESSION** — Focused random/policy coverage passes `Files=3, Tests=90`; broader checking/core passes `Files=13, Tests=187`. Syntax, every book chapter, Knowledge Map, claims, and containment pass; staged diff and doctrines close the slice. Full CI/push remain deferred.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'Files=5/Tests=27' --oneline -- docs/book/src/16d-hial-vial-verification-architecture.md` identifies `74cc7c7f6`; the fresh exact run changed that governed claim identity.
+- [x] **ADDRESSED (verified)** — The guarded matrix passes every selected checking boundary at `Files=5, Tests=28` in 561 seconds. Task/index/Memory, the mdBook result, and its claim disposition now agree.
+- [x] **NO REGRESSION** — Exact proof reports `All tests successful` at `Files=5, Tests=28`; every book chapter, task integrity, claims, containment, staged diff, and doctrines pass. Full CI/push remain deferred.
