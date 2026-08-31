@@ -3083,6 +3083,8 @@ Retained-residue cardinality is admitted before ordinal, ownership/detail,
 required-capability, or normalized-record construction.
 Backend-binding cardinality is derived and admitted before either backend's
 mapping lookup or any normalized binding-record construction.
+Each projected source-map entry is admitted before its record is constructed,
+so entry 65,537 is never materialized; terminal manifest validation remains.
 
 The binding ladder is the first axis authored under that rule. Its three levels
 above the gate generate 1,933,429, 3,866,741, and 3,866,800 direct-IAL1 bytes —

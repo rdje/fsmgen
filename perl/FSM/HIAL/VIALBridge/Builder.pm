@@ -1533,12 +1533,17 @@ sub _source_map_walk($entries, $value, $fact_path, $field_path, $semantic_id, $s
         return;
     }
     if (ref($value) eq 'ARRAY') {
-        push @$entries, _source_map_entry($fact_path, $field_path, $semantic_id, $sources);
+        _append_source_map_entry($entries, $fact_path, $field_path, $semantic_id, $sources);
         for my $index (0 .. $#$value) {
             _source_map_walk($entries, $value->[$index], "$fact_path/$index", "$field_path/$index", $semantic_id, $sources);
         }
         return;
     }
+    _append_source_map_entry($entries, $fact_path, $field_path, $semantic_id, $sources);
+}
+
+sub _append_source_map_entry($entries, $fact_path, $field_path, $semantic_id, $sources) {
+    _validate_collection_count('source_map', scalar(@$entries) + 1);
     push @$entries, _source_map_entry($fact_path, $field_path, $semantic_id, $sources);
 }
 

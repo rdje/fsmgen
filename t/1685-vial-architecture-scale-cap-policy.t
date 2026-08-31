@@ -114,8 +114,8 @@ is(
 );
 is(
     $policy->{groups}{bridge_normalized_collections}{current_enforcement},
-    'raw_collection_cardinality_before_normalization_and_distinct_types_before_materialization_remaining_collections_terminal',
-    'bridge policy records raw-collection and distinct-type preflight plus remaining checks',
+    'raw_collections_before_normalization_distinct_types_and_source_map_entries_before_materialization_remaining_checks_terminal',
+    'bridge policy records raw-collection, distinct-type, and source-map admission plus remaining checks',
 );
 ok(
     scalar(grep { $_ eq 't/1694-hial-vial-bridge-configuration-cap-order.t' }
@@ -161,6 +161,11 @@ ok(
     scalar(grep { $_ eq 't/1702-hial-vial-bridge-backend-binding-cap-order.t' }
         @{$policy->{groups}{bridge_normalized_collections}{evidence}}),
     'bridge policy cites the exact backend-binding admission witness',
+);
+ok(
+    scalar(grep { $_ eq 't/1703-hial-vial-bridge-source-map-cap-order.t' }
+        @{$policy->{groups}{bridge_normalized_collections}{evidence}}),
+    'bridge policy cites the exact source-map admission witness',
 );
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;

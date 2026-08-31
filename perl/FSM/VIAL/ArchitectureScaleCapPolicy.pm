@@ -199,7 +199,7 @@ my $GROUPS = {
     bridge_normalized_collections => _group(
         'FSM::Support::HIALVIALBridgeContract', 'bridge',
         ['HIAL_VIAL_BRIDGE_LIMIT_ERROR'], 'normalized manifest collection path',
-        'raw_collection_cardinality_before_normalization_and_distinct_types_before_materialization_remaining_collections_terminal',
+        'raw_collections_before_normalization_distinct_types_and_source_map_entries_before_materialization_remaining_checks_terminal',
         'no_manifest_or_report',
         'move_same_layer_check_before_avoidable_materialization', '.17.4.3',
         [
@@ -213,6 +213,7 @@ my $GROUPS = {
             't/1700-hial-vial-bridge-event-cap-order.t',
             't/1701-hial-vial-bridge-residue-cap-order.t',
             't/1702-hial-vial-bridge-backend-binding-cap-order.t',
+            't/1703-hial-vial-bridge-source-map-cap-order.t',
         ],
     ),
     bridge_serialized_manifest => _group(
