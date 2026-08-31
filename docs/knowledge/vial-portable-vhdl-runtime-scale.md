@@ -15,6 +15,7 @@ answers:
   - "how are GHDL scenario expectation diagnostic and cancelled fiber identities admitted?"
   - "how is the GHDL scenario logical-time domain bound to plan authority?"
   - "how are GHDL passing diagnostic codes and logical times bound to VHDL emitter behavior?"
+  - "how is GHDL diagnostic cardinality bound to authenticated expectation trace counts?"
   - "how are GHDL fault applications and scoreboard comparisons bound to trace records?"
   - "how do fake GHDL lifecycle providers avoid host executable admission?"
 date: 2026-09-01
@@ -92,15 +93,11 @@ tool-free. The unchanged 64-MiB envelope remains authoritative, actual runtime
 bytes remain unclaimed, and later GHDL measurement may honestly reject the
 larger candidate.
 
-One caller-sealed GHDL lifecycle now owns provider verification, preparation,
-analysis, elaboration, run, trace validation, result production, assembly, and
-cleanup for exact qualification and the common-controller measurement adapter.
-It reloads content-addressed state/object chains and uses the same
-sealed process supervisor extracted from the byte-stable Verilator lifecycle.
-The qualifier's separate four-state probe uses that supervisor and the fresh
-exact rerun remains byte-identical to its checked report. This external GHDL
-execution is not IASIM execution and adds no OSVVM, support, budget, or capacity
-claim.
+One caller-sealed GHDL lifecycle owns exact qualification and dynamic measurement
+from provider verification through same-volume cleanup. It reloads addressed
+state/objects and uses the Verilator-derived process supervisor. The qualifier's
+four-state probe shares that supervisor and reruns byte-identically. External
+GHDL is not IASIM and adds no OSVVM, support, budget, or capacity claim.
 
 The `.17.4.7` cleanup audit found that the shared GHDL exception boundary
 recorded failed removal and exact residue but retained the earlier phase
@@ -146,6 +143,7 @@ mismatches reject before persistence. Both scenario timestamp domains must equal
 that sealed domain, so even an internally consistent foreign pair rejects.
 Passing diagnostics are ordered `VIAL_EXPECT_SUCCESS` or
 `VIAL_EXPECT_ERROR` at each scenario end cycle with ranks `0/3/3`; mismatches reject.
+Their count also equals the authenticated `expectations` trace count.
 Fault applications and scoreboard comparisons each equal half their authenticated
 trace count: the emitter writes arm/apply and enqueue/compare record pairs.
 Portable VHDL emits no scenario-owned expectation, diagnostic, or cancelled-fiber

@@ -248,7 +248,8 @@ domain from the canonical plan, while dynamic callers select it from ExecutionIR
 The passing diagnostic collection is exact too: one record per scenario in
 scenario order, emitter-selected `VIAL_EXPECT_SUCCESS`/`VIAL_EXPECT_ERROR` code,
 the matching scenario end cycle, and logical-time ranks `0/3/3`. Missing, extra,
-reordered, foreign, or mistimed diagnostics reject before persistence.
+reordered, foreign, or mistimed diagnostics reject before persistence. Their
+cardinality must also equal the authenticated `expectations` trace count.
 The portable-VHDL producer emits no scenario-owned
 expectation, diagnostic, or cancelled-fiber records, so each matching identity
 projection must be exactly `[]`; any non-empty array rejects at its collection

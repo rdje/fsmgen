@@ -145,7 +145,9 @@ my $expected_observation_catalog = {
             semantic_id => 'probe/reg_data_q', width => 8},
     ],
 };
-my $expected_record_counts = {coverage => 2, faults => 2, scoreboards => 2};
+my $expected_record_counts = {
+    coverage => 2, expectations => 2, faults => 2, scoreboards => 2,
+};
 my $encoded = $json->encode($manifest);
 
 subtest 'canonical result is admitted at the exact byte boundary' => sub {
@@ -587,6 +589,13 @@ subtest 'top-level result values and aggregate totals are closed' => sub {
         '/result_produced/metrics/diagnostic_records',
         'diagnostic metric must equal collection cardinality');
 
+    for my $count (0, 1, 3) {
+        is(top_level_failure($manifest, {
+                %$expected_record_counts, expectations => $count,
+            })->{path}, '/result_produced/diagnostics',
+            "diagnostic count rejects expectation trace authority $count");
+    }
+
     my $missing_diagnostic = clone($manifest);
     pop @{$missing_diagnostic->{diagnostics}};
     $missing_diagnostic->{metrics}{diagnostic_records} = 1;
@@ -841,16 +850,17 @@ sub validate_outcome_values {
 }
 
 sub validate_top_level_values {
+    my ($candidate, $record_counts) = @_;
     FSM::VIAL::Backend::GHDLLifecycle::_validate_runtime_result_top_level_values(
-        $_[0], $expected_record_counts, $expected_fixture_id,
+        $candidate, $record_counts // $expected_record_counts, $expected_fixture_id,
         $expected_random_decisions_sha256, \@expected_diagnostic_code,
     );
 }
 
 sub top_level_failure {
-    my ($candidate) = @_;
+    my ($candidate, $record_counts) = @_;
     my $ok = eval {
-        validate_top_level_values($candidate);
+        validate_top_level_values($candidate, $record_counts);
         1;
     };
     ok(!$ok, 'invalid top-level result value rejects');

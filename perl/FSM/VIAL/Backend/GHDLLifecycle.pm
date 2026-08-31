@@ -1405,7 +1405,7 @@ sub _validate_runtime_result_top_level_values(
         unless ref($expected_counts) eq 'HASH' && !blessed($expected_counts)
             && !grep {
                 !_runtime_result_nonnegative_integer($expected_counts->{$_})
-            } qw(coverage faults scoreboards);
+            } qw(coverage expectations faults scoreboards);
     die "GHDL runtime expected fixture identity is invalid\n"
         unless _runtime_result_identity($expected_fixture_id);
     die "GHDL runtime expected random-decision digest is invalid\n"
@@ -1510,6 +1510,10 @@ sub _validate_runtime_result_top_level_values(
         'GHDL runtime diagnostic metric differs from its collection',
         '/result_produced/metrics/diagnostic_records')
         unless $metrics->{diagnostic_records} == @$diagnostics;
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime diagnostic count differs from authenticated trace records',
+        '/result_produced/diagnostics')
+        unless @$diagnostics == $expected_counts->{expectations};
     _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
         'GHDL runtime fault metric differs from its fault record',
         '/result_produced/metrics/fault_applications')
