@@ -3803,6 +3803,15 @@ route rejection must reproduce the diagnostic byte-for-byte. The default
 foundation/model suite passes at Files=2/Tests=11; the four high accepted levels
 pass their exact RAM-guarded sweep.
 
+The execution builder admits both model cardinalities from compact SemanticIR
+before normalizing any model-instance record, its bindings, or definition. It first checks
+the instance collection, then saturating-adds each referenced definition's
+state-cell count in authored instance order. Accepted construction must match
+those compact counts exactly; the original post-construction scalar-cell check
+remains an independent terminal defense. Thus either adjacent excess retains
+the same `/models` diagnostic and creates no model records, while admitted
+inputs retain their exact plan identity and checking semantics.
+
 The scoreboard-instance source binds one shared capacity-one in-order definition
 to 32, 1,024, or 4,096 instances; the capacity source binds one instance at
 4,096, 262,144, or 1,000,000. Its single-reset scenario lets the qualification

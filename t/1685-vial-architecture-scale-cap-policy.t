@@ -278,6 +278,22 @@ ok(
     } @{$policy->{groups}{execution_serialized_plan}{evidence}}),
     'execution plan policy cites the exact materialization-seam witness',
 );
+is(
+    $policy->{groups}{checking_models}{current_enforcement},
+    'compact_preflight_before_model_normalization_with_terminal_defense',
+    'checking model policy records compact preflight plus terminal defense',
+);
+is(
+    $policy->{groups}{checking_models}{selected_treatment},
+    'retain_compact_preflight_and_terminal_defense',
+    'checking model policy retains both enforcement layers',
+);
+ok(
+    scalar(grep {
+        $_ eq 't/1711-vial-execution-model-cardinality-preflight.t'
+    } @{$policy->{groups}{checking_models}{evidence}}),
+    'checking model policy cites the exact normalization-seam witness',
+);
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;
 my @catalog_axes;

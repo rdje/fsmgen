@@ -830,7 +830,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement and prove explicit architecture resource caps and graceful bounded failure.`
   Acceptance: `Apply the selected caps at the earliest authoritative stages with deterministic diagnostics, atomic no-partial-output behavior, same-volume cleanup, boundary/over-bound tests, and unchanged accepted-profile semantics; host exhaustion and external-tool crashes are not accepted as product limit enforcement.`
-  Verification: `Clean predecessor b441e7a8b closes measured-family publication before this pivot. Query-first audit of decisions 0056/0059/0072, the immutable calibration closure, current contracts/builders, focused tests, and Git history separates limit interaction, measured route-boundary, and preflight-dominance evidence. The work is partitioned by authoritative stage so policy selection cannot be hidden inside a mechanism repair and accepted measurement levels remain unchanged until .17.4.1 selects the cross-layer contract. No parser, IR, bridge, execution, backend, runtime, support, capacity, budget, or public-API behavior changes in activation.`
+  Verification: `Clean predecessor b441e7a8b closes measured-family publication. The activation partitions cap work by authoritative stage under decisions 0056/0059/0072, preserves all selected measurement levels, and changes no product behavior or claim.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4: activate architecture cap hardening`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8`
 
@@ -856,8 +856,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Enforce the selected checking-state resource caps before avoidable state-service materialization.`
   Acceptance: `Implement only the .17.4.1-selected checking contract for models, scalar cells, scoreboards and capacity, coverage, faults, and random occurrences. Preserve exact accepted checking semantics and replay while proving earliest deterministic rejection, no partial checking result, bounded construction, and guarded checking_state_v1 boundaries.`
-  Verification: `Clean 5b3860fc0 closes .17.4.4. Decision 0093 confines this activation to checking models, scoreboards, coverage, faults, and randomness; model admission is next. No behavior changes.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: activate checking cap hardening`
+  Verification: `Clean 5b3860fc0 closes .17.4.4. Model/scalar cardinality now preflights compact SemanticIR before normalization, retains terminal defense, exact diagnostics, and accepted plan identity; t1630/t1685/t1711 pass Files=3/Tests=83. Scoreboard admission is next.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: activate checking cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5: preflight model cardinality`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6`
   Status: `proposed`
   Goal: `Enforce the selected backend-emission resource caps before partial artifact publication.`
@@ -7791,8 +7791,8 @@ The completed node records above and their named Git commits remain the canonica
 - [x] **ADDRESSED (verified)** — RED t1624/t1625 entered `_index_bridge` three times per excess; GREEN `Files=3, Tests=53` preflights both measures, retains diagnostics/accepted and later-plan-cap identities, and keeps terminal checks.
 - [x] **NO REGRESSION** — The focused set reports `Files=7, Tests=75`; syntax, every mdBook chapter, Knowledge Map (1,156 facts/6,139 questions), claims, task, locality, containment, staged-result, diff, ceiling, and doctrine gates pass. Full CI/push remain deferred.
 
-## Acceptance Checklist (enforced) — `.17.4.5` bounded activation
+## Acceptance Checklist (enforced) — `.17.4.5` model-cardinality preflight
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'after_model_normalization' -- perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` identifies `951720257`: checking-model admission is late and owned by `.17.4.5`; clean `5b3860fc0` closes execution hardening first.
-- [x] **ADDRESSED (verified)** — `.17.4.4` is done and `.17.4.5` alone is active; task index, Memory, and mdBook agree that model-instance/scalar-cell admission is next. No product code changed.
-- [x] **NO REGRESSION** — Policy t1685 reports `All tests successful` at `Files=1, Tests=60`; syntax, mdBook, Knowledge Map, claims, task, locality, containment, diff, and doctrines close this activation. Full CI/push remain deferred.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'after_model_normalization' -- perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` identifies `951720257`; `_build_models` normalized every model record before either known count was admitted.
+- [x] **ADDRESSED (verified)** — Compact preflight now saturating-counts instance references before `_build_models`; accepted terminal counts must agree, the scalar terminal defense remains, and t1711 pins both one-over diagnostics plus the accepted plan identity.
+- [x] **NO REGRESSION** — Model/policy coverage reports `All tests successful` at `Files=3, Tests=83`; syntax, mdBook, Knowledge Map, claims, task, locality, containment, staged diff, and doctrines close the slice. Full CI/push remain deferred.

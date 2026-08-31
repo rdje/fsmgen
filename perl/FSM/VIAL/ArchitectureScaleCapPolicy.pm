@@ -306,9 +306,13 @@ my $GROUPS = {
     checking_models => _group(
         'FSM::Support::VIALExecutionContract', 'bind_plan',
         ['VIAL_EXECUTION_LIMIT_ERROR'], 'models path',
-        'after_model_normalization', 'no_execution_ir_plan_or_checking_result',
-        'move_same_layer_check_before_avoidable_materialization', '.17.4.5',
-        ['t/1630-vial-architecture-scale-checking-models.t'],
+        'compact_preflight_before_model_normalization_with_terminal_defense',
+        'no_execution_ir_plan_or_checking_result',
+        'retain_compact_preflight_and_terminal_defense', '.17.4.5',
+        [
+            't/1630-vial-architecture-scale-checking-models.t',
+            't/1711-vial-execution-model-cardinality-preflight.t',
+        ],
     ),
     checking_scoreboards => _group(
         'FSM::Support::VIALExecutionContract', 'parse_validate_or_bind_plan',

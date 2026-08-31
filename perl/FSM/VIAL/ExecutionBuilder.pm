@@ -261,12 +261,17 @@ sub _build($raw, $qualification_profile = undef) {
         $random_occurrences,
     );
 
+    my $model_cardinality = _preflight_model_cardinality($ctx);
     my ($models, $scalar_state_cells) = _build_models($ctx);
+    _limit('model_instances', scalar(@$models), '/models');
+    _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+        'model cardinality changed after compact preflight', '/models')
+        unless scalar(@$models) == $model_cardinality->{model_instances}
+            && $scalar_state_cells == $model_cardinality->{scalar_state_cells};
     my ($scoreboards, $scoreboard_capacity) = _build_scoreboards($ctx);
     my $coverage = _normalize_node($ctx, $fixture->{coverage});
     my $faults = _normalize_node($ctx, $fixture->{faults});
     my $coverage_materialization = _coverage_materialization_count($fixture->{coverage});
-    _limit('model_instances', scalar(@{$fixture->{instances}{model_instances}}), '/models');
     _limit('scoreboard_instances', scalar(@{$fixture->{instances}{scoreboard_instances}}), '/scoreboards');
     _limit('coverpoints', scalar(@{$fixture->{coverage}{coverpoints}}), '/coverage');
     _limit('coverage_bins_and_cross_tuples', $coverage_materialization, '/coverage');
@@ -2430,6 +2435,32 @@ sub _validate_normalized_value($value, $type_id, $type) {
         $type_id, 'two_state', $type->{signed}, $type->{width});
     _throw('VIAL_REPLAY_ERROR', 'replay', 'replay value is not canonically normalized', '/replay_manifest/decisions/value')
         unless _canonical_json($expected) eq _canonical_json($value);
+}
+
+sub _preflight_model_cardinality($ctx) {
+    my $instances = $ctx->{fixture}{instances}{model_instances};
+    my $model_instances = scalar(@$instances);
+    _limit('model_instances', $model_instances, '/models');
+
+    my %scalar_cells_by_model = map {
+        $_->{semantic_id} => scalar(@{$_->{state}})
+    } @{$ctx->{package}{models}};
+    my $scalar_state_cells = 0;
+    my $ceiling = $LIMIT{scalar_state_cells};
+    for my $instance (@$instances) {
+        my $model_id = $instance->{model_id};
+        _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+            'model instance references no normalized definition', '/models')
+            unless exists $scalar_cells_by_model{$model_id};
+        $scalar_state_cells = _bounded_count_add(
+            $scalar_state_cells, $scalar_cells_by_model{$model_id}, $ceiling,
+        );
+        _limit('scalar_state_cells', $scalar_state_cells, '/models');
+    }
+    return {
+        model_instances => $model_instances,
+        scalar_state_cells => $scalar_state_cells,
+    };
 }
 
 sub _build_models($ctx) {

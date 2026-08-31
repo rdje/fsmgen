@@ -15,6 +15,7 @@ answers:
   - "when is the VIAL execution operations-per-scenario cap enforced?"
   - "when does VIAL random-attempt exhaustion stop plan construction?"
   - "when is the VIAL serialized-plan byte cap enforced?"
+  - "when are VIAL model-instance and scalar-state-cell caps enforced?"
 date: 2026-08-31
 status: current
 tags: [vial, architecture-scale, limits, bounded-failure, route-authority]
@@ -54,6 +55,7 @@ evidence: >-
   t/1709-vial-execution-binding-cardinality-preflight.t;
   t/1710-vial-execution-random-attempt-authority.t;
   t/1634-vial-architecture-scale-checking-random-replay.t;
+  t/1711-vial-execution-model-cardinality-preflight.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -86,6 +88,7 @@ reverify: >-
   t/1709-vial-execution-binding-cardinality-preflight.t
   t/1710-vial-execution-random-attempt-authority.t
   t/1634-vial-architecture-scale-checking-random-replay.t
+  t/1711-vial-execution-model-cardinality-preflight.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -165,7 +168,8 @@ retain authority. SemanticIR and bridge remain earlier normal-route authorities;
 execution checks defend internal inputs, with diagnostics and accepted plan
 identity unchanged.
 
-The guarded exact semantic-catalog and bridge-fanout matrices close every
-selected parser/SemanticIR and bridge qualification, boundary, excess, and cap
-interaction through canonical oracles. Execution hardening remains active;
-later layers retain their separate task owners and nonclaims.
+Before model normalization, checking admission counts instances and
+saturating-adds each referenced definition's scalar cells. Both excesses retain
+`/models` and create no model records; accepted terminal counts must equal
+preflight, with the scalar terminal check retained. Other checking groups and
+later layers keep their separate owners and nonclaims.
