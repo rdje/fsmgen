@@ -37,14 +37,14 @@
          ]
       },
       {
-         "byte_length" : 46277,
+         "byte_length" : 46373,
          "kind" : "vhdl_source",
          "language" : "vhdl",
          "relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
          "role" : "portable_vhdl_fixture_top",
-         "sha256" : "3a2ff51c2ce48eec1f1c56e684857bccc5238f2ab7e894c22897d00a9e8dabf3",
+         "sha256" : "ee482c162829f44ee5319818d1c09001e8e1e9d1b0a969ab7c232778e9fd0c7c",
          "source_ids" : [
-            "3a2ff51c2ce48eec1f1c56e684857bccc5238f2ab7e894c22897d00a9e8dabf3",
+            "ee482c162829f44ee5319818d1c09001e8e1e9d1b0a969ab7c232778e9fd0c7c",
             "plan/e236297c8b434a9b374d1800112841e00327bdbd5d8d9130440bd20681fbed6e"
          ]
       },
@@ -319,7 +319,7 @@
             "/backend_bindings"
          ],
          "generated_end_column" : 37,
-         "generated_end_line" : 835,
+         "generated_end_line" : 837,
          "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
          "generated_start_column" : 1,
          "generated_start_line" : 1,
@@ -1523,7 +1523,7 @@
             "/domains/0"
          ],
          "generated_end_column" : 30,
-         "generated_end_line" : 834,
+         "generated_end_line" : 836,
          "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
          "generated_start_column" : 1,
          "generated_start_line" : 68,
@@ -1764,10 +1764,10 @@
       {
          "bridge_fact_paths" : [],
          "generated_end_column" : 14,
-         "generated_end_line" : 579,
+         "generated_end_line" : 581,
          "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
          "generated_start_column" : 1,
-         "generated_start_line" : 576,
+         "generated_start_line" : 578,
          "generated_symbol" : "vial_model_00_count",
          "plan_paths" : [
             "/models/0"
@@ -1792,10 +1792,10 @@
       {
          "bridge_fact_paths" : [],
          "generated_end_column" : 14,
-         "generated_end_line" : 583,
+         "generated_end_line" : 585,
          "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
          "generated_start_column" : 1,
-         "generated_start_line" : 580,
+         "generated_start_line" : 582,
          "generated_symbol" : "vial_model_01_count",
          "plan_paths" : [
             "/models/1"

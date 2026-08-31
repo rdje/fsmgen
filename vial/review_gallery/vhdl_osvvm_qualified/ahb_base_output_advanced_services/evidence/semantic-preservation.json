@@ -31,11 +31,11 @@
       },
       {
          "advanced_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
-         "advanced_sha256" : "3a2ff51c2ce48eec1f1c56e684857bccc5238f2ab7e894c22897d00a9e8dabf3",
+         "advanced_sha256" : "ee482c162829f44ee5319818d1c09001e8e1e9d1b0a969ab7c232778e9fd0c7c",
          "byte_identical" : true,
-         "byte_length" : 46277,
+         "byte_length" : 46373,
          "portable_relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_tb.vhd",
-         "portable_sha256" : "3a2ff51c2ce48eec1f1c56e684857bccc5238f2ab7e894c22897d00a9e8dabf3",
+         "portable_sha256" : "ee482c162829f44ee5319818d1c09001e8e1e9d1b0a969ab7c232778e9fd0c7c",
          "role" : "vhdl_fixture_top"
       },
       {

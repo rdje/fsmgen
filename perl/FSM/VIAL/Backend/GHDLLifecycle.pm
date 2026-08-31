@@ -1117,6 +1117,9 @@ sub _phase_result_produced($session) {
     my $decoded = _decode_runtime_result_record(
         $output, $RESULT_RECORD_MAX_BYTES,
     );
+    _validate_runtime_result_plan_identity(
+        $decoded, $session->{validation}{expected_plan_id},
+    );
     push @{$session->{objects}}, _write_object(
         $session, 'normalized_result', _canonical($decoded) . "\n", 0,
     );
@@ -1167,6 +1170,28 @@ sub _decode_runtime_result_record($output, $byte_limit) {
             && ($decoded->{schema_version} // 0) == 1
             && ($decoded->{status} // '') eq 'pass';
     return $decoded;
+}
+
+sub _validate_runtime_result_plan_identity($decoded, $expected_plan_id) {
+    die "GHDL runtime expected plan identity is invalid\n"
+        unless defined($expected_plan_id) && !ref($expected_plan_id)
+            && $expected_plan_id =~ m{\Aplan/[0-9a-f]{64}\z};
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime result plan identity differs from trace authority',
+        '/result_produced/plan_id')
+        unless defined($decoded->{plan_id}) && !ref($decoded->{plan_id})
+            && $decoded->{plan_id} eq $expected_plan_id;
+    my $projection = $decoded->{parity_projection};
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime parity projection is not one object',
+        '/result_produced/parity_projection')
+        unless ref($projection) eq 'HASH' && !blessed($projection);
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime parity-projection plan identity differs from trace authority',
+        '/result_produced/parity_projection/plan_id')
+        unless defined($projection->{plan_id}) && !ref($projection->{plan_id})
+            && $projection->{plan_id} eq $expected_plan_id;
+    return;
 }
 
 sub _phase_assembled($session) {

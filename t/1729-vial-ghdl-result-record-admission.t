@@ -14,11 +14,14 @@ use FSM::VIAL::Backend::GHDLLifecycle;
 use FSM::VIAL::Backend::ResultProducer;
 
 my $json = JSON::PP->new->canonical(1);
+my $expected_plan_id = 'plan/' . ('a' x 64);
 my $manifest = {map { $_ => undef }
     @{FSM::VIAL::Backend::ResultProducer->manifest_keys}};
 $manifest->{schema} = 'fsmgen.verification_result_manifest.v1';
 $manifest->{schema_version} = 1;
 $manifest->{status} = 'pass';
+$manifest->{plan_id} = $expected_plan_id;
+$manifest->{parity_projection} = {plan_id => $expected_plan_id};
 my $encoded = $json->encode($manifest);
 
 subtest 'canonical result is admitted at the exact byte boundary' => sub {
@@ -68,6 +71,32 @@ subtest 'result manifest top-level vocabulary is closed' => sub {
         'foreign shared manifest key points to result production');
 };
 
+subtest 'result plan identities match the sealed trace authority' => sub {
+    my $top_level = clone($manifest);
+    $top_level->{plan_id} = 'plan/' . ('b' x 64);
+    my $top_error = identity_failure($top_level);
+    is($top_error->{code}, 'VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'foreign result plan identity rejects');
+    is($top_error->{path}, '/result_produced/plan_id',
+        'foreign result plan identity has the exact path');
+
+    my $projection = clone($manifest);
+    $projection->{parity_projection}{plan_id} = 'plan/' . ('b' x 64);
+    my $projection_error = identity_failure($projection);
+    is($projection_error->{code}, 'VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'foreign parity-projection plan identity rejects');
+    is($projection_error->{path}, '/result_produced/parity_projection/plan_id',
+        'foreign parity-projection plan identity has the exact path');
+
+    my $wrong_shape = clone($manifest);
+    $wrong_shape->{parity_projection} = [];
+    my $shape_error = identity_failure($wrong_shape);
+    is($shape_error->{code}, 'VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'non-object parity projection rejects');
+    is($shape_error->{path}, '/result_produced/parity_projection',
+        'non-object parity projection has the exact path');
+};
+
 subtest 'record cardinality and JSON shape remain fail closed' => sub {
     my $duplicate = decode_failure(
         "$encoded\nFSMGEN_VIAL_RESULT_V1\t$encoded",
@@ -97,6 +126,20 @@ sub decode_failure {
         1;
     };
     ok(!$ok, 'controlled result record rejects');
+    my $error = $@;
+    isa_ok($error, 'FSM::VIAL::Backend::GHDLLifecycle::Failure');
+    return ref($error) ? $error : {};
+}
+
+sub identity_failure {
+    my ($candidate) = @_;
+    my $ok = eval {
+        FSM::VIAL::Backend::GHDLLifecycle::_validate_runtime_result_plan_identity(
+            $candidate, $expected_plan_id,
+        );
+        1;
+    };
+    ok(!$ok, 'foreign result identity rejects');
     my $error = $@;
     isa_ok($error, 'FSM::VIAL::Backend::GHDLLifecycle::Failure');
     return ref($error) ? $error : {};

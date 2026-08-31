@@ -1724,7 +1724,9 @@ sub _render_fixture(%arg) {
             _vhdl_textio_write('result_line', '"}');
     }
     push @line,
-        _vhdl_textio_write('result_line', '],"schema":"fsmgen.vial_vhdl_portable_outcomes.v1","schema_version":1},"plan_id":"'),
+        _vhdl_textio_write('result_line', '],"plan_id":"'),
+        '      write(result_line, VIAL_PLAN_ID);',
+        _vhdl_textio_write('result_line', '","schema":"fsmgen.vial_vhdl_portable_outcomes.v1","schema_version":1},"plan_id":"'),
         '      write(result_line, VIAL_PLAN_ID);',
         _vhdl_textio_write('result_line', '","portable_parity_eligible":false,"random_decisions":' . $random_decisions . ',"result_id":null,"samples":[],"scenario_results":[');
     for my $index (0 .. $#{$execution->{scenarios}}) {

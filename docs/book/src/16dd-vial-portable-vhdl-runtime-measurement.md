@@ -185,10 +185,13 @@ persisting the normalized object. It also derives the exact top-level
 vocabulary from the shared result-manifest producer: any missing or foreign
 member rejects. This closure exposed an omitted `samples` member in the VHDL
 producer itself; the emitter, both checked galleries, and both exact GHDL
-qualification reports now carry the repaired complete manifest. Exact equality
-passes; one excess byte or a semantically identical noncanonical spelling
-rejects without a result object. The surrounding run-capture ceiling remains
-an independent earlier defense.
+qualification reports now carry the repaired complete manifest. The outer
+result and its VHDL parity projection must also carry the exact plan identity
+already sealed for trace validation. Adding that check exposed a missing plan
+identity in the projection producer; producer and authenticated evidence are
+repaired together. Exact equality passes; one excess byte or a semantically
+identical noncanonical spelling rejects without a result object. The
+surrounding run-capture ceiling remains an independent earlier defense.
 
 The shared production process supervisor records containment, spawn, successful
 `exec`, first output, exit, timeout/capture status, signal, and complete process-

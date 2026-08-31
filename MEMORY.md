@@ -8,8 +8,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
   (`active`; runtime-stream cap hardening under decisions `0093`/`0083`)
-- next_action: audit and close the GHDL lifecycle's nested normalized-result
-  semantic identities after exact top-level manifest admission in `.17.4.7`.
-- in_flight_uncommitted: none after result-manifest producer/admission repair.
+- next_action: bind GHDL normalized-result scenario/run identities to the sealed
+  trace authority after plan-identity closure in `.17.4.7`.
+- in_flight_uncommitted: none after result plan-identity producer/admission repair.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none; immutable `.17.3` evidence is the selection input.
