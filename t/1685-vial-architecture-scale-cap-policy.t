@@ -262,6 +262,22 @@ ok(
     } @{$policy->{groups}{execution_random_attempts}{evidence}}),
     'execution random policy cites the final-materialization seam witness',
 );
+is(
+    $policy->{groups}{execution_serialized_plan}{current_enforcement},
+    'preflight_projection_plus_terminal_defense',
+    'execution plan policy records projection plus terminal defense',
+);
+is(
+    $policy->{groups}{execution_serialized_plan}{selected_treatment},
+    'retain_preflight_and_terminal_defense',
+    'execution plan policy retains both byte authorities',
+);
+ok(
+    scalar(grep {
+        $_ eq 't/1634-vial-architecture-scale-checking-random-replay.t'
+    } @{$policy->{groups}{execution_serialized_plan}{evidence}}),
+    'execution plan policy cites the exact materialization-seam witness',
+);
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;
 my @catalog_axes;

@@ -14,6 +14,7 @@ answers:
   - "does VIAL recheck selected unit and domain cardinality after SemanticIR and bridge validation?"
   - "when is the VIAL execution operations-per-scenario cap enforced?"
   - "when does VIAL random-attempt exhaustion stop plan construction?"
+  - "when is the VIAL serialized-plan byte cap enforced?"
 date: 2026-08-31
 status: current
 tags: [vial, architecture-scale, limits, bounded-failure, route-authority]
@@ -52,6 +53,7 @@ evidence: >-
   t/1708-vial-execution-source-map-cap-order.t;
   t/1709-vial-execution-binding-cardinality-preflight.t;
   t/1710-vial-execution-random-attempt-authority.t;
+  t/1634-vial-architecture-scale-checking-random-replay.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -83,6 +85,7 @@ reverify: >-
   t/1708-vial-execution-source-map-cap-order.t
   t/1709-vial-execution-binding-cardinality-preflight.t
   t/1710-vial-execution-random-attempt-authority.t
+  t/1634-vial-architecture-scale-checking-random-replay.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -152,6 +155,9 @@ After bridge indexing, compact binding cardinality is admitted before binding
 records; the terminal count remains defense and accepted counts agree exactly.
 Random exhaustion is decided during projection before plan-byte preflight or
 final decision, ExecutionIR, and report materialization.
+Serialized-plan bytes are admitted from the exact compact projection before
+those final materializers; accepted terminal canonical bytes must agree and
+the terminal cap remains defense in depth.
 Novel execution types are admitted before cloning, caching, or insertion; a
 duplicate shape stays reusable at the ceiling. Base source maps are admitted
 before location cloning or append; later base-plus-random and exact-plan checks

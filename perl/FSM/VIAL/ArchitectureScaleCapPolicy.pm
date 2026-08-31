@@ -298,7 +298,10 @@ my $GROUPS = {
         'preflight_projection_plus_terminal_defense',
         'no_execution_ir_plan_or_replay',
         'retain_preflight_and_terminal_defense', '.17.4.4',
-        ['t/1612-vial-architecture-scale-execution-plan-over-limit.t'],
+        [
+            't/1612-vial-architecture-scale-execution-plan-over-limit.t',
+            't/1634-vial-architecture-scale-checking-random-replay.t',
+        ],
     ),
     checking_models => _group(
         'FSM::Support::VIALExecutionContract', 'bind_plan',
