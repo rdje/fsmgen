@@ -2508,6 +2508,21 @@ known count check before avoidable same-layer materialization, but accepted
 profile bytes and the absence of a total-operation capacity claim stay fixed;
 source/parser/SemanticIR enforcement hardening is now the active leaf.
 
+### Direct import-cap admission order
+
+The parser enforces the 64-source import ceiling as soon as one parsed source
+exposes a direct import list that cannot fit in the remaining import budget. It
+reports the first overflowing direct edge before recursively lexing or parsing
+any source from that list. Malformed imported bytes therefore cannot mask an
+already-known direct fan-out excess.
+
+The result remains one `VIAL_LIMIT_ERROR`, phase `limit`, message `imported
+sources exceed the 64-source limit`, at `/packages/0/imports`; no partial
+semantic report or `SemanticIR` escapes. Accepted import graphs retain their
+authored depth-first source order and semantic identities. The per-edge check
+also remains as a terminal defense for excess discovered only while traversing
+nested imports.
+
 ### Action-cap admission order
 
 A scenario admits at most 65,536 expanded actions. The semantic builder now

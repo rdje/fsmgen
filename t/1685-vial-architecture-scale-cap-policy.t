@@ -57,6 +57,16 @@ is(
     'retain_intrinsic_repeat_ceiling_and_overflow_safe_action_layering',
     'repeat policy retains its intrinsic ceiling and overflow-safe action layer',
 );
+is(
+    $policy->{groups}{semantic_parser_admission}{current_enforcement},
+    'source_bytes_before_lex_and_direct_import_fanout_before_recursion',
+    'parser policy records byte admission and direct fan-out preflight',
+);
+is(
+    $policy->{groups}{semantic_parser_admission}{selected_treatment},
+    'retain_early_preflight_and_per_edge_terminal_defense',
+    'parser policy retains both direct preflight and terminal edge defense',
+);
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;
 my @catalog_axes;

@@ -844,8 +844,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Enforce the selected source, parser, and SemanticIR resource caps at their earliest authoritative stages.`
   Acceptance: `Implement only the .17.4.1-selected semantic/parser contract; reject boundary excess before dependent expansion with stable diagnostics and paths, unchanged accepted SemanticIR, and no partial result or residue. Prove every semantic_catalog_v1 boundary and interaction, including literal-repeat versus expanded-action dominance, with focused default and guarded exact tests.`
-  Verification: `Clean selection commit 951720257d727e79f9e0986955655c8d330e0079 closes .17.4.1 before this pivot. Activation commit 93adfbd82 owns only source/parser/SemanticIR earliest-cap hardening under decision 0093. The first implementation slice reserves scenario action capacity before inspecting a next node and admits repeat copies with overflow-safe arithmetic; t1686 proves over-limit and exact-full precedence with no partial report, while t1550/t1601/t1620/t1621 retain accepted and established boundary behavior. Remaining parser/semantic cap audit stays active; bridge and later layers remain proposed.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: activate semantic cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: enforce action cap before further construction`
+  Verification: `Clean selection commit 951720257d727e79f9e0986955655c8d330e0079 closes .17.4.1 before this pivot. Activation commit 93adfbd82 owns only source/parser/SemanticIR earliest-cap hardening under decision 0093. The first implementation slice reserves scenario action capacity before inspecting a next node and admits repeat copies with overflow-safe arithmetic; t1686 proves over-limit and exact-full precedence with no partial report, while t1550/t1601/t1620/t1621 retain accepted and established boundary behavior. The direct-import slice preflights an already-visible 65th edge before recursive imported-source parsing; t1687 proves malformed imported bytes cannot mask the exact diagnostic and pins accepted 64-import projection/report identities. Remaining parser/semantic cap audit stays active; bridge and later layers remain proposed.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: activate semantic cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: enforce action cap before further construction; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2: preflight direct import fan-out before recursion`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3`
   Status: `proposed`
   Goal: `Enforce the selected HIAL-to-VIAL bridge resource caps before avoidable manifest materialization.`
@@ -7647,3 +7647,26 @@ The completed node records above and their named Git commits remain the canonica
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'action_count' --oneline -- perl/FSM/VIAL/SemanticBuilder.pm` locates the original terminal-only scenario count: `_action` built every sibling and repeat arithmetic before `_build_scenarios` compared the total, so a later malformed node masked an already-known action excess.
 - [x] **ADDRESSED (verified)** — RED t1686 first reports eight wrong-precedence assertions, then four after the initial reservation repair exposed the remaining pre-form gap. The builder now reserves each node before form inspection, checks repeat copies by division before multiplication, retains the terminal defense and exact scenario diagnostic, and returns no partial semantic report.
 - [x] **NO REGRESSION** — Focused guarded semantic/execution coverage reports `All tests successful` at `Files=6, Tests=66`; exact-boundary t1620, adjacent-excess t1621, core t1550, semantic-catalog t1601, policy t1685, and order/atomicity t1686 remain the declared set. The policy assertions pin the hardened action-admission and bounded-repeat enforcement metadata. mdBook, Knowledge Map, claim, task, locality, containment, staged-result, diff, and `[doctrine] all doctrine checks passed` close the slice; full CI/push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.2` direct-import admission
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'import_count' --oneline --
+  perl/FSM/VIAL/Parser.pm` identifies `be9c74163` as the original import-edge
+  implementation. Its loop counted and recursively parsed each earlier catalog
+  source before it reached an already-visible 65th direct edge, so malformed
+  imported token bytes could mask the declared import limit.
+- [x] **ADDRESSED (verified)** — The first `(broken)` probe correctly exposed
+  that semantic invalidity occurs after import traversal; refining the source
+  to the lexically incomplete `(` produced RED t1687 at `Failed 1/16` with
+  `unterminated '(' list` instead of the limit. The parser now compares the
+  parsed direct list with the remaining budget, reports the first overflowing
+  edge before recursion, and retains the per-edge nested-import defense. t1687
+  pins the exact diagnostic, no partial report, and both accepted 64-import
+  semantic identities; t1685 pins matching machine-policy metadata.
+- [x] **NO REGRESSION** — The first guarded aggregate invocation honestly
+  stopped after green t1550 because the selected `t/1554-vial-source-projection.t`
+  path does not exist. The corrected guarded parser/source/catalog/policy set
+  reports `All tests successful` at `Files=5, Tests=60`; `Parser.pm` is syntax
+  clean. mdBook, Knowledge Map, claims, task integrity, locality, containment,
+  staged-result, diff, and `[doctrine] all doctrine checks passed` close the
+  slice; full CI/push remain deferred by policy.

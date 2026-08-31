@@ -111,9 +111,14 @@ my $AXIS_GROUPS = {
 my $GROUPS = {
     semantic_parser_admission => _group(
         'FSM::VIAL::Parser', 'parse_validate', ['VIAL_LIMIT_ERROR'],
-        'source-or-import semantic path', 'early_before_semantic_ir',
-        'no_semantic_ir_or_artifact', 'verify_existing_early_boundary',
-        '.17.4.2', ['t/1601-vial-architecture-scale-semantic-catalog.t'],
+        'source-or-import semantic path',
+        'source_bytes_before_lex_and_direct_import_fanout_before_recursion',
+        'no_semantic_ir_or_artifact',
+        'retain_early_preflight_and_per_edge_terminal_defense',
+        '.17.4.2', [
+            't/1601-vial-architecture-scale-semantic-catalog.t',
+            't/1687-vial-parser-direct-import-cap-order.t',
+        ],
     ),
     semantic_declaration_cardinality => _group(
         'FSM::VIAL::SemanticBuilder', 'parse_validate', ['VIAL_LIMIT_ERROR'],

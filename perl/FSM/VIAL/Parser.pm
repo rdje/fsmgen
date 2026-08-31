@@ -221,7 +221,18 @@ sub _visit_source {
         line_ending => _line_ending($bytes),
     };
 
-    for my $import (_imports_from_form($form)) {
+    my @imports = _imports_from_form($form);
+    my $remaining_imports = MAX_IMPORTS - $state->{import_count};
+    if (@imports > $remaining_imports) {
+        my $span = $imports[$remaining_imports][2];
+        _throw(
+            'VIAL_LIMIT_ERROR', 'limit',
+            'imported sources exceed the 64-source limit',
+            $span, '/packages/0/imports',
+        );
+    }
+
+    for my $import (@imports) {
         my ($alias, $path, $span) = @{$import};
         _validate_source_name($path, $span, 'VIAL_IMPORT_ERROR');
         ++$state->{import_count};

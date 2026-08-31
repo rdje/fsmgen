@@ -15,12 +15,15 @@ evidence: >-
   docs/decisions/0093-architecture-scale-caps-are-component-ceilings-with-explicit-route-authority.md;
   perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm;
   t/1685-vial-architecture-scale-cap-policy.t;
+  perl/FSM/VIAL/Parser.pm;
+  t/1687-vial-parser-direct-import-cap-order.t;
   perl/FSM/VIAL/SemanticBuilder.pm;
   t/1686-vial-semantic-action-cap-order.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
   prove -Iperl t/1685-vial-architecture-scale-cap-policy.t
+  t/1687-vial-parser-direct-import-cap-order.t
   t/1686-vial-semantic-action-cap-order.t
 ---
 
@@ -32,6 +35,12 @@ boundary when one exists. It authorizes earlier same-layer enforcement and
 terminal defenses, but no limit increase, decrease, re-levelling, support,
 budget, capacity, or accepted-profile change. Decision [[vial-execution-scale-axis-outcomes]]
 retains the reachability evidence; decision `0093` is the rationale authority.
+
+Direct import fan-out that cannot fit the remaining 64-source import ceiling
+is rejected at the first overflowing direct edge before recursive catalog
+source parsing. Malformed imported bytes cannot mask the established import
+limit, while accepted depth-first ordering, semantic identities, and the
+per-edge nested-import defense remain unchanged.
 
 Scenario action accounting now reserves the 65,536-expanded-action ceiling
 before inspecting the next action node. Repeat bodies are checked once, then
