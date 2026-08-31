@@ -2584,6 +2584,26 @@ unchanged.
 prove -Iperl t/1718-vial-backend-osvvm-provider-admission-order.t
 ```
 
+### Native-UVM cap admission order
+
+Native-UVM emission retains its exact selected-shape negotiation before source
+rendering. For an admitted shape, it renders the fixed source set and checks
+the exact combined bytes first. Only then does it admit the source inventory
+and compact source-map specification count. A known byte, inventory, or map
+excess therefore returns no partial source map, performs no structural
+validation or review-closure construction, and publishes no artifact graph.
+
+The existing source-map ceiling remains profile-local. Accepted map entries
+must equal the compact preflight, and the complete artifact graph must still
+equal the independently derived fixed inventory at the terminal boundary.
+This changes construction order only: accepted bytes, ordering, identities,
+selected-shape scope, review status, and runtime/support nonclaims remain
+unchanged.
+
+```sh
+prove -Iperl t/1719-vial-backend-native-uvm-cap-order.t
+```
+
 ### Source-byte cap admission order
 
 The parser measures each source's encoded byte representation before lexing or

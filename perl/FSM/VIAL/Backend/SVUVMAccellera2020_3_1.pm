@@ -22,6 +22,14 @@ my $BASE = 'backends/sv_uvm_emit.accellera_2020_3_1';
 my $CONTRACT = 'docs/decisions/0050-vial-native-uvm-is-open-source-first-with-capability-gated-runtime.md';
 my $EMITTER_REVISION = 5;
 my $JSON = JSON::PP->new->canonical(1);
+my $GENERATED_SOURCE_BYTES_LIMIT = 16_777_216;
+my $SOURCE_ARTIFACT_COUNT = 10;
+my $SUPPORT_ARTIFACT_COUNT = 5;
+my $BACKEND_MANIFEST_ARTIFACT_COUNT = 1;
+my $TOTAL_ARTIFACT_COUNT = $SOURCE_ARTIFACT_COUNT
+    + $SUPPORT_ARTIFACT_COUNT
+    + $BACKEND_MANIFEST_ARTIFACT_COUNT;
+my $SOURCE_MAP_ENTRY_LIMIT = 1_000_000;
 
 my @RESULT_KEYS = qw(
     ok status backend_profile plan_id generated_top operation_id negotiation
@@ -225,7 +233,9 @@ sub _emit($raw) {
     $source_bytes += bytes::length($_->{content}) for @source_artifacts;
     _throw('VIAL_UVM_BACKEND_LIMIT_EXCEEDED',
         'generated native UVM source exceeds the 16 MiB backend cap', '/artifacts')
-        if $source_bytes > 16_777_216;
+        if $source_bytes > $GENERATED_SOURCE_BYTES_LIMIT;
+
+    my $artifact_count = _preflight_artifact_count(\@source_artifacts);
 
     my @spec = (
         @$types_specs, @$component_specs, @$interface_specs, @$notification_specs, @$service_specs,
@@ -237,6 +247,12 @@ sub _emit($raw) {
             bridge_paths => ['/units/0'], locations => [],
         ),
     );
+    my $source_map_entry_count =
+        _preflight_source_map_entry_count(\@spec);
+    _throw('VIAL_UVM_BACKEND_LIMIT_EXCEEDED',
+        'native UVM source map exceeds its record cap', '/source_map/entries')
+        if $source_map_entry_count > $SOURCE_MAP_ENTRY_LIMIT;
+
     my %source_text = map { $_->{relpath} => $_->{content} } @source_artifacts;
     my $source_map = {
         schema => $SOURCE_MAP_SCHEMA,
@@ -248,7 +264,9 @@ sub _emit($raw) {
     };
     _throw('VIAL_UVM_BACKEND_LIMIT_EXCEEDED',
         'native UVM source map exceeds its record cap', '/source_map/entries')
-        if @{$source_map->{entries}} > 1_000_000;
+        if @{$source_map->{entries}} > $SOURCE_MAP_ENTRY_LIMIT;
+    confess "native UVM source-map preflight disagrees with materialization\n"
+        unless @{$source_map->{entries}} == $source_map_entry_count;
 
     my $static = FSM::VIAL::Backend::SVUVMStaticValidator->validate({
         backend_profile => $BACKEND_PROFILE,
@@ -372,10 +390,10 @@ sub _emit($raw) {
         limits => {
             selected_units => 1,
             selected_domains => 1,
-            generated_source_artifacts => 10,
-            generated_source_bytes => 16_777_216,
-            total_artifacts => 16,
-            source_map_entries => 1_000_000,
+            generated_source_artifacts => $SOURCE_ARTIFACT_COUNT,
+            generated_source_bytes => $GENERATED_SOURCE_BYTES_LIMIT,
+            total_artifacts => $TOTAL_ARTIFACT_COUNT,
+            source_map_entries => $SOURCE_MAP_ENTRY_LIMIT,
             identifier_bytes => 255,
         },
         artifacts => \@referenced,
@@ -428,7 +446,7 @@ sub _emit($raw) {
         ($manifest_artifact, @source_artifacts, @support_artifacts);
     _throw('VIAL_UVM_BACKEND_LIMIT_EXCEEDED',
         'native UVM artifact graph does not match its sixteen-artifact matrix/review contract', '/artifacts')
-        unless @artifacts == 16;
+        unless @artifacts == $artifact_count;
 
     return _result({
         ok => JSON::PP::true,
@@ -3206,6 +3224,20 @@ sub _methodology_profile() {
         },
         execution_evidence => JSON::PP::false,
     };
+}
+
+sub _preflight_artifact_count($source_artifacts) {
+    _throw('VIAL_UVM_BACKEND_LIMIT_EXCEEDED',
+        'native UVM artifact graph does not match its sixteen-artifact matrix/review contract',
+        '/artifacts')
+        unless @$source_artifacts == $SOURCE_ARTIFACT_COUNT;
+    return $SOURCE_ARTIFACT_COUNT
+        + $SUPPORT_ARTIFACT_COUNT
+        + $BACKEND_MANIFEST_ARTIFACT_COUNT;
+}
+
+sub _preflight_source_map_entry_count($specs) {
+    return scalar @$specs;
 }
 
 sub _source_map_entries($specs, $source_text) {

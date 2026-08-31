@@ -25,6 +25,8 @@ answers:
   - "does portable VHDL have an independent source-map record cap?"
   - "when does OSVVM verify its provider relative to the portable VHDL foundation?"
   - "does a rejected OSVVM portable foundation touch the provider cache?"
+  - "when does native UVM admit its fixed source and artifact inventories?"
+  - "does native UVM preflight source-map capacity before entry materialization?"
 date: 2026-08-31
 status: current
 tags: [vial, architecture-scale, limits, bounded-failure, route-authority]
@@ -75,6 +77,8 @@ evidence: >-
   t/1717-vial-backend-portable-vhdl-cap-order.t;
   perl/FSM/VIAL/Backend/VHDLOSVVM2026_05.pm;
   t/1718-vial-backend-osvvm-provider-admission-order.t;
+  perl/FSM/VIAL/Backend/SVUVMAccellera2020_3_1.pm;
+  t/1719-vial-backend-native-uvm-cap-order.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -115,6 +119,7 @@ reverify: >-
   t/1716-vial-backend-portable-sv-cap-order.t
   t/1717-vial-backend-portable-vhdl-cap-order.t
   t/1718-vial-backend-osvvm-provider-admission-order.t
+  t/1719-vial-backend-native-uvm-cap-order.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -150,26 +155,23 @@ materialization. Saturating arithmetic, terminal defenses, earlier
 SemanticIR/bridge authorities, diagnostics, and accepted plan identities remain
 unchanged.
 
-Checking-state admission compactly preflights models/cells, scoreboard
-instances/capacity, coverage structure, faults, and random occurrences before
-normalization or operation-graph work. Accepted terminal counts must agree;
-existing semantic/parser and serialized-plan authorities, diagnostics, replay,
-and terminal defenses remain.
+Checking-state preflights models/cells, scoreboard capacity, coverage, faults,
+and random occurrences before dependent work. Accepted counts, prior
+authorities, diagnostics, replay, and terminal defenses remain.
 
-Portable SystemVerilog retains exact rendered-byte precedence, then compactly
-admits renderer specifications, two fixed maps, and seven ExecutionIR families
-before commands or entries. Accepted maps equal preflight and retain the
-terminal one-million-record defense.
+Profile emitters retain byte-first order. Portable SystemVerilog then preflights
+its selected map cap; portable VHDL admits fixed inventory and independently
+censuses its map without inventing a cap. Accepted counts must agree with
+materialization, and terminal defenses remain.
 
-Portable VHDL likewise measures its selected six sources against 16 MiB first,
-then admits fixed inventory before validation, review, commands, or support.
-Its compact map census must equal materialization (59 for the reference), while
-the expected seventeen-artifact graph is rechecked terminally. The census is
-an integrity oracle, not a new map cap or capacity claim.
+OSVVM admits portable sources, adapter, and translated map before provider
+verification. Known rejection and no-emission callbacks never verify; accepted
+callbacks lazily seal and reuse one provider result. Wrapper censuses remain
+integrity checks, not new caps or support claims.
 
-OSVVM now completes portable emission, fixed portable-source/adapter admission,
-and portable-map translation before provider verification. Known failure
-therefore returns without provider evidence or cache access. The first accepted
-callback emission lazily verifies one defensive provider result and the second
-reuses it; no-emission callbacks do not verify. Wrapper map/materialized-artifact
-censuses remain terminal integrity checks, not new caps or support claims.
+Native UVM keeps exact selected-shape negotiation before rendering. Accepted
+shapes retain exact source-byte precedence, then fixed source/total inventory
+and compact map-spec preflight before map materialization, static validation,
+or review closure. Accepted map and artifact materializations must equal those
+preflights, with terminal defenses retained; identities and nonclaims do not
+change.

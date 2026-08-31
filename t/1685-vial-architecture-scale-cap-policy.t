@@ -366,8 +366,8 @@ ok(
 );
 is(
     $policy->{groups}{backend_artifact_graph}{current_enforcement},
-    'portable_sv_map_cap_and_portable_vhdl_inventory_census_after_byte_first_then_osvvm_portable_inventory_translation_before_lazy_provider_with_terminal_validation',
-    'backend policy records portable-SV, portable-VHDL, and OSVVM admission order',
+    'profile_local_byte_first_map_inventory_preflight_with_osvvm_lazy_provider_and_terminal_validation',
+    'backend policy records all four profile-local admission orders',
 );
 is(
     $policy->{groups}{backend_artifact_graph}{selected_treatment},
@@ -391,6 +391,12 @@ ok(
         $_ eq 't/1718-vial-backend-osvvm-provider-admission-order.t'
     } @{$policy->{groups}{backend_artifact_graph}{evidence}}),
     'backend policy cites the OSVVM provider-admission witness',
+);
+ok(
+    scalar(grep {
+        $_ eq 't/1719-vial-backend-native-uvm-cap-order.t'
+    } @{$policy->{groups}{backend_artifact_graph}{evidence}}),
+    'backend policy cites the native-UVM admission-order witness',
 );
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;

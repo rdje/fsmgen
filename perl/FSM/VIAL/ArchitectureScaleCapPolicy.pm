@@ -365,7 +365,7 @@ my $GROUPS = {
         'FSM::VIAL::BackendEmissionAuthority', 'emit',
         ['profile_specific_backend_limit_error'],
         'backend artifact graph or generated source path',
-        'portable_sv_map_cap_and_portable_vhdl_inventory_census_after_byte_first_then_osvvm_portable_inventory_translation_before_lazy_provider_with_terminal_validation',
+        'profile_local_byte_first_map_inventory_preflight_with_osvvm_lazy_provider_and_terminal_validation',
         'no_partial_final_artifact_graph',
         'retain_profile_specific_component_ceilings', '.17.4.6',
         [
@@ -373,6 +373,7 @@ my $GROUPS = {
             't/1716-vial-backend-portable-sv-cap-order.t',
             't/1717-vial-backend-portable-vhdl-cap-order.t',
             't/1718-vial-backend-osvvm-provider-admission-order.t',
+            't/1719-vial-backend-native-uvm-cap-order.t',
         ],
     ),
     runtime_stream_envelopes => _group(
