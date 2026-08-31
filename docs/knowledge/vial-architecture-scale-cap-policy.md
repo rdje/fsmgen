@@ -31,6 +31,7 @@ answers:
   - "is native UVM included in the executable runtime-stream cap scope?"
   - "when does portable SystemVerilog reject a trace that cannot fit the public artifact graph?"
   - "when does portable SystemVerilog reject a produced result that cannot fit the public artifact graph?"
+  - "does the portable SystemVerilog lifecycle enforce its final backend artifact graph?"
 date: 2026-08-31
 status: current
 tags: [vial, architecture-scale, limits, bounded-failure, route-authority]
@@ -88,6 +89,7 @@ evidence: >-
   perl/FSM/VIAL/Backend/VerilatorLifecycle.pm;
   t/1721-vial-runtime-trace-artifact-preflight.t;
   t/1722-vial-runtime-result-artifact-preflight.t;
+  t/1723-vial-runtime-final-artifact-graph.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -128,6 +130,7 @@ reverify: >-
   t/1720-vial-runtime-structural-artifact-preflight.t
   t/1721-vial-runtime-trace-artifact-preflight.t
   t/1722-vial-runtime-result-artifact-preflight.t
+  t/1723-vial-runtime-final-artifact-graph.t
   t/1716-vial-backend-portable-sv-cap-order.t
   t/1717-vial-backend-portable-vhdl-cap-order.t
   t/1718-vial-backend-osvvm-provider-admission-order.t
@@ -197,4 +200,7 @@ trace-object writes or ResultProducer. After successful result production, a
 third bound adds the exact final replacement profile, compile/run transcripts,
 trace, result manifest, and immutable emission. Adjacent excess rejects before
 result-payload persistence or assembly; final backend-manifest and Tool graph
-checks remain later defenses. This changes no cap or claim.
+checks remain later defenses. After the backend manifest is finalized, the
+lifecycle enforces exact completed-backend count and bytes before Runner return;
+the Tool then retains its complete plan-plus-backend terminal validation. This
+changes no cap or claim.

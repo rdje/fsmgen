@@ -1223,6 +1223,7 @@ sub _finalize_public_result($session, $assembly, $clone_artifacts = 1) {
     my @artifacts = map {
         $clone_artifacts ? _clone($artifact{$_}) : $artifact{$_}
     } sort keys %artifact;
+    _enforce_public_backend_artifact_graph(\@artifacts);
     return {
         ok => JSON::PP::true,
         status => $assembly->{result}{status},
@@ -1237,6 +1238,25 @@ sub _finalize_public_result($session, $assembly, $clone_artifacts = 1) {
             removed => JSON::PP::true,
         },
     };
+}
+
+sub _enforce_public_backend_artifact_graph($artifacts) {
+    my $limits = build_vial_tooling_contract()->{limits};
+    _throw(
+        'VIAL_RUN_LIMIT_EXCEEDED',
+        'completed backend artifact count exceeds the public artifact limit '
+            . $limits->{artifacts},
+        '/artifacts',
+    ) if @$artifacts > $limits->{artifacts};
+    my $bytes = 0;
+    $bytes += bytes::length($_->{content}) for @$artifacts;
+    _throw(
+        'VIAL_RUN_LIMIT_EXCEEDED',
+        'completed backend artifact bytes exceed the public artifact limit '
+            . "$limits->{artifact_bytes} bytes",
+        '/artifacts',
+    ) if $bytes > $limits->{artifact_bytes};
+    return 1;
 }
 
 sub _finalize_measurement_result($session, $assembly) {

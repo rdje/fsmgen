@@ -2641,13 +2641,22 @@ once because its content must exist before this bound is knowable. The final
 backend manifest and Tool-owned plan layer remain excluded until their exact
 later boundaries.
 
-The next slice audits the complete lifecycle backend graph before Runner
-return; later slices retain the separate VHDL and OSVVM profile authorities.
+The lifecycle finalizer supplies the terminal backend boundary. After replacing
+the backend manifest, it measures the complete sorted backend graph against the
+same 256-artifact and 67,108,864-byte contract before Runner return or
+measurement publication. Exact boundaries pass; adjacent count or byte excess
+uses `VIAL_RUN_LIMIT_EXCEEDED` at `/artifacts`. The Tool subsequently validates
+the larger plan-plus-backend graph, so neither boundary substitutes for the
+other.
+
+The next slice audits compile/run capture, timeout, and cleanup closure; later
+slices retain the separate VHDL and OSVVM profile authorities.
 
 ```sh
 prove -Iperl t/1720-vial-runtime-structural-artifact-preflight.t \
   t/1721-vial-runtime-trace-artifact-preflight.t \
-  t/1722-vial-runtime-result-artifact-preflight.t
+  t/1722-vial-runtime-result-artifact-preflight.t \
+  t/1723-vial-runtime-final-artifact-graph.t
 ```
 
 ### Source-byte cap admission order

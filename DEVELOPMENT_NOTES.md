@@ -1112,3 +1112,17 @@ the replacement tool profile, both normalized transcripts, normalized trace,
 and the produced result manifest. The backend manifest and Tool plan layer are
 still unknown and remain for terminal checks. This preserves a sound lower
 bound while preventing avoidable large payload persistence and assembly.
+
+## 2026-08-31: Backend and Tool artifact graphs retain distinct terminal scopes
+
+The lifecycle knows the exact backend graph only after it replaces the backend
+manifest. The Tool knows the complete public transaction graph only after it
+combines that backend result with planning artifacts and rebuilds its own
+manifests. Treating either as the other's authority would leave one direct
+consumer unbounded or would force the lifecycle to trust artifacts it never
+receives.
+
+Both therefore enforce the same count and byte contract over their exact local
+scope. The lifecycle rejects its completed backend graph before Runner return;
+the Tool retains the later complete transaction check. This is defense in depth
+without a second cap or an inferred whole-route formula.
