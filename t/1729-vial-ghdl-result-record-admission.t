@@ -12,6 +12,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::VIAL::Backend::GHDLLifecycle;
 use FSM::VIAL::Backend::ResultProducer;
+use FSM::VIAL::Backend::VHDLResultSchema;
 
 my $json = JSON::PP->new->canonical(1);
 my $expected_plan_id = 'plan/' . ('a' x 64);
@@ -24,11 +25,35 @@ $manifest->{schema_version} = 1;
 $manifest->{status} = 'pass';
 $manifest->{plan_id} = $expected_plan_id;
 $manifest->{scenario_results} = [map {
-    {run_id => $expected_run_id[$_], scenario_id => $scenario_id[$_]}
+    {
+        run_id => $expected_run_id[$_],
+        scenario_id => $scenario_id[$_],
+        status => 'pass',
+        start_time => {},
+        end_time => {},
+        completion_reason => 'completed',
+        expectation_ids => [],
+        diagnostic_ids => [],
+        cancelled_fiber_ids => [],
+        logical_cycle_count => 1,
+    }
 } 0 .. $#scenario_id];
 $manifest->{parity_projection} = {
     plan_id => $expected_plan_id,
-    outcomes => [map {{scenario_id => $_}} @scenario_id],
+    schema => 'fsmgen.vial_vhdl_portable_outcomes.v1',
+    schema_version => 1,
+    outcomes => [map {{
+        bus_accepts => 0,
+        final_read_data_bits => '00000000',
+        final_ready => 1,
+        final_response => 0,
+        nonzero_read_data_cycles => 0,
+        ready_low_cycles => 0,
+        response_error_cycles => 0,
+        scenario_id => $_,
+        status => 'pass',
+        storage_bits => '00000000',
+    }} @scenario_id],
 };
 my $encoded = $json->encode($manifest);
 
@@ -144,6 +169,96 @@ subtest 'result scenario identities match ordered trace runs' => sub {
         'foreign parity scenario rejects at its ordered slot');
 };
 
+subtest 'VHDL parity vocabulary has one defensive schema authority' => sub {
+    is(FSM::VIAL::Backend::VHDLResultSchema->parity_schema,
+        'fsmgen.vial_vhdl_portable_outcomes.v1',
+        'selected parity schema is exact');
+    is(FSM::VIAL::Backend::VHDLResultSchema->parity_schema_version, 1,
+        'selected parity schema version is exact');
+    is_deeply(
+        FSM::VIAL::Backend::VHDLResultSchema->parity_projection_keys,
+        [qw(outcomes plan_id schema schema_version)],
+        'projection vocabulary is exact');
+    my $mutable = FSM::VIAL::Backend::VHDLResultSchema->parity_outcome_keys;
+    is_deeply($mutable, [qw(
+        bus_accepts final_read_data_bits final_ready final_response
+        nonzero_read_data_cycles ready_low_cycles response_error_cycles
+        scenario_id status storage_bits
+    )], 'outcome vocabulary is exact');
+    pop @$mutable;
+    is(scalar @{FSM::VIAL::Backend::VHDLResultSchema->parity_outcome_keys}, 10,
+        'callers cannot mutate the schema authority');
+};
+
+subtest 'nested result vocabularies and statuses remain closed' => sub {
+    my $valid = eval {
+        validate_result_shapes(clone($manifest));
+        1;
+    };
+    ok($valid, 'closed pass-consistent nested result is admitted');
+
+    my $missing_scenario = clone($manifest);
+    delete $missing_scenario->{scenario_results}[0]{logical_cycle_count};
+    is(shape_failure($missing_scenario)->{path},
+        '/result_produced/scenario_results/0/logical_cycle_count',
+        'missing shared scenario member rejects at its exact path');
+
+    my $foreign_scenario = clone($manifest);
+    $foreign_scenario->{scenario_results}[0]{foreign_runtime_field} = 1;
+    is(shape_failure($foreign_scenario)->{path},
+        '/result_produced/scenario_results/0/foreign_runtime_field',
+        'foreign shared scenario member rejects at its exact path');
+
+    my $failed_scenario = clone($manifest);
+    $failed_scenario->{scenario_results}[0]{status} = 'fail';
+    is(shape_failure($failed_scenario)->{path},
+        '/result_produced/scenario_results/0/status',
+        'non-pass scenario rejects beneath a passing result');
+
+    my $foreign_projection = clone($manifest);
+    $foreign_projection->{parity_projection}{foreign_runtime_field} = 1;
+    is(shape_failure($foreign_projection)->{path},
+        '/result_produced/parity_projection/foreign_runtime_field',
+        'foreign parity-projection member rejects at its exact path');
+
+    my $missing_projection = clone($manifest);
+    delete $missing_projection->{parity_projection}{schema};
+    is(shape_failure($missing_projection)->{path},
+        '/result_produced/parity_projection/schema',
+        'missing parity-projection member rejects at its exact path');
+
+    my $wrong_projection_schema = clone($manifest);
+    $wrong_projection_schema->{parity_projection}{schema} =
+        'fsmgen.vial_vhdl_portable_outcomes.v2';
+    is(shape_failure($wrong_projection_schema)->{path},
+        '/result_produced/parity_projection/schema',
+        'foreign parity-projection schema rejects at its exact path');
+
+    my $wrong_projection_version = clone($manifest);
+    $wrong_projection_version->{parity_projection}{schema_version} = 2;
+    is(shape_failure($wrong_projection_version)->{path},
+        '/result_produced/parity_projection/schema_version',
+        'foreign parity-projection version rejects at its exact path');
+
+    my $missing_outcome = clone($manifest);
+    delete $missing_outcome->{parity_projection}{outcomes}[0]{storage_bits};
+    is(shape_failure($missing_outcome)->{path},
+        '/result_produced/parity_projection/outcomes/0/storage_bits',
+        'missing VHDL outcome member rejects at its exact path');
+
+    my $foreign_outcome = clone($manifest);
+    $foreign_outcome->{parity_projection}{outcomes}[0]{foreign_runtime_field} = 1;
+    is(shape_failure($foreign_outcome)->{path},
+        '/result_produced/parity_projection/outcomes/0/foreign_runtime_field',
+        'foreign VHDL outcome member rejects at its exact path');
+
+    my $failed_outcome = clone($manifest);
+    $failed_outcome->{parity_projection}{outcomes}[0]{status} = 'fail';
+    is(shape_failure($failed_outcome)->{path},
+        '/result_produced/parity_projection/outcomes/0/status',
+        'non-pass parity outcome rejects beneath a passing result');
+};
+
 subtest 'record cardinality and JSON shape remain fail closed' => sub {
     my $duplicate = decode_failure(
         "$encoded\nFSMGEN_VIAL_RESULT_V1\t$encoded",
@@ -205,6 +320,22 @@ sub scenario_failure {
         1;
     };
     ok(!$ok, 'invalid result scenario identity rejects');
+    my $error = $@;
+    isa_ok($error, 'FSM::VIAL::Backend::GHDLLifecycle::Failure');
+    return ref($error) ? $error : {};
+}
+
+sub validate_result_shapes {
+    FSM::VIAL::Backend::GHDLLifecycle::_validate_runtime_result_shapes($_[0]);
+}
+
+sub shape_failure {
+    my ($candidate) = @_;
+    my $ok = eval {
+        validate_result_shapes($candidate);
+        1;
+    };
+    ok(!$ok, 'invalid nested result shape rejects');
     my $error = $@;
     isa_ok($error, 'FSM::VIAL::Backend::GHDLLifecycle::Failure');
     return ref($error) ? $error : {};

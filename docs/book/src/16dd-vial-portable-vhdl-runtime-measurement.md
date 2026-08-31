@@ -192,10 +192,16 @@ identity in the projection producer; producer and authenticated evidence are
 repaired together. The ordered result scenarios must then match every sealed
 trace run and its derived scenario identity, while the ordered parity outcomes
 must name those same scenarios. Omission, duplication, reordering, or foreign
-identity rejects before persistence. Exact equality passes; one excess byte or
-a semantically identical noncanonical spelling rejects without a result
-object. The surrounding run-capture ceiling remains an independent earlier
-defense.
+identity rejects before persistence. Every scenario result must also have the
+shared `ResultProducer` scenario vocabulary. One `VHDLResultSchema` authority
+defines the parity projection schema/version and its exact projection/outcome
+vocabularies; the emitter consumes its schema identity and lifecycle admission
+consumes its closed keys. Because the outer result already claims `pass`, every
+scenario and parity outcome must also say `pass`. Missing or foreign nested
+members, schema drift, or status drift rejects at the exact field path. Exact
+equality passes; one excess byte or a semantically identical noncanonical
+spelling rejects without a result object. The surrounding run-capture ceiling
+remains an independent earlier defense.
 
 The shared production process supervisor records containment, spawn, successful
 `exec`, first output, exit, timeout/capture status, signal, and complete process-

@@ -19,6 +19,7 @@ no warnings 'experimental::signatures';
 use FSM::VIAL::Backend::ProcessSupervisor;
 use FSM::VIAL::Backend::ResultProducer;
 use FSM::VIAL::Backend::VHDLPortableTraceValidator;
+use FSM::VIAL::Backend::VHDLResultSchema;
 
 my $JSON = JSON::PP->new->canonical(1);
 my $LIFECYCLE_SCHEMA = 'fsmgen.vial_ghdl_lifecycle.v1';
@@ -1124,6 +1125,7 @@ sub _phase_result_produced($session) {
         $decoded, $session->{validation}{expected_plan_id},
         $session->{validation}{expected_run_ids},
     );
+    _validate_runtime_result_shapes($decoded);
     push @{$session->{objects}}, _write_object(
         $session, 'normalized_result', _canonical($decoded) . "\n", 0,
     );
@@ -1259,6 +1261,84 @@ sub _validate_runtime_result_scenario_identities(
                 && !ref($outcome->{scenario_id})
                 && $outcome->{scenario_id} eq $scenario_id[$index];
     }
+    return;
+}
+
+sub _validate_runtime_result_shapes($decoded) {
+    my $scenario_results = $decoded->{scenario_results};
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime scenario results are not one array',
+        '/result_produced/scenario_results')
+        unless ref($scenario_results) eq 'ARRAY' && !blessed($scenario_results);
+    my $scenario_keys = FSM::VIAL::Backend::ResultProducer->scenario_keys;
+    for my $index (0 .. $#$scenario_results) {
+        my $path = "/result_produced/scenario_results/$index";
+        my $entry = $scenario_results->[$index];
+        _require_runtime_result_keys(
+            $entry, $scenario_keys, $path, 'scenario result',
+        );
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime passing result contains a non-pass scenario',
+            "$path/status")
+            unless defined($entry->{status}) && !ref($entry->{status})
+                && $entry->{status} eq 'pass';
+    }
+
+    my $projection = $decoded->{parity_projection};
+    _require_runtime_result_keys(
+        $projection,
+        FSM::VIAL::Backend::VHDLResultSchema->parity_projection_keys,
+        '/result_produced/parity_projection', 'parity projection',
+    );
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime parity-projection schema is not selected VHDL schema',
+        '/result_produced/parity_projection/schema')
+        unless defined($projection->{schema}) && !ref($projection->{schema})
+            && $projection->{schema}
+                eq FSM::VIAL::Backend::VHDLResultSchema->parity_schema;
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime parity-projection schema version is unsupported',
+        '/result_produced/parity_projection/schema_version')
+        unless defined($projection->{schema_version})
+            && !ref($projection->{schema_version})
+            && $projection->{schema_version} =~ /\A[0-9]+\z/
+            && $projection->{schema_version} ==
+                FSM::VIAL::Backend::VHDLResultSchema->parity_schema_version;
+
+    my $outcomes = $projection->{outcomes};
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime parity outcomes are not one array',
+        '/result_produced/parity_projection/outcomes')
+        unless ref($outcomes) eq 'ARRAY' && !blessed($outcomes);
+    my $outcome_keys = FSM::VIAL::Backend::VHDLResultSchema->parity_outcome_keys;
+    for my $index (0 .. $#$outcomes) {
+        my $path = "/result_produced/parity_projection/outcomes/$index";
+        my $outcome = $outcomes->[$index];
+        _require_runtime_result_keys(
+            $outcome, $outcome_keys, $path, 'parity outcome',
+        );
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime passing result contains a non-pass parity outcome',
+            "$path/status")
+            unless defined($outcome->{status}) && !ref($outcome->{status})
+                && $outcome->{status} eq 'pass';
+    }
+    return;
+}
+
+sub _require_runtime_result_keys($value, $expected, $path, $label) {
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        "GHDL runtime $label is not one object", $path)
+        unless ref($value) eq 'HASH' && !blessed($value);
+    my %expected = map { $_ => 1 } @$expected;
+    my @unknown = sort grep { !$expected{$_} } keys %$value;
+    my @missing = grep { !exists($value->{$_}) } @$expected;
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        "GHDL runtime $label has unknown key '$unknown[0]'",
+        "$path/$unknown[0]") if @unknown;
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        "GHDL runtime $label is missing key '$missing[0]'",
+        "$path/$missing[0]") if @missing;
     return;
 }
 

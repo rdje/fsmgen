@@ -19,7 +19,7 @@ evidence: >-
   docs/decisions/0090-portable-vhdl-runtime-scale-uses-sample-snapshots-and-one-shared-ghdl-lifecycle.md;
   perl/FSM/VIAL/Backend/VHDLPortableGHDL.pm;
   perl/FSM/VIAL/Backend/VHDLPortableGHDLQualification.pm;
-  perl/FSM/VIAL/Backend/GHDLLifecycle.pm;
+  perl/FSM/VIAL/Backend/GHDLLifecycle.pm; perl/FSM/VIAL/Backend/VHDLResultSchema.pm;
   perl/FSM/VIAL/Backend/ProcessSupervisor.pm;
   perl/FSM/VIAL/Backend/VerilatorLifecycle.pm;
   perl/FSM/VIAL/Backend/VHDLPortableTraceValidator.pm;
@@ -139,10 +139,10 @@ throwing aborts become the qualifier cleanup diagnostic at `/cleanup` with a
 sanitized reason. No probe is retried and its process policy is unchanged.
 
 Normalized result admission applies the selected 67,108,864-byte ceiling,
-shared top-level keys, sealed plan identity, and ordered trace run/scenario
-identities across result entries and parity outcomes before persistence.
-Closure repaired omitted `samples`/projection-plan members; missing, duplicate,
-reordered, foreign, excess, noncanonical, or malformed records reject.
+shared top-level/scenario and VHDL projection/outcome vocabularies, one parity
+schema/version, sealed plan identity, and ordered trace run/scenario identities.
+Closure repaired omitted `samples`/projection-plan members; missing, foreign,
+duplicate, reordered, non-pass, excess, noncanonical, or malformed records reject.
 
 The guarded exact adapter accepts one 77-record reference validation, one gate
 validation plus three retained 10,000-record measurements, and one

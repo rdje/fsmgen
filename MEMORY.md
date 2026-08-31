@@ -8,8 +8,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
   (`active`; runtime-stream cap hardening under decisions `0093`/`0083`)
-- next_action: close GHDL scenario-result and parity-outcome shapes/statuses
-  after sealed scenario/run identity admission in `.17.4.7`.
-- in_flight_uncommitted: none after result scenario/run identity admission.
+- next_action: validate nested GHDL result value domains and cross-field
+  relations after key/status closure in `.17.4.7`.
+- in_flight_uncommitted: none after nested result key/status admission.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none; immutable `.17.3` evidence is the selection input.

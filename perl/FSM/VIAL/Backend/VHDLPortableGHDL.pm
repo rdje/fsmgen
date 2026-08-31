@@ -13,6 +13,7 @@ no warnings 'experimental::signatures';
 
 use FSM::VIAL::Backend::VHDLPortableReviewClosure;
 use FSM::VIAL::Backend::VHDLPortableStaticValidator;
+use FSM::VIAL::Backend::VHDLResultSchema;
 
 my $BACKEND_PROFILE = 'vhdl_portable_ghdl';
 my $BACKEND_SCHEMA = 'fsmgen.vial_backend.vhdl_portable.v1';
@@ -23,6 +24,9 @@ my $GENERATED_SOURCE_BYTES_LIMIT = 16_777_216;
 my $FIXED_SOURCE_ARTIFACT_COUNT = 5;
 my $FIXED_SUPPORT_ARTIFACT_COUNT = 10;
 my $BACKEND_MANIFEST_ARTIFACT_COUNT = 1;
+my $PARITY_SCHEMA = FSM::VIAL::Backend::VHDLResultSchema->parity_schema;
+my $PARITY_SCHEMA_VERSION =
+    FSM::VIAL::Backend::VHDLResultSchema->parity_schema_version;
 
 my @RESULT_KEYS = qw(
     ok status backend_profile plan_id generated_top operation_id negotiation
@@ -1726,7 +1730,8 @@ sub _render_fixture(%arg) {
     push @line,
         _vhdl_textio_write('result_line', '],"plan_id":"'),
         '      write(result_line, VIAL_PLAN_ID);',
-        _vhdl_textio_write('result_line', '","schema":"fsmgen.vial_vhdl_portable_outcomes.v1","schema_version":1},"plan_id":"'),
+        _vhdl_textio_write('result_line', '","schema":"' . $PARITY_SCHEMA
+            . '","schema_version":' . $PARITY_SCHEMA_VERSION . '},"plan_id":"'),
         '      write(result_line, VIAL_PLAN_ID);',
         _vhdl_textio_write('result_line', '","portable_parity_eligible":false,"random_decisions":' . $random_decisions . ',"result_id":null,"samples":[],"scenario_results":[');
     for my $index (0 .. $#{$execution->{scenarios}}) {
