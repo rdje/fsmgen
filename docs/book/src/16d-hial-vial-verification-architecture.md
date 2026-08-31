@@ -2511,8 +2511,8 @@ semantic-catalog matrix accepts or rejects every selected qualification,
 boundary, and excess level through its canonical oracle. Focused precedence
 witnesses cover each selected cap group, and the literal-repeat/action
 interaction retains its explicitly reported earlier authority. Bridge-cap
-hardening is now the active leaf; later layers remain separate work and gain no
-claim from this activation.
+hardening is complete, execution-graph hardening is now active, and later
+layers remain separate work and gain no claim from either activation.
 
 ### Source-byte cap admission order
 
@@ -3091,6 +3091,26 @@ The RAM-guarded exact bridge matrix closes every selected bridge qualification,
 limit, excess, identity, interaction, atomicity, staging, and cleanup contract.
 Execution-graph cap hardening is now the active layer; its activation changes
 no product behavior or selected matrix level.
+
+### Execution fiber-cap admission order
+
+After fixture/scenario selection, the execution builder walks the compact
+SemanticIR action trees before it creates the execution context. A parallel
+action contributes each child fiber plus its nested descendants; a repeated
+body multiplies allocated descendants by its literal count but does not
+multiply simultaneous liveness. One root fiber is then added per selected
+scenario. Saturating arithmetic derives the aggregate total and the maximum
+simultaneously-live count without emitting operations, fibers, source maps, or
+random/plan records.
+
+The builder applies the established total-fiber limit before the established
+simultaneously-live limit, and does so before bridge indexing. The existing
+post-emission checks remain as terminal defense. Consequently both adjacent
+excess workloads retain their established diagnostics and paths without
+constructing a partial graph, while accepted boundaries retain their plans.
+In particular, the legal total-fiber boundary still reaches and is rejected by
+the later serialized-plan authority; moving the fiber check earlier does not
+turn the component ceiling into a route-capacity claim.
 
 The binding ladder is the first axis authored under that rule. Its three levels
 above the gate generate 1,933,429, 3,866,741, and 3,866,800 direct-IAL1 bytes —

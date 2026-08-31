@@ -8,6 +8,8 @@ answers:
   - "what happens when an earlier VIAL layer rejects before a selected limit?"
   - "does architecture scale cap hardening raise or lower existing limits?"
   - "where is the machine checked VIAL resource cap inventory?"
+  - "when are VIAL execution fiber caps enforced?"
+  - "how are total and simultaneous VIAL fibers counted before materialization?"
 date: 2026-08-31
 status: current
 tags: [vial, architecture-scale, limits, bounded-failure, route-authority]
@@ -37,6 +39,9 @@ evidence: >-
   t/1702-hial-vial-bridge-backend-binding-cap-order.t;
   t/1703-hial-vial-bridge-source-map-cap-order.t;
   t/1704-hial-vial-bridge-serialized-manifest-terminal-authority.t;
+  perl/FSM/VIAL/ExecutionBuilder.pm;
+  t/1624-vial-architecture-scale-execution-live-fiber-limit.t;
+  t/1625-vial-architecture-scale-execution-total-fiber-limit.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -60,6 +65,8 @@ reverify: >-
   t/1702-hial-vial-bridge-backend-binding-cap-order.t
   t/1703-hial-vial-bridge-source-map-cap-order.t
   t/1704-hial-vial-bridge-serialized-manifest-terminal-authority.t
+  t/1624-vial-architecture-scale-execution-live-fiber-limit.t
+  t/1625-vial-architecture-scale-execution-total-fiber-limit.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -133,7 +140,16 @@ Each projected source-map entry is admitted before record construction, so the
 Exact serialized-manifest bytes remain terminal because only canonical encoding
 decides size; boundary acceptance and adjacent valid excess are both frozen.
 
+Execution total and maximum-live fiber cardinality is now admitted from the
+selected compact action trees before execution-context construction or bridge
+indexing. Parallel actions allocate direct and nested descendants; repeat
+multiplies allocations but not simultaneous liveness; each scenario adds one
+root. Saturating arithmetic preserves total-before-live diagnostic order, and
+the original post-emission checks remain terminal defense. Exact excess
+diagnostics, accepted plan identities, and the legal 65,536-total-fiber
+workload's later serialized-plan rejection remain unchanged.
+
 The guarded exact semantic-catalog and bridge-fanout matrices close every
 selected parser/SemanticIR and bridge qualification, boundary, excess, and cap
-interaction through canonical oracles. Execution and later layers retain their
-separate task owners and nonclaims.
+interaction through canonical oracles. Execution hardening remains active;
+later layers retain their separate task owners and nonclaims.

@@ -209,6 +209,7 @@ sub _build($raw, $qualification_profile = undef) {
     my ($package, $fixture) = _find_fixture($semantic, $raw->{fixture_id});
     my @selected_scenarios = _select_scenarios($fixture, $raw->{scenario_ids});
     _preflight_expanded_operations_total(\@selected_scenarios);
+    _preflight_fiber_cardinality(\@selected_scenarios);
     my $semantic_ir_id = 'semantic/' . sha256_hex(_canonical_json($semantic));
     my $semantic_identity = {
         semantic_ir_id => $semantic_ir_id,
@@ -670,6 +671,124 @@ sub _preflight_expanded_operations_total($scenarios) {
         _limit('expanded_operations_total', $total, '/operation_graph/operations');
     }
     return $total;
+}
+
+sub _preflight_fiber_cardinality($scenarios) {
+    my $total_limit = $LIMIT{total_fibers};
+    my $live_limit = $LIMIT{simultaneous_live_fibers};
+    my $total_fibers = 0;
+    my $maximum_simultaneous_live_fibers = 0;
+
+    for my $scenario (@$scenarios) {
+        my $cardinality = _compact_fiber_cardinality(
+            $scenario->{actions}, $scenario,
+        );
+        my $scenario_fibers = _bounded_count_add(
+            1, $cardinality->{additional_fibers}, $total_limit,
+        );
+        $total_fibers = _bounded_count_add(
+            $total_fibers, $scenario_fibers, $total_limit,
+        );
+
+        my $scenario_live_fibers = _bounded_count_add(
+            1, $cardinality->{maximum_live_descendants}, $live_limit,
+        );
+        $maximum_simultaneous_live_fibers = $scenario_live_fibers
+            if $scenario_live_fibers > $maximum_simultaneous_live_fibers;
+    }
+
+    # Keep the terminal operation-graph checks as defense-in-depth. This
+    # compact pass exists to reject a count already determined by SemanticIR
+    # before bridge indexing, source-map creation, or graph materialization.
+    _limit('total_fibers', $total_fibers, '/operation_graph/fibers');
+    _limit('simultaneous_live_fibers', $maximum_simultaneous_live_fibers,
+        '/operation_graph/maximum_simultaneous_live_fibers');
+    return {
+        total_fibers => $total_fibers,
+        maximum_simultaneous_live_fibers =>
+            $maximum_simultaneous_live_fibers,
+    };
+}
+
+sub _compact_fiber_cardinality($actions, $scenario) {
+    _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+        'selected scenario compact action tree is malformed',
+        $scenario->{semantic_path}, $scenario->{source_span})
+        unless ref($actions) eq 'ARRAY' && @$actions;
+
+    my $total_limit = $LIMIT{total_fibers};
+    my $live_limit = $LIMIT{simultaneous_live_fibers};
+    my $additional_fibers = 0;
+    my $maximum_live_descendants = 0;
+
+    for my $action (@$actions) {
+        _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+            'selected scenario compact action tree is malformed',
+            $scenario->{semantic_path}, $scenario->{source_span})
+            unless ref($action) eq 'HASH'
+                && defined($action->{kind}) && !ref($action->{kind})
+                && exists $ACTION_PHASE{$action->{kind}};
+
+        my $action_live_descendants = 0;
+        if ($action->{kind} eq 'parallel') {
+            _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+                'selected scenario parallel action is malformed',
+                $scenario->{semantic_path}, $scenario->{source_span})
+                unless ref($action->{fibers}) eq 'ARRAY'
+                    && @{$action->{fibers}} >= 2;
+            for my $fiber (@{$action->{fibers}}) {
+                _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+                    'selected scenario parallel fiber is malformed',
+                    $scenario->{semantic_path}, $scenario->{source_span})
+                    unless ref($fiber) eq 'HASH';
+                my $child = _compact_fiber_cardinality(
+                    $fiber->{actions}, $scenario,
+                );
+                $additional_fibers = _bounded_count_add(
+                    $additional_fibers, 1, $total_limit,
+                );
+                $additional_fibers = _bounded_count_add(
+                    $additional_fibers, $child->{additional_fibers},
+                    $total_limit,
+                );
+                my $child_live = _bounded_count_add(
+                    1, $child->{maximum_live_descendants}, $live_limit,
+                );
+                $action_live_descendants = _bounded_count_add(
+                    $action_live_descendants, $child_live, $live_limit,
+                );
+            }
+        }
+        elsif ($action->{kind} eq 'repeat') {
+            my $raw_repeat_count = $action->{count} // $action->{times};
+            _throw('VIAL_EXECUTION_INTERNAL_ERROR', 'internal',
+                'selected scenario repeat action is malformed',
+                $scenario->{semantic_path}, $scenario->{source_span})
+                unless defined($raw_repeat_count) && !ref($raw_repeat_count)
+                    && "$raw_repeat_count" =~ /\A[1-9][0-9]*\z/;
+            my $repeat_count = _bounded_canonical_count(
+                $raw_repeat_count, $total_limit,
+            );
+            my $body = $action->{actions} || $action->{body};
+            my $child = _compact_fiber_cardinality($body, $scenario);
+            my $repeated_fibers = _bounded_count_multiply(
+                $repeat_count, $child->{additional_fibers}, $total_limit,
+            );
+            $additional_fibers = _bounded_count_add(
+                $additional_fibers, $repeated_fibers, $total_limit,
+            );
+            $action_live_descendants =
+                $child->{maximum_live_descendants};
+        }
+
+        $maximum_live_descendants = $action_live_descendants
+            if $action_live_descendants > $maximum_live_descendants;
+    }
+
+    return {
+        additional_fibers => $additional_fibers,
+        maximum_live_descendants => $maximum_live_descendants,
+    };
 }
 
 sub _expanded_operation_count($actions, $ceiling, $scenario) {

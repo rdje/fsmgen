@@ -850,8 +850,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Enforce the selected execution-graph resource caps before avoidable graph, random, source-map, or plan materialization.`
   Acceptance: `Implement only the .17.4.1-selected execution contract; preserve the existing compact total-operation and serialized-plan preflights, repair remaining late checks, and reconcile binding/type/map limits with lower bridge and byte authorities. Prove deterministic diagnostics, no partial ExecutionIR/plan/replay, unchanged accepted plans, and guarded execution_graph_v1 boundaries.`
-  Verification: `Clean predecessor a1773fce49decf9c623111b678abe9d8b48345aa closes bridge-cap hardening before this pivot. The exact terminal .17.4.3 node and all thirteen acceptance records are retained at source revision a1773fce49decf9c623111b678abe9d8b48345aa in content-addressed segment fe8d16354a8ab20cfc88625d6eb7fc53fedd68a4a06cb4317db740c03d550a7e; the bounded manifest and integrity checker reconstruct one authoritative graph. Activation owns only execution-graph earliest-cap hardening under decision 0093; checking and later layers remain proposed, and product behavior is unchanged.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: activate execution cap hardening`
+  Verification: `Clean predecessor a1773fce49decf9c623111b678abe9d8b48345aa closes bridge-cap hardening before this pivot. The exact terminal .17.4.3 node and all thirteen acceptance records are retained at source revision a1773fce49decf9c623111b678abe9d8b48345aa in content-addressed segment fe8d16354a8ab20cfc88625d6eb7fc53fedd68a4a06cb4317db740c03d550a7e; the bounded manifest and integrity checker reconstruct one authoritative graph. Activation owns only execution-graph earliest-cap hardening under decision 0093; checking and later layers remain proposed. Compact total/live-fiber preflight now rejects before bridge indexing; exact t1624/t1625 retain accepted identities, diagnostics, the later 65,536-fiber plan-cap interaction, and terminal defense. Semantics, levels, and claims stay unchanged; .17.4.4 remains active.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: activate execution cap hardening; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4: preflight execution fiber cardinality`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5`
   Status: `proposed`
   Goal: `Enforce the selected checking-state resource caps before avoidable state-service materialization.`
@@ -7799,3 +7799,22 @@ The completed node records above and their named Git commits remain the canonica
   containment across 22 surfaces, staged-result agreement, diff, and all
   doctrines pass with zero enforcement-ceiling increases. Full CI/push remain
   deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.4` fiber-cardinality preflight
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S"_limit('total_fibers'"
+  --oneline -- perl/FSM/VIAL/ExecutionBuilder.pm` and the matching
+  `_maximum_live_descendants` history identify `44dbecd1a`: both fiber limits
+  were introduced only after `_emit_sequence` materializes the selected
+  operation/fiber graph, even though compact SemanticIR already determines
+  both counts.
+- [x] **ADDRESSED (verified)** — RED t1624/t1625 entered `_index_bridge` three
+  times per exact excess. GREEN `Files=3, Tests=53` derives both measures first,
+  retains exact diagnostics and accepted/later-plan-cap identities, and keeps
+  the original post-emission limits as terminal defense.
+- [x] **NO REGRESSION** — The focused execution foundation/fiber/operation/
+  policy set reports `Files=7, Tests=75`; both changed modules are syntax clean.
+  Every mdBook chapter tests, the Knowledge Map regenerates and verifies 1,156
+  facts/6,139 questions, and `scripts/check_doctrines.sh` covers claims, task
+  integrity, locality, containment, staged-result agreement, and diff before
+  commit. Full CI/push remain deferred by policy.

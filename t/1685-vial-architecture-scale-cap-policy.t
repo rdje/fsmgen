@@ -179,6 +179,16 @@ ok(
     } @{$policy->{groups}{bridge_serialized_manifest}{evidence}}),
     'bridge byte policy cites the exact terminal-authority witness',
 );
+is(
+    $policy->{groups}{execution_fiber_cardinality}{current_enforcement},
+    'compact_preflight_before_execution_context_and_terminal_defense',
+    'execution fiber policy records compact preflight plus terminal defense',
+);
+is(
+    $policy->{groups}{execution_fiber_cardinality}{selected_treatment},
+    'retain_compact_preflight_and_terminal_defense',
+    'execution fiber policy retains both enforcement layers',
+);
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;
 my @catalog_axes;

@@ -203,8 +203,20 @@ subtest 'one further fiber is rejected by the axis own structural cap' => sub {
         $bridge_sha256,
         'the canonical checked-AHB bridge is built before the rejection');
 
-    my $built = $class->build({construction => construction('over_limit_v1')});
-    my $again = $class->build({construction => construction('over_limit_v1')});
+    my $bridge_index_entries = 0;
+    my ($built, $again, $evaluation);
+    {
+        no warnings qw(once redefine);
+        local *FSM::VIAL::ExecutionBuilder::_index_bridge = sub {
+            ++$bridge_index_entries;
+            die 'bridge indexing must not precede total-fiber rejection';
+        };
+        $built = $class->build({construction => construction('over_limit_v1')});
+        $again = $class->build({construction => construction('over_limit_v1')});
+        $evaluation = $class->evaluate({construction => construction('over_limit_v1')});
+    }
+    is($bridge_index_entries, 0,
+        'the 65,537-total-fiber rejection occurs before bridge indexing');
     ok(!$built->{ok}, 'the public builder rejects one fiber above the cap');
     is($json->encode($again), $json->encode($built),
         'independent over-limit rejection is byte-identical');
@@ -213,7 +225,6 @@ subtest 'one further fiber is rejected by the axis own structural cap' => sub {
     is_deeply($built->{diagnostics}, [$fiber_diagnostic],
         'builder returns the one exact authoritative total-fiber diagnostic');
 
-    my $evaluation = $class->evaluate({construction => construction('over_limit_v1')});
     ok($evaluation->{ok}, 'over-limit evaluation satisfies every closed oracle');
     diag($json->encode($evaluation->{diagnostics})) unless $evaluation->{ok};
     is($evaluation->{status}, 'expected_rejection',

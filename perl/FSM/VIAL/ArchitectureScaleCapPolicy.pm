@@ -249,8 +249,9 @@ my $GROUPS = {
     execution_fiber_cardinality => _group(
         'FSM::Support::VIALExecutionContract', 'bind_plan',
         ['VIAL_EXECUTION_LIMIT_ERROR'], 'operation-graph fiber path',
-        'after_operation_graph_materialization', 'no_execution_ir_plan_or_replay',
-        'move_same_layer_check_before_avoidable_materialization', '.17.4.4',
+        'compact_preflight_before_execution_context_and_terminal_defense',
+        'no_execution_ir_plan_or_replay',
+        'retain_compact_preflight_and_terminal_defense', '.17.4.4',
         [
             't/1624-vial-architecture-scale-execution-live-fiber-limit.t',
             't/1625-vial-architecture-scale-execution-total-fiber-limit.t',

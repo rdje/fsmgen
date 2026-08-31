@@ -1037,3 +1037,20 @@ formula, and nonclaims without silently substituting a new derivation.
 Later producer evolution must select a new publication namespace rather than
 reinterpret this file set. Cap enforcement and budget promotion remain later,
 separate lifecycle authorities; durable publication alone grants neither.
+
+## 2026-08-31: Fiber preflight counts allocation and liveness separately
+
+Execution fiber limits are determined by compact SemanticIR, so materializing
+the operation graph before checking them gave already-known excesses authority
+too late. The preflight now derives two related but distinct quantities. Every
+parallel occurrence allocates its direct children and all nested descendants;
+a repeat multiplies those allocations by its literal count. Simultaneous
+liveness instead sums parallel branches and takes the maximum nested shape,
+while repetition stays sequential and does not multiply that maximum. Each
+selected scenario contributes one root fiber to both measures.
+
+All arithmetic saturates at one past the applicable ceiling. Aggregate total
+fibers are admitted before maximum live fibers, preserving the terminal graph
+check's diagnostic precedence. The terminal checks remain independent defense,
+and exact accepted plan identities prove the compact derivation did not alter
+execution semantics.

@@ -151,8 +151,20 @@ subtest 'one further live fiber is rejected by the axis own cap' => sub {
 };
 
 subtest 'the over-limit rejection is exact and leaves no partial output' => sub {
-    my $first = $class->build({construction => construction('over_limit_v1')});
-    my $second = $class->build({construction => construction('over_limit_v1')});
+    my $bridge_index_entries = 0;
+    my ($first, $second, $evaluation);
+    {
+        no warnings qw(once redefine);
+        local *FSM::VIAL::ExecutionBuilder::_index_bridge = sub {
+            ++$bridge_index_entries;
+            die 'bridge indexing must not precede live-fiber rejection';
+        };
+        $first = $class->build({construction => construction('over_limit_v1')});
+        $second = $class->build({construction => construction('over_limit_v1')});
+        $evaluation = $class->evaluate({construction => construction('over_limit_v1')});
+    }
+    is($bridge_index_entries, 0,
+        'the 16,385-live-fiber rejection occurs before bridge indexing');
     ok(!$first->{ok}, 'the public builder rejects one fiber above the cap');
     is($json->encode($second), $json->encode($first),
         'independent over-limit rejection is byte-identical');
@@ -162,7 +174,6 @@ subtest 'the over-limit rejection is exact and leaves no partial output' => sub 
     is_deeply($first->{diagnostics}, [$expected_diagnostic],
         'builder returns the one exact authoritative live-fiber diagnostic');
 
-    my $evaluation = $class->evaluate({construction => construction('over_limit_v1')});
     ok($evaluation->{ok}, 'over-limit evaluation satisfies every closed oracle');
     is($evaluation->{status}, 'expected_rejection',
         'evaluation classifies the boundary rejection as expected');
