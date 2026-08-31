@@ -136,39 +136,26 @@ Normalized result admission applies the selected 67,108,864-byte ceiling, exact 
 Scenario times are exact `domain_id/cycle/phase/ordinal` records: zero/drive/zero start; same-domain check/zero end at positive count minus one. This repaired the VHDL one-based end-cycle defect. Missing, foreign, duplicate, reordered, non-pass, excess, noncanonical, or malformed records reject.
 Parity counters are nonnegative and cycle-bounded; scalars are `0|1`; vectors use `0/1/X/Z` at authenticated HRDATA/reg-data widths. Known nonzero final read data, asserted response, or deasserted ready requires its nonzero counter.
 The mdBook shows the canonical two-outcome projection; the compact OSVVM gallery keeps only checked report path/identity/digest to avoid a second value authority.
+Fixed schema/profile/evidence/flags, projection collections, aggregates, and diagnostic records are closed; metrics equal records/cardinalities, zero passing mismatches, and authenticated trace coverage (reset barriers are sampled cycles, not coverage events). Plan-owned `fixture_id`/`random_decisions` equality is next; admission currently proves only a safe ID and plain-object array.
 The 127 fixed source bytes also move the unchanged 16-MiB portable/OSVVM structural boundary to accepted `T=29,505` at 16,776,666 portable bytes and adjacent rejected `T=29,506`; both graph oracles are v2.
 
-The guarded exact adapter accepts one 77-record reference validation, one gate
-validation plus three retained 10,000-record measurements, and one
-qualification validation plus five retained 100,000-record measurements. Each
-of the 11 isolated records reconstructs canonical authority, authenticates the
-six-source emission, four command/transcript identities, lifecycle predecessor
-chain, trace and normalized result, and proves lifecycle plus controller
-cleanup. No sample is excluded and no owned staging residue remains. Limit and
-over-limit shapes remain controller- and tool-free under the earlier structural
-authority; the measurement creates no promoted budget, support, capacity,
-parity, IASIM, or public-API claim.
+The guarded exact adapter retains one 77-record reference, three gate
+10,000-record measurements, and five qualification 100,000-record measurements:
+11 isolated records, no excluded sample, and zero owned residue. Every record
+reconstructs the six-source emission, four commands/transcripts, lifecycle
+chain, trace/result, and cleanup. Structural limit/excess remains tool-free;
+no budget, support, capacity, parity, IASIM, or API claim is promoted.
 
-Clean measurement commit `e7203c278` activates `.17.3.6.5` as the sole owner of
-five-profile immutable publication and independent fresh-process reload. The
-new producer-derived publisher isolates every profile, retains raw canonical
-reports before returning compact coordinator entries, seals only one clean
-Git/host/GHDL/guard identity, and rejects collision, ambiguity, mutation,
-oversize, signal, or incomplete state. It reuses the earlier runtime-capture
-byte authority as a conservative file ceiling. Its first clean exact attempt
-failed closed before publication because a copied aggregate check required the
-portable-Verilator six-artifact graph; the underlying accepted portable-VHDL
-lifecycle correctly retained seventeen. Raw and compact validators now share
-that exact producer authority, with an executable seventeen-artifact manifest
-control. Clean revision `d85256aa806a8dbdcf89c0e14b6bad9521521168` now
-seals five profiles plus family/complete manifests as seven files totaling
-1,354,895 bytes. The largest is 787,082 bytes. A separate guarded reload returns
-complete identity
-`portable-vhdl-runtime-matrix/cf0844de188b3a07ec7ed8026dcdfd95551cf7202b3df528659456da6e00e329`;
-the aggregate retains three validations, eight raw/zero excluded records, two
-preflights, 11 cleanup/zero residue, one common GHDL/host/guard identity, and no
-staging. The retained 66,321,782-byte ceiling headroom is containment evidence,
-not a performance, capacity, support, parity, OSVVM, IASIM, or API claim.
+Commit `e7203c278` gives `.17.3.6.5` sole ownership of five-profile immutable
+publication and fresh-process reload. After a copied six-artifact Verilator
+assumption failed closed, raw and compact validators shared the producer's
+seventeen-artifact VHDL authority. Revision
+`d85256aa806a8dbdcf89c0e14b6bad9521521168` seals five profiles plus family and
+complete manifests: seven files/1,354,895 bytes, largest 787,082. Guarded reload
+identity is `portable-vhdl-runtime-matrix/cf0844de188b3a07ec7ed8026dcdfd95551cf7202b3df528659456da6e00e329`;
+it retains three validations, eight raw/zero-excluded records, two preflights,
+11 cleanup/zero residue, one common GHDL/host/guard identity, and no staging.
+The 66,321,782-byte headroom is containment evidence only.
 
 Related: [[vial-architecture-scale-proof]],
 [[hial-vial-verification-fixture-architecture]].

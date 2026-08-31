@@ -224,6 +224,18 @@ projection remains:
 | `success` | 1 | 15 | 0 | 0 | `1/0` | 32 zero bits | `11001010111111101011101010111110` |
 | `unsupported_size` | 1 | 11 | 2 | 0 | `1/0` | 32 zero bits | 32 zero bits |
 
+The fixed outer result is value-closed too: schema/version, execution and
+backend profiles, capability/backend evidence, passing status, null result and
+parity identities, false portable-parity eligibility, collection domains,
+metric vocabulary, coverage/fault/scoreboard projections, and diagnostic
+records must match the VHDL projection contract. Metrics must equal their
+records and collection cardinalities; a passing result has zero scoreboard
+mismatches. Coverage also equals the authenticated trace coverage count—not
+the scenario-cycle total—because reset barriers are sampled cycles but emit no
+coverage event. Plan-owned equality for `fixture_id` and `random_decisions`
+remains the next admission step; their current checks establish only a safe ID
+and an array of plain objects.
+
 Those values stay canonical in each checked qualification report and are shown
 here for bounded reviewer visibility. The compact OSVVM gallery reference keeps
 only the report path, identity, and digest: copying the nested projection there

@@ -1130,6 +1130,9 @@ sub _phase_result_produced($session) {
     _validate_runtime_result_outcome_values(
         $decoded, $session->{validation}{expected_observation_catalog},
     );
+    _validate_runtime_result_top_level_values(
+        $decoded, $session->{validation}{expected_record_counts},
+    );
     push @{$session->{objects}}, _write_object(
         $session, 'normalized_result', _canonical($decoded) . "\n", 0,
     );
@@ -1346,6 +1349,263 @@ sub _require_runtime_result_keys($value, $expected, $path, $label) {
     return;
 }
 
+sub _validate_runtime_result_top_level_values($decoded, $expected_counts) {
+    die "GHDL runtime expected record counts are invalid\n"
+        unless ref($expected_counts) eq 'HASH' && !blessed($expected_counts)
+            && _runtime_result_nonnegative_integer(
+                $expected_counts->{coverage},
+            );
+    my $contract =
+        FSM::VIAL::Backend::VHDLResultSchema->runtime_result_contract;
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime result schema differs from the VHDL result contract',
+        '/result_produced/schema')
+        unless defined($decoded->{schema}) && !ref($decoded->{schema})
+            && $decoded->{schema} eq $contract->{schema};
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime result schema version is unsupported',
+        '/result_produced/schema_version')
+        unless _canonical($decoded->{schema_version})
+            eq _canonical($contract->{schema_version});
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime projection assigned a finalized result identity',
+        '/result_produced/result_id') if defined($decoded->{result_id});
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime fixture identity is unsafe',
+        '/result_produced/fixture_id')
+        unless _runtime_result_identity($decoded->{fixture_id});
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime execution profile differs from the VHDL result contract',
+        '/result_produced/execution_profile')
+        unless defined($decoded->{execution_profile})
+            && !ref($decoded->{execution_profile})
+            && $decoded->{execution_profile} eq $contract->{execution_profile};
+    _require_runtime_result_exact(
+        $decoded->{backend_profile}, $contract->{backend_profile},
+        '/result_produced/backend_profile', 'backend profile',
+    );
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime result did not retain passing status',
+        '/result_produced/status')
+        unless defined($decoded->{status}) && !ref($decoded->{status})
+            && $decoded->{status} eq 'pass';
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL VHDL outcome projection claimed portable parity eligibility',
+        '/result_produced/portable_parity_eligible')
+        unless JSON::PP::is_bool($decoded->{portable_parity_eligible})
+            && !$decoded->{portable_parity_eligible};
+    _require_runtime_result_exact(
+        $decoded->{capability_evidence}, $contract->{capability_evidence},
+        '/result_produced/capability_evidence', 'capability evidence',
+    );
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL VHDL outcome projection claimed a portable parity digest',
+        '/result_produced/parity_digest') if defined($decoded->{parity_digest});
+    _require_runtime_result_exact(
+        $decoded->{backend_evidence}, $contract->{backend_evidence},
+        '/result_produced/backend_evidence', 'backend evidence',
+    );
+
+    for my $field (@{$contract->{collection_keys}}) {
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime top-level collection is not one array',
+            "/result_produced/$field")
+            unless ref($decoded->{$field}) eq 'ARRAY'
+                && !blessed($decoded->{$field});
+    }
+    for my $field (@{$contract->{empty_collection_keys}}) {
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime projection-only collection is not empty',
+            "/result_produced/$field") if @{$decoded->{$field}};
+    }
+    for my $index (0 .. $#{$decoded->{random_decisions}}) {
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime random decision is not one object',
+            "/result_produced/random_decisions/$index")
+            unless ref($decoded->{random_decisions}[$index]) eq 'HASH'
+                && !blessed($decoded->{random_decisions}[$index]);
+    }
+
+    my $metrics = _validate_runtime_result_metrics($decoded, $contract);
+    my $coverage = _validate_runtime_result_coverage($decoded, $contract);
+    my $fault = _validate_runtime_result_fault($decoded, $contract);
+    my $scoreboard = _validate_runtime_result_scoreboard($decoded, $contract);
+    my $diagnostics =
+        _validate_runtime_result_diagnostics($decoded, $contract);
+
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime coverage metrics differ from their coverage record',
+        '/result_produced/metrics')
+        unless $metrics->{coverage_not_stalled}
+                == $coverage->{bins}{not_stalled}
+            && $metrics->{coverage_stalled}
+                == $coverage->{bins}{stalled}
+            && $metrics->{coverage_not_stalled} + $metrics->{coverage_stalled}
+                == $expected_counts->{coverage};
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime diagnostic metric differs from its collection',
+        '/result_produced/metrics/diagnostic_records')
+        unless $metrics->{diagnostic_records} == @$diagnostics;
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime fault metric differs from its fault record',
+        '/result_produced/metrics/fault_applications')
+        unless $metrics->{fault_applications} == $fault->{applications};
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime scoreboard-comparison metric differs from its record',
+        '/result_produced/metrics/scoreboard_comparisons')
+        unless $metrics->{scoreboard_comparisons}
+            == $scoreboard->{comparisons};
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime scoreboard-mismatch metric differs from its record',
+        '/result_produced/metrics/scoreboard_mismatches')
+        unless $metrics->{scoreboard_mismatches}
+            == $scoreboard->{mismatches};
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime passing result contains a scoreboard mismatch',
+        '/result_produced/metrics/scoreboard_mismatches')
+        if $metrics->{scoreboard_mismatches} != 0;
+    return;
+}
+
+sub _validate_runtime_result_metrics($decoded, $contract) {
+    my $metrics = $decoded->{metrics};
+    _require_runtime_result_keys(
+        $metrics, $contract->{metric_keys},
+        '/result_produced/metrics', 'runtime metrics',
+    );
+    for my $field (@{$contract->{metric_keys}}) {
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime metric is not a nonnegative integer',
+            "/result_produced/metrics/$field")
+            unless _runtime_result_nonnegative_integer($metrics->{$field});
+    }
+    return $metrics;
+}
+
+sub _validate_runtime_result_coverage($decoded, $contract) {
+    my $coverage = $decoded->{coverage};
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime result does not contain one coverage record',
+        '/result_produced/coverage') unless @$coverage == 1;
+    my $record = $coverage->[0];
+    _require_runtime_result_keys(
+        $record, $contract->{coverage_record_keys},
+        '/result_produced/coverage/0', 'coverage record',
+    );
+    _require_runtime_result_keys(
+        $record->{bins}, $contract->{coverage_bin_keys},
+        '/result_produced/coverage/0/bins', 'coverage bins',
+    );
+    for my $field (@{$contract->{coverage_bin_keys}}) {
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime coverage bin is not a nonnegative integer',
+            "/result_produced/coverage/0/bins/$field")
+            unless _runtime_result_nonnegative_integer($record->{bins}{$field});
+    }
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime coverage record uses a foreign coverpoint',
+        '/result_produced/coverage/0/coverpoint_id')
+        unless defined($record->{coverpoint_id})
+            && !ref($record->{coverpoint_id})
+            && $record->{coverpoint_id} eq $contract->{coverage_coverpoint_id};
+    return $record;
+}
+
+sub _validate_runtime_result_fault($decoded, $contract) {
+    my $faults = $decoded->{faults};
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime result does not contain one fault record',
+        '/result_produced/faults') unless @$faults == 1;
+    my $record = $faults->[0];
+    _require_runtime_result_keys(
+        $record, $contract->{fault_record_keys},
+        '/result_produced/faults/0', 'fault record',
+    );
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime fault application count is not a nonnegative integer',
+        '/result_produced/faults/0/applications')
+        unless _runtime_result_nonnegative_integer($record->{applications});
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime result uses a foreign fault projection',
+        '/result_produced/faults/0')
+        unless defined($record->{fault_id}) && !ref($record->{fault_id})
+            && $record->{fault_id} eq $contract->{fault_id}
+            && defined($record->{kind}) && !ref($record->{kind})
+            && $record->{kind} eq $contract->{fault_kind};
+    return $record;
+}
+
+sub _validate_runtime_result_scoreboard($decoded, $contract) {
+    my $scoreboards = $decoded->{scoreboards};
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime result does not contain one scoreboard record',
+        '/result_produced/scoreboards') unless @$scoreboards == 1;
+    my $record = $scoreboards->[0];
+    _require_runtime_result_keys(
+        $record, $contract->{scoreboard_record_keys},
+        '/result_produced/scoreboards/0', 'scoreboard record',
+    );
+    for my $field (@{$contract->{scoreboard_record_keys}}) {
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime scoreboard value is not a nonnegative integer',
+            "/result_produced/scoreboards/0/$field")
+            unless _runtime_result_nonnegative_integer($record->{$field});
+    }
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime scoreboard capacity differs from the VHDL contract',
+        '/result_produced/scoreboards/0/capacity')
+        unless $record->{capacity} == $contract->{scoreboard_capacity};
+    return $record;
+}
+
+sub _validate_runtime_result_diagnostics($decoded, $contract) {
+    my $diagnostics = $decoded->{diagnostics};
+    for my $index (0 .. $#$diagnostics) {
+        my $path = "/result_produced/diagnostics/$index";
+        my $diagnostic = $diagnostics->[$index];
+        _require_runtime_result_keys(
+            $diagnostic, $contract->{diagnostic_record_keys},
+            $path, 'diagnostic record',
+        );
+        _require_runtime_result_keys(
+            $diagnostic->{logical_time}, $contract->{diagnostic_time_keys},
+            "$path/logical_time", 'diagnostic logical time',
+        );
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime diagnostic code is unsafe', "$path/code")
+            unless _runtime_result_identity($diagnostic->{code});
+        for my $field (@{$contract->{diagnostic_time_keys}}) {
+            _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+                'GHDL runtime diagnostic time value is not a nonnegative integer',
+                "$path/logical_time/$field")
+                unless _runtime_result_nonnegative_integer(
+                    $diagnostic->{logical_time}{$field},
+                );
+        }
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime diagnostic phase rank is unsupported',
+            "$path/logical_time/phase_rank")
+            if $diagnostic->{logical_time}{phase_rank} > 3;
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL runtime passing diagnostic has a foreign outcome or severity',
+            $path)
+            unless defined($diagnostic->{outcome})
+                && !ref($diagnostic->{outcome})
+                && $diagnostic->{outcome} eq 'pass'
+                && defined($diagnostic->{severity})
+                && !ref($diagnostic->{severity})
+                && $diagnostic->{severity} eq 'info';
+    }
+    return $diagnostics;
+}
+
+sub _require_runtime_result_exact($actual, $expected, $path, $label) {
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        "GHDL runtime $label differs from the VHDL result contract", $path)
+        unless _canonical($actual) eq _canonical($expected);
+    return;
+}
+
 sub _validate_runtime_result_scenario_values($decoded) {
     my $time_keys = FSM::VIAL::Backend::ResultProducer->logical_time_keys;
     for my $index (0 .. $#{$decoded->{scenario_results}}) {
@@ -1540,12 +1800,12 @@ sub _runtime_result_identity($value) {
 
 sub _runtime_result_nonnegative_integer($value) {
     return defined($value) && !ref($value)
-        && $value =~ /\A(?:0|[1-9][0-9]*)\z/;
+        && _canonical($value) =~ /\A(?:0|[1-9][0-9]*)\z/;
 }
 
 sub _runtime_result_positive_integer($value) {
     return defined($value) && !ref($value)
-        && $value =~ /\A[1-9][0-9]*\z/;
+        && _canonical($value) =~ /\A[1-9][0-9]*\z/;
 }
 
 sub _phase_assembled($session) {

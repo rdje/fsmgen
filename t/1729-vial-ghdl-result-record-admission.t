@@ -24,6 +24,60 @@ $manifest->{schema} = 'fsmgen.verification_result_manifest.v1';
 $manifest->{schema_version} = 1;
 $manifest->{status} = 'pass';
 $manifest->{plan_id} = $expected_plan_id;
+$manifest->{result_id} = undef;
+$manifest->{fixture_id} = 'fixture/reference';
+$manifest->{execution_profile} =
+    'core_directed_single_clock_execution_v1';
+$manifest->{backend_profile} = {
+    capabilities => [
+        'vial.backend.vhdl_portable_ghdl.v1',
+        'vial.backend.vhdl_portable_ghdl.result_manifest_projection.v1',
+    ],
+    id => 'vhdl_portable_ghdl',
+    methodology => 'plain_vhdl_no_provider',
+    target_language => 'VHDL',
+    tool_name => undef,
+    tool_version => undef,
+    uvm_revision => undef,
+    vhdl_standard => 'IEEE 1076-2008',
+};
+$manifest->{portable_parity_eligible} = JSON::PP::false;
+$manifest->{capability_evidence} = {
+    native_only => [], required => [],
+    satisfied => ['portable_checking_projection'], unsatisfied => [],
+};
+$manifest->{random_decisions} = [];
+$manifest->{$_} = [] for qw(
+    events drives samples transactions expectations models fibers
+    native_extensions exclusions
+);
+$manifest->{scoreboards} = [{
+    capacity => 4, comparisons => 0, mismatches => 0,
+}];
+$manifest->{coverage} = [{
+    bins => {not_stalled => 2, stalled => 0},
+    coverpoint_id => 'coverpoint/stall_seen',
+}];
+$manifest->{faults} = [{
+    applications => 0,
+    fault_id => 'fault/unsupported_size',
+    kind => 'substitution',
+}];
+$manifest->{diagnostics} = [];
+$manifest->{metrics} = {
+    coverage_not_stalled => 2,
+    coverage_stalled => 0,
+    diagnostic_records => 0,
+    fault_applications => 0,
+    scoreboard_comparisons => 0,
+    scoreboard_mismatches => 0,
+};
+$manifest->{parity_digest} = undef;
+$manifest->{backend_evidence} = {
+    analysis_status => 'not_run',
+    elaboration_status => 'not_run',
+    runtime_status => 'projection_only',
+};
 $manifest->{scenario_results} = [map {
     {
         run_id => $expected_run_id[$_],
@@ -76,6 +130,7 @@ my $expected_observation_catalog = {
             semantic_id => 'probe/reg_data_q', width => 8},
     ],
 };
+my $expected_record_counts = {coverage => 2};
 my $encoded = $json->encode($manifest);
 
 subtest 'canonical result is admitted at the exact byte boundary' => sub {
@@ -237,6 +292,17 @@ subtest 'VHDL parity vocabulary has one defensive schema authority' => sub {
     is(scalar keys
         %{FSM::VIAL::Backend::VHDLResultSchema->parity_scalar_catalog_bindings},
         2, 'callers cannot mutate the catalog bindings');
+    my $contract =
+        FSM::VIAL::Backend::VHDLResultSchema->runtime_result_contract;
+    is($contract->{schema}, 'fsmgen.verification_result_manifest.v1',
+        'runtime-result schema authority is exact');
+    is($contract->{backend_profile}{id}, 'vhdl_portable_ghdl',
+        'runtime backend-profile authority is exact');
+    delete $contract->{backend_profile}{id};
+    is(FSM::VIAL::Backend::VHDLResultSchema
+            ->runtime_result_contract->{backend_profile}{id},
+        'vhdl_portable_ghdl',
+        'callers cannot mutate the runtime-result contract');
 };
 
 subtest 'nested result vocabularies and statuses remain closed' => sub {
@@ -394,6 +460,118 @@ subtest 'scenario values obey the shared passing-result contract' => sub {
     is(value_failure($duplicate_id)->{path},
         '/result_produced/scenario_results/0/cancelled_fiber_ids/1',
         'duplicate scenario-owned identity rejects at its second index');
+};
+
+subtest 'top-level result values and aggregate totals are closed' => sub {
+    my $valid = eval {
+        validate_top_level_values(clone($manifest));
+        1;
+    };
+    ok($valid, 'closed top-level result values are admitted');
+
+    my $foreign_schema = clone($manifest);
+    $foreign_schema->{schema} = 'fsmgen.verification_result_manifest.v2';
+    is(top_level_failure($foreign_schema)->{path},
+        '/result_produced/schema',
+        'foreign result schema rejects at its exact path');
+
+    my $string_version = clone($manifest);
+    $string_version->{schema_version} = '1';
+    is(top_level_failure($string_version)->{path},
+        '/result_produced/schema_version',
+        'numeric-looking string schema version rejects');
+
+    my $assigned_result = clone($manifest);
+    $assigned_result->{result_id} = 'result/' . ('d' x 64);
+    is(top_level_failure($assigned_result)->{path},
+        '/result_produced/result_id',
+        'runtime projection cannot claim a finalized result identity');
+
+    my $foreign_backend = clone($manifest);
+    $foreign_backend->{backend_profile}{id} = 'vhdl_foreign';
+    is(top_level_failure($foreign_backend)->{path},
+        '/result_produced/backend_profile',
+        'foreign backend profile rejects');
+
+    my $eligible = clone($manifest);
+    $eligible->{portable_parity_eligible} = JSON::PP::true;
+    is(top_level_failure($eligible)->{path},
+        '/result_produced/portable_parity_eligible',
+        'VHDL outcome projection cannot claim portable parity eligibility');
+
+    my $digest = clone($manifest);
+    $digest->{parity_digest} = 'sha256/' . ('e' x 64);
+    is(top_level_failure($digest)->{path},
+        '/result_produced/parity_digest',
+        'VHDL outcome projection cannot claim a portable parity digest');
+
+    my $capability = clone($manifest);
+    push @{$capability->{capability_evidence}{unsatisfied}}, 'foreign';
+    is(top_level_failure($capability)->{path},
+        '/result_produced/capability_evidence',
+        'foreign capability evidence rejects');
+
+    my $non_array = clone($manifest);
+    $non_array->{random_decisions} = {};
+    is(top_level_failure($non_array)->{path},
+        '/result_produced/random_decisions',
+        'top-level collection must be an array');
+
+    my $nonempty = clone($manifest);
+    push @{$nonempty->{events}}, {foreign => 1};
+    is(top_level_failure($nonempty)->{path},
+        '/result_produced/events',
+        'projection-empty stream cannot carry records');
+
+    my $negative_metric = clone($manifest);
+    $negative_metric->{metrics}{fault_applications} = -1;
+    is(top_level_failure($negative_metric)->{path},
+        '/result_produced/metrics/fault_applications',
+        'negative metric rejects at its exact path');
+
+    my $string_metric = clone($manifest);
+    $string_metric->{metrics}{fault_applications} = '0';
+    is(top_level_failure($string_metric)->{path},
+        '/result_produced/metrics/fault_applications',
+        'numeric-looking string metric rejects');
+
+    my $coverage_total = clone($manifest);
+    $coverage_total->{coverage}[0]{bins}{not_stalled} = 1;
+    $coverage_total->{metrics}{coverage_not_stalled} = 1;
+    is(top_level_failure($coverage_total)->{path},
+        '/result_produced/metrics',
+        'coverage total must equal the authenticated trace record count');
+
+    my $diagnostic_total = clone($manifest);
+    $diagnostic_total->{metrics}{diagnostic_records} = 1;
+    is(top_level_failure($diagnostic_total)->{path},
+        '/result_produced/metrics/diagnostic_records',
+        'diagnostic metric must equal collection cardinality');
+
+    my $fault_total = clone($manifest);
+    $fault_total->{faults}[0]{applications} = 1;
+    is(top_level_failure($fault_total)->{path},
+        '/result_produced/metrics/fault_applications',
+        'fault metric must equal the canonical fault record');
+
+    my $scoreboard_total = clone($manifest);
+    $scoreboard_total->{scoreboards}[0]{comparisons} = 1;
+    is(top_level_failure($scoreboard_total)->{path},
+        '/result_produced/metrics/scoreboard_comparisons',
+        'scoreboard metric must equal the canonical scoreboard record');
+
+    my $passing_mismatch = clone($manifest);
+    $passing_mismatch->{scoreboards}[0]{mismatches} = 1;
+    $passing_mismatch->{metrics}{scoreboard_mismatches} = 1;
+    is(top_level_failure($passing_mismatch)->{path},
+        '/result_produced/metrics/scoreboard_mismatches',
+        'passing result cannot retain a scoreboard mismatch');
+
+    my $foreign_evidence = clone($manifest);
+    $foreign_evidence->{backend_evidence}{runtime_status} = 'passed';
+    is(top_level_failure($foreign_evidence)->{path},
+        '/result_produced/backend_evidence',
+        'runtime projection evidence cannot claim provider execution');
 };
 
 subtest 'parity outcome values bind to cycles and the observation catalog' => sub {
@@ -566,6 +744,24 @@ sub validate_outcome_values {
     FSM::VIAL::Backend::GHDLLifecycle::_validate_runtime_result_outcome_values(
         $_[0], $expected_observation_catalog,
     );
+}
+
+sub validate_top_level_values {
+    FSM::VIAL::Backend::GHDLLifecycle::_validate_runtime_result_top_level_values(
+        $_[0], $expected_record_counts,
+    );
+}
+
+sub top_level_failure {
+    my ($candidate) = @_;
+    my $ok = eval {
+        validate_top_level_values($candidate);
+        1;
+    };
+    ok(!$ok, 'invalid top-level result value rejects');
+    my $error = $@;
+    isa_ok($error, 'FSM::VIAL::Backend::GHDLLifecycle::Failure');
+    return ref($error) ? $error : {};
 }
 
 sub outcome_failure {
