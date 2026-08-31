@@ -83,3 +83,8 @@ domain, key, and Cartesian-product validation.
 List length, record field count, and aggregate depth are admitted before
 recursive inner-type resolution. Invalid inner types cannot mask any known
 outer-shape excess, while exact-boundary semantic identities remain unchanged.
+
+The guarded exact semantic-catalog matrix now closes every selected
+qualification, boundary, excess, and declared cap interaction through the
+canonical oracle. This completes parser/SemanticIR hardening only; bridge and
+later layers retain their separate task owners and nonclaims.

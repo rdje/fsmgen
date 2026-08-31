@@ -2506,7 +2506,12 @@ measured reachable boundary. No lower layer is raised and no workload level is
 rewritten merely to reach a later cap. Stage-specific hardening may move a
 known count check before avoidable same-layer materialization, but accepted
 profile bytes and the absence of a total-operation capacity claim stay fixed;
-source/parser/SemanticIR enforcement hardening is now the active leaf.
+source/parser/SemanticIR enforcement hardening is complete. The guarded exact
+semantic-catalog matrix accepts or rejects every selected qualification,
+boundary, and excess level through its canonical oracle. Focused precedence
+witnesses cover each selected cap group, and the literal-repeat/action
+interaction retains its explicitly reported earlier authority. Bridge and later
+layers remain separate work and gain no claim from this closure.
 
 ### Source-byte cap admission order
 
