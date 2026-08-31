@@ -2622,11 +2622,22 @@ checks remain terminal defenses over the result and final manifests.
 This is an exact materialized lower bound, not a projection from measured
 scale points. Accepted runtime behavior, caps, identities, tool qualification,
 support statements, capacity nonclaims, and public artifacts remain unchanged.
-The next slice audits the first sound validated-trace/result byte lower bound;
-later slices retain the separate VHDL and OSVVM profile authorities.
+
+After trace validation, the shared lifecycle now applies the same limit to a
+second sound lower bound before writing trace objects or invoking
+`ResultProducer`: exact normalized trace bytes plus every immutable emitted
+artifact. The emitted tool profile and backend manifest are excluded because
+publication replaces them, so their earlier contents cannot safely establish
+a lower bound. Exact equality with 67,108,864 bytes is admitted; one extra byte
+returns `VIAL_RUN_LIMIT_EXCEEDED` at `/artifacts`. Assembly and the Tool's
+complete-graph checks remain independent terminal defenses.
+
+The next slice audits the result-payload/assembly boundary; later slices retain
+the separate VHDL and OSVVM profile authorities.
 
 ```sh
-prove -Iperl t/1720-vial-runtime-structural-artifact-preflight.t
+prove -Iperl t/1720-vial-runtime-structural-artifact-preflight.t \
+  t/1721-vial-runtime-trace-artifact-preflight.t
 ```
 
 ### Source-byte cap admission order

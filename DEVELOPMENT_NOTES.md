@@ -1086,3 +1086,16 @@ contract before starting the shared lifecycle. This moves known count, byte,
 and path-collision failure ahead of external execution without estimating
 future trace or result size. Post-runtime checks remain as terminal defenses;
 validated-trace and result admission need their own sound later bounds.
+
+## 2026-08-31: Runtime trace admission counts only durable lower-bound members
+
+The normalized trace is exact before result production, but two emitted
+artifacts are not durable byte contributors: publication replaces the selected
+tool profile and backend manifest. Counting their old contents could overstate
+the final graph and reject a route that actually fits.
+
+The lifecycle therefore combines the normalized trace only with immutable
+emitted artifacts. That subset is necessarily contained in the final public
+graph, so exceeding the existing graph cap is conclusive while equality stays
+admissible. Result and assembly growth remain owned by later checks, and the
+complete Tool validation remains the terminal authority.

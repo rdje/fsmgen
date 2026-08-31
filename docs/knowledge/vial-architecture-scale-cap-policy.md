@@ -29,6 +29,7 @@ answers:
   - "does native UVM preflight source-map capacity before entry materialization?"
   - "which task leaf owns runtime-stream and transcript envelope hardening?"
   - "is native UVM included in the executable runtime-stream cap scope?"
+  - "when does portable SystemVerilog reject a trace that cannot fit the public artifact graph?"
 date: 2026-08-31
 status: current
 tags: [vial, architecture-scale, limits, bounded-failure, route-authority]
@@ -81,6 +82,10 @@ evidence: >-
   t/1718-vial-backend-osvvm-provider-admission-order.t;
   perl/FSM/VIAL/Backend/SVUVMAccellera2020_3_1.pm;
   t/1719-vial-backend-native-uvm-cap-order.t;
+  perl/FSM/VIAL/Tool.pm;
+  t/1720-vial-runtime-structural-artifact-preflight.t;
+  perl/FSM/VIAL/Backend/VerilatorLifecycle.pm;
+  t/1721-vial-runtime-trace-artifact-preflight.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -118,6 +123,8 @@ reverify: >-
   t/1713-vial-execution-coverage-cardinality-preflight.t
   t/1714-vial-execution-fault-cardinality-preflight.t
   t/1715-vial-execution-random-occurrence-preflight.t
+  t/1720-vial-runtime-structural-artifact-preflight.t
+  t/1721-vial-runtime-trace-artifact-preflight.t
   t/1716-vial-backend-portable-sv-cap-order.t
   t/1717-vial-backend-portable-vhdl-cap-order.t
   t/1718-vial-backend-osvvm-provider-admission-order.t
@@ -179,4 +186,8 @@ lifecycle; native UVM remains emission-only. Its first slice applies the
 existing public graph validator to the exact plan-plus-emission artifact set
 before Runner eligibility. Known count, byte, or collision excess therefore
 starts no tool and publishes no partial graph; later terminal validations stay
-in place. This exact materialized lower bound changes no cap or claim.
+in place. After trace validation, the shared lifecycle checks a second exact
+lower bound: normalized trace bytes plus immutable emitted artifacts, excluding
+only the tool profile and backend manifest that publication replaces. Equality
+with the existing 67,108,864-byte cap passes; one excess byte rejects before
+trace-object writes or ResultProducer. This changes no cap or claim.

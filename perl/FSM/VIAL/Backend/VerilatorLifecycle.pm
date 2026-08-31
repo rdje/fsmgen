@@ -22,6 +22,7 @@ no warnings 'experimental::signatures';
 use FSM::VIAL::Backend::ResultProducer;
 use FSM::VIAL::Backend::ProcessSupervisor;
 use FSM::VIAL::Backend::TraceValidator;
+use FSM::Support::VIALToolingContract qw(build_vial_tooling_contract);
 
 my $BASE = 'backends/sv_portable_verilator';
 my $PREFIX = "FSMGEN_VIAL_TRACE_V1\t";
@@ -816,6 +817,7 @@ sub _phase_trace_validate($session) {
             . ' at ' . $trace->{diagnostics}[0]{path},
         '/trace',
     ) unless $trace->{ok};
+    _enforce_public_artifact_byte_lower_bound($session, $trace_jsonl);
     my @objects = (
         _write_content_object(
             $session, 'validated_trace',
@@ -837,6 +839,29 @@ sub _phase_trace_validate($session) {
             validation_object_sha256 => $objects[0]{sha256},
         },
     };
+}
+
+sub _enforce_public_artifact_byte_lower_bound($session, $trace_jsonl) {
+    my %replaced_at_publication = map { $_ => 1 } (
+        "$BASE/evidence/tool-profile.json",
+        "$BASE/backend-manifest.json",
+    );
+    my $bytes = bytes::length($trace_jsonl);
+    for my $relpath (keys %{$session->{artifact}}) {
+        next if $replaced_at_publication{$relpath};
+        $bytes += bytes::length(
+            $session->{artifact}{$relpath}{content},
+        );
+    }
+    my $limit =
+        build_vial_tooling_contract()->{limits}{artifact_bytes};
+    _throw(
+        'VIAL_RUN_LIMIT_EXCEEDED',
+        'runtime trace and immutable backend artifacts exceed the public '
+            . "artifact limit $limit bytes",
+        '/artifacts',
+    ) if $bytes > $limit;
+    return 1;
 }
 
 sub _phase_result_produce($session) {
