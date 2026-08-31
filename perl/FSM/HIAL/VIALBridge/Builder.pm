@@ -504,6 +504,10 @@ sub _build_semantic_model($actor, $layer, $backend_names, $sources, $artifacts,
         scalar(@{$actor->{transactions} || []}) + ($bridge ? 1 : 0),
     );
     _validate_collection_count('events', _raw_event_count($actor, $bridge));
+    _validate_collection_count(
+        'unsupported_residue',
+        scalar(@{($bridge || {})->{residues} || []}),
+    );
     my $domain_name = $bridge ? $bridge->{domain} : 'default';
     my $domain_id = "domain/$domain_name";
     my (%types_by_key, @types, @endpoints);

@@ -3079,6 +3079,8 @@ The combined ordinary-actor plus fixed bridge transaction count is admitted
 before transaction-family shape, clause, or normalized-record construction.
 Bridge-declared events plus event-producing ordinary clauses are admitted
 before event-family shape, expression, or normalized-record construction.
+Retained-residue cardinality is admitted before ordinal, ownership/detail,
+required-capability, or normalized-record construction.
 
 The binding ladder is the first axis authored under that rule. Its three levels
 above the gate generate 1,933,429, 3,866,741, and 3,866,800 direct-IAL1 bytes —
