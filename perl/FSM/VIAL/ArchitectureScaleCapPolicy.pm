@@ -123,10 +123,14 @@ my $GROUPS = {
     ),
     semantic_action_cardinality => _group(
         'FSM::VIAL::SemanticBuilder', 'parse_validate', ['VIAL_LIMIT_ERROR'],
-        'scenario semantic path', 'after_compact_action_tree_count',
+        'scenario semantic path',
+        'capacity_reserved_before_action_form_and_repeat_copy_multiplication',
         'no_semantic_ir_or_artifact',
-        'move_same_layer_check_before_avoidable_materialization',
-        '.17.4.2', ['t/1601-vial-architecture-scale-semantic-catalog.t'],
+        'retain_early_reservation_and_terminal_defense',
+        '.17.4.2', [
+            't/1601-vial-architecture-scale-semantic-catalog.t',
+            't/1686-vial-semantic-action-cap-order.t',
+        ],
     ),
     semantic_action_shape => _group(
         'FSM::VIAL::SemanticBuilder', 'parse_validate', ['VIAL_LIMIT_ERROR'],
@@ -149,11 +153,12 @@ my $GROUPS = {
     semantic_repeat_layering => _group(
         'FSM::VIAL::SemanticBuilder', 'parse_validate', ['VIAL_LIMIT_ERROR'],
         'repeat count or enclosing scenario path',
-        'compact_repeat_then_expanded_action_accounting',
+        'compact_body_then_bounded_copy_reservation',
         'no_semantic_ir_or_artifact',
-        'classify_layered_route_and_harden_local_check',
+        'retain_intrinsic_repeat_ceiling_and_overflow_safe_action_layering',
         '.17.4.2', [
             't/1601-vial-architecture-scale-semantic-catalog.t',
+            't/1686-vial-semantic-action-cap-order.t',
             'docs/decisions/0059-vial-literal-repeat-scale-is-currently-dominated-by-expanded-actions.md',
         ],
     ),

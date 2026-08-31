@@ -37,6 +37,26 @@ is(
     'publish_component_ceiling_earliest_authority_and_measured_boundary',
     'selection keeps component, earliest-route, and measured-boundary truth distinct',
 );
+is(
+    $policy->{groups}{semantic_action_cardinality}{current_enforcement},
+    'capacity_reserved_before_action_form_and_repeat_copy_multiplication',
+    'action-cardinality policy records the hardened admission point',
+);
+is(
+    $policy->{groups}{semantic_action_cardinality}{selected_treatment},
+    'retain_early_reservation_and_terminal_defense',
+    'action-cardinality policy retains both early and terminal enforcement',
+);
+is(
+    $policy->{groups}{semantic_repeat_layering}{current_enforcement},
+    'compact_body_then_bounded_copy_reservation',
+    'repeat policy records bounded copy reservation after compact-body checking',
+);
+is(
+    $policy->{groups}{semantic_repeat_layering}{selected_treatment},
+    'retain_intrinsic_repeat_ceiling_and_overflow_safe_action_layering',
+    'repeat policy retains its intrinsic ceiling and overflow-safe action layer',
+);
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;
 my @catalog_axes;

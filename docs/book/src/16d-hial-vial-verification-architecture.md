@@ -2508,6 +2508,30 @@ known count check before avoidable same-layer materialization, but accepted
 profile bytes and the absence of a total-operation capacity claim stay fixed;
 source/parser/SemanticIR enforcement hardening is now the active leaf.
 
+### Action-cap admission order
+
+A scenario admits at most 65,536 expanded actions. The semantic builder now
+reserves that capacity before it parses or resolves the next action node. A
+source that has already filled the scenario cannot make malformed later syntax
+mask the resource boundary. For example, this intentionally failing shape
+counts the `repeat` node plus its 65,535 reset copies, then rejects the final
+atom without inspecting it as an action:
+
+```vial
+(steps
+  (repeat 65535 (reset bus 1))
+  malformed_action_atom)
+```
+
+The result is one `VIAL_LIMIT_ERROR`, phase `limit`, message
+`scenario exceeds 65536 expanded actions`, at the enclosing scenario path; no
+partial semantic report or `SemanticIR` escapes. A repeat that crosses the
+ceiling is rejected immediately after its one compact body has been checked.
+Its additional-copy count is compared by division before multiplication, so
+nested large repeat counts cannot overflow while deciding the boundary. The
+terminal scenario check remains as defense in depth, and accepted scenarios at
+the exact boundary retain their existing semantic identity and execution path.
+
 ```perl
 use FSM::VIAL::ArchitectureScaleExecutionGraph;
 

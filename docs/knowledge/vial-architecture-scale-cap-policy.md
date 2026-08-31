@@ -15,10 +15,13 @@ evidence: >-
   docs/decisions/0093-architecture-scale-caps-are-component-ceilings-with-explicit-route-authority.md;
   perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm;
   t/1685-vial-architecture-scale-cap-policy.t;
+  perl/FSM/VIAL/SemanticBuilder.pm;
+  t/1686-vial-semantic-action-cap-order.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
   prove -Iperl t/1685-vial-architecture-scale-cap-policy.t
+  t/1686-vial-semantic-action-cap-order.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -29,3 +32,10 @@ boundary when one exists. It authorizes earlier same-layer enforcement and
 terminal defenses, but no limit increase, decrease, re-levelling, support,
 budget, capacity, or accepted-profile change. Decision [[vial-execution-scale-axis-outcomes]]
 retains the reachability evidence; decision `0093` is the rationale authority.
+
+Scenario action accounting now reserves the 65,536-expanded-action ceiling
+before inspecting the next action node. Repeat bodies are checked once, then
+additional copies are admitted with division-before-multiplication arithmetic.
+Crossing the cap therefore retains the established scenario-level diagnostic
+and cannot be masked by malformed later syntax or leak a partial semantic
+report; exact-boundary accepted behavior is unchanged.

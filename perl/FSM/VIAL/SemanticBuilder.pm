@@ -1073,6 +1073,7 @@ sub _build_scenarios {
         my $state = {
             handles => {}, expectations => {}, injected_faults => {},
             action_count => 0, fiber_count => 0, scenario_id => $scenario_id,
+            scenario_span => $items->[$index]{span}, scenario_path => $item_path,
         };
         my @actions;
         for my $action_index (1 .. $#{$steps_items}) {
@@ -1095,9 +1096,9 @@ sub _build_scenarios {
 
 sub _action {
     my ($self, $context, $fixture, $node, $path, $state, $parallel_depth) = @_;
+    _reserve_action_count($state, 1);
     my $items = _form($node, undef, 1, undef, $path);
     my $head = _atom($items->[0]);
-    ++$state->{action_count};
     my $meta = $self->_meta($path, $node);
     my $env = {
         %{$self->_fixture_expr_env($fixture)},
@@ -1173,7 +1174,7 @@ sub _action {
             push @actions, $self->_action($context, $fixture, $items->[$action_index], "$path/actions/" . ($action_index - 2), $state, $parallel_depth);
         }
         my $body_count = $state->{action_count} - $before;
-        $state->{action_count} += ($count - 1) * $body_count;
+        _reserve_repeated_actions($state, $body_count, $count - 1);
         return { %{$meta}, kind => 'repeat', count => $count, actions => \@actions };
     }
     if ($head eq 'expect') {
@@ -1203,6 +1204,31 @@ sub _action {
         return { %{$meta}, kind => 'inject', fault_id => $fault->{semantic_id} };
     }
     _fail('VIAL_PARSE_ERROR', 'parse', "unknown action '$head'", $items->[0]{span}, $path);
+}
+
+sub _reserve_action_count {
+    my ($state, $increment) = @_;
+    _fail_scenario_action_limit($state)
+        if $increment > MAX_SCENARIO_ACTIONS - $state->{action_count};
+    $state->{action_count} += $increment;
+}
+
+sub _reserve_repeated_actions {
+    my ($state, $body_count, $additional_copies) = @_;
+    return unless $body_count && $additional_copies;
+    my $remaining = MAX_SCENARIO_ACTIONS - $state->{action_count};
+    _fail_scenario_action_limit($state)
+        if $body_count > int($remaining / $additional_copies);
+    $state->{action_count} += $body_count * $additional_copies;
+}
+
+sub _fail_scenario_action_limit {
+    my ($state) = @_;
+    _fail(
+        'VIAL_LIMIT_ERROR', 'limit',
+        'scenario exceeds 65536 expanded actions',
+        $state->{scenario_span}, $state->{scenario_path},
+    );
 }
 
 sub _transaction_field_values {
