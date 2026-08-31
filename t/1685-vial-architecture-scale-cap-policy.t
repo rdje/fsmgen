@@ -157,6 +157,11 @@ ok(
         @{$policy->{groups}{bridge_normalized_collections}{evidence}}),
     'bridge policy cites the exact retained-residue admission witness',
 );
+ok(
+    scalar(grep { $_ eq 't/1702-hial-vial-bridge-backend-binding-cap-order.t' }
+        @{$policy->{groups}{bridge_normalized_collections}{evidence}}),
+    'bridge policy cites the exact backend-binding admission witness',
+);
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;
 my @catalog_axes;

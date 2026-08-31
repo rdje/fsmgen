@@ -34,6 +34,7 @@ evidence: >-
   t/1699-hial-vial-bridge-transaction-cap-order.t;
   t/1700-hial-vial-bridge-event-cap-order.t;
   t/1701-hial-vial-bridge-residue-cap-order.t;
+  t/1702-hial-vial-bridge-backend-binding-cap-order.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -54,6 +55,7 @@ reverify: >-
   t/1699-hial-vial-bridge-transaction-cap-order.t
   t/1700-hial-vial-bridge-event-cap-order.t
   t/1701-hial-vial-bridge-residue-cap-order.t
+  t/1702-hial-vial-bridge-backend-binding-cap-order.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -120,6 +122,8 @@ Combined bridge-declared events and event-producing ordinary clauses are
 admitted before event-family shape, expression, or record normalization.
 Retained-residue cardinality is admitted before ordinal, ownership/detail,
 required-capability, or normalized residue-record construction.
+Backend-binding cardinality is derived and admitted before either backend's
+mapping lookup or any normalized binding-record construction.
 
 The guarded exact semantic-catalog matrix now closes every selected
 qualification, boundary, excess, and declared cap interaction through the

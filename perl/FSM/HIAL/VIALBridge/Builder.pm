@@ -599,6 +599,10 @@ sub _build_semantic_model($actor, $layer, $backend_names, $sources, $artifacts,
         @events = @{$semantics->{events}};
     }
 
+    _validate_collection_count(
+        'backend_bindings',
+        2 * (1 + @endpoints + @configurations + @probes),
+    );
     my @bindings = _build_backend_bindings(
         $backend_names, $unit_id, $unit_name, \@endpoints,
         \@configurations, \@probes,
