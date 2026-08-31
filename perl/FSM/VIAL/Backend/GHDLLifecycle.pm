@@ -17,6 +17,7 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
 use FSM::VIAL::Backend::ProcessSupervisor;
+use FSM::VIAL::Backend::ResultProducer;
 use FSM::VIAL::Backend::VHDLPortableTraceValidator;
 
 my $JSON = JSON::PP->new->canonical(1);
@@ -1149,6 +1150,16 @@ sub _decode_runtime_result_record($output, $byte_limit) {
     _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
         'GHDL runtime result is not canonical JSON', '/result_produced')
         unless $JSON->encode($decoded) eq $result[0];
+    my $manifest_keys = FSM::VIAL::Backend::ResultProducer->manifest_keys;
+    my %manifest_key = map { $_ => 1 } @$manifest_keys;
+    my @unknown = sort grep { !$manifest_key{$_} } keys %$decoded;
+    my @missing = grep { !exists($decoded->{$_}) } @$manifest_keys;
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        "GHDL runtime result has unknown key '$unknown[0]'",
+        '/result_produced') if @unknown;
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        "GHDL runtime result is missing key '$missing[0]'",
+        '/result_produced') if @missing;
     _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
         'GHDL runtime normalized result did not pass', '/result_produced')
         unless ($decoded->{schema} // '')

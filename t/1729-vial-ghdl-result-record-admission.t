@@ -44,6 +44,30 @@ subtest 'noncanonical runtime result bytes reject' => sub {
         'noncanonical result points to result production');
 };
 
+subtest 'result manifest top-level vocabulary is closed' => sub {
+    my $missing = clone($manifest);
+    delete $missing->{metrics};
+    my $missing_encoded = $json->encode($missing);
+    my $missing_error = decode_failure(
+        $missing_encoded, length($missing_encoded),
+    );
+    is($missing_error->{code}, 'VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'missing shared manifest key rejects');
+    is($missing_error->{path}, '/result_produced',
+        'missing shared manifest key points to result production');
+
+    my $foreign = clone($manifest);
+    $foreign->{foreign_runtime_field} = 'unowned';
+    my $foreign_encoded = $json->encode($foreign);
+    my $foreign_error = decode_failure(
+        $foreign_encoded, length($foreign_encoded),
+    );
+    is($foreign_error->{code}, 'VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'foreign shared manifest key rejects');
+    is($foreign_error->{path}, '/result_produced',
+        'foreign shared manifest key points to result production');
+};
+
 subtest 'record cardinality and JSON shape remain fail closed' => sub {
     my $duplicate = decode_failure(
         "$encoded\nFSMGEN_VIAL_RESULT_V1\t$encoded",
@@ -76,4 +100,8 @@ sub decode_failure {
     my $error = $@;
     isa_ok($error, 'FSM::VIAL::Backend::GHDLLifecycle::Failure');
     return ref($error) ? $error : {};
+}
+
+sub clone {
+    return JSON::PP->new->decode(JSON::PP->new->encode($_[0]));
 }

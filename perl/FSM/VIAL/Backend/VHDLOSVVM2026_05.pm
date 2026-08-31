@@ -23,7 +23,7 @@ my $DEPENDENCY_ROOT = '.artifacts/cache/providers/osvvm/2026.05/source';
 my $QUALIFICATION_REPORT =
     'vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json';
 my $QUALIFICATION_SHA256 =
-    'e83c1a346c31cde5b516e1b6d19696f0c63e05902a31f945f011f23e2268f1fa';
+    '490a47783ea8f1293be4735168f9199a50b5c6c3b8b5012c7643553d414e6a21';
 my $JSON = JSON::PP->new->canonical(1);
 my $PRETTY_JSON = JSON::PP->new->canonical(1)->pretty(1);
 my $PORTABLE_SOURCE_ARTIFACT_COUNT = 6;

@@ -138,11 +138,11 @@ preserves the original probe failure; failed, malformed, or unexpectedly
 throwing aborts become the qualifier cleanup diagnostic at `/cleanup` with a
 sanitized reason. No probe is retried and its process policy is unchanged.
 
-Normalized result admission now applies the selected 67,108,864-byte ceiling
-to the record payload before JSON decoding and requires the input bytes to be
-canonical before object persistence. Exact-boundary canonical content passes;
-one excess byte, reordered/whitespace-altered JSON, duplicate records, and
-malformed JSON reject. The outer run capture remains independently bounded.
+Normalized result admission applies the selected 67,108,864-byte ceiling and
+requires canonical bytes plus the exact shared ResultProducer top-level keys
+before object persistence. Closure exposed and repaired the VHDL producer's
+omitted `samples` member; missing/foreign keys, one excess byte, noncanonical,
+duplicate, or malformed records reject. Outer run capture is independently bounded.
 
 The guarded exact adapter accepts one 77-record reference validation, one gate
 validation plus three retained 10,000-record measurements, and one

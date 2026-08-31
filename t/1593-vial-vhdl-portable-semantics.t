@@ -15,6 +15,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::VIAL::ArtifactTransaction;
+use FSM::VIAL::Backend::ResultProducer;
 use FSM::VIAL::Backend::VHDLPortableGHDL;
 use FSM::VIAL::Backend::VHDLPortableStaticValidator;
 use FSM::VIAL::Parser;
@@ -192,17 +193,12 @@ subtest 'portable source emits typed stimulus, scheduling, models, and declared 
         'generated JSON uses VHDL quote doubling rather than C-style escapes');
     like($runtime, qr/fsmgen\.verification_result_manifest\.v1/,
         'normalized result schema is projected into generated VHDL');
-    for my $key (qw(
-        backend_evidence backend_profile capability_evidence coverage
-        diagnostics drives events exclusions execution_profile expectations
-        faults fibers fixture_id metrics models native_extensions parity_digest
-        parity_projection plan_id portable_parity_eligible random_decisions
-        result_id scenario_results schema schema_version scoreboards status
-        transactions
-    )) {
+    for my $key (@{FSM::VIAL::Backend::ResultProducer->manifest_keys}) {
         like($top, qr/\b\Q$key\E\b/,
             "normalized result projection carries '$key'");
     }
+    like($top, qr/""result_id"":null,""samples"":\[\],""scenario_results"":\[/,
+        'normalized result emits the samples member in its canonical slot');
     like($top, qr/sha256_counter_rejection_v1/,
         'normalized result projection preserves the exact plan-time random decision');
     my @phase = map { index($top, "-- FSMGEN VIAL PHASE: $_") }

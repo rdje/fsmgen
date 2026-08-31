@@ -181,9 +181,14 @@ unchanged; it does not retry the probe or alter any deadline or capture limit.
 Normalized result admission is byte exact as well. The lifecycle checks the
 JSON payload against the selected result byte ceiling before decode,
 then requires its runtime bytes to equal their canonical JSON encoding before
-persisting the normalized object. Exact equality passes; one excess byte or a
-semantically identical noncanonical spelling rejects without a result object.
-The surrounding run-capture ceiling remains an independent earlier defense.
+persisting the normalized object. It also derives the exact top-level
+vocabulary from the shared result-manifest producer: any missing or foreign
+member rejects. This closure exposed an omitted `samples` member in the VHDL
+producer itself; the emitter, both checked galleries, and both exact GHDL
+qualification reports now carry the repaired complete manifest. Exact equality
+passes; one excess byte or a semantically identical noncanonical spelling
+rejects without a result object. The surrounding run-capture ceiling remains
+an independent earlier defense.
 
 The shared production process supervisor records containment, spawn, successful
 `exec`, first output, exit, timeout/capture status, signal, and complete process-
