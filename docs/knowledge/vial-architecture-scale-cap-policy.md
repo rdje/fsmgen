@@ -23,6 +23,7 @@ evidence: >-
   t/1689-vial-semantic-declaration-cap-order.t;
   t/1690-vial-semantic-scoreboard-capacity-order.t;
   t/1691-vial-semantic-cross-max-bins-order.t;
+  t/1692-vial-semantic-type-shape-cap-order.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -33,6 +34,7 @@ reverify: >-
   t/1689-vial-semantic-declaration-cap-order.t
   t/1690-vial-semantic-scoreboard-capacity-order.t
   t/1691-vial-semantic-cross-max-bins-order.t
+  t/1692-vial-semantic-type-shape-cap-order.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -70,3 +72,7 @@ dependent transaction or coverpoint resolution. Known scalar excess therefore
 retains its established limit diagnostic and atomic failure even when a later
 reference is invalid; admitted declarations retain every reference, type,
 domain, key, and Cartesian-product validation.
+
+List length, record field count, and aggregate depth are admitted before
+recursive inner-type resolution. Invalid inner types cannot mask any known
+outer-shape excess, while exact-boundary semantic identities remain unchanged.

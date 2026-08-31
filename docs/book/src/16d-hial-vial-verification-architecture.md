@@ -2577,6 +2577,17 @@ failure. Exact-boundary inputs retain their projection and report identities;
 valid admitted inputs still undergo all transaction, key, coverpoint, domain,
 and Cartesian-product checks.
 
+### Type-shape cap admission order
+
+Type-shape limits are structural preflights. A list admits its declared length
+before resolving its element type; a record admits its field count before
+parsing individual field declarations; and record/list aggregate depth is
+checked before descending into the next nested type. Invalid inner types
+therefore cannot mask a known outer-shape excess. Each route retains its
+established `VIAL_LIMIT_ERROR` and semantic path, emits no partial semantic
+report or `SemanticIR`, and preserves exact-boundary projection and report
+identities.
+
 ```perl
 use FSM::VIAL::ArchitectureScaleExecutionGraph;
 

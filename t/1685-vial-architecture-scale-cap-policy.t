@@ -97,6 +97,16 @@ is(
     'retain_scalar_preflight_before_dependent_resolution',
     'service-scalar policy retains scalar preflight before dependent resolution',
 );
+is(
+    $policy->{groups}{semantic_type_shape}{current_enforcement},
+    'length_field_count_and_depth_before_inner_type_resolution',
+    'type-shape policy records all shape checks before inner-type resolution',
+);
+is(
+    $policy->{groups}{semantic_type_shape}{selected_treatment},
+    'retain_shape_preflight_before_recursive_resolution',
+    'type-shape policy retains preflight before recursive resolution',
+);
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;
 my @catalog_axes;

@@ -155,9 +155,14 @@ my $GROUPS = {
     ),
     semantic_type_shape => _group(
         'FSM::VIAL::SemanticBuilder', 'parse_validate', ['VIAL_LIMIT_ERROR'],
-        'type semantic path', 'at_type_shape_admission',
-        'no_semantic_ir_or_artifact', 'verify_existing_early_boundary',
-        '.17.4.2', ['t/1601-vial-architecture-scale-semantic-catalog.t'],
+        'type semantic path',
+        'length_field_count_and_depth_before_inner_type_resolution',
+        'no_semantic_ir_or_artifact',
+        'retain_shape_preflight_before_recursive_resolution',
+        '.17.4.2', [
+            't/1601-vial-architecture-scale-semantic-catalog.t',
+            't/1692-vial-semantic-type-shape-cap-order.t',
+        ],
     ),
     semantic_service_scalar => _group(
         'FSM::VIAL::SemanticBuilder', 'parse_validate', ['VIAL_LIMIT_ERROR'],

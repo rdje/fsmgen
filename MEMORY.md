@@ -10,6 +10,6 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
   (`active`; source/parser/SemanticIR architecture-cap hardening)
 - next_action: continue the remaining parser/semantic cap-group audit against
   decision `0093` and add the next smallest RED earliest-authority control.
-- in_flight_uncommitted: none after the service-scalar admission slice commit.
+- in_flight_uncommitted: none after the type-shape admission proof commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none; immutable `.17.3` evidence is the selection input.
