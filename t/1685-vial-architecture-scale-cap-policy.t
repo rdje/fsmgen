@@ -366,8 +366,8 @@ ok(
 );
 is(
     $policy->{groups}{backend_artifact_graph}{current_enforcement},
-    'portable_sv_exact_generated_bytes_before_support_graph_then_compact_source_map_preflight_with_terminal_validation',
-    'backend policy records portable-SV byte precedence and map preflight',
+    'portable_sv_byte_first_map_cap_preflight_and_portable_vhdl_byte_first_inventory_preflight_with_exact_map_census_and_terminal_validation',
+    'backend policy records portable-SV and portable-VHDL admission order',
 );
 is(
     $policy->{groups}{backend_artifact_graph}{selected_treatment},
@@ -379,6 +379,12 @@ ok(
         $_ eq 't/1716-vial-backend-portable-sv-cap-order.t'
     } @{$policy->{groups}{backend_artifact_graph}{evidence}}),
     'backend policy cites the portable-SV admission-order witness',
+);
+ok(
+    scalar(grep {
+        $_ eq 't/1717-vial-backend-portable-vhdl-cap-order.t'
+    } @{$policy->{groups}{backend_artifact_graph}{evidence}}),
+    'backend policy cites the portable-VHDL admission-order witness',
 );
 
 my $catalog = FSM::VIAL::ArchitectureScaleWorkload->catalog;

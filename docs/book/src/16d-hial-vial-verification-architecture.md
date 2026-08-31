@@ -2538,6 +2538,30 @@ and structural-only nonclaims are unchanged.
 prove -Iperl t/1716-vial-backend-portable-sv-cap-order.t
 ```
 
+### Portable VHDL backend-cap admission order
+
+Portable VHDL retains its distinct contract. The emitter renders its selected
+six-source graph and applies the unchanged 16-MiB generated-byte cap first,
+before artifact admission, map census, structural validation, review closure,
+commands, support artifacts, or the final manifest. An excess therefore keeps
+the exact `VIAL_VHDL_BACKEND_LIMIT_EXCEEDED` result at `/artifacts` and exposes
+no partial validation, map, or artifact graph.
+
+After byte admission, the emitter checks the fixed source inventory before
+dependent construction and carries the expected seventeen-artifact count to
+the terminal graph defense. It also derives map cardinality directly from the
+compact operations, scenarios, fibers, models, endpoints, checking regions,
+and probes, then requires materialization to agree; the reference count remains
+59. Unlike portable SystemVerilog and native UVM, portable VHDL declares no
+independent one-million-record map ceiling. The census is therefore an exact
+integrity oracle, not a new cap or capacity claim. Accepted bytes, artifact
+order and identities, structural checks, and provider-free nonclaims remain
+unchanged.
+
+```sh
+prove -Iperl t/1717-vial-backend-portable-vhdl-cap-order.t
+```
+
 ### Source-byte cap admission order
 
 The parser measures each source's encoded byte representation before lexing or

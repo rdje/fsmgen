@@ -19,6 +19,10 @@ my $BACKEND_SCHEMA = 'fsmgen.vial_backend.vhdl_portable.v1';
 my $SOURCE_MAP_SCHEMA = 'fsmgen.vial_vhdl_backend_source_map.v1';
 my $BASE = 'backends/vhdl_portable_ghdl';
 my $JSON = JSON::PP->new->canonical(1);
+my $GENERATED_SOURCE_BYTES_LIMIT = 16_777_216;
+my $FIXED_SOURCE_ARTIFACT_COUNT = 5;
+my $FIXED_SUPPORT_ARTIFACT_COUNT = 10;
+my $BACKEND_MANIFEST_ARTIFACT_COUNT = 1;
 
 my @RESULT_KEYS = qw(
     ok status backend_profile plan_id generated_top operation_id negotiation
@@ -204,7 +208,12 @@ sub _emit($raw) {
     $source_bytes += bytes::length($_->{content}) for @source_artifacts;
     _throw('VIAL_VHDL_BACKEND_LIMIT_EXCEEDED',
         'generated VHDL exceeds the 16 MiB backend cap', '/artifacts')
-        if $source_bytes > 16_777_216;
+        if $source_bytes > $GENERATED_SOURCE_BYTES_LIMIT;
+
+    my $artifact_count =
+        _preflight_artifact_count(\@source_artifacts, $has_probe_adapter);
+    my $source_map_entry_count =
+        _preflight_source_map_entry_count($execution, $bridge);
 
     my $static = FSM::VIAL::Backend::VHDLPortableStaticValidator->validate({
         backend_profile => $BACKEND_PROFILE,
@@ -236,6 +245,8 @@ sub _emit($raw) {
             probe_adapter => $probe_adapter,
         ),
     };
+    confess "portable VHDL source-map preflight disagrees with materialization\n"
+        unless @{$source_map->{entries}} == $source_map_entry_count;
 
     my $review = FSM::VIAL::Backend::VHDLPortableReviewClosure->build({
         plan_id => $execution->{plan_id},
@@ -469,7 +480,7 @@ sub _emit($raw) {
     my @artifacts = sort { $a->{relpath} cmp $b->{relpath} } @all;
     _throw('VIAL_VHDL_BACKEND_LIMIT_EXCEEDED',
         'portable VHDL review closure emitted an unexpected artifact count', '/artifacts')
-        unless @artifacts == 16 + $has_probe_adapter;
+        unless @artifacts == $artifact_count;
 
     return _result({
         ok => JSON::PP::true,
@@ -2372,6 +2383,31 @@ sub _source_map_entries(%arg) {
         };
     }
     return \@entry;
+}
+
+sub _preflight_artifact_count($source_artifacts, $has_probe_adapter) {
+    my $expected_source_count =
+        $FIXED_SOURCE_ARTIFACT_COUNT + $has_probe_adapter;
+    _throw('VIAL_VHDL_BACKEND_LIMIT_EXCEEDED',
+        'portable VHDL review closure emitted an unexpected artifact count', '/artifacts')
+        unless @$source_artifacts == $expected_source_count;
+    return $expected_source_count
+        + $FIXED_SUPPORT_ARTIFACT_COUNT
+        + $BACKEND_MANIFEST_ARTIFACT_COUNT;
+}
+
+sub _preflight_source_map_entry_count($execution, $bridge) {
+    my $count = 5; # types, runtime, metadata, DUT, and fixture top
+    $count += 1 if @{$bridge->{probes}}; # probe-adapter source
+    $count += scalar(@{$execution->{operation_graph}{operations}});
+    $count += scalar(@{$execution->{scenarios}});
+    $count += scalar(@{$_->{fibers}}) for @{$execution->{scenarios}};
+    $count += 2 * scalar(@{$execution->{models}}); # metadata and update anchors
+    $count += scalar(@{$bridge->{endpoints}});
+    $count += 1; # scheduler region
+    $count += 7; # checking/result regions
+    $count += scalar(@{$bridge->{probes}}); # individual adapter anchors
+    return $count;
 }
 
 sub _probe_bindings_are_exact($execution, $bridge) {
