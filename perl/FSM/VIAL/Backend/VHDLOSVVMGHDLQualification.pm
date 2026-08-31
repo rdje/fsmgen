@@ -548,7 +548,10 @@ sub _validate_runtime_output($output) {
     my $decoded_result = _decode_json($result[0], '/result');
     my $validated = FSM::VIAL::Backend::VHDLPortableTraceValidator->validate({
         trace_text => join("\n", @trace) . "\n",
-        %$TRACE_AUTHORITY,
+        expected_plan_id => $TRACE_AUTHORITY->{expected_plan_id},
+        expected_run_ids => $TRACE_AUTHORITY->{expected_run_ids},
+        expected_observation_catalog =>
+            $TRACE_AUTHORITY->{expected_observation_catalog},
         expected_record_counts => {
             header => 1, scenario_start => 2, events => 2, samples => 35,
             expectations => 2, scoreboards => 2, coverage => 28, faults => 2,

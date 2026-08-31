@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 
+use Digest::SHA qw(sha256_hex);
 use File::Spec;
 use FindBin;
 use JSON::PP ();
@@ -16,6 +17,7 @@ use FSM::VIAL::Backend::VHDLResultSchema;
 
 my $json = JSON::PP->new->canonical(1);
 my $expected_plan_id = 'plan/' . ('a' x 64);
+my $expected_fixture_id = 'fixture/reference';
 my @scenario_id = qw(fixture::scenario::one fixture::scenario::two);
 my @expected_run_id = map { "run/$expected_plan_id/$_" } @scenario_id;
 my $manifest = {map { $_ => undef }
@@ -25,7 +27,7 @@ $manifest->{schema_version} = 1;
 $manifest->{status} = 'pass';
 $manifest->{plan_id} = $expected_plan_id;
 $manifest->{result_id} = undef;
-$manifest->{fixture_id} = 'fixture/reference';
+$manifest->{fixture_id} = $expected_fixture_id;
 $manifest->{execution_profile} =
     'core_directed_single_clock_execution_v1';
 $manifest->{backend_profile} = {
@@ -47,6 +49,8 @@ $manifest->{capability_evidence} = {
     satisfied => ['portable_checking_projection'], unsatisfied => [],
 };
 $manifest->{random_decisions} = [];
+my $expected_random_decisions_sha256 =
+    sha256_hex($json->encode($manifest->{random_decisions}));
 $manifest->{$_} = [] for qw(
     events drives samples transactions expectations models fibers
     native_extensions exclusions
@@ -487,6 +491,12 @@ subtest 'top-level result values and aggregate totals are closed' => sub {
         '/result_produced/result_id',
         'runtime projection cannot claim a finalized result identity');
 
+    my $foreign_fixture = clone($manifest);
+    $foreign_fixture->{fixture_id} = 'fixture/foreign';
+    is(top_level_failure($foreign_fixture)->{path},
+        '/result_produced/fixture_id',
+        'fixture identity must equal plan-owned authority');
+
     my $foreign_backend = clone($manifest);
     $foreign_backend->{backend_profile}{id} = 'vhdl_foreign';
     is(top_level_failure($foreign_backend)->{path},
@@ -516,6 +526,12 @@ subtest 'top-level result values and aggregate totals are closed' => sub {
     is(top_level_failure($non_array)->{path},
         '/result_produced/random_decisions',
         'top-level collection must be an array');
+
+    my $foreign_decision = clone($manifest);
+    push @{$foreign_decision->{random_decisions}}, {foreign => 1};
+    is(top_level_failure($foreign_decision)->{path},
+        '/result_produced/random_decisions',
+        'random decisions must equal plan-owned authority');
 
     my $nonempty = clone($manifest);
     push @{$nonempty->{events}}, {foreign => 1};
@@ -748,7 +764,8 @@ sub validate_outcome_values {
 
 sub validate_top_level_values {
     FSM::VIAL::Backend::GHDLLifecycle::_validate_runtime_result_top_level_values(
-        $_[0], $expected_record_counts,
+        $_[0], $expected_record_counts, $expected_fixture_id,
+        $expected_random_decisions_sha256,
     );
 }
 

@@ -232,9 +232,13 @@ records must match the VHDL projection contract. Metrics must equal their
 records and collection cardinalities; a passing result has zero scoreboard
 mismatches. Coverage also equals the authenticated trace coverage count—not
 the scenario-cycle total—because reset barriers are sampled cycles but emit no
-coverage event. Plan-owned equality for `fixture_id` and `random_decisions`
-remains the next admission step; their current checks establish only a safe ID
-and an array of plain objects.
+coverage event. Lifecycle authority also seals the selected fixture and SHA-256
+of canonical plan-owned random decisions. Fixed qualification authority is
+independently reproduced from the canonical plan; dynamic measurement callers
+derive both from ExecutionIR. A foreign fixture or any decision-projection
+mutation rejects before persistence without copying the nested decision object
+into lifecycle state. Scenario-owned identity collections remain the next
+value-closure boundary.
 
 Those values stay canonical in each checked qualification report and are shown
 here for bounded reviewer visibility. The compact OSVVM gallery reference keeps

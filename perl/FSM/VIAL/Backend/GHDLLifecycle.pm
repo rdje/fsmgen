@@ -76,7 +76,8 @@ my @OSVVM_REPORT_NAMES = qw(
     AlertLogTop_sb_slv.yml
 );
 my @VALIDATION_KEYS = qw(
-    expected_record_counts expected_plan_id expected_run_ids
+    expected_record_counts expected_fixture_id expected_plan_id
+    expected_random_decisions_sha256 expected_run_ids
     expected_observation_catalog run_repetitions
 );
 my @STORAGE_KEYS = qw(
@@ -716,6 +717,29 @@ sub _validated_validation($raw) {
     _throw('VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
         $probe->{diagnostics}[0]{message}, '/validation')
         if $probe->{diagnostics}[0]{code} =~ /(?:INVOCATION|SHAPE|CATALOG)/;
+    _throw('VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
+        'GHDL expected fixture identity is not one bounded safe identity',
+        '/validation/expected_fixture_id')
+        unless _runtime_result_identity($raw->{expected_fixture_id});
+    _throw('VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
+        'GHDL expected random-decision digest is not one SHA-256 identity',
+        '/validation/expected_random_decisions_sha256')
+        unless defined($raw->{expected_random_decisions_sha256})
+            && !ref($raw->{expected_random_decisions_sha256})
+            && $raw->{expected_random_decisions_sha256}
+                =~ /\A[0-9a-f]{64}\z/;
+    my $run_prefix = "run/$raw->{expected_plan_id}/";
+    for my $index (0 .. $#{$raw->{expected_run_ids}}) {
+        my $run_id = $raw->{expected_run_ids}[$index];
+        my $scenario_id = substr($run_id, length($run_prefix));
+        my @scenario_part = split /::scenario::/, $scenario_id, -1;
+        _throw('VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
+            'GHDL expected run identity does not belong to its fixture',
+            "/validation/expected_run_ids/$index")
+            unless index($run_id, $run_prefix) == 0
+                && @scenario_part == 2 && length($scenario_part[1])
+                && $scenario_part[0] eq $raw->{expected_fixture_id};
+    }
     return _clone($raw);
 }
 
@@ -1132,6 +1156,8 @@ sub _phase_result_produced($session) {
     );
     _validate_runtime_result_top_level_values(
         $decoded, $session->{validation}{expected_record_counts},
+        $session->{validation}{expected_fixture_id},
+        $session->{validation}{expected_random_decisions_sha256},
     );
     push @{$session->{objects}}, _write_object(
         $session, 'normalized_result', _canonical($decoded) . "\n", 0,
@@ -1349,12 +1375,21 @@ sub _require_runtime_result_keys($value, $expected, $path, $label) {
     return;
 }
 
-sub _validate_runtime_result_top_level_values($decoded, $expected_counts) {
+sub _validate_runtime_result_top_level_values(
+    $decoded, $expected_counts, $expected_fixture_id,
+    $expected_random_decisions_sha256,
+) {
     die "GHDL runtime expected record counts are invalid\n"
         unless ref($expected_counts) eq 'HASH' && !blessed($expected_counts)
             && _runtime_result_nonnegative_integer(
                 $expected_counts->{coverage},
             );
+    die "GHDL runtime expected fixture identity is invalid\n"
+        unless _runtime_result_identity($expected_fixture_id);
+    die "GHDL runtime expected random-decision digest is invalid\n"
+        unless defined($expected_random_decisions_sha256)
+            && !ref($expected_random_decisions_sha256)
+            && $expected_random_decisions_sha256 =~ /\A[0-9a-f]{64}\z/;
     my $contract =
         FSM::VIAL::Backend::VHDLResultSchema->runtime_result_contract;
     _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
@@ -1371,9 +1406,10 @@ sub _validate_runtime_result_top_level_values($decoded, $expected_counts) {
         'GHDL runtime projection assigned a finalized result identity',
         '/result_produced/result_id') if defined($decoded->{result_id});
     _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
-        'GHDL runtime fixture identity is unsafe',
+        'GHDL runtime fixture identity differs from plan authority',
         '/result_produced/fixture_id')
-        unless _runtime_result_identity($decoded->{fixture_id});
+        unless defined($decoded->{fixture_id}) && !ref($decoded->{fixture_id})
+            && $decoded->{fixture_id} eq $expected_fixture_id;
     _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
         'GHDL runtime execution profile differs from the VHDL result contract',
         '/result_produced/execution_profile')
@@ -1425,6 +1461,11 @@ sub _validate_runtime_result_top_level_values($decoded, $expected_counts) {
             unless ref($decoded->{random_decisions}[$index]) eq 'HASH'
                 && !blessed($decoded->{random_decisions}[$index]);
     }
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime random decisions differ from plan authority',
+        '/result_produced/random_decisions')
+        unless sha256_hex(_canonical($decoded->{random_decisions}))
+            eq $expected_random_decisions_sha256;
 
     my $metrics = _validate_runtime_result_metrics($decoded, $contract);
     my $coverage = _validate_runtime_result_coverage($decoded, $contract);

@@ -8,8 +8,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
   (`active`; runtime-stream cap hardening under decisions `0093`/`0083`)
-- next_action: bind GHDL result `fixture_id` and `random_decisions` to
-  plan-owned authority in `.17.4.7`.
-- in_flight_uncommitted: none after fixed top-level value closure.
+- next_action: close GHDL scenario `expectation_ids`, `diagnostic_ids`, and
+  `cancelled_fiber_ids` projections in `.17.4.7`.
+- in_flight_uncommitted: none after fixture/random-decision authority binding.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none; immutable `.17.3` evidence is the selection input.

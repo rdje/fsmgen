@@ -651,7 +651,12 @@ sub _lifecycle_request($raw, $authority, $context) {
             expected_record_counts => _clone(
                 $raw->{materialization}{trace_projection}{record_families},
             ),
+            expected_fixture_id => $execution->{fixture}{fixture_id},
             expected_plan_id => $execution->{plan_id},
+            expected_random_decisions_sha256 =>
+                sha256_hex(_canonical_json(
+                    $execution->{randomness}{decisions},
+                )),
             expected_run_ids => \@run_ids,
             expected_observation_catalog =>
                 $checked->{expected_observation_catalog},

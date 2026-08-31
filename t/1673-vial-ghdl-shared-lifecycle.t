@@ -69,6 +69,33 @@ my $supervisor_unsealed = eval {
 };
 ok(!$supervisor_unsealed, 'common production process supervisor is caller-sealed');
 
+subtest 'result fixture and decision authorities are sealed at admission' => sub {
+    my $fixture_request = fake_request('foreign-result-fixture-authority');
+    $fixture_request->{validation}{expected_fixture_id} = 'fixture/foreign';
+    my $fixture = lifecycle_begin($fixture_request);
+    ok(!$fixture->{ok}, 'fixture authority inconsistent with run identities rejects');
+    is($fixture->{diagnostics}[0]{code},
+        'VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
+        'foreign fixture authority has the stable invocation diagnostic');
+    is($fixture->{diagnostics}[0]{path},
+        '/validation/expected_run_ids/0',
+        'foreign fixture authority points to the first inconsistent run');
+    ok(!-e repo_path(
+            $fixture_request->{storage_context}{staging_identity},
+        ), 'foreign fixture authority creates no lifecycle root');
+
+    my $digest_request = fake_request('malformed-result-decision-authority');
+    $digest_request->{validation}{expected_random_decisions_sha256} = 'g' x 64;
+    my $digest = lifecycle_begin($digest_request);
+    ok(!$digest->{ok}, 'malformed random-decision authority rejects');
+    is($digest->{diagnostics}[0]{path},
+        '/validation/expected_random_decisions_sha256',
+        'malformed random-decision authority has the exact path');
+    ok(!-e repo_path(
+            $digest_request->{storage_context}{staging_identity},
+        ), 'malformed random-decision authority creates no lifecycle root');
+};
+
 subtest 'admission is content-addressed, resumable, and abortable' => sub {
     my $request = fake_request('admission');
     my $provider_shebang = provider_shebang($request);

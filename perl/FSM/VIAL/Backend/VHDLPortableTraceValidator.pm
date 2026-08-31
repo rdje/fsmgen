@@ -24,6 +24,10 @@ my %KIND = map { $_ => 1 } @KIND;
 my @RESULT_KEYS = qw(ok status trace diagnostics);
 my $CHECKED_PLAN_ID =
     'plan/e236297c8b434a9b374d1800112841e00327bdbd5d8d9130440bd20681fbed6e';
+my $CHECKED_FIXTURE_ID =
+    'ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration';
+my $CHECKED_RANDOM_DECISIONS_SHA256 =
+    'eae7108383c875bde35ef072e5762ac9923996a69bcd6c455ae6cc5bfab9c0e2';
 my @CHECKED_RUN_ID = map { "run/$CHECKED_PLAN_ID/$_" } qw(
     ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::success
     ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::unsupported_size
@@ -71,7 +75,10 @@ sub checked_reference_authority($class) {
         . "->checked_reference_authority requires the exact class invocant\n"
         unless defined($class) && !ref($class) && $class eq __PACKAGE__;
     return $JSON->decode($JSON->encode({
+        expected_fixture_id => $CHECKED_FIXTURE_ID,
         expected_plan_id => $CHECKED_PLAN_ID,
+        expected_random_decisions_sha256 =>
+            $CHECKED_RANDOM_DECISIONS_SHA256,
         expected_run_ids => \@CHECKED_RUN_ID,
         expected_observation_catalog => $CHECKED_OBSERVATION_CATALOG,
     }));

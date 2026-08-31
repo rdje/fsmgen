@@ -18,6 +18,7 @@ use FSM::VIAL::ArtifactTransaction;
 use FSM::VIAL::Backend::ResultProducer;
 use FSM::VIAL::Backend::VHDLPortableGHDL;
 use FSM::VIAL::Backend::VHDLPortableStaticValidator;
+use FSM::VIAL::Backend::VHDLPortableTraceValidator;
 use FSM::VIAL::Parser;
 use FSM::VIAL::PlanBuilder;
 
@@ -30,6 +31,19 @@ my $built = build_plan();
 
 ok($built->{ok}, 'checked VIAL/HIAL fixture reaches portable VHDL backend inputs');
 diag($json->encode($built->{diagnostics})) unless $built->{ok};
+
+subtest 'checked lifecycle result authority is derived from the canonical plan' => sub {
+    my $execution = $built->{execution_ir}->as_hashref;
+    my $authority =
+        FSM::VIAL::Backend::VHDLPortableTraceValidator
+            ->checked_reference_authority;
+    is($authority->{expected_fixture_id},
+        $execution->{fixture}{fixture_id},
+        'checked fixture identity equals the selected plan fixture');
+    is($authority->{expected_random_decisions_sha256},
+        sha256_hex($json->encode($execution->{randomness}{decisions})),
+        'checked decision digest covers the exact canonical plan projection');
+};
 
 subtest 'private HIAL handoff carries deterministic VHDL DUT identity and bytes' => sub {
     is_deeply([sort keys %{$built->{backend_inputs}}],
