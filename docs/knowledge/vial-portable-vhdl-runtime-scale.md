@@ -15,8 +15,9 @@ answers:
   - "how are GHDL scenario expectation diagnostic and cancelled fiber identities admitted?"
   - "how is the GHDL scenario logical-time domain bound to plan authority?"
   - "how are GHDL passing diagnostic codes and logical times bound to VHDL emitter behavior?"
+  - "how are GHDL fault applications and scoreboard comparisons bound to trace records?"
   - "how do fake GHDL lifecycle providers avoid host executable admission?"
-date: 2026-08-31
+date: 2026-09-01
 status: current
 tags: [vial, vhdl, ghdl, runtime, trace, scalability]
 evidence: >-
@@ -110,19 +111,14 @@ the original timeout/execution diagnostic and reports zero residue. This
 changes no GHDL command, deadline, capture ceiling, accepted output, provider
 role, or scale claim.
 
-Before an owner marker exists, admission remembers whether it removed the root
-it created. Success preserves the triggering diagnostic with zero residue;
-failure becomes the cleanup diagnostic with the exact staging identity, never
-inferring ownership from an unwritten marker. Adjacent suites exposed
-intermittent exact-deadline fake-provider probe timeouts. Native doubles emitted
-AMFI `-423`, but `env perl`, absolute Perl, and a tracked Perl script also timed
-out. Three captures show `exec` handoff at 1.421–2.080 ms, then no output until
-TERM at 10.034–10.053 s, falsifying signing, path lookup, fresh inode identity,
-containment, and parent scheduling as sufficient causes. Fixtures now prefer
-one tracked POSIX-shell provider, with configured Perl as the no-`/bin/sh`
-fallback. Five guarded predecessor and three full seven-file passes preserve
-supervisor/process-group/failure/report/cleanup coverage; no launch crosses the
-two-second sampler, no retry was added, and the ten-second deadline is fixed.
+Before an owner marker, admission records exact root removal/residue; cleanup
+failure overrides the triggering diagnostic without inferring unwritten ownership.
+Intermittent fake-provider deadlines persisted across native, `env`, absolute,
+and tracked Perl. Three captures show 1.421–2.080-ms `exec` handoff, then no output
+until TERM at 10.034–10.053 s, excluding signing, lookup, inode, containment, and
+parent scheduling as sufficient causes. Fixtures prefer one tracked POSIX shell
+with configured Perl fallback. Five guarded predecessor and three full passes
+retain process/failure/cleanup coverage without retry or deadline change.
 
 The qualifier's distinct four-state probe uses the same supervisor but retains
 its own error translation. A timed-out probe now reports
@@ -150,6 +146,8 @@ mismatches reject before persistence. Both scenario timestamp domains must equal
 that sealed domain, so even an internally consistent foreign pair rejects.
 Passing diagnostics are ordered `VIAL_EXPECT_SUCCESS` or
 `VIAL_EXPECT_ERROR` at each scenario end cycle with ranks `0/3/3`; mismatches reject.
+Fault applications and scoreboard comparisons each equal half their authenticated
+trace count: the emitter writes arm/apply and enqueue/compare record pairs.
 Portable VHDL emits no scenario-owned expectation, diagnostic, or cancelled-fiber
 records, so each corresponding identity array must be exactly empty; this
 VHDL-specific admission does not narrow richer trace-backed ResultProducer

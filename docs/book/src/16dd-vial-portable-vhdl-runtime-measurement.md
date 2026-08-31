@@ -232,7 +232,11 @@ records must match the VHDL projection contract. Metrics must equal their
 records and collection cardinalities; a passing result has zero scoreboard
 mismatches. Coverage also equals the authenticated trace coverage count—not
 the scenario-cycle total—because reset barriers are sampled cycles but emit no
-coverage event. Lifecycle authority also seals the selected fixture and SHA-256
+coverage event. Fault applications and scoreboard comparisons bind to trace
+counts as well: the emitter writes paired arm/apply fault records and paired
+enqueue/compare scoreboard records. Self-consistent zero or excess aggregates
+therefore reject even when their metrics agree. Lifecycle authority also seals
+the selected fixture and SHA-256
 of canonical plan-owned random decisions. Fixed qualification authority is
 independently reproduced from the canonical plan; dynamic measurement callers
 derive both from ExecutionIR. A foreign fixture or any decision-projection

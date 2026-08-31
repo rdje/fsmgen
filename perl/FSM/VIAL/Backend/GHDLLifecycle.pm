@@ -1403,9 +1403,9 @@ sub _validate_runtime_result_top_level_values(
 ) {
     die "GHDL runtime expected record counts are invalid\n"
         unless ref($expected_counts) eq 'HASH' && !blessed($expected_counts)
-            && _runtime_result_nonnegative_integer(
-                $expected_counts->{coverage},
-            );
+            && !grep {
+                !_runtime_result_nonnegative_integer($expected_counts->{$_})
+            } qw(coverage faults scoreboards);
     die "GHDL runtime expected fixture identity is invalid\n"
         unless _runtime_result_identity($expected_fixture_id);
     die "GHDL runtime expected random-decision digest is invalid\n"
@@ -1524,6 +1524,15 @@ sub _validate_runtime_result_top_level_values(
         '/result_produced/metrics/scoreboard_mismatches')
         unless $metrics->{scoreboard_mismatches}
             == $scoreboard->{mismatches};
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime fault applications differ from authenticated trace records',
+        '/result_produced/faults/0/applications')
+        unless 2 * $fault->{applications} == $expected_counts->{faults};
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime scoreboard comparisons differ from authenticated trace records',
+        '/result_produced/scoreboards/0/comparisons')
+        unless 2 * $scoreboard->{comparisons}
+            == $expected_counts->{scoreboards};
     _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
         'GHDL runtime passing result contains a scoreboard mismatch',
         '/result_produced/metrics/scoreboard_mismatches')

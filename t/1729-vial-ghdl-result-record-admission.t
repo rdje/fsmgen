@@ -58,14 +58,14 @@ $manifest->{$_} = [] for qw(
     native_extensions exclusions
 );
 $manifest->{scoreboards} = [{
-    capacity => 4, comparisons => 0, mismatches => 0,
+    capacity => 4, comparisons => 1, mismatches => 0,
 }];
 $manifest->{coverage} = [{
     bins => {not_stalled => 2, stalled => 0},
     coverpoint_id => 'coverpoint/stall_seen',
 }];
 $manifest->{faults} = [{
-    applications => 0,
+    applications => 1,
     fault_id => 'fault/unsupported_size',
     kind => 'substitution',
 }];
@@ -73,8 +73,8 @@ $manifest->{metrics} = {
     coverage_not_stalled => 2,
     coverage_stalled => 0,
     diagnostic_records => 2,
-    fault_applications => 0,
-    scoreboard_comparisons => 0,
+    fault_applications => 1,
+    scoreboard_comparisons => 1,
     scoreboard_mismatches => 0,
 };
 $manifest->{parity_digest} = undef;
@@ -145,7 +145,7 @@ my $expected_observation_catalog = {
             semantic_id => 'probe/reg_data_q', width => 8},
     ],
 };
-my $expected_record_counts = {coverage => 2};
+my $expected_record_counts = {coverage => 2, faults => 2, scoreboards => 2};
 my $encoded = $json->encode($manifest);
 
 subtest 'canonical result is admitted at the exact byte boundary' => sub {
@@ -628,16 +628,31 @@ subtest 'top-level result values and aggregate totals are closed' => sub {
     }
 
     my $fault_total = clone($manifest);
-    $fault_total->{faults}[0]{applications} = 1;
+    $fault_total->{faults}[0]{applications} = 2;
     is(top_level_failure($fault_total)->{path},
         '/result_produced/metrics/fault_applications',
         'fault metric must equal the canonical fault record');
 
     my $scoreboard_total = clone($manifest);
-    $scoreboard_total->{scoreboards}[0]{comparisons} = 1;
+    $scoreboard_total->{scoreboards}[0]{comparisons} = 2;
     is(top_level_failure($scoreboard_total)->{path},
         '/result_produced/metrics/scoreboard_comparisons',
         'scoreboard metric must equal the canonical scoreboard record');
+
+    for my $case (
+        [faults => 'applications', 'fault_applications'],
+        [scoreboards => 'comparisons', 'scoreboard_comparisons'],
+    ) {
+        my ($collection, $field, $metric) = @$case;
+        for my $value (0, 2) {
+            my $foreign = clone($manifest);
+            $foreign->{$collection}[0]{$field} = $value;
+            $foreign->{metrics}{$metric} = $value;
+            is(top_level_failure($foreign)->{path},
+                "/result_produced/$collection/0/$field",
+                "$collection $field=$value rejects against trace authority");
+        }
+    }
 
     my $passing_mismatch = clone($manifest);
     $passing_mismatch->{scoreboards}[0]{mismatches} = 1;
