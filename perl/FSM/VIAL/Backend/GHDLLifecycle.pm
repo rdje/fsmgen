@@ -133,6 +133,7 @@ my %PHASE_POLICY = (
     elaborated => [60, 8_388_608],
     ran => [30, 67_108_864],
 );
+my $RESULT_RECORD_MAX_BYTES = 67_108_864;
 
 sub state_order($class) {
     _exact_class($class, 'state_order');
@@ -1112,24 +1113,9 @@ sub _phase_result_produced($session) {
     my $runtime_kind = _is_osvvm_role($session->{role})
         ? 'fixture_runtime_output_0' : 'runtime_output_0';
     my $output = _object_content($session, $runtime_kind);
-    my @result = map {
-        substr($_, length("FSMGEN_VIAL_RESULT_V1\t"))
-    } grep { index($_, "FSMGEN_VIAL_RESULT_V1\t") == 0 }
-        split /\r?\n/, $output;
-    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
-        'GHDL runtime must emit exactly one normalized result record',
-        '/result_produced') unless @result == 1;
-    my $decoded = eval { $JSON->decode($result[0]) };
-    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
-        'GHDL runtime result is malformed', '/result_produced')
-        unless defined($decoded) && !$@ && ref($decoded) eq 'HASH'
-            && !blessed($decoded);
-    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
-        'GHDL runtime normalized result did not pass', '/result_produced')
-        unless ($decoded->{schema} // '')
-                eq 'fsmgen.verification_result_manifest.v1'
-            && ($decoded->{schema_version} // 0) == 1
-            && ($decoded->{status} // '') eq 'pass';
+    my $decoded = _decode_runtime_result_record(
+        $output, $RESULT_RECORD_MAX_BYTES,
+    );
     push @{$session->{objects}}, _write_object(
         $session, 'normalized_result', _canonical($decoded) . "\n", 0,
     );
@@ -1138,6 +1124,38 @@ sub _phase_result_produced($session) {
         result_status => 'pass',
         _workspace_evidence($session),
     };
+}
+
+sub _decode_runtime_result_record($output, $byte_limit) {
+    die "GHDL runtime result byte limit must be a positive integer\n"
+        unless defined($byte_limit) && !ref($byte_limit)
+            && $byte_limit =~ /\A[1-9][0-9]*\z/;
+    my @result = map {
+        substr($_, length("FSMGEN_VIAL_RESULT_V1\t"))
+    } grep { index($_, "FSMGEN_VIAL_RESULT_V1\t") == 0 }
+        split /\r?\n/, $output;
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime must emit exactly one normalized result record',
+        '/result_produced') unless @result == 1;
+    _throw('VIAL_GHDL_LIFECYCLE_LIMIT_ERROR',
+        'GHDL runtime normalized result exceeds its exact byte ceiling',
+        '/result_produced')
+        if bytes::length($result[0]) > $byte_limit;
+    my $decoded = eval { $JSON->decode($result[0]) };
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime result is malformed', '/result_produced')
+        unless defined($decoded) && !$@ && ref($decoded) eq 'HASH'
+            && !blessed($decoded);
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime result is not canonical JSON', '/result_produced')
+        unless $JSON->encode($decoded) eq $result[0];
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL runtime normalized result did not pass', '/result_produced')
+        unless ($decoded->{schema} // '')
+                eq 'fsmgen.verification_result_manifest.v1'
+            && ($decoded->{schema_version} // 0) == 1
+            && ($decoded->{status} // '') eq 'pass';
+    return $decoded;
 }
 
 sub _phase_assembled($session) {

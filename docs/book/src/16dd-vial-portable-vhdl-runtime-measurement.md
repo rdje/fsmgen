@@ -178,6 +178,13 @@ and zero diagnostics. A failed or malformed abort instead reports
 lifecycle reason. An exact successful abort rethrows the original probe error
 unchanged; it does not retry the probe or alter any deadline or capture limit.
 
+Normalized result admission is byte exact as well. The lifecycle checks the
+JSON payload against the selected result byte ceiling before decode,
+then requires its runtime bytes to equal their canonical JSON encoding before
+persisting the normalized object. Exact equality passes; one excess byte or a
+semantically identical noncanonical spelling rejects without a result object.
+The surrounding run-capture ceiling remains an independent earlier defense.
+
 The shared production process supervisor records containment, spawn, successful
 `exec`, first output, exit, timeout/capture status, signal, and complete process-
 tree cleanup. Lifecycle-owned public work and outer-worker-owned measurement
@@ -228,6 +235,7 @@ prove -Iperl t/1725-vial-ghdl-cleanup-diagnostic-authority.t \
   t/1726-vial-ghdl-admission-cleanup-evidence.t \
   t/1727-vial-ghdl-probe-timeout-diagnostic-authority.t \
   t/1728-vial-ghdl-probe-abort-cleanup-authority.t \
+  t/1729-vial-ghdl-result-record-admission.t \
   t/1673-vial-ghdl-shared-lifecycle.t \
   t/1678-vial-ghdl-provider-aware-lifecycle.t
 ```

@@ -10,6 +10,7 @@ answers:
   - "does portable VHDL runtime measurement mean IASIM execution?"
   - "which diagnostic wins when a portable VHDL phase and cleanup both fail?"
   - "which diagnostic wins when the separate GHDL probe and its abort both fail?"
+  - "how does the GHDL lifecycle admit normalized result bytes?"
   - "how do fake GHDL lifecycle providers avoid host executable admission?"
 date: 2026-08-31
 status: current
@@ -39,7 +40,7 @@ evidence: >-
   t/1725-vial-ghdl-cleanup-diagnostic-authority.t;
   t/1726-vial-ghdl-admission-cleanup-evidence.t;
   t/1727-vial-ghdl-probe-timeout-diagnostic-authority.t;
-  t/1728-vial-ghdl-probe-abort-cleanup-authority.t;
+  t/1728-vial-ghdl-probe-abort-cleanup-authority.t; t/1729-vial-ghdl-result-record-admission.t;
   t/1674-vial-architecture-scale-portable-vhdl-runtime-measurement.t;
   t/1675-vial-architecture-scale-portable-vhdl-runtime-measurement-matrix.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
@@ -52,7 +53,7 @@ reverify: >-
   t/1725-vial-ghdl-cleanup-diagnostic-authority.t
   t/1726-vial-ghdl-admission-cleanup-evidence.t
   t/1727-vial-ghdl-probe-timeout-diagnostic-authority.t
-  t/1728-vial-ghdl-probe-abort-cleanup-authority.t
+  t/1728-vial-ghdl-probe-abort-cleanup-authority.t t/1729-vial-ghdl-result-record-admission.t
   t/1675-vial-architecture-scale-portable-vhdl-runtime-measurement-matrix.t &&
   scripts/run_with_ram_guard.sh --
   scripts/run_vial_portable_vhdl_runtime_measurement_matrix.pl --validate &&
@@ -136,6 +137,12 @@ probe. Only `aborted_cleaned` with removal, zero residue, and zero diagnostics
 preserves the original probe failure; failed, malformed, or unexpectedly
 throwing aborts become the qualifier cleanup diagnostic at `/cleanup` with a
 sanitized reason. No probe is retried and its process policy is unchanged.
+
+Normalized result admission now applies the selected 67,108,864-byte ceiling
+to the record payload before JSON decoding and requires the input bytes to be
+canonical before object persistence. Exact-boundary canonical content passes;
+one excess byte, reordered/whitespace-altered JSON, duplicate records, and
+malformed JSON reject. The outer run capture remains independently bounded.
 
 The guarded exact adapter accepts one 77-record reference validation, one gate
 validation plus three retained 10,000-record measurements, and one
