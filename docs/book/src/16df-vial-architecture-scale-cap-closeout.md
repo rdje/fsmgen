@@ -27,8 +27,8 @@ execution-operation-cardinality, execution-fiber-cardinality,
 execution-route-collection, execution-random-attempt, and
 execution-serialized-plan witnesses are now joined too. Semantic-parser
 admission, semantic-declaration cardinality, and semantic-action cardinality
-are now joined as well. The same classification remains pending for every
-other group.
+and shape are now joined as well. The same classification remains pending for
+every other group.
 
 ## Why calibration publication is separate
 
@@ -64,7 +64,8 @@ manifest, normalized-collection, execution-profile-selection, and
 execution-operation-cardinality, execution-fiber-cardinality,
 execution-route-collection, execution-random-attempt, and
 execution-serialized-plan, semantic-parser-admission, and semantic-declaration-
-cardinality, and semantic-action-cardinality groups are `verified`
+cardinality, semantic-action-cardinality, and semantic-action-shape groups are
+`verified`
 across all seven
 dimensions; all other groups remain `pending_independent_verification`.
 Runtime covers the selected materialization profiles plus t1720 through t1749
@@ -185,7 +186,15 @@ a full boundary, and malformed action syntax after a full boundary all retain
 the stable scenario-root limit before further semantic construction and publish
 no semantic report. T1686 is not accepted-boundary or accepted-identity
 evidence.
-T1763 reconstructs all nineteen sets of per-dimension projections,
+Action shape uses a separate asymmetric pair. T1601 owns both exact axes:
+parallel depth 16 admits before 17 rejects, while 256 fibers in one parallel form admit before 257 reject.
+It also owns provider-free construction, same-volume
+cleanup, deterministic accepted identities, and absence of partial semantic or
+format identities on rejection. T1688 independently strengthens only the fiber
+axis: it pins the exact accepted projection/report identities and proves the
+adjacent excess wins before invalid join-value resolution without a semantic
+report. T1688 is not depth, no-tool, or cleanup evidence.
+T1763 reconstructs all twenty sets of per-dimension projections,
 requires their complete unions, checks every path, and rejects omitted or
 foreign evidence. Policy citations remain candidates
 for all unreviewed groups. The validator also
@@ -433,6 +442,17 @@ cleanup, identities, and sealed falsifiers with:
 scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
   prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t \
   t/1686-vial-semantic-action-cap-order.t \
+  t/1763-vial-architecture-scale-cap-consistency.t \
+  t/1685-vial-architecture-scale-cap-policy.t
+```
+
+Reverify exact parallel depth and fiber shape, pre-join admission order,
+failure atomicity, cleanup, identities, and sealed falsifiers with:
+
+```sh
+scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
+  prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t \
+  t/1688-vial-semantic-parallel-fiber-cap-order.t \
   t/1763-vial-architecture-scale-cap-consistency.t \
   t/1685-vial-architecture-scale-cap-policy.t
 ```

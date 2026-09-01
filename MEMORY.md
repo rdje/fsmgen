@@ -8,10 +8,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8`
   (`active`; cross-family cap closeout under decision `0093`)
-- next_action: Independently review and bind `semantic_action_shape` to
+- next_action: Independently review and bind `semantic_repeat_layering` to
   every sealed consistency dimension; keep calibration blocked until all groups
   are verified.
-- in_flight_uncommitted: none; the semantic-action-cardinality join is complete
-  and the next semantic-action-shape audit has not started.
+- in_flight_uncommitted: none; semantic-action-shape evidence is complete and
+  the semantic-repeat-layering audit has not started.
 - in_flight_background: none.
 - blockers: none.

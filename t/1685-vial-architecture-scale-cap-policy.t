@@ -94,6 +94,14 @@ is(
     'retain_shape_preflight_before_semantic_resolution',
     'action-shape policy retains structural preflight before semantic resolution',
 );
+is_deeply(
+    $policy->{groups}{semantic_action_shape}{evidence},
+    [qw(
+        t/1601-vial-architecture-scale-semantic-catalog.t
+        t/1688-vial-semantic-parallel-fiber-cap-order.t
+    )],
+    'action-shape policy cites the exact catalog and parallel-fiber evidence set',
+);
 is(
     $policy->{groups}{semantic_declaration_cardinality}{current_enforcement},
     'per_section_before_later_section_shape_parsing',

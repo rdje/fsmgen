@@ -775,6 +775,32 @@ my %SEMANTIC_ACTION_RATIONALE = (
     accepted_identity =>
         'the exact action boundary retains deterministic semantic projection, report, and format identities',
 );
+my @SEMANTIC_ACTION_SHAPE_EVIDENCE = (
+    [
+        't/1601-vial-architecture-scale-semantic-catalog.t',
+        @DIMENSIONS,
+    ],
+    [
+        't/1688-vial-semantic-parallel-fiber-cap-order.t',
+        qw(boundary adjacent_excess diagnostics atomicity accepted_identity),
+    ],
+);
+my %SEMANTIC_ACTION_SHAPE_RATIONALE = (
+    boundary =>
+        'exact 16-level parallel depth and 256-fiber parallel shapes admit',
+    adjacent_excess =>
+        'generated 17-level depth and 257-fiber excesses reject, with independent fiber pre-join order',
+    diagnostics =>
+        'parallel-shape excesses retain the stable limit family and action semantic path',
+    atomicity =>
+        'depth and fiber excess publish no partial semantic identities, while fiber count preflights before join resolution without a report',
+    no_tool =>
+        'every selected semantic catalog construction carries no backend or external-tool selector',
+    cleanup =>
+        'semantic catalog staging removes same-volume success and consumer-failure residue',
+    accepted_identity =>
+        'the closed matrix plus focused fiber boundary retain deterministic semantic projection and report identities',
+);
 my @SEMANTIC_DECLARATION_EVIDENCE = (
     [
         't/1601-vial-architecture-scale-semantic-catalog.t',
@@ -1012,6 +1038,18 @@ for my $entry (@SEMANTIC_ACTION_EVIDENCE) {
     push @{$semantic_action_dimensions{$_}{evidence}}, $path
         for @dimensions;
 }
+my %semantic_action_shape_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $SEMANTIC_ACTION_SHAPE_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@SEMANTIC_ACTION_SHAPE_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$semantic_action_shape_dimensions{$_}{evidence}}, $path
+        for @dimensions;
+}
 my %semantic_declaration_dimensions = map {
     $_ => {
         status => 'verified',
@@ -1042,6 +1080,7 @@ my $VERIFIED_DIMENSIONS = {
     execution_route_collections => \%execution_route_dimensions,
     runtime_stream_envelopes => \%runtime_dimensions,
     semantic_action_cardinality => \%semantic_action_dimensions,
+    semantic_action_shape => \%semantic_action_shape_dimensions,
     semantic_declaration_cardinality => \%semantic_declaration_dimensions,
     semantic_parser_admission => \%semantic_parser_dimensions,
 };
