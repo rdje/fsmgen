@@ -26,7 +26,7 @@ normalized-bridge-collection, execution-profile-selection, and
 execution-operation-cardinality, execution-fiber-cardinality,
 execution-route-collection, execution-random-attempt, and
 execution-serialized-plan witnesses are now joined too. Semantic-parser
-admission is now joined as well. The same
+admission and semantic-declaration cardinality are now joined as well. The same
 classification remains pending for every other group.
 
 ## Why calibration publication is separate
@@ -62,7 +62,8 @@ checking-scoreboard, checking-coverage, bridge-profile-cardinality, serialized
 manifest, normalized-collection, execution-profile-selection, and
 execution-operation-cardinality, execution-fiber-cardinality,
 execution-route-collection, execution-random-attempt, and
-execution-serialized-plan and semantic-parser-admission groups are `verified`
+execution-serialized-plan, semantic-parser-admission, and semantic-declaration-
+cardinality groups are `verified`
 across all seven
 dimensions; all other groups remain `pending_independent_verification`.
 Runtime covers the selected materialization profiles plus t1720 through t1749
@@ -166,7 +167,15 @@ direct imports and rejects 65 before recursive parsing. T1693 admits the
 1,048,576-byte per-source and 16,777,216-byte combined-source boundaries, then
 rejects each first byte excess before lexing. Both focused rejection witnesses
 retain stable diagnostics and publish no partial semantic report.
-T1763 reconstructs all seventeen sets of per-dimension projections,
+Declaration cardinality retains its deliberately asymmetric two-witness
+authority. T1601 admits exactly 1,024 fixtures and rejects 1,025 through the
+closed semantic matrix; every expected rejection now explicitly publishes no
+semantic-projection, semantic-report, or format identity. T1689 independently
+admits exactly 4,096 declarations and rejects 4,097 before parsing a malformed
+later section. Together they retain stable diagnostics, provider-free shape,
+same-volume cleanup, and deterministic accepted identities without inventing
+a redundant third witness.
+T1763 reconstructs all eighteen sets of per-dimension projections,
 requires their complete unions, checks every path, and rejects omitted or
 foreign evidence. Policy citations remain candidates
 for all unreviewed groups. The validator also
@@ -392,6 +401,17 @@ scripts/run_with_ram_guard.sh -- prove -Iperl \
   t/1601-vial-architecture-scale-semantic-catalog.t \
   t/1687-vial-parser-direct-import-cap-order.t \
   t/1693-vial-parser-source-byte-cap-order.t \
+  t/1763-vial-architecture-scale-cap-consistency.t \
+  t/1685-vial-architecture-scale-cap-policy.t
+```
+
+Reverify exact declaration and fixture cardinality, failure atomicity,
+admission order, cleanup, identities, and sealed falsifiers with:
+
+```sh
+scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
+  prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t \
+  t/1689-vial-semantic-declaration-cap-order.t \
   t/1763-vial-architecture-scale-cap-consistency.t \
   t/1685-vial-architecture-scale-cap-policy.t
 ```

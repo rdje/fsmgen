@@ -96,6 +96,14 @@ is(
     'retain_per_section_preflight_before_dependent_parsing',
     'declaration policy retains per-section preflight before dependent parsing',
 );
+is_deeply(
+    $policy->{groups}{semantic_declaration_cardinality}{evidence},
+    [qw(
+        t/1601-vial-architecture-scale-semantic-catalog.t
+        t/1689-vial-semantic-declaration-cap-order.t
+    )],
+    'declaration policy cites the exact catalog and declaration-order evidence set',
+);
 is(
     $policy->{groups}{semantic_service_scalar}{current_enforcement},
     'before_dependent_reference_resolution',

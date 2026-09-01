@@ -96,7 +96,7 @@
 
 _VIAL architecture-scale caps are component ceilings with explicit route authority_
 
-- **date:** 2026-09-01 · **status:** current
+- **date:** 2026-09-02 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-architecture-scale-cap-policy.md`](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 
 ### vial-architecture-scale-proof

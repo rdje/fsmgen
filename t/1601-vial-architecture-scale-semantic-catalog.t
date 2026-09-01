@@ -72,6 +72,12 @@ sub check_evaluation {
     elsif ($evaluation->{status} eq 'expected_rejection') {
         is($evaluation->{diagnostics}[0]{code}, 'VIAL_LIMIT_ERROR',
             "$axis/$level rejects at one authoritative VIAL limit");
+        is($evaluation->{semantic_projection_sha256}, undef,
+            "$axis/$level publishes no partial semantic-projection identity");
+        is($evaluation->{semantic_report_sha256}, undef,
+            "$axis/$level publishes no partial semantic-report identity");
+        is_deeply($evaluation->{format_identities}, [],
+            "$axis/$level publishes no partial format identities");
     }
 }
 

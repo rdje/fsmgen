@@ -8,9 +8,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8`
   (`active`; cross-family cap closeout under decision `0093`)
-- next_action: Independently review and bind `semantic_declaration_cardinality` to
+- next_action: Independently review and bind `semantic_action_cardinality` to
   every sealed consistency dimension; keep calibration blocked until all groups
   are verified.
-- in_flight_uncommitted: semantic-parser admission evidence join is verified and awaiting staged acceptance/doctrine commit gates.
-- in_flight_background: none; the five-file guarded join is terminal green.
+- in_flight_uncommitted: none; semantic-action cardinality evidence review has not started.
+- in_flight_background: none.
 - blockers: none.

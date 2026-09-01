@@ -34,7 +34,7 @@ answers:
   - "does the portable SystemVerilog lifecycle enforce its final backend artifact graph?"
   - "how does the common controller admit worker artifact files?"
   - "which cap evidence groups are independently verified?"
-date: 2026-09-01
+date: 2026-09-02
 status: current
 tags: [vial, architecture-scale, limits, bounded-failure, route-authority]
 evidence: >-
@@ -95,11 +95,12 @@ native UVM stays emission-only. Eligibility rejects excess before tools; the
 shared lifecycle bounds trace and final artifacts.
 
 `FSM::VIAL::ArchitectureScaleCapConsistency` rebuilds policy without caller
-evidence. Seventeen groups verify all dimensions: runtime, backend, models,
+evidence. Eighteen groups verify all dimensions: runtime, backend, models,
 faults, randomness, scoreboards, coverage, bridge-profile cardinality,
 serialized bridge manifests, normalized bridge collections, execution
 profiles, operation cardinality, fiber cardinality, route collections,
-execution random attempts, and serialized plans. Layered joins stay exact: scoreboards use
+execution random attempts, serialized plans, parser admission, and declaration
+cardinality. Layered joins stay exact: scoreboards use
 t1631/t1690/t1712, coverage t1632/t1691/t1713, and bridge profile t1602;
 compact preflight is not boundary evidence. T1763 rebuilds exact unions and
 rejects omitted/foreign paths.
@@ -136,6 +137,10 @@ Parser admission assigns t1601 closed construction/no-tool/cleanup and gate
 identity; t1687 exact 64/65-import admission before recursion; and t1693 exact
 1,048,576-byte per-source plus 16,777,216-byte combined-source admission before
 lexing. Focused excesses retain stable diagnostics and no semantic report.
+Declaration cardinality assigns t1601 the exact 1,024/1,025 fixture boundary,
+closed no-tool matrix, cleanup, identities, and explicit absence of partial
+semantic/format identities on rejection; t1689 independently admits 4,096
+declarations and rejects 4,097 before malformed later-section parsing.
 Other groups and calibration remain pending/blocked.
 
 The common controller admits bounded worker files before counts/digests; cap+1

@@ -749,6 +749,32 @@ my %SEMANTIC_PARSER_RATIONALE = (
     accepted_identity =>
         'the closed catalog plus exact import and byte boundaries retain deterministic semantic identities',
 );
+my @SEMANTIC_DECLARATION_EVIDENCE = (
+    [
+        't/1601-vial-architecture-scale-semantic-catalog.t',
+        @DIMENSIONS,
+    ],
+    [
+        't/1689-vial-semantic-declaration-cap-order.t',
+        qw(boundary adjacent_excess diagnostics atomicity accepted_identity),
+    ],
+);
+my %SEMANTIC_DECLARATION_RATIONALE = (
+    boundary =>
+        'exact declaration and fixture axes admit at their selected cardinality boundaries',
+    adjacent_excess =>
+        'the first declaration and fixture excesses reject at semantic preflight',
+    diagnostics =>
+        'declaration and fixture excesses retain the stable limit family and semantic path',
+    atomicity =>
+        'known declaration excess precedes later shapes and both excess axes publish no partial semantic identities',
+    no_tool =>
+        'every selected semantic construction carries no backend or external-tool selector',
+    cleanup =>
+        'semantic gate staging removes same-volume success and consumer-failure residue',
+    accepted_identity =>
+        'the closed catalog and exact declaration boundary retain deterministic semantic identities',
+);
 my %runtime_dimensions = map {
     $_ => {
         status => 'verified',
@@ -948,6 +974,18 @@ for my $entry (@SEMANTIC_PARSER_EVIDENCE) {
     push @{$semantic_parser_dimensions{$_}{evidence}}, $path
         for @dimensions;
 }
+my %semantic_declaration_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $SEMANTIC_DECLARATION_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@SEMANTIC_DECLARATION_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$semantic_declaration_dimensions{$_}{evidence}}, $path
+        for @dimensions;
+}
 my $VERIFIED_DIMENSIONS = {
     backend_artifact_graph => \%backend_dimensions,
     bridge_normalized_collections => \%bridge_normalized_dimensions,
@@ -965,6 +1003,7 @@ my $VERIFIED_DIMENSIONS = {
     execution_random_attempts => \%execution_random_dimensions,
     execution_route_collections => \%execution_route_dimensions,
     runtime_stream_envelopes => \%runtime_dimensions,
+    semantic_declaration_cardinality => \%semantic_declaration_dimensions,
     semantic_parser_admission => \%semantic_parser_dimensions,
 };
 
