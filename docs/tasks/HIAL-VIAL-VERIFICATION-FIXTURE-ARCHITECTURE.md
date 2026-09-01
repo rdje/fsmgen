@@ -947,7 +947,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
   Semantic Parser Admission Claim Disposition Finding: `The user-facing parser explanation produced three actionable candidates: accepted direct-import admission, its first excess/pre-recursion order, and the two exact source-byte boundaries/pre-lex order. Each is now a derived-gate disposition with non-aliased catalog/generator/parser re-derivation, the closed catalog and focused import/byte oracles as falsifiers, and the exact policy plus sealed consistency authority as durability watchers. Re-derive: regenerate the producer-derived inventory and join every candidate through the required-complete verification_architecture group. Falsify: removing a disposition, producer, oracle, watcher, or current candidate identity fails closed. Durability: the disposition registry, generated inventory, this task, and work-unit history retain the result at 1,730/1,730 disposed candidates, 958 derived gates, and zero gaps/open owners.`
 
-  Frontier: `Twenty groups are sealed through semantic_action_shape. Continue with semantic_repeat_layering; calibration remains blocked until every group is independently verified.`
+  Frontier: `Twenty-one groups are sealed through semantic_repeat_layering. Continue with semantic_service_scalar; calibration remains blocked until every group is independently verified.`
 
   Semantic Declaration Cardinality Audit Finding: `The semantic_declaration_cardinality candidate inventory is complete as written and deliberately asymmetric. T1601 is the only closed exact-matrix owner for the distinct 1,024/1,025 fixture axis, and also retains every declaration/fixture construction, no-tool shape, accepted semantic identity, diagnostic oracle, and same-volume success/failure cleanup. T1689 independently admits 4,096 declarations, rejects 4,097 in the types section with the stable public diagnostic, and proves that known excess precedes malformed later-section parsing without a semantic report. T1601's rejection evaluation already emits no semantic projection/report identity or format identities, but the regression only checks its status and diagnostic family; explicit atomicity assertions are therefore still missing for the fixture route. History shows t1601 was introduced by 145d3084a, t1689 by e9679effb, and the earlier 951720257 policy selected their exact complementary pair; adding a third path would invent evidence rather than close a dimension. The complete opt-in exact policy/candidate/consistency baseline is green at Files=4/Tests=102 in 93 wallclock seconds under the repository RAM guard. Before authority promotion, the intentional RED kept the exact policy assertion green and made t1763 fail on all twenty-one pending status/evidence/rationale assertions plus both inactive omission/foreign-evidence controls at Files=2/Tests=84; the remaining union and path checks passed. This active .17.4.8 slice owns retaining the exact two-witness policy inventory, making rejection atomicity explicit in the closed matrix, and binding only independently classified dimensions. Re-derive: run t1601/t1689 plus t1685/t1763 with FSMGEN_VIAL_SCALE_EXACT=1 under the RAM guard and inspect their exact history. Falsify: removing t1601 loses the fixture axis, closed matrix, no-tool, cleanup, and broad identities; removing t1689 loses the independent declaration boundary/excess and later-section order proof. Durability: this task entry owns the audit and exact RED before source changes; the completed slice must synchronize consistency authority, tests, book, Knowledge Map, and work-unit history.`
 
@@ -1059,6 +1059,100 @@ decomposes the architecture needed to move beyond that bounded foundation.
   registry, generated inventory, this task, and work-unit history retain the
   result at 1,734/1,734 disposed candidates, 962 derived gates, and zero
   gaps/open owners.`
+
+  Semantic Repeat Layering Audit Finding: `The semantic_repeat_layering policy
+  correctly retains two distinct enforcement layers, but its current
+  executable evidence does not yet freeze the accepted effective boundary.
+  T1601 proves the 4,096 gate is accepted with deterministic identities,
+  262,144 and 1,000,000 are rejected by the earlier 65,536-expanded-action
+  ceiling, and 1,000,001 rejects directly at the intrinsic repeat-count path;
+  it also owns closed no-tool construction, rejection atomicity, and
+  same-volume success/failure cleanup. T1686 proves repeat multiplication and
+  later-action reservation order, but every current assertion is a rejection.
+  A read-only construction probe through the same catalog and parser proves
+  count 65,535 is accepted with exactly 65,536 expanded actions, count 65,536
+  is the first effective excess, count 1,000,000 remains action-dominated, and
+  count 1,000,001 reaches the intrinsic count diagnostic. Decision 0059
+  already records why the nominal intrinsic ceiling cannot be accepted by any
+  legal non-empty repeat body. Exact `git log -S'semantic_repeat_layering' --
+  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` history locates policy selection
+  at 951720257, while 145d3084a introduced the catalog/decision and 6ad4a9292
+  hardened overflow-safe reservation. The exact four-file guarded baseline is
+  green at Files=4, Tests=111 in 82 wallclock seconds. This active .17.4.8
+  slice owns extending t1686 with the missing accepted 65,535 boundary and
+  deterministic identity witness before any consistency promotion. Re-derive:
+  run the four fixed counts through the generated catalog source and public
+  parser, then run t1601/t1686/t1685/t1763 with exact scale enabled under the
+  repository RAM guard. Falsify: removing the new accepted-boundary assertion
+  leaves boundary/identity unproved; removing t1601 loses the intrinsic layer,
+  closed matrix, no-tool, cleanup, and rejection identities; removing t1686
+  loses effective-boundary ordering. Durability: this task entry owns the gap
+  before test or consistency changes; the completed slice must synchronize the
+  decision-backed policy, regressions, consistency authority, book, Knowledge
+  Map, claims, containment, and work-unit history.`
+
+  Semantic Repeat Layering Witness and Intentional RED: `T1686 now passes all
+  29 assertions, including the generated accepted 65,535-count boundary,
+  exact 65,536 expanded-action metric, absent backend/tool selectors, and fixed
+  semantic projection/report identities. Before consistency source promotion,
+  the exact policy evidence assertion passes while t1763 fails only the
+  expected twenty-one pending status/evidence/rationale assertions plus the
+  inactive boundary-omission and foreign-identity mutation controls at
+  Files=2, Tests=87. Its exact t1601/t1686/decision-0059 union and path-existence
+  controls already pass. This isolates the unpromoted seven-dimension join
+  after closing the accepted-boundary evidence gap.`
+
+  Semantic Repeat Cross-Group Evidence Finding: `The new accepted repeat
+  boundary also changes t1686's current direct evidence role for the already
+  sealed semantic_action_cardinality group. Before this slice t1686 contained
+  only rejection-order controls, so excluding it from boundary, no-tool, and
+  accepted-identity dimensions was exact. Its new assertions now admit exactly
+  65,536 expanded actions through a repeat route, assert absent backend/tool
+  selectors, and freeze both semantic identities. Leaving the earlier
+  classification unchanged would make the consistency authority stale even
+  though product behavior did not change. This slice therefore owns adding
+  only those three newly proved t1686 roles to semantic_action_cardinality,
+  retaining t1601's exact generated action-axis boundary/excess and cleanup,
+  and synchronizing the book/Knowledge Map explanation.`
+
+  Semantic Repeat Layering Join: `The exact three-path policy inventory now
+  seals semantic_repeat_layering across all seven dimensions without treating
+  the intrinsic repeat ceiling as an accepted route promise. T1686 admits
+  count 65,535 at exactly 65,536 expanded actions with absent backend/tool
+  selectors and fixed semantic projection/report identities, then proves count
+  65,536 and later malformed actions retain the scenario-root action limit.
+  T1601 retains the accepted catalog gate, action-dominated qualification and
+  nominal intrinsic-boundary routes, direct 1,000,001 intrinsic excess,
+  rejection atomicity, closed no-tool matrix, same-volume cleanup, and
+  identities. Decision 0059 directly owns the selected explanation for why a
+  legal non-empty body cannot admit the nominal repeat ceiling. T1686's new
+  direct proof is also joined to boundary, no-tool, and accepted-identity for
+  semantic_action_cardinality; t1601 remains that group's exact generated-axis
+  and cleanup owner. T1763 reconstructs both exact projections and their full
+  candidate unions, verifies every path, and rejects omission or foreign
+  evidence. The focused authority gate passes Files=3, Tests=116; the final
+  four-file exact RAM-guarded join reports All tests successful at Files=4,
+  Tests=120 in 83 wallclock seconds. Re-derive: run the exact guarded command
+  documented in the book. Falsify: the recorded RED proves all twenty-one
+  repeat-dimension records and both mutation controls fail before promotion,
+  while the accepted-boundary witness fails if either count or identity moves.
+  Durability: source authority, policy, decision, regressions, this task, book,
+  Knowledge Map, claims, containment, and work-unit history retain the two
+  layers without changing either cap or product behavior.`
+
+  Semantic Repeat Layering Claim Disposition Finding: `The user-facing two-
+  layer explanation produces one actionable candidate covering the accepted
+  effective boundary, its first action-layer excess, and the direct intrinsic
+  excess. It is a derived-gate disposition with non-aliased catalog/workload/
+  parser/SemanticBuilder re-derivation, t1601/t1686 falsifiers, and the exact
+  policy/decision/caller-sealed consistency authority as durability watchers.
+  Re-derive: regenerate the producer-derived inventory and join every candidate
+  through the required-complete verification_architecture group. Falsify:
+  removing the disposition, producer, either oracle, watcher, or current
+  candidate identity fails closed. Durability: the disposition registry,
+  generated inventory, this task, and work-unit history retain the result at
+  1,735/1,735 disposed candidates, 963 derived gates, and zero gaps/open
+  owners.`
 
   Containment Resolution: `The cap-policy card's long one-path-per-line reverify list is now a shorter equivalent set of numeric brace ranges plus exact outliers; every expansion resolves to an existing tracked test. With checking-randomness evidence added, the card aggregate falls from 46,939 lines/3,464,850 bytes to 46,903 lines/3,462,766 bytes, restoring 39 lines/2,119 bytes below the inherited transition allowance without changing it. Re-derive: expand every compacted pattern and aggregate docs/knowledge Markdown with wc. Falsify: missing paths fail the explicit expansion census, and Knowledge Map/live-document checks reject freshness, answer, transition, or ceiling drift. Durability: this task, the compacted card, generated shard, containment manifest, and work-unit commit retain the resolution.`
 
@@ -3504,5 +3598,40 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   Files=1, Tests=2; memory, task, containment, reference-authority, claim, and
   Knowledge Map checks pass. Staged acceptance and all doctrines are the final
   commit gate. No cap, boundary, level, accepted identity, route outcome,
+  product behavior, publication, support, budget, or capacity claim changes.
+  Full CI and push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.8` semantic-repeat-layering evidence join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `semantic_repeat_layering` remains pending
+  and its current t1601/t1686 executable witnesses omit accepted effective-
+  boundary proof. A direct generated-source probe admits repeat count 65,535
+  with 65,536 expanded actions, rejects 65,536 at the scenario action ceiling,
+  keeps 1,000,000 action-dominated, and rejects 1,000,001 at the intrinsic
+  repeat-count path. Exact `git log -S'semantic_repeat_layering' --
+  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` history recovers the selected
+  layered policy; the guarded pre-change baseline reports All tests successful
+  at Files=4, Tests=111 in 82 wallclock seconds.
+- [x] **ADDRESSED (verified)** — extended t1686 with accepted effective-boundary,
+  expanded-action metric, no-tool shape, and deterministic projection/report
+  identities; retain t1601 for the intrinsic layer, closed matrix, rejection
+  atomicity, cleanup, and gate identities; preserve decision 0059 as the exact
+  rationale for the unreachable nominal accepted boundary; classified only
+  directly proved dimensions; activated exact union/path/mutation controls;
+  and updated t1686's newly direct boundary/no-tool/identity roles in the
+  already sealed action-cardinality group. The intentional RED preceded
+  consistency-authority promotion.
+- [x] **NO REGRESSION** — the final complete exact guarded join reports
+  `All tests successful` at Files=4, Tests=120 in 83 wallclock seconds; the
+  focused boundary/policy/consistency gate passes Files=3, Tests=116. MdBook
+  tests all 59 chapters; its inspected render contains 94 files/20,640 KiB and
+  was removed exactly. Knowledge Map reports 1,159 facts/6,231 questions/6,403
+  occurrences/138 shards; claims dispose 1,735/1,735 candidates through 963
+  gates with zero gaps/open owners; knowledge cards remain within transition
+  at 46,899 lines/3,463,340 bytes. The exact 59-file book authority is 55,041
+  lines/2,972,062 bytes at measured +17 lines/+1,285 bytes with zero ceiling
+  increase. Relative paths pass Files=1, Tests=2; memory, task, containment,
+  reference-authority, claim, and Knowledge Map checks pass. Staged acceptance
+  and all doctrines are the final commit gate. No cap, level, route outcome,
   product behavior, publication, support, budget, or capacity claim changes.
   Full CI and push remain deferred by policy.

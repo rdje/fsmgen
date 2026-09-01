@@ -26,9 +26,9 @@ normalized-bridge-collection, execution-profile-selection, and
 execution-operation-cardinality, execution-fiber-cardinality,
 execution-route-collection, execution-random-attempt, and
 execution-serialized-plan witnesses are now joined too. Semantic-parser
-admission, semantic-declaration cardinality, and semantic-action cardinality
-and shape are now joined as well. The same classification remains pending for
-every other group.
+admission, semantic-declaration cardinality, semantic-action cardinality and
+shape, and semantic-repeat layering are now joined as well. The same
+classification remains pending for every other group.
 
 ## Why calibration publication is separate
 
@@ -63,11 +63,10 @@ checking-scoreboard, checking-coverage, bridge-profile-cardinality, serialized
 manifest, normalized-collection, execution-profile-selection, and
 execution-operation-cardinality, execution-fiber-cardinality,
 execution-route-collection, execution-random-attempt, and
-execution-serialized-plan, semantic-parser-admission, and semantic-declaration-
-cardinality, semantic-action-cardinality, and semantic-action-shape groups are
-`verified`
-across all seven
-dimensions; all other groups remain `pending_independent_verification`.
+execution-serialized-plan, semantic-parser-admission, semantic-declaration-
+cardinality, semantic-action-cardinality, semantic-action-shape, and semantic-
+repeat-layering groups are `verified` across all seven dimensions; all other
+groups remain `pending_independent_verification`.
 Runtime covers the selected materialization profiles plus t1720 through t1749
 and t1751 through t1762.
 Backend covers t1646 through t1650 and t1716 through t1719. Checking models
@@ -184,8 +183,9 @@ and absence of partial semantic or format identities on rejection. T1686 adds
 three independent excess-order controls: repeat multiplication, an action after
 a full boundary, and malformed action syntax after a full boundary all retain
 the stable scenario-root limit before further semantic construction and publish
-no semantic report. T1686 is not accepted-boundary or accepted-identity
-evidence.
+no semantic report. Its focused repeat route now also independently admits the
+same expanded-action boundary with no backend/tool selector and fixed semantic
+identities; t1601 remains the exact generated action-axis and cleanup owner.
 Action shape uses a separate asymmetric pair. T1601 owns both exact axes:
 parallel depth 16 admits before 17 rejects, while 256 fibers in one parallel form admit before 257 reject.
 It also owns provider-free construction, same-volume
@@ -194,7 +194,13 @@ format identities on rejection. T1688 independently strengthens only the fiber
 axis: it pins the exact accepted projection/report identities and proves the
 adjacent excess wins before invalid join-value resolution without a semantic
 report. T1688 is not depth, no-tool, or cleanup evidence.
-T1763 reconstructs all twenty sets of per-dimension projections,
+Repeat layering preserves two different ceilings: t1686 proves that a non-empty repeat at count 65,535 is accepted at exactly 65,536 expanded actions and count 65,536 is the first effective excess, while t1601 proves the lower gate, action-dominated higher routes, and the first intrinsic excess at 1,000,001.
+The linked decision record explains why no legal non-empty body can admit the nominal
+repeat-count ceiling. Together the three evidence paths preserve distinct
+scenario-root and count-path diagnostics, atomic rejection, provider-free
+shape, cleanup, and deterministic accepted identities without lowering either
+component ceiling.
+T1763 reconstructs all twenty-one sets of per-dimension projections,
 requires their complete unions, checks every path, and rejects omitted or
 foreign evidence. Policy citations remain candidates
 for all unreviewed groups. The validator also
@@ -453,6 +459,17 @@ failure atomicity, cleanup, identities, and sealed falsifiers with:
 scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
   prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t \
   t/1688-vial-semantic-parallel-fiber-cap-order.t \
+  t/1763-vial-architecture-scale-cap-consistency.t \
+  t/1685-vial-architecture-scale-cap-policy.t
+```
+
+Reverify the accepted effective repeat boundary, both adjacent enforcement
+layers, failure atomicity, cleanup, identities, and sealed falsifiers with:
+
+```sh
+scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
+  prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t \
+  t/1686-vial-semantic-action-cap-order.t \
   t/1763-vial-architecture-scale-cap-consistency.t \
   t/1685-vial-architecture-scale-cap-policy.t
 ```

@@ -756,12 +756,12 @@ my @SEMANTIC_ACTION_EVIDENCE = (
     ],
     [
         't/1686-vial-semantic-action-cap-order.t',
-        qw(adjacent_excess diagnostics atomicity),
+        qw(boundary adjacent_excess diagnostics atomicity no_tool accepted_identity),
     ],
 );
 my %SEMANTIC_ACTION_RATIONALE = (
     boundary =>
-        'the exact 65536-action generated catalog route admits',
+        'the exact 65536-action generated catalog and focused repeat routes admit',
     adjacent_excess =>
         'the generated 65537-action excess and three reservation-order excesses reject',
     diagnostics =>
@@ -769,11 +769,11 @@ my %SEMANTIC_ACTION_RATIONALE = (
     atomicity =>
         'capacity reserves before action form and repeat multiplication, while rejection publishes no partial semantic identities or report',
     no_tool =>
-        'every selected semantic catalog construction carries no backend or external-tool selector',
+        'the closed catalog and focused repeat-boundary construction carry no backend or external-tool selector',
     cleanup =>
         'semantic catalog staging removes same-volume success and consumer-failure residue',
     accepted_identity =>
-        'the exact action boundary retains deterministic semantic projection, report, and format identities',
+        'the exact generated and repeat-based action boundaries retain deterministic semantic identities',
 );
 my @SEMANTIC_ACTION_SHAPE_EVIDENCE = (
     [
@@ -800,6 +800,36 @@ my %SEMANTIC_ACTION_SHAPE_RATIONALE = (
         'semantic catalog staging removes same-volume success and consumer-failure residue',
     accepted_identity =>
         'the closed matrix plus focused fiber boundary retain deterministic semantic projection and report identities',
+);
+my @SEMANTIC_REPEAT_EVIDENCE = (
+    [
+        't/1601-vial-architecture-scale-semantic-catalog.t',
+        qw(adjacent_excess diagnostics atomicity no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1686-vial-semantic-action-cap-order.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool accepted_identity),
+    ],
+    [
+        'docs/decisions/0059-vial-literal-repeat-scale-is-currently-dominated-by-expanded-actions.md',
+        qw(boundary adjacent_excess),
+    ],
+);
+my %SEMANTIC_REPEAT_RATIONALE = (
+    boundary =>
+        'repeat count 65535 admits at exactly 65536 expanded actions while decision 0059 records why the higher intrinsic ceiling is unreachable for a non-empty body',
+    adjacent_excess =>
+        'count 65536 is the first effective expanded-action excess and 1000001 is the first intrinsic repeat-count excess',
+    diagnostics =>
+        'the effective and intrinsic excesses retain distinct stable scenario-root and repeat-count limit diagnostics',
+    atomicity =>
+        'both layering failures publish no semantic projection, report, or format identity',
+    no_tool =>
+        'the closed catalog and effective-boundary construction carry no backend or external-tool selector',
+    cleanup =>
+        'semantic catalog staging removes same-volume success and consumer-failure residue',
+    accepted_identity =>
+        'the accepted catalog gate and exact effective boundary retain deterministic semantic projection and report identities',
 );
 my @SEMANTIC_DECLARATION_EVIDENCE = (
     [
@@ -1050,6 +1080,18 @@ for my $entry (@SEMANTIC_ACTION_SHAPE_EVIDENCE) {
     push @{$semantic_action_shape_dimensions{$_}{evidence}}, $path
         for @dimensions;
 }
+my %semantic_repeat_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $SEMANTIC_REPEAT_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@SEMANTIC_REPEAT_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$semantic_repeat_dimensions{$_}{evidence}}, $path
+        for @dimensions;
+}
 my %semantic_declaration_dimensions = map {
     $_ => {
         status => 'verified',
@@ -1081,6 +1123,7 @@ my $VERIFIED_DIMENSIONS = {
     runtime_stream_envelopes => \%runtime_dimensions,
     semantic_action_cardinality => \%semantic_action_dimensions,
     semantic_action_shape => \%semantic_action_shape_dimensions,
+    semantic_repeat_layering => \%semantic_repeat_dimensions,
     semantic_declaration_cardinality => \%semantic_declaration_dimensions,
     semantic_parser_admission => \%semantic_parser_dimensions,
 };

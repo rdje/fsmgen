@@ -65,6 +65,15 @@ is(
     'retain_intrinsic_repeat_ceiling_and_overflow_safe_action_layering',
     'repeat policy retains its intrinsic ceiling and overflow-safe action layer',
 );
+is_deeply(
+    $policy->{groups}{semantic_repeat_layering}{evidence},
+    [qw(
+        t/1601-vial-architecture-scale-semantic-catalog.t
+        t/1686-vial-semantic-action-cap-order.t
+        docs/decisions/0059-vial-literal-repeat-scale-is-currently-dominated-by-expanded-actions.md
+    )],
+    'repeat policy cites the exact catalog, reservation-order, and layering-decision evidence set',
+);
 is(
     $policy->{groups}{semantic_parser_admission}{current_enforcement},
     'source_bytes_before_lex_and_direct_import_fanout_before_recursion',

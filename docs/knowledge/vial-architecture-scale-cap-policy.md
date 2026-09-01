@@ -39,6 +39,7 @@ status: current
 tags: [vial, architecture-scale, limits, bounded-failure, route-authority]
 evidence: >-
   docs/decisions/0093-architecture-scale-caps-are-component-ceilings-with-explicit-route-authority.md;
+  docs/decisions/0059-vial-literal-repeat-scale-is-currently-dominated-by-expanded-actions.md;
   perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm; perl/FSM/VIAL/ArchitectureScaleCapConsistency.pm;
   perl/FSM/VIAL/Parser.pm; perl/FSM/VIAL/SemanticBuilder.pm;
   perl/FSM/HIAL/VIALBridge/Builder.pm; perl/FSM/VIAL/ExecutionBuilder.pm;
@@ -95,12 +96,12 @@ native UVM stays emission-only. Eligibility rejects excess before tools; the
 shared lifecycle bounds trace and final artifacts.
 
 `FSM::VIAL::ArchitectureScaleCapConsistency` rebuilds policy without caller
-evidence. Twenty groups verify all dimensions: runtime, backend, models,
+evidence. Twenty-one groups verify all dimensions: runtime, backend, models,
 faults, randomness, scoreboards, coverage, bridge-profile cardinality,
 serialized bridge manifests, normalized bridge collections, execution
 profiles, operation cardinality, fiber cardinality, route collections,
-execution random attempts, serialized plans, parser admission, and declaration
-cardinality, action cardinality, and action shape. Layered joins stay exact:
+execution random attempts, serialized plans, parser admission, declaration
+cardinality, action cardinality, action shape, and repeat layering. Layered joins stay exact:
 scoreboards use
 t1631/t1690/t1712, coverage t1632/t1691/t1713, and bridge profile t1602;
 compact preflight is not boundary evidence. T1763 rebuilds exact unions and
@@ -146,13 +147,19 @@ Action cardinality assigns t1601 the exact 65,536/65,537 generated boundary,
 no-tool shape, cleanup, accepted identities, and rejection atomicity; t1686
 independently proves repeat multiplication, the action after a full boundary,
 and malformed action syntax after a full boundary all retain the scenario-root
-limit before further semantic construction. T1686 is not accepted-boundary or
-accepted-identity evidence.
+limit before further semantic construction. Its focused route also admits the
+exact expanded-action boundary with absent backend/tool selectors and fixed
+semantic identities; t1601 remains the generated-axis and cleanup owner.
 Action shape assigns t1601 both exact 16/17 parallel-depth and 256/257
 fiber-count axes plus no-tool shape, cleanup, identities, and rejection
 atomicity. T1688 independently pins the 256-fiber accepted identities and proves
 257 fibers reject before invalid join resolution without a semantic report; it
 is not depth, no-tool, or cleanup evidence.
+Repeat layering uses t1686 for the accepted effective count 65,535 boundary and
+its first 65,536 excess, t1601 for the action-dominated higher routes plus the
+1,000,001 direct intrinsic excess, and decision 0059 for the reason no legal
+non-empty repeat body can admit the nominal intrinsic ceiling. Both component
+ceilings and their distinct diagnostics remain unchanged.
 Other groups and calibration remain pending/blocked.
 
 The common controller admits bounded worker files before counts/digests; cap+1

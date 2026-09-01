@@ -569,22 +569,22 @@ my @semantic_action_evidence = qw(
     t/1686-vial-semantic-action-cap-order.t
 );
 my %semantic_action_evidence = (
-    boundary => [$semantic_action_evidence[0]],
+    boundary => [@semantic_action_evidence],
     adjacent_excess => [@semantic_action_evidence],
     diagnostics => [@semantic_action_evidence],
     atomicity => [@semantic_action_evidence],
-    no_tool => [$semantic_action_evidence[0]],
+    no_tool => [@semantic_action_evidence],
     cleanup => [$semantic_action_evidence[0]],
-    accepted_identity => [$semantic_action_evidence[0]],
+    accepted_identity => [@semantic_action_evidence],
 );
 my %semantic_action_rationale = (
-    boundary => 'the exact 65536-action generated catalog route admits',
+    boundary => 'the exact 65536-action generated catalog and focused repeat routes admit',
     adjacent_excess => 'the generated 65537-action excess and three reservation-order excesses reject',
     diagnostics => 'action excesses retain the stable limit family, phase, message, and scenario-root path',
     atomicity => 'capacity reserves before action form and repeat multiplication, while rejection publishes no partial semantic identities or report',
-    no_tool => 'every selected semantic catalog construction carries no backend or external-tool selector',
+    no_tool => 'the closed catalog and focused repeat-boundary construction carry no backend or external-tool selector',
     cleanup => 'semantic catalog staging removes same-volume success and consumer-failure residue',
-    accepted_identity => 'the exact action boundary retains deterministic semantic projection, report, and format identities',
+    accepted_identity => 'the exact generated and repeat-based action boundaries retain deterministic semantic identities',
 );
 my @semantic_action_shape_evidence = qw(
     t/1601-vial-architecture-scale-semantic-catalog.t
@@ -607,6 +607,29 @@ my %semantic_action_shape_rationale = (
     no_tool => 'every selected semantic catalog construction carries no backend or external-tool selector',
     cleanup => 'semantic catalog staging removes same-volume success and consumer-failure residue',
     accepted_identity => 'the closed matrix plus focused fiber boundary retain deterministic semantic projection and report identities',
+);
+my @semantic_repeat_evidence = qw(
+    t/1601-vial-architecture-scale-semantic-catalog.t
+    t/1686-vial-semantic-action-cap-order.t
+    docs/decisions/0059-vial-literal-repeat-scale-is-currently-dominated-by-expanded-actions.md
+);
+my %semantic_repeat_evidence = (
+    boundary => [@semantic_repeat_evidence[1, 2]],
+    adjacent_excess => [@semantic_repeat_evidence],
+    diagnostics => [@semantic_repeat_evidence[0, 1]],
+    atomicity => [@semantic_repeat_evidence[0, 1]],
+    no_tool => [@semantic_repeat_evidence[0, 1]],
+    cleanup => [$semantic_repeat_evidence[0]],
+    accepted_identity => [@semantic_repeat_evidence[0, 1]],
+);
+my %semantic_repeat_rationale = (
+    boundary => 'repeat count 65535 admits at exactly 65536 expanded actions while decision 0059 records why the higher intrinsic ceiling is unreachable for a non-empty body',
+    adjacent_excess => 'count 65536 is the first effective expanded-action excess and 1000001 is the first intrinsic repeat-count excess',
+    diagnostics => 'the effective and intrinsic excesses retain distinct stable scenario-root and repeat-count limit diagnostics',
+    atomicity => 'both layering failures publish no semantic projection, report, or format identity',
+    no_tool => 'the closed catalog and effective-boundary construction carry no backend or external-tool selector',
+    cleanup => 'semantic catalog staging removes same-volume success and consumer-failure residue',
+    accepted_identity => 'the accepted catalog gate and exact effective boundary retain deterministic semantic projection and report identities',
 );
 my @semantic_declaration_evidence = qw(
     t/1601-vial-architecture-scale-semantic-catalog.t
@@ -649,6 +672,7 @@ my %verified_evidence = (
     runtime_stream_envelopes => \%runtime_evidence,
     semantic_action_cardinality => \%semantic_action_evidence,
     semantic_action_shape => \%semantic_action_shape_evidence,
+    semantic_repeat_layering => \%semantic_repeat_evidence,
     semantic_declaration_cardinality => \%semantic_declaration_evidence,
     semantic_parser_admission => \%semantic_parser_evidence,
 );
@@ -671,6 +695,7 @@ my %verified_rationale = (
     runtime_stream_envelopes => \%runtime_rationale,
     semantic_action_cardinality => \%semantic_action_rationale,
     semantic_action_shape => \%semantic_action_shape_rationale,
+    semantic_repeat_layering => \%semantic_repeat_rationale,
     semantic_declaration_cardinality => \%semantic_declaration_rationale,
     semantic_parser_admission => \%semantic_parser_rationale,
 );
@@ -984,6 +1009,18 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
     is_deeply(
         [grep { !-f $_ } sort keys %semantic_action_shape_join], [],
         'every sealed semantic-action-shape evidence path exists',
+    );
+
+    my %semantic_repeat_join = map { $_ => 1 }
+        map { @{$semantic_repeat_evidence{$_}} } @dimensions;
+    is_deeply(
+        [sort keys %semantic_repeat_join],
+        [sort @semantic_repeat_evidence],
+        'semantic-repeat join covers its catalog, effective-boundary, and layering-decision witnesses',
+    );
+    is_deeply(
+        [grep { !-f $_ } sort keys %semantic_repeat_join], [],
+        'every sealed semantic-repeat evidence path exists',
     );
 
     my %semantic_declaration_join = map { $_ => 1 }
@@ -1334,6 +1371,21 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
     like(dies(sub { $assert->($foreign_semantic_action_shape) }),
         qr/semantic_action_shape\/accepted_identity' contradicts the sealed evidence authority/,
         'callers cannot add foreign semantic-action-shape evidence');
+
+    my $omitted_semantic_repeat = $class->build;
+    $omitted_semantic_repeat->{groups}{semantic_repeat_layering}
+        {dimensions}{boundary}{evidence} = [];
+    like(dies(sub { $assert->($omitted_semantic_repeat) }),
+        qr/semantic_repeat_layering\/boundary' verified evidence must be one non-empty array/,
+        'callers cannot empty sealed semantic-repeat boundary evidence');
+
+    my $foreign_semantic_repeat = $class->build;
+    push @{$foreign_semantic_repeat->{groups}{semantic_repeat_layering}
+        {dimensions}{accepted_identity}{evidence}},
+        't/foreign-semantic-repeat-evidence.t';
+    like(dies(sub { $assert->($foreign_semantic_repeat) }),
+        qr/semantic_repeat_layering\/accepted_identity' contradicts the sealed evidence authority/,
+        'callers cannot add foreign semantic-repeat evidence');
 
     my $omitted_semantic_declaration = $class->build;
     $omitted_semantic_declaration->{groups}{semantic_declaration_cardinality}
