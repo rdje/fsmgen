@@ -190,6 +190,18 @@ also remain scalar-exact. Run the isolated reload controls with:
 prove -Iperl t/1740-vial-osvvm-persisted-request-scalar-types.t
 ```
 
+Reload also re-derives the plan's six-field provider-verification projection
+before reading a predecessor handle. The selected provider, version, commit,
+tree, materialization-manifest digest, and provider-source identity must all
+match; changing any one rejects before lifecycle or external-tool work:
+
+```console
+prove -Iperl t/1741-vial-osvvm-persisted-provider-admission.t
+```
+
+This is persisted-authority admission evidence, not a new provider-generality,
+support, performance, or capacity claim.
+
 Each executable role uses one lifecycle execution per controller record. The
 reference role has one correctness-only validation. Gate has one validation
 and three independently measured records; qualification has one validation

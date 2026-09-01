@@ -69,6 +69,14 @@ subtest 'numeric-looking persisted values do not impersonate numbers' => sub {
 done_testing();
 
 sub exact_inputs {
+    my $provider_authority = {
+        provider => 'OSVVM',
+        version => '2026.05',
+        root_commit => '1' x 40,
+        root_tree => '2' x 40,
+        materialization_manifest_sha256 => '3' x 64,
+        provider_source_identity => 'provider-source/' . ('4' x 64),
+    };
     my $plan_identity = 'osvvm-plan/' . ('2' x 64);
     my $execution_plan_id = 'plan/' . ('3' x 64);
     my $materialization_identity = 'osvvm-materialization/' . ('4' x 64);
@@ -78,7 +86,10 @@ sub exact_inputs {
     my $raw = {
         repository_root => abs_path('.'),
         materialization => {report_identity => $materialization_identity},
-        execution_plan => {plan_identity => $plan_identity},
+        execution_plan => {
+            plan_identity => $plan_identity,
+            provider_authority => $provider_authority,
+        },
         context => {staging_identity => $staging_identity},
     };
     my $route = {
@@ -108,7 +119,10 @@ sub exact_inputs {
         schema_version => 1,
         materialization_identity => $materialization_identity,
         plan_identity => $plan_identity,
-        provider_verification => {},
+        provider_verification =>
+            FSM::VIAL::ArchitectureScaleOSVVMRuntimeMeasurement::_provider_projection(
+                $raw->{execution_plan},
+            ),
         request => $request,
     };
     return ($raw, $route, $envelope);

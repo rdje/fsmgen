@@ -627,6 +627,11 @@ sub _validated_request_envelope($raw, $route_authority, $envelope) {
                 $envelope->{plan_identity},
                 $raw->{execution_plan}{plan_identity},
             );
+    confess "OSVVM runtime persisted provider verification changed\n"
+        unless _canonical_json($envelope->{provider_verification})
+            eq _canonical_json(_provider_projection(
+                $raw->{execution_plan},
+            ));
     my $request = $envelope->{request};
     _exact_keys($request, [qw(
         provider source_set source_identity emission_identity commands
