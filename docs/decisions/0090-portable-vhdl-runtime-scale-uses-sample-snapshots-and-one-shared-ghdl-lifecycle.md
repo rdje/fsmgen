@@ -128,6 +128,18 @@ controller applies its independently sealed outer worker and RAM/host bounds.
 No retry, timeout widening, alternate tool, system cache, or off-volume stage
 is permitted.
 
+### Capture-evidence resume refinement (2026-09-01)
+
+Content-addressed resume now reauthenticates every successful GHDL capture,
+not merely its key vocabulary. Portable version, analysis, elaboration, and
+run evidence must retain exact JSON booleans, zero exit/signal/exec failure,
+the selected containment/timeout/capture policy, consistent monotonic timing,
+and an `output_bytes` value equal to the sealed transcript object. Transcript
+digests and deterministic rerun evidence are independently rebound to those
+objects. A forged but internally rehashed state therefore cannot claim a
+different process result or resource policy. Live checked qualification bytes,
+commands, deadlines, capture ceilings, and accepted transcripts are unchanged.
+
 ### Ordered implementation
 
 Task `.17.3.6` proceeds in five cleanly committed children: v2 trace truth;

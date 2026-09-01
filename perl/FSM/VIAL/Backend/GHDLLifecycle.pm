@@ -2321,20 +2321,61 @@ sub _validate_state_shape($session, $record) {
     _throw('VIAL_GHDL_LIFECYCLE_OBJECT_ERROR',
         'GHDL state object inventory is not exact', '/objects')
         unless _canonical(\@actual) eq _canonical(\@expected);
-    if ($state eq 'tool_verified'
-            || (!_is_osvvm_role($session->{role})
-                && $state =~ /\A(?:analyzed|elaborated)\z/)) {
-        _closed($record->{evidence}{capture}, \@CAPTURE_KEYS,
-            "GHDL $state capture");
+    if ($state eq 'tool_verified') {
+        _validate_capture_evidence(
+            $session, $record->{objects}, $record->{evidence}{capture},
+            @{$PHASE_POLICY{tool_verified}}, 'tool_version_output',
+            '/evidence/capture', 'GHDL tool-version capture',
+        );
+        _validate_capture_digest(
+            $record->{evidence}{version_sha256},
+            _object_by_kind($record->{objects}, 'tool_version_output'),
+            '/evidence/version_sha256', 'GHDL tool-version transcript',
+        );
+    }
+    if (!_is_osvvm_role($session->{role})
+            && $state =~ /\A(?:analyzed|elaborated)\z/) {
+        my $kind = $state eq 'analyzed'
+            ? 'analysis_output' : 'elaboration_output';
+        _validate_capture_evidence(
+            $session, $record->{objects}, $record->{evidence}{capture},
+            @{$PHASE_POLICY{$state}}, $kind,
+            '/evidence/capture', "GHDL $state capture",
+        );
+        _validate_capture_digest(
+            $record->{evidence}{output_sha256},
+            _object_by_kind($record->{objects}, $kind),
+            '/evidence/output_sha256', "GHDL $state transcript",
+        );
     }
     if ($state eq 'ran' && !_is_osvvm_role($session->{role})) {
+        my $repetitions = $session->{validation}{run_repetitions};
         _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
             'GHDL run capture cardinality is not exact', '/evidence/captures')
             unless ref($record->{evidence}{captures}) eq 'ARRAY'
                 && @{$record->{evidence}{captures}}
-                    == $session->{validation}{run_repetitions};
-        _closed($_, \@CAPTURE_KEYS, 'GHDL run capture')
-            for @{$record->{evidence}{captures}};
+                    == $repetitions
+                && ref($record->{evidence}{output_sha256}) eq 'ARRAY'
+                && @{$record->{evidence}{output_sha256}} == $repetitions;
+        for my $index (0 .. $repetitions - 1) {
+            my $kind = "runtime_output_$index";
+            _validate_capture_evidence(
+                $session, $record->{objects},
+                $record->{evidence}{captures}[$index],
+                @{$PHASE_POLICY{ran}}, $kind,
+                "/evidence/captures/$index", 'GHDL run capture',
+            );
+            _validate_capture_digest(
+                $record->{evidence}{output_sha256}[$index],
+                _object_by_kind($record->{objects}, $kind),
+                "/evidence/output_sha256/$index", 'GHDL run transcript',
+            );
+        }
+        _validate_determinism_evidence(
+            $record->{evidence}{deterministic}, $repetitions,
+            [$record->{evidence}{output_sha256}],
+            '/evidence/deterministic', 'GHDL run',
+        );
     }
     if (_is_osvvm_role($session->{role})) {
         _validate_osvvm_capture_shape($session, $record);
@@ -2429,39 +2470,284 @@ sub _expected_objects($session, $state) {
 
 sub _validate_osvvm_capture_shape($session, $record) {
     my $state = $record->{state};
+    my $objects = $record->{objects};
+    my $resource = $session->{commands}{resource_controls};
     if ($state eq 'analyzed') {
         my $count = scalar(@{$session->{commands}{provider_analyze}});
         _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
             'OSVVM provider-analysis capture cardinality is not exact',
             '/evidence/captures')
             unless ref($record->{evidence}{captures}) eq 'ARRAY'
-                && @{$record->{evidence}{captures}} == $count;
-        _closed($_, \@CAPTURE_KEYS, 'OSVVM provider-analysis capture')
-            for @{$record->{evidence}{captures}};
-        _closed($record->{evidence}{generated_capture}, \@CAPTURE_KEYS,
-            'OSVVM generated-analysis capture');
+                && @{$record->{evidence}{captures}} == $count
+                && ref($record->{evidence}{output_sha256}) eq 'ARRAY'
+                && @{$record->{evidence}{output_sha256}} == $count;
+        for my $index (0 .. $count - 1) {
+            my $kind = sprintf('provider_analysis_output_%02d', $index);
+            _validate_capture_evidence(
+                $session, $objects, $record->{evidence}{captures}[$index],
+                $resource->{provider_analysis_timeout_seconds_per_source},
+                $resource->{provider_capture_limit_bytes}, $kind,
+                "/evidence/captures/$index",
+                'OSVVM provider-analysis capture',
+            );
+            _validate_capture_digest(
+                $record->{evidence}{output_sha256}[$index],
+                _object_by_kind($objects, $kind),
+                "/evidence/output_sha256/$index",
+                'OSVVM provider-analysis transcript',
+            );
+        }
+        _validate_capture_evidence(
+            $session, $objects, $record->{evidence}{generated_capture},
+            $resource->{generated_analysis_timeout_seconds},
+            $resource->{provider_capture_limit_bytes},
+            'generated_analysis_output', '/evidence/generated_capture',
+            'OSVVM generated-analysis capture',
+        );
+        _validate_capture_digest(
+            $record->{evidence}{generated_output_sha256},
+            _object_by_kind($objects, 'generated_analysis_output'),
+            '/evidence/generated_output_sha256',
+            'OSVVM generated-analysis transcript',
+        );
     }
     elsif ($state eq 'elaborated') {
+        my @kind = qw(
+            fixture_elaboration_output provider_probe_elaboration_output
+        );
         _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
             'OSVVM elaboration capture cardinality is not exact',
             '/evidence/captures')
             unless ref($record->{evidence}{captures}) eq 'ARRAY'
-                && @{$record->{evidence}{captures}} == 2;
-        _closed($_, \@CAPTURE_KEYS, 'OSVVM elaboration capture')
-            for @{$record->{evidence}{captures}};
+                && @{$record->{evidence}{captures}} == @kind
+                && ref($record->{evidence}{output_sha256}) eq 'ARRAY'
+                && @{$record->{evidence}{output_sha256}} == @kind;
+        for my $index (0 .. $#kind) {
+            _validate_capture_evidence(
+                $session, $objects, $record->{evidence}{captures}[$index],
+                $resource->{elaboration_timeout_seconds},
+                $resource->{provider_capture_limit_bytes}, $kind[$index],
+                "/evidence/captures/$index", 'OSVVM elaboration capture',
+            );
+            _validate_capture_digest(
+                $record->{evidence}{output_sha256}[$index],
+                _object_by_kind($objects, $kind[$index]),
+                "/evidence/output_sha256/$index",
+                'OSVVM elaboration transcript',
+            );
+        }
     }
     elsif ($state eq 'ran') {
         my $count = $session->{validation}{run_repetitions};
-        for my $name (qw(fixture_captures provider_captures)) {
+        for my $spec (
+            ['fixture_captures', 'fixture_output_sha256',
+                'fixture_runtime_output',
+                $resource->{fixture_capture_limit_bytes}],
+            ['provider_captures', 'provider_output_sha256',
+                'provider_runtime_output',
+                $resource->{provider_capture_limit_bytes}],
+        ) {
+            my ($capture_name, $digest_name, $kind_prefix, $limit) = @$spec;
             _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
                 'OSVVM runtime capture cardinality is not exact',
-                "/evidence/$name")
-                unless ref($record->{evidence}{$name}) eq 'ARRAY'
-                    && @{$record->{evidence}{$name}} == $count;
-            _closed($_, \@CAPTURE_KEYS, 'OSVVM runtime capture')
-                for @{$record->{evidence}{$name}};
+                "/evidence/$capture_name")
+                unless ref($record->{evidence}{$capture_name}) eq 'ARRAY'
+                    && @{$record->{evidence}{$capture_name}} == $count
+                    && ref($record->{evidence}{$digest_name}) eq 'ARRAY'
+                    && @{$record->{evidence}{$digest_name}} == $count;
+            for my $index (0 .. $count - 1) {
+                my $kind = "${kind_prefix}_$index";
+                _validate_capture_evidence(
+                    $session, $objects,
+                    $record->{evidence}{$capture_name}[$index],
+                    $resource->{execution_timeout_seconds}, $limit, $kind,
+                    "/evidence/$capture_name/$index",
+                    'OSVVM runtime capture',
+                );
+                _validate_capture_digest(
+                    $record->{evidence}{$digest_name}[$index],
+                    _object_by_kind($objects, $kind),
+                    "/evidence/$digest_name/$index",
+                    'OSVVM runtime transcript',
+                );
+            }
         }
+        my @report_digest = _osvvm_report_set_digests(
+            $session, $objects, $count,
+        );
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            'OSVVM provider-report digest cardinality is not exact',
+            '/evidence/provider_report_sha256')
+            unless ref($record->{evidence}{provider_report_sha256}) eq 'ARRAY'
+                && @{$record->{evidence}{provider_report_sha256}} == $count;
+        for my $index (0 .. $count - 1) {
+            _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+                'OSVVM provider-report digest differs from sealed objects',
+                "/evidence/provider_report_sha256/$index")
+                unless defined($record->{evidence}{provider_report_sha256}[$index])
+                    && !ref($record->{evidence}{provider_report_sha256}[$index])
+                    && $record->{evidence}{provider_report_sha256}[$index]
+                        eq $report_digest[$index];
+        }
+        _validate_determinism_evidence(
+            $record->{evidence}{deterministic}, $count,
+            [
+                $record->{evidence}{fixture_output_sha256},
+                $record->{evidence}{provider_output_sha256},
+                $record->{evidence}{provider_report_sha256},
+            ],
+            '/evidence/deterministic', 'OSVVM runtime',
+        );
     }
+}
+
+sub _validate_capture_evidence(
+    $session, $objects, $capture, $timeout, $limit, $kind, $path, $label,
+) {
+    _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+        "$label is not one closed capture object", $path)
+        unless ref($capture) eq 'HASH' && !blessed($capture);
+    my %expected = map { $_ => 1 } @CAPTURE_KEYS;
+    _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+        "$label has an unknown or missing key", $path)
+        if grep({ !$expected{$_} } keys %$capture)
+            || grep({ !exists($capture->{$_}) } @CAPTURE_KEYS);
+    my $object = _object_by_kind($objects, $kind);
+    _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+        "$label differs from its qualified process contract", $path)
+        unless JSON::PP::is_bool($capture->{ok}) && $capture->{ok}
+            && JSON::PP::is_bool($capture->{timed_out})
+            && !$capture->{timed_out}
+            && JSON::PP::is_bool($capture->{output_limited})
+            && !$capture->{output_limited}
+            && JSON::PP::is_bool($capture->{exec_failed})
+            && !$capture->{exec_failed}
+            && !defined($capture->{exec_error})
+            && _runtime_result_nonnegative_integer($capture->{exit_code})
+            && 0 + $capture->{exit_code} == 0
+            && _runtime_result_nonnegative_integer($capture->{signal})
+            && 0 + $capture->{signal} == 0
+            && defined($capture->{containment})
+            && !ref($capture->{containment})
+            && $capture->{containment}
+                eq $session->{storage_context}{containment}
+            && _runtime_result_positive_integer($capture->{timeout_seconds})
+            && 0 + $capture->{timeout_seconds} == $timeout
+            && _runtime_result_positive_integer(
+                $capture->{capture_limit_bytes},
+            )
+            && 0 + $capture->{capture_limit_bytes} == $limit
+            && _runtime_result_nonnegative_integer($capture->{output_bytes})
+            && _runtime_result_nonnegative_integer($object->{bytes})
+            && 0 + $capture->{output_bytes} == 0 + $object->{bytes}
+            && 0 + $capture->{output_bytes} <= $limit;
+
+    for my $key (qw(
+        started_monotonic_ns exec_handoff_monotonic_ns
+        finished_monotonic_ns spawn_to_exec_ns execution_ns
+    )) {
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            "$label timing evidence is incomplete", "$path/$key")
+            unless _runtime_result_nonnegative_integer($capture->{$key});
+    }
+    my ($started, $handoff, $finished) = map { 0 + $capture->{$_} }
+        qw(started_monotonic_ns exec_handoff_monotonic_ns finished_monotonic_ns);
+    _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+        "$label timing evidence is internally inconsistent", $path)
+        unless $started <= $handoff && $handoff <= $finished
+            && 0 + $capture->{spawn_to_exec_ns} == $handoff - $started
+            && 0 + $capture->{execution_ns} == $finished - $handoff;
+
+    my @first = qw(
+        first_output_monotonic_ns exec_to_first_output_ns
+        first_output_to_exit_ns
+    );
+    if (0 + $capture->{output_bytes} == 0) {
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            "$label zero-byte timing evidence is inconsistent", $path)
+            if grep { defined($capture->{$_}) } @first;
+    }
+    else {
+        for my $key (@first) {
+            _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+                "$label first-output timing evidence is incomplete",
+                "$path/$key")
+                unless _runtime_result_nonnegative_integer($capture->{$key});
+        }
+        my $first = 0 + $capture->{first_output_monotonic_ns};
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            "$label first-output timing evidence is internally inconsistent",
+            $path)
+            unless $handoff <= $first && $first <= $finished
+                && 0 + $capture->{exec_to_first_output_ns}
+                    == $first - $handoff
+                && 0 + $capture->{first_output_to_exit_ns}
+                    == $finished - $first;
+    }
+    return 1;
+}
+
+sub _validate_capture_digest($digest, $object, $path, $label) {
+    _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+        "$label digest differs from its sealed object", $path)
+        unless defined($digest) && !ref($digest)
+            && $digest =~ /\A[0-9a-f]{64}\z/
+            && defined($object->{sha256}) && !ref($object->{sha256})
+            && $digest eq $object->{sha256};
+    return 1;
+}
+
+sub _validate_determinism_evidence(
+    $deterministic, $repetitions, $digest_sets, $path, $label,
+) {
+    my $expected = $repetitions == 2 ? 1 : 0;
+    _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+        "$label determinism evidence is not exact", $path)
+        unless JSON::PP::is_bool($deterministic)
+            && ($deterministic ? 1 : 0) == $expected
+            && ref($digest_sets) eq 'ARRAY';
+    for my $digests (@$digest_sets) {
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            "$label digest evidence is not exact", $path)
+            unless ref($digests) eq 'ARRAY'
+                && @$digests == $repetitions;
+        for my $digest (@$digests) {
+            _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+                "$label digest evidence is malformed", $path)
+                unless defined($digest) && !ref($digest)
+                    && $digest =~ /\A[0-9a-f]{64}\z/;
+        }
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            "$label deterministic repetitions differ", $path)
+            if $repetitions == 2 && $digests->[0] ne $digests->[1];
+    }
+    return 1;
+}
+
+sub _osvvm_report_set_digests($session, $objects, $repetitions) {
+    my @digest;
+    for my $run (0 .. $repetitions - 1) {
+        my @report;
+        for my $index (0 .. $#{$session->{commands}{provider_reports}}) {
+            my $authority = $session->{commands}{provider_reports}[$index];
+            my $object = _object_by_kind(
+                $objects, "provider_report_${run}_$index",
+            );
+            _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+                'OSVVM provider-report object evidence is malformed',
+                "/evidence/provider_report_sha256/$run")
+                unless _runtime_result_nonnegative_integer($object->{bytes})
+                    && defined($object->{sha256}) && !ref($object->{sha256})
+                    && $object->{sha256} =~ /\A[0-9a-f]{64}\z/;
+            push @report, {
+                name => $authority->{name},
+                bytes => 0 + $object->{bytes},
+                sha256 => $object->{sha256},
+            };
+        }
+        push @digest, sha256_hex(_canonical(\@report));
+    }
+    return @digest;
 }
 
 sub _write_object($session, $kind, $content, $executable) {

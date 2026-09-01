@@ -116,6 +116,16 @@ reports are copied into sealed objects after each probe execution and removed
 from the raw report directory before the next state. They remain supplementary
 evidence and cannot replace portable trace or normalized-result truth.
 
+Resumption semantically rebinds all provider/generated analysis,
+fixture/probe elaboration, and fixture/provider runtime captures to their exact
+qualified policy and sealed transcript objects. Successful booleans, zero
+exit/signal/exec failure, containment, timeout, capture ceiling, byte count,
+and monotonic timing arithmetic must all agree. Ordered transcript digests,
+the four-report-set digest, and deterministic rerun flag are rederived from
+the sealed objects. A foreign but rehashed capture record therefore rejects as
+state evidence; accepted commands, deadlines, 8-MiB/64-MiB limits, report
+content, and checked qualification bytes remain unchanged.
+
 The checked qualifier no longer has a second process implementation. It
 reconstructs the private execution plan, admits that plan to the lifecycle,
 advances every state, and builds the existing public report from the cleaned

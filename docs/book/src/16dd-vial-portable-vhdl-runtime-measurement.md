@@ -165,6 +165,19 @@ fixture execution has only this lifecycle. The checked qualifier now consumes
 that lifecycle, runs its distinct probe through the same supervisor, and still
 reproduces the checked qualification report byte for byte.
 
+Resume also authenticates the meaning of every capture record. The lifecycle
+requires real JSON booleans for success/failure flags, the exact phase
+containment, deadline, and byte ceiling, consistent spawn/exec/first-output/
+exit arithmetic, and `output_bytes` equal to the sealed transcript object.
+Empty transcripts must have no first-output timing. Transcript digests and
+one-versus-two-run determinism are rederived from the same objects. Thus a
+rehashed state cannot preserve valid transcript bytes while claiming a foreign
+process outcome or policy. Focused control:
+
+```console
+prove -Iperl t/1731-vial-ghdl-capture-evidence-admission.t
+```
+
 That distinct probe also preserves deadline authority: a supervisor
 `timed_out` result reports `VIAL_VHDL_QUALIFICATION_TIMEOUT` at
 `/resource_controls` before capture overflow or generic execution handling.

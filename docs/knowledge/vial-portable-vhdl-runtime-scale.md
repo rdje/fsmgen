@@ -19,6 +19,7 @@ answers:
   - "how is GHDL diagnostic cardinality bound to authenticated expectation trace counts?"
   - "how are GHDL fault applications and scoreboard comparisons bound to trace records?"
   - "how do fake GHDL lifecycle providers avoid host executable admission?"
+  - "how does GHDL resume authenticate portable and OSVVM capture evidence?"
 date: 2026-09-01
 status: current
 tags: [vial, vhdl, ghdl, runtime, trace, scalability]
@@ -43,6 +44,7 @@ evidence: >-
   t/1671-vial-vhdl-portable-trace-v2.t;
   t/1672-vial-architecture-scale-portable-vhdl-runtime-materialization.t;
   t/1673-vial-ghdl-shared-lifecycle.t;
+  t/1731-vial-ghdl-capture-evidence-admission.t;
   t/1678-vial-ghdl-provider-aware-lifecycle.t;
   t/1725-vial-ghdl-cleanup-diagnostic-authority.t;
   t/1726-vial-ghdl-admission-cleanup-evidence.t;
@@ -129,6 +131,15 @@ probe. Only `aborted_cleaned` with removal, zero residue, and zero diagnostics
 preserves the original probe failure; failed, malformed, or unexpectedly
 throwing aborts become the qualifier cleanup diagnostic at `/cleanup` with a
 sanitized reason. No probe is retried and its process policy is unchanged.
+
+The shared lifecycle now reauthenticates capture meaning whenever portable or
+OSVVM state is resumed. It requires exact JSON supervisor booleans, successful
+exit/signal/exec status, phase/profile containment plus timeout and capture
+ceiling, consistent monotonic timing arithmetic, and an output byte count that
+equals the sealed transcript object. Transcript and OSVVM report-set digests
+and one-versus-two-run determinism are rederived from the same objects. t1731
+falsifies foreign policy, byte, boolean, timing, transcript, report-set, and
+determinism evidence; both live checked qualifiers remain byte-identical.
 
 Normalized result admission applies the selected 67,108,864-byte ceiling,
 exact shared/VHDL vocabularies, one parity schema/version, sealed plan identity,

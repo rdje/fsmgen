@@ -133,6 +133,18 @@ read is an object-integrity failure before persistence. The matrix publisher
 retains its independent terminal complete-publication check; no new limit,
 provider role, accepted report, or qualification identity is introduced.
 
+### Capture-evidence resume refinement (2026-09-01)
+
+The provider-aware role now applies the shared semantic capture admission to
+every provider/generated analysis, fixture/probe elaboration, and
+fixture/provider execution. Each resumed capture must match its selected
+timeout and distinct 8-MiB or 64-MiB ceiling, successful supervisor outcome,
+timing arithmetic, and sealed output-object bytes. Ordered transcript digests,
+report-set digests, and deterministic-rerun evidence are rederived from the
+sealed objects rather than trusted from state JSON. This closes evidence
+forgery only; the supervisor, commands, accepted reports, qualification bytes,
+deadlines, and limits do not change.
+
 ## Ordered implementation
 
 The active leaf proceeds through five clean children:
