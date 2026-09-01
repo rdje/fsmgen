@@ -883,6 +883,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Runtime Join: `The caller-sealed consistency authority now promotes only runtime_stream_envelopes. A one-entry-per-test classification maps the three selected materialization profiles and all 42 completed t1720-t1749/t1751-t1762 hardening leaves across boundary, adjacent excess, diagnostics, atomicity, no-tool, cleanup, and accepted identity; the union is exact and every path exists. T1763 independently reconstructs each ordered evidence array, requires that complete 45-path union, and rejects omitted or foreign runtime evidence. All other groups remain pending, so calibration stays historical, incomplete, and blocked. Re-derive: execute all sealed paths through the RAM-guarded 46-file suite. Falsify: the exact union plus omission/foreign mutations fail closed. Durability: this task, book, Knowledge Map card, consistency source/test, and work-unit commit retain the classification. The complete suite reports All tests successful at Files=46/Tests=210 in 417 wallclock seconds. No cap, level, accepted profile, behavior, publication, support, budget, or capacity claim changes. The next slice independently joins backend_artifact_graph. Adjacent doctrine finding: the rationale-ledger manifest is at ordinal 2907 while DEVELOPMENT_NOTES_INDEX.md still advertises 2905; the range-ID-only index check does not catch the mismatch, so a separate clean task-tree slice must reconcile the displayed row and add a numeric-cell falsifier before the next rationale append.`
   Backend Join: `The caller-sealed consistency authority now also promotes backend_artifact_graph. A one-entry-per-test classification maps the four profile foundations t1646-t1649, their cross-profile qualification t1650, and the four t1716-t1719 admission-order hardeners across boundary, adjacent excess, diagnostics, atomicity, no-tool, cleanup, and accepted identity. T1763 independently reconstructs every ordered projection, requires the exact nine-path union, checks path existence, and rejects omitted or foreign backend evidence; its generic defensive-copy check now preserves the selected group's actual sealed state rather than assuming the alphabetically first group is pending. Runtime remains verified and every unaudited group remains pending, so calibration stays historical, incomplete, and blocked. Re-derive: execute all nine evidence paths plus t1763 and t1685 through the repository-local RAM guard. Falsify: t1763's exact projections, union, omission, foreign-evidence, and caller-mutation controls fail closed. Durability: this task, book, Knowledge Map card, consistency source/test, and work-unit commit retain the classification. The complete guarded suite reports All tests successful at Files=11/Tests=241 in 566 wallclock seconds. No cap, level, accepted profile, provider boundary, product behavior, publication, support, budget, or capacity claim changes. The next slice independently reviews the smallest remaining two-witness group, checking_models.`
   Checking Models Join: `The caller-sealed consistency authority now also promotes checking_models. T1630 owns exact model-instance and scalar-state-cell limit admission, adjacent rejection, provider-free state evaluation, same-volume cleanup, and deterministic construction/evaluation/rerun identities; t1711 independently proves compact count agreement, accepted plan identity, rejection before model normalization, and no partial ExecutionIR or plan. T1763 reconstructs the two-path projections and union, checks both paths, and rejects omitted or foreign evidence. The omission falsifier removes one of two adjacent-excess witnesses so the exact sealed-authority comparison is exercised; removing the sole boundary witness correctly fails earlier at the non-empty verified-evidence shape gate. Runtime/backend remain verified and every unaudited group remains pending, so calibration stays historical, incomplete, and blocked. Re-derive: execute t1630 with FSMGEN_VIAL_SCALE_EXACT=1 plus t1711, t1763, and t1685 under the repository-local RAM guard. Falsify: exact limit and adjacent cases plus projection/union/omission/foreign/caller-mutation controls fail closed. Durability: this task, book, Knowledge Map card, consistency source/test, and work-unit commit retain the classification. The guarded suite reports All tests successful at Files=4/Tests=104 in 100 wallclock seconds. No cap, level, accepted profile, product behavior, publication, support, budget, or capacity claim changes. The next slice independently reviews checking_faults.`
+  Checking Faults Join: `The caller-sealed consistency authority now also promotes checking_faults. T1633 owns exact fault limit admission, adjacent rejection, provider-free lifecycle evaluation, same-volume cleanup, mutation defenses, and deterministic construction/evaluation/rerun identities; t1714 independently proves compact count agreement, accepted plan identity, rejection before fault normalization, and no partial ExecutionIR or plan. T1763 reconstructs the two-path projections and union, checks both paths, and rejects omitted or foreign evidence. Runtime/backend/checking-model remain verified and every unaudited group remains pending, so calibration stays historical, incomplete, and blocked. Re-derive: execute t1633 with FSMGEN_VIAL_SCALE_EXACT=1 plus t1714, t1763, and t1685 under the repository-local RAM guard. Falsify: the exact 4,096/4,097 boundary pair plus projection/union/omission/foreign/caller-mutation controls fail closed. Durability: this task, book, Knowledge Map card, consistency source/test, and work-unit commit retain the classification. The guarded suite reports All tests successful at Files=4/Tests=98 in 21 wallclock seconds. No cap, level, accepted profile, product behavior, publication, support, budget, or capacity claim changes. The next slice independently reviews checking_randomness.`
+  Containment Finding: `The canonical Knowledge Map cards now occupy 46,939 lines/3,464,850 bytes against the older .17.4.7 transition allowance of 46,942 lines/3,464,885 bytes, leaving three lines/35 bytes while remaining far below the hard 65,536-line/4,194,304-byte enforcement ceiling. Re-derive: aggregate tracked docs/knowledge Markdown with wc and add the knowledge_cards baseline to its declared transition max_growth. Falsify: scripts/check_live_document_size.sh rejects transition-budget or hard-ceiling excess. Durability: this task, doctrine/live_document_size/surfaces.jsonl, and the work-unit commit retain the distinction. The next evidence-family sync must compact the canonical card rather than silently increase its allowance.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
   Status: `proposed`
@@ -2686,6 +2688,37 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   inventory independently agrees at 11,444 numeric lines with zero open
   migration owner or untracked producer. All 22 live-document surfaces and the
   exact 59-file/54,686-line/2,952,881-byte book authority pass with zero ceiling
+  increase. Staged acceptance and every registered doctrine are required green
+  immediately before commit with no cap, level,
+  accepted profile, product behavior, publication, support, budget, or capacity
+  change. Full CI and push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.8` checking-fault evidence join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the sealed consistency report leaves
+  checking_faults pending because its two policy witnesses remain
+  undifferentiated candidates: t1633 owns the exact fault boundary, adjacent
+  excess, provider-free lifecycle oracle, mutation defenses, identities, and
+  cleanup; t1714 independently owns compact-preflight ordering and absence of
+  partial ExecutionIR or plan. Exact `git log -S'checking_faults' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` traces that candidate-only group
+  to `951720257`.
+- [x] **ADDRESSED (verified)** — independently classify both checking-fault
+  witnesses across boundary, adjacent excess, diagnostics, atomicity, no-tool,
+  cleanup, and accepted identity; run t1633's exact qualification and limit
+  ladder under the RAM guard; seal exact paths and rationales in the no-input
+  consistency authority; reject omitted or foreign evidence; retain all prior
+  verified joins; and keep calibration blocked while any other group remains
+  pending.
+- [x] **NO REGRESSION** — the exact checking-fault evidence plus consistency
+  and policy collection reports `All tests successful` at Files=4/Tests=98 in
+  21 wallclock seconds. Task integrity passes across 4 trees/1,031 nodes; all
+  59 mdBook chapters test, and the inspected 94-file/20,556-KiB
+  repository-local render is removed exactly. `knowledge-map: OK` reports
+  1,159 facts/6,231 questions/6,403 answer occurrences/138 shards. Claim
+  inventory independently agrees at 11,451 numeric lines with zero open
+  migration owner or untracked producer. All 22 live-document surfaces and the
+  exact 59-file/54,699-line/2,953,478-byte book authority pass with zero ceiling
   increase. Staged acceptance and every registered doctrine are required green
   immediately before commit with no cap, level,
   accepted profile, product behavior, publication, support, budget, or capacity

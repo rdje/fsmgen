@@ -303,6 +303,32 @@ my %CHECKING_MODEL_RATIONALE = (
     accepted_identity =>
         'accepted construction, evaluation, rerun, plan, and compact-preflight identities are deterministic',
 );
+my @CHECKING_FAULT_EVIDENCE = (
+    [
+        't/1633-vial-architecture-scale-checking-faults.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1714-vial-execution-fault-cardinality-preflight.t',
+        qw(adjacent_excess diagnostics atomicity no_tool accepted_identity),
+    ],
+);
+my %CHECKING_FAULT_RATIONALE = (
+    boundary =>
+        'the selected fault axis admits its exact provider-free lifecycle limit',
+    adjacent_excess =>
+        'the first excess fault rejects before fault normalization',
+    diagnostics =>
+        'fault limit, lifecycle-oracle, and staging failures retain stable diagnostics',
+    atomicity =>
+        'compact fault excess performs no fault normalization and publishes no ExecutionIR or plan',
+    no_tool =>
+        'the complete fault ladder uses a provider-free lifecycle oracle and starts no external tool',
+    cleanup =>
+        'accepted and consumer-failure fault staging is same-volume and residue-free',
+    accepted_identity =>
+        'accepted fault construction, evaluation, rerun, plan, and compact-preflight identities are deterministic',
+);
 my %runtime_dimensions = map {
     $_ => {
         status => 'verified',
@@ -336,8 +362,20 @@ for my $entry (@CHECKING_MODEL_EVIDENCE) {
     my ($path, @dimensions) = @{$entry};
     push @{$checking_model_dimensions{$_}{evidence}}, $path for @dimensions;
 }
+my %checking_fault_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $CHECKING_FAULT_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@CHECKING_FAULT_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$checking_fault_dimensions{$_}{evidence}}, $path for @dimensions;
+}
 my $VERIFIED_DIMENSIONS = {
     backend_artifact_graph => \%backend_dimensions,
+    checking_faults => \%checking_fault_dimensions,
     checking_models => \%checking_model_dimensions,
     runtime_stream_envelopes => \%runtime_dimensions,
 };

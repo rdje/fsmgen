@@ -76,7 +76,7 @@ evidence: >-
   t/1630-vial-architecture-scale-checking-models.t; t/1711-vial-execution-model-cardinality-preflight.t;
   t/1712-vial-execution-scoreboard-cardinality-preflight.t;
   t/1713-vial-execution-coverage-cardinality-preflight.t;
-  t/1714-vial-execution-fault-cardinality-preflight.t;
+  t/1633-vial-architecture-scale-checking-faults.t; t/1714-vial-execution-fault-cardinality-preflight.t;
   t/1715-vial-execution-random-occurrence-preflight.t;
   perl/FSM/VIAL/Backend/SVPortableVerilator.pm;
   t/1716-vial-backend-portable-sv-cap-order.t;
@@ -127,7 +127,7 @@ reverify: >-
   t/1630-vial-architecture-scale-checking-models.t t/1711-vial-execution-model-cardinality-preflight.t
   t/1712-vial-execution-scoreboard-cardinality-preflight.t
   t/1713-vial-execution-coverage-cardinality-preflight.t
-  t/1714-vial-execution-fault-cardinality-preflight.t
+  t/1633-vial-architecture-scale-checking-faults.t t/1714-vial-execution-fault-cardinality-preflight.t
   t/1715-vial-execution-random-occurrence-preflight.t
   t/1720-vial-runtime-structural-artifact-preflight.t
   t/1721-vial-runtime-trace-artifact-preflight.t
@@ -197,10 +197,10 @@ before writes or assembly. Exact boundaries pass, adjacent excess rejects, and
 completed-backend plus Tool terminal checks remain; no cap or claim changes.
 
 `FSM::VIAL::ArchitectureScaleCapConsistency` rebuilds the policy without caller
-evidence. Runtime, backend, and checking-model groups verify all seven
-dimensions. Runtime joins three profiles with 42 leaves; backend joins
-t1646–t1650 with t1716–t1719; checking models joins t1630 with t1711. T1763
-reconstructs all three exact unions and rejects omissions or foreign evidence.
-Other groups remain pending, so calibration stays historical and blocked.
+evidence. Runtime, backend, checking-model, and checking-fault groups verify all
+seven dimensions. Their joins are three profiles+42 leaves, t1646–t1650+
+t1716–t1719, t1630+t1711, and t1633+t1714. T1763 reconstructs all four unions
+and rejects omitted/foreign evidence. Other groups remain pending, so
+calibration stays historical and blocked.
 
 The common controller admits worker files before counts/digests: the cap passes and cap+1 rejects; safe metadata and modes pass, while unsafe paths or writable modes reject. No cap or support claim changes.
