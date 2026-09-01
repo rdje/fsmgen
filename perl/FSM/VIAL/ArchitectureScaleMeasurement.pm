@@ -268,7 +268,7 @@ sub _measure($raw) {
     );
     print STDERR "vial-scale-measurement: recovered $stage_rel\n"
         if $recovered;
-    my ($stage_abs, $created) = _create_owned_stage(
+    my ($stage_abs, $created, $stage_root_identity) = _create_owned_stage(
         $repo_root, $root_device, $stage_rel,
     );
 
@@ -299,6 +299,7 @@ sub _measure($raw) {
                 root_device => $root_device,
                 stage_abs => $stage_abs,
                 stage_rel => $stage_rel,
+                stage_root_identity => $stage_root_identity,
                 workload_identity => $construction->{workload_identity},
                 run_ordinal => $run_ordinal,
             });
@@ -311,6 +312,7 @@ sub _measure($raw) {
         }
         _validate_owned_artifact_census(
             $stage_abs, \@artifact_records, $root_device,
+            $stage_root_identity,
         ) if $staging_cleanup_safe;
         1;
     };
@@ -329,13 +331,23 @@ sub _measure($raw) {
     my @cleanup_times_before = times;
     my $cleanup_error = _remove_owned_stage_after_worker_containment(
         $staging_cleanup_safe, $stage_abs, $stage_rel, $created,
+        $stage_root_identity, $root_device,
     );
     my @cleanup_times_after = times;
     my $cleanup_finished = clock_gettime(CLOCK_MONOTONIC);
     my $cleanup_ok = !defined $cleanup_error;
-    my $cleanup_residue = $cleanup_ok ? []
-        : !$staging_cleanup_safe ? [$stage_rel]
-        : _cleanup_residue($stage_abs, $stage_rel, $root_device);
+    my $cleanup_residue;
+    if ($cleanup_ok) {
+        $cleanup_residue = [];
+    }
+    elsif (!$staging_cleanup_safe) {
+        $cleanup_residue = [$stage_rel];
+    }
+    else {
+        my $observed =
+            _cleanup_residue($stage_abs, $stage_rel, $root_device);
+        $cleanup_residue = @$observed ? $observed : [$stage_rel];
+    }
     my $cleanup_oracle = {
         stage => 'cleanup',
         oracle_id => 'owned_stage_absent',
@@ -582,6 +594,10 @@ sub _run_stage($raw) {
         ([], [], undef, 0);
     if (!defined $diagnostic) {
         my $ok = eval {
+            _validate_owned_stage_root(
+                $raw->{stage_abs}, $raw->{stage_root_identity},
+                $raw->{root_device},
+            );
             $oracles = _validated_worker_oracles(
                 $stage, $worker_result->{correctness_oracles},
             );
@@ -1418,7 +1434,11 @@ sub _read_worker_artifact_bounded($fh, $relative) {
 
 sub _validate_owned_artifact_census(
     $stage_abs, $artifacts, $repository_device = undef,
+    $stage_root_identity = undef,
 ) {
+    _validate_owned_stage_root(
+        $stage_abs, $stage_root_identity, $repository_device,
+    ) if defined $stage_root_identity;
     my (%expected, %stage);
     for my $index (0 .. $#$artifacts) {
         my $artifact = $artifacts->[$index];
@@ -1593,7 +1613,7 @@ sub _publish_record($raw) {
             '/publication_identity',
         );
     }
-    my ($stage_abs, $created) = eval {
+    my ($stage_abs, $created, $stage_root_identity) = eval {
         _create_owned_stage($repo_root, $root_device, $stage_rel);
     };
     if (!defined $stage_abs) {
@@ -1619,7 +1639,10 @@ sub _publish_record($raw) {
     };
     my $error = $@;
     if (!$published) {
-        _remove_owned_stage($stage_abs, $stage_rel, $created);
+        _remove_owned_stage(
+            $stage_abs, $stage_rel, $created,
+            $stage_root_identity, $root_device,
+        );
         _remove_empty_created_directories(\@publication_created, undef);
         return _publication_failure(
             $record->{measurement_identity}, $target_rel, $artifact_rel,
@@ -2256,13 +2279,14 @@ sub _recover_interrupted_stage($repo_root, $root_device, $stage_rel) {
         $repo_root, split m{/}, $stage_rel,
     );
     return 0 unless -e $stage_abs || -l $stage_abs;
+    my $stage_root_identity =
+        _owned_stage_root_identity($stage_abs, $root_device);
     _validate_recoverable_stage($stage_abs, $root_device);
-    my $errors;
-    remove_tree($stage_abs, {error => \$errors});
-    confess "cannot reclaim interrupted measurement staging root\n"
-        if $errors && @$errors;
-    confess "interrupted measurement staging root remains after recovery\n"
-        if -e $stage_abs || -l $stage_abs;
+    my $cleanup_error = _remove_owned_stage(
+        $stage_abs, $stage_rel, [], $stage_root_identity, $root_device,
+    );
+    confess "cannot reclaim interrupted measurement staging root: "
+        . "$cleanup_error\n" if defined $cleanup_error;
     _prune_recovered_stage_parents($repo_root, dirname($stage_abs));
     return 1;
 }
@@ -2321,18 +2345,40 @@ sub _create_owned_stage($repo_root, $root_device, $stage_rel) {
         _remove_empty_created_directories(\@created, undef);
         die $error;
     }
-    return ($path, \@created);
+    my $stage_root_identity =
+        _owned_stage_root_identity($path, $root_device);
+    return ($path, \@created, $stage_root_identity);
 }
 
-sub _remove_owned_stage($stage_abs, $stage_rel, $created) {
-    if (-e $stage_abs || -l $stage_abs) {
-        return "owned staging root '$stage_rel' is not a real directory"
-            unless -d $stage_abs && !-l $stage_abs;
-        my $errors;
-        remove_tree($stage_abs, {error => \$errors});
-        return "cannot remove owned staging root '$stage_rel'"
-            if $errors && @$errors;
+sub _remove_owned_stage(
+    $stage_abs, $stage_rel, $created, $stage_root_identity,
+    $repository_device,
+) {
+    return "owned staging root identity changed for '$stage_rel'"
+        unless -e $stage_abs || -l $stage_abs;
+    return "owned staging root '$stage_rel' is not a real directory"
+        unless -d $stage_abs && !-l $stage_abs;
+    return "owned staging root identity changed for '$stage_rel'"
+        unless _owned_stage_root_matches(
+            $stage_abs, $stage_root_identity, $repository_device,
+        );
+    my $census_ok = eval {
+        _tree_files($stage_abs, $repository_device);
+        1;
+    };
+    if (!$census_ok) {
+        my $error = _sanitize_exception($@);
+        return "owned staging root '$stage_rel' failed bounded cleanup "
+            . "admission: $error";
     }
+    return "owned staging root identity changed for '$stage_rel'"
+        unless _owned_stage_root_matches(
+            $stage_abs, $stage_root_identity, $repository_device,
+        );
+    my $errors;
+    remove_tree($stage_abs, {error => \$errors});
+    return "cannot remove owned staging root '$stage_rel'"
+        if $errors && @$errors;
     return "owned staging root '$stage_rel' remains after cleanup"
         if -e $stage_abs || -l $stage_abs;
     _remove_empty_created_directories($created, $stage_abs);
@@ -2341,10 +2387,48 @@ sub _remove_owned_stage($stage_abs, $stage_rel, $created) {
 
 sub _remove_owned_stage_after_worker_containment(
     $cleanup_safe, $stage_abs, $stage_rel, $created,
+    $stage_root_identity = undef, $repository_device = undef,
 ) {
     return "owned staging root '$stage_rel' retained a live worker process group"
         unless $cleanup_safe;
-    return _remove_owned_stage($stage_abs, $stage_rel, $created);
+    return _remove_owned_stage(
+        $stage_abs, $stage_rel, $created,
+        $stage_root_identity, $repository_device,
+    );
+}
+
+sub _owned_stage_root_identity($path, $repository_device) {
+    my @stat = lstat($path);
+    confess "measurement staging root is not a real directory\n"
+        unless @stat && !-l _ && -d _;
+    confess "measurement staging crossed repository volume\n"
+        unless $stat[0] == $repository_device;
+    confess "measurement staging owner changed\n"
+        unless $stat[4] == $<;
+    return [map { 0 + $stat[$_] } 0, 1, 4];
+}
+
+sub _owned_stage_root_matches(
+    $path, $expected, $repository_device,
+) {
+    return 0 unless ref($expected) eq 'ARRAY' && @$expected == 3;
+    my @stat = lstat($path);
+    return 0 unless @stat && !-l _ && -d _
+        && $stat[0] == $repository_device
+        && $stat[4] == $<;
+    return $stat[0] == $expected->[0]
+        && $stat[1] == $expected->[1]
+        && $stat[4] == $expected->[2];
+}
+
+sub _validate_owned_stage_root(
+    $path, $expected, $repository_device,
+) {
+    confess "measurement staging root identity changed\n"
+        unless _owned_stage_root_matches(
+            $path, $expected, $repository_device,
+        );
+    return 1;
 }
 
 sub _cleanup_residue($stage_abs, $stage_rel, $repository_device) {

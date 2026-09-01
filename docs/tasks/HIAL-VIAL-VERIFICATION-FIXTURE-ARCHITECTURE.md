@@ -1910,3 +1910,65 @@ post-census pathname-identity/delete audit remains next after that clean commit.
   live-document surfaces pass with zero ceiling increases. Staged task
   acceptance and all registered doctrines are required green immediately before
   commit.
+
+**Tracked destructive-cleanup finding resolved:** after worker-group
+containment, the controller still remembered only the staging pathname.
+A worker could rename the controller-created root aside, install a different
+same-owner/same-volume directory at that pathname, return plausibly, and let
+terminal validation fail while `_remove_owned_stage` recursively deleted the
+replacement. Moving the root away without replacement also let cleanup claim
+success while the displaced tree remained. Independently, the terminal census
+was not repeated at cleanup, so 1,025 files introduced after that census were
+recursively reclaimed without the common structural bound. This slice owns all
+three forms as one destructive-admission defect.
+
+## Acceptance Checklist (enforced) — `.17.4.7` bounded authenticated cleanup admission
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the corrected host-authorized t1753 RED
+  used a canonical zero-exit worker to replace the created root and a
+  cleanup-entry hook to add file 1,025 after terminal census. Six of eleven
+  assertions failed at t/1753-vial-common-bounded-cleanup-admission.t line 68:
+  cleanup reported success, deleted the unauthenticated marker, admitted the
+  first excess, emitted neither identity nor census diagnostic, and retained no
+  excess residue; the 1,024-file control and exact fixture cleanup passed. The
+  signoff extension then moved the root away without replacement and failed the
+  cleanup-success assertion at line 83 while retaining the displaced tree.
+  `_create_owned_stage` returned no durable root identity, result/terminal
+  admission authenticated only the current pathname tree, `_remove_owned_stage`
+  treated absence as success, and destructive cleanup called `remove_tree`
+  without a cleanup-local bounded census.
+- [x] **ADDRESSED (verified)** — stage creation now seals the root's repository
+  device, inode, and owner. The parent reauthenticates that identity before
+  worker-result validation, at terminal artifact admission, and twice around a
+  cleanup-local common census. Cleanup requires the root to remain present and
+  exact, rejects replacement or disappearance without recursive deletion,
+  admits the existing 1,024-file boundary, and rejects file 1,025 while
+  retaining the exact staging identity as residue. Interrupted recovery
+  captures its pre-validation root identity and delegates removal through the
+  same cleanup gate, so growth from 1,024 to 1,025 between recovery validation
+  and deletion also rejects. Final t1753 passes `Files=1, Tests=16`, including
+  unauthenticated-marker retention, missing-root residue, both cleanup
+  boundaries, recovery re-bounding, and exact repository-local teardown.
+- [x] **NO REGRESSION** — Perl product/test syntax is clean; t1751+t1752 retain
+  `Files=2, Tests=16`; host-authorized t1656 retains `Files=1, Tests=6`; and the
+  unchanged default-88%/4,096-MiB guarded foundation, every executable
+  common-controller consumer, t1748/t1749/t1751/t1752, and t1753 pass
+  `Files=13, Tests=92` in 68 wallclock seconds. All 58 mdBook chapters test; the
+  inspected 93-file/20,428-KiB repository-local render contains the exact claim
+  and is removed. Knowledge Map parity is 1,158 facts / 6,204 questions / 6,376
+  answer occurrences / 137 shards. Two claim shards retain 27 records / 26
+  published / one fixture; inventory and dispositions close 1,711/1,711
+  candidates through 179 claim records, 939 gates, and 593 reviewed outcomes
+  with zero gaps/open. Maintained-book authority is exact at 58 files / 54,371
+  lines / 2,937,015 bytes; the existing knowledge-card transition admits 1,157
+  files / 46,761 lines / 3,454,004 bytes; all 22 live-document surfaces pass
+  with zero ceiling increases. Staged task acceptance and all registered
+  doctrines are required green immediately before commit.
+
+**Tracked adjacent audit:** process-group absence is now followed by exact
+root and bounded cleanup admission, but the group model itself has not yet been
+falsified against a callback that creates a new session/process group before
+its leader exits. The next `.17.4.7` slice must prove whether such a detached
+descendant can survive the negative-PID containment domain and mutate the stage
+after cleanup admission; if so, it owns the containment repair before any
+further destructive-path audit.

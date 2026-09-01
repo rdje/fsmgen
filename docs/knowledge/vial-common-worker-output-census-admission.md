@@ -10,6 +10,8 @@ answers:
   - "what binds VIAL cleanup residue to the repository device?"
   - "can a successful VIAL measurement worker leave a live descendant?"
   - "when does the common VIAL controller terminate residual process groups?"
+  - "what authenticates the VIAL staging root before destructive cleanup?"
+  - "does VIAL cleanup recheck output census bounds before remove_tree?"
   - "does the worker output census create a VIAL capacity claim?"
 date: 2026-09-01
 status: current
@@ -20,6 +22,7 @@ evidence: >-
   t/1748-vial-common-worker-artifact-file-admission.t;
   t/1751-vial-common-interrupted-stage-census-admission.t;
   t/1752-vial-common-worker-process-group-containment.t;
+  t/1753-vial-common-bounded-cleanup-admission.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16de-vial-osvvm-runtime-execution-plan.md;
   doctrine/claim_verification/claims.jsonl;
@@ -30,6 +33,7 @@ reverify: >-
   t/1749-vial-common-worker-output-census-admission.t
   t/1751-vial-common-interrupted-stage-census-admission.t
   t/1752-vial-common-worker-process-group-containment.t
+  t/1753-vial-common-bounded-cleanup-admission.t
 ---
 
 The isolated stage worker is timed and its canonical result pipe is bounded,
@@ -64,6 +68,19 @@ TERM/KILL containment, requires the group to disappear, and returns
 never promoted. If containment itself cannot prove group absence, an internal
 cleanup-safety bit suppresses the terminal census and recursive deletion and
 reports the exact owned staging identity as residue.
+
+Stage creation also retains the root's repository device, inode, and owner.
+That identity must still match before worker-result validation, terminal
+artifact admission, and destructive cleanup. A replacement or missing root
+rejects without recursive deletion; if pathname disappearance prevents a
+filesystem census, the exact owned staging identity remains the truthful
+residue authority.
+
+Cleanup repeats the common bounded census and then rechecks root identity
+immediately before removal. Consequently the existing exact 1,024-file
+boundary remains removable after terminal census, file 1,025 rejects as
+residue, and interrupted recovery rejects the same first excess if it appears
+between recovery validation and cleanup.
 
 These are private controller-containment limits. They do not enlarge or reduce
 the existing runtime-artifact byte ceiling and do not establish architecture

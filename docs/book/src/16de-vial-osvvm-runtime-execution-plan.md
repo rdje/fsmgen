@@ -369,6 +369,35 @@ Run the normal-exit residue proof without invoking an HDL tool:
 prove -Iperl -v t/1752-vial-common-worker-process-group-containment.t
 ```
 
+The controller also binds cleanup to the staging root it actually created,
+not merely to the pathname later found there. Creation retains the root's
+repository device, inode, and owner. The parent rechecks that identity before
+worker-result validation, at terminal artifact admission, and immediately
+before destructive cleanup. A replaced or missing root therefore fails with
+the exact staging identity as residue; cleanup never recursively deletes the
+replacement and never promotes pathname disappearance while a displaced tree
+may remain.
+
+Destructive cleanup repeats the common bounded census after terminal admission
+and checks the root identity again before removal. Thus an exact 1,024-file
+tree introduced after terminal census remains removable, while file 1,025
+rejects and stays as residue. Interrupted recovery delegates through the same
+cleanup-local admission, so equivalent growth between recovery validation and
+removal also rejects.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-common-bounded-cleanup-admission-v1 -->
+- Claim: The common architecture-scale measurement controller binds destructive cleanup to the repository device, inode, and owner captured for its created staging root, rejects replacement or disappearance without recursive deletion, and repeats the shared bounded census immediately before removal: 1,024 late files remain admissible, 1,025 reject as residue, and interrupted recovery re-bounds equivalent post-validation growth. These are private cleanup-safety bounds, not capacity or support claims.
+- Re-derive: Run `prove -Iperl -v t/1753-vial-common-bounded-cleanup-admission.t`; inspect `_create_owned_stage`, `_validate_owned_stage_root`, `_remove_owned_stage`, and `_recover_interrupted_stage`, then run every executable common-controller consumer under the repository RAM guard.
+- Falsify: Replace the created root with a same-owner/same-volume directory, move it away without replacement, inject 1,024 and 1,025 files after terminal census, and inject file 1,025 after a 1,024-file recovery validation. Cleanup must retain unauthenticated or first-excess trees and exact residue while removing only the authenticated exact-boundary control.
+- Durability: Retain the common controller, t1753, task `.17.4.7`, this chapter, the worker-census Knowledge Map card, bounded second-shard claim record, doctrine watcher, and work-unit Git chain.
+<!-- CLAIM-VERIFICATION:END vial-common-bounded-cleanup-admission-v1 -->
+
+Run the destructive-admission proof without invoking an HDL tool:
+
+```console
+prove -Iperl -v t/1753-vial-common-bounded-cleanup-admission.t
+```
+
 Each executable role uses one lifecycle execution per controller record. The
 reference role has one correctness-only validation. Gate has one validation
 and three independently measured records; qualification has one validation
