@@ -46,8 +46,8 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.29` active for exact task-narration containment and HIAL/VIAL root rollover | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
-| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.17.4.7` authority-object admission is closed; containment `.29` owns the prerequisite task-evidence rollover | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
+| `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.29` is done; `.12` remains behind director-deferred `.26` | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
+| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.17.4.7` resumes with exact GHDL object-descriptor field and file-mode admission | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `ISF-SPEC-TEST-INDEX-SYNC` | `active` | `R14` | `.3` exact post-partition transformation is green; commit it before resolving the remaining complete-CI findings | [task](docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 completeness` | `.844` terminal | [task](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
 
@@ -281,6 +281,7 @@ docs/TASK_TREE.md
 docs/tasks/
   TEMPLATE.md
   <TREE>.md
+  history/<TREE>/acceptance-history.jsonl  # optional exact historical suffix
 ```
 
 `docs/TASK_TREE.md` is the workflow and active-tree index.
@@ -305,7 +306,9 @@ valid without them.
 - Long-running-tree containment: a live root keeps metadata and the
   nonterminal ancestor/frontier; content-addressed sealed segments copy exact
   completed subtrees, while compact terminals reconstruct them from an exact
-  version object.
+  version object. A bounded acceptance-history manifest may separately retrieve
+  an exact predecessor and its historical Markdown suffix after repeated
+  checklists make that non-authoritative narration a scaling term.
 
 ## ID Rules
 
@@ -366,6 +369,14 @@ An optional `Segment manifest` metadata field points to
 `docs/tasks/segments/<TREE>/manifest.jsonl`. The live file still contains the
 root and all nonterminal ancestors; ordinary trees require no manifest.
 
+An optional `Acceptance history manifest` under a unique
+`## Version-Retrievable Historical Views` heading points to
+`docs/tasks/history/<TREE>/acceptance-history.jsonl`. It records a complete
+exact predecessor plus the digest and dimensions of the predecessor suffix
+removed from the live file. The manifest is finite, closed-schema, and bound
+to a named version-retention contract. It never replaces or authorizes drift
+in the live `## Task Tree` node graph.
+
 The following four sections are **optional historical convenience views**, not
 required to be maintained per-slice (decision
 [0019](decisions/0019-task-tree-in-file-secondary-views-are-historical.md)); the
@@ -405,6 +416,13 @@ Leaf node:
   Commit: pending
 ```
 
+Live `Goal`, `Acceptance`, `Verification`, `Commit`, and `Blocked by` values
+are single-line, backtick-delimited bounded current narration: each value is at
+most 4,096 source bytes, including embedded Markdown code spans. `Children` fields are structural graph
+indexes and are governed by exact child closure instead of this narrative cap.
+Summarize current evidence in the node and route chronological detail to Git or
+an admitted historical view before the cap is reached.
+
 For a long-running tree only, decision
 [0042](decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md)
 permits finite JSONL manifests over content-addressed, exact-source terminal
@@ -420,13 +438,16 @@ A node with children must not be marked `done` until every child is `done`,
 `deferred`, or `superseded`, and every non-`done` child has a recorded reason.
 
 The registered `TASK-TREE-INTEGRITY` doctrine mechanically checks these live
-and optional sealed/version-object rules for every tree indexed as `active`:
+and optional sealed/version-object/history rules for every tree indexed as
+`active`:
 
 ```bash
 scripts/check_task_tree_integrity.pl
 ```
 
-It deliberately does not parse or enforce the optional historical views below.
+It deliberately ignores unmanifested optional historical prose; when an
+acceptance-history manifest is declared, it retrieves and authenticates that
+exact historical source and the bounded live pointer.
 
 ## Current Frontier Rules
 

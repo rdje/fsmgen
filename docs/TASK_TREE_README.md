@@ -37,6 +37,7 @@ docs/tasks/TEMPLATE.md
 docs/tasks/<FIRST-TREE>.md
 docs/tasks/segments/<TREE>/manifest.jsonl  # optional for long-running trees
 docs/tasks/segments/<TREE>/<SHA256>.md     # optional sealed subtree
+docs/tasks/history/<TREE>/acceptance-history.jsonl  # optional historical suffix
 doctrine/task_tree/index_archives.jsonl    # optional bounded completed-index history
 ```
 
@@ -120,7 +121,8 @@ For repositories that adopt FSMGEN's mechanical enforcement layer, copy
 and add focused fixture tests. The checker derives active task paths from the
 `Active Task Trees` table and validates the authoritative live `## Task Tree`
 node list plus any optional manifest-addressed sealed segments or exact
-version-object terminals; it intentionally ignores optional historical views.
+version-object terminals. Unmanifested optional historical prose is ignored;
+a declared acceptance-history manifest is retrieved and authenticated.
 
 ## Recommended Full Setup
 
@@ -250,6 +252,9 @@ Use these rules once the workflow is installed:
 - Record blockers with unblock conditions.
 - Record decisions where they are made.
 - Record validation in the owning task file.
+- Keep each live `Goal`, `Acceptance`, `Verification`, `Commit`, and
+  `Blocked by` value on one backtick-delimited line at or below 4,096 source
+  bytes; embedded code spans count.
 - Update the bounded resume pointer and user-facing docs only where state or
   behavior changes; never duplicate the whole task tree or git history.
 - Commit every completed leaf before selecting another leaf.
@@ -312,6 +317,25 @@ PNT: current work is always selected from the live file, and the historical
 frontier/log/changelog tables remain non-authoritative. Do not migrate a
 healthy tree merely because the format exists.
 
+If repeated committed checklists or other optional historical sections—not
+terminal node bodies—become the scaling term, stop at one exact predecessor
+revision and replace the historical suffix with one bounded pointer:
+
+```text
+## Version-Retrievable Historical Views
+
+- Acceptance history manifest: `docs/tasks/history/<TREE>/acceptance-history.jsonl`
+```
+
+The finite JSONL manifest binds the owning tree, exact source revision/path,
+complete-source SHA-256/line/byte identity, unique suffix start heading,
+suffix SHA-256/line/byte/section identity, unique live pointer heading, and a
+named retention contract. The checker retrieves both identities, rejects
+unknown fields, string-encoded numbers, unsafe paths, missing history, and a
+missing or displaced pointer. Keep the live node graph intact and independently
+validated; later acceptance evidence may append after the pointer until the
+next atomic rollover.
+
 The cross-tree index follows the same rule. Keep only active rows in its live
 PNT table and proposed rows in its backlog table. When accumulated terminal
 rows make the index a history ledger, seal the exact prior index version in a
@@ -357,6 +381,7 @@ Use this checklist when enabling the workflow in a new project.
 [ ] Durable decisions, user-facing docs, and git each have explicit roles.
 [ ] The setup is committed as one documentation/workflow slice.
 [ ] If sealed segments are used, the manifest has finite bounds and exact source/retrieval fixtures pass.
+[ ] If acceptance history is rolled over, its complete-source/suffix manifest and live-pointer checks pass.
 [ ] If terminal index rows are query-first, their bounded exact-version manifest and PNT-view checks pass.
 ```
 

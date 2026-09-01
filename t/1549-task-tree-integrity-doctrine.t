@@ -25,8 +25,8 @@ subtest 'live active task trees satisfy the integrity contract' => sub {
     ok($ok, 'live task-tree integrity passes') or diag($output);
     like(
         $output,
-        qr/all active task-tree invariants hold \(trees=[1-9][0-9]*, nodes=[1-9][0-9]*, segments=[0-9]+, compact_terminals=[0-9]+, index_archives=[0-9]+, migrations=[0-9]+\)/,
-        'live result reports measured tree, node, segment, terminal, and index-archive counts',
+        qr/all active task-tree invariants hold \(trees=[1-9][0-9]*, nodes=[1-9][0-9]*, segments=[0-9]+, compact_terminals=[0-9]+, index_archives=[0-9]+, migrations=[0-9]+, acceptance_histories=[0-9]+\)/,
+        'live result reports every bounded task-history topology',
     );
 };
 
@@ -38,6 +38,28 @@ subtest 'valid minimal active tree passes unchanged' => sub {
         $output,
         qr/trees=1, nodes=3, segments=0, compact_terminals=0, index_archives=0, migrations=0/,
         'legacy in-file fixture result reports exact counts',
+    );
+};
+
+subtest 'live node narration is bounded independently of Markdown ceilings' => sub {
+    my $task = valid_task();
+    my $oversized = ('x' x 4090) . '`inner`';
+    $task =~ s/  Verification: `pending`/  Verification: `$oversized`/;
+    expect_failure(
+        make_fixture($task),
+        qr/live node EXAMPLE\.1 Verification bytes 4097 exceed 4096/,
+        'oversized live node narration',
+    );
+};
+
+subtest 'malformed delimiters cannot bypass live narration bounds' => sub {
+    my $task = valid_task();
+    my $oversized = 'x' x 4097;
+    $task =~ s/  Verification: `pending`/  Verification: `$oversized/;
+    expect_failure(
+        make_fixture($task),
+        qr/live node EXAMPLE\.1 Verification bytes 4097 exceed 4096/,
+        'malformed oversized live node narration',
     );
 };
 
@@ -248,6 +270,62 @@ subtest 'missing history reports owner and recovery action' => sub {
         $fixture->{root},
         qr/retention contract fixture_history owner fixture-maintainers requires recovery: Fetch complete fixture history/,
         'actionable missing-history diagnostic',
+    );
+};
+
+subtest 'exact acceptance-history recovery passes' => sub {
+    my $fixture = make_acceptance_history_fixture();
+    my ($ok, $output) = run_checker($fixture->{root});
+    ok($ok, 'acceptance-history fixture passes') or diag($output);
+    like($output, qr/acceptance_histories=1/,
+        'one exact acceptance-history source is measured');
+};
+
+subtest 'acceptance history verifies the complete source identity' => sub {
+    my $fixture = make_acceptance_history_fixture();
+    mutate_file(
+        $fixture->{manifest},
+        sub { $_[0] =~ s/"source_sha256":"[0-9a-f]{64}"/"source_sha256":"@{['0' x 64]}"/; },
+    );
+    expect_failure(
+        $fixture->{root}, qr/acceptance-history source digest mismatch/,
+        'acceptance-history complete source mismatch',
+    );
+};
+
+subtest 'acceptance history rejects string-encoded numeric evidence' => sub {
+    my $fixture = make_acceptance_history_fixture();
+    mutate_file(
+        $fixture->{manifest},
+        sub { $_[0] =~ s/"source_lines":([0-9]+)/"source_lines":"$1"/; },
+    );
+    expect_failure(
+        $fixture->{root}, qr/source_lines must be an integer >=1/,
+        'string-encoded acceptance-history number',
+    );
+};
+
+subtest 'acceptance history verifies the exact archived suffix' => sub {
+    my $fixture = make_acceptance_history_fixture();
+    mutate_file(
+        $fixture->{manifest},
+        sub { $_[0] =~ s/"history_sha256":"[0-9a-f]{64}"/"history_sha256":"@{['0' x 64]}"/; },
+    );
+    expect_failure(
+        $fixture->{root}, qr/acceptance-history suffix digest mismatch/,
+        'acceptance-history suffix mismatch',
+    );
+};
+
+subtest 'acceptance history requires its bounded live pointer' => sub {
+    my $fixture = make_acceptance_history_fixture();
+    mutate_file(
+        $fixture->{task},
+        sub { $_[0] =~ s/## Version-Retrievable Historical Views/## Missing Historical View/; },
+    );
+    expect_failure(
+        $fixture->{root}, qr/live heading .* is absent or duplicated/,
+        'acceptance-history live pointer mismatch',
     );
 };
 
@@ -580,6 +658,59 @@ sub make_migration_fixture {
         $fixture->{root}, split m{/}, $migration_relative
     );
     return $fixture;
+}
+
+sub make_acceptance_history_fixture {
+    my $history = "## Verification Log\n\n"
+        . "Committed verification detail.\n\n"
+        . "## Acceptance Checklist (enforced) — fixture\n\n"
+        . "- [x] **ROOT CAUSE (WHY + WHERE)** — fixture history.\n"
+        . "- [x] **ADDRESSED (verified)** — fixture history.\n"
+        . "- [x] **NO REGRESSION** — fixture history.\n";
+    my $source = valid_task() . $history;
+    my ($root, $revision) = initialize_versioned_fixture($source);
+    my $task_relative = 'docs/tasks/EXAMPLE.md';
+    my $manifest_relative =
+        'docs/tasks/history/EXAMPLE/acceptance-history.jsonl';
+    my $live = valid_task()
+        . "## Version-Retrievable Historical Views\n\n"
+        . "- Acceptance history manifest: `$manifest_relative`\n";
+    write_file($root, $task_relative, $live);
+
+    my $history_sections = () = $history =~ /^## /mg;
+    my $json = JSON::PP->new->canonical;
+    my $manifest = join(
+        "\n",
+        $json->encode({
+            record_type => 'registry', schema_version => 1,
+            tree_id => 'EXAMPLE', max_records => 1, max_bytes => 4096,
+            max_record_bytes => 2048,
+        }),
+        $json->encode({
+            record_type => 'acceptance_history', schema_version => 1,
+            history_id => 'example_acceptance_history',
+            source_revision => $revision, source_path => $task_relative,
+            source_sha256 => sha256_hex($source),
+            source_lines => fixture_line_count($source),
+            source_bytes => length($source),
+            start_heading => 'Verification Log',
+            history_sha256 => sha256_hex($history),
+            history_lines => fixture_line_count($history),
+            history_bytes => length($history),
+            history_sections => $history_sections,
+            live_heading => 'Version-Retrievable Historical Views',
+            retention_contract => 'fixture_history',
+        }),
+        '',
+    );
+    write_file($root, $manifest_relative, $manifest);
+    return {
+        root => $root,
+        task => File::Spec->catfile($root, split m{/}, $task_relative),
+        manifest => File::Spec->catfile(
+            $root, split m{/}, $manifest_relative,
+        ),
+    };
 }
 
 sub make_compact_fixture {

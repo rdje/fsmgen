@@ -262,6 +262,11 @@ separate reviewed authority proving that the surface's contract expanded.
 - Generate projections from smaller canonical units and prove freshness.
 - Rotate ordered ledgers at whole-record boundaries, then move sealed history
   to a declared archive terminal.
+- Bound task-tree narrative fields separately from task-file ceilings. If
+  repeated optional checklists become the scaling term, preserve the complete
+  live node graph, bind one exact predecessor and its removed historical suffix
+  in a finite manifest, and leave one checked live pointer. Count embedded
+  markup in source bytes and reject string-encoded numeric evidence.
 - Remove duplicated prose only after proving its richer canonical source.
 - When removing a duplicate, compare it with its source and deliberately check
   whether the convenient copy has been hiding divergence in that authority;

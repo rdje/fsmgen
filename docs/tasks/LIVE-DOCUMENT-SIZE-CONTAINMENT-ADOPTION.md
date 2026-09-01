@@ -269,11 +269,11 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `none`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.29`
-  Status: `in_progress`
+  Status: `done`
   Goal: `Contain repeated per-slice narration while preserving exact task evidence.`
   Acceptance: `Treat node Verification fields as bounded current-state summaries and committed Acceptance Checklists as version-retrievable history. Add deterministic bounds/recovery checks, atomically roll the HIAL/VIAL task root below rollover, retain its complete live frontier and canonical node evidence, and prove the exact predecessor through the declared history-retention contract. Do not raise a ceiling, weaken staged acceptance or task integrity, or lose any recorded fact.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Activation revision 6fe704c7b fixes HIAL/VIAL at 7,851 lines/976,299 bytes; its historical suffix is 6,135 lines/685,184 bytes and the live .17.4.7 Verification value is 5,157 bytes. RED t1549 proved absent narration, source, suffix, pointer, embedded-code-span, malformed-delimiter, and numeric-type checks; the live gate also found and normalized one multi-line ISF Verification field without changing its evidence. The checker now requires one-line backtick-delimited values, caps five live narrative fields at 4,096 raw source bytes, parses embedded code spans, and authenticates one finite closed-schema acceptance-history manifest through exact source/suffix identities, a unique live pointer, strict JSON numbers, safe same-volume paths, and fsmgen_required_history. The live root is 1,721 lines/287,887 bytes; its 115 node IDs and every Task Tree byte except the deliberately summarized .17.4.7 Verification value match the predecessor at SHA-256 a695acb4.... Task evidence returns from rollover debt to normal at 76.5% with no ceiling change. Focused and broader evidence is recorded in the checklist below. Knowledge Map is 1,156 facts/6,182 questions/6,354 occurrences/136 shards; claims retain 1,693 completely joined candidates. All 58 book chapters test; the inspected 93-file/20,637,816-byte render contains the portable rule and is removed exactly. Live containment covers 22 surfaces with zero ceiling increases and exact predecessor retrieval; compiler/runtime/product behavior is unchanged.`
+  Commit: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.29: bound task narration history`
   Blocked by: `none`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.30`
@@ -1153,3 +1153,9 @@ no routed destination becomes the next uninstrumented blob.
   inspected 88-file/18,624-KiB repository-local render is removed exactly.
   Diff, staged acceptance, and the final `[doctrine] all doctrine checks passed`
   result complete the commit without compiler, runtime, or product changes.
+
+## Acceptance Checklist (enforced) — `.29` bounded task narration and rollover
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Exact revision `6fe704c7b0a8ec45d31f188f235eceeec388499b` measures the HIAL/VIAL task at 7,851 lines/976,299 bytes, with 6,135 lines/685,184 bytes in the repeated historical suffix and 5,157 bytes in `.17.4.7` Verification. RED t1549 first proved six missing admission seams, then independently proved embedded Markdown backticks and a missing closing delimiter bypassed field measurement while JSON string `"1"` passed as numeric evidence; the emitted failures report at t/1549-task-tree-integrity-doctrine.t line 980 and line 991. The live gate exposed one pre-existing multi-line `.2` ISF Verification value using the same grammar gap.
+- [x] **ADDRESSED (verified)** — Five live narrative fields must now be one-line backtick-delimited values and have an exact 4,096-raw-source-byte cap; embedded code spans and malformed raw payloads are measured. The ISF value is normalized without changing its three commands. The finite acceptance-history manifest binds the complete predecessor, exact suffix, unique live pointer, same-volume safe path, strict numeric types, and named retention recovery. HIAL/VIAL is 1,721 lines/287,887 bytes; all 115 node IDs and the normalized Task Tree projection match the predecessor at SHA-256 `a695acb42e70f1328b357265352d89514b9358b95c98a2a82196a6902ea2d562`.
+- [x] **NO REGRESSION** — t1549 passes 48 subtests; the RAM-guarded task/containment/Knowledge/claim cluster passes `Files=11, Tests=134` in 53 seconds. Task evidence is `normal` at 76.5% with no ceiling increase; Knowledge Map is 1,156 facts/6,182 questions/6,354 occurrences/136 shards and all 1,693 claim candidates remain joined. All 58 mdBook chapters test; the inspected 93-file/20,637,816-byte build is removed exactly. Exact source/suffix retrieval, artifact absence, diff hygiene, and product non-change are verified; staged acceptance and complete doctrines remain the final commit gates.

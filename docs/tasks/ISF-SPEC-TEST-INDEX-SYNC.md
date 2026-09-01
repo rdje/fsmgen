@@ -47,8 +47,7 @@ repo's `t/*-isf-*.t` regression files.
   Status: `done`
   Goal: `Repair focused-test index drift after ATL doc-status audit coverage`
   Acceptance: `Spec index includes t/1332-isf-atl-doc-status-audit.t and the focused audit passes`
-  Verification: `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t`;
-  `mdbook build docs/book`; `git diff --check`
+  Verification: `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t; mdbook build docs/book; git diff --check`
   Commit: `ISF-SPEC-TEST-INDEX-SYNC.2: sync ATL doc-status audit index`
 
 - ID: `ISF-SPEC-TEST-INDEX-SYNC.3`

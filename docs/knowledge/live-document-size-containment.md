@@ -52,13 +52,14 @@ answers:
   - "how is a deliberately retained derived-state copy verified?"
   - "is immutable task evidence the same as mutable current derived state?"
   - "what is the main downstream entry point for containment doctrine updates?"
-date: 2026-08-09
+  - "how are repeated task-tree acceptance checklists contained?"
+date: 2026-09-01
 status: current
 tags: [documentation, doctrine, continuity, size, derived-state, sharding, rollover, archive, harness-neutral]
 evidence: >-
   LIVE_DOCUMENT_SIZE_CONTAINMENT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/derived_state_contracts.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/live_document_size/ledger_manifests.jsonl; doctrine/live_document_size/version_retention_contracts.jsonl;
   scripts/check_live_document_size.sh; scripts/run_live_document_adapter_verifiers.pl; scripts/check_live_document_resulting_tree.pl; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md; docs/decisions/0045-maintained-reference-bounds-the-read-path-not-product-scope.md; docs/decisions/0054-derived-state-is-derived-on-read-or-authority-verified.md;
-  docs/decisions/0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; knowledge-map/scripts/knowledge_map.pl; knowledge-map/scripts/query_knowledge_map.sh; scripts/check_knowledge_card_history.pl; t/1554-live-document-size-doctrine.t; t/1567-knowledge-map-shards.t; t/1568-knowledge-card-history.t
+  docs/decisions/0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl; scripts/check_task_tree_integrity.pl; knowledge-map/scripts/knowledge_map.pl; knowledge-map/scripts/query_knowledge_map.sh; scripts/check_knowledge_card_history.pl; t/1549-task-tree-integrity-doctrine.t; t/1554-live-document-size-doctrine.t; t/1567-knowledge-map-shards.t; t/1568-knowledge-card-history.t
   doctrine/live_document_size/isf_reference_partitions.jsonl; scripts/check_isf_reference_partitions.pl; scripts/focused_document_index.pl; docs/index/FOCUSED_DOCUMENTS.md; t/1569-focused-document-containment.t
 reverify: >-
   scripts/check_live_document_size.sh && knowledge-map/scripts/check_knowledge_map.sh && scripts/check_knowledge_card_history.pl && prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t t/1560-live-document-ceiling-authority.t t/1561-live-document-reference-authority.t t/1567-knowledge-map-shards.t t/1568-knowledge-card-history.t
@@ -345,3 +346,8 @@ inaccurate active-source link. The director independently selected retirement;
 decision `0049` preserves the exact March-June 2026 chronology and R0-R14
 snapshot by verified Git retrieval while requiring live-path and consumer
 absence. No replacement status projection is created.
+
+Leaf `.29` caps live task narration at 4,096 source bytes, including embedded
+code spans. HIAL/VIAL keeps its complete node graph while a finite manifest
+authenticates the 976,299-byte predecessor and 685,184-byte historical suffix;
+unsafe/displaced pointers, drift, unbounded records, and numeric strings reject.

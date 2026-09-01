@@ -53,6 +53,8 @@ my $total_segments = 0;
 my $total_compact_terminals = 0;
 my $total_index_archives = 0;
 my $total_migrations = 0;
+my $total_acceptance_histories = 0;
+my $max_live_narrative_bytes = 4096;
 my $retention_registry_relative =
     'doctrine/live_document_size/version_retention_contracts.jsonl';
 my %retention_contracts;
@@ -127,6 +129,21 @@ for my $entry (@active_trees) {
         );
     }
 
+    my @acceptance_history_fields =
+        $task =~ /^- Acceptance history manifest: `([^`]+)`\s*$/mg;
+    if (@acceptance_history_fields > 1) {
+        push @errors,
+            "$task_relative: must have at most one Acceptance history manifest field";
+    }
+    elsif (@acceptance_history_fields == 1) {
+        $total_acceptance_histories += load_acceptance_history_manifest(
+            tree_id       => $tree_id,
+            task_relative => $task_relative,
+            task_raw      => $task,
+            manifest      => $acceptance_history_fields[0],
+        );
+    }
+
     my @nodes = (@live_nodes, @segment_nodes);
     $total_nodes += scalar @nodes;
     validate_tree(
@@ -145,9 +162,10 @@ if (@errors) {
 
 printf "[task-tree-integrity] all active task-tree invariants hold "
     . "(trees=%d, nodes=%d, segments=%d, compact_terminals=%d, "
-    . "index_archives=%d, migrations=%d)\n",
+    . "index_archives=%d, migrations=%d, acceptance_histories=%d)\n",
     scalar(@active_trees), $total_nodes, $total_segments,
-    $total_compact_terminals, $total_index_archives, $total_migrations;
+    $total_compact_terminals, $total_index_archives, $total_migrations,
+    $total_acceptance_histories;
 exit 0;
 
 sub load_index_archive_manifest {
@@ -891,6 +909,218 @@ sub load_migration_manifest {
     return 1;
 }
 
+sub load_acceptance_history_manifest {
+    my (%args) = @_;
+    my $tree_id = $args{tree_id};
+    my $task_relative = $args{task_relative};
+    my $current_task = $args{task_raw};
+    my $manifest_relative = $args{manifest};
+
+    if (!safe_relative_path($manifest_relative)
+        || $manifest_relative !~ /\.jsonl\z/) {
+        push @errors,
+            "$task_relative: unsafe or non-JSONL acceptance-history manifest "
+                . $manifest_relative;
+        return 0;
+    }
+    my $manifest_path = checked_local_file(
+        $manifest_relative, "$task_relative: acceptance-history manifest"
+    );
+    return 0 if !defined $manifest_path;
+
+    my $raw = read_file($manifest_path, $manifest_relative);
+    my @records = decode_jsonl($raw, $manifest_relative);
+    return 0 if !@records;
+
+    my $registry = shift @records;
+    check_keys(
+        $registry,
+        [qw(record_type schema_version tree_id max_records max_bytes
+            max_record_bytes)],
+        [], "$manifest_relative: registry record",
+    );
+    check_equal($registry->{record_type}, 'registry',
+        "$manifest_relative: registry record_type");
+    check_integer($registry->{schema_version}, 1, 1,
+        "$manifest_relative: registry schema_version");
+    check_equal($registry->{tree_id}, $tree_id,
+        "$manifest_relative: registry tree_id");
+    check_integer($registry->{max_records}, 1, undef,
+        "$manifest_relative: registry max_records");
+    check_integer($registry->{max_bytes}, 1, undef,
+        "$manifest_relative: registry max_bytes");
+    check_integer($registry->{max_record_bytes}, 1, undef,
+        "$manifest_relative: registry max_record_bytes");
+
+    if (is_positive_integer($registry->{max_records})
+        && @records > $registry->{max_records}) {
+        push @errors,
+            "$manifest_relative: acceptance-history record count "
+                . scalar(@records)
+                . " exceeds max_records $registry->{max_records}";
+    }
+    if (is_positive_integer($registry->{max_bytes})
+        && length($raw) > $registry->{max_bytes}) {
+        push @errors,
+            "$manifest_relative: size " . length($raw)
+                . " exceeds max_bytes $registry->{max_bytes}";
+    }
+    if (is_positive_integer($registry->{max_record_bytes})) {
+        my $line = 0;
+        for my $encoded (split /\n/, $raw) {
+            $line++;
+            push @errors,
+                "$manifest_relative: record $line exceeds max_record_bytes "
+                    . $registry->{max_record_bytes}
+                if length($encoded) > $registry->{max_record_bytes};
+        }
+    }
+    if (@records != 1) {
+        push @errors,
+            "$manifest_relative: must contain exactly one acceptance-history record";
+        return scalar @records;
+    }
+
+    my $record = $records[0];
+    my $where = "$manifest_relative: record 2";
+    check_keys(
+        $record,
+        [qw(record_type schema_version history_id source_revision source_path
+            source_sha256 source_lines source_bytes start_heading history_sha256
+            history_lines history_bytes history_sections live_heading
+            retention_contract)],
+        [], $where,
+    );
+    check_equal($record->{record_type}, 'acceptance_history',
+        "$where record_type");
+    check_integer($record->{schema_version}, 1, 1,
+        "$where schema_version");
+
+    my $history_id = $record->{history_id};
+    push @errors, "$where has invalid history_id"
+        if !defined $history_id || ref $history_id
+            || $history_id !~ /\A[a-z][a-z0-9_.-]*\z/;
+
+    my $source_revision = $record->{source_revision};
+    my $source_path = $record->{source_path};
+    if (!defined $source_revision || ref $source_revision
+        || $source_revision !~ /\A(?:[0-9a-f]{40}|[0-9a-f]{64})\z/) {
+        push @errors, "$where has invalid exact source_revision";
+    }
+    if (!defined $source_path || ref $source_path
+        || !safe_relative_path($source_path) || $source_path !~ /\.md\z/) {
+        push @errors, "$where has unsafe or non-Markdown source_path";
+    }
+    elsif ($source_path ne $task_relative) {
+        push @errors,
+            "$where source_path must identify owning task $task_relative";
+    }
+
+    for my $field (qw(source_sha256 history_sha256)) {
+        my $digest = $record->{$field};
+        push @errors, "$where has invalid $field"
+            if !defined $digest || ref $digest
+                || $digest !~ /\A[0-9a-f]{64}\z/;
+    }
+    for my $field (
+        qw(source_lines source_bytes history_lines history_bytes history_sections)
+    ) {
+        check_integer($record->{$field}, 1, undef, "$where $field");
+    }
+    for my $field (qw(start_heading live_heading)) {
+        my $heading = $record->{$field};
+        push @errors, "$where has invalid $field"
+            if !defined $heading || ref $heading || $heading eq ''
+                || $heading =~ /[\r\n`]/;
+    }
+
+    my $live_heading = $record->{live_heading};
+    if (defined $live_heading && !ref $live_heading
+        && $live_heading ne '' && $live_heading !~ /[\r\n`]/) {
+        my @headings = $current_task =~ /^## \Q$live_heading\E\s*$/mg;
+        if (@headings != 1) {
+            push @errors,
+                "$where live heading $live_heading is absent or duplicated";
+        }
+        else {
+            my $live_section = extract_section($current_task, $live_heading);
+            my @pointers = defined $live_section
+                ? $live_section =~ /^- Acceptance history manifest: `([^`]+)`\s*$/mg
+                : ();
+            if (@pointers != 1 || $pointers[0] ne $manifest_relative) {
+                push @errors,
+                    "$where live heading $live_heading does not contain its exact manifest pointer";
+            }
+        }
+    }
+
+    return 1
+        if !defined $source_revision || ref $source_revision
+            || $source_revision !~ /\A(?:[0-9a-f]{40}|[0-9a-f]{64})\z/
+            || !defined $source_path || ref $source_path
+            || !safe_relative_path($source_path);
+    my $source = retrieve_version_object(
+        $source_revision, $source_path, "$where acceptance-history source",
+        $record->{retention_contract},
+    );
+    return 1 if !defined $source;
+
+    my $source_sha = $record->{source_sha256};
+    if (defined $source_sha && !ref $source_sha
+        && $source_sha =~ /\A[0-9a-f]{64}\z/
+        && sha256_hex($source) ne $source_sha) {
+        push @errors, "$where acceptance-history source digest mismatch";
+    }
+    push @errors,
+        "$where source_lines $record->{source_lines} does not match retrieved count "
+            . line_count($source)
+        if is_positive_integer($record->{source_lines})
+            && line_count($source) != $record->{source_lines};
+    push @errors,
+        "$where source_bytes $record->{source_bytes} does not match retrieved count "
+            . length($source)
+        if is_positive_integer($record->{source_bytes})
+            && length($source) != $record->{source_bytes};
+
+    my $start_heading = $record->{start_heading};
+    return 1 if !defined $start_heading || ref $start_heading
+        || $start_heading eq '' || $start_heading =~ /[\r\n`]/;
+    my $needle = "## $start_heading\n";
+    my @starts;
+    while ($source =~ /^\Q$needle\E/mg) {
+        push @starts, $-[0];
+    }
+    if (@starts != 1) {
+        push @errors,
+            "$where source heading $start_heading is absent or duplicated";
+        return 1;
+    }
+    my $history = substr($source, $starts[0]);
+    my $history_sha = $record->{history_sha256};
+    if (defined $history_sha && !ref $history_sha
+        && $history_sha =~ /\A[0-9a-f]{64}\z/
+        && sha256_hex($history) ne $history_sha) {
+        push @errors, "$where acceptance-history suffix digest mismatch";
+    }
+    push @errors,
+        "$where history_lines $record->{history_lines} does not match retrieved count "
+            . line_count($history)
+        if is_positive_integer($record->{history_lines})
+            && line_count($history) != $record->{history_lines};
+    push @errors,
+        "$where history_bytes $record->{history_bytes} does not match retrieved count "
+            . length($history)
+        if is_positive_integer($record->{history_bytes})
+            && length($history) != $record->{history_bytes};
+    my $history_sections = () = $history =~ /^## /mg;
+    push @errors,
+        "$where history_sections $record->{history_sections} does not match retrieved count "
+            . $history_sections
+        if is_positive_integer($record->{history_sections})
+            && $history_sections != $record->{history_sections};
+    return 1;
+}
+
 sub validate_loss_residue {
     my ($record, $where) = @_;
     my $kind = $record->{loss_residue_kind};
@@ -971,6 +1201,25 @@ sub validate_tree {
             && $node_id !~ /^\Q$tree_id\E(?:\.[1-9][0-9]*)+\z/) {
             push @errors,
                 "$display: node $node_id is not a descendant of root $tree_id";
+        }
+
+        if ($node->{origin} eq 'live') {
+            for my $field (
+                'Goal', 'Acceptance', 'Verification', 'Commit', 'Blocked by'
+            ) {
+                my @parsed = field_values($node, $field);
+                my $count = field_count($node, $field);
+                push @errors,
+                    "$display: live node $node_id $field fields must use backtick-delimited values"
+                    if @parsed != $count;
+                for my $value (narrative_field_values($node, $field)) {
+                    my $bytes = length($value);
+                    push @errors,
+                        "$display: live node $node_id $field bytes $bytes exceed "
+                            . $max_live_narrative_bytes
+                        if $bytes > $max_live_narrative_bytes;
+                }
+            }
         }
 
         my @statuses = field_values($node, 'Status');
@@ -1343,7 +1592,18 @@ sub canonical_node {
 
 sub field_values {
     my ($node, $field) = @_;
-    return $node->{body} =~ /^  \Q$field\E: `([^`]*)`\s*$/mg;
+    return $node->{body} =~ /^  \Q$field\E: `(.*)`\s*$/mg;
+}
+
+sub narrative_field_values {
+    my ($node, $field) = @_;
+    my @values = $node->{body} =~ /^  \Q$field\E:\s*(.*)$/mg;
+    for my $value (@values) {
+        $value =~ s/[ \t]+\z//;
+        $value =~ s/\A`//;
+        $value =~ s/`\z//;
+    }
+    return @values;
 }
 
 sub field_count {
@@ -1407,7 +1667,10 @@ sub check_equal {
 
 sub check_integer {
     my ($actual, $minimum, $maximum, $where) = @_;
-    if (!defined $actual || ref $actual || $actual !~ /\A[0-9]+\z/
+    my $encoded = defined $actual && !ref $actual
+        ? JSON::PP->new->allow_nonref->encode($actual)
+        : '';
+    if ($encoded !~ /\A[0-9]+\z/
         || $actual < $minimum
         || (defined $maximum && $actual > $maximum)) {
         my $range = defined $maximum
@@ -1626,8 +1889,10 @@ authoritative; optional bounded JSONL manifests may add exact-source sealed
 subtree segments, and compact completed terminals must retrieve their full
 terminal subtree from an exact version object. A bounded completed-history
 manifest may prove query-first terminal index rows from an exact version while
-the live PNT tables retain only active/proposed work. PATH is intended for
-focused repository-local fixtures.
+the live PNT tables retain only active/proposed work. A bounded acceptance-
+history manifest may authenticate an exact predecessor suffix while live node
+narration remains independently capped. PATH is intended for focused
+repository-local fixtures.
 USAGE
     exit $exit;
 }

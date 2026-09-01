@@ -427,6 +427,16 @@ applicable steps:
    derivation, retained copy, or archive retrieval has been proved.
 8. Commit the transition atomically so no durable state exposes half a move.
 
+For a task-tree ledger, bound live narrative fields independently from the
+file and collection ceilings. When repeated optional verification/checklist
+history becomes the scaling term, retain the complete live node graph, stop at
+one exact predecessor, and replace only the historical suffix with a finite
+manifest pointer. The verifier must retrieve and authenticate both the complete
+predecessor and the exact removed suffix, require a unique live pointer, count
+embedded markup as source bytes, and reject string-encoded numeric evidence.
+Structural child indexes remain governed by graph closure rather than the
+narrative-field cap.
+
 Sealed units are immutable. Corrections create a superseding record or segment
 rather than silently editing archived evidence.
 

@@ -1,7 +1,7 @@
 # Knowledge Map: `live-document`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **89** uniquely owned question entries.
+> **4** facts · **90** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -27,6 +27,7 @@
 - q="how are live-document currency contracts declared?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how are live-document sizes contained project-wide?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how are mechanically exact current-state fields contained?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="how are repeated task-tree acceptance checklists contained?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="how big is MEMORY.md allowed to be?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="how do I add a knowledge map card or write a fact card?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 - q="how do I add a new knowledge fact card?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
@@ -101,7 +102,7 @@
 
 _Live documents use bounded views over durable stores_
 
-- **date:** 2026-08-09 · **status:** current
+- **date:** 2026-09-01 · **status:** current
 - **source and verification:** [`docs/knowledge/live-document-size-containment.md`](../../docs/knowledge/live-document-size-containment.md)
 
 ### live-document-surface-growth-procedure
