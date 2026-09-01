@@ -294,11 +294,14 @@ is(
     'retain_preflight_and_terminal_defense',
     'execution plan policy retains both byte authorities',
 );
-ok(
-    scalar(grep {
-        $_ eq 't/1634-vial-architecture-scale-checking-random-replay.t'
-    } @{$policy->{groups}{execution_serialized_plan}{evidence}}),
-    'execution plan policy cites the exact materialization-seam witness',
+is_deeply(
+    $policy->{groups}{execution_serialized_plan}{evidence},
+    [qw(
+        t/1611-vial-architecture-scale-execution-plan-limit.t
+        t/1612-vial-architecture-scale-execution-plan-over-limit.t
+        t/1634-vial-architecture-scale-checking-random-replay.t
+    )],
+    'execution plan policy cites the exact boundary, excess, and seam evidence set',
 );
 is(
     $policy->{groups}{checking_models}{current_enforcement},

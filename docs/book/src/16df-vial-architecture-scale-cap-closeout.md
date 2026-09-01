@@ -23,9 +23,9 @@ reviewed runtime-stream, backend-artifact, checking-model, checking-fault,
 checking-randomness, and checking-scoreboard witnesses to explicit dimensions.
 The checking-coverage, bridge-profile, serialized-bridge-manifest,
 normalized-bridge-collection, execution-profile-selection, and
-execution-operation-cardinality, execution-fiber-cardinality, and
-execution-route-collection and execution-random-attempt witnesses are now
-joined too. The same
+execution-operation-cardinality, execution-fiber-cardinality,
+execution-route-collection, execution-random-attempt, and
+execution-serialized-plan witnesses are now joined too. The same
 classification remains pending for every other group.
 
 ## Why calibration publication is separate
@@ -59,8 +59,9 @@ identity.
 Runtime, backend, checking-model, checking-fault, checking-randomness,
 checking-scoreboard, checking-coverage, bridge-profile-cardinality, serialized
 manifest, normalized-collection, execution-profile-selection, and
-execution-operation-cardinality, execution-fiber-cardinality, and
-execution-route-collection and execution-random-attempt groups are `verified`
+execution-operation-cardinality, execution-fiber-cardinality,
+execution-route-collection, execution-random-attempt, and
+execution-serialized-plan groups are `verified`
 across all seven
 dimensions; all other groups remain `pending_independent_verification`.
 Runtime covers the selected materialization profiles plus t1720 through t1749
@@ -149,7 +150,15 @@ preflight or any final materializer. The lower 262,144-attempt t1613
 qualification remains a useful regression but is superseded for this closeout
 join by t1614's stronger boundary proof. Accepted and rejected workload shapes
 select no backend or external tool.
-T1763 reconstructs all fifteen sets of per-dimension projections,
+Serialized plans require three complementary witnesses. T1611 admits the exact
+16,777,216-byte canonical plan, freezes its content-derived identity and closed
+evaluation, and owns no-tool plus same-volume success/failure cleanup. T1612
+owns the first complete valid excess and public plan-root diagnostic. T1634
+independently rejects before random-decision, ExecutionIR, plan, or report
+materialization and preserves replay-route identity and cleanup. The lower
+one-MiB t1609 and four-MiB t1610 ladders remain regressions but are superseded
+for this closeout join by t1611's exact-cap proof.
+T1763 reconstructs all sixteen sets of per-dimension projections,
 requires their complete unions, checks every path, and rejects omitted or
 foreign evidence. Policy citations remain candidates
 for all unreviewed groups. The validator also
@@ -351,6 +360,18 @@ scripts/run_with_ram_guard.sh -- prove -Iperl \
   t/1614-vial-architecture-scale-execution-random-limit.t \
   t/1615-vial-architecture-scale-execution-random-over-limit.t \
   t/1710-vial-execution-random-attempt-authority.t \
+  t/1763-vial-architecture-scale-cap-consistency.t \
+  t/1685-vial-architecture-scale-cap-policy.t
+```
+
+Reverify the exact serialized-plan boundary, first complete excess,
+pre-materialization order, cleanup, identities, and sealed falsifiers with:
+
+```sh
+scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
+  prove -Iperl t/1611-vial-architecture-scale-execution-plan-limit.t \
+  t/1612-vial-architecture-scale-execution-plan-over-limit.t \
+  t/1634-vial-architecture-scale-checking-random-replay.t \
   t/1763-vial-architecture-scale-cap-consistency.t \
   t/1685-vial-architecture-scale-cap-policy.t
 ```

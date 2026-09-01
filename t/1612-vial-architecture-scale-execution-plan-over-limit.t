@@ -78,6 +78,10 @@ subtest 'over-limit construction appends exactly one complete reset' => sub {
         },
         'construction retains the exact first-complete-record contract',
     );
+    is($first->{specification}{backend_profile}, undef,
+        'over-limit construction selects no backend');
+    is($first->{specification}{tool_profile}, undef,
+        'over-limit construction selects no external tool');
     is($first->{workload_identity}, $expected{workload_identity},
         'over-limit construction identity is exact');
 

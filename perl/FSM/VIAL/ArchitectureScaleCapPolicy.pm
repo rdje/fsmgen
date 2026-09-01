@@ -307,6 +307,7 @@ my $GROUPS = {
         'no_execution_ir_plan_or_replay',
         'retain_preflight_and_terminal_defense', '.17.4.4',
         [
+            't/1611-vial-architecture-scale-execution-plan-limit.t',
             't/1612-vial-architecture-scale-execution-plan-over-limit.t',
             't/1634-vial-architecture-scale-checking-random-replay.t',
         ],

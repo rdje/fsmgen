@@ -8,9 +8,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8`
   (`active`; cross-family cap closeout under decision `0093`)
-- next_action: Independently review and bind `execution_serialized_plan` to
+- next_action: Independently review and bind `semantic_parser_admission` to
   every sealed consistency dimension; keep calibration blocked until all groups
   are verified.
-- in_flight_uncommitted: random-attempt evidence join is implemented and under final documentation/claim/doctrine verification.
-- in_flight_background: none; all exact-SHA hosted workflows are terminal green.
+- in_flight_uncommitted: serialized-plan evidence join is verified and awaiting staged acceptance/doctrine commit gates.
+- in_flight_background: none; default, exact, and lower-rung guarded verification is terminal green.
 - blockers: none.

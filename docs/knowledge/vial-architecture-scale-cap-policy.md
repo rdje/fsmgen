@@ -40,71 +40,24 @@ tags: [vial, architecture-scale, limits, bounded-failure, route-authority]
 evidence: >-
   docs/decisions/0093-architecture-scale-caps-are-component-ceilings-with-explicit-route-authority.md;
   perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm; perl/FSM/VIAL/ArchitectureScaleCapConsistency.pm;
-  t/1685-vial-architecture-scale-cap-policy.t; t/1763-vial-architecture-scale-cap-consistency.t;
-  perl/FSM/VIAL/Parser.pm;
-  t/1687-vial-parser-direct-import-cap-order.t;
-  t/1693-vial-parser-source-byte-cap-order.t;
-  perl/FSM/VIAL/SemanticBuilder.pm;
-  t/1686-vial-semantic-action-cap-order.t;
-  t/1688-vial-semantic-parallel-fiber-cap-order.t;
-  t/1689-vial-semantic-declaration-cap-order.t;
-  t/1690-vial-semantic-scoreboard-capacity-order.t;
-  t/1691-vial-semantic-cross-max-bins-order.t;
-  t/1692-vial-semantic-type-shape-cap-order.t;
-  perl/FSM/HIAL/VIALBridge/Builder.pm;
-  t/1602-vial-architecture-scale-bridge-fanout.t;
-  t/1694-hial-vial-bridge-configuration-cap-order.t;
-  t/1695-hial-vial-bridge-endpoint-cap-order.t;
-  t/1696-hial-vial-bridge-observation-cap-order.t;
-  t/1697-hial-vial-bridge-probe-cap-order.t;
-  t/1698-hial-vial-bridge-type-cap-order.t;
-  t/1699-hial-vial-bridge-transaction-cap-order.t;
-  t/1700-hial-vial-bridge-event-cap-order.t;
-  t/1701-hial-vial-bridge-residue-cap-order.t;
-  t/1702-hial-vial-bridge-backend-binding-cap-order.t;
-  t/1703-hial-vial-bridge-source-map-cap-order.t;
-  t/1704-hial-vial-bridge-serialized-manifest-terminal-authority.t;
-  perl/FSM/VIAL/ExecutionBuilder.pm;
-  t/1603-vial-architecture-scale-execution-foundation.t;
-  t/1606-vial-architecture-scale-execution-types.t; t/1607-vial-architecture-scale-execution-source-maps.t;
-  t/1616-vial-architecture-scale-execution-scenario-qualification.t; t/1617-vial-architecture-scale-execution-scenario-limit.t; t/1618-vial-architecture-scale-execution-scenario-over-limit.t;
-  t/1619-vial-architecture-scale-execution-operation-qualification.t; t/1620-vial-architecture-scale-execution-operation-limit.t; t/1621-vial-architecture-scale-execution-operation-over-limit.t; t/1622-vial-architecture-scale-execution-total-operation-qualification.t; t/1626-vial-architecture-scale-execution-total-operation-limit.t;
-  t/1623-vial-architecture-scale-execution-fiber-qualification.t; t/1624-vial-architecture-scale-execution-live-fiber-limit.t; t/1625-vial-architecture-scale-execution-total-fiber-limit.t;
-  t/1627-vial-architecture-scale-execution-type-qualification.t; t/1628-vial-architecture-scale-execution-binding-limits.t;
-  t/1705-vial-execution-selected-domain-cap-order.t;
-  t/1706-vial-execution-operation-cardinality-cap-order.t;
-  t/1707-vial-execution-type-cap-order.t;
-  t/1708-vial-execution-source-map-cap-order.t;
-  t/1709-vial-execution-binding-cardinality-preflight.t;
-  t/1614-vial-architecture-scale-execution-random-limit.t;
-  t/1615-vial-architecture-scale-execution-random-over-limit.t;
-  t/1710-vial-execution-random-attempt-authority.t;
-  t/1630-vial-architecture-scale-checking-models.t; t/1711-vial-execution-model-cardinality-preflight.t;
-  t/1631-vial-architecture-scale-checking-scoreboards.t; t/1712-vial-execution-scoreboard-cardinality-preflight.t;
-  t/1632-vial-architecture-scale-checking-coverage.t; t/1713-vial-execution-coverage-cardinality-preflight.t;
-  t/1633-vial-architecture-scale-checking-faults.t; t/1714-vial-execution-fault-cardinality-preflight.t;
-  t/1634-vial-architecture-scale-checking-random-replay.t; t/1715-vial-execution-random-occurrence-preflight.t;
+  perl/FSM/VIAL/Parser.pm; perl/FSM/VIAL/SemanticBuilder.pm;
+  perl/FSM/HIAL/VIALBridge/Builder.pm; perl/FSM/VIAL/ExecutionBuilder.pm;
   perl/FSM/VIAL/Backend/SVPortableVerilator.pm;
-  t/1716-vial-backend-portable-sv-cap-order.t;
   perl/FSM/VIAL/Backend/VHDLPortableGHDL.pm;
-  t/1717-vial-backend-portable-vhdl-cap-order.t;
   perl/FSM/VIAL/Backend/VHDLOSVVM2026_05.pm;
-  t/1718-vial-backend-osvvm-provider-admission-order.t;
   perl/FSM/VIAL/Backend/SVUVMAccellera2020_3_1.pm;
-  t/1719-vial-backend-native-uvm-cap-order.t;
-  perl/FSM/VIAL/Tool.pm;
-  t/1720-vial-runtime-structural-artifact-preflight.t;
-  perl/FSM/VIAL/Backend/VerilatorLifecycle.pm;
-  t/1721-vial-runtime-trace-artifact-preflight.t;
-  t/1722-vial-runtime-result-artifact-preflight.t;
-  t/1723-vial-runtime-final-artifact-graph.t; perl/FSM/VIAL/ArchitectureScaleMeasurement.pm; t/1748-vial-common-worker-artifact-file-admission.t;
+  perl/FSM/VIAL/Tool.pm; perl/FSM/VIAL/Backend/VerilatorLifecycle.pm;
+  perl/FSM/VIAL/ArchitectureScaleMeasurement.pm;
+  t/1685-vial-architecture-scale-cap-policy.t; t/1763-vial-architecture-scale-cap-consistency.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
-  docs/book/src/16d-hial-vial-verification-architecture.md
+  docs/book/src/16d-hial-vial-verification-architecture.md;
+  docs/book/src/16df-vial-architecture-scale-cap-closeout.md
 reverify: >-
   prove -Iperl t/1685-vial-architecture-scale-cap-policy.t
   t/1602-vial-architecture-scale-bridge-fanout.t
   t/160{3,6,7}-vial-architecture-scale-execution-*.t t/161{6..8}-*.t
   t/161{4,5}-vial-architecture-scale-execution-random-*.t
+  t/161{1,2}-vial-architecture-scale-execution-plan-*.t
   t/1619-*.t t/162{0..2}-*.t t/1626-*.t
   t/16{86..93}-*.t t/16{94..99}-*.t t/17{00..23}-*.t
   t/162{3..5}-*.t t/163{0..4}-vial-architecture-scale-checking-*.t
@@ -141,11 +94,11 @@ native UVM stays emission-only. Eligibility rejects excess before tools; the
 shared lifecycle bounds trace and final artifacts.
 
 `FSM::VIAL::ArchitectureScaleCapConsistency` rebuilds policy without caller
-evidence. Fifteen groups verify all dimensions: runtime, backend, models,
+evidence. Sixteen groups verify all dimensions: runtime, backend, models,
 faults, randomness, scoreboards, coverage, bridge-profile cardinality,
 serialized bridge manifests, normalized bridge collections, execution
-profiles, operation cardinality, fiber cardinality, route collections, and
-execution random attempts. Layered joins stay exact: scoreboards use
+profiles, operation cardinality, fiber cardinality, route collections,
+execution random attempts, and serialized plans. Layered joins stay exact: scoreboards use
 t1631/t1690/t1712, coverage t1632/t1691/t1713, and bridge profile t1602;
 compact preflight is not boundary evidence. T1763 rebuilds exact unions and
 rejects omitted/foreign paths.
@@ -174,6 +127,10 @@ identity, no-tool, and same-volume cleanup proof; t1615 the 1,000,001-attempt
 public exhaustion; and t1710 independent projection-before-materialization
 order. T1613's lower qualification remains regression evidence but is
 superseded for this closeout join by t1614.
+Serialized-plan evidence assigns t1611 the exact 16,777,216-byte boundary,
+identity, no-tool, and cleanup proof; t1612 the first complete excess and public
+diagnostic; and t1634 independent pre-materialization order, replay identity,
+and cleanup. T1609/t1610 remain superseded lower regressions.
 Other groups and calibration remain pending/blocked.
 
 The common controller admits bounded worker files before counts/digests; cap+1

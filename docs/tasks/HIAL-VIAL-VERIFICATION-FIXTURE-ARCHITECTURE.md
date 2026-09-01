@@ -933,6 +933,16 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
   Execution Random Attempts Claim Disposition Finding: `The user-facing random-attempt explanation produced three actionable candidates: the exact 1,000,000-attempt boundary, its 1,000,001-attempt adjacent excess, and the lower 262,144-attempt qualification that is deliberately superseded for closeout. Each is now a derived-gate disposition with non-aliased contract/generator/random-authority/workload/builder re-derivation, all three focused random-attempt oracles as falsifiers, and the exact policy plus sealed consistency authority as durability watchers. Re-derive: regenerate the producer-derived inventory and join every candidate through the required-complete verification_architecture group. Falsify: removing a disposition, producer, oracle, watcher, or current candidate identity fails closed. Durability: the disposition registry, generated inventory, this task, and work-unit history retain the result at 1,725/1,725 disposed candidates, 953 derived gates, and zero gaps/open owners.`
 
+  Execution Serialized Plan Audit Finding: `The execution_serialized_plan candidate inventory is incomplete. T1612 owns the first complete valid plan excess and public diagnostic, while t1634 independently pins plan rejection before random-decision, ExecutionIR, or report materialization and supplies lower-route replay/cleanup evidence; the policy omits t1611, the exact accepted 16,777,216-byte plan, content-derived identity, and closed evaluation witness. T1609's one-MiB gate and t1610's four-MiB qualification are useful lower-scale regressions but are strictly superseded for closeout by t1611's structurally equivalent exact-cap proof. History shows 951720257 introduced t1612 alone and 5b3860fc0 appended t1634's distinct seam defense without restoring the accepted boundary. The complete five-file policy/candidate/consistency baseline is green at Files=5/Tests=96 in 172 wallclock seconds under the repository RAM guard, proving evidence-inventory debt rather than a runtime regression. The intentional RED exposes one exact policy mismatch, 21 pending status/evidence/rationale assertions, and two inactive omission/foreign-evidence controls. This active .17.4.8 slice owns repairing the exact three-witness policy inventory, adding explicit no-tool and exact-boundary same-volume success/failure cleanup proof, and only then binding independently classified dimensions. Re-derive: inspect t1609-t1612, t1634, exact policy history, and run t1611/t1612/t1634 plus t1685/t1763 under the RAM guard. Falsify: omitting t1611 loses exact accepted boundary, identity, and cleanup; omitting t1612 loses first complete excess and the public diagnostic; omitting t1634 loses independent pre-materialization order, replay-route, and cleanup evidence; adding t1609/t1610 changes no seven-dimension projection. Durability: this task entry owns the defect and RED before authority changes; the completed slice must synchronize policy, consistency authority, tests, book, Knowledge Map, and work-unit history.`
+
+  Execution Serialized Plan Join: `The repaired policy now cites the exact t1611/t1612/t1634 witness set, and the caller-sealed consistency authority promotes execution_serialized_plan across all seven dimensions. T1611 owns exact 16,777,216-byte canonical admission, content-derived plan and evaluation identities, absent backend/tool selectors, and same-volume success/failure cleanup. T1612 owns the first complete valid excess, public plan-root diagnostic, absent selectors, and atomic no-ExecutionIR/no-plan rejection. T1634 independently pins the same plan authority before random-decision, ExecutionIR, plan, or report materialization while preserving its accepted replay route and cleanup. T1609/t1610 remain useful one-/four-MiB regressions but add no closeout dimension beyond t1611. T1763 reconstructs every projection and the exact three-path union, checks each path, and rejects omitted or foreign evidence. The completed default guarded join passes Files=5/Tests=97 in 170 wallclock seconds; independent exact replay qualification passes Files=3/Tests=88 in 372 seconds; and the lower-rung disposition witnesses pass Files=2/Tests=8 in 18 seconds. Re-derive: run t1611/t1612/t1634 plus t1763/t1685 under the repository RAM guard, setting FSMGEN_VIAL_SCALE_EXACT=1 for the replay qualification. Falsify: exact boundary, first complete excess, diagnostic, projection/materialization order, no-tool, cleanup, identity, union, omission, foreign-evidence, and caller-mutation controls fail closed. Durability: this task, repaired policy, consistency source/test, three primary and two superseded witnesses, book, Knowledge Map, decision 0093, and work-unit commit retain the result. No cap, boundary, level, accepted identity, route outcome, product behavior, publication, support, budget, or capacity claim changes.`
+
+  Execution Serialized Plan Claim Disposition Finding: `The user-facing serialized-plan explanation produced two actionable candidates: the exact 16,777,216-byte canonical boundary and the one-/four-MiB lower ladders deliberately superseded for closeout. Each is now a derived-gate disposition with non-aliased contract/generator/workload/builder re-derivation, the boundary/excess/materialization and lower-rung witnesses as falsifiers, and the repaired policy plus sealed consistency authority as durability watchers. Re-derive: regenerate the producer-derived inventory and join every candidate through the required-complete verification_architecture group. Falsify: removing a disposition, producer, oracle, watcher, or current candidate identity fails closed. Durability: the disposition registry, generated inventory, this task, and work-unit history retain the result at 1,727/1,727 disposed candidates, 955 derived gates, and zero gaps/open owners.`
+
+  Execution Serialized Plan Containment Finding: `The synchronized Knowledge Card initially remained legal by only 22 lines/165 bytes under its inherited transition allowance, too little continuity margin for the remaining group joins. Its redundant one-test-per-line evidence copy is now replaced by canonical policy, consistency, parser, semantic, bridge, execution, backend, runtime, task, and book authorities while the executable ranged reverify inventory retains the exact test routes. The aggregate is now 46,870 lines/3,461,231 bytes, restoring 72 lines/3,654 bytes of transition headroom without raising an allowance or dropping a fact, question, route, or runnable check. Re-derive: aggregate docs/knowledge Markdown and expand the reverify patterns. Falsify: Knowledge Map, relative-path, history, and live-document checks reject lost answers, stale generation, bad canonical paths, or ceiling drift. Durability: this task, compacted card, generated shards, containment manifest, and work-unit history retain the resolution.`
+
+  Frontier: `Sixteen groups are sealed through execution_serialized_plan. Continue with semantic_parser_admission; calibration remains blocked until every group is independently verified.`
+
   Containment Resolution: `The cap-policy card's long one-path-per-line reverify list is now a shorter equivalent set of numeric brace ranges plus exact outliers; every expansion resolves to an existing tracked test. With checking-randomness evidence added, the card aggregate falls from 46,939 lines/3,464,850 bytes to 46,903 lines/3,462,766 bytes, restoring 39 lines/2,119 bytes below the inherited transition allowance without changing it. Re-derive: expand every compacted pattern and aggregate docs/knowledge Markdown with wc. Falsify: missing paths fail the explicit expansion census, and Knowledge Map/live-document checks reject freshness, answer, transition, or ceiling drift. Durability: this task, the compacted card, generated shard, containment manifest, and work-unit commit retain the resolution.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
@@ -3210,4 +3220,39 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   registered doctrine are required green immediately before commit with no cap,
   boundary, level, accepted identity, route outcome, product behavior,
   publication, support, budget, or capacity claim change. Full CI and push
+  remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.8` execution-serialized-plan evidence join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `execution_serialized_plan` remains
+  pending, and its two-path candidate list omits t1611, the exact accepted
+  16,777,216-byte plan, identity, and evaluation witness. T1609/t1610 are
+  superseded lower rungs; t1612 owns the first complete excess; t1634 owns the
+  independent pre-materialization seam. Exact history traces t1612 to
+  `951720257` and the later t1634 addition to `5b3860fc0`; re-derive that locus
+  with `git log -S'execution_serialized_plan' --
+  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm`. The guarded complete baseline
+  is green at Files=5/Tests=96 in 172 wallclock seconds, proving evidence-
+  inventory debt rather than a runtime regression.
+- [x] **ADDRESSED (verified)** — repaired the policy to the exact t1611/t1612/
+  t1634 witness set; add explicit absent backend/tool selectors and
+  exact-boundary same-volume success/failure cleanup; classify only directly
+  proved boundary, adjacent-excess, diagnostic, atomicity, no-tool, cleanup,
+  and accepted-identity dimensions; and make t1763 reconstruct exact
+  projections, union, path existence, omission, and foreign-evidence controls.
+  The intentional RED was recorded before promoting the authority modules.
+- [x] **NO REGRESSION** — the default guarded join passes Files=5/Tests=97 in
+  170 seconds, exact replay qualification passes Files=3/Tests=88 in 372
+  seconds, and the two lower-rung disposition witnesses pass Files=2/Tests=8
+  in 18 seconds; each prove run reports `All tests successful`. MdBook tests
+  all 59 chapters; its inspected render contains
+  94 files/20,616 KiB and was removed with its same-volume temporary root.
+  Knowledge Map reports 1,159 facts/6,231 questions/6,403 occurrences/138
+  shards; claims dispose 1,727/1,727 candidates through 955 gates with zero
+  gaps/open owners; knowledge cards remain within transition at 46,870
+  lines/3,461,231 bytes. Relative paths pass Files=1/Tests=2; memory, task,
+  containment, reference-authority, claim, and Knowledge Map checks pass.
+  Staged acceptance and all doctrines are the final commit gate. No cap,
+  boundary, level, accepted identity, route outcome, product behavior,
+  publication, support, budget, or capacity claim changes. Full CI and push
   remain deferred by policy.

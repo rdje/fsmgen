@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use bytes ();
+use Cwd qw(abs_path);
 use Digest::SHA qw(sha256_hex);
 use File::Spec;
 use FindBin;
@@ -13,9 +14,12 @@ use Test::More;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::VIAL::ArchitectureScaleExecutionGraph;
+use FSM::VIAL::ArchitectureScaleWorkload;
 
 my $class = 'FSM::VIAL::ArchitectureScaleExecutionGraph';
+my $foundation = 'FSM::VIAL::ArchitectureScaleWorkload';
 my $json = JSON::PP->new->canonical(1)->utf8(1);
+my $repo_root = abs_path(File::Spec->catdir($FindBin::Bin, '..'));
 my $reference_hial = slurp_raw(repo_path('ppif/ahb_lite_subordinate.ppif'));
 my $scenario_suffix =
     '_exact_sixteen_mib_execution_plan_limit_with_referenced_checked_ahb_resets_and_ready_out_coverpoint_signal';
@@ -79,6 +83,10 @@ subtest 'sixteen-MiB construction is canonical referenced source' => sub {
         'independent limit construction is byte-identical');
     is($first->{specification}{requested_counts}{serialized_plan_bytes},
         $expected{plan_bytes}, 'construction retains the exact sixteen-MiB request');
+    is($first->{specification}{backend_profile}, undef,
+        'limit construction selects no backend');
+    is($first->{specification}{tool_profile}, undef,
+        'limit construction selects no external tool');
     is($first->{workload_identity}, $expected{workload_identity},
         'limit construction identity is exact');
 
@@ -242,6 +250,46 @@ subtest 'sixteen-MiB evaluation freezes exact metrics and identities' => sub {
         'plan identity is exact');
     is_deeply($evaluation->{contract_discrepancies}, [],
         'limit construction has no selected contract discrepancy');
+};
+
+subtest 'sixteen-MiB staging is same-volume and residue-free' => sub {
+    my $construction = construction();
+    my $stage_abs = File::Spec->catdir(
+        $repo_root, split m{/}, $construction->{staging_identity},
+    );
+    ok(!-e $stage_abs && !-l $stage_abs,
+        'serialized-plan staging root begins absent');
+
+    my $success = $foundation->with_staging({
+        repository_root => $repo_root,
+        construction => $construction,
+        consumer => sub {
+            my ($context) = @_;
+            is($context->{staging_identity}, $construction->{staging_identity},
+                'serialized-plan consumer receives the exact staging identity');
+            ok(!(grep { !-f $_->{absolute_path} } @{$context->{inputs}}),
+                'serialized-plan staging materializes both canonical inputs');
+        },
+    });
+    diag($json->encode($success->{diagnostics})) unless $success->{ok};
+    ok($success->{ok}, 'serialized-plan staging succeeds');
+    ok($success->{same_volume},
+        'serialized-plan staging proves same-volume identity');
+    ok($success->{removed},
+        'successful serialized-plan staging reports removal');
+    ok(!-e $stage_abs && !-l $stage_abs,
+        'successful serialized-plan staging leaves no residue');
+
+    my $failure = $foundation->with_staging({
+        repository_root => $repo_root,
+        construction => $construction,
+        consumer => sub { die "forced serialized-plan consumer failure\n" },
+    });
+    ok(!$failure->{ok}, 'serialized-plan consumer failure is reported');
+    is($failure->{diagnostics}[0]{code}, 'VIAL_SCALE_CONSUMER_ERROR',
+        'serialized-plan failure retains the stable staging diagnostic');
+    ok(!-e $stage_abs && !-l $stage_abs,
+        'failed serialized-plan staging leaves no residue');
 };
 
 subtest 'sixteen-MiB limit rejects mutation and unowned reference level' => sub {

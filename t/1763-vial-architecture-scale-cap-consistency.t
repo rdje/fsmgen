@@ -518,6 +518,29 @@ my %execution_random_rationale = (
     cleanup => 'accepted boundary staging success and consumer failure are same-volume and residue-free',
     accepted_identity => 'the exact-limit construction, generated plan, replayed plan, decision, and evaluation identities are deterministic',
 );
+my @execution_plan_evidence = qw(
+    t/1611-vial-architecture-scale-execution-plan-limit.t
+    t/1612-vial-architecture-scale-execution-plan-over-limit.t
+    t/1634-vial-architecture-scale-checking-random-replay.t
+);
+my %execution_plan_evidence = (
+    boundary => [$execution_plan_evidence[0]],
+    adjacent_excess => [$execution_plan_evidence[1]],
+    diagnostics => [@execution_plan_evidence[1, 2]],
+    atomicity => [@execution_plan_evidence[1, 2]],
+    no_tool => [@execution_plan_evidence[0, 1]],
+    cleanup => [@execution_plan_evidence[0, 2]],
+    accepted_identity => [@execution_plan_evidence[0, 2]],
+);
+my %execution_plan_rationale = (
+    boundary => 'the exact 16777216-byte canonical plan admits through the public binder',
+    adjacent_excess => 'the first complete valid plan above 16777216 bytes rejects at preflight',
+    diagnostics => 'public and independent seam rejections retain the stable plan-root limit diagnostic',
+    atomicity => 'known plan excess precedes random decisions, ExecutionIR, plan, replay, report, and metrics publication',
+    no_tool => 'the exact boundary and first complete excess carry no backend or external-tool selector',
+    cleanup => 'exact-boundary and replay-gate staging remove same-volume success and consumer-failure residue',
+    accepted_identity => 'the exact-limit plan plus accepted replay-gate workload, evaluation, rerun, and replay identities are deterministic',
+);
 my %verified_evidence = (
     backend_artifact_graph => \%backend_evidence,
     bridge_normalized_collections => \%bridge_normalized_evidence,
@@ -530,6 +553,7 @@ my %verified_evidence = (
     checking_scoreboards => \%checking_scoreboard_evidence,
     execution_fiber_cardinality => \%execution_fiber_evidence,
     execution_operation_cardinality => \%execution_operation_evidence,
+    execution_serialized_plan => \%execution_plan_evidence,
     execution_profile_selection => \%execution_profile_evidence,
     execution_random_attempts => \%execution_random_evidence,
     execution_route_collections => \%execution_route_evidence,
@@ -547,6 +571,7 @@ my %verified_rationale = (
     checking_scoreboards => \%checking_scoreboard_rationale,
     execution_fiber_cardinality => \%execution_fiber_rationale,
     execution_operation_cardinality => \%execution_operation_rationale,
+    execution_serialized_plan => \%execution_plan_rationale,
     execution_profile_selection => \%execution_profile_rationale,
     execution_random_attempts => \%execution_random_rationale,
     execution_route_collections => \%execution_route_rationale,
@@ -814,6 +839,18 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
     is_deeply(
         [grep { !-f $_ } sort keys %execution_random_join], [],
         'every sealed execution-random evidence path exists',
+    );
+
+    my %execution_plan_join = map { $_ => 1 }
+        map { @{$execution_plan_evidence{$_}} } @dimensions;
+    is_deeply(
+        [sort keys %execution_plan_join],
+        [sort @execution_plan_evidence],
+        'execution-plan join covers its exact boundary, excess, and materialization-seam witnesses',
+    );
+    is_deeply(
+        [grep { !-f $_ } sort keys %execution_plan_join], [],
+        'every sealed execution-plan evidence path exists',
     );
 
     is($report->{calibration}{evidence_role},
@@ -1092,6 +1129,21 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
     like(dies(sub { $assert->($foreign_execution_random) }),
         qr/execution_random_attempts\/accepted_identity' contradicts the sealed evidence authority/,
         'callers cannot add foreign execution-random evidence');
+
+    my $omitted_execution_plan = $class->build;
+    pop @{$omitted_execution_plan->{groups}{execution_serialized_plan}
+        {dimensions}{boundary}{evidence}};
+    like(dies(sub { $assert->($omitted_execution_plan) }),
+        qr/execution_serialized_plan\/boundary' verified evidence must be one non-empty array/,
+        'callers cannot empty sealed execution-plan boundary evidence');
+
+    my $foreign_execution_plan = $class->build;
+    push @{$foreign_execution_plan->{groups}{execution_serialized_plan}
+        {dimensions}{accepted_identity}{evidence}},
+        't/foreign-execution-plan-evidence.t';
+    like(dies(sub { $assert->($foreign_execution_plan) }),
+        qr/execution_serialized_plan\/accepted_identity' contradicts the sealed evidence authority/,
+        'callers cannot add foreign execution-plan evidence');
 
     my $missing = $class->build;
     delete $missing->{groups}{$first_group}{dimensions}{cleanup};
