@@ -330,7 +330,7 @@ sub _measure($raw) {
     my $cleanup_finished = clock_gettime(CLOCK_MONOTONIC);
     my $cleanup_ok = !defined $cleanup_error;
     my $cleanup_residue = $cleanup_ok
-        ? [] : _cleanup_residue($stage_abs, $stage_rel);
+        ? [] : _cleanup_residue($stage_abs, $stage_rel, $root_device);
     my $cleanup_oracle = {
         stage => 'cleanup',
         oracle_id => 'owned_stage_absent',
@@ -2239,28 +2239,14 @@ sub _recover_interrupted_stage($repo_root, $root_device, $stage_rel) {
 }
 
 sub _validate_recoverable_stage($path, $root_device) {
-    my @stat = lstat($path);
-    confess "interrupted measurement staging root is not a real directory\n"
-        unless @stat && !-l _ && -d _;
-    confess "interrupted measurement staging crossed repository volume\n"
-        unless $stat[0] == $root_device;
-    opendir my $dh, $path
-        or confess "cannot inventory interrupted measurement staging\n";
-    my @entries = sort grep { $_ ne '.' && $_ ne '..' } readdir $dh;
-    closedir $dh
-        or confess "cannot close interrupted measurement staging directory\n";
-    for my $name (@entries) {
-        my $entry = File::Spec->catfile($path, $name);
-        my @entry_stat = lstat($entry);
-        confess "interrupted measurement staging contains an unsafe entry\n"
-            unless @entry_stat && !-l _ && (-d _ || -f _);
-        confess "interrupted measurement staging crossed repository volume\n"
-            unless $entry_stat[0] == $root_device;
-        confess "interrupted measurement staging contains a hard-linked file\n"
-            if -f _ && $entry_stat[3] != 1;
-        _validate_recoverable_stage($entry, $root_device) if -d _;
-    }
-    return 1;
+    my $ok = eval { _tree_files($path, $root_device); 1 };
+    return 1 if $ok;
+    my $error = "$@";
+    confess "interrupted measurement staging contains an unsafe entry\n"
+        if $error =~ /contains a symlink or special file/;
+    confess "interrupted measurement staging contains a hard-linked file\n"
+        if $error =~ /contains a hard-linked file/;
+    die $error;
 }
 
 sub _prune_recovered_stage_parents($repo_root, $path) {
@@ -2324,10 +2310,10 @@ sub _remove_owned_stage($stage_abs, $stage_rel, $created) {
     return undef;
 }
 
-sub _cleanup_residue($stage_abs, $stage_rel) {
+sub _cleanup_residue($stage_abs, $stage_rel, $repository_device) {
     return [] unless -e $stage_abs || -l $stage_abs;
     return [$stage_rel] unless -d $stage_abs && !-l $stage_abs;
-    my @files = eval { _tree_files($stage_abs) };
+    my @files = eval { _tree_files($stage_abs, $repository_device) };
     return [$stage_rel] if $@ || !@files;
     return [map { "$stage_rel/$_" } @files];
 }
@@ -2449,6 +2435,8 @@ sub _walk_tree($root, $relative, $files, $census, $expected_stat) {
         confess "measurement staging contains a symlink or special file\n"
             unless @stat && !$is_symlink && ($is_directory || $is_file);
         _validate_census_entry_stat(\@stat, $census);
+        confess "measurement staging contains a hard-linked file\n"
+            if $is_file && $stat[3] != 1;
         my $depth = scalar split m{/}, $rel;
         confess "measurement staging exceeds the "
             . "$MAX_WORKER_OUTPUT_DEPTH-component census depth ceiling\n"

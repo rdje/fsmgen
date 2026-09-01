@@ -6,6 +6,8 @@ answers:
   - "what limits apply to the common measurement controller output census?"
   - "does the worker timeout bound the controller output tree walk?"
   - "do per-stage and terminal VIAL artifact admission share one census?"
+  - "does interrupted VIAL stage recovery use the bounded output census?"
+  - "what binds VIAL cleanup residue to the repository device?"
   - "does the worker output census create a VIAL capacity claim?"
 date: 2026-09-01
 status: current
@@ -14,13 +16,16 @@ evidence: >-
   perl/FSM/VIAL/ArchitectureScaleMeasurement.pm;
   t/1749-vial-common-worker-output-census-admission.t;
   t/1748-vial-common-worker-artifact-file-admission.t;
+  t/1751-vial-common-interrupted-stage-census-admission.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16de-vial-osvvm-runtime-execution-plan.md;
-  doctrine/claim_verification/claims.jsonl
+  doctrine/claim_verification/claims.jsonl;
+  doctrine/claim_verification/claims-0002.jsonl
 reverify: >-
   prove -Iperl -It/lib
   t/1748-vial-common-worker-artifact-file-admission.t
   t/1749-vial-common-worker-output-census-admission.t
+  t/1751-vial-common-interrupted-stage-census-admission.t
 ---
 
 The isolated stage worker is timed and its canonical result pipe is bounded,
@@ -38,6 +43,13 @@ the terminal whole-staging artifact check. It admits equality at 1,024 files,
 1,024 directories, 64 relative-path components, and 262,144 aggregate bytes
 across every visited file and directory relative path. Each first excess fails
 during traversal. Only the bounded file vector is sorted and returned.
+
+Interrupted-stage recovery also reuses that implementation after acquiring the
+exact stage lock and before starting a fresh worker. The exact file boundary is
+recoverable, the first excess rejects before recursive reclamation, and the
+existing symlink, special-file, and hard-link diagnostics stay authoritative.
+Cleanup-residue reporting passes the already validated repository device into
+the same census rather than trusting the remaining path as a new authority.
 
 These are private controller-containment limits. They do not enlarge or reduce
 the existing runtime-artifact byte ceiling and do not establish architecture

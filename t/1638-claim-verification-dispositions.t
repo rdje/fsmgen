@@ -92,7 +92,7 @@ subtest 'disposed candidates cannot retain a migration owner' => sub {
 
 subtest 'claim-record source identity must match the candidate path' => sub {
     my $repo = make_fixture();
-    mutate_jsonl($repo, 'doctrine/claim_verification/claims.jsonl', sub {
+    mutate_jsonl($repo, 'doctrine/claim_verification/claims-0002.jsonl', sub {
         $_[0][1]{source_path} = 'docs/book/src/other.md';
     });
     fails_like($repo, qr/claim source_path does not match the candidate path/,
@@ -142,7 +142,27 @@ sub make_fixture {
         } @candidate_ids
     );
     write_jsonl(
+        $repo, 'doctrine/claim_verification/claim_registries.jsonl',
+        registry_set(),
+        {
+            ordinal => 1,
+            path => 'doctrine/claim_verification/claims.jsonl',
+            record_type => 'registry_shard',
+            schema_version => 1,
+        },
+        {
+            ordinal => 2,
+            path => 'doctrine/claim_verification/claims-0002.jsonl',
+            record_type => 'registry_shard',
+            schema_version => 1,
+        }
+    );
+    write_jsonl(
         $repo, 'doctrine/claim_verification/claims.jsonl',
+        registry(65_536, 4096, 256)
+    );
+    write_jsonl(
+        $repo, 'doctrine/claim_verification/claims-0002.jsonl',
         registry(65_536, 4096, 256),
         {
             claim_id => 'fixture-published-claim',
@@ -236,6 +256,18 @@ sub registry {
         max_record_bytes => $max_record_bytes,
         max_records => $max_records,
         record_type => 'registry',
+        schema_version => 1,
+    };
+}
+
+sub registry_set {
+    return {
+        max_bytes => 65_536,
+        max_record_bytes => 512,
+        max_shards => 64,
+        max_total_bytes => 4_194_304,
+        max_total_records => 8_192,
+        record_type => 'registry_set',
         schema_version => 1,
     };
 }

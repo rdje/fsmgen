@@ -324,6 +324,33 @@ The 64-MiB value is reused from the shipped runtime envelope; the census values
 are private containment limits for post-worker controller work. Neither adds a
 larger cap, scale qualification, performance budget, or support statement.
 
+The same census now owns interrupted-stage recovery before a fresh worker can
+start. Recovery holds the exact stage lock, then admits the orphan root and
+every entry under the caller-selected repository device, current owner,
+single-link file rule, and the same file/directory/depth/path-byte ceilings.
+The exact 1,024-file boundary remains recoverable; file 1,025 rejects before
+recursive reclamation. Existing symlink, special-file, and hard-link recovery
+diagnostics remain fail closed. If cleanup itself fails, residue reporting also
+retains the caller-selected repository device instead of deriving authority
+from whatever path remains.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-common-interrupted-stage-recovery-admission-v1 -->
+- Claim: The common architecture-scale measurement controller admits an interrupted staging tree through the same caller-device/current-owner bounded census before fresh worker execution: exactly 1,024 files remain recoverable, 1,025 reject before reclamation, unsafe symlink/special and hard-linked files retain their fail-closed diagnostics, and cleanup-residue census keeps the caller-sealed repository device. These are recovery safety bounds, not capacity or support claims.
+- Re-derive: Run `prove -Iperl -v t/1656-vial-architecture-scale-measurement-foundation.t t/1751-vial-common-interrupted-stage-census-admission.t`; inspect `_recover_interrupted_stage`, `_validate_recoverable_stage`, `_tree_files`, and `_cleanup_residue`, then run the guarded shared-controller consumer set.
+- Falsify: Construct 1,024/1,025-file orphan trees, replace the common census with a sentinel, drop the third device argument, and retain symlink/FIFO/hard-link controls. The exact boundary and normal recovery must pass; each excess, unsafe, bypass, or foreign-authority control rejects before fresh work and leaves exact cleanup evidence.
+- Durability: Retain the common controller, t1656/t1751, task `.17.4.7`, this chapter, the worker-census Knowledge Map card, second bounded claim shard, doctrine watcher, and work-unit Git chain.
+<!-- CLAIM-VERIFICATION:END vial-common-interrupted-stage-recovery-admission-v1 -->
+
+Run the focused recovery boundary without invoking an HDL tool:
+
+```console
+prove -Iperl -v t/1656-vial-architecture-scale-measurement-foundation.t \
+    t/1751-vial-common-interrupted-stage-census-admission.t
+```
+
+These bounds govern private pre-worker recovery and failure reporting. They do
+not promote recoverable tree size as product capacity or backend support.
+
 Each executable role uses one lifecycle execution per controller record. The
 reference role has one correctness-only validation. Gate has one validation
 and three independently measured records; qualification has one validation

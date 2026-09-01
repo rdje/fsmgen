@@ -7,9 +7,11 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
-  (`active`; runtime-stream cap hardening resumes after registry repair)
-- next_action: Query the Knowledge Map, then audit the next adjacent shared
-  runtime-lifecycle admission boundary after the bounded worker-output census.
-- in_flight_uncommitted: none after the task-scoped registry rollover commit.
+  (`active`; common-controller hardening continues)
+- next_action: Audit the adjacent destructive cleanup path after bounded census:
+  determine whether path replacement or post-census growth can make
+  `remove_tree` reclaim an unauthenticated or unbounded tree, then add the exact
+  `.17.4.7` RED before any repair.
+- in_flight_uncommitted: none after the interrupted-stage recovery census commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none.

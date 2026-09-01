@@ -1807,3 +1807,57 @@ The manifest binds the complete predecessor task file and its exact suffix from 
 - [x] **NO REGRESSION** — the final foundation, semantic/bridge, execution/checking, backend-emission, portable-SystemVerilog, portable-VHDL, OSVVM, balanced-portable, t1748, and t1749 collection reports `All tests successful` at `Files=10, Tests=60` in 62 wallclock seconds; focused t1748/t1749 separately pass at `Files=2, Tests=8`. All 58 mdBook chapters test; the inspected ignored 93-file/20,392-KiB repository-local render contains the exact census claim and runnable command and is removed. Knowledge Map parity is `1,157` facts / `6,193` questions / `6,365` occurrences / `137` shards. Claim verification retains 25 records (24 published/one fixture) and closes all `1,704` candidates through 172 claim-record, 939 gate, and 593 reviewed dispositions with zero gaps; the registry cap is unchanged. Maintained-book authority is exact at 0 files/+13 lines/+1,179 bytes; the new bounded fact card uses a measured transition allowance; all 22 live-document surfaces pass with zero ceiling increases. The rationale ledger is unchanged because the task, fact card, user chapter, and Git own all new rationale directly. Staged task acceptance and all 12 registered doctrines pass.
 
 **Tracked adjacent foundational finding:** the slice-start `wc -c doctrine/claim_verification/claims.jsonl` reported 64,872 bytes against the registry's unchanged 65,536-byte self-cap, leaving 664 bytes; extending the already-owned common-controller record brings the canonical file to 65,381 bytes and leaves only 155, so an ordinary independent three-leg claim cannot fit. No cap was raised. Once this slice is clean, the claim-verification task-tree must own a bounded partition/rollover repair before another independent quantitative claim is published. Re-derive with the tracked registry checker plus `wc`; falsify by canonically encoding the smallest complete available-leg record under the current schema and comparing its bytes with the residue; durability is this task evidence, the registered claim/live-document gates, and the forthcoming separately committed repair leaf.
+
+**Tracked adjacent finding after the clean registry repair:** `_recover_interrupted_stage` still calls a separate `_validate_recoverable_stage` walker that recursively materializes and sorts every directory without the common 1,024-file, 1,024-directory, 64-component, 262,144-relative-path-byte, or current-owner admission. This runs after the stage lock but before any fresh worker or timeout. `_cleanup_residue` also invokes `_tree_files` without the caller-sealed repository device. The next `.17.4.7` sub-slice owns reuse of the common bounded census for interrupted recovery plus exact device-bound residue reporting; destructive cleanup mechanics remain a distinct follow-on audit unless the RED requires them.
+
+## Acceptance Checklist (enforced) — `.17.4.7` interrupted-stage recovery census admission
+
+- [x] **Integration defect owned before repair** — the new shard-2 recovery
+  claim proved that `scripts/check_claim_verification_dispositions.pl` still
+  reads only `claims.jsonl`, although the production claim verifier and
+  `claim_registries.jsonl` admit the bounded registry set. Repair the
+  disposition consumer and freeze a claim that exists only in shard 2 before
+  this slice can pass doctrine enforcement. Before repair, the production join
+  rejected each of the three new dispositions because
+  `vial-common-interrupted-stage-recovery-admission-v1` was absent from its
+  single-file view. The repaired t1638 fixture stores its only claim in
+  `claims-0002.jsonl`; all ten positive and mutation subtests pass, and the
+  production join now closes 1,707/1,707 candidates across both shards.
+- [x] **ROOT CAUSE (WHY + WHERE)** — t1751's executable RED accepted the exact
+  1,024-file interrupted tree but also accepted file 1,025, never reached the
+  substituted common-census sentinel, and proved `_cleanup_residue` accepted
+  only two arguments rather than the caller-sealed device; three of five
+  top-level tests failed. The first boundary failure was reported at t/1751-vial-common-interrupted-stage-census-admission.t line 59,
+  while the missing device argument reported line 88. `_validate_recoverable_stage`
+  recursively sorted an
+  unbounded private walk before fresh work, while cleanup-residue census called
+  `_tree_files` without `root_device`. The same slice's new claim then exposed
+  the downstream disposition consumer's stale single-shard default. The
+  invalid exploratory broad invocation with `--host-max-pct 100` was discarded
+  because the product correctly rejects that threshold; the valid default-88%
+  guarded rerun is the regression evidence below.
+- [x] **ADDRESSED (verified)** — `_validate_recoverable_stage` now delegates to
+  the common `_tree_files($path, $root_device)` admission and preserves the
+  interrupted-stage symlink/special and hard-link diagnostics; `_tree_files`
+  itself enforces the previously private single-link rule for every consumer.
+  `_cleanup_residue` requires and receives the sealed repository device.
+  Focused t1751+t1749 pass at `Files=2, Tests=9`; host-authorized t1656 passes at
+  `Files=1, Tests=6`, preserving recovery, lock, symlink, FIFO, hard-link, and
+  cleanup behavior. The disposition checker now validates the finite registry
+  set, shard naming/census, per-shard bounds, aggregate bounds, and cross-shard
+  claim-ID uniqueness while retaining explicit `--claims` fixture operation;
+  t1638 passes all ten subtests and the production checker reports 175 claim
+  records, 939 derived gates, 593 reviewed items, zero gaps, and zero open.
+- [x] **NO REGRESSION** — the valid default-88% guarded common-controller set
+  passes `Files=11, Tests=65` in 64 wallclock seconds across t1656, t1657,
+  t1659, t1661, t1667, t1674, t1679, t1681, t1748, t1749, and t1751. Claim
+  verification reports two shards / 26 records / 25 published / one fixture;
+  inventory independently agrees at 11,390 numeric lines and 1,707 candidates,
+  all disposed. All 58 mdBook chapters test; the inspected 93-file/20,408-KiB
+  local render contains the exact claim and command and is removed. Knowledge
+  Map parity is 1,158 facts / 6,200 questions / 6,372 answer occurrences / 137
+  shards. The maintained-book authority is exact at 58 files / 54,324 lines /
+  2,933,475 bytes; the knowledge-card transition retains one ratchet step; all
+  22 live-document surfaces pass with zero ceiling increases. Staged task
+  acceptance and all registered doctrines are required green immediately before
+  commit.

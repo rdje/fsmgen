@@ -9,18 +9,21 @@ use File::Spec;
 use Getopt::Long qw(GetOptions);
 use JSON::PP;
 
-my ($root_arg, $inventory_arg, $claims_arg, $dispositions_arg, $groups_arg,
-    $report, $help);
+my ($root_arg, $inventory_arg, $claims_arg, $claim_registry_set_arg,
+    $dispositions_arg, $groups_arg, $report, $help);
 GetOptions(
-    'root=s'         => \$root_arg,
-    'inventory=s'    => \$inventory_arg,
-    'claims=s'       => \$claims_arg,
-    'dispositions=s' => \$dispositions_arg,
-    'groups=s'       => \$groups_arg,
-    'report'         => \$report,
-    'help|h'         => \$help,
+    'root=s'               => \$root_arg,
+    'inventory=s'          => \$inventory_arg,
+    'claims=s'             => \$claims_arg,
+    'claim-registry-set=s' => \$claim_registry_set_arg,
+    'dispositions=s'       => \$dispositions_arg,
+    'groups=s'             => \$groups_arg,
+    'report'               => \$report,
+    'help|h'               => \$help,
 ) or usage(2);
 usage(0) if $help;
+die "claim-dispositions: --claims and --claim-registry-set are mutually exclusive\n"
+    if defined($claims_arg) && defined($claim_registry_set_arg);
 
 my $script = abs_path(__FILE__);
 my $root = abs_path($root_arg // File::Spec->catdir(dirname($script), '..'));
@@ -28,7 +31,8 @@ die "claim-dispositions: invalid repository root\n"
     if !defined($root) || !-d $root;
 my $inventory = $inventory_arg
     // 'doctrine/claim_verification/inventory.jsonl';
-my $claims = $claims_arg // 'doctrine/claim_verification/claims.jsonl';
+my $claim_registry_set = $claim_registry_set_arg
+    // 'doctrine/claim_verification/claim_registries.jsonl';
 my $dispositions = $dispositions_arg
     // 'doctrine/claim_verification/dispositions.jsonl';
 my $groups = $groups_arg
@@ -37,9 +41,16 @@ my $groups = $groups_arg
 my @problems;
 my $json = JSON::PP->new->canonical(1)->utf8(1);
 my %tracked = tracked_paths();
-for my $registry_path ($inventory, $claims, $dispositions, $groups) {
+for my $registry_path ($inventory, $dispositions, $groups) {
     problem("registry path is not tracked: $registry_path")
         if !$tracked{$registry_path};
+}
+my @claim_paths = defined($claims_arg)
+    ? ($claims_arg)
+    : read_claim_registry_set($claim_registry_set);
+for my $claim_path (@claim_paths) {
+    problem("registry path is not tracked: $claim_path")
+        if !$tracked{$claim_path};
 }
 
 my ($inventory_records, $inventory_lines) = read_jsonl($inventory, 'inventory');
@@ -67,23 +78,35 @@ for my $index (1 .. $#{$inventory_records}) {
 }
 problem("$inventory contains no published candidates") if !keys %candidates;
 
-my ($claim_records, $claim_lines) = read_jsonl($claims, 'claim registry');
-validate_registry(
-    $claim_records, $claim_lines, $claims,
-    {bytes => 65_536, records => 256, record_bytes => 4096}
-);
 my %claim_by_id;
-for my $index (1 .. $#{$claim_records}) {
-    my $record = $claim_records->[$index];
-    next if ref($record) ne 'HASH' || text($record->{record_type}) ne 'claim';
-    my $id = text($record->{claim_id});
-    next if $id eq '';
-    problem("$claims duplicates claim_id $id") if $claim_by_id{$id};
-    $claim_by_id{$id} = {
-        classification => text($record->{classification}),
-        source_path => text($record->{source_path}),
-    };
+my ($claim_set_bytes, $claim_set_records) = (0, 0);
+for my $claim_path (@claim_paths) {
+    my ($claim_records, $claim_lines) = read_jsonl(
+        $claim_path, 'claim registry'
+    );
+    validate_registry(
+        $claim_records, $claim_lines, $claim_path,
+        {bytes => 65_536, records => 256, record_bytes => 4096}
+    );
+    $claim_set_bytes += length(join("\n", @{$claim_lines}) . "\n");
+    $claim_set_records += @{$claim_records} ? @{$claim_records} - 1 : 0;
+    for my $index (1 .. $#{$claim_records}) {
+        my $record = $claim_records->[$index];
+        next if ref($record) ne 'HASH'
+            || text($record->{record_type}) ne 'claim';
+        my $id = text($record->{claim_id});
+        next if $id eq '';
+        problem("claim registry set duplicates claim_id $id")
+            if $claim_by_id{$id};
+        $claim_by_id{$id} = {
+            classification => text($record->{classification}),
+            source_path => text($record->{source_path}),
+        };
+    }
 }
+validate_claim_registry_set_aggregate(
+    $claim_registry_set, $claim_set_bytes, $claim_set_records
+) if !defined($claims_arg);
 
 my ($group_records, $group_lines) = read_jsonl($groups, 'group registry');
 validate_registry(
@@ -258,13 +281,112 @@ sub usage {
     print <<'USAGE';
 Usage:
   scripts/check_claim_verification_dispositions.pl [--root DIR]
-      [--inventory FILE] [--claims FILE] [--dispositions FILE]
-      [--groups FILE] [--report]
+      [--inventory FILE]
+      [--claims FILE | --claim-registry-set FILE]
+      [--dispositions FILE] [--groups FILE] [--report]
 
 Validates the bounded join from current inventory candidate IDs to claim
 records, three-leg derived gates, reviewed-incidental reasons, or owned gaps.
 USAGE
     exit $status;
+}
+
+sub read_claim_registry_set {
+    my ($relative) = @_;
+    problem("claim registry set is not tracked: $relative")
+        if !$tracked{$relative};
+    my ($records, $lines) = read_jsonl($relative, 'claim registry set');
+    if (!@{$records} || ref($records->[0]) ne 'HASH') {
+        problem("$relative must begin with registry-set metadata");
+        return;
+    }
+
+    my $meta = $records->[0];
+    exact_keys(
+        $meta,
+        [qw(max_bytes max_record_bytes max_shards max_total_bytes
+            max_total_records record_type schema_version)],
+        "$relative line 1"
+    );
+    problem("$relative line 1 record_type must be registry_set")
+        if text($meta->{record_type}) ne 'registry_set';
+    validate_integer($meta->{schema_version}, 1, 1,
+        "$relative line 1 schema_version");
+    validate_integer($meta->{max_bytes}, 1, 65_536,
+        "$relative line 1 max_bytes");
+    validate_integer($meta->{max_record_bytes}, 1, 512,
+        "$relative line 1 max_record_bytes");
+    validate_integer($meta->{max_shards}, 1, 64,
+        "$relative line 1 max_shards");
+    validate_integer($meta->{max_total_bytes}, 1, 4_194_304,
+        "$relative line 1 max_total_bytes");
+    validate_integer($meta->{max_total_records}, 1, 8_192,
+        "$relative line 1 max_total_records");
+    my $bytes = length(join("\n", @{$lines}) . "\n");
+    problem("$relative exceeds declared max_bytes")
+        if integer($meta->{max_bytes}) && $bytes > $meta->{max_bytes};
+    if (integer($meta->{max_record_bytes})) {
+        for my $index (0 .. $#{$lines}) {
+            problem("$relative line " . ($index + 1)
+                . " exceeds declared max_record_bytes")
+                if length($lines->[$index]) > $meta->{max_record_bytes};
+        }
+    }
+
+    my $shard_count = @{$records} - 1;
+    problem("$relative must enumerate at least one registry shard")
+        if $shard_count < 1;
+    problem("$relative exceeds declared max_shards")
+        if integer($meta->{max_shards})
+            && $shard_count > $meta->{max_shards};
+    my $directory = dirname($relative);
+    my $prefix = $directory eq '.' ? '' : "$directory/";
+    my (@paths, %seen);
+    for my $index (1 .. $#{$records}) {
+        my $entry = $records->[$index];
+        my $where = "$relative line " . ($index + 1);
+        next if ref($entry) ne 'HASH';
+        exact_keys(
+            $entry, [qw(ordinal path record_type schema_version)], $where
+        );
+        problem("$where record_type must be registry_shard")
+            if text($entry->{record_type}) ne 'registry_shard';
+        validate_integer($entry->{schema_version}, 1, 1,
+            "$where schema_version");
+        validate_integer($entry->{ordinal}, 1, 64, "$where ordinal");
+        problem("$where ordinal must equal $index")
+            if integer($entry->{ordinal}) && $entry->{ordinal} != $index;
+        my $expected = $index == 1
+            ? "${prefix}claims.jsonl"
+            : sprintf('%sclaims-%04d.jsonl', $prefix, $index);
+        my $path = text($entry->{path});
+        problem("$where ordinal $index path must be $expected")
+            if $path ne $expected;
+        my $valid = validate_tracked_path($path, "$where path");
+        next if !defined $valid;
+        problem("$where duplicates shard path $valid") if $seen{$valid}++;
+        push @paths, $valid;
+    }
+    my $quoted_prefix = quotemeta($prefix);
+    my @tracked_shards = sort grep {
+        /\A${quoted_prefix}claims(?:-[0-9]{4})?[.]jsonl\z/
+    } keys %tracked;
+    problem("$relative tracked shard census does not match manifest entries")
+        if join("\0", sort @paths) ne join("\0", @tracked_shards);
+    return @paths;
+}
+
+sub validate_claim_registry_set_aggregate {
+    my ($relative, $bytes, $records) = @_;
+    my ($set_records) = read_jsonl($relative, 'claim registry set');
+    return if !@{$set_records} || ref($set_records->[0]) ne 'HASH';
+    my $meta = $set_records->[0];
+    problem("$relative aggregate shard size exceeds declared max_total_bytes")
+        if integer($meta->{max_total_bytes})
+            && $bytes > $meta->{max_total_bytes};
+    problem("$relative aggregate claim count exceeds declared max_total_records")
+        if integer($meta->{max_total_records})
+            && $records > $meta->{max_total_records};
 }
 
 sub validate_claim_record {
