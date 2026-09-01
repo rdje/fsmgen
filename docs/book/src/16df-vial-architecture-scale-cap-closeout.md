@@ -41,6 +41,28 @@ Only after the second answer is complete can `.17.4.8` disposition the
 historical publication as reusable, superseded, or requiring a versioned
 recapture.
 
+## Machine-enforced closeout state
+
+`FSM::VIAL::ArchitectureScaleCapConsistency` is the separate closeout owner.
+It accepts no policy or evidence input: the exact class rebuilds the live cap
+policy internally and emits every selected group, its axes, declared
+authority, implementation leaf, diagnostic families, and candidate evidence.
+Each group must contain the same closed dimension set: boundary, adjacent
+excess, diagnostics, atomicity, no-tool behavior, cleanup, and accepted
+identity.
+
+The initial report marks every dimension `pending_independent_verification`.
+That state is deliberate. A policy citation is useful evidence to review, but
+its presence alone cannot prove which closeout dimensions it exercises. The
+report validator rejects caller arguments, subclass invocants, missing or
+unknown fields, caller-promoted dimensions, returned-data mutation, and an
+early calibration disposition.
+
+The calibration state remains `historical_measurement_only` and
+`blocked_pending_current_cap_verification`. Completing all dimension joins can
+only make it eligible for an explicit revalidation; it cannot automatically
+relabel historical measurement as current cap proof.
+
 ## Reverify the inventory
 
 The policy watcher re-derives declared values and includes its omission and
@@ -64,5 +86,21 @@ perl -Iperl -MFSM::VIAL::ArchitectureScaleCapPolicy=build_architecture_scale_cap
 ```
 
 The owning task-tree records the independent re-derivation, falsification, and
-durability legs. The next implementation slice adds the caller-sealed
-cross-family consistency layer; it does not alter product behavior.
+durability legs. The sealed foundation can be inspected without running a
+product route or external tool:
+
+```sh
+perl -Iperl -MFSM::VIAL::ArchitectureScaleCapConsistency -e '
+  my $class = "FSM::VIAL::ArchitectureScaleCapConsistency";
+  my $report = $class->build;
+  for my $group (sort keys %{$report->{groups}}) {
+    my %state = map {
+      $report->{groups}{$group}{dimensions}{$_}{status} => 1
+    } @{$report->{required_dimensions}};
+    print "$group: ", join(",", sort keys %state), "\n";
+  }
+'
+```
+
+Family-specific slices now promote dimensions only after independent evidence
+review. The foundation itself does not alter product behavior.

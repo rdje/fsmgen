@@ -879,6 +879,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `Clean 5583365cb closes the complete runtime-stream leaf after its guarded closure suite and source census. Decision 0093 assigns this final child the independent cross-family consistency, atomic-failure, cleanup, immutable-publication, and durable-closeout proof. Activation changes no product behavior, cap, publication, support statement, budget, or capacity claim. The first implementation slice must enumerate the live cap policy and every closed child evidence owner before selecting the smallest missing cross-family proof.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8: activate cross-family cap closeout`
   Inventory: `Clean activation 02768a427 enables the read-only first slice. The live policy exactly joins 50 catalog axes to 23 groups, 19 selected interactions, six non-axis envelopes, four backend profiles, and three runtime profiles; all 70 declared group-evidence references and every interaction/envelope evidence path exist. That establishes selection and declared-value alignment, not final closeout: runtime_stream_envelopes still cites only t1663/t1672/t1676 and t1685 has no runtime-group-specific assertion, so none of the completed t1720-t1749/t1751-t1762 evidence is independently joined. The 256-file immutable calibration store and its b66de5ce6 closure manifest remain internally addressable, but the publication explicitly denies cap_implementation and predates every .17.4 child. Re-derive: build the policy and independently census its catalog join/evidence paths. Falsify: t1685's missing-axis mutation and an existence check over every referenced path reject omissions. Durability: this task, the synchronized book/card frontier, and the work-unit commit retain the result. The next slice adds a caller-sealed cross-family closeout layer; it must consume current policy authority internally, distinguish measurement publication from cap proof, and bind each selected group to boundary/excess, diagnostics, atomicity/no-tool, cleanup, and accepted-identity evidence before any calibration disposition.`
+  Foundation: `Executable RED t1763 first fails only because ArchitectureScaleCapConsistency is absent. The exact-class implementation accepts no inputs, rebuilds the current policy internally, and emits all 23 selected groups and 50 axes with the same seven closed evidence dimensions. Every dimension begins pending with no promoted evidence; policy paths remain candidates. Exact schema, invocant, argument, group, axis, authority, candidate-evidence, dimension, defensive-copy, and mutation checks fail closed. The historical calibration authority remains measurement-only, cap_implementation remains a prohibited relabel, and disposition stays blocked until every sealed dimension is independently verified. Focused t1763+t1685 passes Files=2/Tests=84 without executing a product route or external tool. The next slice independently joins the completed runtime-stream leaf.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
   Status: `proposed`
@@ -2567,3 +2568,32 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   live-document surfaces pass with no ceiling increase. Staged acceptance and
   every registered doctrine are required green immediately before commit. No
   behavior changed, so full CI and push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.8` sealed consistency foundation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the current
+  `ArchitectureScaleCapPolicy` validates catalog membership, declared values,
+  selected authorities, and undifferentiated evidence paths, but it has no
+  machine field for boundary, adjacent excess, diagnostics, atomicity,
+  no-tool, cleanup, or accepted identity. Its runtime group consequently still
+  validates while citing only the pre-hardening materialization witnesses, and
+  no separate consistency module or focused test exists. Exact
+  `git log -S'runtime_stream_envelopes' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` traces that undifferentiated
+  selection to `951720257`.
+- [x] **ADDRESSED (verified)** — executable RED t1763 first fails only for the
+  absent module. The exact-class, no-input builder now derives the live policy
+  internally; emits every group, axis, implementation leaf, and candidate
+  path; assigns all seven dimensions an explicit pending record; defensively
+  copies results; and rejects caller arguments, subclasses, shape drift,
+  caller-promoted dimensions, mutation, or premature calibration disposition.
+  It executes no product route or tool.
+- [x] **NO REGRESSION** — focused t1763+t1685 reports `All tests successful`
+  at Files=2/Tests=84; all 59 mdBook chapters test; task integrity and
+  `knowledge-map: OK` pass; the regenerated claim inventory has no open
+  migration owner or untracked producer; and all 22 live-document surfaces
+  pass with zero ceiling increase after line-and-byte-neutral Knowledge Map
+  containment. Staged acceptance and all registered doctrines are required
+  green immediately before commit. No cap, level, accepted profile,
+  publication, support statement, budget, capacity claim, or product behavior
+  changes; full CI and push remain deferred by policy.

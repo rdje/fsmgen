@@ -187,23 +187,18 @@ preflights, with terminal defenses retained; identities and nonclaims do not
 change.
 
 Completed `.17.4.7` owns executable portable-SystemVerilog, portable-VHDL, and
-OSVVM runtime envelopes; native UVM remains emission-only. Active `.17.4.8`
-found policy/catalog alignment but no cross-family closeout proof; its next
-sealed layer joins failure, cleanup, identity, and publication evidence. The first portable-SystemVerilog slice applies the
-existing public graph validator to the exact plan-plus-emission artifact set
-before Runner eligibility. Known count, byte, or collision excess therefore
-starts no tool and publishes no partial graph; later terminal validations stay
-in place. After trace validation, the shared lifecycle checks a second exact
-lower bound: normalized trace bytes plus immutable emitted artifacts, excluding
-only the tool profile and backend manifest that publication replaces. Equality
-with the existing 67,108,864-byte cap passes; one excess byte rejects before
-trace-object writes or ResultProducer. After successful result production, a
-third bound adds the exact final replacement profile, compile/run transcripts,
-trace, result manifest, and immutable emission. Adjacent excess rejects before
-result-payload persistence or assembly; final backend-manifest and Tool graph
-checks remain later defenses. After the backend manifest is finalized, the
-lifecycle enforces exact completed-backend count and bytes before Runner return;
-the Tool then retains its complete plan-plus-backend terminal validation. This
-changes no cap or claim.
+OSVVM runtime envelopes; native UVM remains emission-only. Portable
+SystemVerilog validates plan plus emission before Runner eligibility, so known
+excess starts no tool or partial graph. The shared lifecycle then bounds trace
+plus immutable emission and the final profile/transcript/trace/result graph
+before writes or assembly. Exact boundaries pass, adjacent excess rejects, and
+completed-backend plus Tool terminal checks remain; no cap or claim changes.
+
+`FSM::VIAL::ArchitectureScaleCapConsistency` now rebuilds the policy without
+caller evidence and gives every selected group a closed boundary, excess,
+diagnostic, atomicity, no-tool, cleanup, and accepted-identity record. All
+records begin explicitly pending; policy citations remain candidates. A sealed
+barrier keeps calibration historical and blocks disposition until independent
+family slices verify every dimension.
 
 The common controller admits worker files before counts/digests: the cap passes and cap+1 rejects; safe metadata and modes pass, while unsafe paths or writable modes reject. No cap or support claim changes.
