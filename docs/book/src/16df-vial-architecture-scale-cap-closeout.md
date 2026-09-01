@@ -25,7 +25,8 @@ The checking-coverage, bridge-profile, serialized-bridge-manifest,
 normalized-bridge-collection, execution-profile-selection, and
 execution-operation-cardinality, execution-fiber-cardinality,
 execution-route-collection, execution-random-attempt, and
-execution-serialized-plan witnesses are now joined too. The same
+execution-serialized-plan witnesses are now joined too. Semantic-parser
+admission is now joined as well. The same
 classification remains pending for every other group.
 
 ## Why calibration publication is separate
@@ -61,7 +62,7 @@ checking-scoreboard, checking-coverage, bridge-profile-cardinality, serialized
 manifest, normalized-collection, execution-profile-selection, and
 execution-operation-cardinality, execution-fiber-cardinality,
 execution-route-collection, execution-random-attempt, and
-execution-serialized-plan groups are `verified`
+execution-serialized-plan and semantic-parser-admission groups are `verified`
 across all seven
 dimensions; all other groups remain `pending_independent_verification`.
 Runtime covers the selected materialization profiles plus t1720 through t1749
@@ -158,7 +159,14 @@ independently rejects before random-decision, ExecutionIR, plan, or report
 materialization and preserves replay-route identity and cleanup. The lower
 one-MiB t1609 and four-MiB t1610 ladders remain regressions but are superseded
 for this closeout join by t1611's exact-cap proof.
-T1763 reconstructs all sixteen sets of per-dimension projections,
+Parser admission uses the exact three-witness policy inventory. T1601 closes
+all semantic workload axes and levels, proves provider-free construction plus
+same-volume cleanup, and freezes accepted gate identities. T1687 admits 64
+direct imports and rejects 65 before recursive parsing. T1693 admits the
+1,048,576-byte per-source and 16,777,216-byte combined-source boundaries, then
+rejects each first byte excess before lexing. Both focused rejection witnesses
+retain stable diagnostics and publish no partial semantic report.
+T1763 reconstructs all seventeen sets of per-dimension projections,
 requires their complete unions, checks every path, and rejects omitted or
 foreign evidence. Policy citations remain candidates
 for all unreviewed groups. The validator also
@@ -372,6 +380,18 @@ scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
   prove -Iperl t/1611-vial-architecture-scale-execution-plan-limit.t \
   t/1612-vial-architecture-scale-execution-plan-over-limit.t \
   t/1634-vial-architecture-scale-checking-random-replay.t \
+  t/1763-vial-architecture-scale-cap-consistency.t \
+  t/1685-vial-architecture-scale-cap-policy.t
+```
+
+Reverify the closed semantic catalog, exact import and byte parser boundaries,
+pre-recursion/pre-lex order, cleanup, identities, and sealed falsifiers with:
+
+```sh
+scripts/run_with_ram_guard.sh -- prove -Iperl \
+  t/1601-vial-architecture-scale-semantic-catalog.t \
+  t/1687-vial-parser-direct-import-cap-order.t \
+  t/1693-vial-parser-source-byte-cap-order.t \
   t/1763-vial-architecture-scale-cap-consistency.t \
   t/1685-vial-architecture-scale-cap-policy.t
 ```

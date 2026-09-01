@@ -719,6 +719,36 @@ my %EXECUTION_PLAN_RATIONALE = (
     accepted_identity =>
         'the exact-limit plan plus accepted replay-gate workload, evaluation, rerun, and replay identities are deterministic',
 );
+my @SEMANTIC_PARSER_EVIDENCE = (
+    [
+        't/1601-vial-architecture-scale-semantic-catalog.t',
+        qw(no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1687-vial-parser-direct-import-cap-order.t',
+        qw(boundary adjacent_excess diagnostics atomicity accepted_identity),
+    ],
+    [
+        't/1693-vial-parser-source-byte-cap-order.t',
+        qw(boundary adjacent_excess diagnostics atomicity accepted_identity),
+    ],
+);
+my %SEMANTIC_PARSER_RATIONALE = (
+    boundary =>
+        'direct imports plus per-source and combined source bytes admit at their exact parser boundaries',
+    adjacent_excess =>
+        'the first direct-import and source-byte excesses reject at parser preflight',
+    diagnostics =>
+        'import and source-byte excesses retain their stable public code, phase, message, and semantic path',
+    atomicity =>
+        'known import excess precedes recursion and known byte excess precedes lexing without a semantic report',
+    no_tool =>
+        'every selected semantic construction carries no backend or external-tool selector',
+    cleanup =>
+        'semantic gate staging removes same-volume success and consumer-failure residue',
+    accepted_identity =>
+        'the closed catalog plus exact import and byte boundaries retain deterministic semantic identities',
+);
 my %runtime_dimensions = map {
     $_ => {
         status => 'verified',
@@ -906,6 +936,18 @@ for my $entry (@EXECUTION_PLAN_EVIDENCE) {
     push @{$execution_plan_dimensions{$_}{evidence}}, $path
         for @dimensions;
 }
+my %semantic_parser_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $SEMANTIC_PARSER_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@SEMANTIC_PARSER_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$semantic_parser_dimensions{$_}{evidence}}, $path
+        for @dimensions;
+}
 my $VERIFIED_DIMENSIONS = {
     backend_artifact_graph => \%backend_dimensions,
     bridge_normalized_collections => \%bridge_normalized_dimensions,
@@ -923,6 +965,7 @@ my $VERIFIED_DIMENSIONS = {
     execution_random_attempts => \%execution_random_dimensions,
     execution_route_collections => \%execution_route_dimensions,
     runtime_stream_envelopes => \%runtime_dimensions,
+    semantic_parser_admission => \%semantic_parser_dimensions,
 };
 
 sub build {

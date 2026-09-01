@@ -54,6 +54,7 @@ evidence: >-
   docs/book/src/16df-vial-architecture-scale-cap-closeout.md
 reverify: >-
   prove -Iperl t/1685-vial-architecture-scale-cap-policy.t
+  t/1601-vial-architecture-scale-semantic-catalog.t
   t/1602-vial-architecture-scale-bridge-fanout.t
   t/160{3,6,7}-vial-architecture-scale-execution-*.t t/161{6..8}-*.t
   t/161{4,5}-vial-architecture-scale-execution-random-*.t
@@ -94,7 +95,7 @@ native UVM stays emission-only. Eligibility rejects excess before tools; the
 shared lifecycle bounds trace and final artifacts.
 
 `FSM::VIAL::ArchitectureScaleCapConsistency` rebuilds policy without caller
-evidence. Sixteen groups verify all dimensions: runtime, backend, models,
+evidence. Seventeen groups verify all dimensions: runtime, backend, models,
 faults, randomness, scoreboards, coverage, bridge-profile cardinality,
 serialized bridge manifests, normalized bridge collections, execution
 profiles, operation cardinality, fiber cardinality, route collections,
@@ -131,6 +132,10 @@ Serialized-plan evidence assigns t1611 the exact 16,777,216-byte boundary,
 identity, no-tool, and cleanup proof; t1612 the first complete excess and public
 diagnostic; and t1634 independent pre-materialization order, replay identity,
 and cleanup. T1609/t1610 remain superseded lower regressions.
+Parser admission assigns t1601 closed construction/no-tool/cleanup and gate
+identity; t1687 exact 64/65-import admission before recursion; and t1693 exact
+1,048,576-byte per-source plus 16,777,216-byte combined-source admission before
+lexing. Focused excesses retain stable diagnostics and no semantic report.
 Other groups and calibration remain pending/blocked.
 
 The common controller admits bounded worker files before counts/digests; cap+1

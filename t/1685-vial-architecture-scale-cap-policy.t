@@ -67,10 +67,14 @@ is(
     'retain_early_preflight_and_per_edge_terminal_defense',
     'parser policy retains both direct preflight and terminal edge defense',
 );
-ok(
-    scalar(grep { $_ eq 't/1693-vial-parser-source-byte-cap-order.t' }
-        @{$policy->{groups}{semantic_parser_admission}{evidence}}),
-    'parser policy cites the exact source-byte admission witness',
+is_deeply(
+    $policy->{groups}{semantic_parser_admission}{evidence},
+    [qw(
+        t/1601-vial-architecture-scale-semantic-catalog.t
+        t/1687-vial-parser-direct-import-cap-order.t
+        t/1693-vial-parser-source-byte-cap-order.t
+    )],
+    'parser policy cites the exact catalog, import, and source-byte evidence set',
 );
 is(
     $policy->{groups}{semantic_action_shape}{current_enforcement},

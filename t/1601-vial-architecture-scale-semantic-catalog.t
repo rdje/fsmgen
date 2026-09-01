@@ -90,6 +90,10 @@ subtest 'closed construction covers every selected semantic axis and level deter
                 "$axis/$level independently regenerates byte-equal source and identity");
             is($first->{specification}{family}, 'semantic_catalog_v1',
                 "$axis/$level cannot escape the semantic family");
+            is($first->{specification}{backend_profile}, undef,
+                "$axis/$level selects no backend");
+            is($first->{specification}{tool_profile}, undef,
+                "$axis/$level selects no external tool");
             is_deeply([map { $_->{role} } @{$first->{inputs}}],
                 [('vial_source') x scalar(@{$first->{inputs}})],
                 "$axis/$level contains only canonical VIAL source inputs");

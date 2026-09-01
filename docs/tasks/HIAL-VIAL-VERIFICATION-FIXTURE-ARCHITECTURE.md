@@ -941,7 +941,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
   Execution Serialized Plan Containment Finding: `The synchronized Knowledge Card initially remained legal by only 22 lines/165 bytes under its inherited transition allowance, too little continuity margin for the remaining group joins. Its redundant one-test-per-line evidence copy is now replaced by canonical policy, consistency, parser, semantic, bridge, execution, backend, runtime, task, and book authorities while the executable ranged reverify inventory retains the exact test routes. The aggregate is now 46,870 lines/3,461,231 bytes, restoring 72 lines/3,654 bytes of transition headroom without raising an allowance or dropping a fact, question, route, or runnable check. Re-derive: aggregate docs/knowledge Markdown and expand the reverify patterns. Falsify: Knowledge Map, relative-path, history, and live-document checks reject lost answers, stale generation, bad canonical paths, or ceiling drift. Durability: this task, compacted card, generated shards, containment manifest, and work-unit history retain the resolution.`
 
-  Frontier: `Sixteen groups are sealed through execution_serialized_plan. Continue with semantic_parser_admission; calibration remains blocked until every group is independently verified.`
+  Semantic Parser Admission Audit Finding: `The semantic_parser_admission candidate inventory is complete as written. T1601 owns the closed 14-axis/five-level semantic workload inventory, deterministic construction, accepted gate identities, and same-volume success/failure cleanup; t1687 independently admits exactly 64 direct imports and rejects 65 before recursive parsing; t1693 independently admits the 1,048,576-byte per-source and 16,777,216-byte combined-source boundaries and rejects their first byte excesses before lexing. The latter two witnesses own stable public diagnostics and no-partial-semantic-report atomicity. T1601 constructs every selected level but currently does not explicitly assert the already-null backend/tool selectors, and no caller-sealed consistency projection promotes the group. History shows t1601 was introduced by 145d3084a, the two focused order witnesses by a622325c7 and 273678c6b, and the later 951720257 policy deliberately cited all three; no evidence path is missing or redundant. The complete five-file policy/candidate/consistency baseline is green at Files=5/Tests=105 in 20 wallclock seconds under the repository RAM guard. The intentional RED keeps the exact policy assertion green while exposing 21 pending status/evidence/rationale assertions and two inactive omission/foreign-evidence controls. The active .17.4.8 slice owns retaining the exact three-witness policy inventory, adding explicit no-tool proof to the closed construction matrix, and binding only independently classified dimensions. Re-derive: inspect t1601/t1687/t1693, their exact history, and run them plus t1685/t1763 under the RAM guard. Falsify: removing t1601 loses closed generator coverage, cleanup, and gate identity; removing t1687 loses import boundary/excess and pre-recursion order; removing t1693 loses both byte boundaries/excesses and pre-lex order. Durability: this task entry owns the audit and RED before authority changes; the completed slice must synchronize consistency authority, tests, book, Knowledge Map, and work-unit history.`
+
+  Semantic Parser Admission Join: `The exact three-witness policy inventory is retained unchanged and the caller-sealed consistency authority now promotes semantic_parser_admission across all seven dimensions. T1601 owns the closed 14-axis/five-level construction matrix, explicitly absent backend/tool selectors, accepted gate identities, and same-volume success/failure cleanup. T1687 owns exact 64-import admission, the 65-import first excess, stable public diagnostic, and rejection before recursive parsing without a semantic report. T1693 owns both exact byte boundaries and their first byte excesses, stable public diagnostics, and rejection before lexing without a semantic report. T1763 reconstructs every projection and the exact three-path union, checks each path, and rejects empty or foreign evidence. The policy/consistency pair passes Files=2/Tests=83; the complete guarded join reports All tests successful at Files=5/Tests=105 in 20 wallclock seconds. Re-derive: run t1601/t1687/t1693 plus t1763/t1685 under the repository RAM guard. Falsify: closed generator/no-tool, three exact boundaries/excesses, pre-recursion/pre-lex order, diagnostic, atomicity, cleanup, identity, union, omission, foreign-evidence, and caller-mutation controls fail closed. Durability: this task, unchanged exact policy inventory, consistency source/test, three focused witnesses, book, Knowledge Map, decision 0093, and work-unit commit retain the result. No cap, boundary, level, accepted identity, route outcome, product behavior, publication, support, budget, or capacity claim changes.`
+
+  Semantic Parser Admission Claim Disposition Finding: `The user-facing parser explanation produced three actionable candidates: accepted direct-import admission, its first excess/pre-recursion order, and the two exact source-byte boundaries/pre-lex order. Each is now a derived-gate disposition with non-aliased catalog/generator/parser re-derivation, the closed catalog and focused import/byte oracles as falsifiers, and the exact policy plus sealed consistency authority as durability watchers. Re-derive: regenerate the producer-derived inventory and join every candidate through the required-complete verification_architecture group. Falsify: removing a disposition, producer, oracle, watcher, or current candidate identity fails closed. Durability: the disposition registry, generated inventory, this task, and work-unit history retain the result at 1,730/1,730 disposed candidates, 958 derived gates, and zero gaps/open owners.`
+
+  Frontier: `Seventeen groups are sealed through semantic_parser_admission. Continue with semantic_declaration_cardinality; calibration remains blocked until every group is independently verified.`
 
   Containment Resolution: `The cap-policy card's long one-path-per-line reverify list is now a shorter equivalent set of numeric brace ranges plus exact outliers; every expansion resolves to an existing tracked test. With checking-randomness evidence added, the card aggregate falls from 46,939 lines/3,464,850 bytes to 46,903 lines/3,462,766 bytes, restoring 39 lines/2,119 bytes below the inherited transition allowance without changing it. Re-derive: expand every compacted pattern and aggregate docs/knowledge Markdown with wc. Falsify: missing paths fail the explicit expansion census, and Knowledge Map/live-document checks reject freshness, answer, transition, or ceiling drift. Durability: this task, the compacted card, generated shard, containment manifest, and work-unit commit retain the resolution.`
 
@@ -3256,3 +3262,36 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   boundary, level, accepted identity, route outcome, product behavior,
   publication, support, budget, or capacity claim changes. Full CI and push
   remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.8` semantic-parser-admission evidence join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `semantic_parser_admission` remains
+  pending even though its exact t1601/t1687/t1693 candidate inventory is
+  complete. T1601 owns the closed generator, gate identities, and cleanup;
+  t1687 owns import boundary/excess before recursion; t1693 owns both byte
+  boundaries/excesses before lexing. The missing evidence is explicit no-tool
+  assertion in t1601 plus the seven-dimension consistency join, not a missing
+  policy path or runtime regression. Exact history is recoverable with
+  `git log -S'semantic_parser_admission' --
+  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm`; the guarded baseline reports
+  Files=5/Tests=105 in 20 wallclock seconds.
+- [x] **ADDRESSED (verified)** — retained the exact three policy witnesses; made
+  t1601 assert absent backend/tool selectors for every selected axis/level;
+  classify only directly proved boundary, adjacent-excess, diagnostics,
+  atomicity, no-tool, cleanup, and accepted-identity dimensions; and make
+  t1763 reconstruct exact projections, union, path existence, omission, and
+  foreign-evidence controls. The intentional RED was recorded before promoting
+  the consistency authority.
+- [x] **NO REGRESSION** — the complete guarded join reports `All tests successful`
+  at Files=5/Tests=105 in 20 wallclock seconds; policy/consistency
+  alone pass Files=2/Tests=83. MdBook tests all 59 chapters; its inspected
+  render contains 94 files/20,624 KiB and was removed with its same-volume
+  temporary root. Knowledge Map reports 1,159 facts/6,231 questions/6,403
+  occurrences/138 shards; claims dispose 1,730/1,730 candidates through 958
+  gates with zero gaps/open owners; knowledge cards remain within transition
+  at 46,875 lines/3,461,595 bytes. The exact 59-file book authority is
+  54,963 lines/2,967,530 bytes. Relative paths, memory, task, containment,
+  reference-authority, claim, and Knowledge Map checks are the final staged
+  gates. No cap, boundary, level, accepted identity, route outcome, product
+  behavior, publication, support, budget, or capacity claim changes. Full CI
+  and push remain deferred by policy.

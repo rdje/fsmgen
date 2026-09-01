@@ -541,6 +541,29 @@ my %execution_plan_rationale = (
     cleanup => 'exact-boundary and replay-gate staging remove same-volume success and consumer-failure residue',
     accepted_identity => 'the exact-limit plan plus accepted replay-gate workload, evaluation, rerun, and replay identities are deterministic',
 );
+my @semantic_parser_evidence = qw(
+    t/1601-vial-architecture-scale-semantic-catalog.t
+    t/1687-vial-parser-direct-import-cap-order.t
+    t/1693-vial-parser-source-byte-cap-order.t
+);
+my %semantic_parser_evidence = (
+    boundary => [@semantic_parser_evidence[1, 2]],
+    adjacent_excess => [@semantic_parser_evidence[1, 2]],
+    diagnostics => [@semantic_parser_evidence[1, 2]],
+    atomicity => [@semantic_parser_evidence[1, 2]],
+    no_tool => [$semantic_parser_evidence[0]],
+    cleanup => [$semantic_parser_evidence[0]],
+    accepted_identity => [@semantic_parser_evidence],
+);
+my %semantic_parser_rationale = (
+    boundary => 'direct imports plus per-source and combined source bytes admit at their exact parser boundaries',
+    adjacent_excess => 'the first direct-import and source-byte excesses reject at parser preflight',
+    diagnostics => 'import and source-byte excesses retain their stable public code, phase, message, and semantic path',
+    atomicity => 'known import excess precedes recursion and known byte excess precedes lexing without a semantic report',
+    no_tool => 'every selected semantic construction carries no backend or external-tool selector',
+    cleanup => 'semantic gate staging removes same-volume success and consumer-failure residue',
+    accepted_identity => 'the closed catalog plus exact import and byte boundaries retain deterministic semantic identities',
+);
 my %verified_evidence = (
     backend_artifact_graph => \%backend_evidence,
     bridge_normalized_collections => \%bridge_normalized_evidence,
@@ -558,6 +581,7 @@ my %verified_evidence = (
     execution_random_attempts => \%execution_random_evidence,
     execution_route_collections => \%execution_route_evidence,
     runtime_stream_envelopes => \%runtime_evidence,
+    semantic_parser_admission => \%semantic_parser_evidence,
 );
 my %verified_rationale = (
     backend_artifact_graph => \%backend_rationale,
@@ -576,6 +600,7 @@ my %verified_rationale = (
     execution_random_attempts => \%execution_random_rationale,
     execution_route_collections => \%execution_route_rationale,
     runtime_stream_envelopes => \%runtime_rationale,
+    semantic_parser_admission => \%semantic_parser_rationale,
 );
 
 sub dies {
@@ -851,6 +876,18 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
     is_deeply(
         [grep { !-f $_ } sort keys %execution_plan_join], [],
         'every sealed execution-plan evidence path exists',
+    );
+
+    my %semantic_parser_join = map { $_ => 1 }
+        map { @{$semantic_parser_evidence{$_}} } @dimensions;
+    is_deeply(
+        [sort keys %semantic_parser_join],
+        [sort @semantic_parser_evidence],
+        'semantic-parser join covers its catalog, import, and source-byte witnesses',
+    );
+    is_deeply(
+        [grep { !-f $_ } sort keys %semantic_parser_join], [],
+        'every sealed semantic-parser evidence path exists',
     );
 
     is($report->{calibration}{evidence_role},
@@ -1144,6 +1181,21 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
     like(dies(sub { $assert->($foreign_execution_plan) }),
         qr/execution_serialized_plan\/accepted_identity' contradicts the sealed evidence authority/,
         'callers cannot add foreign execution-plan evidence');
+
+    my $omitted_semantic_parser = $class->build;
+    $omitted_semantic_parser->{groups}{semantic_parser_admission}
+        {dimensions}{boundary}{evidence} = [];
+    like(dies(sub { $assert->($omitted_semantic_parser) }),
+        qr/semantic_parser_admission\/boundary' verified evidence must be one non-empty array/,
+        'callers cannot empty sealed semantic-parser boundary evidence');
+
+    my $foreign_semantic_parser = $class->build;
+    push @{$foreign_semantic_parser->{groups}{semantic_parser_admission}
+        {dimensions}{accepted_identity}{evidence}},
+        't/foreign-semantic-parser-evidence.t';
+    like(dies(sub { $assert->($foreign_semantic_parser) }),
+        qr/semantic_parser_admission\/accepted_identity' contradicts the sealed evidence authority/,
+        'callers cannot add foreign semantic-parser evidence');
 
     my $missing = $class->build;
     delete $missing->{groups}{$first_group}{dimensions}{cleanup};
