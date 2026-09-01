@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
-- Last updated: `2026-08-31`
+- Last updated: `2026-09-01`
 - Owner: repo-local workflow
 - Segment manifest: `docs/tasks/segments/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/manifest.jsonl`
 
@@ -914,6 +914,12 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Execution Operation Cardinality Join: `The repaired policy now cites the complete six-witness set across operations_per_scenario and operations_total, and the caller-sealed consistency authority promotes execution_operation_cardinality without flattening their different route outcomes. T1620, t1626, and t1706 own exact component-boundary admission; t1621, t1626, and t1706 own first excess; t1620 through t1622 plus t1626/t1706 own stable diagnostics and atomicity; all six witnesses now explicitly prove absent backend/provider/tool selection; t1619 alone owns same-volume success/failure cleanup; and t1619, t1620, t1622, t1626, and t1706 freeze accepted plan or stage identities. Later serialized-plan dominance remains a route fact rather than a false component-cap failure. T1763 reconstructs every projection and the exact six-path union, checks each path, and rejects empty or foreign evidence. The intended RED exposed one policy inventory mismatch, 21 pending status/evidence/rationale assertions, and two inactive mutation controls; the completed guarded suite reports All tests successful at Files=8/Tests=125 in 177 wallclock seconds. Every prior group remains sealed, every unaudited group remains pending, and calibration remains historical/incomplete/blocked. Re-derive: run t1619 through t1622, t1626, t1706, t1763, and t1685 under the repository RAM guard. Falsify: qualification identity, semantic boundary/excess, plan-byte dominance, compact per-scenario/aggregate preflight, diagnostic, pre-materialization, no-tool, cleanup, union, omission, foreign-evidence, and caller-mutation controls fail closed. Durability: this task, repaired policy, consistency source/test, six focused witnesses, book, Knowledge Map, decision 0093, and work-unit commit retain the result. No cap, level, accepted profile, route outcome, product behavior, publication, support, budget, or capacity claim changes. The next slice independently reviews execution_fiber_cardinality.`
 
   Execution Operation Containment Resolution: `The Knowledge Map card had only 37 lines/1,469 bytes of inherited transition headroom after the first operation-cardinality sync. Compacting repeated stage and join prose, without changing answers, evidence, reverify routes, exact numeric claim lines, or the allowance, reduces the aggregate from 46,905 lines/3,463,416 bytes to 46,896 lines/3,462,879 bytes and restores 46 lines/2,006 bytes of headroom. Re-derive: aggregate tracked docs/knowledge Markdown against the declared baseline plus transition growth. Falsify: Knowledge Map and live-document gates reject answer drift, missing evidence, stale shards, or allowance drift. Durability: this task, compacted card, generated map, containment manifest, and work-unit commit retain the resolution.`
+
+  Execution Fiber Cardinality Audit Finding: `The execution_fiber_cardinality candidate inventory is incomplete. It cites t1624's exact 16,384-live-fiber boundary/16,385 excess and t1625's 65,536-total-fiber component admission under later serialized-plan dominance/65,537 structural excess, but omits t1623, the dedicated accepted qualification and exact plan-identity witness for both axes. T1605 is a useful lower-scale topology regression but is superseded here by t1623's qualification-scale identity; t1604 does not exercise a fiber axis. History shows 951720257 introduced the two-path inventory and 4c97d16b0 later changed the enforcement wording without repairing it. The complete five-file candidate/policy/consistency baseline is green at Files=5/Tests=100 in 69 wallclock seconds under the repository RAM guard, so this is evidence-inventory debt rather than a runtime regression. This active .17.4.8 slice owns repairing the exact three-witness policy inventory, adding explicit no-tool and same-volume cleanup proof where the ladder is silent, and only then binding independently classified dimensions. Re-derive: inspect t1623 through t1625, t1604/t1605, policy history, and run t1623-t1625 plus t1763/t1685 under the RAM guard. Falsify: omitting t1623 loses accepted qualification identity and cleanup, while omitting either boundary witness loses one axis's exact component admission, first excess, route diagnostic, or atomic failure. Durability: this task entry owns the defect before source changes; the completed slice must synchronize policy, consistency authority, tests, book, Knowledge Map, and work-unit history.`
+
+  Execution Fiber Cardinality Join: `The repaired policy now cites the complete three-witness set across simultaneously_live_fibers and fibers_total, and the caller-sealed consistency authority promotes execution_fiber_cardinality without confusing component admission with complete route success. T1624/t1625 own exact component-boundary admission, first excess, stable route diagnostics, and atomic no-ExecutionIR/no-plan failure; t1623 owns both accepted qualification plans plus same-volume success/failure cleanup. All three explicitly retain unset backend/tool selectors and deterministic accepted plan or semantic-stage identities. T1625 honestly records that 65,536 total fibers clear the component preflight but meet the later serialized-plan cap, while 65,537 rejects at the fiber authority before bridge indexing. T1605 remains a lower-scale topology regression rather than duplicate closeout evidence, and t1604 exercises no fiber axis. T1763 reconstructs every projection and the exact three-path union, checks each path, and rejects empty or foreign evidence. The intentional RED exposed one policy mismatch, 21 pending status/evidence/rationale assertions, and two inactive mutation controls; the completed guarded suite reports All tests successful at Files=5/Tests=102 in 69 wallclock seconds. Every prior group remains sealed, every unaudited group remains pending, and calibration remains historical/incomplete/blocked. Re-derive: run t1623 through t1625, t1763, and t1685 under the repository RAM guard. Falsify: qualification identity, two-axis boundary/excess, plan-byte dominance, diagnostic, pre-materialization, no-tool, cleanup, union, omission, foreign-evidence, and caller-mutation controls fail closed. Durability: this task, repaired policy, consistency source/test, three focused witnesses, book, Knowledge Map, decision 0093, and work-unit commit retain the result. No cap, level, accepted profile, route outcome, product behavior, publication, support, budget, or capacity claim changes. The next slice independently reviews execution_route_collections.`
+
+  Execution Fiber Claim Disposition Finding: `The user-facing fiber explanation produced three actionable candidates: the exact live-fiber boundary, its adjacent excess combined with total-fiber component admission, and the total-fiber adjacent excess. Each is now a derived-gate disposition with non-aliased catalog/generator/contract/builder re-derivation, all three focused fiber oracles as falsifiers, and the repaired policy plus sealed consistency authority as durability watchers. Re-derive: regenerate the producer-derived inventory and join every candidate through the required-complete verification_architecture group. Falsify: removing a disposition, producer, oracle, watcher, or current candidate identity fails closed. Durability: the disposition registry, generated inventory, this task, and work-unit history retain the result at 1,719/1,719 disposed candidates, 947 derived gates, and zero gaps/open owners.`
 
   Containment Resolution: `The cap-policy card's long one-path-per-line reverify list is now a shorter equivalent set of numeric brace ranges plus exact outliers; every expansion resolves to an existing tracked test. With checking-randomness evidence added, the card aggregate falls from 46,939 lines/3,464,850 bytes to 46,903 lines/3,462,766 bytes, restoring 39 lines/2,119 bytes below the inherited transition allowance without changing it. Re-derive: expand every compacted pattern and aggregate docs/knowledge Markdown with wc. Falsify: missing paths fail the explicit expansion census, and Knowledge Map/live-document checks reject freshness, answer, transition, or ceiling drift. Durability: this task, the compacted card, generated shard, containment manifest, and work-unit commit retain the resolution.`
 
@@ -3068,3 +3074,41 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   are required green immediately before commit with no execution cap, level,
   profile, route outcome, identity, product behavior, publication, support,
   budget, or capacity claim change. Full CI and push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.8` execution-fiber-cardinality evidence join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `execution_fiber_cardinality` remains
+  pending, and its two-path candidate list omits t1623, the dedicated accepted
+  qualification and exact plan-identity witness for both fiber axes. Exact
+  `git log -S'execution_fiber_cardinality' --
+  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` history traces the incomplete
+  inventory to `951720257`; `4c97d16b0` later changed enforcement wording but
+  not evidence. T1605 is superseded by the qualification-scale witness for
+  closeout, while t1604 exercises no fiber axis. The guarded baseline is green
+  at Files=5/Tests=100 in 69 wallclock seconds, proving evidence-inventory debt
+  rather than a runtime regression.
+- [x] **ADDRESSED (verified)** — repair the executable policy to the exact
+  t1623-t1625 witness set; add explicit absent backend/tool selectors and
+  two-axis same-volume success/failure cleanup; classify only directly proved
+  boundary, adjacent-excess, diagnostic, atomicity, no-tool, cleanup, and
+  accepted-identity dimensions; and make t1763 reconstruct the exact
+  projections, union, path existence, omission, and foreign-evidence controls.
+  The intentional RED contains one exact policy mismatch, 21 pending
+  status/evidence/rationale assertions, and two inactive mutation controls
+  before the authority modules change.
+- [x] **NO REGRESSION** — the complete three-witness fiber set plus policy and
+  consistency report `All tests successful` at Files=5/Tests=102 in 69
+  wallclock seconds under the repository RAM guard. All 59 mdBook chapters
+  test, and the inspected 94-file/20,600-KiB repository-local render is removed
+  exactly. Task integrity passes across 4 trees/1,031 nodes.
+  `knowledge-map: OK` reports 1,159 facts/6,231 questions/6,403 answer
+  occurrences/138 shards. Claim inventory independently agrees at 11,529
+  numeric lines with 1,719/1,719 candidates dispositioned, 947 derived gates,
+  and zero gaps, open owners, or untracked producers. All 22 live-document
+  surfaces and the exact 59-file/54,869-line/2,962,334-byte book authority pass
+  with zero ceiling increase; the Knowledge Map remains 44 lines/1,722 bytes
+  below its inherited transition allowance. Staged acceptance and every
+  registered doctrine are required green immediately before commit with no
+  execution cap, level, profile, route outcome, identity, product behavior,
+  publication, support, budget, or capacity claim change. Full CI and push
+  remain deferred by policy.

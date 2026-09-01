@@ -258,6 +258,15 @@ is(
     'retain_compact_preflight_and_terminal_defense',
     'execution fiber policy retains both enforcement layers',
 );
+is_deeply(
+    $policy->{groups}{execution_fiber_cardinality}{evidence},
+    [qw(
+        t/1623-vial-architecture-scale-execution-fiber-qualification.t
+        t/1624-vial-architecture-scale-execution-live-fiber-limit.t
+        t/1625-vial-architecture-scale-execution-total-fiber-limit.t
+    )],
+    'execution fiber policy cites the complete qualification and two-axis limit evidence set',
+);
 is(
     $policy->{groups}{execution_random_attempts}{current_enforcement},
     'bounded_generation_before_plan_materialization',

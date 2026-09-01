@@ -265,6 +265,7 @@ my $GROUPS = {
         'no_execution_ir_plan_or_replay',
         'retain_compact_preflight_and_terminal_defense', '.17.4.4',
         [
+            't/1623-vial-architecture-scale-execution-fiber-qualification.t',
             't/1624-vial-architecture-scale-execution-live-fiber-limit.t',
             't/1625-vial-architecture-scale-execution-total-fiber-limit.t',
         ],

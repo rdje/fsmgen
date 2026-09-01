@@ -23,7 +23,8 @@ reviewed runtime-stream, backend-artifact, checking-model, checking-fault,
 checking-randomness, and checking-scoreboard witnesses to explicit dimensions.
 The checking-coverage, bridge-profile, serialized-bridge-manifest,
 normalized-bridge-collection, execution-profile-selection, and
-execution-operation-cardinality witnesses are now joined too. The same
+execution-operation-cardinality and execution-fiber-cardinality witnesses are
+now joined too. The same
 classification remains pending for every other group.
 
 ## Why calibration publication is separate
@@ -57,7 +58,8 @@ identity.
 Runtime, backend, checking-model, checking-fault, checking-randomness,
 checking-scoreboard, checking-coverage, bridge-profile-cardinality, serialized
 manifest, normalized-collection, execution-profile-selection, and
-execution-operation-cardinality groups are `verified` across all seven
+execution-operation-cardinality and execution-fiber-cardinality groups are
+`verified` across all seven
 dimensions; all other groups remain `pending_independent_verification`.
 Runtime covers the selected materialization profiles plus t1720 through t1749
 and t1751 through t1762.
@@ -115,8 +117,15 @@ the aggregate qualification, exact compact preflight, first aggregate excess,
 and preflight-dominated route without pretending a final plan was built.
 T1706 independently admits the compact exact boundary and rejects the first
 excess before bridge indexing. Every workload and ordinary invocation shape
-explicitly carries no backend, provider, or tool selector. T1763 reconstructs
-all twelve sets of per-dimension projections,
+explicitly carries no backend, provider, or tool selector.
+Fiber cardinality requires three complementary witnesses. T1623 freezes both
+accepted qualification plans and owns same-volume success/failure cleanup.
+T1624 admits exactly 16,384 simultaneously live fibers and atomically rejects
+16,385 before bridge indexing. T1625 admits the 65,536-total-fiber component
+preflight even though the later serialized-plan cap rejects that route, then
+atomically rejects the 65,537-fiber structural excess before bridge indexing.
+All three workload shapes explicitly select no backend or external tool.
+T1763 reconstructs all thirteen sets of per-dimension projections,
 requires their complete unions, checks every path, and rejects omitted or
 foreign evidence. Policy citations remain candidates
 for all unreviewed groups. The validator also
@@ -277,6 +286,18 @@ scripts/run_with_ram_guard.sh -- prove -Iperl \
   t/1622-vial-architecture-scale-execution-total-operation-qualification.t \
   t/1626-vial-architecture-scale-execution-total-operation-limit.t \
   t/1706-vial-execution-operation-cardinality-cap-order.t \
+  t/1763-vial-architecture-scale-cap-consistency.t \
+  t/1685-vial-architecture-scale-cap-policy.t
+```
+
+Reverify both fiber axes, qualification cleanup, exact component boundaries,
+route dominance, adjacent excesses, and sealed-report falsifiers with:
+
+```sh
+scripts/run_with_ram_guard.sh -- prove -Iperl \
+  t/1623-vial-architecture-scale-execution-fiber-qualification.t \
+  t/1624-vial-architecture-scale-execution-live-fiber-limit.t \
+  t/1625-vial-architecture-scale-execution-total-fiber-limit.t \
   t/1763-vial-architecture-scale-cap-consistency.t \
   t/1685-vial-architecture-scale-cap-policy.t
 ```

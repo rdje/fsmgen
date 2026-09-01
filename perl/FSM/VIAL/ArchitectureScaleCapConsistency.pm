@@ -579,6 +579,36 @@ my %EXECUTION_OPERATION_RATIONALE = (
     accepted_identity =>
         'qualification plans, exact-limit semantic stages, and the ordinary accepted plan retain deterministic identities',
 );
+my @EXECUTION_FIBER_EVIDENCE = (
+    [
+        't/1623-vial-architecture-scale-execution-fiber-qualification.t',
+        qw(no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1624-vial-architecture-scale-execution-live-fiber-limit.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool accepted_identity),
+    ],
+    [
+        't/1625-vial-architecture-scale-execution-total-fiber-limit.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool accepted_identity),
+    ],
+);
+my %EXECUTION_FIBER_RATIONALE = (
+    boundary =>
+        'the exact 16384 live-fiber and 65536 total-fiber component preflights admit before any later authority',
+    adjacent_excess =>
+        'the first 16385 live-fiber and 65537 total-fiber excesses reject at the execution-graph authority',
+    diagnostics =>
+        'live-fiber, total-fiber, and later serialized-plan route outcomes retain stable loci',
+    atomicity =>
+        'known fiber or later plan excess publishes no ExecutionIR, plan, metrics, or bridge index',
+    no_tool =>
+        'every fiber workload specification carries no backend or external-tool selector',
+    cleanup =>
+        'both fiber qualification axes stage on-volume and remove success or consumer-failure residue',
+    accepted_identity =>
+        'qualification plans, the exact live-fiber plan, and total-fiber semantic stages retain deterministic identities',
+);
 my %runtime_dimensions = map {
     $_ => {
         status => 'verified',
@@ -718,6 +748,18 @@ for my $entry (@EXECUTION_OPERATION_EVIDENCE) {
     push @{$execution_operation_dimensions{$_}{evidence}}, $path
         for @dimensions;
 }
+my %execution_fiber_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $EXECUTION_FIBER_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@EXECUTION_FIBER_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$execution_fiber_dimensions{$_}{evidence}}, $path
+        for @dimensions;
+}
 my $VERIFIED_DIMENSIONS = {
     backend_artifact_graph => \%backend_dimensions,
     bridge_normalized_collections => \%bridge_normalized_dimensions,
@@ -728,6 +770,7 @@ my $VERIFIED_DIMENSIONS = {
     checking_models => \%checking_model_dimensions,
     checking_randomness => \%checking_randomness_dimensions,
     checking_scoreboards => \%checking_scoreboard_dimensions,
+    execution_fiber_cardinality => \%execution_fiber_dimensions,
     execution_operation_cardinality => \%execution_operation_dimensions,
     execution_profile_selection => \%execution_profile_dimensions,
     runtime_stream_envelopes => \%runtime_dimensions,

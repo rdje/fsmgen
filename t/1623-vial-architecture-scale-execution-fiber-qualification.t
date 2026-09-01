@@ -16,7 +16,9 @@ use FSM::VIAL::ArchitectureScaleExecutionGraph;
 use FSM::VIAL::ArchitectureScaleWorkload;
 
 my $class = 'FSM::VIAL::ArchitectureScaleExecutionGraph';
+my $foundation = 'FSM::VIAL::ArchitectureScaleWorkload';
 my $json = JSON::PP->new->canonical(1)->utf8(1);
+my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my $reference_hial = slurp_raw(repo_path('ppif/ahb_lite_subordinate.ppif'));
 
 my %case = (
@@ -81,6 +83,10 @@ for my $axis (sort keys %case) {
             'construction retains the exact requested fiber count');
         is($first->{workload_identity}, $want->{workload_identity},
             'qualification workload identity is exact');
+        is($first->{specification}{backend_profile}, undef,
+            'qualification selects no backend');
+        is($first->{specification}{tool_profile}, undef,
+            'qualification selects no external tool');
 
         my %input = map { $_->{role} => $_ } @{$first->{inputs}};
         is_deeply([sort keys %input], [qw(hial_source vial_source)],
@@ -143,6 +149,47 @@ subtest 'the two fiber axes stay orthogonal at qualification scale' => sub {
     cmp_ok($total->{metrics}{total_fibers}, '>',
         $total->{metrics}{simultaneous_live_fibers},
         'sequential groups raise total fibers without raising live width');
+};
+
+subtest 'fiber qualification staging is same-volume and residue-free' => sub {
+    for my $axis (sort keys %case) {
+        my $construction = construction($axis);
+        my $stage_abs = File::Spec->catdir(
+            $repo_root, split m{/}, $construction->{staging_identity},
+        );
+        ok(!-e $stage_abs && !-l $stage_abs,
+            "$axis staging root begins absent");
+
+        my $success = $foundation->with_staging({
+            repository_root => $repo_root,
+            construction => $construction,
+            consumer => sub {
+                my ($context) = @_;
+                is($context->{staging_identity},
+                    $construction->{staging_identity},
+                    "$axis consumer receives the exact staging identity");
+                ok(!(grep { !-f $_->{absolute_path} } @{$context->{inputs}}),
+                    "$axis materializes both canonical inputs");
+            },
+        });
+        diag($json->encode($success->{diagnostics})) unless $success->{ok};
+        ok($success->{ok}, "$axis qualification staging succeeds");
+        ok($success->{same_volume}, "$axis staging proves same-volume identity");
+        ok($success->{removed}, "$axis successful staging reports removal");
+        ok(!-e $stage_abs && !-l $stage_abs,
+            "$axis successful staging leaves no residue");
+
+        my $failure = $foundation->with_staging({
+            repository_root => $repo_root,
+            construction => $construction,
+            consumer => sub { die "forced $axis fiber consumer failure\n" },
+        });
+        ok(!$failure->{ok}, "$axis consumer failure is reported");
+        is($failure->{diagnostics}[0]{code}, 'VIAL_SCALE_CONSUMER_ERROR',
+            "$axis failure retains the stable staging diagnostic");
+        ok(!-e $stage_abs && !-l $stage_abs,
+            "$axis failed staging leaves no residue");
+    }
 };
 
 subtest 'the levels beyond both fiber axes stay unowned' => sub {

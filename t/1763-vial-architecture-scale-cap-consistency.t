@@ -444,6 +444,29 @@ my %execution_operation_rationale = (
     cleanup => 'operation qualification staging success and consumer failure are same-volume and residue-free',
     accepted_identity => 'qualification plans, exact-limit semantic stages, and the ordinary accepted plan retain deterministic identities',
 );
+my @execution_fiber_evidence = qw(
+    t/1623-vial-architecture-scale-execution-fiber-qualification.t
+    t/1624-vial-architecture-scale-execution-live-fiber-limit.t
+    t/1625-vial-architecture-scale-execution-total-fiber-limit.t
+);
+my %execution_fiber_evidence = (
+    boundary => [@execution_fiber_evidence[1, 2]],
+    adjacent_excess => [@execution_fiber_evidence[1, 2]],
+    diagnostics => [@execution_fiber_evidence[1, 2]],
+    atomicity => [@execution_fiber_evidence[1, 2]],
+    no_tool => [@execution_fiber_evidence],
+    cleanup => [$execution_fiber_evidence[0]],
+    accepted_identity => [@execution_fiber_evidence],
+);
+my %execution_fiber_rationale = (
+    boundary => 'the exact 16384 live-fiber and 65536 total-fiber component preflights admit before any later authority',
+    adjacent_excess => 'the first 16385 live-fiber and 65537 total-fiber excesses reject at the execution-graph authority',
+    diagnostics => 'live-fiber, total-fiber, and later serialized-plan route outcomes retain stable loci',
+    atomicity => 'known fiber or later plan excess publishes no ExecutionIR, plan, metrics, or bridge index',
+    no_tool => 'every fiber workload specification carries no backend or external-tool selector',
+    cleanup => 'both fiber qualification axes stage on-volume and remove success or consumer-failure residue',
+    accepted_identity => 'qualification plans, the exact live-fiber plan, and total-fiber semantic stages retain deterministic identities',
+);
 my %verified_evidence = (
     backend_artifact_graph => \%backend_evidence,
     bridge_normalized_collections => \%bridge_normalized_evidence,
@@ -454,6 +477,7 @@ my %verified_evidence = (
     checking_models => \%checking_model_evidence,
     checking_randomness => \%checking_randomness_evidence,
     checking_scoreboards => \%checking_scoreboard_evidence,
+    execution_fiber_cardinality => \%execution_fiber_evidence,
     execution_operation_cardinality => \%execution_operation_evidence,
     execution_profile_selection => \%execution_profile_evidence,
     runtime_stream_envelopes => \%runtime_evidence,
@@ -468,6 +492,7 @@ my %verified_rationale = (
     checking_models => \%checking_model_rationale,
     checking_randomness => \%checking_randomness_rationale,
     checking_scoreboards => \%checking_scoreboard_rationale,
+    execution_fiber_cardinality => \%execution_fiber_rationale,
     execution_operation_cardinality => \%execution_operation_rationale,
     execution_profile_selection => \%execution_profile_rationale,
     runtime_stream_envelopes => \%runtime_rationale,
@@ -698,6 +723,18 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
     is_deeply(
         [grep { !-f $_ } sort keys %execution_operation_join], [],
         'every sealed execution-operation evidence path exists',
+    );
+
+    my %execution_fiber_join = map { $_ => 1 }
+        map { @{$execution_fiber_evidence{$_}} } @dimensions;
+    is_deeply(
+        [sort keys %execution_fiber_join],
+        [sort @execution_fiber_evidence],
+        'execution-fiber join covers qualification and both exact cardinality ladders',
+    );
+    is_deeply(
+        [grep { !-f $_ } sort keys %execution_fiber_join], [],
+        'every sealed execution-fiber evidence path exists',
     );
 
     is($report->{calibration}{evidence_role},
@@ -931,6 +968,21 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
     like(dies(sub { $assert->($foreign_execution_operation) }),
         qr/execution_operation_cardinality\/accepted_identity' contradicts the sealed evidence authority/,
         'callers cannot add foreign execution-operation evidence');
+
+    my $omitted_execution_fiber = $class->build;
+    pop @{$omitted_execution_fiber->{groups}{execution_fiber_cardinality}
+        {dimensions}{cleanup}{evidence}};
+    like(dies(sub { $assert->($omitted_execution_fiber) }),
+        qr/execution_fiber_cardinality\/cleanup' verified evidence must be one non-empty array/,
+        'callers cannot empty sealed execution-fiber cleanup evidence');
+
+    my $foreign_execution_fiber = $class->build;
+    push @{$foreign_execution_fiber->{groups}{execution_fiber_cardinality}
+        {dimensions}{accepted_identity}{evidence}},
+        't/foreign-execution-fiber-evidence.t';
+    like(dies(sub { $assert->($foreign_execution_fiber) }),
+        qr/execution_fiber_cardinality\/accepted_identity' contradicts the sealed evidence authority/,
+        'callers cannot add foreign execution-fiber evidence');
 
     my $missing = $class->build;
     delete $missing->{groups}{$first_group}{dimensions}{cleanup};
