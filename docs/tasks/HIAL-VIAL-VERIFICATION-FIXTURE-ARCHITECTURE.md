@@ -873,11 +873,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Closure: `The terminal sentence in the earlier Verification snapshot is superseded: common worker artifact admission, bounded output/recovery census, process-group and detached-descendant containment, authenticated bounded cleanup, the synchronous selected-tool boundary, bounded host observers, monotonic TERM/KILL and reap, interruption-safe owned-child/observer/containment-pipe polling, and timeout-primary observation precedence are complete across the 15 commits from 156f27788 through 1f3dac39e. Git now retains 59 .17.4.7 work-unit commits. Every appended acceptance checklist is checked; the complete RAM-guarded t1720-t1749/t1751-t1762 leaf passes Files=42, Tests=184 in 258 wallclock seconds; source audit finds no further independent unbounded supervisor retry. The runtime-stream leaf is exhausted. Cross-family closeout .17.4.8 remains proposed until a separate clean activation commit.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8`
-  Status: `proposed`
+  Status: `active`
   Goal: `Prove cross-family cap consistency, atomic failure, cleanup, and durable closeout before promotion.`
   Acceptance: `Independently enumerate every selected cap and owning stage; require boundary and adjacent excess evidence, stable diagnostic family/path/requested/allowed data where safe, no partial final output, no external-tool invocation behind known excess, exact repository-local cleanup, and unchanged accepted-profile identities. Revalidate all immutable calibration publications or version them explicitly after intentional behavior changes, synchronize task/decision/Knowledge Map/mdBook truth, and close .17.4 without promoting budgets, support, or capacity.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean 5583365cb closes the complete runtime-stream leaf after its guarded closure suite and source census. Decision 0093 assigns this final child the independent cross-family consistency, atomic-failure, cleanup, immutable-publication, and durable-closeout proof. Activation changes no product behavior, cap, publication, support statement, budget, or capacity claim. The first implementation slice must enumerate the live cap policy and every closed child evidence owner before selecting the smallest missing cross-family proof.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8: activate cross-family cap closeout`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
   Status: `proposed`
@@ -2522,3 +2522,23 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   integrity, mdBook test/render inspection, Knowledge Map parity, claim
   verification, live-document ceilings, and all registered doctrines are green
   at commit with no code or product-behavior change.
+
+## Acceptance Checklist (enforced) — `.17.4.8` bounded activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — query-first Knowledge Map inspection,
+  decision `0093`'s ordered implementation, and clean closure commit
+  `5583365cb` establish that `.17.4.8` is the sole remaining `.17.4` child and
+  owns the independent cross-family proof after every component leaf. Exact
+  `git log -S'runtime_stream_envelopes' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` identifies selection commit
+  `951720257`.
+- [x] **ADDRESSED (verified)** — activate only `.17.4.8`; synchronize the live
+  task/index/Memory/mdBook frontier on an evidence-inventory first slice; and
+  change no product behavior, cap, publication, support statement, budget, or
+  capacity claim.
+- [x] **NO REGRESSION** — task-tree integrity and every mdBook chapter test are
+  green; Knowledge Map query parity, claim-inventory regeneration, and all
+  live-document surfaces pass with a fresh maintained-book authority and no
+  ceiling increase. The canonical result is `knowledge-map: OK`; staged
+  acceptance and every registered doctrine are required green immediately
+  before commit. Full CI and push remain deferred by policy.

@@ -186,10 +186,10 @@ or review closure. Accepted map and artifact materializations must equal those
 preflights, with terminal defenses retained; identities and nonclaims do not
 change.
 
-Leaf `.17.4.7` owns executable portable-SystemVerilog, portable-VHDL, and OSVVM
-runtime streams plus transcript/timeout and trace/result/publication envelopes.
-Portable SystemVerilog is audited first through the shared same-volume
-lifecycle; native UVM remains emission-only. Its first slice applies the
+Completed `.17.4.7` owns the executable portable-SystemVerilog, portable-VHDL,
+and OSVVM runtime envelopes; native UVM remains emission-only. Active `.17.4.8`
+owns cross-family consistency and closeout, beginning with a policy/evidence
+inventory. Its first portable-SystemVerilog slice applies the
 existing public graph validator to the exact plan-plus-emission artifact set
 before Runner eligibility. Known count, byte, or collision excess therefore
 starts no tool and publishes no partial graph; later terminal validations stay

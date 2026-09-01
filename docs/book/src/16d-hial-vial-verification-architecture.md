@@ -2610,8 +2610,7 @@ Completed task-tree leaf `.17.4.7` owns the bounded-failure layer for executable
 portable-SystemVerilog, portable-VHDL, and qualified-OSVVM runtime streams,
 together with their transcript, timeout, trace, result, and public-artifact
 envelopes. Native UVM remains emission-only and is not promoted into this
-runtime scope. Its complete RAM-guarded closure suite is green; cross-family
-cap consistency and durable closeout remain proposed under `.17.4.8`.
+runtime scope. Its complete RAM-guarded closure suite is green. Active `.17.4.8` now inventories the live cap policy and closed-child evidence before selecting the smallest missing cross-family proof; no cap, publication, support statement, budget, capacity claim, or product behavior changes.
 
 The first portable-SystemVerilog slice now applies the existing public graph
 validator to the exact plan artifacts plus successful backend emission before
