@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-selected`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **11** uniquely owned question entries.
+> **1** facts · **13** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -9,10 +9,12 @@
 - q="can a selected VIAL tool escape process supervision with setsid?" · facts=[vial-selected-tool-detached-descendant-containment](../../docs/knowledge/vial-selected-tool-detached-descendant-containment.md)
 - q="can a stalled ps or lsof suspend ProcessSupervisor?" · facts=[vial-selected-tool-detached-descendant-containment](../../docs/knowledge/vial-selected-tool-detached-descendant-containment.md)
 - q="can a wall-clock adjustment change selected-tool cleanup?" · facts=[vial-selected-tool-detached-descendant-containment](../../docs/knowledge/vial-selected-tool-detached-descendant-containment.md)
+- q="can selected-tool SIGKILL reap block ProcessSupervisor?" · facts=[vial-selected-tool-detached-descendant-containment](../../docs/knowledge/vial-selected-tool-detached-descendant-containment.md)
 - q="does a detached selected-tool child survive timeout cleanup?" · facts=[vial-selected-tool-detached-descendant-containment](../../docs/knowledge/vial-selected-tool-detached-descendant-containment.md)
 - q="how are selected-tool host observers bounded?" · facts=[vial-selected-tool-detached-descendant-containment](../../docs/knowledge/vial-selected-tool-detached-descendant-containment.md)
 - q="how does ProcessSupervisor contain a detached selected-tool descendant?" · facts=[vial-selected-tool-detached-descendant-containment](../../docs/knowledge/vial-selected-tool-detached-descendant-containment.md)
 - q="how does VIAL find a selected-tool process holding the containment pipe?" · facts=[vial-selected-tool-detached-descendant-containment](../../docs/knowledge/vial-selected-tool-detached-descendant-containment.md)
+- q="how is the exact selected-tool leader reaped after SIGKILL?" · facts=[vial-selected-tool-detached-descendant-containment](../../docs/knowledge/vial-selected-tool-detached-descendant-containment.md)
 - q="what is the difference between lifecycle and outer-worker process containment?" · facts=[vial-selected-tool-detached-descendant-containment](../../docs/knowledge/vial-selected-tool-detached-descendant-containment.md)
 - q="which clock bounds selected-tool TERM and KILL containment?" · facts=[vial-selected-tool-detached-descendant-containment](../../docs/knowledge/vial-selected-tool-detached-descendant-containment.md)
 - q="why is process-tree sampling not the selected-tool cleanup proof?" · facts=[vial-selected-tool-detached-descendant-containment](../../docs/knowledge/vial-selected-tool-detached-descendant-containment.md)

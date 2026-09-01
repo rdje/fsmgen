@@ -4256,6 +4256,18 @@ prove -Iperl -It/lib -v \
   t/1757-vial-selected-tool-monotonic-containment.t
 ```
 
+SIGKILL does not hand control to an unbounded blocking reap. The supervisor
+polls its exact owned leader nonblockingly under a monotonic reap deadline,
+retains the real wait status when it arrives, and still completes the bounded
+process-group absence check before returning or reporting residue. The control
+replaces only a blocking exact-leader wait with a non-completing injection and
+proves that supervision returns without consulting it:
+
+```bash
+prove -Iperl -It/lib -v \
+  t/1758-vial-selected-tool-bounded-leader-reap.t
+```
+
 This is deliberately a synchronous selected-tool contract, not a general
 daemon job object. The caller seal admits only the exact GHDL/Verilator
 lifecycle and qualification command profiles. A child that deliberately closes

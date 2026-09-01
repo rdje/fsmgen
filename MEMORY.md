@@ -8,9 +8,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
   (`active`; common-controller hardening continues)
-- next_action: Falsify `.17.4.7` selected-tool timeout against a non-completing
-  post-SIGKILL reap; bound exact-leader `waitpid` without weakening group
-  absence or wait-status authority.
-- in_flight_uncommitted: none after the monotonic-containment commit.
+- next_action: Inject `EINTR` into `.17.4.7` selected-tool and host-observer
+  `waitpid(..., WNOHANG)` phases; prevent an interrupted poll from authenticating
+  a live process as reaped.
+- in_flight_uncommitted: none after the bounded selected-tool reap commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none.

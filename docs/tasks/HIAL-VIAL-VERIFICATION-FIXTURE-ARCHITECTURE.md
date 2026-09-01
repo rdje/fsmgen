@@ -2253,3 +2253,51 @@ host-observer path already uses bounded `WNOHANG` reap, so the contracts are
 inconsistent. The next `.17.4.7` slice must inject a non-completing selected-tool
 reap, prove whether timeout can still be suspended, and make exact-leader reap
 bounded without weakening process-group absence or wait-status authority.
+
+## Acceptance Checklist (enforced) — `.17.4.7` bounded selected-tool leader reap
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — t1758 installed a compile-time
+  `CORE::GLOBAL::waitpid` injection that delegates every operation except the
+  exact selected-tool leader's blocking post-SIGKILL wait. `_terminate_process`
+  completed its TERM grace and issued SIGKILL, then the injected wait suspended
+  past the seven-second outer watchdog. Prove emitted
+  `Failed test at t/1758-vial-selected-tool-bounded-leader-reap.t line 95` for
+  bounded return and line 103 for the missing status result; one of one
+  top-level subtests failed in eight wallclock seconds. Exact watchdog cleanup
+  and process-group absence passed, isolating the unbounded `waitpid($pid, 0)`
+  rather than signal delivery or group containment.
+- [x] **ADDRESSED (verified)** — the sole blocking selected-tool
+  `waitpid($pid, 0)` is absent. After SIGKILL, `_terminate_process` polls the
+  exact owned leader with `WNOHANG` under a fresh monotonic two-second reap
+  deadline, retains the exact wait status on success, and records an unreaped
+  leader without skipping the existing bounded process-group absence check.
+  Only after that domain check may it raise the explicit residue failure. The
+  repaired t1758 returns in two wallclock seconds, proves the injected blocking
+  wait was called zero times, preserves signal-nine status, exits cleanly, and
+  leaves no process-group residue.
+- [x] **NO REGRESSION** — the strengthened blocking-reap injection passes its
+  top-level subtest and all four inner assertions at `Files=1, Tests=1` in two
+  wallclock seconds, including exact signal status, zero blocking-wait calls,
+  clean probe exit, and group absence. The final RAM-guarded capture-limit,
+  exact Verilator/GHDL lifecycle, provider-aware GHDL, runtime-process
+  envelope, retained-writer, stalled-observer, monotonic-clock, and
+  bounded-reap collection passes `Files=9, Tests=57` in 40 wallclock seconds.
+  All 58 mdBook chapters test; the inspected 93-file/20,456-KiB
+  repository-local render contains the executable t1758 command and is
+  removed. Knowledge Map parity is 1,159 facts / 6,219 questions / 6,391
+  answer occurrences / 138 shards. Claim verification retains 27 records and
+  closes all 1,711 candidates through 179 claim-record, 939 gate, and 593
+  reviewed dispositions with zero gaps/open; the independent inventory agrees
+  at 11,406 numeric lines. Maintained-book authority is exact at 58 files /
+  54,463 lines / 2,941,965 bytes; the existing Knowledge-card transition
+  contains 1,158 files / 46,883 lines / 3,461,085 bytes. All 22 live-document
+  surfaces pass with zero ceiling increases. Staged acceptance and every
+  registered doctrine are required green immediately before commit.
+
+**Tracked adjacent interrupted-wait finding:** every selected-tool and host
+observer `waitpid(..., WNOHANG)` path currently treats `-1` as completed. That
+conflates `ECHILD` with `EINTR`; in `_terminate_process`, one interrupted poll
+can mark an ignoring leader reaped, suppress exact-PID liveness, and return
+before TERM/KILL containment. The next `.17.4.7` slice must inject `EINTR` at
+each wait phase, prove the live-leader escape, retry interruptions, and retain
+the existing no-child, exact-status, deadline, and residue semantics.

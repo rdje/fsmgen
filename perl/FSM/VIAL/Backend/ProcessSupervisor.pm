@@ -855,9 +855,18 @@ sub _terminate_process($pid, $process_group) {
     }
     kill 'KILL', $target;
     unless ($leader_reaped) {
-        waitpid($pid, 0);
-        $leader_status = $?;
+        my $reap_deadline = clock_gettime(CLOCK_MONOTONIC) + 2;
+        while (clock_gettime(CLOCK_MONOTONIC) < $reap_deadline) {
+            my $waited = waitpid($pid, WNOHANG);
+            if ($waited == $pid || $waited == -1) {
+                $leader_reaped = 1;
+                $leader_status = $?;
+                last;
+            }
+            sleep(0.02);
+        }
     }
+    my $leader_reap_failed = !$leader_reaped;
     if ($process_group) {
         my $kill_deadline = clock_gettime(CLOCK_MONOTONIC) + 2;
         while (kill(0, -$pid)
@@ -870,6 +879,10 @@ sub _terminate_process($pid, $process_group) {
             '/process',
         ) if kill(0, -$pid);
     }
+    _throw(
+        'VIAL_PROCESS_RESIDUE_ERROR',
+        'selected-tool leader survived bounded SIGKILL reap', '/process',
+    ) if $leader_reap_failed;
     return defined($leader_status) ? $leader_status : 0;
 }
 

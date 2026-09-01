@@ -13,6 +13,8 @@ answers:
   - "how are selected-tool host observers bounded?"
   - "can a wall-clock adjustment change selected-tool cleanup?"
   - "which clock bounds selected-tool TERM and KILL containment?"
+  - "can selected-tool SIGKILL reap block ProcessSupervisor?"
+  - "how is the exact selected-tool leader reaped after SIGKILL?"
 date: 2026-09-01
 status: current
 tags: [vial, process-supervisor, containment, verilator, ghdl]
@@ -26,6 +28,7 @@ evidence: >-
   t/1755-vial-selected-tool-detached-descendant-containment.t;
   t/1756-vial-selected-tool-host-observer-deadline.t;
   t/1757-vial-selected-tool-monotonic-containment.t;
+  t/1758-vial-selected-tool-bounded-leader-reap.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -38,6 +41,7 @@ reverify: >-
   t/1755-vial-selected-tool-detached-descendant-containment.t
   t/1756-vial-selected-tool-host-observer-deadline.t
   t/1757-vial-selected-tool-monotonic-containment.t
+  t/1758-vial-selected-tool-bounded-leader-reap.t
 ---
 
 `FSM::VIAL::Backend::ProcessSupervisor` serves both public lifecycle execution
@@ -98,3 +102,10 @@ control replaces the module's wall-time function with backward and forward
 steps while independently measuring monotonic elapsed time. Both paths retain
 the intended grace, kill and reap the exact tool, leave no process-group
 residue, and prove the injected wall clock was never called.
+
+After SIGKILL, exact-leader reap is nonblocking and monotonically bounded. The
+supervisor polls its owned PID with `WNOHANG`, retains the delivered wait
+status, and completes any process-group absence check before returning or
+raising residue. An executable control replaces only the former blocking wait
+with a non-completing injection; the repaired path never calls it, returns the
+signal status, and leaves no process-group residue.
