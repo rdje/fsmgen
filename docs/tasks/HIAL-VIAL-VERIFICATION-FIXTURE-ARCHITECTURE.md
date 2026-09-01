@@ -1972,3 +1972,56 @@ its leader exits. The next `.17.4.7` slice must prove whether such a detached
 descendant can survive the negative-PID containment domain and mutate the stage
 after cleanup admission; if so, it owns the containment repair before any
 further destructive-path audit.
+
+## Acceptance Checklist (enforced) — `.17.4.7` detached common-worker descendant containment
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the corrected host-authorized t1754 RED
+  supplied a canonical successful callback whose child called `setsid`, moved
+  outside the worker's negative-PID process-group domain, waited for the
+  controller to remove staging, recreated that pathname, wrote a late marker,
+  and remained alive. The pre-repair controller accepted the measurement, left
+  the detached child alive, and admitted the post-cleanup mutation: three of
+  five assertions failed at t/1754-vial-common-detached-descendant-containment.t line 79,
+  line 83, and line 85. The cleanup-success control and exact fixture cleanup
+  passed. `_run_stage` observed only the original group after the worker leader
+  exited; session creation changes group identity without changing the live
+  child's parentage while that leader remains available to contain it.
+- [x] **ADDRESSED (verified)** — the worker now starts from an authenticated
+  empty child tree, performs a bounded `ps` parentage census after its callback
+  and on TERM, stops newly observed descendants to stabilize that tree, kills
+  every exact observed PID, reaps direct children, and requires absence before
+  publishing its result. Any observed descendant replaces plausible success
+  with `VIAL_SCALE_MEASUREMENT_PROCESS_RESIDUE_ERROR`. A separate one-byte
+  status channel must contain exactly `S` and reach EOF; a surviving fork that
+  retains its inherited writer therefore cannot authorize cleanup. The parent
+  retains its original process-group fallback and admits recursive cleanup only
+  when both worker-side and parent-side containment proofs succeed. Final t1754
+  passes `Files=1, Tests=5`; t1752 retains `Files=1, Tests=11`; and exact
+  RAM-guarded t1656 retains all six top-level subtests including timeout cleanup.
+- [x] **NO REGRESSION** — Perl product/test syntax and `git diff --check` are
+  clean. The valid default-88%/4,096-MiB guarded foundation, every executable
+  common-controller consumer, t1748/t1749/t1751/t1752/t1753, and t1754 pass
+  `Files=14, Tests=97` in 65 wallclock seconds. The earlier broad invocation
+  with a nonexistent t1659 filename is invalidated and contributes no evidence.
+  All 58 mdBook chapters test; the inspected 93-file/20,432-KiB local render
+  contains the exact contract and command and is removed. Knowledge Map parity
+  is 1,158 facts / 6,206 questions / 6,378 answer occurrences / 137 shards.
+  Claim inventory independently agrees at 11,401 numeric lines and 1,711
+  candidates; 27 registry records plus 179 claim-record, 939 gate, and 593
+  reviewed dispositions retain zero gaps/open. Maintained-book authority is
+  exact at 58 files / 54,390 lines / 2,938,088 bytes; the card transition
+  admits 1,157 files / 46,772 lines / 3,454,639 bytes; all 22 live-document
+  surfaces pass with zero ceiling increases. Staged acceptance and every
+  registered doctrine are required green immediately before commit. This
+  private repair changes no artifact, support, performance, capacity,
+  reached-boundary, or public API claim.
+
+**Tracked adjacent selected-tool finding:** the common worker now contains a
+direct child even after that child creates a new session, but
+`FSM::VIAL::Backend::ProcessSupervisor` remains a distinct exec boundary. Its
+normal-exit and timeout paths test and terminate only the original
+negative-PID process group. A selected-tool descendant that calls `setsid`
+would leave that domain before the tool leader exits. The next `.17.4.7` slice
+must supply an executable detached selected-tool RED, prove result/cleanup
+behavior through the shared Verilator/GHDL supervisor contract, and repair the
+supervisor before returning to any other admission audit.

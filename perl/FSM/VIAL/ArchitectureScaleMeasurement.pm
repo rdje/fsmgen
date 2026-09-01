@@ -431,22 +431,51 @@ sub _run_stage($raw) {
     my $timeout = _effective_timeout(
         $stage, $plan->{backend_timeout_seconds},
     );
-    my ($reader, $writer);
+    my ($reader, $writer, $containment_reader, $containment_writer);
     pipe($reader, $writer)
         or confess "cannot create measurement worker pipe\n";
+    # A fork inherits the containment writer.  The parent accepts its one-byte
+    # result only with EOF, so a surviving fork keeps cleanup sealed.
+    if (!pipe($containment_reader, $containment_writer)) {
+        close $reader;
+        close $writer;
+        confess "cannot create measurement worker containment pipe\n";
+    }
     my @times_before = times;
     my $started = clock_gettime(CLOCK_MONOTONIC);
     my $pid = fork();
     if (!defined $pid) {
         close $reader;
         close $writer;
+        close $containment_reader;
+        close $containment_writer;
         confess "cannot fork measurement worker\n";
     }
     if ($pid == 0) {
         close $reader;
+        close $containment_reader;
+        my $worker_pid = $$;
         my $process_group_ready = eval {
             setpgid(0, 0);
-            _worker_process_group_ready();
+            confess "measurement worker process-group containment failed\n"
+                unless _worker_process_group_ready();
+            my $initial = _worker_descendant_snapshot($worker_pid);
+            confess "measurement worker began with a live descendant\n"
+                if @$initial;
+            1;
+        };
+        local $SIG{TERM} = sub {
+            POSIX::_exit(143) unless $$ == $worker_pid;
+            $SIG{TERM} = 'IGNORE';
+            my $safe = eval {
+                _terminate_worker_descendants($worker_pid);
+                1;
+            };
+            _write_worker_containment_status(
+                $containment_writer, $safe ? 'S' : 'U',
+            );
+            close $writer;
+            POSIX::_exit(143);
         };
         my $result = eval {
             confess "measurement worker process-group containment failed\n"
@@ -478,6 +507,43 @@ sub _run_stage($raw) {
                 ),
             };
         }
+        my $descendant_count = 0;
+        my $descendants_contained = eval {
+            $descendant_count =
+                _terminate_worker_descendants($worker_pid);
+            1;
+        };
+        if (!$descendants_contained) {
+            $result = {
+                ok => JSON::PP::false,
+                status => 'worker_containment_error',
+                output_counts => _zero_counts(),
+                semantic_object_counts => {},
+                correctness_oracles => [],
+                artifacts => [],
+                diagnostic => _diagnostic(
+                    'VIAL_SCALE_MEASUREMENT_PROCESS_RESIDUE_ERROR',
+                    _sanitize_exception($@),
+                    "/stage_measurements/$stage/process",
+                ),
+            };
+        }
+        elsif ($descendant_count) {
+            $result = {
+                ok => JSON::PP::false,
+                status => 'worker_process_residue',
+                output_counts => _zero_counts(),
+                semantic_object_counts => {},
+                correctness_oracles => [],
+                artifacts => [],
+                diagnostic => _diagnostic(
+                    'VIAL_SCALE_MEASUREMENT_PROCESS_RESIDUE_ERROR',
+                    "stage '$stage' worker retained a descendant after "
+                        . 'its callback returned',
+                    "/stage_measurements/$stage/process",
+                ),
+            };
+        }
         my $encoded = eval { _canonical_json($result) };
         if (!defined($encoded)
                 || bytes::length($encoded) > $MAX_WORKER_RESULT_BYTES) {
@@ -497,14 +563,21 @@ sub _run_stage($raw) {
         }
         my $written = print {$writer} $encoded;
         close $writer;
-        _exit($written ? 0 : 74);
+        my $containment_written = _write_worker_containment_status(
+            $containment_writer,
+            $descendants_contained ? 'S' : 'U',
+        );
+        _exit($written && $containment_written ? 0 : 74);
     }
 
     close $writer;
+    close $containment_writer;
     eval { setpgid($pid, $pid); 1 };
-    my $flags = fcntl($reader, F_GETFL, 0);
-    fcntl($reader, F_SETFL, $flags | O_NONBLOCK)
-        if defined $flags;
+    for my $fh ($reader, $containment_reader) {
+        my $flags = fcntl($fh, F_GETFL, 0);
+        fcntl($fh, F_SETFL, $flags | O_NONBLOCK)
+            if defined $flags;
+    }
     my ($buffer, @samples, @unsupported) = ('');
     my $next_sample = $started;
     my ($wait_status, $timed_out, $done) = (undef, 0, 0);
@@ -547,6 +620,9 @@ sub _run_stage($raw) {
     }
     _drain_pipe($reader, \$buffer, 1);
     close $reader;
+    my $worker_containment_status =
+        _read_worker_containment_status($containment_reader);
+    close $containment_reader;
     my $finished = clock_gettime(CLOCK_MONOTONIC);
     my @times_after = times;
 
@@ -570,6 +646,13 @@ sub _run_stage($raw) {
         $diagnostic = _diagnostic(
             'VIAL_SCALE_MEASUREMENT_PROCESS_RESIDUE_ERROR',
             $message, "/stage_measurements/$stage/process",
+        );
+    }
+    elsif (($worker_containment_status // '') ne 'S') {
+        $diagnostic = _diagnostic(
+            'VIAL_SCALE_MEASUREMENT_PROCESS_RESIDUE_ERROR',
+            "stage '$stage' worker descendant containment was not proven",
+            "/stage_measurements/$stage/process",
         );
     }
     elsif (defined $result_error) {
@@ -670,7 +753,8 @@ sub _run_stage($raw) {
     };
     return {
         ok => $ok ? JSON::PP::true : JSON::PP::false,
-        cleanup_safe => defined($containment_error) ? 0 : 1,
+        cleanup_safe => ($worker_containment_status // '') eq 'S'
+                && !defined($containment_error) ? 1 : 0,
         stage_measurement => $measurement,
         correctness_oracles => $oracles,
         artifacts => $artifacts,
@@ -2652,6 +2736,117 @@ sub _terminate_residual_process_group($pid) {
     confess "measurement worker residual process group survived containment\n"
         if kill(0, -$pid);
     return 1;
+}
+
+sub _worker_descendant_snapshot($root_pid) {
+    my ($ok, $output) = _capture_command('ps', '-axo', 'pid=,ppid=');
+    confess "measurement worker descendant census is unavailable\n"
+        unless $ok;
+
+    my %children;
+    for my $line (split /\n/, $output) {
+        next if $line =~ /\A\s*\z/;
+        my ($pid, $parent) = $line
+            =~ /\A\s*([1-9][0-9]*)\s+([0-9]+)\s*\z/
+            or confess "measurement worker descendant census is malformed\n";
+        push $children{$parent}->@*, 0 + $pid;
+    }
+
+    my (@pending, @descendants, %seen);
+    push @pending, $children{$root_pid}->@*
+        if exists $children{$root_pid};
+    while (@pending) {
+        my $pid = shift @pending;
+        next if $seen{$pid}++;
+        push @descendants, $pid if kill(0, $pid);
+        push @pending, $children{$pid}->@*
+            if exists $children{$pid};
+    }
+    return [sort { $a <=> $b } @descendants];
+}
+
+sub _reap_worker_children() {
+    while (1) {
+        my $reaped = waitpid(-1, WNOHANG);
+        last if $reaped <= 0;
+    }
+    return;
+}
+
+sub _terminate_worker_descendants($root_pid) {
+    _reap_worker_children();
+    my (%seen, $stable);
+    my $freeze_deadline = clock_gettime(CLOCK_MONOTONIC) + 2;
+    while (!$stable) {
+        my $snapshot = _worker_descendant_snapshot($root_pid);
+        my @new;
+        for my $pid (@$snapshot) {
+            next if $seen{$pid};
+            $seen{$pid} = 1;
+            push @new, $pid;
+        }
+        if (@new) {
+            kill 'STOP', @new;
+            confess "measurement worker descendants resisted freezing\n"
+                if clock_gettime(CLOCK_MONOTONIC) >= $freeze_deadline;
+            sleep(0.01);
+        }
+        else {
+            $stable = 1;
+        }
+    }
+
+    my $count = scalar keys %seen;
+    return 0 unless $count;
+    kill 'KILL', sort { $a <=> $b } keys %seen;
+
+    my $kill_deadline = clock_gettime(CLOCK_MONOTONIC) + 2;
+    while (1) {
+        _reap_worker_children();
+        my $snapshot = _worker_descendant_snapshot($root_pid);
+        for my $pid (@$snapshot) {
+            next if $seen{$pid};
+            $seen{$pid} = 1;
+            $count++;
+            kill 'STOP', $pid;
+            kill 'KILL', $pid;
+        }
+        my @alive = grep { kill(0, $_) } keys %seen;
+        return $count unless @alive || @$snapshot;
+        confess "measurement worker descendants survived containment\n"
+            if clock_gettime(CLOCK_MONOTONIC) >= $kill_deadline;
+        sleep(0.02);
+    }
+}
+
+sub _write_worker_containment_status($writer, $status) {
+    my $written = syswrite($writer, $status, 1);
+    my $closed = close $writer;
+    return defined($written) && $written == 1 && $closed ? 1 : 0;
+}
+
+sub _read_worker_containment_status($reader) {
+    my $status = '';
+    my $eof = 0;
+    while (1) {
+        my $chunk = '';
+        my $read = sysread($reader, $chunk, 2);
+        if (defined $read) {
+            if ($read == 0) {
+                $eof = 1;
+                last;
+            }
+            $status .= $chunk;
+            return undef if bytes::length($status) > 1;
+            next;
+        }
+        next if $! == EINTR;
+        last if $! == EAGAIN || $! == EWOULDBLOCK;
+        return undef;
+    }
+    return undef unless $eof;
+    return $status if $status eq 'S' || $status eq 'U';
+    return undef;
 }
 
 sub _worker_process_group_ready() {

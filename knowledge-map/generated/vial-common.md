@@ -1,10 +1,11 @@
 # Knowledge Map: `vial-common`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **11** uniquely owned question entries.
+> **1** facts · **13** uniquely owned question entries.
 
 ## Questions → facts
 
+- q="can a VIAL common worker descendant escape containment with setsid?" · facts=[vial-common-worker-output-census-admission](../../docs/knowledge/vial-common-worker-output-census-admission.md)
 - q="can a successful VIAL measurement worker leave a live descendant?" · facts=[vial-common-worker-output-census-admission](../../docs/knowledge/vial-common-worker-output-census-admission.md)
 - q="do per-stage and terminal VIAL artifact admission share one census?" · facts=[vial-common-worker-output-census-admission](../../docs/knowledge/vial-common-worker-output-census-admission.md)
 - q="does VIAL cleanup recheck output census bounds before remove_tree?" · facts=[vial-common-worker-output-census-admission](../../docs/knowledge/vial-common-worker-output-census-admission.md)
@@ -14,6 +15,7 @@
 - q="how is the VIAL worker output tree bounded after the worker exits?" · facts=[vial-common-worker-output-census-admission](../../docs/knowledge/vial-common-worker-output-census-admission.md)
 - q="what authenticates the VIAL staging root before destructive cleanup?" · facts=[vial-common-worker-output-census-admission](../../docs/knowledge/vial-common-worker-output-census-admission.md)
 - q="what binds VIAL cleanup residue to the repository device?" · facts=[vial-common-worker-output-census-admission](../../docs/knowledge/vial-common-worker-output-census-admission.md)
+- q="what containment proof must reach EOF before VIAL staging cleanup?" · facts=[vial-common-worker-output-census-admission](../../docs/knowledge/vial-common-worker-output-census-admission.md)
 - q="what limits apply to the common measurement controller output census?" · facts=[vial-common-worker-output-census-admission](../../docs/knowledge/vial-common-worker-output-census-admission.md)
 - q="when does the common VIAL controller terminate residual process groups?" · facts=[vial-common-worker-output-census-admission](../../docs/knowledge/vial-common-worker-output-census-admission.md)
 

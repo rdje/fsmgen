@@ -4181,10 +4181,29 @@ separately bounded `/proc/cpuinfo` processor-ID count is the fail-closed
 fallback, so measurement does not depend on a Perl build exposing
 `_SC_NPROCESSORS_ONLN` and never invents a default. Darwin profiling and the
 closed host-profile schema remain unchanged. These observations never hold
-project output. Persisted paths remain
-repository-relative, diagnostics are sanitized, worker result capture is
-bounded, timeout termination targets both the worker process group and its
-direct PID, and cleanup records exact residue if removal itself fails.
+project output. Persisted paths remain repository-relative, diagnostics are
+sanitized, worker result capture is bounded, and each worker authenticates its
+own process group before invoking a callback. Callback completion is not
+leader completion: while the worker is still alive it inventories its current
+parentage tree, stops newly observed children to stabilize that tree, kills and
+reaps every exact observed PID, and rejects a callback that retained any
+descendant. Because `setsid` changes a child's session and process group but
+not its parent, the same check contains a direct child that leaves the original
+negative-PID group.
+
+The worker publishes a separate one-byte containment result only after that
+check. The controller requires exactly the safe byte plus end-of-stream; a
+surviving fork that retains the inherited writer cannot authenticate cleanup.
+It also retains the original process-group TERM/KILL fallback. Missing worker
+proof or failed parent containment suppresses terminal recursive deletion and
+records the exact staging identity as residue. Timeout termination still
+targets both the worker process group and its direct PID, and cleanup records
+exact residue if removal itself fails. The focused executable proof is:
+
+```bash
+prove -Iperl -v \
+  t/1754-vial-common-detached-descendant-containment.t
+```
 
 ### Semantic and bridge measurement boundary
 

@@ -10,6 +10,8 @@ answers:
   - "what binds VIAL cleanup residue to the repository device?"
   - "can a successful VIAL measurement worker leave a live descendant?"
   - "when does the common VIAL controller terminate residual process groups?"
+  - "can a VIAL common worker descendant escape containment with setsid?"
+  - "what containment proof must reach EOF before VIAL staging cleanup?"
   - "what authenticates the VIAL staging root before destructive cleanup?"
   - "does VIAL cleanup recheck output census bounds before remove_tree?"
   - "does the worker output census create a VIAL capacity claim?"
@@ -23,6 +25,7 @@ evidence: >-
   t/1751-vial-common-interrupted-stage-census-admission.t;
   t/1752-vial-common-worker-process-group-containment.t;
   t/1753-vial-common-bounded-cleanup-admission.t;
+  t/1754-vial-common-detached-descendant-containment.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16de-vial-osvvm-runtime-execution-plan.md;
   doctrine/claim_verification/claims.jsonl;
@@ -34,6 +37,7 @@ reverify: >-
   t/1751-vial-common-interrupted-stage-census-admission.t
   t/1752-vial-common-worker-process-group-containment.t
   t/1753-vial-common-bounded-cleanup-admission.t
+  t/1754-vial-common-detached-descendant-containment.t
 ---
 
 The isolated stage worker is timed and its canonical result pipe is bounded,
@@ -59,15 +63,22 @@ existing symlink, special-file, and hard-link diagnostics stay authoritative.
 Cleanup-residue reporting passes the already validated repository device into
 the same census rather than trusting the remaining path as a new authority.
 
-The parent also treats process-group absence—not worker-leader exit—as the
-precondition for result validation and later cleanup. A worker that cannot
-establish its exact process-group identity rejects before its callback runs.
-If a zero-exit leader leaves a descendant, the parent performs bounded
-TERM/KILL containment, requires the group to disappear, and returns
-`VIAL_SCALE_MEASUREMENT_PROCESS_RESIDUE_ERROR`; the plausible worker result is
-never promoted. If containment itself cannot prove group absence, an internal
-cleanup-safety bit suppresses the terminal census and recursive deletion and
-reports the exact owned staging identity as residue.
+Worker-leader exit alone is never a containment proof. A worker that cannot
+establish its exact process-group identity or begins with a live child rejects
+before its callback runs. Before exit, it inventories its live parentage tree,
+stops newly observed children, kills and reaps every exact observed PID, and
+requires absence. A direct child remains in that parentage domain after
+`setsid`, even though it has escaped the original process group, so it is
+contained and its plausible callback result rejects with
+`VIAL_SCALE_MEASUREMENT_PROCESS_RESIDUE_ERROR`.
+
+The worker also sends exactly one safe/unsafe status byte on a dedicated
+channel. The parent requires the safe byte and EOF: a surviving fork that still
+holds its inherited writer cannot authorize recursive cleanup. The parent then
+retains the original negative-PID TERM/KILL fallback. If either side cannot
+prove its domain absent, an internal cleanup-safety bit suppresses terminal
+census and recursive deletion and reports the exact owned staging identity as
+residue.
 
 Stage creation also retains the root's repository device, inode, and owner.
 That identity must still match before worker-result validation, terminal

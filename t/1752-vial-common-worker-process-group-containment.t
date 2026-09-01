@@ -54,8 +54,8 @@ read_descendant_identity();
 
 ok(!$result->{ok},
     'a successful leader cannot promote a stage with a live descendant');
-like($result->{diagnostic}{message} // '', qr/process group retained a descendant/,
-    'normal-exit residue has an explicit containment diagnostic');
+like($result->{diagnostic}{message} // '', qr/worker retained a descendant/,
+    'normal-exit descendant residue has an explicit containment diagnostic');
 ok(wait_for_group_exit($descendant_group, 0.25),
     'the residual worker process group is gone before stage return');
 ok($result->{cleanup_safe},
@@ -66,6 +66,8 @@ unlink $pid_path or die "cannot reset descendant identity fixture: $!\n";
 my $containment_failure;
 {
     no warnings qw(redefine once);
+    local *FSM::VIAL::ArchitectureScaleMeasurement::_terminate_worker_descendants =
+        sub { 0 };
     local *FSM::VIAL::ArchitectureScaleMeasurement::_terminate_residual_process_group =
         sub { die "forced residual containment failure\n" };
     $containment_failure = stage_request(
