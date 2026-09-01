@@ -77,6 +77,7 @@ sub exact_inputs {
         materialization_manifest_sha256 => '3' x 64,
         provider_source_identity => 'provider-source/' . ('4' x 64),
     };
+    my $tool_authority = exact_tool_authority();
     my $plan_identity = 'osvvm-plan/' . ('2' x 64);
     my $execution_plan_id = 'plan/' . ('3' x 64);
     my $materialization_identity = 'osvvm-materialization/' . ('4' x 64);
@@ -89,6 +90,7 @@ sub exact_inputs {
         execution_plan => {
             plan_identity => $plan_identity,
             provider_authority => $provider_authority,
+            tool_authority => $tool_authority,
         },
         context => {staging_identity => $staging_identity},
     };
@@ -96,7 +98,10 @@ sub exact_inputs {
         projection => {execution_ir => {plan_id => $execution_plan_id}},
     };
     my $request = {
-        provider => {},
+        provider =>
+            FSM::VIAL::ArchitectureScaleOSVVMRuntimeMeasurement::_ghdl_provider_projection(
+                $raw->{execution_plan},
+            ),
         source_set => $source_set,
         source_identity =>
             'source/' . sha256_hex($JSON->encode($source_set)),
@@ -126,6 +131,22 @@ sub exact_inputs {
         request => $request,
     };
     return ($raw, $route, $envelope);
+}
+
+sub exact_tool_authority {
+    return {
+        root => '.artifacts/cache/tools/ghdl/6.0.0',
+        archive => {
+            relpath => '.artifacts/cache/downloads/ghdl-6.0.0.tar.gz',
+            bytes => 12_345,
+            sha256 => '5' x 64,
+        },
+        binary => {
+            relpath => '.artifacts/cache/tools/ghdl/6.0.0/bin/ghdl',
+            sha256 => '6' x 64,
+        },
+        version_output => "GHDL 6.0.0 (selected)\n",
+    };
 }
 
 sub validate_envelope {

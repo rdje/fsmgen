@@ -637,6 +637,11 @@ sub _validated_request_envelope($raw, $route_authority, $envelope) {
         provider source_set source_identity emission_identity commands
         validation storage_context
     )], 'OSVVM runtime persisted lifecycle request');
+    confess "OSVVM runtime persisted GHDL provider changed\n"
+        unless _canonical_json($request->{provider})
+            eq _canonical_json(_ghdl_provider_projection(
+                $raw->{execution_plan},
+            ));
     confess "OSVVM runtime persisted source identity changed\n"
         unless _scalar_equals(
             $request->{source_identity},
@@ -1538,6 +1543,19 @@ sub _provider_projection($plan) {
             $provider->{materialization_manifest_sha256},
         provider_source_identity =>
             $provider->{provider_source_identity},
+    };
+}
+
+sub _ghdl_provider_projection($plan) {
+    my $tool = $plan->{tool_authority};
+    return {
+        root => $tool->{root},
+        archive => $tool->{archive}{relpath},
+        archive_bytes => 0 + $tool->{archive}{bytes},
+        archive_sha256 => $tool->{archive}{sha256},
+        binary => $tool->{binary}{relpath},
+        binary_sha256 => $tool->{binary}{sha256},
+        version_output => $tool->{version_output},
     };
 }
 

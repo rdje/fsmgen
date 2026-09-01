@@ -14,7 +14,7 @@ answers:
   - "how are OSVVM runtime reference gate and qualification records measured?"
   - "how is the complete OSVVM runtime measurement matrix published and reloaded?"
   - "how are OSVVM supplementary provider report bytes bounded before publication?"
-  - "how are OSVVM persisted lifecycle-request integer and provider types admitted?"
+  - "how are OSVVM persisted lifecycle-request integers and both provider authorities admitted?"
 date: 2026-09-01
 status: current
 tags: [hial, vial, vhdl, osvvm, ghdl, review-gallery, verification]
@@ -39,7 +39,7 @@ evidence: >-
   t/1677-vial-architecture-scale-osvvm-runtime-execution-plan.t;
   t/1678-vial-ghdl-provider-aware-lifecycle.t;
   t/1679-vial-architecture-scale-osvvm-runtime-measurement.t;
-  t/1680-vial-architecture-scale-osvvm-runtime-measurement-matrix.t; t/1740-vial-osvvm-persisted-request-scalar-types.t; t/1741-vial-osvvm-persisted-provider-admission.t;
+  t/1680-vial-architecture-scale-osvvm-runtime-measurement-matrix.t; t/1740-vial-osvvm-persisted-request-scalar-types.t; t/1741-vial-osvvm-persisted-provider-admission.t; t/1742-vial-osvvm-persisted-ghdl-provider-admission.t;
   .artifacts/qualification/vial-scale/v1/osvvm-runtime-matrix-v1/matrix.json;
   .artifacts/qualification/vial-scale/v1/osvvm-runtime-complete-matrix-v1/complete-matrix.json;
   vial/qualification/vhdl_osvvm_ghdl/osvvm-2026.05-ghdl-6.0.0-qualification.json;
@@ -59,7 +59,7 @@ reverify: >-
   t/1676-vial-architecture-scale-osvvm-runtime-materialization.t
   t/1677-vial-architecture-scale-osvvm-runtime-execution-plan.t &&
   prove -Iperl t/1678-vial-ghdl-provider-aware-lifecycle.t
-  t/1680-vial-architecture-scale-osvvm-runtime-measurement-matrix.t t/1740-vial-osvvm-persisted-request-scalar-types.t t/1741-vial-osvvm-persisted-provider-admission.t &&
+  t/1680-vial-architecture-scale-osvvm-runtime-measurement-matrix.t t/1740-vial-osvvm-persisted-request-scalar-types.t t/1741-vial-osvvm-persisted-provider-admission.t t/1742-vial-osvvm-persisted-ghdl-provider-admission.t &&
   scripts/run_with_ram_guard.sh -- env
   FSMGEN_VIAL_OSVVM_RUNTIME_MEASUREMENT_EXACT=1 prove -Iperl
   t/1679-vial-architecture-scale-osvvm-runtime-measurement.t &&
@@ -122,9 +122,9 @@ The `.17.4.7` runtime-envelope audit closes file-report and persisted-request
 admission. Four OSVVM file reports receive a closed same-volume census and
 67,108,864-byte aggregate preflight before read or object write; exact equality
 passes, adjacent excess and post-preflight drift reject before persistence.
-Persisted lifecycle-request reload admits envelope version/run repetitions only as canonical JSON integers and re-derives its six-field provider-verification
-projection from the selected plan before predecessor, lifecycle, or tool work. Strings, booleans, or one changed provider/version/commit/tree/manifest/source
-identity reject; t1740/t1741 falsify those boundaries while qualification, accepted reports, measurement identities, and cap values remain unchanged.
+Persisted lifecycle-request reload admits envelope version/run repetitions only as canonical JSON integers and re-derives both plan-selected provider projections
+before predecessor, lifecycle, or tool work: six OSVVM checkout fields and seven GHDL executable/archive fields. Strings, booleans, or one changed authority
+field reject; t1740-t1742 falsify those boundaries while qualification, accepted reports, measurement identities, and cap values remain unchanged.
 
 Child `.17.3.7.4` maps that exact authority onto the common controller without adding a competing process path. Guarded t1679 accepts eleven independent records: reference validation, gate validation plus three measured records, and qualification validation plus five measured records. Every record retains 61 provider-analysis captures, 68 lifecycle sources, separate fixture/probe elaborations, one fixture and one provider-probe run, four reports, portable trace/result truth, stable provider identity, and zero controller/lifecycle residue. Exact trace counts are 77/10,000/100,000; limit/excess remain provider-, plan-, controller-, lifecycle-, and tool-free. Publication, performance, support, capacity, provider-generality, mixed-language, and public-API claims remain deferred.
 

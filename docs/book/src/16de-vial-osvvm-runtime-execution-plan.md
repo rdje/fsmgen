@@ -202,6 +202,18 @@ prove -Iperl t/1741-vial-osvvm-persisted-provider-admission.t
 This is persisted-authority admission evidence, not a new provider-generality,
 support, performance, or capacity claim.
 
+The request's separate GHDL-provider record is also re-derived from the
+selected plan: tool root, archive path/bytes/digest, binary path/digest, and
+version output must all match before the predecessor handle is read. Run the
+seven independent field controls with:
+
+```console
+prove -Iperl t/1742-vial-osvvm-persisted-ghdl-provider-admission.t
+```
+
+OSVVM checkout provenance and GHDL executable provenance remain distinct;
+neither admission rule widens the qualified provider or tool profile.
+
 Each executable role uses one lifecycle execution per controller record. The
 reference role has one correctness-only validation. Gate has one validation
 and three independently measured records; qualification has one validation
