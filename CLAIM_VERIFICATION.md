@@ -17,10 +17,10 @@
   bounded registry, exact source markers, explicit legs or owned gaps, and
   tracked local evidence paths. `scripts/check_doctrines.sh` runs it as the
   registered `CLAIM-VERIFICATION` doctrine.
-- Partition transition: decision `0094` adds an explicit `--registry-set`
-  validation path with finite manifest, aggregate, shard, and global-identity
-  bounds. The repository default remains the single `claims.jsonl` registry
-  until the separately owned migration leaf makes the rollover atomic.
+- Partition contract: decision `0094` makes the finite manifest-addressed
+  registry set the repository default, with aggregate, shard, and
+  global-identity bounds. Explicit `--registry` remains available for bounded
+  portable single-file fixtures and compatibility probes.
 - Original-constant membership: the bounded baseline names the exact adoption
   commit, then derives its identity set from that versioned source. Current
   files must retain each original identity but never rediscover the frozen

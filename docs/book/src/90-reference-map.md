@@ -59,9 +59,9 @@ re-derive it from its source, attempt to falsify it with a separating oracle,
 and keep a tracked producer plus a watcher that detects staleness. A missing
 leg is published explicitly rather than hidden behind repeated checks of the
 same kind. `scripts/check_claim_verification.pl` gates exact bounded records and
-tracked local paths. Decision `0094` adds an explicit finite registry-set mode
-that retains one global claim namespace; the repository default remains the
-single registry until the atomic rollover slice lands. The separately bounded current-surface inventory derives
+tracked local paths. Decision `0094` makes a finite manifest-addressed
+registry set the repository default while retaining one global claim namespace;
+explicit `--registry` remains for bounded single-file fixtures. The separately bounded current-surface inventory derives
 its scope from the live-document registry and sends every open candidate to a
 task owner. Its bounded disposition registry then joins each reviewed current
 candidate to a published claim record, a three-leg derived gate, a reviewed

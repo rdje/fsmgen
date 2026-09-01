@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `CLAIM-VERIFICATION-REGISTRY-PARTITION`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra/evidence governance`
 - Created: `2026-09-01`
 - Last updated: `2026-09-01`
@@ -49,7 +49,7 @@ without silently raising the existing 65,536-byte file ceiling.
 ## Task Tree
 
 - ID: `CLAIM-VERIFICATION-REGISTRY-PARTITION`
-  Status: `active`
+  Status: `done`
   Goal: `Restore bounded future claim-publication capacity without weakening three-leg evidence.`
   Children: `CLAIM-VERIFICATION-REGISTRY-PARTITION.1, CLAIM-VERIFICATION-REGISTRY-PARTITION.2, CLAIM-VERIFICATION-REGISTRY-PARTITION.3`
 
@@ -68,11 +68,11 @@ without silently raising the existing 65,536-byte file ceiling.
   Commit: `CLAIM-VERIFICATION-REGISTRY-PARTITION.2: gate optional finite registry sets`
 
 - ID: `CLAIM-VERIFICATION-REGISTRY-PARTITION.3`
-  Status: `in_progress`
+  Status: `done`
   Goal: `Migrate the default claim doctrine to two bounded shards and close all documentation and governance surfaces.`
   Acceptance: `The original 65,381-byte shard remains byte-identical, one empty bounded shard restores capacity, the finite set becomes the default, and policy/book/Knowledge Map/bootstrap/inventory/containment/task/Memory/doctrine surfaces agree with zero claim/disposition drift or ceiling increase.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `PASS — the no-argument doctrine consumes the exact two-shard finite registry set at 25 records (24 published/one fixture); explicit single-registry compatibility remains green; the original 65,381-byte shard remains byte-identical at SHA-256 38b77b69f5fdad6350e665e0aa4abbf19c89ed94097e7b3ad424a0d3179170bc; the second shard contains bounded metadata and zero claims. Focused hostile, bootstrap, inventory/disposition, Knowledge Map, mdBook, containment, task-acceptance, and doctrine gates are green with zero claim/disposition or ceiling drift.`
+  Commit: `CLAIM-VERIFICATION-REGISTRY-PARTITION.3: roll production claim registry`
 
 ## Decisions
 
@@ -102,8 +102,8 @@ without silently raising the existing 65,536-byte file ceiling.
 
 ## Open Questions
 
-- None. Decision `0094` closes the contract question; `.2` implements the
-  optional checker path before `.3` changes production discovery.
+- None. Decision `0094` is implemented by the exact production manifest,
+  byte-identical first shard, and empty second shard.
 
 ## Blockers
 
@@ -121,6 +121,12 @@ without silently raising the existing 65,536-byte file ceiling.
 - [x] **ADDRESSED (verified)** — `--registry-set` now admits one canonical bounded manifest, contiguous exact shard paths, complete tracked sibling census, aggregate record/byte caps, per-shard bounds/order, and one global claim/marker namespace; manifest and shards are preflighted at the 65,536-byte hard cap and must be tracked same-volume/current-owner regular files. JSON encode-form validation rejects string or boolean impostors before integer comparison. No arguments and explicit `--registry` still validate the unchanged production single registry at 25 records, while t1750 turns fully green with six positive/hostile top-level subtests.
 - [x] **NO REGRESSION** — claim record/inventory/disposition/registry-set tests report `All tests successful` at `Files=4, Tests=37` in 7 wallclock seconds. The current no-argument doctrine remains green at 25 records; inventory/disposition closes all 1,704 candidates through 172 claim-record, 939 gate, and 593 reviewed outcomes. All 58 mdBook chapters test; the inspected repository-local render has 93 files/20,392 KiB, contains the exact optional/default transition boundary, and is removed. All 22 live-document surfaces pass with exact +2-line/+189-byte book authority and zero ceiling increase. Staged task acceptance and all 12 registered doctrines pass.
 
+## Acceptance Checklist (enforced) — `.3` production registry-set rollover
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the clean pre-migration `prove -Iperl t/1750-claim-verification-registry-set.t` RED left all six explicit-set hostile/positive groups green, but the production-default group failed its exact two-shard census ` at t/1750-claim-verification-registry-set.t line 228`; the checker reported only the legacy single-file `records=25, published=24, fixtures=1` path. Exactly one of seven top-level tests failed in two wallclock seconds while test and checker syntax remained clean.
+- [x] **ADDRESSED (verified)** — no-argument checking now resolves the finite production manifest, whose complete tracked census names the byte-identical historical shard plus one metadata-only empty rollover shard. The production set reports exactly two shards/25 records/24 published/one fixture; explicit `--registry` retains the same 25-record single-file result. The original shard remains exactly 26 lines/65,381 bytes at SHA-256 `38b77b69f5fdad6350e665e0aa4abbf19c89ed94097e7b3ad424a0d3179170bc`, while the new shard is one 106-byte metadata line. Bootstrap, policy, toolbox, mdBook, Knowledge Map, inventory scope, and containment authority all name the landed contract.
+- [x] **NO REGRESSION** — claim record/inventory/disposition/registry-set tests report `All tests successful` at `Files=4, Tests=38` in 7 wallclock seconds; bootstrap and all explicit default/compatibility routes pass. Inventory/disposition remains complete at 1,704/1,704 candidates with 172 claim-record, 939 gate, 593 reviewed, and zero gap/open outcomes. All 58 mdBook chapters test; the inspected repository-local render has 93 files/20,392 KiB, contains the landed default, and is removed. Knowledge Map parity is 1,158 facts/6,198 questions/6,370 occurrences/137 shards; task integrity accepts four active trees/1,031 nodes. All 22 live-document surfaces accept exact 58-file/54,297-line/2,930,967-byte book authority, one-step fact-card file headroom, and zero ceiling increase. Staged task acceptance and all 12 registered doctrines pass.
+
 ## Changelog
 
 - `2026-09-01`: Activated from the clean HIAL `.17.4.7` handoff after the
@@ -131,3 +137,7 @@ without silently raising the existing 65,536-byte file ceiling.
 - `2026-09-01`: Leaf `.2` implements and documents the explicit finite-set
   checker with hostile bounds/type/path/census/order/global-identity controls;
   production discovery remains on the byte-identical single registry for `.3`.
+- `2026-09-01`: Leaf `.3` makes the exact two-shard set the production default,
+  retains explicit bounded single-file fixtures, preserves the historical
+  shard byte-for-byte, restores one empty bounded rollover shard, and closes
+  all governance/documentation surfaces without raising a ceiling.

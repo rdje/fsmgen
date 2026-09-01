@@ -1,0 +1,3 @@
+{"max_bytes":65536,"max_record_bytes":512,"max_shards":64,"max_total_bytes":4194304,"max_total_records":8192,"record_type":"registry_set","schema_version":1}
+{"ordinal":1,"path":"doctrine/claim_verification/claims.jsonl","record_type":"registry_shard","schema_version":1}
+{"ordinal":2,"path":"doctrine/claim_verification/claims-0002.jsonl","record_type":"registry_shard","schema_version":1}

@@ -219,6 +219,19 @@ subtest 'global duplicate identity and local record order fail closed' => sub {
     );
 };
 
+subtest 'the repository default consumes the exact finite registry set' => sub {
+    my ($ok, undef, undef, $stdout, $stderr) = run(
+        command => [$checker]
+    );
+    my $output = join('', @{$stdout || []}, @{$stderr || []});
+    ok($ok, 'repository default registry set passes') or diag($output);
+    like(
+        $output,
+        qr/shards=2, records=25, published=24, fixtures=1/,
+        'default reports the migrated two-shard global census'
+    );
+};
+
 done_testing();
 
 sub make_fixture {

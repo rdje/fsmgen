@@ -1,11 +1,12 @@
 # Knowledge Map: `claim-verification`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **47** uniquely owned question entries.
+> **4** facts · **52** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="can the claim checker prove semantic truth or oracle independence?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
+- q="does claim registry sharding create separate claim namespaces?" · facts=[claim-verification-finite-registry-set](../../docs/knowledge/claim-verification-finite-registry-set.md)
 - q="how are AHB requester shape and exact-one-through-four BUSY claims verified?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are APB five-register and six-register bounds separated from selection history?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are APB generalized register-set claims separated by width stride count and policy?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
@@ -31,14 +32,18 @@
 - q="how do repository-derived numeric constants enter claim review?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)
 - q="how does a completed claim migration group fail on open candidates?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how does random replay distinguish semantic bridge and plan boundaries?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
+- q="how does the claim registry roll over when one shard is full?" · facts=[claim-verification-finite-registry-set](../../docs/knowledge/claim-verification-finite-registry-set.md)
 - q="how is claim verification mechanically enforced?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
+- q="how is single-file claim registry compatibility retained?" · facts=[claim-verification-finite-registry-set](../../docs/knowledge/claim-verification-finite-registry-set.md)
 - q="how is the claim inventory source set derived?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)
 - q="how is the original doctrine constant cohort preserved?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)
+- q="what bounds the claim verification registry set?" · facts=[claim-verification-finite-registry-set](../../docs/knowledge/claim-verification-finite-registry-set.md)
 - q="what checker rejects aliased claim verification legs?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="what independently checks claim inventory completeness?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)
 - q="what is the current complete book fixture count?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="what is the exact static repeat cycle formula?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="when does a claim migration group become required complete?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
+- q="where are claim verification records stored?" · facts=[claim-verification-finite-registry-set](../../docs/knowledge/claim-verification-finite-registry-set.md)
 - q="where are inventoried claim candidates dispositioned?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="where are missing claim-evidence legs assigned to repair tasks?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="where are unwatched claims and untracked producers inventoried?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)
@@ -68,6 +73,13 @@ _Claim inventory scope derives from governed current-document surfaces_
 
 - **date:** 2026-08-20 · **status:** current
 - **source and verification:** [`docs/knowledge/claim-verification-current-surface-inventory.md`](../../docs/knowledge/claim-verification-current-surface-inventory.md)
+
+### claim-verification-finite-registry-set
+
+_Claim records use one finite manifest-addressed registry set_
+
+- **date:** 2026-09-01 · **status:** current
+- **source and verification:** [`docs/knowledge/claim-verification-finite-registry-set.md`](../../docs/knowledge/claim-verification-finite-registry-set.md)
 
 ### claim-verification-record-enforcement
 

@@ -104,6 +104,8 @@ else
 fi
 
 claim_verification_files=(
+  doctrine/claim_verification/claim_registries.jsonl
+  doctrine/claim_verification/claims-0002.jsonl
   doctrine/claim_verification/claims.jsonl
   doctrine/claim_verification/disposition_groups.jsonl
   doctrine/claim_verification/dispositions.jsonl
@@ -116,6 +118,7 @@ claim_verification_files=(
   t/1636-claim-verification-doctrine.t
   t/1637-claim-verification-inventory.t
   t/1638-claim-verification-dispositions.t
+  t/1750-claim-verification-registry-set.t
 )
 for file in "${claim_verification_files[@]}"; do
   if [[ -f "${file}" ]]; then

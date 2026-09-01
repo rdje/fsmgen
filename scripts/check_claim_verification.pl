@@ -33,8 +33,9 @@ my %tracked = tracked_paths($root);
 my @registry_paths;
 my $registry_set_meta;
 my $registry_set_path;
-if (defined $registry_set_arg) {
-    $registry_set_path = $registry_set_arg;
+if (!defined $registry_arg) {
+    $registry_set_path = $registry_set_arg
+        // 'doctrine/claim_verification/claim_registries.jsonl';
     if (!safe_relative_path($registry_set_path)) {
         fail("registry-set path is not repository-relative and local: $registry_set_path");
     }
@@ -43,8 +44,7 @@ if (defined $registry_set_arg) {
     );
     @registry_paths = @{$paths};
 } else {
-    my $registry = $registry_arg
-        // 'doctrine/claim_verification/claims.jsonl';
+    my $registry = $registry_arg;
     if (!safe_relative_path($registry)) {
         fail("registry path is not repository-relative and local: $registry");
     }

@@ -37,9 +37,9 @@ bounded data-only registry, exact source blocks, three named non-aliased legs or
 task-owned gaps, and tracked repository-local evidence paths. That structural
 gate cannot prove a measurement's truth or an oracle's conceptual independence;
 review and the declared falsification leg still own those semantic judgments.
-Decision `0094` also gives the checker an explicit finite registry-set mode;
-the registered no-argument doctrine remains on the single-registry path until
-its atomic migration leaf lands.
+Decision `0094` makes a finite manifest-addressed registry set the registered
+no-argument doctrine path. Explicit `--registry` retains bounded single-file
+fixture compatibility without creating another production namespace.
 
 `LIVE_DOCUMENT_SIZE_CONTAINMENT.md` is the selected project-neutral,
 project-agnostic, and harness-neutral lifecycle doctrine for every live
