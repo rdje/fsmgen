@@ -2301,3 +2301,54 @@ can mark an ignoring leader reaped, suppress exact-PID liveness, and return
 before TERM/KILL containment. The next `.17.4.7` slice must inject `EINTR` at
 each wait phase, prove the live-leader escape, retry interruptions, and retain
 the existing no-child, exact-status, deadline, and residue semantics.
+
+## Acceptance Checklist (enforced) — `.17.4.7` interrupted owned-child polls
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — t1759 injects `EINTR` independently into
+  the selected-tool exit poll, selected-tool TERM poll, selected-tool
+  post-KILL reap poll, host-observer cleanup poll, and bounded host-command
+  poll. The first four containment/helper controls each returned `F`, exited
+  nonzero, and failed exact-completion assertions while their watchdog and
+  group-residue controls passed. After correcting the exit-poll selector, a
+  controlled restoration of only that old call site injected exactly once and
+  changed a real `exit 42` into admitted `exit_code=0`; only the exit-poll
+  exact-completion and clean-probe assertions failed. Its diagnostic was
+  `Failed test at t/1759-vial-selected-tool-interrupted-wait.t line 226` while
+  the other four repaired phases stayed green. This isolates false
+  `-1/EINTR` completion rather than child behavior, signaling, deadline, or
+  cleanup.
+- [x] **ADDRESSED (verified)** — all five nonblocking owned-child wait sites
+  call `_poll_owned_child`. It performs exactly one `waitpid(..., WNOHANG)`;
+  `EINTR` returns pending to the enclosing monotonic loop, while exact PID and
+  existing genuine-no-child results retain their captured wait/no-child
+  semantics. There is no internal retry loop that can hide the caller's
+  deadline. The final focused t1759 passes all five top-level subtests and 20
+  inner assertions in five wallclock seconds, preserving `exit 42`,
+  signal-nine status, explicit helper-command failure, clean probe exits, and
+  zero process-group residue.
+- [x] **NO REGRESSION** — the final focused injection proof passes five
+  top-level subtests and all 20 inner assertions in five wallclock seconds.
+  The RAM-guarded capture-limit, exact Verilator/GHDL lifecycle,
+  provider-aware GHDL, runtime-process envelope, retained-writer,
+  stalled-observer, monotonic-clock, bounded-reap, and interrupted-wait
+  collection passes `Files=10, Tests=62` in 46 wallclock seconds. All 58
+  mdBook chapters test; the inspected 93-file/20,460-KiB repository-local
+  render contains the executable t1759 command and `exit 42` falsification and
+  is removed exactly. Knowledge Map parity is 1,159 facts / 6,222 questions /
+  6,394 answer occurrences / 138 shards. Claim verification retains 27
+  records and closes all 1,711 candidates through 179 claim-record, 939 gate,
+  and 593 reviewed dispositions with zero gaps/open; the independent inventory
+  agrees at 11,408 numeric lines. Maintained-book authority is exact at 58
+  files / 54,484 lines / 2,943,098 bytes; the Knowledge-card transition is
+  exact at 1,158 files / 46,900 lines / 3,462,178 bytes. All 22 live-document
+  surfaces pass with zero ceiling increases. Staged acceptance and every
+  registered doctrine are required green immediately before commit.
+
+**Tracked adjacent interrupted-read finding:** `_bounded_host_command` checks
+its monotonic deadline only after the inner nonblocking `sysread` loop yields,
+but that inner loop immediately retries `EINTR` without progress or a deadline
+check. A sustained interruption stream can therefore suspend `ps`/`lsof`
+observation beyond the bound that t1756 established. The next `.17.4.7` slice
+must inject repeated `EINTR`, prove the deadline escape under an outer
+watchdog, and return interrupted reads to the enclosing deadline authority
+without weakening bounded output, exact helper cleanup, or diagnostics.

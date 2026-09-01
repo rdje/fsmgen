@@ -345,9 +345,10 @@ sub _capture($working_directory, $argv, $policy) {
                 $next_observation += $PROCESS_OBSERVATION_INTERVAL_SECONDS
                     while $next_observation <= $now;
             }
-            my $waited = waitpid($pid, WNOHANG);
-            if ($waited == $pid || $waited == -1) {
-                $status = $?;
+            my ($waited, $wait_status) = _poll_owned_child($pid);
+            if (defined($waited)
+                    && ($waited == $pid || $waited == -1)) {
+                $status = $wait_status;
                 last;
             }
             sleep(0.01);
@@ -481,19 +482,27 @@ sub _host_observer_cleanup_deadline() {
         + $HOST_OBSERVER_CLEANUP_TIMEOUT_SECONDS;
 }
 
+sub _poll_owned_child($pid) {
+    my $waited = waitpid($pid, WNOHANG);
+    return if $waited == -1 && $! == EINTR;
+    return ($waited, $?);
+}
+
 sub _terminate_host_observer($pid) {
     kill 'TERM', $pid;
     my $term_deadline = clock_gettime(CLOCK_MONOTONIC) + 0.2;
     while (clock_gettime(CLOCK_MONOTONIC) < $term_deadline) {
-        my $waited = waitpid($pid, WNOHANG);
-        return if $waited == $pid || $waited == -1;
+        my ($waited) = _poll_owned_child($pid);
+        return if defined($waited)
+            && ($waited == $pid || $waited == -1);
         sleep(0.01);
     }
     kill 'KILL', $pid;
     my $kill_deadline = clock_gettime(CLOCK_MONOTONIC) + 1;
     while (clock_gettime(CLOCK_MONOTONIC) < $kill_deadline) {
-        my $waited = waitpid($pid, WNOHANG);
-        return if $waited == $pid || $waited == -1;
+        my ($waited) = _poll_owned_child($pid);
+        return if defined($waited)
+            && ($waited == $pid || $waited == -1);
         sleep(0.01);
     }
     die "selected-tool host observer could not be reaped\n";
@@ -569,9 +578,11 @@ sub _bounded_host_command($deadline, @command) {
             );
         }
         if (!defined $status) {
-            my $waited = waitpid($pid, WNOHANG);
-            $status = $? if $waited == $pid;
-            $status = 0 if $waited == -1;
+            my ($waited, $wait_status) = _poll_owned_child($pid);
+            if (defined $waited) {
+                $status = $wait_status if $waited == $pid;
+                $status = 0 if $waited == -1;
+            }
         }
         last if $eof && defined $status;
         _abort_host_observer(
@@ -840,10 +851,11 @@ sub _terminate_process($pid, $process_group) {
     my ($leader_reaped, $leader_status) = (0, undef);
     while (clock_gettime(CLOCK_MONOTONIC) < $deadline) {
         unless ($leader_reaped) {
-            my $waited = waitpid($pid, WNOHANG);
-            if ($waited == $pid || $waited == -1) {
+            my ($waited, $wait_status) = _poll_owned_child($pid);
+            if (defined($waited)
+                    && ($waited == $pid || $waited == -1)) {
                 $leader_reaped = 1;
-                $leader_status = $?;
+                $leader_status = $wait_status;
             }
         }
         my $domain_alive = $process_group
@@ -857,10 +869,11 @@ sub _terminate_process($pid, $process_group) {
     unless ($leader_reaped) {
         my $reap_deadline = clock_gettime(CLOCK_MONOTONIC) + 2;
         while (clock_gettime(CLOCK_MONOTONIC) < $reap_deadline) {
-            my $waited = waitpid($pid, WNOHANG);
-            if ($waited == $pid || $waited == -1) {
+            my ($waited, $wait_status) = _poll_owned_child($pid);
+            if (defined($waited)
+                    && ($waited == $pid || $waited == -1)) {
                 $leader_reaped = 1;
-                $leader_status = $?;
+                $leader_status = $wait_status;
                 last;
             }
             sleep(0.02);

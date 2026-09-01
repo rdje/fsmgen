@@ -4268,6 +4268,27 @@ prove -Iperl -It/lib -v \
   t/1758-vial-selected-tool-bounded-leader-reap.t
 ```
 
+An interrupted nonblocking child poll is pending work, not completion.
+`ProcessSupervisor` uses one exact owned-child poll for selected-tool exit,
+TERM grace, post-SIGKILL reap, host-observer cleanup, and bounded host-command
+completion. A `waitpid(..., WNOHANG)` result for the owned PID retains the wait
+status; a genuine no-child result retains the existing completion semantics;
+`EINTR` returns control to the enclosing monotonic loop without authenticating
+exit. The retry is deliberately not hidden inside an unbounded helper loop, so
+the selected-tool or observer deadline remains authoritative.
+
+The executable proof injects one interruption into each of those five phases.
+Its falsification control showed that the old main exit poll could turn a real
+`exit 42` into admitted `exit_code 0`; the TERM and observer controls exposed
+live children, and the post-KILL control lost exact signal-nine evidence. The
+repaired cases preserve the exact exit/signal result, complete within their
+outer watchdogs, and leave no process-group residue:
+
+```bash
+prove -Iperl -It/lib -v \
+  t/1759-vial-selected-tool-interrupted-wait.t
+```
+
 This is deliberately a synchronous selected-tool contract, not a general
 daemon job object. The caller seal admits only the exact GHDL/Verilator
 lifecycle and qualification command profiles. A child that deliberately closes

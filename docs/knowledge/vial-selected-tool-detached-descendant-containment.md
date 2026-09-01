@@ -15,6 +15,9 @@ answers:
   - "which clock bounds selected-tool TERM and KILL containment?"
   - "can selected-tool SIGKILL reap block ProcessSupervisor?"
   - "how is the exact selected-tool leader reaped after SIGKILL?"
+  - "can EINTR make a live selected tool look reaped?"
+  - "how does ProcessSupervisor retry interrupted waitpid polls?"
+  - "can an interrupted host-observer wait hide a failing command?"
 date: 2026-09-01
 status: current
 tags: [vial, process-supervisor, containment, verilator, ghdl]
@@ -29,6 +32,7 @@ evidence: >-
   t/1756-vial-selected-tool-host-observer-deadline.t;
   t/1757-vial-selected-tool-monotonic-containment.t;
   t/1758-vial-selected-tool-bounded-leader-reap.t;
+  t/1759-vial-selected-tool-interrupted-wait.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -42,6 +46,7 @@ reverify: >-
   t/1756-vial-selected-tool-host-observer-deadline.t
   t/1757-vial-selected-tool-monotonic-containment.t
   t/1758-vial-selected-tool-bounded-leader-reap.t
+  t/1759-vial-selected-tool-interrupted-wait.t
 ---
 
 `FSM::VIAL::Backend::ProcessSupervisor` serves both public lifecycle execution
@@ -109,3 +114,15 @@ status, and completes any process-group absence check before returning or
 raising residue. An executable control replaces only the former blocking wait
 with a non-completing injection; the repaired path never calls it, returns the
 signal status, and leaves no process-group residue.
+
+Every nonblocking owned-child wait distinguishes interruption from completion.
+`EINTR` returns pending to the caller's existing monotonic loop; it cannot mark
+the selected-tool leader or a host observer reaped, cannot manufacture a
+successful helper-command status, and cannot erase the exact wait status. The
+poll helper performs only one syscall per call, so repeated interruptions still
+encounter the enclosing deadline rather than entering an unbounded internal
+retry. The five-phase executable control covers selected-tool exit, TERM,
+post-SIGKILL reap, host-observer cleanup, and bounded host-command completion.
+Its falsification leg demonstrated a real `exit 42` becoming `exit_code 0`
+under the old exit poll; all repaired cases retain exact exit/signal evidence
+and leave no process-group residue.
