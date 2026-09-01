@@ -247,6 +247,19 @@ Exact numeric, string, boolean, rehashed-state, resume, and cleanup controls:
 prove -Iperl t/1738-vial-ghdl-handle-state-scalar-types.t
 ```
 
+Initial caller requests receive the same type admission before filesystem or
+trace checks can coerce their values. Provider/source byte counts, expected
+record and observation widths, repetition count, and storage schema version
+must be canonical JSON integers. The OSVVM command-plan schema version and
+generated-settings byte count are checked the same way; the latter must also
+equal the selected content length. For example, `"schema_version": 1` is
+admitted, while `"schema_version": "1"` and `"schema_version": true` reject
+before a lifecycle root is created. Run the portable and OSVVM controls with:
+
+```console
+prove -Iperl t/1739-vial-ghdl-request-scalar-types.t
+```
+
 Canonical terminal payloads are not trusted merely because their evidence
 summaries agree with them. On every resume at or beyond trace validation, the
 lifecycle extracts the trace from the sealed runtime transcript and reruns the

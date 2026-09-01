@@ -1195,6 +1195,6 @@ payloads, keeping byte and meaning integrity separate without coupling schemas.
 ## 2026-09-01: JSON type admission must precede semantic equality
 
 Canonical JSON does not make equal-looking value types interchangeable. Perl
-numeric equality can admit strings or booleans and can change later scalar
-encoding, making digest results depend on check order. GHDL handle/state input
-now validates scalar kinds and canonical integers before equality or hashing.
+numeric operations can admit strings or booleans, change later encoding, and
+make authority depend on check order. GHDL state and request/storage/validation/
+command-plan input admit integers before comparison, validation, or hashing.

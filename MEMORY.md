@@ -8,8 +8,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
   (`active`; runtime-state admission hardening)
-- next_action: Audit exact GHDL caller request, storage, and command-plan scalar
-  JSON-type admission, then plant the smallest isolated RED.
-- in_flight_uncommitted: none after the GHDL handle/state JSON-type commit.
+- next_action: Prove whether OSVVM persisted lifecycle-request envelope scalar
+  comparisons can normalize foreign JSON types before lifecycle admission.
+- in_flight_uncommitted: none after the GHDL request JSON-type commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none.

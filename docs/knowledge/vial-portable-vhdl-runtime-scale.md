@@ -27,6 +27,7 @@ answers:
   - "how does GHDL authenticate object descriptor JSON types and file modes?"
   - "how does GHDL authenticate lifecycle state and owner marker file size and mode?"
   - "how does GHDL authenticate handle and state scalar JSON types?"
+  - "how does GHDL authenticate caller request storage and command-plan JSON integer types?"
 date: 2026-09-01
 status: current
 tags: [vial, vhdl, ghdl, runtime, trace, scalability]
@@ -54,7 +55,7 @@ evidence: >-
   t/1731-vial-ghdl-capture-evidence-admission.t;
   t/1732-vial-ghdl-state-evidence-admission.t;
   t/1733-vial-ghdl-terminal-payload-resume-admission.t;
-  t/1735-vial-ghdl-authority-object-admission.t; t/1736-vial-ghdl-object-descriptor-admission.t; t/1737-vial-ghdl-state-owner-file-admission.t; t/1738-vial-ghdl-handle-state-scalar-types.t;
+  t/1735-vial-ghdl-authority-object-admission.t; t/1736-vial-ghdl-object-descriptor-admission.t; t/1737-vial-ghdl-state-owner-file-admission.t; t/1738-vial-ghdl-handle-state-scalar-types.t; t/1739-vial-ghdl-request-scalar-types.t;
   t/1678-vial-ghdl-provider-aware-lifecycle.t;
   t/1725-vial-ghdl-cleanup-diagnostic-authority.t;
   t/1726-vial-ghdl-admission-cleanup-evidence.t;
@@ -72,7 +73,7 @@ reverify: >-
   t/1731-vial-ghdl-capture-evidence-admission.t
   t/1732-vial-ghdl-state-evidence-admission.t
   t/1733-vial-ghdl-terminal-payload-resume-admission.t
-  t/1735-vial-ghdl-authority-object-admission.t t/1736-vial-ghdl-object-descriptor-admission.t t/1737-vial-ghdl-state-owner-file-admission.t t/1738-vial-ghdl-handle-state-scalar-types.t
+  t/1735-vial-ghdl-authority-object-admission.t t/1736-vial-ghdl-object-descriptor-admission.t t/1737-vial-ghdl-state-owner-file-admission.t t/1738-vial-ghdl-handle-state-scalar-types.t t/1739-vial-ghdl-request-scalar-types.t
   t/1725-vial-ghdl-cleanup-diagnostic-authority.t
   t/1726-vial-ghdl-admission-cleanup-evidence.t
   t/1727-vial-ghdl-probe-timeout-diagnostic-authority.t
@@ -173,8 +174,8 @@ State files are same-volume regular `0600` files at or below 1 MiB; `.owner.json
 The atomic writer normalizes `0600`; t1737 rejects state mode/size drift and owner mode/size/shape/type drift while both checked qualifiers remain byte-identical and residue-free.
 Owner drift makes cleanup authority unprovable, so the lifecycle refuses to remove that root.
 
-Handle/state schema versions and ordinals are canonical JSON integers; enum, identity, successor, path, and nullable predecessor fields are scalars.
-t1738 rejects strings/booleans in handles and rehashed states before semantic comparison or digest reconstruction; exact resume/cleanup and both checked qualifiers remain unchanged.
+Handle/state versions/ordinals plus caller provider/source bytes, expected counts/catalog widths, repetition, storage version, OSVVM command-plan version, and settings bytes are canonical JSON integers; enum, identity, and path fields are scalars.
+t1738 rejects foreign handle/rehashed-state types before comparison or digest reconstruction; t1739 rejects request/storage/plan strings or booleans before root creation while both checked qualifiers remain byte-identical and residue-free.
 
 Terminal admission reconstructs trace/result/assembly meaning from sealed runtime bytes and requires each canonical reconstruction to equal its object; successor inventories retain predecessor descriptors as an ordered prefix and append only phase-owned objects.
 t1733 rejects substituted terminal payloads and replaced/reordered/missing predecessor descriptors; live portable and OSVVM qualification remain byte-identical with zero staging residue.

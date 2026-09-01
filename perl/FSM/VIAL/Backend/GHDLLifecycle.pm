@@ -248,6 +248,16 @@ sub _json_integer_equals($actual, $expected) {
         && _canonical($actual) eq "$expected";
 }
 
+sub _json_nonnegative_integer($actual) {
+    return defined($actual) && !ref($actual)
+        && _canonical($actual) =~ /\A(?:0|[1-9][0-9]*)\z/;
+}
+
+sub _json_positive_integer($actual) {
+    return defined($actual) && !ref($actual)
+        && _canonical($actual) =~ /\A[1-9][0-9]*\z/;
+}
+
 sub _session_with_handle($raw, $role, $session_out) {
     _closed($raw, [qw(
         repo_root provider source_set source_identity emission_identity
@@ -409,8 +419,7 @@ sub _validated_provider($repo_root, $root_device, $raw, $validate_inputs) {
     _throw('VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
         'provider archive byte size is not one positive integer',
         '/provider/archive_bytes')
-        unless defined($raw->{archive_bytes}) && !ref($raw->{archive_bytes})
-            && $raw->{archive_bytes} =~ /\A[1-9][0-9]*\z/;
+        unless _json_positive_integer($raw->{archive_bytes});
     _throw('VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
         'provider version output is not one normalized scalar',
         '/provider/version_output')
@@ -443,8 +452,7 @@ sub _validated_sources($repo_root, $root_device, $raw, $validate_inputs) {
             if $seen{$entry->{relpath}}++;
         _throw('VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
             'GHDL source byte size is invalid', "/source_set/$index/bytes")
-            unless defined($entry->{bytes}) && !ref($entry->{bytes})
-                && $entry->{bytes} =~ /\A(?:0|[1-9][0-9]*)\z/;
+            unless _json_nonnegative_integer($entry->{bytes});
         _throw('VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
             'GHDL source digest is invalid', "/source_set/$index/sha256")
             unless defined($entry->{sha256}) && !ref($entry->{sha256})
@@ -464,8 +472,8 @@ sub _validated_storage($raw, $role) {
     _closed($raw, \@STORAGE_KEYS, 'GHDL storage context');
     _throw('VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
         'GHDL storage schema is not exact', '/storage_context/schema')
-        unless ($raw->{schema} // '') eq $STORAGE_SCHEMA
-            && ($raw->{schema_version} // 0) == 1;
+        unless _scalar_equals($raw->{schema}, $STORAGE_SCHEMA)
+            && _json_integer_equals($raw->{schema_version}, 1);
     my %expected = (
         qualification => [
             'qualification', 'lifecycle_process_group',
@@ -488,8 +496,8 @@ sub _validated_storage($raw, $role) {
     my ($mode, $containment, $pattern) = @{$expected{$role}};
     _throw('VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
         'GHDL storage context differs from caller authority',
-        '/storage_context') unless ($raw->{mode} // '') eq $mode
-            && ($raw->{containment} // '') eq $containment
+        '/storage_context') unless _scalar_equals($raw->{mode}, $mode)
+            && _scalar_equals($raw->{containment}, $containment)
             && defined($raw->{staging_identity})
             && !ref($raw->{staging_identity})
             && $raw->{staging_identity} =~ $pattern;
@@ -556,8 +564,8 @@ sub _validated_osvvm_commands($raw, $binary, $stage_rel, $source_set) {
         'OSVVM/GHDL multi-command authority');
     _throw('VIAL_GHDL_LIFECYCLE_COMMAND_ERROR',
         'OSVVM/GHDL command-plan schema is not exact', '/commands/schema')
-        unless ($raw->{schema} // '') eq $OSVVM_COMMAND_SCHEMA
-            && ($raw->{schema_version} // 0) == 2;
+        unless _scalar_equals($raw->{schema}, $OSVVM_COMMAND_SCHEMA)
+            && _json_integer_equals($raw->{schema_version}, 2);
 
     _closed($raw->{generated_settings}, \@OSVVM_SETTINGS_KEYS,
         'OSVVM generated settings authority');
@@ -566,12 +574,14 @@ sub _validated_osvvm_commands($raw, $binary, $stage_rel, $source_set) {
     _throw('VIAL_GHDL_LIFECYCLE_COMMAND_ERROR',
         'OSVVM generated settings identity is not exact',
         '/commands/generated_settings')
-        unless ($settings->{relpath} // '') eq $settings_rel
+        unless _scalar_equals($settings->{relpath}, $settings_rel)
             && defined($settings->{content}) && !ref($settings->{content})
-            && ($settings->{bytes} // -1)
-                == bytes::length($settings->{content})
-            && ($settings->{sha256} // '')
-                eq sha256_hex($settings->{content});
+            && _json_integer_equals(
+                $settings->{bytes}, bytes::length($settings->{content}),
+            )
+            && _scalar_equals(
+                $settings->{sha256}, sha256_hex($settings->{content}),
+            );
 
     _closed($raw->{libraries}, \@OSVVM_LIBRARY_KEYS,
         'OSVVM/GHDL library authority');
@@ -736,9 +746,36 @@ sub _validated_validation($raw) {
     _throw('VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
         'GHDL run repetition count must be one or two',
         '/validation/run_repetitions')
-        unless defined($raw->{run_repetitions})
-            && !ref($raw->{run_repetitions})
-            && $raw->{run_repetitions} =~ /\A[12]\z/;
+        unless _json_integer_equals($raw->{run_repetitions}, 1)
+            || _json_integer_equals($raw->{run_repetitions}, 2);
+    if (ref($raw->{expected_record_counts}) eq 'HASH'
+            && !blessed($raw->{expected_record_counts})) {
+        for my $kind (keys %{$raw->{expected_record_counts}}) {
+            _throw('VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
+                'GHDL expected record count is not one JSON integer',
+                "/validation/expected_record_counts/$kind")
+                unless _json_nonnegative_integer(
+                    $raw->{expected_record_counts}{$kind},
+                );
+        }
+    }
+    my $catalog = $raw->{expected_observation_catalog};
+    if (ref($catalog) eq 'HASH' && !blessed($catalog)) {
+        _throw('VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
+            'GHDL observation total width is not one JSON integer',
+            '/validation/expected_observation_catalog/total_width')
+            unless _json_nonnegative_integer($catalog->{total_width});
+        if (ref($catalog->{entries}) eq 'ARRAY') {
+            for my $index (0 .. $#{$catalog->{entries}}) {
+                my $entry = $catalog->{entries}[$index];
+                next unless ref($entry) eq 'HASH' && !blessed($entry);
+                _throw('VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
+                    'GHDL observation width is not one JSON integer',
+                    "/validation/expected_observation_catalog/entries/$index/width")
+                    unless _json_positive_integer($entry->{width});
+            }
+        }
+    }
     my $probe = FSM::VIAL::Backend::VHDLPortableTraceValidator->validate({
         trace_text => "invalid\n",
         expected_record_counts => $raw->{expected_record_counts},
