@@ -567,14 +567,7 @@ sub _lifecycle_request($raw, $route_authority, $instantiated) {
                 $checked->{expected_observation_catalog},
             run_repetitions => 1,
         },
-        storage_context => {
-            schema => 'fsmgen.vial_ghdl_lifecycle_storage.v1',
-            schema_version => 1,
-            mode => 'osvvm_architecture_scale_measurement',
-            staging_identity =>
-                "$raw->{context}{staging_identity}/lifecycle",
-            containment => 'outer_worker_process_group',
-        },
+        storage_context => _storage_context($raw),
     };
     $request_without_root->{emission_identity} = _emission_identity(
         $raw, $instantiated->{plan_identity},
@@ -654,19 +647,12 @@ sub _validated_request_envelope($raw, $route_authority, $envelope) {
         $request->{commands}, $raw->{context}{staging_identity},
         $request->{source_set}, $raw->{execution_plan},
     );
+    _exact_keys($request->{storage_context}, [qw(
+        schema schema_version mode staging_identity containment
+    )], 'OSVVM runtime persisted lifecycle storage');
     confess "OSVVM runtime persisted lifecycle storage changed\n"
-        unless _scalar_equals(
-                $request->{storage_context}{staging_identity},
-                "$raw->{context}{staging_identity}/lifecycle",
-            )
-            && _scalar_equals(
-                $request->{storage_context}{mode},
-                'osvvm_architecture_scale_measurement',
-            )
-            && _scalar_equals(
-                $request->{storage_context}{containment},
-                'outer_worker_process_group',
-            );
+        unless _canonical_json($request->{storage_context})
+            eq _canonical_json(_storage_context($raw));
     my $execution = $route_authority->{projection}{execution_ir};
     confess "OSVVM runtime persisted validation plan changed\n"
         unless _scalar_equals(
@@ -686,6 +672,16 @@ sub _scalar_equals($actual, $expected) {
 sub _json_integer_equals($actual, $expected) {
     return defined($actual) && !ref($actual)
         && _canonical_json($actual) eq "$expected";
+}
+
+sub _storage_context($raw) {
+    return {
+        schema => 'fsmgen.vial_ghdl_lifecycle_storage.v1',
+        schema_version => 1,
+        mode => 'osvvm_architecture_scale_measurement',
+        staging_identity => "$raw->{context}{staging_identity}/lifecycle",
+        containment => 'outer_worker_process_group',
+    };
 }
 
 sub _emission_identity($raw, $plan_identity, $source_identity, $commands) {

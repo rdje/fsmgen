@@ -238,6 +238,17 @@ prove -Iperl t/1744-vial-osvvm-persisted-command-authority.t
 The same relocation-aware validator serves reload and final report validation;
 it now runs before predecessor-handle access or resumed external-tool work.
 
+Persisted lifecycle storage is admitted at that same early boundary. Emit and
+reload share one closed constructor for schema, numeric schema version, mode,
+repository-relative lifecycle root, and process containment. Reload rejects a
+foreign schema, string or boolean version, and any missing or unknown key
+before reading a predecessor handle; the shared GHDL lifecycle independently
+rechecks the record when execution resumes:
+
+```console
+prove -Iperl -It/lib t/1745-vial-osvvm-persisted-lifecycle-storage-admission.t
+```
+
 Each executable role uses one lifecycle execution per controller record. The
 reference role has one correctness-only validation. Gate has one validation
 and three independently measured records; qualification has one validation
