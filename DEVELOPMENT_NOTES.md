@@ -1188,13 +1188,13 @@ timing stays armed and no timeout is retried or widened.
 
 ## 2026-09-01: Content addressing does not replace semantic reconstruction
 
-A canonical, digest-named lifecycle state proves that its bytes are
-self-consistent; it does not prove that every evidence value still describes
-the caller-sealed commands or retained objects. GHDL capture admission closed
-the process-policy portion, but command digests and trace/result/assembly
-summaries could still be changed together with the state identity.
+A digest-named state proves byte consistency, not that its values still
+describe selected commands or retained objects. Resume reconstructs inputs and
+payloads, keeping byte and meaning integrity separate without coupling schemas.
 
-Resume therefore reconstructs those values from selected inputs and canonical
-same-volume payloads. This keeps content addressing as the byte-integrity
-layer and semantic reconstruction as the meaning-integrity layer, matching the
-shared Verilator lifecycle without coupling profile-specific state schemas.
+## 2026-09-01: JSON type admission must precede semantic equality
+
+Canonical JSON does not make equal-looking value types interchangeable. Perl
+numeric equality can admit strings or booleans and can change later scalar
+encoding, making digest results depend on check order. GHDL handle/state input
+now validates scalar kinds and canonical integers before equality or hashing.

@@ -239,6 +239,15 @@ sub _is_osvvm_role($role) {
         && $role =~ /\Aosvvm_(?:qualification|architecture_scale_measurement)\z/;
 }
 
+sub _scalar_equals($actual, $expected) {
+    return defined($actual) && !ref($actual) && $actual eq $expected;
+}
+
+sub _json_integer_equals($actual, $expected) {
+    return defined($actual) && !ref($actual)
+        && _canonical($actual) eq "$expected";
+}
+
 sub _session_with_handle($raw, $role, $session_out) {
     _closed($raw, [qw(
         repo_root provider source_set source_identity emission_identity
@@ -252,24 +261,40 @@ sub _session_with_handle($raw, $role, $session_out) {
     $session->{handle} = $handle;
     _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
         'lifecycle handle schema or authority differs', '/handle')
-        unless ($handle->{schema} // '') eq $session->{handle_schema}
-            && ($handle->{schema_version} // 0)
-                == $session->{schema_version}
-            && ($handle->{lifecycle_identity} // '')
-                eq $session->{lifecycle_identity}
+        unless _scalar_equals(
+                $handle->{schema}, $session->{handle_schema},
+            )
+            && _json_integer_equals(
+                $handle->{schema_version}, $session->{schema_version},
+            )
+            && _scalar_equals(
+                $handle->{lifecycle_identity},
+                $session->{lifecycle_identity},
+            )
+            && ref($handle->{storage_context}) eq 'HASH'
+            && !blessed($handle->{storage_context})
             && _canonical($handle->{storage_context})
                 eq _canonical($session->{storage_context});
     my $state = $handle->{state};
     _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
         'GHDL lifecycle handle state or successor is invalid', '/handle')
-        unless defined($state) && exists($STATE_ORDINAL{$state})
+        unless defined($state) && !ref($state)
+            && exists($STATE_ORDINAL{$state})
             && $state ne 'cleaned'
-            && ($handle->{ordinal} // -1) == $STATE_ORDINAL{$state}
-            && ($handle->{next_state} // '')
-                eq ($STATE_ORDER[$STATE_ORDINAL{$state} + 1] // '')
-            && ($handle->{state_identity} // '')
+            && _json_integer_equals(
+                $handle->{ordinal}, $STATE_ORDINAL{$state},
+            )
+            && _scalar_equals(
+                $handle->{next_state},
+                $STATE_ORDER[$STATE_ORDINAL{$state} + 1] // '',
+            )
+            && defined($handle->{state_identity})
+            && !ref($handle->{state_identity})
+            && $handle->{state_identity}
                 =~ m{\Astate/[0-9a-f]{64}\z}
-            && ($handle->{state_relpath} // '') =~
+            && defined($handle->{state_relpath})
+            && !ref($handle->{state_relpath})
+            && $handle->{state_relpath} =~
                 m{\A\Q$session->{stage_rel}\E/states/[0-9]{2}-[a-z_]+-[0-9a-f]{64}[.]json\z};
     $session->{cleanup_on_error} = 1;
     _validate_current_provider($session);
@@ -2241,10 +2266,12 @@ sub _load_chain($session, $handle) {
     _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
         'GHDL lifecycle handle state is invalid', '/handle/state')
         unless defined($handle->{state})
+            && !ref($handle->{state})
             && exists($STATE_ORDINAL{$handle->{state}})
             && $handle->{state} ne 'cleaned'
-            && ($handle->{ordinal} // -1)
-                == $STATE_ORDINAL{$handle->{state}};
+            && _json_integer_equals(
+                $handle->{ordinal}, $STATE_ORDINAL{$handle->{state}},
+            );
     _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
         'GHDL lifecycle owner does not match', '/handle')
         unless _owner_matches($session);
@@ -2273,10 +2300,12 @@ sub _load_chain($session, $handle) {
         my $record = _read_state($session, $relative);
         _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
             'GHDL lifecycle state order or successor changed', '/state')
-            unless $record->{ordinal} == $ordinal
+            unless _json_integer_equals($record->{ordinal}, $ordinal)
                 && $record->{state} eq $STATE_ORDER[$ordinal]
-                && ($record->{next_state} // '')
-                    eq ($STATE_ORDER[$ordinal + 1] // '');
+                && _scalar_equals(
+                    $record->{next_state},
+                    $STATE_ORDER[$ordinal + 1] // '',
+                );
         _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
             'GHDL lifecycle filename does not bind its content identity',
             '/state_identity')
@@ -2305,9 +2334,13 @@ sub _load_chain($session, $handle) {
     my $expected_rel = "$session->{stage_rel}/states/$name[-1]";
     _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
         'GHDL lifecycle handle and current state differ', '/handle')
-        unless ($handle->{state_identity} // '') eq $current->{state_identity}
-            && ($handle->{state_relpath} // '') eq $expected_rel
-            && ($handle->{next_state} // '') eq ($current->{next_state} // '');
+        unless _scalar_equals(
+                $handle->{state_identity}, $current->{state_identity},
+            )
+            && _scalar_equals($handle->{state_relpath}, $expected_rel)
+            && _scalar_equals(
+                $handle->{next_state}, $current->{next_state},
+            );
     _validate_objects($session, $current->{objects});
     _validate_authority_objects($session, $current);
     _validate_terminal_payloads($session, $current);
@@ -2433,13 +2466,39 @@ sub _read_state($session, $relative) {
     _closed($record, \@STATE_KEYS, 'GHDL lifecycle state');
     _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
         'GHDL lifecycle state schema or authority changed', '/state')
-        unless ($record->{schema} // '') eq $session->{state_schema}
-            && ($record->{schema_version} // 0)
-                == $session->{schema_version}
-            && ($record->{lifecycle_identity} // '')
-                eq $session->{lifecycle_identity}
+        unless _scalar_equals(
+                $record->{schema}, $session->{state_schema},
+            )
+            && _json_integer_equals(
+                $record->{schema_version}, $session->{schema_version},
+            )
+            && _scalar_equals(
+                $record->{lifecycle_identity},
+                $session->{lifecycle_identity},
+            )
+            && ref($record->{authority}) eq 'HASH'
+            && !blessed($record->{authority})
             && _canonical($record->{authority})
                 eq _canonical($session->{authority});
+    my $state = $record->{state};
+    my $ordinal = defined($state) && !ref($state)
+        ? $STATE_ORDINAL{$state} : undef;
+    _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+        'GHDL lifecycle state scalar fields are invalid', '/state')
+        unless defined($ordinal) && $state ne 'cleaned'
+            && _json_integer_equals($record->{ordinal}, $ordinal)
+            && _scalar_equals(
+                $record->{next_state}, $STATE_ORDER[$ordinal + 1] // '',
+            )
+            && defined($record->{state_identity})
+            && !ref($record->{state_identity})
+            && $record->{state_identity} =~ m{\Astate/[0-9a-f]{64}\z}
+            && (!defined($record->{predecessor_identity})
+                || (!ref($record->{predecessor_identity})
+                    && $record->{predecessor_identity}
+                        =~ m{\Astate/[0-9a-f]{64}\z}))
+            && (!defined($record->{predecessor_relpath})
+                || !ref($record->{predecessor_relpath}));
     my $identity = $record->{state_identity};
     my $copy = _clone($record);
     $copy->{state_identity} = undef;

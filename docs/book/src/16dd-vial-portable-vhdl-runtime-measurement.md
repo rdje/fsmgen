@@ -234,6 +234,19 @@ controls are runnable with:
 prove -Iperl t/1737-vial-ghdl-state-owner-file-admission.t
 ```
 
+Resume handles and decoded states also admit JSON types before comparing
+values. Schema versions and state ordinals must be canonical JSON integers;
+strings such as `"1"` and JSON booleans cannot borrow Perl's numeric value.
+State names, successors, identities, relative paths, and nullable predecessor
+identities must be scalars, while authority and storage context remain closed
+objects. These checks run before digest reconstruction, so admission no longer
+depends on a coercive comparison changing a scalar's later JSON encoding.
+Exact numeric, string, boolean, rehashed-state, resume, and cleanup controls:
+
+```console
+prove -Iperl t/1738-vial-ghdl-handle-state-scalar-types.t
+```
+
 Canonical terminal payloads are not trusted merely because their evidence
 summaries agree with them. On every resume at or beyond trace validation, the
 lifecycle extracts the trace from the sealed runtime transcript and reruns the
