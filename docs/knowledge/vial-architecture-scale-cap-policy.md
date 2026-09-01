@@ -77,7 +77,7 @@ evidence: >-
   t/1712-vial-execution-scoreboard-cardinality-preflight.t;
   t/1713-vial-execution-coverage-cardinality-preflight.t;
   t/1633-vial-architecture-scale-checking-faults.t; t/1714-vial-execution-fault-cardinality-preflight.t;
-  t/1715-vial-execution-random-occurrence-preflight.t;
+  t/1634-vial-architecture-scale-checking-random-replay.t; t/1715-vial-execution-random-occurrence-preflight.t;
   perl/FSM/VIAL/Backend/SVPortableVerilator.pm;
   t/1716-vial-backend-portable-sv-cap-order.t;
   perl/FSM/VIAL/Backend/VHDLPortableGHDL.pm;
@@ -96,48 +96,12 @@ evidence: >-
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
   prove -Iperl t/1685-vial-architecture-scale-cap-policy.t
-  t/1687-vial-parser-direct-import-cap-order.t
-  t/1693-vial-parser-source-byte-cap-order.t
-  t/1686-vial-semantic-action-cap-order.t
-  t/1688-vial-semantic-parallel-fiber-cap-order.t
-  t/1689-vial-semantic-declaration-cap-order.t
-  t/1690-vial-semantic-scoreboard-capacity-order.t
-  t/1691-vial-semantic-cross-max-bins-order.t
-  t/1692-vial-semantic-type-shape-cap-order.t
-  t/1694-hial-vial-bridge-configuration-cap-order.t
-  t/1695-hial-vial-bridge-endpoint-cap-order.t
-  t/1696-hial-vial-bridge-observation-cap-order.t
-  t/1697-hial-vial-bridge-probe-cap-order.t
-  t/1698-hial-vial-bridge-type-cap-order.t
-  t/1699-hial-vial-bridge-transaction-cap-order.t
-  t/1700-hial-vial-bridge-event-cap-order.t
-  t/1701-hial-vial-bridge-residue-cap-order.t
-  t/1702-hial-vial-bridge-backend-binding-cap-order.t
-  t/1703-hial-vial-bridge-source-map-cap-order.t
-  t/1704-hial-vial-bridge-serialized-manifest-terminal-authority.t
-  t/1624-vial-architecture-scale-execution-live-fiber-limit.t
-  t/1625-vial-architecture-scale-execution-total-fiber-limit.t
-  t/1705-vial-execution-selected-domain-cap-order.t
-  t/1706-vial-execution-operation-cardinality-cap-order.t
-  t/1707-vial-execution-type-cap-order.t
-  t/1708-vial-execution-source-map-cap-order.t
-  t/1709-vial-execution-binding-cardinality-preflight.t
-  t/1710-vial-execution-random-attempt-authority.t
-  t/1634-vial-architecture-scale-checking-random-replay.t
-  t/1630-vial-architecture-scale-checking-models.t t/1711-vial-execution-model-cardinality-preflight.t
-  t/1712-vial-execution-scoreboard-cardinality-preflight.t
-  t/1713-vial-execution-coverage-cardinality-preflight.t
-  t/1633-vial-architecture-scale-checking-faults.t t/1714-vial-execution-fault-cardinality-preflight.t
-  t/1715-vial-execution-random-occurrence-preflight.t
-  t/1720-vial-runtime-structural-artifact-preflight.t
-  t/1721-vial-runtime-trace-artifact-preflight.t
-  t/1722-vial-runtime-result-artifact-preflight.t
-  t/1723-vial-runtime-final-artifact-graph.t t/1748-vial-common-worker-artifact-file-admission.t t/1763-vial-architecture-scale-cap-consistency.t
-  t/1716-vial-backend-portable-sv-cap-order.t
-  t/1717-vial-backend-portable-vhdl-cap-order.t
-  t/1718-vial-backend-osvvm-provider-admission-order.t
-  t/1719-vial-backend-native-uvm-cap-order.t
-  t/164{6..9}-vial-architecture-scale-backend-emission-*.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t
+  t/16{86..93}-*.t t/16{94..99}-*.t t/17{00..23}-*.t
+  t/162{4..5}-*.t t/163{0..4}-vial-architecture-scale-checking-*.t
+  t/164{6..9}-vial-architecture-scale-backend-emission-*.t
+  t/1650-vial-architecture-scale-backend-emission-family-qualification.t
+  t/1748-vial-common-worker-artifact-file-admission.t
+  t/1763-vial-architecture-scale-cap-consistency.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -197,10 +161,10 @@ before writes or assembly. Exact boundaries pass, adjacent excess rejects, and
 completed-backend plus Tool terminal checks remain; no cap or claim changes.
 
 `FSM::VIAL::ArchitectureScaleCapConsistency` rebuilds the policy without caller
-evidence. Runtime, backend, checking-model, and checking-fault groups verify all
-seven dimensions. Their joins are three profiles+42 leaves, t1646–t1650+
-t1716–t1719, t1630+t1711, and t1633+t1714. T1763 reconstructs all four unions
-and rejects omitted/foreign evidence. Other groups remain pending, so
-calibration stays historical and blocked.
+evidence. Five groups verify all dimensions: runtime (three profiles+42 leaves),
+backend (t1646–t1650+t1716–t1719), models (t1630+t1711), faults (t1633+t1714),
+and randomness (t1634+t1715). T1763 reconstructs exact unions and rejects
+omitted/foreign evidence; other groups and calibration remain pending/blocked.
 
-The common controller admits worker files before counts/digests: the cap passes and cap+1 rejects; safe metadata and modes pass, while unsafe paths or writable modes reject. No cap or support claim changes.
+The common controller admits bounded worker files before counts/digests; cap+1
+and unsafe path/mode cases reject. No cap or support claim changes.

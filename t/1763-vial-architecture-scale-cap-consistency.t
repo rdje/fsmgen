@@ -257,16 +257,40 @@ my %checking_fault_rationale = (
     cleanup => 'accepted and consumer-failure fault staging is same-volume and residue-free',
     accepted_identity => 'accepted fault construction, evaluation, rerun, plan, and compact-preflight identities are deterministic',
 );
+my @checking_randomness_evidence = qw(
+    t/1634-vial-architecture-scale-checking-random-replay.t
+    t/1715-vial-execution-random-occurrence-preflight.t
+);
+my %checking_randomness_evidence = (
+    boundary => [$checking_randomness_evidence[0]],
+    adjacent_excess => [@checking_randomness_evidence],
+    diagnostics => [@checking_randomness_evidence],
+    atomicity => [@checking_randomness_evidence],
+    no_tool => [@checking_randomness_evidence],
+    cleanup => [$checking_randomness_evidence[0]],
+    accepted_identity => [@checking_randomness_evidence],
+);
+my %checking_randomness_rationale = (
+    boundary => 'the selected route admits 8,440 occurrences, rejects 8,441 on plan bytes, and records 65,536-occurrence preflight dominance',
+    adjacent_excess => 'the first route-plan or random-occurrence excess rejects before forbidden materialization',
+    diagnostics => 'plan-byte, occurrence-limit, replay-oracle, and staging failures retain stable diagnostics',
+    atomicity => 'known route or occurrence excess publishes no ExecutionIR, plan, replay, or checking result',
+    no_tool => 'the complete random/replay proofs are provider-free and start no external tool',
+    cleanup => 'accepted and consumer-failure random staging is same-volume and residue-free',
+    accepted_identity => 'accepted workload, evaluation, rerun, replay, plan, and compact-preflight identities are deterministic',
+);
 my %verified_evidence = (
     backend_artifact_graph => \%backend_evidence,
     checking_faults => \%checking_fault_evidence,
     checking_models => \%checking_model_evidence,
+    checking_randomness => \%checking_randomness_evidence,
     runtime_stream_envelopes => \%runtime_evidence,
 );
 my %verified_rationale = (
     backend_artifact_graph => \%backend_rationale,
     checking_faults => \%checking_fault_rationale,
     checking_models => \%checking_model_rationale,
+    checking_randomness => \%checking_randomness_rationale,
     runtime_stream_envelopes => \%runtime_rationale,
 );
 
@@ -401,6 +425,18 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
         'every sealed checking-fault evidence path exists',
     );
 
+    my %checking_randomness_join = map { $_ => 1 }
+        map { @{$checking_randomness_evidence{$_}} } @dimensions;
+    is_deeply(
+        [sort keys %checking_randomness_join],
+        [sort @checking_randomness_evidence],
+        'checking-randomness join covers its replay and preflight witnesses',
+    );
+    is_deeply(
+        [grep { !-f $_ } sort keys %checking_randomness_join], [],
+        'every sealed checking-randomness evidence path exists',
+    );
+
     is($report->{calibration}{evidence_role},
         'historical_measurement_only',
         'calibration stays measurement evidence');
@@ -512,6 +548,21 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
     like(dies(sub { $assert->($foreign_checking_fault) }),
         qr/checking_faults\/accepted_identity' contradicts the sealed evidence authority/,
         'callers cannot add foreign checking-fault evidence');
+
+    my $omitted_checking_randomness = $class->build;
+    pop @{$omitted_checking_randomness->{groups}{checking_randomness}
+        {dimensions}{adjacent_excess}{evidence}};
+    like(dies(sub { $assert->($omitted_checking_randomness) }),
+        qr/checking_randomness\/adjacent_excess' contradicts the sealed evidence authority/,
+        'callers cannot omit sealed checking-randomness evidence');
+
+    my $foreign_checking_randomness = $class->build;
+    push @{$foreign_checking_randomness->{groups}{checking_randomness}
+        {dimensions}{accepted_identity}{evidence}},
+        't/foreign-checking-randomness-evidence.t';
+    like(dies(sub { $assert->($foreign_checking_randomness) }),
+        qr/checking_randomness\/accepted_identity' contradicts the sealed evidence authority/,
+        'callers cannot add foreign checking-randomness evidence');
 
     my $missing = $class->build;
     delete $missing->{groups}{$first_group}{dimensions}{cleanup};

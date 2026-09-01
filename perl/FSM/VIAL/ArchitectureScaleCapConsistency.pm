@@ -329,6 +329,32 @@ my %CHECKING_FAULT_RATIONALE = (
     accepted_identity =>
         'accepted fault construction, evaluation, rerun, plan, and compact-preflight identities are deterministic',
 );
+my @CHECKING_RANDOMNESS_EVIDENCE = (
+    [
+        't/1634-vial-architecture-scale-checking-random-replay.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1715-vial-execution-random-occurrence-preflight.t',
+        qw(adjacent_excess diagnostics atomicity no_tool accepted_identity),
+    ],
+);
+my %CHECKING_RANDOMNESS_RATIONALE = (
+    boundary =>
+        'the selected route admits 8,440 occurrences, rejects 8,441 on plan bytes, and records 65,536-occurrence preflight dominance',
+    adjacent_excess =>
+        'the first route-plan or random-occurrence excess rejects before forbidden materialization',
+    diagnostics =>
+        'plan-byte, occurrence-limit, replay-oracle, and staging failures retain stable diagnostics',
+    atomicity =>
+        'known route or occurrence excess publishes no ExecutionIR, plan, replay, or checking result',
+    no_tool =>
+        'the complete random/replay proofs are provider-free and start no external tool',
+    cleanup =>
+        'accepted and consumer-failure random staging is same-volume and residue-free',
+    accepted_identity =>
+        'accepted workload, evaluation, rerun, replay, plan, and compact-preflight identities are deterministic',
+);
 my %runtime_dimensions = map {
     $_ => {
         status => 'verified',
@@ -373,10 +399,23 @@ for my $entry (@CHECKING_FAULT_EVIDENCE) {
     my ($path, @dimensions) = @{$entry};
     push @{$checking_fault_dimensions{$_}{evidence}}, $path for @dimensions;
 }
+my %checking_randomness_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $CHECKING_RANDOMNESS_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@CHECKING_RANDOMNESS_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$checking_randomness_dimensions{$_}{evidence}}, $path
+        for @dimensions;
+}
 my $VERIFIED_DIMENSIONS = {
     backend_artifact_graph => \%backend_dimensions,
     checking_faults => \%checking_fault_dimensions,
     checking_models => \%checking_model_dimensions,
+    checking_randomness => \%checking_randomness_dimensions,
     runtime_stream_envelopes => \%runtime_dimensions,
 };
 
