@@ -564,6 +564,28 @@ my %semantic_parser_rationale = (
     cleanup => 'semantic gate staging removes same-volume success and consumer-failure residue',
     accepted_identity => 'the closed catalog plus exact import and byte boundaries retain deterministic semantic identities',
 );
+my @semantic_action_evidence = qw(
+    t/1601-vial-architecture-scale-semantic-catalog.t
+    t/1686-vial-semantic-action-cap-order.t
+);
+my %semantic_action_evidence = (
+    boundary => [$semantic_action_evidence[0]],
+    adjacent_excess => [@semantic_action_evidence],
+    diagnostics => [@semantic_action_evidence],
+    atomicity => [@semantic_action_evidence],
+    no_tool => [$semantic_action_evidence[0]],
+    cleanup => [$semantic_action_evidence[0]],
+    accepted_identity => [$semantic_action_evidence[0]],
+);
+my %semantic_action_rationale = (
+    boundary => 'the exact 65536-action generated catalog route admits',
+    adjacent_excess => 'the generated 65537-action excess and three reservation-order excesses reject',
+    diagnostics => 'action excesses retain the stable limit family, phase, message, and scenario-root path',
+    atomicity => 'capacity reserves before action form and repeat multiplication, while rejection publishes no partial semantic identities or report',
+    no_tool => 'every selected semantic catalog construction carries no backend or external-tool selector',
+    cleanup => 'semantic catalog staging removes same-volume success and consumer-failure residue',
+    accepted_identity => 'the exact action boundary retains deterministic semantic projection, report, and format identities',
+);
 my @semantic_declaration_evidence = qw(
     t/1601-vial-architecture-scale-semantic-catalog.t
     t/1689-vial-semantic-declaration-cap-order.t
@@ -603,6 +625,7 @@ my %verified_evidence = (
     execution_random_attempts => \%execution_random_evidence,
     execution_route_collections => \%execution_route_evidence,
     runtime_stream_envelopes => \%runtime_evidence,
+    semantic_action_cardinality => \%semantic_action_evidence,
     semantic_declaration_cardinality => \%semantic_declaration_evidence,
     semantic_parser_admission => \%semantic_parser_evidence,
 );
@@ -623,6 +646,7 @@ my %verified_rationale = (
     execution_random_attempts => \%execution_random_rationale,
     execution_route_collections => \%execution_route_rationale,
     runtime_stream_envelopes => \%runtime_rationale,
+    semantic_action_cardinality => \%semantic_action_rationale,
     semantic_declaration_cardinality => \%semantic_declaration_rationale,
     semantic_parser_admission => \%semantic_parser_rationale,
 );
@@ -912,6 +936,18 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
     is_deeply(
         [grep { !-f $_ } sort keys %semantic_parser_join], [],
         'every sealed semantic-parser evidence path exists',
+    );
+
+    my %semantic_action_join = map { $_ => 1 }
+        map { @{$semantic_action_evidence{$_}} } @dimensions;
+    is_deeply(
+        [sort keys %semantic_action_join],
+        [sort @semantic_action_evidence],
+        'semantic-action join covers its catalog and reservation-order witnesses',
+    );
+    is_deeply(
+        [grep { !-f $_ } sort keys %semantic_action_join], [],
+        'every sealed semantic-action evidence path exists',
     );
 
     my %semantic_declaration_join = map { $_ => 1 }
@@ -1232,6 +1268,21 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
     like(dies(sub { $assert->($foreign_semantic_parser) }),
         qr/semantic_parser_admission\/accepted_identity' contradicts the sealed evidence authority/,
         'callers cannot add foreign semantic-parser evidence');
+
+    my $omitted_semantic_action = $class->build;
+    $omitted_semantic_action->{groups}{semantic_action_cardinality}
+        {dimensions}{boundary}{evidence} = [];
+    like(dies(sub { $assert->($omitted_semantic_action) }),
+        qr/semantic_action_cardinality\/boundary' verified evidence must be one non-empty array/,
+        'callers cannot empty sealed semantic-action boundary evidence');
+
+    my $foreign_semantic_action = $class->build;
+    push @{$foreign_semantic_action->{groups}{semantic_action_cardinality}
+        {dimensions}{accepted_identity}{evidence}},
+        't/foreign-semantic-action-evidence.t';
+    like(dies(sub { $assert->($foreign_semantic_action) }),
+        qr/semantic_action_cardinality\/accepted_identity' contradicts the sealed evidence authority/,
+        'callers cannot add foreign semantic-action evidence');
 
     my $omitted_semantic_declaration = $class->build;
     $omitted_semantic_declaration->{groups}{semantic_declaration_cardinality}

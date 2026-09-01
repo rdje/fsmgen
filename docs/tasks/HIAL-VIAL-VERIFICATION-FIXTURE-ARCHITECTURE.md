@@ -947,11 +947,52 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
   Semantic Parser Admission Claim Disposition Finding: `The user-facing parser explanation produced three actionable candidates: accepted direct-import admission, its first excess/pre-recursion order, and the two exact source-byte boundaries/pre-lex order. Each is now a derived-gate disposition with non-aliased catalog/generator/parser re-derivation, the closed catalog and focused import/byte oracles as falsifiers, and the exact policy plus sealed consistency authority as durability watchers. Re-derive: regenerate the producer-derived inventory and join every candidate through the required-complete verification_architecture group. Falsify: removing a disposition, producer, oracle, watcher, or current candidate identity fails closed. Durability: the disposition registry, generated inventory, this task, and work-unit history retain the result at 1,730/1,730 disposed candidates, 958 derived gates, and zero gaps/open owners.`
 
-  Frontier: `Eighteen groups are sealed through semantic_declaration_cardinality. Continue with semantic_action_cardinality; calibration remains blocked until every group is independently verified.`
+  Frontier: `Nineteen groups are sealed through semantic_action_cardinality. Continue with semantic_action_shape; calibration remains blocked until every group is independently verified.`
 
   Semantic Declaration Cardinality Audit Finding: `The semantic_declaration_cardinality candidate inventory is complete as written and deliberately asymmetric. T1601 is the only closed exact-matrix owner for the distinct 1,024/1,025 fixture axis, and also retains every declaration/fixture construction, no-tool shape, accepted semantic identity, diagnostic oracle, and same-volume success/failure cleanup. T1689 independently admits 4,096 declarations, rejects 4,097 in the types section with the stable public diagnostic, and proves that known excess precedes malformed later-section parsing without a semantic report. T1601's rejection evaluation already emits no semantic projection/report identity or format identities, but the regression only checks its status and diagnostic family; explicit atomicity assertions are therefore still missing for the fixture route. History shows t1601 was introduced by 145d3084a, t1689 by e9679effb, and the earlier 951720257 policy selected their exact complementary pair; adding a third path would invent evidence rather than close a dimension. The complete opt-in exact policy/candidate/consistency baseline is green at Files=4/Tests=102 in 93 wallclock seconds under the repository RAM guard. Before authority promotion, the intentional RED kept the exact policy assertion green and made t1763 fail on all twenty-one pending status/evidence/rationale assertions plus both inactive omission/foreign-evidence controls at Files=2/Tests=84; the remaining union and path checks passed. This active .17.4.8 slice owns retaining the exact two-witness policy inventory, making rejection atomicity explicit in the closed matrix, and binding only independently classified dimensions. Re-derive: run t1601/t1689 plus t1685/t1763 with FSMGEN_VIAL_SCALE_EXACT=1 under the RAM guard and inspect their exact history. Falsify: removing t1601 loses the fixture axis, closed matrix, no-tool, cleanup, and broad identities; removing t1689 loses the independent declaration boundary/excess and later-section order proof. Durability: this task entry owns the audit and exact RED before source changes; the completed slice must synchronize consistency authority, tests, book, Knowledge Map, and work-unit history.`
 
   Semantic Declaration Cardinality Join: `The exact two-witness policy inventory is now asserted and the consistency authority seals semantic_declaration_cardinality across all seven dimensions. T1601 explicitly proves that every expected rejection emits no semantic projection, semantic report, or format identity; t1689 retains the independent declaration-order proof. T1763 reconstructs the exact t1601/t1689 union, checks both paths, and rejects omitted or foreign evidence. The focused authority gate is green at Files=2/Tests=84, and the exact four-file RAM-guarded join is green at Files=4/Tests=103 in 97 wallclock seconds. Re-derive: run the exact guarded four-file command documented in the book. Falsify: the recorded RED proves all twenty-one dimension records and both mutation controls fail before promotion. Durability: source authority, regressions, this task, the bounded resume pointer, book, Knowledge Map, and the work-unit commit retain the join without changing any cap, accepted outcome, product behavior, support statement, budget, or capacity claim.`
+
+  Semantic Action Cardinality Audit Finding: `The semantic_action_cardinality policy candidate inventory is complete as the complementary t1601/t1686 pair, but their roles are intentionally asymmetric. T1601 alone owns exact 65,536-action admission, the generated 65,537 first excess, closed no-tool construction, same-volume success/failure cleanup, deterministic accepted identities, stable diagnostic oracle, and absence of partial identities on rejection. T1686 independently proves three reservation-order excesses: repeat multiplication, the action after a full boundary, and malformed action syntax after a full boundary all return the stable scenario-root limit before further semantic construction and without a semantic report. T1686 does not independently return an accepted boundary or accepted identity and must not be classified as either. History ties the hardened reservation and focused witness to 6ad4a9292 and the original two-file policy selection to 951720257; a third witness would duplicate rather than complete the group. The exact policy/candidate/consistency baseline is green at Files=4/Tests=109 in 83 wallclock seconds under the repository RAM guard. Re-derive: run t1601/t1686 plus t1685/t1763 with FSMGEN_VIAL_SCALE_EXACT=1 under the RAM guard and inspect git log -S history. Falsify: removing t1601 loses boundary, generated excess, no-tool, cleanup, and identity proof; removing t1686 loses the independent early-reservation and malformed-sibling precedence controls. Durability: this task entry owns the audit before source changes; the completed slice must synchronize consistency authority, regressions, book, Knowledge Map, claims, and work-unit history.`
+  Intentional RED: `The exact policy inventory assertion passes while the
+  unpromoted consistency authority produces only the expected 21
+  status/evidence/rationale failures plus the boundary-omission and foreign
+  accepted-identity mutation-control failures at Files=2, Tests=85. This
+  isolates the missing semantic-action join before source promotion.`
+
+  Semantic Action Cardinality Join: `The exact two-witness policy inventory is
+  now asserted and the consistency authority seals semantic_action_cardinality
+  across all seven dimensions without flattening their roles. T1601 alone owns
+  exact 65,536-action admission, the generated 65,537 excess, no-tool shape,
+  same-volume cleanup, deterministic accepted identities, stable diagnostics,
+  and absence of partial semantic or format identities on rejection. T1686
+  independently proves three early-reservation excesses before further semantic
+  construction and without a semantic report, but is not accepted-boundary,
+  no-tool, cleanup, or accepted-identity evidence. T1763 reconstructs the exact
+  t1601/t1686 union, checks both paths, and rejects omitted or foreign evidence.
+  The focused authority gate is green at Files=2, Tests=85, and the exact
+  four-file RAM-guarded join reports All tests successful at Files=4, Tests=110
+  in 81 wallclock seconds. Re-derive: run the exact guarded four-file command
+  documented in the book. Falsify: the recorded RED proves all twenty-one
+  dimension records and both mutation controls fail before promotion.
+  Durability: source authority, regressions, this task, the bounded resume
+  pointer, book, Knowledge Map, and the work-unit commit retain the join without
+  changing any cap, accepted outcome, product behavior, support statement,
+  budget, or capacity claim.`
+
+  Semantic Action Cardinality Claim Disposition Finding: `The user-facing
+  explanation produces one actionable paired candidate for exact 65,536-action
+  admission and its 65,537-action adjacent excess. It is a derived-gate
+  disposition with non-aliased catalog/generator/parser/SemanticBuilder
+  re-derivation, the closed exact matrix plus independent reservation-order
+  oracle as falsifiers, and the exact policy plus caller-sealed consistency
+  authority as durability watchers. Re-derive: regenerate the producer-derived
+  inventory and join every candidate through the required-complete
+  verification_architecture group. Falsify: removing the disposition, producer,
+  either oracle, watcher, or current candidate identity fails closed.
+  Durability: the disposition registry, generated inventory, this task, and
+  work-unit history retain the result at 1,733/1,733 disposed candidates, 961
+  derived gates, and zero gaps/open owners.`
 
   Containment Resolution: `The cap-policy card's long one-path-per-line reverify list is now a shorter equivalent set of numeric brace ranges plus exact outliers; every expansion resolves to an existing tracked test. With checking-randomness evidence added, the card aggregate falls from 46,939 lines/3,464,850 bytes to 46,903 lines/3,462,766 bytes, restoring 39 lines/2,119 bytes below the inherited transition allowance without changing it. Re-derive: expand every compacted pattern and aggregate docs/knowledge Markdown with wc. Falsify: missing paths fail the explicit expansion census, and Knowledge Map/live-document checks reject freshness, answer, transition, or ceiling drift. Durability: this task, the compacted card, generated shard, containment manifest, and work-unit commit retain the resolution.`
 
@@ -3335,3 +3376,34 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   are the final commit gate. No cap, boundary, level, accepted identity, route
   outcome, product behavior, publication, support, budget, or capacity claim
   changes. Full CI and push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.8` semantic-action-cardinality evidence join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `semantic_action_cardinality` remains
+  pending although its complementary t1601/t1686 inventory is complete. T1601
+  alone proves exact 65,536 admission, generated 65,537 excess, no-tool shape,
+  cleanup, accepted identities, diagnostic oracle, and rejection atomicity;
+  t1686 independently proves three early-reservation excess/order controls but
+  no accepted boundary or identity. Exact `git log -S` history recovers policy
+  selection at 951720257 and action reservation hardening at 6ad4a9292. The
+  exact guarded baseline is green at Files=4, Tests=109 in 83 wallclock seconds.
+- [x] **ADDRESSED (verified)** — retained and asserted the exact t1601/t1686
+  policy witnesses; classified only directly proved boundary, adjacent-excess,
+  diagnostics, atomicity, no-tool, cleanup, and accepted-identity dimensions;
+  and made t1763 reconstruct exact projections, union, path existence,
+  omission, and foreign-evidence controls. The intentional RED was recorded
+  before consistency-authority promotion.
+- [x] **NO REGRESSION** — the complete exact guarded join reports `All tests successful`
+  at Files=4, Tests=110 in 81 wallclock seconds; policy/consistency alone pass
+  Files=2, Tests=85. MdBook tests all 59 chapters; its inspected render contains
+  94 files/20,632 KiB and was removed exactly. Knowledge Map reports 1,159
+  facts/6,231 questions/6,403 occurrences/138 shards; claims dispose
+  1,733/1,733 candidates through 961 gates with zero gaps/open owners;
+  knowledge cards remain within transition at 46,886 lines/3,462,376 bytes.
+  The exact 59-file book authority is 55,004 lines/2,969,706 bytes at measured
+  +21 lines/+1,110 bytes with zero ceiling increase. Relative paths pass
+  Files=1, Tests=2; memory, task, containment, reference-authority, claim, and
+  Knowledge Map checks pass. Staged acceptance and all doctrines are the final
+  commit gate. No cap, boundary, level, accepted identity, route outcome,
+  product behavior, publication, support, budget, or capacity claim changes.
+  Full CI and push remain deferred by policy.

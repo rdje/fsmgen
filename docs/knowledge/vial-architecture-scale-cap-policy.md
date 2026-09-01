@@ -95,12 +95,12 @@ native UVM stays emission-only. Eligibility rejects excess before tools; the
 shared lifecycle bounds trace and final artifacts.
 
 `FSM::VIAL::ArchitectureScaleCapConsistency` rebuilds policy without caller
-evidence. Eighteen groups verify all dimensions: runtime, backend, models,
+evidence. Nineteen groups verify all dimensions: runtime, backend, models,
 faults, randomness, scoreboards, coverage, bridge-profile cardinality,
 serialized bridge manifests, normalized bridge collections, execution
 profiles, operation cardinality, fiber cardinality, route collections,
 execution random attempts, serialized plans, parser admission, and declaration
-cardinality. Layered joins stay exact: scoreboards use
+cardinality, and action cardinality. Layered joins stay exact: scoreboards use
 t1631/t1690/t1712, coverage t1632/t1691/t1713, and bridge profile t1602;
 compact preflight is not boundary evidence. T1763 rebuilds exact unions and
 rejects omitted/foreign paths.
@@ -141,6 +141,12 @@ Declaration cardinality assigns t1601 the exact 1,024/1,025 fixture boundary,
 closed no-tool matrix, cleanup, identities, and explicit absence of partial
 semantic/format identities on rejection; t1689 independently admits 4,096
 declarations and rejects 4,097 before malformed later-section parsing.
+Action cardinality assigns t1601 the exact 65,536/65,537 generated boundary,
+no-tool shape, cleanup, accepted identities, and rejection atomicity; t1686
+independently proves repeat multiplication, the action after a full boundary,
+and malformed action syntax after a full boundary all retain the scenario-root
+limit before further semantic construction. T1686 is not accepted-boundary or
+accepted-identity evidence.
 Other groups and calibration remain pending/blocked.
 
 The common controller admits bounded worker files before counts/digests; cap+1

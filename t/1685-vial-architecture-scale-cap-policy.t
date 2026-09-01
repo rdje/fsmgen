@@ -47,6 +47,14 @@ is(
     'retain_early_reservation_and_terminal_defense',
     'action-cardinality policy retains both early and terminal enforcement',
 );
+is_deeply(
+    $policy->{groups}{semantic_action_cardinality}{evidence},
+    [qw(
+        t/1601-vial-architecture-scale-semantic-catalog.t
+        t/1686-vial-semantic-action-cap-order.t
+    )],
+    'action-cardinality policy cites the exact catalog and reservation-order evidence set',
+);
 is(
     $policy->{groups}{semantic_repeat_layering}{current_enforcement},
     'compact_body_then_bounded_copy_reservation',

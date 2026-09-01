@@ -749,6 +749,32 @@ my %SEMANTIC_PARSER_RATIONALE = (
     accepted_identity =>
         'the closed catalog plus exact import and byte boundaries retain deterministic semantic identities',
 );
+my @SEMANTIC_ACTION_EVIDENCE = (
+    [
+        't/1601-vial-architecture-scale-semantic-catalog.t',
+        @DIMENSIONS,
+    ],
+    [
+        't/1686-vial-semantic-action-cap-order.t',
+        qw(adjacent_excess diagnostics atomicity),
+    ],
+);
+my %SEMANTIC_ACTION_RATIONALE = (
+    boundary =>
+        'the exact 65536-action generated catalog route admits',
+    adjacent_excess =>
+        'the generated 65537-action excess and three reservation-order excesses reject',
+    diagnostics =>
+        'action excesses retain the stable limit family, phase, message, and scenario-root path',
+    atomicity =>
+        'capacity reserves before action form and repeat multiplication, while rejection publishes no partial semantic identities or report',
+    no_tool =>
+        'every selected semantic catalog construction carries no backend or external-tool selector',
+    cleanup =>
+        'semantic catalog staging removes same-volume success and consumer-failure residue',
+    accepted_identity =>
+        'the exact action boundary retains deterministic semantic projection, report, and format identities',
+);
 my @SEMANTIC_DECLARATION_EVIDENCE = (
     [
         't/1601-vial-architecture-scale-semantic-catalog.t',
@@ -974,6 +1000,18 @@ for my $entry (@SEMANTIC_PARSER_EVIDENCE) {
     push @{$semantic_parser_dimensions{$_}{evidence}}, $path
         for @dimensions;
 }
+my %semantic_action_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $SEMANTIC_ACTION_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@SEMANTIC_ACTION_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$semantic_action_dimensions{$_}{evidence}}, $path
+        for @dimensions;
+}
 my %semantic_declaration_dimensions = map {
     $_ => {
         status => 'verified',
@@ -1003,6 +1041,7 @@ my $VERIFIED_DIMENSIONS = {
     execution_random_attempts => \%execution_random_dimensions,
     execution_route_collections => \%execution_route_dimensions,
     runtime_stream_envelopes => \%runtime_dimensions,
+    semantic_action_cardinality => \%semantic_action_dimensions,
     semantic_declaration_cardinality => \%semantic_declaration_dimensions,
     semantic_parser_admission => \%semantic_parser_dimensions,
 };

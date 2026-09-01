@@ -26,8 +26,9 @@ normalized-bridge-collection, execution-profile-selection, and
 execution-operation-cardinality, execution-fiber-cardinality,
 execution-route-collection, execution-random-attempt, and
 execution-serialized-plan witnesses are now joined too. Semantic-parser
-admission and semantic-declaration cardinality are now joined as well. The same
-classification remains pending for every other group.
+admission, semantic-declaration cardinality, and semantic-action cardinality
+are now joined as well. The same classification remains pending for every
+other group.
 
 ## Why calibration publication is separate
 
@@ -63,7 +64,7 @@ manifest, normalized-collection, execution-profile-selection, and
 execution-operation-cardinality, execution-fiber-cardinality,
 execution-route-collection, execution-random-attempt, and
 execution-serialized-plan, semantic-parser-admission, and semantic-declaration-
-cardinality groups are `verified`
+cardinality, and semantic-action-cardinality groups are `verified`
 across all seven
 dimensions; all other groups remain `pending_independent_verification`.
 Runtime covers the selected materialization profiles plus t1720 through t1749
@@ -175,7 +176,16 @@ admits exactly 4,096 declarations and rejects 4,097 before parsing a malformed
 later section. Together they retain stable diagnostics, provider-free shape,
 same-volume cleanup, and deterministic accepted identities without inventing
 a redundant third witness.
-T1763 reconstructs all eighteen sets of per-dimension projections,
+Action cardinality is deliberately asymmetric too. T1601 alone admits exactly
+65,536 expanded actions, rejects 65,537 through the generated catalog route,
+and owns provider-free construction, same-volume cleanup, accepted identities,
+and absence of partial semantic or format identities on rejection. T1686 adds
+three independent excess-order controls: repeat multiplication, an action after
+a full boundary, and malformed action syntax after a full boundary all retain
+the stable scenario-root limit before further semantic construction and publish
+no semantic report. T1686 is not accepted-boundary or accepted-identity
+evidence.
+T1763 reconstructs all nineteen sets of per-dimension projections,
 requires their complete unions, checks every path, and rejects omitted or
 foreign evidence. Policy citations remain candidates
 for all unreviewed groups. The validator also
@@ -412,6 +422,17 @@ admission order, cleanup, identities, and sealed falsifiers with:
 scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
   prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t \
   t/1689-vial-semantic-declaration-cap-order.t \
+  t/1763-vial-architecture-scale-cap-consistency.t \
+  t/1685-vial-architecture-scale-cap-policy.t
+```
+
+Reverify exact action cardinality, early reservation order, failure atomicity,
+cleanup, identities, and sealed falsifiers with:
+
+```sh
+scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
+  prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t \
+  t/1686-vial-semantic-action-cap-order.t \
   t/1763-vial-architecture-scale-cap-consistency.t \
   t/1685-vial-architecture-scale-cap-policy.t
 ```
