@@ -650,6 +650,10 @@ sub _validated_request_envelope($raw, $route_authority, $envelope) {
                 $request->{source_identity}, $request->{commands},
             ),
         );
+    _validate_runtime_commands(
+        $request->{commands}, $raw->{context}{staging_identity},
+        $request->{source_set}, $raw->{execution_plan},
+    );
     confess "OSVVM runtime persisted lifecycle storage changed\n"
         unless _scalar_equals(
                 $request->{storage_context}{staging_identity},

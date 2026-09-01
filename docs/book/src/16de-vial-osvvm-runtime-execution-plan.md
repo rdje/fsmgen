@@ -224,8 +224,19 @@ prove -Iperl t/1743-vial-osvvm-persisted-emission-identity.t
 ```
 
 Emit and reload call the same identity constructor, preventing formula drift.
-The check authenticates this request composite; later controls still own the
-individual source-set and command authorities.
+That composite check is followed by independent selected-plan reconstruction.
+Reload rebuilds the relocated 68-source lifecycle plan, including all 61
+provider-analysis commands, generated-source analysis, fixture/probe commands,
+generated settings, libraries, reports, and resource controls. A reordered
+provider command and matching reordered source entry therefore reject even
+when both source and emission identities have been recomputed consistently:
+
+```console
+prove -Iperl t/1744-vial-osvvm-persisted-command-authority.t
+```
+
+The same relocation-aware validator serves reload and final report validation;
+it now runs before predecessor-handle access or resumed external-tool work.
 
 Each executable role uses one lifecycle execution per controller record. The
 reference role has one correctness-only validation. Gate has one validation

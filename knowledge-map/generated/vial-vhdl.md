@@ -13,7 +13,7 @@
 - q="has the generated VIAL VHDL been analyzed or run?" · facts=[vial-vhdl-portable-profile](../../docs/knowledge/vial-vhdl-portable-profile.md)
 - q="how are 44 OSVVM and 17 Common sources verified?" · facts=[vial-vhdl-provider-claim-evidence](../../docs/knowledge/vial-vhdl-provider-claim-evidence.md)
 - q="how are OSVVM licence and notice counts verified?" · facts=[vial-vhdl-provider-claim-evidence](../../docs/knowledge/vial-vhdl-provider-claim-evidence.md)
-- q="how are OSVVM persisted lifecycle-request integers, providers, and emission identity admitted?" · facts=[vial-vhdl-osvvm-qualified-tier](../../docs/knowledge/vial-vhdl-osvvm-qualified-tier.md)
+- q="how are OSVVM persisted lifecycle-request types, providers, emission identity, and relocated command/source plan admitted?" · facts=[vial-vhdl-osvvm-qualified-tier](../../docs/knowledge/vial-vhdl-osvvm-qualified-tier.md)
 - q="how are OSVVM runtime reference gate and qualification records measured?" · facts=[vial-vhdl-osvvm-qualified-tier](../../docs/knowledge/vial-vhdl-osvvm-qualified-tier.md)
 - q="how are OSVVM supplementary provider report bytes bounded before publication?" · facts=[vial-vhdl-osvvm-qualified-tier](../../docs/knowledge/vial-vhdl-osvvm-qualified-tier.md)
 - q="how are VIAL scenarios fibers and models emitted in VHDL?" · facts=[vial-vhdl-portable-profile](../../docs/knowledge/vial-vhdl-portable-profile.md)
