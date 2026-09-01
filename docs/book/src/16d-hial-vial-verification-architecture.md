@@ -2606,11 +2606,12 @@ prove -Iperl t/1719-vial-backend-native-uvm-cap-order.t
 
 ### Runtime-stream cap-hardening frontier
 
-Task-tree leaf `.17.4.7` now owns the next bounded-failure layer: executable
+Completed task-tree leaf `.17.4.7` owns the bounded-failure layer for executable
 portable-SystemVerilog, portable-VHDL, and qualified-OSVVM runtime streams,
 together with their transcript, timeout, trace, result, and public-artifact
 envelopes. Native UVM remains emission-only and is not promoted into this
-runtime scope.
+runtime scope. Its complete RAM-guarded closure suite is green; cross-family
+cap consistency and durable closeout remain proposed under `.17.4.8`.
 
 The first portable-SystemVerilog slice now applies the existing public graph
 validator to the exact plan artifacts plus successful backend emission before
