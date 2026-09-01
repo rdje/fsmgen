@@ -23,6 +23,7 @@ answers:
   - "how does GHDL resume authenticate command trace result and assembly evidence?"
   - "how does GHDL resume semantically authenticate terminal trace result and assembly payloads?"
   - "why must GHDL lifecycle object descriptors be append-only across states?"
+  - "how does GHDL resume bind lifecycle authority version and OSVVM settings object bytes?"
 date: 2026-09-01
 status: current
 tags: [vial, vhdl, ghdl, runtime, trace, scalability]
@@ -50,6 +51,7 @@ evidence: >-
   t/1731-vial-ghdl-capture-evidence-admission.t;
   t/1732-vial-ghdl-state-evidence-admission.t;
   t/1733-vial-ghdl-terminal-payload-resume-admission.t;
+  t/1735-vial-ghdl-authority-object-admission.t;
   t/1678-vial-ghdl-provider-aware-lifecycle.t;
   t/1725-vial-ghdl-cleanup-diagnostic-authority.t;
   t/1726-vial-ghdl-admission-cleanup-evidence.t;
@@ -67,6 +69,7 @@ reverify: >-
   t/1731-vial-ghdl-capture-evidence-admission.t
   t/1732-vial-ghdl-state-evidence-admission.t
   t/1733-vial-ghdl-terminal-payload-resume-admission.t
+  t/1735-vial-ghdl-authority-object-admission.t
   t/1725-vial-ghdl-cleanup-diagnostic-authority.t
   t/1726-vial-ghdl-admission-cleanup-evidence.t
   t/1727-vial-ghdl-probe-timeout-diagnostic-authority.t
@@ -156,6 +159,15 @@ result status/hash, and assembly count/hash must match canonical sealed
 same-volume payloads. t1732 rejects foreign values for every command family
 and terminal digest while exact portable and provider-aware chains finish with
 unchanged output and cleanup.
+
+Caller-owned content objects are independently rebound rather than trusted for
+self-consistent hashes. Every resumed state compares the canonical
+`lifecycle_authority` bytes with reconstructed session authority. From
+`tool_verified`, the version object must be the selected multi-line GHDL
+version plus exactly one LF; OSVVM `prepared` and later states require exact
+selected generated-settings bytes. Live version capture uses the same
+canonical form. t1735 rejects foreign authority, version, settings, and
+trailing-newline forms while both installed checked qualifiers remain exact.
 
 Terminal object admission now reconstructs meaning rather than accepting
 self-consistent canonical bytes. Resume extracts and fully revalidates the

@@ -134,6 +134,15 @@ than trusted from state JSON. Shared trace, result, assembly, and workspace
 evidence is then rebound to canonical same-volume objects. The combined
 forgery oracle is `t/1732-vial-ghdl-state-evidence-admission.t`.
 
+The object bytes carrying caller authority are rebound independently as well.
+Every state compares its canonical lifecycle-authority object with the
+reconstructed session authority; `prepared` and later states compare the
+generated-settings object byte for byte with the selected command plan; and
+`tool_verified` and later states require the selected multi-line GHDL version
+plus exactly one LF. The live version phase writes only that same canonical
+transcript. The shared portable/OSVVM forgery control is
+`t/1735-vial-ghdl-authority-object-admission.t`.
+
 The terminal objects themselves are independently reproduced on resume.
 Fixture runtime bytes are passed through the full trace validator and full
 normalized-result admission again; provider-aware assembly is rebuilt from

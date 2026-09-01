@@ -192,6 +192,20 @@ This focused control covers both portable and OSVVM state forms:
 prove -Iperl t/1732-vial-ghdl-state-evidence-admission.t
 ```
 
+Content-addressing alone does not make caller-owned object bytes authoritative.
+Every resumed state therefore compares its sealed `lifecycle_authority` object
+with the canonical reconstructed session authority. From `tool_verified`
+onward, the sealed version transcript must equal the selected multi-line GHDL
+version followed by exactly one LF; live capture enforces that same canonical
+form before writing the object. Provider-aware states at or beyond `prepared`
+also compare the sealed generated-settings bytes with the selected command-plan
+content. Rehashing the complete state chain around a foreign but internally
+consistent authority, version, or settings object now rejects. Focused control:
+
+```console
+prove -Iperl t/1735-vial-ghdl-authority-object-admission.t
+```
+
 Canonical terminal payloads are not trusted merely because their evidence
 summaries agree with them. On every resume at or beyond trace validation, the
 lifecycle extracts the trace from the sealed runtime transcript and reruns the

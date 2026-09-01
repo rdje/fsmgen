@@ -382,8 +382,10 @@ sub _validated_provider($repo_root, $root_device, $raw, $validate_inputs) {
         unless defined($raw->{archive_bytes}) && !ref($raw->{archive_bytes})
             && $raw->{archive_bytes} =~ /\A[1-9][0-9]*\z/;
     _throw('VIAL_GHDL_LIFECYCLE_INVOCATION_ERROR',
-        'provider version output is not one scalar', '/provider/version_output')
-        unless defined($raw->{version_output}) && !ref($raw->{version_output});
+        'provider version output is not one normalized scalar',
+        '/provider/version_output')
+        unless defined($raw->{version_output}) && !ref($raw->{version_output})
+            && $raw->{version_output} !~ /[\r\n]\z/;
     _throw('VIAL_GHDL_LIFECYCLE_PATH_ERROR',
         'provider binary is outside its exact provider root',
         '/provider/binary') unless index($raw->{binary}, "$raw->{root}/") == 0;
@@ -906,12 +908,10 @@ sub _phase_tool_verified($session) {
         if _is_osvvm_role($session->{role});
     my $capture = _run_phase($session, 'tool_verified',
         $session->{commands}{version});
-    my $normalized = $capture->{output};
-    $normalized =~ s/[\r\n]+\z//;
     _throw('VIAL_GHDL_LIFECYCLE_TOOL_ERROR',
         'installed GHDL version differs from caller authority',
         '/tool_verified/version')
-        unless $normalized eq $session->{provider}{version_output};
+        unless $capture->{output} eq _expected_tool_version_output($session);
     push @{$session->{objects}}, _write_object(
         $session, 'tool_version_output', $capture->{output}, 0,
     );
@@ -920,6 +920,10 @@ sub _phase_tool_verified($session) {
         capture => _capture_evidence($capture),
         _workspace_evidence($session),
     };
+}
+
+sub _expected_tool_version_output($session) {
+    return $session->{provider}{version_output} . "\n";
 }
 
 sub _phase_analyzed($session) {
@@ -2300,6 +2304,7 @@ sub _load_chain($session, $handle) {
             && ($handle->{state_relpath} // '') eq $expected_rel
             && ($handle->{next_state} // '') eq ($current->{next_state} // '');
     _validate_objects($session, $current->{objects});
+    _validate_authority_objects($session, $current);
     _validate_terminal_payloads($session, $current);
     _validate_workspace($session, $current->{evidence});
     $session->{objects} = _clone($current->{objects});
@@ -2318,6 +2323,41 @@ sub _validate_object_history($previous, $current) {
             unless _canonical($current->[$index])
                 eq _canonical($previous->[$index]);
     }
+    return 1;
+}
+
+sub _validate_authority_objects($session, $record) {
+    my $ordinal = $STATE_ORDINAL{$record->{state}};
+    _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+        'GHDL lifecycle authority-object state is invalid', '/state')
+        unless defined($ordinal);
+    _require_authority_object(
+        $session, $record->{objects}, 'lifecycle_authority',
+        _canonical($session->{authority}) . "\n",
+    );
+    if ($ordinal >= $STATE_ORDINAL{tool_verified}) {
+        _require_authority_object(
+            $session, $record->{objects}, 'tool_version_output',
+            _expected_tool_version_output($session),
+        );
+    }
+    if (_is_osvvm_role($session->{role})
+            && $ordinal >= $STATE_ORDINAL{prepared}) {
+        _require_authority_object(
+            $session, $record->{objects}, 'generated_settings',
+            $session->{commands}{generated_settings}{content},
+        );
+    }
+    return 1;
+}
+
+sub _require_authority_object($session, $objects, $kind, $expected) {
+    my $matches = eval {
+        _object_content_from($session, $objects, $kind) eq $expected;
+    };
+    _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+        "sealed GHDL object '$kind' differs from selected authority",
+        "/objects/$kind") unless $matches;
     return 1;
 }
 
