@@ -199,6 +199,16 @@ staging alone may be recovered. The conservative 67,108,864-byte publication
 ceiling reuses an existing GHDL runtime-capture authority; it is containment,
 not a performance or capacity claim.
 
+OSVVM's four supplementary reports are file outputs rather than process
+transcript bytes. After the provider run, the shared lifecycle first checks the
+exact closed same-volume report inventory, stats all four regular files, and
+preflights their aggregate against that same 67,108,864-byte publication
+ceiling. Exact equality is admitted; one adjacent byte rejects before any
+report read or lifecycle-object write. If a report's size changes between the
+preflight and read, object-integrity admission rejects before persistence. The
+matrix still performs its terminal complete-publication check, so this is an
+earlier monotonic known-excess defense rather than a replacement authority.
+
 Inspect the immutable inventory without starting provider or tool work:
 
 ```console

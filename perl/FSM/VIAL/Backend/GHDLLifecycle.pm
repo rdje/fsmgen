@@ -136,7 +136,7 @@ my %PHASE_POLICY = (
     elaborated => [60, 8_388_608],
     ran => [30, 67_108_864],
 );
-my $RESULT_RECORD_MAX_BYTES = 67_108_864;
+my $RUNTIME_ARTIFACT_MAX_BYTES = 67_108_864;
 
 sub state_order($class) {
     _exact_class($class, 'state_order');
@@ -1159,7 +1159,7 @@ sub _phase_result_produced($session) {
         ? 'fixture_runtime_output_0' : 'runtime_output_0';
     my $output = _object_content($session, $runtime_kind);
     my $decoded = _decode_runtime_result_record(
-        $output, $RESULT_RECORD_MAX_BYTES,
+        $output, $RUNTIME_ARTIFACT_MAX_BYTES,
     );
     my $validated_trace = eval {
         $JSON->decode(_object_content($session, 'validated_trace'))
@@ -2565,7 +2565,7 @@ sub _snapshot_osvvm_reports($session, $run_index) {
         'OSVVM provider report inventory is not exact',
         '/ran/provider_reports') unless _canonical(\@actual)
             eq _canonical(\@expected);
-    my @snapshot;
+    my @candidate;
     for my $index (0 .. $#{$session->{commands}{provider_reports}}) {
         my $authority = $session->{commands}{provider_reports}[$index];
         my $absolute = _repo_path(
@@ -2574,7 +2574,28 @@ sub _snapshot_osvvm_reports($session, $run_index) {
         _regular_same_volume(
             $absolute, $authority->{relpath}, $session->{root_device},
         );
-        my $content = _slurp($absolute);
+        push @candidate, {
+            authority => $authority,
+            absolute => $absolute,
+            bytes => _osvvm_report_file_bytes($absolute),
+        };
+    }
+    _preflight_osvvm_report_bytes(
+        [map {{
+            name => $_->{authority}{name}, bytes => $_->{bytes},
+        }} @candidate],
+        $RUNTIME_ARTIFACT_MAX_BYTES,
+    );
+
+    my @snapshot;
+    for my $index (0 .. $#candidate) {
+        my $candidate = $candidate[$index];
+        my $authority = $candidate->{authority};
+        my $content = _slurp($candidate->{absolute});
+        _throw('VIAL_GHDL_LIFECYCLE_OBJECT_ERROR',
+            'OSVVM provider report changed after byte preflight',
+            "/ran/provider_reports/$index")
+            unless bytes::length($content) == $candidate->{bytes};
         push @{$session->{objects}}, _write_object(
             $session, "provider_report_${run_index}_$index", $content, 0,
         );
@@ -2585,6 +2606,40 @@ sub _snapshot_osvvm_reports($session, $run_index) {
         };
     }
     return \@snapshot;
+}
+
+sub _osvvm_report_file_bytes($absolute) {
+    my $bytes = -s $absolute;
+    _throw('VIAL_GHDL_LIFECYCLE_OBJECT_ERROR',
+        'cannot determine exact OSVVM provider report bytes',
+        '/ran/provider_reports')
+        unless _runtime_result_nonnegative_integer($bytes);
+    return 0 + $bytes;
+}
+
+sub _preflight_osvvm_report_bytes($reports, $limit) {
+    _throw('VIAL_GHDL_LIFECYCLE_OBJECT_ERROR',
+        'OSVVM provider report byte preflight is malformed',
+        '/ran/provider_reports')
+        unless ref($reports) eq 'ARRAY' && !blessed($reports)
+            && _runtime_result_positive_integer($limit);
+    my $total = 0;
+    for my $index (0 .. $#$reports) {
+        my $report = $reports->[$index];
+        _throw('VIAL_GHDL_LIFECYCLE_OBJECT_ERROR',
+            'OSVVM provider report byte evidence is malformed',
+            "/ran/provider_reports/$index")
+            unless ref($report) eq 'HASH' && !blessed($report)
+                && defined($report->{name}) && !ref($report->{name})
+                && _runtime_result_nonnegative_integer($report->{bytes});
+        my $bytes = 0 + $report->{bytes};
+        _throw('VIAL_GHDL_LIFECYCLE_LIMIT_ERROR',
+            'OSVVM provider reports exceed the exact public artifact byte ceiling',
+            '/ran/provider_reports')
+            if $bytes > $limit - $total;
+        $total += $bytes;
+    }
+    return $total;
 }
 
 sub _clear_osvvm_reports($session) {

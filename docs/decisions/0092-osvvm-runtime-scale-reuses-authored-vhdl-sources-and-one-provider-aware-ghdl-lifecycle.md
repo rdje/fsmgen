@@ -121,6 +121,18 @@ validates. It rejects incomplete, reordered, mixed, stale, collided,
 signalled, oversized, or ambiguous state and preserves every raw/excluded
 sample, dominance classification, cleanup record, and nonclaim.
 
+### Provider-report byte preflight refinement (2026-09-01)
+
+The provider probe writes four supplementary reports outside stdout/stderr, so
+process capture alone does not bound those files. The provider-aware lifecycle
+now validates the exact closed same-volume inventory, stats every regular
+report, and rejects when the report-only aggregate exceeds the existing
+67,108,864-byte publication ceiling before reading or sealing any report
+content. Exact equality remains admissible. A size change between preflight and
+read is an object-integrity failure before persistence. The matrix publisher
+retains its independent terminal complete-publication check; no new limit,
+provider role, accepted report, or qualification identity is introduced.
+
 ## Ordered implementation
 
 The active leaf proceeds through five clean children:
