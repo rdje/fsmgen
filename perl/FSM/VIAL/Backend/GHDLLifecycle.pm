@@ -51,6 +51,9 @@ my @STATE_KEYS = qw(
     evidence
 );
 my @OBJECT_KEYS = qw(kind sha256 bytes executable relative_path);
+my @OWNER_KEYS = qw(
+    schema schema_version lifecycle_identity staging_identity
+);
 my @PROVIDER_KEYS = qw(
     root archive archive_bytes archive_sha256 binary binary_sha256
     version_output
@@ -137,6 +140,8 @@ my %PHASE_POLICY = (
     ran => [30, 67_108_864],
 );
 my $RUNTIME_ARTIFACT_MAX_BYTES = 67_108_864;
+my $STATE_MAX_BYTES = 1_048_576;
+my $OWNER_MAX_BYTES = 4_096;
 
 sub state_order($class) {
     _exact_class($class, 'state_order');
@@ -2414,6 +2419,11 @@ sub _validate_terminal_payloads($session, $record) {
 sub _read_state($session, $relative) {
     my $absolute = _repo_path($session->{repo_root}, $relative);
     _regular_same_volume($absolute, $relative, $session->{root_device});
+    my @stat = stat($absolute);
+    _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+        'GHDL lifecycle state file size or mode is invalid', '/state')
+        unless @stat && $stat[7] <= $STATE_MAX_BYTES
+            && ($stat[2] & 07777) == 0600;
     my $text = _slurp($absolute);
     my $record = eval { $JSON->decode($text) };
     _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
@@ -3435,17 +3445,28 @@ sub _owner_matches($session) {
     my $path = "$session->{stage_abs}/.owner.json";
     return 0 unless -f $path && !-l $path;
     my @stat = stat($path);
-    return 0 unless @stat && $stat[0] == $session->{root_device};
+    return 0 unless @stat && $stat[0] == $session->{root_device}
+        && $stat[7] <= $OWNER_MAX_BYTES
+        && ($stat[2] & 07777) == 0600;
     my $text = eval { _slurp($path) };
     return 0 unless defined $text;
     my $owner = eval { $JSON->decode($text) };
     return 0 unless ref($owner) eq 'HASH' && !blessed($owner)
         && $text eq _canonical($owner) . "\n";
-    return ($owner->{schema} // '') eq $OWNER_SCHEMA
-        && ($owner->{schema_version} // 0) == 1
-        && ($owner->{lifecycle_identity} // '')
+    return 0 unless keys(%$owner) == @OWNER_KEYS
+        && !grep { !exists($owner->{$_}) } @OWNER_KEYS;
+    return defined($owner->{schema}) && !ref($owner->{schema})
+        && $owner->{schema} eq $OWNER_SCHEMA
+        && defined($owner->{schema_version})
+        && !ref($owner->{schema_version})
+        && _canonical($owner->{schema_version}) eq '1'
+        && defined($owner->{lifecycle_identity})
+        && !ref($owner->{lifecycle_identity})
+        && $owner->{lifecycle_identity}
             eq $session->{lifecycle_identity}
-        && ($owner->{staging_identity} // '') eq $session->{stage_rel};
+        && defined($owner->{staging_identity})
+        && !ref($owner->{staging_identity})
+        && $owner->{staging_identity} eq $session->{stage_rel};
 }
 
 sub _remove_owned_root($session) {
@@ -3585,6 +3606,9 @@ sub _write_atomic($path, $content) {
     rename $temporary, $path
         or _throw('VIAL_GHDL_LIFECYCLE_HOST_ERROR',
             'cannot commit GHDL atomic object', '/state');
+    chmod 0600, $path
+        or _throw('VIAL_GHDL_LIFECYCLE_HOST_ERROR',
+            'cannot seal GHDL atomic file permissions', '/state');
 }
 
 sub _regular_same_volume($path, $identity, $root_device) {

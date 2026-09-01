@@ -220,6 +220,20 @@ unchanged. Focused field/type/mode controls are runnable with:
 prove -Iperl t/1736-vial-ghdl-object-descriptor-admission.t
 ```
 
+The chain and cleanup authorities now have byte and permission admission before
+decode. Every state must be a same-volume regular `0600` file no larger than
+1 MiB. The fixed `.owner.json` marker must be canonical JSON no larger than
+4 KiB, use exact `0600`, contain only schema, numeric schema version, lifecycle
+identity, and staging identity, and match the selected session. The atomic
+writer normalizes `0600` explicitly instead of depending on process umask.
+State mode/size drift therefore rejects before JSON semantics; owner drift
+makes ownership unprovable, so cleanup refuses to remove that root. Focused
+controls are runnable with:
+
+```console
+prove -Iperl t/1737-vial-ghdl-state-owner-file-admission.t
+```
+
 Canonical terminal payloads are not trusted merely because their evidence
 summaries agree with them. On every resume at or beyond trace validation, the
 lifecycle extracts the trace from the sealed runtime transcript and reruns the
