@@ -33,13 +33,14 @@ answers:
   - "when does portable SystemVerilog reject a produced result that cannot fit the public artifact graph?"
   - "does the portable SystemVerilog lifecycle enforce its final backend artifact graph?"
   - "how does the common controller admit worker artifact files?"
+  - "which runtime cap evidence dimensions are independently verified?"
 date: 2026-09-01
 status: current
 tags: [vial, architecture-scale, limits, bounded-failure, route-authority]
 evidence: >-
   docs/decisions/0093-architecture-scale-caps-are-component-ceilings-with-explicit-route-authority.md;
-  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm;
-  t/1685-vial-architecture-scale-cap-policy.t;
+  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm; perl/FSM/VIAL/ArchitectureScaleCapConsistency.pm;
+  t/1685-vial-architecture-scale-cap-policy.t; t/1763-vial-architecture-scale-cap-consistency.t;
   perl/FSM/VIAL/Parser.pm;
   t/1687-vial-parser-direct-import-cap-order.t;
   t/1693-vial-parser-source-byte-cap-order.t;
@@ -131,7 +132,7 @@ reverify: >-
   t/1720-vial-runtime-structural-artifact-preflight.t
   t/1721-vial-runtime-trace-artifact-preflight.t
   t/1722-vial-runtime-result-artifact-preflight.t
-  t/1723-vial-runtime-final-artifact-graph.t t/1748-vial-common-worker-artifact-file-admission.t
+  t/1723-vial-runtime-final-artifact-graph.t t/1748-vial-common-worker-artifact-file-admission.t t/1763-vial-architecture-scale-cap-consistency.t
   t/1716-vial-backend-portable-sv-cap-order.t
   t/1717-vial-backend-portable-vhdl-cap-order.t
   t/1718-vial-backend-osvvm-provider-admission-order.t
@@ -194,11 +195,10 @@ plus immutable emission and the final profile/transcript/trace/result graph
 before writes or assembly. Exact boundaries pass, adjacent excess rejects, and
 completed-backend plus Tool terminal checks remain; no cap or claim changes.
 
-`FSM::VIAL::ArchitectureScaleCapConsistency` now rebuilds the policy without
-caller evidence and gives every selected group a closed boundary, excess,
-diagnostic, atomicity, no-tool, cleanup, and accepted-identity record. All
-records begin explicitly pending; policy citations remain candidates. A sealed
-barrier keeps calibration historical and blocks disposition until independent
-family slices verify every dimension.
+`FSM::VIAL::ArchitectureScaleCapConsistency` rebuilds the policy without caller
+evidence. Its runtime group now verifies all seven closed dimensions from the
+three selected-profile witnesses plus every completed t1720–t1749/t1751–t1762
+leaf; t1763 requires the exact union and rejects omissions or foreign evidence.
+Other groups remain pending, so calibration stays historical and blocked.
 
 The common controller admits worker files before counts/digests: the cap passes and cap+1 rejects; safe metadata and modes pass, while unsafe paths or writable modes reject. No cap or support claim changes.

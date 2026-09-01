@@ -17,6 +17,160 @@ my @dimensions = qw(
     boundary adjacent_excess diagnostics atomicity no_tool cleanup
     accepted_identity
 );
+my @runtime_profile_evidence = qw(
+    t/1663-vial-architecture-scale-portable-runtime-materialization.t
+    t/1672-vial-architecture-scale-portable-vhdl-runtime-materialization.t
+    t/1676-vial-architecture-scale-osvvm-runtime-materialization.t
+);
+my %runtime_evidence = (
+    boundary => [
+        @runtime_profile_evidence, qw(
+            t/1721-vial-runtime-trace-artifact-preflight.t
+            t/1722-vial-runtime-result-artifact-preflight.t
+            t/1723-vial-runtime-final-artifact-graph.t
+            t/1729-vial-ghdl-result-record-admission.t
+            t/1730-vial-ghdl-osvvm-provider-report-byte-preflight.t
+            t/1748-vial-common-worker-artifact-file-admission.t
+            t/1749-vial-common-worker-output-census-admission.t
+            t/1751-vial-common-interrupted-stage-census-admission.t
+            t/1753-vial-common-bounded-cleanup-admission.t
+        )
+    ],
+    adjacent_excess => [
+        @runtime_profile_evidence, qw(
+            t/1720-vial-runtime-structural-artifact-preflight.t
+            t/1721-vial-runtime-trace-artifact-preflight.t
+            t/1722-vial-runtime-result-artifact-preflight.t
+            t/1723-vial-runtime-final-artifact-graph.t
+            t/1729-vial-ghdl-result-record-admission.t
+            t/1730-vial-ghdl-osvvm-provider-report-byte-preflight.t
+            t/1748-vial-common-worker-artifact-file-admission.t
+            t/1749-vial-common-worker-output-census-admission.t
+            t/1751-vial-common-interrupted-stage-census-admission.t
+            t/1753-vial-common-bounded-cleanup-admission.t
+        )
+    ],
+    diagnostics => [qw(
+        t/1720-vial-runtime-structural-artifact-preflight.t
+        t/1721-vial-runtime-trace-artifact-preflight.t
+        t/1722-vial-runtime-result-artifact-preflight.t
+        t/1723-vial-runtime-final-artifact-graph.t
+        t/1724-vial-runtime-process-envelope.t
+        t/1725-vial-ghdl-cleanup-diagnostic-authority.t
+        t/1726-vial-ghdl-admission-cleanup-evidence.t
+        t/1727-vial-ghdl-probe-timeout-diagnostic-authority.t
+        t/1728-vial-ghdl-probe-abort-cleanup-authority.t
+        t/1729-vial-ghdl-result-record-admission.t
+        t/1730-vial-ghdl-osvvm-provider-report-byte-preflight.t
+        t/1748-vial-common-worker-artifact-file-admission.t
+        t/1749-vial-common-worker-output-census-admission.t
+        t/1751-vial-common-interrupted-stage-census-admission.t
+        t/1752-vial-common-worker-process-group-containment.t
+        t/1753-vial-common-bounded-cleanup-admission.t
+        t/1754-vial-common-detached-descendant-containment.t
+        t/1755-vial-selected-tool-detached-descendant-containment.t
+        t/1756-vial-selected-tool-host-observer-deadline.t
+        t/1757-vial-selected-tool-monotonic-containment.t
+        t/1758-vial-selected-tool-bounded-leader-reap.t
+        t/1759-vial-selected-tool-interrupted-wait.t
+        t/1760-vial-selected-tool-interrupted-observer-read.t
+        t/1761-vial-selected-tool-observation-timeout-precedence.t
+        t/1762-vial-selected-tool-interrupted-containment-pipe-read.t
+    )],
+    atomicity => [
+        @runtime_profile_evidence, qw(
+            t/1720-vial-runtime-structural-artifact-preflight.t
+            t/1721-vial-runtime-trace-artifact-preflight.t
+            t/1722-vial-runtime-result-artifact-preflight.t
+            t/1723-vial-runtime-final-artifact-graph.t
+            t/1724-vial-runtime-process-envelope.t
+            t/1730-vial-ghdl-osvvm-provider-report-byte-preflight.t
+            t/1744-vial-osvvm-persisted-command-authority.t
+            t/1745-vial-osvvm-persisted-lifecycle-storage-admission.t
+            t/1746-vial-osvvm-persisted-lifecycle-validation-admission.t
+            t/1747-vial-osvvm-outer-persisted-json-file-admission.t
+            t/1749-vial-common-worker-output-census-admission.t
+            t/1751-vial-common-interrupted-stage-census-admission.t
+            t/1752-vial-common-worker-process-group-containment.t
+            t/1753-vial-common-bounded-cleanup-admission.t
+            t/1754-vial-common-detached-descendant-containment.t
+            t/1755-vial-selected-tool-detached-descendant-containment.t
+            t/1756-vial-selected-tool-host-observer-deadline.t
+            t/1757-vial-selected-tool-monotonic-containment.t
+            t/1758-vial-selected-tool-bounded-leader-reap.t
+            t/1759-vial-selected-tool-interrupted-wait.t
+            t/1760-vial-selected-tool-interrupted-observer-read.t
+            t/1761-vial-selected-tool-observation-timeout-precedence.t
+            t/1762-vial-selected-tool-interrupted-containment-pipe-read.t
+        )
+    ],
+    no_tool => [
+        @runtime_profile_evidence,
+        't/1720-vial-runtime-structural-artifact-preflight.t',
+    ],
+    cleanup => [
+        @runtime_profile_evidence, qw(
+            t/1724-vial-runtime-process-envelope.t
+            t/1725-vial-ghdl-cleanup-diagnostic-authority.t
+            t/1726-vial-ghdl-admission-cleanup-evidence.t
+            t/1728-vial-ghdl-probe-abort-cleanup-authority.t
+            t/1736-vial-ghdl-object-descriptor-admission.t
+            t/1737-vial-ghdl-state-owner-file-admission.t
+            t/1738-vial-ghdl-handle-state-scalar-types.t
+            t/1739-vial-ghdl-request-scalar-types.t
+            t/1747-vial-osvvm-outer-persisted-json-file-admission.t
+            t/1748-vial-common-worker-artifact-file-admission.t
+            t/1749-vial-common-worker-output-census-admission.t
+            t/1751-vial-common-interrupted-stage-census-admission.t
+            t/1752-vial-common-worker-process-group-containment.t
+            t/1753-vial-common-bounded-cleanup-admission.t
+            t/1754-vial-common-detached-descendant-containment.t
+            t/1755-vial-selected-tool-detached-descendant-containment.t
+            t/1756-vial-selected-tool-host-observer-deadline.t
+            t/1757-vial-selected-tool-monotonic-containment.t
+            t/1758-vial-selected-tool-bounded-leader-reap.t
+            t/1759-vial-selected-tool-interrupted-wait.t
+            t/1760-vial-selected-tool-interrupted-observer-read.t
+            t/1761-vial-selected-tool-observation-timeout-precedence.t
+            t/1762-vial-selected-tool-interrupted-containment-pipe-read.t
+        )
+    ],
+    accepted_identity => [
+        @runtime_profile_evidence, qw(
+            t/1729-vial-ghdl-result-record-admission.t
+            t/1731-vial-ghdl-capture-evidence-admission.t
+            t/1732-vial-ghdl-state-evidence-admission.t
+            t/1733-vial-ghdl-terminal-payload-resume-admission.t
+            t/1734-vial-verilator-terminal-resume-admission.t
+            t/1735-vial-ghdl-authority-object-admission.t
+            t/1736-vial-ghdl-object-descriptor-admission.t
+            t/1737-vial-ghdl-state-owner-file-admission.t
+            t/1738-vial-ghdl-handle-state-scalar-types.t
+            t/1739-vial-ghdl-request-scalar-types.t
+            t/1740-vial-osvvm-persisted-request-scalar-types.t
+            t/1741-vial-osvvm-persisted-provider-admission.t
+            t/1742-vial-osvvm-persisted-ghdl-provider-admission.t
+            t/1743-vial-osvvm-persisted-emission-identity.t
+            t/1744-vial-osvvm-persisted-command-authority.t
+            t/1745-vial-osvvm-persisted-lifecycle-storage-admission.t
+            t/1746-vial-osvvm-persisted-lifecycle-validation-admission.t
+            t/1747-vial-osvvm-outer-persisted-json-file-admission.t
+            t/1748-vial-common-worker-artifact-file-admission.t
+            t/1752-vial-common-worker-process-group-containment.t
+            t/1753-vial-common-bounded-cleanup-admission.t
+            t/1754-vial-common-detached-descendant-containment.t
+        )
+    ],
+);
+my %runtime_rationale = (
+    boundary => 'exact runtime artifact, result, report, census, and cleanup ceilings admit at their selected boundary',
+    adjacent_excess => 'the first structural, byte, count, report, census, and cleanup excess rejects',
+    diagnostics => 'runtime limit, admission, timeout, containment, and cleanup failures retain stable authority',
+    atomicity => 'known excess and supervised failure publish no partial graph and preserve authenticated staging',
+    no_tool => 'all three profile preflights and structural excess reject before provider or selected-tool execution',
+    cleanup => 'owned staging and supervised process domains are removed exactly or report bounded residue',
+    accepted_identity => 'all three profiles and persisted runtime objects rebind to selected source, plan, tool, trace, result, and storage authority',
+);
 
 sub dies {
     my ($code) = @_;
@@ -70,17 +224,47 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
             [sort @dimensions],
             "$name cannot omit a closeout dimension");
         for my $dimension (@dimensions) {
-            is($group->{dimensions}{$dimension}{status},
-                'pending_independent_verification',
-                "$name/$dimension remains explicitly pending");
-            is_deeply($group->{dimensions}{$dimension}{evidence}, [],
-                "$name/$dimension does not relabel candidate evidence");
+            my $expected_status = $name eq 'runtime_stream_envelopes'
+                ? 'verified' : 'pending_independent_verification';
+            my $expected_evidence = $name eq 'runtime_stream_envelopes'
+                ? $runtime_evidence{$dimension} : [];
+            is($group->{dimensions}{$dimension}{status}, $expected_status,
+                "$name/$dimension has its sealed verification state");
+            is_deeply(
+                $group->{dimensions}{$dimension}{evidence},
+                $expected_evidence,
+                "$name/$dimension has its exact evidence join",
+            );
+            is(
+                $group->{dimensions}{$dimension}{rationale},
+                $name eq 'runtime_stream_envelopes'
+                    ? $runtime_rationale{$dimension}
+                    : 'policy citations are candidates, not dimension proof',
+                "$name/$dimension has its exact evidence rationale",
+            );
         }
         push @missing_evidence,
             grep { !-f $_ } @{$group->{candidate_evidence}};
     }
     is_deeply(\@missing_evidence, [],
         'every policy candidate-evidence path exists');
+
+    my %joined = map { $_ => 1 }
+        map { @{$runtime_evidence{$_}} } @dimensions;
+    my @expected_join = (
+        @runtime_profile_evidence,
+        map {
+            sprintf 't/%04d-%s', $_, runtime_leaf_suffix($_)
+        } (1720 .. 1749, 1751 .. 1762),
+    );
+    is_deeply(
+        [sort keys %joined], [sort @expected_join],
+        'runtime join covers every selected profile and completed leaf once',
+    );
+    is_deeply(
+        [grep { !-f $_ } sort keys %joined], [],
+        'every sealed runtime evidence path exists',
+    );
 
     is($report->{calibration}{evidence_role},
         'historical_measurement_only',
@@ -130,6 +314,20 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
     my $assert = $class->can('_assert_report');
     ok(defined($assert), 'private sealed-report assertion is available');
 
+    my $omitted_runtime = $class->build;
+    pop @{$omitted_runtime->{groups}{runtime_stream_envelopes}
+        {dimensions}{boundary}{evidence}};
+    like(dies(sub { $assert->($omitted_runtime) }),
+        qr/runtime_stream_envelopes\/boundary' contradicts the sealed evidence authority/,
+        'callers cannot omit sealed runtime evidence');
+
+    my $foreign_runtime = $class->build;
+    push @{$foreign_runtime->{groups}{runtime_stream_envelopes}
+        {dimensions}{cleanup}{evidence}}, 't/foreign-runtime-evidence.t';
+    like(dies(sub { $assert->($foreign_runtime) }),
+        qr/runtime_stream_envelopes\/cleanup' contradicts the sealed evidence authority/,
+        'callers cannot add foreign runtime evidence');
+
     my $missing = $class->build;
     delete $missing->{groups}{$first_group}{dimensions}{cleanup};
     like(dies(sub { $assert->($missing) }),
@@ -160,3 +358,11 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
 };
 
 done_testing;
+
+sub runtime_leaf_suffix {
+    my ($number) = @_;
+    my %suffix = map { /^t\/(\d+)-(.*)\.t\z/ ? ($1 => $2) : () }
+        map { @{$runtime_evidence{$_}} } @dimensions;
+    die "runtime evidence omits t/$number\n" unless exists $suffix{$number};
+    return "$suffix{$number}.t";
+}

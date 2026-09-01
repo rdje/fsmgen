@@ -23,8 +23,220 @@ my @DIMENSIONS = qw(
 
 # Later family-specific slices may promote one entry only after independently
 # reviewing its evidence. An absent entry is deliberately visible as pending;
-# policy citations are candidates, not dimension proof.
-my $VERIFIED_DIMENSIONS = {};
+# policy citations are candidates, not dimension proof. Each promoted test is
+# listed once with only the dimensions it proves, so the join remains auditable.
+my @RUNTIME_EVIDENCE = (
+    [
+        't/1663-vial-architecture-scale-portable-runtime-materialization.t',
+        qw(boundary adjacent_excess atomicity no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1672-vial-architecture-scale-portable-vhdl-runtime-materialization.t',
+        qw(boundary adjacent_excess atomicity no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1676-vial-architecture-scale-osvvm-runtime-materialization.t',
+        qw(boundary adjacent_excess atomicity no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1720-vial-runtime-structural-artifact-preflight.t',
+        qw(adjacent_excess diagnostics atomicity no_tool),
+    ],
+    [
+        't/1721-vial-runtime-trace-artifact-preflight.t',
+        qw(boundary adjacent_excess diagnostics atomicity),
+    ],
+    [
+        't/1722-vial-runtime-result-artifact-preflight.t',
+        qw(boundary adjacent_excess diagnostics atomicity),
+    ],
+    [
+        't/1723-vial-runtime-final-artifact-graph.t',
+        qw(boundary adjacent_excess diagnostics atomicity),
+    ],
+    [
+        't/1724-vial-runtime-process-envelope.t',
+        qw(diagnostics atomicity cleanup),
+    ],
+    [
+        't/1725-vial-ghdl-cleanup-diagnostic-authority.t',
+        qw(diagnostics cleanup),
+    ],
+    [
+        't/1726-vial-ghdl-admission-cleanup-evidence.t',
+        qw(diagnostics cleanup),
+    ],
+    [
+        't/1727-vial-ghdl-probe-timeout-diagnostic-authority.t',
+        qw(diagnostics),
+    ],
+    [
+        't/1728-vial-ghdl-probe-abort-cleanup-authority.t',
+        qw(diagnostics cleanup),
+    ],
+    [
+        't/1729-vial-ghdl-result-record-admission.t',
+        qw(boundary adjacent_excess diagnostics accepted_identity),
+    ],
+    [
+        't/1730-vial-ghdl-osvvm-provider-report-byte-preflight.t',
+        qw(boundary adjacent_excess diagnostics atomicity),
+    ],
+    [
+        't/1731-vial-ghdl-capture-evidence-admission.t',
+        qw(accepted_identity),
+    ],
+    [
+        't/1732-vial-ghdl-state-evidence-admission.t',
+        qw(accepted_identity),
+    ],
+    [
+        't/1733-vial-ghdl-terminal-payload-resume-admission.t',
+        qw(accepted_identity),
+    ],
+    [
+        't/1734-vial-verilator-terminal-resume-admission.t',
+        qw(accepted_identity),
+    ],
+    [
+        't/1735-vial-ghdl-authority-object-admission.t',
+        qw(accepted_identity),
+    ],
+    [
+        't/1736-vial-ghdl-object-descriptor-admission.t',
+        qw(cleanup accepted_identity),
+    ],
+    [
+        't/1737-vial-ghdl-state-owner-file-admission.t',
+        qw(cleanup accepted_identity),
+    ],
+    [
+        't/1738-vial-ghdl-handle-state-scalar-types.t',
+        qw(cleanup accepted_identity),
+    ],
+    [
+        't/1739-vial-ghdl-request-scalar-types.t',
+        qw(cleanup accepted_identity),
+    ],
+    [
+        't/1740-vial-osvvm-persisted-request-scalar-types.t',
+        qw(accepted_identity),
+    ],
+    [
+        't/1741-vial-osvvm-persisted-provider-admission.t',
+        qw(accepted_identity),
+    ],
+    [
+        't/1742-vial-osvvm-persisted-ghdl-provider-admission.t',
+        qw(accepted_identity),
+    ],
+    [
+        't/1743-vial-osvvm-persisted-emission-identity.t',
+        qw(accepted_identity),
+    ],
+    [
+        't/1744-vial-osvvm-persisted-command-authority.t',
+        qw(atomicity accepted_identity),
+    ],
+    [
+        't/1745-vial-osvvm-persisted-lifecycle-storage-admission.t',
+        qw(atomicity accepted_identity),
+    ],
+    [
+        't/1746-vial-osvvm-persisted-lifecycle-validation-admission.t',
+        qw(atomicity accepted_identity),
+    ],
+    [
+        't/1747-vial-osvvm-outer-persisted-json-file-admission.t',
+        qw(atomicity cleanup accepted_identity),
+    ],
+    [
+        't/1748-vial-common-worker-artifact-file-admission.t',
+        qw(boundary adjacent_excess diagnostics cleanup accepted_identity),
+    ],
+    [
+        't/1749-vial-common-worker-output-census-admission.t',
+        qw(boundary adjacent_excess diagnostics atomicity cleanup),
+    ],
+    [
+        't/1751-vial-common-interrupted-stage-census-admission.t',
+        qw(boundary adjacent_excess diagnostics atomicity cleanup),
+    ],
+    [
+        't/1752-vial-common-worker-process-group-containment.t',
+        qw(diagnostics atomicity cleanup accepted_identity),
+    ],
+    [
+        't/1753-vial-common-bounded-cleanup-admission.t',
+        qw(boundary adjacent_excess diagnostics atomicity cleanup accepted_identity),
+    ],
+    [
+        't/1754-vial-common-detached-descendant-containment.t',
+        qw(diagnostics atomicity cleanup accepted_identity),
+    ],
+    [
+        't/1755-vial-selected-tool-detached-descendant-containment.t',
+        qw(diagnostics atomicity cleanup),
+    ],
+    [
+        't/1756-vial-selected-tool-host-observer-deadline.t',
+        qw(diagnostics atomicity cleanup),
+    ],
+    [
+        't/1757-vial-selected-tool-monotonic-containment.t',
+        qw(diagnostics atomicity cleanup),
+    ],
+    [
+        't/1758-vial-selected-tool-bounded-leader-reap.t',
+        qw(diagnostics atomicity cleanup),
+    ],
+    [
+        't/1759-vial-selected-tool-interrupted-wait.t',
+        qw(diagnostics atomicity cleanup),
+    ],
+    [
+        't/1760-vial-selected-tool-interrupted-observer-read.t',
+        qw(diagnostics atomicity cleanup),
+    ],
+    [
+        't/1761-vial-selected-tool-observation-timeout-precedence.t',
+        qw(diagnostics atomicity cleanup),
+    ],
+    [
+        't/1762-vial-selected-tool-interrupted-containment-pipe-read.t',
+        qw(diagnostics atomicity cleanup),
+    ],
+);
+my %RUNTIME_RATIONALE = (
+    boundary =>
+        'exact runtime artifact, result, report, census, and cleanup ceilings admit at their selected boundary',
+    adjacent_excess =>
+        'the first structural, byte, count, report, census, and cleanup excess rejects',
+    diagnostics =>
+        'runtime limit, admission, timeout, containment, and cleanup failures retain stable authority',
+    atomicity =>
+        'known excess and supervised failure publish no partial graph and preserve authenticated staging',
+    no_tool =>
+        'all three profile preflights and structural excess reject before provider or selected-tool execution',
+    cleanup =>
+        'owned staging and supervised process domains are removed exactly or report bounded residue',
+    accepted_identity =>
+        'all three profiles and persisted runtime objects rebind to selected source, plan, tool, trace, result, and storage authority',
+);
+my %runtime_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $RUNTIME_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@RUNTIME_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$runtime_dimensions{$_}{evidence}}, $path for @dimensions;
+}
+my $VERIFIED_DIMENSIONS = {
+    runtime_stream_envelopes => \%runtime_dimensions,
+};
 
 sub build {
     my ($class, @args) = @_;
