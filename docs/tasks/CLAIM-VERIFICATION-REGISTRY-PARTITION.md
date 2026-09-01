@@ -61,14 +61,14 @@ without silently raising the existing 65,536-byte file ceiling.
   Commit: `CLAIM-VERIFICATION-REGISTRY-PARTITION.1: select finite claim registry set`
 
 - ID: `CLAIM-VERIFICATION-REGISTRY-PARTITION.2`
-  Status: `in_progress`
+  Status: `done`
   Goal: `Implement the optional finite registry-set checker contract and focused hostile fixtures.`
   Acceptance: `The checker accepts explicit single-registry or registry-set input, validates manifest and aggregate bounds plus exact tracked shard closure, preserves all existing record/marker invariants globally, and a pre-repair RED watcher turns green without changing the production default registry.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `PASS — pre-repair t1750 failed its sole reached subtest because registry-set was unknown; the repaired checker preflights 65,536-byte hard bounds, preserves JSON integer type, binds tracked same-volume/current-owner regular files, closes manifest/tracked-shard/aggregate/global identity and marker state, and retains explicit/default single-registry behavior. Claim governance plus t1750 passes Files=4/Tests=37 in 7 seconds; all 58 book chapters test and the inspected 93-file/20,392-KiB render is removed; inventory/disposition and all 22 live surfaces pass.`
+  Commit: `CLAIM-VERIFICATION-REGISTRY-PARTITION.2: gate optional finite registry sets`
 
 - ID: `CLAIM-VERIFICATION-REGISTRY-PARTITION.3`
-  Status: `pending`
+  Status: `in_progress`
   Goal: `Migrate the default claim doctrine to two bounded shards and close all documentation and governance surfaces.`
   Acceptance: `The original 65,381-byte shard remains byte-identical, one empty bounded shard restores capacity, the finite set becomes the default, and policy/book/Knowledge Map/bootstrap/inventory/containment/task/Memory/doctrine surfaces agree with zero claim/disposition drift or ceiling increase.`
   Verification: `pending`
@@ -93,6 +93,12 @@ without silently raising the existing 65,536-byte file ceiling.
   leaf `.1` therefore applies the existing containment formula only to the
   three exceeded transition dimensions: actual minus immutable baseline plus
   one existing ratchet step. No health target or ceiling changes.
+- `2026-09-01`: Signoff review of `.2` found two adjacent holes in the old
+  single-registry checker: numeric-looking JSON strings could impersonate
+  integer metadata, and registry size was checked only after an unbounded
+  slurp. The shared repair now preserves JSON scalar type and applies the hard
+  byte cap before reading every explicit registry-set manifest or shard as
+  well as the compatible single-registry path.
 
 ## Open Questions
 
@@ -109,6 +115,12 @@ without silently raising the existing 65,536-byte file ceiling.
 - [x] **ADDRESSED (verified)** — decision `0094` records the 65,381/65,536-byte saturation and selects a finite registry set. The existing containment formula sets only the exceeded rationale transition dimensions to actual minus baseline plus one unchanged ratchet step: files 7, total lines 822, and total bytes 49,482; the owner becomes `.1`, while all health targets and enforcement ceilings remain unchanged.
 - [x] **NO REGRESSION** — the documentation-path audit reports `All tests successful` at `Files=1, Tests=2`; task integrity accepts five active trees and 1,035 nodes; Memory architecture passes at 16 lines; the claim checker remains green at 25 records, inventory/disposition remains complete at 1,704/1,704 candidates with 172 claim-record, 939 gate, and 593 reviewed outcomes, and live containment accepts all 22 surfaces with zero ceiling increase. Staged task acceptance and all 12 registered doctrines pass.
 
+## Acceptance Checklist (enforced) — `.2` optional finite registry-set checker
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the clean pre-repair `prove -Iperl -v t/1750-claim-verification-registry-set.t` RED reported `Unknown option: registry-set` and emitted its exact positive watcher failure ` at t/1750-claim-verification-registry-set.t line 26`; only one top-level subtest ran and failed before hostile controls, while test syntax remained clean. Signoff inspection then proved the existing `positive_integer` accepted JSON string numerals and `read_registry` applied its declared size only after `read_relative_file` had slurped the complete path.
+- [x] **ADDRESSED (verified)** — `--registry-set` now admits one canonical bounded manifest, contiguous exact shard paths, complete tracked sibling census, aggregate record/byte caps, per-shard bounds/order, and one global claim/marker namespace; manifest and shards are preflighted at the 65,536-byte hard cap and must be tracked same-volume/current-owner regular files. JSON encode-form validation rejects string or boolean impostors before integer comparison. No arguments and explicit `--registry` still validate the unchanged production single registry at 25 records, while t1750 turns fully green with six positive/hostile top-level subtests.
+- [x] **NO REGRESSION** — claim record/inventory/disposition/registry-set tests report `All tests successful` at `Files=4, Tests=37` in 7 wallclock seconds. The current no-argument doctrine remains green at 25 records; inventory/disposition closes all 1,704 candidates through 172 claim-record, 939 gate, and 593 reviewed outcomes. All 58 mdBook chapters test; the inspected repository-local render has 93 files/20,392 KiB, contains the exact optional/default transition boundary, and is removed. All 22 live-document surfaces pass with exact +2-line/+189-byte book authority and zero ceiling increase. Staged task acceptance and all 12 registered doctrines pass.
+
 ## Changelog
 
 - `2026-09-01`: Activated from the clean HIAL `.17.4.7` handoff after the
@@ -116,3 +128,6 @@ without silently raising the existing 65,536-byte file ceiling.
 - `2026-09-01`: Leaf `.1` proved a 477-byte conservative record lower bound,
   selected decision `0094`, and handed implementation to `.2` without changing
   checker or registry behavior.
+- `2026-09-01`: Leaf `.2` implements and documents the explicit finite-set
+  checker with hostile bounds/type/path/census/order/global-identity controls;
+  production discovery remains on the byte-identical single registry for `.3`.

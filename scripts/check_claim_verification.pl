@@ -10,38 +10,90 @@ use File::Spec;
 use Getopt::Long qw(GetOptions);
 use JSON::PP;
 
-my ($root_arg, $registry_arg, $help);
+my ($root_arg, $registry_arg, $registry_set_arg, $help);
 GetOptions(
-    'root=s'     => \$root_arg,
-    'registry=s' => \$registry_arg,
-    'help|h'     => \$help,
+    'root=s'         => \$root_arg,
+    'registry=s'     => \$registry_arg,
+    'registry-set=s' => \$registry_set_arg,
+    'help|h'         => \$help,
 ) or usage(2);
 usage(0) if $help;
+fail('--registry and --registry-set are mutually exclusive')
+    if defined($registry_arg) && defined($registry_set_arg);
 
 my $script = abs_path(__FILE__);
 my $root = abs_path($root_arg // File::Spec->catdir(dirname($script), '..'));
-my $registry = $registry_arg // 'doctrine/claim_verification/claims.jsonl';
 my @problems;
 
 if (!defined($root) || !-d $root) {
     fail('invalid repository root');
 }
-if (!safe_relative_path($registry)) {
-    fail("registry path is not repository-relative and local: $registry");
-}
 
 my %tracked = tracked_paths($root);
-my ($records, $raw_lines) = read_registry($root, $registry);
-validate_registry_bounds($records, $raw_lines, $registry);
+my @registry_paths;
+my $registry_set_meta;
+my $registry_set_path;
+if (defined $registry_set_arg) {
+    $registry_set_path = $registry_set_arg;
+    if (!safe_relative_path($registry_set_path)) {
+        fail("registry-set path is not repository-relative and local: $registry_set_path");
+    }
+    ($registry_set_meta, my $paths) = read_registry_set(
+        $root, \%tracked, $registry_set_path
+    );
+    @registry_paths = @{$paths};
+} else {
+    my $registry = $registry_arg
+        // 'doctrine/claim_verification/claims.jsonl';
+    if (!safe_relative_path($registry)) {
+        fail("registry path is not repository-relative and local: $registry");
+    }
+    @registry_paths = ($registry);
+}
+
+my @record_entries;
+my $aggregate_shard_bytes = 0;
+for my $registry (@registry_paths) {
+    my $valid_registry = validate_tracked_path(
+        $root, \%tracked, $registry, 'claim registry'
+    );
+    next if !defined $valid_registry;
+    my ($records, $raw_lines) = read_registry($root, $registry);
+    validate_registry_bounds($records, $raw_lines, $registry);
+    validate_record_order($records, $registry);
+    my $path = File::Spec->catfile($root, split m{/}, $registry);
+    $aggregate_shard_bytes += -f $path ? -s $path : 0;
+    for my $index (1 .. $#{$records}) {
+        push @record_entries, {
+            record => $records->[$index],
+            where => "$registry line " . ($index + 1),
+        };
+    }
+}
+
+if (defined $registry_set_path) {
+    validate_registry_set_aggregate(
+        $registry_set_meta,
+        $aggregate_shard_bytes,
+        scalar(@record_entries),
+        $registry_set_path,
+    );
+}
+
+@record_entries = sort {
+    string_value(ref($a->{record}) eq 'HASH' ? $a->{record}{claim_id} : undef)
+        cmp string_value(ref($b->{record}) eq 'HASH' ? $b->{record}{claim_id} : undef)
+        || $a->{where} cmp $b->{where}
+} @record_entries;
 
 my %claims;
 my %source_records;
 my $published = 0;
 my $fixtures = 0;
 
-for my $index (1 .. $#{$records}) {
-    my $record = $records->[$index];
-    my $where = "$registry line " . ($index + 1);
+for my $entry (@record_entries) {
+    my $record = $entry->{record};
+    my $where = $entry->{where};
     next if ref($record) ne 'HASH';
 
     validate_record_shape($record, $where);
@@ -148,7 +200,6 @@ for my $index (1 .. $#{$records}) {
     };
 }
 
-validate_record_order($records, $registry);
 validate_markers($root, \%tracked, \%claims, \%source_records);
 
 if (@problems) {
@@ -156,19 +207,27 @@ if (@problems) {
     exit 1;
 }
 
-my $count = @{$records} ? @{$records} - 1 : 0;
-print "claim-verification: all bounded record invariants hold "
-    . "(records=$count, published=$published, fixtures=$fixtures)\n";
+my $count = scalar @record_entries;
+if (defined $registry_set_path) {
+    my $shards = scalar @registry_paths;
+    print "claim-verification: all bounded registry-set and record invariants hold "
+        . "(shards=$shards, records=$count, published=$published, fixtures=$fixtures)\n";
+} else {
+    print "claim-verification: all bounded record invariants hold "
+        . "(records=$count, published=$published, fixtures=$fixtures)\n";
+}
 exit 0;
 
 sub usage {
     my ($status) = @_;
     print <<'USAGE';
 Usage:
-  scripts/check_claim_verification.pl [--root DIR] [--registry FILE]
+  scripts/check_claim_verification.pl [--root DIR]
+      [--registry FILE | --registry-set FILE]
 
-Checks FSMGen's bounded claim registry, exact source markers, explicit
-re-derive/falsify/durability legs, tracked evidence paths, and path locality.
+Checks FSMGen's bounded claim registry or finite registry set, exact source
+markers, explicit re-derive/falsify/durability legs, tracked evidence paths,
+and path locality.
 USAGE
     exit $status;
 }
@@ -183,9 +242,155 @@ sub problem {
     push @problems, $_[0];
 }
 
+sub read_registry_set {
+    my ($base, $tracked, $relative) = @_;
+    my $valid_set = validate_tracked_path(
+        $base, $tracked, $relative, 'registry set'
+    );
+    return ({}, []) if !defined $valid_set;
+    my ($records, $lines) = read_jsonl(
+        $base, $relative, 'claim registry set', 65_536
+    );
+    if (!@{$records} || ref($records->[0]) ne 'HASH') {
+        problem("$relative must begin with registry-set metadata");
+        return ({}, []);
+    }
+
+    my $meta = $records->[0];
+    exact_keys(
+        $meta,
+        [qw(max_bytes max_record_bytes max_shards max_total_bytes
+            max_total_records record_type schema_version)],
+        "$relative line 1"
+    );
+    problem("$relative line 1 record_type must be registry_set")
+        if string_value($meta->{record_type}) ne 'registry_set';
+    validate_integer($meta->{schema_version}, 1, 1,
+        "$relative line 1 schema_version");
+    validate_registry_set_limit(
+        $meta->{max_bytes}, 65_536, "$relative line 1 max_bytes"
+    );
+    validate_registry_set_limit(
+        $meta->{max_record_bytes}, 512,
+        "$relative line 1 max_record_bytes"
+    );
+    validate_registry_set_limit(
+        $meta->{max_shards}, 64, "$relative line 1 max_shards"
+    );
+    validate_registry_set_limit(
+        $meta->{max_total_bytes}, 4_194_304,
+        "$relative line 1 max_total_bytes"
+    );
+    validate_registry_set_limit(
+        $meta->{max_total_records}, 8_192,
+        "$relative line 1 max_total_records"
+    );
+
+    my $path = File::Spec->catfile($base, split m{/}, $relative);
+    my $bytes = -f $path ? -s $path : 0;
+    if (positive_integer($meta->{max_bytes}) && $bytes > $meta->{max_bytes}) {
+        problem("$relative registry set size $bytes exceeds max_bytes $meta->{max_bytes}");
+    }
+    if (positive_integer($meta->{max_record_bytes})) {
+        for my $index (0 .. $#{$lines}) {
+            my $line_bytes = length($lines->[$index]);
+            problem("$relative line " . ($index + 1)
+                . " is $line_bytes bytes (> max_record_bytes $meta->{max_record_bytes})")
+                if $line_bytes > $meta->{max_record_bytes};
+        }
+    }
+
+    my $entry_count = @{$records} - 1;
+    if (positive_integer($meta->{max_shards})
+        && $entry_count > $meta->{max_shards}) {
+        problem("$relative shard count $entry_count exceeds max_shards $meta->{max_shards}");
+    }
+    problem("$relative must enumerate at least one registry shard")
+        if $entry_count < 1;
+
+    my $directory = dirname($relative);
+    my $prefix = $directory eq '.' ? '' : "$directory/";
+    my @paths;
+    my %seen;
+    for my $index (1 .. $#{$records}) {
+        my $entry = $records->[$index];
+        my $line_number = $index + 1;
+        my $where = "$relative line $line_number";
+        next if ref($entry) ne 'HASH';
+        exact_keys(
+            $entry,
+            [qw(ordinal path record_type schema_version)],
+            $where
+        );
+        problem("$where record_type must be registry_shard")
+            if string_value($entry->{record_type}) ne 'registry_shard';
+        validate_integer($entry->{schema_version}, 1, 1,
+            "$where schema_version");
+        validate_integer($entry->{ordinal}, 1, 64, "$where ordinal");
+        problem("$where ordinal must equal $index")
+            if positive_integer($entry->{ordinal})
+                && $entry->{ordinal} != $index;
+
+        my $expected = $index == 1
+            ? "${prefix}claims.jsonl"
+            : sprintf('%sclaims-%04d.jsonl', $prefix, $index);
+        my $declared = string_value($entry->{path});
+        problem("$where ordinal $index path must be $expected")
+            if $declared ne $expected;
+        my $valid = validate_tracked_path(
+            $base, $tracked, $entry->{path}, "$where path"
+        );
+        next if !defined $valid;
+        problem("$where duplicates shard path $valid") if $seen{$valid}++;
+        push @paths, $valid;
+    }
+
+    my $quoted_prefix = quotemeta($prefix);
+    my @tracked_shards = sort grep {
+        /\A${quoted_prefix}claims(?:-[0-9]{4})?\.jsonl\z/
+    } keys %{$tracked};
+    my @declared_shards = sort @paths;
+    problem("$relative tracked shard census does not match manifest entries")
+        if join("\0", @tracked_shards) ne join("\0", @declared_shards);
+
+    return ($meta, \@paths);
+}
+
+sub validate_registry_set_limit {
+    my ($value, $hard_maximum, $where) = @_;
+    problem("$where must be an integer in 1..$hard_maximum")
+        if !positive_integer($value) || $value > $hard_maximum;
+}
+
+sub validate_registry_set_aggregate {
+    my ($meta, $bytes, $record_count, $relative) = @_;
+    return if ref($meta) ne 'HASH';
+    if (positive_integer($meta->{max_total_bytes})
+        && $bytes > $meta->{max_total_bytes}) {
+        problem("$relative aggregate shard size $bytes exceeds "
+            . "max_total_bytes $meta->{max_total_bytes}");
+    }
+    if (positive_integer($meta->{max_total_records})
+        && $record_count > $meta->{max_total_records}) {
+        problem("$relative aggregate record count $record_count exceeds "
+            . "max_total_records $meta->{max_total_records}");
+    }
+}
+
 sub read_registry {
     my ($base, $relative) = @_;
-    my $raw = read_relative_file($base, $relative, 'claim registry');
+    return read_jsonl($base, $relative, 'claim registry', 65_536);
+}
+
+sub read_jsonl {
+    my ($base, $relative, $label, $hard_maximum) = @_;
+    my $path = File::Spec->catfile($base, split m{/}, $relative);
+    my @stat = lstat $path;
+    if (@stat && defined($hard_maximum) && $stat[7] > $hard_maximum) {
+        problem("$relative $label size $stat[7] exceeds hard byte limit $hard_maximum");
+        return ([], []);
+    }
+    my $raw = read_relative_file($base, $relative, $label);
     return ([], []) if !defined $raw;
     problem("$relative must end with exactly one newline")
         if $raw eq '' || $raw !~ /\n\z/ || $raw =~ /\n\n\z/;
@@ -372,6 +577,16 @@ sub validate_tracked_path {
         problem("$where is not a regular non-symlink file: $value");
         return undef;
     }
+    my @root_stat = stat $base;
+    my @path_stat = lstat $path;
+    if (!@root_stat || !@path_stat || $path_stat[0] != $root_stat[0]) {
+        problem("$where is not on the repository filesystem volume: $value");
+        return undef;
+    }
+    if ($path_stat[4] != $root_stat[4]) {
+        problem("$where is not owned by the repository owner: $value");
+        return undef;
+    }
     my $resolved = abs_path($path);
     if (!defined($resolved) || index($resolved, "$base/") != 0) {
         problem("$where resolves outside the repository: $value");
@@ -528,7 +743,9 @@ sub validate_integer {
 
 sub positive_integer {
     my ($value) = @_;
-    return defined($value) && !ref($value) && "$value" =~ /\A[1-9][0-9]*\z/;
+    return 0 if !defined($value) || ref($value);
+    my $encoded = JSON::PP->new->allow_nonref->encode($value);
+    return $encoded =~ /\A[1-9][0-9]*\z/;
 }
 
 sub exact_keys {

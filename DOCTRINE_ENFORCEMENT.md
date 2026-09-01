@@ -37,6 +37,9 @@ bounded data-only registry, exact source blocks, three named non-aliased legs or
 task-owned gaps, and tracked repository-local evidence paths. That structural
 gate cannot prove a measurement's truth or an oracle's conceptual independence;
 review and the declared falsification leg still own those semantic judgments.
+Decision `0094` also gives the checker an explicit finite registry-set mode;
+the registered no-argument doctrine remains on the single-registry path until
+its atomic migration leaf lands.
 
 `LIVE_DOCUMENT_SIZE_CONTAINMENT.md` is the selected project-neutral,
 project-agnostic, and harness-neutral lifecycle doctrine for every live
@@ -110,7 +113,7 @@ Current registered checks:
 | `README-ENTRYPOINT` | `scripts/check_readme_entrypoint.sh` | On every commit/CI tree, the rendered GitHub landing page stays within its locally derived 275-line / 12,288-byte budget, retains its first-use contract, avoids narrated work-unit chronology, and keeps every route in `doctrine/readme_entrypoint/routed_destinations.jsonl` marker-linked to the common surface graph (`docs/decisions/0021`, `0024`, `0038`, `0040`, and `0041`; reusable standard: `README_POLICY.md`). |
 | `PROJECT-DATA-LOCALITY` | `scripts/check_project_data_locality.sh` | Project-owned output, temporary, test, cache, log, dependency, and build paths stay repository-derived and same-volume (`docs/decisions/0022`). |
 | `TASK-TREE-INTEGRITY` | `scripts/check_task_tree_integrity.pl` | Every active indexed tree has one live active root, unique valid nodes, exact direct-child enumeration, canonical statuses, valid ancestry/container state, and complete leaf evidence across the live list plus optional bounded exact-source sealed segments; compact terminals and completed-index manifests use named retention contracts, while migration manifests independently prove complete source, semantic nodes, working-set dimensions, and loss residue. |
-| `CLAIM-VERIFICATION` | `scripts/check_claim_verification.pl` | The bounded canonical JSONL registry and exact source records agree; each claim names distinct re-derive, falsify, and durability legs or task-owned gaps; all declared source, owner, producer, oracle, and watcher paths are tracked regular files inside the repository. |
+| `CLAIM-VERIFICATION` | `scripts/check_claim_verification.pl` | A bounded canonical JSONL registry—or an explicitly selected finite registry set—agrees with exact source records; each claim names distinct re-derive, falsify, and durability legs or task-owned gaps; global IDs and all declared source, owner, producer, oracle, watcher, manifest, and shard paths remain tracked local regular files. |
 | `CLAIM-INVENTORY` | `scripts/check_claim_verification_inventory.pl` | Selected high-traffic live-document surfaces and current doctrine constants re-derive to the exact bounded inventory; a separate Git census agrees on every numeric source line; an exact versioned source fixes original-constant membership independently of later fields; incidental partitions and conservative actionable debt remain explicit; every open record names its migration owner. |
 | `CLAIM-DISPOSITIONS` | `scripts/check_claim_verification_dispositions.pl` | Candidate groups exactly partition every current inventory candidate path; each reviewed candidate joins its stable ID to a published claim record, three-leg derived gate, reviewed-incidental reason, or task-owned gap; required-complete groups cannot retain an open candidate. |
 | `TASK-ACCEPTANCE` | `scripts/check_task_acceptance.sh` | A staged implementation change has one staged owning task file with fresh checked ROOT CAUSE, ADDRESSED, and NO REGRESSION boxes plus box-scoped declared root/no-regression evidence (`TASK_ACCEPTANCE.md`, decision `0026`). |
