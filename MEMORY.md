@@ -8,9 +8,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
   (`active`; common-controller hardening continues)
-- next_action: Inject sustained `EINTR` into `.17.4.7` bounded-host-observer
-  `sysread`; prevent the inner retry from suspending its enclosing monotonic
-  deadline.
-- in_flight_uncommitted: none after the interrupted owned-child poll commit.
+- next_action: Inject the `.17.4.7` host-observer/selected-tool deadline race;
+  expose the exact result and preserve timeout-primary authority when the
+  selected-tool deadline expires during observation.
+- in_flight_uncommitted: none after the interrupted observer-read commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none.

@@ -18,6 +18,8 @@ answers:
   - "can EINTR make a live selected tool look reaped?"
   - "how does ProcessSupervisor retry interrupted waitpid polls?"
   - "can an interrupted host-observer wait hide a failing command?"
+  - "can repeated EINTR suspend a selected-tool host observer read?"
+  - "where is the host-observer deadline checked after interrupted sysread?"
 date: 2026-09-01
 status: current
 tags: [vial, process-supervisor, containment, verilator, ghdl]
@@ -33,6 +35,7 @@ evidence: >-
   t/1757-vial-selected-tool-monotonic-containment.t;
   t/1758-vial-selected-tool-bounded-leader-reap.t;
   t/1759-vial-selected-tool-interrupted-wait.t;
+  t/1760-vial-selected-tool-interrupted-observer-read.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -47,6 +50,7 @@ reverify: >-
   t/1757-vial-selected-tool-monotonic-containment.t
   t/1758-vial-selected-tool-bounded-leader-reap.t
   t/1759-vial-selected-tool-interrupted-wait.t
+  t/1760-vial-selected-tool-interrupted-observer-read.t
 ---
 
 `FSM::VIAL::Backend::ProcessSupervisor` serves both public lifecycle execution
@@ -126,3 +130,13 @@ post-SIGKILL reap, host-observer cleanup, and bounded host-command completion.
 Its falsification leg demonstrated a real `exit 42` becoming `exit_code 0`
 under the old exit poll; all repaired cases retain exact exit/signal evidence
 and leave no process-group residue.
+
+Interrupted host-observer reads also yield to deadline authority. `EINTR`
+leaves the inner output-drain attempt, after which the outer command loop polls
+the exact helper, checks `CLOCK_MONOTONIC`, and sleeps before another attempt.
+The read path cannot spin indefinitely inside an immediate retry. Successful
+payload/EOF handling, EAGAIN/EWOULDBLOCK, the structural output cap, the exact
+deadline diagnostic, and owned-helper TERM/reap semantics remain distinct. A
+sustained-interruption executable control reaches the declared observer
+deadline, returns its exact error, exits cleanly, and leaves no process-group
+residue.

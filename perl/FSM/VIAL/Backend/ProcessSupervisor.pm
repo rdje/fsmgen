@@ -570,7 +570,7 @@ sub _bounded_host_command($deadline, @command) {
                 ) if bytes::length($output) > $PROCESS_CENSUS_MAX_BYTES;
                 next;
             }
-            next if $! == EINTR;
+            last if $! == EINTR;
             last if $! == EAGAIN || $! == EWOULDBLOCK;
             _abort_host_observer(
                 $reader, $pid,

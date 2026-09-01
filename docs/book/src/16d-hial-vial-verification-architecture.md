@@ -4289,6 +4289,21 @@ prove -Iperl -It/lib -v \
   t/1759-vial-selected-tool-interrupted-wait.t
 ```
 
+The host-observer output drain applies the same rule one layer earlier. A
+`sysread` interrupted by `EINTR` ends only the current drain attempt and yields
+to the outer command loop. That loop polls the exact helper PID, checks the
+existing monotonic deadline, and sleeps before trying again. It therefore
+cannot spin inside the read path while bypassing helper containment or the
+declared observer bound. Successful reads, EAGAIN/EWOULDBLOCK, the structural
+output cap, and the exact deadline diagnostic retain their prior meaning. A
+sustained-interruption control proves bounded return and zero process-group
+residue:
+
+```bash
+prove -Iperl -It/lib -v \
+  t/1760-vial-selected-tool-interrupted-observer-read.t
+```
+
 This is deliberately a synchronous selected-tool contract, not a general
 daemon job object. The caller seal admits only the exact GHDL/Verilator
 lifecycle and qualification command profiles. A child that deliberately closes

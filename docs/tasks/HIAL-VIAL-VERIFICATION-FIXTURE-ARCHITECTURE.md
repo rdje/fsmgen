@@ -2352,3 +2352,67 @@ observation beyond the bound that t1756 established. The next `.17.4.7` slice
 must inject repeated `EINTR`, prove the deadline escape under an outer
 watchdog, and return interrupted reads to the enclosing deadline authority
 without weakening bounded output, exact helper cleanup, or diagnostics.
+
+## Acceptance Checklist (enforced) — `.17.4.7` interrupted observer reads
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — t1760 replaces the exact bounded
+  host-command `sysread` with sustained `EINTR`. The unthrottled RED first
+  proved the tight retry was also resource-unbounded: the RAM guard measured
+  the probe at 5,307.7 MiB RSS, stopped it at the 4,096-MiB cutoff, terminated
+  all four PIDs, and a post-run process census proved zero residue. The safely
+  throttled RED then exceeded the five-second outer watchdog and emitted
+  `Failed test at t/1760-vial-selected-tool-interrupted-observer-read.t line 83`
+  plus the missing exact-deadline result at line 91. Clean probe cleanup and
+  process-group absence passed, isolating the inner `next if EINTR` rather
+  than helper signaling, reap, or outer-watchdog mechanics.
+- [x] **ADDRESSED (verified)** — an interrupted host-observer read now exits
+  only the current inner drain attempt and returns to the existing outer loop,
+  which polls the exact owned helper, checks the monotonic deadline, and sleeps
+  between attempts. EAGAIN/EWOULDBLOCK, successful reads, the four-MiB output
+  cap, exact diagnostic, and helper TERM/reap behavior are unchanged. The
+  repaired t1760 accepts more than one injected interruption, returns the
+  exact deadline error in one wallclock second, exits cleanly, and leaves no
+  process-group residue.
+- [x] **NO REGRESSION** — focused t1760 passes its top-level subtest and all
+  four inner assertions at `Files=1, Tests=1` in one wallclock second. The
+  first broader collection exposed the separately tracked load-sensitive t1755
+  timeout-precedence failure; two isolated t1755 executions then passed all
+  four top-level subtests in 15 and 14 wallclock seconds, and the final
+  RAM-guarded capture-limit, exact Verilator/GHDL lifecycle, provider-aware
+  GHDL, runtime-process envelope, retained-writer, stalled-observer,
+  monotonic-clock, bounded-reap, interrupted-wait, and interrupted-read
+  collection passes `Files=11, Tests=63` in 47 wallclock seconds. All 58
+  mdBook chapters test; the inspected 93-file/20,464-KiB repository-local
+  render contains the executable t1760 command and is removed exactly.
+  Knowledge Map parity is 1,159 facts / 6,224 questions / 6,396 answer
+  occurrences / 138 shards. Claim verification retains 27 records and closes
+  all 1,711 candidates through 179 claim-record, 939 gate, and 593 reviewed
+  dispositions with zero gaps/open; the independent inventory agrees at
+  11,409 numeric lines. Maintained-book authority is exact at 58 files /
+  54,499 lines / 2,943,812 bytes; the Knowledge-card transition is exact at
+  1,158 files / 46,914 lines / 3,463,063 bytes. All 22 live-document surfaces
+  pass with zero ceiling increases. Staged acceptance and every registered
+  doctrine are required green immediately before commit.
+
+**Tracked adjacent containment-pipe-read finding:**
+`_containment_pipe_has_writer` independently retries `sysread` on `EINTR`
+inside an unbounded loop and accepts no deadline parameter. That path runs
+before holder attribution and again inside the two-second post-kill absence
+loop, so sustained interruption can suspend both residue discovery and the
+declared holder-cleanup deadline. The next `.17.4.7` slice must inject repeated
+`EINTR` at both calls, provide explicit monotonic authority, and retain EOF,
+EAGAIN/live-writer, bounded-drain, holder-attribution, and residue semantics.
+
+**Tracked adjacent observed timeout-precedence finding (next priority):** the
+first eleven-file regression collection, at a RAM-guard host reading of 80.7%,
+failed only t1755's lifecycle-process-group timeout-primary assertion. Two
+isolated t1755 executions and the complete eleven-file rerun were green, so the
+failure is load-sensitive and not yet deterministically reproduced. Static
+inspection shows one plausible path: `_capture` may begin a descendant
+observation just before the selected-tool deadline; if the bounded observer
+then expires at that same deadline, `observation_error` currently reaches host
+error handling before the selected-tool timeout result is classified. The next
+`.17.4.7` slice must inject that boundary, expose the exact returned result,
+prove or refute this mechanism, and preserve timeout-primary authority without
+hiding an independently early observer failure. This observed gate failure
+takes priority over the source-only containment-pipe interrupted-read audit.
