@@ -206,6 +206,20 @@ consistent authority, version, or settings object now rejects. Focused control:
 prove -Iperl t/1735-vial-ghdl-authority-object-admission.t
 ```
 
+Object descriptors are admission claims too, not passive summaries. Both the
+writer and every resume now require a closed descriptor with a valid kind and
+SHA-256, a canonical numeric nonnegative byte count, a real JSON boolean
+`executable` flag, and the exact content-addressed repository-relative path.
+The same check binds the regular same-volume object to those bytes and digest
+and to mode `0600` when non-executable or `0700` when executable. Thus a JSON
+string such as `"19"` cannot masquerade as byte count `19`, numeric `0` cannot
+masquerade as JSON false, and permission drift rejects even when content is
+unchanged. Focused field/type/mode controls are runnable with:
+
+```console
+prove -Iperl t/1736-vial-ghdl-object-descriptor-admission.t
+```
+
 Canonical terminal payloads are not trusted merely because their evidence
 summaries agree with them. On every resume at or beyond trace validation, the
 lifecycle extracts the trace from the sealed runtime transcript and reruns the

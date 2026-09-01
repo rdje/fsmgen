@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-portable`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **34** uniquely owned question entries.
+> **2** facts · **35** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -15,6 +15,7 @@
 - q="how are GHDL scenario expectation diagnostic and cancelled fiber identities admitted?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)
 - q="how are VIAL verification probes accessed in SystemVerilog?" · facts=[vial-portable-systemverilog-backend-v1](../../docs/knowledge/vial-portable-systemverilog-backend-v1.md)
 - q="how do fake GHDL lifecycle providers avoid host executable admission?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)
+- q="how does GHDL authenticate object descriptor JSON types and file modes?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)
 - q="how does GHDL resume authenticate command trace result and assembly evidence?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)
 - q="how does GHDL resume authenticate portable and OSVVM capture evidence?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)
 - q="how does GHDL resume bind lifecycle authority version and OSVVM settings object bytes?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)

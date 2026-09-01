@@ -3103,13 +3103,15 @@ sub _write_object($session, $kind, $content, $executable) {
             or _throw('VIAL_GHDL_LIFECYCLE_HOST_ERROR',
                 'cannot seal GHDL content-object permissions', '/objects');
     }
-    return {
+    my $object = {
         kind => $kind,
         sha256 => $digest,
         bytes => bytes::length($content),
         executable => $executable ? JSON::PP::true : JSON::PP::false,
         relative_path => $relative,
     };
+    _validate_object($session, $object);
+    return $object;
 }
 
 sub _validate_objects($session, $objects) {
@@ -3118,21 +3120,10 @@ sub _validate_objects($session, $objects) {
         unless ref($objects) eq 'ARRAY' && @$objects;
     my %kind;
     for my $object (@$objects) {
-        _closed($object, \@OBJECT_KEYS, 'GHDL lifecycle object');
+        _validate_object($session, $object);
         _throw('VIAL_GHDL_LIFECYCLE_OBJECT_ERROR',
             'GHDL object kind is duplicated', '/objects')
             if $kind{$object->{kind}}++;
-        my $expected = "$session->{stage_rel}/objects/$object->{sha256}";
-        _throw('VIAL_GHDL_LIFECYCLE_OBJECT_ERROR',
-            'GHDL object identity or path is invalid', '/objects')
-            unless ($object->{sha256} // '') =~ /\A[0-9a-f]{64}\z/
-                && ($object->{relative_path} // '') eq $expected;
-        my $absolute = _repo_path($session->{repo_root}, $expected);
-        _regular_same_volume($absolute, $expected, $session->{root_device});
-        _throw('VIAL_GHDL_LIFECYCLE_OBJECT_ERROR',
-            'GHDL content object changed after sealing', '/objects')
-            unless -s $absolute == $object->{bytes}
-                && _file_sha256($absolute) eq $object->{sha256};
     }
     my $objects_abs = "$session->{stage_abs}/objects";
     opendir my $dh, $objects_abs
@@ -3145,6 +3136,43 @@ sub _validate_objects($session, $objects) {
         'GHDL content-object tree has extra or missing entries', '/objects')
         unless @actual == keys(%expected)
             && !grep { !$expected{$_} } @actual;
+}
+
+sub _validate_object($session, $object) {
+    _closed($object, \@OBJECT_KEYS, 'GHDL lifecycle object');
+    _throw('VIAL_GHDL_LIFECYCLE_OBJECT_ERROR',
+        'GHDL object descriptor is invalid', '/objects')
+        unless defined($object->{kind}) && !ref($object->{kind})
+            && $object->{kind} =~ /\A[a-z][a-z0-9_]*\z/
+            && defined($object->{sha256}) && !ref($object->{sha256})
+            && $object->{sha256} =~ /\A[0-9a-f]{64}\z/
+            && defined($object->{bytes}) && !ref($object->{bytes})
+            && _canonical($object->{bytes}) =~ /\A(?:0|[1-9][0-9]*)\z/
+            && blessed($object->{executable})
+            && $object->{executable}->isa('JSON::PP::Boolean')
+            && defined($object->{relative_path})
+            && !ref($object->{relative_path});
+    my $expected = "$session->{stage_rel}/objects/$object->{sha256}";
+    _throw('VIAL_GHDL_LIFECYCLE_OBJECT_ERROR',
+        'GHDL object path is not content-addressed',
+        '/objects/relative_path')
+        unless $object->{relative_path} eq $expected;
+    my $absolute = _repo_path($session->{repo_root}, $expected);
+    _regular_same_volume($absolute, $expected, $session->{root_device});
+    my @stat = stat($absolute);
+    _throw('VIAL_GHDL_LIFECYCLE_OBJECT_ERROR',
+        'GHDL content object byte count changed after sealing',
+        '/objects/bytes')
+        unless @stat && $stat[7] == $object->{bytes};
+    my $expected_mode = $object->{executable} ? 0700 : 0600;
+    _throw('VIAL_GHDL_LIFECYCLE_OBJECT_ERROR',
+        'GHDL content object mode differs from its descriptor',
+        '/objects/executable')
+        unless ($stat[2] & 07777) == $expected_mode;
+    _throw('VIAL_GHDL_LIFECYCLE_OBJECT_ERROR',
+        'GHDL content object changed after sealing', '/objects/sha256')
+        unless _file_sha256($absolute) eq $object->{sha256};
+    return 1;
 }
 
 sub _object_by_kind($objects, $kind) {
