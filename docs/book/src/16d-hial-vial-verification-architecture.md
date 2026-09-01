@@ -4229,6 +4229,16 @@ prove -Iperl -v \
   t/1755-vial-selected-tool-detached-descendant-containment.t
 ```
 
+This is deliberately a synchronous selected-tool contract, not a general
+daemon job object. The caller seal admits only the exact GHDL/Verilator
+lifecycle and qualification command profiles. A child that deliberately closes
+all inherited nonstandard descriptors, calls `setsid`, and loses its leader
+between process-tree observations is outside that contract: current macOS
+`EVFILT_PROC` can report the fork but cannot identify or automatically track the
+child. Such a tool must not be selected. A future profile that needs
+daemonization must first add a supported non-cooperative host containment
+authority; neither faster polling nor the inherited-writer proof qualifies.
+
 ### Semantic and bridge measurement boundary
 
 The `.17.3.2` caller-sealed adapter consumes only two already-completed

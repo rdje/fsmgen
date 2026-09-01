@@ -8,6 +8,7 @@ answers:
   - "what is the difference between lifecycle and outer-worker process containment?"
   - "how does VIAL find a selected-tool process holding the containment pipe?"
   - "does a detached selected-tool child survive timeout cleanup?"
+  - "can ProcessSupervisor contain a daemon that closes every inherited descriptor?"
 date: 2026-09-01
 status: current
 tags: [vial, process-supervisor, containment, verilator, ghdl]
@@ -63,3 +64,13 @@ detached PID cannot recreate staging after simulated lifecycle cleanup.
 This is private process-integrity behavior. It changes no selected command,
 deadline, output limit, backend support, artifact graph, performance claim,
 scale capacity, reached boundary, or public API.
+
+The admitted boundary is synchronous and caller-sealed, not a general daemon
+job object. The exact GHDL/Verilator lifecycle and qualification profiles may
+not deliberately close every inherited nonstandard descriptor, call `setsid`,
+and outlive an immediately exiting leader. An executable control proved that
+such a child can cross the group, sampling, and writer proofs. The current
+macOS `EVFILT_PROC` contract reports a fork but does not deliver or automatically
+track the child PID, so it is not a missing generic containment mechanism.
+Future daemonizing profiles require a supported non-cooperative host authority
+before admission; faster polling is not sufficient.

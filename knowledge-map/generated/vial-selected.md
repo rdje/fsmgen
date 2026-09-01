@@ -1,10 +1,11 @@
 # Knowledge Map: `vial-selected`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **6** uniquely owned question entries.
+> **1** facts · **7** uniquely owned question entries.
 
 ## Questions → facts
 
+- q="can ProcessSupervisor contain a daemon that closes every inherited descriptor?" · facts=[vial-selected-tool-detached-descendant-containment](../../docs/knowledge/vial-selected-tool-detached-descendant-containment.md)
 - q="can a selected VIAL tool escape process supervision with setsid?" · facts=[vial-selected-tool-detached-descendant-containment](../../docs/knowledge/vial-selected-tool-detached-descendant-containment.md)
 - q="does a detached selected-tool child survive timeout cleanup?" · facts=[vial-selected-tool-detached-descendant-containment](../../docs/knowledge/vial-selected-tool-detached-descendant-containment.md)
 - q="how does ProcessSupervisor contain a detached selected-tool descendant?" · facts=[vial-selected-tool-detached-descendant-containment](../../docs/knowledge/vial-selected-tool-detached-descendant-containment.md)

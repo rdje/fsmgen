@@ -2090,16 +2090,59 @@ exact holder containment.
   graph, provider/support, performance, capacity, reached-boundary, or public
   API claim.
 
-**Tracked adjacent descriptor-escape audit:** the non-sampled proof depends on
-the selected tool and its descendants retaining the supervisor-owned hidden
-writer they inherit. The selected tools are caller-sealed executables, not an
-arbitrary daemon API, and the process-tree tracker independently catches a
-sustained child that closes inherited descriptors. A zero-dwell child that
-both closes the containment descriptor and escapes parent/group identity has
-not yet been falsified. The next `.17.4.7` slice must make that exact
-`closefrom`-style control executable and either enforce containment through a
-supported host authority or durably narrow/reject the selected-tool contract;
-polling faster is not an admissible proof.
+**Resolved descriptor-escape boundary:** the non-sampled proof depends on the
+selected tool and its descendants retaining the supervisor-owned hidden writer
+they inherit. The exact `closefrom`-style control below proves that a zero-dwell
+child can cross writer, sampling, and process-group evidence together. Because
+the admitted selected tools are synchronous caller-sealed profiles rather than
+arbitrary daemons, this slice narrows that contract explicitly; polling faster
+is not an admissible substitute for kernel containment.
+
+## Acceptance Checklist (enforced) — `.17.4.7` explicit selected-tool descriptor closure
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the extended t1755 control ran a
+  zero-dwell child that closes every inherited nonstandard descriptor before
+  `setsid`. Both explicit-close normal-exit cases accepted the zero-exit leader,
+  left the detached PID alive, and admitted its late staging mutation: four of
+  five assertions failed; Prove's first concrete diagnostic was `Failed test
+  at t/1755-vial-selected-tool-detached-descendant-containment.t line 101`,
+  followed by line 110, line 111, and line 117 under each containment policy,
+  while exact fixture cleanup passed. The retained
+  writer normal/timeout matrix remained green; overall, two of six top-level
+  subtests failed in 14 wallclock seconds. The required macOS SDK
+  `sys/event.h` was inspected read-only through the system toolchain: its
+  current contract says `NOTE_TRACK` child following has been unsupported since
+  macOS 10.5, while `NOTE_FORK` reports only that a fork occurred and does not
+  deliver the child PID. `EVFILT_PROC` is therefore not sufficient kernel
+  authority for exact detached-child cleanup.
+- [x] **ADDRESSED (verified)** — the supported contract is now explicitly
+  narrow: `ProcessSupervisor->capture` remains caller-sealed to the exact
+  GHDL/Verilator lifecycle and qualification classes, whose command validators
+  admit synchronous qualified profiles rather than arbitrary daemon commands.
+  The mdBook and canonical Knowledge Map card now state that group, recorded
+  process-tree, and inherited-writer containment is not a generic job object;
+  deliberate close-all-plus-detach behavior is unsupported and must not be
+  selected. Any future daemonizing profile requires a supported
+  non-cooperative host authority before admission. Faster polling and
+  unconditional inherited-descriptor claims are explicitly rejected.
+- [x] **NO REGRESSION** — the executable close-descriptor falsification is
+  recorded above; the shipped watcher remains the supported retained-writer
+  normal/timeout matrix rather than canonizing unsafe behavior. The
+  default-guarded capture-limit, exact Verilator/GHDL lifecycle and caller-seal
+  controls, runtime-process envelope, and t1755 pass `Files=6, Tests=52` in 28
+  wallclock seconds. All 58 mdBook chapters test; the inspected
+  93-file/20,444-KiB render contains the narrowed contract and is removed.
+  Knowledge Map parity is 1,159 facts / 6,213 questions / 6,385 answer
+  occurrences / 138 shards. Claim inventory independently agrees at 11,403
+  numeric lines and 1,711 candidates; 27 registry records plus 179 claim-record,
+  939 gate, and 593 reviewed dispositions retain zero gaps/open.
+  Maintained-book authority is exact at 58 files / 54,424 lines / 2,940,120
+  bytes; the card transition admits 1,158 files / 46,848 lines / 3,458,904
+  bytes. All 22 live-document surfaces, staged acceptance, and every registered
+  doctrine are required green immediately before commit, with zero ceiling
+  increases. Final source and executable test bytes remain identical to the
+  preceding detached-selected-tool commit; this slice corrects the supported
+  contract rather than weakening the implemented retained-writer containment.
 
 **Tracked adjacent host-observer liveness audit:** the new `ps` and `lsof`
 censuses are structurally bounded by rows and bytes, but their subprocess
