@@ -878,6 +878,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Independently enumerate every selected cap and owning stage; require boundary and adjacent excess evidence, stable diagnostic family/path/requested/allowed data where safe, no partial final output, no external-tool invocation behind known excess, exact repository-local cleanup, and unchanged accepted-profile identities. Revalidate all immutable calibration publications or version them explicitly after intentional behavior changes, synchronize task/decision/Knowledge Map/mdBook truth, and close .17.4 without promoting budgets, support, or capacity.`
   Verification: `Clean 5583365cb closes the complete runtime-stream leaf after its guarded closure suite and source census. Decision 0093 assigns this final child the independent cross-family consistency, atomic-failure, cleanup, immutable-publication, and durable-closeout proof. Activation changes no product behavior, cap, publication, support statement, budget, or capacity claim. The first implementation slice must enumerate the live cap policy and every closed child evidence owner before selecting the smallest missing cross-family proof.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8: activate cross-family cap closeout`
+  Inventory: `Clean activation 02768a427 enables the read-only first slice. The live policy exactly joins 50 catalog axes to 23 groups, 19 selected interactions, six non-axis envelopes, four backend profiles, and three runtime profiles; all 70 declared group-evidence references and every interaction/envelope evidence path exist. That establishes selection and declared-value alignment, not final closeout: runtime_stream_envelopes still cites only t1663/t1672/t1676 and t1685 has no runtime-group-specific assertion, so none of the completed t1720-t1749/t1751-t1762 evidence is independently joined. The 256-file immutable calibration store and its b66de5ce6 closure manifest remain internally addressable, but the publication explicitly denies cap_implementation and predates every .17.4 child. Re-derive: build the policy and independently census its catalog join/evidence paths. Falsify: t1685's missing-axis mutation and an existence check over every referenced path reject omissions. Durability: this task, the synchronized book/card frontier, and the work-unit commit retain the result. The next slice adds a caller-sealed cross-family closeout layer; it must consume current policy authority internally, distinguish measurement publication from cap proof, and bind each selected group to boundary/excess, diagnostics, atomicity/no-tool, cleanup, and accepted-identity evidence before any calibration disposition.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
   Status: `proposed`
@@ -2542,3 +2543,27 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   ceiling increase. The canonical result is `knowledge-map: OK`; staged
   acceptance and every registered doctrine are required green immediately
   before commit. Full CI and push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.8` cross-family evidence inventory
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — exact
+  `git log -S'runtime_stream_envelopes' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` identifies selection commit
+  `951720257`; a fresh policy/catalog/evidence census proves complete declared
+  alignment but finds the runtime group still stops at the three pre-hardening
+  materialization witnesses. The existing calibration manifest names publisher
+  revision `b66de5ce6`, and t1684/source explicitly retain `cap_implementation`
+  as a nonclaim.
+- [x] **ADDRESSED (verified)** — record the independently re-derived inventory,
+  its falsification and durability legs, and the exact distinction between
+  measurement publication and cap-closeout proof. Select one separate
+  caller-sealed consistency layer as the next implementation slice; change no
+  source, test, cap, publication, behavior, support statement, budget, or
+  capacity claim in this audit slice.
+- [x] **NO REGRESSION** — task-tree integrity holds across 4 trees and 1,031
+  nodes; all 59 mdBook chapters pass; `knowledge-map: OK` reports 1,159 facts,
+  6,230 unique questions, and 6,402 answer occurrences; the claim inventory is
+  regenerated with no open migration owner or untracked producer; and all 22
+  live-document surfaces pass with no ceiling increase. Staged acceptance and
+  every registered doctrine are required green immediately before commit. No
+  behavior changed, so full CI and push remain deferred by policy.

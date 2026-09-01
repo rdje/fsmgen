@@ -186,10 +186,10 @@ or review closure. Accepted map and artifact materializations must equal those
 preflights, with terminal defenses retained; identities and nonclaims do not
 change.
 
-Completed `.17.4.7` owns the executable portable-SystemVerilog, portable-VHDL,
-and OSVVM runtime envelopes; native UVM remains emission-only. Active `.17.4.8`
-owns cross-family consistency and closeout, beginning with a policy/evidence
-inventory. Its first portable-SystemVerilog slice applies the
+Completed `.17.4.7` owns executable portable-SystemVerilog, portable-VHDL, and
+OSVVM runtime envelopes; native UVM remains emission-only. Active `.17.4.8`
+found policy/catalog alignment but no cross-family closeout proof; its next
+sealed layer joins failure, cleanup, identity, and publication evidence. The first portable-SystemVerilog slice applies the
 existing public graph validator to the exact plan-plus-emission artifact set
 before Runner eligibility. Known count, byte, or collision excess therefore
 starts no tool and publishes no partial graph; later terminal validations stay
@@ -206,4 +206,4 @@ lifecycle enforces exact completed-backend count and bytes before Runner return;
 the Tool then retains its complete plan-plus-backend terminal validation. This
 changes no cap or claim.
 
-The common controller admits worker files before counts/digests: 67,108,864 passes, cap+1 rejects, parents/leaf require current-owner same-volume symlink-free single-link regular files, and a no-follow bounded read binds stable opened/path metadata. Safe modes pass, writable modes reject; no cap or support claim changes.
+The common controller admits worker files before counts/digests: the cap passes and cap+1 rejects; safe metadata and modes pass, while unsafe paths or writable modes reject. No cap or support claim changes.
