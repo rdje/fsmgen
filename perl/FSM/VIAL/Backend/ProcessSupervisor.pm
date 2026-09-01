@@ -645,9 +645,11 @@ sub _containment_pipe_identity($writer, $deadline) {
     die "selected-tool containment host is unsupported\n";
 }
 
-sub _containment_pipe_has_writer($reader) {
+sub _containment_pipe_has_writer($reader, $deadline) {
     my $drained = 0;
     while (1) {
+        die "selected-tool containment pipe observation exceeded its deadline\n"
+            if clock_gettime(CLOCK_MONOTONIC) >= $deadline;
         my $chunk = '';
         my $read = sysread($reader, $chunk, 65_536);
         if (defined $read) {
@@ -656,7 +658,10 @@ sub _containment_pipe_has_writer($reader) {
             return 1 if $drained > $PROCESS_CENSUS_MAX_BYTES;
             next;
         }
-        next if $! == EINTR;
+        if ($! == EINTR) {
+            sleep(0.01);
+            next;
+        }
         return 1 if $! == EAGAIN || $! == EWOULDBLOCK;
         die "selected-tool containment pipe cannot be observed\n";
     }
@@ -732,7 +737,7 @@ sub _containment_pipe_holders($identity, $deadline) {
 }
 
 sub _terminate_containment_pipe_holders($reader, $identity, $deadline) {
-    return 0 unless _containment_pipe_has_writer($reader);
+    return 0 unless _containment_pipe_has_writer($reader, $deadline);
     my $holders = _containment_pipe_holders($identity, $deadline);
     die "selected-tool containment pipe has no attributable holder\n"
         unless @$holders;
@@ -741,7 +746,7 @@ sub _terminate_containment_pipe_holders($reader, $identity, $deadline) {
     my $absence_deadline = clock_gettime(CLOCK_MONOTONIC) + 2;
     while (clock_gettime(CLOCK_MONOTONIC) < $absence_deadline) {
         return scalar(@$holders)
-            unless _containment_pipe_has_writer($reader);
+            unless _containment_pipe_has_writer($reader, $absence_deadline);
         sleep(0.02);
     }
     die "selected-tool containment pipe remained live after holder kill\n";

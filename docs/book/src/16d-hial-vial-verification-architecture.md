@@ -4319,6 +4319,21 @@ prove -Iperl -It/lib -v \
   t/1761-vial-selected-tool-observation-timeout-precedence.t
 ```
 
+Containment-pipe writer observation is bounded in both places where it can
+delay cleanup. The initial read receives the caller's host-observer cleanup
+deadline; after exact holders are killed, each absence read receives the
+existing two-second absence deadline. An interrupted read yields briefly and
+rechecks that monotonic authority instead of retrying forever inside
+`sysread`. EOF still proves writer absence, EAGAIN/EWOULDBLOCK still proves a
+live writer, and payload still drains only to the structural census bound. The
+two-phase control interrupts before attribution and after one real holder has
+been attributed and killed:
+
+```bash
+prove -Iperl -It/lib -v \
+  t/1762-vial-selected-tool-interrupted-containment-pipe-read.t
+```
+
 This is deliberately a synchronous selected-tool contract, not a general
 daemon job object. The caller seal admits only the exact GHDL/Verilator
 lifecycle and qualification command profiles. A child that deliberately closes

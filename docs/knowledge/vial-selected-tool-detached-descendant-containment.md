@@ -23,6 +23,9 @@ answers:
   - "can a host-observer failure mask an expired selected-tool timeout?"
   - "what wins when selected-tool observation fails at the tool deadline?"
   - "when does selected-tool observation remain a host error?"
+  - "can EINTR suspend containment-pipe holder attribution?"
+  - "can interrupted pipe reads suspend post-kill holder absence?"
+  - "which deadlines bound selected-tool containment-pipe reads?"
 date: 2026-09-01
 status: current
 tags: [vial, process-supervisor, containment, verilator, ghdl]
@@ -40,6 +43,7 @@ evidence: >-
   t/1759-vial-selected-tool-interrupted-wait.t;
   t/1760-vial-selected-tool-interrupted-observer-read.t;
   t/1761-vial-selected-tool-observation-timeout-precedence.t;
+  t/1762-vial-selected-tool-interrupted-containment-pipe-read.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -56,6 +60,7 @@ reverify: >-
   t/1759-vial-selected-tool-interrupted-wait.t
   t/1760-vial-selected-tool-interrupted-observer-read.t
   t/1761-vial-selected-tool-observation-timeout-precedence.t
+  t/1762-vial-selected-tool-interrupted-containment-pipe-read.t
 ---
 
 `FSM::VIAL::Backend::ProcessSupervisor` serves both public lifecycle execution
@@ -154,3 +159,12 @@ deadline retains `VIAL_PROCESS_HOST_ERROR`. The executable boundary control
 forces both deadline races and an independently early failure, then requires
 exact timeout/timeout/host-error precedence, clean probe exit, and zero
 process-group residue.
+
+Containment-pipe reads cannot suspend either holder-attribution entry or the
+post-kill absence loop. The first observation receives the cleanup deadline;
+the later observations receive the existing two-second absence deadline.
+`EINTR` yields and rechecks that monotonic bound, while EOF, EAGAIN/live-writer,
+and structurally bounded payload drain remain distinct results. The executable
+control interrupts from the first read, then separately permits one live-writer
+read and one real holder kill before sustaining interruption; both phases
+return the exact bounded error and leave zero process-group residue.

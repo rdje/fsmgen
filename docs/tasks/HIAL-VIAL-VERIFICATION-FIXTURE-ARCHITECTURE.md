@@ -2394,14 +2394,14 @@ without weakening bounded output, exact helper cleanup, or diagnostics.
   pass with zero ceiling increases. Staged acceptance and every registered
   doctrine are required green immediately before commit.
 
-**Tracked adjacent containment-pipe-read finding:**
+**Resolved adjacent containment-pipe-read finding:**
 `_containment_pipe_has_writer` independently retries `sysread` on `EINTR`
 inside an unbounded loop and accepts no deadline parameter. That path runs
 before holder attribution and again inside the two-second post-kill absence
-loop, so sustained interruption can suspend both residue discovery and the
-declared holder-cleanup deadline. The next `.17.4.7` slice must inject repeated
-`EINTR` at both calls, provide explicit monotonic authority, and retain EOF,
-EAGAIN/live-writer, bounded-drain, holder-attribution, and residue semantics.
+loop, so sustained interruption suspended both residue discovery and the
+declared holder-cleanup deadline. T1762 now injects both phases and the shared
+reader receives the appropriate cleanup or absence deadline without changing
+EOF, EAGAIN/live-writer, bounded-drain, holder-attribution, or residue branches.
 
 **Resolved adjacent observed timeout-precedence finding:** the
 first eleven-file regression collection, at a RAM-guard host reading of 80.7%,
@@ -2453,3 +2453,50 @@ authority. The queued containment-pipe interrupted-read audit resumes next.
   / 3,463,951 bytes. All 22 live-document surfaces pass with zero ceiling
   increases. Staged acceptance and every registered doctrine are required
   green immediately before commit.
+
+## Acceptance Checklist (enforced) — `.17.4.7` interrupted containment-pipe reads
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — t1762 injects sustained `EINTR` before
+  holder attribution and again after one real holder is attributed and killed.
+  Both RED phases exceeded their five-second outer watchdog and emitted
+  `Failed test at t/1762-vial-selected-tool-interrupted-containment-pipe-read.t line 96`; both exact-result assertions also failed at line 103. The harness
+  terminated each full process group and proved zero residue, isolating the
+  unbounded retry inside `_containment_pipe_has_writer` from attribution,
+  holder kill, and watchdog cleanup.
+- [x] **ADDRESSED (verified)** — `_containment_pipe_has_writer` now accepts and
+  checks an explicit monotonic deadline before every read attempt. `EINTR`
+  yields briefly and returns to that check; the pre-attribution call receives
+  the caller's cleanup deadline and the post-kill call receives its existing
+  two-second absence deadline. Repaired t1762 completes both phases in four
+  wallclock seconds with the exact bounded observation result, the expected
+  zero/one holder-attribution call split, clean probe exits, and zero
+  process-group residue. EOF, EAGAIN/live-writer, structural drain, holder
+  attribution, and residue classification retain their existing branches.
+- [x] **NO REGRESSION** — focused t1762 passes both top-level phases and their
+  eight inner assertions at `Files=1, Tests=2` in four wallclock seconds. The
+  RAM-guarded capture-limit, exact Verilator/GHDL lifecycle, provider-aware
+  GHDL, runtime-process envelope, retained-writer, stalled-observer,
+  monotonic-clock, bounded-reap, interrupted-wait, interrupted observer-read,
+  timeout-precedence, and interrupted containment-read collection passes
+  `Files=13, Tests=68` in 51 wallclock seconds. All 58 mdBook chapters test;
+  the inspected 93-file/20,472-KiB repository-local render contains the
+  executable t1762 command and is removed exactly. Knowledge Map parity is
+  1,159 facts / 6,230 questions / 6,402 answer occurrences / 138 shards.
+  Claim verification retains 27 records and closes all 1,711 candidates
+  through 179 claim-record, 939 gate, and 593 reviewed dispositions with zero
+  gaps/open; the independent inventory agrees at 11,411 numeric lines.
+  Maintained-book authority is exact at 58 files / 54,529 lines / 2,945,322
+  bytes; the Knowledge-card transition is exact at 1,158 files / 46,942 lines
+  / 3,464,885 bytes. All 22 live-document surfaces pass with zero ceiling
+  increases. Staged acceptance and every registered doctrine are required
+  green immediately before commit.
+
+**Post-repair interrupt-path audit:** the only other explicit `EINTR` retry in
+`ProcessSupervisor` is the bounded 2,048-byte child-control write performed by
+the already supervised selected-tool child. It cannot suspend the supervisor:
+the parent retains its monotonic selected-tool deadline and terminates that
+exact child/domain. Capture reads and host-observer reads already return to
+their enclosing deadline loops, and every owned-child poll now treats `EINTR`
+as pending. No further independent unbounded supervisor retry is present. The
+next slice must audit complete `.17.4.7` acceptance/evidence for exhaustion;
+only a clean closure may activate proposed cross-family closeout `.17.4.8`.

@@ -8,9 +8,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
   (`active`; common-controller hardening continues)
-- next_action: Inject sustained `EINTR` into both `.17.4.7`
-  `_containment_pipe_has_writer` call phases; add monotonic deadline authority
-  without weakening EOF/live-writer, bounded-drain, or residue semantics.
-- in_flight_uncommitted: none after the observation-timeout-precedence commit.
+- next_action: Audit `.17.4.7` acceptance against its complete committed
+  runtime/process evidence; close it only if exhausted, then activate proposed
+  cross-family closeout `.17.4.8` from the required clean handoff point.
+- in_flight_uncommitted: none after the containment-pipe EINTR commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none.
