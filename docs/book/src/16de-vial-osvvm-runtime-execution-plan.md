@@ -214,6 +214,19 @@ prove -Iperl t/1742-vial-osvvm-persisted-ghdl-provider-admission.t
 OSVVM checkout provenance and GHDL executable provenance remain distinct;
 neither admission rule widens the qualified provider or tool profile.
 
+The persisted `emission_identity` is also reconstructed before predecessor
+access from the selected workload, materialization and plan identities plus
+the persisted source identity and command plan. A different but well-formed
+`emission/<sha256>` cannot substitute for that exact composite:
+
+```console
+prove -Iperl t/1743-vial-osvvm-persisted-emission-identity.t
+```
+
+Emit and reload call the same identity constructor, preventing formula drift.
+The check authenticates this request composite; later controls still own the
+individual source-set and command authorities.
+
 Each executable role uses one lifecycle execution per controller record. The
 reference role has one correctness-only validation. Gate has one validation
 and three independently measured records; qualification has one validation

@@ -81,11 +81,13 @@ sub exact_inputs {
     my $plan_identity = 'osvvm-plan/' . ('2' x 64);
     my $execution_plan_id = 'plan/' . ('3' x 64);
     my $materialization_identity = 'osvvm-materialization/' . ('4' x 64);
+    my $workload_identity = 'workload/' . ('6' x 64);
     my $staging_identity = '.artifacts/tmp/vial-scale/' . ('5' x 64)
         . '/validation/00';
     my $source_set = [];
     my $raw = {
         repository_root => abs_path('.'),
+        construction => {workload_identity => $workload_identity},
         materialization => {report_identity => $materialization_identity},
         execution_plan => {
             plan_identity => $plan_identity,
@@ -105,7 +107,7 @@ sub exact_inputs {
         source_set => $source_set,
         source_identity =>
             'source/' . sha256_hex($JSON->encode($source_set)),
-        emission_identity => 'emission/' . ('6' x 64),
+        emission_identity => undef,
         commands => {},
         validation => {
             expected_plan_id => $execution_plan_id,
@@ -119,6 +121,11 @@ sub exact_inputs {
             containment => 'outer_worker_process_group',
         },
     };
+    $request->{emission_identity} =
+        FSM::VIAL::ArchitectureScaleOSVVMRuntimeMeasurement::_emission_identity(
+            $raw, $plan_identity, $request->{source_identity},
+            $request->{commands},
+        );
     my $envelope = {
         schema => 'fsmgen.vial_osvvm_runtime_lifecycle_request.v1',
         schema_version => 1,

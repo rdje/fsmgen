@@ -576,15 +576,10 @@ sub _lifecycle_request($raw, $route_authority, $instantiated) {
             containment => 'outer_worker_process_group',
         },
     };
-    $request_without_root->{emission_identity} =
-        'emission/' . sha256_hex(_canonical_json({
-            workload_identity => $raw->{construction}{workload_identity},
-            materialization_identity =>
-                $raw->{materialization}{report_identity},
-            plan_identity => $instantiated->{plan_identity},
-            source_identity => $instantiated->{source_identity},
-            commands => $instantiated->{commands},
-        }));
+    $request_without_root->{emission_identity} = _emission_identity(
+        $raw, $instantiated->{plan_identity},
+        $instantiated->{source_identity}, $instantiated->{commands},
+    );
     my $provider_verification = {
         provider => $instantiated->{provider_authority}{provider},
         version => $instantiated->{provider_authority}{version},
@@ -647,6 +642,14 @@ sub _validated_request_envelope($raw, $route_authority, $envelope) {
             $request->{source_identity},
             'source/' . sha256_hex(_canonical_json($request->{source_set})),
         );
+    confess "OSVVM runtime persisted emission identity changed\n"
+        unless _scalar_equals(
+            $request->{emission_identity},
+            _emission_identity(
+                $raw, $raw->{execution_plan}{plan_identity},
+                $request->{source_identity}, $request->{commands},
+            ),
+        );
     confess "OSVVM runtime persisted lifecycle storage changed\n"
         unless _scalar_equals(
                 $request->{storage_context}{staging_identity},
@@ -679,6 +682,17 @@ sub _scalar_equals($actual, $expected) {
 sub _json_integer_equals($actual, $expected) {
     return defined($actual) && !ref($actual)
         && _canonical_json($actual) eq "$expected";
+}
+
+sub _emission_identity($raw, $plan_identity, $source_identity, $commands) {
+    return 'emission/' . sha256_hex(_canonical_json({
+        workload_identity => $raw->{construction}{workload_identity},
+        materialization_identity =>
+            $raw->{materialization}{report_identity},
+        plan_identity => $plan_identity,
+        source_identity => $source_identity,
+        commands => $commands,
+    }));
 }
 
 sub _read_request_envelope($context) {
