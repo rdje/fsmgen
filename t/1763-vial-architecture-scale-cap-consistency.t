@@ -171,6 +171,56 @@ my %runtime_rationale = (
     cleanup => 'owned staging and supervised process domains are removed exactly or report bounded residue',
     accepted_identity => 'all three profiles and persisted runtime objects rebind to selected source, plan, tool, trace, result, and storage authority',
 );
+my @backend_profile_evidence = qw(
+    t/1646-vial-architecture-scale-backend-emission-portable-sv.t
+    t/1647-vial-architecture-scale-backend-emission-portable-vhdl.t
+    t/1648-vial-architecture-scale-backend-emission-osvvm.t
+    t/1649-vial-architecture-scale-backend-emission-native-uvm.t
+    t/1650-vial-architecture-scale-backend-emission-family-qualification.t
+);
+my @backend_hardening_evidence = qw(
+    t/1716-vial-backend-portable-sv-cap-order.t
+    t/1717-vial-backend-portable-vhdl-cap-order.t
+    t/1718-vial-backend-osvvm-provider-admission-order.t
+    t/1719-vial-backend-native-uvm-cap-order.t
+);
+my %backend_evidence = (
+    boundary => [@backend_profile_evidence],
+    adjacent_excess => [
+        @backend_profile_evidence, @backend_hardening_evidence,
+    ],
+    diagnostics => [
+        @backend_profile_evidence, @backend_hardening_evidence,
+    ],
+    atomicity => [
+        @backend_profile_evidence, @backend_hardening_evidence,
+    ],
+    no_tool => [
+        @backend_profile_evidence, @backend_hardening_evidence,
+    ],
+    cleanup => [@backend_profile_evidence],
+    accepted_identity => [
+        @backend_profile_evidence,
+        't/1718-vial-backend-osvvm-provider-admission-order.t',
+    ],
+);
+my %backend_rationale = (
+    boundary => 'each selected backend profile admits its exact owned artifact-graph boundary',
+    adjacent_excess => 'the first unowned shape, generated-byte, map, inventory, or adapter excess rejects',
+    diagnostics => 'profile-local negotiation, byte, map, inventory, and provider diagnostics retain stable paths',
+    atomicity => 'known backend excess publishes no partial source, map, artifact graph, or provider evidence',
+    no_tool => 'pure emitters start no runtime and known OSVVM foundation excess does not verify its provider',
+    cleanup => 'accepted, rejected, and consumer-failure staging is same-volume and removed exactly',
+    accepted_identity => 'selected artifact, source-map, provider, validation, and review identities are deterministic and profile-local',
+);
+my %verified_evidence = (
+    backend_artifact_graph => \%backend_evidence,
+    runtime_stream_envelopes => \%runtime_evidence,
+);
+my %verified_rationale = (
+    backend_artifact_graph => \%backend_rationale,
+    runtime_stream_envelopes => \%runtime_rationale,
+);
 
 sub dies {
     my ($code) = @_;
@@ -224,10 +274,11 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
             [sort @dimensions],
             "$name cannot omit a closeout dimension");
         for my $dimension (@dimensions) {
-            my $expected_status = $name eq 'runtime_stream_envelopes'
+            my $verified = exists($verified_evidence{$name});
+            my $expected_status = $verified
                 ? 'verified' : 'pending_independent_verification';
-            my $expected_evidence = $name eq 'runtime_stream_envelopes'
-                ? $runtime_evidence{$dimension} : [];
+            my $expected_evidence = $verified
+                ? $verified_evidence{$name}{$dimension} : [];
             is($group->{dimensions}{$dimension}{status}, $expected_status,
                 "$name/$dimension has its sealed verification state");
             is_deeply(
@@ -237,8 +288,8 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
             );
             is(
                 $group->{dimensions}{$dimension}{rationale},
-                $name eq 'runtime_stream_envelopes'
-                    ? $runtime_rationale{$dimension}
+                $verified
+                    ? $verified_rationale{$name}{$dimension}
                     : 'policy citations are candidates, not dimension proof',
                 "$name/$dimension has its exact evidence rationale",
             );
@@ -264,6 +315,18 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
     is_deeply(
         [grep { !-f $_ } sort keys %joined], [],
         'every sealed runtime evidence path exists',
+    );
+
+    my %backend_join = map { $_ => 1 }
+        map { @{$backend_evidence{$_}} } @dimensions;
+    is_deeply(
+        [sort keys %backend_join],
+        [sort @backend_profile_evidence, @backend_hardening_evidence],
+        'backend join covers every profile proof and completed hardening leaf',
+    );
+    is_deeply(
+        [grep { !-f $_ } sort keys %backend_join], [],
+        'every sealed backend evidence path exists',
     );
 
     is($report->{calibration}{evidence_role},
@@ -297,12 +360,17 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
 
     my $first = $class->build;
     my ($first_group) = sort keys %{$first->{groups}};
-    $first->{groups}{$first_group}{dimensions}{cleanup}{status} = 'verified';
+    my $sealed_status =
+        $first->{groups}{$first_group}{dimensions}{cleanup}{status};
+    $first->{groups}{$first_group}{dimensions}{cleanup}{status} =
+        $sealed_status eq 'verified'
+            ? 'pending_independent_verification'
+            : 'verified';
     push @{$first->{groups}{$first_group}{candidate_evidence}}, 'caller';
     $first->{calibration}{disposition} = 'reusable';
     my $second = $class->build;
     is($second->{groups}{$first_group}{dimensions}{cleanup}{status},
-        'pending_independent_verification',
+        $sealed_status,
         'returned dimension mutation cannot enter authority');
     ok(!(grep { $_ eq 'caller' }
         @{$second->{groups}{$first_group}{candidate_evidence}}),
@@ -327,6 +395,21 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
     like(dies(sub { $assert->($foreign_runtime) }),
         qr/runtime_stream_envelopes\/cleanup' contradicts the sealed evidence authority/,
         'callers cannot add foreign runtime evidence');
+
+    my $omitted_backend = $class->build;
+    pop @{$omitted_backend->{groups}{backend_artifact_graph}
+        {dimensions}{adjacent_excess}{evidence}};
+    like(dies(sub { $assert->($omitted_backend) }),
+        qr/backend_artifact_graph\/adjacent_excess' contradicts the sealed evidence authority/,
+        'callers cannot omit sealed backend evidence');
+
+    my $foreign_backend = $class->build;
+    push @{$foreign_backend->{groups}{backend_artifact_graph}
+        {dimensions}{accepted_identity}{evidence}},
+        't/foreign-backend-evidence.t';
+    like(dies(sub { $assert->($foreign_backend) }),
+        qr/backend_artifact_graph\/accepted_identity' contradicts the sealed evidence authority/,
+        'callers cannot add foreign backend evidence');
 
     my $missing = $class->build;
     delete $missing->{groups}{$first_group}{dimensions}{cleanup};

@@ -74,7 +74,7 @@
 - q="where must the VIAL total operation cap be enforced?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="which VIAL scale families are measured first?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="which execution graph scale limits are reachable before earlier caps?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
-- q="which runtime cap evidence dimensions are independently verified?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
+- q="which runtime and backend cap evidence dimensions are independently verified?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="which task leaf owns runtime-stream and transcript envelope hardening?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="why are portable direct drives limited to input carriers and root fibers?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="why cannot the nineteen pre-repair scale reports enter the repaired revision seal?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)

@@ -881,6 +881,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Inventory: `Clean activation 02768a427 enables the read-only first slice. The live policy exactly joins 50 catalog axes to 23 groups, 19 selected interactions, six non-axis envelopes, four backend profiles, and three runtime profiles; all 70 declared group-evidence references and every interaction/envelope evidence path exist. That establishes selection and declared-value alignment, not final closeout: runtime_stream_envelopes still cites only t1663/t1672/t1676 and t1685 has no runtime-group-specific assertion, so none of the completed t1720-t1749/t1751-t1762 evidence is independently joined. The 256-file immutable calibration store and its b66de5ce6 closure manifest remain internally addressable, but the publication explicitly denies cap_implementation and predates every .17.4 child. Re-derive: build the policy and independently census its catalog join/evidence paths. Falsify: t1685's missing-axis mutation and an existence check over every referenced path reject omissions. Durability: this task, the synchronized book/card frontier, and the work-unit commit retain the result. The next slice adds a caller-sealed cross-family closeout layer; it must consume current policy authority internally, distinguish measurement publication from cap proof, and bind each selected group to boundary/excess, diagnostics, atomicity/no-tool, cleanup, and accepted-identity evidence before any calibration disposition.`
   Foundation: `Executable RED t1763 first fails only because ArchitectureScaleCapConsistency is absent. The exact-class implementation accepts no inputs, rebuilds the current policy internally, and emits all 23 selected groups and 50 axes with the same seven closed evidence dimensions. Every dimension begins pending with no promoted evidence; policy paths remain candidates. Exact schema, invocant, argument, group, axis, authority, candidate-evidence, dimension, defensive-copy, and mutation checks fail closed. The historical calibration authority remains measurement-only, cap_implementation remains a prohibited relabel, and disposition stays blocked until every sealed dimension is independently verified. Focused t1763+t1685 passes Files=2/Tests=84 without executing a product route or external tool. The next slice independently joins the completed runtime-stream leaf.`
   Runtime Join: `The caller-sealed consistency authority now promotes only runtime_stream_envelopes. A one-entry-per-test classification maps the three selected materialization profiles and all 42 completed t1720-t1749/t1751-t1762 hardening leaves across boundary, adjacent excess, diagnostics, atomicity, no-tool, cleanup, and accepted identity; the union is exact and every path exists. T1763 independently reconstructs each ordered evidence array, requires that complete 45-path union, and rejects omitted or foreign runtime evidence. All other groups remain pending, so calibration stays historical, incomplete, and blocked. Re-derive: execute all sealed paths through the RAM-guarded 46-file suite. Falsify: the exact union plus omission/foreign mutations fail closed. Durability: this task, book, Knowledge Map card, consistency source/test, and work-unit commit retain the classification. The complete suite reports All tests successful at Files=46/Tests=210 in 417 wallclock seconds. No cap, level, accepted profile, behavior, publication, support, budget, or capacity claim changes. The next slice independently joins backend_artifact_graph. Adjacent doctrine finding: the rationale-ledger manifest is at ordinal 2907 while DEVELOPMENT_NOTES_INDEX.md still advertises 2905; the range-ID-only index check does not catch the mismatch, so a separate clean task-tree slice must reconcile the displayed row and add a numeric-cell falsifier before the next rationale append.`
+  Backend Join: `The caller-sealed consistency authority now also promotes backend_artifact_graph. A one-entry-per-test classification maps the four profile foundations t1646-t1649, their cross-profile qualification t1650, and the four t1716-t1719 admission-order hardeners across boundary, adjacent excess, diagnostics, atomicity, no-tool, cleanup, and accepted identity. T1763 independently reconstructs every ordered projection, requires the exact nine-path union, checks path existence, and rejects omitted or foreign backend evidence; its generic defensive-copy check now preserves the selected group's actual sealed state rather than assuming the alphabetically first group is pending. Runtime remains verified and every unaudited group remains pending, so calibration stays historical, incomplete, and blocked. Re-derive: execute all nine evidence paths plus t1763 and t1685 through the repository-local RAM guard. Falsify: t1763's exact projections, union, omission, foreign-evidence, and caller-mutation controls fail closed. Durability: this task, book, Knowledge Map card, consistency source/test, and work-unit commit retain the classification. The complete guarded suite reports All tests successful at Files=11/Tests=241 in 566 wallclock seconds. No cap, level, accepted profile, provider boundary, product behavior, publication, support, budget, or capacity claim changes. The next slice independently reviews the smallest remaining two-witness group, checking_models.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
   Status: `proposed`
@@ -2627,3 +2628,33 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   required green immediately before commit with no cap, selected level,
   accepted profile, publication, support, budget, capacity, or
   product-behavior change. Full CI and push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.8` backend-artifact evidence join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the sealed consistency report leaves
+  backend_artifact_graph pending because its policy candidates do not classify
+  dimension ownership: t1650 consolidates the selected profiles, t1646–t1649
+  retain their exact profile boundaries/identities/cleanup, and t1716–t1719
+  retain the later cap-order, atomicity, and provider-no-touch hardening. Exact
+  `git log -S'backend_artifact_graph' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` traces the undifferentiated
+  policy group to its selection history.
+- [x] **ADDRESSED (verified)** — independently classify the complete nine-test
+  backend set across boundary, adjacent excess, diagnostics, atomicity,
+  no-tool, cleanup, and accepted identity; seal exact paths and rationales in
+  the no-input consistency authority; reject omission or foreign evidence;
+  retain the verified runtime join; and keep calibration blocked while any
+  other group remains pending.
+- [x] **NO REGRESSION** — the complete nine-path backend evidence plus
+  consistency and policy collection reports `All tests successful` at
+  Files=11/Tests=241 in 566 wallclock seconds. Task integrity passes across
+  4 trees/1,031 nodes; all 59 mdBook chapters test, and the inspected
+  94-file/20,552-KiB repository-local render is removed exactly.
+  `knowledge-map: OK` reports 1,159 facts/6,231 questions/6,403 answer
+  occurrences/138 shards. Claim inventory independently agrees at 11,438
+  numeric lines with zero open migration owner or untracked producer. All 22
+  live-document surfaces and the exact 59-file/54,673-line/2,952,444-byte
+  book authority pass with zero ceiling increase. Staged acceptance and every
+  registered doctrine are required green immediately before commit with no cap, level,
+  accepted profile, provider boundary, product behavior, publication, support,
+  budget, or capacity change. Full CI and push remain deferred by policy.

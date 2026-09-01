@@ -33,7 +33,7 @@ answers:
   - "when does portable SystemVerilog reject a produced result that cannot fit the public artifact graph?"
   - "does the portable SystemVerilog lifecycle enforce its final backend artifact graph?"
   - "how does the common controller admit worker artifact files?"
-  - "which runtime cap evidence dimensions are independently verified?"
+  - "which runtime and backend cap evidence dimensions are independently verified?"
 date: 2026-09-01
 status: current
 tags: [vial, architecture-scale, limits, bounded-failure, route-authority]
@@ -137,6 +137,7 @@ reverify: >-
   t/1717-vial-backend-portable-vhdl-cap-order.t
   t/1718-vial-backend-osvvm-provider-admission-order.t
   t/1719-vial-backend-native-uvm-cap-order.t
+  t/164{6..9}-vial-architecture-scale-backend-emission-*.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t
 ---
 
 Every selected numeric architecture-scale cap remains the hard ceiling of its
@@ -196,9 +197,10 @@ before writes or assembly. Exact boundaries pass, adjacent excess rejects, and
 completed-backend plus Tool terminal checks remain; no cap or claim changes.
 
 `FSM::VIAL::ArchitectureScaleCapConsistency` rebuilds the policy without caller
-evidence. Its runtime group now verifies all seven closed dimensions from the
-three selected-profile witnesses plus every completed t1720–t1749/t1751–t1762
-leaf; t1763 requires the exact union and rejects omissions or foreign evidence.
-Other groups remain pending, so calibration stays historical and blocked.
+evidence. Runtime and backend now verify all seven dimensions: runtime joins
+three profiles with 42 hardening leaves; backend joins t1646–t1650 with
+t1716–t1719. T1763 reconstructs both exact unions and rejects omissions or
+foreign evidence. Other groups remain pending, so calibration stays historical
+and blocked.
 
 The common controller admits worker files before counts/digests: the cap passes and cap+1 rejects; safe metadata and modes pass, while unsafe paths or writable modes reject. No cap or support claim changes.

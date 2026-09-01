@@ -223,6 +223,60 @@ my %RUNTIME_RATIONALE = (
     accepted_identity =>
         'all three profiles and persisted runtime objects rebind to selected source, plan, tool, trace, result, and storage authority',
 );
+my @BACKEND_EVIDENCE = (
+    [
+        't/1646-vial-architecture-scale-backend-emission-portable-sv.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1647-vial-architecture-scale-backend-emission-portable-vhdl.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1648-vial-architecture-scale-backend-emission-osvvm.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1649-vial-architecture-scale-backend-emission-native-uvm.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1650-vial-architecture-scale-backend-emission-family-qualification.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1716-vial-backend-portable-sv-cap-order.t',
+        qw(adjacent_excess diagnostics atomicity no_tool),
+    ],
+    [
+        't/1717-vial-backend-portable-vhdl-cap-order.t',
+        qw(adjacent_excess diagnostics atomicity no_tool),
+    ],
+    [
+        't/1718-vial-backend-osvvm-provider-admission-order.t',
+        qw(adjacent_excess diagnostics atomicity no_tool accepted_identity),
+    ],
+    [
+        't/1719-vial-backend-native-uvm-cap-order.t',
+        qw(adjacent_excess diagnostics atomicity no_tool),
+    ],
+);
+my %BACKEND_RATIONALE = (
+    boundary =>
+        'each selected backend profile admits its exact owned artifact-graph boundary',
+    adjacent_excess =>
+        'the first unowned shape, generated-byte, map, inventory, or adapter excess rejects',
+    diagnostics =>
+        'profile-local negotiation, byte, map, inventory, and provider diagnostics retain stable paths',
+    atomicity =>
+        'known backend excess publishes no partial source, map, artifact graph, or provider evidence',
+    no_tool =>
+        'pure emitters start no runtime and known OSVVM foundation excess does not verify its provider',
+    cleanup =>
+        'accepted, rejected, and consumer-failure staging is same-volume and removed exactly',
+    accepted_identity =>
+        'selected artifact, source-map, provider, validation, and review identities are deterministic and profile-local',
+);
 my %runtime_dimensions = map {
     $_ => {
         status => 'verified',
@@ -234,7 +288,19 @@ for my $entry (@RUNTIME_EVIDENCE) {
     my ($path, @dimensions) = @{$entry};
     push @{$runtime_dimensions{$_}{evidence}}, $path for @dimensions;
 }
+my %backend_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $BACKEND_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@BACKEND_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$backend_dimensions{$_}{evidence}}, $path for @dimensions;
+}
 my $VERIFIED_DIMENSIONS = {
+    backend_artifact_graph => \%backend_dimensions,
     runtime_stream_envelopes => \%runtime_dimensions,
 };
 
