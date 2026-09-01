@@ -393,6 +393,31 @@ my %bridge_normalized_rationale = (
     cleanup => 'normalized-collection workload success and consumer failure are same-volume and residue-free',
     accepted_identity => 'the exact ladder and ten representative accepted controls retain deterministic byte-equal manifest/report identities',
 );
+my @execution_profile_evidence = qw(
+    t/1603-vial-architecture-scale-execution-foundation.t
+    t/1616-vial-architecture-scale-execution-scenario-qualification.t
+    t/1617-vial-architecture-scale-execution-scenario-limit.t
+    t/1618-vial-architecture-scale-execution-scenario-over-limit.t
+    t/1705-vial-execution-selected-domain-cap-order.t
+);
+my %execution_profile_evidence = (
+    boundary => [@execution_profile_evidence[2, 4]],
+    adjacent_excess => [@execution_profile_evidence[0, 3, 4]],
+    diagnostics => [@execution_profile_evidence[0, 3, 4]],
+    atomicity => [@execution_profile_evidence[0, 3, 4]],
+    no_tool => [@execution_profile_evidence[0, 1, 3, 4]],
+    cleanup => [$execution_profile_evidence[1]],
+    accepted_identity => [@execution_profile_evidence[1, 2, 4]],
+);
+my %execution_profile_rationale = (
+    boundary => 'the exact 4096-scenario limit and fixed one-fixture, one-unit, one-domain profile admit',
+    adjacent_excess => '4097 scenarios reject, fixed-scalar over-limit shapes stay caller-sealed, and defensive second unit/domain inputs reject',
+    diagnostics => 'caller-sealed shape, scenario-limit, unit-reference, and domain-limit failures retain stable loci',
+    atomicity => 'unowned shapes construct no workload while execution excess publishes no ExecutionIR, plan, or metrics',
+    no_tool => 'workload specifications and ordinary execution arguments carry no backend, provider, or tool selector',
+    cleanup => 'qualification staging success and consumer failure are same-volume and residue-free',
+    accepted_identity => 'qualification, exact-limit, and ordinary fixed-profile plans retain deterministic identities',
+);
 my %verified_evidence = (
     backend_artifact_graph => \%backend_evidence,
     bridge_normalized_collections => \%bridge_normalized_evidence,
@@ -403,6 +428,7 @@ my %verified_evidence = (
     checking_models => \%checking_model_evidence,
     checking_randomness => \%checking_randomness_evidence,
     checking_scoreboards => \%checking_scoreboard_evidence,
+    execution_profile_selection => \%execution_profile_evidence,
     runtime_stream_envelopes => \%runtime_evidence,
 );
 my %verified_rationale = (
@@ -415,6 +441,7 @@ my %verified_rationale = (
     checking_models => \%checking_model_rationale,
     checking_randomness => \%checking_randomness_rationale,
     checking_scoreboards => \%checking_scoreboard_rationale,
+    execution_profile_selection => \%execution_profile_rationale,
     runtime_stream_envelopes => \%runtime_rationale,
 );
 
@@ -621,6 +648,18 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
         'every sealed normalized-collection evidence path exists',
     );
 
+    my %execution_profile_join = map { $_ => 1 }
+        map { @{$execution_profile_evidence{$_}} } @dimensions;
+    is_deeply(
+        [sort keys %execution_profile_join],
+        [sort @execution_profile_evidence],
+        'execution-profile join covers the fixed-scalar and scenario witnesses',
+    );
+    is_deeply(
+        [grep { !-f $_ } sort keys %execution_profile_join], [],
+        'every sealed execution-profile evidence path exists',
+    );
+
     is($report->{calibration}{evidence_role},
         'historical_measurement_only',
         'calibration stays measurement evidence');
@@ -822,6 +861,21 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
     like(dies(sub { $assert->($foreign_bridge_normalized) }),
         qr/bridge_normalized_collections\/accepted_identity' contradicts the sealed evidence authority/,
         'callers cannot add foreign normalized-collection evidence');
+
+    my $omitted_execution_profile = $class->build;
+    pop @{$omitted_execution_profile->{groups}{execution_profile_selection}
+        {dimensions}{cleanup}{evidence}};
+    like(dies(sub { $assert->($omitted_execution_profile) }),
+        qr/execution_profile_selection\/cleanup' verified evidence must be one non-empty array/,
+        'callers cannot empty sealed execution-profile cleanup evidence');
+
+    my $foreign_execution_profile = $class->build;
+    push @{$foreign_execution_profile->{groups}{execution_profile_selection}
+        {dimensions}{accepted_identity}{evidence}},
+        't/foreign-execution-profile-evidence.t';
+    like(dies(sub { $assert->($foreign_execution_profile) }),
+        qr/execution_profile_selection\/accepted_identity' contradicts the sealed evidence authority/,
+        'callers cannot add foreign execution-profile evidence');
 
     my $missing = $class->build;
     delete $missing->{groups}{$first_group}{dimensions}{cleanup};

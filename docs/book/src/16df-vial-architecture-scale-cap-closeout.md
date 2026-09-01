@@ -21,9 +21,9 @@ The policy exposes candidate witnesses without assigning them to closeout
 dimensions. The separate consistency authority now joins the independently
 reviewed runtime-stream, backend-artifact, checking-model, checking-fault,
 checking-randomness, and checking-scoreboard witnesses to explicit dimensions.
-The checking-coverage, bridge-profile, serialized-bridge-manifest, and
-normalized-bridge-collection witnesses are now joined too. The same
-classification remains pending for every other group.
+The checking-coverage, bridge-profile, serialized-bridge-manifest,
+normalized-bridge-collection, and execution-profile-selection witnesses are
+now joined too. The same classification remains pending for every other group.
 
 ## Why calibration publication is separate
 
@@ -55,8 +55,9 @@ identity.
 
 Runtime, backend, checking-model, checking-fault, checking-randomness,
 checking-scoreboard, checking-coverage, bridge-profile-cardinality, serialized
-manifest, and normalized-collection groups are `verified` across all seven
-dimensions; all other groups remain `pending_independent_verification`.
+manifest, normalized-collection, and execution-profile-selection groups are
+`verified` across all seven dimensions; all other groups remain
+`pending_independent_verification`.
 Runtime covers the selected materialization profiles plus t1720 through t1749
 and t1751 through t1762.
 Backend covers t1646 through t1650 and t1716 through t1719. Checking models
@@ -96,7 +97,16 @@ and representative accepted identity. They are deliberately not exact-boundary,
 no-tool, or cleanup evidence. The backend-binding witness preserves its
 multi-binding first-excess shape rather than claiming single-record adjacency;
 the source-map witness additionally stops before constructing the first excess
-record. T1763 reconstructs all ten sets of per-dimension projections,
+record.
+Execution-profile selection requires five complementary witnesses. T1603
+freezes the exact fixed-scalar catalog and rejects every unowned two-selection
+shape at the caller-sealed generator. T1616 proves a deterministic 512-scenario
+qualification plus same-volume cleanup; t1617 admits the exact 4,096-scenario
+limit; t1618 atomically rejects 4,097 with no metrics, ExecutionIR, or plan; and
+t1705 proves the ordinary one-fixture/unit/domain resource summary before
+defensive second-unit/domain rejection. Construction and invocation shapes
+explicitly carry no backend, provider, or tool selector. T1763 reconstructs
+all eleven sets of per-dimension projections,
 requires their complete unions, checks every path, and rejects omitted or
 foreign evidence. Policy citations remain candidates
 for all unreviewed groups. The validator also
@@ -231,6 +241,18 @@ scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
   prove -Iperl t/1602-vial-architecture-scale-bridge-fanout.t \
   t/16{94..99}-hial-vial-bridge-*-cap-order.t \
   t/17{00..03}-hial-vial-bridge-*-cap-order.t \
+  t/1763-vial-architecture-scale-cap-consistency.t \
+  t/1685-vial-architecture-scale-cap-policy.t
+```
+
+Reverify fixed-scalar ownership, the scenario ladder, ordinary profile
+admission, cleanup, and sealed-report falsifiers with:
+
+```sh
+scripts/run_with_ram_guard.sh -- prove -Iperl \
+  t/1603-vial-architecture-scale-execution-foundation.t \
+  t/161{6..8}-vial-architecture-scale-execution-scenario-*.t \
+  t/1705-vial-execution-selected-domain-cap-order.t \
   t/1763-vial-architecture-scale-cap-consistency.t \
   t/1685-vial-architecture-scale-cap-policy.t
 ```

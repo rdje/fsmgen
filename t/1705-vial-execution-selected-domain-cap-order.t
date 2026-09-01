@@ -31,6 +31,22 @@ diag(JSON::PP->new->canonical(1)->encode($accepted->{diagnostics}))
 is($accepted->{plan}{plan_id},
     'plan/e236297c8b434a9b374d1800112841e00327bdbd5d8d9130440bd20681fbed6e',
     'accepted profile retains its exact plan identity');
+my $accepted_resources = $accepted->{execution_ir}->as_hashref->{resource_summary};
+is_deeply(
+    [@{$accepted_resources}{qw(
+        selected_fixtures selected_units selected_domains
+    )}],
+    [1, 1, 1],
+    'accepted execution reports the exact fixed-scalar profile boundary',
+);
+is_deeply(
+    [sort keys %{$accepted_inputs->{arguments}}],
+    [sort qw(
+        bridge_manifest execution_profile fixture_id native_extension_catalog
+        replay_manifest scenario_ids semantic_ir
+    )],
+    'profile admission carries no backend, provider, or tool selector',
+);
 
 my $hostile_data = $accepted_inputs->{semantic_ir}->as_hashref;
 my $dut = $hostile_data->{packages}[0]{fixtures}[0]{dut};

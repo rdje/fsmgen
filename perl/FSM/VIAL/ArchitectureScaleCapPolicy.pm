@@ -235,7 +235,9 @@ my $GROUPS = {
         'retain_layered_route_and_profile_preflight_and_terminal_defense',
         '.17.4.4',
         [
+            't/1603-vial-architecture-scale-execution-foundation.t',
             't/1616-vial-architecture-scale-execution-scenario-qualification.t',
+            't/1617-vial-architecture-scale-execution-scenario-limit.t',
             't/1618-vial-architecture-scale-execution-scenario-over-limit.t',
             't/1705-vial-execution-selected-domain-cap-order.t',
         ],

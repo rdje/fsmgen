@@ -13,9 +13,12 @@ use Test::More;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::VIAL::ArchitectureScaleExecutionGraph;
+use FSM::VIAL::ArchitectureScaleWorkload;
 
 my $class = 'FSM::VIAL::ArchitectureScaleExecutionGraph';
+my $foundation = 'FSM::VIAL::ArchitectureScaleWorkload';
 my $json = JSON::PP->new->canonical(1)->utf8(1);
+my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my $reference_hial = slurp_raw(repo_path('ppif/ahb_lite_subordinate.ppif'));
 my %expected = (
     scenarios => 512,
@@ -64,6 +67,10 @@ subtest '512-scenario construction is canonical checked-AHB source' => sub {
         $expected{scenarios}, 'construction retains exactly 512 scenarios');
     is($first->{workload_identity}, $expected{workload_identity},
         'qualification workload identity is exact');
+    is($first->{specification}{backend_profile}, undef,
+        'qualification selects no backend');
+    is($first->{specification}{tool_profile}, undef,
+        'qualification selects no external tool');
 
     my %input = map { $_->{role} => $_ } @{$first->{inputs}};
     is_deeply([sort keys %input], [qw(hial_source vial_source)],
@@ -152,6 +159,43 @@ subtest '512-scenario evaluation freezes metrics and identities' => sub {
         'plan identity is exact');
     is_deeply($evaluation->{contract_discrepancies}, [],
         'qualification has no selected contract discrepancy');
+};
+
+subtest 'qualification staging is same-volume and residue-free' => sub {
+    my $stage_abs = File::Spec->catdir(
+        $repo_root, split m{/}, $first->{staging_identity},
+    );
+    ok(!-e $stage_abs && !-l $stage_abs,
+        'qualification staging root begins absent');
+
+    my $success = $foundation->with_staging({
+        repository_root => $repo_root,
+        construction => $first,
+        consumer => sub {
+            my ($context) = @_;
+            is($context->{staging_identity}, $first->{staging_identity},
+                'consumer receives the exact repository-relative identity');
+            ok(!(grep { !-f $_->{absolute_path} } @{$context->{inputs}}),
+                'both canonical qualification inputs are materialized');
+        },
+    });
+    diag($json->encode($success->{diagnostics})) unless $success->{ok};
+    ok($success->{ok}, 'qualification staging succeeds');
+    ok($success->{same_volume}, 'qualification staging proves same-volume identity');
+    ok($success->{removed}, 'successful qualification staging reports removal');
+    ok(!-e $stage_abs && !-l $stage_abs,
+        'successful qualification staging leaves no residue');
+
+    my $failure = $foundation->with_staging({
+        repository_root => $repo_root,
+        construction => $first,
+        consumer => sub { die "forced execution-profile consumer failure\n" },
+    });
+    ok(!$failure->{ok}, 'qualification consumer failure is reported');
+    is($failure->{diagnostics}[0]{code}, 'VIAL_SCALE_CONSUMER_ERROR',
+        'consumer failure retains the stable staging diagnostic');
+    ok(!-e $stage_abs && !-l $stage_abs,
+        'failed qualification staging leaves no residue');
 };
 
 subtest 'qualification rejects source mutation and missing authority' => sub {

@@ -901,6 +901,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
   Normalized Collections Containment Resolution: `The Knowledge Map card reached only 20 lines/664 bytes below its inherited transition allowance after the normalized-collection sync. This slice removes one duplicate evidence path and compacts repeated layer summaries plus completed-join prose without changing answers, evidence, reverify routes, cap semantics, or the allowance. Re-derive: aggregate tracked docs/knowledge Markdown and compare it with the declared baseline plus transition growth. Falsify: Knowledge Map and live-document gates reject lost answer parity, missing evidence, or allowance drift. Durability: this task, compacted card, generated shards, containment manifest, and work-unit commit retain the resolution.`
 
+  Execution Profile Selection Audit Finding: `The execution_profile_selection candidate inventory is not complete enough to promote. T1616 proves the 512-scenario qualification point and t1618 proves the 4,097-scenario rejection, but the executable policy omits t1617, the existing exact 4,096-scenario acceptance and identity oracle. It also omits t1603, which freezes the selected_fixtures, selected_units, and selected_domains scalar workload profiles as deliberately unowned and proves every such construction request fails closed at the caller-sealed generator boundary; t1705 separately proves the ordinary accepted one-unit/one-domain route and defensive two-unit/two-domain admission. History shows 951720257 introduced the candidate group with t1616 alone, while 612db31d7 added t1618/t1705 without the two complementary witnesses. This active .17.4.8 slice owns repairing the candidate inventory, strengthening exact scalar/no-tool facts where required, and only then binding independently classified dimensions. Re-derive: inspect the policy group, exact scenario ladder, fixed-scalar catalog frontier, and t1705 admission route, then run the seven-file candidate/policy/consistency baseline under the repository RAM guard. Falsify: removing either omitted witness makes exact-boundary or fixed-scalar route classification impossible without overstating the remaining tests. Durability: this task entry owns the defect before source changes; the completed slice must synchronize policy, consistency authority, tests, book, Knowledge Map, and work-unit history.`
+
+  Execution Profile Selection Join: `The repaired policy now cites the complete five-witness set, and the caller-sealed consistency authority promotes execution_profile_selection without flattening their roles. T1617 plus t1705 own exact boundary admission; t1603, t1618, and t1705 own fixed-scalar/scenario/unit/domain first excess, diagnostics, and atomicity; t1603, t1616, t1618, and t1705 explicitly prove no backend/provider/tool selection; t1616 alone owns same-volume success/failure cleanup; and t1616, t1617, and t1705 freeze accepted identities. T1603 additionally freezes every fixed-scalar workload ladder at 1/1/1/2, while t1705 freezes the accepted resource summary at one fixture, unit, and domain. T1763 reconstructs every projection and the exact five-path union, checks each path, and rejects empty or foreign evidence. The intended RED exposed one policy inventory mismatch, 21 pending status/evidence/rationale assertions, and two inactive mutation controls; the completed guarded suite reports All tests successful at Files=7/Tests=114 in 36 wallclock seconds. Every prior group remains sealed, every unaudited group remains pending, and calibration remains historical/incomplete/blocked. Re-derive: run t1603, t1616 through t1618, t1705, t1763, and t1685 under the repository RAM guard. Falsify: exact ladder, selector, cleanup, resource-summary, boundary/excess, diagnostic, pre-materialization, union, omission, foreign-evidence, and caller-mutation controls fail closed. Durability: this task, repaired policy, consistency source/test, focused witnesses, book, Knowledge Map, decision 0093, and work-unit commit retain the result. No cap, level, accepted profile, product behavior, publication, support, budget, or capacity claim changes. The next slice independently reviews execution_operation_cardinality.`
+
+  Execution Profile Claim Disposition Finding: `The user-facing five-witness explanation produced three new actionable candidates: the 512 qualification point, exact 4,096 scenario limit, and adjacent 4,097 rejection. Each is now a derived-gate disposition with non-aliased generator/contract re-derivation, the three focused scenario oracles as falsifiers, and the repaired policy plus sealed consistency authority as durability watchers. Re-derive: regenerate the producer-derived inventory and join every candidate through the required-complete verification_architecture group. Falsify: removing a disposition, producer, oracle, watcher, or current candidate identity fails closed. Durability: the disposition registry, generated inventory, this task, and work-unit history retain the result at 1,716/1,716 disposed candidates, 944 derived gates, and zero gaps/open owners.`
+
+  Execution Profile Containment Resolution: `The Knowledge Map card had only 31 lines/1,426 bytes of inherited transition headroom after the first execution-profile sync. Compacting repeated stage summaries and coalescing evidence paths, without changing answers, facts, exact numeric claim lines, or the allowance, reduces the aggregate from 46,911 lines/3,463,459 bytes to 46,899 lines/3,462,703 bytes and restores 43 lines/2,182 bytes of headroom. Re-derive: aggregate tracked docs/knowledge Markdown against the declared baseline plus transition growth. Falsify: Knowledge Map and live-document gates reject answer drift, missing evidence, stale derived shards, or allowance drift. Durability: this task, compacted card, generated map, containment manifest, and work-unit commit retain the resolution.`
+
   Containment Resolution: `The cap-policy card's long one-path-per-line reverify list is now a shorter equivalent set of numeric brace ranges plus exact outliers; every expansion resolves to an existing tracked test. With checking-randomness evidence added, the card aggregate falls from 46,939 lines/3,464,850 bytes to 46,903 lines/3,462,766 bytes, restoring 39 lines/2,119 bytes below the inherited transition allowance without changing it. Re-derive: expand every compacted pattern and aggregate docs/knowledge Markdown with wc. Falsify: missing paths fail the explicit expansion census, and Knowledge Map/live-document checks reject freshness, answer, transition, or ceiling drift. Durability: this task, the compacted card, generated shard, containment manifest, and work-unit commit retain the resolution.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
@@ -2977,3 +2985,43 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   are required green immediately before commit with no bridge cap, collection
   shape, accepted identity, product behavior, publication, support, budget, or
   capacity claim change. Full CI and push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.8` execution-profile-selection evidence join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `execution_profile_selection` remains
+  pending, and its policy candidate list is itself incomplete. T1616 freezes
+  the 512-scenario qualification point while t1618 freezes the adjacent 4,097
+  rejection, but t1617's exact 4,096 acceptance/identity proof is omitted.
+  T1603's caller-sealed fixed-scalar frontier is also omitted even though the
+  group owns `selected_fixtures`, `selected_units`, and `selected_domains`;
+  t1705 covers only the ordinary accepted route and defensive unit/domain
+  preflights. Exact history traces the original one-path group to `951720257`
+  and the incomplete three-path hardening to `612db31d7`; re-derive that locus
+  with `git log -S'execution_profile_selection' --
+  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm`. The guarded baseline is green
+  at Files=7/Tests=111, proving this is evidence-inventory debt rather than an
+  existing runtime regression.
+- [x] **ADDRESSED (verified)** — add t1603 and t1617 to the executable policy's
+  exact five-path candidate inventory; freeze each fixed-scalar workload ladder
+  at 1/1/1/2, accepted fixed-profile resource counts, absent backend/tool or
+  provider selectors, and same-volume success/failure cleanup; then classify
+  only the dimensions each witness proves. T1763 reconstructs the exact
+  projections and union, checks every path, rejects empty or foreign evidence,
+  and retains all ten previous joins. The intentional RED contains one exact
+  policy mismatch, 21 pending status/evidence/rationale assertions, and two
+  inactive mutation controls before the two authority modules are changed.
+- [x] **NO REGRESSION** — the complete five-witness profile set plus policy and
+  consistency report `All tests successful` at Files=7/Tests=114 in 36
+  wallclock seconds under the repository RAM guard. Task integrity passes
+  across 4 trees/1,031 nodes; all 59 mdBook chapters test, and the inspected
+  94-file/20,588-KiB repository-local render is removed exactly.
+  `knowledge-map: OK` reports 1,159 facts/6,231 questions/6,403 answer
+  occurrences/138 shards. Claim inventory independently agrees at 11,509
+  numeric lines with 1,716/1,716 candidates dispositioned, 944 derived gates,
+  and zero gaps, open owners, or untracked producers. All 22 live-document
+  surfaces and the exact 59-file/54,824-line/2,959,879-byte book authority pass
+  with zero ceiling increase; Knowledge Map compaction restores 43 lines/2,182
+  bytes of transition headroom. Staged acceptance and every registered doctrine
+  are required green immediately before commit with no execution cap, level,
+  profile, identity, product behavior, publication, support, budget, or capacity
+  claim change. Full CI and push remain deferred by policy.

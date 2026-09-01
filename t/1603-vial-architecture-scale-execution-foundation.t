@@ -37,6 +37,13 @@ subtest 'binding-gate construction is closed, canonical, and exact' => sub {
         'construction cannot escape the execution-graph family');
     is($first->{specification}{requested_counts}{bindings}, 2_048,
         'construction retains the selected binding gate');
+    is($first->{specification}{backend_profile}, undef,
+        'execution construction selects no backend');
+    is($first->{specification}{tool_profile}, undef,
+        'execution construction selects no external tool');
+    like($first->{staging_identity},
+        qr{\A\.artifacts/tmp/vial-scale/[0-9a-f]{64}\z},
+        'construction staging identity stays repository-relative');
     is_deeply([map { $_->{role} } @{$first->{inputs}}],
         [qw(hial_source vial_source)],
         'construction contains exactly one ordinary HIAL and VIAL source');
@@ -74,6 +81,16 @@ subtest 'binding-gate construction is closed, canonical, and exact' => sub {
         for @{$class->owned_shapes};
     my $axes = FSM::VIAL::ArchitectureScaleWorkload->catalog
         ->{families}{execution_graph_v1}{axes};
+    for my $axis (qw(selected_fixtures selected_units selected_domains)) {
+        is_deeply(
+            [map { $axes->{$axis}{levels}{$_}{$axis} } qw(
+                gate_candidate_v1 qualification_candidate_v1
+                limit_v1 over_limit_v1
+            )],
+            [1, 1, 1, 2],
+            "$axis retains its exact fixed-scalar ladder",
+        );
+    }
     my @unowned;
     for my $axis (sort keys %{$axes}) {
         for my $level (sort keys %{$axes->{$axis}{levels}}) {

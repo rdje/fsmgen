@@ -189,10 +189,16 @@ is(
     'retain_layered_route_and_profile_preflight_and_terminal_defense',
     'execution profile policy retains layered route authority and both local defenses',
 );
-ok(
-    scalar(grep { $_ eq 't/1705-vial-execution-selected-domain-cap-order.t' }
-        @{$policy->{groups}{execution_profile_selection}{evidence}}),
-    'execution profile policy cites the exact unit/domain admission witness',
+is_deeply(
+    $policy->{groups}{execution_profile_selection}{evidence},
+    [qw(
+        t/1603-vial-architecture-scale-execution-foundation.t
+        t/1616-vial-architecture-scale-execution-scenario-qualification.t
+        t/1617-vial-architecture-scale-execution-scenario-limit.t
+        t/1618-vial-architecture-scale-execution-scenario-over-limit.t
+        t/1705-vial-execution-selected-domain-cap-order.t
+    )],
+    'execution profile policy cites the complete fixed-scalar and scenario evidence set',
 );
 is(
     $policy->{groups}{execution_operation_cardinality}{current_enforcement},

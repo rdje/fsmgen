@@ -499,6 +499,44 @@ my %BRIDGE_NORMALIZED_RATIONALE = (
     accepted_identity =>
         'the exact ladder and ten representative accepted controls retain deterministic byte-equal manifest/report identities',
 );
+my @EXECUTION_PROFILE_EVIDENCE = (
+    [
+        't/1603-vial-architecture-scale-execution-foundation.t',
+        qw(adjacent_excess diagnostics atomicity no_tool),
+    ],
+    [
+        't/1616-vial-architecture-scale-execution-scenario-qualification.t',
+        qw(no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1617-vial-architecture-scale-execution-scenario-limit.t',
+        qw(boundary accepted_identity),
+    ],
+    [
+        't/1618-vial-architecture-scale-execution-scenario-over-limit.t',
+        qw(adjacent_excess diagnostics atomicity no_tool),
+    ],
+    [
+        't/1705-vial-execution-selected-domain-cap-order.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool accepted_identity),
+    ],
+);
+my %EXECUTION_PROFILE_RATIONALE = (
+    boundary =>
+        'the exact 4096-scenario limit and fixed one-fixture, one-unit, one-domain profile admit',
+    adjacent_excess =>
+        '4097 scenarios reject, fixed-scalar over-limit shapes stay caller-sealed, and defensive second unit/domain inputs reject',
+    diagnostics =>
+        'caller-sealed shape, scenario-limit, unit-reference, and domain-limit failures retain stable loci',
+    atomicity =>
+        'unowned shapes construct no workload while execution excess publishes no ExecutionIR, plan, or metrics',
+    no_tool =>
+        'workload specifications and ordinary execution arguments carry no backend, provider, or tool selector',
+    cleanup =>
+        'qualification staging success and consumer failure are same-volume and residue-free',
+    accepted_identity =>
+        'qualification, exact-limit, and ordinary fixed-profile plans retain deterministic identities',
+);
 my %runtime_dimensions = map {
     $_ => {
         status => 'verified',
@@ -614,6 +652,18 @@ for my $entry (@BRIDGE_NORMALIZED_EVIDENCE) {
     push @{$bridge_normalized_dimensions{$_}{evidence}}, $path
         for @dimensions;
 }
+my %execution_profile_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $EXECUTION_PROFILE_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@EXECUTION_PROFILE_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$execution_profile_dimensions{$_}{evidence}}, $path
+        for @dimensions;
+}
 my $VERIFIED_DIMENSIONS = {
     backend_artifact_graph => \%backend_dimensions,
     bridge_normalized_collections => \%bridge_normalized_dimensions,
@@ -624,6 +674,7 @@ my $VERIFIED_DIMENSIONS = {
     checking_models => \%checking_model_dimensions,
     checking_randomness => \%checking_randomness_dimensions,
     checking_scoreboards => \%checking_scoreboard_dimensions,
+    execution_profile_selection => \%execution_profile_dimensions,
     runtime_stream_envelopes => \%runtime_dimensions,
 };
 

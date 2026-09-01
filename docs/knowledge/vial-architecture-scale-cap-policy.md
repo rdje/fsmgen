@@ -65,6 +65,8 @@ evidence: >-
   t/1703-hial-vial-bridge-source-map-cap-order.t;
   t/1704-hial-vial-bridge-serialized-manifest-terminal-authority.t;
   perl/FSM/VIAL/ExecutionBuilder.pm;
+  t/1603-vial-architecture-scale-execution-foundation.t;
+  t/1616-vial-architecture-scale-execution-scenario-qualification.t; t/1617-vial-architecture-scale-execution-scenario-limit.t; t/1618-vial-architecture-scale-execution-scenario-over-limit.t;
   t/1624-vial-architecture-scale-execution-live-fiber-limit.t;
   t/1625-vial-architecture-scale-execution-total-fiber-limit.t;
   t/1705-vial-execution-selected-domain-cap-order.t;
@@ -97,6 +99,7 @@ evidence: >-
 reverify: >-
   prove -Iperl t/1685-vial-architecture-scale-cap-policy.t
   t/1602-vial-architecture-scale-bridge-fanout.t
+  t/1603-vial-architecture-scale-execution-foundation.t t/161{6..8}-*.t
   t/16{86..93}-*.t t/16{94..99}-*.t t/17{00..23}-*.t
   t/162{4..5}-*.t t/163{0..4}-vial-architecture-scale-checking-*.t
   t/164{6..9}-vial-architecture-scale-backend-emission-*.t
@@ -105,63 +108,58 @@ reverify: >-
   t/1763-vial-architecture-scale-cap-consistency.t
 ---
 
-Every selected numeric architecture-scale cap remains the hard ceiling of its
-declaring component, not a promise that each canonical route can reach it. The
-versioned policy keeps workload levels unchanged and records the component
-ceiling, the route's actual earliest deciding authority, and a measured route
-boundary when one exists. It authorizes earlier same-layer enforcement and
-terminal defenses, but no limit increase, decrease, re-levelling, support,
-budget, capacity, or accepted-profile change. Decision [[vial-execution-scale-axis-outcomes]]
-retains the reachability evidence; decision `0093` is the rationale authority.
+Each selected numeric cap remains its component's hard ceiling, not a promise
+that every route reaches it. The policy preserves workload levels and records
+the ceiling, earliest route authority, and any measured route boundary. Earlier
+same-layer checks and terminal defenses change no limit, support, budget,
+capacity, or profile. [[vial-execution-scale-axis-outcomes]] retains reachability;
+decision `0093` owns the rationale.
 
-Parser admission checks source bytes before lexing and direct imports before
-recursion; malformed syntax cannot mask limits, ordering, identities, or the
-nested-edge defense.
+Parser admission checks bytes before lexing and direct imports before recursion;
+malformed syntax cannot mask limits, ordering, identities, or nested-edge defense.
 
 Semantic admission reserves action/repeat capacity overflow-safely, then checks
-parallel shape, declarations, scoreboard/cross scalars, and types before
-dependent work; exact diagnostics, atomicity, and identities remain.
+parallel shape, declarations, service scalars, and types before dependent work.
 
 Bridge admission covers parameters, endpoints, observations, probes, types,
-transactions/events, residue, bindings, and maps before dependent construction;
-canonical encoding necessarily keeps exact manifest bytes terminal.
+transactions/events, residue, bindings, and maps before dependent construction.
+Canonical encoding necessarily keeps exact manifest bytes terminal.
 
 Execution preflights profiles, scenarios, operations, fibers, bindings, and
-novel types/maps before insertion; random and plan bytes stop final projection.
-Checking preflights models/cells, scoreboards, coverage, faults, and randomness.
-Both retain earlier authorities, diagnostics, identities, and terminal defenses.
+novel types/maps before insertion; checking preflights models/cells,
+scoreboards, coverage, faults, and randomness. Terminal checks remain.
 
-Portable emitters retain byte-first order. SystemVerilog then preflights its map
-cap; VHDL admits fixed inventory and independently censuses maps without
-inventing a cap. Accepted counts equal materialization; terminal checks remain.
+Portable emitters retain byte-first order. SystemVerilog preflights its map cap;
+VHDL admits fixed inventory and censuses maps without inventing a cap.
 
-OSVVM admits portable sources, adapter, and translated map before lazily sealing
-one reusable provider result; rejected/no-emission callbacks never verify.
-Wrapper censuses are integrity checks, not caps or support claims.
+OSVVM admits sources, adapter, and translated map before sealing one reusable
+provider result; rejected/no-emission callbacks never verify.
 
-Native UVM negotiates selected shape before rendering, then applies source-byte,
-fixed-inventory, and compact map-spec preflights before materialization,
-validation, or review. Materialized maps/artifacts equal preflights; terminal
-defenses, identities, and nonclaims remain.
+Native UVM negotiates shape, then applies source-byte, fixed-inventory, and map
+preflights before materialization, validation, or review.
 
 Completed `.17.4.7` owns executable portable-SystemVerilog, portable-VHDL, and
-OSVVM envelopes; native UVM stays emission-only. Eligibility rejects known plan
-or emission excess before tools, while the shared lifecycle bounds trace and
-the final artifact graph before writes. Terminal checks remain.
+OSVVM envelopes; native UVM stays emission-only. Eligibility rejects known
+excess before tools; the shared lifecycle bounds trace and final artifacts.
 
 `FSM::VIAL::ArchitectureScaleCapConsistency` rebuilds the policy without caller
-evidence. Ten groups verify all dimensions: runtime, backend, models, faults,
+evidence. Eleven groups verify all dimensions: runtime, backend, models, faults,
 randomness, scoreboards, coverage, bridge-profile cardinality, serialized
-bridge manifests, and normalized bridge collections. Layered joins stay exact:
-scoreboards use t1631/t1690/t1712, coverage t1632/t1691/t1713, and bridge profile
-t1602, without upgrading compact preflight to boundary evidence. T1763 rebuilds
-exact unions and rejects omitted/foreign paths.
+bridge manifests, normalized bridge collections, and execution profile
+selection. Layered joins stay exact: scoreboards use t1631/t1690/t1712,
+coverage t1632/t1691/t1713, and bridge profile t1602, without upgrading compact
+preflight to boundary evidence. T1763 rebuilds exact unions and rejects
+omitted/foreign paths.
 Serialized manifests separate t1602's exact workload/cleanup from t1704's
 terminal observer, which validates structure/identity before encoding, admits
 16,777,216 bytes, and atomically rejects the first complete 16,777,219-byte excess.
 Normalized collections separate t1602's exact ladder/no-tool/cleanup from
 t1694–t1703's per-axis excess, path, atomicity, and accepted-identity controls;
 source-map admission stops before excess materialization.
+Execution profile selection separates t1603's caller-sealed fixed-scalar
+frontier, t1616's qualification/cleanup, t1617's exact 4,096 boundary, t1618's
+4,097 rejection, and t1705's ordinary fixed-profile admission. No witness is
+promoted beyond the dimensions it directly proves.
 Other groups and calibration remain pending/blocked.
 
 The common controller admits bounded worker files before counts/digests; cap+1
