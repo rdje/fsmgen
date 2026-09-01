@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use bytes ();
 use Cwd qw(abs_path);
-use Errno qw(EINTR);
+use Errno qw(EAGAIN EINTR EWOULDBLOCK);
 use Fcntl qw(FD_CLOEXEC F_GETFD F_GETFL F_SETFD F_SETFL O_NONBLOCK);
 use IO::Select;
 use JSON::PP ();
@@ -16,6 +16,9 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
 my $POLICY_SCHEMA = 'fsmgen.vial_process_supervisor_policy.v1';
+my $PROCESS_CENSUS_MAX_BYTES = 4_194_304;
+my $PROCESS_CENSUS_MAX_ROWS = 65_536;
+my $PROCESS_OBSERVATION_INTERVAL_SECONDS = 0.05;
 my @POLICY_KEYS = qw(
     schema schema_version containment timeout_seconds capture_limit_bytes
 );
@@ -107,6 +110,7 @@ sub _capture($working_directory, $argv, $policy) {
     my ($stdin_reader, $stdin_writer);
     my ($output_reader, $output_writer);
     my ($control_reader, $control_writer);
+    my ($containment_reader, $containment_writer);
     pipe($stdin_reader, $stdin_writer)
         or _throw('VIAL_PROCESS_HOST_ERROR',
             'cannot create selected-tool stdin pipe', '/process');
@@ -116,6 +120,16 @@ sub _capture($working_directory, $argv, $policy) {
     pipe($control_reader, $control_writer)
         or _throw('VIAL_PROCESS_HOST_ERROR',
             'cannot create selected-tool exec-control pipe', '/process');
+    pipe($containment_reader, $containment_writer)
+        or _throw('VIAL_PROCESS_HOST_ERROR',
+            'cannot create selected-tool containment pipe', '/process');
+    my $containment_identity = eval {
+        _containment_pipe_identity($containment_writer);
+    };
+    _throw(
+        'VIAL_PROCESS_HOST_ERROR',
+        'cannot authenticate selected-tool containment pipe', '/process',
+    ) unless defined $containment_identity;
     my $control_flags = fcntl($control_writer, F_GETFD, 0);
     _throw('VIAL_PROCESS_HOST_ERROR',
         'cannot inspect selected-tool exec-control pipe', '/process')
@@ -132,6 +146,21 @@ sub _capture($working_directory, $argv, $policy) {
         close $stdin_writer;
         close $output_reader;
         close $control_reader;
+        close $containment_reader;
+        my $containment_flags = fcntl(
+            $containment_writer, F_GETFD, 0,
+        );
+        if (!defined($containment_flags)
+                || !fcntl(
+                    $containment_writer, F_SETFD,
+                    $containment_flags & ~FD_CLOEXEC,
+                )) {
+            _write_child_control(
+                $control_writer,
+                'containment handoff failed',
+            );
+            _exit(126);
+        }
         if ($policy->{containment} eq 'lifecycle_process_group') {
             unless (eval { setpgid(0, 0); 1 }) {
                 _write_child_control(
@@ -172,10 +201,11 @@ sub _capture($working_directory, $argv, $policy) {
     close $stdin_reader;
     close $output_writer;
     close $control_writer;
+    close $containment_writer;
     close $stdin_writer;
     eval { setpgid($pid, $pid); 1 }
         if $policy->{containment} eq 'lifecycle_process_group';
-    for my $fh ($output_reader, $control_reader) {
+    for my $fh ($output_reader, $control_reader, $containment_reader) {
         my $flags = fcntl($fh, F_GETFL, 0);
         fcntl($fh, F_SETFL, $flags | O_NONBLOCK) if defined $flags;
     }
@@ -185,8 +215,24 @@ sub _capture($working_directory, $argv, $policy) {
     my ($output, $exec_error) = ('', '');
     my ($timed_out, $limited) = (0, 0);
     my ($exec_handoff, $first_output);
+    my (%observed_descendants, $observation_error);
+    my $next_observation = $started;
     while ($select->count) {
         my $now = clock_gettime(CLOCK_MONOTONIC);
+        if ($now >= $next_observation) {
+            my $observed = eval {
+                _observe_selected_tool_descendants(
+                    $pid, \%observed_descendants,
+                );
+                1;
+            };
+            if (!$observed) {
+                $observation_error = $@;
+                last;
+            }
+            $next_observation += $PROCESS_OBSERVATION_INTERVAL_SECONDS
+                while $next_observation <= $now;
+        }
         if ($now - $started > $policy->{timeout_seconds}) {
             $timed_out = 1;
             last;
@@ -222,44 +268,139 @@ sub _capture($working_directory, $argv, $policy) {
         }
         last if $limited;
     }
+    if (defined $observation_error) {
+        $select->remove($_) for $select->handles;
+        close $_ for grep { defined(fileno($_)) }
+            ($output_reader, $control_reader);
+        my $contained = eval {
+            _terminate_supervised_domains(
+                $pid,
+                $policy->{containment} eq 'lifecycle_process_group',
+                \%observed_descendants,
+                $containment_reader, $containment_identity,
+            );
+            1;
+        };
+        _throw(
+            'VIAL_PROCESS_RESIDUE_ERROR',
+            'selected-tool process domains survived failed observation',
+            '/process',
+        ) unless $contained;
+        _throw(
+            'VIAL_PROCESS_HOST_ERROR',
+            'selected-tool descendant observation failed', '/process',
+        );
+    }
     my $status;
     if ($timed_out || $limited) {
         $select->remove($_) for $select->handles;
         close $_ for grep { defined(fileno($_)) }
             ($output_reader, $control_reader);
-        $status = _terminate_process(
-            $pid, $policy->{containment} eq 'lifecycle_process_group',
+        $status = _terminate_supervised_domains(
+            $pid,
+            $policy->{containment} eq 'lifecycle_process_group',
+            \%observed_descendants,
+            $containment_reader, $containment_identity,
         );
     }
     else {
         while (1) {
+            my $now = clock_gettime(CLOCK_MONOTONIC);
+            if ($now >= $next_observation) {
+                my $observed = eval {
+                    _observe_selected_tool_descendants(
+                        $pid, \%observed_descendants,
+                    );
+                    1;
+                };
+                if (!$observed) {
+                    $observation_error = $@;
+                    last;
+                }
+                $next_observation += $PROCESS_OBSERVATION_INTERVAL_SECONDS
+                    while $next_observation <= $now;
+            }
             my $waited = waitpid($pid, WNOHANG);
             if ($waited == $pid || $waited == -1) {
                 $status = $?;
                 last;
             }
-            if (clock_gettime(CLOCK_MONOTONIC) - $started
+            if ($now - $started
                     > $policy->{timeout_seconds}) {
                 $timed_out = 1;
-                $status = _terminate_process(
+                $status = _terminate_supervised_domains(
                     $pid,
                     $policy->{containment} eq 'lifecycle_process_group',
+                    \%observed_descendants,
+                    $containment_reader, $containment_identity,
                 );
                 last;
             }
             sleep(0.01);
         }
-        if ($policy->{containment} eq 'lifecycle_process_group'
-                && kill(0, -$pid)) {
-            _terminate_residual_group($pid);
+        if (defined $observation_error) {
+            my $contained = eval {
+                _terminate_supervised_domains(
+                    $pid,
+                    $policy->{containment} eq 'lifecycle_process_group',
+                    \%observed_descendants,
+                    $containment_reader, $containment_identity,
+                );
+                1;
+            };
             _throw(
                 'VIAL_PROCESS_RESIDUE_ERROR',
-                'selected-tool process group retained a descendant after '
-                    . 'its leader exited',
+                'selected-tool process domains survived failed observation',
+                '/process',
+            ) unless $contained;
+            _throw(
+                'VIAL_PROCESS_HOST_ERROR',
+                'selected-tool descendant observation failed', '/process',
+            );
+        }
+        my ($observed_residue, $observed_failure) = (0, undef);
+        my $observed = eval {
+            $observed_residue = _terminate_observed_descendants(
+                \%observed_descendants,
+            );
+            1;
+        };
+        $observed_failure = $@ unless $observed;
+        my ($group_residue, $group_failure) = (0, undef);
+        if ($policy->{containment} eq 'lifecycle_process_group') {
+            $group_residue = kill(0, -$pid) ? 1 : 0;
+            if ($group_residue) {
+                my $contained = eval {
+                    _terminate_residual_group($pid);
+                    1;
+                };
+                $group_failure = $@ unless $contained;
+            }
+        }
+        my ($pipe_residue, $pipe_failure) = (0, undef);
+        my $pipe_contained = eval {
+            $pipe_residue = _terminate_containment_pipe_holders(
+                $containment_reader, $containment_identity,
+            );
+            1;
+        };
+        $pipe_failure = $@ unless $pipe_contained;
+        _throw(
+            'VIAL_PROCESS_RESIDUE_ERROR',
+            'selected-tool residual process domains survived containment',
+            '/process',
+        ) if defined($observed_failure) || defined($group_failure)
+            || defined($pipe_failure);
+        if ($observed_residue || $group_residue || $pipe_residue) {
+            _throw(
+                'VIAL_PROCESS_RESIDUE_ERROR',
+                'selected-tool process containment retained a descendant '
+                    . 'after its leader exited',
                 '/process',
             );
         }
     }
+    close $containment_reader;
     my $finished = clock_gettime(CLOCK_MONOTONIC);
     $exec_handoff //= $finished unless length $exec_error;
     $exec_error =~ s/[\r\n\t]+/ /g;
@@ -317,6 +458,276 @@ sub _write_child_control($fh, $message) {
         $offset += $written;
     }
     return;
+}
+
+sub _bounded_host_command(@command) {
+    open my $fh, '-|', @command
+        or die "selected-tool host observation command is unavailable\n";
+    my $output = '';
+    while (1) {
+        my $chunk = '';
+        my $read = sysread($fh, $chunk, 65_536);
+        if (defined $read) {
+            last if $read == 0;
+            $output .= $chunk;
+            if (bytes::length($output) > $PROCESS_CENSUS_MAX_BYTES) {
+                close $fh;
+                die "selected-tool host observation exceeds its bound\n";
+            }
+            next;
+        }
+        next if $! == EINTR;
+        close $fh;
+        die "selected-tool host observation could not be read\n";
+    }
+    close $fh
+        or die "selected-tool host observation did not complete\n";
+    return $output;
+}
+
+sub _containment_pipe_identity($writer) {
+    die "selected-tool containment descriptor is not a pipe\n"
+        unless -p $writer;
+    if ($^O eq 'linux') {
+        my @stat = stat($writer);
+        die "selected-tool containment pipe identity is unavailable\n"
+            unless @stat && $stat[1] =~ /\A[1-9][0-9]*\z/;
+        return "linux-pipe-inode:$stat[1]";
+    }
+    if ($^O eq 'darwin') {
+        my $fd = fileno($writer);
+        die "selected-tool containment descriptor is unavailable\n"
+            unless defined $fd;
+        my $output = _bounded_host_command(
+            'lsof', '-nP', '-F', 'pfn', '-a', '-p', "$$", '-d', "$fd",
+        );
+        my @identities = $output =~ /^n(->0x[0-9a-f]+)$/gmi;
+        die "selected-tool containment endpoint identity is ambiguous\n"
+            unless @identities == 1;
+        return "darwin-pipe-endpoint:$identities[0]";
+    }
+    die "selected-tool containment host is unsupported\n";
+}
+
+sub _containment_pipe_has_writer($reader) {
+    my $drained = 0;
+    while (1) {
+        my $chunk = '';
+        my $read = sysread($reader, $chunk, 65_536);
+        if (defined $read) {
+            return 0 if $read == 0;
+            $drained += $read;
+            return 1 if $drained > $PROCESS_CENSUS_MAX_BYTES;
+            next;
+        }
+        next if $! == EINTR;
+        return 1 if $! == EAGAIN || $! == EWOULDBLOCK;
+        die "selected-tool containment pipe cannot be observed\n";
+    }
+}
+
+sub _darwin_containment_pipe_holders($endpoint) {
+    my $user = getpwuid($<);
+    die "selected-tool containment owner is unavailable\n"
+        unless defined($user) && length($user);
+    my $output = _bounded_host_command(
+        'lsof', '-nP', '-F', 'pn', '-u', $user,
+    );
+    my ($pid, %holders, $rows);
+    for my $line (split /\n/, $output) {
+        $rows++;
+        die "selected-tool holder census exceeds its row bound\n"
+            if $rows > $PROCESS_CENSUS_MAX_ROWS;
+        if ($line =~ /\Ap([1-9][0-9]*)\z/) {
+            $pid = 0 + $1;
+            next;
+        }
+        if ($line eq "n$endpoint") {
+            die "selected-tool holder census has no PID context\n"
+                unless defined $pid;
+            $holders{$pid} = 1 unless $pid == $$;
+        }
+    }
+    return [sort { $a <=> $b } keys %holders];
+}
+
+sub _linux_containment_pipe_holders($inode) {
+    opendir my $proc, '/proc'
+        or die "selected-tool procfs census is unavailable\n";
+    my (@pids, $rows);
+    while (my $entry = readdir $proc) {
+        next unless $entry =~ /\A[1-9][0-9]*\z/;
+        my $pid = 0 + $entry;
+        next if $pid == $$;
+        my @stat = stat("/proc/$pid");
+        next unless @stat && $stat[4] == $<;
+        opendir my $fds, "/proc/$pid/fd" or next;
+        my $holds = 0;
+        while (my $fd = readdir $fds) {
+            next unless $fd =~ /\A[0-9]+\z/;
+            $rows++;
+            if ($rows > $PROCESS_CENSUS_MAX_ROWS) {
+                closedir $fds;
+                closedir $proc;
+                die "selected-tool procfs holder census exceeds its bound\n";
+            }
+            my $target = readlink "/proc/$pid/fd/$fd";
+            if (defined($target) && $target eq "pipe:[$inode]") {
+                $holds = 1;
+                last;
+            }
+        }
+        closedir $fds;
+        push @pids, $pid if $holds;
+    }
+    closedir $proc;
+    return [sort { $a <=> $b } @pids];
+}
+
+sub _containment_pipe_holders($identity) {
+    if ($identity =~ /\Adarwin-pipe-endpoint:(->0x[0-9a-f]+)\z/) {
+        return _darwin_containment_pipe_holders($1);
+    }
+    if ($identity =~ /\Alinux-pipe-inode:([1-9][0-9]*)\z/) {
+        return _linux_containment_pipe_holders($1);
+    }
+    die "selected-tool containment identity is malformed\n";
+}
+
+sub _terminate_containment_pipe_holders($reader, $identity) {
+    return 0 unless _containment_pipe_has_writer($reader);
+    my $holders = _containment_pipe_holders($identity);
+    die "selected-tool containment pipe has no attributable holder\n"
+        unless @$holders;
+    kill 'STOP', @$holders;
+    kill 'KILL', @$holders;
+    my $deadline = time() + 2;
+    while (time() < $deadline) {
+        return scalar(@$holders)
+            unless _containment_pipe_has_writer($reader);
+        sleep(0.02);
+    }
+    die "selected-tool containment pipe remained live after holder kill\n";
+}
+
+sub _selected_tool_process_snapshot() {
+    open my $fh, '-|', 'ps', '-axo', 'pid=,ppid=,lstart='
+        or die "selected-tool process census is unavailable\n";
+    my (%rows, $bytes, $count);
+    while (my $line = <$fh>) {
+        $bytes += bytes::length($line);
+        $count++;
+        if ($bytes > $PROCESS_CENSUS_MAX_BYTES
+                || $count > $PROCESS_CENSUS_MAX_ROWS) {
+            close $fh;
+            die "selected-tool process census exceeds its structural bound\n";
+        }
+        next if $line =~ /\A\s*\z/;
+        my ($pid, $parent, $started) = $line
+            =~ /\A\s*([1-9][0-9]*)\s+([0-9]+)\s+(.+?\S)\s*\z/
+            or do {
+                close $fh;
+                die "selected-tool process census is malformed\n";
+            };
+        die "selected-tool process census repeats a PID\n"
+            if exists $rows{$pid};
+        $rows{$pid} = {
+            parent => 0 + $parent,
+            started => $started,
+        };
+    }
+    close $fh
+        or die "selected-tool process census did not complete\n";
+    return \%rows;
+}
+
+sub _observe_selected_tool_descendants($root_pid, $observed) {
+    my $rows = _selected_tool_process_snapshot();
+    my %children;
+    for my $pid (keys %$rows) {
+        push $children{$rows->{$pid}{parent}}->@*, 0 + $pid;
+    }
+    my (@pending, %seen);
+    push @pending, $children{$root_pid}->@*
+        if exists $children{$root_pid};
+    while (@pending) {
+        my $pid = shift @pending;
+        next if $seen{$pid}++;
+        $observed->{$pid} = $rows->{$pid}{started};
+        push @pending, $children{$pid}->@*
+            if exists $children{$pid};
+    }
+    return;
+}
+
+sub _terminate_observed_descendants($observed) {
+    my %targets;
+    while (1) {
+        my $rows = _selected_tool_process_snapshot();
+        my %children;
+        for my $pid (keys %$rows) {
+            push $children{$rows->{$pid}{parent}}->@*, 0 + $pid;
+        }
+        my @pending = grep {
+            exists($rows->{$_})
+                && $rows->{$_}{started} eq $observed->{$_}
+        } keys %$observed;
+        my @new;
+        while (@pending) {
+            my $pid = shift @pending;
+            next if exists $targets{$pid};
+            $targets{$pid} = $rows->{$pid}{started};
+            push @new, $pid;
+            push @pending, $children{$pid}->@*
+                if exists $children{$pid};
+        }
+        last unless @new;
+        kill 'STOP', @new;
+    }
+
+    my $count = scalar keys %targets;
+    return 0 unless $count;
+    kill 'KILL', sort { $a <=> $b } keys %targets;
+    my $deadline = time() + 2;
+    while (time() < $deadline) {
+        my $rows = _selected_tool_process_snapshot();
+        my @alive = grep {
+            exists($rows->{$_}) && $rows->{$_}{started} eq $targets{$_}
+        } keys %targets;
+        return $count unless @alive;
+        sleep(0.02);
+    }
+    die "selected-tool detached descendants survived containment\n";
+}
+
+sub _terminate_supervised_domains(
+    $pid, $process_group, $observed, $containment_reader,
+    $containment_identity,
+) {
+    my ($status, $group_error, $observed_error, $pipe_error);
+    my $group_contained = eval {
+        $status = _terminate_process($pid, $process_group);
+        1;
+    };
+    $group_error = $@ unless $group_contained;
+    my $observed_contained = eval {
+        _terminate_observed_descendants($observed);
+        1;
+    };
+    $observed_error = $@ unless $observed_contained;
+    my $pipe_contained = eval {
+        _terminate_containment_pipe_holders(
+            $containment_reader, $containment_identity,
+        );
+        1;
+    };
+    $pipe_error = $@ unless $pipe_contained;
+    _throw(
+        'VIAL_PROCESS_RESIDUE_ERROR',
+        'selected-tool process domains survived containment', '/process',
+    ) if defined($group_error) || defined($observed_error)
+        || defined($pipe_error);
+    return $status;
 }
 
 sub _terminate_process($pid, $process_group) {

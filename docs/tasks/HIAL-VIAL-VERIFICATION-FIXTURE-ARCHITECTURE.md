@@ -2025,3 +2025,86 @@ would leave that domain before the tool leader exits. The next `.17.4.7` slice
 must supply an executable detached selected-tool RED, prove result/cleanup
 behavior through the shared Verilator/GHDL supervisor contract, and repair the
 supervisor before returning to any other admission audit.
+
+## Acceptance Checklist (enforced) — `.17.4.7` detached selected-tool descendant containment
+
+**In-slice signoff extension:** the inherited writer is an untrusted selected-tool
+descriptor, so the completion proof must remain cleanup-safe if a descendant
+writes to it. The focused watcher must make that case executable before this
+leaf commits; pipe payload may invalidate success, but it may not short-circuit
+exact holder containment.
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the host-authorized t1755 RED crossed the
+  real supervisor fork/exec boundary. Its selected-tool leader forked a child
+  that called `setsid`, closed captured stdout/stderr, published its detached
+  PID/group, returned zero, and let the child recreate staging after simulated
+  lifecycle cleanup. The pre-repair supervisor returned accepted success, left
+  the PID alive, and admitted the late marker: four of five assertions failed
+  at t/1755-vial-selected-tool-detached-descendant-containment.t line 70,
+  line 73, line 74, and line 80; exact fixture teardown passed. The first
+  parentage-sampling repair passed a sustained-child control but failed the
+  signoff zero-dwell extension in both normal-exit policies at the later line
+  98/107/108/114 assertions: two of four top-level subtests failed while both
+  timeout controls passed. This proved that interval sampling cannot itself
+  authenticate a child that forks, changes session, and loses its leader
+  between observations. The signoff payload extension then wrote through the
+  inherited writer: both normal cases again left the child alive and admitted
+  the late marker at the final line 108/114 assertions, while both timeout
+  cases lost their primary result at line 104. All four top-level cases failed
+  because the reader raised before exact-holder cleanup.
+- [x] **ADDRESSED (verified)** — both admitted supervisor policies now sample a
+  bounded PID/PPID/start-time tree while the selected leader is live and retain
+  recorded observed identities. Independently, one hidden containment-pipe writer
+  is deliberately inherited across exec; leader exit authorizes return only at
+  EOF. If a zero-dwell descendant retains that writer, Darwin resolves exact
+  current-user holders through the writer endpoint's `lsof` identity and Linux
+  through the pipe inode under `/proc/*/fd`; holder discovery runs only on the
+  residue path. The reader drains structurally bounded untrusted payload while
+  preserving EOF/live-writer meaning, so payload cannot bypass holder cleanup.
+  Exact holders are stopped, killed, and required absent before return.
+  `lifecycle_process_group` additionally owns whole-group TERM/KILL;
+  `outer_worker_process_group` never kills its borrowed group and uses only the
+  exact detached-PID layers. Normal exit reports
+  `VIAL_PROCESS_RESIDUE_ERROR`; timeout remains the primary returned result only
+  after all owned domains are absent. Final t1755 passes four top-level/four
+  five-assertion cases covering normal exit and timeout under both policies,
+  including zero dwell, closed stdout/stderr, pre-return PID absence, no late
+  staging mutation, and exact fixture teardown.
+- [x] **NO REGRESSION** — product/test syntax and `git diff --check` are clean.
+  The default-guarded capture-limit, shared Verilator lifecycle, shared and
+  provider-aware GHDL lifecycles, injected runtime-process envelope, and t1755
+  collection passes `Files=6, Tests=52` in 28 wallclock seconds. Existing
+  exec-control, same-group TERM/KILL, output limit, timeout, signal, lifecycle
+  phase attribution, both containment labels, and exact cleanup assertions stay
+  green. All 58 mdBook chapters test; the inspected 93-file/20,440-KiB local
+  render contains the exact contract and command and is removed. Knowledge Map
+  parity is 1,159 facts / 6,212 questions / 6,384 answer occurrences / 138
+  shards. Claim inventory independently agrees at 11,403 numeric lines and
+  1,711 candidates; 27 registry records plus 179 claim-record, 939 gate, and
+  593 reviewed dispositions retain zero gaps/open. Maintained-book authority
+  is exact at 58 files / 54,414 lines / 2,939,445 bytes; the card transition
+  admits 1,158 files / 46,837 lines / 3,458,145 bytes; all 22 live-document
+  surfaces pass with zero ceiling increases. Staged acceptance and every
+  registered doctrine are required green immediately before commit. The repair
+  changes no selected command, lifecycle phase, deadline, output cap, artifact
+  graph, provider/support, performance, capacity, reached-boundary, or public
+  API claim.
+
+**Tracked adjacent descriptor-escape audit:** the non-sampled proof depends on
+the selected tool and its descendants retaining the supervisor-owned hidden
+writer they inherit. The selected tools are caller-sealed executables, not an
+arbitrary daemon API, and the process-tree tracker independently catches a
+sustained child that closes inherited descriptors. A zero-dwell child that
+both closes the containment descriptor and escapes parent/group identity has
+not yet been falsified. The next `.17.4.7` slice must make that exact
+`closefrom`-style control executable and either enforce containment through a
+supported host authority or durably narrow/reject the selected-tool contract;
+polling faster is not an admissible proof.
+
+**Tracked adjacent host-observer liveness audit:** the new `ps` and `lsof`
+censuses are structurally bounded by rows and bytes, but their subprocess
+completion is not yet bounded by monotonic elapsed time. A stalled host helper
+could therefore suspend the selected-tool deadline while supervision waits for
+observation. After the descriptor-escape control, `.17.4.7` must inject a
+non-terminating observer, prove the deadline failure, and give observer startup,
+read, termination, and reap their own bounded containment path.

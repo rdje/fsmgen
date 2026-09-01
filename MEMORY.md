@@ -8,9 +8,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
   (`active`; common-controller hardening continues)
-- next_action: Falsify `.17.4.7` shared selected-tool process supervision with
-  an executable child that calls `setsid`; prove whether it survives the
-  original negative-PID group and crosses lifecycle cleanup admission.
-- in_flight_uncommitted: none after the detached common-worker containment commit.
+- next_action: Falsify `.17.4.7` selected-tool containment with a zero-dwell
+  child that explicitly closes inherited nonstandard descriptors before
+  `setsid`; enforce containment or narrow/reject that daemonizing contract.
+- in_flight_uncommitted: none after the detached selected-tool containment commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none.

@@ -4205,6 +4205,30 @@ prove -Iperl -v \
   t/1754-vial-common-detached-descendant-containment.t
 ```
 
+Selected-tool supervision is a separate fork/exec boundary. Its
+`lifecycle_process_group` policy owns a fresh group; its
+`outer_worker_process_group` policy borrows the common worker's group and must
+not terminate that whole domain. Both policies therefore retain recorded
+PID/parent/start identities while the selected leader is live, but only the
+lifecycle-owned policy may apply whole-group TERM/KILL.
+
+Sampling is supplemental evidence, not the completion proof. The supervisor
+passes a hidden containment-pipe writer through exec and requires EOF before
+return. A descendant that closes captured stdout/stderr, calls `setsid`, and
+outlives an immediately exiting leader still holds that writer. On the residue
+path, Darwin resolves exact current-user holders from the authenticated `lsof`
+pipe-endpoint identity; Linux resolves the pipe inode under `/proc/*/fd`.
+Structurally bounded reads drain untrusted pipe payload without changing its
+EOF/live-writer meaning. Exact holders are stopped, killed, and required absent.
+Normal leader exit then reports `VIAL_PROCESS_RESIDUE_ERROR`; timeout remains
+the primary result only after the original owned domain and every exact holder
+are gone. The focused proof covers normal exit and timeout under both policies:
+
+```bash
+prove -Iperl -v \
+  t/1755-vial-selected-tool-detached-descendant-containment.t
+```
+
 ### Semantic and bridge measurement boundary
 
 The `.17.3.2` caller-sealed adapter consumes only two already-completed
