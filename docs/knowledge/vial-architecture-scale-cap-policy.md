@@ -33,7 +33,7 @@ answers:
   - "when does portable SystemVerilog reject a produced result that cannot fit the public artifact graph?"
   - "does the portable SystemVerilog lifecycle enforce its final backend artifact graph?"
   - "how does the common controller admit worker artifact files?"
-  - "which runtime and backend cap evidence dimensions are independently verified?"
+  - "which cap evidence groups are independently verified?"
 date: 2026-09-01
 status: current
 tags: [vial, architecture-scale, limits, bounded-failure, route-authority]
@@ -73,7 +73,7 @@ evidence: >-
   t/1709-vial-execution-binding-cardinality-preflight.t;
   t/1710-vial-execution-random-attempt-authority.t;
   t/1634-vial-architecture-scale-checking-random-replay.t;
-  t/1711-vial-execution-model-cardinality-preflight.t;
+  t/1630-vial-architecture-scale-checking-models.t; t/1711-vial-execution-model-cardinality-preflight.t;
   t/1712-vial-execution-scoreboard-cardinality-preflight.t;
   t/1713-vial-execution-coverage-cardinality-preflight.t;
   t/1714-vial-execution-fault-cardinality-preflight.t;
@@ -124,7 +124,7 @@ reverify: >-
   t/1709-vial-execution-binding-cardinality-preflight.t
   t/1710-vial-execution-random-attempt-authority.t
   t/1634-vial-architecture-scale-checking-random-replay.t
-  t/1711-vial-execution-model-cardinality-preflight.t
+  t/1630-vial-architecture-scale-checking-models.t t/1711-vial-execution-model-cardinality-preflight.t
   t/1712-vial-execution-scoreboard-cardinality-preflight.t
   t/1713-vial-execution-coverage-cardinality-preflight.t
   t/1714-vial-execution-fault-cardinality-preflight.t
@@ -197,10 +197,10 @@ before writes or assembly. Exact boundaries pass, adjacent excess rejects, and
 completed-backend plus Tool terminal checks remain; no cap or claim changes.
 
 `FSM::VIAL::ArchitectureScaleCapConsistency` rebuilds the policy without caller
-evidence. Runtime and backend now verify all seven dimensions: runtime joins
-three profiles with 42 hardening leaves; backend joins t1646–t1650 with
-t1716–t1719. T1763 reconstructs both exact unions and rejects omissions or
-foreign evidence. Other groups remain pending, so calibration stays historical
-and blocked.
+evidence. Runtime, backend, and checking-model groups verify all seven
+dimensions. Runtime joins three profiles with 42 leaves; backend joins
+t1646–t1650 with t1716–t1719; checking models joins t1630 with t1711. T1763
+reconstructs all three exact unions and rejects omissions or foreign evidence.
+Other groups remain pending, so calibration stays historical and blocked.
 
 The common controller admits worker files before counts/digests: the cap passes and cap+1 rejects; safe metadata and modes pass, while unsafe paths or writable modes reject. No cap or support claim changes.

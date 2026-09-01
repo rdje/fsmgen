@@ -277,6 +277,32 @@ my %BACKEND_RATIONALE = (
     accepted_identity =>
         'selected artifact, source-map, provider, validation, and review identities are deterministic and profile-local',
 );
+my @CHECKING_MODEL_EVIDENCE = (
+    [
+        't/1630-vial-architecture-scale-checking-models.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1711-vial-execution-model-cardinality-preflight.t',
+        qw(adjacent_excess diagnostics atomicity no_tool accepted_identity),
+    ],
+);
+my %CHECKING_MODEL_RATIONALE = (
+    boundary =>
+        'both selected checking-model axes admit their exact provider-free oracle limits',
+    adjacent_excess =>
+        'the first model instance or scalar state cell excess rejects',
+    diagnostics =>
+        'checking-model limit, oracle, and staging failures retain stable diagnostics',
+    atomicity =>
+        'compact model excess performs no model normalization and publishes no ExecutionIR or plan',
+    no_tool =>
+        'the complete checking-model ladder uses a provider-free oracle and starts no external tool',
+    cleanup =>
+        'accepted and consumer-failure staging is same-volume and residue-free',
+    accepted_identity =>
+        'accepted construction, evaluation, rerun, plan, and compact-preflight identities are deterministic',
+);
 my %runtime_dimensions = map {
     $_ => {
         status => 'verified',
@@ -299,8 +325,20 @@ for my $entry (@BACKEND_EVIDENCE) {
     my ($path, @dimensions) = @{$entry};
     push @{$backend_dimensions{$_}{evidence}}, $path for @dimensions;
 }
+my %checking_model_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $CHECKING_MODEL_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@CHECKING_MODEL_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$checking_model_dimensions{$_}{evidence}}, $path for @dimensions;
+}
 my $VERIFIED_DIMENSIONS = {
     backend_artifact_graph => \%backend_dimensions,
+    checking_models => \%checking_model_dimensions,
     runtime_stream_envelopes => \%runtime_dimensions,
 };
 

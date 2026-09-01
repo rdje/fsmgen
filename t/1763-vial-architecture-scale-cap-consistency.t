@@ -213,12 +213,36 @@ my %backend_rationale = (
     cleanup => 'accepted, rejected, and consumer-failure staging is same-volume and removed exactly',
     accepted_identity => 'selected artifact, source-map, provider, validation, and review identities are deterministic and profile-local',
 );
+my @checking_model_evidence = qw(
+    t/1630-vial-architecture-scale-checking-models.t
+    t/1711-vial-execution-model-cardinality-preflight.t
+);
+my %checking_model_evidence = (
+    boundary => [$checking_model_evidence[0]],
+    adjacent_excess => [@checking_model_evidence],
+    diagnostics => [@checking_model_evidence],
+    atomicity => [@checking_model_evidence],
+    no_tool => [@checking_model_evidence],
+    cleanup => [$checking_model_evidence[0]],
+    accepted_identity => [@checking_model_evidence],
+);
+my %checking_model_rationale = (
+    boundary => 'both selected checking-model axes admit their exact provider-free oracle limits',
+    adjacent_excess => 'the first model instance or scalar state cell excess rejects',
+    diagnostics => 'checking-model limit, oracle, and staging failures retain stable diagnostics',
+    atomicity => 'compact model excess performs no model normalization and publishes no ExecutionIR or plan',
+    no_tool => 'the complete checking-model ladder uses a provider-free oracle and starts no external tool',
+    cleanup => 'accepted and consumer-failure staging is same-volume and residue-free',
+    accepted_identity => 'accepted construction, evaluation, rerun, plan, and compact-preflight identities are deterministic',
+);
 my %verified_evidence = (
     backend_artifact_graph => \%backend_evidence,
+    checking_models => \%checking_model_evidence,
     runtime_stream_envelopes => \%runtime_evidence,
 );
 my %verified_rationale = (
     backend_artifact_graph => \%backend_rationale,
+    checking_models => \%checking_model_rationale,
     runtime_stream_envelopes => \%runtime_rationale,
 );
 
@@ -329,6 +353,18 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
         'every sealed backend evidence path exists',
     );
 
+    my %checking_model_join = map { $_ => 1 }
+        map { @{$checking_model_evidence{$_}} } @dimensions;
+    is_deeply(
+        [sort keys %checking_model_join],
+        [sort @checking_model_evidence],
+        'checking-model join covers its foundation and preflight hardener',
+    );
+    is_deeply(
+        [grep { !-f $_ } sort keys %checking_model_join], [],
+        'every sealed checking-model evidence path exists',
+    );
+
     is($report->{calibration}{evidence_role},
         'historical_measurement_only',
         'calibration stays measurement evidence');
@@ -410,6 +446,21 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
     like(dies(sub { $assert->($foreign_backend) }),
         qr/backend_artifact_graph\/accepted_identity' contradicts the sealed evidence authority/,
         'callers cannot add foreign backend evidence');
+
+    my $omitted_checking_model = $class->build;
+    pop @{$omitted_checking_model->{groups}{checking_models}
+        {dimensions}{adjacent_excess}{evidence}};
+    like(dies(sub { $assert->($omitted_checking_model) }),
+        qr/checking_models\/adjacent_excess' contradicts the sealed evidence authority/,
+        'callers cannot omit sealed checking-model evidence');
+
+    my $foreign_checking_model = $class->build;
+    push @{$foreign_checking_model->{groups}{checking_models}
+        {dimensions}{accepted_identity}{evidence}},
+        't/foreign-checking-model-evidence.t';
+    like(dies(sub { $assert->($foreign_checking_model) }),
+        qr/checking_models\/accepted_identity' contradicts the sealed evidence authority/,
+        'callers cannot add foreign checking-model evidence');
 
     my $missing = $class->build;
     delete $missing->{groups}{$first_group}{dimensions}{cleanup};

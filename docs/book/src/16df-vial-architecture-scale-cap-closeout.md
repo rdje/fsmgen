@@ -19,8 +19,9 @@ of asking readers to trust duplicated point-in-time numerals.
 That is necessary alignment evidence, but it is not the final closeout proof.
 The policy exposes candidate witnesses without assigning them to closeout
 dimensions. The separate consistency authority now joins the independently
-reviewed runtime-stream and backend-artifact witnesses to explicit dimensions.
-The same classification remains pending for every other group.
+reviewed runtime-stream, backend-artifact, and checking-model witnesses to
+explicit dimensions. The same classification remains pending for every other
+group.
 
 ## Why calibration publication is separate
 
@@ -50,17 +51,18 @@ Each group must contain the same closed dimension set: boundary, adjacent
 excess, diagnostics, atomicity, no-tool behavior, cleanup, and accepted
 identity.
 
-The runtime-stream and backend-artifact groups are `verified` across all seven
-dimensions; all other groups remain `pending_independent_verification`. The
-runtime join covers each selected portable-SystemVerilog, portable-VHDL, and
-OSVVM materialization profile plus every completed runtime-hardening test from
-t1720 through t1749 and t1751 through t1762. The backend join covers the four
-profile foundations t1646 through t1649, cross-profile qualification t1650,
-and admission-order hardening t1716 through t1719. Each test is listed once in
-the authority and mapped only to the dimensions it proves. T1763 independently
-reconstructs both sets of per-dimension projections, requires their complete
-unions, checks every path, and rejects omitted or foreign evidence. Policy
-citations remain candidates for all unreviewed groups. The validator also
+The runtime-stream, backend-artifact, and checking-model groups are `verified`
+across all seven dimensions; all other groups remain
+`pending_independent_verification`. Runtime covers the three selected
+materialization profiles plus t1720 through t1749 and t1751 through t1762.
+Backend covers t1646 through t1650 and t1716 through t1719. Checking models
+uses t1630 for exact model-instance/scalar-cell limits, provider-free state
+evaluation, and cleanup; t1711 independently proves compact preflight order
+and absence of partial ExecutionIR or plan. Each test is listed once and mapped
+only to the dimensions it proves. T1763 reconstructs all three sets of
+per-dimension projections, requires their complete unions, checks every path,
+and rejects omitted or foreign evidence. Policy citations remain candidates
+for all unreviewed groups. The validator also
 rejects caller arguments, subclass invocants, missing or unknown fields,
 caller-promoted dimensions, returned-data mutation, and an early calibration
 disposition.
@@ -141,3 +143,14 @@ scripts/run_with_ram_guard.sh -- prove -Iperl \
 
 These joins change no cap, level, accepted profile, provider boundary,
 product behavior, publication, support statement, budget, or capacity claim.
+
+Reverify both true checking-model limits, their compact-preflight hardener, and
+the sealed-report falsifiers with:
+
+```sh
+scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
+  prove -Iperl t/1630-vial-architecture-scale-checking-models.t \
+  t/1711-vial-execution-model-cardinality-preflight.t \
+  t/1763-vial-architecture-scale-cap-consistency.t \
+  t/1685-vial-architecture-scale-cap-policy.t
+```
