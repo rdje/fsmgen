@@ -351,6 +351,24 @@ prove -Iperl -v t/1656-vial-architecture-scale-measurement-foundation.t \
 These bounds govern private pre-worker recovery and failure reporting. They do
 not promote recoverable tree size as product capacity or backend support.
 
+Worker-leader exit is not stage completion while its process group still has a
+live descendant. Every common stage worker must first establish its exact
+process-group identity; setup failure rejects before the selected worker runs.
+After the leader is reaped, a surviving same-group descendant triggers bounded
+TERM/KILL containment and
+`VIAL_SCALE_MEASUREMENT_PROCESS_RESIDUE_ERROR`. Worker-result validation and
+staging cleanup begin only after that group is absent, so a plausible zero-exit
+leader cannot leave a mutator racing the controller's file admission or
+reclamation. If escalation cannot prove group absence, the controller reports
+the exact staging identity as residue and seals terminal census plus recursive
+cleanup closed instead of deleting through a live mutation domain.
+
+Run the normal-exit residue proof without invoking an HDL tool:
+
+```console
+prove -Iperl -v t/1752-vial-common-worker-process-group-containment.t
+```
+
 Each executable role uses one lifecycle execution per controller record. The
 reference role has one correctness-only validation. Gate has one validation
 and three independently measured records; qualification has one validation

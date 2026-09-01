@@ -273,6 +273,7 @@ sub _measure($raw) {
     );
 
     my (%planned, @measurements, @oracles, @artifact_records);
+    my $staging_cleanup_safe = 1;
     $planned{$_->{stage}} = $_ for @$plan;
     my $prior_failure;
     my $controller_ok = eval {
@@ -304,12 +305,13 @@ sub _measure($raw) {
             push @measurements, $measurement->{stage_measurement};
             push @oracles, @{$measurement->{correctness_oracles}};
             push @artifact_records, @{$measurement->{artifacts}};
+            $staging_cleanup_safe &&= $measurement->{cleanup_safe};
             $prior_failure = $measurement->{diagnostic}
                 unless $measurement->{ok};
         }
         _validate_owned_artifact_census(
             $stage_abs, \@artifact_records, $root_device,
-        );
+        ) if $staging_cleanup_safe;
         1;
     };
     if (!$controller_ok) {
@@ -325,12 +327,15 @@ sub _measure($raw) {
 
     my $cleanup_started = clock_gettime(CLOCK_MONOTONIC);
     my @cleanup_times_before = times;
-    my $cleanup_error = _remove_owned_stage($stage_abs, $stage_rel, $created);
+    my $cleanup_error = _remove_owned_stage_after_worker_containment(
+        $staging_cleanup_safe, $stage_abs, $stage_rel, $created,
+    );
     my @cleanup_times_after = times;
     my $cleanup_finished = clock_gettime(CLOCK_MONOTONIC);
     my $cleanup_ok = !defined $cleanup_error;
-    my $cleanup_residue = $cleanup_ok
-        ? [] : _cleanup_residue($stage_abs, $stage_rel, $root_device);
+    my $cleanup_residue = $cleanup_ok ? []
+        : !$staging_cleanup_safe ? [$stage_rel]
+        : _cleanup_residue($stage_abs, $stage_rel, $root_device);
     my $cleanup_oracle = {
         stage => 'cleanup',
         oracle_id => 'owned_stage_absent',
@@ -427,8 +432,13 @@ sub _run_stage($raw) {
     }
     if ($pid == 0) {
         close $reader;
-        eval { setpgid(0, 0); 1 };
+        my $process_group_ready = eval {
+            setpgid(0, 0);
+            _worker_process_group_ready();
+        };
         my $result = eval {
+            confess "measurement worker process-group containment failed\n"
+                unless $process_group_ready;
             $plan->{worker}->({
                 stage => $stage,
                 staging_identity => $raw->{stage_rel},
@@ -514,6 +524,15 @@ sub _run_stage($raw) {
         $remaining = 0.01 if $remaining > 0.01 || $remaining <= 0;
         sleep($remaining);
     }
+    my ($process_residue, $containment_error) = (0, undef);
+    if (!$timed_out && kill(0, -$pid)) {
+        $process_residue = 1;
+        my $contained = eval {
+            _terminate_residual_process_group($pid);
+            1;
+        };
+        $containment_error = _sanitize_exception($@) unless $contained;
+    }
     _drain_pipe($reader, \$buffer, 1);
     close $reader;
     my $finished = clock_gettime(CLOCK_MONOTONIC);
@@ -530,6 +549,15 @@ sub _run_stage($raw) {
             'VIAL_SCALE_MEASUREMENT_TIMEOUT',
             "stage '$stage' exceeded its effective timeout",
             "/stage_measurements/$stage/timeout",
+        );
+    }
+    elsif ($process_residue) {
+        my $message = "stage '$stage' process group retained a descendant "
+            . 'after its leader exited';
+        $message .= "; $containment_error" if defined $containment_error;
+        $diagnostic = _diagnostic(
+            'VIAL_SCALE_MEASUREMENT_PROCESS_RESIDUE_ERROR',
+            $message, "/stage_measurements/$stage/process",
         );
     }
     elsif (defined $result_error) {
@@ -626,6 +654,7 @@ sub _run_stage($raw) {
     };
     return {
         ok => $ok ? JSON::PP::true : JSON::PP::false,
+        cleanup_safe => defined($containment_error) ? 0 : 1,
         stage_measurement => $measurement,
         correctness_oracles => $oracles,
         artifacts => $artifacts,
@@ -2310,6 +2339,14 @@ sub _remove_owned_stage($stage_abs, $stage_rel, $created) {
     return undef;
 }
 
+sub _remove_owned_stage_after_worker_containment(
+    $cleanup_safe, $stage_abs, $stage_rel, $created,
+) {
+    return "owned staging root '$stage_rel' retained a live worker process group"
+        unless $cleanup_safe;
+    return _remove_owned_stage($stage_abs, $stage_rel, $created);
+}
+
 sub _cleanup_residue($stage_abs, $stage_rel, $repository_device) {
     return [] unless -e $stage_abs || -l $stage_abs;
     return [$stage_rel] unless -d $stage_abs && !-l $stage_abs;
@@ -2512,6 +2549,29 @@ sub _terminate_process_group($pid) {
         kill 'KILL', -$pid;
         kill 'KILL', $pid;
     }
+}
+
+sub _terminate_residual_process_group($pid) {
+    kill 'TERM', -$pid;
+    my $deadline = clock_gettime(CLOCK_MONOTONIC) + 2;
+    while (kill(0, -$pid)
+            && clock_gettime(CLOCK_MONOTONIC) < $deadline) {
+        sleep(0.02);
+    }
+    return 1 unless kill(0, -$pid);
+    kill 'KILL', -$pid;
+    my $kill_deadline = clock_gettime(CLOCK_MONOTONIC) + 2;
+    while (kill(0, -$pid)
+            && clock_gettime(CLOCK_MONOTONIC) < $kill_deadline) {
+        sleep(0.02);
+    }
+    confess "measurement worker residual process group survived containment\n"
+        if kill(0, -$pid);
+    return 1;
+}
+
+sub _worker_process_group_ready() {
+    return POSIX::getpgrp() == $$;
 }
 
 sub _capture_command(@command) {

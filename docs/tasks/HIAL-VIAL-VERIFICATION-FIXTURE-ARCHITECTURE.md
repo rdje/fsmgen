@@ -1861,3 +1861,52 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   22 live-document surfaces pass with zero ceiling increases. Staged task
   acceptance and all registered doctrines are required green immediately before
   commit.
+
+**Tracked adjacent destructive-cleanup finding:** the clean post-recovery audit
+found that `_run_stage` gives the worker a process group but calls
+`_terminate_process_group` only on timeout. A leader can therefore return a
+plausible successful result, exit zero, and leave a same-group descendant alive
+while the controller validates and later recursively deletes the shared staging
+tree. The established `FSM::VIAL::Backend::ProcessSupervisor` contract already
+classifies the equivalent state as surviving-descendant residue and performs
+bounded TERM/KILL containment. The next `.17.4.7` slice owns an exact normal-exit
+descendant RED and parity repair in the common controller. The separate
+post-census pathname-identity/delete audit remains next after that clean commit.
+
+## Acceptance Checklist (enforced) — `.17.4.7` normal-exit worker-group containment
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the executable t1752 RED supplied a
+  plausible successful canonical worker result from a zero-exit leader that
+  forked a live same-group descendant. `_run_stage` accepted the stage, emitted
+  no residue diagnostic, and returned while the group was alive: the three
+  safety assertions failed at t/1752-vial-common-worker-process-group-containment.t line 115
+  and the adjacent lines, while exact repository-local cleanup passed. The
+  parent called `_terminate_process_group` only on timeout, and both parent and
+  child treated `setpgid` as best-effort rather than authenticating the child's
+  exact group identity.
+- [x] **ADDRESSED (verified)** — the child now requires
+  `_worker_process_group_ready` before invoking its selected callback. After
+  reaping a non-timeout leader, the parent checks the complete negative-PID
+  group domain, performs bounded TERM then KILL escalation through
+  `_terminate_residual_process_group`, requires group absence, and returns
+  `VIAL_SCALE_MEASUREMENT_PROCESS_RESIDUE_ERROR` before decoding or validating
+  the plausible worker result. If containment cannot prove absence, an internal
+  cleanup-safety bit suppresses terminal census and recursive deletion and
+  retains the exact staging identity. Final t1752 passes `Files=1, Tests=11`: its
+  TERM-ignoring descendant proves KILL escalation and pre-return absence, while
+  forced termination failure proves cleanup remains sealed and a forced
+  group-identity failure proves the worker callback is never entered.
+- [x] **NO REGRESSION** — the unchanged default-88%/4,096-MiB guarded set passes
+  `Files=12, Tests=76` in 65 wallclock seconds across the foundation, every
+  executable common-controller consumer, t1748/t1749/t1751, and t1752. Perl
+  product/test syntax is clean. All 58 mdBook chapters test; the inspected
+  93-file/20,412-KiB repository-local render contains the exact process-group
+  contract and runnable proof and is removed. Knowledge Map parity is 1,158
+  facts / 6,202 questions / 6,374 answer occurrences / 137 shards. Claim
+  inventory independently agrees at 11,391 numeric lines and 1,707 fully
+  disposed candidates, so no new quantitative claim or disposition is hidden.
+  Maintained-book authority is exact at 58 files / 54,342 lines / 2,934,417
+  bytes; the updated fact-card transition retains one ratchet step; all 22
+  live-document surfaces pass with zero ceiling increases. Staged task
+  acceptance and all registered doctrines are required green immediately before
+  commit.

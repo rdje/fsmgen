@@ -8,6 +8,8 @@ answers:
   - "do per-stage and terminal VIAL artifact admission share one census?"
   - "does interrupted VIAL stage recovery use the bounded output census?"
   - "what binds VIAL cleanup residue to the repository device?"
+  - "can a successful VIAL measurement worker leave a live descendant?"
+  - "when does the common VIAL controller terminate residual process groups?"
   - "does the worker output census create a VIAL capacity claim?"
 date: 2026-09-01
 status: current
@@ -17,6 +19,7 @@ evidence: >-
   t/1749-vial-common-worker-output-census-admission.t;
   t/1748-vial-common-worker-artifact-file-admission.t;
   t/1751-vial-common-interrupted-stage-census-admission.t;
+  t/1752-vial-common-worker-process-group-containment.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16de-vial-osvvm-runtime-execution-plan.md;
   doctrine/claim_verification/claims.jsonl;
@@ -26,6 +29,7 @@ reverify: >-
   t/1748-vial-common-worker-artifact-file-admission.t
   t/1749-vial-common-worker-output-census-admission.t
   t/1751-vial-common-interrupted-stage-census-admission.t
+  t/1752-vial-common-worker-process-group-containment.t
 ---
 
 The isolated stage worker is timed and its canonical result pipe is bounded,
@@ -50,6 +54,16 @@ recoverable, the first excess rejects before recursive reclamation, and the
 existing symlink, special-file, and hard-link diagnostics stay authoritative.
 Cleanup-residue reporting passes the already validated repository device into
 the same census rather than trusting the remaining path as a new authority.
+
+The parent also treats process-group absence—not worker-leader exit—as the
+precondition for result validation and later cleanup. A worker that cannot
+establish its exact process-group identity rejects before its callback runs.
+If a zero-exit leader leaves a descendant, the parent performs bounded
+TERM/KILL containment, requires the group to disappear, and returns
+`VIAL_SCALE_MEASUREMENT_PROCESS_RESIDUE_ERROR`; the plausible worker result is
+never promoted. If containment itself cannot prove group absence, an internal
+cleanup-safety bit suppresses the terminal census and recursive deletion and
+reports the exact owned staging identity as residue.
 
 These are private controller-containment limits. They do not enlarge or reduce
 the existing runtime-artifact byte ceiling and do not establish architecture
