@@ -19,6 +19,8 @@ my $POLICY_SCHEMA = 'fsmgen.vial_process_supervisor_policy.v1';
 my $PROCESS_CENSUS_MAX_BYTES = 4_194_304;
 my $PROCESS_CENSUS_MAX_ROWS = 65_536;
 my $PROCESS_OBSERVATION_INTERVAL_SECONDS = 0.05;
+my $HOST_OBSERVER_SETUP_TIMEOUT_SECONDS = 1;
+my $HOST_OBSERVER_CLEANUP_TIMEOUT_SECONDS = 2;
 my @POLICY_KEYS = qw(
     schema schema_version containment timeout_seconds capture_limit_bytes
 );
@@ -124,12 +126,24 @@ sub _capture($working_directory, $argv, $policy) {
         or _throw('VIAL_PROCESS_HOST_ERROR',
             'cannot create selected-tool containment pipe', '/process');
     my $containment_identity = eval {
-        _containment_pipe_identity($containment_writer);
+        _containment_pipe_identity(
+            $containment_writer,
+            clock_gettime(CLOCK_MONOTONIC)
+                + $HOST_OBSERVER_SETUP_TIMEOUT_SECONDS,
+        );
     };
-    _throw(
-        'VIAL_PROCESS_HOST_ERROR',
-        'cannot authenticate selected-tool containment pipe', '/process',
-    ) unless defined $containment_identity;
+    if (!defined $containment_identity) {
+        close $_ for (
+            $stdin_reader, $stdin_writer,
+            $output_reader, $output_writer,
+            $control_reader, $control_writer,
+            $containment_reader, $containment_writer,
+        );
+        _throw(
+            'VIAL_PROCESS_HOST_ERROR',
+            'cannot authenticate selected-tool containment pipe', '/process',
+        );
+    }
     my $control_flags = fcntl($control_writer, F_GETFD, 0);
     _throw('VIAL_PROCESS_HOST_ERROR',
         'cannot inspect selected-tool exec-control pipe', '/process')
@@ -139,6 +153,7 @@ sub _capture($working_directory, $argv, $policy) {
         unless fcntl($control_writer, F_SETFD, $control_flags | FD_CLOEXEC);
 
     my $started = clock_gettime(CLOCK_MONOTONIC);
+    my $capture_deadline = $started + $policy->{timeout_seconds};
     my $pid = fork();
     _throw('VIAL_PROCESS_HOST_ERROR',
         'cannot fork the selected tool', '/process') unless defined $pid;
@@ -219,10 +234,14 @@ sub _capture($working_directory, $argv, $policy) {
     my $next_observation = $started;
     while ($select->count) {
         my $now = clock_gettime(CLOCK_MONOTONIC);
+        if ($now > $capture_deadline) {
+            $timed_out = 1;
+            last;
+        }
         if ($now >= $next_observation) {
             my $observed = eval {
                 _observe_selected_tool_descendants(
-                    $pid, \%observed_descendants,
+                    $pid, \%observed_descendants, $capture_deadline,
                 );
                 1;
             };
@@ -232,10 +251,6 @@ sub _capture($working_directory, $argv, $policy) {
             }
             $next_observation += $PROCESS_OBSERVATION_INTERVAL_SECONDS
                 while $next_observation <= $now;
-        }
-        if ($now - $started > $policy->{timeout_seconds}) {
-            $timed_out = 1;
-            last;
         }
         my @ready = sort {
             (fileno($a) == $control_fileno ? 0 : 1)
@@ -306,10 +321,20 @@ sub _capture($working_directory, $argv, $policy) {
     else {
         while (1) {
             my $now = clock_gettime(CLOCK_MONOTONIC);
+            if ($now > $capture_deadline) {
+                $timed_out = 1;
+                $status = _terminate_supervised_domains(
+                    $pid,
+                    $policy->{containment} eq 'lifecycle_process_group',
+                    \%observed_descendants,
+                    $containment_reader, $containment_identity,
+                );
+                last;
+            }
             if ($now >= $next_observation) {
                 my $observed = eval {
                     _observe_selected_tool_descendants(
-                        $pid, \%observed_descendants,
+                        $pid, \%observed_descendants, $capture_deadline,
                     );
                     1;
                 };
@@ -323,17 +348,6 @@ sub _capture($working_directory, $argv, $policy) {
             my $waited = waitpid($pid, WNOHANG);
             if ($waited == $pid || $waited == -1) {
                 $status = $?;
-                last;
-            }
-            if ($now - $started
-                    > $policy->{timeout_seconds}) {
-                $timed_out = 1;
-                $status = _terminate_supervised_domains(
-                    $pid,
-                    $policy->{containment} eq 'lifecycle_process_group',
-                    \%observed_descendants,
-                    $containment_reader, $containment_identity,
-                );
                 last;
             }
             sleep(0.01);
@@ -362,6 +376,7 @@ sub _capture($working_directory, $argv, $policy) {
         my $observed = eval {
             $observed_residue = _terminate_observed_descendants(
                 \%observed_descendants,
+                _host_observer_cleanup_deadline(),
             );
             1;
         };
@@ -381,6 +396,7 @@ sub _capture($working_directory, $argv, $policy) {
         my $pipe_contained = eval {
             $pipe_residue = _terminate_containment_pipe_holders(
                 $containment_reader, $containment_identity,
+                _host_observer_cleanup_deadline(),
             );
             1;
         };
@@ -460,32 +476,117 @@ sub _write_child_control($fh, $message) {
     return;
 }
 
-sub _bounded_host_command(@command) {
-    open my $fh, '-|', @command
-        or die "selected-tool host observation command is unavailable\n";
-    my $output = '';
-    while (1) {
-        my $chunk = '';
-        my $read = sysread($fh, $chunk, 65_536);
-        if (defined $read) {
-            last if $read == 0;
-            $output .= $chunk;
-            if (bytes::length($output) > $PROCESS_CENSUS_MAX_BYTES) {
-                close $fh;
-                die "selected-tool host observation exceeds its bound\n";
-            }
-            next;
-        }
-        next if $! == EINTR;
-        close $fh;
-        die "selected-tool host observation could not be read\n";
+sub _host_observer_cleanup_deadline() {
+    return clock_gettime(CLOCK_MONOTONIC)
+        + $HOST_OBSERVER_CLEANUP_TIMEOUT_SECONDS;
+}
+
+sub _terminate_host_observer($pid) {
+    kill 'TERM', $pid;
+    my $term_deadline = clock_gettime(CLOCK_MONOTONIC) + 0.2;
+    while (clock_gettime(CLOCK_MONOTONIC) < $term_deadline) {
+        my $waited = waitpid($pid, WNOHANG);
+        return if $waited == $pid || $waited == -1;
+        sleep(0.01);
     }
-    close $fh
-        or die "selected-tool host observation did not complete\n";
+    kill 'KILL', $pid;
+    my $kill_deadline = clock_gettime(CLOCK_MONOTONIC) + 1;
+    while (clock_gettime(CLOCK_MONOTONIC) < $kill_deadline) {
+        my $waited = waitpid($pid, WNOHANG);
+        return if $waited == $pid || $waited == -1;
+        sleep(0.01);
+    }
+    die "selected-tool host observer could not be reaped\n";
+}
+
+sub _abort_host_observer($reader, $pid, $message) {
+    my $contained = eval {
+        _terminate_host_observer($pid);
+        1;
+    };
+    close $reader;
+    die "selected-tool host observer survived containment\n"
+        unless $contained;
+    die "$message\n";
+}
+
+sub _bounded_host_command($deadline, @command) {
+    my ($reader, $writer);
+    pipe($reader, $writer)
+        or die "selected-tool host observation pipe is unavailable\n";
+    my $pid = fork();
+    if (!defined $pid) {
+        close $reader;
+        close $writer;
+        die "selected-tool host observation command is unavailable\n";
+    }
+    if ($pid == 0) {
+        close $reader;
+        open STDIN, '<', '/dev/null' or _exit(126);
+        open STDOUT, '>&', $writer or _exit(126);
+        open STDERR, '>', '/dev/null' or _exit(126);
+        close $writer;
+        {
+            no warnings 'exec';
+            exec {$command[0]} @command;
+        }
+        _exit(127);
+    }
+    close $writer;
+    my $flags = fcntl($reader, F_GETFL, 0);
+    _abort_host_observer(
+        $reader, $pid,
+        'selected-tool host observation pipe cannot be inspected',
+    ) unless defined $flags;
+    _abort_host_observer(
+        $reader, $pid,
+        'selected-tool host observation pipe cannot be made nonblocking',
+    ) unless fcntl($reader, F_SETFL, $flags | O_NONBLOCK);
+
+    my $output = '';
+    my ($eof, $status) = (0, undef);
+    while (1) {
+        while (!$eof) {
+            my $chunk = '';
+            my $read = sysread($reader, $chunk, 65_536);
+            if (defined $read) {
+                if ($read == 0) {
+                    $eof = 1;
+                    last;
+                }
+                $output .= $chunk;
+                _abort_host_observer(
+                    $reader, $pid,
+                    'selected-tool host observation exceeds its bound',
+                ) if bytes::length($output) > $PROCESS_CENSUS_MAX_BYTES;
+                next;
+            }
+            next if $! == EINTR;
+            last if $! == EAGAIN || $! == EWOULDBLOCK;
+            _abort_host_observer(
+                $reader, $pid,
+                'selected-tool host observation could not be read',
+            );
+        }
+        if (!defined $status) {
+            my $waited = waitpid($pid, WNOHANG);
+            $status = $? if $waited == $pid;
+            $status = 0 if $waited == -1;
+        }
+        last if $eof && defined $status;
+        _abort_host_observer(
+            $reader, $pid,
+            'selected-tool host observation exceeded its deadline',
+        ) if clock_gettime(CLOCK_MONOTONIC) >= $deadline;
+        sleep(0.01);
+    }
+    close $reader;
+    die "selected-tool host observation did not complete\n"
+        unless ($status & 127) == 0 && ($status >> 8) == 0;
     return $output;
 }
 
-sub _containment_pipe_identity($writer) {
+sub _containment_pipe_identity($writer, $deadline) {
     die "selected-tool containment descriptor is not a pipe\n"
         unless -p $writer;
     if ($^O eq 'linux') {
@@ -499,6 +600,7 @@ sub _containment_pipe_identity($writer) {
         die "selected-tool containment descriptor is unavailable\n"
             unless defined $fd;
         my $output = _bounded_host_command(
+            $deadline,
             'lsof', '-nP', '-F', 'pfn', '-a', '-p', "$$", '-d', "$fd",
         );
         my @identities = $output =~ /^n(->0x[0-9a-f]+)$/gmi;
@@ -526,11 +628,12 @@ sub _containment_pipe_has_writer($reader) {
     }
 }
 
-sub _darwin_containment_pipe_holders($endpoint) {
+sub _darwin_containment_pipe_holders($endpoint, $deadline) {
     my $user = getpwuid($<);
     die "selected-tool containment owner is unavailable\n"
         unless defined($user) && length($user);
     my $output = _bounded_host_command(
+        $deadline,
         'lsof', '-nP', '-F', 'pn', '-u', $user,
     );
     my ($pid, %holders, $rows);
@@ -584,9 +687,9 @@ sub _linux_containment_pipe_holders($inode) {
     return [sort { $a <=> $b } @pids];
 }
 
-sub _containment_pipe_holders($identity) {
+sub _containment_pipe_holders($identity, $deadline) {
     if ($identity =~ /\Adarwin-pipe-endpoint:(->0x[0-9a-f]+)\z/) {
-        return _darwin_containment_pipe_holders($1);
+        return _darwin_containment_pipe_holders($1, $deadline);
     }
     if ($identity =~ /\Alinux-pipe-inode:([1-9][0-9]*)\z/) {
         return _linux_containment_pipe_holders($1);
@@ -594,15 +697,15 @@ sub _containment_pipe_holders($identity) {
     die "selected-tool containment identity is malformed\n";
 }
 
-sub _terminate_containment_pipe_holders($reader, $identity) {
+sub _terminate_containment_pipe_holders($reader, $identity, $deadline) {
     return 0 unless _containment_pipe_has_writer($reader);
-    my $holders = _containment_pipe_holders($identity);
+    my $holders = _containment_pipe_holders($identity, $deadline);
     die "selected-tool containment pipe has no attributable holder\n"
         unless @$holders;
     kill 'STOP', @$holders;
     kill 'KILL', @$holders;
-    my $deadline = time() + 2;
-    while (time() < $deadline) {
+    my $absence_deadline = time() + 2;
+    while (time() < $absence_deadline) {
         return scalar(@$holders)
             unless _containment_pipe_has_writer($reader);
         sleep(0.02);
@@ -610,23 +713,22 @@ sub _terminate_containment_pipe_holders($reader, $identity) {
     die "selected-tool containment pipe remained live after holder kill\n";
 }
 
-sub _selected_tool_process_snapshot() {
-    open my $fh, '-|', 'ps', '-axo', 'pid=,ppid=,lstart='
-        or die "selected-tool process census is unavailable\n";
+sub _selected_tool_process_snapshot($deadline) {
+    my $output = _bounded_host_command(
+        $deadline, 'ps', '-axo', 'pid=,ppid=,lstart=',
+    );
     my (%rows, $bytes, $count);
-    while (my $line = <$fh>) {
+    for my $line (split /(?<=\n)/, $output) {
         $bytes += bytes::length($line);
         $count++;
         if ($bytes > $PROCESS_CENSUS_MAX_BYTES
                 || $count > $PROCESS_CENSUS_MAX_ROWS) {
-            close $fh;
             die "selected-tool process census exceeds its structural bound\n";
         }
         next if $line =~ /\A\s*\z/;
         my ($pid, $parent, $started) = $line
             =~ /\A\s*([1-9][0-9]*)\s+([0-9]+)\s+(.+?\S)\s*\z/
             or do {
-                close $fh;
                 die "selected-tool process census is malformed\n";
             };
         die "selected-tool process census repeats a PID\n"
@@ -636,13 +738,11 @@ sub _selected_tool_process_snapshot() {
             started => $started,
         };
     }
-    close $fh
-        or die "selected-tool process census did not complete\n";
     return \%rows;
 }
 
-sub _observe_selected_tool_descendants($root_pid, $observed) {
-    my $rows = _selected_tool_process_snapshot();
+sub _observe_selected_tool_descendants($root_pid, $observed, $deadline) {
+    my $rows = _selected_tool_process_snapshot($deadline);
     my %children;
     for my $pid (keys %$rows) {
         push $children{$rows->{$pid}{parent}}->@*, 0 + $pid;
@@ -660,10 +760,10 @@ sub _observe_selected_tool_descendants($root_pid, $observed) {
     return;
 }
 
-sub _terminate_observed_descendants($observed) {
+sub _terminate_observed_descendants($observed, $deadline) {
     my %targets;
     while (1) {
-        my $rows = _selected_tool_process_snapshot();
+        my $rows = _selected_tool_process_snapshot($deadline);
         my %children;
         for my $pid (keys %$rows) {
             push $children{$rows->{$pid}{parent}}->@*, 0 + $pid;
@@ -688,9 +788,9 @@ sub _terminate_observed_descendants($observed) {
     my $count = scalar keys %targets;
     return 0 unless $count;
     kill 'KILL', sort { $a <=> $b } keys %targets;
-    my $deadline = time() + 2;
-    while (time() < $deadline) {
-        my $rows = _selected_tool_process_snapshot();
+    my $absence_deadline = time() + 2;
+    while (time() < $absence_deadline) {
+        my $rows = _selected_tool_process_snapshot($deadline);
         my @alive = grep {
             exists($rows->{$_}) && $rows->{$_}{started} eq $targets{$_}
         } keys %targets;
@@ -711,13 +811,16 @@ sub _terminate_supervised_domains(
     };
     $group_error = $@ unless $group_contained;
     my $observed_contained = eval {
-        _terminate_observed_descendants($observed);
+        _terminate_observed_descendants(
+            $observed, _host_observer_cleanup_deadline(),
+        );
         1;
     };
     $observed_error = $@ unless $observed_contained;
     my $pipe_contained = eval {
         _terminate_containment_pipe_holders(
             $containment_reader, $containment_identity,
+            _host_observer_cleanup_deadline(),
         );
         1;
     };

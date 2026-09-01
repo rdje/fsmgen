@@ -2151,3 +2151,53 @@ could therefore suspend the selected-tool deadline while supervision waits for
 observation. After the descriptor-escape control, `.17.4.7` must inject a
 non-terminating observer, prove the deadline failure, and give observer startup,
 read, termination, and reap their own bounded containment path.
+
+## Acceptance Checklist (enforced) — `.17.4.7` bounded selected-tool host observers
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — t1756 replaced `ps` and `lsof`
+  independently through a repository-local PATH fixture with a non-terminating
+  helper and ran `_capture` inside an isolated process group. Both helpers
+  outlived the seven-second outer watchdog: Prove emitted `Failed test at t/1756-vial-selected-tool-host-observer-deadline.t line 92` for bounded
+  return and line 104 for the missing explicit failure under each observer.
+  The watchdog then terminated each exact group; probe/fixture cleanup passed.
+  Overall, both of two top-level subtests failed in 14 wallclock seconds.
+- [x] **ADDRESSED (verified)** — every exact `ps`/`lsof` helper now runs through
+  an owned pipe/fork/exec path with nonblocking structurally bounded output,
+  explicit monotonic completion, exact-PID TERM/KILL, and bounded reap. Setup
+  authentication has its own one-second deadline, live observations consume
+  the selected-tool deadline rather than extending it, and timeout/residue
+  cleanup receives a fresh two-second observer deadline. Each helper remains
+  inside the supervisor's existing containment domain so an outer-worker kill
+  cannot strand a freshly detached helper group. A failed setup authentication
+  closes all eight pre-fork pipe handles before returning the explicit host
+  error. The repaired t1756 returns the exact host/residue failure for both
+  injected stalls inside five wallclock seconds and proves no helper group
+  residue remains.
+- [x] **NO REGRESSION** — the focused injected-stall proof passes both top-level
+  subtests and all ten inner assertions in five wallclock seconds, including
+  explicit host/residue failures, clean probe exit, exact fixture deletion,
+  and no helper-group residue. The final RAM-guarded capture-limit, exact
+  Verilator/GHDL lifecycle, provider-aware GHDL, runtime-process envelope,
+  retained-writer containment, and t1756 collection passes `Files=7, Tests=54`
+  in 33 wallclock seconds. All 58 mdBook chapters test; the inspected
+  93-file/20,452-KiB repository-local render contains the executable t1756
+  command and bounded-observer contract and is removed. Knowledge Map parity
+  is 1,159 facts / 6,215 questions / 6,387 answer occurrences / 138 shards.
+  Claim verification retains 27 records and closes all 1,711 candidates
+  through 179 claim-record, 939 gate, and 593 reviewed dispositions with zero
+  gaps/open; the independent inventory census agrees at 11,404 numeric lines.
+  Maintained-book authority is exact at 58 files / 54,439 lines / 2,940,898
+  bytes; the existing Knowledge-card transition contains 1,158 files / 46,861
+  lines / 3,459,740 bytes. All 22 live-document surfaces pass with zero ceiling
+  increases. Staged acceptance and every registered doctrine are required
+  green immediately before commit.
+
+**Tracked adjacent monotonic-containment finding:** selected-tool execution and
+host-observer deadlines use `CLOCK_MONOTONIC`, but `_terminate_process`,
+`_terminate_residual_group`, containment-holder absence, and observed-descendant
+absence still bound their TERM/KILL loops with adjustable wall time. A backward
+wall-clock step can prolong containment beyond its declared interval; a forward
+step can truncate the intended grace period. The next `.17.4.7` slice must
+inject a wall-time discontinuity, prove the split clock domain, and put every
+selected-tool containment deadline on one monotonic authority without changing
+the admitted timeout or cleanup intervals.

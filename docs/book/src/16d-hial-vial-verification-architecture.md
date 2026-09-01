@@ -4229,6 +4229,21 @@ prove -Iperl -v \
   t/1755-vial-selected-tool-detached-descendant-containment.t
 ```
 
+The `ps` process-tree census and Darwin `lsof` pipe census are themselves
+bounded supervised operations. Setup authentication has an independent short
+deadline; live observations share the selected-tool deadline and therefore
+cannot extend it; timeout and residue cleanup receive a separate bounded
+observer-cleanup interval. Each exact command is launched directly, keeps the
+supervisor's existing containment domain, drains output nonblockingly under its
+structural cap, and is terminated and reaped by its owned PID on failure. Thus
+a stalled host observer returns an explicit host or residue error and cannot
+strand a new detached helper domain. The executable stall injection is:
+
+```bash
+prove -Iperl -It/lib -v \
+  t/1756-vial-selected-tool-host-observer-deadline.t
+```
+
 This is deliberately a synchronous selected-tool contract, not a general
 daemon job object. The caller seal admits only the exact GHDL/Verilator
 lifecycle and qualification command profiles. A child that deliberately closes

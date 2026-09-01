@@ -9,6 +9,8 @@ answers:
   - "how does VIAL find a selected-tool process holding the containment pipe?"
   - "does a detached selected-tool child survive timeout cleanup?"
   - "can ProcessSupervisor contain a daemon that closes every inherited descriptor?"
+  - "can a stalled ps or lsof suspend ProcessSupervisor?"
+  - "how are selected-tool host observers bounded?"
 date: 2026-09-01
 status: current
 tags: [vial, process-supervisor, containment, verilator, ghdl]
@@ -20,6 +22,7 @@ evidence: >-
   t/1678-vial-ghdl-provider-aware-lifecycle.t;
   t/1724-vial-runtime-process-envelope.t;
   t/1755-vial-selected-tool-detached-descendant-containment.t;
+  t/1756-vial-selected-tool-host-observer-deadline.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -30,6 +33,7 @@ reverify: >-
   t/1678-vial-ghdl-provider-aware-lifecycle.t
   t/1724-vial-runtime-process-envelope.t
   t/1755-vial-selected-tool-detached-descendant-containment.t
+  t/1756-vial-selected-tool-host-observer-deadline.t
 ---
 
 `FSM::VIAL::Backend::ProcessSupervisor` serves both public lifecycle execution
@@ -74,3 +78,12 @@ macOS `EVFILT_PROC` contract reports a fork but does not deliver or automaticall
 track the child PID, so it is not a missing generic containment mechanism.
 Future daemonizing profiles require a supported non-cooperative host authority
 before admission; faster polling is not sufficient.
+
+The `ps` and Darwin `lsof` observers cannot suspend supervision. Each exact
+command runs directly through an owned pipe/fork/exec path inside the existing
+supervisor containment domain. Setup pipe authentication has an independent
+deadline, live process observations share the selected-tool deadline, and
+post-timeout or residue cleanup receives a separate bounded observer interval.
+Output is drained nonblockingly under the structural census cap. A helper that
+does not exit is terminated and reaped by exact owned PID; the caller receives
+an explicit host or residue failure, and no detached helper domain remains.
