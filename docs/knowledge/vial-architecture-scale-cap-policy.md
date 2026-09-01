@@ -163,8 +163,9 @@ before writes or assembly. Exact boundaries pass, adjacent excess rejects, and
 completed-backend plus Tool terminal checks remain; no cap or claim changes.
 
 `FSM::VIAL::ArchitectureScaleCapConsistency` rebuilds the policy without caller
-evidence. Eight groups verify all dimensions: runtime, backend, models, faults,
-randomness, scoreboards, coverage, and bridge-profile cardinality. Scoreboards join the t1631 provider-free
+evidence. Nine groups verify all dimensions: runtime, backend, models, faults,
+randomness, scoreboards, coverage, bridge-profile cardinality, and serialized
+bridge manifests. Scoreboards join the t1631 provider-free
 FIFO and cleanup proof, t1690 semantic boundary/order proof, and t1712 compact
 execution preflight without misclassifying the last as boundary evidence.
 Coverage likewise joins t1632's static-domain oracle and lower source-byte
@@ -172,7 +173,12 @@ route authority, t1691 semantic scalar admission, and t1713 compact preflight
 without treating the last as boundary evidence. T1763 reconstructs exact
 unions and rejects omitted/foreign evidence. Bridge-profile cardinality uses
 t1602's exact boundary/excess, identities, cleanup, unset selectors, and absent
-rejected output identities; other groups and calibration remain pending/blocked.
+rejected output identities.
+Serialized-manifest evidence keeps t1602's provider-free exact workload and
+cleanup separate from t1704's terminal canonical encoding observer. The latter
+admits 16,777,216 bytes after structural and uniqueness validation, rejects the
+first complete valid excess at 16,777,219 bytes, and exposes no partial output.
+Other groups and calibration remain pending/blocked.
 
 The common controller admits bounded worker files before counts/digests; cap+1
 and unsafe path/mode cases reject. No cap or support claim changes.

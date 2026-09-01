@@ -437,6 +437,32 @@ my %BRIDGE_PROFILE_RATIONALE = (
     accepted_identity =>
         'accepted construction, manifest, report, input, and review-route identities are deterministic',
 );
+my @BRIDGE_SERIALIZED_EVIDENCE = (
+    [
+        't/1602-vial-architecture-scale-bridge-fanout.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1704-hial-vial-bridge-serialized-manifest-terminal-authority.t',
+        qw(boundary adjacent_excess diagnostics atomicity accepted_identity),
+    ],
+);
+my %BRIDGE_SERIALIZED_RATIONALE = (
+    boundary =>
+        'the exact workload ladder and terminal observer both admit a 16777216-byte canonical manifest',
+    adjacent_excess =>
+        'the enclosing route and terminal observer both reject the first complete valid record above the byte cap',
+    diagnostics =>
+        'workload and terminal checks retain the authoritative bridge limit diagnostic and manifest-root locus',
+    atomicity =>
+        'terminal and enclosing rejections publish no manifest, report, metrics, or identities',
+    no_tool =>
+        'the exact serialized-manifest workload carries no backend or external-tool selector',
+    cleanup =>
+        'serialized-manifest workload success and consumer failure are same-volume and residue-free',
+    accepted_identity =>
+        'the exact workload identities and terminal canonical SHA are deterministic and byte-equal',
+);
 my %runtime_dimensions = map {
     $_ => {
         status => 'verified',
@@ -528,9 +554,22 @@ for my $entry (@BRIDGE_PROFILE_EVIDENCE) {
     my ($path, @dimensions) = @{$entry};
     push @{$bridge_profile_dimensions{$_}{evidence}}, $path for @dimensions;
 }
+my %bridge_serialized_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $BRIDGE_SERIALIZED_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@BRIDGE_SERIALIZED_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$bridge_serialized_dimensions{$_}{evidence}}, $path
+        for @dimensions;
+}
 my $VERIFIED_DIMENSIONS = {
     backend_artifact_graph => \%backend_dimensions,
     bridge_profile_cardinality => \%bridge_profile_dimensions,
+    bridge_serialized_manifest => \%bridge_serialized_dimensions,
     checking_coverage => \%checking_coverage_dimensions,
     checking_faults => \%checking_fault_dimensions,
     checking_models => \%checking_model_dimensions,

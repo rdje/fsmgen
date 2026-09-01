@@ -340,9 +340,32 @@ my %bridge_profile_rationale = (
     cleanup => 'accepted and consumer-failure bridge staging is same-volume and residue-free',
     accepted_identity => 'accepted construction, manifest, report, input, and review-route identities are deterministic',
 );
+my @bridge_serialized_evidence = qw(
+    t/1602-vial-architecture-scale-bridge-fanout.t
+    t/1704-hial-vial-bridge-serialized-manifest-terminal-authority.t
+);
+my %bridge_serialized_evidence = (
+    boundary => [@bridge_serialized_evidence],
+    adjacent_excess => [@bridge_serialized_evidence],
+    diagnostics => [@bridge_serialized_evidence],
+    atomicity => [@bridge_serialized_evidence],
+    no_tool => [$bridge_serialized_evidence[0]],
+    cleanup => [$bridge_serialized_evidence[0]],
+    accepted_identity => [@bridge_serialized_evidence],
+);
+my %bridge_serialized_rationale = (
+    boundary => 'the exact workload ladder and terminal observer both admit a 16777216-byte canonical manifest',
+    adjacent_excess => 'the enclosing route and terminal observer both reject the first complete valid record above the byte cap',
+    diagnostics => 'workload and terminal checks retain the authoritative bridge limit diagnostic and manifest-root locus',
+    atomicity => 'terminal and enclosing rejections publish no manifest, report, metrics, or identities',
+    no_tool => 'the exact serialized-manifest workload carries no backend or external-tool selector',
+    cleanup => 'serialized-manifest workload success and consumer failure are same-volume and residue-free',
+    accepted_identity => 'the exact workload identities and terminal canonical SHA are deterministic and byte-equal',
+);
 my %verified_evidence = (
     backend_artifact_graph => \%backend_evidence,
     bridge_profile_cardinality => \%bridge_profile_evidence,
+    bridge_serialized_manifest => \%bridge_serialized_evidence,
     checking_coverage => \%checking_coverage_evidence,
     checking_faults => \%checking_fault_evidence,
     checking_models => \%checking_model_evidence,
@@ -353,6 +376,7 @@ my %verified_evidence = (
 my %verified_rationale = (
     backend_artifact_graph => \%backend_rationale,
     bridge_profile_cardinality => \%bridge_profile_rationale,
+    bridge_serialized_manifest => \%bridge_serialized_rationale,
     checking_coverage => \%checking_coverage_rationale,
     checking_faults => \%checking_fault_rationale,
     checking_models => \%checking_model_rationale,
@@ -540,6 +564,18 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
         'every sealed bridge-profile evidence path exists',
     );
 
+    my %bridge_serialized_join = map { $_ => 1 }
+        map { @{$bridge_serialized_evidence{$_}} } @dimensions;
+    is_deeply(
+        [sort keys %bridge_serialized_join],
+        [sort @bridge_serialized_evidence],
+        'serialized-manifest join covers the exact workload and terminal witnesses',
+    );
+    is_deeply(
+        [grep { !-f $_ } sort keys %bridge_serialized_join], [],
+        'every sealed serialized-manifest evidence path exists',
+    );
+
     is($report->{calibration}{evidence_role},
         'historical_measurement_only',
         'calibration stays measurement evidence');
@@ -711,6 +747,21 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
     like(dies(sub { $assert->($foreign_bridge_profile) }),
         qr/bridge_profile_cardinality\/accepted_identity' contradicts the sealed evidence authority/,
         'callers cannot add foreign bridge-profile evidence');
+
+    my $omitted_bridge_serialized = $class->build;
+    pop @{$omitted_bridge_serialized->{groups}{bridge_serialized_manifest}
+        {dimensions}{no_tool}{evidence}};
+    like(dies(sub { $assert->($omitted_bridge_serialized) }),
+        qr/bridge_serialized_manifest\/no_tool' verified evidence must be one non-empty array/,
+        'callers cannot empty sealed serialized-manifest evidence');
+
+    my $foreign_bridge_serialized = $class->build;
+    push @{$foreign_bridge_serialized->{groups}{bridge_serialized_manifest}
+        {dimensions}{accepted_identity}{evidence}},
+        't/foreign-bridge-serialized-evidence.t';
+    like(dies(sub { $assert->($foreign_bridge_serialized) }),
+        qr/bridge_serialized_manifest\/accepted_identity' contradicts the sealed evidence authority/,
+        'callers cannot add foreign serialized-manifest evidence');
 
     my $missing = $class->build;
     delete $missing->{groups}{$first_group}{dimensions}{cleanup};

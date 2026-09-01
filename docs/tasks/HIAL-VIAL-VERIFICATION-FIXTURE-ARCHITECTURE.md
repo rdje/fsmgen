@@ -893,6 +893,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
   Bridge Profile Join: `The caller-sealed consistency authority now also promotes bridge_profile_cardinality through its one complete family witness. T1602 already executes selected_units and selected_domains at exact limit and adjacent excess, freezes accepted construction/manifest/report/input/review-route identities, and owns same-volume success/failure cleanup. This slice closes its evidence gap by requiring every construction to retain unset backend/tool selectors and every expected rejection to publish empty metrics plus no manifest/report identity. The exact mode re-executes all thirteen bridge axes at qualification, limit, and excess, so the profile classification is not inferred from a gate-only control. T1763 reconstructs the same single path in every dimension, requires its exact one-path union, rejects empty verified evidence before authority comparison, and rejects foreign evidence through that comparison. Every earlier verified group remains sealed and every unaudited group remains pending, so calibration stays historical, incomplete, and blocked. Re-derive: execute t1602 with FSMGEN_VIAL_SCALE_EXACT=1 plus t1763 and t1685 under the repository-local RAM guard. Falsify: exact profile boundary/excess, partial-output, no-selector, union, empty-evidence, foreign-evidence, and caller-mutation controls fail closed. Durability: this task, book, Knowledge Map card, strengthened foundation test, consistency source/test, and work-unit commit retain the classification. The guarded suite reports All tests successful at Files=3/Tests=90 in 128 wallclock seconds. No bridge cap, profile, accepted identity, product behavior, publication, support, budget, or capacity claim changes. The next slice independently reviews bridge_serialized_manifest.`
 
+  Bridge Serialized Manifest Join: `The caller-sealed consistency authority now also promotes bridge_serialized_manifest through two complementary witnesses. T1602 owns the exact provider-free workload ladder, stable enclosing-route diagnostics and atomicity, repeatable identities, and same-volume cleanup. T1704 independently observes the terminal canonical encoding after structural-limit and semantic-identity validation: 16,777,216 bytes admit with a frozen SHA, while the first complete valid record above the cap encodes to 16,777,219 bytes, returns the stable manifest-root limit diagnostic, and exposes no manifest or report. T1763 reconstructs the exact two-path projections, limits no-tool and cleanup evidence to t1602, requires the complete union, and rejects empty or foreign evidence. Every earlier verified group remains sealed and every unaudited group remains pending, so calibration stays historical, incomplete, and blocked. Re-derive: execute t1602 with FSMGEN_VIAL_SCALE_EXACT=1 plus t1704, t1763, and t1685 under the repository-local RAM guard. Falsify: exact workload/terminal boundary, complete-record excess, validation-order, diagnostic, atomicity, projection, union, omission, foreign-evidence, and caller-mutation controls fail closed. Durability: this task, book, Knowledge Map card, consistency source/test, policy decision 0093, and work-unit commit retain the layered classification. The guarded suite reports All tests successful at Files=4/Tests=106 in 139 wallclock seconds. No bridge cap, canonical encoding, accepted identity, product behavior, publication, support, budget, or capacity claim changes. The next slice independently reviews bridge_normalized_collections.`
+
+  Claim Disposition Finding: `Adding exact serialized-manifest byte results to the closeout chapter caused the producer-derived claim census to emit two open candidates. Root cause was broader than missing per-claim records: the newer 16df closeout chapter was absent from the required-complete verification_architecture disposition group, so it had no candidate routing until its first actionable numeral appeared. This slice registers 16df, dispositions both byte claims through non-aliased producer, terminal-oracle, and watcher legs, and restores zero open owners/gaps. Re-derive: regenerate the inventory and join it through the disposition checker. Falsify: either an ungrouped path or an absent/malformed disposition fails closed. Durability: this task, disposition group, two sorted disposition records, generated inventory, and work-unit commit retain the repair.`
+
   Containment Resolution: `The cap-policy card's long one-path-per-line reverify list is now a shorter equivalent set of numeric brace ranges plus exact outliers; every expansion resolves to an existing tracked test. With checking-randomness evidence added, the card aggregate falls from 46,939 lines/3,464,850 bytes to 46,903 lines/3,462,766 bytes, restoring 39 lines/2,119 bytes below the inherited transition allowance without changing it. Re-derive: expand every compacted pattern and aggregate docs/knowledge Markdown with wc. Falsify: missing paths fail the explicit expansion census, and Knowledge Map/live-document checks reject freshness, answer, transition, or ceiling drift. Durability: this task, the compacted card, generated shard, containment manifest, and work-unit commit retain the resolution.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
@@ -2885,3 +2889,44 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   immediately before commit with no bridge cap, profile, accepted identity,
   product behavior, publication, support, budget, or capacity claim change.
   Full CI and push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.8` bridge-serialized-manifest evidence join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the sealed consistency report leaves
+  `bridge_serialized_manifest` pending because its two selected witnesses remain
+  undifferentiated candidates, and the Knowledge Map has no narrower answer.
+  T1704 owns the terminal canonical-encoding authority: exact 16-MiB acceptance,
+  first complete valid record above it, validation order, stable diagnostic,
+  withheld partial outputs, and accepted SHA identity. T1602 owns the enclosing
+  provider-free exact workload ladder, repeatable stage identities, and
+  same-volume cleanup. Exact `git log -S` history using
+  `'bridge_serialized_manifest' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` traces the candidate-only group
+  to `951720257`.
+- [x] **ADDRESSED (verified)** — independently classify the complementary
+  witnesses across boundary, adjacent excess, diagnostics, atomicity, no-tool,
+  cleanup, and accepted identity; preserve terminal versus enclosing-route
+  distinctions; run the full exact serialized-manifest ladder under the
+  repository-local RAM guard; seal exact paths and rationales in the no-input
+  consistency authority; reject omitted or foreign evidence; retain all prior
+  verified joins; and keep calibration blocked while any group remains pending.
+  The pre-promotion t1763 RED reports exactly 21 missing
+  status/evidence/rationale assertions plus the two deliberately inactive
+  omission/foreign controls, with every prior group green; the matching sealed
+  projection then makes the complete consistency/policy collection pass.
+- [x] **NO REGRESSION** — both serialized-manifest witnesses plus consistency
+  and policy collection report `All tests successful` at Files=4/Tests=106 in
+  139 wallclock seconds. Task integrity passes across 4 trees/1,031 nodes; all
+  59 mdBook chapters test, and the inspected 94-file/20,576-KiB
+  repository-local render is removed exactly. `knowledge-map: OK` reports 1,159
+  facts/6,231 questions/6,403 answer occurrences/138 shards. Claim inventory
+  independently agrees at 11,492 numeric lines with 1,713/1,713 candidates
+  dispositioned, 941 derived gates, and zero gaps, open owners, or untracked
+  producers; its new 16df group membership and two byte dispositions fail
+  closed under the disposition join. All 22 live-document surfaces and the
+  exact 59-file/54,782-line/2,957,619-byte book authority pass with zero ceiling
+  increase; Knowledge Map cards retain 25 lines/1,082 bytes of transition
+  headroom. Staged acceptance and every registered doctrine are required green
+  immediately before commit with no bridge cap, canonical encoding, accepted
+  identity, product behavior, publication, support, budget, or capacity claim
+  change. Full CI and push remain deferred by policy.
