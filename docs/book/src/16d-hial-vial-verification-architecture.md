@@ -4244,6 +4244,18 @@ prove -Iperl -It/lib -v \
   t/1756-vial-selected-tool-host-observer-deadline.t
 ```
 
+Every selected-tool TERM/KILL grace and descendant/holder absence interval
+uses the same monotonic clock as execution and host-observer supervision.
+Adjusting the system wall clock backward cannot extend cleanup, and adjusting
+it forward cannot erase the intended grace interval. The focused control
+injects both discontinuities while independently measuring monotonic elapsed
+time and proves that the injected wall clock is never consulted:
+
+```bash
+prove -Iperl -It/lib -v \
+  t/1757-vial-selected-tool-monotonic-containment.t
+```
+
 This is deliberately a synchronous selected-tool contract, not a general
 daemon job object. The caller seal admits only the exact GHDL/Verilator
 lifecycle and qualification command profiles. A child that deliberately closes

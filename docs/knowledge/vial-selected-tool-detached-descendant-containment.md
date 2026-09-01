@@ -11,6 +11,8 @@ answers:
   - "can ProcessSupervisor contain a daemon that closes every inherited descriptor?"
   - "can a stalled ps or lsof suspend ProcessSupervisor?"
   - "how are selected-tool host observers bounded?"
+  - "can a wall-clock adjustment change selected-tool cleanup?"
+  - "which clock bounds selected-tool TERM and KILL containment?"
 date: 2026-09-01
 status: current
 tags: [vial, process-supervisor, containment, verilator, ghdl]
@@ -23,6 +25,7 @@ evidence: >-
   t/1724-vial-runtime-process-envelope.t;
   t/1755-vial-selected-tool-detached-descendant-containment.t;
   t/1756-vial-selected-tool-host-observer-deadline.t;
+  t/1757-vial-selected-tool-monotonic-containment.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -34,6 +37,7 @@ reverify: >-
   t/1724-vial-runtime-process-envelope.t
   t/1755-vial-selected-tool-detached-descendant-containment.t
   t/1756-vial-selected-tool-host-observer-deadline.t
+  t/1757-vial-selected-tool-monotonic-containment.t
 ---
 
 `FSM::VIAL::Backend::ProcessSupervisor` serves both public lifecycle execution
@@ -87,3 +91,10 @@ post-timeout or residue cleanup receives a separate bounded observer interval.
 Output is drained nonblockingly under the structural census cap. A helper that
 does not exit is terminated and reaped by exact owned PID; the caller receives
 an explicit host or residue failure, and no detached helper domain remains.
+
+All selected-tool TERM/KILL grace and descendant/holder absence deadlines use
+`CLOCK_MONOTONIC`, matching execution and observer supervision. An executable
+control replaces the module's wall-time function with backward and forward
+steps while independently measuring monotonic elapsed time. Both paths retain
+the intended grace, kill and reap the exact tool, leave no process-group
+residue, and prove the injected wall clock was never called.

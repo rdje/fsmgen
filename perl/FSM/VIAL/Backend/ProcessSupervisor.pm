@@ -11,7 +11,7 @@ use IO::Select;
 use JSON::PP ();
 use POSIX qw(WNOHANG _exit setpgid);
 use Scalar::Util qw(blessed);
-use Time::HiRes qw(CLOCK_MONOTONIC clock_gettime sleep time);
+use Time::HiRes qw(CLOCK_MONOTONIC clock_gettime sleep);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
@@ -704,8 +704,8 @@ sub _terminate_containment_pipe_holders($reader, $identity, $deadline) {
         unless @$holders;
     kill 'STOP', @$holders;
     kill 'KILL', @$holders;
-    my $absence_deadline = time() + 2;
-    while (time() < $absence_deadline) {
+    my $absence_deadline = clock_gettime(CLOCK_MONOTONIC) + 2;
+    while (clock_gettime(CLOCK_MONOTONIC) < $absence_deadline) {
         return scalar(@$holders)
             unless _containment_pipe_has_writer($reader);
         sleep(0.02);
@@ -788,8 +788,8 @@ sub _terminate_observed_descendants($observed, $deadline) {
     my $count = scalar keys %targets;
     return 0 unless $count;
     kill 'KILL', sort { $a <=> $b } keys %targets;
-    my $absence_deadline = time() + 2;
-    while (time() < $absence_deadline) {
+    my $absence_deadline = clock_gettime(CLOCK_MONOTONIC) + 2;
+    while (clock_gettime(CLOCK_MONOTONIC) < $absence_deadline) {
         my $rows = _selected_tool_process_snapshot($deadline);
         my @alive = grep {
             exists($rows->{$_}) && $rows->{$_}{started} eq $targets{$_}
@@ -836,9 +836,9 @@ sub _terminate_supervised_domains(
 sub _terminate_process($pid, $process_group) {
     my $target = $process_group ? -$pid : $pid;
     kill 'TERM', $target;
-    my $deadline = time() + 2;
+    my $deadline = clock_gettime(CLOCK_MONOTONIC) + 2;
     my ($leader_reaped, $leader_status) = (0, undef);
-    while (time() < $deadline) {
+    while (clock_gettime(CLOCK_MONOTONIC) < $deadline) {
         unless ($leader_reaped) {
             my $waited = waitpid($pid, WNOHANG);
             if ($waited == $pid || $waited == -1) {
@@ -859,8 +859,9 @@ sub _terminate_process($pid, $process_group) {
         $leader_status = $?;
     }
     if ($process_group) {
-        my $kill_deadline = time() + 2;
-        while (kill(0, -$pid) && time() < $kill_deadline) {
+        my $kill_deadline = clock_gettime(CLOCK_MONOTONIC) + 2;
+        while (kill(0, -$pid)
+                && clock_gettime(CLOCK_MONOTONIC) < $kill_deadline) {
             select undef, undef, undef, 0.02;
         }
         _throw(
@@ -874,14 +875,16 @@ sub _terminate_process($pid, $process_group) {
 
 sub _terminate_residual_group($pid) {
     kill 'TERM', -$pid;
-    my $deadline = time() + 2;
-    while (kill(0, -$pid) && time() < $deadline) {
+    my $deadline = clock_gettime(CLOCK_MONOTONIC) + 2;
+    while (kill(0, -$pid)
+            && clock_gettime(CLOCK_MONOTONIC) < $deadline) {
         select undef, undef, undef, 0.02;
     }
     return unless kill(0, -$pid);
     kill 'KILL', -$pid;
-    my $kill_deadline = time() + 2;
-    while (kill(0, -$pid) && time() < $kill_deadline) {
+    my $kill_deadline = clock_gettime(CLOCK_MONOTONIC) + 2;
+    while (kill(0, -$pid)
+            && clock_gettime(CLOCK_MONOTONIC) < $kill_deadline) {
         select undef, undef, undef, 0.02;
     }
     _throw(

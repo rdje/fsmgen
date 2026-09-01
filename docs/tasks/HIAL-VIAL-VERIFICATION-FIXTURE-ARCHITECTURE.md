@@ -2157,8 +2157,10 @@ read, termination, and reap their own bounded containment path.
 - [x] **ROOT CAUSE (WHY + WHERE)** — t1756 replaced `ps` and `lsof`
   independently through a repository-local PATH fixture with a non-terminating
   helper and ran `_capture` inside an isolated process group. Both helpers
-  outlived the seven-second outer watchdog: Prove emitted `Failed test at t/1756-vial-selected-tool-host-observer-deadline.t line 92` for bounded
-  return and line 104 for the missing explicit failure under each observer.
+  outlived the seven-second outer watchdog. Prove emitted
+  `Failed test at t/1756-vial-selected-tool-host-observer-deadline.t line 92`
+  for bounded return and line 104 for the missing explicit failure under each
+  observer.
   The watchdog then terminated each exact group; probe/fixture cleanup passed.
   Overall, both of two top-level subtests failed in 14 wallclock seconds.
 - [x] **ADDRESSED (verified)** — every exact `ps`/`lsof` helper now runs through
@@ -2201,3 +2203,53 @@ step can truncate the intended grace period. The next `.17.4.7` slice must
 inject a wall-time discontinuity, prove the split clock domain, and put every
 selected-tool containment deadline on one monotonic authority without changing
 the admitted timeout or cleanup intervals.
+
+## Acceptance Checklist (enforced) — `.17.4.7` monotonic selected-tool containment
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — t1757 injected backward and forward
+  replacements for the imported `Time::HiRes::time` while independently timing
+  `_terminate_process` with `CLOCK_MONOTONIC`. The backward step exceeded the
+  seven-second outer watchdog
+  (`Failed test at t/1757-vial-selected-tool-monotonic-containment.t line 98`)
+  and returned no result. The forward step returned immediately with `F`,
+  failed the grace assertion at line 107, and made its probe exit nonzero at
+  line 109. Both of two top-level subtests failed in seven wallclock seconds,
+  while exact watchdog cleanup and both process-group absence controls passed.
+  Source census located the same adjustable-wall-time comparisons in
+  `_terminate_process`, `_terminate_residual_group`, containment-holder
+  absence, and observed-descendant absence.
+- [x] **ADDRESSED (verified)** — every selected-tool TERM/KILL grace and
+  descendant/holder absence loop now derives and compares its deadline through
+  `clock_gettime(CLOCK_MONOTONIC)`; the adjustable `time` import and all
+  `time()` comparisons are absent. Existing intervals, exact PID/group
+  identities, escalation order, wait status, and residue-error precedence are
+  unchanged. The repaired t1757 completes both injected discontinuities in
+  four wallclock seconds, preserves the monotonic TERM grace, contains the
+  exact tool, proves the fake wall clock was called zero times, and leaves no
+  process-group residue.
+- [x] **NO REGRESSION** — the strengthened discontinuity proof passes both
+  top-level subtests and all eight inner assertions at `Files=1, Tests=2` in
+  four wallclock seconds, including zero calls to the injected wall clock and
+  exact group absence. The final RAM-guarded capture-limit, exact
+  Verilator/GHDL lifecycle, provider-aware GHDL, runtime-process envelope,
+  retained-writer, stalled-observer, and monotonic-containment collection
+  passes `Files=8, Tests=56` in 38 wallclock seconds. All 58 mdBook chapters
+  test; the inspected 93-file/20,452-KiB repository-local render contains the
+  executable t1757 command and is removed. Knowledge Map parity is 1,159 facts
+  / 6,217 questions / 6,389 answer occurrences / 138 shards. Claim
+  verification retains 27 records and closes all 1,711 candidates through 179
+  claim-record, 939 gate, and 593 reviewed dispositions with zero gaps/open;
+  the independent inventory agrees at 11,405 numeric lines. Maintained-book
+  authority is exact at 58 files / 54,451 lines / 2,941,432 bytes; the existing
+  Knowledge-card transition contains 1,158 files / 46,872 lines / 3,460,419
+  bytes. All 22 live-document surfaces pass with zero ceiling increases.
+  Staged acceptance and every registered doctrine are required green
+  immediately before commit.
+
+**Tracked adjacent blocking-reap finding:** `_terminate_process` now bounds all
+TERM/KILL decisions monotonically, but after SIGKILL its sole remaining
+`waitpid($pid, 0)` can still block supervision on kernel reap completion. The
+host-observer path already uses bounded `WNOHANG` reap, so the contracts are
+inconsistent. The next `.17.4.7` slice must inject a non-completing selected-tool
+reap, prove whether timeout can still be suspended, and make exact-leader reap
+bounded without weakening process-group absence or wait-status authority.
