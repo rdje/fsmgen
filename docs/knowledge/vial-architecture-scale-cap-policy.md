@@ -96,12 +96,13 @@ native UVM stays emission-only. Eligibility rejects excess before tools; the
 shared lifecycle bounds trace and final artifacts.
 
 `FSM::VIAL::ArchitectureScaleCapConsistency` rebuilds policy without caller
-evidence. Twenty-one groups verify all dimensions: runtime, backend, models,
+evidence. Twenty-two groups verify all dimensions: runtime, backend, models,
 faults, randomness, scoreboards, coverage, bridge-profile cardinality,
 serialized bridge manifests, normalized bridge collections, execution
 profiles, operation cardinality, fiber cardinality, route collections,
 execution random attempts, serialized plans, parser admission, declaration
-cardinality, action cardinality, action shape, and repeat layering. Layered joins stay exact:
+cardinality, action cardinality, action shape, repeat layering, and service
+scalars. Layered joins stay exact:
 scoreboards use
 t1631/t1690/t1712, coverage t1632/t1691/t1713, and bridge profile t1602;
 compact preflight is not boundary evidence. T1763 rebuilds exact unions and
@@ -160,7 +161,13 @@ its first 65,536 excess, t1601 for the action-dominated higher routes plus the
 1,000,001 direct intrinsic excess, and decision 0059 for the reason no legal
 non-empty repeat body can admit the nominal intrinsic ceiling. Both component
 ceilings and their distinct diagnostics remain unchanged.
-Other groups and calibration remain pending/blocked.
+Service scalars assign t1601 both exact 1,000,000/1,000,001 boundary pairs,
+closed no-tool construction, rejection atomicity, shared cleanup, and broad
+identities. T1690 independently freezes the scoreboard diagnostic, accepted
+identity, and pre-transaction-resolution order; t1691 does the same for cross
+max_bins before coverpoint resolution. Neither focused witness is promoted as
+shared cleanup or closed no-tool evidence.
+Semantic type shape and calibration remain pending/blocked.
 
 The common controller admits bounded worker files before counts/digests; cap+1
 and unsafe path/mode cases reject. No cap or support claim changes.

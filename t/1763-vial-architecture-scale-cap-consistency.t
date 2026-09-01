@@ -653,6 +653,29 @@ my %semantic_declaration_rationale = (
     cleanup => 'semantic gate staging removes same-volume success and consumer-failure residue',
     accepted_identity => 'the closed catalog and exact declaration boundary retain deterministic semantic identities',
 );
+my @semantic_service_evidence = qw(
+    t/1601-vial-architecture-scale-semantic-catalog.t
+    t/1690-vial-semantic-scoreboard-capacity-order.t
+    t/1691-vial-semantic-cross-max-bins-order.t
+);
+my %semantic_service_evidence = (
+    boundary => [@semantic_service_evidence],
+    adjacent_excess => [@semantic_service_evidence],
+    diagnostics => [@semantic_service_evidence],
+    atomicity => [@semantic_service_evidence],
+    no_tool => [$semantic_service_evidence[0]],
+    cleanup => [$semantic_service_evidence[0]],
+    accepted_identity => [@semantic_service_evidence],
+);
+my %semantic_service_rationale = (
+    boundary => 'scoreboard capacity and cross max_bins admit at their exact one-million scalar boundaries',
+    adjacent_excess => 'the first scoreboard-capacity and cross-max_bins scalar excesses reject',
+    diagnostics => 'both service-scalar excesses retain stable code, phase, message, and semantic path',
+    atomicity => 'known scalar excess precedes dependent reference resolution and publishes no semantic identities or report',
+    no_tool => 'every selected semantic catalog construction carries no backend or external-tool selector',
+    cleanup => 'semantic catalog staging removes same-volume success and consumer-failure residue',
+    accepted_identity => 'the closed catalog and both exact scalar boundaries retain deterministic semantic identities',
+);
 my %verified_evidence = (
     backend_artifact_graph => \%backend_evidence,
     bridge_normalized_collections => \%bridge_normalized_evidence,
@@ -675,6 +698,7 @@ my %verified_evidence = (
     semantic_repeat_layering => \%semantic_repeat_evidence,
     semantic_declaration_cardinality => \%semantic_declaration_evidence,
     semantic_parser_admission => \%semantic_parser_evidence,
+    semantic_service_scalar => \%semantic_service_evidence,
 );
 my %verified_rationale = (
     backend_artifact_graph => \%backend_rationale,
@@ -698,6 +722,7 @@ my %verified_rationale = (
     semantic_repeat_layering => \%semantic_repeat_rationale,
     semantic_declaration_cardinality => \%semantic_declaration_rationale,
     semantic_parser_admission => \%semantic_parser_rationale,
+    semantic_service_scalar => \%semantic_service_rationale,
 );
 
 sub dies {
@@ -1033,6 +1058,18 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
     is_deeply(
         [grep { !-f $_ } sort keys %semantic_declaration_join], [],
         'every sealed semantic-declaration evidence path exists',
+    );
+
+    my %semantic_service_join = map { $_ => 1 }
+        map { @{$semantic_service_evidence{$_}} } @dimensions;
+    is_deeply(
+        [sort keys %semantic_service_join],
+        [sort @semantic_service_evidence],
+        'semantic-service join covers its catalog and two scalar-order witnesses',
+    );
+    is_deeply(
+        [grep { !-f $_ } sort keys %semantic_service_join], [],
+        'every sealed semantic-service evidence path exists',
     );
 
     is($report->{calibration}{evidence_role},
@@ -1401,6 +1438,21 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
     like(dies(sub { $assert->($foreign_semantic_declaration) }),
         qr/semantic_declaration_cardinality\/accepted_identity' contradicts the sealed evidence authority/,
         'callers cannot add foreign semantic-declaration evidence');
+
+    my $omitted_semantic_service = $class->build;
+    $omitted_semantic_service->{groups}{semantic_service_scalar}
+        {dimensions}{boundary}{evidence} = [];
+    like(dies(sub { $assert->($omitted_semantic_service) }),
+        qr/semantic_service_scalar\/boundary' verified evidence must be one non-empty array/,
+        'callers cannot empty sealed semantic-service boundary evidence');
+
+    my $foreign_semantic_service = $class->build;
+    push @{$foreign_semantic_service->{groups}{semantic_service_scalar}
+        {dimensions}{accepted_identity}{evidence}},
+        't/foreign-semantic-service-evidence.t';
+    like(dies(sub { $assert->($foreign_semantic_service) }),
+        qr/semantic_service_scalar\/accepted_identity' contradicts the sealed evidence authority/,
+        'callers cannot add foreign semantic-service evidence');
 
     my $missing = $class->build;
     delete $missing->{groups}{$first_group}{dimensions}{cleanup};

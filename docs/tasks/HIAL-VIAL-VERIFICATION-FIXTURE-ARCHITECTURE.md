@@ -947,7 +947,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
   Semantic Parser Admission Claim Disposition Finding: `The user-facing parser explanation produced three actionable candidates: accepted direct-import admission, its first excess/pre-recursion order, and the two exact source-byte boundaries/pre-lex order. Each is now a derived-gate disposition with non-aliased catalog/generator/parser re-derivation, the closed catalog and focused import/byte oracles as falsifiers, and the exact policy plus sealed consistency authority as durability watchers. Re-derive: regenerate the producer-derived inventory and join every candidate through the required-complete verification_architecture group. Falsify: removing a disposition, producer, oracle, watcher, or current candidate identity fails closed. Durability: the disposition registry, generated inventory, this task, and work-unit history retain the result at 1,730/1,730 disposed candidates, 958 derived gates, and zero gaps/open owners.`
 
-  Frontier: `Twenty-one groups are sealed through semantic_repeat_layering. Continue with semantic_service_scalar; calibration remains blocked until every group is independently verified.`
+  Frontier: `Twenty-two groups are sealed through semantic_service_scalar. Continue with semantic_type_shape; calibration remains blocked until every group is independently verified.`
 
   Semantic Declaration Cardinality Audit Finding: `The semantic_declaration_cardinality candidate inventory is complete as written and deliberately asymmetric. T1601 is the only closed exact-matrix owner for the distinct 1,024/1,025 fixture axis, and also retains every declaration/fixture construction, no-tool shape, accepted semantic identity, diagnostic oracle, and same-volume success/failure cleanup. T1689 independently admits 4,096 declarations, rejects 4,097 in the types section with the stable public diagnostic, and proves that known excess precedes malformed later-section parsing without a semantic report. T1601's rejection evaluation already emits no semantic projection/report identity or format identities, but the regression only checks its status and diagnostic family; explicit atomicity assertions are therefore still missing for the fixture route. History shows t1601 was introduced by 145d3084a, t1689 by e9679effb, and the earlier 951720257 policy selected their exact complementary pair; adding a third path would invent evidence rather than close a dimension. The complete opt-in exact policy/candidate/consistency baseline is green at Files=4/Tests=102 in 93 wallclock seconds under the repository RAM guard. Before authority promotion, the intentional RED kept the exact policy assertion green and made t1763 fail on all twenty-one pending status/evidence/rationale assertions plus both inactive omission/foreign-evidence controls at Files=2/Tests=84; the remaining union and path checks passed. This active .17.4.8 slice owns retaining the exact two-witness policy inventory, making rejection atomicity explicit in the closed matrix, and binding only independently classified dimensions. Re-derive: run t1601/t1689 plus t1685/t1763 with FSMGEN_VIAL_SCALE_EXACT=1 under the RAM guard and inspect their exact history. Falsify: removing t1601 loses the fixture axis, closed matrix, no-tool, cleanup, and broad identities; removing t1689 loses the independent declaration boundary/excess and later-section order proof. Durability: this task entry owns the audit and exact RED before source changes; the completed slice must synchronize consistency authority, tests, book, Knowledge Map, and work-unit history.`
 
@@ -1152,6 +1152,71 @@ decomposes the architecture needed to move beyond that bounded foundation.
   candidate identity fails closed. Durability: the disposition registry,
   generated inventory, this task, and work-unit history retain the result at
   1,735/1,735 disposed candidates, 963 derived gates, and zero gaps/open
+  owners.`
+
+  Semantic Service Scalar Audit Finding: `The semantic_service_scalar policy
+  candidate inventory is complete as the deliberately asymmetric
+  t1601/t1690/t1691 set. T1601 owns both exact 1,000,000 scalar admissions,
+  both 1,000,001 adjacent excesses, the closed no-backend/no-tool construction
+  matrix, absence of partial semantic and format identities on rejection,
+  deterministic accepted construction identities, and shared same-volume
+  success/failure cleanup. T1690 independently freezes the scoreboard-capacity
+  code, phase, message, path, pre-transaction-resolution order, no-report
+  atomicity, and fixed accepted projection/report identities; t1691 provides
+  the equivalent independent cross-max_bins proof before coverpoint resolution.
+  History identifies 145d3084a as the catalog introduction, 543a1baed as both
+  focused service-scalar witnesses and admission repair, and 951720257 as the
+  exact three-path policy selection. The exact guarded pre-change authority is
+  green at Files=5, Tests=121 in 91 wallclock seconds. Re-derive: run t1601,
+  t1690, t1691, t1685, and t1763 with FSMGEN_VIAL_SCALE_EXACT=1 under the
+  repository RAM guard and inspect their exact history. Falsify: removing
+  t1601 loses the closed two-axis matrix, no-tool proof, shared cleanup, and
+  broad atomic identities; removing t1690 loses exact scoreboard diagnostic,
+  order, and fixed-boundary identity; removing t1691 loses the corresponding
+  cross-max_bins authority. Durability: this task entry owns the audit before
+  policy-test or consistency-source changes; the completed slice must
+  synchronize consistency authority, regressions, book, Knowledge Map, claims,
+  containment, and work-unit history.`
+
+  Semantic Service Scalar Intentional RED: `The exact three-path policy
+  inventory assertion, reconstructed union, and evidence-path checks pass.
+  Before consistency-source promotion, t1763 fails only the expected twenty-one
+  pending status/evidence/rationale assertions plus the inactive boundary-
+  omission and foreign-accepted-identity mutation controls at Files=2,
+  Tests=88. This isolates the unpromoted seven-dimension service-scalar join
+  without changing a witness, policy path, cap, or product behavior.`
+
+  Semantic Service Scalar Join: `The exact t1601/t1690/t1691 policy inventory
+  now seals semantic_service_scalar across all seven dimensions without
+  flattening witness roles. T1601 owns both exact 1,000,000/1,000,001 scalar
+  pairs, the closed no-backend/no-tool matrix, rejection identity atomicity,
+  broad accepted identities, and shared same-volume success/failure cleanup.
+  T1690 independently freezes the scoreboard-capacity diagnostic, admission
+  before transaction resolution, no-report failure, and fixed accepted
+  projection/report identities; t1691 owns the equivalent cross-max_bins proof
+  before coverpoint resolution. Neither focused witness is promoted as cleanup
+  or closed no-tool evidence. T1763 reconstructs every projection and the exact
+  three-path union, checks every path, and rejects omitted or foreign evidence.
+  The focused authority gate passes Files=2, Tests=88; the final five-file exact
+  RAM-guarded join reports All tests successful at Files=5, Tests=122 in 91
+  wallclock seconds. Re-derive: run the exact guarded command documented in the
+  book. Falsify: the recorded RED proves all twenty-one dimension records and
+  both mutation controls fail before promotion. Durability: source authority,
+  policy, regressions, this task, book, Knowledge Map, claims, containment, and
+  work-unit history retain the result without changing a cap or product
+  behavior.`
+
+  Semantic Service Scalar Claim Disposition Finding: `The user-facing two-axis
+  boundary/excess explanation produces one actionable candidate. It is now a
+  derived-gate disposition with non-aliased catalog/workload/parser/
+  SemanticBuilder re-derivation, t1601/t1690/t1691 falsifiers, and the exact
+  policy/caller-sealed consistency authority as durability watchers. Re-derive:
+  regenerate the producer-derived inventory and join every candidate through
+  the required-complete verification_architecture group. Falsify: removing the
+  disposition, any producer, catalog or focused oracle, watcher, or current
+  candidate identity fails closed. Durability: the disposition registry,
+  generated inventory, this task, and work-unit history retain the result at
+  1,736/1,736 disposed candidates, 964 derived gates, and zero gaps/open
   owners.`
 
   Containment Resolution: `The cap-policy card's long one-path-per-line reverify list is now a shorter equivalent set of numeric brace ranges plus exact outliers; every expansion resolves to an existing tracked test. With checking-randomness evidence added, the card aggregate falls from 46,939 lines/3,464,850 bytes to 46,903 lines/3,462,766 bytes, restoring 39 lines/2,119 bytes below the inherited transition allowance without changing it. Re-derive: expand every compacted pattern and aggregate docs/knowledge Markdown with wc. Falsify: missing paths fail the explicit expansion census, and Knowledge Map/live-document checks reject freshness, answer, transition, or ceiling drift. Durability: this task, the compacted card, generated shard, containment manifest, and work-unit commit retain the resolution.`
@@ -3635,3 +3700,38 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   and all doctrines are the final commit gate. No cap, level, route outcome,
   product behavior, publication, support, budget, or capacity claim changes.
   Full CI and push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.8` semantic-service-scalar evidence join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `semantic_service_scalar` remains pending
+  although its exact asymmetric t1601/t1690/t1691 inventory is complete. T1601
+  owns both exact scalar boundary/excess pairs, closed no-tool shape, atomic
+  rejection identities, and shared cleanup; t1690 and t1691 independently own
+  the stable per-axis diagnostics, pre-reference-resolution order, no-report
+  rejection, and fixed accepted identities. Exact history locates catalog
+  introduction at 145d3084a, focused admission at 543a1baed, and selection at
+  951720257; specifically, `git log -S'semantic_service_scalar' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` returns the selected group
+  history. The guarded pre-change authority passes Files=5, Tests=121 in 91
+  wallclock seconds.
+- [x] **ADDRESSED (verified)** — retain and assert the exact policy witness set;
+  classify only directly proved boundary, adjacent-excess, diagnostics,
+  atomicity, no-tool, cleanup, and accepted-identity roles; and make t1763
+  reconstruct exact projections, union, path existence, omission, and
+  foreign-evidence controls. Record the intentional RED before promoting the
+  caller-sealed consistency authority.
+- [x] **NO REGRESSION** — the final complete exact guarded join reports `All
+  tests successful` at Files=5, Tests=122 in 91 wallclock seconds; the focused
+  policy/consistency gate passes Files=2, Tests=88 and the source is syntax
+  clean. MdBook tests all 59 chapters; its inspected render contains 94 files/
+  20,644 KiB and was removed exactly. Knowledge Map reports 1,159 facts/6,231
+  questions/6,403 occurrences/138 shards; claims dispose 1,736/1,736 candidates
+  through 964 gates with zero gaps/open owners; knowledge cards remain bounded
+  at 46,906 lines/3,463,791 bytes. The exact 59-file book authority is 55,064
+  lines/2,973,220 bytes at measured +23 lines/+1,158 bytes with zero ceiling
+  increase. Relative paths pass Files=1, Tests=6; memory, task, containment,
+  reference-authority, claim, and Knowledge Map checks pass. Staged acceptance
+  and all doctrines are the final commit gate. No cap, boundary, level,
+  accepted identity, route outcome, product behavior, publication, support,
+  budget, or capacity claim changes. Full CI and push remain deferred by
+  policy.

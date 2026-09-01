@@ -27,8 +27,8 @@ execution-operation-cardinality, execution-fiber-cardinality,
 execution-route-collection, execution-random-attempt, and
 execution-serialized-plan witnesses are now joined too. Semantic-parser
 admission, semantic-declaration cardinality, semantic-action cardinality and
-shape, and semantic-repeat layering are now joined as well. The same
-classification remains pending for every other group.
+shape, semantic-repeat layering, and semantic-service scalars are now joined
+as well. Only semantic-type shape remains pending.
 
 ## Why calibration publication is separate
 
@@ -65,8 +65,9 @@ execution-operation-cardinality, execution-fiber-cardinality,
 execution-route-collection, execution-random-attempt, and
 execution-serialized-plan, semantic-parser-admission, semantic-declaration-
 cardinality, semantic-action-cardinality, semantic-action-shape, and semantic-
-repeat-layering groups are `verified` across all seven dimensions; all other
-groups remain `pending_independent_verification`.
+repeat-layering, and semantic-service-scalar groups are `verified` across all
+seven dimensions; semantic-type-shape remains
+`pending_independent_verification`.
 Runtime covers the selected materialization profiles plus t1720 through t1749
 and t1751 through t1762.
 Backend covers t1646 through t1650 and t1716 through t1719. Checking models
@@ -200,7 +201,16 @@ repeat-count ceiling. Together the three evidence paths preserve distinct
 scenario-root and count-path diagnostics, atomic rejection, provider-free
 shape, cleanup, and deterministic accepted identities without lowering either
 component ceiling.
-T1763 reconstructs all twenty-one sets of per-dimension projections,
+Service scalars use three complementary witnesses. T1601 admits both exact
+1,000,000 boundaries and rejects both 1,000,001 excesses, closes every
+backend/tool selector, publishes no partial
+semantic or format identity on rejection, and owns same-volume success/failure
+cleanup. T1690 independently freezes the scoreboard diagnostic, admission
+before transaction resolution, and accepted projection/report identities.
+T1691 does the same for cross `max_bins` before coverpoint resolution. The two
+focused tests do not claim shared staging cleanup or closed no-tool
+construction beyond what t1601 directly proves.
+T1763 reconstructs all twenty-two sets of per-dimension projections,
 requires their complete unions, checks every path, and rejects omitted or
 foreign evidence. Policy citations remain candidates
 for all unreviewed groups. The validator also
@@ -450,6 +460,19 @@ scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
   t/1686-vial-semantic-action-cap-order.t \
   t/1763-vial-architecture-scale-cap-consistency.t \
   t/1685-vial-architecture-scale-cap-policy.t
+```
+
+Reverify both semantic-service scalar boundaries, first excesses, diagnostic
+and pre-reference order, fixed identities, shared cleanup, and sealed
+falsifiers with:
+
+```sh
+scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
+  prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t \
+  t/1690-vial-semantic-scoreboard-capacity-order.t \
+  t/1691-vial-semantic-cross-max-bins-order.t \
+  t/1685-vial-architecture-scale-cap-policy.t \
+  t/1763-vial-architecture-scale-cap-consistency.t
 ```
 
 Reverify exact parallel depth and fiber shape, pre-join admission order,

@@ -139,6 +139,15 @@ is(
     'retain_scalar_preflight_before_dependent_resolution',
     'service-scalar policy retains scalar preflight before dependent resolution',
 );
+is_deeply(
+    $policy->{groups}{semantic_service_scalar}{evidence},
+    [qw(
+        t/1601-vial-architecture-scale-semantic-catalog.t
+        t/1690-vial-semantic-scoreboard-capacity-order.t
+        t/1691-vial-semantic-cross-max-bins-order.t
+    )],
+    'service-scalar policy cites the exact catalog and two scalar-order witnesses',
+);
 is(
     $policy->{groups}{semantic_type_shape}{current_enforcement},
     'length_field_count_and_depth_before_inner_type_resolution',

@@ -857,6 +857,36 @@ my %SEMANTIC_DECLARATION_RATIONALE = (
     accepted_identity =>
         'the closed catalog and exact declaration boundary retain deterministic semantic identities',
 );
+my @SEMANTIC_SERVICE_EVIDENCE = (
+    [
+        't/1601-vial-architecture-scale-semantic-catalog.t',
+        @DIMENSIONS,
+    ],
+    [
+        't/1690-vial-semantic-scoreboard-capacity-order.t',
+        qw(boundary adjacent_excess diagnostics atomicity accepted_identity),
+    ],
+    [
+        't/1691-vial-semantic-cross-max-bins-order.t',
+        qw(boundary adjacent_excess diagnostics atomicity accepted_identity),
+    ],
+);
+my %SEMANTIC_SERVICE_RATIONALE = (
+    boundary =>
+        'scoreboard capacity and cross max_bins admit at their exact one-million scalar boundaries',
+    adjacent_excess =>
+        'the first scoreboard-capacity and cross-max_bins scalar excesses reject',
+    diagnostics =>
+        'both service-scalar excesses retain stable code, phase, message, and semantic path',
+    atomicity =>
+        'known scalar excess precedes dependent reference resolution and publishes no semantic identities or report',
+    no_tool =>
+        'every selected semantic catalog construction carries no backend or external-tool selector',
+    cleanup =>
+        'semantic catalog staging removes same-volume success and consumer-failure residue',
+    accepted_identity =>
+        'the closed catalog and both exact scalar boundaries retain deterministic semantic identities',
+);
 my %runtime_dimensions = map {
     $_ => {
         status => 'verified',
@@ -1104,6 +1134,18 @@ for my $entry (@SEMANTIC_DECLARATION_EVIDENCE) {
     push @{$semantic_declaration_dimensions{$_}{evidence}}, $path
         for @dimensions;
 }
+my %semantic_service_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $SEMANTIC_SERVICE_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@SEMANTIC_SERVICE_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$semantic_service_dimensions{$_}{evidence}}, $path
+        for @dimensions;
+}
 my $VERIFIED_DIMENSIONS = {
     backend_artifact_graph => \%backend_dimensions,
     bridge_normalized_collections => \%bridge_normalized_dimensions,
@@ -1126,6 +1168,7 @@ my $VERIFIED_DIMENSIONS = {
     semantic_repeat_layering => \%semantic_repeat_dimensions,
     semantic_declaration_cardinality => \%semantic_declaration_dimensions,
     semantic_parser_admission => \%semantic_parser_dimensions,
+    semantic_service_scalar => \%semantic_service_dimensions,
 };
 
 sub build {
