@@ -1192,9 +1192,9 @@ A digest-named state proves byte consistency, not that its values still
 describe selected commands or retained objects. Resume reconstructs inputs and
 payloads, keeping byte and meaning integrity separate without coupling schemas.
 
-## 2026-09-01: JSON type admission must precede semantic equality
+## 2026-09-01: Persisted JSON admits file and value types before meaning
 
-Canonical JSON does not make equal-looking value types interchangeable. Perl
-numeric operations can admit strings or booleans, change later encoding, and
-make authority depend on check order. GHDL state and request/storage/validation/
-command-plan and persisted envelopes admit integer/provider/emission, relocated command/source-plan, lifecycle-storage, and lifecycle-validation authority before later work.
+Canonical JSON protects encoding only after bytes are bounded and the opened
+file is authenticated; equality also cannot make strings or booleans numbers.
+Shared state plus outer OSVVM request/handle boundaries therefore admit path,
+device, inode, size, mode, JSON type, and selected semantic authority in order.

@@ -25,6 +25,13 @@ performance, capacity, support, or provider-generality claim.
 - Durability: Retain the caller-sealed measurement adapter, common controller and provider-aware lifecycle admissions, t1679, task .17.3.7.4, this chapter, the OSVVM Knowledge Map card, bounded claim record, doctrine gate, and work-unit Git chain; rerun the guarded exact watcher whenever any participant changes.
 <!-- CLAIM-VERIFICATION:END vial-osvvm-runtime-measurement-v1 -->
 
+<!-- CLAIM-VERIFICATION:BEGIN vial-osvvm-runtime-outer-json-admission-v1 -->
+- Claim: The outer OSVVM common-controller lifecycle request and predecessor handle are admitted before decode or resume as exact `0600` same-volume current-owner single-link regular files, with a 65,536-byte request ceiling and 4,096-byte handle ceiling, no symlinked staging component, stable opened inode and metadata, and umask-independent exclusive writes.
+- Re-derive: Run `prove -Iperl -It/lib t/1747-vial-osvvm-outer-persisted-json-file-admission.t`; independently encode the selected request, inspect both constants and the bounded reader, and materialize both artifact kinds under a zero umask before checking their modes.
+- Falsify: Substitute wrong-mode, boundary-plus-one, leaf-symlink, parent-symlink, simulated-foreign-device, multiply linked, or non-regular files; change the file during admission; or let ambient umask select the writer mode. The focused watcher must reject every input control before semantic work and remove its exact owned tree.
+- Durability: Retain the measurement adapter, t1747, task `.17.4.7`, this chapter, the OSVVM Knowledge Map card, bounded claim record, doctrine watcher, and work-unit Git chain.
+<!-- CLAIM-VERIFICATION:END vial-osvvm-runtime-outer-json-admission-v1 -->
+
 <!-- CLAIM-VERIFICATION:BEGIN vial-osvvm-runtime-publication-implementation-v1 -->
 - Claim: The OSVVM-specific matrix publisher derives exactly five ordered roles from producer ownership, isolates every capture or reload in a child process, publishes each complete canonical report before returning a compact coordinator entry, and permits family/complete manifests only at one clean Git revision, host, pinned provider/tool, and active-guard identity. The implementation does not claim that an immutable measurement set exists before its later guarded capture and independent reload both pass.
 - Re-derive: Run prove -Iperl t/1680-vial-architecture-scale-osvvm-runtime-measurement-matrix.t and scripts/run_vial_osvvm_runtime_measurement_matrix.pl --inventory; independently compare the returned order and modes with ArchitectureScaleOSVVMRuntimeMeasurement->owned_shapes and inspect the report-before-entry publication path.
@@ -260,6 +267,22 @@ its internal semantics again when execution resumes:
 ```console
 prove -Iperl -It/lib t/1746-vial-osvvm-persisted-lifecycle-validation-admission.t
 ```
+
+The outer files carrying that authority are admitted before JSON decode as
+well. The reader walks the exact repository-relative staging chain without a
+symlink, then binds the path and opened handle to one same-volume, current-
+owner, single-link regular inode at exact mode `0600`. It reads no more than
+64 KiB for the request or 4 KiB for the closed predecessor handle, requires
+stable metadata and exact canonical bytes, and only then invokes the semantic
+validators described above. Exclusive no-follow writes plus a final mode seal
+make both artifacts independent of ambient umask. Exercise exact controls with:
+
+```console
+prove -Iperl -It/lib t/1747-vial-osvvm-outer-persisted-json-file-admission.t
+```
+
+These are private persisted-file safety ceilings, not promoted runtime
+capacity, performance, provider-generality, or support claims.
 
 Each executable role uses one lifecycle execution per controller record. The
 reference role has one correctness-only validation. Gate has one validation

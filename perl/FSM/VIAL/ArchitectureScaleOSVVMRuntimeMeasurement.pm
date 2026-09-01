@@ -6,6 +6,9 @@ use warnings;
 use bytes ();
 use Carp qw(confess);
 use Digest::SHA qw(sha256_hex);
+use Fcntl qw(
+    O_CREAT O_EXCL O_NOFOLLOW O_NONBLOCK O_RDONLY O_WRONLY
+);
 use File::Path qw(make_path);
 use File::Spec;
 use JSON::PP ();
@@ -44,6 +47,9 @@ my %MODE_SAMPLES = (
     gate_measurement => 3,
     qualification_measurement => 5,
 );
+my $PERSISTED_REQUEST_MAX_BYTES = 64 * 1_024;
+my $PERSISTED_HANDLE_MAX_BYTES = 4 * 1_024;
+my $PERSISTED_FILE_MODE = 0600;
 my @PLANNED_STAGES = qw(
     construct parse_validate bridge bind_plan emit compile_analyze elaborate
     run trace_validate result_produce publish
@@ -446,11 +452,15 @@ sub _lifecycle_stage($raw, $route_authority) {
             unless $result->{status} eq 'admitted';
     }
     else {
-        $envelope = _read_request_envelope($context);
+        my $persisted_context = {
+            %$context, repository_root => $raw->{repository_root},
+        };
+        $envelope = _read_request_envelope($persisted_context);
         $request = _validated_request_envelope(
             $raw, $route_authority, $envelope,
         );
-        $request->{handle} = _read_predecessor_handle($context, $stage);
+        $request->{handle} =
+            _read_predecessor_handle($persisted_context, $stage);
         if ($stage eq 'compile_analyze') {
             for my $target (qw(prepared tool_verified analyzed)) {
                 $result = $LIFECYCLE->advance_session($request);
@@ -699,11 +709,9 @@ sub _emission_identity($raw, $plan_identity, $source_identity, $commands) {
 }
 
 sub _read_request_envelope($context) {
-    my $path = File::Spec->catfile(
-        $context->{staging_root}, 'outputs', 'emit',
-        'lifecycle-request.json',
-    );
-    return _read_json_file($path,
+    return _read_json_file(
+        $context, [qw(outputs emit lifecycle-request.json)],
+        $PERSISTED_REQUEST_MAX_BYTES,
         'OSVVM runtime lifecycle request is absent or malformed');
 }
 
@@ -711,25 +719,113 @@ sub _read_predecessor_handle($context, $stage) {
     my $predecessor = $PREDECESSOR_STAGE{$stage};
     confess "OSVVM runtime lifecycle predecessor stage is unknown\n"
         unless defined $predecessor;
-    my $path = File::Spec->catfile(
-        $context->{staging_root}, 'outputs', $predecessor,
-        'lifecycle-handle.json',
-    );
-    return _read_json_file($path,
+    return _read_json_file(
+        $context, ['outputs', $predecessor, 'lifecycle-handle.json'],
+        $PERSISTED_HANDLE_MAX_BYTES,
         'OSVVM runtime lifecycle predecessor handle is absent or malformed');
 }
 
-sub _read_json_file($path, $message) {
-    open my $fh, '<:raw', $path or confess "$message\n";
-    local $/;
-    my $content = <$fh>;
+sub _read_json_file($context, $parts, $max_bytes, $message) {
+    confess "$message\n"
+        unless ref($context) eq 'HASH'
+            && ref($parts) eq 'ARRAY' && @$parts
+            && defined($max_bytes) && !ref($max_bytes)
+            && $max_bytes =~ /\A[1-9][0-9]*\z/;
+    my $repo_root = $context->{repository_root};
+    my $staging_root = $context->{staging_root};
+    my $staging_identity = $context->{staging_identity};
+    confess "$message\n"
+        unless defined($repo_root) && !ref($repo_root)
+            && defined($staging_root) && !ref($staging_root)
+            && defined($staging_identity) && !ref($staging_identity)
+            && _safe_relative_path($staging_identity);
+    my $expected_root = File::Spec->catdir(
+        $repo_root, split m{/}, $staging_identity,
+    );
+    confess "$message\n" unless $staging_root eq $expected_root;
+
+    my $root_device = _repository_device($repo_root);
+    my $path = $repo_root;
+    for my $component (
+        split(m{/}, $staging_identity), @$parts[0 .. $#$parts - 1]
+    ) {
+        confess "$message\n"
+            unless defined($component) && !ref($component)
+                && $component =~ /\A[A-Za-z0-9_.-]+\z/
+                && $component ne '.' && $component ne '..';
+        $path = File::Spec->catdir($path, $component);
+        my @stat = lstat($path);
+        confess "$message\n"
+            unless @stat && -d _ && !-l _ && $stat[0] == $root_device;
+    }
+    my $leaf = $parts->[-1];
+    confess "$message\n"
+        unless defined($leaf) && !ref($leaf)
+            && $leaf =~ /\A[A-Za-z0-9_.-]+\z/
+            && $leaf ne '.' && $leaf ne '..';
+    $path = File::Spec->catfile($path, $leaf);
+
+    my @path_stat = lstat($path);
+    confess "$message\n"
+        unless @path_stat && -f _ && !-l _
+            && $path_stat[0] == $root_device
+            && $path_stat[3] == 1 && $path_stat[4] == $>
+            && $path_stat[7] <= $max_bytes
+            && ($path_stat[2] & 07777) == $PERSISTED_FILE_MODE;
+    sysopen my $fh, $path, O_RDONLY | O_NOFOLLOW | O_NONBLOCK
+        or confess "$message\n";
+    binmode $fh or confess "$message\n";
+    my @handle_stat = stat($fh);
+    confess "$message\n"
+        unless @handle_stat && -f $fh
+            && $handle_stat[0] == $path_stat[0]
+            && $handle_stat[1] == $path_stat[1]
+            && $handle_stat[3] == 1 && $handle_stat[4] == $>
+            && $handle_stat[7] <= $max_bytes
+            && ($handle_stat[2] & 07777) == $PERSISTED_FILE_MODE;
+
+    my $content = '';
+    while (bytes::length($content) <= $max_bytes) {
+        my $want = $max_bytes + 1 - bytes::length($content);
+        $want = 64 * 1_024 if $want > 64 * 1_024;
+        my $read = read($fh, my $chunk, $want);
+        confess "$message\n" unless defined $read;
+        last unless $read;
+        $content .= $chunk;
+    }
+    my @final_handle_stat = stat($fh);
     close $fh or confess "$message\n";
+    my @final_path_stat = lstat($path);
+    confess "$message\n"
+        unless @final_handle_stat && @final_path_stat
+            && -f _ && !-l _
+            && $final_handle_stat[0] == $handle_stat[0]
+            && $final_handle_stat[1] == $handle_stat[1]
+            && $final_handle_stat[2] == $handle_stat[2]
+            && $final_handle_stat[3] == $handle_stat[3]
+            && $final_handle_stat[4] == $handle_stat[4]
+            && $final_handle_stat[7] == $handle_stat[7]
+            && $final_path_stat[0] == $handle_stat[0]
+            && $final_path_stat[1] == $handle_stat[1]
+            && $final_path_stat[2] == $handle_stat[2]
+            && $final_path_stat[3] == $handle_stat[3]
+            && $final_path_stat[4] == $handle_stat[4]
+            && $final_path_stat[7] == $handle_stat[7]
+            && bytes::length($content) == $handle_stat[7]
+            && bytes::length($content) <= $max_bytes;
     my $value = eval { JSON::PP->new->decode($content) };
     confess "$message\n"
         unless defined($value) && !$@ && ref($value) eq 'HASH'
             && !blessed($value)
             && $content eq _canonical_json($value) . "\n";
     return $value;
+}
+
+sub _repository_device($repo_root) {
+    my @stat = lstat($repo_root);
+    confess "OSVVM runtime repository root is unavailable\n"
+        unless @stat && -d _ && !-l _;
+    return $stat[0];
 }
 
 sub _publish_payload(
@@ -1051,11 +1147,17 @@ sub _materialize_payload($context, $payload) {
         pop @parent;
         make_path(File::Spec->catdir($context->{output_root}, @parent))
             if @parent;
-        open my $fh, '>:raw', $path
+        sysopen my $fh, $path,
+            O_WRONLY | O_CREAT | O_EXCL | O_NOFOLLOW,
+            $PERSISTED_FILE_MODE
             or die "cannot create OSVVM runtime measurement artifact: $!\n";
+        binmode $fh
+            or die "cannot set OSVVM runtime measurement artifact mode: $!\n";
         print {$fh} $artifact->{content};
         close $fh
             or die "cannot close OSVVM runtime measurement artifact: $!\n";
+        chmod $PERSISTED_FILE_MODE, $path
+            or die "cannot seal OSVVM runtime measurement artifact: $!\n";
         push @records, {
             relative_path => "$context->{output_identity}/$suffix",
             kind => _safe_token($artifact->{kind}),

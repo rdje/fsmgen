@@ -8,8 +8,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
   (`active`; runtime-state admission hardening)
-- next_action: Bound and authenticate outer persisted OSVVM lifecycle-request and
-  predecessor-handle JSON files before decode or resumed lifecycle/tool work.
-- in_flight_uncommitted: none after the persisted-lifecycle-validation commit.
+- next_action: Audit common-controller worker-artifact file admission before its
+  unbounded reread, beginning with the OSVVM output graph under active `.17.4.7`.
+- in_flight_uncommitted: none after the outer persisted JSON file-admission commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none.
