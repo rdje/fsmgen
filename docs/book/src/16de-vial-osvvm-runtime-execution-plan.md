@@ -249,6 +249,18 @@ rechecks the record when execution resumes:
 prove -Iperl -It/lib t/1745-vial-osvvm-persisted-lifecycle-storage-admission.t
 ```
 
+Reload also reconstructs the complete lifecycle-validation authority rather
+than trusting its persisted copy. One constructor derives exact record counts,
+per-scenario diagnostic codes, domain, fixture and plan identities, the random-
+decision digest, ordered run identities, the checked observation catalog, and
+numeric repetition count from materialization plus sealed ExecutionIR. The
+nine-key record must match before predecessor access; the lifecycle validates
+its internal semantics again when execution resumes:
+
+```console
+prove -Iperl -It/lib t/1746-vial-osvvm-persisted-lifecycle-validation-admission.t
+```
+
 Each executable role uses one lifecycle execution per controller record. The
 reference role has one correctness-only validation. Gate has one validation
 and three independently measured records; qualification has one validation

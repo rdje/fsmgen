@@ -10,7 +10,9 @@ use Exporter qw(import);
 use JSON::PP ();
 
 use FSM::VIAL::ArchitectureScaleOSVVMRuntimeExecutionPlan;
+use FSM::VIAL::ArchitectureScaleOSVVMRuntimeMaterialization;
 use FSM::VIAL::ArchitectureScaleOSVVMRuntimeMeasurement;
+use FSM::VIAL::Backend::VHDLPortableTraceValidator;
 
 our @EXPORT_OK = qw(exact_inputs rehash_request validate_envelope);
 
@@ -22,6 +24,16 @@ sub exact_inputs {
     my $repository_root = abs_path('.');
     my $plan =
         FSM::VIAL::ArchitectureScaleOSVVMRuntimeExecutionPlan->evaluate({
+            repository_root => $repository_root,
+            level => 'reference_v1',
+        });
+    my $construction =
+        FSM::VIAL::ArchitectureScaleOSVVMRuntimeMaterialization->construct({
+            repository_root => $repository_root,
+            level => 'reference_v1',
+        });
+    my $materialization =
+        FSM::VIAL::ArchitectureScaleOSVVMRuntimeMaterialization->evaluate({
             repository_root => $repository_root,
             level => 'reference_v1',
         });
@@ -113,19 +125,26 @@ sub exact_inputs {
         },
     );
 
-    my $execution_plan_id = 'plan/' . ('c' x 64);
     my $raw = {
         repository_root => $repository_root,
-        construction => {workload_identity => $plan->{workload_identity}},
-        materialization => {
-            report_identity => $plan->{materialization_identity},
-        },
+        construction => $construction,
+        materialization => $materialization,
         execution_plan => $plan,
         context => {staging_identity => $controller_root},
     };
+    my $derived_route =
+        FSM::VIAL::ArchitectureScaleOSVVMRuntimeMeasurement::_route_authority(
+            $raw,
+        );
+    my $execution = $derived_route->{projection}{execution_ir};
     my $route = {
-        projection => {execution_ir => {plan_id => $execution_plan_id}},
+        projection => {execution_ir => _clone($execution)},
     };
+    my @run_ids = map {
+        "run/$execution->{plan_id}/$_->{scenario_id}"
+    } @{$execution->{scenarios}};
+    my $checked = FSM::VIAL::Backend::VHDLPortableTraceValidator
+        ->checked_reference_authority;
     my $tool = $plan->{tool_authority};
     my $request = {
         provider => {
@@ -142,7 +161,21 @@ sub exact_inputs {
         emission_identity => undef,
         commands => $commands,
         validation => {
-            expected_plan_id => $execution_plan_id,
+            expected_record_counts => _clone(
+                $materialization->{trace_projection}{record_families},
+            ),
+            expected_diagnostic_codes => [map {
+                $_->{name} eq 'success'
+                    ? 'VIAL_EXPECT_SUCCESS' : 'VIAL_EXPECT_ERROR'
+            } @{$execution->{scenarios}}],
+            expected_domain_id => $execution->{domains}[0]{domain_id},
+            expected_fixture_id => $execution->{fixture}{fixture_id},
+            expected_plan_id => $execution->{plan_id},
+            expected_random_decisions_sha256 =>
+                sha256_hex($JSON->encode($execution->{randomness}{decisions})),
+            expected_run_ids => \@run_ids,
+            expected_observation_catalog =>
+                _clone($checked->{expected_observation_catalog}),
             run_repetitions => 1,
         },
         storage_context => {

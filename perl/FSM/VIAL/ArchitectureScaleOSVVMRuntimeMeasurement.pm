@@ -534,39 +534,13 @@ sub _lifecycle_stage($raw, $route_authority) {
 }
 
 sub _lifecycle_request($raw, $route_authority, $instantiated) {
-    my $execution = $route_authority->{projection}{execution_ir};
-    my $checked =
-        FSM::VIAL::Backend::VHDLPortableTraceValidator
-            ->checked_reference_authority;
-    my @run_ids = map {
-        "run/$execution->{plan_id}/$_->{scenario_id}"
-    } @{$execution->{scenarios}};
     my $request_without_root = {
         provider => _clone($instantiated->{provider}),
         source_set => _clone($instantiated->{source_set}),
         source_identity => $instantiated->{source_identity},
         emission_identity => undef,
         commands => _clone($instantiated->{commands}),
-        validation => {
-            expected_record_counts => _clone(
-                $raw->{materialization}{trace_projection}{record_families},
-            ),
-            expected_diagnostic_codes => [map {
-                $_->{name} eq 'success'
-                    ? 'VIAL_EXPECT_SUCCESS' : 'VIAL_EXPECT_ERROR'
-            } @{$execution->{scenarios}}],
-            expected_domain_id => $execution->{domains}[0]{domain_id},
-            expected_fixture_id => $execution->{fixture}{fixture_id},
-            expected_plan_id => $execution->{plan_id},
-            expected_random_decisions_sha256 =>
-                sha256_hex(_canonical_json(
-                    $execution->{randomness}{decisions},
-                )),
-            expected_run_ids => \@run_ids,
-            expected_observation_catalog =>
-                $checked->{expected_observation_catalog},
-            run_repetitions => 1,
-        },
+        validation => _validation_authority($raw, $route_authority),
         storage_context => _storage_context($raw),
     };
     $request_without_root->{emission_identity} = _emission_identity(
@@ -653,15 +627,16 @@ sub _validated_request_envelope($raw, $route_authority, $envelope) {
     confess "OSVVM runtime persisted lifecycle storage changed\n"
         unless _canonical_json($request->{storage_context})
             eq _canonical_json(_storage_context($raw));
-    my $execution = $route_authority->{projection}{execution_ir};
-    confess "OSVVM runtime persisted validation plan changed\n"
-        unless _scalar_equals(
-                $request->{validation}{expected_plan_id},
-                $execution->{plan_id},
-            )
-            && _json_integer_equals(
-                $request->{validation}{run_repetitions}, 1,
-            );
+    _exact_keys($request->{validation}, [qw(
+        expected_record_counts expected_diagnostic_codes expected_domain_id
+        expected_fixture_id expected_plan_id expected_random_decisions_sha256
+        expected_run_ids expected_observation_catalog run_repetitions
+    )], 'OSVVM runtime persisted lifecycle validation');
+    confess "OSVVM runtime persisted lifecycle validation changed\n"
+        unless _canonical_json($request->{validation})
+            eq _canonical_json(_validation_authority(
+                $raw, $route_authority,
+            ));
     return {repo_root => $raw->{repository_root}, %$request};
 }
 
@@ -681,6 +656,34 @@ sub _storage_context($raw) {
         mode => 'osvvm_architecture_scale_measurement',
         staging_identity => "$raw->{context}{staging_identity}/lifecycle",
         containment => 'outer_worker_process_group',
+    };
+}
+
+sub _validation_authority($raw, $route_authority) {
+    my $execution = $route_authority->{projection}{execution_ir};
+    my $checked = FSM::VIAL::Backend::VHDLPortableTraceValidator
+        ->checked_reference_authority;
+    my @run_ids = map {
+        "run/$execution->{plan_id}/$_->{scenario_id}"
+    } @{$execution->{scenarios}};
+    return {
+        expected_record_counts => _clone(
+            $raw->{materialization}{trace_projection}{record_families},
+        ),
+        expected_diagnostic_codes => [map {
+            $_->{name} eq 'success'
+                ? 'VIAL_EXPECT_SUCCESS' : 'VIAL_EXPECT_ERROR'
+        } @{$execution->{scenarios}}],
+        expected_domain_id => $execution->{domains}[0]{domain_id},
+        expected_fixture_id => $execution->{fixture}{fixture_id},
+        expected_plan_id => $execution->{plan_id},
+        expected_random_decisions_sha256 => sha256_hex(_canonical_json(
+            $execution->{randomness}{decisions},
+        )),
+        expected_run_ids => \@run_ids,
+        expected_observation_catalog =>
+            _clone($checked->{expected_observation_catalog}),
+        run_repetitions => 1,
     };
 }
 

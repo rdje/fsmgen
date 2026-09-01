@@ -61,7 +61,7 @@ subtest 'numeric-looking persisted values do not impersonate numbers' => sub {
             1;
         };
         ok(!$ok, "$label rejects at persisted-envelope reload");
-        like($@, qr/OSVVM runtime (?:lifecycle request envelope|persisted validation plan) changed/,
+        like($@, qr/OSVVM runtime (?:lifecycle request envelope|persisted lifecycle validation) changed/,
             "$label retains the exact reload diagnostic") unless $ok;
     }
 };
