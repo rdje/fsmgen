@@ -385,6 +385,36 @@ my %CHECKING_SCOREBOARD_RATIONALE = (
     accepted_identity =>
         'accepted construction, semantic, evaluation, rerun, plan, and compact-preflight identities are deterministic',
 );
+my @CHECKING_COVERAGE_EVIDENCE = (
+    [
+        't/1632-vial-architecture-scale-checking-coverage.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1691-vial-semantic-cross-max-bins-order.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool accepted_identity),
+    ],
+    [
+        't/1713-vial-execution-coverage-cardinality-preflight.t',
+        qw(adjacent_excess diagnostics atomicity no_tool accepted_identity),
+    ],
+);
+my %CHECKING_COVERAGE_RATIONALE = (
+    boundary =>
+        'static-domain and semantic scalar limits admit exactly while the coverpoint route freezes lower source-byte dominance',
+    adjacent_excess =>
+        'the first static-domain, semantic scalar, defensive coverpoint, or parser-route excess rejects',
+    diagnostics =>
+        'fixture-envelope, parser-source, semantic, execution, coverage-oracle, and staging failures retain stable diagnostics',
+    atomicity =>
+        'known excess publishes no unadmitted source, semantic report, normalized coverage, ExecutionIR, plan, or checking result',
+    no_tool =>
+        'the complete coverage ladder, parser boundary, semantic order, and compact preflight start no external tool',
+    cleanup =>
+        'accepted and consumer-failure coverage staging is same-volume and residue-free',
+    accepted_identity =>
+        'accepted construction, semantic, evaluation, rerun, plan, and compact-preflight identities are deterministic',
+);
 my %runtime_dimensions = map {
     $_ => {
         status => 'verified',
@@ -453,8 +483,21 @@ for my $entry (@CHECKING_SCOREBOARD_EVIDENCE) {
     push @{$checking_scoreboard_dimensions{$_}{evidence}}, $path
         for @dimensions;
 }
+my %checking_coverage_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $CHECKING_COVERAGE_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@CHECKING_COVERAGE_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$checking_coverage_dimensions{$_}{evidence}}, $path
+        for @dimensions;
+}
 my $VERIFIED_DIMENSIONS = {
     backend_artifact_graph => \%backend_dimensions,
+    checking_coverage => \%checking_coverage_dimensions,
     checking_faults => \%checking_fault_dimensions,
     checking_models => \%checking_model_dimensions,
     checking_randomness => \%checking_randomness_dimensions,

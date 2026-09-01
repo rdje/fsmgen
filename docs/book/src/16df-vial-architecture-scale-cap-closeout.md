@@ -21,7 +21,8 @@ The policy exposes candidate witnesses without assigning them to closeout
 dimensions. The separate consistency authority now joins the independently
 reviewed runtime-stream, backend-artifact, checking-model, checking-fault,
 checking-randomness, and checking-scoreboard witnesses to explicit dimensions.
-The same classification remains pending for every other group.
+The checking-coverage witnesses are now joined too. The same classification
+remains pending for every other group.
 
 ## Why calibration publication is separate
 
@@ -51,10 +52,11 @@ Each group must contain the same closed dimension set: boundary, adjacent
 excess, diagnostics, atomicity, no-tool behavior, cleanup, and accepted
 identity.
 
-Runtime, backend, checking-model, checking-fault, checking-randomness, and
-checking-scoreboard are `verified` across all seven dimensions; all other
-groups remain `pending_independent_verification`. Runtime covers the selected
-materialization profiles plus t1720 through t1749 and t1751 through t1762.
+Runtime, backend, checking-model, checking-fault, checking-randomness,
+checking-scoreboard, and checking-coverage are `verified` across all seven
+dimensions; all other groups remain `pending_independent_verification`.
+Runtime covers the selected materialization profiles plus t1720 through t1749
+and t1751 through t1762.
 Backend covers t1646 through t1650 and t1716 through t1719. Checking models
 uses t1630 for exact model-instance/scalar-cell limits, provider-free state
 evaluation, and cleanup; t1711 independently proves compact preflight order
@@ -70,9 +72,13 @@ axes through a provider-free complete-transaction FIFO oracle and owns cleanup;
 t1690 independently proves semantic scalar capacity admission and its adjacent
 failure before reference resolution; t1712 proves compact normalized-path
 preflight, accepted plan identity, and both adjacent execution excesses before
-scoreboard normalization, but is not boundary evidence. T1763 reconstructs all
-six sets of per-dimension projections, requires their complete unions, checks every path,
-and rejects omitted or foreign evidence. Policy citations remain candidates
+scoreboard normalization, but is not boundary evidence. Coverage is similarly
+layered: t1632 proves the exact static domain, packed-vector oracle, cleanup,
+and lower source-byte route authority; t1691 proves semantic scalar admission;
+t1713 proves compact normalized-path excess and identity but is not boundary
+evidence. T1763 reconstructs all seven sets of per-dimension projections,
+requires their complete unions, checks every path, and rejects omitted or
+foreign evidence. Policy citations remain candidates
 for all unreviewed groups. The validator also
 rejects caller arguments, subclass invocants, missing or unknown fields,
 caller-promoted dimensions, returned-data mutation, and an early calibration
@@ -160,6 +166,18 @@ scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
   prove -Iperl t/1631-vial-architecture-scale-checking-scoreboards.t \
   t/1690-vial-semantic-scoreboard-capacity-order.t \
   t/1712-vial-execution-scoreboard-cardinality-preflight.t \
+  t/1763-vial-architecture-scale-cap-consistency.t \
+  t/1685-vial-architecture-scale-cap-policy.t
+```
+
+Reverify the layered coverage limits, lower source-byte route authority,
+semantic scalar order, compact execution preflight, and sealed falsifiers with:
+
+```sh
+scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
+  prove -Iperl t/1632-vial-architecture-scale-checking-coverage.t \
+  t/1691-vial-semantic-cross-max-bins-order.t \
+  t/1713-vial-execution-coverage-cardinality-preflight.t \
   t/1763-vial-architecture-scale-cap-consistency.t \
   t/1685-vial-architecture-scale-cap-policy.t
 ```

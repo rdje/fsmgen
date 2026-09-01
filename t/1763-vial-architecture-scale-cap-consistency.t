@@ -302,8 +302,32 @@ my %checking_scoreboard_rationale = (
     cleanup => 'accepted and consumer-failure scoreboard staging is same-volume and residue-free',
     accepted_identity => 'accepted construction, semantic, evaluation, rerun, plan, and compact-preflight identities are deterministic',
 );
+my @checking_coverage_evidence = qw(
+    t/1632-vial-architecture-scale-checking-coverage.t
+    t/1691-vial-semantic-cross-max-bins-order.t
+    t/1713-vial-execution-coverage-cardinality-preflight.t
+);
+my %checking_coverage_evidence = (
+    boundary => [@checking_coverage_evidence[0, 1]],
+    adjacent_excess => [@checking_coverage_evidence],
+    diagnostics => [@checking_coverage_evidence],
+    atomicity => [@checking_coverage_evidence],
+    no_tool => [@checking_coverage_evidence],
+    cleanup => [$checking_coverage_evidence[0]],
+    accepted_identity => [@checking_coverage_evidence],
+);
+my %checking_coverage_rationale = (
+    boundary => 'static-domain and semantic scalar limits admit exactly while the coverpoint route freezes lower source-byte dominance',
+    adjacent_excess => 'the first static-domain, semantic scalar, defensive coverpoint, or parser-route excess rejects',
+    diagnostics => 'fixture-envelope, parser-source, semantic, execution, coverage-oracle, and staging failures retain stable diagnostics',
+    atomicity => 'known excess publishes no unadmitted source, semantic report, normalized coverage, ExecutionIR, plan, or checking result',
+    no_tool => 'the complete coverage ladder, parser boundary, semantic order, and compact preflight start no external tool',
+    cleanup => 'accepted and consumer-failure coverage staging is same-volume and residue-free',
+    accepted_identity => 'accepted construction, semantic, evaluation, rerun, plan, and compact-preflight identities are deterministic',
+);
 my %verified_evidence = (
     backend_artifact_graph => \%backend_evidence,
+    checking_coverage => \%checking_coverage_evidence,
     checking_faults => \%checking_fault_evidence,
     checking_models => \%checking_model_evidence,
     checking_randomness => \%checking_randomness_evidence,
@@ -312,6 +336,7 @@ my %verified_evidence = (
 );
 my %verified_rationale = (
     backend_artifact_graph => \%backend_rationale,
+    checking_coverage => \%checking_coverage_rationale,
     checking_faults => \%checking_fault_rationale,
     checking_models => \%checking_model_rationale,
     checking_randomness => \%checking_randomness_rationale,
@@ -474,6 +499,18 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
         'every sealed checking-scoreboard evidence path exists',
     );
 
+    my %checking_coverage_join = map { $_ => 1 }
+        map { @{$checking_coverage_evidence{$_}} } @dimensions;
+    is_deeply(
+        [sort keys %checking_coverage_join],
+        [sort @checking_coverage_evidence],
+        'checking-coverage join covers its oracle, semantic, and preflight witnesses',
+    );
+    is_deeply(
+        [grep { !-f $_ } sort keys %checking_coverage_join], [],
+        'every sealed checking-coverage evidence path exists',
+    );
+
     is($report->{calibration}{evidence_role},
         'historical_measurement_only',
         'calibration stays measurement evidence');
@@ -615,6 +652,21 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
     like(dies(sub { $assert->($foreign_checking_scoreboard) }),
         qr/checking_scoreboards\/accepted_identity' contradicts the sealed evidence authority/,
         'callers cannot add foreign checking-scoreboard evidence');
+
+    my $omitted_checking_coverage = $class->build;
+    pop @{$omitted_checking_coverage->{groups}{checking_coverage}
+        {dimensions}{adjacent_excess}{evidence}};
+    like(dies(sub { $assert->($omitted_checking_coverage) }),
+        qr/checking_coverage\/adjacent_excess' contradicts the sealed evidence authority/,
+        'callers cannot omit sealed checking-coverage evidence');
+
+    my $foreign_checking_coverage = $class->build;
+    push @{$foreign_checking_coverage->{groups}{checking_coverage}
+        {dimensions}{accepted_identity}{evidence}},
+        't/foreign-checking-coverage-evidence.t';
+    like(dies(sub { $assert->($foreign_checking_coverage) }),
+        qr/checking_coverage\/accepted_identity' contradicts the sealed evidence authority/,
+        'callers cannot add foreign checking-coverage evidence');
 
     my $missing = $class->build;
     delete $missing->{groups}{$first_group}{dimensions}{cleanup};
