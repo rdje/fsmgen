@@ -76,6 +76,8 @@ evidence: >-
   t/1707-vial-execution-type-cap-order.t;
   t/1708-vial-execution-source-map-cap-order.t;
   t/1709-vial-execution-binding-cardinality-preflight.t;
+  t/1614-vial-architecture-scale-execution-random-limit.t;
+  t/1615-vial-architecture-scale-execution-random-over-limit.t;
   t/1710-vial-execution-random-attempt-authority.t;
   t/1630-vial-architecture-scale-checking-models.t; t/1711-vial-execution-model-cardinality-preflight.t;
   t/1631-vial-architecture-scale-checking-scoreboards.t; t/1712-vial-execution-scoreboard-cardinality-preflight.t;
@@ -102,6 +104,7 @@ reverify: >-
   prove -Iperl t/1685-vial-architecture-scale-cap-policy.t
   t/1602-vial-architecture-scale-bridge-fanout.t
   t/160{3,6,7}-vial-architecture-scale-execution-*.t t/161{6..8}-*.t
+  t/161{4,5}-vial-architecture-scale-execution-random-*.t
   t/1619-*.t t/162{0..2}-*.t t/1626-*.t
   t/16{86..93}-*.t t/16{94..99}-*.t t/17{00..23}-*.t
   t/162{3..5}-*.t t/163{0..4}-vial-architecture-scale-checking-*.t
@@ -138,10 +141,11 @@ native UVM stays emission-only. Eligibility rejects excess before tools; the
 shared lifecycle bounds trace and final artifacts.
 
 `FSM::VIAL::ArchitectureScaleCapConsistency` rebuilds policy without caller
-evidence. Fourteen groups verify all dimensions: runtime, backend, models,
+evidence. Fifteen groups verify all dimensions: runtime, backend, models,
 faults, randomness, scoreboards, coverage, bridge-profile cardinality,
 serialized bridge manifests, normalized bridge collections, execution
-profiles, operation cardinality, fiber cardinality, and route collections. Layered joins stay exact: scoreboards use
+profiles, operation cardinality, fiber cardinality, route collections, and
+execution random attempts. Layered joins stay exact: scoreboards use
 t1631/t1690/t1712, coverage t1632/t1691/t1713, and bridge profile t1602;
 compact preflight is not boundary evidence. T1763 rebuilds exact unions and
 rejects omitted/foreign paths.
@@ -165,6 +169,11 @@ Route collections assign t1603/t1606/t1607 accepted gate identities and
 cleanup; t1607/t1627/t1628 exact reachable map/type/binding boundaries; and
 t1707-t1709 local pre-materialization defenses. Earlier bridge or plan limits
 do not lower the larger component ceilings.
+Random-attempt evidence assigns t1614 the exact 1,000,000-attempt boundary,
+identity, no-tool, and same-volume cleanup proof; t1615 the 1,000,001-attempt
+public exhaustion; and t1710 independent projection-before-materialization
+order. T1613's lower qualification remains regression evidence but is
+superseded for this closeout join by t1614.
 Other groups and calibration remain pending/blocked.
 
 The common controller admits bounded worker files before counts/digests; cap+1

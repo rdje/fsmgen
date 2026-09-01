@@ -275,11 +275,14 @@ is(
     'verify_existing_early_boundary',
     'execution random policy retains the intrinsic search authority',
 );
-ok(
-    scalar(grep {
-        $_ eq 't/1710-vial-execution-random-attempt-authority.t'
-    } @{$policy->{groups}{execution_random_attempts}{evidence}}),
-    'execution random policy cites the final-materialization seam witness',
+is_deeply(
+    $policy->{groups}{execution_random_attempts}{evidence},
+    [qw(
+        t/1614-vial-architecture-scale-execution-random-limit.t
+        t/1615-vial-architecture-scale-execution-random-over-limit.t
+        t/1710-vial-execution-random-attempt-authority.t
+    )],
+    'execution random policy cites the exact boundary and seam evidence set',
 );
 is(
     $policy->{groups}{execution_serialized_plan}{current_enforcement},

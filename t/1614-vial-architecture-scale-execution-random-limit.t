@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use bytes ();
+use Cwd qw(abs_path);
 use Digest::SHA qw(sha256_hex);
 use File::Spec;
 use FindBin;
@@ -13,9 +14,12 @@ use Test::More;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::VIAL::ArchitectureScaleExecutionGraph;
+use FSM::VIAL::ArchitectureScaleWorkload;
 
 my $class = 'FSM::VIAL::ArchitectureScaleExecutionGraph';
+my $foundation = 'FSM::VIAL::ArchitectureScaleWorkload';
 my $json = JSON::PP->new->canonical(1)->utf8(1);
+my $repo_root = abs_path(File::Spec->catdir($FindBin::Bin, '..'));
 my $reference_hial = slurp_raw(repo_path('ppif/ahb_lite_subordinate.ppif'));
 my $occurrence_id = join('/',
     'decision',
@@ -88,6 +92,10 @@ subtest 'million-attempt construction is canonical checked-AHB source' => sub {
         'independent limit construction is byte-identical');
     is($first->{specification}{requested_counts}{random_attempts},
         $expected{attempts}, 'construction retains exactly one million attempts');
+    is($first->{specification}{backend_profile}, undef,
+        'limit construction selects no backend');
+    is($first->{specification}{tool_profile}, undef,
+        'limit construction selects no external tool');
     is($first->{workload_identity}, $expected{workload_identity},
         'limit construction identity is exact');
 
@@ -215,6 +223,46 @@ subtest 'million-attempt evaluation freezes metrics and identities' => sub {
         'generated plan identity is exact');
     is_deeply($evaluation->{contract_discrepancies}, [],
         'limit has no selected contract discrepancy');
+};
+
+subtest 'million-attempt staging is same-volume and residue-free' => sub {
+    my $construction = construction();
+    my $stage_abs = File::Spec->catdir(
+        $repo_root, split m{/}, $construction->{staging_identity},
+    );
+    ok(!-e $stage_abs && !-l $stage_abs,
+        'random-attempt staging root begins absent');
+
+    my $success = $foundation->with_staging({
+        repository_root => $repo_root,
+        construction => $construction,
+        consumer => sub {
+            my ($context) = @_;
+            is($context->{staging_identity}, $construction->{staging_identity},
+                'random-attempt consumer receives the exact staging identity');
+            ok(!(grep { !-f $_->{absolute_path} } @{$context->{inputs}}),
+                'random-attempt staging materializes both canonical inputs');
+        },
+    });
+    diag($json->encode($success->{diagnostics})) unless $success->{ok};
+    ok($success->{ok}, 'random-attempt staging succeeds');
+    ok($success->{same_volume},
+        'random-attempt staging proves same-volume identity');
+    ok($success->{removed},
+        'successful random-attempt staging reports removal');
+    ok(!-e $stage_abs && !-l $stage_abs,
+        'successful random-attempt staging leaves no residue');
+
+    my $failure = $foundation->with_staging({
+        repository_root => $repo_root,
+        construction => $construction,
+        consumer => sub { die "forced random-attempt consumer failure\n" },
+    });
+    ok(!$failure->{ok}, 'random-attempt consumer failure is reported');
+    is($failure->{diagnostics}[0]{code}, 'VIAL_SCALE_CONSUMER_ERROR',
+        'random-attempt failure retains the stable staging diagnostic');
+    ok(!-e $stage_abs && !-l $stage_abs,
+        'failed random-attempt staging leaves no residue');
 };
 
 subtest 'million-attempt limit rejects replay/source mutation and missing source' => sub {

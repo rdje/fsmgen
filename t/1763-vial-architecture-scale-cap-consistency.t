@@ -495,6 +495,29 @@ my %execution_route_rationale = (
     cleanup => 'binding, type, and source-map gate staging removes same-volume success and consumer-failure residue',
     accepted_identity => 'all three accepted gate plans, exact route controls, and local-defense controls retain deterministic identities',
 );
+my @execution_random_evidence = qw(
+    t/1614-vial-architecture-scale-execution-random-limit.t
+    t/1615-vial-architecture-scale-execution-random-over-limit.t
+    t/1710-vial-execution-random-attempt-authority.t
+);
+my %execution_random_evidence = (
+    boundary => [$execution_random_evidence[0]],
+    adjacent_excess => [@execution_random_evidence[1, 2]],
+    diagnostics => [@execution_random_evidence[1, 2]],
+    atomicity => [@execution_random_evidence[1, 2]],
+    no_tool => [@execution_random_evidence[0, 1]],
+    cleanup => [$execution_random_evidence[0]],
+    accepted_identity => [$execution_random_evidence[0]],
+);
+my %execution_random_rationale = (
+    boundary => 'the exact 1000000-attempt generated and replayed plans admit at zero-based attempt 999999',
+    adjacent_excess => 'attempt 1000001 exhausts at the public boundary and the terminal seam confirms the same projection authority',
+    diagnostics => 'public and terminal exhaustion retain the stable random code, source locus, and decision identity',
+    atomicity => 'random exhaustion precedes plan preflight and publishes no random decision, ExecutionIR, plan, report, or metrics',
+    no_tool => 'the accepted boundary and adjacent excess carry no backend or external-tool selector',
+    cleanup => 'accepted boundary staging success and consumer failure are same-volume and residue-free',
+    accepted_identity => 'the exact-limit construction, generated plan, replayed plan, decision, and evaluation identities are deterministic',
+);
 my %verified_evidence = (
     backend_artifact_graph => \%backend_evidence,
     bridge_normalized_collections => \%bridge_normalized_evidence,
@@ -508,6 +531,7 @@ my %verified_evidence = (
     execution_fiber_cardinality => \%execution_fiber_evidence,
     execution_operation_cardinality => \%execution_operation_evidence,
     execution_profile_selection => \%execution_profile_evidence,
+    execution_random_attempts => \%execution_random_evidence,
     execution_route_collections => \%execution_route_evidence,
     runtime_stream_envelopes => \%runtime_evidence,
 );
@@ -524,6 +548,7 @@ my %verified_rationale = (
     execution_fiber_cardinality => \%execution_fiber_rationale,
     execution_operation_cardinality => \%execution_operation_rationale,
     execution_profile_selection => \%execution_profile_rationale,
+    execution_random_attempts => \%execution_random_rationale,
     execution_route_collections => \%execution_route_rationale,
     runtime_stream_envelopes => \%runtime_rationale,
 );
@@ -777,6 +802,18 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
     is_deeply(
         [grep { !-f $_ } sort keys %execution_route_join], [],
         'every sealed execution-route evidence path exists',
+    );
+
+    my %execution_random_join = map { $_ => 1 }
+        map { @{$execution_random_evidence{$_}} } @dimensions;
+    is_deeply(
+        [sort keys %execution_random_join],
+        [sort @execution_random_evidence],
+        'execution-random join covers its exact boundary, excess, and terminal-seam witnesses',
+    );
+    is_deeply(
+        [grep { !-f $_ } sort keys %execution_random_join], [],
+        'every sealed execution-random evidence path exists',
     );
 
     is($report->{calibration}{evidence_role},
@@ -1040,6 +1077,21 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
     like(dies(sub { $assert->($foreign_execution_route) }),
         qr/execution_route_collections\/accepted_identity' contradicts the sealed evidence authority/,
         'callers cannot add foreign execution-route evidence');
+
+    my $omitted_execution_random = $class->build;
+    pop @{$omitted_execution_random->{groups}{execution_random_attempts}
+        {dimensions}{cleanup}{evidence}};
+    like(dies(sub { $assert->($omitted_execution_random) }),
+        qr/execution_random_attempts\/cleanup' verified evidence must be one non-empty array/,
+        'callers cannot empty sealed execution-random cleanup evidence');
+
+    my $foreign_execution_random = $class->build;
+    push @{$foreign_execution_random->{groups}{execution_random_attempts}
+        {dimensions}{accepted_identity}{evidence}},
+        't/foreign-execution-random-evidence.t';
+    like(dies(sub { $assert->($foreign_execution_random) }),
+        qr/execution_random_attempts\/accepted_identity' contradicts the sealed evidence authority/,
+        'callers cannot add foreign execution-random evidence');
 
     my $missing = $class->build;
     delete $missing->{groups}{$first_group}{dimensions}{cleanup};

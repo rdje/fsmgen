@@ -73,6 +73,10 @@ subtest 'one-over construction targets the first unreachable candidate' => sub {
         'independent one-over construction is byte-identical');
     is($first->{specification}{requested_counts}{random_attempts},
         $expected{attempts}, 'construction retains exactly 1,000,001 attempts');
+    is($first->{specification}{backend_profile}, undef,
+        'one-over construction selects no backend');
+    is($first->{specification}{tool_profile}, undef,
+        'one-over construction selects no external tool');
     is($first->{workload_identity}, $expected{workload_identity},
         'one-over construction identity is exact');
 

@@ -24,7 +24,8 @@ checking-randomness, and checking-scoreboard witnesses to explicit dimensions.
 The checking-coverage, bridge-profile, serialized-bridge-manifest,
 normalized-bridge-collection, execution-profile-selection, and
 execution-operation-cardinality, execution-fiber-cardinality, and
-execution-route-collection witnesses are now joined too. The same
+execution-route-collection and execution-random-attempt witnesses are now
+joined too. The same
 classification remains pending for every other group.
 
 ## Why calibration publication is separate
@@ -59,7 +60,8 @@ Runtime, backend, checking-model, checking-fault, checking-randomness,
 checking-scoreboard, checking-coverage, bridge-profile-cardinality, serialized
 manifest, normalized-collection, execution-profile-selection, and
 execution-operation-cardinality, execution-fiber-cardinality, and
-execution-route-collection groups are `verified` across all seven
+execution-route-collection and execution-random-attempt groups are `verified`
+across all seven
 dimensions; all other groups remain `pending_independent_verification`.
 Runtime covers the selected materialization profiles plus t1720 through t1749
 and t1751 through t1762.
@@ -136,7 +138,18 @@ payload cloning or insertion; t1709 rejects compactly known binding excess
 before binding construction. These route results do not lower the larger
 component ceilings. All accepted gate constructions and layered route
 rejections select no backend or external tool.
-T1763 reconstructs all fourteen sets of per-dimension projections,
+Random attempts retain an exact three-witness authority. T1614 admits the
+1,000,000-attempt boundary at zero-based attempt 999,999 and freezes the
+construction, decision, generated plan, replayed plan, and evaluation
+identities; it also owns same-volume success/failure cleanup. T1615 rejects
+the 1,000,001-attempt adjacent excess with the exact random diagnostic and no
+partial ExecutionIR, plan, or metrics. T1710 independently proves that the
+same exhaustion occurs during random projection before serialized-plan
+preflight or any final materializer. The lower 262,144-attempt t1613
+qualification remains a useful regression but is superseded for this closeout
+join by t1614's stronger boundary proof. Accepted and rejected workload shapes
+select no backend or external tool.
+T1763 reconstructs all fifteen sets of per-dimension projections,
 requires their complete unions, checks every path, and rejects omitted or
 foreign evidence. Policy citations remain candidates
 for all unreviewed groups. The validator also
@@ -326,6 +339,18 @@ scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
   t/1707-vial-execution-type-cap-order.t \
   t/1708-vial-execution-source-map-cap-order.t \
   t/1709-vial-execution-binding-cardinality-preflight.t \
+  t/1763-vial-architecture-scale-cap-consistency.t \
+  t/1685-vial-architecture-scale-cap-policy.t
+```
+
+Reverify the exact random-attempt boundary, adjacent exhaustion, terminal
+projection order, cleanup, and sealed falsifiers with:
+
+```sh
+scripts/run_with_ram_guard.sh -- prove -Iperl \
+  t/1614-vial-architecture-scale-execution-random-limit.t \
+  t/1615-vial-architecture-scale-execution-random-over-limit.t \
+  t/1710-vial-execution-random-attempt-authority.t \
   t/1763-vial-architecture-scale-cap-consistency.t \
   t/1685-vial-architecture-scale-cap-policy.t
 ```

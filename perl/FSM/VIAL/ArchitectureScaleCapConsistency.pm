@@ -659,6 +659,36 @@ my %EXECUTION_ROUTE_RATIONALE = (
     accepted_identity =>
         'all three accepted gate plans, exact route controls, and local-defense controls retain deterministic identities',
 );
+my @EXECUTION_RANDOM_EVIDENCE = (
+    [
+        't/1614-vial-architecture-scale-execution-random-limit.t',
+        qw(boundary no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1615-vial-architecture-scale-execution-random-over-limit.t',
+        qw(adjacent_excess diagnostics atomicity no_tool),
+    ],
+    [
+        't/1710-vial-execution-random-attempt-authority.t',
+        qw(adjacent_excess diagnostics atomicity),
+    ],
+);
+my %EXECUTION_RANDOM_RATIONALE = (
+    boundary =>
+        'the exact 1000000-attempt generated and replayed plans admit at zero-based attempt 999999',
+    adjacent_excess =>
+        'attempt 1000001 exhausts at the public boundary and the terminal seam confirms the same projection authority',
+    diagnostics =>
+        'public and terminal exhaustion retain the stable random code, source locus, and decision identity',
+    atomicity =>
+        'random exhaustion precedes plan preflight and publishes no random decision, ExecutionIR, plan, report, or metrics',
+    no_tool =>
+        'the accepted boundary and adjacent excess carry no backend or external-tool selector',
+    cleanup =>
+        'accepted boundary staging success and consumer failure are same-volume and residue-free',
+    accepted_identity =>
+        'the exact-limit construction, generated plan, replayed plan, decision, and evaluation identities are deterministic',
+);
 my %runtime_dimensions = map {
     $_ => {
         status => 'verified',
@@ -822,6 +852,18 @@ for my $entry (@EXECUTION_ROUTE_EVIDENCE) {
     push @{$execution_route_dimensions{$_}{evidence}}, $path
         for @dimensions;
 }
+my %execution_random_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $EXECUTION_RANDOM_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@EXECUTION_RANDOM_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$execution_random_dimensions{$_}{evidence}}, $path
+        for @dimensions;
+}
 my $VERIFIED_DIMENSIONS = {
     backend_artifact_graph => \%backend_dimensions,
     bridge_normalized_collections => \%bridge_normalized_dimensions,
@@ -835,6 +877,7 @@ my $VERIFIED_DIMENSIONS = {
     execution_fiber_cardinality => \%execution_fiber_dimensions,
     execution_operation_cardinality => \%execution_operation_dimensions,
     execution_profile_selection => \%execution_profile_dimensions,
+    execution_random_attempts => \%execution_random_dimensions,
     execution_route_collections => \%execution_route_dimensions,
     runtime_stream_envelopes => \%runtime_dimensions,
 };
