@@ -269,14 +269,23 @@ sub _validate($raw) {
             if $kind eq 'samples' && $time->[1] != 1;
         next if $outer;
         my $run = $record->{run_id};
-        my $state = $run_state{$run} //= {open => 0, closed => 0, last_time => undef};
+        my $state = $run_state{$run} //= {
+            open => 0, closed => 0, last_time => undef,
+            start_time => undef, end_time => undef,
+        };
         _throw('VIAL_VHDL_TRACE_RUN_ERROR',
             'records may not follow a closed scenario run', "$path/run_id")
             if $state->{closed};
         if ($kind eq 'scenario_start') {
+            _throw('VIAL_VHDL_TRACE_TIME_ERROR',
+                'scenario start must use the exact logical-time origin',
+                "$path/payload/logical_time")
+                unless $time->[0] == 0 && $time->[1] == 0
+                    && $time->[2] == 0 && $time->[3] == 0;
             _throw('VIAL_VHDL_TRACE_RUN_ERROR',
                 'scenario run has a duplicate start', "$path/run_id") if $state->{open};
             $state->{open} = 1;
+            $state->{start_time} = _normalized_time($time);
             push @observed_run_id, $run;
         } else {
             _throw('VIAL_VHDL_TRACE_RUN_ERROR',
@@ -291,8 +300,13 @@ sub _validate($raw) {
         }
         $state->{last_time} = $time;
         if ($kind eq 'scenario_end') {
+            _throw('VIAL_VHDL_TRACE_TIME_ERROR',
+                'scenario end must use the CHECK boundary with local index zero',
+                "$path/payload/logical_time")
+                unless $time->[1] == 3 && $time->[3] == 0;
             $state->{open} = 0;
             $state->{closed} = 1;
+            $state->{end_time} = _normalized_time($time);
         }
     }
     for my $run (keys %run_state) {
@@ -314,6 +328,11 @@ sub _validate($raw) {
             record_count => scalar(@record),
             record_counts => {map { $_ => 0 + ($count{$_} // 0) } @KIND},
             plan_id => $plan_id,
+            scenario_boundaries => [map {{
+                run_id => $_,
+                start_time => $run_state{$_}{start_time},
+                end_time => $run_state{$_}{end_time},
+            }} @observed_run_id],
             observation_catalog => {
                 schema => $CATALOG_SCHEMA,
                 catalog_digest => $catalog_digest,
@@ -401,6 +420,15 @@ sub _validate_time($time, $path) {
         'logical-time phase_rank is outside the closed DRIVE/SAMPLE/REACT/CHECK set',
         "$path/phase_rank") if $time->{phase_rank} > 3;
     return [map { 0 + $time->{$_} } qw(cycle phase_rank static_rank local_index)];
+}
+
+sub _normalized_time($time) {
+    return {
+        cycle => $time->[0],
+        phase_rank => $time->[1],
+        static_rank => $time->[2],
+        local_index => $time->[3],
+    };
 }
 
 sub _integer_equal($value, $expected) {

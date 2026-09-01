@@ -53,7 +53,7 @@
 
 _OSVVM 2026.05 is a separately qualified advanced VHDL provider above the portable core_
 
-- **date:** 2026-08-30 · **status:** current
+- **date:** 2026-09-01 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-vhdl-osvvm-qualified-tier.md`](../../docs/knowledge/vial-vhdl-osvvm-qualified-tier.md)
 
 ### vial-vhdl-portable-profile

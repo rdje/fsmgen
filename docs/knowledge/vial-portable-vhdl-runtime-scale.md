@@ -14,6 +14,7 @@ answers:
   - "how are GHDL result fixture and random decisions bound to plan authority?"
   - "how are GHDL scenario expectation diagnostic and cancelled fiber identities admitted?"
   - "how is the GHDL scenario logical-time domain bound to plan authority?"
+  - "how are GHDL result scenario boundary times bound to the authenticated trace?"
   - "how are GHDL passing diagnostic codes and logical times bound to VHDL emitter behavior?"
   - "how is GHDL diagnostic cardinality bound to authenticated expectation trace counts?"
   - "how are GHDL fault applications and scoreboard comparisons bound to trace records?"
@@ -129,10 +130,28 @@ preserves the original probe failure; failed, malformed, or unexpectedly
 throwing aborts become the qualifier cleanup diagnostic at `/cleanup` with a
 sanitized reason. No probe is retried and its process policy is unchanged.
 
-Normalized result admission applies the selected 67,108,864-byte ceiling, exact shared/VHDL vocabularies, one parity schema/version, sealed plan identity, and ordered trace identities. Closure added omitted `samples`/projection-plan members and `completed` status.
-Scenario times are exact `domain_id/cycle/phase/ordinal` records: zero/drive/zero start; same-domain check/zero end at positive count minus one. This repaired the VHDL one-based end-cycle defect. Missing, foreign, duplicate, reordered, non-pass, excess, noncanonical, or malformed records reject.
-Parity counters are nonnegative and cycle-bounded; scalars are `0|1`; vectors use `0/1/X/Z` at authenticated HRDATA/reg-data widths. Known nonzero final read data, asserted response, or deasserted ready requires its nonzero counter.
-The mdBook shows the canonical two-outcome projection; the compact OSVVM gallery keeps only checked report path/identity/digest to avoid a second value authority.
+Normalized result admission applies the selected 67,108,864-byte ceiling,
+exact shared/VHDL vocabularies, one parity schema/version, sealed plan identity,
+and ordered trace identities. Closure added omitted `samples`/projection-plan
+members and `completed` status.
+Scenario times are exact `domain_id/cycle/phase/ordinal` records:
+zero/drive/zero start; same-domain check/zero end at positive count minus one.
+This repaired the VHDL one-based end-cycle defect. The normalized authenticated
+trace now retains exact ordered start/end boundaries too: every start is the
+complete logical-time origin, every end is CHECK/local-zero, and lifecycle
+admission maps trace cycle, phase rank, and local index to result cycle, phase,
+and ordinal while taking only the domain from sealed plan authority. Real GHDL
+proved that the emitter had reset only cycle between scenarios and emitted end
+after the barrier restored DRIVE; it now resets the full time record and
+selects CHECK before the end record. A self-consistent foreign domain,
+cycle/count pair, phase, or ordinal therefore rejects before persistence.
+Missing, foreign, duplicate, reordered, non-pass, excess, noncanonical, or
+malformed records reject.
+Parity counters are nonnegative and cycle-bounded; scalars are `0|1`; vectors
+use `0/1/X/Z` at authenticated HRDATA/reg-data widths. Known nonzero final read
+data, asserted response, or deasserted ready requires its nonzero counter.
+The mdBook shows the canonical two-outcome projection; the compact OSVVM gallery
+keeps only checked report path/identity/digest to avoid a second value authority.
 Fixed schema/profile/evidence/flags, projection collections, aggregates, and
 diagnostic records are closed; metrics equal records/cardinalities, zero passing
 mismatches, and authenticated trace coverage (reset barriers are sampled cycles,
@@ -150,7 +169,12 @@ Portable VHDL emits no scenario-owned expectation, diagnostic, or cancelled-fibe
 records, so each corresponding identity array must be exactly empty; this
 VHDL-specific admission does not narrow richer trace-backed ResultProducer
 behavior.
-The 127 fixed source bytes also move the unchanged 16-MiB portable/OSVVM structural boundary to accepted `T=29,505` at 16,776,666 portable bytes and adjacent rejected `T=29,506`; both graph oracles are v2.
+The earlier 127-byte result-contract repair moved the unchanged 16-MiB
+portable/OSVVM structural witness to `T=29,505`. The boundary-time repair adds
+112 fixed bytes without moving it: portable accepts 16,776,778 bytes and
+adjacent `T=29,506` renders 16,777,346 bytes before atomic rejection; OSVVM
+adds its fixed adapter to 16,781,129 selected bytes. Both graph oracles remain
+v2 with regenerated identities.
 
 The guarded exact adapter retains one 77-record reference, three gate
 10,000-record measurements, and five qualification 100,000-record measurements:

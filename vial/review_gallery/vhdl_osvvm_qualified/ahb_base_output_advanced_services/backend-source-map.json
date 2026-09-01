@@ -37,14 +37,14 @@
          ]
       },
       {
-         "byte_length" : 46389,
+         "byte_length" : 46501,
          "kind" : "vhdl_source",
          "language" : "vhdl",
          "relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
          "role" : "portable_vhdl_fixture_top",
-         "sha256" : "7c2144ffa06ab57528839f2935b16ca621580e2848e26b6c688ebe4692636122",
+         "sha256" : "e1639212cb7c0152ce3e6cdfb6829916e4ff3b181f1d4490f70dc48fe62f32b6",
          "source_ids" : [
-            "7c2144ffa06ab57528839f2935b16ca621580e2848e26b6c688ebe4692636122",
+            "e1639212cb7c0152ce3e6cdfb6829916e4ff3b181f1d4490f70dc48fe62f32b6",
             "plan/e236297c8b434a9b374d1800112841e00327bdbd5d8d9130440bd20681fbed6e"
          ]
       },
@@ -319,7 +319,7 @@
             "/backend_bindings"
          ],
          "generated_end_column" : 37,
-         "generated_end_line" : 837,
+         "generated_end_line" : 839,
          "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
          "generated_start_column" : 1,
          "generated_start_line" : 1,
@@ -1523,7 +1523,7 @@
             "/domains/0"
          ],
          "generated_end_column" : 30,
-         "generated_end_line" : 836,
+         "generated_end_line" : 838,
          "generated_relpath" : "backends/vhdl_osvvm_qualified/src/portable/base_output_arbitration_tb.vhd",
          "generated_start_column" : 1,
          "generated_start_line" : 68,

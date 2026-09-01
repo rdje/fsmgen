@@ -55,10 +55,10 @@ if ($ENV{FSMGEN_VIAL_VHDL_LINEAR_SOURCE_ONLY}) {
 }
 
 my %expected = (
-    21 => {source_bytes => 118_191, source_maps => 59},
-    128 => {source_bytes => 176_560, source_maps => 166},
-    512 => {source_bytes => 388_528, source_maps => 550},
-    29_505 => {source_bytes => 16_776_666, source_maps => 29_543},
+    21 => {source_bytes => 118_303, source_maps => 59},
+    128 => {source_bytes => 176_672, source_maps => 166},
+    512 => {source_bytes => 388_640, source_maps => 550},
+    29_505 => {source_bytes => 16_776_778, source_maps => 29_543},
 );
 
 for my $total (512, 21, 128) {

@@ -13,7 +13,7 @@ answers:
   - "how does the provider-aware GHDL lifecycle execute the exact OSVVM plan?"
   - "how are OSVVM runtime reference gate and qualification records measured?"
   - "how is the complete OSVVM runtime measurement matrix published and reloaded?"
-date: 2026-08-30
+date: 2026-09-01
 status: current
 tags: [hial, vial, vhdl, osvvm, ghdl, review-gallery, verification]
 evidence: >-
@@ -97,7 +97,7 @@ checks. Unknown, missing, stale, or contradictory fields fail closed.
 The caller-sealed architecture-scale profile owns T=21/128/512/29,505 plus
 adjacent portable-foundation T=29,506 rejection. One provider verification is
 reused only inside its callback for two defensive emissions. Accepted source
-totals are 122,542/180,911/392,879/16,781,017 bytes with
+totals are 122,654/181,023/392,991/16,781,129 bytes with
 66/173/557/29,550 complete maps; every wrapper map, provider/source identity,
 mapping status, semantic guard, and evidence encoding is checked before the
 content-addressed report is accepted. The adjacent excess publishes no
@@ -110,7 +110,7 @@ Related: [[vial-vhdl-portable-profile]],
 
 Decision `0092` selects `.17.3.7` as a five-leaf runtime-measurement chain. It reuses the tracked portable-VHDL runtime sources, adds a profile-specific OSVVM materializer, extracts one caller-sealed provider/tool plan, and admits that plan through a provider-aware role of the shared GHDL lifecycle before measurement and publication. Provider verification, FSMGen work, and external tool stages remain distinct; selection adds no measurement or promoted claim.
 
-Child `.17.3.7.1` materializes the exact authored portable-VHDL reference, 10,000-record gate, and 100,000-record qualification sources through the qualified OSVVM wrapper. Each role stays at 21 operations and 39 ExecutionIR maps, verifies the pinned provider once for two byte-identical emissions, and closes 16 artifacts, seven sources, 66 maps, twelve checks, seven advanced mappings, six preserved portable sources/guards, and the exact provider census. The seven-source totals are 122,413/122,426/122,438 bytes; t1676 re-derives and falsifies these identities, while the module, task tree, and this card retain them durably. Limit/excess are provider-, route-, staging-, and tool-free.
+Child `.17.3.7.1` materializes the exact authored portable-VHDL reference, 10,000-record gate, and 100,000-record qualification sources through the qualified OSVVM wrapper. Each role stays at 21 operations and 39 ExecutionIR maps, verifies the pinned provider once for two byte-identical emissions, and closes 16 artifacts, seven sources, 66 maps, twelve checks, seven advanced mappings, six preserved portable sources/guards, and the exact provider census. The seven-source totals are 122,652/122,665/122,677 bytes; t1676 re-derives and falsifies these identities, while the module, task tree, and this card retain them durably. Limit/excess are provider-, route-, staging-, and tool-free.
 
 Child `.17.3.7.2` seals three in-memory OSVVM/GHDL plans: each binds 61 provider analyses, seven emitted sources plus the checked probe, separate fixture/probe commands, four reports, exact tool/resource authority, and repository-relative storage. t1677 re-derives the full identities and falsifies widening; the qualifier consumes the same private authority and stays byte-identical to its checked 74,976-byte executable oracle. Evaluation creates no stage or process and limit/excess stay plan-free.
 

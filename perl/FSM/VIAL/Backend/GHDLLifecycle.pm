@@ -1161,6 +1161,16 @@ sub _phase_result_produced($session) {
     my $decoded = _decode_runtime_result_record(
         $output, $RESULT_RECORD_MAX_BYTES,
     );
+    my $validated_trace = eval {
+        $JSON->decode(_object_content($session, 'validated_trace'))
+    };
+    _throw('VIAL_GHDL_LIFECYCLE_TRACE_ERROR',
+        'sealed GHDL trace boundary authority is malformed',
+        '/trace_validated/scenario_boundaries')
+        unless ref($validated_trace) eq 'HASH'
+            && !blessed($validated_trace)
+            && ref($validated_trace->{trace}) eq 'HASH'
+            && !blessed($validated_trace->{trace});
     _validate_runtime_result_plan_identity(
         $decoded, $session->{validation}{expected_plan_id},
     );
@@ -1171,6 +1181,7 @@ sub _phase_result_produced($session) {
     _validate_runtime_result_shapes($decoded);
     _validate_runtime_result_scenario_values(
         $decoded, $session->{validation}{expected_domain_id},
+        $validated_trace->{trace}{scenario_boundaries},
     );
     _validate_runtime_result_outcome_values(
         $decoded, $session->{validation}{expected_observation_catalog},
@@ -1705,11 +1716,48 @@ sub _require_runtime_result_exact($actual, $expected, $path, $label) {
     return;
 }
 
-sub _validate_runtime_result_scenario_values($decoded, $expected_domain_id) {
+sub _validate_runtime_result_scenario_values(
+    $decoded, $expected_domain_id, $scenario_boundaries,
+) {
     my $time_keys = FSM::VIAL::Backend::ResultProducer->logical_time_keys;
+    my @trace_time_keys = qw(cycle local_index phase_rank static_rank);
+    my @phase = qw(drive sample react check);
+    _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+        'GHDL trace scenario boundary authority is not one exact array',
+        '/trace_validated/scenario_boundaries')
+        unless ref($scenario_boundaries) eq 'ARRAY'
+            && !blessed($scenario_boundaries)
+            && @$scenario_boundaries == @{$decoded->{scenario_results}};
     for my $index (0 .. $#{$decoded->{scenario_results}}) {
         my $entry = $decoded->{scenario_results}[$index];
         my $path = "/result_produced/scenario_results/$index";
+        my $boundary = $scenario_boundaries->[$index];
+        my $boundary_path = "/trace_validated/scenario_boundaries/$index";
+        _require_runtime_result_keys($boundary,
+            [qw(end_time run_id start_time)], $boundary_path,
+            'trace scenario boundary');
+        _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+            'GHDL trace scenario boundary run identity differs from result',
+            "$path/run_id")
+            unless defined($boundary->{run_id}) && !ref($boundary->{run_id})
+                && $boundary->{run_id} eq $entry->{run_id};
+        for my $time_name (qw(start_time end_time)) {
+            my $trace_time = $boundary->{$time_name};
+            _require_runtime_result_keys($trace_time, \@trace_time_keys,
+                "$boundary_path/$time_name", 'trace scenario time');
+            for my $field (@trace_time_keys) {
+                _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+                    'GHDL trace scenario time is not a nonnegative integer',
+                    "$boundary_path/$time_name/$field")
+                    unless _runtime_result_nonnegative_integer(
+                        $trace_time->{$field},
+                    );
+            }
+            _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
+                'GHDL trace scenario phase rank is unsupported',
+                "$boundary_path/$time_name/phase_rank")
+                if $trace_time->{phase_rank} > $#phase;
+        }
         my $start = $entry->{start_time};
         my $end = $entry->{end_time};
         _require_runtime_result_keys(
@@ -1787,6 +1835,15 @@ sub _validate_runtime_result_scenario_values($decoded, $expected_domain_id) {
             _throw('VIAL_GHDL_LIFECYCLE_RESULT_ERROR',
                 'GHDL runtime scenario identity projection is not empty',
                 "$path/$collection_name") if @$collection;
+        }
+        for my $time_name (qw(start_time end_time)) {
+            my $trace_time = $boundary->{$time_name};
+            _require_runtime_result_exact($entry->{$time_name}, {
+                    domain_id => $expected_domain_id,
+                    cycle => 0 + $trace_time->{cycle},
+                    phase => $phase[$trace_time->{phase_rank}],
+                    ordinal => 0 + $trace_time->{local_index},
+                }, "$path/$time_name", "scenario $time_name trace projection");
         }
     }
     return;

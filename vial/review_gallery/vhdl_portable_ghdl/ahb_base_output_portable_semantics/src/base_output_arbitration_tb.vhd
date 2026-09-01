@@ -691,7 +691,7 @@ begin
       vial_scenario_failure_baseline := vial_check_failures;
       vial_scenario_unknown_baseline := vial_unknown_evidence;
       vial_nonzero_read_data_count := 0;
-      vial_time.cycle := 0;
+      vial_time := VIAL_INITIAL_LOGICAL_TIME;
       vial_current_operation_rank := 0;
       vial_fiber_00_status := VIAL_FIBER_DORMANT;
       vial_fiber_01_status := VIAL_FIBER_DORMANT;
@@ -761,6 +761,7 @@ begin
             and not vial_scoreboard.overflowed
             and vial_scoreboard.expected_depth = 0
             and vial_scoreboard.actual_depth = 0;
+          vial_time.phase := VIAL_CHECK_PHASE;
           vial_emit_trace("scenario_end");
         when 1 =>
           -- VIAL scenario 1: ahb_subordinate_base_output_arbitration::fixture::base_output_arbitration::scenario::unsupported_size
@@ -822,6 +823,7 @@ begin
             and not vial_scoreboard.overflowed
             and vial_scoreboard.expected_depth = 0
             and vial_scoreboard.actual_depth = 0;
+          vial_time.phase := VIAL_CHECK_PHASE;
           vial_emit_trace("scenario_end");
         when others =>
           null;

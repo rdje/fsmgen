@@ -218,6 +218,12 @@ subtest 'portable source emits typed stimulus, scheduling, models, and declared 
         'procedural checking records unknown-value evidence');
     like($top, qr/vial_emit_trace\("footer"\)/,
         'trace has an explicit closure record');
+    like($top,
+        qr/for scenario_index in 0 to \d+ loop.*?vial_time := VIAL_INITIAL_LOGICAL_TIME;.*?vial_emit_trace\("scenario_start"\)/s,
+        'each scenario start resets the complete logical-time origin');
+    like($top,
+        qr/vial_time\.phase := VIAL_CHECK_PHASE;\s+vial_emit_trace\("scenario_end"\);/,
+        'each scenario end is emitted at its declared CHECK boundary');
     like($top, qr/FSMGEN_VIAL_TRACE_V2/,
         'trace records use the exact revision-2 prefix');
     like($top,

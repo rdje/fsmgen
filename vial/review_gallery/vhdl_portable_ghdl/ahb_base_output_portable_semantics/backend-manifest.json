@@ -5,7 +5,7 @@
          "kind" : "source_map",
          "relpath" : "backends/vhdl_portable_ghdl/backend-source-map.json",
          "role" : "backend_source_map",
-         "sha256" : "2226c394d344d80c425985151203590276d3e80a0bf1967c98e2f1a8150ba917"
+         "sha256" : "cccf0a72cb21adf629668ee236a570d1406e84bb80f108390500ff1d72e62456"
       },
       {
          "bytes" : 2990,
@@ -61,7 +61,7 @@
          "kind" : "static_validation",
          "relpath" : "backends/vhdl_portable_ghdl/evidence/static-validation.json",
          "role" : "vhdl_static_validation",
-         "sha256" : "8613a7ab2a0ebed2e01e432469026268504f5d6b743664a59b1c0d5e3fd26f6e"
+         "sha256" : "e829f54ec5c38c0a228ee6bdc56e798f1a411845078025add6c3e2b3933bf8d0"
       },
       {
          "bytes" : 1138,
@@ -85,11 +85,11 @@
          "sha256" : "7a7e3b4e81fd222e53e2098653fcf1131f1b58dbeba35698c1cfe67a4fab5b56"
       },
       {
-         "bytes" : 46389,
+         "bytes" : 46501,
          "kind" : "vhdl_source",
          "relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_tb.vhd",
          "role" : "vhdl_fixture_top",
-         "sha256" : "7c2144ffa06ab57528839f2935b16ca621580e2848e26b6c688ebe4692636122"
+         "sha256" : "e1639212cb7c0152ce3e6cdfb6829916e4ff3b181f1d4490f70dc48fe62f32b6"
       },
       {
          "bytes" : 47670,
@@ -237,7 +237,7 @@
       "entry_count" : 59,
       "relpath" : "backends/vhdl_portable_ghdl/backend-source-map.json",
       "schema" : "fsmgen.vial_vhdl_backend_source_map.v1",
-      "sha256" : "2226c394d344d80c425985151203590276d3e80a0bf1967c98e2f1a8150ba917"
+      "sha256" : "cccf0a72cb21adf629668ee236a570d1406e84bb80f108390500ff1d72e62456"
    },
    "source_order" : {
       "library" : "fsmgen_vial",

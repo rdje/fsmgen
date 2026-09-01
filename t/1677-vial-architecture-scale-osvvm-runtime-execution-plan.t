@@ -23,27 +23,27 @@ my @levels = qw(
 my %expected = (
     reference_v1 => {
         plan =>
-            'osvvm-ghdl-execution-plan/be78cf018f259a28f22ca9195a10267d1014551390b54af39a823e68f5153cc4',
+            'osvvm-ghdl-execution-plan/d80c4533fc3181d0027814a685da88a29d4d4277dfc9a85e1a3bfd9cb1d66515',
         settings =>
-            '8adc31926e5866ce15fccb3c98eedcd815fd5a75e7bbff3da2edef49ef332ace',
+            'd48d2be3023e61e712eb167af93aa6e30116922e50cb4617c7e843c174872ede',
         source =>
-            'source/c0732601bd4ccd902120369a11122d5a2a3fad7552cc2907e487a60f92f2cd09',
+            'source/7e21df531a86a5a023f811fc02acb53db5cbdc7c182aacc1b215474ec30b5b04',
     },
     gate_candidate_v1 => {
         plan =>
-            'osvvm-ghdl-execution-plan/cb30bee9c824346da8f4991dfa6bc263b2e91ab87a339b26075274112a64c235',
+            'osvvm-ghdl-execution-plan/9c37ac1b03fb060f36f9c09f804be4df0ca70a571cfd4a7a002b5c7ba2ccb542',
         settings =>
-            '03e8aac3e4637bd03027b81580cdd2cd1b72cfdbb00b83745ac79436f4e541af',
+            '9e139cd59927986bbf362c29b968300042cde234e7b447694d601ddfdd18a1c7',
         source =>
-            'source/fe3915cfc16d139531703bf045107ca875dd1a65626e7020464706d691809156',
+            'source/5c392b879cadec2da0c143e297469f154b5daa2610d29c1277c3f0db84c12f53',
     },
     qualification_candidate_v1 => {
         plan =>
-            'osvvm-ghdl-execution-plan/65fd2ed80a992268e0049c75126b9d13d91f849099cc8abb8678b3448ad2e002',
+            'osvvm-ghdl-execution-plan/56c2dabfe0a12dc7ed322dde18b1f4673cb7ac52e9b3d763da9a7327d367cbce',
         settings =>
-            'b14988626f7b1af828c84a0caee88b41fc5c5c002fa51ca4cc7e6e193c2e4524',
+            '545014fef057e0defa75c7307d8c0438c59836d0a5d6522895d1d517b7870190',
         source =>
-            'source/64802c307fa4426732613ab0d6ca54c9a0b5cd20ff02e740b70e3ea24ba565f5',
+            'source/f331a858130d76d445879b66cca38165138f748339e503bc0c7d8254d4fc5bef',
     },
 );
 my %report;
@@ -165,17 +165,17 @@ subtest 'the checked qualifier remains the byte-exact executable oracle' => sub 
     is($oracle->{status}, 'byte_exact_executable_oracle',
         'oracle status is explicit');
     is($oracle->{qualification_id},
-        'qualification/1b55ef7d1c6c6e61dd025f7d52b06356b10611aa675973d30673c98e887a016a',
-        'checked qualification identity is unchanged');
+        'qualification/fe49e8b23dfc671349cd407c0a17df1be6ba00262402de149daf9f60aee7b278',
+        'checked qualification identity is exact');
     is($oracle->{bytes}, 74_976, 'checked report byte size is exact');
     is($oracle->{sha256},
-        '498f505128c67151ca2176b1d744ba98e15fa50bdcc7d3adf4a98c5e61c62347',
+        'd397bed3a9820fec473af8f070bb3f5b9a18e4b5ff925286c1458fab46f8b9ab',
         'checked report bytes are sealed');
     is($oracle->{generated_settings_sha256},
-        'b12fa058292479f9af69cf78e08209564d1420ded52fcb049bc30df25cb38bdc',
+        '2f48ef01a4fedccb02ec990a7cc6d98e84d6a7cb180cae5ccb4a68061f54d0cc',
         'qualifier settings bytes come from the extracted authority');
     is($oracle->{command_projection_sha256},
-        '79e7481f4d5156e478da440d45e1f5120d9c12f03fcce58c64e8f6acc8393254',
+        'a5de1a59a3d7f4612c46153475bb3dad614a0fb208a931144a72b963ef26bb48',
         'every checked qualifier command matches the extracted plan');
 };
 

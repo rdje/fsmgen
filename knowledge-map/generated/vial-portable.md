@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-portable`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **28** uniquely owned question entries.
+> **2** facts · **29** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -11,6 +11,7 @@
 - q="how are GHDL fault applications and scoreboard comparisons bound to trace records?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)
 - q="how are GHDL passing diagnostic codes and logical times bound to VHDL emitter behavior?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)
 - q="how are GHDL result fixture and random decisions bound to plan authority?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)
+- q="how are GHDL result scenario boundary times bound to the authenticated trace?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)
 - q="how are GHDL scenario expectation diagnostic and cancelled fiber identities admitted?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)
 - q="how are VIAL verification probes accessed in SystemVerilog?" · facts=[vial-portable-systemverilog-backend-v1](../../docs/knowledge/vial-portable-systemverilog-backend-v1.md)
 - q="how do fake GHDL lifecycle providers avoid host executable admission?" · facts=[vial-portable-vhdl-runtime-scale](../../docs/knowledge/vial-portable-vhdl-runtime-scale.md)

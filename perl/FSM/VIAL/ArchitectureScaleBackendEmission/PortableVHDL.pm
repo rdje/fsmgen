@@ -83,25 +83,25 @@ my @STATIC_CHECKS = qw(
 );
 my %EXPECTED = (
     reference_v1 => {
-        operations => 21, source_bytes => 118_191, source_maps => 59,
+        operations => 21, source_bytes => 118_303, source_maps => 59,
         metadata_bytes => 15_323,
         metadata_sha256 =>
             '59a4f9e1f8a2c9da6b8c5dd36f255ee1edb0b2bce57264906ab916a9141ba8bc',
     },
     gate_candidate_v1 => {
-        operations => 128, source_bytes => 176_560, source_maps => 166,
+        operations => 128, source_bytes => 176_672, source_maps => 166,
         metadata_bytes => 73_692,
         metadata_sha256 =>
             '922e1ab962d20c12cf24cdd8222a19b3f39fe958e934bcfb93b6a03974e0c9c9',
     },
     qualification_candidate_v1 => {
-        operations => 512, source_bytes => 388_528, source_maps => 550,
+        operations => 512, source_bytes => 388_640, source_maps => 550,
         metadata_bytes => 285_660,
         metadata_sha256 =>
             '9c77af56b8241f94c4ca2d9fc23ec73c6ad5582ae709dcb1318d0e6716502d7a',
     },
     limit_v1 => {
-        operations => 29_505, source_bytes => 16_776_666,
+        operations => 29_505, source_bytes => 16_776_778,
         source_maps => 29_543, metadata_bytes => 16_673_798,
         metadata_sha256 =>
             'ee03bed502de45c0f55c944642852489c0f6129bb9318c68392ef176c2d9445c',
@@ -450,9 +450,9 @@ sub _expected_sources($expected) {
                 '7a7e3b4e81fd222e53e2098653fcf1131f1b58dbeba35698c1cfe67a4fab5b56',
         },
         {
-            relpath => $SOURCE_RELPATHS[2], bytes => 46_391,
+            relpath => $SOURCE_RELPATHS[2], bytes => 46_503,
             sha256 =>
-                '1e5e8032e7b38478077a8c49c53498554d57bffaee38e28b1cf7aca7ebae85b6',
+                '69e3cb8f5f19391b516f65fed0183b46d0bf920ea40ed5fb644aa38307531693',
         },
         {
             relpath => $SOURCE_RELPATHS[3], bytes => 47_670,

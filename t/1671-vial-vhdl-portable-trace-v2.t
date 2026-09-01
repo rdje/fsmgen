@@ -98,6 +98,11 @@ is($valid->{trace}{observation_catalog}{total_width}, 4,
 is_deeply($valid->{trace}{observation_catalog}{sample_ids},
     ['sample/endpoint/out', 'sample/probe/state'],
     'validated result retains catalog order');
+is_deeply($valid->{trace}{scenario_boundaries}, [{
+        run_id => $run_id,
+        start_time => time_record(0, 0),
+        end_time => time_record(2, 3),
+    }], 'validated result retains exact ordered scenario boundary times');
 
 my $invocation = FSM::VIAL::Backend::VHDLPortableTraceValidator->validate({
     trace_text => trace_text(\@record),
@@ -183,6 +188,16 @@ my @unknown_phase = clone(\@record)->@*;
 $unknown_phase[1]{payload}{logical_time}{phase_rank} = 4;
 failure(validate_records(\@unknown_phase), 'VIAL_VHDL_TRACE_TIME_ERROR',
     'logical time outside the closed phase vocabulary');
+
+my @foreign_start = clone(\@record)->@*;
+$foreign_start[1]{payload}{logical_time}{static_rank} = 1;
+failure(validate_records(\@foreign_start), 'VIAL_VHDL_TRACE_TIME_ERROR',
+    'scenario start outside the exact logical-time origin');
+
+my @foreign_end = clone(\@record)->@*;
+$foreign_end[4]{payload}{logical_time}{phase_rank} = 0;
+failure(validate_records(\@foreign_end), 'VIAL_VHDL_TRACE_TIME_ERROR',
+    'scenario end outside the CHECK boundary');
 
 my @unframed = clone(\@record)->@*;
 $unframed[1]{record_kind} = 'samples';

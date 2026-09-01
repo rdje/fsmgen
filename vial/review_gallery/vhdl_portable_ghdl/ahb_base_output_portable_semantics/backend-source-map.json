@@ -15,11 +15,11 @@
          "sha256" : "7a7e3b4e81fd222e53e2098653fcf1131f1b58dbeba35698c1cfe67a4fab5b56"
       },
       {
-         "bytes" : 46389,
+         "bytes" : 46501,
          "kind" : "vhdl_source",
          "relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_tb.vhd",
          "role" : "vhdl_fixture_top",
-         "sha256" : "7c2144ffa06ab57528839f2935b16ca621580e2848e26b6c688ebe4692636122"
+         "sha256" : "e1639212cb7c0152ce3e6cdfb6829916e4ff3b181f1d4490f70dc48fe62f32b6"
       },
       {
          "bytes" : 47670,
@@ -158,7 +158,7 @@
             "/backend_bindings"
          ],
          "generated_end_column" : 37,
-         "generated_end_line" : 837,
+         "generated_end_line" : 839,
          "generated_relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_tb.vhd",
          "generated_start_column" : 1,
          "generated_start_line" : 1,
@@ -1362,7 +1362,7 @@
             "/domains/0"
          ],
          "generated_end_column" : 30,
-         "generated_end_line" : 836,
+         "generated_end_line" : 838,
          "generated_relpath" : "backends/vhdl_portable_ghdl/src/base_output_arbitration_tb.vhd",
          "generated_start_column" : 1,
          "generated_start_line" : 68,

@@ -35,8 +35,8 @@ is `artifacts/sources, source bytes, source-map entries, visible static checks`.
 | Profile | Reference | Gate candidate | Qualification candidate | Limit | First excess |
 | --- | --- | --- | --- | --- | --- |
 | portable SystemVerilog (oracle revision 2) | `T=21`: `8/3, 164,507, 54, 0` | `T=1,024`: `8/3, 2,803,857, 1,057, 0` | `T=4,096`: `8/3, 10,910,865, 4,129, 0` | `T=6,318`: `8/3, 16,774,723, 6,351, 0` | `T=6,319`: `VIAL_BACKEND_LIMIT_EXCEEDED` at `/artifacts`, no artifacts; pre-cap size `16,777,362` |
-| portable VHDL (oracle revision 2) | `T=21`: `17/6, 118,191, 59, 21` | `T=128`: `17/6, 176,560, 166, 21` | `T=512`: `17/6, 388,528, 550, 21` | `T=29,505`: `17/6, 16,776,666, 29,543, 21` | `T=29,506`: `VIAL_VHDL_BACKEND_LIMIT_EXCEEDED` at `/artifacts`, rendered size 16,777,234 |
-| OSVVM 2026.05 (oracle revision 2) | `T=21`: selected `16/7, 122,542, 66, 12+21` after repairs | `T=128`: selected `16/7, 180,911, 173, 12+21` | `T=512`: selected `16/7, 392,879, 557, 12+21` | `T=29,505`: selected `16/7, 16,781,017, 29,550, 12+21` | `T=29,506`: portable-foundation byte rejection, no wrapper artifacts |
+| portable VHDL (oracle revision 2) | `T=21`: `17/6, 118,303, 59, 21` | `T=128`: `17/6, 176,672, 166, 21` | `T=512`: `17/6, 388,640, 550, 21` | `T=29,505`: `17/6, 16,776,778, 29,543, 21` | `T=29,506`: `VIAL_VHDL_BACKEND_LIMIT_EXCEEDED` at `/artifacts`, rendered size 16,777,346 |
+| OSVVM 2026.05 (oracle revision 2) | `T=21`: selected `16/7, 122,654, 66, 12+21` after repairs | `T=128`: selected `16/7, 181,023, 173, 12+21` | `T=512`: selected `16/7, 392,991, 557, 12+21` | `T=29,505`: selected `16/7, 16,781,129, 29,550, 12+21` | `T=29,506`: portable-foundation byte rejection, no wrapper artifacts |
 | native UVM review profile | `T=21`: `16/10, 138,345, 75, 14` | `T=22`: selected negotiation rejection after repair | preflight-dominated by `T=22` | preflight-dominated; backend byte/map caps are unreachable in the selected matrix | preflight-dominated; no artifact graph |
 
 ### Portable-SystemVerilog oracle revision 2 (2026-08-24)
@@ -78,7 +78,7 @@ OSVVM, and native UVM share them; the versioned profile oracle carries the
 portable evidence compatibility break.
 
 The portable-VHDL reference above uses the selected generated scale source name.
-The checked repository fixture itself emits 118,189 bytes; the two-byte
+The checked repository fixture itself emits 118,301 bytes; the two-byte
 difference is source-location text, not semantic or renderer instability. The
 OSVVM source totals add its fixed 4,351-byte adapter to those six portable
 sources. Its `12+21` check notation means twelve wrapper checks are visible in
@@ -120,6 +120,26 @@ schema. Ordinary Parser/PlanBuilder emission, byte-equal reruns, the complete
 five-level portable and OSVVM watchers, and the family aggregate independently
 prove the revised identities and adjacent rejection. The cap, runtime
 semantics, public support, performance, and capacity claims do not change.
+
+### Portable-VHDL scenario-boundary trace refinement (2026-09-01)
+
+Real GHDL then proved that `scenario_end` carried the correct cycle but the
+wrong DRIVE phase because the inactive barrier restored DRIVE before emission;
+the next scenario also inherited the preceding static rank because only cycle
+was reset. Generated VHDL now resets the complete logical-time record per
+scenario and selects CHECK immediately before the end record. The normalized
+authenticated trace retains exact ordered start/end boundaries, and result
+admission maps their cycle, phase rank, and local index to result
+cycle/phase/ordinal while retaining the independently sealed plan domain.
+
+This correction adds 112 fixed source bytes. It leaves the selected operation
+witness at `T=29,505`, now 16,776,778 portable bytes and 29,543 maps; adjacent
+`T=29,506` renders 16,777,346 bytes and rejects atomically, 130 bytes over the
+unchanged cap. OSVVM adds its unchanged 4,351-byte adapter only after portable
+admission, producing 16,781,129 selected source bytes. Fresh real-GHDL
+qualification, guarded all-level emission, materialization, and execution-plan
+regressions re-derive the content identities. This changes no cap, runtime
+support, performance, or capacity claim.
 
 Selection found four defects that had to be repaired before the table could be
 consumed:

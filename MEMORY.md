@@ -8,8 +8,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
   (`active`; runtime-stream cap hardening under decisions `0093`/`0083`)
-- next_action: retain normalized GHDL trace scenario boundary times and bind
-  result start/end times to them in `.17.4.7`.
-- in_flight_uncommitted: none after diagnostic trace-cardinality closure.
+- next_action: independently audit the remaining portable-VHDL/OSVVM
+  runtime-envelope admissions in `.17.4.7`; open the smallest proven gap or
+  close the leaf if the selected contract is exhausted.
+- in_flight_uncommitted: none after scenario boundary-time equality closure.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none; immutable `.17.3` evidence is the selection input.

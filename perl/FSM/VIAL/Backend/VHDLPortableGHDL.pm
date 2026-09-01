@@ -2009,7 +2009,7 @@ sub _render_fixture(%arg) {
         '      vial_scenario_failure_baseline := vial_check_failures;',
         '      vial_scenario_unknown_baseline := vial_unknown_evidence;',
         '      vial_nonzero_read_data_count := 0;',
-        '      vial_time.cycle := 0;',
+        '      vial_time := VIAL_INITIAL_LOGICAL_TIME;',
         '      vial_current_operation_rank := 0;';
     for my $index (0 .. $#fiber) {
         my $tag = sprintf('%02d', $index);
@@ -2129,6 +2129,7 @@ sub _render_fixture(%arg) {
             '            and not vial_scoreboard.overflowed',
             '            and vial_scoreboard.expected_depth = 0',
             '            and vial_scoreboard.actual_depth = 0;',
+            '          vial_time.phase := VIAL_CHECK_PHASE;',
             '          vial_emit_trace("scenario_end");';
     }
     push @line,

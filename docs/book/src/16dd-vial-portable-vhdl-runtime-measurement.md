@@ -11,9 +11,9 @@ independently reloads the complete immutable set, closing `.17.3.6`. This
 chapter does not make a performance, capacity, or support claim.
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-portable-vhdl-runtime-selection-v1 -->
-- Claim: The checked portable-VHDL v2 fixture produces 77 trace records across 35 real inactive-edge observation barriers; its authenticated four-entry/66-bit catalog and one snapshot per barrier establish `records(N)=N+74`, reset/timeout candidates 9,926/16,384 and 99,926/131,072 for 10,000/100,000 records, and unchanged GHDL deadline/capture pairs 10/65,536, 120/8,388,608, 60/8,388,608, and 30/67,108,864.
-- Re-derive: Run the guarded exact GHDL qualifier; independently census the 42 pre-snapshot records, 19/16 scenario sample partition, ordered observation catalog, normalized result, and emitted sample-call placement.
-- Falsify: Hostile controls mutate canonical encoding, schema, framing, sequence, catalog identity/order/digest/width, sample identity/phase/width/symbols, logical time, counts, footer closure, and checked qualification evidence; every mutation fails closed before result production.
+- Claim: The checked portable-VHDL v2 fixture produces 77 trace records across 35 real inactive-edge observation barriers; its authenticated four-entry/66-bit catalog and one snapshot per barrier establish `records(N)=N+74`, while ordered exact trace scenario boundaries independently bind every admitted result start/end cycle, phase, and ordinal. Reset/timeout candidates remain 9,926/16,384 and 99,926/131,072 for 10,000/100,000 records, with unchanged GHDL deadline/capture pairs 10/65,536, 120/8,388,608, 60/8,388,608, and 30/67,108,864.
+- Re-derive: Run the guarded exact GHDL qualifier; independently census the 42 pre-snapshot records, 19/16 scenario sample partition, ordered observation catalog, exact trace/result scenario boundaries, normalized result, and emitted sample-call placement.
+- Falsify: Hostile controls mutate canonical encoding, schema, framing, sequence, catalog identity/order/digest/width, sample identity/phase/width/symbols, scenario start/end logical time, result boundary projection, counts, footer closure, and checked qualification evidence; every mutation fails closed before result persistence.
 - Durability: Retain decision 0090, the exact task frontier, this chapter, its Knowledge Map card, the bounded claim record, checked portable/OSVVM reports and galleries, doctrine watcher, and work-unit Git chain.
 <!-- CLAIM-VERIFICATION:END vial-portable-vhdl-runtime-selection-v1 -->
 
@@ -133,9 +133,9 @@ each emission has 17 artifacts, six VHDL sources, 59 emitted source maps, and
 
 | Level | Complete artifact bytes | VHDL source bytes | Fixture bytes |
 | --- | ---: | ---: | ---: |
-| reference | 238,745 | 118,189 | 46,389 |
-| gate candidate | 239,028 | 118,202 | 46,400 |
-| qualification candidate | 239,445 | 118,214 | 46,411 |
+| reference | 238,857 | 118,301 | 46,501 |
+| gate candidate | 239,140 | 118,314 | 46,512 |
+| qualification candidate | 239,557 | 118,326 | 46,523 |
 
 The materialization report alone closes source-to-emission structure, not
 external execution. The measurement adapter now independently makes the
@@ -245,6 +245,19 @@ into lifecycle state. The authority also seals the plan's single logical-time
 domain: both scenario timestamp domains must equal it, so even an internally
 consistent foreign start/end pair rejects. Fixed qualification reproduces that
 domain from the canonical plan, while dynamic callers select it from ExecutionIR.
+The authenticated trace now supplies a second, independent authority for the
+scenario boundary values themselves. Its normalized projection retains each
+run's exact `scenario_start` and `scenario_end` logical time in run order.
+Starts must be the complete cycle/phase/static/local origin; ends must use the
+CHECK phase and local index zero. Result admission maps trace cycle directly,
+phase rank through `drive/sample/react/check`, and trace local index to result
+ordinal, then supplies only the separately sealed plan domain. Both start and
+end must match that projection exactly before the result object can persist.
+This closes internally consistent forged cycle/count pairs as well as foreign
+domains. Real GHDL exposed the producer side of the same defect: only the cycle
+had been reset between scenarios, and `scenario_end` was emitted after the
+inactive barrier had restored DRIVE. Generated VHDL now resets the complete
+logical-time record for every scenario and emits the end boundary in CHECK.
 The passing diagnostic collection is exact too: one record per scenario in
 scenario order, emitter-selected `VIAL_EXPECT_SUCCESS`/`VIAL_EXPECT_ERROR` code,
 the matching scenario end cycle, and logical-time ranks `0/3/3`. Missing, extra,
@@ -262,13 +275,9 @@ here for bounded reviewer visibility. The compact OSVVM gallery reference keeps
 only the report path, identity, and digest: copying the nested projection there
 would create a second value authority rather than improve verification.
 
-The 127 fixed source bytes also refine the structural emission boundary. The
-unchanged 16-MiB cap now accepts the complete `T=29,505` portable graph at
-16,776,666 bytes and 29,543 maps; adjacent `T=29,506` renders 16,777,234 bytes
-and rejects before artifacts. OSVVM inherits that portable-foundation boundary
-and adds its fixed adapter only after successful portable emission. Both scale
-oracles publish revision-2 identities; this changes evidence compatibility,
-not the cap or a runtime/support/capacity claim.
+The earlier result-contract correction added 127 fixed source bytes and moved the structural witness to `T=29,505`; the boundary-time correction adds 112 fixed bytes without moving it.
+The unchanged 16-MiB cap accepts `T=29,505` at 16,776,778 bytes/29,543 maps; adjacent `T=29,506` renders 16,777,346 bytes and rejects, 130 bytes over.
+OSVVM adds its fixed 4,351-byte adapter only after portable admission, producing 16,781,129 selected bytes; both revision-2 graph identities regenerate without changing the cap or a runtime/support/capacity claim.
 
 The shared production process supervisor records containment, spawn, successful
 `exec`, first output, exit, timeout/capture status, signal, and complete process-

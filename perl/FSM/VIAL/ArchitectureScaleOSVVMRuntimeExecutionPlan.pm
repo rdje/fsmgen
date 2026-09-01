@@ -38,9 +38,9 @@ my $ARCHIVE_SHA256 =
 my $BINARY_SHA256 =
     '38a99c1cc18b04dfae128b118c7344910e08b8ba6eeb9c1e67f950a84bca3c3d';
 my $CHECKED_REPORT_SHA256 =
-    '498f505128c67151ca2176b1d744ba98e15fa50bdcc7d3adf4a98c5e61c62347';
+    'd397bed3a9820fec473af8f070bb3f5b9a18e4b5ff925286c1458fab46f8b9ab';
 my $CHECKED_QUALIFICATION_ID =
-    'qualification/1b55ef7d1c6c6e61dd025f7d52b06356b10611aa675973d30673c98e887a016a';
+    'qualification/fe49e8b23dfc671349cd407c0a17df1be6ba00262402de149daf9f60aee7b278';
 my $VERSION_OUTPUT = join("\n",
     'GHDL 6.0.0 (6.0.0.r0.ge589c698c) [Dunoon edition]',
     ' Compiled with GNAT Version: 14.2.0',

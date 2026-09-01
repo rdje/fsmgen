@@ -148,6 +148,17 @@ my $expected_observation_catalog = {
 my $expected_record_counts = {
     coverage => 2, expectations => 2, faults => 2, scoreboards => 2,
 };
+my $expected_scenario_boundaries = [map {
+    {
+        run_id => $expected_run_id[$_],
+        start_time => {
+            cycle => 0, local_index => 0, phase_rank => 0, static_rank => 0,
+        },
+        end_time => {
+            cycle => 0, local_index => 0, phase_rank => 3, static_rank => 3,
+        },
+    }
+} 0 .. $#scenario_id];
 my $encoded = $json->encode($manifest);
 
 subtest 'canonical result is admitted at the exact byte boundary' => sub {
@@ -463,6 +474,13 @@ subtest 'scenario values obey the shared passing-result contract' => sub {
     is(value_failure($off_by_one)->{path},
         '/result_produced/scenario_results/0/end_time/cycle',
         'end cycle must equal logical cycle count minus one');
+
+    my $foreign_trace_time = clone($manifest);
+    $foreign_trace_time->{scenario_results}[0]{end_time}{cycle} = 1;
+    $foreign_trace_time->{scenario_results}[0]{logical_cycle_count} = 2;
+    is(value_failure($foreign_trace_time)->{path},
+        '/result_produced/scenario_results/0/end_time',
+        'internally consistent result time rejects against trace authority');
 
     my $wrong_completion = clone($manifest);
     $wrong_completion->{scenario_results}[0]{completion_reason} =
@@ -828,6 +846,7 @@ sub shape_failure {
 sub validate_scenario_values {
     FSM::VIAL::Backend::GHDLLifecycle::_validate_runtime_result_scenario_values(
         $_[0], $expected_domain_id,
+        defined($_[1]) ? $_[1] : $expected_scenario_boundaries,
     );
 }
 

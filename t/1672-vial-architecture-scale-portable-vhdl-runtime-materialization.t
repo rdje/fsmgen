@@ -33,12 +33,12 @@ my %expected = (
         source_bytes => 4_986,
         source_sha =>
             '2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd',
-        artifact_bytes => 238_618, vhdl_bytes => 118_062,
-        fixture_bytes => 46_262,
+        artifact_bytes => 238_857, vhdl_bytes => 118_301,
+        fixture_bytes => 46_501,
         fixture_sha =>
-            'b327edab233200bc9b8ff1b8e6a22588505749f47363b7bc9c4a0380394f16b3',
+            'e1639212cb7c0152ce3e6cdfb6829916e4ff3b181f1d4490f70dc48fe62f32b6',
         report =>
-            'portable-vhdl-runtime-materialization/7c44198da04cdd158b19213980fc5ccd3cebbf3387a43f020a14e33921dcea15',
+            'portable-vhdl-runtime-materialization/6f12ab75b1ea1e57d3446ef714669daecdc5d2b56f9ff58d6c7fe755147d83bb',
     },
     gate_candidate_v1 => {
         status => 'structurally_qualified', records => 10_000,
@@ -48,12 +48,12 @@ my %expected = (
         source_bytes => 4_991,
         source_sha =>
             'ce1374f97dcf992e823273d70ebcf1014813ff926a103fea53800797cf304959',
-        artifact_bytes => 238_901, vhdl_bytes => 118_075,
-        fixture_bytes => 46_273,
+        artifact_bytes => 239_140, vhdl_bytes => 118_314,
+        fixture_bytes => 46_512,
         fixture_sha =>
-            '4a1cc43d625ec6d352c63a6a0e9b2a2e56a3ae41ea26cf480c9979b21dee2513',
+            'b283e1a2be9fc2c39353347d84537d628dc09cd92de786ce0a7620013f7805e0',
         report =>
-            'portable-vhdl-runtime-materialization/70dc55f5c57ec825359b05428eabfbae0465ad526544055596e57b6f666b9cde',
+            'portable-vhdl-runtime-materialization/1cf26e647d3c95f47b14747b068d1f6c94e9e917ecced7e1f035ed519702e305',
     },
     qualification_candidate_v1 => {
         status => 'structurally_qualified', records => 100_000,
@@ -63,12 +63,12 @@ my %expected = (
         source_bytes => 4_993,
         source_sha =>
             'cbf752abb62d0b88e5411cde979d0e6eb91a5f0e23a1b2eece8c633edad4b7ca',
-        artifact_bytes => 239_318, vhdl_bytes => 118_087,
-        fixture_bytes => 46_284,
+        artifact_bytes => 239_557, vhdl_bytes => 118_326,
+        fixture_bytes => 46_523,
         fixture_sha =>
-            '9e0f2f69389e5bd5e3264dc1aadd220d2bbfa9bf9f35360f2ba692f6ca662b10',
+            '929006e97de7852e8e3a9b0031de12da098f4cafea49293f69fdcddcc8276561',
         report =>
-            'portable-vhdl-runtime-materialization/70e81c250b70d528d4d9a6a04ce34f8f7b8f77ab27f0901ece778b8458c8ef01',
+            'portable-vhdl-runtime-materialization/8ebff4364b5ca10b4fb6ad1cd639116e3986ed61747ae93f8da469dfc287effe',
     },
     limit_v1 => {
         status => 'preflight_dominated', records => 8_000_002,
