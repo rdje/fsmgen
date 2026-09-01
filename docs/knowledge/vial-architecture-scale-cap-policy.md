@@ -32,7 +32,8 @@ answers:
   - "when does portable SystemVerilog reject a trace that cannot fit the public artifact graph?"
   - "when does portable SystemVerilog reject a produced result that cannot fit the public artifact graph?"
   - "does the portable SystemVerilog lifecycle enforce its final backend artifact graph?"
-date: 2026-08-31
+  - "how does the common controller admit worker artifact files?"
+date: 2026-09-01
 status: current
 tags: [vial, architecture-scale, limits, bounded-failure, route-authority]
 evidence: >-
@@ -89,7 +90,7 @@ evidence: >-
   perl/FSM/VIAL/Backend/VerilatorLifecycle.pm;
   t/1721-vial-runtime-trace-artifact-preflight.t;
   t/1722-vial-runtime-result-artifact-preflight.t;
-  t/1723-vial-runtime-final-artifact-graph.t;
+  t/1723-vial-runtime-final-artifact-graph.t; perl/FSM/VIAL/ArchitectureScaleMeasurement.pm; t/1748-vial-common-worker-artifact-file-admission.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -130,7 +131,7 @@ reverify: >-
   t/1720-vial-runtime-structural-artifact-preflight.t
   t/1721-vial-runtime-trace-artifact-preflight.t
   t/1722-vial-runtime-result-artifact-preflight.t
-  t/1723-vial-runtime-final-artifact-graph.t
+  t/1723-vial-runtime-final-artifact-graph.t t/1748-vial-common-worker-artifact-file-admission.t
   t/1716-vial-backend-portable-sv-cap-order.t
   t/1717-vial-backend-portable-vhdl-cap-order.t
   t/1718-vial-backend-osvvm-provider-admission-order.t
@@ -204,3 +205,5 @@ checks remain later defenses. After the backend manifest is finalized, the
 lifecycle enforces exact completed-backend count and bytes before Runner return;
 the Tool then retains its complete plan-plus-backend terminal validation. This
 changes no cap or claim.
+
+The common controller admits worker files before counts/digests: 67,108,864 passes, cap+1 rejects, parents/leaf require current-owner same-volume symlink-free single-link regular files, and a no-follow bounded read binds stable opened/path metadata. Safe modes pass, writable modes reject; no cap or support claim changes.

@@ -284,6 +284,33 @@ prove -Iperl -It/lib t/1747-vial-osvvm-outer-persisted-json-file-admission.t
 These are private persisted-file safety ceilings, not promoted runtime
 capacity, performance, provider-generality, or support claims.
 
+The common measurement controller independently admits every artifact returned
+by every isolated backend worker before it counts lines or trusts a digest.
+The declared and filesystem sizes must both fit the existing 67,108,864-byte
+runtime artifact ceiling. Every parent is a current-owner same-volume real
+directory; the leaf must be a current-owner, single-link regular file whose
+mode is owner-readable, non-executable, free of special bits, and not writable
+by group or other users. The controller opens with no-follow/nonblocking flags,
+binds the pathname to the opened device and inode, reads at most the ceiling
+plus one byte, then rechecks the opened and pathname metadata before validating
+the declared byte count, line count, digest, and complete output census.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-common-worker-artifact-file-admission-v1 -->
+- Claim: The common architecture-scale measurement controller admits worker artifacts only through a symlink-free, same-volume, current-owner, single-link regular-file path; accepts the existing 67,108,864-byte ceiling exactly; rejects cap+1 before content validation; admits safe `0600`, `0640`, and `0644` controls while rejecting group/world-writable mode; and binds a bounded read to stable opened-inode and pathname metadata before trusting counts or digests.
+- Re-derive: Run `prove -Iperl -It/lib t/1748-vial-common-worker-artifact-file-admission.t`; independently inspect the common controller's declared-byte preflight, parent walk, path/opened `stat` comparisons, maximum-plus-one read loop, and post-read identity checks, then run the foundation and each executable runtime adapter.
+- Falsify: Substitute cap+1, ambient-writable, leaf-symlink, parent-symlink, multiply linked, or simulated foreign-volume artifacts while retaining internally consistent worker metadata; each control must reject at file admission, while exact-boundary and safe-mode controls remain accepted and repository-local cleanup remains exact.
+- Durability: Retain the common controller, t1748, task `.17.4.7`, this chapter, the architecture-scale cap Knowledge Map card, bounded claim record, doctrine watcher, and work-unit Git chain.
+<!-- CLAIM-VERIFICATION:END vial-common-worker-artifact-file-admission-v1 -->
+
+Run the focused boundary without invoking an HDL tool:
+
+```console
+prove -Iperl -It/lib t/1748-vial-common-worker-artifact-file-admission.t
+```
+
+The 64-MiB value is reused from the shipped runtime envelope. This reader adds
+no larger cap, scale qualification, performance budget, or support statement.
+
 Each executable role uses one lifecycle execution per controller record. The
 reference role has one correctness-only validation. Gate has one validation
 and three independently measured records; qualification has one validation

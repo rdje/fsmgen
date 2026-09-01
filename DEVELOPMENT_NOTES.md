@@ -1192,9 +1192,9 @@ A digest-named state proves byte consistency, not that its values still
 describe selected commands or retained objects. Resume reconstructs inputs and
 payloads, keeping byte and meaning integrity separate without coupling schemas.
 
-## 2026-09-01: Persisted JSON admits file and value types before meaning
+## 2026-09-01: Worker metadata does not authenticate its artifact file
 
-Canonical JSON protects encoding only after bytes are bounded and the opened
-file is authenticated; equality also cannot make strings or booleans numbers.
-Shared state plus outer OSVVM request/handle boundaries therefore admit path,
-device, inode, size, mode, JSON type, and selected semantic authority in order.
+A worker's counts and digest describe expected content but neither bound a
+pathname read nor authenticate storage. The common controller therefore admits
+size, parent chain, device, owner, links, mode, opened inode, and stable
+metadata before content; it reuses the runtime ceiling without a capacity claim.

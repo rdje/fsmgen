@@ -7,10 +7,10 @@ use bytes ();
 use Carp qw(confess);
 use Config ();
 use Digest::SHA qw(sha256_hex);
-use Errno qw(EAGAIN EEXIST EWOULDBLOCK);
+use Errno qw(EAGAIN EEXIST EINTR EWOULDBLOCK);
 use Fcntl qw(
     FD_CLOEXEC F_GETFD F_GETFL F_SETFD F_SETFL LOCK_EX LOCK_NB
-    O_CREAT O_NOFOLLOW O_NONBLOCK O_RDWR
+    O_CREAT O_NOFOLLOW O_NONBLOCK O_RDONLY O_RDWR
 );
 use File::Basename qw(dirname);
 use File::Path qw(remove_tree);
@@ -30,6 +30,7 @@ my $PUBLICATION_SCHEMA =
 my $IMPLEMENTATION = 'fsmgen.perl_process_tree_sampler.v1';
 my $SAMPLER_INTERVAL_NS = 250_000_000;
 my $MAX_WORKER_RESULT_BYTES = 1_048_576;
+my $MAX_WORKER_ARTIFACT_BYTES = 67_108_864;
 my $STAGING_BASE = '.artifacts/tmp/vial-scale';
 my $LOCK_BASE = '.artifacts/locks/vial-scale-measurement';
 my $PUBLICATION_BASE = '.artifacts/qualification/vial-scale';
@@ -290,6 +291,7 @@ sub _measure($raw) {
             my $measurement = _run_stage({
                 plan => $planned{$stage},
                 run_class => $run_class,
+                root_device => $root_device,
                 stage_abs => $stage_abs,
                 stage_rel => $stage_rel,
                 workload_identity => $construction->{workload_identity},
@@ -551,6 +553,7 @@ sub _run_stage($raw) {
             );
             $artifacts = _validated_worker_artifacts(
                 $raw->{stage_abs}, $stage, $worker_result->{artifacts},
+                $raw->{root_device},
             );
             _validate_output_counts(
                 $worker_result->{output_counts}, $artifacts,
@@ -1190,9 +1193,12 @@ sub _validated_worker_oracles($stage, $raw) {
     return \@out;
 }
 
-sub _validated_worker_artifacts($stage_abs, $stage, $raw) {
+sub _validated_worker_artifacts(
+    $stage_abs, $stage, $raw, $repository_device = undef,
+) {
     confess "worker artifacts must be an array\n"
         unless ref($raw) eq 'ARRAY';
+    $repository_device //= _worker_artifact_repository_device($stage_abs);
     my (@out, %expected);
     for my $index (0 .. $#$raw) {
         my $artifact = $raw->[$index];
@@ -1208,20 +1214,54 @@ sub _validated_worker_artifacts($stage_abs, $stage, $raw) {
             unless $relative =~ m{\Aoutputs/\Q$stage\E/};
         confess "duplicate worker artifact '$relative'\n"
             if $expected{$relative}++;
+        confess "worker artifact '$relative' byte count is invalid\n"
+            unless _nonnegative_integer($artifact->{bytes});
+        my $declared_bytes = 0 + $artifact->{bytes};
+        confess "worker artifact '$relative' exceeds the "
+            . "$MAX_WORKER_ARTIFACT_BYTES-byte ceiling\n"
+            if $declared_bytes > $MAX_WORKER_ARTIFACT_BYTES;
+        _validate_worker_artifact_parent_chain(
+            $stage_abs, $relative, $repository_device,
+        );
         my $path = File::Spec->catfile($stage_abs, split m{/}, $relative);
-        my @stat = lstat($path);
-        confess "worker artifact '$relative' is absent or not a regular file\n"
-            unless @stat && -f _ && !-l _;
-        open my $fh, '<:raw', $path
-            or confess "cannot read worker artifact '$relative'\n";
-        local $/;
-        my $content = <$fh>;
+        my @path_stat = _validated_worker_artifact_path_stat(
+            $path, $relative, $repository_device, $declared_bytes,
+        );
+        sysopen my $fh, $path, O_RDONLY | O_NOFOLLOW | O_NONBLOCK
+            or confess "cannot safely open worker artifact '$relative'\n";
+        binmode $fh
+            or confess "cannot set worker artifact '$relative' byte mode\n";
+        my @opened_stat = stat($fh);
+        _validate_opened_worker_artifact_stat(
+            \@opened_stat, $relative, $repository_device, $declared_bytes,
+        );
+        confess "worker artifact '$relative' opened identity changed\n"
+            unless _same_worker_artifact_stat(\@path_stat, \@opened_stat);
+        my $content = _read_worker_artifact_bounded($fh, $relative);
+        my @final_opened_stat = stat($fh);
+        _validate_opened_worker_artifact_stat(
+            \@final_opened_stat, $relative, $repository_device,
+            $declared_bytes,
+        );
+        confess "worker artifact '$relative' opened metadata changed while reading\n"
+            unless _same_worker_artifact_stat(
+                \@opened_stat, \@final_opened_stat,
+            );
         close $fh or confess "cannot close worker artifact '$relative'\n";
+        _validate_worker_artifact_parent_chain(
+            $stage_abs, $relative, $repository_device,
+        );
+        my @final_path_stat = _validated_worker_artifact_path_stat(
+            $path, $relative, $repository_device, $declared_bytes,
+        );
+        confess "worker artifact '$relative' pathname identity changed while reading\n"
+            unless _same_worker_artifact_stat(
+                \@opened_stat, \@final_path_stat,
+            );
         my $bytes = bytes::length($content);
         my $lines = () = $content =~ /\n/g;
         confess "worker artifact '$relative' byte count changed\n"
-            unless _nonnegative_integer($artifact->{bytes})
-                && $artifact->{bytes} == $bytes;
+            unless $declared_bytes == $bytes;
         confess "worker artifact '$relative' line count changed\n"
             unless _nonnegative_integer($artifact->{lines})
                 && $artifact->{lines} == $lines;
@@ -1242,6 +1282,102 @@ sub _validated_worker_artifacts($stage_abs, $stage, $raw) {
     confess "worker output tree contains unreported files\n"
         unless _canonical_json(\@actual) eq _canonical_json(\@expected);
     return \@out;
+}
+
+sub _worker_artifact_repository_device($stage_abs) {
+    my @stat = stat($stage_abs);
+    confess "worker artifact repository device is unavailable\n" unless @stat;
+    return $stat[0];
+}
+
+sub _validate_worker_artifact_parent_chain(
+    $stage_abs, $relative, $repository_device,
+) {
+    my @parts = split m{/}, $relative;
+    pop @parts;
+    my $path = $stage_abs;
+    for my $part (undef, @parts) {
+        $path = File::Spec->catdir($path, $part) if defined $part;
+        my @stat = lstat($path);
+        confess "worker artifact '$relative' parent is unavailable\n"
+            unless @stat;
+        confess "worker artifact '$relative' traverses a symlink\n"
+            if -l _;
+        confess "worker artifact '$relative' parent is not a directory\n"
+            unless -d _;
+        confess "worker artifact '$relative' crossed repository volume\n"
+            unless $stat[0] == $repository_device;
+        confess "worker artifact '$relative' parent owner changed\n"
+            unless $stat[4] == $<;
+    }
+    return 1;
+}
+
+sub _validated_worker_artifact_path_stat(
+    $path, $relative, $repository_device, $declared_bytes,
+) {
+    my @stat = lstat($path);
+    confess "worker artifact '$relative' is absent\n" unless @stat;
+    confess "worker artifact '$relative' must not be a symlink\n" if -l _;
+    confess "worker artifact '$relative' is not a regular file\n" unless -f _;
+    _validate_opened_worker_artifact_stat(
+        \@stat, $relative, $repository_device, $declared_bytes,
+    );
+    return @stat;
+}
+
+sub _validate_opened_worker_artifact_stat(
+    $stat, $relative, $repository_device, $declared_bytes,
+) {
+    confess "worker artifact '$relative' metadata is unavailable\n"
+        unless @$stat;
+    confess "worker artifact '$relative' crossed repository volume\n"
+        unless $stat->[0] == $repository_device;
+    confess "worker artifact '$relative' must have one link\n"
+        unless $stat->[3] == 1;
+    confess "worker artifact '$relative' owner changed\n"
+        unless $stat->[4] == $<;
+    my $mode = $stat->[2] & 07777;
+    confess "worker artifact '$relative' mode is not admitted\n"
+        unless ($mode & 07000) == 0
+            && ($mode & 0111) == 0
+            && ($mode & 0400) == 0400
+            && ($mode & 0022) == 0;
+    confess "worker artifact '$relative' exceeds the "
+        . "$MAX_WORKER_ARTIFACT_BYTES-byte ceiling\n"
+        if $stat->[7] > $MAX_WORKER_ARTIFACT_BYTES;
+    confess "worker artifact '$relative' byte count changed\n"
+        unless $stat->[7] == $declared_bytes;
+    return 1;
+}
+
+sub _same_worker_artifact_stat($left, $right) {
+    for my $index (0, 1, 2, 3, 4, 7, 9, 10) {
+        return 0 unless $left->[$index] == $right->[$index];
+    }
+    return 1;
+}
+
+sub _read_worker_artifact_bounded($fh, $relative) {
+    my $content = '';
+    while (bytes::length($content) <= $MAX_WORKER_ARTIFACT_BYTES) {
+        my $remaining = $MAX_WORKER_ARTIFACT_BYTES + 1
+            - bytes::length($content);
+        last unless $remaining > 0;
+        my $chunk = '';
+        my $wanted = $remaining > 65_536 ? 65_536 : $remaining;
+        my $read = sysread($fh, $chunk, $wanted);
+        if (!defined $read) {
+            next if $! == EINTR;
+            confess "cannot read worker artifact '$relative'\n";
+        }
+        last if $read == 0;
+        $content .= $chunk;
+    }
+    confess "worker artifact '$relative' exceeds the "
+        . "$MAX_WORKER_ARTIFACT_BYTES-byte ceiling\n"
+        if bytes::length($content) > $MAX_WORKER_ARTIFACT_BYTES;
+    return $content;
 }
 
 sub _validate_owned_artifact_census($stage_abs, $artifacts) {

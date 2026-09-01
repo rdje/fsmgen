@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **82** uniquely owned question entries.
+> **2** facts · **83** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -26,6 +26,7 @@
 - q="how does portable runtime-stream activity reach exactly 10,000 records?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how does semantic bridge measurement preserve a failed stage diagnostic?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how does semantic bridge measurement preserve semantic paths without allowing host paths?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="how does the common controller admit worker artifact files?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="how does the exact combined source byte profile stay below its timeout?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how is balanced portable measurement scoped?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how is execution checking matrix validation memory bounded?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
@@ -94,7 +95,7 @@
 
 _VIAL architecture-scale caps are component ceilings with explicit route authority_
 
-- **date:** 2026-08-31 · **status:** current
+- **date:** 2026-09-01 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-architecture-scale-cap-policy.md`](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 
 ### vial-architecture-scale-proof
