@@ -8,9 +8,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
   (`active`; common-controller hardening continues)
-- next_action: Inject the `.17.4.7` host-observer/selected-tool deadline race;
-  expose the exact result and preserve timeout-primary authority when the
-  selected-tool deadline expires during observation.
-- in_flight_uncommitted: none after the interrupted observer-read commit.
+- next_action: Inject sustained `EINTR` into both `.17.4.7`
+  `_containment_pipe_has_writer` call phases; add monotonic deadline authority
+  without weakening EOF/live-writer, bounded-drain, or residue semantics.
+- in_flight_uncommitted: none after the observation-timeout-precedence commit.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none.

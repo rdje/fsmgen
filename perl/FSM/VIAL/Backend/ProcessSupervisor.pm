@@ -230,7 +230,7 @@ sub _capture($working_directory, $argv, $policy) {
     my ($output, $exec_error) = ('', '');
     my ($timed_out, $limited) = (0, 0);
     my ($exec_handoff, $first_output);
-    my (%observed_descendants, $observation_error);
+    my (%observed_descendants, $observation_error, $observation_failed_at);
     my $next_observation = $started;
     while ($select->count) {
         my $now = clock_gettime(CLOCK_MONOTONIC);
@@ -247,6 +247,7 @@ sub _capture($working_directory, $argv, $policy) {
             };
             if (!$observed) {
                 $observation_error = $@;
+                $observation_failed_at = clock_gettime(CLOCK_MONOTONIC);
                 last;
             }
             $next_observation += $PROCESS_OBSERVATION_INTERVAL_SECONDS
@@ -282,6 +283,12 @@ sub _capture($working_directory, $argv, $policy) {
             }
         }
         last if $limited;
+    }
+    if (defined($observation_error)
+            && defined($observation_failed_at)
+            && $observation_failed_at >= $capture_deadline) {
+        $timed_out = 1;
+        $observation_error = undef;
     }
     if (defined $observation_error) {
         $select->remove($_) for $select->handles;
@@ -340,6 +347,8 @@ sub _capture($working_directory, $argv, $policy) {
                 };
                 if (!$observed) {
                     $observation_error = $@;
+                    $observation_failed_at =
+                        clock_gettime(CLOCK_MONOTONIC);
                     last;
                 }
                 $next_observation += $PROCESS_OBSERVATION_INTERVAL_SECONDS
@@ -352,6 +361,18 @@ sub _capture($working_directory, $argv, $policy) {
                 last;
             }
             sleep(0.01);
+        }
+        if (defined($observation_error)
+                && defined($observation_failed_at)
+                && $observation_failed_at >= $capture_deadline) {
+            $timed_out = 1;
+            $observation_error = undef;
+            $status = _terminate_supervised_domains(
+                $pid,
+                $policy->{containment} eq 'lifecycle_process_group',
+                \%observed_descendants,
+                $containment_reader, $containment_identity,
+            );
         }
         if (defined $observation_error) {
             my $contained = eval {
@@ -373,48 +394,50 @@ sub _capture($working_directory, $argv, $policy) {
                 'selected-tool descendant observation failed', '/process',
             );
         }
-        my ($observed_residue, $observed_failure) = (0, undef);
-        my $observed = eval {
-            $observed_residue = _terminate_observed_descendants(
-                \%observed_descendants,
-                _host_observer_cleanup_deadline(),
-            );
-            1;
-        };
-        $observed_failure = $@ unless $observed;
-        my ($group_residue, $group_failure) = (0, undef);
-        if ($policy->{containment} eq 'lifecycle_process_group') {
-            $group_residue = kill(0, -$pid) ? 1 : 0;
-            if ($group_residue) {
-                my $contained = eval {
-                    _terminate_residual_group($pid);
-                    1;
-                };
-                $group_failure = $@ unless $contained;
+        unless ($timed_out) {
+            my ($observed_residue, $observed_failure) = (0, undef);
+            my $observed = eval {
+                $observed_residue = _terminate_observed_descendants(
+                    \%observed_descendants,
+                    _host_observer_cleanup_deadline(),
+                );
+                1;
+            };
+            $observed_failure = $@ unless $observed;
+            my ($group_residue, $group_failure) = (0, undef);
+            if ($policy->{containment} eq 'lifecycle_process_group') {
+                $group_residue = kill(0, -$pid) ? 1 : 0;
+                if ($group_residue) {
+                    my $contained = eval {
+                        _terminate_residual_group($pid);
+                        1;
+                    };
+                    $group_failure = $@ unless $contained;
+                }
             }
-        }
-        my ($pipe_residue, $pipe_failure) = (0, undef);
-        my $pipe_contained = eval {
-            $pipe_residue = _terminate_containment_pipe_holders(
-                $containment_reader, $containment_identity,
-                _host_observer_cleanup_deadline(),
-            );
-            1;
-        };
-        $pipe_failure = $@ unless $pipe_contained;
-        _throw(
-            'VIAL_PROCESS_RESIDUE_ERROR',
-            'selected-tool residual process domains survived containment',
-            '/process',
-        ) if defined($observed_failure) || defined($group_failure)
-            || defined($pipe_failure);
-        if ($observed_residue || $group_residue || $pipe_residue) {
+            my ($pipe_residue, $pipe_failure) = (0, undef);
+            my $pipe_contained = eval {
+                $pipe_residue = _terminate_containment_pipe_holders(
+                    $containment_reader, $containment_identity,
+                    _host_observer_cleanup_deadline(),
+                );
+                1;
+            };
+            $pipe_failure = $@ unless $pipe_contained;
             _throw(
                 'VIAL_PROCESS_RESIDUE_ERROR',
-                'selected-tool process containment retained a descendant '
-                    . 'after its leader exited',
+                'selected-tool residual process domains survived containment',
                 '/process',
-            );
+            ) if defined($observed_failure) || defined($group_failure)
+                || defined($pipe_failure);
+            if ($observed_residue || $group_residue || $pipe_residue) {
+                _throw(
+                    'VIAL_PROCESS_RESIDUE_ERROR',
+                    'selected-tool process containment retained a descendant '
+                        . 'after its leader exited',
+                    '/process',
+                );
+            }
         }
     }
     close $containment_reader;

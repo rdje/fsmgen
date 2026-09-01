@@ -4304,6 +4304,21 @@ prove -Iperl -It/lib -v \
   t/1760-vial-selected-tool-interrupted-observer-read.t
 ```
 
+Host-observer failure classification also shares the selected-tool deadline.
+An observation that begins before that deadline can finish by failing after it;
+the failure does not gain host-error precedence merely because `_capture` was
+inside the observer call when time expired. Both live-stream and post-EOF
+observation phases record the monotonic failure time before cleanup. A failure
+detected on or after the selected-tool deadline enters the ordinary timeout
+containment path, while an independently earlier observation failure remains
+an explicit `VIAL_PROCESS_HOST_ERROR`. The three-case control freezes both
+deadline-race forms and the early-error counterexample:
+
+```bash
+prove -Iperl -It/lib -v \
+  t/1761-vial-selected-tool-observation-timeout-precedence.t
+```
+
 This is deliberately a synchronous selected-tool contract, not a general
 daemon job object. The caller seal admits only the exact GHDL/Verilator
 lifecycle and qualification command profiles. A child that deliberately closes

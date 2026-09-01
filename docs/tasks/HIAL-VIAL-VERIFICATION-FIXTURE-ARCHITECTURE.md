@@ -2403,16 +2403,53 @@ declared holder-cleanup deadline. The next `.17.4.7` slice must inject repeated
 `EINTR` at both calls, provide explicit monotonic authority, and retain EOF,
 EAGAIN/live-writer, bounded-drain, holder-attribution, and residue semantics.
 
-**Tracked adjacent observed timeout-precedence finding (next priority):** the
+**Resolved adjacent observed timeout-precedence finding:** the
 first eleven-file regression collection, at a RAM-guard host reading of 80.7%,
 failed only t1755's lifecycle-process-group timeout-primary assertion. Two
 isolated t1755 executions and the complete eleven-file rerun were green, so the
-failure is load-sensitive and not yet deterministically reproduced. Static
-inspection shows one plausible path: `_capture` may begin a descendant
-observation just before the selected-tool deadline; if the bounded observer
-then expires at that same deadline, `observation_error` currently reaches host
-error handling before the selected-tool timeout result is classified. The next
-`.17.4.7` slice must inject that boundary, expose the exact returned result,
-prove or refute this mechanism, and preserve timeout-primary authority without
-hiding an independently early observer failure. This observed gate failure
-takes priority over the source-only containment-pipe interrupted-read audit.
+failure was load-sensitive. Static inspection identified the mechanism:
+`_capture` could begin descendant observation just before the selected-tool
+deadline, then let the observer's same-deadline failure reach host-error
+handling before classifying selected-tool timeout. T1761 now reproduces both
+live-stream and post-EOF forms independent of host load; the repaired boundary
+keeps timeout primary while its early-failure control retains host-error
+authority. The queued containment-pipe interrupted-read audit resumes next.
+
+## Acceptance Checklist (enforced) — `.17.4.7` observation-timeout precedence
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — t1761 deterministically expired the
+  selected-tool deadline inside descendant observation in both live-stream and
+  post-EOF phases. Both RED deadline cases returned host error `H` instead of
+  timeout `T`. The RED emitted `Failed test at t/1761-vial-selected-tool-observation-timeout-precedence.t line 135`; the
+  independently early observer-failure control correctly returned `H`, and all
+  watchdog, clean-exit, and process-group-absence controls passed. This proves
+  the load-sensitive t1755 gate mechanism without depending on host load:
+  observation error handling ran before the selected-tool deadline result was
+  classified.
+- [x] **ADDRESSED (verified)** — both observation phases now capture the
+  monotonic observation-failure timestamp before cleanup. A failure detected
+  at/after the selected-tool deadline enters the existing supervised-domain
+  timeout containment path and retains timeout-primary result authority; an
+  independently earlier observation failure retains the exact host error and
+  full domain containment. Repaired t1761 returns exact `T`, `T`, and `H`
+  precedence for the live-stream deadline, post-EOF deadline, and early-error
+  cases, respectively, inside their outer watchdogs with clean probe exits and
+  zero process-group residue.
+- [x] **NO REGRESSION** — focused t1761 passes all three top-level cases and
+  their twelve inner assertions at `Files=1, Tests=3` in three wallclock
+  seconds. The RAM-guarded capture-limit, exact Verilator/GHDL lifecycle,
+  provider-aware GHDL, runtime-process envelope, retained-writer,
+  stalled-observer, monotonic-clock, bounded-reap, interrupted-wait,
+  interrupted-read, and timeout-precedence collection passes
+  `Files=12, Tests=66` in 49 wallclock seconds. All 58 mdBook chapters test;
+  the inspected 93-file/20,472-KiB repository-local render contains the
+  executable t1761 command and is removed exactly. Knowledge Map parity is
+  1,159 facts / 6,227 questions / 6,399 answer occurrences / 138 shards.
+  Claim verification retains 27 records and closes all 1,711 candidates
+  through 179 claim-record, 939 gate, and 593 reviewed dispositions with zero
+  gaps/open; the independent inventory agrees at 11,410 numeric lines.
+  Maintained-book authority is exact at 58 files / 54,514 lines / 2,944,585
+  bytes; the Knowledge-card transition is exact at 1,158 files / 46,928 lines
+  / 3,463,951 bytes. All 22 live-document surfaces pass with zero ceiling
+  increases. Staged acceptance and every registered doctrine are required
+  green immediately before commit.

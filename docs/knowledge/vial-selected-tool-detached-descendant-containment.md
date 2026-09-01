@@ -20,6 +20,9 @@ answers:
   - "can an interrupted host-observer wait hide a failing command?"
   - "can repeated EINTR suspend a selected-tool host observer read?"
   - "where is the host-observer deadline checked after interrupted sysread?"
+  - "can a host-observer failure mask an expired selected-tool timeout?"
+  - "what wins when selected-tool observation fails at the tool deadline?"
+  - "when does selected-tool observation remain a host error?"
 date: 2026-09-01
 status: current
 tags: [vial, process-supervisor, containment, verilator, ghdl]
@@ -36,6 +39,7 @@ evidence: >-
   t/1758-vial-selected-tool-bounded-leader-reap.t;
   t/1759-vial-selected-tool-interrupted-wait.t;
   t/1760-vial-selected-tool-interrupted-observer-read.t;
+  t/1761-vial-selected-tool-observation-timeout-precedence.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
@@ -51,6 +55,7 @@ reverify: >-
   t/1758-vial-selected-tool-bounded-leader-reap.t
   t/1759-vial-selected-tool-interrupted-wait.t
   t/1760-vial-selected-tool-interrupted-observer-read.t
+  t/1761-vial-selected-tool-observation-timeout-precedence.t
 ---
 
 `FSM::VIAL::Backend::ProcessSupervisor` serves both public lifecycle execution
@@ -140,3 +145,12 @@ deadline diagnostic, and owned-helper TERM/reap semantics remain distinct. A
 sustained-interruption executable control reaches the declared observer
 deadline, returns its exact error, exits cleanly, and leaves no process-group
 residue.
+
+Observation failure cannot mask an already expired selected-tool deadline.
+Both live-stream and post-EOF observation phases capture the monotonic instant
+at which observation fails. Detection on or after the selected-tool deadline
+uses the normal timeout containment and result path; detection before the
+deadline retains `VIAL_PROCESS_HOST_ERROR`. The executable boundary control
+forces both deadline races and an independently early failure, then requires
+exact timeout/timeout/host-error precedence, clean probe exit, and zero
+process-group residue.
