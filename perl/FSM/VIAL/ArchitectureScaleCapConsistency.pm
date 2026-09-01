@@ -355,6 +355,36 @@ my %CHECKING_RANDOMNESS_RATIONALE = (
     accepted_identity =>
         'accepted workload, evaluation, rerun, replay, plan, and compact-preflight identities are deterministic',
 );
+my @CHECKING_SCOREBOARD_EVIDENCE = (
+    [
+        't/1631-vial-architecture-scale-checking-scoreboards.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1690-vial-semantic-scoreboard-capacity-order.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool accepted_identity),
+    ],
+    [
+        't/1712-vial-execution-scoreboard-cardinality-preflight.t',
+        qw(adjacent_excess diagnostics atomicity no_tool accepted_identity),
+    ],
+);
+my %CHECKING_SCOREBOARD_RATIONALE = (
+    boundary =>
+        'both selected scoreboard axes admit their exact provider-free limits, including semantic capacity admission',
+    adjacent_excess =>
+        'the first semantic scalar, scoreboard instance, or aggregate capacity excess rejects',
+    diagnostics =>
+        'semantic, execution, FIFO-oracle, and staging failures retain stable diagnostics',
+    atomicity =>
+        'known excess publishes no semantic report, normalized scoreboards, ExecutionIR, plan, or checking result',
+    no_tool =>
+        'the complete scoreboard ladder, semantic order, and compact preflight start no external tool',
+    cleanup =>
+        'accepted and consumer-failure scoreboard staging is same-volume and residue-free',
+    accepted_identity =>
+        'accepted construction, semantic, evaluation, rerun, plan, and compact-preflight identities are deterministic',
+);
 my %runtime_dimensions = map {
     $_ => {
         status => 'verified',
@@ -411,11 +441,24 @@ for my $entry (@CHECKING_RANDOMNESS_EVIDENCE) {
     push @{$checking_randomness_dimensions{$_}{evidence}}, $path
         for @dimensions;
 }
+my %checking_scoreboard_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $CHECKING_SCOREBOARD_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@CHECKING_SCOREBOARD_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$checking_scoreboard_dimensions{$_}{evidence}}, $path
+        for @dimensions;
+}
 my $VERIFIED_DIMENSIONS = {
     backend_artifact_graph => \%backend_dimensions,
     checking_faults => \%checking_fault_dimensions,
     checking_models => \%checking_model_dimensions,
     checking_randomness => \%checking_randomness_dimensions,
+    checking_scoreboards => \%checking_scoreboard_dimensions,
     runtime_stream_envelopes => \%runtime_dimensions,
 };
 

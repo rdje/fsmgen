@@ -19,9 +19,9 @@ of asking readers to trust duplicated point-in-time numerals.
 That is necessary alignment evidence, but it is not the final closeout proof.
 The policy exposes candidate witnesses without assigning them to closeout
 dimensions. The separate consistency authority now joins the independently
-reviewed runtime-stream, backend-artifact, checking-model, checking-fault, and
-checking-randomness witnesses to explicit dimensions. The same classification
-remains pending for every other group.
+reviewed runtime-stream, backend-artifact, checking-model, checking-fault,
+checking-randomness, and checking-scoreboard witnesses to explicit dimensions.
+The same classification remains pending for every other group.
 
 ## Why calibration publication is separate
 
@@ -51,9 +51,9 @@ Each group must contain the same closed dimension set: boundary, adjacent
 excess, diagnostics, atomicity, no-tool behavior, cleanup, and accepted
 identity.
 
-Runtime, backend, checking-model, checking-fault, and checking-randomness are
-`verified` across all seven dimensions; all other groups remain
-`pending_independent_verification`. Runtime covers the three selected
+Runtime, backend, checking-model, checking-fault, checking-randomness, and
+checking-scoreboard are `verified` across all seven dimensions; all other
+groups remain `pending_independent_verification`. Runtime covers the selected
 materialization profiles plus t1720 through t1749 and t1751 through t1762.
 Backend covers t1646 through t1650 and t1716 through t1719. Checking models
 uses t1630 for exact model-instance/scalar-cell limits, provider-free state
@@ -64,8 +64,14 @@ preflight order and absence of partial ExecutionIR or plan. Each test is listed
 once and mapped only to the dimensions it proves. Randomness uses t1634 for the
 exact accepted/adjacent plan-byte route pair, nominal/adjacent occurrence-cap
 outcomes already detailed in the verification-architecture chapter, replay,
-and cleanup; t1715 independently proves compact occurrence preflight. T1763 reconstructs all five sets of
-per-dimension projections, requires their complete unions, checks every path,
+and cleanup; t1715 independently proves compact occurrence preflight.
+Scoreboards preserve their layered authority: t1631 proves both exact selected
+axes through a provider-free complete-transaction FIFO oracle and owns cleanup;
+t1690 independently proves semantic scalar capacity admission and its adjacent
+failure before reference resolution; t1712 proves compact normalized-path
+preflight, accepted plan identity, and both adjacent execution excesses before
+scoreboard normalization, but is not boundary evidence. T1763 reconstructs all
+six sets of per-dimension projections, requires their complete unions, checks every path,
 and rejects omitted or foreign evidence. Policy citations remain candidates
 for all unreviewed groups. The validator also
 rejects caller arguments, subclass invocants, missing or unknown fields,
@@ -142,6 +148,18 @@ scripts/run_with_ram_guard.sh -- prove -Iperl \
   t/1717-vial-backend-portable-vhdl-cap-order.t \
   t/1718-vial-backend-osvvm-provider-admission-order.t \
   t/1719-vial-backend-native-uvm-cap-order.t \
+  t/1763-vial-architecture-scale-cap-consistency.t \
+  t/1685-vial-architecture-scale-cap-policy.t
+```
+
+Reverify both scoreboard limits, semantic scalar order, compact execution
+preflight, and sealed-report falsifiers with:
+
+```sh
+scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
+  prove -Iperl t/1631-vial-architecture-scale-checking-scoreboards.t \
+  t/1690-vial-semantic-scoreboard-capacity-order.t \
+  t/1712-vial-execution-scoreboard-cardinality-preflight.t \
   t/1763-vial-architecture-scale-cap-consistency.t \
   t/1685-vial-architecture-scale-cap-policy.t
 ```

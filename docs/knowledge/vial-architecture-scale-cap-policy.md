@@ -74,7 +74,7 @@ evidence: >-
   t/1710-vial-execution-random-attempt-authority.t;
   t/1634-vial-architecture-scale-checking-random-replay.t;
   t/1630-vial-architecture-scale-checking-models.t; t/1711-vial-execution-model-cardinality-preflight.t;
-  t/1712-vial-execution-scoreboard-cardinality-preflight.t;
+  t/1631-vial-architecture-scale-checking-scoreboards.t; t/1712-vial-execution-scoreboard-cardinality-preflight.t;
   t/1713-vial-execution-coverage-cardinality-preflight.t;
   t/1633-vial-architecture-scale-checking-faults.t; t/1714-vial-execution-fault-cardinality-preflight.t;
   t/1634-vial-architecture-scale-checking-random-replay.t; t/1715-vial-execution-random-occurrence-preflight.t;
@@ -161,10 +161,12 @@ before writes or assembly. Exact boundaries pass, adjacent excess rejects, and
 completed-backend plus Tool terminal checks remain; no cap or claim changes.
 
 `FSM::VIAL::ArchitectureScaleCapConsistency` rebuilds the policy without caller
-evidence. Five groups verify all dimensions: runtime (three profiles+42 leaves),
-backend (t1646–t1650+t1716–t1719), models (t1630+t1711), faults (t1633+t1714),
-and randomness (t1634+t1715). T1763 reconstructs exact unions and rejects
-omitted/foreign evidence; other groups and calibration remain pending/blocked.
+evidence. Six groups verify all dimensions: runtime, backend, models, faults,
+randomness, and scoreboards. Scoreboards join the t1631 provider-free FIFO and
+cleanup proof, t1690 semantic boundary/order proof, and t1712 compact execution
+preflight without misclassifying the last as boundary evidence. T1763
+reconstructs exact unions and rejects omitted/foreign evidence; other groups
+and calibration remain pending/blocked.
 
 The common controller admits bounded worker files before counts/digests; cap+1
 and unsafe path/mode cases reject. No cap or support claim changes.

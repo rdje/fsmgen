@@ -279,11 +279,35 @@ my %checking_randomness_rationale = (
     cleanup => 'accepted and consumer-failure random staging is same-volume and residue-free',
     accepted_identity => 'accepted workload, evaluation, rerun, replay, plan, and compact-preflight identities are deterministic',
 );
+my @checking_scoreboard_evidence = qw(
+    t/1631-vial-architecture-scale-checking-scoreboards.t
+    t/1690-vial-semantic-scoreboard-capacity-order.t
+    t/1712-vial-execution-scoreboard-cardinality-preflight.t
+);
+my %checking_scoreboard_evidence = (
+    boundary => [@checking_scoreboard_evidence[0, 1]],
+    adjacent_excess => [@checking_scoreboard_evidence],
+    diagnostics => [@checking_scoreboard_evidence],
+    atomicity => [@checking_scoreboard_evidence],
+    no_tool => [@checking_scoreboard_evidence],
+    cleanup => [$checking_scoreboard_evidence[0]],
+    accepted_identity => [@checking_scoreboard_evidence],
+);
+my %checking_scoreboard_rationale = (
+    boundary => 'both selected scoreboard axes admit their exact provider-free limits, including semantic capacity admission',
+    adjacent_excess => 'the first semantic scalar, scoreboard instance, or aggregate capacity excess rejects',
+    diagnostics => 'semantic, execution, FIFO-oracle, and staging failures retain stable diagnostics',
+    atomicity => 'known excess publishes no semantic report, normalized scoreboards, ExecutionIR, plan, or checking result',
+    no_tool => 'the complete scoreboard ladder, semantic order, and compact preflight start no external tool',
+    cleanup => 'accepted and consumer-failure scoreboard staging is same-volume and residue-free',
+    accepted_identity => 'accepted construction, semantic, evaluation, rerun, plan, and compact-preflight identities are deterministic',
+);
 my %verified_evidence = (
     backend_artifact_graph => \%backend_evidence,
     checking_faults => \%checking_fault_evidence,
     checking_models => \%checking_model_evidence,
     checking_randomness => \%checking_randomness_evidence,
+    checking_scoreboards => \%checking_scoreboard_evidence,
     runtime_stream_envelopes => \%runtime_evidence,
 );
 my %verified_rationale = (
@@ -291,6 +315,7 @@ my %verified_rationale = (
     checking_faults => \%checking_fault_rationale,
     checking_models => \%checking_model_rationale,
     checking_randomness => \%checking_randomness_rationale,
+    checking_scoreboards => \%checking_scoreboard_rationale,
     runtime_stream_envelopes => \%runtime_rationale,
 );
 
@@ -437,6 +462,18 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
         'every sealed checking-randomness evidence path exists',
     );
 
+    my %checking_scoreboard_join = map { $_ => 1 }
+        map { @{$checking_scoreboard_evidence{$_}} } @dimensions;
+    is_deeply(
+        [sort keys %checking_scoreboard_join],
+        [sort @checking_scoreboard_evidence],
+        'checking-scoreboard join covers its FIFO, semantic, and preflight witnesses',
+    );
+    is_deeply(
+        [grep { !-f $_ } sort keys %checking_scoreboard_join], [],
+        'every sealed checking-scoreboard evidence path exists',
+    );
+
     is($report->{calibration}{evidence_role},
         'historical_measurement_only',
         'calibration stays measurement evidence');
@@ -563,6 +600,21 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
     like(dies(sub { $assert->($foreign_checking_randomness) }),
         qr/checking_randomness\/accepted_identity' contradicts the sealed evidence authority/,
         'callers cannot add foreign checking-randomness evidence');
+
+    my $omitted_checking_scoreboard = $class->build;
+    pop @{$omitted_checking_scoreboard->{groups}{checking_scoreboards}
+        {dimensions}{adjacent_excess}{evidence}};
+    like(dies(sub { $assert->($omitted_checking_scoreboard) }),
+        qr/checking_scoreboards\/adjacent_excess' contradicts the sealed evidence authority/,
+        'callers cannot omit sealed checking-scoreboard evidence');
+
+    my $foreign_checking_scoreboard = $class->build;
+    push @{$foreign_checking_scoreboard->{groups}{checking_scoreboards}
+        {dimensions}{accepted_identity}{evidence}},
+        't/foreign-checking-scoreboard-evidence.t';
+    like(dies(sub { $assert->($foreign_checking_scoreboard) }),
+        qr/checking_scoreboards\/accepted_identity' contradicts the sealed evidence authority/,
+        'callers cannot add foreign checking-scoreboard evidence');
 
     my $missing = $class->build;
     delete $missing->{groups}{$first_group}{dimensions}{cleanup};

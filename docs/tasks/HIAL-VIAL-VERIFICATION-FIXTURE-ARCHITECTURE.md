@@ -887,6 +887,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Containment Finding: `The canonical Knowledge Map cards now occupy 46,939 lines/3,464,850 bytes against the older .17.4.7 transition allowance of 46,942 lines/3,464,885 bytes, leaving three lines/35 bytes while remaining far below the hard 65,536-line/4,194,304-byte enforcement ceiling. Re-derive: aggregate tracked docs/knowledge Markdown with wc and add the knowledge_cards baseline to its declared transition max_growth. Falsify: scripts/check_live_document_size.sh rejects transition-budget or hard-ceiling excess. Durability: this task, doctrine/live_document_size/surfaces.jsonl, and the work-unit commit retain the distinction. The next evidence-family sync must compact the canonical card rather than silently increase its allowance.`
   Checking Randomness Join: `The caller-sealed consistency authority now also promotes checking_randomness without pretending that its nominal component cap is canonically reachable. T1634 proves a provider-free accepted 8,440-occurrence route, adjacent 8,441 plan-byte rejection, explicit 65,536-occurrence preflight dominance, 65,537 occurrence rejection, replay identities, mutation defenses, and same-volume cleanup; t1715 independently proves compact occurrence agreement, accepted plan identity, rejection before operation materialization, and no partial ExecutionIR or plan. T1763 reconstructs the two-path projections and union, checks both paths, and rejects omitted or foreign evidence. Every earlier verified group remains sealed and every unaudited group remains pending, so calibration stays historical, incomplete, and blocked. Re-derive: execute t1634 with FSMGEN_VIAL_SCALE_EXACT=1 plus t1715, t1763, and t1685 under the repository-local RAM guard. Falsify: both route and component boundary/excess pairs plus projection/union/omission/foreign/caller-mutation controls fail closed. Durability: this task, book, Knowledge Map card, consistency source/test, decision 0093, and work-unit commit retain the layered classification. The guarded suite reports All tests successful at Files=4/Tests=98 in 411 wallclock seconds. No cap, route boundary, level, accepted profile, product behavior, publication, support, budget, or capacity claim changes. The next slice independently reviews checking_scoreboards.`
 
+  Checking Scoreboards Join: `The caller-sealed consistency authority now also promotes checking_scoreboards through three layer-specific witnesses. T1631 owns both exact scoreboard axes, the provider-free complete-transaction FIFO oracle, adjacent rejection, identities, mutation defenses, and same-volume cleanup. T1690 independently proves that the semantic scalar capacity boundary admits before reference resolution and its adjacent excess returns no partial semantic report. T1712 is deliberately not classified as boundary evidence: it owns compact execution preflight agreement, accepted plan identity, both normalized-path adjacent excesses, no scoreboard normalization, and no partial ExecutionIR or plan. T1763 reconstructs every ordered projection and the exact three-path union, checks each path, and rejects omitted or foreign evidence. Every earlier verified group remains sealed and every unaudited group remains pending, so calibration stays historical, incomplete, and blocked. Re-derive: execute t1631 with FSMGEN_VIAL_SCALE_EXACT=1 plus t1690, t1712, t1763, and t1685 under the repository-local RAM guard. Falsify: semantic, execution, and terminal boundary/excess controls plus projection/union/omission/foreign/caller-mutation controls fail closed. Durability: this task, book, Knowledge Map card, consistency source/test, and work-unit commit retain the layer-specific classification. The guarded suite reports All tests successful at Files=5/Tests=119 in 23 wallclock seconds. No cap, level, accepted profile, product behavior, publication, support, budget, or capacity claim changes. The next slice independently reviews checking_coverage.`
+
   Containment Resolution: `The cap-policy card's long one-path-per-line reverify list is now a shorter equivalent set of numeric brace ranges plus exact outliers; every expansion resolves to an existing tracked test. With checking-randomness evidence added, the card aggregate falls from 46,939 lines/3,464,850 bytes to 46,903 lines/3,462,766 bytes, restoring 39 lines/2,119 bytes below the inherited transition allowance without changing it. Re-derive: expand every compacted pattern and aggregate docs/knowledge Markdown with wc. Falsify: missing paths fail the explicit expansion census, and Knowledge Map/live-document checks reject freshness, answer, transition, or ceiling drift. Durability: this task, the compacted card, generated shard, containment manifest, and work-unit commit retain the resolution.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
@@ -2763,3 +2765,40 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   immediately before commit with no cap, level,
   accepted profile, product behavior, publication, support, budget, or capacity
   change. Full CI and push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.8` checking-scoreboard evidence join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the sealed consistency report leaves
+  `checking_scoreboards` pending because its three policy witnesses remain
+  undifferentiated candidates: t1631 owns both checking-scoreboard axes,
+  exact provider-free FIFO-oracle limits, adjacent excesses, diagnostics,
+  mutation defenses, identities, and same-volume cleanup; t1690 independently
+  owns semantic scalar boundary/excess order and atomic failure; t1712 owns
+  compact execution preflight, normalization avoidance, and absence of partial
+  ExecutionIR or plan. Exact `git log -S'checking_scoreboards' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` traces that candidate-only group
+  to `951720257`.
+- [x] **ADDRESSED (verified)** — independently classify all three scoreboard
+  witnesses across boundary, adjacent excess, diagnostics, atomicity, no-tool,
+  cleanup, and accepted identity; run t1631's exact qualification and limit
+  ladder under the repository-local RAM guard; seal exact paths and rationales
+  in the no-input consistency authority; reject omitted or foreign evidence;
+  retain all prior verified joins; and keep calibration blocked while any
+  other group remains pending. The pre-implementation t1763 RED reports the
+  exact 21 missing status/evidence/rationale assertions and no unrelated
+  failure; the sealed projection plus omission/foreign controls then pass.
+- [x] **NO REGRESSION** — the exact three-witness scoreboard evidence plus
+  consistency and policy collection reports `All tests successful` at
+  Files=5/Tests=119 in 23 wallclock seconds. Task integrity passes across 4
+  trees/1,031 nodes; all 59 mdBook chapters test, and the inspected
+  94-file/20,564-KiB repository-local render is removed exactly.
+  `knowledge-map: OK` reports 1,159 facts/6,231 questions/6,403 answer
+  occurrences/138 shards. Claim inventory independently agrees at 11,467
+  numeric lines with 1,711/1,711 candidates dispositioned and zero open owner
+  or untracked producer. All 22 live-document surfaces and the exact
+  59-file/54,731-line/2,955,108-byte book authority pass with zero ceiling
+  increase; Knowledge Map cards retain 37 lines/1,957 bytes of transition
+  headroom. Staged acceptance and every registered doctrine are required green
+  immediately before commit with no cap, level, accepted profile, product
+  behavior, publication, support, budget, or capacity claim change. Full CI
+  and push remain deferred by policy.
