@@ -126,6 +126,14 @@ the sealed objects. A foreign but rehashed capture record therefore rejects as
 state evidence; accepted commands, deadlines, 8-MiB/64-MiB limits, report
 content, and checked qualification bytes remain unchanged.
 
+The surrounding provider-aware state evidence is reconstructed on resume as
+well. Generated settings and all four library identities must match the sealed
+command plan. Ordered provider/generated analysis, fixture/probe elaboration,
+and fixture/provider run command digests are recomputed from that plan rather
+than trusted from state JSON. Shared trace, result, assembly, and workspace
+evidence is then rebound to canonical same-volume objects. The combined
+forgery oracle is `t/1732-vial-ghdl-state-evidence-admission.t`.
+
 The checked qualifier no longer has a second process implementation. It
 reconstructs the private execution plan, admits that plan to the lifecycle,
 advances every state, and builds the existing public report from the cleaned

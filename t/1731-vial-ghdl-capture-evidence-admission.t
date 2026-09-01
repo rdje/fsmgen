@@ -105,7 +105,7 @@ sub portable_tool_state {
             version_sha256 => $transcript->{sha256},
             capture => capture(10, 65_536, 7),
             workspace_files => [],
-            workspace_sha256 => '0' x 64,
+            workspace_sha256 => sha256_hex($JSON->encode([])),
         },
     });
 }
@@ -113,12 +113,15 @@ sub portable_tool_state {
 sub osvvm_analysis_state {
     my $provider = object('provider_analysis_output_00', 'd', 0);
     my $generated = object('generated_analysis_output', 'e', 0);
+    my $provider_command = ['providers/ghdl', '-a', 'provider.vhd'];
+    my $generated_command = ['providers/ghdl', '-a', 'generated.vhd'];
     return ({
         role => 'osvvm_qualification',
         storage_context => {containment => 'lifecycle_process_group'},
         validation => {run_repetitions => 1},
         commands => {
-            provider_analyze => [[]],
+            provider_analyze => [$provider_command],
+            analyze_generated => $generated_command,
             provider_reports => [],
             resource_controls => {
                 version_timeout_seconds => 10,
@@ -141,14 +144,14 @@ sub osvvm_analysis_state {
             $generated,
         ],
         evidence => {
-            command_digests => ['1' x 64],
+            command_digests => [command_digest($provider_command)],
             captures => [capture(120, 8_388_608, 0)],
             output_sha256 => [$provider->{sha256}],
-            generated_command_digest => '2' x 64,
+            generated_command_digest => command_digest($generated_command),
             generated_capture => capture(120, 8_388_608, 0),
             generated_output_sha256 => $generated->{sha256},
             workspace_files => [],
-            workspace_sha256 => '0' x 64,
+            workspace_sha256 => sha256_hex($JSON->encode([])),
         },
     });
 }
@@ -169,12 +172,16 @@ sub osvvm_run_state {
     my $fixture = object('fixture_runtime_output_0', 'd', 5);
     my $provider = object('provider_runtime_output_0', 'e', 6);
     my $resource = osvvm_resources();
+    my $fixture_command = ['providers/ghdl', '-r', 'fixture'];
+    my $provider_command = ['providers/ghdl', '-r', 'provider_probe'];
     return ({
         role => 'osvvm_qualification',
         storage_context => {containment => 'lifecycle_process_group'},
         validation => {run_repetitions => 1},
         commands => {
             provider_analyze => [[]],
+            run_fixture => $fixture_command,
+            run_provider_probe => $provider_command,
             provider_reports => [map {{
                 name => $_,
                 relpath => ".artifacts/tmp/tests/provider_reports/$_",
@@ -197,8 +204,8 @@ sub osvvm_run_state {
         ],
         evidence => {
             command_digests => {
-                fixture => '1' x 64,
-                provider_probe => '2' x 64,
+                fixture => command_digest($fixture_command),
+                provider_probe => command_digest($provider_command),
             },
             fixture_captures => [capture(
                 $resource->{execution_timeout_seconds},
@@ -217,7 +224,7 @@ sub osvvm_run_state {
             ],
             deterministic => JSON::PP::false,
             workspace_files => [],
-            workspace_sha256 => '0' x 64,
+            workspace_sha256 => sha256_hex($JSON->encode([])),
         },
     });
 }
@@ -269,6 +276,10 @@ sub capture {
         capture_limit_bytes => $limit,
         output_bytes => $bytes,
     };
+}
+
+sub command_digest {
+    return sha256_hex($JSON->encode($_[0]));
 }
 
 sub validate_state {

@@ -140,6 +140,18 @@ objects. A forged but internally rehashed state therefore cannot claim a
 different process result or resource policy. Live checked qualification bytes,
 commands, deadlines, capture ceilings, and accepted transcripts are unchanged.
 
+### Remaining state-evidence resume refinement (2026-09-01)
+
+Resume now reconstructs the admitted authority digest, prepared source and
+library evidence, workspace digest, and portable analysis/elaboration/run
+command digests from caller-sealed inputs. It decodes the trace, result, and
+assembly objects only as canonical same-volume payloads, then derives their
+record count, status, digest, and object-count evidence. Content addressing
+continues to detect byte drift; semantic reconstruction additionally rejects
+an internally rehashed record whose objects remain sealed while its evidence
+claims a foreign command or payload property. Execution, emitted bytes,
+deadlines, capture ceilings, and accepted qualification behavior do not change.
+
 ### Ordered implementation
 
 Task `.17.3.6` proceeds in five cleanly committed children: v2 trace truth;

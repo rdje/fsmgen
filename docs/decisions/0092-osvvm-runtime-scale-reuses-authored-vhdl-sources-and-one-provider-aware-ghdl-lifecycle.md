@@ -145,6 +145,17 @@ sealed objects rather than trusted from state JSON. This closes evidence
 forgery only; the supervisor, commands, accepted reports, qualification bytes,
 deadlines, and limits do not change.
 
+### Remaining state-evidence resume refinement (2026-09-01)
+
+Provider-aware resume additionally reconstructs generated-settings and library
+identity evidence from the selected plan. It recomputes the ordered provider
+and generated analysis, fixture/probe elaboration, and fixture/provider run
+command digests instead of trusting their state fields. The shared canonical
+trace/result/assembly and workspace checks then bind terminal evidence to the
+same-volume objects. This closes internally rehashed evidence claims without
+changing provider invocation, supplementary reports, execution policy, or
+accepted bytes.
+
 ## Ordered implementation
 
 The active leaf proceeds through five clean children:

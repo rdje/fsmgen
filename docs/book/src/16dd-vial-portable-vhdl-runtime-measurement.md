@@ -178,6 +178,20 @@ process outcome or policy. Focused control:
 prove -Iperl t/1731-vial-ghdl-capture-evidence-admission.t
 ```
 
+Resume reconstructs the rest of the evidence too. The admitted authority
+digest, prepared source/library inventory, workspace digest, and every
+analysis/elaboration/run command digest must equal the caller-sealed inputs.
+Trace count/hash evidence is derived from the canonical sealed validation
+payload; result status/hash and assembly count/hash are derived from their
+canonical sealed payloads. Payload reads retain regular-file and same-volume
+checks. Consequently, rehashing a state cannot preserve valid objects while
+claiming a foreign command, trace count, result status, or assembly inventory.
+This focused control covers both portable and OSVVM state forms:
+
+```console
+prove -Iperl t/1732-vial-ghdl-state-evidence-admission.t
+```
+
 That distinct probe also preserves deadline authority: a supervisor
 `timed_out` result reports `VIAL_VHDL_QUALIFICATION_TIMEOUT` at
 `/resource_controls` before capture overflow or generic execution handling.

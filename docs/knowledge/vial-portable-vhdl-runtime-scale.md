@@ -20,6 +20,7 @@ answers:
   - "how are GHDL fault applications and scoreboard comparisons bound to trace records?"
   - "how do fake GHDL lifecycle providers avoid host executable admission?"
   - "how does GHDL resume authenticate portable and OSVVM capture evidence?"
+  - "how does GHDL resume authenticate command trace result and assembly evidence?"
 date: 2026-09-01
 status: current
 tags: [vial, vhdl, ghdl, runtime, trace, scalability]
@@ -45,6 +46,7 @@ evidence: >-
   t/1672-vial-architecture-scale-portable-vhdl-runtime-materialization.t;
   t/1673-vial-ghdl-shared-lifecycle.t;
   t/1731-vial-ghdl-capture-evidence-admission.t;
+  t/1732-vial-ghdl-state-evidence-admission.t;
   t/1678-vial-ghdl-provider-aware-lifecycle.t;
   t/1725-vial-ghdl-cleanup-diagnostic-authority.t;
   t/1726-vial-ghdl-admission-cleanup-evidence.t;
@@ -59,6 +61,8 @@ reverify: >-
   t/1664-vial-verilator-shared-lifecycle.t
   t/1673-vial-ghdl-shared-lifecycle.t
   t/1678-vial-ghdl-provider-aware-lifecycle.t
+  t/1731-vial-ghdl-capture-evidence-admission.t
+  t/1732-vial-ghdl-state-evidence-admission.t
   t/1725-vial-ghdl-cleanup-diagnostic-authority.t
   t/1726-vial-ghdl-admission-cleanup-evidence.t
   t/1727-vial-ghdl-probe-timeout-diagnostic-authority.t
@@ -140,6 +144,14 @@ equals the sealed transcript object. Transcript and OSVVM report-set digests
 and one-versus-two-run determinism are rederived from the same objects. t1731
 falsifies foreign policy, byte, boolean, timing, transcript, report-set, and
 determinism evidence; both live checked qualifiers remain byte-identical.
+
+The same resume boundary reconstructs every remaining state summary. Admitted
+authority, prepared source/library/settings, workspace, and portable/OSVVM
+command evidence must match the caller-sealed inputs. Trace count/hash, passing
+result status/hash, and assembly count/hash must match canonical sealed
+same-volume payloads. t1732 rejects foreign values for every command family
+and terminal digest while exact portable and provider-aware chains finish with
+unchanged output and cleanup.
 
 Normalized result admission applies the selected 67,108,864-byte ceiling,
 exact shared/VHDL vocabularies, one parity schema/version, sealed plan identity,

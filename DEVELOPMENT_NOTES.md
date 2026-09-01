@@ -1185,3 +1185,16 @@ The tests therefore use one stable tracked POSIX-shell provider when `/bin/sh`
 exists and configured Perl only as a fallback. Real fork/exec, process-group,
 capture, failure, report, deadline, and cleanup coverage remains; failure-only
 timing stays armed and no timeout is retried or widened.
+
+## 2026-09-01: Content addressing does not replace semantic reconstruction
+
+A canonical, digest-named lifecycle state proves that its bytes are
+self-consistent; it does not prove that every evidence value still describes
+the caller-sealed commands or retained objects. GHDL capture admission closed
+the process-policy portion, but command digests and trace/result/assembly
+summaries could still be changed together with the state identity.
+
+Resume therefore reconstructs those values from selected inputs and canonical
+same-volume payloads. This keeps content addressing as the byte-integrity
+layer and semantic reconstruction as the meaning-integrity layer, matching the
+shared Verilator lifecycle without coupling profile-specific state schemas.

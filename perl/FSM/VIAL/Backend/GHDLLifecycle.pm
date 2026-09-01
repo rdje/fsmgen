@@ -2321,6 +2321,7 @@ sub _validate_state_shape($session, $record) {
     _throw('VIAL_GHDL_LIFECYCLE_OBJECT_ERROR',
         'GHDL state object inventory is not exact', '/objects')
         unless _canonical(\@actual) eq _canonical(\@expected);
+    _validate_state_evidence($session, $record);
     if ($state eq 'tool_verified') {
         _validate_capture_evidence(
             $session, $record->{objects}, $record->{evidence}{capture},
@@ -2380,6 +2381,199 @@ sub _validate_state_shape($session, $record) {
     if (_is_osvvm_role($session->{role})) {
         _validate_osvvm_capture_shape($session, $record);
     }
+}
+
+sub _validate_state_evidence($session, $record) {
+    my $state = $record->{state};
+    my $evidence = $record->{evidence};
+    my $objects = $record->{objects};
+    _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+        'GHDL workspace evidence is not internally exact',
+        '/evidence/workspace_sha256')
+        unless ref($evidence->{workspace_files}) eq 'ARRAY'
+            && defined($evidence->{workspace_sha256})
+            && !ref($evidence->{workspace_sha256})
+            && $evidence->{workspace_sha256}
+                eq sha256_hex(_canonical($evidence->{workspace_files}));
+
+    if ($state eq 'admitted') {
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            'GHDL admission evidence differs from selected authority',
+            '/evidence/authority_sha256')
+            unless defined($evidence->{authority_sha256})
+                && !ref($evidence->{authority_sha256})
+                && $evidence->{authority_sha256}
+                    eq sha256_hex(_canonical($session->{authority}));
+    }
+    elsif ($state eq 'prepared') {
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            'GHDL prepared source count differs from selected sources',
+            '/evidence/source_count')
+            unless _runtime_result_nonnegative_integer(
+                $evidence->{source_count},
+            ) && 0 + $evidence->{source_count}
+                == @{$session->{source_set}};
+        if (_is_osvvm_role($session->{role})) {
+            _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+                'OSVVM prepared evidence differs from selected workspace',
+                '/evidence')
+                unless ref($evidence->{library_identities}) eq 'HASH'
+                    && !blessed($evidence->{library_identities})
+                    && _canonical($evidence->{library_identities})
+                        eq _canonical($session->{commands}{libraries})
+                    && defined($evidence->{settings_sha256})
+                    && !ref($evidence->{settings_sha256})
+                    && $evidence->{settings_sha256}
+                        eq $session->{commands}{generated_settings}{sha256};
+        }
+        else {
+            _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+                'GHDL prepared library differs from selected workspace',
+                '/evidence/library_identity')
+                unless defined($evidence->{library_identity})
+                    && !ref($evidence->{library_identity})
+                    && $evidence->{library_identity}
+                        eq $session->{library_rel};
+        }
+    }
+    elsif ($state =~ /\A(?:analyzed|elaborated|ran)\z/) {
+        _validate_command_evidence($session, $state, $evidence);
+    }
+    elsif ($state eq 'trace_validated') {
+        my $validated = _decode_state_payload(
+            $session, $objects, 'validated_trace',
+            '/objects/validated_trace',
+            'sealed GHDL trace validation',
+        );
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            'GHDL trace evidence differs from its sealed validation payload',
+            '/evidence')
+            unless ref($validated->{trace}) eq 'HASH'
+                && !blessed($validated->{trace})
+                && defined($validated->{trace}{trace_sha256})
+                && !ref($validated->{trace}{trace_sha256})
+                && ($evidence->{trace_sha256} // '')
+                    eq $validated->{trace}{trace_sha256}
+                && _runtime_result_nonnegative_integer(
+                    $validated->{trace}{record_count},
+                )
+                && _runtime_result_nonnegative_integer(
+                    $evidence->{record_count},
+                )
+                && 0 + $evidence->{record_count}
+                    == 0 + $validated->{trace}{record_count}
+                && defined($evidence->{validation_sha256})
+                && !ref($evidence->{validation_sha256})
+                && $evidence->{validation_sha256}
+                    eq sha256_hex(_canonical($validated));
+    }
+    elsif ($state eq 'result_produced') {
+        my $result = _decode_state_payload(
+            $session, $objects, 'normalized_result',
+            '/objects/normalized_result',
+            'sealed GHDL normalized result',
+        );
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            'GHDL result evidence differs from its sealed result payload',
+            '/evidence')
+            unless defined($result->{status}) && !ref($result->{status})
+                && $result->{status} eq 'pass'
+                && defined($evidence->{result_sha256})
+                && !ref($evidence->{result_sha256})
+                && $evidence->{result_sha256}
+                    eq sha256_hex(_canonical($result))
+                && defined($evidence->{result_status})
+                && !ref($evidence->{result_status})
+                && $evidence->{result_status} eq 'pass';
+    }
+    elsif ($state eq 'assembled') {
+        my $assembly = _decode_state_payload(
+            $session, $objects, 'assembly_payload',
+            '/objects/assembly_payload',
+            'sealed GHDL assembly payload',
+        );
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            'GHDL assembly evidence differs from its sealed payload',
+            '/evidence')
+            unless defined($evidence->{assembly_sha256})
+                && !ref($evidence->{assembly_sha256})
+                && $evidence->{assembly_sha256}
+                    eq sha256_hex(_canonical($assembly))
+                && _runtime_result_nonnegative_integer(
+                    $evidence->{object_count},
+                )
+                && 0 + $evidence->{object_count} == @$objects;
+    }
+    return 1;
+}
+
+sub _validate_command_evidence($session, $state, $evidence) {
+    if (!_is_osvvm_role($session->{role})) {
+        my %command = (
+            analyzed => 'analyze', elaborated => 'elaborate', ran => 'run',
+        );
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            "GHDL $state command evidence differs from selected command",
+            '/evidence/command_digest')
+            unless defined($evidence->{command_digest})
+                && !ref($evidence->{command_digest})
+                && $evidence->{command_digest}
+                    eq _command_digest($session->{commands}{$command{$state}});
+        return 1;
+    }
+
+    if ($state eq 'analyzed') {
+        my @expected = map { _command_digest($_) }
+            @{$session->{commands}{provider_analyze}};
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            'OSVVM analysis command evidence differs from selected commands',
+            '/evidence/command_digests')
+            unless ref($evidence->{command_digests}) eq 'ARRAY'
+                && _canonical($evidence->{command_digests})
+                    eq _canonical(\@expected)
+                && defined($evidence->{generated_command_digest})
+                && !ref($evidence->{generated_command_digest})
+                && $evidence->{generated_command_digest}
+                    eq _command_digest($session->{commands}{analyze_generated});
+    }
+    elsif ($state eq 'elaborated') {
+        my @expected = map { _command_digest($_) }
+            @{$session->{commands}}{qw(
+                elaborate_fixture elaborate_provider_probe
+            )};
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            'OSVVM elaboration command evidence differs from selected commands',
+            '/evidence/command_digests')
+            unless ref($evidence->{command_digests}) eq 'ARRAY'
+                && _canonical($evidence->{command_digests})
+                    eq _canonical(\@expected);
+    }
+    else {
+        my $expected = {
+            fixture => _command_digest($session->{commands}{run_fixture}),
+            provider_probe =>
+                _command_digest($session->{commands}{run_provider_probe}),
+        };
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            'OSVVM runtime command evidence differs from selected commands',
+            '/evidence/command_digests')
+            unless ref($evidence->{command_digests}) eq 'HASH'
+                && !blessed($evidence->{command_digests})
+                && _canonical($evidence->{command_digests})
+                    eq _canonical($expected);
+    }
+    return 1;
+}
+
+sub _decode_state_payload($session, $objects, $kind, $path, $label) {
+    my $content = _object_content_from($session, $objects, $kind);
+    my $decoded = eval { $JSON->decode($content) };
+    _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+        "$label is not one canonical object", $path)
+        unless defined($decoded) && !$@ && ref($decoded) eq 'HASH'
+            && !blessed($decoded)
+            && $content eq _canonical($decoded) . "\n";
+    return $decoded;
 }
 
 sub _evidence_keys($session, $state) {
@@ -2825,10 +3019,18 @@ sub _object_by_kind($objects, $kind) {
 }
 
 sub _object_content($session, $kind) {
-    my $object = _object_by_kind($session->{objects}, $kind);
-    my $content = _slurp(
-        _repo_path($session->{repo_root}, $object->{relative_path}),
+    return _object_content_from($session, $session->{objects}, $kind);
+}
+
+sub _object_content_from($session, $objects, $kind) {
+    my $object = _object_by_kind($objects, $kind);
+    my $absolute = _repo_path(
+        $session->{repo_root}, $object->{relative_path},
     );
+    _regular_same_volume(
+        $absolute, $object->{relative_path}, $session->{root_device},
+    );
+    my $content = _slurp($absolute);
     _throw('VIAL_GHDL_LIFECYCLE_OBJECT_ERROR',
         "GHDL object '$kind' changed after sealing", '/objects')
         unless bytes::length($content) == $object->{bytes}
