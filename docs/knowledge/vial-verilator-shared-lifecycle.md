@@ -9,7 +9,9 @@ answers:
   - "what work follows completed common-controller portable Verilator measurement?"
   - "how is the portable Verilator runtime matrix published and reloaded?"
   - "how are Verilator supervisor failures attributed to lifecycle phases?"
-date: 2026-08-31
+  - "how are portable Verilator terminal payloads authenticated on resume?"
+  - "why are Verilator lifecycle object descriptors append-only?"
+date: 2026-09-01
 status: current
 tags: [vial, verilator, lifecycle, runner, scalability, macos]
 evidence: >-
@@ -28,6 +30,7 @@ evidence: >-
   t/1667-vial-architecture-scale-portable-runtime-measurement.t;
   t/1670-vial-architecture-scale-portable-runtime-measurement-matrix.t;
   t/1724-vial-runtime-process-envelope.t;
+  t/1734-vial-verilator-terminal-resume-admission.t;
   scripts/run_vial_portable_runtime_measurement_matrix.pl;
   vial/qualification/sv_portable_verilator/macos-premain-qualification-2026-08-24.json;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
@@ -41,6 +44,7 @@ reverify: >-
   t/1665-vial-macos-premain-qualification.t
   t/1664-vial-verilator-shared-lifecycle.t
   t/1724-vial-runtime-process-envelope.t
+  t/1734-vial-verilator-terminal-resume-admission.t
   t/1666-vial-macos-premain-evidence.t
   t/1667-vial-architecture-scale-portable-runtime-measurement.t
   t/1670-vial-architecture-scale-portable-runtime-measurement-matrix.t &&
@@ -66,6 +70,18 @@ private projections as sanitized host errors without publishing artifacts or
 trusting partial cleanup claims.
 Reference stays correctness-only; nominal record limit/excess stay byte-
 preflight dominated; other backend selection remains separate.
+
+Resume does not treat a content-addressed terminal state as semantic proof by
+itself. Every successor object inventory must retain its predecessor as one
+exact ordered prefix, and the sealed tool-version bytes must equal the selected
+qualified profile. From `trace_validated` onward, admission re-extracts the
+trace from sealed raw output, reruns `TraceValidator`, reruns `ResultProducer`,
+and reconstructs the public assembly or compact measurement descriptor. Exact
+stored-byte comparison rejects foreign but internally rehashed version, trace,
+result, assembly, and earlier-object histories before finalization. Focused
+t1734 retains exact controls for every forgery class; the guarded
+real-tool lifecycle and compact-measurement resume watchers retain execution
+and byte-identity proof.
 
 The public Runner still exposes the external stages as one atomic transaction,
 but the shared lifecycle is their sole implementation owner. It uses close-on-

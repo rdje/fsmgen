@@ -668,6 +668,19 @@ after its lifecycle/storage authority is proved. A malformed or foreign handle
 never gains deletion authority, while a failure after creation cleans the exact
 new root.
 
+Content addressing alone does not make a resumed terminal payload
+authoritative: an attacker could replace an object, repair the state summaries,
+and rehash the complete chain. Resume therefore also requires every successor's
+object descriptors to preserve the complete ordered predecessor prefix and
+compares the sealed version bytes with the selected qualified Verilator
+identity. Once runtime output exists, it re-extracts and validates the trace
+from the sealed raw transcript and process result. It then regenerates the
+normalized result and rebuilds either the complete public assembly or the
+compact measurement descriptor. The stored trace, result, and assembly bytes
+must equal those reconstructed values exactly. A canonical but foreign trace,
+passing result, assembly, version, or earlier object history consequently fails
+state admission before public or measurement finalization.
+
 A later worker cannot trust a path or state supplied by its caller. It
 reconstructs the canonical source-to-emission route, derives the lifecycle
 identity and owned root, verifies the complete predecessor chain and object
@@ -796,6 +809,7 @@ The normal closed-contract watcher is inexpensive and tool-free:
 
 ```sh
 prove -Iperl t/1667-vial-architecture-scale-portable-runtime-measurement.t
+prove -Iperl t/1734-vial-verilator-terminal-resume-admission.t
 ```
 
 Exact runtime qualification is deliberately opt-in and must run below the

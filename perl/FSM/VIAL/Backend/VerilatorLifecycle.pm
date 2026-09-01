@@ -795,30 +795,12 @@ sub _phase_run($session) {
 }
 
 sub _phase_trace_validate($session) {
-    my $raw = _read_object_content(
-        $session, _object_by_kind(
-            $session->{objects}, 'runtime_raw_output',
-        ),
+    my $payload = _reconstruct_trace_payload(
+        $session, $session->{objects},
     );
-    my ($trace_text, $trace_jsonl, $ordinary) =
-        _extract_trace($raw);
-    my $process = _decode_object_json(
-        $session, _object_by_kind(
-            $session->{objects}, 'runtime_process_evidence',
-        ),
-    );
-    my $trace = FSM::VIAL::Backend::TraceValidator->validate({
-        execution_ir => $session->{execution_ir},
-        trace_text => $trace_text,
-        simulator_exit_code => $process->{exit_code},
-    });
-    _throw(
-        'VIAL_RUN_TRACE_ERROR',
-        $trace->{diagnostics}[0]{message}
-            . ' at ' . $trace->{diagnostics}[0]{path},
-        '/trace',
-    ) unless $trace->{ok};
-    _enforce_public_artifact_byte_lower_bound($session, $trace_jsonl);
+    my $trace = $payload->{validation};
+    my $trace_jsonl = $payload->{trace_jsonl};
+    my $ordinary = $payload->{ordinary};
     my @objects = (
         _write_content_object(
             $session, 'validated_trace',
@@ -839,6 +821,34 @@ sub _phase_trace_validate($session) {
             record_count => $trace->{projection}{record_count},
             validation_object_sha256 => $objects[0]{sha256},
         },
+    };
+}
+
+sub _reconstruct_trace_payload($session, $objects) {
+    my $raw = _read_object_content(
+        $session, _object_by_kind($objects, 'runtime_raw_output'),
+    );
+    my ($trace_text, $trace_jsonl, $ordinary) =
+        _extract_trace($raw);
+    my $process = _decode_object_json(
+        $session, _object_by_kind($objects, 'runtime_process_evidence'),
+    );
+    my $trace = FSM::VIAL::Backend::TraceValidator->validate({
+        execution_ir => $session->{execution_ir},
+        trace_text => $trace_text,
+        simulator_exit_code => $process->{exit_code},
+    });
+    _throw(
+        'VIAL_RUN_TRACE_ERROR',
+        $trace->{diagnostics}[0]{message}
+            . ' at ' . $trace->{diagnostics}[0]{path},
+        '/trace',
+    ) unless $trace->{ok};
+    _enforce_public_artifact_byte_lower_bound($session, $trace_jsonl);
+    return {
+        validation => $trace,
+        trace_jsonl => $trace_jsonl,
+        ordinary => $ordinary,
     };
 }
 
@@ -892,20 +902,45 @@ sub _enforce_public_result_artifact_byte_lower_bound($session, $payload) {
 }
 
 sub _phase_result_produce($session) {
-    my $trace = _decode_object_json(
-        $session, _object_by_kind(
-            $session->{objects}, 'validated_trace',
-        ),
+    my $payload = _reconstruct_result_payload(
+        $session, $session->{objects},
     );
-    my $ordinary = _decode_object_json(
-        $session, _object_by_kind(
-            $session->{objects}, 'runtime_ordinary_lines',
-        ),
+    my $object = _write_content_object(
+        $session, 'result_production_payload',
+        _canonical_json($payload), 0,
     );
+    return {
+        objects => [$object],
+        evidence => {
+            result_id => $payload->{result}{manifest}{result_id},
+            result_status => $payload->{result}{status},
+            result_payload_sha256 => $object->{sha256},
+        },
+    };
+}
+
+sub _reconstruct_result_payload(
+    $session, $objects, $trace_payload = undef,
+) {
+    my $trace = defined($trace_payload)
+        ? $trace_payload->{validation}
+        : _decode_object_json(
+            $session, _object_by_kind($objects, 'validated_trace'),
+        );
+    my $ordinary = defined($trace_payload)
+        ? $trace_payload->{ordinary}
+        : _decode_object_json(
+            $session, _object_by_kind(
+                $objects, 'runtime_ordinary_lines',
+            ),
+        );
+    my $trace_jsonl = defined($trace_payload)
+        ? $trace_payload->{trace_jsonl}
+        : _read_object_content(
+            $session, _object_by_kind($objects, 'runtime_trace_jsonl'),
+        );
     my $version = _read_object_content(
-        $session, _object_by_kind(
-            $session->{objects}, 'tool_version_output',
-        ),
+        $session, _object_by_kind($objects, 'tool_version_output'),
     );
     my $compile_transcript = _compile_transcript(
         $session->{compile}, $version,
@@ -957,46 +992,25 @@ sub _phase_result_produce($session) {
         tool_profile => $tool_profile,
         compile_transcript => $compile_transcript,
         run_transcript => $run_transcript,
-        trace_jsonl => _read_object_content(
-            $session, _object_by_kind(
-                $session->{objects}, 'runtime_trace_jsonl',
-            ),
-        ),
+        trace_jsonl => $trace_jsonl,
         result => $result,
         backend_manifest_id => $backend_manifest_id,
         compile_id => $compile_id,
         simulation_id => $simulation_id,
     };
     _enforce_public_result_artifact_byte_lower_bound($session, $payload);
-    my $object = _write_content_object(
-        $session, 'result_production_payload',
-        _canonical_json($payload), 0,
-    );
-    return {
-        objects => [$object],
-        evidence => {
-            result_id => $result->{manifest}{result_id},
-            result_status => $result->{status},
-            result_payload_sha256 => $object->{sha256},
-        },
-    };
+    return $payload;
 }
 
 sub _phase_assemble($session) {
-    my $payload = _decode_object_json(
-        $session, _object_by_kind(
-            $session->{objects}, 'result_production_payload',
-        ),
+    my $payload = _reconstruct_assembly_payload(
+        $session, $session->{objects},
     );
-    my $assembly = _build_assembly($session, $payload);
+    my $assembly = $payload->{assembly};
     $session->{terminal_assembly} = $assembly;
-    my $stored = $session->{storage_context}{mode}
-            eq 'architecture_scale_measurement'
-        ? _measurement_assembly_descriptor($session, $assembly)
-        : $assembly;
     my $object = _write_content_object(
         $session, 'assembly_payload',
-        _canonical_json($stored), 0,
+        _canonical_json($payload->{stored}), 0,
     );
     return {
         objects => [$object],
@@ -1006,6 +1020,24 @@ sub _phase_assemble($session) {
                 scalar keys %{$assembly->{artifact}},
         },
     };
+}
+
+sub _reconstruct_assembly_payload(
+    $session, $objects, $result_payload = undef,
+) {
+    $result_payload //= _decode_object_json(
+        $session, _object_by_kind(
+            $objects, 'result_production_payload',
+        ),
+    );
+    my $assembly = _build_assembly($session, $result_payload);
+    my $stored = $session->{storage_context}{mode}
+            eq 'architecture_scale_measurement'
+        ? _measurement_assembly_descriptor(
+            $session, $assembly, $objects,
+        )
+        : $assembly;
+    return {assembly => $assembly, stored => $stored};
 }
 
 sub _build_assembly($session, $payload) {
@@ -1628,6 +1660,9 @@ sub _load_state_chain($session, $handle) {
                 '/predecessor_identity',
             ) unless ($state->{predecessor_identity} // '')
                 eq $chain[$index - 1]{state_identity};
+            _validate_object_history(
+                $chain[$index - 1]{objects}, $state->{objects},
+            );
         }
     }
     my $current = $chain[-1];
@@ -1653,10 +1688,112 @@ sub _load_state_chain($session, $handle) {
         'lifecycle state tree contains a partial, extra, or missing state',
         '/state',
     ) unless _canonical_json(\@actual) eq _canonical_json(\@expected);
+    _validate_terminal_payloads($session, $current);
     $session->{chain} = \@chain;
     $session->{state} = _clone($current);
     $session->{objects} = _clone($current->{objects});
     return $session->{state};
+}
+
+sub _validate_object_history($previous, $current) {
+    _throw(
+        'VIAL_LIFECYCLE_STATE_ERROR',
+        'lifecycle object history must be two arrays', '/objects',
+    ) unless ref($previous) eq 'ARRAY' && ref($current) eq 'ARRAY';
+    _throw(
+        'VIAL_LIFECYCLE_STATE_ERROR',
+        'lifecycle successor dropped a predecessor object', '/objects',
+    ) if @$current < @$previous;
+    for my $index (0 .. $#$previous) {
+        _throw(
+            'VIAL_LIFECYCLE_STATE_ERROR',
+            'lifecycle successor changed predecessor object history',
+            '/objects',
+        ) unless _canonical_json($current->[$index])
+            eq _canonical_json($previous->[$index]);
+    }
+    return 1;
+}
+
+sub _validate_terminal_payloads($session, $record) {
+    my $ok = eval {
+        my $ordinal = $STATE_ORDINAL{$record->{state}};
+        _throw(
+            'VIAL_LIFECYCLE_STATE_ERROR',
+            'terminal payload state is unknown', '/state',
+        ) unless defined $ordinal;
+        my $objects = $record->{objects};
+        _qualified_version_content($session, $objects)
+            if $ordinal >= $STATE_ORDINAL{tool_verified};
+
+        my ($trace_payload, $result_payload);
+        if ($ordinal >= $STATE_ORDINAL{trace_validated}) {
+            $trace_payload = _reconstruct_trace_payload(
+                $session, $objects,
+            );
+            _require_terminal_content(
+                $session, $objects, 'validated_trace',
+                _canonical_json($trace_payload->{validation}),
+            );
+            _require_terminal_content(
+                $session, $objects, 'runtime_trace_jsonl',
+                $trace_payload->{trace_jsonl},
+            );
+            _require_terminal_content(
+                $session, $objects, 'runtime_ordinary_lines',
+                _canonical_json($trace_payload->{ordinary}),
+            );
+        }
+        if ($ordinal >= $STATE_ORDINAL{result_produced}) {
+            $result_payload = _reconstruct_result_payload(
+                $session, $objects, $trace_payload,
+            );
+            _require_terminal_content(
+                $session, $objects, 'result_production_payload',
+                _canonical_json($result_payload),
+            );
+        }
+        if ($ordinal >= $STATE_ORDINAL{assembled}) {
+            my $assembly = _reconstruct_assembly_payload(
+                $session, $objects, $result_payload,
+            );
+            _require_terminal_content(
+                $session, $objects, 'assembly_payload',
+                _canonical_json($assembly->{stored}),
+            );
+        }
+        1;
+    };
+    return 1 if $ok;
+    my $error = $@;
+    die $error if blessed($error)
+        && $error->isa(
+            'FSM::VIAL::Backend::VerilatorLifecycle::Failure'
+        )
+        && ($error->{code} // '') eq 'VIAL_LIFECYCLE_STATE_ERROR';
+    my $message = blessed($error)
+            && $error->isa(
+                'FSM::VIAL::Backend::VerilatorLifecycle::Failure'
+            )
+        ? $error->{message} : _sanitize_exception($error);
+    _throw(
+        'VIAL_LIFECYCLE_STATE_ERROR',
+        "terminal payload reconstruction failed: $message", '/objects',
+    );
+}
+
+sub _require_terminal_content(
+    $session, $objects, $kind, $expected,
+) {
+    my $actual = _read_object_content(
+        $session, _object_by_kind($objects, $kind),
+    );
+    _throw(
+        'VIAL_LIFECYCLE_STATE_ERROR',
+        "sealed $kind differs from reconstructed authority",
+        "/objects/$kind",
+    ) unless $actual eq $expected;
+    return 1;
 }
 
 sub _read_state_record($session, $relative) {
@@ -2263,6 +2400,19 @@ sub _validate_authority_objects($session) {
     ) unless $emission->{sha256}
         eq sha256_hex(_canonical_json($session->{emission}));
     return 1;
+}
+
+sub _qualified_version_content($session, $objects) {
+    my $version = _read_object_content(
+        $session, _object_by_kind($objects, 'tool_version_output'),
+    );
+    _throw(
+        'VIAL_LIFECYCLE_STATE_ERROR',
+        'sealed tool version differs from the qualified profile',
+        '/objects/tool_version_output',
+    ) unless $version
+        eq $session->{selected_profile}{qualified_version_output};
+    return $version;
 }
 
 sub _read_object_content($session, $object) {

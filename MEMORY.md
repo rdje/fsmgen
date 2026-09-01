@@ -8,9 +8,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
   (`active`; runtime-stream cap hardening under decisions `0093`/`0083`)
-- next_action: audit the remaining selected runtime-envelope surface in
-  `.17.4.7` and open the next bounded leaf only for a proven gap.
-- in_flight_uncommitted: none; terminal-payload admission is closed in its
-  task evidence and the next bounded runtime-envelope audit is selected.
+- next_action: audit and close GHDL lifecycle-authority, selected tool-version,
+  and provider-settings object binding in `.17.4.7`.
+- in_flight_uncommitted: none; portable-SV terminal admission is closed and the
+  next bounded runtime-envelope slice is selected.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none; immutable `.17.3` evidence is the selection input.
