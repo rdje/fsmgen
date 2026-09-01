@@ -21,9 +21,9 @@ The policy exposes candidate witnesses without assigning them to closeout
 dimensions. The separate consistency authority now joins the independently
 reviewed runtime-stream, backend-artifact, checking-model, checking-fault,
 checking-randomness, and checking-scoreboard witnesses to explicit dimensions.
-The checking-coverage, bridge-profile, and serialized-bridge-manifest witnesses
-are now joined too. The same classification remains pending for every other
-group.
+The checking-coverage, bridge-profile, serialized-bridge-manifest, and
+normalized-bridge-collection witnesses are now joined too. The same
+classification remains pending for every other group.
 
 ## Why calibration publication is separate
 
@@ -54,9 +54,9 @@ excess, diagnostics, atomicity, no-tool behavior, cleanup, and accepted
 identity.
 
 Runtime, backend, checking-model, checking-fault, checking-randomness,
-checking-scoreboard, checking-coverage, bridge-profile-cardinality, and
-serialized-bridge-manifest groups are `verified` across all seven dimensions;
-all other groups remain `pending_independent_verification`.
+checking-scoreboard, checking-coverage, bridge-profile-cardinality, serialized
+manifest, and normalized-collection groups are `verified` across all seven
+dimensions; all other groups remain `pending_independent_verification`.
 Runtime covers the selected materialization profiles plus t1720 through t1749
 and t1751 through t1762.
 Backend covers t1646 through t1650 and t1716 through t1719. Checking models
@@ -81,14 +81,22 @@ t1713 proves compact normalized-path excess and identity but is not boundary
 evidence. Bridge-profile cardinality uses t1602's exact single-unit/domain
 limit and adjacent excess, deterministic manifest/report identities, and
 same-volume cleanup. The strengthened witness also requires unset backend/tool
-selectors and no rejected metrics or manifest/report identity. T1763
+selectors and no rejected metrics or manifest/report identity.
 The serialized-manifest join keeps the enclosing route and terminal authority
 distinct. T1602 proves the exact provider-free workload ladder, cleanup, and
 repeatable identities. T1704 observes canonical encoding only after structural
 and uniqueness validation: 16,777,216 bytes pass, while the first complete
 valid record above the cap encodes to 16,777,219 bytes and returns the stable
-manifest-root diagnostic with no partial manifest or report. T1763
-reconstructs all nine sets of per-dimension projections,
+manifest-root diagnostic with no partial manifest or report.
+Normalized collections retain a different split. T1602 alone proves every
+selected collection's exact limit ladder, provider-free construction, cleanup,
+and workload identities. T1694 through t1703 each prove one collection's first
+constructible excess, stable normalized path and diagnostic, atomic rejection,
+and representative accepted identity. They are deliberately not exact-boundary,
+no-tool, or cleanup evidence. The backend-binding witness preserves its
+multi-binding first-excess shape rather than claiming single-record adjacency;
+the source-map witness additionally stops before constructing the first excess
+record. T1763 reconstructs all ten sets of per-dimension projections,
 requires their complete unions, checks every path, and rejects omitted or
 foreign evidence. Policy citations remain candidates
 for all unreviewed groups. The validator also
@@ -211,6 +219,18 @@ authority, validation order, atomic rejection, and sealed falsifiers with:
 scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
   prove -Iperl t/1602-vial-architecture-scale-bridge-fanout.t \
   t/1704-hial-vial-bridge-serialized-manifest-terminal-authority.t \
+  t/1763-vial-architecture-scale-cap-consistency.t \
+  t/1685-vial-architecture-scale-cap-policy.t
+```
+
+Reverify all normalized bridge collections, their exact shared ladder, each
+focused cap-order control, and sealed-report falsifiers with:
+
+```sh
+scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
+  prove -Iperl t/1602-vial-architecture-scale-bridge-fanout.t \
+  t/16{94..99}-hial-vial-bridge-*-cap-order.t \
+  t/17{00..03}-hial-vial-bridge-*-cap-order.t \
   t/1763-vial-architecture-scale-cap-consistency.t \
   t/1685-vial-architecture-scale-cap-policy.t
 ```

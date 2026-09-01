@@ -463,6 +463,42 @@ my %BRIDGE_SERIALIZED_RATIONALE = (
     accepted_identity =>
         'the exact workload identities and terminal canonical SHA are deterministic and byte-equal',
 );
+my @BRIDGE_NORMALIZED_EVIDENCE = (
+    [
+        't/1602-vial-architecture-scale-bridge-fanout.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool cleanup accepted_identity),
+    ],
+    map {
+        [$_, qw(adjacent_excess diagnostics atomicity accepted_identity)]
+    } qw(
+        t/1694-hial-vial-bridge-configuration-cap-order.t
+        t/1695-hial-vial-bridge-endpoint-cap-order.t
+        t/1696-hial-vial-bridge-observation-cap-order.t
+        t/1697-hial-vial-bridge-probe-cap-order.t
+        t/1698-hial-vial-bridge-type-cap-order.t
+        t/1699-hial-vial-bridge-transaction-cap-order.t
+        t/1700-hial-vial-bridge-event-cap-order.t
+        t/1701-hial-vial-bridge-residue-cap-order.t
+        t/1702-hial-vial-bridge-backend-binding-cap-order.t
+        t/1703-hial-vial-bridge-source-map-cap-order.t
+    ),
+);
+my %BRIDGE_NORMALIZED_RATIONALE = (
+    boundary =>
+        'the exact workload ladder admits all ten normalized collection axes at their selected limits',
+    adjacent_excess =>
+        'the exact ladder plus ten order witnesses reject each first constructible excess, including the 16386 binding shape',
+    diagnostics =>
+        'every collection retains the authoritative bridge limit code, count message, and normalized path',
+    atomicity =>
+        'every collection excess publishes no manifest or report, and the exact route withholds metrics and identities',
+    no_tool =>
+        'the exact normalized-collection workload carries no backend or external-tool selector',
+    cleanup =>
+        'normalized-collection workload success and consumer failure are same-volume and residue-free',
+    accepted_identity =>
+        'the exact ladder and ten representative accepted controls retain deterministic byte-equal manifest/report identities',
+);
 my %runtime_dimensions = map {
     $_ => {
         status => 'verified',
@@ -566,8 +602,21 @@ for my $entry (@BRIDGE_SERIALIZED_EVIDENCE) {
     push @{$bridge_serialized_dimensions{$_}{evidence}}, $path
         for @dimensions;
 }
+my %bridge_normalized_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $BRIDGE_NORMALIZED_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@BRIDGE_NORMALIZED_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$bridge_normalized_dimensions{$_}{evidence}}, $path
+        for @dimensions;
+}
 my $VERIFIED_DIMENSIONS = {
     backend_artifact_graph => \%backend_dimensions,
+    bridge_normalized_collections => \%bridge_normalized_dimensions,
     bridge_profile_cardinality => \%bridge_profile_dimensions,
     bridge_serialized_manifest => \%bridge_serialized_dimensions,
     checking_coverage => \%checking_coverage_dimensions,

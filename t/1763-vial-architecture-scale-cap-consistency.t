@@ -362,8 +362,40 @@ my %bridge_serialized_rationale = (
     cleanup => 'serialized-manifest workload success and consumer failure are same-volume and residue-free',
     accepted_identity => 'the exact workload identities and terminal canonical SHA are deterministic and byte-equal',
 );
+my @bridge_normalized_evidence = qw(
+    t/1602-vial-architecture-scale-bridge-fanout.t
+    t/1694-hial-vial-bridge-configuration-cap-order.t
+    t/1695-hial-vial-bridge-endpoint-cap-order.t
+    t/1696-hial-vial-bridge-observation-cap-order.t
+    t/1697-hial-vial-bridge-probe-cap-order.t
+    t/1698-hial-vial-bridge-type-cap-order.t
+    t/1699-hial-vial-bridge-transaction-cap-order.t
+    t/1700-hial-vial-bridge-event-cap-order.t
+    t/1701-hial-vial-bridge-residue-cap-order.t
+    t/1702-hial-vial-bridge-backend-binding-cap-order.t
+    t/1703-hial-vial-bridge-source-map-cap-order.t
+);
+my %bridge_normalized_evidence = (
+    boundary => [$bridge_normalized_evidence[0]],
+    adjacent_excess => [@bridge_normalized_evidence],
+    diagnostics => [@bridge_normalized_evidence],
+    atomicity => [@bridge_normalized_evidence],
+    no_tool => [$bridge_normalized_evidence[0]],
+    cleanup => [$bridge_normalized_evidence[0]],
+    accepted_identity => [@bridge_normalized_evidence],
+);
+my %bridge_normalized_rationale = (
+    boundary => 'the exact workload ladder admits all ten normalized collection axes at their selected limits',
+    adjacent_excess => 'the exact ladder plus ten order witnesses reject each first constructible excess, including the 16386 binding shape',
+    diagnostics => 'every collection retains the authoritative bridge limit code, count message, and normalized path',
+    atomicity => 'every collection excess publishes no manifest or report, and the exact route withholds metrics and identities',
+    no_tool => 'the exact normalized-collection workload carries no backend or external-tool selector',
+    cleanup => 'normalized-collection workload success and consumer failure are same-volume and residue-free',
+    accepted_identity => 'the exact ladder and ten representative accepted controls retain deterministic byte-equal manifest/report identities',
+);
 my %verified_evidence = (
     backend_artifact_graph => \%backend_evidence,
+    bridge_normalized_collections => \%bridge_normalized_evidence,
     bridge_profile_cardinality => \%bridge_profile_evidence,
     bridge_serialized_manifest => \%bridge_serialized_evidence,
     checking_coverage => \%checking_coverage_evidence,
@@ -375,6 +407,7 @@ my %verified_evidence = (
 );
 my %verified_rationale = (
     backend_artifact_graph => \%backend_rationale,
+    bridge_normalized_collections => \%bridge_normalized_rationale,
     bridge_profile_cardinality => \%bridge_profile_rationale,
     bridge_serialized_manifest => \%bridge_serialized_rationale,
     checking_coverage => \%checking_coverage_rationale,
@@ -576,6 +609,18 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
         'every sealed serialized-manifest evidence path exists',
     );
 
+    my %bridge_normalized_join = map { $_ => 1 }
+        map { @{$bridge_normalized_evidence{$_}} } @dimensions;
+    is_deeply(
+        [sort keys %bridge_normalized_join],
+        [sort @bridge_normalized_evidence],
+        'normalized-collection join covers the exact ladder and ten order witnesses',
+    );
+    is_deeply(
+        [grep { !-f $_ } sort keys %bridge_normalized_join], [],
+        'every sealed normalized-collection evidence path exists',
+    );
+
     is($report->{calibration}{evidence_role},
         'historical_measurement_only',
         'calibration stays measurement evidence');
@@ -762,6 +807,21 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
     like(dies(sub { $assert->($foreign_bridge_serialized) }),
         qr/bridge_serialized_manifest\/accepted_identity' contradicts the sealed evidence authority/,
         'callers cannot add foreign serialized-manifest evidence');
+
+    my $omitted_bridge_normalized = $class->build;
+    pop @{$omitted_bridge_normalized->{groups}{bridge_normalized_collections}
+        {dimensions}{no_tool}{evidence}};
+    like(dies(sub { $assert->($omitted_bridge_normalized) }),
+        qr/bridge_normalized_collections\/no_tool' verified evidence must be one non-empty array/,
+        'callers cannot empty sealed normalized-collection evidence');
+
+    my $foreign_bridge_normalized = $class->build;
+    push @{$foreign_bridge_normalized->{groups}{bridge_normalized_collections}
+        {dimensions}{accepted_identity}{evidence}},
+        't/foreign-bridge-normalized-evidence.t';
+    like(dies(sub { $assert->($foreign_bridge_normalized) }),
+        qr/bridge_normalized_collections\/accepted_identity' contradicts the sealed evidence authority/,
+        'callers cannot add foreign normalized-collection evidence');
 
     my $missing = $class->build;
     delete $missing->{groups}{$first_group}{dimensions}{cleanup};

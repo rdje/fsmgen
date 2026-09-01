@@ -73,7 +73,6 @@ evidence: >-
   t/1708-vial-execution-source-map-cap-order.t;
   t/1709-vial-execution-binding-cardinality-preflight.t;
   t/1710-vial-execution-random-attempt-authority.t;
-  t/1634-vial-architecture-scale-checking-random-replay.t;
   t/1630-vial-architecture-scale-checking-models.t; t/1711-vial-execution-model-cardinality-preflight.t;
   t/1631-vial-architecture-scale-checking-scoreboards.t; t/1712-vial-execution-scoreboard-cardinality-preflight.t;
   t/1632-vial-architecture-scale-checking-coverage.t; t/1713-vial-execution-coverage-cardinality-preflight.t;
@@ -115,69 +114,54 @@ terminal defenses, but no limit increase, decrease, re-levelling, support,
 budget, capacity, or accepted-profile change. Decision [[vial-execution-scale-axis-outcomes]]
 retains the reachability evidence; decision `0093` is the rationale authority.
 
-Parser admission checks each source's bytes before lexing and direct import
-fan-out before recursion. Malformed imported syntax cannot mask either limit;
-accepted ordering and identities plus the nested-edge defense remain.
+Parser admission checks source bytes before lexing and direct imports before
+recursion; malformed syntax cannot mask limits, ordering, identities, or the
+nested-edge defense.
 
-Semantic admission reserves action/repeat capacity overflow-safely and checks
-parallel shape, declarations, scoreboard/cross scalars, and type shape before
-dependent parsing or resolution. Exact diagnostics, atomic failure, and
-accepted identities remain.
+Semantic admission reserves action/repeat capacity overflow-safely, then checks
+parallel shape, declarations, scoreboard/cross scalars, and types before
+dependent work; exact diagnostics, atomicity, and identities remain.
 
 Bridge admission covers parameters, endpoints, observations, probes, types,
-transactions/events, residue, bindings, and maps before dependent construction.
-Terminal collections remain, while exact manifest bytes stay terminal because
-canonical encoding decides size.
+transactions/events, residue, bindings, and maps before dependent construction;
+canonical encoding necessarily keeps exact manifest bytes terminal.
 
-Execution preflights profile/scenario/operation/fiber counts, then bindings and
+Execution preflights profiles, scenarios, operations, fibers, bindings, and
 novel types/maps before insertion; random and plan bytes stop final projection.
-Earlier authorities, diagnostics, accepted identities, and defenses remain.
+Checking preflights models/cells, scoreboards, coverage, faults, and randomness.
+Both retain earlier authorities, diagnostics, identities, and terminal defenses.
 
-Checking-state preflights models/cells, scoreboard capacity, coverage, faults,
-and random occurrences before dependent work. Accepted counts, prior
-authorities, diagnostics, replay, and terminal defenses remain.
+Portable emitters retain byte-first order. SystemVerilog then preflights its map
+cap; VHDL admits fixed inventory and independently censuses maps without
+inventing a cap. Accepted counts equal materialization; terminal checks remain.
 
-Profile emitters retain byte-first order. Portable SystemVerilog then preflights
-its selected map cap; portable VHDL admits fixed inventory and independently
-censuses its map without inventing a cap. Accepted counts must agree with
-materialization, and terminal defenses remain.
+OSVVM admits portable sources, adapter, and translated map before lazily sealing
+one reusable provider result; rejected/no-emission callbacks never verify.
+Wrapper censuses are integrity checks, not caps or support claims.
 
-OSVVM admits portable sources, adapter, and translated map before provider
-verification. Known rejection and no-emission callbacks never verify; accepted
-callbacks lazily seal and reuse one provider result. Wrapper censuses remain
-integrity checks, not new caps or support claims.
-
-Native UVM keeps exact selected-shape negotiation before rendering. Accepted
-shapes retain exact source-byte precedence, then fixed source/total inventory
-and compact map-spec preflight before map materialization, static validation,
-or review closure. Accepted map and artifact materializations must equal those
-preflights, with terminal defenses retained; identities and nonclaims do not
-change.
+Native UVM negotiates selected shape before rendering, then applies source-byte,
+fixed-inventory, and compact map-spec preflights before materialization,
+validation, or review. Materialized maps/artifacts equal preflights; terminal
+defenses, identities, and nonclaims remain.
 
 Completed `.17.4.7` owns executable portable-SystemVerilog, portable-VHDL, and
-OSVVM runtime envelopes; native UVM remains emission-only. Portable
-SystemVerilog validates plan plus emission before Runner eligibility, so known
-excess starts no tool or partial graph. The shared lifecycle then bounds trace
-plus immutable emission and the final profile/transcript/trace/result graph
-before writes or assembly. Exact boundaries pass, adjacent excess rejects, and
-completed-backend plus Tool terminal checks remain; no cap or claim changes.
+OSVVM envelopes; native UVM stays emission-only. Eligibility rejects known plan
+or emission excess before tools, while the shared lifecycle bounds trace and
+the final artifact graph before writes. Terminal checks remain.
 
 `FSM::VIAL::ArchitectureScaleCapConsistency` rebuilds the policy without caller
-evidence. Nine groups verify all dimensions: runtime, backend, models, faults,
-randomness, scoreboards, coverage, bridge-profile cardinality, and serialized
-bridge manifests. Scoreboards join the t1631 provider-free
-FIFO and cleanup proof, t1690 semantic boundary/order proof, and t1712 compact
-execution preflight without misclassifying the last as boundary evidence.
-Coverage likewise joins t1632's static-domain oracle and lower source-byte
-route authority, t1691 semantic scalar admission, and t1713 compact preflight
-without treating the last as boundary evidence. T1763 reconstructs exact
-unions and rejects omitted/foreign evidence. Bridge-profile cardinality uses
-t1602's exact boundary/excess, identities, cleanup, unset selectors, and absent
-rejected output identities.
-Serialized-manifest evidence keeps t1602's provider-free exact workload and
-cleanup separate from t1704's terminal canonical encoding observer. The latter
-admits 16,777,216 bytes after structural and uniqueness validation, rejects the
-first complete valid excess at 16,777,219 bytes, and exposes no partial output.
+evidence. Ten groups verify all dimensions: runtime, backend, models, faults,
+randomness, scoreboards, coverage, bridge-profile cardinality, serialized
+bridge manifests, and normalized bridge collections. Layered joins stay exact:
+scoreboards use t1631/t1690/t1712, coverage t1632/t1691/t1713, and bridge profile
+t1602, without upgrading compact preflight to boundary evidence. T1763 rebuilds
+exact unions and rejects omitted/foreign paths.
+Serialized manifests separate t1602's exact workload/cleanup from t1704's
+terminal observer, which validates structure/identity before encoding, admits
+16,777,216 bytes, and atomically rejects the first complete 16,777,219-byte excess.
+Normalized collections separate t1602's exact ladder/no-tool/cleanup from
+t1694–t1703's per-axis excess, path, atomicity, and accepted-identity controls;
+source-map admission stops before excess materialization.
 Other groups and calibration remain pending/blocked.
 
 The common controller admits bounded worker files before counts/digests; cap+1

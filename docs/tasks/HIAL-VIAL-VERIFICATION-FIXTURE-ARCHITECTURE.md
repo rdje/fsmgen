@@ -897,6 +897,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
   Claim Disposition Finding: `Adding exact serialized-manifest byte results to the closeout chapter caused the producer-derived claim census to emit two open candidates. Root cause was broader than missing per-claim records: the newer 16df closeout chapter was absent from the required-complete verification_architecture disposition group, so it had no candidate routing until its first actionable numeral appeared. This slice registers 16df, dispositions both byte claims through non-aliased producer, terminal-oracle, and watcher legs, and restores zero open owners/gaps. Re-derive: regenerate the inventory and join it through the disposition checker. Falsify: either an ungrouped path or an absent/malformed disposition fails closed. Durability: this task, disposition group, two sorted disposition records, generated inventory, and work-unit commit retain the repair.`
 
+  Bridge Normalized Collections Join: `The caller-sealed consistency authority now also promotes bridge_normalized_collections through eleven deliberately asymmetric witnesses. T1602 alone owns all ten exact collection boundaries, first constructible excesses, provider-free construction, same-volume cleanup, and exact workload identities. T1694 through t1703 each own one collection's first constructible excess, stable normalized path and diagnostic, atomic no-manifest/no-report result, and frozen representative accepted identity; none is upgraded to exact-boundary, no-tool, or cleanup evidence. The backend-binding witness honestly preserves 16,386 as its first constructible shape above the 16,384 cap, and t1703 stops before source-map record 65,537 materialization. T1763 reconstructs the exact per-dimension projections and eleven-path union, checks every path, and rejects empty or foreign evidence. Every earlier verified group remains sealed and every unaudited group remains pending, so calibration stays historical, incomplete, and blocked. Re-derive: execute t1602 with FSMGEN_VIAL_SCALE_EXACT=1 plus t1694 through t1703, t1763, and t1685 under the repository-local RAM guard. Falsify: all ten exact boundary/excess ladders, ten malformed-last-record precedence controls, source-map materialization spy, projection, union, omission, foreign-evidence, and caller-mutation controls fail closed. Durability: this task, book, Knowledge Map card, consistency source/test, policy decision 0093, and work-unit commit retain the layered classification. The guarded suite reports All tests successful at Files=13/Tests=221 in 159 wallclock seconds. No bridge cap, collection shape, accepted identity, product behavior, publication, support, budget, or capacity claim changes. The next slice independently reviews execution_profile_selection.`
+
+  Normalized Collections Containment Resolution: `The Knowledge Map card reached only 20 lines/664 bytes below its inherited transition allowance after the normalized-collection sync. This slice removes one duplicate evidence path and compacts repeated layer summaries plus completed-join prose without changing answers, evidence, reverify routes, cap semantics, or the allowance. Re-derive: aggregate tracked docs/knowledge Markdown and compare it with the declared baseline plus transition growth. Falsify: Knowledge Map and live-document gates reject lost answer parity, missing evidence, or allowance drift. Durability: this task, compacted card, generated shards, containment manifest, and work-unit commit retain the resolution.`
+
   Containment Resolution: `The cap-policy card's long one-path-per-line reverify list is now a shorter equivalent set of numeric brace ranges plus exact outliers; every expansion resolves to an existing tracked test. With checking-randomness evidence added, the card aggregate falls from 46,939 lines/3,464,850 bytes to 46,903 lines/3,462,766 bytes, restoring 39 lines/2,119 bytes below the inherited transition allowance without changing it. Re-derive: expand every compacted pattern and aggregate docs/knowledge Markdown with wc. Falsify: missing paths fail the explicit expansion census, and Knowledge Map/live-document checks reject freshness, answer, transition, or ceiling drift. Durability: this task, the compacted card, generated shard, containment manifest, and work-unit commit retain the resolution.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
@@ -2930,3 +2934,46 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   immediately before commit with no bridge cap, canonical encoding, accepted
   identity, product behavior, publication, support, budget, or capacity claim
   change. Full CI and push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.8` bridge-normalized-collections evidence join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the sealed consistency report leaves
+  `bridge_normalized_collections` pending because its eleven policy witnesses
+  remain undifferentiated candidates, and the Knowledge Map has no narrower
+  answer. T1602 alone owns every axis's exact limit ladder, provider-free
+  construction, cleanup, and workload identities. T1694 through t1703 each own
+  one collection's first constructible excess, stable normalized path and
+  diagnostic, atomic rejection, and representative accepted identity; none is
+  exact boundary, no-tool, or cleanup evidence. The backend-binding shape first
+  exceeds 16,384 at 16,386 rather than arithmetic cap+1, while t1703 additionally
+  proves interruption before source-map record 65,537 is materialized. Exact
+  `git log -S` history using `'bridge_normalized_collections' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` traces the candidate-only group
+  to `951720257`.
+- [x] **ADDRESSED (verified)** — classify the eleven complementary witnesses
+  across boundary, adjacent excess, diagnostics, atomicity, no-tool, cleanup,
+  and accepted identity without upgrading gate-only accepted controls to exact
+  boundary proof; run t1602's complete exact ladder plus all ten focused
+  cap-order witnesses under the repository-local RAM guard; seal exact paths
+  and rationales in the no-input consistency authority; reject omitted or
+  foreign evidence; retain all prior joins; and keep calibration blocked while
+  any group remains pending. The pre-promotion t1763 RED reports exactly 21
+  missing status/evidence/rationale assertions plus the two deliberately
+  inactive omission/foreign controls, with all nine prior groups green; the
+  matching sealed projection then makes the complete consistency/policy
+  collection pass.
+- [x] **NO REGRESSION** — all eleven normalized-collection witnesses plus
+  consistency and policy collection report `All tests successful` at
+  Files=13/Tests=221 in 159 wallclock seconds. Task integrity passes across 4
+  trees/1,031 nodes; all 59 mdBook chapters test, and the inspected
+  94-file/20,580-KiB repository-local render is removed exactly.
+  `knowledge-map: OK` reports 1,159 facts/6,231 questions/6,403 answer
+  occurrences/138 shards. Claim inventory independently agrees at 11,499
+  numeric lines with 1,713/1,713 candidates dispositioned, 941 derived gates,
+  and zero gaps, open owners, or untracked producers. All 22 live-document
+  surfaces and the exact 59-file/54,802-line/2,958,761-byte book authority pass
+  with zero ceiling increase; Knowledge Map compaction restores 41 lines/2,063
+  bytes of transition headroom. Staged acceptance and every registered doctrine
+  are required green immediately before commit with no bridge cap, collection
+  shape, accepted identity, product behavior, publication, support, budget, or
+  capacity claim change. Full CI and push remain deferred by policy.
