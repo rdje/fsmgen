@@ -1197,4 +1197,4 @@ payloads, keeping byte and meaning integrity separate without coupling schemas.
 Canonical JSON does not make equal-looking value types interchangeable. Perl
 numeric operations can admit strings or booleans, change later encoding, and
 make authority depend on check order. GHDL state and request/storage/validation/
-command-plan input admit integers before comparison, validation, or hashing.
+command-plan plus persisted-envelope input admit integers before later work.

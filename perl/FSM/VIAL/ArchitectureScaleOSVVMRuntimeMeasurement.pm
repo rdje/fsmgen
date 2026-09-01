@@ -616,34 +616,59 @@ sub _validated_request_envelope($raw, $route_authority, $envelope) {
         provider_verification request
     )], 'OSVVM runtime lifecycle request envelope');
     confess "OSVVM runtime lifecycle request envelope changed\n"
-        unless ($envelope->{schema} // '') eq
-                'fsmgen.vial_osvvm_runtime_lifecycle_request.v1'
-            && ($envelope->{schema_version} // 0) == 1
-            && $envelope->{materialization_identity}
-                eq $raw->{materialization}{report_identity}
-            && $envelope->{plan_identity}
-                eq $raw->{execution_plan}{plan_identity};
+        unless _scalar_equals($envelope->{schema},
+                'fsmgen.vial_osvvm_runtime_lifecycle_request.v1')
+            && _json_integer_equals($envelope->{schema_version}, 1)
+            && _scalar_equals(
+                $envelope->{materialization_identity},
+                $raw->{materialization}{report_identity},
+            )
+            && _scalar_equals(
+                $envelope->{plan_identity},
+                $raw->{execution_plan}{plan_identity},
+            );
     my $request = $envelope->{request};
     _exact_keys($request, [qw(
         provider source_set source_identity emission_identity commands
         validation storage_context
     )], 'OSVVM runtime persisted lifecycle request');
     confess "OSVVM runtime persisted source identity changed\n"
-        unless $request->{source_identity} eq
-            'source/' . sha256_hex(_canonical_json($request->{source_set}));
+        unless _scalar_equals(
+            $request->{source_identity},
+            'source/' . sha256_hex(_canonical_json($request->{source_set})),
+        );
     confess "OSVVM runtime persisted lifecycle storage changed\n"
-        unless $request->{storage_context}{staging_identity} eq
-                "$raw->{context}{staging_identity}/lifecycle"
-            && $request->{storage_context}{mode} eq
-                'osvvm_architecture_scale_measurement'
-            && $request->{storage_context}{containment} eq
-                'outer_worker_process_group';
+        unless _scalar_equals(
+                $request->{storage_context}{staging_identity},
+                "$raw->{context}{staging_identity}/lifecycle",
+            )
+            && _scalar_equals(
+                $request->{storage_context}{mode},
+                'osvvm_architecture_scale_measurement',
+            )
+            && _scalar_equals(
+                $request->{storage_context}{containment},
+                'outer_worker_process_group',
+            );
     my $execution = $route_authority->{projection}{execution_ir};
     confess "OSVVM runtime persisted validation plan changed\n"
-        unless $request->{validation}{expected_plan_id}
-                eq $execution->{plan_id}
-            && $request->{validation}{run_repetitions} == 1;
+        unless _scalar_equals(
+                $request->{validation}{expected_plan_id},
+                $execution->{plan_id},
+            )
+            && _json_integer_equals(
+                $request->{validation}{run_repetitions}, 1,
+            );
     return {repo_root => $raw->{repository_root}, %$request};
+}
+
+sub _scalar_equals($actual, $expected) {
+    return defined($actual) && !ref($actual) && $actual eq $expected;
+}
+
+sub _json_integer_equals($actual, $expected) {
+    return defined($actual) && !ref($actual)
+        && _canonical_json($actual) eq "$expected";
 }
 
 sub _read_request_envelope($context) {

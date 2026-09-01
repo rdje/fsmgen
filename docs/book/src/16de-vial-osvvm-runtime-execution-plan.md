@@ -178,6 +178,18 @@ external controller stages retain every provider/generated analysis capture,
 both elaboration captures, and separate fixture/provider-probe captures.
 Trace and normalized-result truth still come only from the portable fixture.
 
+Emit also persists the canonical lifecycle-request envelope used by every
+later controller stage. Reload now requires both its envelope schema version
+and nested run-repetition count to remain canonical JSON integers before the
+predecessor handle or lifecycle is consumed. Thus numeric `1` admits, while
+string `"1"` and JSON `true` reject before lifecycle or external-tool work;
+schema, plan, materialization, source, validation, and storage identities must
+also remain scalar-exact. Run the isolated reload controls with:
+
+```console
+prove -Iperl t/1740-vial-osvvm-persisted-request-scalar-types.t
+```
+
 Each executable role uses one lifecycle execution per controller record. The
 reference role has one correctness-only validation. Gate has one validation
 and three independently measured records; qualification has one validation
