@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 
+use Cwd qw(abs_path);
 use Digest::SHA qw(sha256_hex);
 use File::Spec;
 use FindBin;
@@ -15,7 +16,9 @@ use FSM::VIAL::ArchitectureScaleExecutionGraph;
 use FSM::VIAL::ArchitectureScaleWorkload;
 
 my $class = 'FSM::VIAL::ArchitectureScaleExecutionGraph';
+my $foundation = 'FSM::VIAL::ArchitectureScaleWorkload';
 my $json = JSON::PP->new->canonical(1)->utf8(1);
+my $repo_root = abs_path(File::Spec->catdir($FindBin::Bin, '..'));
 my %expected = (
     types => 512,
     bindings => 514,
@@ -54,6 +57,10 @@ subtest 'type construction is canonical ordinary source' => sub {
         'independent type construction is byte-identical');
     is($first->{specification}{requested_counts}{execution_types},
         $expected{types}, 'construction retains the selected type request');
+    is($first->{specification}{backend_profile}, undef,
+        'type construction selects no backend');
+    is($first->{specification}{tool_profile}, undef,
+        'type construction selects no external tool');
     is_deeply([sort map { $_->{role} } @{$first->{inputs}}],
         [qw(hial_source vial_source)],
         'construction contains only generated HIAL and VIAL source');
@@ -155,6 +162,43 @@ subtest 'type evaluation freezes route, topology, maps, and identities' => sub {
         'plan identity is exact');
     is_deeply($evaluation->{contract_discrepancies}, [],
         'type gate has no selected contract discrepancy');
+};
+
+subtest 'type-gate staging is same-volume and residue-free' => sub {
+    my $construction = construction();
+    my $stage_abs = File::Spec->catdir(
+        $repo_root, split m{/}, $construction->{staging_identity},
+    );
+    ok(!-e $stage_abs && !-l $stage_abs, 'type staging root begins absent');
+
+    my $success = $foundation->with_staging({
+        repository_root => $repo_root,
+        construction => $construction,
+        consumer => sub {
+            my ($context) = @_;
+            is($context->{staging_identity}, $construction->{staging_identity},
+                'type consumer receives the exact staging identity');
+            ok(!(grep { !-f $_->{absolute_path} } @{$context->{inputs}}),
+                'type staging materializes both canonical inputs');
+        },
+    });
+    diag($json->encode($success->{diagnostics})) unless $success->{ok};
+    ok($success->{ok}, 'type-gate staging succeeds');
+    ok($success->{same_volume}, 'type staging proves same-volume identity');
+    ok($success->{removed}, 'successful type staging reports removal');
+    ok(!-e $stage_abs && !-l $stage_abs,
+        'successful type staging leaves no residue');
+
+    my $failure = $foundation->with_staging({
+        repository_root => $repo_root,
+        construction => $construction,
+        consumer => sub { die "forced type-route consumer failure\n" },
+    });
+    ok(!$failure->{ok}, 'type consumer failure is reported');
+    is($failure->{diagnostics}[0]{code}, 'VIAL_SCALE_CONSUMER_ERROR',
+        'type failure retains the stable staging diagnostic');
+    ok(!-e $stage_abs && !-l $stage_abs,
+        'failed type staging leaves no residue');
 };
 
 subtest 'type gate rejects mutation, checked-source injection, and unfinished levels' => sub {

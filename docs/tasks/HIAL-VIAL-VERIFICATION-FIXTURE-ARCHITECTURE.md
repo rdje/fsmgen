@@ -921,6 +921,12 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
   Execution Fiber Claim Disposition Finding: `The user-facing fiber explanation produced three actionable candidates: the exact live-fiber boundary, its adjacent excess combined with total-fiber component admission, and the total-fiber adjacent excess. Each is now a derived-gate disposition with non-aliased catalog/generator/contract/builder re-derivation, all three focused fiber oracles as falsifiers, and the repaired policy plus sealed consistency authority as durability watchers. Re-derive: regenerate the producer-derived inventory and join every candidate through the required-complete verification_architecture group. Falsify: removing a disposition, producer, oracle, watcher, or current candidate identity fails closed. Durability: the disposition registry, generated inventory, this task, and work-unit history retain the result at 1,719/1,719 disposed candidates, 947 derived gates, and zero gaps/open owners.`
 
+  Execution Route Collections Audit Finding: `The execution_route_collections candidate inventory is incomplete across its three owned axes. T1607/t1627/t1628 plus t1707-t1709 prove the source-map, execution-type, and binding route boundaries and local defenses, but the executable policy omits t1603's accepted binding-gate plan and t1606's accepted execution-type plan; t1607 already supplies the corresponding accepted source-map route identity. History shows 951720257 introduced only t1607/t1627/t1628, while 2892b36ad, 00c68b1fd, and f8c4808cb appended their local hardeners without revisiting accepted-route completeness. The complete ten-file policy/candidate/consistency baseline is green at Files=10/Tests=139 in 54 wallclock seconds under the repository RAM guard, so this is evidence-inventory debt rather than a runtime regression. This active .17.4.8 slice owns repairing the exact eight-witness policy inventory, strengthening explicit no-tool and same-volume cleanup facts where the accepted ladders are silent, and only then binding independently classified dimensions. Re-derive: inspect t1603/t1606/t1607, t1627/t1628, t1707-t1709, exact policy history, and run all eight witnesses plus t1763/t1685 under the RAM guard. Falsify: omitting either accepted gate loses one owned axis's deterministic complete-plan identity and cleanup, while omitting any existing witness loses a route boundary, adjacent excess, diagnostic, or pre-materialization defense. Durability: this task entry owns the defect before source changes; the completed slice must synchronize policy, consistency authority, tests, book, Knowledge Map, and work-unit history.`
+
+  Execution Route Collections Join: `The repaired policy now cites the complete eight-witness set across bindings, execution_types, and source_map_records, and the caller-sealed consistency authority promotes execution_route_collections without flattening component admission into whole-route reachability. T1603/t1606/t1607 own accepted binding/type/map gate plans plus same-volume success/failure cleanup. T1628 admits 2,054 bindings before the 2,055 route crosses the 2,048-event bridge cap; t1627 admits 1,043 types before 1,044 crosses serialized bridge bytes; t1607 admits 46,294 source maps before 46,295 crosses serialized plan bytes. T1707/t1708 independently admit exact type-table/source-map component limits and reject first excess before cloning/insertion; t1709 rejects compactly known binding excess before binding construction. The accepted gate and layered route constructions explicitly select no backend or tool. T1763 reconstructs every projection and the exact eight-path union, checks each path, and rejects omitted or foreign evidence. The intentional RED exposed one policy mismatch, 21 pending status/evidence/rationale assertions, and two inactive mutation controls. The completed default guarded suite reports Files=10/Tests=140 in 55 wallclock seconds; the exact three-route boundary suite reports Files=3/Tests=21 in 77 wallclock seconds. Every prior group remains sealed, every unaudited group remains pending, and calibration remains historical/incomplete/blocked. Re-derive: run t1603/t1606/t1607/t1627/t1628/t1707-t1709 plus t1763/t1685 under the RAM guard, with FSMGEN_VIAL_SCALE_EXACT=1 for the three route-boundary witnesses. Falsify: accepted identity, three different earlier route authorities, local exact-boundary/excess, diagnostic, pre-materialization, no-tool, cleanup, union, omission, foreign-evidence, and caller-mutation controls fail closed. Durability: this task, repaired policy, consistency source/test, eight focused witnesses, book, Knowledge Map, decision 0093, and work-unit commit retain the result. No cap, route boundary, level, accepted identity, route outcome, product behavior, publication, support, budget, or capacity claim changes. The next slice independently reviews execution_random_attempts.`
+
+  Execution Route Collections Claim Disposition Finding: `The user-facing three-route explanation produced three actionable candidates: the binding/event route boundary, the execution-type/serialized-bridge boundary, and the source-map/serialized-plan boundary. Each is now a derived-gate disposition with non-aliased contract/generator/bridge/builder re-derivation, all eight route witnesses as falsifiers, and the repaired policy plus sealed consistency authority as durability watchers. Re-derive: regenerate the producer-derived inventory and join every candidate through the required-complete verification_architecture group. Falsify: removing a disposition, producer, oracle, watcher, or current candidate identity fails closed. Durability: the disposition registry, generated inventory, this task, and work-unit history retain the result at 1,722/1,722 disposed candidates, 950 derived gates, and zero gaps/open owners.`
+
   Containment Resolution: `The cap-policy card's long one-path-per-line reverify list is now a shorter equivalent set of numeric brace ranges plus exact outliers; every expansion resolves to an existing tracked test. With checking-randomness evidence added, the card aggregate falls from 46,939 lines/3,464,850 bytes to 46,903 lines/3,462,766 bytes, restoring 39 lines/2,119 bytes below the inherited transition allowance without changing it. Re-derive: expand every compacted pattern and aggregate docs/knowledge Markdown with wc. Falsify: missing paths fail the explicit expansion census, and Knowledge Map/live-document checks reject freshness, answer, transition, or ceiling drift. Durability: this task, the compacted card, generated shard, containment manifest, and work-unit commit retain the resolution.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
@@ -3112,3 +3118,47 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   execution cap, level, profile, route outcome, identity, product behavior,
   publication, support, budget, or capacity claim change. Full CI and push
   remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.8` execution-route-collections evidence join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `execution_route_collections` remains
+  pending, and its six-path candidate list omits t1603's accepted binding-gate
+  plan and t1606's accepted execution-type plan; t1607 already owns the
+  accepted source-map plan. Exact history traces the original t1607/t1627/t1628
+  inventory to `951720257`; `2892b36ad`, `00c68b1fd`, and `f8c4808cb` appended
+  only t1707-t1709; re-derive that locus with
+  `git log -S'execution_route_collections' --
+  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm`. The guarded complete baseline is green at
+  Files=10/Tests=139 in 54 wallclock seconds, proving evidence-inventory debt
+  rather than a runtime regression.
+- [x] **ADDRESSED (verified)** — repair the executable policy to the exact eight
+  witnesses; strengthen explicit absent backend/tool selectors and
+  same-volume success/failure cleanup for all three accepted gate routes;
+  classify only directly proved boundary, adjacent-excess, diagnostic,
+  atomicity, no-tool, cleanup, and accepted-identity dimensions; and make
+  t1763 reconstruct exact projections, union, path existence, omission, and
+  foreign-evidence controls. The intentional RED contains one exact policy
+  mismatch, 21 pending status/evidence/rationale assertions, and two inactive
+  mutation controls before the authority modules change. The repaired policy
+  and consistency authority pass Files=2/Tests=83; the default complete route
+  suite passes Files=10/Tests=140 in 55 wallclock seconds, and the three exact
+  route boundaries pass Files=3/Tests=21 in 77 wallclock seconds under the
+  repository RAM guard.
+- [x] **NO REGRESSION** — the complete eight-witness route set plus policy and
+  consistency passes Files=10/Tests=140 in 55 wallclock seconds, and the exact
+  three-route suite passes Files=3/Tests=21 in 77 wallclock seconds under the
+  repository RAM guard. All 59 mdBook chapters test; the inspected
+  94-file/20,608-KiB repository-local render contains the three route
+  boundaries, fourteen-group state, and runnable command, then is removed with
+  its task-local temporary root. Task integrity passes across 4 trees/1,031
+  nodes; relative-document paths pass Files=1/Tests=2. `knowledge-map: OK`
+  reports 1,159 facts/6,231 questions/6,403 answer occurrences/138 shards.
+  Claim inventory independently agrees at 11,547 numeric lines with
+  1,722/1,722 candidates dispositioned, 950 derived gates, and zero gaps, open
+  owners, or untracked producers. All 22 live-document surfaces and the exact
+  59-file/54,897-line/2,964,000-byte book authority pass with zero ceiling
+  increase; the Knowledge Map remains 38 lines/1,204 bytes below its inherited
+  transition allowance. Staged acceptance and every registered doctrine are
+  required green immediately before commit with no cap, route boundary, level,
+  accepted identity, product behavior, publication, support, budget, or
+  capacity claim change. Full CI and push remain deferred by policy.

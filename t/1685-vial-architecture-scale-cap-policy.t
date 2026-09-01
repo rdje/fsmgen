@@ -232,21 +232,19 @@ is(
     'retain_local_defenses_and_layered_route_authorities',
     'execution route policy retains local defenses and earlier route authorities',
 );
-ok(
-    scalar(grep { $_ eq 't/1707-vial-execution-type-cap-order.t' }
-        @{$policy->{groups}{execution_route_collections}{evidence}}),
-    'execution route policy cites the exact type-table insertion witness',
-);
-ok(
-    scalar(grep { $_ eq 't/1708-vial-execution-source-map-cap-order.t' }
-        @{$policy->{groups}{execution_route_collections}{evidence}}),
-    'execution route policy cites the exact source-map insertion witness',
-);
-ok(
-    scalar(grep {
-        $_ eq 't/1709-vial-execution-binding-cardinality-preflight.t'
-    } @{$policy->{groups}{execution_route_collections}{evidence}}),
-    'execution route policy cites the exact binding-cardinality witness',
+is_deeply(
+    $policy->{groups}{execution_route_collections}{evidence},
+    [qw(
+        t/1603-vial-architecture-scale-execution-foundation.t
+        t/1606-vial-architecture-scale-execution-types.t
+        t/1607-vial-architecture-scale-execution-source-maps.t
+        t/1627-vial-architecture-scale-execution-type-qualification.t
+        t/1628-vial-architecture-scale-execution-binding-limits.t
+        t/1707-vial-execution-type-cap-order.t
+        t/1708-vial-execution-source-map-cap-order.t
+        t/1709-vial-execution-binding-cardinality-preflight.t
+    )],
+    'execution route policy cites the complete three-axis route and local-defense evidence set',
 );
 is(
     $policy->{groups}{execution_fiber_cardinality}{current_enforcement},

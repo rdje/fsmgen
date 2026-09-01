@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use bytes ();
+use Cwd qw(abs_path);
 use Digest::SHA qw(sha256_hex);
 use File::Spec;
 use FindBin;
@@ -13,9 +14,12 @@ use Test::More;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::VIAL::ArchitectureScaleExecutionGraph;
+use FSM::VIAL::ArchitectureScaleWorkload;
 
 my $class = 'FSM::VIAL::ArchitectureScaleExecutionGraph';
+my $foundation = 'FSM::VIAL::ArchitectureScaleWorkload';
 my $json = JSON::PP->new->canonical(1)->utf8(1);
+my $repo_root = abs_path(File::Spec->catdir($FindBin::Bin, '..'));
 my $reference_hial = slurp_raw(repo_path('ppif/ahb_lite_subordinate.ppif'));
 my @fixed_map_paths = (
     '/bindings/domains/0',
@@ -101,6 +105,10 @@ subtest 'source-map construction is canonical checked-AHB source' => sub {
         'independent source-map construction is byte-identical');
     is($first->{specification}{requested_counts}{source_map_records},
         $expected{source_maps}, 'construction retains the selected map request');
+    is($first->{specification}{backend_profile}, undef,
+        'source-map construction selects no backend');
+    is($first->{specification}{tool_profile}, undef,
+        'source-map construction selects no external tool');
     is($first->{workload_identity}, $expected{workload_identity},
         'construction identity is exact');
 
@@ -239,6 +247,45 @@ subtest 'source-map evaluation freezes exact metrics and identities' => sub {
         'plan identity is exact');
     is_deeply($evaluation->{contract_discrepancies}, [],
         'source-map gate has no selected contract discrepancy');
+};
+
+subtest 'source-map staging is same-volume and residue-free' => sub {
+    my $construction = construction();
+    my $stage_abs = File::Spec->catdir(
+        $repo_root, split m{/}, $construction->{staging_identity},
+    );
+    ok(!-e $stage_abs && !-l $stage_abs,
+        'source-map staging root begins absent');
+
+    my $success = $foundation->with_staging({
+        repository_root => $repo_root,
+        construction => $construction,
+        consumer => sub {
+            my ($context) = @_;
+            is($context->{staging_identity}, $construction->{staging_identity},
+                'source-map consumer receives the exact staging identity');
+            ok(!(grep { !-f $_->{absolute_path} } @{$context->{inputs}}),
+                'source-map staging materializes both canonical inputs');
+        },
+    });
+    diag($json->encode($success->{diagnostics})) unless $success->{ok};
+    ok($success->{ok}, 'source-map staging succeeds');
+    ok($success->{same_volume},
+        'source-map staging proves same-volume identity');
+    ok($success->{removed}, 'successful source-map staging reports removal');
+    ok(!-e $stage_abs && !-l $stage_abs,
+        'successful source-map staging leaves no residue');
+
+    my $failure = $foundation->with_staging({
+        repository_root => $repo_root,
+        construction => $construction,
+        consumer => sub { die "forced source-map consumer failure\n" },
+    });
+    ok(!$failure->{ok}, 'source-map consumer failure is reported');
+    is($failure->{diagnostics}[0]{code}, 'VIAL_SCALE_CONSUMER_ERROR',
+        'source-map failure retains the stable staging diagnostic');
+    ok(!-e $stage_abs && !-l $stage_abs,
+        'failed source-map staging leaves no residue');
 };
 
 subtest 'every source-map level above the gate exceeds the envelope exactly' => sub {

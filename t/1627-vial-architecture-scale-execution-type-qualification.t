@@ -91,6 +91,10 @@ subtest 'the 8,192-type qualification level is authored deterministically' => su
         'independent qualification construction is byte-identical');
     is($first->{specification}{requested_counts}{execution_types},
         $expected{types}, 'construction retains exactly 8,192 execution types');
+    is($first->{specification}{backend_profile}, undef,
+        'type qualification selects no backend');
+    is($first->{specification}{tool_profile}, undef,
+        'type qualification selects no external tool');
     is($first->{workload_identity}, $expected{workload_identity},
         'execution-type qualification workload identity is exact');
 
@@ -219,6 +223,10 @@ subtest 'the two highest type levels retain their exact envelope rejection' => s
             "$name returns the one exact bounded-envelope diagnostic");
         is($first->{specification}{requested_counts}{execution_types},
             $case->{types}, "$name retains its exact requested type count");
+        is($first->{specification}{backend_profile}, undef,
+            "$name selects no backend");
+        is($first->{specification}{tool_profile}, undef,
+            "$name selects no external tool");
         is($first->{workload_identity}, undef,
             "$name claims no workload identity for unadmitted source");
         is_deeply($first->{inputs}, [],

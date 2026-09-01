@@ -609,6 +609,56 @@ my %EXECUTION_FIBER_RATIONALE = (
     accepted_identity =>
         'qualification plans, the exact live-fiber plan, and total-fiber semantic stages retain deterministic identities',
 );
+my @EXECUTION_ROUTE_EVIDENCE = (
+    [
+        't/1603-vial-architecture-scale-execution-foundation.t',
+        qw(no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1606-vial-architecture-scale-execution-types.t',
+        qw(no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1607-vial-architecture-scale-execution-source-maps.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1627-vial-architecture-scale-execution-type-qualification.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool accepted_identity),
+    ],
+    [
+        't/1628-vial-architecture-scale-execution-binding-limits.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool accepted_identity),
+    ],
+    [
+        't/1707-vial-execution-type-cap-order.t',
+        qw(boundary adjacent_excess diagnostics atomicity accepted_identity),
+    ],
+    [
+        't/1708-vial-execution-source-map-cap-order.t',
+        qw(boundary adjacent_excess diagnostics atomicity accepted_identity),
+    ],
+    [
+        't/1709-vial-execution-binding-cardinality-preflight.t',
+        qw(adjacent_excess diagnostics atomicity accepted_identity),
+    ],
+);
+my %EXECUTION_ROUTE_RATIONALE = (
+    boundary =>
+        'the binding, execution-type, and source-map routes plus type-table and source-map components admit at their exact reachable boundaries',
+    adjacent_excess =>
+        'the first route, type-table, source-map, or compact binding excess rejects at its earliest layered authority',
+    diagnostics =>
+        'bridge, semantic, plan-byte, type-table, source-map, and binding-preflight failures retain stable loci',
+    atomicity =>
+        'known route or local-defense excess publishes no partial manifest, ExecutionIR, plan, type entry, source map, or binding record',
+    no_tool =>
+        'all three accepted gate constructions and their layered route rejections carry no backend or external-tool selector',
+    cleanup =>
+        'binding, type, and source-map gate staging removes same-volume success and consumer-failure residue',
+    accepted_identity =>
+        'all three accepted gate plans, exact route controls, and local-defense controls retain deterministic identities',
+);
 my %runtime_dimensions = map {
     $_ => {
         status => 'verified',
@@ -760,6 +810,18 @@ for my $entry (@EXECUTION_FIBER_EVIDENCE) {
     push @{$execution_fiber_dimensions{$_}{evidence}}, $path
         for @dimensions;
 }
+my %execution_route_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $EXECUTION_ROUTE_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@EXECUTION_ROUTE_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$execution_route_dimensions{$_}{evidence}}, $path
+        for @dimensions;
+}
 my $VERIFIED_DIMENSIONS = {
     backend_artifact_graph => \%backend_dimensions,
     bridge_normalized_collections => \%bridge_normalized_dimensions,
@@ -773,6 +835,7 @@ my $VERIFIED_DIMENSIONS = {
     execution_fiber_cardinality => \%execution_fiber_dimensions,
     execution_operation_cardinality => \%execution_operation_dimensions,
     execution_profile_selection => \%execution_profile_dimensions,
+    execution_route_collections => \%execution_route_dimensions,
     runtime_stream_envelopes => \%runtime_dimensions,
 };
 

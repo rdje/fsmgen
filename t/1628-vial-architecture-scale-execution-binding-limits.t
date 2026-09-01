@@ -82,6 +82,10 @@ subtest 'each level reports its construction-stage rejection exactly' => sub {
             "$name retains the axis the caller asked for");
         is($first->{specification}{requested_counts}{bindings}, $level{$name}{bindings},
             "$name retains its exact requested count");
+        is($first->{specification}{backend_profile}, undef,
+            "$name selects no backend");
+        is($first->{specification}{tool_profile}, undef,
+            "$name selects no external tool");
         is($first->{workload_identity}, undef,
             "$name claims no workload identity for a source that was never admitted");
         is_deeply($first->{inputs}, [],

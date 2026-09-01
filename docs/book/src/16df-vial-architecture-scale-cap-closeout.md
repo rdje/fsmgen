@@ -23,8 +23,8 @@ reviewed runtime-stream, backend-artifact, checking-model, checking-fault,
 checking-randomness, and checking-scoreboard witnesses to explicit dimensions.
 The checking-coverage, bridge-profile, serialized-bridge-manifest,
 normalized-bridge-collection, execution-profile-selection, and
-execution-operation-cardinality and execution-fiber-cardinality witnesses are
-now joined too. The same
+execution-operation-cardinality, execution-fiber-cardinality, and
+execution-route-collection witnesses are now joined too. The same
 classification remains pending for every other group.
 
 ## Why calibration publication is separate
@@ -58,8 +58,8 @@ identity.
 Runtime, backend, checking-model, checking-fault, checking-randomness,
 checking-scoreboard, checking-coverage, bridge-profile-cardinality, serialized
 manifest, normalized-collection, execution-profile-selection, and
-execution-operation-cardinality and execution-fiber-cardinality groups are
-`verified` across all seven
+execution-operation-cardinality, execution-fiber-cardinality, and
+execution-route-collection groups are `verified` across all seven
 dimensions; all other groups remain `pending_independent_verification`.
 Runtime covers the selected materialization profiles plus t1720 through t1749
 and t1751 through t1762.
@@ -125,7 +125,18 @@ T1624 admits exactly 16,384 simultaneously live fibers and atomically rejects
 preflight even though the later serialized-plan cap rejects that route, then
 atomically rejects the 65,537-fiber structural excess before bridge indexing.
 All three workload shapes explicitly select no backend or external tool.
-T1763 reconstructs all thirteen sets of per-dimension projections,
+Route collections require eight deliberately layered witnesses. T1603, t1606,
+and t1607 own accepted binding, type, and source-map gate plans plus same-volume
+success/failure cleanup. Their exact reachable boundaries differ: t1628 admits
+2,054 bindings before 2,055 crosses the bridge event cap; t1627 admits 1,043
+types before 1,044 crosses serialized bridge bytes; and t1607 admits 46,294
+source maps before 46,295 crosses serialized plan bytes. T1707/t1708 retain
+exact local type-table/source-map component admission and first excess before
+payload cloning or insertion; t1709 rejects compactly known binding excess
+before binding construction. These route results do not lower the larger
+component ceilings. All accepted gate constructions and layered route
+rejections select no backend or external tool.
+T1763 reconstructs all fourteen sets of per-dimension projections,
 requires their complete unions, checks every path, and rejects omitted or
 foreign evidence. Policy citations remain candidates
 for all unreviewed groups. The validator also
@@ -298,6 +309,23 @@ scripts/run_with_ram_guard.sh -- prove -Iperl \
   t/1623-vial-architecture-scale-execution-fiber-qualification.t \
   t/1624-vial-architecture-scale-execution-live-fiber-limit.t \
   t/1625-vial-architecture-scale-execution-total-fiber-limit.t \
+  t/1763-vial-architecture-scale-cap-consistency.t \
+  t/1685-vial-architecture-scale-cap-policy.t
+```
+
+Reverify all three execution route collections, their accepted gate identities,
+exact reachable boundaries, local defenses, cleanup, and sealed falsifiers with:
+
+```sh
+scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
+  prove -Iperl t/1603-vial-architecture-scale-execution-foundation.t \
+  t/1606-vial-architecture-scale-execution-types.t \
+  t/1607-vial-architecture-scale-execution-source-maps.t \
+  t/1627-vial-architecture-scale-execution-type-qualification.t \
+  t/1628-vial-architecture-scale-execution-binding-limits.t \
+  t/1707-vial-execution-type-cap-order.t \
+  t/1708-vial-execution-source-map-cap-order.t \
+  t/1709-vial-execution-binding-cardinality-preflight.t \
   t/1763-vial-architecture-scale-cap-consistency.t \
   t/1685-vial-architecture-scale-cap-policy.t
 ```

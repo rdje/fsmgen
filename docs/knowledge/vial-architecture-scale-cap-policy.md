@@ -66,9 +66,11 @@ evidence: >-
   t/1704-hial-vial-bridge-serialized-manifest-terminal-authority.t;
   perl/FSM/VIAL/ExecutionBuilder.pm;
   t/1603-vial-architecture-scale-execution-foundation.t;
+  t/1606-vial-architecture-scale-execution-types.t; t/1607-vial-architecture-scale-execution-source-maps.t;
   t/1616-vial-architecture-scale-execution-scenario-qualification.t; t/1617-vial-architecture-scale-execution-scenario-limit.t; t/1618-vial-architecture-scale-execution-scenario-over-limit.t;
   t/1619-vial-architecture-scale-execution-operation-qualification.t; t/1620-vial-architecture-scale-execution-operation-limit.t; t/1621-vial-architecture-scale-execution-operation-over-limit.t; t/1622-vial-architecture-scale-execution-total-operation-qualification.t; t/1626-vial-architecture-scale-execution-total-operation-limit.t;
   t/1623-vial-architecture-scale-execution-fiber-qualification.t; t/1624-vial-architecture-scale-execution-live-fiber-limit.t; t/1625-vial-architecture-scale-execution-total-fiber-limit.t;
+  t/1627-vial-architecture-scale-execution-type-qualification.t; t/1628-vial-architecture-scale-execution-binding-limits.t;
   t/1705-vial-execution-selected-domain-cap-order.t;
   t/1706-vial-execution-operation-cardinality-cap-order.t;
   t/1707-vial-execution-type-cap-order.t;
@@ -99,7 +101,7 @@ evidence: >-
 reverify: >-
   prove -Iperl t/1685-vial-architecture-scale-cap-policy.t
   t/1602-vial-architecture-scale-bridge-fanout.t
-  t/1603-vial-architecture-scale-execution-foundation.t t/161{6..8}-*.t
+  t/160{3,6,7}-vial-architecture-scale-execution-*.t t/161{6..8}-*.t
   t/1619-*.t t/162{0..2}-*.t t/1626-*.t
   t/16{86..93}-*.t t/16{94..99}-*.t t/17{00..23}-*.t
   t/162{3..5}-*.t t/163{0..4}-vial-architecture-scale-checking-*.t
@@ -136,10 +138,10 @@ native UVM stays emission-only. Eligibility rejects excess before tools; the
 shared lifecycle bounds trace and final artifacts.
 
 `FSM::VIAL::ArchitectureScaleCapConsistency` rebuilds policy without caller
-evidence. Thirteen groups verify all dimensions: runtime, backend, models,
+evidence. Fourteen groups verify all dimensions: runtime, backend, models,
 faults, randomness, scoreboards, coverage, bridge-profile cardinality,
 serialized bridge manifests, normalized bridge collections, execution
-profiles, operation cardinality, and fiber cardinality. Layered joins stay exact: scoreboards use
+profiles, operation cardinality, fiber cardinality, and route collections. Layered joins stay exact: scoreboards use
 t1631/t1690/t1712, coverage t1632/t1691/t1713, and bridge profile t1602;
 compact preflight is not boundary evidence. T1763 rebuilds exact unions and
 rejects omitted/foreign paths.
@@ -159,6 +161,10 @@ is not component-cap failure.
 Fiber evidence assigns t1623 qualification/cleanup and t1624/t1625 the two
 exact component boundaries and first excesses. T1625's later plan-byte
 dominance stays a route fact, not a fiber-cap failure.
+Route collections assign t1603/t1606/t1607 accepted gate identities and
+cleanup; t1607/t1627/t1628 exact reachable map/type/binding boundaries; and
+t1707-t1709 local pre-materialization defenses. Earlier bridge or plan limits
+do not lower the larger component ceilings.
 Other groups and calibration remain pending/blocked.
 
 The common controller admits bounded worker files before counts/digests; cap+1

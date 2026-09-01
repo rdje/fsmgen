@@ -467,6 +467,34 @@ my %execution_fiber_rationale = (
     cleanup => 'both fiber qualification axes stage on-volume and remove success or consumer-failure residue',
     accepted_identity => 'qualification plans, the exact live-fiber plan, and total-fiber semantic stages retain deterministic identities',
 );
+my @execution_route_evidence = qw(
+    t/1603-vial-architecture-scale-execution-foundation.t
+    t/1606-vial-architecture-scale-execution-types.t
+    t/1607-vial-architecture-scale-execution-source-maps.t
+    t/1627-vial-architecture-scale-execution-type-qualification.t
+    t/1628-vial-architecture-scale-execution-binding-limits.t
+    t/1707-vial-execution-type-cap-order.t
+    t/1708-vial-execution-source-map-cap-order.t
+    t/1709-vial-execution-binding-cardinality-preflight.t
+);
+my %execution_route_evidence = (
+    boundary => [@execution_route_evidence[2 .. 6]],
+    adjacent_excess => [@execution_route_evidence[2 .. 7]],
+    diagnostics => [@execution_route_evidence[2 .. 7]],
+    atomicity => [@execution_route_evidence[2 .. 7]],
+    no_tool => [@execution_route_evidence[0 .. 4]],
+    cleanup => [@execution_route_evidence[0 .. 2]],
+    accepted_identity => [@execution_route_evidence],
+);
+my %execution_route_rationale = (
+    boundary => 'the binding, execution-type, and source-map routes plus type-table and source-map components admit at their exact reachable boundaries',
+    adjacent_excess => 'the first route, type-table, source-map, or compact binding excess rejects at its earliest layered authority',
+    diagnostics => 'bridge, semantic, plan-byte, type-table, source-map, and binding-preflight failures retain stable loci',
+    atomicity => 'known route or local-defense excess publishes no partial manifest, ExecutionIR, plan, type entry, source map, or binding record',
+    no_tool => 'all three accepted gate constructions and their layered route rejections carry no backend or external-tool selector',
+    cleanup => 'binding, type, and source-map gate staging removes same-volume success and consumer-failure residue',
+    accepted_identity => 'all three accepted gate plans, exact route controls, and local-defense controls retain deterministic identities',
+);
 my %verified_evidence = (
     backend_artifact_graph => \%backend_evidence,
     bridge_normalized_collections => \%bridge_normalized_evidence,
@@ -480,6 +508,7 @@ my %verified_evidence = (
     execution_fiber_cardinality => \%execution_fiber_evidence,
     execution_operation_cardinality => \%execution_operation_evidence,
     execution_profile_selection => \%execution_profile_evidence,
+    execution_route_collections => \%execution_route_evidence,
     runtime_stream_envelopes => \%runtime_evidence,
 );
 my %verified_rationale = (
@@ -495,6 +524,7 @@ my %verified_rationale = (
     execution_fiber_cardinality => \%execution_fiber_rationale,
     execution_operation_cardinality => \%execution_operation_rationale,
     execution_profile_selection => \%execution_profile_rationale,
+    execution_route_collections => \%execution_route_rationale,
     runtime_stream_envelopes => \%runtime_rationale,
 );
 
@@ -735,6 +765,18 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
     is_deeply(
         [grep { !-f $_ } sort keys %execution_fiber_join], [],
         'every sealed execution-fiber evidence path exists',
+    );
+
+    my %execution_route_join = map { $_ => 1 }
+        map { @{$execution_route_evidence{$_}} } @dimensions;
+    is_deeply(
+        [sort keys %execution_route_join],
+        [sort @execution_route_evidence],
+        'execution-route join covers all three gate, boundary, and local-defense families',
+    );
+    is_deeply(
+        [grep { !-f $_ } sort keys %execution_route_join], [],
+        'every sealed execution-route evidence path exists',
     );
 
     is($report->{calibration}{evidence_role},
@@ -983,6 +1025,21 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
     like(dies(sub { $assert->($foreign_execution_fiber) }),
         qr/execution_fiber_cardinality\/accepted_identity' contradicts the sealed evidence authority/,
         'callers cannot add foreign execution-fiber evidence');
+
+    my $omitted_execution_route = $class->build;
+    pop @{$omitted_execution_route->{groups}{execution_route_collections}
+        {dimensions}{cleanup}{evidence}};
+    like(dies(sub { $assert->($omitted_execution_route) }),
+        qr/execution_route_collections\/cleanup' contradicts the sealed evidence authority/,
+        'callers cannot omit sealed execution-route cleanup evidence');
+
+    my $foreign_execution_route = $class->build;
+    push @{$foreign_execution_route->{groups}{execution_route_collections}
+        {dimensions}{accepted_identity}{evidence}},
+        't/foreign-execution-route-evidence.t';
+    like(dies(sub { $assert->($foreign_execution_route) }),
+        qr/execution_route_collections\/accepted_identity' contradicts the sealed evidence authority/,
+        'callers cannot add foreign execution-route evidence');
 
     my $missing = $class->build;
     delete $missing->{groups}{$first_group}{dimensions}{cleanup};

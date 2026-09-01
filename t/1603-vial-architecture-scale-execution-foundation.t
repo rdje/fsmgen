@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 
+use Cwd qw(abs_path);
 use JSON::PP ();
 use Test::More;
 use File::Spec;
@@ -18,6 +19,7 @@ use FSM::VIAL::ExecutionBuilder;
 my $class = 'FSM::VIAL::ArchitectureScaleExecutionGraph';
 my $foundation = 'FSM::VIAL::ArchitectureScaleWorkload';
 my $json = JSON::PP->new->canonical(1)->utf8(1);
+my $repo_root = abs_path(File::Spec->catdir($FindBin::Bin, '..'));
 
 sub construction {
     return $class->construct({
@@ -228,6 +230,44 @@ subtest 'canonical gate reaches 2048 bindings with deterministic target-neutral 
         'plan identity is a canonical digest');
     is_deeply($evaluation->{contract_discrepancies}, [],
         'accepted gate has no selected contract discrepancy');
+};
+
+subtest 'binding-gate staging is same-volume and residue-free' => sub {
+    my $construction = construction();
+    my $stage_abs = File::Spec->catdir(
+        $repo_root, split m{/}, $construction->{staging_identity},
+    );
+    ok(!-e $stage_abs && !-l $stage_abs,
+        'binding staging root begins absent');
+
+    my $success = $foundation->with_staging({
+        repository_root => $repo_root,
+        construction => $construction,
+        consumer => sub {
+            my ($context) = @_;
+            is($context->{staging_identity}, $construction->{staging_identity},
+                'binding consumer receives the exact staging identity');
+            ok(!(grep { !-f $_->{absolute_path} } @{$context->{inputs}}),
+                'binding staging materializes both canonical inputs');
+        },
+    });
+    diag($json->encode($success->{diagnostics})) unless $success->{ok};
+    ok($success->{ok}, 'binding-gate staging succeeds');
+    ok($success->{same_volume}, 'binding staging proves same-volume identity');
+    ok($success->{removed}, 'successful binding staging reports removal');
+    ok(!-e $stage_abs && !-l $stage_abs,
+        'successful binding staging leaves no residue');
+
+    my $failure = $foundation->with_staging({
+        repository_root => $repo_root,
+        construction => $construction,
+        consumer => sub { die "forced binding-route consumer failure\n" },
+    });
+    ok(!$failure->{ok}, 'binding consumer failure is reported');
+    is($failure->{diagnostics}[0]{code}, 'VIAL_SCALE_CONSUMER_ERROR',
+        'binding failure retains the stable staging diagnostic');
+    ok(!-e $stage_abs && !-l $stage_abs,
+        'failed binding staging leaves no residue');
 };
 
 done_testing();
