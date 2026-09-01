@@ -21,8 +21,8 @@ The policy exposes candidate witnesses without assigning them to closeout
 dimensions. The separate consistency authority now joins the independently
 reviewed runtime-stream, backend-artifact, checking-model, checking-fault,
 checking-randomness, and checking-scoreboard witnesses to explicit dimensions.
-The checking-coverage witnesses are now joined too. The same classification
-remains pending for every other group.
+The checking-coverage and bridge-profile witnesses are now joined too. The
+same classification remains pending for every other group.
 
 ## Why calibration publication is separate
 
@@ -54,7 +54,8 @@ identity.
 
 Runtime, backend, checking-model, checking-fault, checking-randomness,
 checking-scoreboard, and checking-coverage are `verified` across all seven
-dimensions; all other groups remain `pending_independent_verification`.
+dimensions, as is bridge-profile cardinality; all other groups remain
+`pending_independent_verification`.
 Runtime covers the selected materialization profiles plus t1720 through t1749
 and t1751 through t1762.
 Backend covers t1646 through t1650 and t1716 through t1719. Checking models
@@ -76,7 +77,11 @@ scoreboard normalization, but is not boundary evidence. Coverage is similarly
 layered: t1632 proves the exact static domain, packed-vector oracle, cleanup,
 and lower source-byte route authority; t1691 proves semantic scalar admission;
 t1713 proves compact normalized-path excess and identity but is not boundary
-evidence. T1763 reconstructs all seven sets of per-dimension projections,
+evidence. Bridge-profile cardinality uses t1602's exact single-unit/domain
+limit and adjacent excess, deterministic manifest/report identities, and
+same-volume cleanup. The strengthened witness also requires unset backend/tool
+selectors and no rejected metrics or manifest/report identity. T1763
+reconstructs all eight sets of per-dimension projections,
 requires their complete unions, checks every path, and rejects omitted or
 foreign evidence. Policy citations remain candidates
 for all unreviewed groups. The validator also
@@ -178,6 +183,16 @@ scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
   prove -Iperl t/1632-vial-architecture-scale-checking-coverage.t \
   t/1691-vial-semantic-cross-max-bins-order.t \
   t/1713-vial-execution-coverage-cardinality-preflight.t \
+  t/1763-vial-architecture-scale-cap-consistency.t \
+  t/1685-vial-architecture-scale-cap-policy.t
+```
+
+Reverify exact bridge-profile admission, the strengthened atomic/no-tool
+controls, cleanup, and sealed-report falsifiers with:
+
+```sh
+scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
+  prove -Iperl t/1602-vial-architecture-scale-bridge-fanout.t \
   t/1763-vial-architecture-scale-cap-consistency.t \
   t/1685-vial-architecture-scale-cap-policy.t
 ```

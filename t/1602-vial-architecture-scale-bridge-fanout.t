@@ -76,6 +76,13 @@ sub check_evaluation {
             "$axis/$level stops at one authoritative bridge boundary");
         is(scalar(@{$evaluation->{contract_discrepancies}}), 1,
             "$axis/$level records the exact earlier-cap interaction");
+        is_deeply($evaluation->{metrics}, {},
+            "$axis/$level rejection publishes no partial bridge metrics");
+        is_deeply(
+            [@{$evaluation}{qw(manifest_sha256 report_sha256)}],
+            [undef, undef],
+            "$axis/$level rejection publishes no manifest or report identity",
+        );
     }
 }
 
@@ -99,6 +106,11 @@ subtest 'closed construction covers every bridge axis and level deterministicall
             is_deeply([map { $_->{role} } @{$first->{inputs}}],
                 [qw(hial_source vial_source)],
                 "$axis/$level contains exactly one HIAL and one VIAL source");
+            is_deeply(
+                [@{$first->{specification}}{qw(backend_profile tool_profile)}],
+                [undef, undef],
+                "$axis/$level carries no backend or external-tool selector",
+            );
             $count++;
         }
     }

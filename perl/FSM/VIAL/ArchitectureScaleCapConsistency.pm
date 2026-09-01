@@ -415,6 +415,28 @@ my %CHECKING_COVERAGE_RATIONALE = (
     accepted_identity =>
         'accepted construction, semantic, evaluation, rerun, plan, and compact-preflight identities are deterministic',
 );
+my @BRIDGE_PROFILE_EVIDENCE = (
+    [
+        't/1602-vial-architecture-scale-bridge-fanout.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool cleanup accepted_identity),
+    ],
+);
+my %BRIDGE_PROFILE_RATIONALE = (
+    boundary =>
+        'the selected single-unit and single-domain bridge profiles admit at their exact limits',
+    adjacent_excess =>
+        'the first second unit or domain rejects before normalized manifest construction',
+    diagnostics =>
+        'profile excess retains its stable bridge capability diagnostic and semantic path',
+    atomicity =>
+        'profile rejection publishes empty metrics and no manifest or report identity',
+    no_tool =>
+        'every bridge construction has no backend or external-tool selector and uses the reviewed in-process route',
+    cleanup =>
+        'accepted and consumer-failure bridge staging is same-volume and residue-free',
+    accepted_identity =>
+        'accepted construction, manifest, report, input, and review-route identities are deterministic',
+);
 my %runtime_dimensions = map {
     $_ => {
         status => 'verified',
@@ -495,8 +517,20 @@ for my $entry (@CHECKING_COVERAGE_EVIDENCE) {
     push @{$checking_coverage_dimensions{$_}{evidence}}, $path
         for @dimensions;
 }
+my %bridge_profile_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $BRIDGE_PROFILE_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@BRIDGE_PROFILE_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$bridge_profile_dimensions{$_}{evidence}}, $path for @dimensions;
+}
 my $VERIFIED_DIMENSIONS = {
     backend_artifact_graph => \%backend_dimensions,
+    bridge_profile_cardinality => \%bridge_profile_dimensions,
     checking_coverage => \%checking_coverage_dimensions,
     checking_faults => \%checking_fault_dimensions,
     checking_models => \%checking_model_dimensions,

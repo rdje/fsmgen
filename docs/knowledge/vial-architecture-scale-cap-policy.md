@@ -52,6 +52,7 @@ evidence: >-
   t/1691-vial-semantic-cross-max-bins-order.t;
   t/1692-vial-semantic-type-shape-cap-order.t;
   perl/FSM/HIAL/VIALBridge/Builder.pm;
+  t/1602-vial-architecture-scale-bridge-fanout.t;
   t/1694-hial-vial-bridge-configuration-cap-order.t;
   t/1695-hial-vial-bridge-endpoint-cap-order.t;
   t/1696-hial-vial-bridge-observation-cap-order.t;
@@ -96,6 +97,7 @@ evidence: >-
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
   prove -Iperl t/1685-vial-architecture-scale-cap-policy.t
+  t/1602-vial-architecture-scale-bridge-fanout.t
   t/16{86..93}-*.t t/16{94..99}-*.t t/17{00..23}-*.t
   t/162{4..5}-*.t t/163{0..4}-vial-architecture-scale-checking-*.t
   t/164{6..9}-vial-architecture-scale-backend-emission-*.t
@@ -161,15 +163,16 @@ before writes or assembly. Exact boundaries pass, adjacent excess rejects, and
 completed-backend plus Tool terminal checks remain; no cap or claim changes.
 
 `FSM::VIAL::ArchitectureScaleCapConsistency` rebuilds the policy without caller
-evidence. Seven groups verify all dimensions: runtime, backend, models, faults,
-randomness, scoreboards, and coverage. Scoreboards join the t1631 provider-free
+evidence. Eight groups verify all dimensions: runtime, backend, models, faults,
+randomness, scoreboards, coverage, and bridge-profile cardinality. Scoreboards join the t1631 provider-free
 FIFO and cleanup proof, t1690 semantic boundary/order proof, and t1712 compact
 execution preflight without misclassifying the last as boundary evidence.
 Coverage likewise joins t1632's static-domain oracle and lower source-byte
 route authority, t1691 semantic scalar admission, and t1713 compact preflight
 without treating the last as boundary evidence. T1763 reconstructs exact
-unions and rejects omitted/foreign evidence; other groups and calibration
-remain pending/blocked.
+unions and rejects omitted/foreign evidence. Bridge-profile cardinality uses
+t1602's exact boundary/excess, identities, cleanup, unset selectors, and absent
+rejected output identities; other groups and calibration remain pending/blocked.
 
 The common controller admits bounded worker files before counts/digests; cap+1
 and unsafe path/mode cases reject. No cap or support claim changes.

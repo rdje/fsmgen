@@ -325,8 +325,24 @@ my %checking_coverage_rationale = (
     cleanup => 'accepted and consumer-failure coverage staging is same-volume and residue-free',
     accepted_identity => 'accepted construction, semantic, evaluation, rerun, plan, and compact-preflight identities are deterministic',
 );
+my @bridge_profile_evidence = qw(
+    t/1602-vial-architecture-scale-bridge-fanout.t
+);
+my %bridge_profile_evidence = map {
+    $_ => [@bridge_profile_evidence]
+} @dimensions;
+my %bridge_profile_rationale = (
+    boundary => 'the selected single-unit and single-domain bridge profiles admit at their exact limits',
+    adjacent_excess => 'the first second unit or domain rejects before normalized manifest construction',
+    diagnostics => 'profile excess retains its stable bridge capability diagnostic and semantic path',
+    atomicity => 'profile rejection publishes empty metrics and no manifest or report identity',
+    no_tool => 'every bridge construction has no backend or external-tool selector and uses the reviewed in-process route',
+    cleanup => 'accepted and consumer-failure bridge staging is same-volume and residue-free',
+    accepted_identity => 'accepted construction, manifest, report, input, and review-route identities are deterministic',
+);
 my %verified_evidence = (
     backend_artifact_graph => \%backend_evidence,
+    bridge_profile_cardinality => \%bridge_profile_evidence,
     checking_coverage => \%checking_coverage_evidence,
     checking_faults => \%checking_fault_evidence,
     checking_models => \%checking_model_evidence,
@@ -336,6 +352,7 @@ my %verified_evidence = (
 );
 my %verified_rationale = (
     backend_artifact_graph => \%backend_rationale,
+    bridge_profile_cardinality => \%bridge_profile_rationale,
     checking_coverage => \%checking_coverage_rationale,
     checking_faults => \%checking_fault_rationale,
     checking_models => \%checking_model_rationale,
@@ -511,6 +528,18 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
         'every sealed checking-coverage evidence path exists',
     );
 
+    my %bridge_profile_join = map { $_ => 1 }
+        map { @{$bridge_profile_evidence{$_}} } @dimensions;
+    is_deeply(
+        [sort keys %bridge_profile_join],
+        [sort @bridge_profile_evidence],
+        'bridge-profile join covers its exact fanout witness once',
+    );
+    is_deeply(
+        [grep { !-f $_ } sort keys %bridge_profile_join], [],
+        'every sealed bridge-profile evidence path exists',
+    );
+
     is($report->{calibration}{evidence_role},
         'historical_measurement_only',
         'calibration stays measurement evidence');
@@ -667,6 +696,21 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
     like(dies(sub { $assert->($foreign_checking_coverage) }),
         qr/checking_coverage\/accepted_identity' contradicts the sealed evidence authority/,
         'callers cannot add foreign checking-coverage evidence');
+
+    my $omitted_bridge_profile = $class->build;
+    pop @{$omitted_bridge_profile->{groups}{bridge_profile_cardinality}
+        {dimensions}{adjacent_excess}{evidence}};
+    like(dies(sub { $assert->($omitted_bridge_profile) }),
+        qr/bridge_profile_cardinality\/adjacent_excess' verified evidence must be one non-empty array/,
+        'callers cannot empty sealed bridge-profile evidence');
+
+    my $foreign_bridge_profile = $class->build;
+    push @{$foreign_bridge_profile->{groups}{bridge_profile_cardinality}
+        {dimensions}{accepted_identity}{evidence}},
+        't/foreign-bridge-profile-evidence.t';
+    like(dies(sub { $assert->($foreign_bridge_profile) }),
+        qr/bridge_profile_cardinality\/accepted_identity' contradicts the sealed evidence authority/,
+        'callers cannot add foreign bridge-profile evidence');
 
     my $missing = $class->build;
     delete $missing->{groups}{$first_group}{dimensions}{cleanup};

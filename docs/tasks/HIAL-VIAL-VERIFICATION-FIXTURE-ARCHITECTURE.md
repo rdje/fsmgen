@@ -891,6 +891,8 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
   Checking Coverage Join: `The caller-sealed consistency authority now also promotes checking_coverage without pretending the nominal coverpoint component cap is canonically reachable. T1632 owns the exact static-domain limit, adjacent rejection, provider-free packed-vector oracle, identities, mutation defenses, same-volume cleanup, and the lower source-byte route boundary that preflight-dominates the nominal coverpoint cap. T1691 independently proves exact semantic cross-scalar boundary/excess order and no partial semantic report. T1713 is deliberately not boundary evidence: it proves compact accepted-count agreement and plan identity plus both normalized-path adjacent excesses before coverage normalization, ExecutionIR, or plan publication. T1763 reconstructs every ordered projection and exact three-path union, checks each path, and rejects omitted or foreign evidence. Every earlier verified group remains sealed and every unaudited group remains pending, so calibration stays historical, incomplete, and blocked. Re-derive: execute t1632 with FSMGEN_VIAL_SCALE_EXACT=1 plus t1691, t1713, t1763, and t1685 under the repository-local RAM guard. Falsify: fixture-envelope, parser-route, semantic, execution, and terminal boundary/excess controls plus projection/union/omission/foreign/caller-mutation controls fail closed. Durability: this task, book, Knowledge Map card, consistency source/test, decision 0093, and work-unit commit retain the layered classification. The guarded suite reports All tests successful at Files=5/Tests=120 in 67 wallclock seconds. No cap, route boundary, level, accepted profile, product behavior, publication, support, budget, or capacity claim changes. The next slice independently reviews the one-witness bridge_profile_cardinality group.`
 
+  Bridge Profile Join: `The caller-sealed consistency authority now also promotes bridge_profile_cardinality through its one complete family witness. T1602 already executes selected_units and selected_domains at exact limit and adjacent excess, freezes accepted construction/manifest/report/input/review-route identities, and owns same-volume success/failure cleanup. This slice closes its evidence gap by requiring every construction to retain unset backend/tool selectors and every expected rejection to publish empty metrics plus no manifest/report identity. The exact mode re-executes all thirteen bridge axes at qualification, limit, and excess, so the profile classification is not inferred from a gate-only control. T1763 reconstructs the same single path in every dimension, requires its exact one-path union, rejects empty verified evidence before authority comparison, and rejects foreign evidence through that comparison. Every earlier verified group remains sealed and every unaudited group remains pending, so calibration stays historical, incomplete, and blocked. Re-derive: execute t1602 with FSMGEN_VIAL_SCALE_EXACT=1 plus t1763 and t1685 under the repository-local RAM guard. Falsify: exact profile boundary/excess, partial-output, no-selector, union, empty-evidence, foreign-evidence, and caller-mutation controls fail closed. Durability: this task, book, Knowledge Map card, strengthened foundation test, consistency source/test, and work-unit commit retain the classification. The guarded suite reports All tests successful at Files=3/Tests=90 in 128 wallclock seconds. No bridge cap, profile, accepted identity, product behavior, publication, support, budget, or capacity claim changes. The next slice independently reviews bridge_serialized_manifest.`
+
   Containment Resolution: `The cap-policy card's long one-path-per-line reverify list is now a shorter equivalent set of numeric brace ranges plus exact outliers; every expansion resolves to an existing tracked test. With checking-randomness evidence added, the card aggregate falls from 46,939 lines/3,464,850 bytes to 46,903 lines/3,462,766 bytes, restoring 39 lines/2,119 bytes below the inherited transition allowance without changing it. Re-derive: expand every compacted pattern and aggregate docs/knowledge Markdown with wc. Falsify: missing paths fail the explicit expansion census, and Knowledge Map/live-document checks reject freshness, answer, transition, or ceiling drift. Durability: this task, the compacted card, generated shard, containment manifest, and work-unit commit retain the resolution.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
@@ -2844,3 +2846,42 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   immediately before commit with no cap, route boundary, level, accepted
   profile, product behavior, publication, support, budget, or capacity claim
   change. Full CI and push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.8` bridge-profile-cardinality evidence join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the sealed consistency report leaves
+  `bridge_profile_cardinality` pending with only t1602 as its candidate. T1602
+  executes both selected profile axes at exact limit and adjacent excess,
+  freezes accepted identities, and proves same-volume cleanup, while production
+  already returns empty metrics plus no manifest/report identity on rejection.
+  The test's expected-rejection branch does not assert those withheld outputs,
+  however, and construction only implies no-tool operation through its unset
+  backend/tool selectors rather than checking them. Exact `git log -S`
+  history using `'bridge_profile_cardinality' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` traces the undifferentiated
+  single-witness group to `951720257`.
+- [x] **ADDRESSED (verified)** — strengthen t1602 to require empty rejected
+  metrics, absent manifest/report identities, and unset backend/tool selectors;
+  independently classify that one exact witness across boundary, adjacent
+  excess, diagnostics, atomicity, no-tool, cleanup, and accepted identity; run
+  its full exact bridge ladder under the repository-local RAM guard; seal the
+  path and rationales in the no-input consistency authority; reject omitted or
+  foreign evidence; retain all prior joins; and keep calibration blocked while
+  any other group remains pending. The pre-promotion t1763 RED reports the
+  exact 21 missing status/evidence/rationale assertions and no unrelated
+  failure; the sealed projection plus empty/foreign evidence controls then
+  pass.
+- [x] **NO REGRESSION** — the exact bridge-profile witness plus consistency and
+  policy collection reports `All tests successful` at Files=3/Tests=90 in 128
+  wallclock seconds. Task integrity passes across 4 trees/1,031 nodes; all 59
+  mdBook chapters test, and the inspected 94-file/20,572-KiB repository-local
+  render is removed exactly. `knowledge-map: OK` reports 1,159 facts/6,231
+  questions/6,403 answer occurrences/138 shards. Claim inventory independently
+  agrees at 11,482 numeric lines with 1,711/1,711 candidates dispositioned and
+  zero open owner or untracked producer. All 22 live-document surfaces and the
+  exact 59-file/54,764-line/2,956,651-byte book authority pass with zero ceiling
+  increase; Knowledge Map cards retain 31 lines/1,425 bytes of transition
+  headroom. Staged acceptance and every registered doctrine are required green
+  immediately before commit with no bridge cap, profile, accepted identity,
+  product behavior, publication, support, budget, or capacity claim change.
+  Full CI and push remain deferred by policy.
