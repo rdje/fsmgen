@@ -31,6 +31,10 @@ my $IMPLEMENTATION = 'fsmgen.perl_process_tree_sampler.v1';
 my $SAMPLER_INTERVAL_NS = 250_000_000;
 my $MAX_WORKER_RESULT_BYTES = 1_048_576;
 my $MAX_WORKER_ARTIFACT_BYTES = 67_108_864;
+my $MAX_WORKER_OUTPUT_FILES = 1_024;
+my $MAX_WORKER_OUTPUT_DIRECTORIES = 1_024;
+my $MAX_WORKER_OUTPUT_DEPTH = 64;
+my $MAX_WORKER_OUTPUT_PATH_BYTES = 262_144;
 my $STAGING_BASE = '.artifacts/tmp/vial-scale';
 my $LOCK_BASE = '.artifacts/locks/vial-scale-measurement';
 my $PUBLICATION_BASE = '.artifacts/qualification/vial-scale';
@@ -303,7 +307,9 @@ sub _measure($raw) {
             $prior_failure = $measurement->{diagnostic}
                 unless $measurement->{ok};
         }
-        _validate_owned_artifact_census($stage_abs, \@artifact_records);
+        _validate_owned_artifact_census(
+            $stage_abs, \@artifact_records, $root_device,
+        );
         1;
     };
     if (!$controller_ok) {
@@ -1275,8 +1281,9 @@ sub _validated_worker_artifacts(
     my $stage_output_abs = File::Spec->catdir(
         $stage_abs, 'outputs', $stage,
     );
-    my @actual = -d($stage_output_abs)
-        ? map { "outputs/$stage/$_" } _tree_files($stage_output_abs)
+    my @actual = (-e($stage_output_abs) || -l($stage_output_abs))
+        ? map { "outputs/$stage/$_" }
+            _tree_files($stage_output_abs, $repository_device)
         : ();
     my @expected = sort keys %expected;
     confess "worker output tree contains unreported files\n"
@@ -1380,7 +1387,9 @@ sub _read_worker_artifact_bounded($fh, $relative) {
     return $content;
 }
 
-sub _validate_owned_artifact_census($stage_abs, $artifacts) {
+sub _validate_owned_artifact_census(
+    $stage_abs, $artifacts, $repository_device = undef,
+) {
     my (%expected, %stage);
     for my $index (0 .. $#$artifacts) {
         my $artifact = $artifacts->[$index];
@@ -1393,7 +1402,7 @@ sub _validate_owned_artifact_census($stage_abs, $artifacts) {
             if $expected{$relative}++;
         $stage{$artifact->{stage}}++;
     }
-    my @actual = _tree_files($stage_abs);
+    my @actual = _tree_files($stage_abs, $repository_device);
     my @expected = sort keys %expected;
     confess "measurement staging contains unreported or missing artifacts\n"
         unless _canonical_json(\@actual) eq _canonical_json(\@expected);
@@ -2393,31 +2402,100 @@ sub _validated_repository_root($raw) {
     return ($repo_root, $stat[0]);
 }
 
-sub _tree_files($root) {
+sub _tree_files($root, $repository_device = undef) {
+    my @root_stat = lstat($root);
+    confess "measurement staging root is not a real directory\n"
+        unless @root_stat && !-l _ && -d _;
+    $repository_device //= $root_stat[0];
+    confess "measurement staging crossed repository volume\n"
+        unless $root_stat[0] == $repository_device;
+    confess "measurement staging owner changed\n"
+        unless $root_stat[4] == $<;
     my @files;
-    _walk_tree($root, '', \@files);
+    my $census = {
+        files => 0,
+        directories => 0,
+        path_bytes => 0,
+        repository_device => $repository_device,
+    };
+    _walk_tree($root, '', \@files, $census, \@root_stat);
     return sort @files;
 }
 
-sub _walk_tree($root, $relative, $files) {
+sub _walk_tree($root, $relative, $files, $census, $expected_stat) {
     my $path = length($relative)
         ? File::Spec->catdir($root, split m{/}, $relative) : $root;
+    my @path_stat = lstat($path);
+    confess "measurement staging contains a symlink or special file\n"
+        unless @path_stat && !-l _ && -d _;
+    _validate_census_entry_stat(\@path_stat, $census);
+    confess "measurement staging directory identity changed\n"
+        unless _same_census_stat($expected_stat, \@path_stat);
     opendir my $dh, $path or confess "cannot inventory measurement staging\n";
-    my @entries = sort grep { $_ ne '.' && $_ ne '..' } readdir $dh;
-    closedir $dh or confess "cannot close measurement staging directory\n";
-    for my $name (@entries) {
+    my @opened_stat = stat($dh);
+    confess "measurement staging directory handle is invalid\n"
+        unless @opened_stat && -d _;
+    _validate_census_entry_stat(\@opened_stat, $census);
+    confess "measurement staging directory identity changed\n"
+        unless _same_census_stat(\@path_stat, \@opened_stat);
+    while (defined(my $name = readdir $dh)) {
+        next if $name eq '.' || $name eq '..';
         my $rel = length($relative) ? "$relative/$name" : $name;
         my $entry = File::Spec->catfile($path, $name);
         my @stat = lstat($entry);
+        my $is_symlink = @stat && -l _;
+        my $is_directory = @stat && -d _;
+        my $is_file = @stat && -f _;
         confess "measurement staging contains a symlink or special file\n"
-            unless @stat && !-l _ && (-d _ || -f _);
-        if (-d _) {
-            _walk_tree($root, $rel, $files);
+            unless @stat && !$is_symlink && ($is_directory || $is_file);
+        _validate_census_entry_stat(\@stat, $census);
+        my $depth = scalar split m{/}, $rel;
+        confess "measurement staging exceeds the "
+            . "$MAX_WORKER_OUTPUT_DEPTH-component census depth ceiling\n"
+            if $depth > $MAX_WORKER_OUTPUT_DEPTH;
+        $census->{path_bytes} += bytes::length($rel);
+        confess "measurement staging exceeds the "
+            . "$MAX_WORKER_OUTPUT_PATH_BYTES-byte relative-path census ceiling\n"
+            if $census->{path_bytes} > $MAX_WORKER_OUTPUT_PATH_BYTES;
+        if ($is_directory) {
+            $census->{directories}++;
+            confess "measurement staging exceeds the "
+                . "$MAX_WORKER_OUTPUT_DIRECTORIES-directory census ceiling\n"
+                if $census->{directories} > $MAX_WORKER_OUTPUT_DIRECTORIES;
+            _walk_tree($root, $rel, $files, $census, \@stat);
         }
         else {
+            $census->{files}++;
+            confess "measurement staging exceeds the "
+                . "$MAX_WORKER_OUTPUT_FILES-file census ceiling\n"
+                if $census->{files} > $MAX_WORKER_OUTPUT_FILES;
             push @$files, $rel;
         }
     }
+    my @final_opened_stat = stat($dh);
+    confess "measurement staging directory handle changed\n"
+        unless @final_opened_stat && -d _
+            && _same_census_stat(\@opened_stat, \@final_opened_stat);
+    closedir $dh or confess "cannot close measurement staging directory\n";
+    my @final_path_stat = lstat($path);
+    confess "measurement staging directory pathname changed\n"
+        unless @final_path_stat && !-l _ && -d _
+            && _same_census_stat(\@opened_stat, \@final_path_stat);
+}
+
+sub _validate_census_entry_stat($stat, $census) {
+    confess "measurement staging crossed repository volume\n"
+        unless $stat->[0] == $census->{repository_device};
+    confess "measurement staging owner changed\n"
+        unless $stat->[4] == $<;
+    return 1;
+}
+
+sub _same_census_stat($left, $right) {
+    for my $index (0, 1, 2, 3, 4, 7, 9, 10) {
+        return 0 unless $left->[$index] == $right->[$index];
+    }
+    return 1;
 }
 
 sub _drain_pipe($reader, $buffer_ref, $finish = 0) {
