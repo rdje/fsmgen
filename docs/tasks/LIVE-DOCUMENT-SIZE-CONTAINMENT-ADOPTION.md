@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `infra/continuity / project-wide live-document lifecycle`
 - Created: `2026-07-31`
-- Last updated: `2026-08-21`
+- Last updated: `2026-09-01`
 - Owner: repo-local workflow
 - Selected by: `README-POLICY-ROUTED-DESTINATION-PRESSURE-CLOSURE.2`
 
@@ -269,11 +269,11 @@ no routed destination becomes the next uninstrumented blob.
   Blocked by: `none`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.29`
-  Status: `proposed`
-  Goal: `Contain per-slice narration accreting into single task-tree node fields.`
-  Acceptance: `A long-running leaf appends one slice of narration to its single-line node Verification field per commit, so that one line grows without bound while the per-slice Acceptance Checklist sections already hold the same evidence. On 2026-08-19 the HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2.4.2 field reached 7,837 bytes and drove the task_evidence line_bytes_each axis to 95.7% of its 8,192-byte ceiling; a manual compaction to 1,770 bytes returned the surface to 76.5%. The line ceiling detected the accretion but nothing prevents it from recurring on the next long leaf, and the current remedy depends on an author noticing. Select whether the node Verification field is contractually a bounded current-state field routed to the per-slice checklists, and if so add the deterministic check that proves it, without weakening task-tree integrity evidence requirements or removing any exact recorded fact. Not PNT-eligible until activated.`
+  Status: `in_progress`
+  Goal: `Contain repeated per-slice narration while preserving exact task evidence.`
+  Acceptance: `Treat node Verification fields as bounded current-state summaries and committed Acceptance Checklists as version-retrievable history. Add deterministic bounds/recovery checks, atomically roll the HIAL/VIAL task root below rollover, retain its complete live frontier and canonical node evidence, and prove the exact predecessor through the declared history-retention contract. Do not raise a ceiling, weaken staged acceptance or task integrity, or lose any recorded fact.`
   Verification: `pending`
-  Commit: `pending activation`
+  Commit: `pending`
   Blocked by: `none`
 
 - ID: `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.30`

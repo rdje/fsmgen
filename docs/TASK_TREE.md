@@ -46,8 +46,8 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.30` done; proposed `.29` owns node-field narration accretion | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
-| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.17.4.7` GHDL authority-object admission is closing; declared task-evidence rollover precedes exact object-descriptor admission | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
+| `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.29` active for exact task-narration containment and HIAL/VIAL root rollover | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
+| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.17.4.7` authority-object admission is closed; containment `.29` owns the prerequisite task-evidence rollover | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `ISF-SPEC-TEST-INDEX-SYNC` | `active` | `R14` | `.3` exact post-partition transformation is green; commit it before resolving the remaining complete-CI findings | [task](docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 completeness` | `.844` terminal | [task](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
 
