@@ -1125,9 +1125,24 @@ sub _phase_osvvm_ran($session) {
 }
 
 sub _phase_trace_validated($session) {
+    my $validated = _reconstruct_trace_payload(
+        $session, $session->{objects},
+    );
+    push @{$session->{objects}}, _write_object(
+        $session, 'validated_trace', _canonical($validated) . "\n", 0,
+    );
+    return {
+        trace_sha256 => $validated->{trace}{trace_sha256},
+        record_count => 0 + $validated->{trace}{record_count},
+        validation_sha256 => sha256_hex(_canonical($validated)),
+        _workspace_evidence($session),
+    };
+}
+
+sub _reconstruct_trace_payload($session, $objects) {
     my $runtime_kind = _is_osvvm_role($session->{role})
         ? 'fixture_runtime_output_0' : 'runtime_output_0';
-    my $output = _object_content($session, $runtime_kind);
+    my $output = _object_content_from($session, $objects, $runtime_kind);
     my @trace = grep { index($_, "FSMGEN_VIAL_TRACE_V2\t") == 0 }
         split /\r?\n/, $output;
     my $trace_text = @trace ? join("\n", @trace) . "\n" : '';
@@ -1143,27 +1158,37 @@ sub _phase_trace_validated($session) {
     _throw('VIAL_GHDL_LIFECYCLE_TRACE_ERROR',
         $validated->{diagnostics}[0]{message},
         $validated->{diagnostics}[0]{path}) unless $validated->{ok};
+    return $validated;
+}
+
+sub _phase_result_produced($session) {
+    my $decoded = _reconstruct_result_payload(
+        $session, $session->{objects},
+    );
     push @{$session->{objects}}, _write_object(
-        $session, 'validated_trace', _canonical($validated) . "\n", 0,
+        $session, 'normalized_result', _canonical($decoded) . "\n", 0,
     );
     return {
-        trace_sha256 => $validated->{trace}{trace_sha256},
-        record_count => 0 + $validated->{trace}{record_count},
-        validation_sha256 => sha256_hex(_canonical($validated)),
+        result_sha256 => sha256_hex(_canonical($decoded)),
+        result_status => 'pass',
         _workspace_evidence($session),
     };
 }
 
-sub _phase_result_produced($session) {
+sub _reconstruct_result_payload(
+    $session, $objects, $validated_trace = undef,
+) {
     my $runtime_kind = _is_osvvm_role($session->{role})
         ? 'fixture_runtime_output_0' : 'runtime_output_0';
-    my $output = _object_content($session, $runtime_kind);
+    my $output = _object_content_from($session, $objects, $runtime_kind);
     my $decoded = _decode_runtime_result_record(
         $output, $RUNTIME_ARTIFACT_MAX_BYTES,
     );
-    my $validated_trace = eval {
-        $JSON->decode(_object_content($session, 'validated_trace'))
-    };
+    $validated_trace = eval {
+        $JSON->decode(_object_content_from(
+            $session, $objects, 'validated_trace',
+        ))
+    } unless defined($validated_trace);
     _throw('VIAL_GHDL_LIFECYCLE_TRACE_ERROR',
         'sealed GHDL trace boundary authority is malformed',
         '/trace_validated/scenario_boundaries')
@@ -1192,14 +1217,7 @@ sub _phase_result_produced($session) {
         $session->{validation}{expected_random_decisions_sha256},
         $session->{validation}{expected_diagnostic_codes},
     );
-    push @{$session->{objects}}, _write_object(
-        $session, 'normalized_result', _canonical($decoded) . "\n", 0,
-    );
-    return {
-        result_sha256 => sha256_hex(_canonical($decoded)),
-        result_status => 'pass',
-        _workspace_evidence($session),
-    };
+    return $decoded;
 }
 
 sub _decode_runtime_result_record($output, $byte_limit) {
@@ -1963,17 +1981,9 @@ sub _runtime_result_positive_integer($value) {
 sub _phase_assembled($session) {
     return _phase_osvvm_assembled($session)
         if _is_osvvm_role($session->{role});
-    my $assembly = {
-        schema => 'fsmgen.vial_ghdl_lifecycle_assembly.v1',
-        schema_version => 1,
-        lifecycle_identity => $session->{lifecycle_identity},
-        runtime_output_sha256 =>
-            _object_by_kind($session->{objects}, 'runtime_output_0')->{sha256},
-        trace_validation_sha256 =>
-            _object_by_kind($session->{objects}, 'validated_trace')->{sha256},
-        normalized_result_sha256 =>
-            _object_by_kind($session->{objects}, 'normalized_result')->{sha256},
-    };
+    my $assembly = _expected_assembly_payload(
+        $session, $session->{objects},
+    );
     push @{$session->{objects}}, _write_object(
         $session, 'assembly_payload', _canonical($assembly) . "\n", 0,
     );
@@ -1985,34 +1995,9 @@ sub _phase_assembled($session) {
 }
 
 sub _phase_osvvm_assembled($session) {
-    my $repetitions = $session->{validation}{run_repetitions};
-    my $assembly = {
-        schema => 'fsmgen.vial_ghdl_lifecycle_osvvm_assembly.v2',
-        schema_version => 2,
-        lifecycle_identity => $session->{lifecycle_identity},
-        fixture_runtime_output_sha256 => [map {
-            _object_by_kind(
-                $session->{objects}, "fixture_runtime_output_$_",
-            )->{sha256}
-        } 0 .. $repetitions - 1],
-        provider_runtime_output_sha256 => [map {
-            _object_by_kind(
-                $session->{objects}, "provider_runtime_output_$_",
-            )->{sha256}
-        } 0 .. $repetitions - 1],
-        provider_report_sha256 => [map {
-            my $run = $_;
-            [map {
-                _object_by_kind(
-                    $session->{objects}, "provider_report_${run}_$_",
-                )->{sha256}
-            } 0 .. $#{$session->{commands}{provider_reports}}]
-        } 0 .. $repetitions - 1],
-        trace_validation_sha256 =>
-            _object_by_kind($session->{objects}, 'validated_trace')->{sha256},
-        normalized_result_sha256 =>
-            _object_by_kind($session->{objects}, 'normalized_result')->{sha256},
-    };
+    my $assembly = _expected_assembly_payload(
+        $session, $session->{objects},
+    );
     push @{$session->{objects}}, _write_object(
         $session, 'assembly_payload', _canonical($assembly) . "\n", 0,
     );
@@ -2020,6 +2005,50 @@ sub _phase_osvvm_assembled($session) {
         assembly_sha256 => sha256_hex(_canonical($assembly)),
         object_count => scalar(@{$session->{objects}}),
         _workspace_evidence($session),
+    };
+}
+
+sub _expected_assembly_payload($session, $objects) {
+    unless (_is_osvvm_role($session->{role})) {
+        return {
+            schema => 'fsmgen.vial_ghdl_lifecycle_assembly.v1',
+            schema_version => 1,
+            lifecycle_identity => $session->{lifecycle_identity},
+            runtime_output_sha256 =>
+                _object_by_kind($objects, 'runtime_output_0')->{sha256},
+            trace_validation_sha256 =>
+                _object_by_kind($objects, 'validated_trace')->{sha256},
+            normalized_result_sha256 =>
+                _object_by_kind($objects, 'normalized_result')->{sha256},
+        };
+    }
+    my $repetitions = $session->{validation}{run_repetitions};
+    return {
+        schema => 'fsmgen.vial_ghdl_lifecycle_osvvm_assembly.v2',
+        schema_version => 2,
+        lifecycle_identity => $session->{lifecycle_identity},
+        fixture_runtime_output_sha256 => [map {
+            _object_by_kind(
+                $objects, "fixture_runtime_output_$_",
+            )->{sha256}
+        } 0 .. $repetitions - 1],
+        provider_runtime_output_sha256 => [map {
+            _object_by_kind(
+                $objects, "provider_runtime_output_$_",
+            )->{sha256}
+        } 0 .. $repetitions - 1],
+        provider_report_sha256 => [map {
+            my $run = $_;
+            [map {
+                _object_by_kind(
+                    $objects, "provider_report_${run}_$_",
+                )->{sha256}
+            } 0 .. $#{$session->{commands}{provider_reports}}]
+        } 0 .. $repetitions - 1],
+        trace_validation_sha256 =>
+            _object_by_kind($objects, 'validated_trace')->{sha256},
+        normalized_result_sha256 =>
+            _object_by_kind($objects, 'normalized_result')->{sha256},
     };
 }
 
@@ -2257,6 +2286,9 @@ sub _load_chain($session, $handle) {
                         eq $chain[-1]{state_identity}
                     && ($record->{predecessor_relpath} // '')
                         eq "$session->{stage_rel}/states/$name[$ordinal - 1]";
+            _validate_object_history(
+                $chain[-1]{objects}, $record->{objects},
+            );
         }
         push @chain, $record;
     }
@@ -2268,10 +2300,75 @@ sub _load_chain($session, $handle) {
             && ($handle->{state_relpath} // '') eq $expected_rel
             && ($handle->{next_state} // '') eq ($current->{next_state} // '');
     _validate_objects($session, $current->{objects});
+    _validate_terminal_payloads($session, $current);
     _validate_workspace($session, $current->{evidence});
     $session->{objects} = _clone($current->{objects});
     $session->{state} = _clone($current);
     return $current;
+}
+
+sub _validate_object_history($previous, $current) {
+    _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+        'GHDL lifecycle object history is malformed', '/objects')
+        unless ref($previous) eq 'ARRAY' && ref($current) eq 'ARRAY'
+            && @$current >= @$previous;
+    for my $index (0 .. $#$previous) {
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            'GHDL lifecycle object history is not append-only', '/objects')
+            unless _canonical($current->[$index])
+                eq _canonical($previous->[$index]);
+    }
+    return 1;
+}
+
+sub _validate_terminal_payloads($session, $record) {
+    my $ordinal = $STATE_ORDINAL{$record->{state}};
+    my $objects = $record->{objects};
+    my $validated_trace;
+    if (defined($ordinal)
+            && $ordinal >= $STATE_ORDINAL{trace_validated}) {
+        my $matches = eval {
+            $validated_trace = _reconstruct_trace_payload(
+                $session, $objects,
+            );
+            ref($validated_trace) eq 'HASH'
+                && !blessed($validated_trace)
+                && _object_content_from(
+                    $session, $objects, 'validated_trace',
+                ) eq _canonical($validated_trace) . "\n";
+        };
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            'sealed GHDL trace validation is not reproducible',
+            '/objects/validated_trace') unless $matches;
+    }
+    if (defined($ordinal)
+            && $ordinal >= $STATE_ORDINAL{result_produced}) {
+        my $matches = eval {
+            my $result = _reconstruct_result_payload(
+                $session, $objects, $validated_trace,
+            );
+            ref($result) eq 'HASH' && !blessed($result)
+                && _object_content_from(
+                    $session, $objects, 'normalized_result',
+                ) eq _canonical($result) . "\n";
+        };
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            'sealed GHDL normalized result is not reproducible',
+            '/objects/normalized_result') unless $matches;
+    }
+    if (defined($ordinal) && $ordinal >= $STATE_ORDINAL{assembled}) {
+        my $matches = eval {
+            my $assembly = _expected_assembly_payload($session, $objects);
+            ref($assembly) eq 'HASH' && !blessed($assembly)
+                && _object_content_from(
+                    $session, $objects, 'assembly_payload',
+                ) eq _canonical($assembly) . "\n";
+        };
+        _throw('VIAL_GHDL_LIFECYCLE_STATE_ERROR',
+            'sealed GHDL assembly payload is not reproducible',
+            '/objects/assembly_payload') unless $matches;
+    }
+    return 1;
 }
 
 sub _read_state($session, $relative) {

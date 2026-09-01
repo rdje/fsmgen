@@ -8,9 +8,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7`
   (`active`; runtime-stream cap hardening under decisions `0093`/`0083`)
-- next_action: independently audit the remaining portable-VHDL/OSVVM
-  runtime-envelope admissions in `.17.4.7`; open the smallest proven gap or
-  close the leaf if the selected contract is exhausted.
-- in_flight_uncommitted: none after GHDL state-evidence admission closure.
+- next_action: audit the remaining selected runtime-envelope surface in
+  `.17.4.7` and open the next bounded leaf only for a proven gap.
+- in_flight_uncommitted: none; terminal-payload admission is closed in its
+  task evidence and the next bounded runtime-envelope audit is selected.
 - in_flight_background: none; all exact-SHA hosted workflows are terminal green.
 - blockers: none; immutable `.17.3` evidence is the selection input.

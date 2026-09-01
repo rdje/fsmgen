@@ -134,6 +134,17 @@ than trusted from state JSON. Shared trace, result, assembly, and workspace
 evidence is then rebound to canonical same-volume objects. The combined
 forgery oracle is `t/1732-vial-ghdl-state-evidence-admission.t`.
 
+The terminal objects themselves are independently reproduced on resume.
+Fixture runtime bytes are passed through the full trace validator and full
+normalized-result admission again; provider-aware assembly is rebuilt from
+the exact fixture/probe/report/trace/result object identities. Canonical bytes
+must match the sealed trace, result, and assembly objects, and each successor
+state must preserve its predecessor's ordered object descriptors as an exact
+prefix. Thus an attacker cannot rehash an internally consistent state chain
+around substituted terminal payloads or rewritten earlier objects. The shared
+portable/OSVVM falsification control is
+`t/1733-vial-ghdl-terminal-payload-resume-admission.t`.
+
 The checked qualifier no longer has a second process implementation. It
 reconstructs the private execution plan, admits that plan to the lifecycle,
 advances every state, and builds the existing public report from the cleaned

@@ -192,6 +192,24 @@ This focused control covers both portable and OSVVM state forms:
 prove -Iperl t/1732-vial-ghdl-state-evidence-admission.t
 ```
 
+Canonical terminal payloads are not trusted merely because their evidence
+summaries agree with them. On every resume at or beyond trace validation, the
+lifecycle extracts the trace from the sealed runtime transcript and reruns the
+full trace validator. At or beyond result production it decodes the original
+runtime result and reruns all plan, scenario, time, outcome, aggregate, and
+diagnostic checks against that reconstructed trace. At assembly it rebuilds
+the exact portable or OSVVM assembly payload from the authenticated object
+inventory. Each reconstructed canonical value must equal the sealed terminal
+object byte for byte. Successor states must also retain every predecessor
+object descriptor as an exact ordered prefix; they may only append the objects
+owned by the new phase. A fully rehashed chain therefore cannot substitute a
+foreign trace, minimal passing result, assembly, or earlier object while
+remaining resumable. Focused falsification:
+
+```console
+prove -Iperl t/1733-vial-ghdl-terminal-payload-resume-admission.t
+```
+
 That distinct probe also preserves deadline authority: a supervisor
 `timed_out` result reports `VIAL_VHDL_QUALIFICATION_TIMEOUT` at
 `/resource_controls` before capture overflow or generic execution handling.

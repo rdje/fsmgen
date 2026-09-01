@@ -21,6 +21,8 @@ answers:
   - "how do fake GHDL lifecycle providers avoid host executable admission?"
   - "how does GHDL resume authenticate portable and OSVVM capture evidence?"
   - "how does GHDL resume authenticate command trace result and assembly evidence?"
+  - "how does GHDL resume semantically authenticate terminal trace result and assembly payloads?"
+  - "why must GHDL lifecycle object descriptors be append-only across states?"
 date: 2026-09-01
 status: current
 tags: [vial, vhdl, ghdl, runtime, trace, scalability]
@@ -47,6 +49,7 @@ evidence: >-
   t/1673-vial-ghdl-shared-lifecycle.t;
   t/1731-vial-ghdl-capture-evidence-admission.t;
   t/1732-vial-ghdl-state-evidence-admission.t;
+  t/1733-vial-ghdl-terminal-payload-resume-admission.t;
   t/1678-vial-ghdl-provider-aware-lifecycle.t;
   t/1725-vial-ghdl-cleanup-diagnostic-authority.t;
   t/1726-vial-ghdl-admission-cleanup-evidence.t;
@@ -63,6 +66,7 @@ reverify: >-
   t/1678-vial-ghdl-provider-aware-lifecycle.t
   t/1731-vial-ghdl-capture-evidence-admission.t
   t/1732-vial-ghdl-state-evidence-admission.t
+  t/1733-vial-ghdl-terminal-payload-resume-admission.t
   t/1725-vial-ghdl-cleanup-diagnostic-authority.t
   t/1726-vial-ghdl-admission-cleanup-evidence.t
   t/1727-vial-ghdl-probe-timeout-diagnostic-authority.t
@@ -152,6 +156,18 @@ result status/hash, and assembly count/hash must match canonical sealed
 same-volume payloads. t1732 rejects foreign values for every command family
 and terminal digest while exact portable and provider-aware chains finish with
 unchanged output and cleanup.
+
+Terminal object admission now reconstructs meaning rather than accepting
+self-consistent canonical bytes. Resume extracts and fully revalidates the
+trace from the sealed runtime transcript, reruns complete normalized-result
+admission against that reconstructed trace, and rebuilds the portable or
+OSVVM assembly from authenticated object descriptors. Each reconstructed
+canonical payload must equal its sealed object byte for byte. Successor object
+inventories must preserve the complete predecessor descriptor list as an
+ordered prefix and may only append phase-owned objects. t1733 admits exact
+controls and rejects substituted canonical trace/result/assembly payloads plus
+replaced, reordered, or missing predecessor descriptors; live portable and
+OSVVM qualification remain byte-identical with zero staging residue.
 
 Normalized result admission applies the selected 67,108,864-byte ceiling,
 exact shared/VHDL vocabularies, one parity schema/version, sealed plan identity,
