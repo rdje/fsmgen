@@ -72,6 +72,10 @@ subtest '65,536-total-operation construction fans out over 32 scenarios' => sub 
         'construction retains exactly 65,536 total operations');
     is($first->{workload_identity}, $expected{workload_identity},
         'total-operation qualification workload identity is exact');
+    is($first->{specification}{backend_profile}, undef,
+        'total-operation qualification selects no backend');
+    is($first->{specification}{tool_profile}, undef,
+        'total-operation qualification selects no external tool');
 
     my %input = map { $_->{role} => $_ } @{$first->{inputs}};
     is_deeply([sort keys %input], [qw(hial_source vial_source)],

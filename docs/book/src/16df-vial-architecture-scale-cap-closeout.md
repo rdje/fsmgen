@@ -22,8 +22,9 @@ dimensions. The separate consistency authority now joins the independently
 reviewed runtime-stream, backend-artifact, checking-model, checking-fault,
 checking-randomness, and checking-scoreboard witnesses to explicit dimensions.
 The checking-coverage, bridge-profile, serialized-bridge-manifest,
-normalized-bridge-collection, and execution-profile-selection witnesses are
-now joined too. The same classification remains pending for every other group.
+normalized-bridge-collection, execution-profile-selection, and
+execution-operation-cardinality witnesses are now joined too. The same
+classification remains pending for every other group.
 
 ## Why calibration publication is separate
 
@@ -55,9 +56,9 @@ identity.
 
 Runtime, backend, checking-model, checking-fault, checking-randomness,
 checking-scoreboard, checking-coverage, bridge-profile-cardinality, serialized
-manifest, normalized-collection, and execution-profile-selection groups are
-`verified` across all seven dimensions; all other groups remain
-`pending_independent_verification`.
+manifest, normalized-collection, execution-profile-selection, and
+execution-operation-cardinality groups are `verified` across all seven
+dimensions; all other groups remain `pending_independent_verification`.
 Runtime covers the selected materialization profiles plus t1720 through t1749
 and t1751 through t1762.
 Backend covers t1646 through t1650 and t1716 through t1719. Checking models
@@ -105,8 +106,17 @@ qualification plus same-volume cleanup; t1617 admits the exact 4,096-scenario
 limit; t1618 atomically rejects 4,097 with no metrics, ExecutionIR, or plan; and
 t1705 proves the ordinary one-fixture/unit/domain resource summary before
 defensive second-unit/domain rejection. Construction and invocation shapes
-explicitly carry no backend, provider, or tool selector. T1763 reconstructs
-all eleven sets of per-dimension projections,
+explicitly carry no backend, provider, or tool selector.
+Operation cardinality requires six complementary witnesses. T1619 owns the
+accepted per-scenario qualification, exact plan identity, and same-volume
+cleanup. T1620 and t1621 preserve the exact component boundary's later
+plan-byte dominance and the first semantic excess. T1622 and t1626 preserve
+the aggregate qualification, exact compact preflight, first aggregate excess,
+and preflight-dominated route without pretending a final plan was built.
+T1706 independently admits the compact exact boundary and rejects the first
+excess before bridge indexing. Every workload and ordinary invocation shape
+explicitly carries no backend, provider, or tool selector. T1763 reconstructs
+all twelve sets of per-dimension projections,
 requires their complete unions, checks every path, and rejects omitted or
 foreign evidence. Policy citations remain candidates
 for all unreviewed groups. The validator also
@@ -253,6 +263,20 @@ scripts/run_with_ram_guard.sh -- prove -Iperl \
   t/1603-vial-architecture-scale-execution-foundation.t \
   t/161{6..8}-vial-architecture-scale-execution-scenario-*.t \
   t/1705-vial-execution-selected-domain-cap-order.t \
+  t/1763-vial-architecture-scale-cap-consistency.t \
+  t/1685-vial-architecture-scale-cap-policy.t
+```
+
+Reverify both operation-cardinality ladders, exact compact preflights,
+same-volume cleanup, and sealed-report falsifiers with:
+
+```sh
+scripts/run_with_ram_guard.sh -- prove -Iperl \
+  t/1619-vial-architecture-scale-execution-operation-qualification.t \
+  t/162{0..1}-vial-architecture-scale-execution-operation-*.t \
+  t/1622-vial-architecture-scale-execution-total-operation-qualification.t \
+  t/1626-vial-architecture-scale-execution-total-operation-limit.t \
+  t/1706-vial-execution-operation-cardinality-cap-order.t \
   t/1763-vial-architecture-scale-cap-consistency.t \
   t/1685-vial-architecture-scale-cap-policy.t
 ```

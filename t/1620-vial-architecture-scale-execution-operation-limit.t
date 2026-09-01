@@ -69,6 +69,10 @@ subtest '65,536-operation construction is canonical checked-AHB source' => sub {
         'construction retains exactly 65,536 operations in one scenario');
     is($first->{workload_identity}, $expected{workload_identity},
         'limit workload identity is exact');
+    is($first->{specification}{backend_profile}, undef,
+        'limit construction selects no backend');
+    is($first->{specification}{tool_profile}, undef,
+        'limit construction selects no external tool');
 
     my %input = map { $_->{role} => $_ } @{$first->{inputs}};
     is_deeply([sort keys %input], [qw(hial_source vial_source)],

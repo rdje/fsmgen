@@ -250,7 +250,10 @@ my $GROUPS = {
         'no_execution_ir_plan_or_replay',
         'retain_compact_preflights_and_terminal_defense', '.17.4.4',
         [
+            't/1619-vial-architecture-scale-execution-operation-qualification.t',
             't/1620-vial-architecture-scale-execution-operation-limit.t',
+            't/1621-vial-architecture-scale-execution-operation-over-limit.t',
+            't/1622-vial-architecture-scale-execution-total-operation-qualification.t',
             't/1626-vial-architecture-scale-execution-total-operation-limit.t',
             't/1706-vial-execution-operation-cardinality-cap-order.t',
         ],

@@ -30,6 +30,14 @@ diag($json->encode($accepted->{diagnostics})) unless $accepted->{ok};
 is($accepted->{plan}{plan_id},
     'plan/e236297c8b434a9b374d1800112841e00327bdbd5d8d9130440bd20681fbed6e',
     'accepted profile retains its exact plan identity');
+is_deeply(
+    [sort keys %{$inputs->{arguments}}],
+    [sort qw(
+        bridge_manifest execution_profile fixture_id native_extension_catalog
+        replay_manifest scenario_ids semantic_ir
+    )],
+    'operation admission carries no backend, provider, or tool selector',
+);
 
 my $semantic = $inputs->{semantic_ir}->as_hashref;
 my $scenario = $semantic->{packages}[0]{fixtures}[0]{scenarios}[0];

@@ -909,6 +909,12 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
   Execution Profile Containment Resolution: `The Knowledge Map card had only 31 lines/1,426 bytes of inherited transition headroom after the first execution-profile sync. Compacting repeated stage summaries and coalescing evidence paths, without changing answers, facts, exact numeric claim lines, or the allowance, reduces the aggregate from 46,911 lines/3,463,459 bytes to 46,899 lines/3,462,703 bytes and restores 43 lines/2,182 bytes of headroom. Re-derive: aggregate tracked docs/knowledge Markdown against the declared baseline plus transition growth. Falsify: Knowledge Map and live-document gates reject answer drift, missing evidence, stale derived shards, or allowance drift. Durability: this task, compacted card, generated map, containment manifest, and work-unit commit retain the resolution.`
 
+  Execution Operation Cardinality Audit Finding: `The execution_operation_cardinality candidate inventory is incomplete across both owned axes. It cites t1620's per-scenario nominal-cap/plan-byte dominance, t1626's total-operation exact preflight and adjacent excess, and t1706's compact preflight hardener, but omits t1619's accepted 8,192-operation qualification and exact plan identity, t1621's genuine 65,537-operation semantic excess, and t1622's 65,536-total-operation qualification/plan-byte dominance. The omission dates to 951720257; 9c091a7c5 added the compact hardener without repairing the pre-existing ladder inventory. The complete eight-file policy/candidate/consistency baseline is green at Files=8/Tests=123 in 175 wallclock seconds under the repository RAM guard, so this is evidence-inventory debt rather than a runtime regression. This active .17.4.8 slice owns repairing the exact six-witness policy inventory, adding explicit no-tool and same-volume cleanup proof where the existing ladder is silent, and only then binding independently classified dimensions. Re-derive: run git log -S'execution_operation_cardinality' over the policy, inspect t1619 through t1622 plus t1626/t1706, and run those six witnesses with t1763/t1685 under the RAM guard. Falsify: omitting any ladder member loses the accepted qualification, per-scenario first semantic excess, total qualification, terminal dominance, compact exact boundary, or adjacent aggregate excess required for an honest two-axis join. Durability: this task entry owns the defect before source changes; the completed slice must synchronize policy, consistency authority, tests, book, Knowledge Map, and work-unit history.`
+
+  Execution Operation Cardinality Join: `The repaired policy now cites the complete six-witness set across operations_per_scenario and operations_total, and the caller-sealed consistency authority promotes execution_operation_cardinality without flattening their different route outcomes. T1620, t1626, and t1706 own exact component-boundary admission; t1621, t1626, and t1706 own first excess; t1620 through t1622 plus t1626/t1706 own stable diagnostics and atomicity; all six witnesses now explicitly prove absent backend/provider/tool selection; t1619 alone owns same-volume success/failure cleanup; and t1619, t1620, t1622, t1626, and t1706 freeze accepted plan or stage identities. Later serialized-plan dominance remains a route fact rather than a false component-cap failure. T1763 reconstructs every projection and the exact six-path union, checks each path, and rejects empty or foreign evidence. The intended RED exposed one policy inventory mismatch, 21 pending status/evidence/rationale assertions, and two inactive mutation controls; the completed guarded suite reports All tests successful at Files=8/Tests=125 in 177 wallclock seconds. Every prior group remains sealed, every unaudited group remains pending, and calibration remains historical/incomplete/blocked. Re-derive: run t1619 through t1622, t1626, t1706, t1763, and t1685 under the repository RAM guard. Falsify: qualification identity, semantic boundary/excess, plan-byte dominance, compact per-scenario/aggregate preflight, diagnostic, pre-materialization, no-tool, cleanup, union, omission, foreign-evidence, and caller-mutation controls fail closed. Durability: this task, repaired policy, consistency source/test, six focused witnesses, book, Knowledge Map, decision 0093, and work-unit commit retain the result. No cap, level, accepted profile, route outcome, product behavior, publication, support, budget, or capacity claim changes. The next slice independently reviews execution_fiber_cardinality.`
+
+  Execution Operation Containment Resolution: `The Knowledge Map card had only 37 lines/1,469 bytes of inherited transition headroom after the first operation-cardinality sync. Compacting repeated stage and join prose, without changing answers, evidence, reverify routes, exact numeric claim lines, or the allowance, reduces the aggregate from 46,905 lines/3,463,416 bytes to 46,896 lines/3,462,879 bytes and restores 46 lines/2,006 bytes of headroom. Re-derive: aggregate tracked docs/knowledge Markdown against the declared baseline plus transition growth. Falsify: Knowledge Map and live-document gates reject answer drift, missing evidence, stale shards, or allowance drift. Durability: this task, compacted card, generated map, containment manifest, and work-unit commit retain the resolution.`
+
   Containment Resolution: `The cap-policy card's long one-path-per-line reverify list is now a shorter equivalent set of numeric brace ranges plus exact outliers; every expansion resolves to an existing tracked test. With checking-randomness evidence added, the card aggregate falls from 46,939 lines/3,464,850 bytes to 46,903 lines/3,462,766 bytes, restoring 39 lines/2,119 bytes below the inherited transition allowance without changing it. Re-derive: expand every compacted pattern and aggregate docs/knowledge Markdown with wc. Falsify: missing paths fail the explicit expansion census, and Knowledge Map/live-document checks reject freshness, answer, transition, or ceiling drift. Durability: this task, the compacted card, generated shard, containment manifest, and work-unit commit retain the resolution.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
@@ -3025,3 +3031,40 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   are required green immediately before commit with no execution cap, level,
   profile, identity, product behavior, publication, support, budget, or capacity
   claim change. Full CI and push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.4.8` execution-operation-cardinality evidence join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `execution_operation_cardinality` remains
+  pending, and its three-path candidate list omits half of the two-axis ladder:
+  t1619's accepted per-scenario qualification and plan identity, t1621's first
+  genuine semantic excess, and t1622's total-operation qualification plus
+  plan-byte dominance. Exact `git log -S'execution_operation_cardinality' --
+  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` history traces the incomplete
+  original inventory to `951720257` and the compact-preflight-only addition to
+  `9c091a7c5`. The guarded complete baseline is green at Files=8/Tests=123 in
+  175 wallclock seconds, proving evidence-inventory debt rather than a runtime
+  regression.
+- [x] **ADDRESSED (verified)** — repair the executable policy to the exact six
+  witnesses; add explicit absent backend/provider/tool selectors and
+  same-volume success/failure cleanup; classify only directly proved boundary,
+  adjacent-excess, diagnostic, atomicity, no-tool, cleanup, and accepted-
+  identity dimensions; and make t1763 reconstruct the exact projections,
+  union, path existence, omission, and foreign-evidence controls. The
+  intentional RED contains one exact policy mismatch, 21 pending
+  status/evidence/rationale assertions, and two inactive mutation controls
+  before the authority modules change.
+- [x] **NO REGRESSION** — the complete six-witness operation set plus policy
+  and consistency report `All tests successful` at Files=8/Tests=125 in 177
+  wallclock seconds under the repository RAM guard. All 59 mdBook chapters
+  test, and the inspected 94-file/20,596-KiB repository-local render is removed
+  exactly. Task integrity passes across 4 trees/1,031 nodes.
+  `knowledge-map: OK` reports 1,159 facts/6,231 questions/6,403 answer
+  occurrences/138 shards. Claim inventory independently agrees at 11,520
+  numeric lines with 1,716/1,716 candidates dispositioned, 944 derived gates,
+  and zero gaps, open owners, or untracked producers. All 22 live-document
+  surfaces and the exact 59-file/54,848-line/2,961,230-byte book authority pass
+  with zero ceiling increase; Knowledge Map compaction restores 46 lines/2,006
+  bytes of transition headroom. Staged acceptance and every registered doctrine
+  are required green immediately before commit with no execution cap, level,
+  profile, route outcome, identity, product behavior, publication, support,
+  budget, or capacity claim change. Full CI and push remain deferred by policy.

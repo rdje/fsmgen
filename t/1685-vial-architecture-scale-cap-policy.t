@@ -210,11 +210,17 @@ is(
     'retain_compact_preflights_and_terminal_defense',
     'execution operation policy retains all three enforcement points',
 );
-ok(
-    scalar(grep {
-        $_ eq 't/1706-vial-execution-operation-cardinality-cap-order.t'
-    } @{$policy->{groups}{execution_operation_cardinality}{evidence}}),
-    'execution operation policy cites the per-scenario admission witness',
+is_deeply(
+    $policy->{groups}{execution_operation_cardinality}{evidence},
+    [qw(
+        t/1619-vial-architecture-scale-execution-operation-qualification.t
+        t/1620-vial-architecture-scale-execution-operation-limit.t
+        t/1621-vial-architecture-scale-execution-operation-over-limit.t
+        t/1622-vial-architecture-scale-execution-total-operation-qualification.t
+        t/1626-vial-architecture-scale-execution-total-operation-limit.t
+        t/1706-vial-execution-operation-cardinality-cap-order.t
+    )],
+    'execution operation policy cites the complete per-scenario and total-operation evidence set',
 );
 is(
     $policy->{groups}{execution_route_collections}{current_enforcement},

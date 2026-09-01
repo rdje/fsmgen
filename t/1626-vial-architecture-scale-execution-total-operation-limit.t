@@ -192,6 +192,10 @@ subtest 'the 1,000,000 limit level is authored compactly and identically' => sub
         $limit{operations}, 'construction retains exactly 1,000,000 operations');
     is($first->{workload_identity}, $limit{workload_identity},
         'limit workload identity is exact');
+    is($first->{specification}{backend_profile}, undef,
+        'limit construction selects no backend');
+    is($first->{specification}{tool_profile}, undef,
+        'limit construction selects no external tool');
 
     my %input = map { $_->{role} => $_ } @{$first->{inputs}};
     is($input{hial_source}{content}, $reference_hial,
@@ -271,6 +275,10 @@ subtest 'one further operation is authored and parsed exactly' => sub {
         $over{operations}, 'construction retains exactly 1,000,001 operations');
     is($first->{workload_identity}, $over{workload_identity},
         'over-limit workload identity is exact');
+    is($first->{specification}{backend_profile}, undef,
+        'over-limit construction selects no backend');
+    is($first->{specification}{tool_profile}, undef,
+        'over-limit construction selects no external tool');
 
     my %input = map { $_->{role} => $_ } @{$first->{inputs}};
     is(bytes::length($input{vial_source}{content}), $over{vial_bytes},

@@ -83,6 +83,10 @@ subtest '65,537-operation construction adds exactly one complete operation' => s
         'construction retains exactly 65,537 operations in one scenario');
     is($first->{workload_identity}, $expected{workload_identity},
         'one-over workload identity is exact');
+    is($first->{specification}{backend_profile}, undef,
+        'one-over construction selects no backend');
+    is($first->{specification}{tool_profile}, undef,
+        'one-over construction selects no external tool');
 
     my %input = map { $_->{role} => $_ } @{$first->{inputs}};
     is_deeply([sort keys %input], [qw(hial_source vial_source)],

@@ -418,6 +418,32 @@ my %execution_profile_rationale = (
     cleanup => 'qualification staging success and consumer failure are same-volume and residue-free',
     accepted_identity => 'qualification, exact-limit, and ordinary fixed-profile plans retain deterministic identities',
 );
+my @execution_operation_evidence = qw(
+    t/1619-vial-architecture-scale-execution-operation-qualification.t
+    t/1620-vial-architecture-scale-execution-operation-limit.t
+    t/1621-vial-architecture-scale-execution-operation-over-limit.t
+    t/1622-vial-architecture-scale-execution-total-operation-qualification.t
+    t/1626-vial-architecture-scale-execution-total-operation-limit.t
+    t/1706-vial-execution-operation-cardinality-cap-order.t
+);
+my %execution_operation_evidence = (
+    boundary => [@execution_operation_evidence[1, 4, 5]],
+    adjacent_excess => [@execution_operation_evidence[2, 4, 5]],
+    diagnostics => [@execution_operation_evidence[1 .. 5]],
+    atomicity => [@execution_operation_evidence[1 .. 5]],
+    no_tool => [@execution_operation_evidence],
+    cleanup => [$execution_operation_evidence[0]],
+    accepted_identity => [@execution_operation_evidence[0, 1, 3, 4, 5]],
+);
+my %execution_operation_rationale = (
+    boundary => 'the exact 65536 per-scenario and 1000000 aggregate preflights admit before any later plan-byte authority',
+    adjacent_excess => 'the first 65537 per-scenario and 1000001 aggregate excesses reject at their earliest semantic or execution authority',
+    diagnostics => 'semantic action, plan-byte dominance, compact invariant, and operation-cardinality failures retain stable loci',
+    atomicity => 'known semantic, plan-byte, and compact-preflight excess publishes no ExecutionIR, plan, metrics, or bridge index',
+    no_tool => 'every workload specification and ordinary execution argument set carries no backend, provider, or tool selector',
+    cleanup => 'operation qualification staging success and consumer failure are same-volume and residue-free',
+    accepted_identity => 'qualification plans, exact-limit semantic stages, and the ordinary accepted plan retain deterministic identities',
+);
 my %verified_evidence = (
     backend_artifact_graph => \%backend_evidence,
     bridge_normalized_collections => \%bridge_normalized_evidence,
@@ -428,6 +454,7 @@ my %verified_evidence = (
     checking_models => \%checking_model_evidence,
     checking_randomness => \%checking_randomness_evidence,
     checking_scoreboards => \%checking_scoreboard_evidence,
+    execution_operation_cardinality => \%execution_operation_evidence,
     execution_profile_selection => \%execution_profile_evidence,
     runtime_stream_envelopes => \%runtime_evidence,
 );
@@ -441,6 +468,7 @@ my %verified_rationale = (
     checking_models => \%checking_model_rationale,
     checking_randomness => \%checking_randomness_rationale,
     checking_scoreboards => \%checking_scoreboard_rationale,
+    execution_operation_cardinality => \%execution_operation_rationale,
     execution_profile_selection => \%execution_profile_rationale,
     runtime_stream_envelopes => \%runtime_rationale,
 );
@@ -660,6 +688,18 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
         'every sealed execution-profile evidence path exists',
     );
 
+    my %execution_operation_join = map { $_ => 1 }
+        map { @{$execution_operation_evidence{$_}} } @dimensions;
+    is_deeply(
+        [sort keys %execution_operation_join],
+        [sort @execution_operation_evidence],
+        'execution-operation join covers both exact cardinality ladders and compact preflights',
+    );
+    is_deeply(
+        [grep { !-f $_ } sort keys %execution_operation_join], [],
+        'every sealed execution-operation evidence path exists',
+    );
+
     is($report->{calibration}{evidence_role},
         'historical_measurement_only',
         'calibration stays measurement evidence');
@@ -876,6 +916,21 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
     like(dies(sub { $assert->($foreign_execution_profile) }),
         qr/execution_profile_selection\/accepted_identity' contradicts the sealed evidence authority/,
         'callers cannot add foreign execution-profile evidence');
+
+    my $omitted_execution_operation = $class->build;
+    pop @{$omitted_execution_operation->{groups}{execution_operation_cardinality}
+        {dimensions}{cleanup}{evidence}};
+    like(dies(sub { $assert->($omitted_execution_operation) }),
+        qr/execution_operation_cardinality\/cleanup' verified evidence must be one non-empty array/,
+        'callers cannot empty sealed execution-operation cleanup evidence');
+
+    my $foreign_execution_operation = $class->build;
+    push @{$foreign_execution_operation->{groups}{execution_operation_cardinality}
+        {dimensions}{accepted_identity}{evidence}},
+        't/foreign-execution-operation-evidence.t';
+    like(dies(sub { $assert->($foreign_execution_operation) }),
+        qr/execution_operation_cardinality\/accepted_identity' contradicts the sealed evidence authority/,
+        'callers cannot add foreign execution-operation evidence');
 
     my $missing = $class->build;
     delete $missing->{groups}{$first_group}{dimensions}{cleanup};

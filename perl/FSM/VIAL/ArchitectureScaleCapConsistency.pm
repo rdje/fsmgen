@@ -537,6 +537,48 @@ my %EXECUTION_PROFILE_RATIONALE = (
     accepted_identity =>
         'qualification, exact-limit, and ordinary fixed-profile plans retain deterministic identities',
 );
+my @EXECUTION_OPERATION_EVIDENCE = (
+    [
+        't/1619-vial-architecture-scale-execution-operation-qualification.t',
+        qw(no_tool cleanup accepted_identity),
+    ],
+    [
+        't/1620-vial-architecture-scale-execution-operation-limit.t',
+        qw(boundary diagnostics atomicity no_tool accepted_identity),
+    ],
+    [
+        't/1621-vial-architecture-scale-execution-operation-over-limit.t',
+        qw(adjacent_excess diagnostics atomicity no_tool),
+    ],
+    [
+        't/1622-vial-architecture-scale-execution-total-operation-qualification.t',
+        qw(diagnostics atomicity no_tool accepted_identity),
+    ],
+    [
+        't/1626-vial-architecture-scale-execution-total-operation-limit.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool accepted_identity),
+    ],
+    [
+        't/1706-vial-execution-operation-cardinality-cap-order.t',
+        qw(boundary adjacent_excess diagnostics atomicity no_tool accepted_identity),
+    ],
+);
+my %EXECUTION_OPERATION_RATIONALE = (
+    boundary =>
+        'the exact 65536 per-scenario and 1000000 aggregate preflights admit before any later plan-byte authority',
+    adjacent_excess =>
+        'the first 65537 per-scenario and 1000001 aggregate excesses reject at their earliest semantic or execution authority',
+    diagnostics =>
+        'semantic action, plan-byte dominance, compact invariant, and operation-cardinality failures retain stable loci',
+    atomicity =>
+        'known semantic, plan-byte, and compact-preflight excess publishes no ExecutionIR, plan, metrics, or bridge index',
+    no_tool =>
+        'every workload specification and ordinary execution argument set carries no backend, provider, or tool selector',
+    cleanup =>
+        'operation qualification staging success and consumer failure are same-volume and residue-free',
+    accepted_identity =>
+        'qualification plans, exact-limit semantic stages, and the ordinary accepted plan retain deterministic identities',
+);
 my %runtime_dimensions = map {
     $_ => {
         status => 'verified',
@@ -664,6 +706,18 @@ for my $entry (@EXECUTION_PROFILE_EVIDENCE) {
     push @{$execution_profile_dimensions{$_}{evidence}}, $path
         for @dimensions;
 }
+my %execution_operation_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $EXECUTION_OPERATION_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@EXECUTION_OPERATION_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$execution_operation_dimensions{$_}{evidence}}, $path
+        for @dimensions;
+}
 my $VERIFIED_DIMENSIONS = {
     backend_artifact_graph => \%backend_dimensions,
     bridge_normalized_collections => \%bridge_normalized_dimensions,
@@ -674,6 +728,7 @@ my $VERIFIED_DIMENSIONS = {
     checking_models => \%checking_model_dimensions,
     checking_randomness => \%checking_randomness_dimensions,
     checking_scoreboards => \%checking_scoreboard_dimensions,
+    execution_operation_cardinality => \%execution_operation_dimensions,
     execution_profile_selection => \%execution_profile_dimensions,
     runtime_stream_envelopes => \%runtime_dimensions,
 };
