@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **103** uniquely owned question entries.
+> **3** facts · **104** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -97,6 +97,7 @@
 - q="why did execution checking matrix resume stop before profile twenty?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="why did portable Verilator runtime reachability expose a phase-order defect?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="why did the portable SystemVerilog scale oracle move to revision 2?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="why does VIAL complete-corpus validation separate capture and execution revisions?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="why does VIAL keep a cap that a canonical route cannot reach?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="why does native UVM reject the portable backend scale ladder?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="why does source-free VIAL scale have no measurement record?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)

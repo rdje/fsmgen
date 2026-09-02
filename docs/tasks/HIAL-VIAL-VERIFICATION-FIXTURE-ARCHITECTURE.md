@@ -1555,18 +1555,18 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.1`
-  Status: `active`
+  Status: `done`
   Goal: `Separate sealed evidence revision from current execution revision during complete-corpus validation.`
   Acceptance: `Preserve public ProfileCapture capture/resume as exact current-clean-revision operations with all stale-revision controls. For CorpusCoordinator validate only, authenticate the immutable evidence revision from the already complete loaded corpus and pass it through one exact-caller closed ProfileCapture seam; use it solely to admit embedded report/common identity while independently pinning the current clean execution revision before and after every child, parent revalidation, and complete-corpus load. Retain fresh public adapter validation in child and parent, current host/guard/tool checks, plan/policy/report/provider/applicability/artifact identities, producer prohibition, bounded IPC, signal/error handling, and byte-read-only behavior. Expose capture versus execution revision without ambiguity, advancing a schema if the public result shape changes. Prove foreign callers, caller-supplied or malformed revisions, forged corpus/profile revision disagreement, current repository mutation, ordinary stale public resume, and every existing coordinator control reject. Re-run the exact real validate path only after focused synthetic proof; do not recapture, move, relabel, or mutate the sealed publication and do not promote a budget, support, performance, or capacity claim.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `ProfileCapture public capture/resume remain current-clean-revision strict. One exact-CorpusCoordinator-only seam accepts only repository root, ordinal, and the capture revision derived from an already authenticated complete seal; child and parent report validation use that immutable revision while every child, parent reload, complete load, and final comparison pins the separately derived clean execution revision. CorpusCoordinator schema v2 reports both revisions, retains capture revision in common identity, captures zero profiles during validation, and compares the complete corpus before/after. Synthetic two-revision proof admits all eleven sealed profiles and rejects foreign seam callers, public revision injection, malformed seam revision, seal/profile disagreement, complete-load mutation, later execution mutation, and ordinary stale public resume. RAM-guarded adjacent t1768/t1769/t1772/t1773/t1774 passes Files=5, Tests=40 in 59 seconds; t1773 alone passes Files=1, Tests=8 in 29 seconds with sixteen revision-separation assertions. All 59 mdBook chapters test; the inspected repository-local build contains 94 files/21,312,509 bytes and is removed exactly with no off-repository residue. Knowledge Map parity is 1,160 facts/6,251 questions/6,423 occurrences/138 shards; exact claim and disposition joins, maintained-reference authority, containment, staged acceptance, and all doctrines pass. The rationale surface is already rollover debt, so the same durable rationale is retained in this task, book, Knowledge card, claim record, tests, and Git rather than bypassing containment with a redundant decision file. No sealed publication byte, producer, provider, simulator, budget, support, performance, memory, capacity, full CI, or push changes in this repair; child .2 owns the real clean closeout reruns.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.1: separate capture and execution revisions`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Close and synchronize the independently authenticated current publication.`
   Acceptance: `From the clean .1 repair, re-run the standalone verifier, guarded producer-free production validate, guarded inventory, historical separation verifier, and adjacent exact-publication watchers. Require exact immutable identities/counts, current execution-revision reporting, zero producer/provider/simulator/controller execution, unchanged real-publication census, empty staging, bounded output, and complete cleanup. Join all falsification and canonicalization evidence; synchronize task/book/Knowledge Map/claims/containment/resume pointers; close .17.5.2 only if every leg agrees, without budget, support, performance, memory, or capacity promotion.`
   Verification: `pending`
-  Commit: `pending activation`
+  Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3`
   Status: `proposed`
@@ -5382,3 +5382,39 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   568,304-byte retained diagnostic census pass. Staged task acceptance, all
   doctrines, and a clean task-scoped commit form final signoff; full CI and
   push remain intentionally deferred.
+
+## Acceptance Checklist (enforced) — `.17.5.2.5.4.1` revision-separated validation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the standalone verifier and production
+  inventory authenticate capture revision `155aa22ea`, but clean production
+  validation at `3a1502ac7` failed on ordinal one because complete-corpus
+  validation passed current HEAD through the public profile-resume contract.
+  `git log -S'profile capture report Git revision changed'` and
+  `git log -S'profile resume worker did not load an existing artifact'` trace
+  the public same-revision admission and completed resume path to `41808b11d`
+  and `9bc711443`, respectively. That rule is correct at the public profile
+  boundary but makes every immutable complete seal non-revalidatable after the
+  next identity-preserving commit when reused unchanged by the coordinator.
+- [x] **ADDRESSED (verified)** — public capture/resume remain same-revision
+  strict. Complete validation first authenticates the seal, derives its one
+  capture revision, and uses one exact-caller ProfileCapture seam while pinning
+  current clean execution revision independently around every load and child/
+  parent validation. Schema v2 names both revisions and retains capture
+  revision in common identity. Before -> after: an authenticated prior-commit
+  synthetic seal resumes all eleven profiles with zero captures and identical
+  bytes; foreign callers, public injection, malformed or disagreed evidence,
+  load-time mutation, later repository mutation, and stale public resume all
+  reject. The rollover-debt rationale collection is not widened; the rationale
+  is durable in this task, book, Knowledge card, claim record, tests, and Git.
+- [x] **NO REGRESSION** — syntax and diff hygiene pass. The final RAM-guarded
+  adjacent band reports `All tests successful` at `Files=5, Tests=40` in 59
+  seconds; focused t1773 reports `Files=1, Tests=8` in 29 seconds and includes
+  sixteen exact revision-separation assertions. All 59 mdBook chapters test;
+  the inspected repository-local render contains 94 files/21,312,509 bytes and
+  is removed with no off-repository residue. Knowledge Map parity is 1,160
+  facts/6,251 questions/6,423 occurrences/138 shards. Exact claim inventory,
+  1,819/1,819 disposition join, maintained-reference authority, zero ceiling
+  increase, live containment, task integrity, Memory, staged acceptance, and
+  all doctrines pass. No real publication byte, producer, provider, simulator,
+  budget, support, performance, memory, capacity, full CI, or push changes;
+  clean child `.5.4.2` owns the real closeout reruns.

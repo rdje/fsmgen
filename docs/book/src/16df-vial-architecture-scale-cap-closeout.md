@@ -1223,3 +1223,30 @@ Current capture, budget qualification, gate/CI integration, public truth, and
 independent closeout remain separate rollback owners. Until those leaves pass,
 all historical candidate budgets stay candidate-only, and whole-product
 big/really-big capacity remains unclaimed.
+
+## Revision-separated complete-corpus validation
+
+Subsequent commits do not rewrite an immutable capture revision. The earlier
+coordinator nevertheless reused public single-profile resume during complete-
+corpus validation, requiring the sealed revision to equal the revision running
+the validator. That is right for a caller selecting one profile directly, but
+it made an authenticated complete seal non-revalidatable after the next commit.
+Independent verification and production inventory still admitted the seal
+while production validation rejected at its first profile.
+
+Coordination schema v2 separates those authorities. `capture_revision` comes
+only from the authenticated complete corpus and remains in every profile's
+common identity. `execution_revision` comes from the current clean checkout
+and is pinned before and after every child, parent validation, reload, and final
+complete-corpus comparison. ProfileCapture's public `capture` and `resume` APIs
+remain same-revision strict. Only an exact-caller seam used by CorpusCoordinator
+can carry the seal-derived capture revision; foreign callers, injected
+revisions, seal/profile disagreement, and executing-repository mutation reject.
+Validation remains producer-free and read-only and preserves publication bytes.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-revision-separated-validation-v1 -->
+- Claim: Public regression-promotion profile resume remains exact-current-revision only, while complete-corpus validation derives immutable capture revision solely from the authenticated complete seal and pins the clean executing revision separately. Coordination schema v2 reports both revisions; validation remains producer-free, repeats child and parent public report validation plus current environment admission, and leaves every publication byte unchanged. This is sealed-evidence revalidation, not general historical compatibility, recapture, performance qualification, support, or capacity promotion.
+- Re-derive: Run guarded t1769 and t1773. Require ordinary public resume to reject a prior-revision profile, then require a complete synthetic corpus captured at one clean commit to validate after a second clean commit through eleven exact-caller resumes. The result must report distinct capture/execution revisions, retain capture revision in common identity, capture zero profiles, resume all eleven, and preserve complete bytes.
+- Falsify: Call the private seam outside CorpusCoordinator; inject capture/execution revision through every public coordinator method; mutate complete-versus-profile capture revision; corrupt the seam's revision; and dirty the executing repository after complete admission. Every control must reject, while existing stale host/guard/tool/provider, malformed result, child failure, mutation, bounded IPC, and cleanup controls remain green.
+- Durability: Retain the `.17.5.2.5.4.1` task record, ProfileCapture, CorpusCoordinator, t1769/t1773, this chapter, the compact regression-promotion fact card, bounded claim record, doctrine gates, and the work-unit Git chain. Child `.5.4.2` owns the real sealed-corpus closeout result.
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-revision-separated-validation-v1 -->

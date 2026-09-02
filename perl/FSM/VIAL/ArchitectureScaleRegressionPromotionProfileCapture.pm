@@ -27,6 +27,8 @@ use FSM::VIAL::ArchitectureScaleMeasurement;
 my $PLAN = 'FSM::VIAL::ArchitectureScaleRegressionPromotionCapturePlan';
 my $STORE = 'FSM::VIAL::ArchitectureScaleRegressionPromotionProfileStore';
 my $MEASUREMENT = 'FSM::VIAL::ArchitectureScaleMeasurement';
+my $CORPUS_COORDINATOR =
+    'FSM::VIAL::ArchitectureScaleRegressionPromotionCorpusCoordinator';
 my $SCHEMA =
     'fsmgen.vial_architecture_scale_regression_promotion_profile_capture.v1';
 my $WORKER_SCHEMA =
@@ -88,13 +90,15 @@ sub capture($class, @args) {
         plan => $plan,
         entry => $entry,
         git_revision => $git_revision,
+        execution_revision => $git_revision,
     });
     _require_unchanged_clean_revision($repo_root, $git_revision);
     _validate_result($result, $plan, $entry, $git_revision);
     confess "profile capture worker returned a resume artifact\n"
         if ($result->{artifact}{status} // '') eq 'loaded';
     _revalidate_in_parent(
-        'capture', $repo_root, $plan, $entry, $git_revision, $result,
+        'capture', $repo_root, $plan, $entry,
+        $git_revision, $git_revision, $result,
     );
     return _clone($result);
 }
@@ -114,19 +118,61 @@ sub resume($class, @args) {
         plan => $plan,
         entry => $entry,
         git_revision => $git_revision,
+        execution_revision => $git_revision,
     });
     _require_unchanged_clean_revision($repo_root, $git_revision);
     _validate_result($result, $plan, $entry, $git_revision);
     confess "profile resume worker did not load an existing artifact\n"
         unless ($result->{artifact}{status} // '') eq 'loaded';
     _revalidate_in_parent(
-        'resume', $repo_root, $plan, $entry, $git_revision, $result,
+        'resume', $repo_root, $plan, $entry,
+        $git_revision, $git_revision, $result,
+    );
+    return _clone($result);
+}
+
+# A complete corpus has already authenticated one immutable capture revision.
+# This exact-caller seam revalidates those sealed bytes with the current clean
+# implementation without weakening public same-revision profile resume.
+sub _corpus_validate_resume($class, @args) {
+    _exact_invocant($class, '_corpus_validate_resume');
+    my $caller = caller;
+    confess "profile corpus-validation resume is private to the exact coordinator\n"
+        unless defined($caller) && $caller eq $CORPUS_COORDINATOR;
+    my $request = _request(
+        '_corpus_validate_resume', \@args,
+        [qw(repository_root ordinal capture_revision)],
+    );
+    my $capture_revision = $request->{capture_revision};
+    confess "profile corpus-validation capture revision is invalid\n"
+        unless defined($capture_revision) && !ref($capture_revision)
+            && $capture_revision =~ /\A[0-9a-f]{40}\z/;
+    _require_active_guard();
+    my $repo_root = _repository_root($request->{repository_root});
+    my ($plan, $entry) = _current_entry($repo_root, $request->{ordinal});
+    my $execution_revision = _require_clean_revision($repo_root);
+    my $result = _run_profile_worker({
+        operation => 'resume',
+        repository_root => $repo_root,
+        plan => $plan,
+        entry => $entry,
+        git_revision => $capture_revision,
+        execution_revision => $execution_revision,
+    });
+    _require_unchanged_clean_revision($repo_root, $execution_revision);
+    _validate_result($result, $plan, $entry, $capture_revision);
+    confess "profile corpus-validation worker did not load an existing artifact\n"
+        unless ($result->{artifact}{status} // '') eq 'loaded';
+    _revalidate_in_parent(
+        'corpus-validation resume', $repo_root, $plan, $entry,
+        $capture_revision, $execution_revision, $result,
     );
     return _clone($result);
 }
 
 sub _revalidate_in_parent(
-    $operation, $repo_root, $plan, $entry, $git_revision, $result,
+    $operation, $repo_root, $plan, $entry,
+    $capture_revision, $execution_revision, $result,
 ) {
     my $loaded = $STORE->load({
         repository_root => $repo_root,
@@ -142,24 +188,26 @@ sub _revalidate_in_parent(
     confess "profile $operation parent adapter changed the admitted report\n"
         unless _canonical_json($validated) eq _canonical_json($report);
     my ($common, $provider, $applicability) = _admit_report(
-        $report, $entry, $git_revision,
+        $report, $entry, $capture_revision,
     );
     _require_current_resume_identity($repo_root, $entry, $common)
-        if $operation eq 'resume';
+        unless $operation eq 'capture';
     my $expected = _result(
         $plan, $entry, $report, $common, $provider, $applicability,
         $result->{artifact},
     );
     confess "profile $operation worker metadata changed after publication\n"
         unless _canonical_json($result) eq _canonical_json($expected);
-    _require_unchanged_clean_revision($repo_root, $git_revision);
+    _require_unchanged_clean_revision($repo_root, $execution_revision);
     return 1;
 }
 
 sub _capture_in_child($raw) {
-    my ($repo_root, $plan, $entry, $git_revision) =
-        @{$raw}{qw(repository_root plan entry git_revision)};
-    _require_unchanged_clean_revision($repo_root, $git_revision);
+    my ($repo_root, $plan, $entry, $git_revision, $execution_revision) =
+        @{$raw}{qw(
+            repository_root plan entry git_revision execution_revision
+        )};
+    _require_unchanged_clean_revision($repo_root, $execution_revision);
     my $adapter = $entry->{adapter_class};
     my $method = $entry->{adapter_method};
     confess "profile capture adapter method is unavailable\n"
@@ -182,13 +230,13 @@ sub _capture_in_child($raw) {
     my ($common, $provider, $applicability) = _admit_report(
         $report, $entry, $git_revision,
     );
-    _require_unchanged_clean_revision($repo_root, $git_revision);
+    _require_unchanged_clean_revision($repo_root, $execution_revision);
     my $artifact = $STORE->publish({
         repository_root => $repo_root,
         ordinal => $entry->{ordinal},
         report => $report,
     });
-    _require_unchanged_clean_revision($repo_root, $git_revision);
+    _require_unchanged_clean_revision($repo_root, $execution_revision);
     return _result(
         $plan, $entry, $report, $common, $provider, $applicability,
         $artifact,
@@ -196,9 +244,11 @@ sub _capture_in_child($raw) {
 }
 
 sub _resume_in_child($raw) {
-    my ($repo_root, $plan, $entry, $git_revision) =
-        @{$raw}{qw(repository_root plan entry git_revision)};
-    _require_unchanged_clean_revision($repo_root, $git_revision);
+    my ($repo_root, $plan, $entry, $git_revision, $execution_revision) =
+        @{$raw}{qw(
+            repository_root plan entry git_revision execution_revision
+        )};
+    _require_unchanged_clean_revision($repo_root, $execution_revision);
     my $loaded = $STORE->load({
         repository_root => $repo_root,
         ordinal => $entry->{ordinal},
@@ -220,7 +270,7 @@ sub _resume_in_child($raw) {
         $report, $entry, $git_revision,
     );
     _require_current_resume_identity($repo_root, $entry, $common);
-    _require_unchanged_clean_revision($repo_root, $git_revision);
+    _require_unchanged_clean_revision($repo_root, $execution_revision);
     return _result(
         $plan, $entry, $report, $common, $provider, $applicability,
         $loaded->{artifact},

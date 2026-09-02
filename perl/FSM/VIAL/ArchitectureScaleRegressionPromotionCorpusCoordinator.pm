@@ -29,7 +29,7 @@ my $PROFILE_STORE =
     'FSM::VIAL::ArchitectureScaleRegressionPromotionProfileStore';
 
 my $SCHEMA =
-    'fsmgen.vial_architecture_scale_regression_promotion_corpus_coordination.v1';
+    'fsmgen.vial_architecture_scale_regression_promotion_corpus_coordination.v2';
 my $INVENTORY_SCHEMA =
     'fsmgen.vial_architecture_scale_regression_promotion_corpus_inventory.v1';
 my $PROFILE_RESULT_SCHEMA =
@@ -40,7 +40,7 @@ my $CORPUS_ARTIFACT_SCHEMA =
     'fsmgen.vial_architecture_scale_regression_promotion_corpus_artifact.v1';
 
 my $COORDINATION_REVISION =
-    'regression_promotion_corpus_coordinator_v1';
+    'regression_promotion_corpus_coordinator_v2';
 my $PROFILE_COUNT = 11;
 my $VALIDATION_RECORDS = 11;
 my $RAW_MEASUREMENT_RECORDS = 33;
@@ -53,8 +53,8 @@ my $MAX_ERROR_BYTES = $PROFILE_LIMITS->{maximum_error_bytes};
 
 my @RESULT_KEYS = qw(
     schema schema_version operation plan_identity policy_identity
-    git_revision common_identity summary profiles corpus_identity
-    publication_identity corpus_artifact
+    capture_revision execution_revision common_identity summary profiles
+    corpus_identity publication_identity corpus_artifact
 );
 my @SUMMARY_KEYS = qw(
     profile_count captured_profiles resumed_profiles validated_profiles
@@ -162,18 +162,32 @@ sub _coordinate($operation, $repository_root) {
         unless $operation =~ /\A(?:capture|validate)\z/;
     _require_active_guard();
     my ($repo_root, $root_device) = _repository_root($repository_root);
-    my $git_revision = _require_clean_revision($repo_root);
+    my $execution_revision = _require_clean_revision($repo_root);
     my $plan = $PLAN->derive({repository_root => $repo_root});
     confess "corpus coordination plan cardinality changed\n"
         unless ref($plan->{entries}) eq 'ARRAY'
             && @{$plan->{entries}} == $PROFILE_COUNT;
 
+    my ($capture_revision, $validation_authority) =
+        ($execution_revision, undef);
     if ($operation eq 'validate') {
         my $state = _corpus_inventory(
             $repo_root, $root_device, $plan,
         );
+        _require_unchanged_clean_revision(
+            $repo_root, $execution_revision,
+        );
         confess "corpus validation requires an existing complete publication\n"
             unless $state->{status} eq 'present';
+        $validation_authority = $CORPUS_STORE->load({
+            repository_root => $repo_root,
+        });
+        _require_unchanged_clean_revision(
+            $repo_root, $execution_revision,
+        );
+        $capture_revision = _validation_capture_revision(
+            $validation_authority,
+        );
     }
 
     my (@profiles, @outcomes);
@@ -190,14 +204,19 @@ sub _coordinate($operation, $repository_root) {
             confess "corpus validation profile $entry->{ordinal} is missing\n";
         }
         my $profile_operation = $operation eq 'validate'
-            ? 'resume'
+            ? 'corpus_validate_resume'
             : $state->{status} eq 'present' ? 'resume' : 'capture';
         my $result = _run_profile_operation(
             $profile_operation, $repo_root, $entry->{ordinal},
+            $capture_revision,
         );
-        _require_unchanged_clean_revision($repo_root, $git_revision);
+        _require_unchanged_clean_revision($repo_root, $execution_revision);
+        my $reported_profile_operation =
+            $profile_operation eq 'corpus_validate_resume'
+                ? 'resume' : $profile_operation;
         _validate_profile_result(
-            $result, $profile_operation, $plan, $entry, $git_revision,
+            $result, $reported_profile_operation, $plan, $entry,
+            $capture_revision,
         );
         _require_loaded_profile_match($repo_root, $entry, $result);
         my $candidate = _corpus_common($result->{common_identity});
@@ -210,8 +229,11 @@ sub _coordinate($operation, $repository_root) {
             $corpus_common = $candidate;
         }
         push @profiles, _clone($result);
-        push @outcomes, _profile_outcome($profile_operation, $result);
-        $profile_operation eq 'capture' ? $captured++ : $resumed++;
+        push @outcomes, _profile_outcome(
+            $reported_profile_operation, $result,
+        );
+        $reported_profile_operation eq 'capture'
+            ? $captured++ : $resumed++;
     }
     confess "corpus coordination did not visit every profile exactly once\n"
         unless @profiles == $PROFILE_COUNT
@@ -223,23 +245,28 @@ sub _coordinate($operation, $repository_root) {
             repository_root => $repo_root,
             profiles => \@profiles,
         });
-        _require_unchanged_clean_revision($repo_root, $git_revision);
+        _require_unchanged_clean_revision($repo_root, $execution_revision);
         $loaded = $CORPUS_STORE->load({repository_root => $repo_root});
     }
     else {
         $loaded = $CORPUS_STORE->load({repository_root => $repo_root});
         $published_artifact = $loaded->{artifact};
     }
-    _require_unchanged_clean_revision($repo_root, $git_revision);
+    _require_unchanged_clean_revision($repo_root, $execution_revision);
+    confess "complete corpus changed during validation\n"
+        if defined($validation_authority)
+            && _canonical_json($loaded) ne
+                _canonical_json($validation_authority);
     _require_corpus_profile_match($loaded, \@profiles, $plan);
 
     my $result = {
         schema => $SCHEMA,
-        schema_version => 1,
+        schema_version => 2,
         operation => $operation,
         plan_identity => $plan->{plan_identity},
         policy_identity => $plan->{policy_identity},
-        git_revision => $git_revision,
+        capture_revision => $capture_revision,
+        execution_revision => $execution_revision,
         common_identity => $corpus_common,
         summary => {
             profile_count => $PROFILE_COUNT,
@@ -256,7 +283,10 @@ sub _coordinate($operation, $repository_root) {
         publication_identity => $loaded->{manifest}{publication_identity},
         corpus_artifact => _clone($published_artifact),
     };
-    _validate_result($result, $plan, $operation, $git_revision);
+    _validate_result(
+        $result, $plan, $operation,
+        $capture_revision, $execution_revision,
+    );
     return $result;
 }
 
@@ -364,13 +394,21 @@ sub _relative_file_state(
     return 'present';
 }
 
-sub _run_profile_operation($operation, $repo_root, $ordinal) {
+sub _run_profile_operation(
+    $operation, $repo_root, $ordinal, $capture_revision,
+) {
     confess "corpus profile operation is invalid\n"
-        unless $operation =~ /\A(?:capture|resume)\z/;
-    my $result = $PROFILE_CAPTURE->$operation({
-        repository_root => $repo_root,
-        ordinal => $ordinal,
-    });
+        unless $operation =~ /\A(?:capture|resume|corpus_validate_resume)\z/;
+    my $result = $operation eq 'corpus_validate_resume'
+        ? $PROFILE_CAPTURE->_corpus_validate_resume({
+            repository_root => $repo_root,
+            ordinal => $ordinal,
+            capture_revision => $capture_revision,
+        })
+        : $PROFILE_CAPTURE->$operation({
+            repository_root => $repo_root,
+            ordinal => $ordinal,
+        });
     my $encoded = _canonical_json($result);
     confess "corpus profile worker metadata exceeded the bounded envelope\n"
         if bytes::length($encoded) > $MAX_PROFILE_IPC_BYTES;
@@ -378,7 +416,7 @@ sub _run_profile_operation($operation, $repo_root, $ordinal) {
 }
 
 sub _validate_profile_result(
-    $result, $operation, $plan, $entry, $git_revision,
+    $result, $operation, $plan, $entry, $capture_revision,
 ) {
     _exact_keys(
         $result, $PROFILE_CAPTURE->result_keys,
@@ -403,7 +441,7 @@ sub _validate_profile_result(
     );
     confess "corpus coordination profile revision changed\n"
         unless ($result->{common_identity}{git_revision} // '')
-                eq $git_revision
+                eq $capture_revision
             && !_json_boolean(
                 $result->{common_identity}{dirty_state},
                 'corpus coordination profile dirty state',
@@ -512,6 +550,47 @@ sub _require_loaded_profile_match($repo_root, $entry, $result) {
     return 1;
 }
 
+sub _validation_capture_revision($loaded) {
+    _exact_keys(
+        $loaded, $CORPUS_STORE->load_result_keys,
+        'corpus validation authority',
+    );
+    my $report = $loaded->{report};
+    confess "corpus validation report authority is invalid\n"
+        unless ref($report) eq 'HASH' && !blessed($report);
+    my $common = $report->{common_identity};
+    _exact_keys(
+        $common, \@CORPUS_COMMON_KEYS,
+        'corpus validation common authority',
+    );
+    my $capture_revision = $common->{git_revision};
+    confess "corpus validation capture revision is invalid\n"
+        unless defined($capture_revision) && !ref($capture_revision)
+            && $capture_revision =~ /\A[0-9a-f]{40}\z/
+            && !_json_boolean(
+                $common->{dirty_state},
+                'corpus validation common dirty state',
+            );
+    confess "corpus validation profile authority is invalid\n"
+        unless ref($report->{profiles}) eq 'ARRAY'
+            && @{$report->{profiles}} == $PROFILE_COUNT;
+    for my $profile (@{$report->{profiles}}) {
+        my $profile_common = $profile->{common_identity};
+        _exact_keys(
+            $profile_common, \@COMMON_KEYS,
+            'corpus validation profile common authority',
+        );
+        confess "corpus validation profile capture revision changed\n"
+            unless ($profile_common->{git_revision} // '') eq
+                    $capture_revision
+                && !_json_boolean(
+                    $profile_common->{dirty_state},
+                    'corpus validation profile dirty state',
+                );
+    }
+    return $capture_revision;
+}
+
 sub _corpus_common($common) {
     _exact_keys(
         $common, \@COMMON_KEYS,
@@ -575,24 +654,32 @@ sub _corpus_profile_projection($result, $entry) {
     };
 }
 
-sub _validate_result($result, $plan, $operation, $git_revision) {
+sub _validate_result(
+    $result, $plan, $operation, $capture_revision, $execution_revision,
+) {
     _exact_keys($result, \@RESULT_KEYS, 'corpus coordination result');
     confess "corpus coordination result schema is invalid\n"
         unless ($result->{schema} // '') eq $SCHEMA
-            && _json_integer_equals($result->{schema_version}, 1);
+            && _json_integer_equals($result->{schema_version}, 2);
     confess "corpus coordination result operation changed\n"
         unless ($result->{operation} // '') eq $operation;
     confess "corpus coordination result plan binding changed\n"
         unless ($result->{plan_identity} // '') eq $plan->{plan_identity}
             && ($result->{policy_identity} // '') eq $plan->{policy_identity}
-            && ($result->{git_revision} // '') eq $git_revision;
+            && ($result->{capture_revision} // '') eq $capture_revision
+            && ($result->{execution_revision} // '') eq $execution_revision
+            && $result->{capture_revision} =~ /\A[0-9a-f]{40}\z/
+            && $result->{execution_revision} =~ /\A[0-9a-f]{40}\z/;
+    confess "corpus capture used different evidence and execution revisions\n"
+        if $operation eq 'capture'
+            && $capture_revision ne $execution_revision;
     _exact_keys(
         $result->{common_identity}, \@CORPUS_COMMON_KEYS,
         'corpus coordination result common identity',
     );
     confess "corpus coordination result common revision changed\n"
         unless ($result->{common_identity}{git_revision} // '') eq
-            $git_revision;
+            $capture_revision;
     _exact_keys($result->{summary}, \@SUMMARY_KEYS,
         'corpus coordination result summary');
     my $summary = $result->{summary};

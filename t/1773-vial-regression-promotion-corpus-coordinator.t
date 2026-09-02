@@ -24,11 +24,15 @@ use FSM::VIAL::ArchitectureScaleRegressionPromotionProfileStore;
 
 my $class =
     'FSM::VIAL::ArchitectureScaleRegressionPromotionCorpusCoordinator';
+my $corpus_store =
+    'FSM::VIAL::ArchitectureScaleRegressionPromotionCorpusStore';
 my $measurement = 'FSM::VIAL::ArchitectureScaleMeasurement';
 my $plan_class =
     'FSM::VIAL::ArchitectureScaleRegressionPromotionCapturePlan';
 my $profile_store =
     'FSM::VIAL::ArchitectureScaleRegressionPromotionProfileStore';
+my $profile_capture =
+    'FSM::VIAL::ArchitectureScaleRegressionPromotionProfileCapture';
 my $repo_root = Cwd::realpath(
     File::Spec->catdir($FindBin::Bin, '..'),
 );
@@ -62,7 +66,7 @@ my $sealed_plan = $plan_class->derive({repository_root => $repo_root});
 subtest 'public APIs are closed, guarded, and metadata-bounded' => sub {
     is_deeply($class->coordination_limits, {
         coordination_revision =>
-            'regression_promotion_corpus_coordinator_v1',
+            'regression_promotion_corpus_coordinator_v2',
         maximum_profile_ipc_bytes => 65_536,
         maximum_error_bytes => 4_096,
         profile_count => 11,
@@ -72,8 +76,8 @@ subtest 'public APIs are closed, guarded, and metadata-bounded' => sub {
     }, 'coordinator publishes its exact bounded worker and corpus census');
     is_deeply([sort @{$class->result_keys}], [sort qw(
         schema schema_version operation plan_identity policy_identity
-        git_revision common_identity summary profiles corpus_identity
-        publication_identity corpus_artifact
+        capture_revision execution_revision common_identity summary profiles
+        corpus_identity publication_identity corpus_artifact
     )], 'coordination result has one closed metadata schema');
     is_deeply([sort @{$class->profile_outcome_keys}], [sort qw(
         ordinal selection_key operation report_identity provider_status
@@ -94,6 +98,7 @@ subtest 'public APIs are closed, guarded, and metadata-bounded' => sub {
     for my $method (qw(inventory capture validate)) {
         for my $key (qw(
             worker callback result profiles ordinal operation plan report
+            capture_revision execution_revision
         )) {
             like(dies(sub {
                 $class->$method({
@@ -133,6 +138,13 @@ subtest 'eleven fresh profile workers publish one complete current corpus' => su
 
     is($result->{operation}, 'capture',
         'capture returns the exact coordination operation');
+    is($result->{schema},
+        'fsmgen.vial_architecture_scale_regression_promotion_corpus_coordination.v2',
+        'coordination result advances its revision-separated schema');
+    is($json->encode($result->{schema_version}), '2',
+        'coordination result schema version is a JSON number');
+    is($result->{capture_revision}, $result->{execution_revision},
+        'fresh capture binds evidence and execution to one clean revision');
     is($result->{summary}{captured_profiles}, 11,
         'all eleven missing profiles are captured');
     is($result->{summary}{resumed_profiles}, 0,
@@ -204,6 +216,134 @@ subtest 'existing profiles resume without producers and validate read-only' => s
         'validation loads rather than republishes the complete corpus');
     is(complete_bytes($repo), $before,
         'validation leaves complete bytes unchanged');
+};
+
+subtest 'complete validation separates sealed capture from clean execution' => sub {
+    my $repo = $complete_repo;
+    my $capture_revision = git_output($repo, qw(rev-parse HEAD));
+    $capture_revision =~ s/\s+\z//;
+    my $before = complete_bytes($repo);
+    write_raw(repo_path($repo, 'anchor.txt'), "fixture\nnext revision\n");
+    git_ok($repo, qw(add anchor.txt));
+    git_ok($repo, qw(commit -q -m next-revision));
+    my $execution_revision = git_output($repo, qw(rev-parse HEAD));
+    $execution_revision =~ s/\s+\z//;
+    isnt($execution_revision, $capture_revision,
+        'fixture advances the clean execution revision after sealing');
+
+    like(dies(sub {
+        with_synthetic_adapters(sub {
+            return $profile_capture->resume({
+                repository_root => $repo, ordinal => 1,
+            });
+        }, forbid_producer => 1);
+    }), qr/Git revision changed/,
+        'public single-profile resume remains same-revision strict');
+    like(dies(sub {
+        $profile_capture->_corpus_validate_resume({
+            repository_root => $repo,
+            ordinal => 1,
+            capture_revision => $capture_revision,
+        });
+    }), qr/private to the exact coordinator/,
+        'foreign callers cannot invoke revision-separated resume');
+
+    my $private_resume = $profile_capture->can('_corpus_validate_resume');
+    my @seen_capture_revisions;
+    my $validated;
+    {
+        no warnings 'redefine';
+        local *FSM::VIAL::ArchitectureScaleRegressionPromotionProfileCapture::_corpus_validate_resume = sub {
+            push @seen_capture_revisions, $_[1]{capture_revision};
+            goto &$private_resume;
+        };
+        $validated = with_synthetic_adapters(sub {
+            return $class->validate({repository_root => $repo});
+        }, forbid_producer => 1);
+    }
+    is($validated->{capture_revision}, $capture_revision,
+        'validation reports the immutable evidence revision');
+    is($validated->{execution_revision}, $execution_revision,
+        'validation separately reports the clean executing revision');
+    is($validated->{common_identity}{git_revision}, $capture_revision,
+        'validated common identity remains capture-revision evidence');
+    is_deeply(
+        \@seen_capture_revisions,
+        [($capture_revision) x 11],
+        'only the complete seal supplies all eleven private resume revisions',
+    );
+    is($validated->{summary}{captured_profiles}, 0,
+        'revision-separated validation captures no profile');
+    is($validated->{summary}{resumed_profiles}, 11,
+        'revision-separated validation re-admits all eleven profiles');
+    is(complete_bytes($repo), $before,
+        'revision-separated validation leaves the complete seal byte exact');
+
+    {
+        my $load = $corpus_store->can('load');
+        no warnings 'redefine';
+        local *FSM::VIAL::ArchitectureScaleRegressionPromotionCorpusStore::load = sub {
+            my $loaded = $load->(@_);
+            $loaded->{report}{common_identity}{git_revision} = 'f' x 40;
+            return $loaded;
+        };
+        like(dies(sub {
+            $class->validate({repository_root => $repo});
+        }), qr/profile capture revision changed/,
+            'forged complete-versus-profile capture revision rejects');
+    }
+    {
+        no warnings 'redefine';
+        local *FSM::VIAL::ArchitectureScaleRegressionPromotionProfileCapture::_corpus_validate_resume = sub {
+            $_[1]{capture_revision} = 'not-a-revision';
+            goto &$private_resume;
+        };
+        like(dies(sub {
+            $class->validate({repository_root => $repo});
+        }), qr/capture revision is invalid/,
+            'malformed internal capture revision rejects before byte admission');
+    }
+    {
+        my $load = $corpus_store->can('load');
+        my $mutated = 0;
+        no warnings 'redefine';
+        local *FSM::VIAL::ArchitectureScaleRegressionPromotionCorpusStore::load = sub {
+            my $loaded = $load->(@_);
+            if (!$mutated++) {
+                write_raw(
+                    repo_path($repo, 'anchor.txt'),
+                    "fixture\ncomplete-load mutation\n",
+                );
+            }
+            return $loaded;
+        };
+        like(dies(sub {
+            $class->validate({repository_root => $repo});
+        }), qr/requires a clean Git revision/,
+            'repository mutation during complete load rejects immediately');
+    }
+    write_raw(repo_path($repo, 'anchor.txt'), "fixture\nnext revision\n");
+    is(git_output($repo, qw(status --porcelain)), '',
+        'complete-load mutation control restores the clean fixture revision');
+    {
+        my $mutated = 0;
+        no warnings 'redefine';
+        local *FSM::VIAL::ArchitectureScaleRegressionPromotionProfileCapture::_corpus_validate_resume = sub {
+            if (!$mutated++) {
+                write_raw(
+                    repo_path($repo, 'anchor.txt'),
+                    "fixture\nexecution mutation\n",
+                );
+            }
+            goto &$private_resume;
+        };
+        like(dies(sub {
+            $class->validate({repository_root => $repo});
+        }), qr/requires a clean Git revision/,
+            'current execution-repository mutation still rejects');
+    }
+    is(complete_bytes($repo), $before,
+        'all revision controls preserve complete publication bytes');
 };
 
 subtest 'capture resumes an exact prefix and captures only missing profiles' => sub {
@@ -334,8 +474,10 @@ subtest 'worker failures and post-worker mutations propagate fail closed' => sub
             no warnings 'redefine';
             local *FSM::VIAL::ArchitectureScaleRegressionPromotionCorpusCoordinator::_run_profile_operation =
                 sub {
-                    my ($operation, $repo, $ordinal) = @_;
-                    my $result = $original->($operation, $repo, $ordinal);
+                    my ($operation, $repo, $ordinal, $capture_revision) = @_;
+                    my $result = $original->(
+                        $operation, $repo, $ordinal, $capture_revision,
+                    );
                     if ($ordinal == 1) {
                         append_raw(repo_path(
                             $repo, $result->{artifact}{artifact_relative_path},
@@ -461,8 +603,10 @@ sub with_profile_result_mutation {
     no warnings 'redefine';
     local *FSM::VIAL::ArchitectureScaleRegressionPromotionCorpusCoordinator::_run_profile_operation =
         sub {
-            my ($operation, $repo, $ordinal) = @_;
-            my $result = $original->($operation, $repo, $ordinal);
+            my ($operation, $repo, $ordinal, $capture_revision) = @_;
+            my $result = $original->(
+                $operation, $repo, $ordinal, $capture_revision,
+            );
             $mutate->($result) if $ordinal == $target_ordinal;
             return $result;
         };
