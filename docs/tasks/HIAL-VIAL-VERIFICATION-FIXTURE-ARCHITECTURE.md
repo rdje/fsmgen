@@ -1525,11 +1525,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.2: falsify copied current corpus mutations`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Characterize and, if warranted, repair current-corpus canonicalization cost before budget qualification.`
   Acceptance: `Measure the balanced-profile and complete-corpus phases under the repository RAM guard with project-local `sample -file` output and bounded instrumentation. Attribute CPU, wall, allocation/copying, input/output bytes, and canonicalization multiplicity separately; distinguish inherent evidence-size cost from avoidable repeated whole-graph encoding or hash/array copying. If a defect is proven, add a narrower child owner before source repair and prove byte/identity parity plus focused performance improvement; otherwise retain a measured nondefect rationale. Do not promote a regression budget.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Activated from clean copied-falsification commit cb236fad9. Characterization is split into two exact read-only phases: current ordinal-11 balanced report validation through its public adapter, and current complete-corpus load through the production store. A tracked bounded diagnostic runner must report per-phase monotonic wall time, process user/system CPU, exact current input/output artifact bytes, and separately wrapped canonical-encode and clone call/time/encoded-byte totals for each participating module without changing returned values or publication bytes. Each phase runs under the repository RAM guard, launches macOS sample with `-file` directly into a repository-derived `.artifacts/diagnostics/vial-scale/` path, bounds its canonical result, and proves the real publication/staging census unchanged. The existing 2-second sample is only a coarse corroborating observation because it exposes Perl copy/hash/array opcodes but not production subroutine multiplicity. Classification must compare the unique evidence floor and required identity checks against measured repeated whole-graph encoding/copying; any source repair requires a narrower task-tree child activated before code change and must preserve exact bytes/identities while improving focused measurements. No budget, support, capacity, or performance qualification is authorized.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3: activate canonicalization cost characterization`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4`
   Status: `proposed`
@@ -5227,3 +5227,23 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   census, and clean Git after commit. No producer, provider, simulator,
   measurement, budget, support, capacity, full CI, push, or real-corpus write is
   part of this slice.
+
+## Acceptance Checklist (enforced) — `.17.5.2.5.3` characterization activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean commit `cb236fad9` closes copied-
+  artifact falsification, while the retained project-local macOS sample locates
+  active Perl hash/array/value-copy opcodes but cannot attribute their call
+  multiplicity, encoded bytes, CPU, or wall cost to balanced validation versus
+  complete-corpus loading. This is an unresolved performance-risk observation,
+  not evidence sufficient to classify a defect or set a budget.
+- [x] **ADDRESSED (verified)** — `.5.3` alone is active with separate public
+  balanced-validation and corpus-load phase boundaries, bounded per-module
+  canonical/clone instrumentation, direct repository-local `sample -file`
+  capture, immutable corpus/staging checks, and an explicit narrower-child rule
+  before any repair. Before -> after: one proposed risk-characterization leaf
+  becomes executable without authorizing production source change.
+- [x] **NO REGRESSION** — this activation changes only task-tree continuity.
+  Task integrity, Memory, relative paths, Knowledge Map, containment, claims,
+  and all doctrines are required green before commit. No instrumentation,
+  sample, producer, provider, simulator, measurement, source repair, budget,
+  support, capacity, full CI, push, or publication write runs in activation.
