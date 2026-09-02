@@ -1325,6 +1325,40 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Durability: the card, generated index/shards, task, containment manifest, and
   work-unit history retain the result.`
 
+  Calibration Publication Topology Audit Finding: `The required Knowledge Map
+  query returned no answer, and an independent immutable-store census proves
+  that the 256 files/32,007,521 bytes are three disjoint sets: the closure's
+  232 currently selected source artifacts/28,398,586 bytes, the preserved
+  backend-emission-v1 publication's 22 files/2,232,452 bytes, and the closure
+  publication's two files/1,376,483 bytes. The closure selects backend-emission
+  v2, while commit 0601fa8aa explicitly sealed that non-colliding successor and
+  retained v1 as historical evidence. The next authority must therefore
+  rederive the selected 232-file lineage through current validators and compare
+  it with the immutable closure, authenticate the two closure files, classify
+  v1 as explicitly versioned/superseded rather than pretending the v2 producer
+  can revalidate it, and require the three-set union to equal the complete
+  store with zero residue. Re-derive: extract every repository-relative
+  artifact string from the closure report, extract the v1 profile graph plus
+  its family/complete manifests, and independently census the full store.
+  Falsify: a missing, overlapping, extra, byte-drifted, digest-drifted, or
+  wrongly current/legacy-classified path must reject the disposition.
+  Durability: this task owns the finding before source changes; the synchronized
+  book/Knowledge Map and the completed caller-sealed disposition authority must
+  retain the topology without promoting cap_implementation, budgets, support,
+  performance enforcement, or capacity.`
+
+  Calibration Topology Claim Disposition Finding: `The four user-facing
+  topology lines are four actionable candidates because each publishes a
+  separately falsifiable total or partition. All four are derived gates with
+  closure/matrix re-derivation, existing t1662/t1683/t1684 byte/digest/identity
+  oracles plus the exact-union negative control, and task/book/Knowledge Map
+  durability watchers. Re-derive: regenerate the producer-derived inventory
+  and join all four current candidate identities. Falsify: removing a
+  disposition, producer, oracle, watcher, or current candidate identity fails
+  closed. Durability: the disposition registry, generated inventory, this
+  task, and work-unit history retain 1,741/1,741 disposed candidates, 969
+  derived gates, and zero gaps/open owners.`
+
   Containment Resolution: `The cap-policy card's long one-path-per-line reverify list is now a shorter equivalent set of numeric brace ranges plus exact outliers; every expansion resolves to an existing tracked test. With checking-randomness evidence added, the card aggregate falls from 46,939 lines/3,464,850 bytes to 46,903 lines/3,462,766 bytes, restoring 39 lines/2,119 bytes below the inherited transition allowance without changing it. Re-derive: expand every compacted pattern and aggregate docs/knowledge Markdown with wc. Falsify: missing paths fail the explicit expansion census, and Knowledge Map/live-document checks reject freshness, answer, transition, or ceiling drift. Durability: this task, the compacted card, generated shard, containment manifest, and work-unit commit retain the resolution.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
@@ -3877,3 +3911,35 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   accepted identity, route outcome, product behavior, publication, support,
   budget, or capacity claim changes. Full CI and push remain deferred by
   policy.
+
+## Acceptance Checklist (enforced) — `.17.4.8` calibration-publication topology audit
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the all-group consistency transition only
+  unlocks explicit revalidation; it does not classify the immutable store's
+  current, superseded, and closure-publication files. A no-result Knowledge Map
+  query and independent path/byte/history censuses expose the exact three-set
+  topology before implementation; `git log -S'portable_sv_oracle_revision_2'
+  --oneline -- perl/FSM/VIAL/ArchitectureScaleBackendEmissionMeasurementMatrix.pm`
+  locates the explicit v1-to-v2 namespace transition.
+- [x] **ADDRESSED (verified)** — record the selected 232-file lineage, explicit
+  backend-emission-v1 versioning, two-file closure, exact union, required fresh
+  rederivation, and prohibited cap/budget/support/capacity relabel in the task,
+  mdBook, Knowledge Map, and bounded resume pointer. Before -> after: one
+  unclassified immutable store becomes three explicit, disjoint disposition
+  classes with a required exact-union check.
+- [x] **NO REGRESSION** — independent path extraction reports current
+  232/28,398,586, legacy 22/2,232,452, closure 2/1,376,483, complete store
+  256/32,007,521, three zero overlaps, exact-union acceptance, and injected-
+  extra-path rejection. MdBook tests all 59 chapters; the inspected 94-file/
+  20,656-KiB repository-local render contains the synchronized topology and is
+  removed exactly. Knowledge Map parity is 1,159 facts/6,232 questions/6,404
+  occurrences/138 shards; cards remain bounded at 46,914 lines/3,464,430
+  bytes. The 59-file book authority is 55,093 lines/2,974,980 bytes at exact
+  +11 lines/+754 bytes with no ceiling increase. Memory, task integrity,
+  relative paths, Knowledge Map, containment, and the focused four-file/
+  57-test documentation suite report `All tests successful` at Files=4,
+  Tests=57. Claims dispose 1,741/1,741 candidates
+  through 969 derived gates with zero gaps/open owners. `[doctrine] all doctrine
+  checks passed` across all 12 registered checks. No source, test, immutable
+  artifact, cap, identity, product behavior, publication, support, budget, or
+  capacity changes.

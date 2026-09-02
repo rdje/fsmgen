@@ -54,7 +54,8 @@ answers:
   - "where are the authored portable runtime qualification sources and structural oracle?"
   - "what are the final tracked portable runtime artifact graph sizes?"
   - "how is balanced portable measurement scoped?"
-date: 2026-08-30
+  - "which immutable VIAL calibration files need current revalidation or explicit versioning?"
+date: 2026-09-02
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
 evidence: >-
@@ -80,6 +81,8 @@ evidence: >-
   perl/FSM/VIAL/ArchitectureScaleBackendEmissionMeasurement.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmissionMeasurementMatrix.pm;
   perl/FSM/VIAL/ArchitectureScaleCalibrationClosure.pm;
+  perl/FSM/VIAL/ArchitectureScaleCalibrationClosurePublication.pm;
+  perl/FSM/VIAL/ArchitectureScaleCapConsistency.pm;
   perl/FSM/VIAL/ArchitectureScalePortableRuntimeMaterialization.pm;
   perl/FSM/VIAL/Parser.pm; perl/FSM/VIAL/SemanticBuilder.pm;
   scripts/run_vial_semantic_bridge_measurement_matrix.pl;
@@ -368,22 +371,15 @@ Portable-SV oracle revision 2 is the versioned result of `.17.3.5.1.4`: exact
 T=6,318 emits 16,774,723 bytes/6,351 maps and T=6,319 rejects before the
 unchanged 16-MiB cap. `.17.3.5.2` separately selects authored 10,000/15,000-
 record runtime candidates; VHDL/OSVVM remain separately owned. Calibration
-closure then found the durability gap: backend-emission matrix v1 was sealed
-at `fdc6e6a1b` before oracle-v2 commit `eb8967271`, so current regeneration
-correctly rejects its v1 canonical evaluation. The publisher now hashes
-`portable_sv_oracle_revision_2` into profile IDs and uses v2 aggregate
-directories, preserving v1 without collision. Clean `4487f0fe3` exact t1662
-now captures and independently reloads 22 same-volume files/2,252,381 bytes in
-13,146 seconds; complete identity is
+closure exposed that backend-emission matrix v1 predates oracle v2. Commit
+`0601fa8aa` explicitly seals the non-colliding v2 namespace and preserves v1
+as superseded historical evidence. Clean `4487f0fe3` exact t1662 captures and
+independently reloads 22 v2 files/2,252,381 bytes; identity is
 `backend-emission-matrix/9d634e6a898cc58a3566e6f52c846c19ea1b06c509961338a57c3322840c4fe1`.
-All 20 referenced profile byte counts and hashes reverify independently with
-no staging residue. Guarded exact t1683 then passes Files=1/Tests=2 in 14,954
-seconds and closes seven authorities/nine families/216 profiles/356 raw and
-zero excluded records as 92 candidate/124 noncandidate profiles. Its read-only
-1,374,727-byte report has SHA-256 `f6cc10c3a4c198d856470783cb7a836ee0d7e84c57a15bf7ae0f1208ef390d7c`
-and identity `calibration-closure/92ef0a203e18ce8de8b17cf819f36b73fe0889f00fdcb4def8b2b0e9eeb9dcc5`;
-an independent census verifies all 232 referenced same-volume artifacts/
-28,398,586 bytes and declared hashes with zero errors.
+Guarded exact t1683 closes seven authorities/nine families/216 profiles/356
+raw records, zero exclusions, and 92 candidate/124 noncandidate profiles at
+identity `calibration-closure/92ef0a203e18ce8de8b17cf819f36b73fe0889f00fdcb4def8b2b0e9eeb9dcc5`.
+Its 232 referenced artifacts total 28,398,586 bytes.
 
 `.17.3.8.1` measures the sole balanced structural gate; clean `118b3bfb68902c9479ca4c83a714b23ebb50501a` seals `.2`
 as three immutable files/1,280,699 bytes and complete identity `balanced-portable-matrix/d0619d4cce4d8eebb6b486d70bc41368d9d5f379ce54f87c6843f931ca462900`.
@@ -397,6 +393,11 @@ files/1,376,483 bytes. Report: 1,374,728 bytes/SHA-256
 manifest: 1,755 bytes/SHA-256
 `ae5c11ac9848f47bfe3f06905f7a059399e07f25c827dd85b900896c14d175ef`
 and its identity is `calibration-closure-publication/1316d11a6dfa008515fcb23aa132e30a72e7961d9e9e6eeba82ae0bf42546ac8`.
+The complete 256-file/32,007,521-byte store is exactly the disjoint union of
+those 232 selected artifacts, the 22 preserved v1 files/2,232,452 bytes, and
+the two closure files. Current disposition must rederive the selected lineage,
+authenticate the closure, retain v1 as explicitly versioned/superseded, and
+reject any missing, overlapping, or extra path; none may become cap proof.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],

@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **84** uniquely owned question entries.
+> **2** facts · **85** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -75,6 +75,7 @@
 - q="which VIAL scale families are measured first?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="which cap evidence groups are independently verified?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="which execution graph scale limits are reachable before earlier caps?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="which immutable VIAL calibration files need current revalidation or explicit versioning?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="which task leaf owns runtime-stream and transcript envelope hardening?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="why are portable direct drives limited to input carriers and root fibers?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="why cannot the nineteen pre-repair scale reports enter the repaired revision seal?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
@@ -103,5 +104,5 @@ _VIAL architecture-scale caps are component ceilings with explicit route authori
 
 _VIAL architecture scale is proved by orthogonal families with stage-local oracles, not capacity claims_
 
-- **date:** 2026-08-30 · **status:** current
+- **date:** 2026-09-02 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-architecture-scale-proof.md`](../../docs/knowledge/vial-architecture-scale-proof.md)

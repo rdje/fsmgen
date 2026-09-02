@@ -49,6 +49,17 @@ Only after the second answer is complete can `.17.4.8` disposition the
 historical publication as reusable, superseded, or requiring a versioned
 recapture.
 
+The immutable store is not one uniform target. Its 256 files/32,007,521 bytes
+split into three disjoint sets: 232 artifacts/28,398,586 bytes selected by the
+closure, 22 backend-emission-v1 files/2,232,452 bytes preserved after the
+explicit v2 namespace transition, and the two closure files/1,376,483 bytes.
+Fresh revalidation must reconstruct the selected set through current
+validators and compare the complete report. The v1 set is authenticated as
+explicitly versioned, superseded evidence; running the v2 producer against it
+would conflate two deliberately different revisions. The final authority must
+also prove that those three sets exactly exhaust the store. This audit fixes
+the disposition scope; it does not yet disposition the publication.
+
 ## Machine-enforced closeout state
 
 `FSM::VIAL::ArchitectureScaleCapConsistency` is the separate closeout owner.
