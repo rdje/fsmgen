@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
-- Last updated: `2026-09-01`
+- Last updated: `2026-09-02`
 - Owner: repo-local workflow
 - Segment manifest: `docs/tasks/segments/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/manifest.jsonl`
 
@@ -1401,7 +1401,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.4`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the bounded same-volume v2 single-profile publication store without producer execution.`
   Acceptance: `Add one caller-sealed storage authority for only a current dispatch entry's exact v2 report coordinate. Define closed canonical publication/artifact schemas and conservative report/IPC/error ceilings; create and fsync one repository-local staging directory and file, atomically rename only the complete directory, reload by lstat/stat/read/digest/canonical-JSON checks, and reject absolute/escaping/revision-1/unknown paths, extra entries, symlinks, hard links, cross-device state, collisions, oversized or malformed bytes, ambiguous recovery, and cleanup residue. Default tests use bounded synthetic publications and never invoke an adapter, provider, simulator, measurement controller, or real capture.`
   Verification: `Implementation and focused verification are green; final synchronized gate evidence is recorded in the fresh checklist below. The store derives the exact current entry from ordinal rather than accepting a path; wraps only JSON-object reports in a content-addressed plan/policy/profile envelope; fsyncs the repository-local file and staging directory before complete-directory rename; reopens by pathname/handle identity, exact census, one-link/device/owner/size, digest, canonical JSON, and current-plan checks; recovers only one byte-exact stage; and returns bounded closed artifact metadata. Synthetic current-plan tests install fatal producer/controller doubles and leave no fixture residue. Source/history audit also exposed two unbounded legacy revision-1 publishers, now owned by .17.5.2.2.4 rather than silently inherited.`
@@ -1409,11 +1409,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.1.1`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.1.1`
-  Status: `proposed`
+  Status: `done`
   Goal: `Repair the stale repository-default claim-registry census watcher exposed by the profile-store broader gate.`
   Acceptance: `Reproduce t1750 against the unchanged two-shard registry; prove by Git history and blame that d11fb2a4e added the twenty-seventh/26th-published record while leaving the repository-default watcher at 26/25; update only the exact expected census to 27/26; retain all positive, missing/extra/reordered/duplicate/oversized shard controls; run the focused claim suite plus doctrines; and synchronize the task/frontier without modifying a claim record or hiding future registry growth.`
-  Verification: `The .17.5.2.2.1 broader claim suite fails only t1750's repository-default message match: the checker reports shards=2, records=27, published=26, fixtures=1 while line 230 expects records=26, published=25. Git blame assigns that expectation to 0b6f25fba; git history shows d11fb2a4e subsequently added vial-common-bounded-cleanup-admission-v1 to claims-0002.jsonl without updating the watcher. The other five focused claim files pass and the registry checker itself passes, so this is a stale durability oracle rather than malformed claim data.`
-  Commit: `pending`
+  Verification: `The pre-change RED failed only t1750's repository-default message match: the checker reported shards=2, records=27, published=26, fixtures=1 while line 230 expected records=26, published=25. Git blame assigns that expectation to 0b6f25fba; git history shows d11fb2a4e subsequently added vial-common-bounded-cleanup-admission-v1 to claims-0002.jsonl without updating the watcher. Updating only that exact census returns the four-file focused claim suite to All tests successful at Files=4, Tests=38; all three claim checkers agree on 1,762/1,762 disposed candidates, 179 claim records, 988 gates, 595 reviewed dispositions, and zero gaps/open owners.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.1.1: repair claim registry census watcher`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.2`
   Status: `proposed`
@@ -4370,8 +4370,34 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   simulator, measurement, budget, support, performance, capacity, full CI, or
   push is claimed or run in this ordinary implementation slice.
 
-## Next Clean Frontier — `.17.5.2.2.1.1` claim-registry census repair
+## Acceptance Checklist (enforced) — `.17.5.2.2.1.1` claim-registry census repair
 
-- After `.17.5.2.2.1` commits cleanly, repair the proven stale t1750
-  repository-default census as its own commit. Then continue to `.17.5.2.2.2`
-  isolated profile dispatch/admission.
+- [x] **ROOT CAUSE (WHY + WHERE)** — The unchanged checker reproduced
+  `Failed test 'default reports the migrated two-shard global census' at
+  t/1750-claim-verification-registry-set.t line 228`: its live result was
+  `shards=2, records=27, published=26, fixtures=1`, while line 230 admitted
+  only `26/25`. `git blame -L 222,232` assigns the stale expectation to
+  `0b6f25fba7`; `git log -S'vial-common-bounded-cleanup-admission-v1' --
+  doctrine/claim_verification/registry/claims-0002.jsonl` proves that
+  `d11fb2a4e` later added the twenty-seventh record and twenty-sixth published
+  claim without changing this repository-default watcher.
+- [x] **ADDRESSED (verified)** — Only t1750's exact repository census changed
+  from 26 records/25 published claims to the checker-derived 27/26. The
+  registry, manifest, checker, fixture census, and all positive and hostile
+  controls remain byte-for-byte unchanged. Before -> after: one stale exact
+  durability expectation rejects the valid registry, then accepts precisely
+  the current complete two-shard registry without hiding future additions.
+- [x] **NO REGRESSION** — The four-file claim suite reports `All tests
+  successful` at Files=4, Tests=38. The doctrine, inventory, and disposition
+  checkers independently report 27 records/26 published claims, 1,762/1,762
+  disposed candidates, 179 claim records, 988 gates, 595 reviewed outcomes,
+  and zero gaps/open owners. Task integrity, containment, staged acceptance,
+  textual diff, and all doctrines pass before commit. No claim record,
+  disposition, inventory, product code, capture artifact, mdBook behavior,
+  measurement, simulator, full CI, or push changes in this repair slice.
+
+## Next Clean Frontier — `.17.5.2.2.2` isolated profile dispatch/admission
+
+- Query the Knowledge Map, inspect the public family adapters and the committed
+  v2 profile-store API, then implement exactly one bounded isolated dispatch
+  and admission path without broadening into corpus coordination.
