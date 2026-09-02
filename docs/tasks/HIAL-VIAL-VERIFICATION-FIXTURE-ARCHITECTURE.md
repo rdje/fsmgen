@@ -1508,6 +1508,35 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Validate the sealed publication in a distinct fresh process without capture authority; independently reproduce its exact file/byte/hash/device census, ordered profile/record counts, common identities, applicability/provider outcomes, correctness/oracle closure, exclusions, cleanup, and aggregate statistics. Falsify report, manifest, profile, ordering, identity, provider, count, digest, file-shape, extra-path, and historical-substitution controls; synchronize task/book/Knowledge Map/claim evidence and leave performance budgets entirely unpromoted for .17.5.3. Also root-cause the CPU-bound balanced-profile and corpus canonicalization observed during .4.3: use macOS `sample -file` only with a repository-derived `.artifacts/` destination, distinguish expected evidence-size cost from avoidable hash/array copying, and task-tree own any proven defect before budget work. Close .17.5.2 only when clean Git plus immutable same-volume evidence can recover the complete result without conversation state.`
   Verification: `Clean predecessor 9a2bf5246 seals the eleven-profile current corpus, retains exact guarded capture/validate/inventory evidence, and repairs historical-prefix replay so current and historical publications remain separately authenticated. This activation makes .17.5.2.5 the sole owner for a producer-independent file/byte/hash/device/identity census, actual-publication mutation falsification, and current-publication closeout before any budget work. A project-local two-second stack sample taken during the long balanced/corpus phase showed active Perl hash/array traversal and value copying rather than blocked I/O; the exact sample is retained at .artifacts/diagnostics/vial-scale/perl_2026-09-02_154454_06oT.sample.txt at 29,432 bytes with SHA-256 d58a6a69...0924a, and the exact sampler-created /tmp original is absent. Future sampling must use `sample ... -file .artifacts/...` directly. This remains a tracked performance-risk observation, not yet a defect classification or budget.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5: activate current corpus closeout`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.1`
+  Status: `active`
+  Goal: `Implement a producer-independent read-only verifier and exact census for the sealed current publication.`
+  Acceptance: `Derive the repository root from the tracked verifier location and import no regression-promotion store, coordinator, capture, measurement, provider, or simulator implementation. Traverse the active v2 namespace read-only; reject symlinks, non-regular or multiply linked files, foreign owner/device, extra or missing files/directories, staging residue, noncanonical JSON, and every manifest/report/profile content mismatch. Independently reproduce the exact 13-file layout, per-file byte/SHA-256 identities, total bytes, eleven ordered profiles, validation/raw/controller/exclusion counts, common revision/host/guard identity, report-coordinate and applicability/provider outcomes, corpus/publication/plan/policy/file-set identities, and explicit nonclaims. Emit one bounded canonical newline JSON result only after the complete census succeeds, with no producer or production reload call.`
+  Verification: `Pending implementation from clean activation f9b8e7a82.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.1: implement independent current corpus census`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.2`
+  Status: `proposed`
+  Goal: `Falsify the independent verifier against copied exact real-publication mutations.`
+  Acceptance: `Use only repository-local same-volume copies of the exact active publication. Prove baseline acceptance and empty stdout on report, manifest, profile, ordering, identity, provider, count, digest, canonicality, link, owner/device where safely reproducible, file-shape, extra/missing path, staging, and historical-substitution mutations; restore or remove every fixture deterministically and leave the real publication byte-identical.`
+  Verification: `pending`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3`
+  Status: `proposed`
+  Goal: `Characterize and, if warranted, repair current-corpus canonicalization cost before budget qualification.`
+  Acceptance: `Measure the balanced-profile and complete-corpus phases under the repository RAM guard with project-local `sample -file` output and bounded instrumentation. Attribute CPU, wall, allocation/copying, input/output bytes, and canonicalization multiplicity separately; distinguish inherent evidence-size cost from avoidable repeated whole-graph encoding or hash/array copying. If a defect is proven, add a narrower child owner before source repair and prove byte/identity parity plus focused performance improvement; otherwise retain a measured nondefect rationale. Do not promote a regression budget.`
+  Verification: `pending`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4`
+  Status: `proposed`
+  Goal: `Synchronize the independent result and close current-publication evidence for later budget qualification.`
+  Acceptance: `Re-run the independent verifier and production producer-free validate/inventory from clean state; join their exact identities and counts, retain every falsification and canonicalization conclusion, close the bounded capture claim's missing leg only if earned, synchronize task/book/Knowledge Map/containment/claims, and mark .17.5.2 done without promoting performance budgets, support, or capacity.`
+  Verification: `pending`
+  Commit: `pending activation`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3`
   Status: `proposed`
   Goal: `Qualify representative current profiles and freeze exact pinned-host/tool regression budgets.`
@@ -5096,5 +5125,23 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
 - [x] **NO REGRESSION** — activation changes only task-tree continuity state.
   Task integrity, Memory, relative paths, Knowledge Map, containment, claims,
   and all doctrines are required green before commit. No source, test,
+  artifact, producer, provider, simulator, measurement, mutation, budget,
+  support, capacity, full CI, or push runs in this activation.
+
+## Acceptance Checklist (enforced) — `.17.5.2.5.1` independent-census activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `.17.5.2.5` currently combines three
+  independently falsifiable concerns: immutable publication census, hostile
+  mutation admission, and CPU-bound canonicalization characterization. A
+  single implementation slice would obscure rollback and allow a producer
+  reload to masquerade as an independent census.
+- [x] **ADDRESSED (verified)** — four ordered children now separate independent
+  census, copied actual-publication falsification, canonicalization diagnosis,
+  and synchronized closeout. `.5.1` alone is active and forbids imports or
+  calls into the production capture/store/coordinator/measurement stack.
+  Before -> after: the first executable unit has one closed read-only result.
+- [x] **NO REGRESSION** — this partition changes only task-tree continuity
+  state. Task integrity, Memory, relative paths, Knowledge Map, containment,
+  claims, and all doctrines are required green before commit. No source, test,
   artifact, producer, provider, simulator, measurement, mutation, budget,
   support, capacity, full CI, or push runs in this activation.
