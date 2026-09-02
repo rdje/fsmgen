@@ -1511,10 +1511,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.1`
-  Status: `active`
+  Status: `done`
   Goal: `Implement a producer-independent read-only verifier and exact census for the sealed current publication.`
   Acceptance: `Derive the repository root from the tracked verifier location and import no regression-promotion store, coordinator, capture, measurement, provider, or simulator implementation. Traverse the active v2 namespace read-only; reject symlinks, non-regular or multiply linked files, foreign owner/device, extra or missing files/directories, staging residue, noncanonical JSON, and every manifest/report/profile content mismatch. Independently reproduce the exact 13-file layout, per-file byte/SHA-256 identities, total bytes, eleven ordered profiles, validation/raw/controller/exclusion counts, common revision/host/guard identity, report-coordinate and applicability/provider outcomes, corpus/publication/plan/policy/file-set identities, and explicit nonclaims. Emit one bounded canonical newline JSON result only after the complete census succeeds, with no producer or production reload call.`
-  Verification: `Pending implementation from clean activation f9b8e7a82.`
+  Verification: `The tracked standalone verifier derives the repository from its own location and uses only core Perl filesystem, JSON, byte, and SHA facilities—no FSMGEN production module or library path. It traverses the active namespace read-only; enforces exact owner/device, directory, regular one-link file, canonical JSON, and empty profile/corpus staging state; recomputes corpus, publication, profile-publication, and all eleven family report identities; and binds report coordinates, common revision/host/guard state, applicability, providers, 44 ordered accepted controller records, every successful correctness oracle, cleanup, exclusions, and explicit nonclaims. It reconstructs exactly 13 files/6,220,126 bytes with direct inventory digest 94c11e5c...bb57, including eleven profile reports, 11 validations, 33 raw records, 44 invocations, and zero exclusions. This direct digest is scope-distinct from production file-set dc5b315b...c66f, which hashes report plus manifest and binds profile byte/hashes transitively through the report. Provider status remains seven non-external foundation routes, one repository OSVVM materialization, and three exact external-tool routes. t1775+t1776 pass Files=2/Tests=6 and prove canonical bounded output, closed invocation, absence of production imports, byte/file-identity parity, historical separation, and copied outer-seal controls without a producer or simulator. All 59 mdBook chapters test; the inspected repository-local render contains 94 files/21,204,890 bytes and is removed. Claim inventory/disposition joins report 1,786/1,786 candidates disposed, 193 claim records, 991 gates, 602 reviewed, and zero gaps/open owners. Actual copied-publication mutations remain exclusively owned by .5.2, so the claim's falsification leg remains explicitly missing.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.1: implement independent current corpus census`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.2`
@@ -5145,3 +5145,42 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   claims, and all doctrines are required green before commit. No source, test,
   artifact, producer, provider, simulator, measurement, mutation, budget,
   support, capacity, full CI, or push runs in this activation.
+
+## Acceptance Checklist (enforced) — `.17.5.2.5.1` independent current-corpus census
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — production `--validate` and the historical
+  verifier both reload through code descended from the publication contract;
+  neither is a producer-independent oracle for the complete current namespace.
+  Query-first review and direct sealed-byte inspection established that the
+  missing dimension is one standalone read-only filesystem/JSON/SHA census
+  that imports no capture, store, coordinator, measurement, provider, or
+  simulator implementation. `git log -S` for both the verifier command and
+  result-schema token returns no predecessor under `scripts/`.
+- [x] **ADDRESSED (verified)** — the tracked verifier derives the root from its
+  location, authenticates exact owner/device and 14-directory/13-file regular
+  one-link shape, requires empty profile/corpus staging, and reads within
+  authenticated byte counts. It independently recomputes the corpus,
+  publication, eleven profile-publication, and eleven family-report identities;
+  binds every report coordinate and common/provider/applicability projection;
+  and checks all 44 ordered accepted records, correctness oracles, cleanup,
+  exclusions, and nonclaims. Before -> after: the sealed namespace remains
+  byte- and inode-identical while one bounded canonical result exposes the
+  exact 6,220,126-byte census and inventory SHA-256 `94c11e5c...bb57`.
+  The direct inventory digest is intentionally separate from production
+  file-set `dc5b315b...c66f`, which hashes report plus manifest and binds the
+  profile bytes transitively through the report; both exact chains agree.
+- [x] **NO REGRESSION** — both new files are syntax-clean. t1776 reports `All
+  tests successful`; its final join with t1775 is `Files=2, Tests=6`, including
+  source independence, before/after evidence parity, bounded canonical output,
+  exact 11/33/44/0 and provider census, historical separation, copied outer
+  controls, and empty-output rejection. All 59 mdBook chapters test; the
+  inspected repository-local render contains 94 files/21,204,890 bytes and is
+  removed. Maintained-reference authority accepts 0 files/+31 lines/+2,197
+  bytes under the fresh `.5.1` aggregate identity; the compact card stays
+  within its pre-existing transition allowance. Knowledge Map parity is 1,160 facts/6,247 questions/6,419
+  occurrences/138 shards. Claim inventory/disposition joins report
+  1,786/1,786 disposed candidates, 193 claim records, 991 gates, 602 reviewed,
+  and zero gaps/open owners after staging. This slice runs no producer,
+  provider, simulator, measurement, new mutation, budget, support, capacity,
+  full CI, or push; exact copied-publication mutations and the still-missing
+  claim falsification leg remain owned by `.17.5.2.5.2`.

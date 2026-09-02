@@ -60,7 +60,7 @@
 - q="what exact workloads prove VIAL backend emission scale?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="what happens when an earlier VIAL layer rejects before a selected limit?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="what is the VIAL architecture scale cap policy?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
-- q="what is the current VIAL regression-promotion corpus identity?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
+- q="what is the current VIAL regression-promotion corpus identity and how can it be independently verified?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="what is the portable SystemVerilog 16 MiB boundary after scheduler repair?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="what must happen before VIAL architecture scale regression budgets are promoted?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="when are VIAL coverpoint and bin-cross aggregate caps enforced?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)

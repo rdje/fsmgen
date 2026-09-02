@@ -12,7 +12,7 @@ answers:
   - "how is the VIAL v2 current corpus resumed and published?"
   - "how are regression-promotion report coordinates authenticated separately from policy selection?"
   - "did the repaired VIAL regression-promotion current corpus complete?"
-  - "what is the current VIAL regression-promotion corpus identity?"
+  - "what is the current VIAL regression-promotion corpus identity and how can it be independently verified?"
 date: 2026-09-02
 status: current
 tags: [hial, vial, scalability, regression, measurement, publication]
@@ -21,10 +21,10 @@ evidence: >-
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16df-vial-architecture-scale-cap-closeout.md;
   perl/FSM/VIAL/ArchitectureScaleRegressionPromotionPolicy.pm; perl/FSM/VIAL/ArchitectureScaleMeasurement.pm;
-  perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCapturePlan.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileCapture.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusCoordinator.pm; scripts/run_vial_regression_promotion_corpus.pl; scripts/verify_vial_regression_promotion_failed_prefix.pl;
-  t/1765-vial-architecture-scale-regression-promotion-policy.t; t/1766-vial-architecture-scale-regression-promotion-capture-plan.t; t/1767-vial-architecture-scale-regression-promotion-profile-store.t; t/1768-vial-architecture-scale-regression-promotion-profile-capture.t; t/1769-vial-architecture-scale-regression-promotion-profile-resume.t; t/1772-vial-regression-promotion-corpus-store.t; t/1773-vial-regression-promotion-corpus-coordinator.t; t/1774-vial-regression-promotion-corpus-cli.t
+  perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCapturePlan.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileCapture.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusCoordinator.pm; scripts/run_vial_regression_promotion_corpus.pl; scripts/verify_vial_regression_promotion_failed_prefix.pl; scripts/verify_vial_regression_promotion_current_corpus.pl;
+  t/1765-vial-architecture-scale-regression-promotion-policy.t; t/1766-vial-architecture-scale-regression-promotion-capture-plan.t; t/1767-vial-architecture-scale-regression-promotion-profile-store.t; t/1768-vial-architecture-scale-regression-promotion-profile-capture.t; t/1769-vial-architecture-scale-regression-promotion-profile-resume.t; t/1772-vial-regression-promotion-corpus-store.t; t/1773-vial-regression-promotion-corpus-coordinator.t; t/1774-vial-regression-promotion-corpus-cli.t; t/1776-vial-regression-promotion-current-corpus-verifier.t
 reverify: >-
-  scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_corpus.pl --validate; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_corpus.pl --inventory; scripts/verify_vial_regression_promotion_failed_prefix.pl
+  scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_corpus.pl --validate; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_corpus.pl --inventory; scripts/verify_vial_regression_promotion_failed_prefix.pl; scripts/verify_vial_regression_promotion_current_corpus.pl
 ---
 
 Decision 0096 selects eleven v2 gate profiles. Each adapter call owns one
@@ -107,8 +107,10 @@ its publication identity is `regression-promotion-corpus-publication/865c5cce3de
 the complete file-set digest is `dc5b315b827389eb466776716f6851cdd9ddd13b2f1aec441f8a51b7d72dc66f`.
 A producer-free validate pass reproduced every identity/count; inventory reports eleven
 present, zero missing, and no staging residue. Real-artifact mutation falsification remains
-missing under `.17.5.2.5`, so no budget, support, performance, or capacity claim is promoted.
-That leaf owns CPU-bound canonicalization; macOS sampling must use repository-local `sample -file` output.
+missing under `.17.5.2.5.2`, so no budget is promoted; CPU sampling stays repository-local.
+
+The read-only independent verifier imports no production module and authenticates 13 files/6,220,126 bytes, inventory `94c11e5c...bb57`, all identities, 11/33/44/0, cleanup, nonclaims, and seven foundation/one materialized/three external routes.
+That direct digest covers every file; production `file_set_sha256` directly covers report+manifest and transitively binds profiles. t1776 proves no byte/file-identity change; copied mutations remain `.5.2`'s missing falsification leg.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]].

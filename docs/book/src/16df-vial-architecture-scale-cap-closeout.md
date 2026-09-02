@@ -778,20 +778,51 @@ scripts/run_with_ram_guard.sh -- \
   scripts/run_vial_regression_promotion_corpus.pl --inventory
 ```
 
+For a producer-independent census, use the separately implemented read-only
+verifier:
+
+```bash
+scripts/verify_vial_regression_promotion_current_corpus.pl
+prove -Iperl t/1776-vial-regression-promotion-current-corpus-verifier.t
+```
+
+It derives the repository root from its tracked location and imports no
+FSMGEN production module. The verifier traverses only the sealed namespace,
+requires the exact same-volume owner, directory and 13-file regular/one-link
+census, reads each file within its authenticated size, and reconstructs every
+canonical JSON identity directly. It independently recomputes each profile
+publication and family report identity, all report coordinates, common
+revision/host/guard state, 44 ordered controller records, successful
+correctness oracles, cleanup, applicability, provider bindings, and explicit
+nonclaims. The complete namespace is 6,220,126 bytes and its canonical
+13-file inventory digest is
+`94c11e5c81843f412cb8d1af23b7699dbb15b1af19077c1903cab91d8eddbb57`.
+This inventory identity is deliberately distinct from the production
+`file_set_sha256`: that seal directly hashes only the complete report and
+manifest, while the report transitively authenticates all eleven profile
+byte/hash identities. Both chains agree on the current evidence, but they
+answer different census questions.
+The provider census remains seven non-external foundation routes, one
+repository-materialized OSVVM route, and three exact external-tool routes.
+The focused watcher compares every path, inode, mode, link, owner, byte count,
+and file hash before and after execution, and the verifier emits only one
+bounded canonical result after the complete census succeeds.
+
 This proves current capture and producer-free re-admission, not a regression
 budget, support tier, capacity limit, or performance qualification. The
-re-derivation and tracked durability legs are available; independent mutation
-falsification against this exact real publication remains explicitly missing
-under `.17.5.2.5`. That leaf must also characterize the observed CPU-bound
+production and independent re-derivation paths plus tracked durability are
+available; independent mutation falsification against a same-volume copy of
+this exact real publication remains explicitly missing under `.17.5.2.5.2`.
+That closeout must also characterize the observed CPU-bound
 balanced/corpus canonicalization before deciding whether it is expected scale
 cost or a repairable performance defect. Budget work remains solely
 `.17.5.3`.
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-real-current-corpus-capture-v1 -->
-- Claim: At clean revision 155aa22ea3099642eb6b7f5de81ea03633e72bcb, guarded production capture published the repaired eleven-profile current corpus as eleven validations, 33 fresh raw measurements, 44 accepted controller invocations, and zero exclusions; its complete report is 23,288 bytes with SHA-256 d6139d0f...84a1 and its manifest is 1,280 bytes with SHA-256 3de607e3...0273. A distinct guarded producer-free process resumed all eleven and reproduced the same corpus, publication, plan, policy, report, and file-set identities. This proves current capture and re-admission, not independent real-artifact mutation falsification, a regression budget, support, performance, or capacity.
-- Re-derive: Run guarded `--validate` and `--inventory` against the active corpus. Require corpus ab2df899...e505, publication 865c5cce...432e, plan fbf69740...9737, policy 19cf4105...ece, file-set dc5b315b...c66f, report 23,288 bytes/d6139d0f...84a1, manifest 1,280 bytes/3de607e3...0273, eleven resumed/present profiles, eleven validations, 33 raw records, 44 invocations, zero exclusions, and zero missing profiles.
-- Falsify: MISSING - Independent mutation controls have not yet been fired against the exact real publication; synthetic store/admission RED controls do not close that actual-artifact leg. (owner: HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5)
-- Durability: Retain the exact task result, mdBook section, Knowledge card, bounded claim record, clean revision, same-volume sealed artifacts, tracked validate/inventory producer, doctrine gate, and work-unit Git chain; `.17.5.2.5` separately owns complete immutable-evidence recovery.
+- Claim: At clean revision 155aa22ea3099642eb6b7f5de81ea03633e72bcb, guarded production capture published the repaired eleven-profile current corpus as eleven validations, 33 fresh raw measurements, 44 accepted controller invocations, and zero exclusions; its complete report is 23,288 bytes with SHA-256 d6139d0f...84a1 and its manifest is 1,280 bytes with SHA-256 3de607e3...0273. A distinct guarded producer-free process resumed all eleven. A separately implemented read-only verifier imports no production module and reconstructs the exact 13-file/6,220,126-byte namespace, inventory SHA-256 94c11e5c...bb57, identities, records, providers, correctness oracles, cleanup, and nonclaims. This proves current capture and two distinct re-admission paths, not independent real-artifact mutation falsification, a regression budget, support, performance, or capacity.
+- Re-derive: Run guarded `--validate` and `--inventory`, then run `scripts/verify_vial_regression_promotion_current_corpus.pl` against the active corpus. Require corpus ab2df899...e505, publication 865c5cce...432e, plan fbf69740...9737, policy 19cf4105...ece, file-set dc5b315b...c66f, report 23,288 bytes/d6139d0f...84a1, manifest 1,280 bytes/3de607e3...0273, inventory 94c11e5c...bb57, 13 files/6,220,126 bytes, eleven profiles/validations, 33 raw records, 44 invocations, zero exclusions/missing profiles, and the exact seven-foundation/one-materialized/three-external provider partition.
+- Falsify: MISSING - Independent mutation controls have not yet been fired against a same-volume copy of the exact real publication; synthetic store/admission RED controls and a read-only baseline watcher do not close that actual-artifact leg. (owner: HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.2)
+- Durability: Retain the exact task result, mdBook section, Knowledge card, bounded claim record, clean revision, same-volume sealed artifacts, tracked production validate/inventory path, tracked independent verifier and watcher, doctrine gate, and work-unit Git chain; `.17.5.2.5.2` separately owns copied immutable-evidence mutation controls.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-real-current-corpus-capture-v1 -->
 
 The dispatch authority now implements the metadata-only first step. It
