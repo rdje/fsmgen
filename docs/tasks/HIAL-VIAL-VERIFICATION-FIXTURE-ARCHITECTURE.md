@@ -1549,9 +1549,25 @@ decomposes the architecture needed to move beyond that bounded foundation.
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4`
   Status: `active`
   Goal: `Synchronize the independent result and close current-publication evidence for later budget qualification.`
-  Acceptance: `Re-run the independent verifier and production producer-free validate/inventory from clean state; join their exact identities and counts, retain every falsification and canonicalization conclusion, close the bounded capture claim's missing leg only if earned, synchronize task/book/Knowledge Map/containment/claims, and mark .17.5.2 done without promoting performance budgets, support, or capacity.`
-  Verification: `Activated after both `.5.3` repair children preserve exact current-corpus and balanced-report identities under guarded v3 attribution. Clean producer-free public validate/inventory plus the independent verifier now own final publication closeout before `.17.5.2` can complete.`
+  Acceptance: `After child .1 separates immutable capture revision from current clean execution revision without weakening public single-profile resume, child .2 must re-run the independent verifier and production producer-free validate/inventory from clean state; join their exact identities and counts, retain every falsification and canonicalization conclusion, close the bounded capture claim's missing leg only if earned, synchronize task/book/Knowledge Map/containment/claims, and mark .17.5.2 done without promoting performance budgets, support, or capacity.`
+  Verification: `At clean 3a1502ac7, the independent verifier re-authenticated all 13 files/6,220,126 bytes, inventory 94c11e5c...bb57, and 11/33/44/0 counts. Guarded production inventory reported eleven present, zero missing, and the exact corpus/publication/plan/policy/file-set identities while separately reporting current HEAD. Guarded production validate then failed closed at ordinal one with exit 70 and "profile capture Git revision changed": public resume requires each report's immutable capture revision 155aa22ea to equal executing HEAD 3a1502ac7. Git history traces the intentional public same-revision check to 41808b11d and its exact resume closeout to 9bc711443. Applying that rule unchanged inside complete-corpus validate makes any seal non-revalidatable after the next commit, including a documentation-only closeout. The failed command wrote zero result bytes, its exact diagnostic target was removed, no publication byte changed, and no process or staging residue remains. Children .1 and .2 own repair then final closeout; recapture, weakened public resume, and budget promotion are forbidden.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4: own revision-separated closeout`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.1`
+  Status: `active`
+  Goal: `Separate sealed evidence revision from current execution revision during complete-corpus validation.`
+  Acceptance: `Preserve public ProfileCapture capture/resume as exact current-clean-revision operations with all stale-revision controls. For CorpusCoordinator validate only, authenticate the immutable evidence revision from the already complete loaded corpus and pass it through one exact-caller closed ProfileCapture seam; use it solely to admit embedded report/common identity while independently pinning the current clean execution revision before and after every child, parent revalidation, and complete-corpus load. Retain fresh public adapter validation in child and parent, current host/guard/tool checks, plan/policy/report/provider/applicability/artifact identities, producer prohibition, bounded IPC, signal/error handling, and byte-read-only behavior. Expose capture versus execution revision without ambiguity, advancing a schema if the public result shape changes. Prove foreign callers, caller-supplied or malformed revisions, forged corpus/profile revision disagreement, current repository mutation, ordinary stale public resume, and every existing coordinator control reject. Re-run the exact real validate path only after focused synthetic proof; do not recapture, move, relabel, or mutate the sealed publication and do not promote a budget, support, performance, or capacity claim.`
+  Verification: `pending`
   Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2`
+  Status: `proposed`
+  Goal: `Close and synchronize the independently authenticated current publication.`
+  Acceptance: `From the clean .1 repair, re-run the standalone verifier, guarded producer-free production validate, guarded inventory, historical separation verifier, and adjacent exact-publication watchers. Require exact immutable identities/counts, current execution-revision reporting, zero producer/provider/simulator/controller execution, unchanged real-publication census, empty staging, bounded output, and complete cleanup. Join all falsification and canonicalization evidence; synchronize task/book/Knowledge Map/claims/containment/resume pointers; close .17.5.2 only if every leg agrees, without budget, support, performance, memory, or capacity promotion.`
+  Verification: `pending`
+  Commit: `pending activation`
+
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3`
   Status: `proposed`
   Goal: `Qualify representative current profiles and freeze exact pinned-host/tool regression budgets.`
