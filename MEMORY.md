@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.1`
-  (`proposed`; eleven-entry current-capture dispatch plan)
-- next_action: After the clean `.17.5.2` activation commit, implement the
-  caller-sealed dispatch plan without running producers or creating artifacts.
-- in_flight_uncommitted: none; `.17.5.2` activation is verified and awaiting commit.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2`
+  (`proposed`; isolated current-profile capture and atomic v2 publication)
+- next_action: After the clean `.17.5.2.1` dispatch-plan commit, activate and
+  implement isolated one-entry capture/publication with exact-profile resume.
+- in_flight_uncommitted: none; `.17.5.2.1` is verified and awaiting commit.
 - in_flight_background: none.
 - blockers: none.

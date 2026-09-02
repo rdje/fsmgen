@@ -1386,11 +1386,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.1`
-  Status: `proposed`
+  Status: `done`
   Goal: `Derive one closed eleven-entry current-capture dispatch plan from the promotion policy and current producer ownership.`
   Acceptance: `Introduce a caller-sealed plan authority that accepts only the repository root, internally derives the .17.5.1 policy, and maps every ordered selection exactly once to its tracked measurement adapter, public measurement method, closed arguments, provider/applicability prerequisite, record count, and v2 publication coordinate. Require eleven profile workers and four common-controller invocations per worker—one validation followed by three measurements—while rejecting caller evidence, private seams, duplicate or missing coordinates, revision-1 paths, and unsupported adapters. Return bounded defensive content-addressed data without invoking a producer, provider, simulator, measurement controller, or publication transaction.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `ArchitectureScaleRegressionPromotionCapturePlan accepts only repository_root, internally authenticates the .17.5.1 policy under the RAM guard, and derives content-addressed plan 0b6a15cea4437d33e86359a7ec01919b122fe16fc70dea8d8d98b75989820c33. Its eleven ordered entries bind all seven current adapters to only measure_profile or measure_member, exact closed arguments, current producer metadata identities, applicability predicates, one worker each, one validation plus three raw records each, and unique ordinal-plus-selection-hash report coordinates below the v2 corpus. Three runtime routes require exact tool profiles; the OSVVM structural route separately requires repository materialization without an external tool; seven routes are provider-free. Fatal producer/controller doubles prove plan derivation runs no work. Missing, duplicate, unknown, revision-1, producer-authority, and provider drift controls fail closed; return data is defensive and deterministic. Default t1766 passes Files=1/Tests=10; guarded authenticated t1765+t1766 passes Files=2/Tests=18. No producer, simulator, measurement, publication, artifact, budget, support, performance, capacity, CI, or product behavior changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.1: derive current capture dispatch`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2`
   Status: `proposed`
@@ -4231,8 +4231,54 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   support, capability, performance, capacity, or product behavior changes in
   activation; full CI and push remain deferred by policy.
 
-## Next Clean Frontier — `.17.5.2.1` dispatch-plan implementation
+## Acceptance Checklist (enforced) — `.17.5.2.1` current-capture dispatch plan
 
-- After `.17.5.2` commits cleanly, derive the closed eleven-entry current
-  dispatch plan without running producers, providers, simulators, measurements,
-  or publication transactions.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Knowledge Map query `how will the VIAL
+  architecture scale regression corpus be captured?` resolves to the dedicated
+  capture card and decision 0096. The clean predecessor audit found a selected
+  policy and seven current measurement adapters but no v2 dispatch authority.
+  `git log -S'regression-promotion-corpus-v1' --oneline -- perl scripts t`
+  returns only predecessor e59d9ce02, which owns selection rather than capture.
+  Public metadata inspection proves that their call shapes differ: family,
+  backend-profile, level-only, and balanced-member adapters cannot safely be
+  inferred by a generic argument template. It also separates the structural
+  OSVVM route's repository materialization from the runtime route's exact
+  GHDL-plus-OSVVM provider; conflating them would execute or require the wrong
+  prerequisite.
+- [x] **ADDRESSED (verified)** —
+  `ArchitectureScaleRegressionPromotionCapturePlan` accepts only
+  `repository_root`, internally authenticates the promotion policy, and maps
+  its exact order to eleven entries across all seven public adapters. Every
+  entry seals coordinates, public method, closed non-root arguments, symbolic
+  root binding, current producer-authority identity, provider/applicability
+  prerequisite, one validation followed by three measurements, one worker,
+  and an ordinal-plus-selection-hash v2 report path. The report is defensive
+  and content-addressed. Fatal doubles prove metadata derivation executes no
+  producer, provider, simulator, controller, or publication transaction;
+  missing, duplicate, unknown, historical-path, authority, and tool-profile
+  mutations fail closed. Before -> after: policy coordinates that required
+  manual adapter knowledge become one executable metadata-only dispatch
+  contract without creating current evidence or an artifact.
+- [x] **NO REGRESSION** — Perl syntax passes; `All tests successful` for default
+  t1766 at Files=1, Tests=10 and guarded authenticated t1765+t1766 at Files=2,
+  Tests=18.
+  Focused task/containment/claim documentation regression passes Files=4/
+  Tests=77. All 59 mdBook chapters test; the inspected 94-file/21,027,174-byte
+  repository-local render contains the new dispatch and OSVVM prerequisite
+  boundaries before exact removal. Knowledge Map parity is 1,160 facts/6,241
+  questions/6,413 occurrences/138 shards. Claims dispose 1,761/1,761
+  candidates through 987 gates, 179 claim records, and 595 reviewed records
+  with zero gaps/open owners. The 59-file book authority is 55,247 lines/
+  2,983,273 bytes at exact +34 lines/+1,495 bytes. The capture card returns to
+  its predecessor 63-line bound while shrinking from 3,977 to 3,672 bytes;
+  the 1,159-card surface is 46,999 lines/3,469,722 bytes. All 22 containment
+  surfaces, relative paths, Memory, four-tree/1,042-node task integrity,
+  generated-output cleanup, staged acceptance, textual diff, and all 12
+  doctrines pass. No measurement execution, v2 artifact, budget, CI, support,
+  capability, performance, capacity, or product behavior changes; full CI and
+  push remain deferred by policy.
+
+## Next Clean Frontier — `.17.5.2.2` isolated profile capture/publication
+
+- After `.17.5.2.1` commits cleanly, activate and implement one-entry isolated
+  capture, atomic v2 profile publication, and exact same-profile resume.

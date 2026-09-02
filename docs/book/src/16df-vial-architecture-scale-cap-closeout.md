@@ -660,6 +660,40 @@ then independently reloads, falsifies, documents, and closes the publication
 for the still-separate budget qualification leaf. Activation itself runs no
 simulator, measurement producer, or artifact publication.
 
+The dispatch authority now implements the metadata-only first step. It
+authenticates the promotion policy internally, preserves policy order, and
+binds every selection to its current adapter, public measurement method,
+closed arguments, producer-authority metadata, provider and applicability
+prerequisites, record sequence, and unique repository-relative report path.
+The report-directory token is derived from the complete selection key, while
+the leading ordinal makes order reviewable. Derivation is defensive and
+content-addressed; it invokes no producer, provider, simulator, measurement
+controller, or publication transaction.
+
+Structural OSVVM emission and OSVVM runtime deliberately have different
+provider prerequisites. The structural dispatch binds the exact repository
+materialization but does not invoke an external verification tool. The runtime
+dispatch requires the exact qualified GHDL-plus-OSVVM tool profile. This keeps
+source materialization from masquerading as simulator execution.
+
+Run the bounded metadata-only watcher with:
+
+```sh
+prove -Iperl \
+  t/1766-vial-architecture-scale-regression-promotion-capture-plan.t
+```
+
+Authenticate both the selection policy and dispatch plan under the repository
+RAM guard with:
+
+```sh
+scripts/run_with_ram_guard.sh -- env \
+  FSMGEN_VIAL_SCALE_PROMOTION_CAPTURE_PLAN_EXACT=1 \
+  prove -Iperl \
+  t/1765-vial-architecture-scale-regression-promotion-policy.t \
+  t/1766-vial-architecture-scale-regression-promotion-capture-plan.t
+```
+
 Qualified tools are resolved through their exact profiles. A shell-global
 `ghdl` is not required; the repository-local GHDL provider is the authority.
 If an exact provider is absent, the route is unavailable—not passing. Timing
