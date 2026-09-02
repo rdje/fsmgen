@@ -609,3 +609,22 @@ scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
   t/1763-vial-architecture-scale-cap-consistency.t \
   t/1685-vial-architecture-scale-cap-policy.t
 ```
+
+## What happens after cap closeout
+
+Architecture-scale regression promotion is active under `.17.5`, but no
+performance budget or support statement is promoted by activation. The first
+leaf must select current evidence and representative profiles before any new
+measurement. This ordering matters because the complete v1 calibration closure
+is authentic historical evidence, not current performance evidence; its
+candidate budgets cannot be copied into a live regression gate.
+
+The selected contract must compare two valid evidence shapes: recapturing a
+complete current closure, or publishing a smaller independently versioned
+corpus containing only the representative profiles intended for promotion.
+Either shape must satisfy the same correctness, repetition, pinned-host/tool,
+atomic-publication, cleanup, variability, recalibration, and nonclaim rules.
+Current capture, budget qualification, gate/CI integration, public truth, and
+independent closeout remain separate rollback owners. Until those leaves pass,
+all historical candidate budgets stay candidate-only, and whole-product
+big/really-big capacity remains unclaimed.

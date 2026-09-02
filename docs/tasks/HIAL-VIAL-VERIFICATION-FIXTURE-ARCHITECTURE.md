@@ -1364,9 +1364,47 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Closure: `The complete cap-consistency authority verifies all 23 groups across all seven required dimensions (161 verified joins) and unlocks explicit calibration revalidation without relabelling measurement as cap implementation. The caller-sealed disposition authenticates the complete immutable publication, versions the atomic 232-file selected lineage as historical after exactly six semantic/bridge current mismatches, derives the separate 239-byte VHDL graph/evaluation drift and portable-VHDL/OSVVM materialization changes, validates the 22-file legacy lineage plus two closure files, and requires their exact 256-file/32,007,521-byte partition. Guarded exact t1764 passes in 785 seconds; focused policy/consistency/disposition passes Files=3/Tests=92 and adjacent closure/publication passes Files=2/Tests=8. Recapture is required before future current-performance use, not cap closeout; immutable bytes remain unchanged and budgets, support, capacity, and reached-boundary claims remain prohibited.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
-  Status: `proposed`
+  Status: `active`
   Goal: `Stabilize architecture-scale regression gates, public documentation, capability truth, and closeout.`
   Acceptance: `Promote representative bounded profiles into stable non-flaky gates; document exact measured envelopes, budgets, commands, variability policy, cleanup, supported claims, and residue; synchronize support/capability/Knowledge Map/task/Memory surfaces without claiming whole-product big/really-big qualification.`
+  Verification: `Clean predecessor da26959cf closes all .17.4 cap hardening and atomically versions the immutable calibration closure as authentic historical evidence. Query-first review of decisions 0056/0095, the Knowledge Map, current calibration modules/tests, CI inventory, and Git history finds no promoted architecture-scale regression-gate owner. Decision 0056 requires complete current evidence before promotion, while decision 0095 forbids using the historical candidate budgets as current performance evidence. The activation therefore selects .17.5.1 first and partitions current-evidence capture, budget qualification, gate implementation, public truth, and independent closeout into separate rollback owners. No source, test, artifact, CI, capability, support, budget, performance, capacity, or product behavior changes in activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5: activate scale regression closeout`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.1`
+  Status: `active`
+  Goal: `Select the exact current-evidence, representative-profile, promotion, regression-gate, and public-truth contract before recapture or gate implementation.`
+  Acceptance: `Inventory every candidate profile, current validator/tool/applicability identity, deterministic oracle, raw-sample requirement, candidate budget, CI cost, host-match rule, cleanup proof, support surface, and nonclaim. Compare a complete current closure recapture with a narrower independently versioned representative promotion corpus; select the smallest evidence boundary that satisfies decisions 0056/0095 without borrowing historical measurements, weakening atomic closure identity, or claiming unmeasured capacity. Freeze rollback, recalibration, informational-unmatched-host, CI-placement, and downstream documentation requirements in a decision, focused executable contract, Knowledge Map, mdBook, and task evidence without changing behavior.`
+  Verification: `pending`
+  Commit: `pending activation`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2`
+  Status: `proposed`
+  Goal: `Capture and independently publish the .17.5.1-selected current calibration evidence under a new non-colliding version.`
+  Acceptance: `Construct only selected canonical profiles through current producers; retain validation plus required raw samples, exact host/tool/guard/applicability identities, deterministic stage oracles, exclusions, cleanup, and nonclaims; atomically publish before bounded IPC; independently reload; and reject stale, partial, mixed, reordered, collided, oversized, symlinked, signalled, or residue-bearing state. Historical v1 bytes remain immutable and cannot satisfy a current-evidence field.`
+  Verification: `pending`
+  Commit: `pending activation`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3`
+  Status: `proposed`
+  Goal: `Qualify representative current profiles and freeze exact pinned-host/tool regression budgets.`
+  Acceptance: `Consume only the .17.5.2 current publication; independently reproduce complete correctness and repetition evidence; apply the exact decision-0056 wall/CPU/RSS formulas and deterministic count oracles; bind workload, revision, host, tool, guard, provider, and applicability identities; retain recalibration and rollback history; and leave unmatched hosts informational. No budget may derive from historical v1 evidence, failed correctness, excluded samples, or a single slow-run rewrite.`
+  Verification: `pending`
+  Commit: `pending activation`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4`
+  Status: `proposed`
+  Goal: `Implement stable architecture-scale regression gates with bounded CI placement and exact host/tool applicability.`
+  Acceptance: `Run the .17.5.3-qualified representative profiles through canonical producers and stage-local oracles; enforce frozen performance budgets only on the exact pinned host/tool profile; run correctness, deterministic-output, safety, no-tool/qualified-tool, atomic publication, and cleanup checks everywhere applicable; report unmatched performance informationally; fail closed on evidence or identity drift; and place expensive guarded gates according to the selected CI cadence without making ordinary slice commits run full CI.`
+  Verification: `pending`
+  Commit: `pending activation`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5`
+  Status: `proposed`
+  Goal: `Publish exact architecture-scale commands, envelopes, variability policy, support/capability truth, and nonclaims.`
+  Acceptance: `Synchronize the mdBook, support/capability surfaces, Knowledge Map, task tree, and bounded resume pointer from executable gate and publication identities. Document runnable repository-relative commands, selected workload and host/tool envelopes, deterministic versus performance checks, unmatched-host behavior, recalibration, cleanup/residue, and exact supported claims. Preserve whole-product big/really-big, multi-unit/domain, mixed-language, native-UVM-runtime, full-language, synthesis, arbitrary-tool-capacity, and general-parity nonclaims.`
+  Verification: `pending`
+  Commit: `pending activation`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6`
+  Status: `proposed`
+  Goal: `Independently close architecture-scale regression, evidence, public truth, and residue before completing .17.5.`
+  Acceptance: `Re-derive the complete selected profile/gate/evidence/budget/support partition from current producers and publications; prove exact pinned-host enforcement, unmatched-host informational behavior, deterministic oracles, qualified tools, graceful boundaries, atomicity, same-volume cleanup, documentation commands, capability truth, and zero unowned residue. Reject missing, extra, stale, historical-substituted, reordered, mutated, mixed-identity, or caller-supplied evidence; then close .17.5 without generalizing to whole-product capacity.`
   Verification: `pending`
   Commit: `pending activation`
 
@@ -4040,10 +4078,43 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   cap, accepted route, product behavior, support, budget, capacity, or
   reached-boundary claim changes; full CI and push remain deferred by policy.
 
-## Next Clean Frontier — `.17.5` activation
+## Acceptance Checklist (enforced) — `.17.5` activation
 
-- `.17.4` and `.17.4.8` are complete; `.17.5` remains proposed until this slice
-  commits and the repository is handoff-ready.
-- The next clean selection-only slice activates the regression-gate,
-  documentation, capability-truth, and closeout parent without changing product
-  behavior or promoting historical calibration budgets.
+- [x] **ROOT CAUSE (WHY + WHERE)** — decisions `0056` and `0095`, the canonical
+  scale-proof card, current calibration producers/tests, CI inventory, and Git
+  history agree that `.17.4` is complete but no architecture-scale regression
+  gate is promoted. `git log -S'ArchitectureScaleRegression' -- perl scripts t`
+  returns no owner. The only complete cross-family calibration closure is now
+  explicitly historical, so its candidate budgets cannot satisfy the current-
+  evidence prerequisite for `.17.5` promotion.
+- [x] **ADDRESSED (verified)** — `.17.5` is active with `.1` selecting the exact
+  current-evidence and representative-profile boundary before any capture. `.2`
+  owns new non-colliding current publication, `.3` exact budget qualification,
+  `.4` bounded regression/CI integration, `.5` user-facing capability truth,
+  and `.6` independent closeout. The selection must compare full-closure
+  recapture with a narrower representative promotion corpus; neither may borrow
+  historical samples or weaken atomic v1 identity. Before -> after: one
+  unpartitioned proposed parent becomes six ordered rollback owners without a
+  source, test, artifact, CI, support, budget, capability, or behavior change.
+- [x] **NO REGRESSION** — `All tests successful` at Files=4, Tests=72 for the
+  corrected focused documentation suite. All 59 mdBook chapters test; the inspected 94-file/
+  20,998,733-byte repository-local render contains the active/current-evidence
+  boundary and is removed exactly. Memory is bounded at 15 lines, task integrity reports
+  four trees/1,037 nodes, and Knowledge Map parity reports 1,159 facts/6,234
+  questions/6,406 occurrences/138 shards. Claims dispose 1,755/1,755 candidates
+  through 983 derived gates, 179 claim records, and 593 reviewed records with
+  zero gaps/open owners. The 59-file book authority is 55,160 lines/2,978,941
+  bytes at exact +19 lines/+1,131 bytes. Knowledge-card compaction preserves
+  canonical decision detail while reducing the largest card to 419 lines/
+  31,748 bytes; all 22 containment surfaces pass with no ceiling rise. Relative
+  paths and textual diff pass; `[doctrine] all doctrine checks passed` across
+  all 12 registered checks. No source, test, artifact, CI, capability, support, budget,
+  performance, capacity, or product behavior changes; full CI and push remain
+  deferred by policy.
+
+## Next Clean Frontier — `.17.5.1` selection
+
+- After this selection-only activation commits cleanly, `.17.5.1` audits
+  candidate profiles and current applicability, compares complete recapture
+  with a minimal independently versioned promotion corpus, and records the
+  exact no-behavior-change contract before any measurement or gate work.

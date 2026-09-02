@@ -56,6 +56,7 @@ answers:
   - "how is balanced portable measurement scoped?"
   - "which immutable VIAL calibration files need current revalidation or explicit versioning?"
   - "how is the immutable VIAL calibration publication dispositioned?"
+  - "what must happen before VIAL architecture scale regression budgets are promoted?"
 date: 2026-09-02
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -392,34 +393,26 @@ Exact t1682 plus fresh reload retain one validation, three raw/zero excluded and
 remains inapplicable. `.17.3.9.1` seals independent statistics/candidate-budget derivation; `.2` owns atomic publication;
 `.17.4`/`.17.5` retain cap enforcement/promotion. No runtime, capacity, support, parity, or API claim follows.
 
-Clean `b66de5ce6` exact t1684 passes in 7,353 seconds; fresh reload accepts two
-files/1,376,483 bytes. Report: 1,374,728 bytes/SHA-256
-`1a060b166d6b7d88582ee1fec9ae0f255fc3859ef16918227670e095b99e10e0`;
-manifest: 1,755 bytes/SHA-256
-`ae5c11ac9848f47bfe3f06905f7a059399e07f25c827dd85b900896c14d175ef`
-and its identity is `calibration-closure-publication/1316d11a6dfa008515fcb23aa132e30a72e7961d9e9e6eeba82ae0bf42546ac8`.
-The complete 256-file/32,007,521-byte store is exactly the disjoint union of
-those 232 selected artifacts, the 22 preserved v1 files/2,232,452 bytes, and
-the two closure files. `ArchitectureScaleCalibrationDisposition` implements a
-no-evidence-input bounded-worker barrier and requires all 23 groups/161
-dimensions. Its first exact RED proves the 232 selected artifacts are not all
-current: six of 52 bridge-fanout profiles retain pre-4834873a8 fully
-materialized source-map counts, whereas current code stops before record
-65,537; all 56 semantic profiles validate. Decision 0095 versions the whole
-232-file closure-selected lineage atomically as historical, authenticates the
-publication as superseded, retains the separate backend-emission-v1 lineage,
-runs all 108 semantic/bridge profiles through current validation, requires 102
-matches, binds the exact six-profile drift, and rejects any missing,
-overlapping, or extra store path. A separate guarded census finds execution/
-checking, portable-SystemVerilog runtime, and balanced-portable current, while
-backend emission, portable-VHDL runtime, and OSVVM runtime reject their first
-VHDL-derived reference witness. Re-derivation binds the latter chain to the
-127-byte `460df366e` and 112-byte `0b6e83979` repairs: only the generated testbench
-changes, portable source grows 118,064→118,303 bytes, 59 maps remain, and the
-artifact/evaluation plus portable-VHDL/OSVVM materialization identities change.
-Recapture is required before future current-performance use, not before current
-cap closeout. Candidate budgets remain candidate-only; cap implementation,
-support, and capacity stay prohibited or unestablished.
+Clean `b66de5ce6` exact t1684 plus fresh reload seals two files/1,376,483 bytes
+at identity `calibration-closure-publication/1316d11a6dfa008515fcb23aa132e30a72e7961d9e9e6eeba82ae0bf42546ac8`.
+The complete 256-file/32,007,521-byte store is exactly 232 selected artifacts,
+22 preserved backend-v1 files, and two closure files.
+
+`ArchitectureScaleCalibrationDisposition` requires the independent 23-group/
+161-dimension cap proof, authenticates that exact store, and revalidates all
+108 semantic/bridge profiles. Decision 0095 versions the complete selected
+lineage historical after six bridge mismatches; a separate census binds VHDL-
+derived backend/runtime drift to the 127-byte `460df366e` and 112-byte
+`0b6e83979` repairs. The decision and executable authority retain the exact
+counts, hashes, identities, drift records, union, and falsifiers without
+duplicating them here. Recapture is required for current-performance use, not
+cap closeout; candidate budgets, support, and capacity remain unpromoted.
+
+`.17.5` activation promotes nothing. `.17.5.1` compares complete recapture with
+a narrower independently versioned representative corpus; only new current
+evidence may feed qualification. Capture, frozen budgets, regression/CI,
+public truth, and closeout remain separate owners, and whole-product capacity
+remains outside the claim.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
