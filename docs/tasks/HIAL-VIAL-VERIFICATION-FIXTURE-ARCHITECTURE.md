@@ -1496,11 +1496,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.2: authenticate producer report coordinates`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Capture the complete repaired current corpus from an empty active namespace.`
   Acceptance: `From the clean report-coordinate repair revision and empty active v2 namespace, run production --capture under the RAM guard. Require all eleven current profiles, eleven validations, 33 fresh raw measurements, 44 accepted controller records, zero exclusions/diagnostics, one admitted common identity, route-specific provider identity, complete cleanup, and an atomic corpus report/manifest seal. Preserve any new honest failure prefix under the same revision-keyed doctrine; do not reuse revision-610ed7869 bytes.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Clean predecessor 32e086885 advances the capture plan to schema v2, authenticates all eleven producer-report coordinate sets independently of policy selection, passes the guarded seven-file/58-test plan-through-CLI integration, preserves the exact historical failed prefix, and leaves the active v2 namespace absent. All twelve staged doctrines pass. This activation makes .4.3 the sole owner for a fresh production --capture from that clean repair revision; no revision-610ed7869 profile byte may be reused.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.3: activate repaired current-corpus capture`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5`
   Status: `proposed`
@@ -5006,4 +5006,20 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   `Files=7, Tests=58`. The mdBook and Knowledge Map explain schema v2, all real
   axes, the runnable focused gate, and the separate `.4.3` fresh-capture owner.
   No real producer, provider, simulator, measurement, capture, publication,
+  budget, performance, support, capacity, full CI, or push runs in this slice.
+
+## Acceptance Checklist (enforced) — `.17.5.2.4.3` repaired capture activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — committed repair `32e086885` closes the
+  selection/report-coordinate admission defect that stopped the first guarded
+  capture at ordinal five. The exact failed prefix remains independently
+  verifiable in revision-keyed history, and the active v2 namespace is absent.
+- [x] **ADDRESSED (verified)** — `.17.5.2.4.3` is now the sole active leaf;
+  Memory and the active task index direct the next action to a fresh guarded
+  production `--capture` from the clean repair revision. Before -> after: the
+  proposed capture leaf becomes executable without starting capture early.
+- [x] **NO REGRESSION** — this activation changes only task-tree continuity
+  state. Task integrity, Memory, relative paths, Knowledge Map, containment,
+  claims, and all doctrines are required green before commit. No source, test,
+  artifact, producer, provider, simulator, measurement, capture, publication,
   budget, performance, support, capacity, full CI, or push runs in this slice.
