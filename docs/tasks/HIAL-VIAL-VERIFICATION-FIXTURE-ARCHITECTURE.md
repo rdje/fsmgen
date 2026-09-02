@@ -1445,9 +1445,31 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.4.1: close coordinator isolation audit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Coordinate the ordered eleven-profile corpus and atomically seal one independently reloadable complete publication.`
   Acceptance: `Add a bounded repository-relative CLI and caller-sealed coordinator with inventory, capture, and validate operations. Walk the exact dispatch order, preserve exact profile-boundary resume under one clean revision and complete common host/tool/guard/provider identity, independently reload every profile in a fresh worker, census all eleven validations and 33 raw records with zero exclusions, and withhold the family/complete seal until every profile is present and current. Atomically publish a canonical corpus report plus manifest under the selected v2 path; prove collision, interruption, malformed/oversized IPC, child exception/exit/signal, mixed identity, duplicate/missing/reordered profile, post-validation mutation, staging ambiguity, and cleanup residue fail closed. Default tests use injected bounded workers and do not run real measurement producers or tools.`
+  Verification: `Clean predecessor 663ab909d closes the complete per-profile transaction and both inherited unbounded revision-1 stores. Query-first review of decision 0096, the dedicated capture card, source, tests, scripts, and Git history finds no complete-corpus module, CLI, report-plus-manifest store, or seal: current code stops at ordinal-only profile publication and resume. The analogous 1,394-line calibration-closure publisher combines storage, worker coordination, and CLI-facing closure concerns, so this activation partitions the current-corpus implementation into a bounded producer-free complete store, ordered coordinator, and CLI/adversarial closeout rather than creating another monolith. No producer, provider, simulator, profile capture/resume, publication, artifact, budget, support, performance, capacity, CI, or product behavior changes in activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3: activate complete corpus coordination`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.1`
+  Status: `proposed`
+  Goal: `Implement the bounded canonical complete-corpus report-plus-manifest store without profile execution.`
+  Acceptance: `Derive only the selected v2 complete coordinate from the current plan; define closed report, manifest, artifact, and limit schemas; accept only all eleven ordered admitted profile results with 11 validations, 33 raw records, zero exclusions, one complete identity, and immutable profile artifacts; then atomically publish exactly a canonical report plus compact manifest on the repository volume before returning bounded metadata. Reload through stable no-follow directory/file handles with exact census, byte/hash/schema/identity/current-plan checks and reject collision, partial or ambiguous stage, extra/missing/reordered profile, stale or mixed identity, malformed/noncanonical/oversized bytes, symlink/hard-link/cross-device aliases, post-validation mutation, and cleanup residue. Default tests use synthetic admitted metadata and never invoke a profile worker, producer, provider, simulator, or measurement controller.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.2`
+  Status: `proposed`
+  Goal: `Coordinate exact ordered profile capture or resume and seal only a fully revalidated current corpus.`
+  Acceptance: `Expose caller-sealed inventory, capture, and validate operations over repository_root only. Require the active guard and one unchanged clean revision; walk all eleven plan ordinals exactly once; capture a missing profile or exact-resume an existing one only at profile boundaries; independently reload and re-admit each through a fresh profile worker; enforce one complete host/tool/guard/revision/provider-applicability identity, 11 validations, 33 accepted raw records, zero exclusions and cleanup residue; and publish through .1 only after every profile passes. Return bounded metadata-only IPC and reject caller worker/result injection in production, exception, exit, signal, malformed/noncanonical/oversized IPC, duplicate/missing/reordered profile, mixed identity, repository mutation, and post-worker artifact mutation. Default tests use a sealed bounded test worker and run no real producer or tool.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.3`
+  Status: `proposed`
+  Goal: `Close the repository-relative corpus CLI and adversarial coordinator/publication contract before real capture.`
+  Acceptance: `Add limits, inventory, capture, and validate CLI modes that derive the repository root from the script location, require guarded clean-state authority where applicable, emit only bounded canonical JSON, and document exact resume, unavailable-provider, cleanup, current-evidence, and nonclaim behavior. Exercise the public production paths with deterministic bounded workers and independently falsify interruption, collision, stage ambiguity, report/manifest mutation, stale or mixed common/provider identity, duplicate/missing/reordered profiles and records, malformed/oversized IPC, child exception/exit/signal, repository mutation, symlink/hard-link/cross-device state, and target/staging residue. Synchronize runnable mdBook, Knowledge Map, task, and claim evidence while leaving real capture exclusively to .17.5.2.4.`
   Verification: `pending`
   Commit: `pending`
 
@@ -4607,3 +4629,35 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   all doctrines are final commit gates. No artifact recapture, producer,
   simulator, v2 corpus seal, budget, support, performance, capacity, full CI,
   or push is claimed or run in this ordinary implementation slice.
+
+## Acceptance Checklist (enforced) — `.17.5.2.3` complete-corpus coordination activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — query-first review resolves to
+  `vial-architecture-scale-regression-promotion-capture` and decision `0096`.
+  `rg --files` finds only the policy, dispatch plan, per-profile store, and
+  per-profile capture/resume modules plus t1765–t1769; `git log
+  -S'ArchitectureScaleRegressionPromotionCorpus' -- perl scripts t` returns no
+  commit, and the only `regression-promotion-corpus-v1` history is selection,
+  dispatch, and profile storage. The closest complete publisher,
+  `ArchitectureScaleCalibrationClosurePublication`, is 1,394 lines and joins
+  storage, worker coordination, and CLI-facing closure. No current-corpus
+  report-plus-manifest store, complete coordinator, CLI, or seal exists.
+- [x] **ADDRESSED (verified)** — `.17.5.2.3` is active from clean predecessor
+  `663ab909d` and has three ordered rollback owners: `.1` owns producer-free
+  complete report-plus-manifest storage, `.2` owns exact eleven-profile
+  coordination and profile-boundary resume, and `.3` owns the bounded CLI and
+  adversarial closeout. The current frontier selects only `.1`; real guarded
+  profile capture remains exclusively proposed `.17.5.2.4`. Before -> after:
+  one monolithic proposed coordinator becomes a clean implementation sequence
+  without changing or running source behavior.
+- [x] **NO REGRESSION** — `scripts/check_task_tree_integrity.pl` reports all
+  active invariants green at 4 trees/1,051 nodes/3 segments/0 compact
+  terminals/1 index archive/1 migration/1 acceptance history. Memory
+  architecture passes at 16 lines; relative paths pass Files=1/Tests=2; all 59
+  mdBook chapters test; Knowledge Map parity remains 1,160 facts/6,244 unique
+  questions/6,416 answer occurrences/138 shards; and all 22 live-document
+  surfaces plus maintained-reference/ceiling authorities pass with zero
+  reference changes and no ceiling increase. No source, test, script,
+  generated artifact, producer, provider, simulator, profile capture/resume,
+  publication, budget, support, performance, capacity, CI, or product behavior
+  changes in this activation; full CI and push remain deferred by policy.
