@@ -1372,11 +1372,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.1`
-  Status: `active`
+  Status: `done`
   Goal: `Select the exact current-evidence, representative-profile, promotion, regression-gate, and public-truth contract before recapture or gate implementation.`
   Acceptance: `Inventory every candidate profile, current validator/tool/applicability identity, deterministic oracle, raw-sample requirement, candidate budget, CI cost, host-match rule, cleanup proof, support surface, and nonclaim. Compare a complete current closure recapture with a narrower independently versioned representative promotion corpus; select the smallest evidence boundary that satisfies decisions 0056/0095 without borrowing historical measurements, weakening atomic closure identity, or claiming unmeasured capacity. Freeze rollback, recalibration, informational-unmatched-host, CI-placement, and downstream documentation requirements in a decision, focused executable contract, Knowledge Map, mdBook, and task evidence without changing behavior.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Decision 0096 selects an independently versioned eleven-profile current corpus: semantic actions, bridge backend bindings, execution bindings, checking random occurrences, all three structural backend routes, all three qualified runtime routes, and the balanced structural route. The caller-sealed promotion policy authenticates closure v1, proves its 216-profile/92-candidate/356-raw-record historical scope, requires the eleven coordinates exactly once, and derives 33 historical comparator records versus 356 without treating timing as a budget. Current capture requires eleven validations plus 33 new raw records under a non-colliding v2 publication, exact current identities, zero exclusions, atomic publication, and same-volume cleanup. Exact provider absence is unavailable rather than pass; unmatched hosts retain correctness with informational performance; guarded current capture/gating runs at full pre-push or selected-important-step cadence. Default and RAM-guarded exact t1765 pass Files=1/Tests=8. No historical sample, budget, support, capacity, CI, or product behavior is promoted.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.1: select current regression corpus`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2`
   Status: `proposed`
   Goal: `Capture and independently publish the .17.5.1-selected current calibration evidence under a new non-colliding version.`
@@ -4112,9 +4112,49 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   performance, capacity, or product behavior changes; full CI and push remain
   deferred by policy.
 
-## Next Clean Frontier — `.17.5.1` selection
+## Acceptance Checklist (enforced) — `.17.5.1` current promotion corpus selection
 
-- After this selection-only activation commits cleanly, `.17.5.1` audits
-  candidate profiles and current applicability, compares complete recapture
-  with a minimal independently versioned promotion corpus, and records the
-  exact no-behavior-change contract before any measurement or gate work.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'ArchitectureScaleRegression'
+  -- perl scripts t` returns no promoted gate owner. Decisions `0056`/`0095`
+  require current evidence, while the only complete closure is historical. An
+  independent authenticated JSON census finds 216 profiles, 92 candidates, 356
+  raw records, 6,806,844,563,000 ns summed raw wall time, and 2,764,865,536
+  bytes maximum tree RSS. Shell `ghdl` is absent, but the exact repository-local
+  GHDL provider and OSVVM commit exist, proving provider resolution—not `PATH`—
+  is the required availability mechanism.
+- [x] **ADDRESSED (verified)** — decision 0096 and
+  `ArchitectureScaleRegressionPromotionPolicy` select eleven stable
+  authority/family/level/axis/backend coordinates. The policy authenticates v1,
+  recomputes complete and selected metrics, requires every route exactly once,
+  and emits a v2 capture contract for eleven validations plus 33 new raw records
+  and 44 total invocations. It forbids historical substitution, treats provider
+  absence as unavailable, limits timing enforcement to exact common identity,
+  keeps unmatched-host timing informational, and assigns expensive capture to
+  full pre-push/selected-important-step cadence. Before -> after: an open full-
+  versus-narrow choice becomes one current representative corpus without
+  weakening cap coverage or claiming complete current closure.
+- [x] **NO REGRESSION** — module syntax passes; closure/publication/disposition/
+  policy regression reports `All tests successful` at Files=4/Tests=19, and
+  RAM-guarded exact t1765 reports Files=1/Tests=8. All 59 mdBook chapters test;
+  the inspected 94-file/20.04-MiB repository-local render contains decision
+  0096, the eleven routes, 44-invocation contract, and provider rule before
+  exact removal. The corrected focused documentation suite passes Files=4/
+  Tests=72. Knowledge Map parity is 1,159 facts/6,234 questions/6,406
+  occurrences/138 shards. Claims dispose 1,759/1,759 candidates through 987
+  derived gates, 179 claim records, and 593 reviewed records with zero gaps or
+  open owners. The 59-file book authority is 55,200 lines/2,980,949 bytes at
+  exact +40 lines/+2,008 bytes. The 97-file rationale surface is 9,001 lines/
+  527,654 bytes; its 36,088-byte index crosses the 90% aggregate pressure
+  threshold, so the exact +3,104-byte member allowance and `rollover_debt`
+  state are tracked without a ceiling rise. All 22 containment surfaces,
+  memory, relative paths, four-tree/1,037-node task integrity, staged result,
+  claim registries, and textual diff pass. `[doctrine] all doctrine checks
+  passed` across all 12 registered checks. No measurement/artifact capture,
+  CI wiring, promoted budget, cap, capability, support, performance, capacity,
+  or product-behavior change; full CI and push remain deferred by policy.
+
+## Next Clean Frontier — `.17.5.2` activation
+
+- After `.17.5.1` commits cleanly, activate `.17.5.2` with a selection-only
+  implementation partition for the eleven-profile v2 capture/publication. No
+  measurement or immutable artifact capture begins in the activation slice.

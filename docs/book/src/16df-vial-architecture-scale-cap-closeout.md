@@ -619,11 +619,51 @@ measurement. This ordering matters because the complete v1 calibration closure
 is authentic historical evidence, not current performance evidence; its
 candidate budgets cannot be copied into a live regression gate.
 
-The selected contract must compare two valid evidence shapes: recapturing a
-complete current closure, or publishing a smaller independently versioned
-corpus containing only the representative profiles intended for promotion.
-Either shape must satisfy the same correctness, repetition, pinned-host/tool,
-atomic-publication, cleanup, variability, recalibration, and nonclaim rules.
+[Decision 0096](../../decisions/0096-regression-promotion-uses-a-current-eleven-profile-corpus.md)
+selects the smaller independently versioned current corpus. Exact cap tests
+already cover every resource axis; performance promotion needs representative
+stage and tool routes. The eleven stable coordinate selections are:
+
+| Authority | Family/route | Gate coordinate |
+| --- | --- | --- |
+| semantic/bridge | semantic catalog | `actions` |
+| semantic/bridge | bridge fanout | `backend_bindings` |
+| execution/checking | execution graph | `bindings` |
+| execution/checking | checking state | `random_occurrences` |
+| backend emission | portable SystemVerilog | `sv_portable_verilator` |
+| backend emission | portable VHDL | `vhdl_portable_ghdl` |
+| backend emission | OSVVM-qualified VHDL | `vhdl_osvvm_qualified` |
+| portable runtime | SystemVerilog/Verilator | `sv_portable_verilator` |
+| portable runtime | VHDL/GHDL | `vhdl_portable_ghdl` |
+| OSVVM runtime | VHDL/GHDL + OSVVM | `vhdl_osvvm_qualified` |
+| balanced portable | structural composition | `sv_portable_verilator` |
+
+The historical complete closure contains 356 raw records; the selected
+coordinates contain 33. Their summed historical raw wall values are
+6,806,844,563,000 ns and 2,135,252,066,000 ns respectively. The difference is
+a capture-scope comparator, not a regression budget. `.17.5.2` must reconstruct
+all eleven profiles at the current revision, run one validation and three fresh
+measurements per profile, allow zero exclusions, and publish 44 records
+atomically below
+`.artifacts/qualification/vial-scale/v2/regression-promotion-corpus-v1/`.
+
+Qualified tools are resolved through their exact profiles. A shell-global
+`ghdl` is not required; the repository-local GHDL provider is the authority.
+If an exact provider is absent, the route is unavailable—not passing. Timing
+enforcement later applies only to the exact common revision/host/tool/guard
+identity; unmatched environments retain applicable correctness checks and
+informational timing. Expensive capture and gate execution belongs to full
+pre-push or explicitly selected important steps, not every ordinary slice.
+
+Re-derive the selection and its closure comparison with:
+
+```sh
+scripts/run_with_ram_guard.sh -- env \
+  FSMGEN_VIAL_SCALE_PROMOTION_POLICY_EXACT=1 \
+  prove -Iperl \
+  t/1765-vial-architecture-scale-regression-promotion-policy.t
+```
+
 Current capture, budget qualification, gate/CI integration, public truth, and
 independent closeout remain separate rollback owners. Until those leaves pass,
 all historical candidate budgets stay candidate-only, and whole-product

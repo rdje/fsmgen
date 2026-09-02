@@ -73,6 +73,7 @@ evidence: >-
   docs/decisions/0089-linux-logical-core-discovery-uses-bounded-kernel-authorities.md;
   docs/decisions/0093-architecture-scale-caps-are-component-ceilings-with-explicit-route-authority.md;
   docs/decisions/0095-calibration-closure-versions-atomically-after-current-validator-drift.md;
+  docs/decisions/0096-regression-promotion-uses-a-current-eleven-profile-corpus.md;
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/VIAL/ArchitectureScaleWorkload.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission.pm; perl/FSM/VIAL/ArchitectureScaleRuntimeStream.pm;
   perl/FSM/VIAL/ArchitectureScaleBalancedPortable.pm; perl/FSM/VIAL/ArchitectureScaleBalancedPortableMeasurement.pm; perl/FSM/VIAL/ArchitectureScaleBalancedPortableMeasurementMatrix.pm;
@@ -88,6 +89,7 @@ evidence: >-
   perl/FSM/VIAL/ArchitectureScaleCalibrationClosurePublication.pm;
   perl/FSM/VIAL/ArchitectureScaleCapConsistency.pm;
   perl/FSM/VIAL/ArchitectureScaleCalibrationDisposition.pm;
+  perl/FSM/VIAL/ArchitectureScaleRegressionPromotionPolicy.pm;
   perl/FSM/VIAL/ArchitectureScalePortableRuntimeMaterialization.pm;
   perl/FSM/VIAL/Parser.pm; perl/FSM/VIAL/SemanticBuilder.pm;
   scripts/run_vial_semantic_bridge_measurement_matrix.pl;
@@ -114,6 +116,7 @@ evidence: >-
   t/1663-vial-architecture-scale-portable-runtime-materialization.t;
   t/1683-vial-architecture-scale-calibration-closure.t;
   t/1764-vial-architecture-scale-calibration-disposition.t;
+  t/1765-vial-architecture-scale-regression-promotion-policy.t;
   vial/qualification/sv_portable_verilator_runtime_gate.vial;
   vial/qualification/sv_portable_verilator_runtime_qualification.vial;
   docs/knowledge/vial-execution-scale-reachability.md;
@@ -408,11 +411,15 @@ counts, hashes, identities, drift records, union, and falsifiers without
 duplicating them here. Recapture is required for current-performance use, not
 cap closeout; candidate budgets, support, and capacity remain unpromoted.
 
-`.17.5` activation promotes nothing. `.17.5.1` compares complete recapture with
-a narrower independently versioned representative corpus; only new current
-evidence may feed qualification. Capture, frozen budgets, regression/CI,
-public truth, and closeout remain separate owners, and whole-product capacity
-remains outside the claim.
+Decision 0096 selects an independently versioned eleven-profile current corpus:
+one semantic, bridge, execution, checking, and balanced route plus all three
+backend-emission and runtime routes. Historical comparison contracts 356 raw
+records to 33, but no old timing becomes a budget. Current v2 capture requires
+eleven validations plus 33 fresh records, zero exclusions, exact provider-
+resolved applicability, and atomic same-volume publication. Missing providers
+are unavailable rather than passing; unmatched-host timing is informational.
+Capture, budgets, regression/CI, public truth, and closeout remain separate,
+and whole-product capacity stays outside the claim.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
