@@ -1474,11 +1474,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.3: implement corpus CLI closeout`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Capture and atomically publish the complete real current corpus at one clean implementation revision.`
   Acceptance: `From the clean .17.5.2.3 implementation revision, run the production capture CLI under the active repository RAM guard and repository-local providers. Capture or exact-resume all eleven selected profiles through their current canonical producers; require one validation and three fresh raw measurements per profile, all 44 controller records, zero exclusions, one common revision/host/tool/guard/provider identity, deterministic stage oracles, complete cleanup, and no revision-1 substitution. Publish the v2 complete seal only after all profiles reload successfully. If a route is unavailable or disagrees, retain honest partial publications, withhold the seal, root-cause the exact producer/provider/admission failure under this owner, and never relax validation, timing, guard, or evidence identity to force acceptance.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Clean predecessor 6702f48e0 completes the producer-free store/coordinator/CLI chain and passes its 65-test integration plus all twelve doctrines. Query-first review of the dedicated capture card and decision 0096 confirms this leaf is the sole next owner for real provider and simulator execution: eleven ordered gate profiles, one validation plus three fresh raw measurements each, 44 controller records, zero exclusions, and no revision-1 substitution. This activation changes continuity documents only; it does not execute a producer, provider, simulator, measurement, capture, validation, publication, full CI, or push.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4: activate real current-corpus capture`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5`
   Status: `proposed`
@@ -4847,3 +4847,23 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   before commit. No real producer, provider, simulator, controller,
   measurement, v2 evidence capture, budget, support, performance, capacity,
   full CI, or push is run or promoted in this ordinary slice.
+
+## Acceptance Checklist (enforced) — `.17.5.2.4` real current-corpus capture activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Knowledge Map query `what does 44
+  invocations mean in the VIAL regression promotion policy?` resolves to the
+  dedicated capture card. Decision 0096 and clean predecessor `6702f48e0`
+  establish that the eleven-profile v2 implementation is complete but no real
+  current corpus has yet been captured; `.17.5.2.4` is the existing owner for
+  provider/simulator execution and honest partial-publication diagnosis.
+- [x] **ADDRESSED (verified)** — `.17.5.2.4` is now the sole active frontier.
+  Memory and the task index point to a guarded production `--capture` from its
+  clean activation revision. Before -> after: the already-proposed capture
+  leaf becomes active without changing implementation or executing real work.
+- [x] **NO REGRESSION** — this continuity-only activation changes Memory, the
+  active task index, and owning task evidence. Task-tree integrity, Memory,
+  relative paths, Knowledge Map, live-document containment, claims, staged
+  result, and all registered doctrines are commit gates. No source, test,
+  script, book, generated artifact, producer, provider, simulator, controller,
+  measurement, capture, validation, publication, budget, support, performance,
+  capacity, full CI, push, or product behavior changes.
