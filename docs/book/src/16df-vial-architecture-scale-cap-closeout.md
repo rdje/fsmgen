@@ -28,7 +28,8 @@ execution-route-collection, execution-random-attempt, and
 execution-serialized-plan witnesses are now joined too. Semantic-parser
 admission, semantic-declaration cardinality, semantic-action cardinality and
 shape, semantic-repeat layering, and semantic-service scalars are now joined
-as well. Only semantic-type shape remains pending.
+as well. Semantic-type shape completes the selected group classification; no
+group remains pending independent verification.
 
 ## Why calibration publication is separate
 
@@ -65,9 +66,8 @@ execution-operation-cardinality, execution-fiber-cardinality,
 execution-route-collection, execution-random-attempt, and
 execution-serialized-plan, semantic-parser-admission, semantic-declaration-
 cardinality, semantic-action-cardinality, semantic-action-shape, and semantic-
-repeat-layering, and semantic-service-scalar groups are `verified` across all
-seven dimensions; semantic-type-shape remains
-`pending_independent_verification`.
+repeat-layering, semantic-service-scalar, and semantic-type-shape groups are
+`verified` across all seven dimensions.
 Runtime covers the selected materialization profiles plus t1720 through t1749
 and t1751 through t1762.
 Backend covers t1646 through t1650 and t1716 through t1719. Checking models
@@ -210,18 +210,24 @@ before transaction resolution, and accepted projection/report identities.
 T1691 does the same for cross `max_bins` before coverpoint resolution. The two
 focused tests do not claim shared staging cleanup or closed no-tool
 construction beyond what t1601 directly proves.
-T1763 reconstructs all twenty-two sets of per-dimension projections,
+Type shape uses a distinct asymmetric pair. T1601 admits/rejects exact list lengths 65,536/65,537, record-field counts 256/257, and aggregate depths 32/33.
+It also owns closed no-tool
+construction, rejection atomicity, shared cleanup, and broad accepted
+identities. T1692 independently freezes all three diagnostics, admission
+before invalid inner-type resolution, and fixed accepted projection/report
+identities; it is not shared cleanup or closed no-tool evidence.
+T1763 reconstructs all twenty-three sets of per-dimension projections,
 requires their complete unions, checks every path, and rejects omitted or
-foreign evidence. Policy citations remain candidates
-for all unreviewed groups. The validator also
+foreign evidence. The validator also
 rejects caller arguments, subclass invocants, missing or unknown fields,
 caller-promoted dimensions, returned-data mutation, and an early calibration
 disposition.
 
-The calibration state remains `historical_measurement_only` and
-`blocked_pending_current_cap_verification`. Completing all dimension joins can
-only make it eligible for an explicit revalidation; it cannot automatically
-relabel historical measurement as current cap proof.
+The calibration evidence remains `historical_measurement_only`. With all
+dimension joins complete, the current-cap proof is `complete` and the
+publication is `eligible_for_explicit_revalidation`; it has not yet been
+revalidated or dispositioned. Eligibility cannot automatically relabel the
+historical measurement as `cap_implementation`, which remains prohibited.
 
 ## Reverify the inventory
 
@@ -471,6 +477,18 @@ scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
   prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t \
   t/1690-vial-semantic-scoreboard-capacity-order.t \
   t/1691-vial-semantic-cross-max-bins-order.t \
+  t/1685-vial-architecture-scale-cap-policy.t \
+  t/1763-vial-architecture-scale-cap-consistency.t
+```
+
+Reverify all three semantic-type-shape boundaries and first excesses,
+pre-inner-resolution order, fixed identities, shared cleanup, and the complete
+all-group calibration unlock with:
+
+```sh
+scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
+  prove -Iperl t/1601-vial-architecture-scale-semantic-catalog.t \
+  t/1692-vial-semantic-type-shape-cap-order.t \
   t/1685-vial-architecture-scale-cap-policy.t \
   t/1763-vial-architecture-scale-cap-consistency.t
 ```

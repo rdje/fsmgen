@@ -887,6 +887,32 @@ my %SEMANTIC_SERVICE_RATIONALE = (
     accepted_identity =>
         'the closed catalog and both exact scalar boundaries retain deterministic semantic identities',
 );
+my @SEMANTIC_TYPE_SHAPE_EVIDENCE = (
+    [
+        't/1601-vial-architecture-scale-semantic-catalog.t',
+        @DIMENSIONS,
+    ],
+    [
+        't/1692-vial-semantic-type-shape-cap-order.t',
+        qw(boundary adjacent_excess diagnostics atomicity accepted_identity),
+    ],
+);
+my %SEMANTIC_TYPE_SHAPE_RATIONALE = (
+    boundary =>
+        'list length, record fields, and aggregate depth admit at their exact type-shape boundaries',
+    adjacent_excess =>
+        'the first list-length, record-field, and aggregate-depth excesses reject',
+    diagnostics =>
+        'all three type-shape excesses retain stable code, phase, message, and semantic path',
+    atomicity =>
+        'known type-shape excess precedes inner-type resolution and publishes no semantic identities or report',
+    no_tool =>
+        'every selected semantic catalog construction carries no backend or external-tool selector',
+    cleanup =>
+        'semantic catalog staging removes same-volume success and consumer-failure residue',
+    accepted_identity =>
+        'the closed catalog and all three exact type-shape boundaries retain deterministic semantic identities',
+);
 my %runtime_dimensions = map {
     $_ => {
         status => 'verified',
@@ -1146,6 +1172,18 @@ for my $entry (@SEMANTIC_SERVICE_EVIDENCE) {
     push @{$semantic_service_dimensions{$_}{evidence}}, $path
         for @dimensions;
 }
+my %semantic_type_shape_dimensions = map {
+    $_ => {
+        status => 'verified',
+        evidence => [],
+        rationale => $SEMANTIC_TYPE_SHAPE_RATIONALE{$_},
+    }
+} @DIMENSIONS;
+for my $entry (@SEMANTIC_TYPE_SHAPE_EVIDENCE) {
+    my ($path, @dimensions) = @{$entry};
+    push @{$semantic_type_shape_dimensions{$_}{evidence}}, $path
+        for @dimensions;
+}
 my $VERIFIED_DIMENSIONS = {
     backend_artifact_graph => \%backend_dimensions,
     bridge_normalized_collections => \%bridge_normalized_dimensions,
@@ -1169,6 +1207,7 @@ my $VERIFIED_DIMENSIONS = {
     semantic_declaration_cardinality => \%semantic_declaration_dimensions,
     semantic_parser_admission => \%semantic_parser_dimensions,
     semantic_service_scalar => \%semantic_service_dimensions,
+    semantic_type_shape => \%semantic_type_shape_dimensions,
 };
 
 sub build {

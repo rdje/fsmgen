@@ -676,6 +676,28 @@ my %semantic_service_rationale = (
     cleanup => 'semantic catalog staging removes same-volume success and consumer-failure residue',
     accepted_identity => 'the closed catalog and both exact scalar boundaries retain deterministic semantic identities',
 );
+my @semantic_type_shape_evidence = qw(
+    t/1601-vial-architecture-scale-semantic-catalog.t
+    t/1692-vial-semantic-type-shape-cap-order.t
+);
+my %semantic_type_shape_evidence = (
+    boundary => [@semantic_type_shape_evidence],
+    adjacent_excess => [@semantic_type_shape_evidence],
+    diagnostics => [@semantic_type_shape_evidence],
+    atomicity => [@semantic_type_shape_evidence],
+    no_tool => [$semantic_type_shape_evidence[0]],
+    cleanup => [$semantic_type_shape_evidence[0]],
+    accepted_identity => [@semantic_type_shape_evidence],
+);
+my %semantic_type_shape_rationale = (
+    boundary => 'list length, record fields, and aggregate depth admit at their exact type-shape boundaries',
+    adjacent_excess => 'the first list-length, record-field, and aggregate-depth excesses reject',
+    diagnostics => 'all three type-shape excesses retain stable code, phase, message, and semantic path',
+    atomicity => 'known type-shape excess precedes inner-type resolution and publishes no semantic identities or report',
+    no_tool => 'every selected semantic catalog construction carries no backend or external-tool selector',
+    cleanup => 'semantic catalog staging removes same-volume success and consumer-failure residue',
+    accepted_identity => 'the closed catalog and all three exact type-shape boundaries retain deterministic semantic identities',
+);
 my %verified_evidence = (
     backend_artifact_graph => \%backend_evidence,
     bridge_normalized_collections => \%bridge_normalized_evidence,
@@ -699,6 +721,7 @@ my %verified_evidence = (
     semantic_declaration_cardinality => \%semantic_declaration_evidence,
     semantic_parser_admission => \%semantic_parser_evidence,
     semantic_service_scalar => \%semantic_service_evidence,
+    semantic_type_shape => \%semantic_type_shape_evidence,
 );
 my %verified_rationale = (
     backend_artifact_graph => \%backend_rationale,
@@ -723,6 +746,7 @@ my %verified_rationale = (
     semantic_declaration_cardinality => \%semantic_declaration_rationale,
     semantic_parser_admission => \%semantic_parser_rationale,
     semantic_service_scalar => \%semantic_service_rationale,
+    semantic_type_shape => \%semantic_type_shape_rationale,
 );
 
 sub dies {
@@ -1072,14 +1096,29 @@ subtest 'sealed report enumerates every selected group and closeout dimension' =
         'every sealed semantic-service evidence path exists',
     );
 
+    my %semantic_type_shape_join = map { $_ => 1 }
+        map { @{$semantic_type_shape_evidence{$_}} } @dimensions;
+    is_deeply(
+        [sort keys %semantic_type_shape_join],
+        [sort @semantic_type_shape_evidence],
+        'semantic-type-shape join covers its catalog and three-axis order witnesses',
+    );
+    is_deeply(
+        [grep { !-f $_ } sort keys %semantic_type_shape_join], [],
+        'every sealed semantic-type-shape evidence path exists',
+    );
+
     is($report->{calibration}{evidence_role},
         'historical_measurement_only',
         'calibration stays measurement evidence');
-    is($report->{calibration}{cap_proof_status}, 'incomplete',
-        'pending dimensions keep cap proof incomplete');
+    is($report->{calibration}{cap_proof_status}, 'complete',
+        'all independently verified groups complete current cap proof');
     is($report->{calibration}{disposition},
-        'blocked_pending_current_cap_verification',
-        'historical publication cannot be dispositioned prematurely');
+        'eligible_for_explicit_revalidation',
+        'complete current cap proof only unlocks explicit revalidation');
+    is($report->{calibration}{unlock_condition},
+        'all_group_dimensions_verified',
+        'calibration eligibility retains its exact all-group unlock');
     is($report->{calibration}{prohibited_relabel}, 'cap_implementation',
         'the historical publication nonclaim remains explicit');
 };
@@ -1119,8 +1158,8 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
         @{$second->{groups}{$first_group}{candidate_evidence}}),
         'returned evidence mutation cannot enter authority');
     is($second->{calibration}{disposition},
-        'blocked_pending_current_cap_verification',
-        'returned calibration mutation cannot bypass the barrier');
+        'eligible_for_explicit_revalidation',
+        'returned calibration mutation cannot forge a final disposition');
 
     my $assert = $class->can('_assert_report');
     ok(defined($assert), 'private sealed-report assertion is available');
@@ -1453,6 +1492,21 @@ subtest 'callers cannot inject authority or mutate the sealed report' => sub {
     like(dies(sub { $assert->($foreign_semantic_service) }),
         qr/semantic_service_scalar\/accepted_identity' contradicts the sealed evidence authority/,
         'callers cannot add foreign semantic-service evidence');
+
+    my $omitted_semantic_type_shape = $class->build;
+    $omitted_semantic_type_shape->{groups}{semantic_type_shape}
+        {dimensions}{boundary}{evidence} = [];
+    like(dies(sub { $assert->($omitted_semantic_type_shape) }),
+        qr/semantic_type_shape\/boundary' verified evidence must be one non-empty array/,
+        'callers cannot empty sealed semantic-type-shape boundary evidence');
+
+    my $foreign_semantic_type_shape = $class->build;
+    push @{$foreign_semantic_type_shape->{groups}{semantic_type_shape}
+        {dimensions}{accepted_identity}{evidence}},
+        't/foreign-semantic-type-shape-evidence.t';
+    like(dies(sub { $assert->($foreign_semantic_type_shape) }),
+        qr/semantic_type_shape\/accepted_identity' contradicts the sealed evidence authority/,
+        'callers cannot add foreign semantic-type-shape evidence');
 
     my $missing = $class->build;
     delete $missing->{groups}{$first_group}{dimensions}{cleanup};

@@ -947,7 +947,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
   Semantic Parser Admission Claim Disposition Finding: `The user-facing parser explanation produced three actionable candidates: accepted direct-import admission, its first excess/pre-recursion order, and the two exact source-byte boundaries/pre-lex order. Each is now a derived-gate disposition with non-aliased catalog/generator/parser re-derivation, the closed catalog and focused import/byte oracles as falsifiers, and the exact policy plus sealed consistency authority as durability watchers. Re-derive: regenerate the producer-derived inventory and join every candidate through the required-complete verification_architecture group. Falsify: removing a disposition, producer, oracle, watcher, or current candidate identity fails closed. Durability: the disposition registry, generated inventory, this task, and work-unit history retain the result at 1,730/1,730 disposed candidates, 958 derived gates, and zero gaps/open owners.`
 
-  Frontier: `Twenty-two groups are sealed through semantic_service_scalar. Continue with semantic_type_shape; calibration remains blocked until every group is independently verified.`
+  Frontier: `All twenty-three groups are independently verified. Explicitly revalidate and disposition the immutable historical calibration publication without relabelling it as cap implementation.`
 
   Semantic Declaration Cardinality Audit Finding: `The semantic_declaration_cardinality candidate inventory is complete as written and deliberately asymmetric. T1601 is the only closed exact-matrix owner for the distinct 1,024/1,025 fixture axis, and also retains every declaration/fixture construction, no-tool shape, accepted semantic identity, diagnostic oracle, and same-volume success/failure cleanup. T1689 independently admits 4,096 declarations, rejects 4,097 in the types section with the stable public diagnostic, and proves that known excess precedes malformed later-section parsing without a semantic report. T1601's rejection evaluation already emits no semantic projection/report identity or format identities, but the regression only checks its status and diagnostic family; explicit atomicity assertions are therefore still missing for the fixture route. History shows t1601 was introduced by 145d3084a, t1689 by e9679effb, and the earlier 951720257 policy selected their exact complementary pair; adding a third path would invent evidence rather than close a dimension. The complete opt-in exact policy/candidate/consistency baseline is green at Files=4/Tests=102 in 93 wallclock seconds under the repository RAM guard. Before authority promotion, the intentional RED kept the exact policy assertion green and made t1763 fail on all twenty-one pending status/evidence/rationale assertions plus both inactive omission/foreign-evidence controls at Files=2/Tests=84; the remaining union and path checks passed. This active .17.4.8 slice owns retaining the exact two-witness policy inventory, making rejection atomicity explicit in the closed matrix, and binding only independently classified dimensions. Re-derive: run t1601/t1689 plus t1685/t1763 with FSMGEN_VIAL_SCALE_EXACT=1 under the RAM guard and inspect their exact history. Falsify: removing t1601 loses the fixture axis, closed matrix, no-tool, cleanup, and broad identities; removing t1689 loses the independent declaration boundary/excess and later-section order proof. Durability: this task entry owns the audit and exact RED before source changes; the completed slice must synchronize consistency authority, tests, book, Knowledge Map, and work-unit history.`
 
@@ -1218,6 +1218,112 @@ decomposes the architecture needed to move beyond that bounded foundation.
   generated inventory, this task, and work-unit history retain the result at
   1,736/1,736 disposed candidates, 964 derived gates, and zero gaps/open
   owners.`
+
+  Semantic Type Shape Audit Finding: `The semantic_type_shape policy candidate
+  inventory is complete as the deliberately asymmetric t1601/t1692 pair.
+  T1601 owns exact 65,536/65,537 list-length, 256/257 record-field, and 32/33
+  aggregate-depth pairs; the closed no-backend/no-tool construction matrix;
+  absence of partial semantic and format identities on every rejection;
+  deterministic accepted construction identities; and shared same-volume
+  success/failure cleanup. T1692 independently freezes each axis's code, phase,
+  message, semantic path, admission before invalid inner-type resolution,
+  no-report atomicity, and fixed accepted projection/report identities.
+  History identifies 145d3084a as the catalog introduction, 52ddb9cf3 as the
+  focused three-axis preflight witness, and 951720257 as the exact two-path
+  policy selection. The exact guarded pre-change authority is green at Files=4,
+  Tests=95 in 94 wallclock seconds. Re-derive: run t1601, t1692, t1685, and
+  t1763 with FSMGEN_VIAL_SCALE_EXACT=1 under the repository RAM guard and
+  inspect their exact history. Falsify: removing t1601 loses the complete
+  three-axis matrix, closed no-tool proof, shared cleanup, and broad atomic
+  identities; removing t1692 loses independent per-axis diagnostics,
+  pre-inner-resolution order, and fixed-boundary identities. Durability: this
+  task entry owns the audit before policy-test or consistency-source changes;
+  the completed slice must synchronize consistency authority, regressions,
+  book, Knowledge Map, claims, containment, and work-unit history.`
+
+  Semantic Type Shape Intentional RED: `The exact two-path policy inventory
+  assertion, reconstructed union, and evidence-path checks pass. Before
+  consistency-source promotion, t1763 fails only the expected twenty-one
+  pending status/evidence/rationale assertions plus the inactive boundary-
+  omission and foreign-accepted-identity mutation controls at Files=2,
+  Tests=89. This isolates the unpromoted seven-dimension type-shape join
+  without changing a witness, policy path, cap, or product behavior.`
+
+  Calibration Eligibility Transition Finding: `Promoting the twenty-third and
+  final policy group makes the consistency report derive
+  cap_proof_status=complete and disposition=eligible_for_explicit_revalidation
+  from its original all_group_dimensions_verified unlock condition. The first
+  post-promotion focused run correctly exposed three stale test expectations
+  that still asserted the earlier incomplete/blocked state; every group and
+  evidence assertion was already green. Exact `git log -S` history identifies
+  caf26e17b as the commit that deliberately introduced this conditional
+  transition. Eligibility is not revalidation and cannot relabel the immutable
+  publication: evidence_role remains historical_measurement_only and
+  prohibited_relabel remains cap_implementation. This slice owns updating only
+  the derived calibration-state expectations and documenting the newly
+  unlocked, still-explicit revalidation frontier before any publication
+  disposition is attempted.`
+
+  Semantic Type Shape Join: `The exact asymmetric t1601/t1692 policy inventory
+  is asserted and the caller-sealed consistency authority now promotes
+  semantic_type_shape across all seven dimensions. T1601 owns the exact
+  65,536/65,537 list-length, 256/257 record-field, and 32/33 aggregate-depth
+  pairs plus closed no-tool construction, atomic rejection, shared cleanup,
+  and broad accepted identities. T1692 independently owns all three stable
+  diagnostics, pre-inner-resolution order, no-report rejection, and fixed
+  accepted projection/report identities; it is not promoted as shared cleanup
+  or closed no-tool evidence. T1763 reconstructs the exact two-path union,
+  checks both paths, and rejects omitted or foreign evidence. The focused
+  policy/consistency gate passes Files=2, Tests=89. The complete exact guarded
+  authority passes Files=4, Tests=96 in 92 wallclock seconds. Every one of the
+  twenty-three groups is now independently verified, so the original
+  all_group_dimensions_verified condition makes current-cap proof complete and
+  the immutable calibration publication eligible for explicit revalidation.
+  It remains historical_measurement_only, has not been revalidated or
+  dispositioned, and cannot be relabelled as cap_implementation. Re-derive:
+  run the four-file guarded command documented in the book. Falsify: the
+  recorded RED proves all twenty-one dimension records and both omission/
+  foreign-evidence mutation controls fail before promotion. Durability: the
+  policy, caller-sealed consistency authority, regressions, this task, book,
+  Knowledge Map, claim disposition, containment authority, and work-unit
+  history retain the result without changing any cap, boundary, accepted
+  identity, route outcome, product behavior, publication, support, budget, or
+  capacity claim.`
+
+  Semantic Type Shape Claim Disposition Finding: `The user-facing three-axis
+  boundary/excess sentence produces one actionable candidate. It is a
+  derived-gate disposition with non-aliased semantic-catalog, workload,
+  parser, and SemanticBuilder re-derivation; t1601/t1692 falsifiers; and the
+  exact policy plus caller-sealed consistency authority as durability
+  watchers. Re-derive: regenerate the producer-derived inventory and join
+  every candidate through the required-complete verification_architecture
+  group. Falsify: removing the disposition, a producer, catalog/focused
+  oracle, watcher, or current candidate identity fails closed. Durability:
+  the disposition registry, generated inventory, this task, and work-unit
+  history retain the result at 1,737/1,737 disposed candidates, 965 derived
+  gates, and zero gaps/open owners.`
+
+  Semantic Type Shape Book Containment Finding: `The synchronized 59-file
+  mdBook is 55,082 lines/2,974,226 bytes, an exact +18 lines/+1,006 bytes from
+  the preceding semantic-service-scalar authority. The maintained-reference
+  aggregate authority now owns that measured delta, names the complete
+  twenty-three-group state and calibration-revalidation eligibility, and
+  raises no ceiling. Re-derive: aggregate every docs/book/src Markdown file
+  with independent file/line/byte censuses. Falsify: the mdBook, membership,
+  relative-path, live-document-size, and doctrine gates reject missing pages,
+  drift, unsafe paths, or allowance growth. Durability: the containment
+  manifest, book, task, and work-unit history retain the result.`
+
+  Semantic Type Shape Knowledge Containment Finding: `The synchronized
+  Knowledge Card aggregate is 46,913 lines/3,464,365 bytes, an exact +7 lines/
+  +574 bytes from the preceding 46,906-line/3,463,791-byte authority. The card
+  adds the completed type-shape join and explicit calibration-eligibility
+  distinction without adding a fact, question, shard, or containment
+  allowance. Re-derive: aggregate docs/knowledge Markdown and regenerate the
+  Knowledge Map. Falsify: Knowledge Map parity and live-document checks reject
+  stale generation, lost answers, missing paths, or transition drift.
+  Durability: the card, generated index/shards, task, containment manifest, and
+  work-unit history retain the result.`
 
   Containment Resolution: `The cap-policy card's long one-path-per-line reverify list is now a shorter equivalent set of numeric brace ranges plus exact outliers; every expansion resolves to an existing tracked test. With checking-randomness evidence added, the card aggregate falls from 46,939 lines/3,464,850 bytes to 46,903 lines/3,462,766 bytes, restoring 39 lines/2,119 bytes below the inherited transition allowance without changing it. Re-derive: expand every compacted pattern and aggregate docs/knowledge Markdown with wc. Falsify: missing paths fail the explicit expansion census, and Knowledge Map/live-document checks reject freshness, answer, transition, or ceiling drift. Durability: this task, the compacted card, generated shard, containment manifest, and work-unit commit retain the resolution.`
 
@@ -3731,6 +3837,42 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   lines/2,973,220 bytes at measured +23 lines/+1,158 bytes with zero ceiling
   increase. Relative paths pass Files=1, Tests=6; memory, task, containment,
   reference-authority, claim, and Knowledge Map checks pass. Staged acceptance
+  and all doctrines are the final commit gate. No cap, boundary, level,
+  accepted identity, route outcome, product behavior, publication, support,
+  budget, or capacity claim changes. Full CI and push remain deferred by
+  policy.
+
+## Acceptance Checklist (enforced) — `.17.4.8` semantic-type-shape evidence join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `semantic_type_shape` remains the sole
+  pending group although its exact asymmetric t1601/t1692 inventory is
+  complete. T1601 owns all three boundary/excess pairs, closed no-tool shape,
+  atomic rejection identities, and shared cleanup; t1692 independently owns
+  the stable per-axis diagnostics, pre-inner-resolution order, no-report
+  rejection, and fixed accepted identities. Exact
+  `git log -S'semantic_type_shape' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleCapPolicy.pm` returns the selected group
+  history. The guarded pre-change authority passes Files=4, Tests=95 in 94
+  wallclock seconds.
+- [x] **ADDRESSED (verified)** — retain and assert the exact policy witness set;
+  classify only directly proved boundary, adjacent-excess, diagnostics,
+  atomicity, no-tool, cleanup, and accepted-identity roles; and make t1763
+  reconstruct exact projections, union, path existence, omission, and
+  foreign-evidence controls. The intentional RED is recorded before promotion;
+  the original all-group unlock now yields only explicit-revalidation
+  eligibility while preserving the historical evidence role and prohibited
+  cap-implementation relabel.
+- [x] **NO REGRESSION** — the final exact guarded four-file authority passes
+  Files=4, Tests=96 in 92 wallclock seconds; syntax plus the focused policy/
+  consistency gate pass Files=2, Tests=89. All 59 mdBook chapters test, and the
+  inspected 94-file/20,648-KiB render contains the exact evidence,
+  calibration, and runnable-command text before exact removal. Knowledge Map
+  parity holds at 1,159 facts/6,231 questions/6,403 occurrences/138 shards.
+  Claims dispose 1,737/1,737 candidates through 965 derived gates with zero
+  gaps/open owners. The exact book authority is 55,082 lines/2,974,226 bytes
+  at +18 lines/+1,006 bytes and zero ceiling increase; knowledge cards are
+  46,913 lines/3,464,365 bytes. Relative paths pass Files=1/Tests=2; memory,
+  task, live-document, claim, and Knowledge Map gates pass. Staged acceptance
   and all doctrines are the final commit gate. No cap, boundary, level,
   accepted identity, route outcome, product behavior, publication, support,
   budget, or capacity claim changes. Full CI and push remain deferred by

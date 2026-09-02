@@ -158,6 +158,14 @@ is(
     'retain_shape_preflight_before_recursive_resolution',
     'type-shape policy retains preflight before recursive resolution',
 );
+is_deeply(
+    $policy->{groups}{semantic_type_shape}{evidence},
+    [qw(
+        t/1601-vial-architecture-scale-semantic-catalog.t
+        t/1692-vial-semantic-type-shape-cap-order.t
+    )],
+    'type-shape policy cites the exact catalog and three-axis order witnesses',
+);
 is(
     $policy->{groups}{bridge_normalized_collections}{current_enforcement},
     'raw_collections_before_normalization_distinct_types_and_source_map_entries_before_materialization_remaining_checks_terminal',

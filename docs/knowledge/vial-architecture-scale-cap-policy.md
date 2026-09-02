@@ -96,13 +96,13 @@ native UVM stays emission-only. Eligibility rejects excess before tools; the
 shared lifecycle bounds trace and final artifacts.
 
 `FSM::VIAL::ArchitectureScaleCapConsistency` rebuilds policy without caller
-evidence. Twenty-two groups verify all dimensions: runtime, backend, models,
+evidence. Twenty-three groups verify all dimensions: runtime, backend, models,
 faults, randomness, scoreboards, coverage, bridge-profile cardinality,
 serialized bridge manifests, normalized bridge collections, execution
 profiles, operation cardinality, fiber cardinality, route collections,
 execution random attempts, serialized plans, parser admission, declaration
 cardinality, action cardinality, action shape, repeat layering, and service
-scalars. Layered joins stay exact:
+scalars, and semantic type shape. Layered joins stay exact:
 scoreboards use
 t1631/t1690/t1712, coverage t1632/t1691/t1713, and bridge profile t1602;
 compact preflight is not boundary evidence. T1763 rebuilds exact unions and
@@ -167,7 +167,14 @@ identities. T1690 independently freezes the scoreboard diagnostic, accepted
 identity, and pre-transaction-resolution order; t1691 does the same for cross
 max_bins before coverpoint resolution. Neither focused witness is promoted as
 shared cleanup or closed no-tool evidence.
-Semantic type shape and calibration remain pending/blocked.
+Semantic type shape assigns t1601 the exact 65,536/65,537 list-length,
+256/257 record-field, and 32/33 aggregate-depth pairs plus closed no-tool
+construction, atomic rejection, shared cleanup, and broad identities. T1692
+independently freezes all three diagnostics, pre-inner-resolution order, and
+accepted identities; it is not shared cleanup or closed no-tool evidence. All
+groups are verified and current-cap proof is complete. Immutable calibration
+remains historical measurement and is only eligible for explicit revalidation;
+it is not revalidated, dispositioned, or relabelled as cap implementation.
 
 The common controller admits bounded worker files before counts/digests; cap+1
 and unsafe path/mode cases reject. No cap or support claim changes.
