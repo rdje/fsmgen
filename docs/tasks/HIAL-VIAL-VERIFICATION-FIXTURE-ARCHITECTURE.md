@@ -1378,10 +1378,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `Decision 0096 selects an independently versioned eleven-profile current corpus: semantic actions, bridge backend bindings, execution bindings, checking random occurrences, all three structural backend routes, all three qualified runtime routes, and the balanced structural route. The caller-sealed promotion policy authenticates closure v1, proves its 216-profile/92-candidate/356-raw-record historical scope, requires the eleven coordinates exactly once, and derives 33 historical comparator records versus 356 without treating timing as a budget. Current capture requires eleven validations plus 33 new raw records under a non-colliding v2 publication, exact current identities, zero exclusions, atomic publication, and same-volume cleanup. Exact provider absence is unavailable rather than pass; unmatched hosts retain correctness with informational performance; guarded current capture/gating runs at full pre-push or selected-important-step cadence. Default and RAM-guarded exact t1765 pass Files=1/Tests=8. No historical sample, budget, support, capacity, CI, or product behavior is promoted.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.1: select current regression corpus`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2`
-  Status: `active`
+  Status: `done`
   Goal: `Capture and independently publish the .17.5.1-selected current calibration evidence under a new non-colliding version.`
   Acceptance: `Construct only selected canonical profiles through current producers; retain validation plus required raw samples, exact host/tool/guard/applicability identities, deterministic stage oracles, exclusions, cleanup, and nonclaims; atomically publish before bounded IPC; independently reload; and reject stale, partial, mixed, reordered, collided, oversized, symlinked, signalled, or residue-bearing state. Historical v1 bytes remain immutable and cannot satisfy a current-evidence field.`
-  Verification: `Clean predecessor e59d9ce02 selects and executable-seals the eleven-profile current corpus. Query-first code/history audit finds no v2 capture coordinator or publisher: the only regression-promotion-corpus implementation references are the policy and t1765. Seven current measurement adapters already own the selected canonical producers, while their existing matrix publishers hard-code broad revision-1 family inventories and publication paths that cannot be reused as current v2 evidence. The 44 required controller invocations are grouped as four records inside each of eleven guard-visible profile-worker lifecycles, not 44 publication workers. Activation partitions dispatch, isolated profile publication, complete coordination, clean guarded capture, and independent reload/closeout without running a producer, simulator, or measurement and without creating a v2 artifact.`
+  Verification: `All five ordered children are complete. The caller-sealed plan, bounded profile/complete stores, isolated capture/resume/coordinator, repository-derived CLI, immutable failed-prefix archive, producer-report coordinate repair, and guarded current capture publish one independently recoverable v2 corpus without borrowing revision-1 bytes. The current seal remains capture revision 155aa22ea with 13 files/6,220,126 bytes, eleven validations, 33 fresh raw measurements, 44 accepted controller invocations, and zero exclusions. Independent census, copied-artifact falsification, canonicalization diagnosis/repairs, revision-separated validation, whole-profile process isolation, guarded production validate/inventory, historical separation, and exact cleanup all agree from clean execution revision 1da11b2e3. Claim, book, Knowledge Map, containment, task, and Git evidence are synchronized. No performance or memory budget, support tier, or capacity claim is promoted; `.17.5.3` owns qualification.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2: activate current corpus publication`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5`
 
@@ -1503,10 +1503,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.3: seal repaired current corpus`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5`
-  Status: `active`
+  Status: `done`
   Goal: `Independently reload, census, falsify, document, and close the current v2 publication for budget qualification.`
   Acceptance: `Validate the sealed publication in a distinct fresh process without capture authority; independently reproduce its exact file/byte/hash/device census, ordered profile/record counts, common identities, applicability/provider outcomes, correctness/oracle closure, exclusions, cleanup, and aggregate statistics. Falsify report, manifest, profile, ordering, identity, provider, count, digest, file-shape, extra-path, and historical-substitution controls; synchronize task/book/Knowledge Map/claim evidence and leave performance budgets entirely unpromoted for .17.5.3. Also root-cause the CPU-bound balanced-profile and corpus canonicalization observed during .4.3: use macOS `sample -file` only with a repository-derived `.artifacts/` destination, distinguish expected evidence-size cost from avoidable hash/array copying, and task-tree own any proven defect before budget work. Close .17.5.2 only when clean Git plus immutable same-volume evidence can recover the complete result without conversation state.`
-  Verification: `Clean predecessor 9a2bf5246 seals the eleven-profile current corpus, retains exact guarded capture/validate/inventory evidence, and repairs historical-prefix replay so current and historical publications remain separately authenticated. This activation makes .17.5.2.5 the sole owner for a producer-independent file/byte/hash/device/identity census, actual-publication mutation falsification, and current-publication closeout before any budget work. A project-local two-second stack sample taken during the long balanced/corpus phase showed active Perl hash/array traversal and value copying rather than blocked I/O; the exact sample is retained at .artifacts/diagnostics/vial-scale/perl_2026-09-02_154454_06oT.sample.txt at 29,432 bytes with SHA-256 d58a6a69...0924a, and the exact sampler-created /tmp original is absent. Future sampling must use `sample ... -file .artifacts/...` directly. This remains a tracked performance-risk observation, not yet a defect classification or budget.`
+  Verification: `All four ordered children are complete. The standalone verifier independently reconstructs the exact current namespace and nonclaims; same-volume copied mutations falsify every safe content, semantic, file-shape, namespace, staging, and historical-substitution class; guarded v3 diagnostics located and repaired repeated plan derivation plus balanced-composition reconstruction without changing outputs; revision-separated validation and whole-profile process isolation then made the immutable seal revalidatable from a later clean revision without aggregate parent retention. Final guarded production validate/inventory, independent before/after census, historical separation, adjacent watchers, and cleanup agree exactly. The retained diagnostic samples remain point observations only. No budget, support, performance, memory, capacity, or stable ratio is promoted.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5: activate current corpus closeout`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4`
 
@@ -1547,10 +1547,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3.2: reuse accepted balanced composition`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4`
-  Status: `active`
+  Status: `done`
   Goal: `Synchronize the independent result and close current-publication evidence for later budget qualification.`
   Acceptance: `After child .1 separates immutable capture revision from current clean execution revision without weakening public single-profile resume, child .2 must re-run the independent verifier and production producer-free validate/inventory from clean state; join their exact identities and counts, retain every falsification and canonicalization conclusion, close the bounded capture claim's missing leg only if earned, synchronize task/book/Knowledge Map/containment/claims, and mark .17.5.2 done without promoting performance budgets, support, or capacity.`
-  Verification: `At clean 3a1502ac7, the independent verifier re-authenticated all 13 files/6,220,126 bytes, inventory 94c11e5c...bb57, and 11/33/44/0 counts. Guarded production inventory reported eleven present, zero missing, and the exact corpus/publication/plan/policy/file-set identities while separately reporting current HEAD. Guarded production validate then failed closed at ordinal one with exit 70 and "profile capture Git revision changed": public resume requires each report's immutable capture revision 155aa22ea to equal executing HEAD 3a1502ac7. Git history traces the intentional public same-revision check to 41808b11d and its exact resume closeout to 9bc711443. Applying that rule unchanged inside complete-corpus validate makes any seal non-revalidatable after the next commit, including a documentation-only closeout. The failed command wrote zero result bytes, its exact diagnostic target was removed, no publication byte changed, and no process or staging residue remains. Children .1 and .2 own repair then final closeout; recapture, weakened public resume, and budget promotion are forbidden.`
+  Verification: `Child .1 preserves public same-revision resume while separating seal-derived capture revision from current clean execution revision through an exact-caller path and coordination schema v2. Child .2 proves the first repaired production validate still retained parent-side validation state across profiles, places each whole ProfileCapture operation in a fresh outer worker without removing nested dual validation, and closes the real immutable corpus from clean execution revision 1da11b2e3. Guarded production validate/inventory, independent census before/after, historical separation, copied mutations, revision/resume and coordinator watchers, canonical bounded outputs, exact identities/counts, empty staging, and cleanup all pass. No recapture, public-resume weakening, guard increase, budget, support, performance, memory, or capacity promotion occurs.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4: own revision-separated closeout`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2`
 
@@ -1562,10 +1562,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.1: separate capture and execution revisions`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2`
-  Status: `active`
+  Status: `done`
   Goal: `Close and synchronize the independently authenticated current publication.`
   Acceptance: `After child .1 diagnoses and repairs the guarded aggregate-memory failure without weakening validation, child .2 must re-run the standalone verifier, guarded producer-free production validate, guarded inventory, historical separation verifier, and adjacent exact-publication watchers. Require exact immutable identities/counts, current execution-revision reporting, zero producer/provider/simulator/controller execution, unchanged real-publication census, empty staging, bounded output, and complete cleanup. Join all falsification and canonicalization evidence; synchronize task/book/Knowledge Map/claims/containment/resume pointers; close .17.5.2 only if every leg agrees, without budget, support, performance, memory, or capacity promotion.`
-  Verification: `At clean a802ec97f, the standalone independent verifier re-authenticated capture revision 155aa22ea, all 13 files/6,220,126 bytes, inventory 94c11e5c...bb57, and exact 11/33/44/0 counts. Guarded production validate began at 61.5% host occupancy, emitted no partial result, then the repository guard terminated its two-process tree with exit 137 after host occupancy reached 88.6%; no per-process 4,096-MiB event fired. Immediate post-termination guard sampling reported 52.2%, the independent verifier reproduced every pre-run byte/hash/identity, Git stayed clean, and no staging/process residue remained. The code path runs ProfileCapture's expensive child plus independent parent report validation once per profile while retaining that parent as the long-lived CorpusCoordinator process. Children .1 and .2 own bounded diagnosis/repair then a fresh clean closeout; the interrupted run is not admission, a performance budget, a memory improvement, support, or capacity evidence.`
+  Verification: `The initial clean a802ec97f run failed at the host guard while preserving every corpus byte; child .1 traced that aggregate lifetime to ProfileCapture's parent-side validation running repeatedly in the long-lived CorpusCoordinator and committed a bounded fresh outer worker per whole profile operation. Child .2 then completed clean guarded production validate from 1da11b2e3 below both unchanged guard boundaries, reproduced the immutable capture revision and all current identities/counts, and independently proved before/after corpus invariance. Guarded inventory, historical separation, copied-mutation and adjacent watchers, canonical bounded output, zero execution, empty staging, exact temporary-output removal, process cleanup, and clean Git all pass. This is a process-lifetime repair and correctness closeout, not a budget, support, performance, memory, or capacity promotion.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2: own guarded validation memory repair`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2.2`
 
@@ -1577,14 +1577,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2.1: isolate profile validation parents`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Complete final current-publication closeout after the bounded validation repair.`
   Acceptance: `From clean .1, rerun the independent verifier, guarded production validate and inventory, historical separation verifier, adjacent exact-publication watchers, before/after corpus census, and cleanup checks. Join immutable capture and current execution revisions, exact identities/counts/providers, zero producer/provider/simulator/controller execution, bounded output, and all prior falsification/canonicalization evidence; synchronize task/book/Knowledge Map/claims/containment/resume pointers and close .17.5.2 only if every leg agrees. Promote no budget, support, performance, memory, or capacity claim.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `From clean repair commit 1da11b2e3, the standalone verifier passed before and after every production/watcher step with capture revision 155aa22ea, 13 files/6,220,126 bytes, inventory 94c11e5c...bb57, corpus ab2df899...e505, publication 865c5cce...432e, plan fbf69740...9737, policy 19cf4105...ece, file-set dc5b315b...c66f, exact 11/33/44/0 counts, and the seven-foundation/one-materialized/three-external provider partition. Guarded producer-free `--validate` began at 57.1% host occupancy, completed below both unchanged boundaries, and emitted one 16,169-byte canonical newline JSON result (SHA-256 0447cb0a...cd23) reporting capture 155aa22ea, execution 1da11b2e3, zero captured, eleven resumed/validated, and the exact identities/counts. Repeated live snapshots showed fresh outer/inner PID pairs and non-monotonic coordinator RSS; no partial stdout appeared. Guarded `--inventory` emitted 10,567 canonical bytes (SHA-256 73b93594...dd74), reporting eleven present/zero missing and the same seal. The historical verifier separately retained its five-file/604,539-byte archive; guarded t1776+t1777 passed Files=2/Tests=10 in 125 seconds, and guarded t1769+t1773 passed Files=2/Tests=16 in 37 seconds. External PGEN compiler pressure was allowed to finish before the final watchers and did not alter results. All exact temporary captures, mutation fixtures, staging roots, and process trees are absent; Git remains clean. Existing current-corpus and revision-separated claim records remain exact with every re-derive/falsify/durability leg executed. No producer/provider/simulator/controller execution, recapture, republish, guard change, budget, support, performance, memory, or capacity promotion occurred.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2.2: close current corpus publication`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Qualify representative current profiles and freeze exact pinned-host/tool regression budgets.`
   Acceptance: `Consume only the .17.5.2 current publication; independently reproduce complete correctness and repetition evidence; apply the exact decision-0056 wall/CPU/RSS formulas and deterministic count oracles; bind workload, revision, host, tool, guard, provider, and applicability identities; retain recalibration and rollback history; and leave unmatched hosts informational. No budget may derive from historical v1 evidence, failed correctness, excluded samples, or a single slow-run rewrite.`
   Verification: `pending`
@@ -5492,3 +5492,32 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   No real corpus or public result byte is changed by this slice, and no guard,
   validation count, budget, support, performance, memory, or capacity claim is
   promoted. Active `.2.2` owns the required clean real-corpus confirmation.
+
+## Acceptance Checklist (enforced) — `.17.5.2.5.4.2.2` clean current-corpus closeout
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the first revision-correct production
+  validate preserved all sealed bytes but crossed the host guard because the
+  direct coordinator loop retained each ProfileCapture parent validation in one
+  long-lived process. Exact `git log -S'_run_profile_operation('` history
+  locates that loop at 5ca220a803b559287535ce814c0f3260ff5f4242; committed
+  child `.2.1` gives each whole operation a fresh outer lifetime. This leaf's
+  missing acceptance leg was a clean real-publication run through that repair,
+  not another source change or a guard increase.
+- [x] **ADDRESSED (verified)** — from clean 1da11b2e3, guarded production
+  validate completed below both unchanged boundaries with distinct sealed
+  capture/current execution revisions, zero captures, all profiles resumed and
+  validated, and exact stored identities/counts. Guarded inventory, independent
+  before/after verifier, historical separation, copied mutations, resume and
+  coordinator watchers all agree. The four bounded temporary output/diagnostic
+  files were proven regular single-link files, then removed exactly; staging,
+  mutation fixtures, and process trees are absent.
+- [x] **NO REGRESSION** — both focused bands report `All tests successful`:
+  `Files=2, Tests=10` for t1776+t1777 and `Files=2, Tests=16` for t1769+t1773.
+  The independent verifier repeatedly reproduces 13 files/6,220,126 bytes and
+  exact 11/33/44/0 counts after production and hostile activity. All 59 mdBook
+  chapters test; the inspected same-volume render contains 94 files/21,323,217
+  bytes and is removed. Knowledge Map, claims/inventory/dispositions,
+  maintained-reference authority, containment, task integrity, Memory, staged
+  acceptance, and all doctrines pass. No
+  publication mutation, producer/provider/simulator/controller execution,
+  budget, support, performance, memory, capacity, full CI, or push occurs.

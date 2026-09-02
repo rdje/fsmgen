@@ -8,8 +8,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2`
   (`active`; current regression-promotion publication)
-- next_action: Execute `.17.5.2.5.4.2.2`'s independent and guarded clean
-  real-corpus closeout after the committed validation-process isolation repair.
+- next_action: Execute `.17.5.3`'s current-profile regression-budget
+  qualification from the independently closed v2 publication.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: none.

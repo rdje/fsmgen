@@ -926,8 +926,8 @@ or stable ratio.
 This proves current capture, producer-free re-admission, and actual copied-
 artifact falsification, not a regression budget, support tier, capacity limit,
 or performance qualification. Both characterized authority rebuilds are now
-repaired; clean independent/publication closeout remains under `.17.5.2.5.4`,
-and budget work remains solely `.17.5.3`.
+repaired; clean independent/publication closeout is complete, and budget work
+remains solely `.17.5.3`.
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-real-current-corpus-capture-v1 -->
 - Claim: At clean revision 155aa22ea3099642eb6b7f5de81ea03633e72bcb, guarded production capture published the repaired eleven-profile current corpus as eleven validations, 33 fresh raw measurements, 44 accepted controller invocations, and zero exclusions; its complete report is 23,288 bytes with SHA-256 d6139d0f...84a1 and its manifest is 1,280 bytes with SHA-256 3de607e3...0273. A distinct guarded producer-free process resumed all eleven. A separately implemented read-only verifier imports no production module and reconstructs the exact 13-file/6,220,126-byte namespace, inventory SHA-256 94c11e5c...bb57, identities, records, providers, correctness oracles, cleanup, and nonclaims. Same-volume copied-artifact controls independently falsify every sealed content, semantic, file-shape, namespace, staging, and historical-substitution class that is safe to construct. This proves current capture, two distinct re-admission paths, and actual-artifact falsification, not a regression budget, support, performance, or capacity.
@@ -1277,5 +1277,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl \
 ```
 
 The synthetic watcher proves the isolation boundary and unchanged result
-semantics. Real-publication resource and byte-invariance conclusions remain
-unclaimed until the subsequent clean-revision guarded closeout succeeds.
+semantics. A subsequent clean-revision guarded production validation completed
+every stored profile through this topology and emitted one canonical result.
+Guarded inventory and independent before/after census preserved the exact seal,
+so real-publication resource and byte-invariance closeout is now complete.

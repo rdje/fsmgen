@@ -103,12 +103,11 @@ the exact 1,241,948-byte report remains while canonical bytes fall
 sampled peak moves 325.6M→320.5M. `.5.4` owns clean closeout. No budget, stable
 ratio, support, or capacity tier is promoted.
 
-`.5.4.1` keeps public resume same-revision strict and gives complete validation
-a seal-derived capture revision plus separately pinned clean execution revision.
-Foreign/malformed input, disagreement, and mutation reject. `.5.4.2.1` now runs
-each whole ProfileCapture call in a fresh outer child: its nested dual
-validation remains, only bounded canonical metadata returns, and hostile IPC
-fails closed. `.5.4.2.2` owns clean real-corpus resource and byte proof.
+`.5.4.1` separates seal capture from clean execution revision. `.5.4.2.1` puts
+each whole ProfileCapture call in a fresh child while retaining nested dual
+validation and bounded fail-closed IPC. At clean `1da11b2e3`, production
+validate/inventory, independent census, mutation watchers, and historical
+separation agree; resource and byte proof is complete without a budget claim.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]].
