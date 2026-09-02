@@ -1445,10 +1445,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.4.1: close coordinator isolation audit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Coordinate the ordered eleven-profile corpus and atomically seal one independently reloadable complete publication.`
   Acceptance: `Add a bounded repository-relative CLI and caller-sealed coordinator with inventory, capture, and validate operations. Walk the exact dispatch order, preserve exact profile-boundary resume under one clean revision and complete common host/tool/guard/provider identity, independently reload every profile in a fresh worker, census all eleven validations and 33 raw records with zero exclusions, and withhold the family/complete seal until every profile is present and current. Atomically publish a canonical corpus report plus manifest under the selected v2 path; prove collision, interruption, malformed/oversized IPC, child exception/exit/signal, mixed identity, duplicate/missing/reordered profile, post-validation mutation, staging ambiguity, and cleanup residue fail closed. Default tests use injected bounded workers and do not run real measurement producers or tools.`
-  Verification: `Clean predecessor 663ab909d closes the complete per-profile transaction and both inherited unbounded revision-1 stores. Query-first review of decision 0096, the dedicated capture card, source, tests, scripts, and Git history finds no complete-corpus module, CLI, report-plus-manifest store, or seal: current code stops at ordinal-only profile publication and resume. The analogous 1,394-line calibration-closure publisher combines storage, worker coordination, and CLI-facing closure concerns, so this activation partitions the current-corpus implementation into a bounded producer-free complete store, ordered coordinator, and CLI/adversarial closeout rather than creating another monolith. No producer, provider, simulator, profile capture/resume, publication, artifact, budget, support, performance, capacity, CI, or product behavior changes in activation.`
+  Verification: `All three children are complete. .1 implements the producer-free canonical report-plus-manifest store, .2 implements closed ordered inventory/capture/validate coordination over the existing bounded profile-worker boundary, and .3 supplies an explicit-operation repository-relative CLI with canonical bounded stdout plus fresh-process public-path controls. The final guarded policy/plan/profile-store/capture/resume/corpus-store/coordinator/CLI integration reports Files=8/Tests=65. Synthetic watchers execute no real producer, provider, simulator, controller, measurement, or v2 evidence capture; those remain exclusively owned by .17.5.2.4.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3: activate complete corpus coordination`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.3`
 
@@ -1467,11 +1467,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.2: implement complete corpus coordinator`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Close the repository-relative corpus CLI and adversarial coordinator/publication contract before real capture.`
   Acceptance: `Add limits, inventory, capture, and validate CLI modes that derive the repository root from the script location, require guarded clean-state authority where applicable, emit only bounded canonical JSON, and document exact resume, unavailable-provider, cleanup, current-evidence, and nonclaim behavior. Exercise the public production paths with deterministic bounded workers and independently falsify interruption, collision, stage ambiguity, report/manifest mutation, stale or mixed common/provider identity, duplicate/missing/reordered profiles and records, malformed/oversized IPC, child exception/exit/signal, repository mutation, symlink/hard-link/cross-device state, and target/staging residue. Synchronize runnable mdBook, Knowledge Map, task, and claim evidence while leaving real capture exclusively to .17.5.2.4.`
-  Verification: `Clean predecessor 5ca220a80 implements closed inventory/capture/validate coordination and reuses the bounded fresh-worker profile boundary. Query-first review resolves current publication behavior to the dedicated regression-promotion capture card: production module APIs exist, while the repository-relative CLI and its public-path adversarial closeout remain the sole unimplemented child before real guarded capture. This activation selects .17.5.2.3.3 alone; real producer/provider/simulator execution remains proposed .17.5.2.4. No source, test, script, artifact, worker, producer, provider, simulator, capture, publication, budget, support, performance, capacity, CI, or product behavior changes in activation.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.3: activate corpus CLI closeout`
+  Verification: `The executable run_vial_regression_promotion_corpus.pl derives the repository root from its own tracked location and requires exactly one case-sensitive, unabbreviated --limits, --inventory, --capture, or --validate operation; omitted or ambiguous selection cannot default into expensive capture. Limits is guard-free; all state operations delegate to the coordinator, which retains active-guard and clean-revision authority. The CLI encodes the complete result before output and admits only canonical newline-terminated JSON at or below a fixed 1,048,576-byte envelope, so cap-plus-one emits no partial stdout. Fresh-process t1774 uses a script-local coordinator double to prove exact method/root dispatch, option closure, exact-cap/cap-plus-one, failure propagation, and cleanup without product injection or real work. Both new files pass syntax; guarded focused t1774 passes Files=1/Tests=5 and full .17.5.2.3 integration passes Files=8/Tests=65. Existing t1772/t1773 retain storage, profile, identity, interruption, collision, mutation, worker-failure, and seal-withholding controls.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.3: implement corpus CLI closeout`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4`
   Status: `proposed`
@@ -4809,3 +4809,41 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   script, book, generated artifact, worker, producer, provider, simulator,
   capture, publication, budget, support, performance, capacity, full CI, push,
   or product behavior changes.
+
+## Acceptance Checklist (enforced) — `.17.5.2.3.3` corpus CLI closeout implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the pre-implementation guarded RED
+  reported `Can't open perl script ".../scripts/run_vial_regression_promotion_corpus.pl": No such file or directory` from t1774. Source/history audit found only older runners that default to capture; none exposed the new coordinator or bounded its complete stdout, so omitting a flag could not be made both closed and safe by copying that pattern.
+  The exact `git log -S 'run_vial_regression_promotion_corpus' --all --oneline -- scripts`
+  history probe returned no predecessor.
+- [x] **ADDRESSED (verified)** — the tracked executable derives its repository
+  from `FindBin`, accepts exactly one explicit operation with abbreviation and
+  case folding disabled, delegates only to public coordinator methods, and
+  encodes the complete canonical result before writing any bytes. A fixed
+  output envelope admits exact-cap newline-terminated JSON and rejects
+  cap-plus-one with empty stdout. Before -> after: the completed module stack
+  has one repository-relative public command without implicit real capture or
+  caller path/plan/profile/result/worker injection.
+- [x] **NO REGRESSION** — both new files report `syntax OK`. Guarded focused
+  t1774 reports `All tests successful` at Files=1, Tests=5; final guarded
+  policy/plan/profile-store/capture/resume/corpus-store/coordinator/CLI
+  integration reports `All tests successful` at Files=8, Tests=65. Controls
+  cover all explicit modes,
+  omitted/multiple/positional/unknown/abbreviated/case-variant options, exact
+  script-derived root and method dispatch, canonical output, exact cap and
+  cap-plus-one, coordinator exception propagation, and exact fixture cleanup;
+  integrated t1772/t1773 retain the complete hostile storage/worker/identity
+  matrix. The claim regression reports Files=4/Tests=38; its registries close
+  31 records (30 published/one fixture), 1,773 inventory candidates, and 1,773
+  dispositions through 988 derived gates/183 claim records/602 reviewed
+  records with zero gaps/open owners. All 59 mdBook chapters test; the inspected
+  94-file/21,120,046-byte repository-local render contains the exact CLI modes
+  and claim legs and is removed. The maintained book is 55,466 lines/2,999,981
+  bytes at exact +27 lines/+2,344 bytes, and Knowledge Map parity is 1,160
+  facts/6,244 questions/6,416 occurrences/138 shards. Task integrity reports
+  four trees/1,051 nodes; Memory is 15 lines; all 22 live-document surfaces
+  accept the exact book authority without a ceiling or Knowledge-allowance
+  increase. Locality, staged acceptance, and all doctrines are required green
+  before commit. No real producer, provider, simulator, controller,
+  measurement, v2 evidence capture, budget, support, performance, capacity,
+  full CI, or push is run or promoted in this ordinary slice.

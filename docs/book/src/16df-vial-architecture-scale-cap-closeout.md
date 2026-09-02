@@ -815,6 +815,33 @@ scripts/run_with_ram_guard.sh -- prove -Iperl \
   t/1773-vial-regression-promotion-corpus-coordinator.t
 ```
 
+The repository-relative CLI requires an explicit operation; there is no
+default capture. This matters because a typo or omitted option must not start
+real providers and tools. `--limits` is guard-free. Inventory, capture, and
+validation retain the coordinator's active RAM-guard and clean-revision
+requirements. The script accepts no repository path or evidence injection.
+
+```sh
+scripts/run_vial_regression_promotion_corpus.pl --limits
+scripts/run_with_ram_guard.sh -- \
+  scripts/run_vial_regression_promotion_corpus.pl --inventory
+scripts/run_with_ram_guard.sh -- \
+  scripts/run_vial_regression_promotion_corpus.pl --validate
+```
+
+Use `--capture` only from the intended clean implementation revision when all
+selected providers are available. The command encodes the whole result as
+canonical newline-terminated JSON and checks its fixed output envelope before
+writing, so a rejected oversized result cannot leave a plausible partial
+document on stdout.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-corpus-cli-output-contract-v1 -->
+- Claim: The regression-promotion corpus CLI requires exactly one explicit operation and emits no partial result unless its canonical newline-terminated JSON fits within 1,048,576 bytes. Exact-cap output is admitted and cap-plus-one rejects; this is a metadata-output containment limit, not corpus-storage capacity, workload fit, support, performance, or proof that real capture completed.
+- Re-derive: Run `scripts/run_vial_regression_promotion_corpus.pl --limits` and the guarded t1774 watcher; the limits schema, fresh-process method log, canonical exact-boundary stdout length, and CLI source constant must independently agree.
+- Falsify: t1774 must reject omitted, multiple, positional, unknown, abbreviated, case-variant, and help-plus-operation selections; prove each operation dispatches once with the script-derived root; admit exact-cap canonical output; and reject cap-plus-one with empty stdout while propagating coordinator failure without false JSON success.
+- Durability: Retain the tracked CLI, t1774, task `.17.5.2.3.3`, this chapter, the capture Knowledge card, this bounded claim record, doctrine gates, and the work-unit Git chain; real capture remains separately owned by `.17.5.2.4`.
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-corpus-cli-output-contract-v1 -->
+
 The legacy storage remediation is complete. Both publishers now expose their
 selected ceilings, encode and reject before staging, and require one
 newline-terminated canonical JSON file that is regular, same-volume, one-link,
