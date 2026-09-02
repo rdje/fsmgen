@@ -29,6 +29,8 @@ my $CURRENT_PUBLICATION_ID = 'regression-promotion-corpus-v1';
 my $CURRENT_PUBLICATION_SCHEMA =
     'fsmgen.vial_architecture_scale_regression_promotion_corpus.v1';
 my $MAX_REPORT_BYTES = 2_097_152;
+my $PERFORMANCE_APPLICABILITY_SCHEMA =
+    'fsmgen.vial_architecture_scale_regression_performance_applicability.v1';
 
 my @REPORT_KEYS = qw(
     schema schema_version policy_identity source_evidence selected_strategy
@@ -39,6 +41,19 @@ my @SELECTED_PROFILE_KEYS = qw(
     ordinal selection_key authority family level primary_axis backend_profile
     historical_profile_id historical_raw_records historical_raw_wall_time_ns
     historical_maximum_wall_time_ns historical_maximum_tree_rss_bytes
+);
+my @PERFORMANCE_APPLICABILITY_KEYS = qw(
+    schema schema_version applicability_identity refines_policy_schema
+    evidence_revision_role exact_environment_fields
+    exact_deterministic_fields matching_later_revision
+    deterministic_mismatch environment_mismatch unavailable_exact_provider
+    recalibration
+);
+my @EXACT_ENVIRONMENT_FIELDS = qw(
+    host_profile tool_profile resource_guard provider_status
+);
+my @EXACT_DETERMINISTIC_FIELDS = qw(
+    selection_key workload_identity correctness_projection_identity
 );
 my @NONCLAIMS = qw(
     historical_measurement_is_current
@@ -177,6 +192,39 @@ sub selected_profile_keys($class) {
 sub explicit_nonclaims($class) {
     _exact_invocant($class, 'explicit_nonclaims');
     return [@NONCLAIMS];
+}
+
+sub performance_applicability_keys($class) {
+    _exact_invocant($class, 'performance_applicability_keys');
+    return [@PERFORMANCE_APPLICABILITY_KEYS];
+}
+
+sub performance_applicability_contract($class, @args) {
+    _exact_invocant($class, 'performance_applicability_contract');
+    confess __PACKAGE__
+        . "->performance_applicability_contract accepts no caller input\n"
+        if @args;
+    my $contract = {
+        schema => $PERFORMANCE_APPLICABILITY_SCHEMA,
+        schema_version => 1,
+        applicability_identity => undef,
+        refines_policy_schema => $SCHEMA,
+        evidence_revision_role => 'immutable_qualification_provenance_only',
+        exact_environment_fields => [@EXACT_ENVIRONMENT_FIELDS],
+        exact_deterministic_fields => [@EXACT_DETERMINISTIC_FIELDS],
+        matching_later_revision =>
+            'performance_enforcement_eligible_after_correctness',
+        deterministic_mismatch => 'correctness_rejects_before_performance',
+        environment_mismatch =>
+            'correctness_required_performance_informational',
+        unavailable_exact_provider => 'unavailable_not_pass',
+        recalibration => 'owned_version_replacement_with_old_new_evidence',
+    };
+    $contract->{applicability_identity} =
+        'regression-promotion-performance-applicability/'
+        . sha256_hex(_canonical_json($contract));
+    _validate_performance_applicability_contract($contract);
+    return _clone($contract);
 }
 
 sub derive($class, @args) {
@@ -557,6 +605,47 @@ sub _validate_policy_report($report) {
             _canonical_json(\@NONCLAIMS);
 }
 
+sub _validate_performance_applicability_contract($contract) {
+    _exact_keys(
+        $contract, \@PERFORMANCE_APPLICABILITY_KEYS,
+        'promotion performance-applicability contract',
+    );
+    confess "promotion performance-applicability schema is invalid\n"
+        unless ($contract->{schema} // '') eq $PERFORMANCE_APPLICABILITY_SCHEMA
+            && _json_integer_equals($contract->{schema_version}, 1);
+    my $projection = _clone($contract);
+    my $identity = $projection->{applicability_identity};
+    $projection->{applicability_identity} = undef;
+    confess "promotion performance-applicability identity changed\n"
+        unless defined($identity) && !ref($identity)
+            && $identity eq
+                'regression-promotion-performance-applicability/'
+                . sha256_hex(_canonical_json($projection));
+    confess "promotion performance-applicability policy binding changed\n"
+        unless ($contract->{refines_policy_schema} // '') eq $SCHEMA;
+    confess "promotion evidence revision became an enforcement dimension\n"
+        unless ($contract->{evidence_revision_role} // '') eq
+            'immutable_qualification_provenance_only';
+    confess "promotion exact environment identity changed\n"
+        unless _canonical_json($contract->{exact_environment_fields}) eq
+            _canonical_json(\@EXACT_ENVIRONMENT_FIELDS);
+    confess "promotion exact deterministic identity changed\n"
+        unless _canonical_json($contract->{exact_deterministic_fields}) eq
+            _canonical_json(\@EXACT_DETERMINISTIC_FIELDS);
+    confess "promotion performance-applicability behavior changed\n"
+        unless ($contract->{matching_later_revision} // '') eq
+                'performance_enforcement_eligible_after_correctness'
+            && ($contract->{deterministic_mismatch} // '') eq
+                'correctness_rejects_before_performance'
+            && ($contract->{environment_mismatch} // '') eq
+                'correctness_required_performance_informational'
+            && ($contract->{unavailable_exact_provider} // '') eq
+                'unavailable_not_pass'
+            && ($contract->{recalibration} // '') eq
+                'owned_version_replacement_with_old_new_evidence';
+    return 1;
+}
+
 sub _repository_root($value) {
     confess "promotion policy repository root is invalid\n"
         unless defined($value) && !ref($value) && length($value);
@@ -619,6 +708,12 @@ sub _exact_invocant($class, $method) {
 
 sub _positive_integer($value) {
     return _nonnegative_integer($value) && $value > 0;
+}
+
+sub _json_integer_equals($value, $expected) {
+    return defined($value) && !ref($value)
+        && $value =~ /\A(?:0|[1-9][0-9]*)\z/
+        && 0 + $value == $expected;
 }
 
 sub _nonnegative_integer($value) {

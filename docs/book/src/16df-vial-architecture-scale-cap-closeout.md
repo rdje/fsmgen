@@ -1205,10 +1205,21 @@ scripts/run_with_ram_guard.sh -- env \
 Qualified tools are resolved through their exact profiles. A shell-global
 `ghdl` is not required; the repository-local GHDL provider is the authority.
 If an exact provider is absent, the route is unavailable—not passing. Timing
-enforcement later applies only to the exact common revision/host/tool/guard
-identity; unmatched environments retain applicable correctness checks and
-informational timing. Expensive capture and gate execution belongs to full
-pre-push or explicitly selected important steps, not every ordinary slice.
+enforcement later requires exact host/tool/guard/provider identity plus exact
+selection/workload/correctness identity. The capture Git revision remains
+immutable evidence provenance, but is not a runtime match field: otherwise the
+qualification and gate commits would make their own budget permanently
+informational. Deterministic drift rejects during correctness; environment
+drift retains applicable correctness checks and informational timing. Expensive
+capture and gate execution belongs to full pre-push or explicitly selected
+important steps, not every ordinary slice.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-applicability-identity-v1 -->
+- Claim: The sealed v2 corpus binds capture policy `regression-promotion-policy/19cf4105...5ece` and capture revision `155aa22ea...bcb`. Requiring that revision to equal a future run would make every post-qualification performance verdict informational. Decision 0096's amended contract therefore retains revision as immutable provenance while exact environment and deterministic behavior identities decide enforcement eligibility; the immutable capture policy bytes and identity do not change. This repairs applicability semantics, not a budget, performance result, support tier, or capacity claim.
+- Re-derive: Read the authenticated corpus report for its policy and capture revision, then run t1765. Require the original policy identity unchanged and the separately content-addressed applicability contract to name exact host/tool/guard/provider plus selection/workload/correctness projection fields.
+- Falsify: Rehash an applicability contract that restores the capture revision as a runtime match dimension and require t1765 to reject it. Caller input must reject; deterministic mismatch must select correctness rejection, while environment mismatch must select correctness plus informational performance.
+- Durability: Retain decision 0096, the executable policy, focused watcher, owning task, this chapter, bounded claim record, doctrine gates, and the work-unit Git commit.
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-applicability-identity-v1 -->
 
 Re-derive the selection and its closure comparison with:
 

@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 
+use Digest::SHA qw(sha256_hex);
 use File::Spec;
 use FindBin;
 use JSON::PP ();
@@ -58,6 +59,58 @@ subtest 'policy exposes one caller-sealed promotion contract' => sub {
         'borrowed class invocants fail closed');
 };
 
+subtest 'performance applicability separates provenance from enforcement' => sub {
+    is_deeply([sort @{$class->performance_applicability_keys}], [sort qw(
+        schema schema_version applicability_identity refines_policy_schema
+        evidence_revision_role exact_environment_fields
+        exact_deterministic_fields matching_later_revision
+        deterministic_mismatch environment_mismatch unavailable_exact_provider
+        recalibration
+    )], 'performance applicability has one closed schema');
+    my $contract = $class->performance_applicability_contract;
+    is($contract->{evidence_revision_role},
+        'immutable_qualification_provenance_only',
+        'capture revision remains evidence rather than a runtime match field');
+    is_deeply($contract->{exact_environment_fields}, [qw(
+        host_profile tool_profile resource_guard provider_status
+    )], 'host, tool, guard, and provider remain exact');
+    is_deeply($contract->{exact_deterministic_fields}, [qw(
+        selection_key workload_identity correctness_projection_identity
+    )], 'workload and correctness behavior remain exact');
+    is($contract->{matching_later_revision},
+        'performance_enforcement_eligible_after_correctness',
+        'a later revision with identical behavior and environment stays eligible');
+    is($contract->{deterministic_mismatch},
+        'correctness_rejects_before_performance',
+        'deterministic drift rejects rather than borrowing the budget');
+    is($contract->{environment_mismatch},
+        'correctness_required_performance_informational',
+        'environment drift retains correctness with informational performance');
+    like($contract->{applicability_identity},
+        qr{\Aregression-promotion-performance-applicability/[0-9a-f]{64}\z},
+        'the applicability contract is content-addressed');
+    like(dies(sub {
+        $class->performance_applicability_contract({git_revision => 'forged'});
+    }), qr/accepts no caller input/,
+        'callers cannot select a weaker applicability identity');
+
+    $contract->{evidence_revision_role} = 'runtime_match_required';
+    $contract->{applicability_identity} = undef;
+    $contract->{applicability_identity} =
+        'regression-promotion-performance-applicability/'
+        . sha256_hex($json->encode($contract));
+    my $validate = $class->can(
+        '_validate_performance_applicability_contract');
+    like(dies(sub { $validate->($contract) }),
+        qr/evidence revision became an enforcement dimension/,
+        'a rehashed revision-match contract still rejects');
+
+    my $fresh = $class->performance_applicability_contract;
+    is($fresh->{evidence_revision_role},
+        'immutable_qualification_provenance_only',
+        'returned applicability data is defensive');
+};
+
 subtest 'representative corpus is exact, current-only, and narrower' => sub {
     my $report = read_json($source_path);
     my $derive = $class->can('_derive_from_report');
@@ -69,6 +122,10 @@ subtest 'representative corpus is exact, current-only, and narrower' => sub {
     like($policy->{policy_identity},
         qr{\Aregression-promotion-policy/[0-9a-f]{64}\z},
         'policy identity is content-addressed');
+    is($policy->{policy_identity},
+        'regression-promotion-policy/'
+        . '19cf41056da86d95c266597e7db76eff3810ee29511a005e1051053009a65ece',
+        'the immutable current-corpus capture policy identity is unchanged');
     is($policy->{selected_strategy}{strategy},
         'representative_current_promotion_corpus',
         'representative current corpus is selected');

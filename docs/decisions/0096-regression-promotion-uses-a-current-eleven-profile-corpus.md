@@ -62,10 +62,10 @@ availability must therefore be an admission result; absence can never pass.
    tree RSS. The exact difference from the complete v1 raw corpus is 323 records
    and 4,671,592,497,000 ns. These are scope/cost comparators, never budgets.
 7. `.17.5.3` derives budgets only from the new current corpus with the exact
-   decision-0056 formulas. Performance enforcement applies only when the
-   complete common revision/host/tool/guard/provider identity matches. Other
-   environments must still run applicable correctness and deterministic
-   checks, but performance is informational.
+   decision-0056 formulas. Capture revision is immutable provenance, not an
+   applicability field. Enforcement requires exact workload/correctness and
+   host/tool/guard/provider identity. Other environments still run correctness;
+   timing is informational.
 8. An unavailable exact provider is `unavailable`, never `pass`. Hosted CI may
    verify the contract, publication, and available correctness paths while
    keeping performance informational. The guarded current corpus and promoted

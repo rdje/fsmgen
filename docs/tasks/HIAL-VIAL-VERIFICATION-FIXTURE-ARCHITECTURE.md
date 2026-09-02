@@ -1598,13 +1598,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `pending`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.2`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.1`
-  Status: `active`
+  Status: `done`
   Goal: `Repair the performance-applicability identity so a promoted budget can remain enforceable after its own qualification and gate commits.`
   Acceptance: `Reconcile decisions 0056 and 0096 plus the executable policy. Keep the capture Git revision immutable as provenance, but define later performance eligibility from exact host/tool/guard/provider identity and an exact deterministic workload/correctness projection rather than equality with the capture commit. Prove same-behavior later revisions remain eligible, deterministic behavior drift fails correctness rather than borrowing a budget, host/tool/guard/provider drift remains informational, and caller-selected identity cannot weaken the rule. Synchronize decision, policy, tests, mdBook, Knowledge Map, task, and Memory without deriving or publishing any budget.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Decision 0096's amended contract resolves the contradiction without mutating sealed capture evidence: revision is immutable qualification provenance, while exact host/tool/guard/provider plus selection/workload/correctness-projection identity controls later enforcement. The existing v1 policy derivation remains byte-identical at 19cf4105...5ece; guarded production corpus reload retains capture revision 155aa22ea, all eleven profiles, and the exact seal. The separate closed applicability contract is content-addressed at b5976719...8018, accepts no caller input, returns defensively, and rejects a rehashed revision-as-runtime-dimension control. Matching later revisions are enforcement-eligible only after correctness; deterministic drift rejects before performance; environment drift is informational; unavailable providers do not pass. Syntax and focused t1765 pass; guarded exact t1765+t1766 report All tests successful at Files=2/Tests=19. Decision/book/task/claim evidence and doctrines close in the work-unit commit. No current corpus byte, plan/policy identity, budget, publication, support, performance result, capacity claim, full CI, or push changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.1: separate evidence revision from applicability`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the authenticated in-memory budget derivation against the repaired applicability contract.`
   Acceptance: `Satisfy the parent .17.5.3.1 acceptance after .1.1 closes, binding immutable evidence revision separately from the exact deterministic and environment applicability identity used by later gates.`
   Verification: `pending`
@@ -5600,3 +5600,35 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   test, artifact, producer, provider, simulator, measurement, publication,
   budget, CI, support, capability, performance, capacity, or product behavior
   changes; full CI and push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.5.3.1.1` applicability-identity repair
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — authenticated corpus inspection reports
+  capture revision `155aa22ea...bcb` and policy `19cf4105...5ece`; every
+  qualification/gate implementation revision is necessarily later. Decision
+  `0096`'s literal common-revision match would therefore classify all future
+  performance results as informational, contradicting decision `0056`'s
+  usable pinned-host/tool regression model. `git log -S` identifies commit
+  `e59d9ce02` as the exact policy/decision origin, and source inspection confirms
+  its `exact_common_identity_only` output is transitively sealed by the current
+  plan and corpus, so mutating it would invalidate valid evidence.
+- [x] **ADDRESSED (verified)** — decision `0096`'s amended contract and Policy's
+  separate content-addressed applicability contract retain the capture revision as
+  immutable provenance while requiring exact environment and deterministic
+  behavior identities. t1765 proves later same-behavior revisions are eligible
+  after correctness, deterministic mismatch rejects before performance,
+  environment mismatch is informational, unavailable providers do not pass,
+  caller input rejects, returned state is defensive, and a rehashed attempt to
+  restore revision matching fails. Guarded real corpus load independently
+  preserves policy `19cf4105...5ece`, revision `155aa22ea...bcb`, and eleven
+  profiles; the new applicability identity is `b5976719...8018`.
+- [x] **NO REGRESSION** — Policy syntax passes. Guarded exact policy plus
+  capture-plan regression reports `All tests successful` at Files=2/Tests=19,
+  and guarded production corpus reload succeeds under unchanged 88% host and
+  4,096-MiB descendant limits. All 59 mdBook chapters pass; the 94-file,
+  21,331,410-byte rendered book is verified and removed. Knowledge Map reports
+  1,160 facts/6,252 questions/6,424 answers/138 shards; 37 claim records and all
+  1,819 dispositions join; containment, task integrity, Memory, relative paths,
+  staged acceptance, and `[doctrine] all doctrine checks passed` are green. No
+  current-corpus byte, capture policy/plan identity, budget, publication,
+  support, performance result, capacity claim, full CI, or push changes.
