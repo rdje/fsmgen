@@ -38,27 +38,73 @@ revision predates the cap-hardening leaves, and its public nonclaims explicitly
 include `cap_implementation`. Byte-valid measurement files therefore cannot be
 relabelled as proof that the current caps fail atomically or clean up exactly.
 
-The closeout layer will consume the current cap policy internally, reject
-caller-supplied evidence, and keep two questions separate:
+The closeout layer consumes the current cap policy internally, rejects
+caller-supplied evidence, and keeps two questions separate:
 
 - Is the historical measurement publication still internally authentic?
 - Does current code satisfy every selected cap's boundary, adjacent excess,
   diagnostic, atomicity, no-tool, cleanup, and accepted-identity contract?
 
-Only after the second answer is complete can `.17.4.8` disposition the
-historical publication as reusable, superseded, or requiring a versioned
-recapture.
+Only after the second answer is complete may `.17.4.8` disposition the
+historical publication. The current authority reaches that prerequisite with
+all 23 groups and all 161 required group dimensions verified.
 
 The immutable store is not one uniform target. Its 256 files/32,007,521 bytes
 split into three disjoint sets: 232 artifacts/28,398,586 bytes selected by the
 closure, 22 backend-emission-v1 files/2,232,452 bytes preserved after the
 explicit v2 namespace transition, and the two closure files/1,376,483 bytes.
-Fresh revalidation must reconstruct the selected set through current
-validators and compare the complete report. The v1 set is authenticated as
-explicitly versioned, superseded evidence; running the v2 producer against it
-would conflate two deliberately different revisions. The final authority must
-also prove that those three sets exactly exhaust the store. This audit fixes
-the disposition scope; it does not yet disposition the publication.
+`FSM::VIAL::ArchitectureScaleCalibrationDisposition` authenticates the selected
+set and runs current derivations in a bounded worker before disposition. Its
+first exact RED rejects six of the 52
+bridge-fanout profiles. Each stale profile recorded a fully materialized
+source-map count such as 114,909; current code intentionally stops before
+constructing record 65,537. Commit `4834873a8` introduced that safer
+pre-materialization admission after publication. All 56 semantic-catalog
+profiles remain valid. Consequently, “232 selected artifacts” is not the same
+as “232 current artifacts.” [Decision 0095](../../decisions/0095-calibration-closure-versions-atomically-after-current-validator-drift.md)
+therefore versions the complete closure-selected lineage atomically instead of
+calling the individually unchanged files current.
+
+The guarded census also distinguishes the rest of the closure. Execution/
+checking, portable-SystemVerilog runtime, and balanced-portable publications
+still validate. Backend emission, portable-VHDL runtime, and OSVVM runtime each
+reject their first VHDL-derived reference witness. The closure predates both
+the 127-byte scenario-cycle correction in `460df366e` and the 112-byte boundary-
+time correction in `0b6e83979`. Only generated
+`base_output_arbitration_tb.vhd` changes, from 46,264 to 46,503 bytes; total
+portable VHDL source changes from 118,064 to 118,303 bytes while the source-map
+count stays 59. The artifact graph and backend evaluation therefore change,
+followed by portable-VHDL materialization
+`7c44198d…` → `6f12ab75…` and OSVVM materialization
+`6ce4f9a1…` → `5cef115e…`. The authored 4,986-byte VIAL source remains
+byte-identical.
+
+The authority authenticates v1 as explicitly versioned, superseded evidence;
+running the v2 producer against it would conflate two deliberately different
+revisions. It revalidates all 108 semantic/bridge profiles, requires 102 exact
+matches, and binds the other six source-map diagnostic changes plus their
+historical/current projection-byte counts. It independently derives the exact
+239-byte VHDL source delta, unchanged 59-map count, graph/evaluation identities,
+and both downstream materialization pairs. It then requires pairwise
+disjointness and the exact three-set union. Its role remains
+`historical_measurement_only`; candidate budgets remain candidate-only and cap
+implementation, support, capacity, and public performance claims remain
+prohibited or unestablished. A new immutable capture is required before the
+data can support future current-performance use, but not for current cap
+closeout.
+
+The default test checks the caller-sealed API, incomplete-cap barrier,
+canonical closure mismatch, overlap, extra-path, and defensive-report
+falsifiers. The exact route authenticates the complete publication,
+reconstructs the expected current drift, and validates the historical
+disposition:
+
+```sh
+scripts/run_with_ram_guard.sh -- env \
+  FSMGEN_VIAL_SCALE_CALIBRATION_DISPOSITION_EXACT=1 \
+  prove -Iperl \
+  t/1764-vial-architecture-scale-calibration-disposition.t
+```
 
 ## Machine-enforced closeout state
 
@@ -236,8 +282,10 @@ disposition.
 
 The calibration evidence remains `historical_measurement_only`. With all
 dimension joins complete, the current-cap proof is `complete` and the
-publication is `eligible_for_explicit_revalidation`; it has not yet been
-revalidated or dispositioned. Eligibility cannot automatically relabel the
+publication is `eligible_for_explicit_revalidation`. Exact revalidation
+rejects the expected post-publication drift; the atomic closure is therefore
+`explicitly_versioned_historical`, while its publication is an
+`authentic_superseded_publication`. Eligibility and versioning never relabel
 historical measurement as `cap_implementation`, which remains prohibited.
 
 ## Reverify the inventory

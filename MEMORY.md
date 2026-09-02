@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8`
-  (`active`; cross-family cap closeout under decision `0093`)
-- next_action: Implement the caller-sealed current-lineage revalidation and
-  historical calibration disposition authority defined by the topology audit.
-- in_flight_uncommitted: none; the next implementation slice has not started.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
+  (`proposed`; regression-gate, documentation, capability-truth closeout)
+- next_action: From the clean committed predecessor, activate `.17.5` with one
+  selection-only task-tree slice before implementation.
+- in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: none.

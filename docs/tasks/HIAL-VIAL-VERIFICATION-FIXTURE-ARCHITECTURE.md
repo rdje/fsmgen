@@ -827,12 +827,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9.2: activate measured-family closure publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9.2: implement measured-family closure publication; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.9.2: seal measured-family closure publication`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4`
-  Status: `active`
+  Status: `done`
   Goal: `Implement and prove explicit architecture resource caps and graceful bounded failure.`
   Acceptance: `Apply the selected caps at the earliest authoritative stages with deterministic diagnostics, atomic no-partial-output behavior, same-volume cleanup, boundary/over-bound tests, and unchanged accepted-profile semantics; host exhaustion and external-tool crashes are not accepted as product limit enforcement.`
   Verification: `Clean predecessor b441e7a8b closes measured-family publication. The activation partitions cap work by authoritative stage under decisions 0056/0059/0072, preserves all selected measurement levels, and changes no product behavior or claim.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4: activate architecture cap hardening`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8`
+  Closure: `All eight children are complete. Current caps retain earliest-stage deterministic admission, diagnostics, atomic no-partial-output behavior, no-tool short-circuiting, same-volume cleanup, accepted identities, and an independent 23-group/161-dimension closeout. Decision 0095 and the caller-sealed disposition preserve the immutable calibration closure as authentic historical evidence across exact bridge and VHDL-derived drift without promoting budgets, support, or capacity. The next clean activation is .17.5.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.1`
   Status: `done`
@@ -873,11 +874,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Closure: `The terminal sentence in the earlier Verification snapshot is superseded: common worker artifact admission, bounded output/recovery census, process-group and detached-descendant containment, authenticated bounded cleanup, the synchronous selected-tool boundary, bounded host observers, monotonic TERM/KILL and reap, interruption-safe owned-child/observer/containment-pipe polling, and timeout-primary observation precedence are complete across the 15 commits from 156f27788 through 1f3dac39e. Git now retains 59 .17.4.7 work-unit commits. Every appended acceptance checklist is checked; the complete RAM-guarded t1720-t1749/t1751-t1762 leaf passes Files=42, Tests=184 in 258 wallclock seconds; source audit finds no further independent unbounded supervisor retry. The runtime-stream leaf is exhausted. Cross-family closeout .17.4.8 remains proposed until a separate clean activation commit.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8`
-  Status: `active`
+  Status: `done`
   Goal: `Prove cross-family cap consistency, atomic failure, cleanup, and durable closeout before promotion.`
   Acceptance: `Independently enumerate every selected cap and owning stage; require boundary and adjacent excess evidence, stable diagnostic family/path/requested/allowed data where safe, no partial final output, no external-tool invocation behind known excess, exact repository-local cleanup, and unchanged accepted-profile identities. Revalidate all immutable calibration publications or version them explicitly after intentional behavior changes, synchronize task/decision/Knowledge Map/mdBook truth, and close .17.4 without promoting budgets, support, or capacity.`
   Verification: `Clean 5583365cb closes the complete runtime-stream leaf after its guarded closure suite and source census. Decision 0093 assigns this final child the independent cross-family consistency, atomic-failure, cleanup, immutable-publication, and durable-closeout proof. Activation changes no product behavior, cap, publication, support statement, budget, or capacity claim. The first implementation slice must enumerate the live cap policy and every closed child evidence owner before selecting the smallest missing cross-family proof.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8: activate cross-family cap closeout`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8: activate cross-family cap closeout; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8: disposition historical calibration`
   Inventory: `Clean activation 02768a427 enables the read-only first slice. The live policy exactly joins 50 catalog axes to 23 groups, 19 selected interactions, six non-axis envelopes, four backend profiles, and three runtime profiles; all 70 declared group-evidence references and every interaction/envelope evidence path exist. That establishes selection and declared-value alignment, not final closeout: runtime_stream_envelopes still cites only t1663/t1672/t1676 and t1685 has no runtime-group-specific assertion, so none of the completed t1720-t1749/t1751-t1762 evidence is independently joined. The 256-file immutable calibration store and its b66de5ce6 closure manifest remain internally addressable, but the publication explicitly denies cap_implementation and predates every .17.4 child. Re-derive: build the policy and independently census its catalog join/evidence paths. Falsify: t1685's missing-axis mutation and an existence check over every referenced path reject omissions. Durability: this task, the synchronized book/card frontier, and the work-unit commit retain the result. The next slice adds a caller-sealed cross-family closeout layer; it must consume current policy authority internally, distinguish measurement publication from cap proof, and bind each selected group to boundary/excess, diagnostics, atomicity/no-tool, cleanup, and accepted-identity evidence before any calibration disposition.`
   Foundation: `Executable RED t1763 first fails only because ArchitectureScaleCapConsistency is absent. The exact-class implementation accepts no inputs, rebuilds the current policy internally, and emits all 23 selected groups and 50 axes with the same seven closed evidence dimensions. Every dimension begins pending with no promoted evidence; policy paths remain candidates. Exact schema, invocant, argument, group, axis, authority, candidate-evidence, dimension, defensive-copy, and mutation checks fail closed. The historical calibration authority remains measurement-only, cap_implementation remains a prohibited relabel, and disposition stays blocked until every sealed dimension is independently verified. Focused t1763+t1685 passes Files=2/Tests=84 without executing a product route or external tool. The next slice independently joins the completed runtime-stream leaf.`
   Runtime Join: `The caller-sealed consistency authority now promotes only runtime_stream_envelopes. A one-entry-per-test classification maps the three selected materialization profiles and all 42 completed t1720-t1749/t1751-t1762 hardening leaves across boundary, adjacent excess, diagnostics, atomicity, no-tool, cleanup, and accepted identity; the union is exact and every path exists. T1763 independently reconstructs each ordered evidence array, requires that complete 45-path union, and rejects omitted or foreign runtime evidence. All other groups remain pending, so calibration stays historical, incomplete, and blocked. Re-derive: execute all sealed paths through the RAM-guarded 46-file suite. Falsify: the exact union plus omission/foreign mutations fail closed. Durability: this task, book, Knowledge Map card, consistency source/test, and work-unit commit retain the classification. The complete suite reports All tests successful at Files=46/Tests=210 in 417 wallclock seconds. No cap, level, accepted profile, behavior, publication, support, budget, or capacity claim changes. The next slice independently joins backend_artifact_graph. Adjacent doctrine finding: the rationale-ledger manifest is at ordinal 2907 while DEVELOPMENT_NOTES_INDEX.md still advertises 2905; the range-ID-only index check does not catch the mismatch, so a separate clean task-tree slice must reconcile the displayed row and add a numeric-cell falsifier before the next rationale append.`
@@ -1360,6 +1361,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   derived gates, and zero gaps/open owners.`
 
   Containment Resolution: `The cap-policy card's long one-path-per-line reverify list is now a shorter equivalent set of numeric brace ranges plus exact outliers; every expansion resolves to an existing tracked test. With checking-randomness evidence added, the card aggregate falls from 46,939 lines/3,464,850 bytes to 46,903 lines/3,462,766 bytes, restoring 39 lines/2,119 bytes below the inherited transition allowance without changing it. Re-derive: expand every compacted pattern and aggregate docs/knowledge Markdown with wc. Falsify: missing paths fail the explicit expansion census, and Knowledge Map/live-document checks reject freshness, answer, transition, or ceiling drift. Durability: this task, the compacted card, generated shard, containment manifest, and work-unit commit retain the resolution.`
+  Closure: `The complete cap-consistency authority verifies all 23 groups across all seven required dimensions (161 verified joins) and unlocks explicit calibration revalidation without relabelling measurement as cap implementation. The caller-sealed disposition authenticates the complete immutable publication, versions the atomic 232-file selected lineage as historical after exactly six semantic/bridge current mismatches, derives the separate 239-byte VHDL graph/evaluation drift and portable-VHDL/OSVVM materialization changes, validates the 22-file legacy lineage plus two closure files, and requires their exact 256-file/32,007,521-byte partition. Guarded exact t1764 passes in 785 seconds; focused policy/consistency/disposition passes Files=3/Tests=92 and adjacent closure/publication passes Files=2/Tests=8. Recapture is required before future current-performance use, not cap closeout; immutable bytes remain unchanged and budgets, support, capacity, and reached-boundary claims remain prohibited.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
   Status: `proposed`
@@ -3943,3 +3945,105 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   checks passed` across all 12 registered checks. No source, test, immutable
   artifact, cap, identity, product behavior, publication, support, budget, or
   capacity changes.
+
+## Completed Implementation — `.17.4.8` calibration disposition
+
+- Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8`.
+- Implemented one no-evidence-input, repository-root-only disposition authority
+  that rebuilds the complete cap-consistency authority internally, requires all
+  23 groups and 161 dimensions to remain verified, and validates the immutable
+  closure publication in one bounded worker before any disposition.
+- Bound the exact six-profile post-publication source-map diagnostic drift to
+  current derivation and commit 4834873a8; version the atomic 232-file selected
+  closure as historical rather than calling its unchanged members current.
+  Separately bind the 127+112-byte portable-VHDL source lineage to commits
+  460df366e/0b6e83979, its exact graph/evaluation identity change, and the
+  downstream portable-VHDL/OSVVM materialization identities. Validate the
+  explicit 22-file backend-emission-v1 lineage and two closure files; require
+  pairwise disjointness plus exact 256-file store equality.
+- Returns only a bounded defensive superseded disposition: recapture is required
+  before future current-performance use but is not a cap-closeout dependency;
+  cap implementation, promoted/public budgets, support, capacity, and behavior
+  claims remain prohibited. Default contract/mutation tests and the RAM-guarded
+  exact disposition route are synchronized with every durable surface.
+
+  Calibration Revalidation RED Finding: `The first RAM-guarded exact t1764
+  run rejects after 235 seconds in the immutable
+  bridge-fanout-v1.configurations.limit-v1 report. Its bridge-stage diagnostic
+  recorded source_map count 114909 and a 1,230-byte materialized projection;
+  current derivation rejects before record 65,537, reports count 65537, and
+  produces 1,229 bytes. Exact history identifies 4834873a8 (.17.4.3 source-map
+  admission before materialization) as the intentional post-publication
+  behavior change. The complete semantic/bridge census proves all 56 semantic
+  profiles still validate and exactly six of 52 bridge profiles retain that
+  one-field historical diagnostic: configurations limit; types qualification
+  and limit; endpoints limit; and backend-bindings qualification and limit.
+  Therefore the audited 232-file selected set is a closure selection, not a
+  wholly current lineage. Decision 0095 versions the closure atomically as
+  historical, authenticates its immutable publication as superseded, binds the
+  exact six-profile drift, and requires recapture before future current-
+  performance use without weakening current validators, relabelling historical
+  measurement as cap proof, or blocking the independent cap closeout. A
+  subsequent 76-minute guarded census finds execution/checking, portable-
+  SystemVerilog runtime, and balanced-portable current; backend emission,
+  portable-VHDL runtime, and OSVVM runtime reject their first VHDL-derived
+  reference profiles. The closure backend reference predates both the 127-byte
+  scenario-cycle repair in 460df366e and the 112-byte boundary-time repair in
+  0b6e83979. Fresh derivation proves only base_output_arbitration_tb.vhd changes
+  (46,264→46,503 bytes), total portable source changes 118,064→118,303 bytes,
+  all 59 maps remain, artifact/evaluation identities change, and portable-VHDL
+  plus OSVVM materialization identities move from 7c44198d…/6ce4f9a1… to
+  6f12ab75…/5cef115e…. This second expected identity cascade strengthens the
+  atomic historical disposition and is not artifact corruption.`
+
+## Acceptance Checklist (enforced) — `.17.4.8` calibration disposition
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the completed 23-group/161-dimension cap
+  proof authorizes explicit calibration revalidation but does not make an old
+  measurement publication current. The first exact t1764 RED rejects the
+  configurations-limit bridge witness after 235 seconds; a full semantic/
+  bridge census finds exactly six current mismatches, and
+  `git log -S'_append_source_map_entry' --oneline --
+  perl/FSM/HIAL/VIALBridge/Builder.pm` uniquely identifies 4834873a8's
+  intentional pre-materialization source-map admission. A separate 76-minute
+  six-authority census finds backend-emission, portable-VHDL runtime, and OSVVM
+  runtime stale while execution/checking, portable-SystemVerilog runtime, and
+  balanced-portable remain current. Exact backend derivation plus history binds
+  that second family to the 127-byte 460df366e cycle repair and 112-byte
+  0b6e83979 boundary-time repair.
+- [x] **ADDRESSED (verified)** — decision 0095 selects atomic versioning rather
+  than validator relaxation or immutable-artifact mutation.
+  `ArchitectureScaleCalibrationDisposition` accepts only a repository root,
+  rebuilds the complete cap prerequisite, authenticates closure bytes, runs all
+  108 semantic/bridge profiles through current validation, requires exactly
+  102 matches and the six sealed drift records, derives the exact 239-byte VHDL
+  graph/evaluation change plus portable-VHDL/OSVVM materialization identities,
+  validates the explicit 232/22/2 lineage split, and requires its exact
+  256-file/32,007,521-byte union. Before -> after: an authentic but unclassified
+  publication becomes explicit historical-only evidence with recapture required
+  before future current-performance use and no cap-closeout dependency.
+- [x] **NO REGRESSION** — module syntax passes; RAM-guarded exact t1764 reports
+  `All tests successful` at Files=1/Tests=3 in 785 seconds. Focused cap-policy/
+  consistency/disposition regression passes Files=3/Tests=92, and adjacent
+  closure/publication contracts pass Files=2/Tests=8. All 59 mdBook chapters
+  test; the inspected 94-file/20,990,806-byte repository-local render contains
+  the versioned disposition and VHDL identities before exact removal. The
+  focused documentation suite passes Files=4/Tests=326. Knowledge Map parity is
+  1,159 facts/6,233 questions/6,405 occurrences/138 shards. Claims dispose
+  1,755/1,755 candidates through 983 derived gates, 179 claim records, and 593
+  reviewed records with zero gaps/open owners. The 59-file book authority is
+  55,141 lines/2,977,810 bytes at exact +48 lines/+2,830 bytes; rationale and
+  knowledge-card transition allowances are exact, all 22 containment surfaces
+  pass, and no ceiling rises. Memory, task integrity (four trees/1,031 nodes),
+  relative paths, focused index, and textual diff checks pass. `[doctrine] all
+  doctrine checks passed` across all 12 registered checks. No immutable artifact,
+  cap, accepted route, product behavior, support, budget, capacity, or
+  reached-boundary claim changes; full CI and push remain deferred by policy.
+
+## Next Clean Frontier — `.17.5` activation
+
+- `.17.4` and `.17.4.8` are complete; `.17.5` remains proposed until this slice
+  commits and the repository is handoff-ready.
+- The next clean selection-only slice activates the regression-gate,
+  documentation, capability-truth, and closeout parent without changing product
+  behavior or promoting historical calibration budgets.

@@ -55,6 +55,7 @@ answers:
   - "what are the final tracked portable runtime artifact graph sizes?"
   - "how is balanced portable measurement scoped?"
   - "which immutable VIAL calibration files need current revalidation or explicit versioning?"
+  - "how is the immutable VIAL calibration publication dispositioned?"
 date: 2026-09-02
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]
@@ -69,6 +70,8 @@ evidence: >-
   docs/decisions/0081-portable-systemverilog-direct-drive-uses-root-owned-zero-duration-driver-slots.md;
   docs/decisions/0083-portable-systemverilog-runtime-scale-uses-authored-cycle-sampling-and-one-shared-staged-lifecycle.md;
   docs/decisions/0089-linux-logical-core-discovery-uses-bounded-kernel-authorities.md;
+  docs/decisions/0093-architecture-scale-caps-are-component-ceilings-with-explicit-route-authority.md;
+  docs/decisions/0095-calibration-closure-versions-atomically-after-current-validator-drift.md;
   perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/VIAL/ArchitectureScaleWorkload.pm;
   perl/FSM/VIAL/ArchitectureScaleBackendEmission.pm; perl/FSM/VIAL/ArchitectureScaleRuntimeStream.pm;
   perl/FSM/VIAL/ArchitectureScaleBalancedPortable.pm; perl/FSM/VIAL/ArchitectureScaleBalancedPortableMeasurement.pm; perl/FSM/VIAL/ArchitectureScaleBalancedPortableMeasurementMatrix.pm;
@@ -83,6 +86,7 @@ evidence: >-
   perl/FSM/VIAL/ArchitectureScaleCalibrationClosure.pm;
   perl/FSM/VIAL/ArchitectureScaleCalibrationClosurePublication.pm;
   perl/FSM/VIAL/ArchitectureScaleCapConsistency.pm;
+  perl/FSM/VIAL/ArchitectureScaleCalibrationDisposition.pm;
   perl/FSM/VIAL/ArchitectureScalePortableRuntimeMaterialization.pm;
   perl/FSM/VIAL/Parser.pm; perl/FSM/VIAL/SemanticBuilder.pm;
   scripts/run_vial_semantic_bridge_measurement_matrix.pl;
@@ -108,6 +112,7 @@ evidence: >-
   t/1662-vial-architecture-scale-backend-emission-measurement-matrix.t;
   t/1663-vial-architecture-scale-portable-runtime-materialization.t;
   t/1683-vial-architecture-scale-calibration-closure.t;
+  t/1764-vial-architecture-scale-calibration-disposition.t;
   vial/qualification/sv_portable_verilator_runtime_gate.vial;
   vial/qualification/sv_portable_verilator_runtime_qualification.vial;
   docs/knowledge/vial-execution-scale-reachability.md;
@@ -395,9 +400,26 @@ manifest: 1,755 bytes/SHA-256
 and its identity is `calibration-closure-publication/1316d11a6dfa008515fcb23aa132e30a72e7961d9e9e6eeba82ae0bf42546ac8`.
 The complete 256-file/32,007,521-byte store is exactly the disjoint union of
 those 232 selected artifacts, the 22 preserved v1 files/2,232,452 bytes, and
-the two closure files. Current disposition must rederive the selected lineage,
-authenticate the closure, retain v1 as explicitly versioned/superseded, and
-reject any missing, overlapping, or extra path; none may become cap proof.
+the two closure files. `ArchitectureScaleCalibrationDisposition` implements a
+no-evidence-input bounded-worker barrier and requires all 23 groups/161
+dimensions. Its first exact RED proves the 232 selected artifacts are not all
+current: six of 52 bridge-fanout profiles retain pre-4834873a8 fully
+materialized source-map counts, whereas current code stops before record
+65,537; all 56 semantic profiles validate. Decision 0095 versions the whole
+232-file closure-selected lineage atomically as historical, authenticates the
+publication as superseded, retains the separate backend-emission-v1 lineage,
+runs all 108 semantic/bridge profiles through current validation, requires 102
+matches, binds the exact six-profile drift, and rejects any missing,
+overlapping, or extra store path. A separate guarded census finds execution/
+checking, portable-SystemVerilog runtime, and balanced-portable current, while
+backend emission, portable-VHDL runtime, and OSVVM runtime reject their first
+VHDL-derived reference witness. Re-derivation binds the latter chain to the
+127-byte `460df366e` and 112-byte `0b6e83979` repairs: only the generated testbench
+changes, portable source grows 118,064→118,303 bytes, 59 maps remain, and the
+artifact/evaluation plus portable-VHDL/OSVVM materialization identities change.
+Recapture is required before future current-performance use, not before current
+cap closeout. Candidate budgets remain candidate-only; cap implementation,
+support, and capacity stay prohibited or unestablished.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
