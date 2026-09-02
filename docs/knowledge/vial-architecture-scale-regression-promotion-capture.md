@@ -22,9 +22,9 @@ evidence: >-
   docs/book/src/16df-vial-architecture-scale-cap-closeout.md;
   perl/FSM/VIAL/ArchitectureScaleRegressionPromotionPolicy.pm; perl/FSM/VIAL/ArchitectureScaleMeasurement.pm;
   perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCapturePlan.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileCapture.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusCoordinator.pm; scripts/run_vial_regression_promotion_corpus.pl; scripts/verify_vial_regression_promotion_failed_prefix.pl; scripts/verify_vial_regression_promotion_current_corpus.pl;
-  t/1765-vial-architecture-scale-regression-promotion-policy.t; t/1766-vial-architecture-scale-regression-promotion-capture-plan.t; t/1767-vial-architecture-scale-regression-promotion-profile-store.t; t/1768-vial-architecture-scale-regression-promotion-profile-capture.t; t/1769-vial-architecture-scale-regression-promotion-profile-resume.t; t/1772-vial-regression-promotion-corpus-store.t; t/1773-vial-regression-promotion-corpus-coordinator.t; t/1774-vial-regression-promotion-corpus-cli.t; t/1776-vial-regression-promotion-current-corpus-verifier.t
+  t/1776-vial-regression-promotion-current-corpus-verifier.t; t/1777-vial-regression-promotion-current-corpus-mutations.t
 reverify: >-
-  scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_corpus.pl --validate; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_corpus.pl --inventory; scripts/verify_vial_regression_promotion_failed_prefix.pl; scripts/verify_vial_regression_promotion_current_corpus.pl
+  scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_corpus.pl --validate; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_corpus.pl --inventory; scripts/verify_vial_regression_promotion_failed_prefix.pl; scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/run_with_ram_guard.sh -- prove -v t/1777-vial-regression-promotion-current-corpus-mutations.t
 ---
 
 Decision 0096 selects eleven v2 gate profiles. Each adapter call owns one
@@ -106,11 +106,11 @@ controller invocations, and zero exclusions. Its atomic same-volume corpus is
 its publication identity is `regression-promotion-corpus-publication/865c5cce3deee3eaaca9b66cd5d7f007a6e10b6423ac7d5dff2dc7484cd8432e`;
 the complete file-set digest is `dc5b315b827389eb466776716f6851cdd9ddd13b2f1aec441f8a51b7d72dc66f`.
 A producer-free validate pass reproduced every identity/count; inventory reports eleven
-present, zero missing, and no staging residue. Real-artifact mutation falsification remains
-missing under `.17.5.2.5.2`, so no budget is promoted; CPU sampling stays repository-local.
+present, zero missing, and no staging residue. Copied-artifact falsification is complete;
+no budget is promoted, and CPU sampling remains separately owned and repository-local.
 
 The read-only independent verifier imports no production module and authenticates 13 files/6,220,126 bytes, inventory `94c11e5c...bb57`, all identities, 11/33/44/0, cleanup, nonclaims, and seven foundation/one materialized/three external routes.
-That direct digest covers every file; production `file_set_sha256` directly covers report+manifest and transitively binds profiles. t1776 proves no byte/file-identity change; copied mutations remain `.5.2`'s missing falsification leg.
+That direct digest covers every file; production `file_set_sha256` directly covers report+manifest and transitively binds profiles. t1776 proves read-only identity; t1777 rejects 17 safe same-volume content/file/staging/history mutation classes, restores each copy, removes it, and leaves the real census exact.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]].

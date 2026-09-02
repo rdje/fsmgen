@@ -784,6 +784,8 @@ verifier:
 ```bash
 scripts/verify_vial_regression_promotion_current_corpus.pl
 prove -Iperl t/1776-vial-regression-promotion-current-corpus-verifier.t
+scripts/run_with_ram_guard.sh -- \
+  prove -v t/1777-vial-regression-promotion-current-corpus-mutations.t
 ```
 
 It derives the repository root from its tracked location and imports no
@@ -808,21 +810,30 @@ The focused watcher compares every path, inode, mode, link, owner, byte count,
 and file hash before and after execution, and the verifier emits only one
 bounded canonical result after the complete census succeeds.
 
-This proves current capture and producer-free re-admission, not a regression
-budget, support tier, capacity limit, or performance qualification. The
-production and independent re-derivation paths plus tracked durability are
-available; independent mutation falsification against a same-volume copy of
-this exact real publication remains explicitly missing under `.17.5.2.5.2`.
-That closeout must also characterize the observed CPU-bound
+The copied-artifact watcher closes the independent falsification leg without
+writing the sealed namespace. It installs the verifier beside an exact
+repository-local same-volume copy, admits the baseline, and fires 17 controls:
+report, manifest, profile record, order, identity, provider, count, digest,
+canonicality, symlink, hard link, FIFO, extra and missing paths, both staging
+roots, and historical-profile substitution. Every mutation rejects with empty
+stdout, every restored copy re-authenticates, the fixture is removed, and the
+real path/inode/owner/device/size/hash census stays identical. Foreign-owner
+and foreign-device mutations are not fabricated: the former needs privilege
+and the latter would violate the same-volume evidence policy; direct lstat
+enforcement and the same-owner/device baseline remain watched.
+
+This proves current capture, producer-free re-admission, and actual copied-
+artifact falsification, not a regression budget, support tier, capacity limit,
+or performance qualification. The next closeout must characterize the CPU-bound
 balanced/corpus canonicalization before deciding whether it is expected scale
 cost or a repairable performance defect. Budget work remains solely
 `.17.5.3`.
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-real-current-corpus-capture-v1 -->
-- Claim: At clean revision 155aa22ea3099642eb6b7f5de81ea03633e72bcb, guarded production capture published the repaired eleven-profile current corpus as eleven validations, 33 fresh raw measurements, 44 accepted controller invocations, and zero exclusions; its complete report is 23,288 bytes with SHA-256 d6139d0f...84a1 and its manifest is 1,280 bytes with SHA-256 3de607e3...0273. A distinct guarded producer-free process resumed all eleven. A separately implemented read-only verifier imports no production module and reconstructs the exact 13-file/6,220,126-byte namespace, inventory SHA-256 94c11e5c...bb57, identities, records, providers, correctness oracles, cleanup, and nonclaims. This proves current capture and two distinct re-admission paths, not independent real-artifact mutation falsification, a regression budget, support, performance, or capacity.
+- Claim: At clean revision 155aa22ea3099642eb6b7f5de81ea03633e72bcb, guarded production capture published the repaired eleven-profile current corpus as eleven validations, 33 fresh raw measurements, 44 accepted controller invocations, and zero exclusions; its complete report is 23,288 bytes with SHA-256 d6139d0f...84a1 and its manifest is 1,280 bytes with SHA-256 3de607e3...0273. A distinct guarded producer-free process resumed all eleven. A separately implemented read-only verifier imports no production module and reconstructs the exact 13-file/6,220,126-byte namespace, inventory SHA-256 94c11e5c...bb57, identities, records, providers, correctness oracles, cleanup, and nonclaims. Same-volume copied-artifact controls independently falsify every sealed content, semantic, file-shape, namespace, staging, and historical-substitution class that is safe to construct. This proves current capture, two distinct re-admission paths, and actual-artifact falsification, not a regression budget, support, performance, or capacity.
 - Re-derive: Run guarded `--validate` and `--inventory`, then run `scripts/verify_vial_regression_promotion_current_corpus.pl` against the active corpus. Require corpus ab2df899...e505, publication 865c5cce...432e, plan fbf69740...9737, policy 19cf4105...ece, file-set dc5b315b...c66f, report 23,288 bytes/d6139d0f...84a1, manifest 1,280 bytes/3de607e3...0273, inventory 94c11e5c...bb57, 13 files/6,220,126 bytes, eleven profiles/validations, 33 raw records, 44 invocations, zero exclusions/missing profiles, and the exact seven-foundation/one-materialized/three-external provider partition.
-- Falsify: MISSING - Independent mutation controls have not yet been fired against a same-volume copy of the exact real publication; synthetic store/admission RED controls and a read-only baseline watcher do not close that actual-artifact leg. (owner: HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.2)
-- Durability: Retain the exact task result, mdBook section, Knowledge card, bounded claim record, clean revision, same-volume sealed artifacts, tracked production validate/inventory path, tracked independent verifier and watcher, doctrine gate, and work-unit Git chain; `.17.5.2.5.2` separately owns copied immutable-evidence mutation controls.
+- Falsify: Run guarded t1777. Its exact same-volume copy must accept before mutation and after every restore; report, manifest, profile record, order, identity, provider, count, digest, canonicality, symlink, hard-link, FIFO, extra/missing path, both staging, and historical-substitution controls must reject with empty stdout; the real namespace census and final fixture absence must remain exact. Foreign owner/device controls remain explicitly unavailable where privilege or cross-volume data would be required.
+- Durability: Retain the exact task result, mdBook section, Knowledge card, bounded claim record, clean revision, same-volume sealed artifacts, tracked production validate/inventory path, tracked independent verifier, t1776/t1777 watchers, doctrine gate, and work-unit Git chain.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-real-current-corpus-capture-v1 -->
 
 The dispatch authority now implements the metadata-only first step. It

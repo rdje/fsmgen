@@ -1518,10 +1518,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.1: implement independent current corpus census`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.2`
-  Status: `active`
+  Status: `done`
   Goal: `Falsify the independent verifier against copied exact real-publication mutations.`
   Acceptance: `Use only repository-local same-volume copies of the exact active publication. Prove baseline acceptance and empty stdout on report, manifest, profile, ordering, identity, provider, count, digest, canonicality, link, owner/device where safely reproducible, file-shape, extra/missing path, staging, and historical-substitution mutations; restore or remove every fixture deterministically and leave the real publication byte-identical.`
-  Verification: `Activated from clean independent-census commit c4f745541. The copied-evidence watcher must install the tracked verifier beside one exact repository-local same-volume copy so root derivation and all paths remain authentic. Controls are partitioned into complete report, manifest, profile/report-record, order/count/identity/provider/digest/canonicality, symlink/hard-link/special-file, extra/missing path, profile/corpus staging, and historical-byte substitution classes. Each class restores the copy before the next control, requires nonzero status plus empty stdout, and compares the untouched real namespace against a pre/post byte/file-identity census. Owner/device variants run only when safely reproducible without privilege or cross-volume project data; the verifier's direct lstat enforcement remains mandatory either way. No production reload, producer, provider, simulator, measurement, budget, support, capacity, or real-publication mutation is authorized.`
+  Verification: `The tracked t1777 watcher installs the tracked independent verifier beside one exact repository-local same-volume copy of the 13-file/6,220,126-byte current publication. One baseline plus every restored state re-authenticates. Seventeen actual copied-artifact controls mutate complete report, manifest, profile report, profile order, corpus identity, provider identity, count, digest, canonicality, symlink, hard link, FIFO shape, extra path, missing path, profile staging, corpus staging, and historical-profile substitution; every control exits nonzero with empty stdout and a diagnostic bounded at 65,536 bytes, restores the exact copied path/mode/link/owner/device/size/hash census, and then passes full verification. Foreign-owner mutation is unavailable without privilege and foreign-device mutation is forbidden by same-volume policy, so neither is fabricated; the verifier's direct lstat owner/device comparison and the copied baseline's exact common owner/device are checked. The real publication's pre/post path/inode/mode/link/owner/device/size/hash census is identical, and the fixture is absent after completion. RAM-guarded t1777 passes Files=1/Tests=7 in 110 seconds; final adjacent t1776+t1777 passes Files=2/Tests=10 in 121 seconds. All 59 mdBook chapters test; the inspected repository-local render contains 94 files/21,212,073 bytes and is removed. Knowledge Map parity remains 1,160 facts/6,247 questions/6,419 occurrences/138 shards within the existing allowance after redundant historical watcher paths are compacted; claim joins close 1,787/1,787 candidates, 194 claim records, 991 gates, 602 reviewed, and zero gaps/open owners. No ceiling rises. No production reload, producer, provider, simulator, measurement, budget, support, capacity, or real-publication mutation occurs. This closes the registered claim's formerly missing actual-artifact falsification leg.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.2: falsify copied current corpus mutations`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3`
@@ -5201,3 +5201,29 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   claims, and all doctrines are required green before commit. No source, test,
   fixture, mutation, producer, provider, simulator, measurement, budget,
   support, capacity, full CI, or push runs in this activation.
+
+## Acceptance Checklist (enforced) — `.17.5.2.5.2` copied-mutation implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` pickaxes for both the
+  current-corpus-mutation watcher name and `copied-artifact controls` across
+  all relevant history return no predecessor: clean activation
+  `806198a8d` owns the explicitly missing actual-publication falsification leg,
+  while existing t1776 proves only read-only baseline acceptance.
+- [x] **ADDRESSED (verified)** — new tracked t1777 copies the exact current
+  publication and independent verifier onto the repository volume, proves the
+  baseline, fires 17 content/semantic/link/node/path/staging/history controls,
+  requires nonzero plus empty stdout for every RED, restores and fully
+  re-authenticates after each control, removes the fixture, and proves the real
+  namespace's pre/post inode/owner/device/byte/hash census identical. Before ->
+  after: the registered falsification leg moves from named missing owner `.5.2`
+  to available t1777 evidence; unsafe foreign-owner/device probes remain
+  explicitly unavailable instead of violating privilege/locality policy.
+- [x] **NO REGRESSION** — the 4,096-MiB repository RAM guard reports focused
+  t1777 `Files=1, Tests=7, Result: PASS` in 110 seconds. Final signoff must also
+  pass syntax/diff checks, guarded t1776+t1777, task integrity, Memory, relative
+  paths, exact claim-marker/registry parity, generated claim inventory and
+  disposition joins, Knowledge Map parity, mdBook tests/render inspection and
+  cleanup, maintained-reference authority, all doctrines, clean fixture/staging
+  census, and clean Git after commit. No producer, provider, simulator,
+  measurement, budget, support, capacity, full CI, push, or real-corpus write is
+  part of this slice.
