@@ -712,8 +712,7 @@ sub _positive_integer($value) {
 
 sub _json_integer_equals($value, $expected) {
     return defined($value) && !ref($value)
-        && $value =~ /\A(?:0|[1-9][0-9]*)\z/
-        && 0 + $value == $expected;
+        && _canonical_json($value) eq "$expected";
 }
 
 sub _nonnegative_integer($value) {

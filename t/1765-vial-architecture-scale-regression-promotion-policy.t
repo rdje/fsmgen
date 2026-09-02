@@ -105,6 +105,15 @@ subtest 'performance applicability separates provenance from enforcement' => sub
         qr/evidence revision became an enforcement dimension/,
         'a rehashed revision-match contract still rejects');
 
+    my $numeric_string = $class->performance_applicability_contract;
+    $numeric_string->{schema_version} = sprintf('%d', 1);
+    $numeric_string->{applicability_identity} = undef;
+    $numeric_string->{applicability_identity} =
+        'regression-promotion-performance-applicability/'
+        . sha256_hex($json->encode($numeric_string));
+    like(dies(sub { $validate->($numeric_string) }), qr/schema is invalid/,
+        'a rehashed JSON string cannot impersonate numeric schema version 1');
+
     my $fresh = $class->performance_applicability_contract;
     is($fresh->{evidence_revision_role},
         'immutable_qualification_provenance_only',

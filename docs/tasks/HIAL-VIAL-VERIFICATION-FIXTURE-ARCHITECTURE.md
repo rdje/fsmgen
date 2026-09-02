@@ -1591,11 +1591,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3: activate current budget qualification`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1`
-  Status: `active`
+  Status: `done`
   Goal: `Derive one authenticated in-memory budget qualification from the current v2 corpus without publishing it.`
   Acceptance: `Accept only the repository root; load and authenticate the complete .17.5.2 corpus; independently reconstruct every accepted run total, aggregate statistic, deterministic count oracle, correctness/repetition/exclusion result, and common/provider/applicability identity; derive each profile's wall/CPU/RSS budget with integer-safe decision-0056 floors, multipliers, and rounding; and return a bounded defensive content-addressed qualification report. Reject caller evidence, historical v1 bytes or budgets, non-current or dirty evidence, failed correctness, exclusions, incomplete/reordered profiles or records, mixed identities, invalid numeric types, overflow, and mutation. Execute no producer, provider, simulator, measurement controller, or publication write.`
-  Verification: `Activation audit exposed a prerequisite contract contradiction: decision 0096 requires exact common revision identity for later enforcement even though the capture revision necessarily precedes qualification and gate commits. Ordered child .1 first repairs applicability semantics without changing a budget; child .2 then implements derivation against the corrected authority.`
-  Commit: `pending`
+  Verification: `Activation audit exposed a prerequisite contract contradiction: decision 0096 required exact common revision identity for later enforcement even though the capture revision necessarily precedes qualification and gate commits. Child .1 repaired applicability semantics without changing a budget. Child .2 now loads only the authenticated current corpus and profile stores, independently validates all 44 accepted records, reconstructs exact non-timing correctness projections, derives three-sample statistics and integer-safe Decision 0056 budgets, and returns one bounded defensive content-addressed in-memory report. No publication or gate is active.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.1: separate evidence revision from applicability; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.2: derive current regression budgets`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.2`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.1`
   Status: `done`
@@ -1604,13 +1604,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `Decision 0096's amended contract resolves the contradiction without mutating sealed capture evidence: revision is immutable qualification provenance, while exact host/tool/guard/provider plus selection/workload/correctness-projection identity controls later enforcement. The existing v1 policy derivation remains byte-identical at 19cf4105...5ece; guarded production corpus reload retains capture revision 155aa22ea, all eleven profiles, and the exact seal. The separate closed applicability contract is content-addressed at b5976719...8018, accepts no caller input, returns defensively, and rejects a rehashed revision-as-runtime-dimension control. Matching later revisions are enforcement-eligible only after correctness; deterministic drift rejects before performance; environment drift is informational; unavailable providers do not pass. Syntax and focused t1765 pass; guarded exact t1765+t1766 report All tests successful at Files=2/Tests=19. Decision/book/task/claim evidence and doctrines close in the work-unit commit. No current corpus byte, plan/policy identity, budget, publication, support, performance result, capacity claim, full CI, or push changes.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.1: separate evidence revision from applicability`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the authenticated in-memory budget derivation against the repaired applicability contract.`
   Acceptance: `Satisfy the parent .17.5.3.1 acceptance after .1.1 closes, binding immutable evidence revision separately from the exact deterministic and environment applicability identity used by later gates.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `ArchitectureScaleRegressionPromotionQualification accepts only a repository root below the active RAM guard, invokes the authenticated corpus/profile stores once each, and emits no file. It requires the exact current policy, ordered eleven-profile plan, 11 validations, 33 measured records, 44 total accepted invocations, zero exclusions, clean immutable capture revision, exact common/provider environment, complete oracle/cleanup success, and canonical JSON integer types. For every record it independently verifies stage order, process success, stage count integers, oracle membership/evidence hashes, artifact count/hash rows, and workload/common identity; its bounded correctness projection retains all four records' exact non-timing stage counts, artifact identities, and oracle identities. It reconstructs per-run wall/CPU sums and maximum process-tree RSS, then min/median/max/MAD and the integer-safe Decision 0056 floor/multiplier/ceiling formula. The real corpus derives a 762,664-byte report at d8fb1813...0c97; its eleven per-profile projections are each below 262,144 bytes and its exact first/last budgets are 2,000,000,000/2,000,000,000/268,435,456 and 429,258,000,000/462,510,000,000/4,177,526,784 wall/CPU/RSS units. T1779 proves the closed API, formulas, defensive output, exact projections, and hostile historical/missing/reordered/excluded/failed/mixed/string/unsafe/overflow/rehashed controls. The audit also repairs Policy's JSON-number helper so a rehashed string `"1"` cannot impersonate numeric schema version 1. Focused t1765+t1779 and guarded real derivation pass; broader guarded source/store watchers, book, claims, containment, acceptance, and doctrines close before commit. No artifact, producer, provider, simulator, measurement-controller, publication, gate, support, capacity, full-CI, push, or existing policy/corpus identity changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.2: derive current regression budgets`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Freeze the authenticated current budget qualification in one bounded versioned atomic publication.`
   Acceptance: `Publish only a .17.5.3.1-accepted report beneath a non-colliding repository-relative same-volume qualification namespace; bind source corpus bytes and identities, formula authority, exact profile budgets, host/tool/guard/provider applicability, deterministic oracles, recalibration predecessor/trigger requirements, rollback, and nonclaims. Use closed canonical schemas, conservative byte ceilings, fsync plus atomic rename, exact reload, and owned cleanup; reject collisions, stale or mixed evidence, historical substitution, malformed/noncanonical/oversized state, file aliases, staging residue, or caller-selected paths and budgets.`
   Verification: `pending`
@@ -5632,3 +5632,47 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   staged acceptance, and `[doctrine] all doctrine checks passed` are green. No
   current-corpus byte, capture policy/plan identity, budget, publication,
   support, performance result, capacity claim, full CI, or push changes.
+
+## Acceptance Checklist (enforced) — `.17.5.3.1.2` authenticated budget derivation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S'_candidate_budget'` finds
+  budget arithmetic only in the historical calibration path introduced by
+  `4487f0fe3` and the current-corpus selection in `e59d9ce02`; neither is an
+  admissible current-budget owner. Inspection of the authenticated v2 report
+  shapes shows that exact deterministic truth lives inside all four records'
+  stage counts, artifact rows, and correctness-oracle evidence identities, not
+  only in the report-level workload fields. The first uncommitted projection
+  dropped those record facts; review made that construction RED before commit.
+  Separately, predecessor `eaf02abda` compared schema-version scalars by regex
+  and numeric coercion, so canonical JSON string `"1"` could impersonate number
+  `1` after rehashing.
+- [x] **ADDRESSED (verified)** — the new caller-sealed Qualification module
+  loads only CorpusStore and ProfileStore, validates and recounts all current
+  evidence, reconstructs exact non-timing correctness projections from all
+  four records per profile, derives checked three-sample statistics and exact
+  Decision 0056 budgets, and returns a defensive content-addressed report
+  bounded at 1 MiB. The real report is 762,664 bytes at identity
+  `d8fb1813...0c97`; every one of its eleven correctness projections stays
+  below the 262,144-byte per-profile bound. Policy and Qualification now test
+  canonical JSON encoding before accepting integer types. T1779 deliberately
+  mutates evidence, deterministic counts, artifact-byte types, record order,
+  environment, exclusions, arithmetic, budgets, and applicability; each
+  competing construction rejects.
+- [x] **NO REGRESSION** — module and watcher syntax pass. Focused t1765+t1779
+  report `All tests successful` at Files=2/Tests=15. Guarded production
+  derivation reauthenticates the exact current 11/33/44/0 corpus under the
+  unchanged 88%-host/4,096-MiB-descendant limits and reproduces identity
+  `d8fb1813...0c97`. The corrected guarded policy/profile-store/corpus-store/
+  qualification band reports `All tests successful` at Files=4/Tests=35. All
+  59 mdBook chapters test; its inspected 94-file/21,383,590-byte same-volume
+  render is removed exactly. Knowledge Map parity remains 1,160 facts/6,252
+  questions/6,424 occurrences/138 shards. The claim join closes all
+  1,832/1,832 candidates with zero gaps. Containment, task integrity, Memory,
+  relative paths, staged acceptance, and all doctrines are green before
+  commit. The artifact census also found a stale 440-file/2,408-KiB t1773
+  synthetic fixture from the prior day's interrupted process; its encoded PID
+  was absent, its exact test-owned path was removed, and the residue census now
+  contains only the established tool-cache sentinels. No stored qualification
+  artifact, capture policy/plan/corpus identity,
+  producer/provider/simulator/controller run, publication, active gate,
+  support, capacity, full CI, push, or project data locality changes.
