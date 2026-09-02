@@ -694,11 +694,42 @@ ambiguous stays in place for diagnosis. The provisional 64 MiB file ceiling is
 a storage-admission limit, not evidence that a profile fits, performs, or has
 capacity. Real capture must fit or fail without relaxing the ceiling.
 
+The isolated single-profile capture boundary is implemented. Its public
+API accepts only the repository root and one plan ordinal. It derives the
+current dispatch internally, requires a clean Git revision, and forks one
+guard-visible child. The child invokes exactly the plan's public adapter method
+with the sealed arguments, calls that adapter's public `validate_report`, and
+admits only the selected gate coordinate, accepted validation followed by
+three accepted gate records, zero exclusions, complete cleanup, and one clean
+revision/host/tool/guard identity. Numeric or string lookalikes cannot replace
+the required JSON scalar types.
+
+Provider admission is route-specific. Structural OSVVM emission must retain
+the exact read-only repository materialization and must remain non-external.
+Runtime routes must reproduce the complete content-addressed tool profile;
+an internally consistent foreign provider still rejects. Only an admitted
+report reaches the v2 store. The child returns bounded metadata—not report
+bytes—through canonical IPC, and the parent reloads the publication, compares
+artifact identity, re-runs public adapter validation, and proves the repository
+revision stayed clean and unchanged.
+
+Exceptions, signals, unframed exits, malformed or noncanonical IPC, an
+oversized envelope, mixed record identities, reordered or incomplete samples,
+failed outcomes, residue, and producer-side repository mutation all fail
+closed. The focused watcher crosses all eleven plan routes using public-method
+doubles and repository-local Git fixtures; it proves dispatch and admission
+without running a scale producer, simulator, or real capture. The guarded real
+capture remains owned by `.17.5.2.4` after the coordinator and resume path ship.
+
 The storage audit also found a legacy gap: five newer revision-1 matrix
 publishers declare byte ceilings, but the older semantic/bridge and
 execution/checking publishers do not. The new v2 store does not inherit that
 gap. A separate tracked remediation must bound those historical public
-readers/writers before `.17.5.2.2` closes.
+readers/writers before `.17.5.2.2` closes. That remediation also owns a bounded
+audit of the semantic/bridge matrix's older direct coordinator loop: unlike the
+six newer publishers, it does not isolate each full report validation in a
+fresh profile process. Historical success prevents calling this a failure
+without reproduction; v2 already isolates the route.
 
 Run the bounded metadata-only watcher with:
 
@@ -712,6 +743,14 @@ Run the producer-free v2 storage and adversarial admission watcher with:
 ```sh
 prove -Iperl \
   t/1767-vial-architecture-scale-regression-promotion-profile-store.t
+```
+
+Run the isolated ordinal-dispatch and accepted-report watcher under the RAM
+guard with:
+
+```sh
+scripts/run_with_ram_guard.sh -- prove -Iperl \
+  t/1768-vial-architecture-scale-regression-promotion-profile-capture.t
 ```
 
 Authenticate both the selection policy and dispatch plan under the repository

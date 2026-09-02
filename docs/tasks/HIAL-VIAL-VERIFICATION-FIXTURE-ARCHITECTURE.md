@@ -1416,11 +1416,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.1.1: repair claim registry census watcher`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.2`
-  Status: `proposed`
+  Status: `done`
   Goal: `Execute and admit one current dispatch entry in an isolated profile worker before atomic publication.`
   Acceptance: `Internally derive the current plan, select only one ordinal, execute only its public adapter/method with its sealed arguments in one guard-visible child, validate through that adapter, and require exact coordinates, accepted validation followed by three accepted gate measurements, zero exclusions/residue, deterministic identities, exact applicability/provider status, clean revision, and one within-profile host/tool/guard/common identity. Publish through .1 before returning bounded metadata-only IPC; reject caller entry/report/callback/private-method injection plus exception, exit, signal, malformed, noncanonical, oversized, mixed, reordered, failed, or mutation controls.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `ArchitectureScaleRegressionPromotionProfileCapture accepts only repository_root plus one numeric plan ordinal, requires the active repository RAM guard and a clean current Git revision, then derives the current plan and executes exactly the sealed public adapter method in one child. Generic admission requires the selected coordinates, one accepted ordinal-zero validation followed by accepted measurement ordinals one through three, zero exclusions/diagnostics, exact JSON scalar types, complete four-record cleanup, one host/tool/guard/revision identity, and the route's exact external tool profile or read-only OSVVM repository materialization. Only admitted reports reach the bounded v2 profile store; canonical metadata crosses the 65,536-byte IPC boundary, while the parent reloads exact artifact bytes, reruns the public validator and admission, and proves revision stability. The all-eleven-route public-method watcher rejects caller injection, mixed/reordered/incomplete/failed/residual state, provider substitution, repository mutation, dirty starts, exception/exit/signal, malformed/noncanonical/cap-plus-one IPC, and leaves repository-local fixtures clean without running a simulator or scale producer. Syntax passes; the guarded focused watcher reports Files=1/Tests=9 and policy/plan/store/capture integration reports Files=4/Tests=37. The source audit also durably routes the semantic/bridge legacy coordinator-isolation asymmetry to .17.5.2.2.4.1 as a risk requiring reproduction, not a current failure.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.2: implement isolated profile dispatch`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.3`
   Status: `proposed`
@@ -1430,10 +1430,18 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Close the two inherited unbounded revision-1 semantic/execution publication readers and writers.`
   Acceptance: `Independently census current semantic/bridge and execution/checking publication bytes, select and three-leg verify conservative storage ceilings without implying capacity, and add encode-before-write plus stat-before-read enforcement to both legacy publishers. Require canonical newline-terminated JSON, exact single-file census, same-volume regular files with one link, bounded reads, and focused exact-cap/cap-plus-one/malformed/noncanonical/symlink/hard-link controls without changing historical artifact identities or weakening family admission. Keep this remediation separate from v2 evidence and complete it before closing .17.5.2.2.`
   Verification: `Source audit during .17.5.2.2.1 found that backend-emission, portable-runtime, portable-VHDL-runtime, OSVVM-runtime, and balanced-portable revision-1 publishers declare explicit maximum publication bytes, while ArchitectureScaleSemanticBridgeMeasurementMatrix and ArchitectureScaleExecutionCheckingMeasurementMatrix encode, write, stat, and read without a byte ceiling. Existing artifacts falsify immediate oversize—execution/checking currently peaks below 1 MiB—but artifact history cannot substitute for a bound.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.4.1`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.4.1`
+  Status: `proposed`
+  Goal: `Resolve the inherited semantic/bridge revision-1 coordinator-isolation asymmetry before legacy hardening closes.`
+  Acceptance: `Reproduce current semantic/bridge publication reload under the unchanged repository RAM guard and compare its direct long-lived _capture_family validation loop with one fresh process per immutable profile. Prove whether full adapter regeneration retains coordinator high-water memory across profiles, using the existing clean 108-profile publication and bounded synthetic allocation controls without relabelling evidence. If retention can threaten the selected guard, isolate capture and immutable reload per profile with closed bounded canonical IPC and exact exception/exit/signal/malformed/oversized controls; otherwise retain independently repeatable evidence that direct validation stays bounded. Preserve report bytes, public APIs, common identity, publication paths, cleanup, and all performance/capacity nonclaims.`
+  Verification: `Signoff audit in .17.5.2.2.2 finds six newer revision-1 matrix publishers with _run_isolated_profile_worker, while ArchitectureScaleSemanticBridgeMeasurementMatrix still invokes measure_profile and full validate_report directly inside one _capture_family process. Git history shows execution/checking isolation b9463c663 was introduced only after two fresh processes retained roughly 5 GiB while validating the same nineteen-profile prefix. Semantic/bridge historically completed 108 profiles and its current reports peak at 253,882 bytes, so the asymmetry is adjacent risk requiring reproduction—not proof of a current failure. The v2 profile capture path already isolates every route and does not inherit this uncertainty.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3`
@@ -4396,8 +4404,52 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   disposition, inventory, product code, capture artifact, mdBook behavior,
   measurement, simulator, full CI, or push changes in this repair slice.
 
-## Next Clean Frontier — `.17.5.2.2.2` isolated profile dispatch/admission
+## Acceptance Checklist (enforced) — `.17.5.2.2.2` isolated profile dispatch/admission
 
-- Query the Knowledge Map, inspect the public family adapters and the committed
-  v2 profile-store API, then implement exactly one bounded isolated dispatch
-  and admission path without broadening into corpus coordination.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Query-first review of the promotion-capture
+  card, current plan/store, and seven measurement adapters confirmed that no
+  heterogeneous v2 execution owner existed. `git log -S'sub
+  _run_isolated_profile_worker' --oneline --
+  perl/FSM/VIAL/ArchitectureScale*MeasurementMatrix.pm` identifies six newer
+  revision-1 family publishers with isolated workers, while each remains tied
+  to its private schema, inventory, path, and admission contract; direct reuse
+  would make one family authoritative for the other ten routes. The same audit
+  found the older semantic/bridge direct coordinator loop. Execution/checking
+  history records roughly 5-GiB retention as the reason its later worker
+  isolation shipped, but semantic/bridge's completed 108-profile history and
+  current 253,882-byte report maximum falsify calling the asymmetry a present
+  failure. Proposed legacy child `.17.5.2.2.4.1` now owns exact reproduction.
+- [x] **ADDRESSED (verified)** —
+  `ArchitectureScaleRegressionPromotionProfileCapture` exposes only root plus
+  numeric ordinal. It authenticates the current plan, guard, and clean revision;
+  forks one child; invokes only the sealed public adapter method; reruns the
+  public validator; and admits the exact validation-plus-three-measurement
+  sequence with accepted outcomes, zero exclusions/diagnostics, complete
+  cleanup, exact JSON scalar types, one common identity, and route-specific
+  provider evidence. The child publishes only through the v2 store before
+  returning canonical metadata bounded to 65,536 bytes; the parent reloads the
+  artifact, repeats public validation/admission, and checks unchanged clean Git
+  state. All eleven routes and hostile report/provider/process/IPC/repository
+  controls cross the same boundary. Before -> after: a metadata-only plan and
+  producer-free store become one executable single-profile transaction without
+  a corpus coordinator, resume claim, real capture, simulator run, or budget.
+- [x] **NO REGRESSION** — Perl syntax passes. Exact RAM-guarded t1768 reports
+  `All tests successful` at Files=1/Tests=9; guarded policy/plan/store/capture
+  integration reports Files=4/Tests=37. The claim checkers rederive 11,688
+  numeric lines and retain 1,762/1,762 dispositions, 179 claim records, 988
+  gates, 595 reviewed records, and zero gaps/open owners; their four-file
+  watcher reports Files=4/Tests=38. All 59 mdBook chapters test; the inspected
+  94-file/21,048,215-byte repository-local render contains the dispatch and
+  bounded legacy-risk wording before exact removal. The book is 59 files/
+  55,317 lines/2,987,271 bytes at authorized +39 lines/+2,296 bytes. Knowledge
+  Map parity is 1,160 facts/6,242 questions/6,414 occurrences/138 shards; the
+  1,159-card source surface is 46,991 lines/3,469,834 bytes. All 22 containment
+  surfaces and four-tree/1,048-node task integrity pass. No real producer,
+  simulator, current capture evidence, corpus seal, budget, support,
+  performance, capacity, full CI, or push is claimed or run.
+
+## Next Clean Frontier — `.17.5.2.2.3` exact same-profile resume
+
+- Query the Knowledge Map, audit the committed capture/store reload boundary,
+  then close same-revision/same-identity resume and its adversarial controls
+  without broadening into the complete-corpus coordinator.

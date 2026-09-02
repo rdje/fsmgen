@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **94** uniquely owned question entries.
+> **3** facts · **95** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -23,6 +23,7 @@
 - q="how are total and simultaneous VIAL fibers counted before materialization?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="how does VIAL architecture scale measurement work?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how does VIAL measure Linux logical cores without a Perl POSIX constant?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="how does one VIAL regression-promotion profile run in isolation?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="how does portable SystemVerilog implement a direct endpoint drive?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how does portable SystemVerilog schedule a check-to-react successor?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how does portable runtime-stream activity reach exactly 10,000 records?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
