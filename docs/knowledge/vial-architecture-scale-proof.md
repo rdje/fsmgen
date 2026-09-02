@@ -22,6 +22,7 @@ answers:
   - "what does semantic and bridge scale measurement claim?"
   - "how does semantic bridge measurement preserve semantic paths without allowing host paths?"
   - "how is the semantic bridge scale matrix resumed and published?"
+  - "does semantic bridge matrix validation require profile isolation?"
   - "how does semantic bridge measurement preserve a failed stage diagnostic?"
   - "how does the exact combined source byte profile stay below its timeout?"
   - "how are VIAL execution and checking stages measured?"
@@ -93,6 +94,7 @@ evidence: >-
   perl/FSM/VIAL/ArchitectureScalePortableRuntimeMaterialization.pm;
   perl/FSM/VIAL/Parser.pm; perl/FSM/VIAL/SemanticBuilder.pm;
   scripts/run_vial_semantic_bridge_measurement_matrix.pl;
+  scripts/audit_vial_semantic_bridge_profile_isolation.pl;
   scripts/run_vial_execution_checking_measurement_matrix.pl;
   scripts/run_vial_backend_emission_measurement_matrix.pl;
   perl/FSM/VIAL/ArchitectureScaleSemanticCatalog.pm;
@@ -112,6 +114,7 @@ evidence: >-
   t/1648-vial-architecture-scale-backend-emission-osvvm.t; t/1650-vial-architecture-scale-backend-emission-family-qualification.t; t/1651-vial-architecture-scale-runtime-stream-construction.t; t/1652-vial-balanced-portable-bridge-admission.t; t/1653-vial-balanced-portable-composition.t; t/1654-vial-balanced-portable-emission.t; t/1655-vial-architecture-scale-runtime-balanced-qualification.t; t/1656-vial-architecture-scale-measurement-foundation.t; t/1657-vial-architecture-scale-semantic-bridge-measurement.t; t/1659-vial-architecture-scale-execution-checking-measurement.t; t/1660-vial-architecture-scale-execution-checking-measurement-matrix.t; t/1661-vial-architecture-scale-backend-emission-measurement.t;
   t/1557-vial-portable-sv-backend-emission.t;
   t/1558-vial-verilator-run-integration.t;
+  t/1770-vial-semantic-bridge-profile-isolation-audit.t;
   t/1662-vial-architecture-scale-backend-emission-measurement-matrix.t;
   t/1663-vial-architecture-scale-portable-runtime-materialization.t;
   t/1683-vial-architecture-scale-calibration-closure.t;
@@ -150,6 +153,9 @@ reverify: >-
   rg -n 'utf8::downgrade|pack.*B\*|validation_rejected|prior_stage_failed'
   perl/FSM/VIAL/Parser.pm perl/FSM/VIAL/SemanticBuilder.pm
   perl/FSM/VIAL/ArchitectureScaleSemanticBridgeMeasurement.pm &&
+  rg -n 'expected_drift|synthetic-allocation|_load_report_publication'
+  scripts/audit_vial_semantic_bridge_profile_isolation.pl
+  t/1770-vial-semantic-bridge-profile-isolation-audit.t &&
   rg -n 'source_free_construction|preflight_dominated|_measurement_inputs|bind_plan'
   perl/FSM/VIAL/ArchitectureScaleExecutionCheckingMeasurement.pm
   perl/FSM/VIAL/ArchitectureScaleExecutionGraph.pm perl/FSM/VIAL/ArchitectureScaleCheckingState.pm &&
@@ -189,38 +195,29 @@ reverify: >-
   t/1645-vial-architecture-scale-backend-emission-foundation.t
   t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t t/1652-vial-balanced-portable-bridge-admission.t t/1653-vial-balanced-portable-composition.t t/1654-vial-balanced-portable-emission.t t/1655-vial-architecture-scale-runtime-balanced-qualification.t t/1656-vial-architecture-scale-measurement-foundation.t t/1657-vial-architecture-scale-semantic-bridge-measurement.t t/1658-vial-architecture-scale-semantic-bridge-measurement-matrix.t t/1659-vial-architecture-scale-execution-checking-measurement.t t/1660-vial-architecture-scale-execution-checking-measurement-matrix.t t/1661-vial-architecture-scale-backend-emission-measurement.t
   t/1662-vial-architecture-scale-backend-emission-measurement-matrix.t
+  t/1770-vial-semantic-bridge-profile-isolation-audit.t
 ---
 
 Decisions `0055` and `0056` select architecture-scale proof without claiming capacity.
-Six orthogonal families isolate source/SemanticIR, bridge fanout, execution
-graphs, checking state, backend emission, and runtime streams; one conservative
-balanced candidate checks interaction. Each axis has reference, gate-candidate,
-qualification-candidate, exact-limit, and over-limit levels. Every timing/RSS
-sample is invalid unless its stage-local semantic, identity, source-map,
-artifact, deterministic-rerun, result, failure, and cleanup oracles pass.
-Fixed 88%-host/4,096-MiB-descendant safety applies immediately; performance
-budgets derive immutably from clean pinned-host calibration and do not fail on
-unmatched hosts. Earliest-cap dominance is reported honestly. These candidates
-are not support, multi-unit/domain, mixed-language, native-UVM-runtime, full-
-language, whole-product `big`/`really_big`, synthesis, or general-parity claims.
+Six orthogonal families isolate source/SemanticIR, bridge, execution, checking,
+backend emission, and runtime streams; one balanced candidate checks interaction.
+Axes retain reference, gate, qualification, exact-limit, and excess levels.
+Timing/RSS is invalid unless stage-local semantics, identity, source maps,
+artifacts, rerun, result, failure, and cleanup all pass. Fixed 88%-host and
+4,096-MiB-descendant safety is immediate; budgets require clean pinned-host
+calibration, while earliest-cap dominance remains explicit. None of these are
+support, whole-product capacity, synthesis, native-UVM-runtime, or parity claims.
 
-Decision `0083` closes portable-SystemVerilog runtime-stream selection without
-promoting a benchmark to support or capacity. The checked 274-record reference
-adds five genuine records per extra authored reset cycle—four endpoint/probe
-samples and one coverage record—and one final passing expectation, giving
-`records(N)=5N+260`. Qualified public probes reach exact 10,000 records at
-`N=1,948` and exact 15,000 records at `N=2,948`. The former 100,000 candidate
-hits the Runner's 67,108,864-byte runtime-output envelope; 25,000 separately
-hits the complete public artifact-graph cap. Portable qualification therefore
-uses the largest 5,000-record step whose complete graph remains at or below
-three quarters of that cap: the 15,000 probe used 47,502,039 bytes and left
-19,606,825 bytes of hard-cap headroom, while 20,000 left only 4,194,825 bytes.
-Those revision-local probe bytes selected the workload. Completed child
-`.17.3.5.2` regenerates the ordinary source-to-emission route twice from the
-tracked inputs and seals the final graphs at 32,098,531/47,505,049 bytes. The
-qualification graph leaves 19,603,815 bytes below the hard cap and 2,826,599
-bytes below the three-quarter admission ceiling; the changed provenance bytes
-are therefore measured identities, not an inferred adjustment to the probes.
+Decision `0083` selects portable-SystemVerilog runtime-stream qualification
+without promoting support or capacity. Each authored reset adds five records
+plus the final expectation, so `records(N)=5N+260`; qualified probes reach
+10,000/15,000 records at `N=1,948/2,948`. The 100,000 candidate hits the
+67,108,864-byte runtime envelope and 25,000 hits the artifact-graph cap.
+Qualification therefore uses the largest 5,000-record step at or below three
+quarters of that cap: the 15,000 probe used 47,502,039 bytes and left
+19,606,825 hard-cap bytes, whereas 20,000 left 4,194,825. `.17.3.5.2` reruns
+ordinary source-to-emission and seals 32,098,531/47,505,049-byte final graphs;
+their changed provenance bytes are measured identities, not probe adjustments.
 
 Completed `.17.2.1`-`.17.2.5` cover source through checking state. Decision
 `0075` selects checked-AHB backend routes: portable-SV oracle revision 2
@@ -234,23 +231,20 @@ checks, content-addressed reruns, atomic rejection, and cleanup. Runtime
 execution or runtime/capacity claims. Exact historical counts remain in the
 task evidence and decisions `0075`/`0055`, not duplicated here.
 
-Decision `0077` resolves balanced `.17.2.7.2` with a private caller-sealed
-direct-IAL1 revision-2 route, leaving public AHB/revision 1 unchanged. Its real
-1+1+126+32+16+1,744+128 equation yields 2,048 bindings; canonical composition,
+Decision `0077` resolves balanced `.17.2.7.2` through a private caller-sealed
+direct-IAL1 revision-2 route while public AHB/revision 1 remains unchanged. Its
+`1+1+126+32+16+1,744+128` equation yields 2,048 bindings; canonical composition,
 portable-SV emission, and the fifteen-runtime/one-balanced partition reject
-hostile evidence and clean repository staging. The dedicated card/book retains
-exact artifacts/maps. Provider/runtime/support/performance/capacity/boundary
-claims remain unclaimed; `.17.2` is complete.
+hostile evidence and clean staging. Dedicated docs retain exact artifacts/maps;
+provider, runtime, support, performance, capacity, and boundary remain unclaimed.
 
-Completed `.17.3.1` supplies twelve closed stage records, correctness-before-
-measurement, 250-ms controller/descendant sampling, smaller-of timeouts,
-disjoint artifact census, same-volume atomic publication, and exact cleanup;
-the guard wrapper remains enforcement authority. t/1656 falsifies identity,
-path, timeout, ordinal, stage, output, collision, and failure substitutions.
-Linux host identity now derives logical cores from the bounded kernel online
-CPU mask and `kernel_max`, with strict canonical parsing and an independently
-bounded `/proc/cpuinfo` fallback. Missing or hostile authorities fail closed;
-Darwin profiling and the closed evidence schema are unchanged.
+Completed `.17.3.1` supplies twelve closed stages, correctness-first 250-ms
+sampling, smaller-of timeouts, disjoint artifact census, same-volume atomic
+publication, and exact cleanup under the guard wrapper. t/1656 falsifies
+identity, path, timeout, ordinal, stage, output, collision, and failure drift.
+Linux logical-core identity comes from bounded canonical kernel authorities
+with bounded `/proc/cpuinfo` fallback; missing or hostile inputs fail closed.
+Darwin profiling and the evidence schema remain unchanged.
 `.17.3.2` adds caller-sealed semantic/bridge reconstruction, independent stage
 reruns, and a collision-checked `path` to `semantic_path` evidence projection
 while retaining original evaluation JSON as an artifact. Accepted gate and
@@ -261,6 +255,12 @@ matrix retains 186 raw records and zero exclusions. A first combined-byte run
 exposed masked timeout evidence and parser/value-normalization hot paths; the
 repair preserves rejected-stage diagnostics, Unicode semantics, the fixture,
 and the fixed timeout. Tasks, decisions, and Git retain the detailed evidence.
+A tracked read-only audit compares direct and fresh-child profile validation.
+Both reproduce 102 current matches plus decision 0095's six drifts. Direct
+full-corpus validation reaches 2,236,547,072-byte maximum RSS with
+2,058,420,224-byte 4-GiB guard headroom; isolation lowers retained parent state,
+but no direct failure is reproduced, so product code stays unchanged. One-run
+timings are witnesses, not budgets.
 
 `.17.3.3` reconstructs only the execution or
 checking producer and measures independently rerun `construct`,
@@ -294,8 +294,13 @@ all terminal defenses while rejecting known excess before final list, map, IR,
 or report allocation. Exact adapters retain attempts, identities, boundary
 outcomes, the fixed 300-second ceiling, and clean staging.
 
-Revision `9c0209c22` seals the complete 40-execution/32-checking matrix: 75 active files/7,312,415 bytes, both family manifests, accepted identity `execution-checking-matrix/0548629720a9f4c8636c912396cfaefff523da92fc800594618db68b788b91d0`, 41 accepted, 19 expected rejection, five inapplicable measurement, two preflight dominated, 31 applicable measurement, 62 controller applicable, ten controller inapplicable, 119 raw records, ten source-free profiles, and zero exclusions.
-The 88% host cutoff safely interrupted immutable execution-family revalidation; same-identity resume left zero raw staging and completed checking plus the aggregate seal. A separate guarded `--validate` reloads the same identity and partition with zero diagnostics. This does not claim capacity, reached boundaries, public budgets, backend/tool execution, compile/run/trace/result behavior, support, or a public API.
+Revision `9c0209c22` seals the 40-execution/32-checking matrix: 75 files/
+7,312,415 bytes at identity `execution-checking-matrix/0548629720a9f4c8636c912396cfaefff523da92fc800594618db68b788b91d0`,
+41 accepted/19 rejected, 31 applicable/five inapplicable/two preflight-dominated
+measurements, 62/ten controller applicable/inapplicable, 119 raw records, ten
+source-free profiles, and zero exclusions. Same-identity resume after the 88%
+host cutoff left zero staging; guarded `--validate` reloads with no diagnostics.
+This is not capacity, support, budget, public-API, or backend/tool execution.
 
 `.17.3.4.1` measures only structural `backend_emission_v1` production through
 caller-sealed `construct`, `parse_validate`, `bridge`, `bind_plan`, and `emit`
@@ -324,18 +329,13 @@ exclusions, provider classification, content identity, and nonclaims. These
 bounds and manifests are structural evidence, not IASIM/tool execution,
 support, performance budgets, capacity, or reached-boundary claims.
 
-Clean revision `fdc6e6a1b` seals all twenty profiles as 22 immutable files/
-2,232,452 bytes at complete identity
-`backend-emission-matrix/a5bb05a5f4be7fb364fbf52c6750b10e04417d53732f364158e6f143bc71f735`.
-The accepted partition is 13 emitted/seven authoritative non-emission,
-twelve validation/eight measurement-candidate, six applicable/two
-inapplicable measurement, 24 raw/zero excluded records, five read-only
-provider-verification profiles, and three preflight-dominated profiles. The
-largest profile is 442,009 bytes below the 524,288-byte publication ceiling;
-family and complete manifests are 30,203/2,535 bytes. Exact t/1662 passes in
-12,656 seconds under the unchanged guard, and a fresh-process guarded
-`--validate` returns the same identity and partition. The elapsed observation
-is capture provenance, not a public budget or capacity claim.
+Clean `fdc6e6a1b` seals twenty profiles as 22 files/2,232,452 bytes at
+`backend-emission-matrix/a5bb05a5f4be7fb364fbf52c6750b10e04417d53732f364158e6f143bc71f735`:
+13 emitted/seven non-emission, twelve validation/eight measurement candidates,
+six applicable/two inapplicable, 24 raw/zero excluded, five read-only provider,
+and three preflight-dominated. The largest is 442,009 bytes below its 524,288
+ceiling; family/complete manifests are 30,203/2,535 bytes. Exact t1662 and a
+fresh guarded reload agree; 12,656 seconds is provenance, not a budget/capacity.
 
 Completed `.17.3.5.1.1` repairs the portable-SV phase-order defect found by a
 real gate-reachability probe. It preserves immutable operation/static-rank
@@ -376,19 +376,15 @@ decision `0077`: it qualifies structural emission only, claims no runtime
 execution of its reset-child fibers, and retains its exact private shape gate
 and public-bypass rejection.
 
-Portable-SV oracle revision 2 is the versioned result of `.17.3.5.1.4`: exact
-T=6,318 emits 16,774,723 bytes/6,351 maps and T=6,319 rejects before the
-unchanged 16-MiB cap. `.17.3.5.2` separately selects authored 10,000/15,000-
-record runtime candidates; VHDL/OSVVM remain separately owned. Calibration
-closure exposed that backend-emission matrix v1 predates oracle v2. Commit
-`0601fa8aa` explicitly seals the non-colliding v2 namespace and preserves v1
-as superseded historical evidence. Clean `4487f0fe3` exact t1662 captures and
-independently reloads 22 v2 files/2,252,381 bytes; identity is
+Portable-SV oracle v2 accepts `T=6,318` at 16,774,723 bytes/6,351 maps and
+rejects `6,319` before 16 MiB; runtime selection remains separate. `0601fa8aa`
+preserves matrix v1 historically and gives v2 a non-colliding namespace.
+Clean `4487f0fe3` t1662 reloads 22 v2 files/2,252,381 bytes at identity
 `backend-emission-matrix/9d634e6a898cc58a3566e6f52c846c19ea1b06c509961338a57c3322840c4fe1`.
-Guarded exact t1683 closes seven authorities/nine families/216 profiles/356
-raw records, zero exclusions, and 92 candidate/124 noncandidate profiles at
-identity `calibration-closure/92ef0a203e18ce8de8b17cf819f36b73fe0889f00fdcb4def8b2b0e9eeb9dcc5`.
-Its 232 referenced artifacts total 28,398,586 bytes.
+Exact t1683 seals seven authorities/nine families/216 profiles/356 raw records,
+zero exclusions, and 92 candidate/124 noncandidate profiles at identity
+`calibration-closure/92ef0a203e18ce8de8b17cf819f36b73fe0889f00fdcb4def8b2b0e9eeb9dcc5`;
+its 232 referenced artifacts total 28,398,586 bytes.
 
 `.17.3.8.1` measures the sole balanced structural gate; clean `118b3bfb68902c9479ca4c83a714b23ebb50501a` seals `.2`
 as three immutable files/1,280,699 bytes and complete identity `balanced-portable-matrix/d0619d4cce4d8eebb6b486d70bc41368d9d5f379ce54f87c6843f931ca462900`.
@@ -396,10 +392,10 @@ Exact t1682 plus fresh reload retain one validation, three raw/zero excluded and
 remains inapplicable. `.17.3.9.1` seals independent statistics/candidate-budget derivation; `.2` owns atomic publication;
 `.17.4`/`.17.5` retain cap enforcement/promotion. No runtime, capacity, support, parity, or API claim follows.
 
-Clean `b66de5ce6` exact t1684 plus fresh reload seals two files/1,376,483 bytes
-at identity `calibration-closure-publication/1316d11a6dfa008515fcb23aa132e30a72e7961d9e9e6eeba82ae0bf42546ac8`.
-The complete 256-file/32,007,521-byte store is exactly 232 selected artifacts,
-22 preserved backend-v1 files, and two closure files.
+Clean `b66de5ce6` t1684 and reload seal two files/1,376,483 bytes at identity
+`calibration-closure-publication/1316d11a6dfa008515fcb23aa132e30a72e7961d9e9e6eeba82ae0bf42546ac8`.
+The 256-file/32,007,521-byte store is 232 selected artifacts, 22 backend-v1
+files, and two closure files.
 
 `ArchitectureScaleCalibrationDisposition` requires the independent 23-group/
 161-dimension cap proof, authenticates that exact store, and revalidates all

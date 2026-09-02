@@ -1438,11 +1438,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.4.1`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.4.1`
-  Status: `proposed`
+  Status: `done`
   Goal: `Resolve the inherited semantic/bridge revision-1 coordinator-isolation asymmetry before legacy hardening closes.`
   Acceptance: `Reproduce current semantic/bridge publication reload under the unchanged repository RAM guard and compare its direct long-lived _capture_family validation loop with one fresh process per immutable profile. Prove whether full adapter regeneration retains coordinator high-water memory across profiles, using the existing clean 108-profile publication and bounded synthetic allocation controls without relabelling evidence. If retention can threaten the selected guard, isolate capture and immutable reload per profile with closed bounded canonical IPC and exact exception/exit/signal/malformed/oversized controls; otherwise retain independently repeatable evidence that direct validation stays bounded. Preserve report bytes, public APIs, common identity, publication paths, cleanup, and all performance/capacity nonclaims.`
-  Verification: `Signoff audit in .17.5.2.2.2 finds six newer revision-1 matrix publishers with _run_isolated_profile_worker, while ArchitectureScaleSemanticBridgeMeasurementMatrix still invokes measure_profile and full validate_report directly inside one _capture_family process. Git history shows execution/checking isolation b9463c663 was introduced only after two fresh processes retained roughly 5 GiB while validating the same nineteen-profile prefix. Semantic/bridge historically completed 108 profiles and its current reports peak at 253,882 bytes, so the asymmetry is adjacent risk requiring reproduction—not proof of a current failure. The v2 profile capture path already isolates every route and does not inherit this uncertainty.`
-  Commit: `pending`
+  Verification: `Query-first audit and exact history distinguish semantic/bridge's direct revision-1 coordinator from the later b9463c663 execution/checking repair. A new read-only tracked audit traverses the exact immutable publication loader either directly or in one child per profile, pins its six accepted drifts to ArchitectureScaleCalibrationDisposition, emits one closed 108/102/6 census, and offers a capped 67,108,864-byte synthetic control. Under the unchanged 4,096-MiB guard, direct validation completes all 108 profiles at 2,236,547,072-byte maximum RSS and 1,603,422,248-byte coordinator peak, leaving 2,058,420,224 bytes of process-cutoff headroom; isolation reproduces the same census at 1,368,801,280-byte maximum RSS and 106,987,952-byte parent peak. The asymmetry is real, but a current guard failure is falsified; the conditional no-repair branch preserves product code and avoids inventing a performance conclusion from one 541.06/503.44-second run per arm. Focused t1770 and synchronized task/book/Knowledge Map evidence make the audit repeatable without recapture, publication, support, capacity, or budget claims.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.4.1: close coordinator isolation audit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3`
   Status: `proposed`
@@ -4491,8 +4491,64 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   No producer, simulator, current capture evidence, corpus seal, budget,
   support, performance, capacity, full CI, or push is claimed or run.
 
-## Next Clean Frontier — `.17.5.2.2.4.1` legacy coordinator isolation audit
+## Completed Frontier — `.17.5.2.2.4.1` legacy coordinator isolation audit
 
-- From the clean `.17.5.2.2.3` commit, query the Knowledge Map and reproduce
-  semantic/bridge revision-1 reload under the unchanged RAM guard before
-  deciding whether its direct coordinator loop requires per-profile isolation.
+- The measured conditional selects no product-code repair. Continue parent
+  `.17.5.2.2.4` with the separately owned legacy publication byte ceilings.
+
+## Acceptance Checklist (enforced) — `.17.5.2.2.4.1` semantic/bridge coordinator isolation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — query-first review resolved both canonical
+  semantic/bridge questions to `vial-architecture-scale-proof`. `git log
+  -S'_load_report_publication' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleSemanticBridgeMeasurementMatrix.pm` locates
+  b3a03d285's direct resume loop; `git log -S'sub
+  _run_isolated_profile_worker' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleExecutionCheckingMeasurementMatrix.pm` locates
+  b9463c663's later repair after the distinct repeated roughly-5-GiB execution
+  failure. The tracked exact-loader A/B authenticates the same immutable 108
+  profiles as 102 current matches and decision 0095's six expected drifts.
+  Direct validation measures 2,236,547,072-byte maximum RSS and a
+  1,603,422,248-byte coordinator peak; isolated validation measures
+  1,368,801,280-byte maximum RSS and a 106,987,952-byte parent peak. Retention
+  is therefore real, but the direct full census completes beneath the unchanged
+  guard with 2,058,420,224 bytes of process-cutoff headroom.
+- [x] **ADDRESSED (verified)** — the task's conditional no-repair branch is
+  selected: no current direct guard failure is reproduced, so semantic/bridge
+  product code remains byte-identical. The read-only
+  `audit_vial_semantic_bridge_profile_isolation.pl` makes the result repeatable
+  in direct, isolated, or single-profile form; rejects unknown modes/profiles;
+  pins the six drift IDs to the executable disposition; publishes one closed
+  JSON census; and optionally adds a 0..67,108,864-byte per-profile synthetic
+  control while rejecting cap-plus-one. It cannot capture, publish, relabel, or
+  mutate revision-1 evidence. Claim legs: tracked guarded direct mode is the
+  re-derivation; tracked guarded isolated mode plus the bounded synthetic
+  control falsify the hypothesis that both process models retain the same
+  parent high-water state; this task, t1770, the mdBook, the Knowledge card,
+  and claim gate are durability. The registered claim advances the finite
+  registry census from 27/26 to 28/27 records/published claims, and t1750's
+  repository-default watcher now pins that exact checker-derived identity.
+  The one 541.06/503.44-second observation per arm is explicitly not a
+  comparative performance estimate or budget.
+- [x] **NO REGRESSION** — Perl syntax passes. t1658+t1770 pass at `Files=2,
+  Tests=7` across inventory, drift, exact loader,
+  direct/isolated, bounded 67,108,864-byte allocation, mode/profile, and
+  cap-plus-one controls; the semantic/bridge product module has no textual
+  diff. The four-file claim suite passes `Files=4, Tests=38`, including t1750's
+  corrected 28-record/27-published repository census. Claim gates retain
+  1,765/1,765 dispositions, 180 claim records, 988 gates, 597 reviewed
+  outcomes, and zero gaps/open owners. Five reflowed numeric lines retain their
+  existing derived-gate evidence under exact current candidate identities.
+  All 59 mdBook chapters test; the inspected 94-file/21,065,746-byte local
+  render contains the registered claim before removal. The book source is 59
+  files/55,329 lines/2,989,730 bytes under the new exact aggregate authority;
+  its largest chapter is 4,610 lines, with zero ceiling/allowance increase.
+  Knowledge Map parity is 1,160 facts/6,243 questions/6,415 occurrences/138
+  shards; required compaction leaves the 1,159-card surface at 46,989 lines/
+  3,468,920 bytes and its largest card at 422 lines/31,278 bytes. Memory,
+  relative paths, project locality, four-tree/1,048-node integrity, complete
+  3,095-path containment, claim inventory, detached-worktree/generated-output
+  cleanup, and textual diff pass. Staged acceptance and all doctrines are the
+  final commit gates. No revision-1 evidence is recaptured or rewritten; no
+  validator/guard, timing budget, performance comparison, product behavior,
+  full CI, or push is claimed or run in this ordinary audit slice.

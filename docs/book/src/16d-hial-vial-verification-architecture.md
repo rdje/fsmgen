@@ -4334,44 +4334,32 @@ prove -Iperl -It/lib -v \
   t/1762-vial-selected-tool-interrupted-containment-pipe-read.t
 ```
 
-This is deliberately a synchronous selected-tool contract, not a general
-daemon job object. The caller seal admits only the exact GHDL/Verilator
-lifecycle and qualification command profiles. A child that deliberately closes
-all inherited nonstandard descriptors, calls `setsid`, and loses its leader
-between process-tree observations is outside that contract: current macOS
-`EVFILT_PROC` can report the fork but cannot identify or automatically track the
-child. Such a tool must not be selected. A future profile that needs
-daemonization must first add a supported non-cooperative host containment
-authority; neither faster polling nor the inherited-writer proof qualifies.
+This is a synchronous selected-tool contract, not a general daemon job object. The caller seal admits only exact GHDL/Verilator lifecycle
+and qualification profiles. A child that closes inherited nonstandard descriptors, calls `setsid`, and loses its leader between process-tree
+observations is outside that contract: macOS `EVFILT_PROC` reports the fork but cannot identify or track the child. Such a tool must not be
+selected. A daemonizing profile first needs supported non-cooperative host containment; polling and inherited-writer proof do not qualify.
 
 ### Semantic and bridge measurement boundary
 
-The `.17.3.2` caller-sealed adapter consumes only two already-completed
-provider-free families. `semantic_catalog_v1` is reconstructed through
-`FSM::VIAL::ArchitectureScaleSemanticCatalog` and retains parse, validation, and
-SemanticIR oracles. `bridge_fanout_v1` is reconstructed through
-`FSM::VIAL::ArchitectureScaleBridgeFanout` and retains the selected canonical
-HIAL route, manifest, mapping, binding, rerun, earliest-failure, and cleanup
-oracles. A measurement adapter may not accept caller-created IR, manifests,
-count overrides, or precomputed reports as substitutes for those authorities.
+The `.17.3.2` caller-sealed adapter consumes two provider-free families. `semantic_catalog_v1` reconstructs through
+`ArchitectureScaleSemanticCatalog` with parse, validation, and SemanticIR oracles; `bridge_fanout_v1` reconstructs through
+`ArchitectureScaleBridgeFanout` with canonical HIAL route, manifest, mapping, binding, rerun, earliest-failure, and cleanup oracles.
+Caller-created IR, manifests, count overrides, and precomputed reports cannot substitute for those authorities.
 
-`FSM::VIAL::ArchitectureScaleSemanticBridgeMeasurement` exposes four operations: canonical construction, correctness-only validation,
-guarded gate or qualification measurement, and independent report validation. Each stage computes its own payload twice before the common
-controller accepts it. Only `construct` repeats canonical family reconstruction; later stages consume that sealed construction so their
-measurements do not include construction cost. The semantic family owns `construct` and `parse_validate`; the bridge family additionally owns `bridge`. Every later stage is explicitly `not_run`.
+`ArchitectureScaleSemanticBridgeMeasurement` exposes canonical construction, correctness validation, guarded gate/qualification measurement,
+and independent report validation. Each stage computes its payload twice. Only `construct` repeats family reconstruction; later stages consume
+it, excluding construction cost. Semantic owns `construct`/`parse_validate`; bridge also owns `bridge`; later stages are explicitly `not_run`.
 
-Canonical family evaluation JSON is retained byte-for-byte as a stage-owned, content-addressed artifact. Its copy inside the generic
-measurement oracle is a closed evidence projection: any family diagnostic key named `path` becomes `semantic_path`, with a collision check
-if both spellings occur. This preserves the semantic pointer while keeping the foundation's rejection of absolute machine-local paths strict. Report validation independently regenerates both the original artifact identity and the projected evidence.
+Canonical family evaluation JSON remains a stage-owned content-addressed artifact. Its closed generic-oracle projection renames diagnostic
+`path` to `semantic_path` with collision rejection, preserving semantic pointers without admitting machine-local paths. Validation independently
+regenerates the original artifact identity and projected evidence.
 
-Rejected stages remain first-class evidence rather than being re-executed as though they succeeded. The adapter verifies their command/input
-identity, requires zero output, semantic, oracle, and artifact evidence, requires later family stages to remain explicitly not-run, and
-preserves the controller's original stage diagnostic. Successfully completed stages still undergo full canonical rederivation.
+Rejected stages remain first-class evidence: the adapter verifies command/input identity, requires zero output/semantic/oracle/artifact evidence,
+keeps later stages explicitly not-run, and preserves the controller diagnostic. Successful stages still undergo full canonical rederivation.
 
-The exact combined-source-byte fixture remains ordinary, referenced VIAL declarations under the unchanged stage timeout. Its parser validates
-its required Unicode encoding before using a byte-oriented chunk cursor only for proven-ASCII source; non-ASCII input retains Unicode-scalar
-columns and source-byte offsets. Wide four-state value/known/Z masks are normalized linearly. These are semantic-preserving implementation repairs, not padding, a
-larger timeout, a promoted performance budget, or a capacity/reached-boundary claim.
+The exact combined-source-byte fixture remains ordinary referenced VIAL under the unchanged timeout. Parsing validates Unicode before a
+byte-oriented cursor is used only for proven ASCII; non-ASCII retains scalar columns and byte offsets. Wide four-state masks normalize linearly.
+These are semantic-preserving repairs, not padding, a larger timeout, a budget, capacity, or a reached-boundary claim.
 
 A correctness-only reference check can be invoked directly:
 
@@ -4393,47 +4381,49 @@ die "reference validation failed\n"
 print "semantic reference validation passed\n";
 ```
 
-Non-reference validation and all measurements must execute below the real
-repository RAM guard. Setting guard-looking environment variables by hand is
-not equivalent to enforcement. The focused exact adapter proof is:
+Non-reference validation and measurement require the real repository RAM guard; guard-looking variables alone are not enforcement:
 
 ```bash
-FSMGEN_VIAL_SCALE_SEMANTIC_BRIDGE_EXACT=1 \
-  scripts/run_with_ram_guard.sh -- \
-  prove -Iperl t/1657-vial-architecture-scale-semantic-bridge-measurement.t
+FSMGEN_VIAL_SCALE_SEMANTIC_BRIDGE_EXACT=1 scripts/run_with_ram_guard.sh -- prove -Iperl t/1657-vial-architecture-scale-semantic-bridge-measurement.t
 ```
 
-Each accepted gate profile requires one correctness-only validation followed
-by three guarded measured ordinals; an accepted qualification profile requires
-five. Limit and over-limit levels remain correctness/failure evidence unless
-their decision-`0055` applicability says otherwise. Every retained timing or
-RSS sample must still pass the family oracle in its own measured run. This leaf
-separates FSMGen-owned `construct`, `parse_validate`, and `bridge` costs and
-marks every later or inapplicable stage `not_run` with a reason. It does not run
-a provider, compiler, simulator, or other external verification tool, derive a
-performance budget, repair an earlier cap, or claim support, capacity, or a
-reached boundary.
+Each accepted gate profile requires one correctness-only validation plus three guarded measurements; qualification requires five.
+Limit and excess levels remain correctness/failure evidence unless decision `0055` says otherwise, and each retained sample must pass
+the family oracle in its own run. This leaf separates FSMGen-owned `construct`, `parse_validate`, and `bridge` costs and marks later or
+inapplicable stages `not_run`; it runs no provider/compiler/simulator, derives no budget, and claims no support, capacity, or boundary.
 
-Generated work stays below repository-derived `.artifacts/tmp/vial-scale/` and
-is removed exactly. An over-limit proof must fail at the earliest authoritative
-stage with a stable diagnostic, no partial publication, and no residue. Host
-exhaustion, signal 137, or an external-tool crash is never accepted as the
-product's limit behavior.
+Generated work stays below repository-derived `.artifacts/tmp/vial-scale/` and is removed exactly. An excess proof must fail at the
+earliest authoritative stage with a stable diagnostic, no partial publication, and no residue. Host exhaustion, signal 137, or an
+external-tool crash is never accepted as product limit behavior.
 
-The complete-matrix runner owns an immutable four-level inventory across all fourteen
-semantic and thirteen bridge axes: 108 sets, never a caller list. Accepted
-gate/qualification sets retain three/five samples; limits and earlier dominant
-rejections retain correctness without timing. The checked reference is their
-construction anchor, not a separate measurement. Long work resumes only at a complete-profile boundary.
-Inventory and published report modes use the adapter's exact sealed vocabulary: `gate_measurement`, `qualification_measurement`, or `validation`; no shorthand translation sits between selection, capture, and revalidation.
-Each set atomically publishes validation, every raw record/exclusion, identities, oracles, and cleanup to `.artifacts/qualification/vial-scale/v1/<profile-id>/measurement-set.json`.
+The complete-matrix runner owns an immutable four-level inventory across fourteen semantic and thirteen bridge axes: 108 sets, never a
+caller list. Accepted gate/qualification sets retain three/five samples; limits and dominant rejections retain untimed correctness.
+References anchor construction, and resume occurs only at complete-profile boundaries. Report modes use only `gate_measurement`,
+`qualification_measurement`, or `validation`; each set atomically publishes validation, records/exclusions, identities, oracles, and cleanup.
 
-A retry revalidates immutable bytes at the same clean Git and common host/tool/guard
-identity. Byte-equal output is unchanged, different bytes collide, and ambiguous
-crash staging fails closed. Completed profiles survive interruption without
-claiming completion. Exact child censuses alone publish family `matrix.json`
-files and `semantic-bridge-complete-matrix-v1/complete-matrix.json`; manifests
-retain dominance/content identities while profile files remain raw authority.
+A retry revalidates immutable bytes at the same clean Git and host/tool/guard identity. Byte-equal output is unchanged, different bytes
+collide, and ambiguous staging fails closed. Completed profiles survive interruption without claiming completion. Exact child censuses
+alone publish family/complete manifests, which retain dominance/content identity while profile files remain raw authority.
+
+The revision-1 coordinator-isolation audit is read-only and separate from capture. It traverses the exact publication loader in one
+long-lived process or one fresh child per profile, accepts only decision `0095`'s historical drifts, and returns one closed JSON census.
+A bounded optional per-profile allocation control rejects its first excess. Reproduce both process models below the real guard:
+
+```bash
+scripts/run_with_ram_guard.sh -- scripts/audit_vial_semantic_bridge_profile_isolation.pl --mode direct
+scripts/run_with_ram_guard.sh -- scripts/audit_vial_semantic_bridge_profile_isolation.pl --mode isolated
+```
+
+Both audits reproduced the same current-versus-historical partition. Direct validation completed without a guard event and retained
+substantial cutoff headroom; isolation reduced parent retention. This proves allocator-retention asymmetry, but not a current guard
+failure, so product code remains unchanged. Exact measurements and the single-run timing nonclaim live in the registered claim below.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-semantic-bridge-direct-coordinator-bounded-audit-v1 -->
+- Claim: The immutable semantic/bridge revision-1 matrix's direct long-lived coordinator completes exact current-loader validation of all 108 profiles as 102 current matches plus decision 0095's six historical drifts beneath the unchanged 4,096-MiB process guard: maximum RSS is 2,236,547,072 bytes and guard headroom is 2,058,420,224 bytes. Fresh-child validation proves lower retained parent state, but no current direct guard failure; this is an audit result, not a performance budget, support, or capacity claim.
+- Re-derive: Run direct mode through `scripts/run_with_ram_guard.sh -- /usr/bin/time -l scripts/audit_vial_semantic_bridge_profile_isolation.pl --mode direct`; require the closed 108/102/6 JSON result, no guard event, maximum RSS 2,236,547,072 bytes, and subtract it from 4 GiB to reproduce 2,058,420,224-byte headroom.
+- Falsify: Run the same 108-profile corpus in isolated mode and the 67,108,864-byte synthetic direct/isolated controls. Both process modes must reproduce 102/6; cap-plus-one, unknown mode/profile, changed drift membership, and any unexpected validation outcome reject. Isolation's lower parent peak separates genuine coordinator retention from report size alone.
+- Durability: Retain the read-only audit, t1770, task `.17.5.2.2.4.1`, mdBook semantic/bridge boundary, architecture-scale Knowledge card, this bounded claim record, doctrine watcher, and work-unit Git chain.
+<!-- CLAIM-VERIFICATION:END vial-semantic-bridge-direct-coordinator-bounded-audit-v1 -->
 
 The root-derived operator has no root override; capture requires a clean tree and the real guard, while inventory and validation are non-measuring:
 ```bash
@@ -4442,17 +4432,13 @@ scripts/run_with_ram_guard.sh -- scripts/run_vial_semantic_bridge_measurement_ma
 scripts/run_vial_semantic_bridge_measurement_matrix.pl --validate
 ```
 
-The guarded matrix is complete: 108 sets and both family/full manifests share one clean revision,
-one host/tool/guard identity, 186 raw records, zero exclusions, and one accepted aggregate identity.
+The guarded matrix is complete: 108 sets and all manifests share one revision/host/tool/guard identity.
+It retains 186 raw records, zero exclusions, and one accepted aggregate identity.
 
-The public support snapshot and normative contract report the portable-SV
-Runner's enforced 8-MiB compile and 64-MiB runtime capture limits. Those are
-bounded transcript-capture controls, not scale qualification or evidence that
-the selected AHB fixture approaches either limit.
+The public contract reports portable-SV Runner 8-MiB compile and 64-MiB runtime capture limits. These bound transcripts; they are not
+scale qualification or evidence that the selected AHB fixture approaches either limit.
 
-Even a later passing architecture profile will not substitute for the
-separately owned whole-product `big`/`really_big` qualification, mixed-language
-scale, native-UVM runtime scale, synthesis scale, or general backend parity.
+No passing architecture profile substitutes for separately owned whole-product `big`/`really_big`, mixed-language, native-UVM runtime, synthesis, or general backend-parity qualification.
 ### Execution and checking measurement boundary
 
 The semantic/bridge adapter, publisher, and exact matrix are complete. `.17.3.3` now also provides caller-sealed `FSM::VIAL::ArchitectureScaleExecutionCheckingMeasurement` for `execution_graph_v1` and `checking_state_v1`: callers select only repository root, owned axis, and level; the adapter reconstructs the canonical producer twice and admits no caller source, SemanticIR, bridge manifest, plan, report, or tool result. Its family vocabulary is `construct -> parse_validate -> bridge -> bind_plan`; each planned payload is independently rerun twice, recorded by the common controller, and regenerated again by report validation. Accepted gate/qualification authorities retain one correctness validation plus exactly three/five raw measured records; an authoritative parser or bridge rejection is validated without timing. A `preflight_dominated` construction runs only `construct` and `bind_plan`, so it cannot claim parse/bridge work that its authority forbids. An `envelope_unconstructible` source-free outcome stays outside the common controller because no canonical workload identity exists: the report retains the canonical family evaluation but invents no identity, input, validation record, sample, artifact, or reached boundary. The controller still emits its full twelve-stage record, runs exact cleanup, and marks every unplanned processing stage `not_run`. Correctness validation, measurement, and independent report regeneration all require the real guard; run the exact adapter proof through `FSMGEN_VIAL_SCALE_EXECUTION_CHECKING_EXACT=1 scripts/run_with_ram_guard.sh -- prove -Iperl t/1659-vial-architecture-scale-execution-checking-measurement.t`, because setting guard-looking variables manually is not enforcement. The exact publisher freezes only the canonical producers' ten execution and eight checking axes at four selected levels: 72 profile sets, never a caller inventory or report collection. A controller-backed report establishes one clean Git/host/tool/enforced-guard capture identity; each immutable content-addressed profile envelope carries that provenance, including an `envelope_unconstructible` nested report that remains free of invented workload, validation, sample, or controller identity. Byte-equal same-capture evidence resumes, while different bytes, revisions, host/tool/guard identities, or ambiguous staging reject; family/full manifests remain absent until every exact child validates. Inspect without measuring through `scripts/run_vial_execution_checking_measurement_matrix.pl --inventory`; capture with `scripts/run_with_ram_guard.sh -- scripts/run_vial_execution_checking_measurement_matrix.pl`; independently revalidate with the same wrapper plus `--validate`. `.17.3.3.1` supplies concurrency-safe raw-stage orphan recovery without manual deletion or a weaker threshold. `.17.3.3.2` now runs every full profile capture, immutable resume, and family/complete revalidation in a separate guard-visible child. The child preserves complete adapter regeneration and atomic publication/reload, then returns only a canonical closed compact result through a close-on-exec pipe bounded to 1,048,576 bytes; exceptions are bounded to 4,096 bytes, and signal, nonzero exit, malformed/noncanonical/oversized output, identity drift, and artifact drift reject before the coordinator retains the entry. The long-lived parent therefore cannot accumulate full-report allocator high-water state. Nineteen pre-repair reports remain immutable revision-`c7493e3d` interruption evidence: they can be independently revalidated through the repaired path, but cannot be relabelled or mixed into a later repaired revision's common-identity seal.
