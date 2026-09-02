@@ -1393,9 +1393,31 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.1: derive current capture dispatch`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement isolated current-profile capture, atomic v2 profile publication, and exact-profile resume.`
   Acceptance: `Consume only one .17.5.2.1 dispatch entry; execute its public current adapter in a separate guard-visible child; require the accepted validation plus three accepted raw records, zero exclusions, canonical workload/report/oracle identities, exact provider/applicability status, cleanup, and current clean revision/common identity; publish the complete canonical profile report atomically beneath the v2 corpus before returning bounded IPC. Resume only a byte-authenticated same-revision/same-identity profile; reject stale, mixed, partial, reordered, collided, oversized, malformed, noncanonical, symlinked, hard-linked, signalled, failed, or residue-bearing state without borrowing any revision-1 byte.`
+  Verification: `Clean predecessor 0e18a088d seals the eleven-entry v2 dispatch. Query-first source audit finds seven revision-1 matrix publishers independently duplicating private worker, atomic-publication, and resume mechanisms; every implementation hard-codes its own family schema, complete inventory, v1 path, and report admission, so none is a safe heterogeneous v2 service. The implementation is partitioned into a caller-sealed v2 profile-store substrate, isolated heterogeneous dispatch/admission, and exact-resume/adversarial closeout. No producer, worker, simulator, measurement, publication, or artifact runs during activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2: partition isolated profile publication`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.1`
+  Status: `proposed`
+  Goal: `Implement the bounded same-volume v2 single-profile publication store without producer execution.`
+  Acceptance: `Add one caller-sealed storage authority for only a current dispatch entry's exact v2 report coordinate. Define closed canonical publication/artifact schemas and conservative report/IPC/error ceilings; create and fsync one repository-local staging directory and file, atomically rename only the complete directory, reload by lstat/stat/read/digest/canonical-JSON checks, and reject absolute/escaping/revision-1/unknown paths, extra entries, symlinks, hard links, cross-device state, collisions, oversized or malformed bytes, ambiguous recovery, and cleanup residue. Default tests use bounded synthetic publications and never invoke an adapter, provider, simulator, measurement controller, or real capture.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.2`
+  Status: `proposed`
+  Goal: `Execute and admit one current dispatch entry in an isolated profile worker before atomic publication.`
+  Acceptance: `Internally derive the current plan, select only one ordinal, execute only its public adapter/method with its sealed arguments in one guard-visible child, validate through that adapter, and require exact coordinates, accepted validation followed by three accepted gate measurements, zero exclusions/residue, deterministic identities, exact applicability/provider status, clean revision, and one within-profile host/tool/guard/common identity. Publish through .1 before returning bounded metadata-only IPC; reject caller entry/report/callback/private-method injection plus exception, exit, signal, malformed, noncanonical, oversized, mixed, reordered, failed, or mutation controls.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.3`
+  Status: `proposed`
+  Goal: `Close exact same-profile resume and adversarial v2 profile-publication validation.`
+  Acceptance: `Resume without producer execution only when the exact plan, dispatch entry, repository revision, profile common identity, provider/applicability identity, complete report bytes, artifact census, and cleanup state revalidate in a fresh isolated worker. Reject stale revision/plan/tool/host/guard/provider, mixed records, missing/extra/reordered identities, partial/collided/revision-1 substitutions, post-validation mutation, staging or target residue, symlink/hard-link/cross-device aliases, and noncanonical or oversized state; synchronize runnable docs and leave complete-corpus sealing to .17.5.2.3.`
   Verification: `pending`
   Commit: `pending`
 
