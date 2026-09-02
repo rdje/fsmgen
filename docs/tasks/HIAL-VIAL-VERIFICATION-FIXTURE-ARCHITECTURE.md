@@ -1453,11 +1453,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.3`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.1`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the bounded canonical complete-corpus report-plus-manifest store without profile execution.`
   Acceptance: `Derive only the selected v2 complete coordinate from the current plan; define closed report, manifest, artifact, and limit schemas; accept only all eleven ordered admitted profile results with 11 validations, 33 raw records, zero exclusions, one complete identity, and immutable profile artifacts; then atomically publish exactly a canonical report plus compact manifest on the repository volume before returning bounded metadata. Reload through stable no-follow directory/file handles with exact census, byte/hash/schema/identity/current-plan checks and reject collision, partial or ambiguous stage, extra/missing/reordered profile, stale or mixed identity, malformed/noncanonical/oversized bytes, symlink/hard-link/cross-device aliases, post-validation mutation, and cleanup residue. Default tests use synthetic admitted metadata and never invoke a profile worker, producer, provider, simulator, or measurement controller.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Clean activation predecessor 17f5b1623 partitions complete publication from coordination and CLI closure. The canonical capture card and decision 0096 require a non-colliding same-volume v2 seal only after all eleven current profiles independently revalidate; ArchitectureScaleRegressionPromotionProfileStore supplies a bounded one-file profile transaction but no complete authority, while the historical calibration-closure publisher proves the required two-file atomic shape but is coupled to revision-1 closure schemas and derivation. This leaf owns a new producer-free current-corpus report-plus-manifest store and synthetic adversarial watcher only; no worker, producer, provider, simulator, current measurement, or real v2 artifact runs during activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.1: activate complete corpus store`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.2`
   Status: `proposed`
@@ -4661,3 +4661,24 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   generated artifact, producer, provider, simulator, profile capture/resume,
   publication, budget, support, performance, capacity, CI, or product behavior
   changes in this activation; full CI and push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.5.2.3.1` complete-corpus store activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Knowledge Map query `how is the VIAL v2
+  current corpus resumed and published?` resolves to the dedicated capture
+  card. Source and history review finds a bounded current per-profile store but
+  no current complete-corpus report-plus-manifest authority; the historical
+  calibration-closure publisher is coupled to revision-1 closure derivation
+  and schemas and cannot authenticate current v2 profile publications.
+- [x] **ADDRESSED (verified)** — `.17.5.2.3.1` is active from clean predecessor
+  `17f5b1623` and owns only producer-free complete storage plus synthetic
+  falsification. Ordered profile execution remains proposed `.2`, CLI closure
+  remains proposed `.3`, and real guarded capture remains proposed
+  `.17.5.2.4`; no sibling or producer path is activated.
+- [x] **NO REGRESSION** — this continuity-only diff changes Memory, the active
+  task index, and the owning task evidence only. `scripts/check_task_tree_integrity.pl`,
+  Memory architecture, relative-path, live-document containment, Knowledge
+  Map, staged-result, claim, and all registered doctrine checks are the commit
+  gates. No source, test, script, book, generated artifact, provider,
+  simulator, capture, publication, budget, support, performance, capacity, CI,
+  or product behavior changes; full CI and push remain deferred by policy.
