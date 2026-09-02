@@ -1518,11 +1518,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.1: implement independent current corpus census`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Falsify the independent verifier against copied exact real-publication mutations.`
   Acceptance: `Use only repository-local same-volume copies of the exact active publication. Prove baseline acceptance and empty stdout on report, manifest, profile, ordering, identity, provider, count, digest, canonicality, link, owner/device where safely reproducible, file-shape, extra/missing path, staging, and historical-substitution mutations; restore or remove every fixture deterministically and leave the real publication byte-identical.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Activated from clean independent-census commit c4f745541. The copied-evidence watcher must install the tracked verifier beside one exact repository-local same-volume copy so root derivation and all paths remain authentic. Controls are partitioned into complete report, manifest, profile/report-record, order/count/identity/provider/digest/canonicality, symlink/hard-link/special-file, extra/missing path, profile/corpus staging, and historical-byte substitution classes. Each class restores the copy before the next control, requires nonzero status plus empty stdout, and compares the untouched real namespace against a pre/post byte/file-identity census. Owner/device variants run only when safely reproducible without privilege or cross-volume project data; the verifier's direct lstat enforcement remains mandatory either way. No production reload, producer, provider, simulator, measurement, budget, support, capacity, or real-publication mutation is authorized.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.2: falsify copied current corpus mutations`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3`
   Status: `proposed`
@@ -5184,3 +5184,20 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   provider, simulator, measurement, new mutation, budget, support, capacity,
   full CI, or push; exact copied-publication mutations and the still-missing
   claim falsification leg remain owned by `.17.5.2.5.2`.
+
+## Acceptance Checklist (enforced) — `.17.5.2.5.2` copied-mutation activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean commit `c4f745541` independently
+  authenticates the exact real namespace, but the published claim still marks
+  its falsification leg missing because no same-volume copy has exercised the
+  complete hostile mutation matrix against that verifier.
+- [x] **ADDRESSED (verified)** — `.5.2` alone is active with closed copied-fixture
+  ownership for content, order/count/identity/provider/digest/canonicality,
+  link/node/path/staging, and historical-substitution controls. Before ->
+  after: one proposed mutation leaf becomes executable without touching the
+  real sealed namespace.
+- [x] **NO REGRESSION** — this activation changes only task-tree continuity
+  state. Task integrity, Memory, relative paths, Knowledge Map, containment,
+  claims, and all doctrines are required green before commit. No source, test,
+  fixture, mutation, producer, provider, simulator, measurement, budget,
+  support, capacity, full CI, or push runs in this activation.
