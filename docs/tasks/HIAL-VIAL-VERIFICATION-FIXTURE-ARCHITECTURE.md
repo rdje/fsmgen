@@ -1594,6 +1594,19 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Derive one authenticated in-memory budget qualification from the current v2 corpus without publishing it.`
   Acceptance: `Accept only the repository root; load and authenticate the complete .17.5.2 corpus; independently reconstruct every accepted run total, aggregate statistic, deterministic count oracle, correctness/repetition/exclusion result, and common/provider/applicability identity; derive each profile's wall/CPU/RSS budget with integer-safe decision-0056 floors, multipliers, and rounding; and return a bounded defensive content-addressed qualification report. Reject caller evidence, historical v1 bytes or budgets, non-current or dirty evidence, failed correctness, exclusions, incomplete/reordered profiles or records, mixed identities, invalid numeric types, overflow, and mutation. Execute no producer, provider, simulator, measurement controller, or publication write.`
+  Verification: `Activation audit exposed a prerequisite contract contradiction: decision 0096 requires exact common revision identity for later enforcement even though the capture revision necessarily precedes qualification and gate commits. Ordered child .1 first repairs applicability semantics without changing a budget; child .2 then implements derivation against the corrected authority.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.2`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.1`
+  Status: `active`
+  Goal: `Repair the performance-applicability identity so a promoted budget can remain enforceable after its own qualification and gate commits.`
+  Acceptance: `Reconcile decisions 0056 and 0096 plus the executable policy. Keep the capture Git revision immutable as provenance, but define later performance eligibility from exact host/tool/guard/provider identity and an exact deterministic workload/correctness projection rather than equality with the capture commit. Prove same-behavior later revisions remain eligible, deterministic behavior drift fails correctness rather than borrowing a budget, host/tool/guard/provider drift remains informational, and caller-selected identity cannot weaken the rule. Synchronize decision, policy, tests, mdBook, Knowledge Map, task, and Memory without deriving or publishing any budget.`
+  Verification: `pending`
+  Commit: `pending`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.2`
+  Status: `proposed`
+  Goal: `Implement the authenticated in-memory budget derivation against the repaired applicability contract.`
+  Acceptance: `Satisfy the parent .17.5.3.1 acceptance after .1.1 closes, binding immutable evidence revision separately from the exact deterministic and environment applicability identity used by later gates.`
   Verification: `pending`
   Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2`
@@ -5563,3 +5576,27 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   artifact, producer, provider, simulator, measurement, publication, budget,
   CI, support, capability, performance, capacity, or product behavior changes;
   full CI and push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.5.3.1.1` applicability-identity repair activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — decision `0056` freezes Git revision as
+  evidence provenance but says performance pass/fail applies on the exact
+  host/tool profile. Decision `0096` later requires the complete common
+  revision/host/tool/guard/provider identity. The current corpus records
+  capture revision `155aa22ea`, while its clean validation and every future
+  qualification/gate commit have later revisions; literal common-identity
+  equality would therefore make the promoted performance gate informational
+  immediately after implementation.
+- [x] **ADDRESSED (verified)** — `.17.5.3.1` now has two ordered children. `.1`
+  owns the decision/policy correction that separates immutable evidence
+  revision from exact deterministic/environment eligibility; `.2` retains
+  budget derivation only after that prerequisite is executable. Before ->
+  after: a latent never-enforced budget contract becomes one explicit repair
+  owner without silently weakening host/tool/guard/provider or correctness
+  matching.
+- [x] **NO REGRESSION** — this activation changes only task-tree continuity
+  state. Task integrity, Memory, relative paths, Knowledge Map, containment,
+  claims, and all doctrines are required green before commit. No policy source,
+  test, artifact, producer, provider, simulator, measurement, publication,
+  budget, CI, support, capability, performance, capacity, or product behavior
+  changes; full CI and push remain deferred by policy.
