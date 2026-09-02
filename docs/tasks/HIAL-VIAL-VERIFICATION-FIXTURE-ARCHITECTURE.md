@@ -1474,11 +1474,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.3: implement corpus CLI closeout`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4`
-  Status: `active`
+  Status: `done`
   Goal: `Capture and atomically publish the complete real current corpus at one clean implementation revision.`
-  Acceptance: `From the clean .17.5.2.3 implementation revision, run the production capture CLI under the active repository RAM guard and repository-local providers. Capture or exact-resume all eleven selected profiles through their current canonical producers; require one validation and three fresh raw measurements per profile, all 44 controller records, zero exclusions, one common revision/host/tool/guard/provider identity, deterministic stage oracles, complete cleanup, and no revision-1 substitution. Publish the v2 complete seal only after all profiles reload successfully. If a route is unavailable or disagrees, retain honest partial publications, withhold the seal, root-cause the exact producer/provider/admission failure under this owner, and never relax validation, timing, guard, or evidence identity to force acceptance.`
-  Verification: `Clean predecessor 6702f48e0 completes the producer-free store/coordinator/CLI chain and passes its 65-test integration plus all twelve doctrines. Query-first review of the dedicated capture card and decision 0096 confirms this leaf is the sole next owner for real provider and simulator execution: eleven ordered gate profiles, one validation plus three fresh raw measurements each, 44 controller records, zero exclusions, and no revision-1 substitution. The first guarded production attempt at clean revision 610ed7869 atomically retained ordinals one through four, then failed closed at ordinal five because the backend-emission report's legitimate artifact_graph primary_axis appeared where the plan exposed only the nullable selection coordinate; the corpus seal remains absent. Source audit proves all seven remaining producer reports carry fixed report axes while their policy selection axis is intentionally null, and synthetic capture/resume doubles copied the null selection coordinate and masked the distinction. Children .1-.3 own exact prefix archival, separate authenticated report-coordinate repair, and fresh capture.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4: activate real current-corpus capture`
+  Acceptance: `From the clean .17.5.2.3 implementation revision, run the production capture CLI under the active repository RAM guard and repository-local providers. Capture or exact-resume all eleven selected profiles through their current canonical producers; require one validation and three fresh raw measurements per profile, all 44 controller records, zero exclusions, one common revision/host/guard identity plus exact route-specific tool/provider identities, deterministic stage oracles, complete cleanup, and no revision-1 substitution. Publish the v2 complete seal only after all profiles reload successfully. If a route is unavailable or disagrees, retain honest partial publications, withhold the seal, root-cause the exact producer/provider/admission failure under this owner, and never relax validation, timing, guard, or evidence identity to force acceptance.`
+  Verification: `The first guarded production attempt at clean revision 610ed7869 failed closed after four profiles; .1 preserves that exact prefix and failure, and .2 repairs the selection/report-coordinate admission defect without weakening producer truth. Child .3 then ran a fresh guarded production capture from an empty active namespace at clean revision 155aa22ea. All eleven current profile reports were newly published and admitted as eleven validations plus 33 fresh raw measurements and 44 controller invocations with zero exclusions. The complete same-volume report-plus-manifest seal published atomically as corpus ab2df899...e505 and publication 865c5cce...432e; a distinct guarded producer-free process resumed all eleven profiles and reproduced every common, route-specific, report, plan, policy, publication, and file-set identity before inventory reported eleven present and zero missing. Post-publication replay exposed and closed the historical verifier's obsolete permanent-empty assertion: verification schema v2 accepts absent current state or authenticates this exact 13-file/eleven-profile seal separately from the five-file archive, while copied-evidence controls reject current mutation, foreign paths, cross-history hard links, and archive mutation. No revision-610ed7869 profile byte entered the current corpus, staging was empty at completion, and no budget, support, performance, or capacity claim is promoted.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.3: seal repaired current corpus`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.3`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.1`
@@ -1496,17 +1496,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.2: authenticate producer report coordinates`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.3`
-  Status: `active`
+  Status: `done`
   Goal: `Capture the complete repaired current corpus from an empty active namespace.`
-  Acceptance: `From the clean report-coordinate repair revision and empty active v2 namespace, run production --capture under the RAM guard. Require all eleven current profiles, eleven validations, 33 fresh raw measurements, 44 accepted controller records, zero exclusions/diagnostics, one admitted common identity, route-specific provider identity, complete cleanup, and an atomic corpus report/manifest seal. Preserve any new honest failure prefix under the same revision-keyed doctrine; do not reuse revision-610ed7869 bytes.`
-  Verification: `Clean predecessor 32e086885 advances the capture plan to schema v2, authenticates all eleven producer-report coordinate sets independently of policy selection, passes the guarded seven-file/58-test plan-through-CLI integration, preserves the exact historical failed prefix, and leaves the active v2 namespace absent. All twelve staged doctrines pass. This activation makes .4.3 the sole owner for a fresh production --capture from that clean repair revision; no revision-610ed7869 profile byte may be reused.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.3: activate repaired current-corpus capture`
+  Acceptance: `From the clean report-coordinate repair revision and empty active v2 namespace, run production --capture under the RAM guard. Require all eleven current profiles, eleven validations, 33 fresh raw measurements, 44 accepted controller records, zero exclusions/diagnostics, one admitted common identity, route-specific provider identity, complete cleanup, and an atomic corpus report/manifest seal. Preserve any new honest failure prefix under the same revision-keyed doctrine; do not reuse revision-610ed7869 bytes. After successful current publication, keep the tracked failed-prefix verifier runnable by replacing its obsolete permanent-empty active-namespace assertion with exact read-only separation checks: authenticate the current complete corpus/manifest identity without treating it as archive evidence, reject overlap or aliasing with history, and retain all historical byte/hash/path/device/owner/staging controls.`
+  Verification: `From the empty active namespace and clean current revision 155aa22ea, the guarded production --capture newly ran all eleven current adapters, including exact Verilator, GHDL, and GHDL-plus-OSVVM runtime routes. It published eleven atomic profile reports representing eleven validations, 33 fresh raw measurements, 44 accepted controller invocations, and zero exclusions. Common identity is clean revision 155aa22ea on the sealed Apple-M4-Pro/APFS host and repository RAM guard; exact route-specific providers are retained per profile. The complete corpus is regression-promotion-corpus/ab2df899...e505, publication is 865c5cce...432e, plan is fbf69740...9737, policy is 19cf4105...ece, and file-set SHA-256 is dc5b315b...c66f. The 23,288-byte corpus report and 1,280-byte manifest published atomically under the repository-relative complete coordinate with hashes d6139d0f...84a1 and 3de607e3...0273. A distinct guarded --validate process captured nothing, resumed all eleven profiles, reproduced every identity and count, and accepted zero exclusions; guarded --inventory then reported eleven present, zero missing, and the same seal. The post-publication historical verifier initially rejected that legitimate current state because .4.1 had encoded its then-empty active namespace as permanent. Schema v2 now keeps archive-only replay, or authenticates exactly 13 current files/eleven profiles at corpus ab2df899...e505 without using them as history; t1775 rejects current content mutation, a foreign file, cross-history hard-link aliasing, and historical mutation with empty result output. Staging was empty after every observed publication and at completion. Independent artifact census and mutation falsification remain explicitly owned by .17.5.2.5, so this result promotes no performance budget, support, or capacity claim.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.3: seal repaired current corpus`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5`
   Status: `proposed`
   Goal: `Independently reload, census, falsify, document, and close the current v2 publication for budget qualification.`
-  Acceptance: `Validate the sealed publication in a distinct fresh process without capture authority; independently reproduce its exact file/byte/hash/device census, ordered profile/record counts, common identities, applicability/provider outcomes, correctness/oracle closure, exclusions, cleanup, and aggregate statistics. Falsify report, manifest, profile, ordering, identity, provider, count, digest, file-shape, extra-path, and historical-substitution controls; synchronize task/book/Knowledge Map/claim evidence and leave performance budgets entirely unpromoted for .17.5.3. Close .17.5.2 only when clean Git plus immutable same-volume evidence can recover the complete result without conversation state.`
-  Verification: `pending`
+  Acceptance: `Validate the sealed publication in a distinct fresh process without capture authority; independently reproduce its exact file/byte/hash/device census, ordered profile/record counts, common identities, applicability/provider outcomes, correctness/oracle closure, exclusions, cleanup, and aggregate statistics. Falsify report, manifest, profile, ordering, identity, provider, count, digest, file-shape, extra-path, and historical-substitution controls; synchronize task/book/Knowledge Map/claim evidence and leave performance budgets entirely unpromoted for .17.5.3. Also root-cause the CPU-bound balanced-profile and corpus canonicalization observed during .4.3: use macOS `sample -file` only with a repository-derived `.artifacts/` destination, distinguish expected evidence-size cost from avoidable hash/array copying, and task-tree own any proven defect before budget work. Close .17.5.2 only when clean Git plus immutable same-volume evidence can recover the complete result without conversation state.`
+  Verification: `Pending. .4.3 already supplies a distinct guarded producer-free validate pass and guarded inventory, but this leaf still owns an independently implemented census and actual-publication mutation controls. A project-local two-second stack sample taken during the long balanced/corpus phase showed active Perl hash/array traversal and value copying rather than blocked I/O; the exact sample was copied from the sampler's automatic /tmp default into .artifacts/diagnostics/vial-scale, verified at 29,432 bytes with SHA-256 d58a6a69...0924a, and the exact off-volume original was deleted with a residue check. Future sampling must use `sample ... -file .artifacts/...` directly. This is a tracked performance-risk observation, not yet a defect classification or budget.`
   Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3`
   Status: `proposed`
@@ -5023,3 +5023,59 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   claims, and all doctrines are required green before commit. No source, test,
   artifact, producer, provider, simulator, measurement, capture, publication,
   budget, performance, support, capacity, full CI, or push runs in this slice.
+
+## Acceptance Checklist (enforced) — `.17.5.2.4.3` repaired production capture
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — query-first review resolves to
+  `vial-architecture-scale-regression-promotion-capture` and decision `0096`.
+  The first honest capture and archived failure prove that nullable policy
+  selection coordinates could not authenticate fixed producer-report axes;
+  clean repair `32e086885` closes that admission defect. Before this run, the
+  active v2 namespace was empty and only the revision-610ed7869 failed prefix
+  existed in history, so a complete current seal could only come from fresh
+  current producers under this leaf.
+- [x] **ADDRESSED (verified)** — guarded production `--capture` at clean
+  revision `155aa22ea` newly published all eleven profiles, admitted eleven
+  validations plus 33 fresh raw measurements and 44 controller invocations,
+  accepted zero exclusions, cleaned all staging, and atomically sealed corpus
+  `ab2df899...e505` / publication `865c5cce...432e` with file-set digest
+  `dc5b315b...c66f`. Exact Verilator, GHDL, and GHDL-plus-OSVVM runtime
+  providers appear only on their owned routes; revision-610ed7869 bytes were
+  not reused. Before -> after: an empty current namespace becomes one complete
+  authenticated same-volume current corpus without relaxing any admission.
+- [x] **NO REGRESSION** — a distinct guarded producer-free `--validate`
+  captured zero profiles, resumed all eleven, reproduced every report/common/
+  provider/plan/policy/publication/file-set identity, and returned the same
+  11/33/44/0 census. Guarded `--inventory` independently reported eleven
+  present and zero missing with the same seal; Git stayed clean throughout
+  execution and temporary staging was empty at completion. The task/book/card
+  and bounded claim name actual-publication mutation falsification as missing
+  under `.17.5.2.5`; no performance budget, support, capacity, full CI, or
+  push claim is made in this slice.
+
+## Acceptance Checklist (enforced) — `.17.5.2.4.3` post-publication verifier repair
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — running the tracked historical-prefix
+  verifier after the successful seal rejected before archive reconstruction
+  with `active regression-promotion v2 namespace is not empty`. The archive
+  remains exact; line 46 had promoted `.4.1`'s true pre-recapture emptiness
+  condition into a permanent invariant that necessarily conflicted with
+  `.4.3`'s owned successful current publication. `git log -S` on that exact
+  diagnostic identifies introducing commit `a1f33e2b1` (`.17.5.2.4.1`).
+- [x] **ADDRESSED (verified)** — verification schema v2 retains archive-only
+  replay and, when the current namespace exists, authenticates its pinned
+  revision, corpus/publication/file-set identities, 13-file/eleven-profile
+  census, raw profile hashes, canonical seal bytes, same-volume owner and file
+  shape, empty staging, and inode separation from the historical archive.
+  Before -> after: legitimate current evidence no longer masquerades as
+  residue, while no current byte can satisfy a historical field.
+- [x] **NO REGRESSION** — the real verifier reconstructs the original
+  five-file/604,539-byte archive and exact current seal. Project-local copied
+  controls in t1775 reject changed current content, an extra current file,
+  cross-history hard-link aliasing, and changed historical content with empty
+  stdout, then prove archive-only replay still succeeds. Syntax and focused
+  `Files=1, Tests=3` pass. All 59 mdBook chapters test; the inspected
+  repository-local render contains 94 files/21,191,530 bytes and was removed
+  after verification. Task/book/card/claim evidence and all doctrine gates
+  must pass before commit. No producer, provider, simulator, measurement,
+  recapture, budget, support, capacity, full CI, or push runs in this repair.

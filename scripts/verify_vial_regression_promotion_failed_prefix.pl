@@ -7,6 +7,7 @@ use warnings;
 use bytes ();
 use Cwd qw(realpath);
 use Digest::SHA qw(sha256_hex);
+use File::Basename qw(dirname);
 use File::Find qw(find);
 use File::Spec;
 use FindBin;
@@ -38,13 +39,29 @@ my $EXPECTED_FILES_SHA256 =
 my $EXPECTED_REPORT_BYTES = 600_036;
 my $EXPECTED_MANIFEST_BYTES = 4_503;
 my $EXPECTED_TOTAL_BYTES = 604_539;
+my $CURRENT_CAPTURE_REVISION =
+    '155aa22ea3099642eb6b7f5de81ea03633e72bcb';
+my $EXPECTED_CURRENT_CORPUS_IDENTITY =
+    'regression-promotion-corpus/'
+    . 'ab2df8992d85b8466f4afca530a5af36984031c453002534fc92ff5678a2e505';
+my $EXPECTED_CURRENT_PUBLICATION_IDENTITY =
+    'regression-promotion-corpus-publication/'
+    . '865c5cce3deee3eaaca9b66cd5d7f007a6e10b6423ac7d5dff2dc7484cd8432e';
+my $EXPECTED_CURRENT_REPORT_SHA256 =
+    'd6139d0f122ced6148846909b3dcf54fd2aed65df1b86f98425d265c060f84a1';
+my $EXPECTED_CURRENT_MANIFEST_SHA256 =
+    '3de607e3d3504f7fe49ca092b32b5be7c4f2452ceb9af14559d83aef92990273';
+my $EXPECTED_CURRENT_FILE_SET_SHA256 =
+    'dc5b315b827389eb466776716f6851cdd9ddd13b2f1aec441f8a51b7d72dc66f';
+my $EXPECTED_CURRENT_REPORT_BYTES = 23_288;
+my $EXPECTED_CURRENT_MANIFEST_BYTES = 1_280;
+my $CURRENT_STAGING_RELATIVE =
+    '.artifacts/tmp/vial-scale/regression-promotion-corpus-publication/v1';
 my $JSON = JSON::PP->new->canonical(1)->utf8(1);
 
 @ARGV == 0 or die "usage: scripts/verify_vial_regression_promotion_failed_prefix.pl\n";
 my $archive = _root_path($ARCHIVE_RELATIVE);
 my $active = _root_path($ACTIVE_RELATIVE);
-die "active regression-promotion v2 namespace is not empty\n"
-    if -e $active || -l $active;
 die "failed-prefix archive is unavailable\n"
     unless -d $archive && !-l $archive;
 
@@ -64,7 +81,7 @@ my @staging = grep {
 closedir $parent_fh or die "cannot close archive parent\n";
 die "failed-prefix archive staging residue remains\n" if @staging;
 
-my @files;
+my (@files, %archive_inodes);
 find({
     no_chdir => 1,
     wanted => sub {
@@ -72,6 +89,8 @@ find({
         die "failed-prefix archive contains a symlink\n" if -l $path;
         return unless -f _;
         _safe_path($path, $root_device, $owner, 1);
+        my @file_stat = lstat($path);
+        $archive_inodes{"$file_stat[0]:$file_stat[1]"} = 1;
         my $bytes = _read_raw($path);
         my $relative = File::Spec->abs2rel($path, $archive);
         $relative =~ s{\\}{/}g;
@@ -201,10 +220,14 @@ $total_bytes += $_->{bytes} for @files;
 die "failed-prefix total byte census changed\n"
     unless $total_bytes == $EXPECTED_TOTAL_BYTES;
 
+my $active_verification = _verify_active_namespace(
+    $active, $archive, $root_device, $owner, \%archive_inodes,
+);
+
 print $JSON->encode({
     schema =>
-        'fsmgen.vial_architecture_scale_regression_promotion_failed_prefix_verification.v1',
-    schema_version => 1,
+        'fsmgen.vial_architecture_scale_regression_promotion_failed_prefix_verification.v2',
+    schema_version => 2,
     archive_relative_path => $ARCHIVE_RELATIVE,
     archive_identity => $archive_identity,
     file_count => scalar(@files),
@@ -215,9 +238,157 @@ print $JSON->encode({
     manifest_sha256 => $EXPECTED_MANIFEST_SHA256,
     profiles_canonical_json_sha256 => $EXPECTED_PROFILES_SHA256,
     archive_files_canonical_json_sha256 => $EXPECTED_FILES_SHA256,
-    active_namespace => 'absent',
+    active_namespace => $active_verification,
     archive_staging_count => scalar(@staging),
 }), "\n";
+
+sub _verify_active_namespace {
+    my ($active_path, $archive_path, $device, $expected_owner,
+        $archive_inode_set) = @_;
+    return {status => 'absent'}
+        unless -e $active_path || -l $active_path;
+
+    _safe_path($active_path, $device, $expected_owner, 0);
+    die "current regression-promotion namespace is not a directory\n"
+        unless -d $active_path;
+    my $active_real = realpath($active_path)
+        // die "cannot resolve current regression-promotion namespace\n";
+    my $archive_real = realpath($archive_path)
+        // die "cannot resolve failed-prefix archive\n";
+    die "current regression-promotion namespace aliases failed-prefix history\n"
+        if $active_real eq $archive_real
+            || index("$active_real/", "$archive_real/") == 0
+            || index("$archive_real/", "$active_real/") == 0;
+
+    my (%files_by_relative, %directories);
+    find({
+        no_chdir => 1,
+        wanted => sub {
+            my $path = $File::Find::name;
+            die "current regression-promotion namespace contains a symlink\n"
+                if -l $path;
+            my $relative = File::Spec->abs2rel($path, $active_path);
+            $relative = '' if $relative eq '.';
+            $relative =~ s{\\}{/}g;
+            if (-d _) {
+                _safe_path($path, $device, $expected_owner, 0);
+                $directories{$relative} = 1;
+                return;
+            }
+            die "current regression-promotion namespace contains a non-file\n"
+                unless -f _;
+            _safe_path($path, $device, $expected_owner, 1);
+            my @file_stat = lstat($path);
+            die "current regression-promotion namespace aliases failed-prefix bytes\n"
+                if $archive_inode_set->{"$file_stat[0]:$file_stat[1]"};
+            $files_by_relative{$relative} = {
+                path => $path,
+                bytes => $file_stat[7],
+            };
+        },
+    }, $active_path);
+
+    my $report_relative = 'complete/regression-promotion-corpus.json';
+    my $manifest_relative = 'complete/corpus-manifest.json';
+    my $report_entry = $files_by_relative{$report_relative};
+    my $manifest_entry = $files_by_relative{$manifest_relative};
+    die "current regression-promotion complete artifacts are missing\n"
+        unless ref($report_entry) eq 'HASH' && ref($manifest_entry) eq 'HASH';
+    my $report_bytes = _read_raw($report_entry->{path});
+    my $manifest_bytes = _read_raw($manifest_entry->{path});
+    die "current regression-promotion report identity changed\n"
+        unless bytes::length($report_bytes) == $EXPECTED_CURRENT_REPORT_BYTES
+            && sha256_hex($report_bytes) eq $EXPECTED_CURRENT_REPORT_SHA256;
+    die "current regression-promotion manifest identity changed\n"
+        unless bytes::length($manifest_bytes) == $EXPECTED_CURRENT_MANIFEST_BYTES
+            && sha256_hex($manifest_bytes) eq $EXPECTED_CURRENT_MANIFEST_SHA256;
+    die "current regression-promotion file-set identity changed\n"
+        unless sha256_hex(join "\0",
+            bytes::length($report_bytes), $report_bytes,
+            bytes::length($manifest_bytes), $manifest_bytes,
+        ) eq $EXPECTED_CURRENT_FILE_SET_SHA256;
+
+    my $report = _decode_canonical_json(
+        $report_bytes, 'current regression-promotion report',
+    );
+    my $manifest = _decode_canonical_json(
+        $manifest_bytes, 'current regression-promotion manifest',
+    );
+    die "current regression-promotion seal identity changed\n"
+        unless ($report->{corpus_identity} // '') eq
+                $EXPECTED_CURRENT_CORPUS_IDENTITY
+            && ($manifest->{corpus_identity} // '') eq
+                $EXPECTED_CURRENT_CORPUS_IDENTITY
+            && ($manifest->{publication_identity} // '') eq
+                $EXPECTED_CURRENT_PUBLICATION_IDENTITY
+            && ($report->{common_identity}{git_revision} // '') eq
+                $CURRENT_CAPTURE_REVISION
+            && !$report->{common_identity}{dirty_state};
+    my $profiles = $report->{profiles};
+    die "current regression-promotion profile census changed\n"
+        unless ref($profiles) eq 'ARRAY' && @{$profiles} == 11;
+
+    my %expected_files = map { $_ => 1 }
+        ($report_relative, $manifest_relative);
+    my %expected_directories = map { $_ => 1 } ('', 'complete', 'profiles');
+    for my $index (0 .. $#{$profiles}) {
+        my $profile = $profiles->[$index];
+        my $artifact = ref($profile) eq 'HASH' ? $profile->{artifact} : undef;
+        my $root_relative = ref($artifact) eq 'HASH'
+            ? $artifact->{relative_path} : undef;
+        die "current regression-promotion profile artifact changed\n"
+            unless defined($root_relative) && !ref($root_relative)
+                && index($root_relative, "$ACTIVE_RELATIVE/") == 0;
+        my $relative = substr($root_relative, length($ACTIVE_RELATIVE) + 1);
+        my $entry = $files_by_relative{$relative};
+        die "current regression-promotion profile artifact changed\n"
+            unless ref($entry) eq 'HASH'
+                && $entry->{bytes} == ($artifact->{bytes} // -1);
+        my $bytes = _read_raw($entry->{path});
+        die "current regression-promotion profile content changed\n"
+            unless sha256_hex($bytes) eq ($artifact->{sha256} // '');
+        $expected_files{$relative} = 1;
+        $expected_directories{dirname($relative)} = 1;
+    }
+    die "current regression-promotion namespace file census changed\n"
+        unless $JSON->encode([sort keys %files_by_relative]) eq
+            $JSON->encode([sort keys %expected_files]);
+    die "current regression-promotion namespace directory census changed\n"
+        unless $JSON->encode([sort keys %directories]) eq
+            $JSON->encode([sort keys %expected_directories]);
+
+    my $staging = _root_path($CURRENT_STAGING_RELATIVE);
+    if (-e $staging || -l $staging) {
+        _safe_path($staging, $device, $expected_owner, 0);
+        die "current regression-promotion staging is not a directory\n"
+            unless -d $staging;
+        opendir my $staging_fh, $staging
+            or die "cannot inspect current regression-promotion staging\n";
+        my @residue = grep { /^corpus-/ } readdir $staging_fh;
+        closedir $staging_fh
+            or die "cannot close current regression-promotion staging\n";
+        die "current regression-promotion staging residue remains\n" if @residue;
+    }
+
+    return {
+        status => 'authenticated_current',
+        capture_revision => $CURRENT_CAPTURE_REVISION,
+        corpus_identity => $EXPECTED_CURRENT_CORPUS_IDENTITY,
+        publication_identity => $EXPECTED_CURRENT_PUBLICATION_IDENTITY,
+        file_set_sha256 => $EXPECTED_CURRENT_FILE_SET_SHA256,
+        profile_count => scalar(@{$profiles}),
+        file_count => scalar(keys %files_by_relative),
+    };
+}
+
+sub _decode_canonical_json {
+    my ($bytes, $label) = @_;
+    my $value = eval { $JSON->decode($bytes) };
+    die "$label JSON is invalid\n" if $@ || ref($value) ne 'HASH';
+    die "$label is not canonical newline JSON\n"
+        unless $bytes eq $JSON->encode($value) . "\n";
+    return $value;
+}
 
 sub _root_path {
     my ($relative) = @_;

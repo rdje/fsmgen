@@ -678,15 +678,28 @@ bytes plus a 4,503-byte canonical failure manifest under the exact capture
 revision in `.artifacts/qualification/vial-scale/history/`. Independent
 reconstruction yields archive identity
 `regression-promotion-failed-prefix/f46939aab1731f2b2a136a0d06cf161d4ff6ec99b2336559227a668c8b86e5a4`,
-five files/604,539 bytes, and an empty active v2 namespace with no archive
-staging. None of this is a performance, capacity, simulator-support, or
-regression-budget claim.
+five files/604,539 bytes; at archival time the active v2 namespace and archive
+staging were empty. None of this is a performance, capacity, simulator-support,
+or regression-budget claim.
 
 Reconstruct the retained failed prefix without measuring or invoking a
 simulator:
 
 ```bash
 scripts/verify_vial_regression_promotion_failed_prefix.pl
+```
+
+Verification schema v2 keeps the historical archive independently replayable
+when the active namespace is absent. When a current namespace is present, it
+must instead be the exact 13-file repaired seal: eleven profile reports plus
+the authenticated corpus report and manifest at revision `155aa22ea`. The
+verifier checks current file/content identities, exact directory census,
+same-volume ownership, staging absence, and inode separation from history; a
+foreign, mutated, linked, or partial current namespace rejects before output.
+The focused copied-evidence controls are runnable without a simulator:
+
+```bash
+prove -Iperl t/1775-vial-regression-promotion-failed-prefix-verifier.t
 ```
 
 The repair keeps decision-0096 selection keys and all publication paths
@@ -725,8 +738,61 @@ scripts/run_with_ram_guard.sh -- prove -Iperl \
   t/1774-vial-regression-promotion-corpus-cli.t
 ```
 
-Fresh real capture remains a separate operation owned by `.17.5.2.4.3`; this
-repair neither executes a provider nor promotes a budget or support claim.
+The repaired real capture is now complete. From an empty active namespace at
+clean revision `155aa22ea3099642eb6b7f5de81ea03633e72bcb`, the guarded
+production operation ran all eleven current adapters and published eleven
+atomic profile reports: eleven validations, 33 fresh raw measurements, 44
+accepted controller invocations, and zero exclusions. The runtime routes used
+their exact owned providers—Verilator 5.046, GHDL 6.0.0 LLVM JIT, and the
+qualified GHDL-plus-OSVVM combination—while repository-only emission routes
+remained correctly distinct from external simulator execution.
+
+The complete same-volume seal has these authenticated identities:
+
+| Evidence | Current identity |
+| --- | --- |
+| corpus | `regression-promotion-corpus/ab2df8992d85b8466f4afca530a5af36984031c453002534fc92ff5678a2e505` |
+| publication | `regression-promotion-corpus-publication/865c5cce3deee3eaaca9b66cd5d7f007a6e10b6423ac7d5dff2dc7484cd8432e` |
+| capture plan | `regression-promotion-capture-plan/fbf697407b0ba326a11a10cbb2d31744f8d28944a0d4d402294cd960dea09737` |
+| policy | `regression-promotion-policy/19cf41056da86d95c266597e7db76eff3810ee29511a005e1051053009a65ece` |
+| complete file set | `dc5b315b827389eb466776716f6851cdd9ddd13b2f1aec441f8a51b7d72dc66f` |
+
+The complete report is 23,288 bytes with SHA-256
+`d6139d0f122ced6148846909b3dcf54fd2aed65df1b86f98425d265c060f84a1`;
+its manifest is 1,280 bytes with SHA-256
+`3de607e3d3504f7fe49ca092b32b5be7c4f2452ceb9af14559d83aef92990273`.
+A distinct guarded process then ran producer-free validation, captured no new
+profile, resumed all eleven, and reproduced every common, provider, report,
+plan, policy, publication, and file-set identity. Guarded inventory reported
+eleven present profiles and zero missing profiles with no staging residue.
+The historical-prefix verifier also succeeds against this exact current seal;
+it does not mistake an authenticated current publication for failed-capture
+residue or admit it as historical evidence.
+
+Review the sealed result without invoking a measurement producer:
+
+```bash
+scripts/run_with_ram_guard.sh -- \
+  scripts/run_vial_regression_promotion_corpus.pl --validate
+scripts/run_with_ram_guard.sh -- \
+  scripts/run_vial_regression_promotion_corpus.pl --inventory
+```
+
+This proves current capture and producer-free re-admission, not a regression
+budget, support tier, capacity limit, or performance qualification. The
+re-derivation and tracked durability legs are available; independent mutation
+falsification against this exact real publication remains explicitly missing
+under `.17.5.2.5`. That leaf must also characterize the observed CPU-bound
+balanced/corpus canonicalization before deciding whether it is expected scale
+cost or a repairable performance defect. Budget work remains solely
+`.17.5.3`.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-real-current-corpus-capture-v1 -->
+- Claim: At clean revision 155aa22ea3099642eb6b7f5de81ea03633e72bcb, guarded production capture published the repaired eleven-profile current corpus as eleven validations, 33 fresh raw measurements, 44 accepted controller invocations, and zero exclusions; its complete report is 23,288 bytes with SHA-256 d6139d0f...84a1 and its manifest is 1,280 bytes with SHA-256 3de607e3...0273. A distinct guarded producer-free process resumed all eleven and reproduced the same corpus, publication, plan, policy, report, and file-set identities. This proves current capture and re-admission, not independent real-artifact mutation falsification, a regression budget, support, performance, or capacity.
+- Re-derive: Run guarded `--validate` and `--inventory` against the active corpus. Require corpus ab2df899...e505, publication 865c5cce...432e, plan fbf69740...9737, policy 19cf4105...ece, file-set dc5b315b...c66f, report 23,288 bytes/d6139d0f...84a1, manifest 1,280 bytes/3de607e3...0273, eleven resumed/present profiles, eleven validations, 33 raw records, 44 invocations, zero exclusions, and zero missing profiles.
+- Falsify: MISSING - Independent mutation controls have not yet been fired against the exact real publication; synthetic store/admission RED controls do not close that actual-artifact leg. (owner: HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5)
+- Durability: Retain the exact task result, mdBook section, Knowledge card, bounded claim record, clean revision, same-volume sealed artifacts, tracked validate/inventory producer, doctrine gate, and work-unit Git chain; `.17.5.2.5` separately owns complete immutable-evidence recovery.
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-real-current-corpus-capture-v1 -->
 
 The dispatch authority now implements the metadata-only first step. It
 authenticates the promotion policy internally, preserves policy order, and

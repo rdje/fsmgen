@@ -11,6 +11,8 @@ answers:
   - "how does one VIAL regression-promotion profile run in isolation?"
   - "how is the VIAL v2 current corpus resumed and published?"
   - "how are regression-promotion report coordinates authenticated separately from policy selection?"
+  - "did the repaired VIAL regression-promotion current corpus complete?"
+  - "what is the current VIAL regression-promotion corpus identity?"
 date: 2026-09-02
 status: current
 tags: [hial, vial, scalability, regression, measurement, publication]
@@ -22,7 +24,7 @@ evidence: >-
   perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCapturePlan.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileCapture.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusCoordinator.pm; scripts/run_vial_regression_promotion_corpus.pl; scripts/verify_vial_regression_promotion_failed_prefix.pl;
   t/1765-vial-architecture-scale-regression-promotion-policy.t; t/1766-vial-architecture-scale-regression-promotion-capture-plan.t; t/1767-vial-architecture-scale-regression-promotion-profile-store.t; t/1768-vial-architecture-scale-regression-promotion-profile-capture.t; t/1769-vial-architecture-scale-regression-promotion-profile-resume.t; t/1772-vial-regression-promotion-corpus-store.t; t/1773-vial-regression-promotion-corpus-coordinator.t; t/1774-vial-regression-promotion-corpus-cli.t
 reverify: >-
-  scripts/run_with_ram_guard.sh -- prove -Iperl t/1766-vial-architecture-scale-regression-promotion-capture-plan.t t/1767-vial-architecture-scale-regression-promotion-profile-store.t t/1768-vial-architecture-scale-regression-promotion-profile-capture.t t/1769-vial-architecture-scale-regression-promotion-profile-resume.t t/1772-vial-regression-promotion-corpus-store.t t/1773-vial-regression-promotion-corpus-coordinator.t t/1774-vial-regression-promotion-corpus-cli.t; scripts/verify_vial_regression_promotion_failed_prefix.pl
+  scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_corpus.pl --validate; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_corpus.pl --inventory; scripts/verify_vial_regression_promotion_failed_prefix.pl
 ---
 
 Decision 0096 selects eleven v2 gate profiles. Each adapter call owns one
@@ -82,23 +84,31 @@ the distinction. No corpus seal was written. The exact four-report/600,036-byte
 prefix plus a canonical failure manifest is preserved in the revision-keyed
 same-volume history archive with identity
 `regression-promotion-failed-prefix/f46939aab1731f2b2a136a0d06cf161d4ff6ec99b2336559227a668c8b86e5a4`;
-the active v2 namespace is empty. The repository-relative
-`verify_vial_regression_promotion_failed_prefix.pl` rechecks every fixed
-identity, byte, hash, record, path, device, link, owner, and residue invariant;
-a copied report mutation rejects before emitting a result.
+the active namespace was empty when archived. The repository-relative v2 verifier
+rechecks every fixed archive invariant, accepts archive-only replay, and—when
+current evidence exists—separately authenticates the exact 13-file/eleven-profile
+seal. Current mutation, foreign paths, historical hard links, or archive mutation
+reject before output; current bytes never satisfy a historical field.
 
-`.17.5.2.4.2` closes the admission defect without changing a selection key or
-publication path. Capture-plan schema v2 carries a distinct authenticated
-`report_coordinate_authority` on every entry. Each of the seven adapters
-derives its four report coordinates through canonical producer ownership, and
-the plan pins the resulting eleven identities. Capture and resume compare
-reports to this authority rather than to policy selection coordinates.
-Backend, runtime, and balanced selection axes remain null, while their real
-report axes are respectively `artifact_graph`, `runtime_trace_records`, and
-`interaction_profile`. Synthetic reports reproduce those real axes. Changed,
-missing, newly appearing, rehashed, or aliased coordinates reject before
-publication; the guarded seven-file integration passes 58 tests. Fresh real
-capture remains solely owned by `.17.5.2.4.3`.
+`.17.5.2.4.2` closes the defect without changing selection keys or publication paths.
+Capture-plan schema v2 authenticates `report_coordinate_authority` on every entry;
+seven adapters derive four report coordinates through canonical producer ownership,
+and the plan pins all eleven identities. Capture and resume use that authority, not
+policy selection coordinates. Backend, runtime, and balanced selections remain null,
+while their report axes are `artifact_graph`, `runtime_trace_records`, and
+`interaction_profile`. Changed, missing, new, rehashed, or aliased coordinates reject;
+synthetic reports retain real axes and guarded integration passes 58 tests.
+
+That repaired capture is complete at clean revision `155aa22ea`: all eleven
+selected reports, eleven validations, 33 fresh raw measurements, 44 accepted
+controller invocations, and zero exclusions. Its atomic same-volume corpus is
+`regression-promotion-corpus/ab2df8992d85b8466f4afca530a5af36984031c453002534fc92ff5678a2e505`;
+its publication identity is `regression-promotion-corpus-publication/865c5cce3deee3eaaca9b66cd5d7f007a6e10b6423ac7d5dff2dc7484cd8432e`;
+the complete file-set digest is `dc5b315b827389eb466776716f6851cdd9ddd13b2f1aec441f8a51b7d72dc66f`.
+A producer-free validate pass reproduced every identity/count; inventory reports eleven
+present, zero missing, and no staging residue. Real-artifact mutation falsification remains
+missing under `.17.5.2.5`, so no budget, support, performance, or capacity claim is promoted.
+That leaf owns CPU-bound canonicalization; macOS sampling must use repository-local `sample -file` output.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]].
