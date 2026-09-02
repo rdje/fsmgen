@@ -1503,11 +1503,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.3: seal repaired current corpus`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5`
-  Status: `proposed`
+  Status: `active`
   Goal: `Independently reload, census, falsify, document, and close the current v2 publication for budget qualification.`
   Acceptance: `Validate the sealed publication in a distinct fresh process without capture authority; independently reproduce its exact file/byte/hash/device census, ordered profile/record counts, common identities, applicability/provider outcomes, correctness/oracle closure, exclusions, cleanup, and aggregate statistics. Falsify report, manifest, profile, ordering, identity, provider, count, digest, file-shape, extra-path, and historical-substitution controls; synchronize task/book/Knowledge Map/claim evidence and leave performance budgets entirely unpromoted for .17.5.3. Also root-cause the CPU-bound balanced-profile and corpus canonicalization observed during .4.3: use macOS `sample -file` only with a repository-derived `.artifacts/` destination, distinguish expected evidence-size cost from avoidable hash/array copying, and task-tree own any proven defect before budget work. Close .17.5.2 only when clean Git plus immutable same-volume evidence can recover the complete result without conversation state.`
-  Verification: `Pending. .4.3 already supplies a distinct guarded producer-free validate pass and guarded inventory, but this leaf still owns an independently implemented census and actual-publication mutation controls. A project-local two-second stack sample taken during the long balanced/corpus phase showed active Perl hash/array traversal and value copying rather than blocked I/O; the exact sample was copied from the sampler's automatic /tmp default into .artifacts/diagnostics/vial-scale, verified at 29,432 bytes with SHA-256 d58a6a69...0924a, and the exact off-volume original was deleted with a residue check. Future sampling must use `sample ... -file .artifacts/...` directly. This is a tracked performance-risk observation, not yet a defect classification or budget.`
-  Commit: `pending`
+  Verification: `Clean predecessor 9a2bf5246 seals the eleven-profile current corpus, retains exact guarded capture/validate/inventory evidence, and repairs historical-prefix replay so current and historical publications remain separately authenticated. This activation makes .17.5.2.5 the sole owner for a producer-independent file/byte/hash/device/identity census, actual-publication mutation falsification, and current-publication closeout before any budget work. A project-local two-second stack sample taken during the long balanced/corpus phase showed active Perl hash/array traversal and value copying rather than blocked I/O; the exact sample is retained at .artifacts/diagnostics/vial-scale/perl_2026-09-02_154454_06oT.sample.txt at 29,432 bytes with SHA-256 d58a6a69...0924a, and the exact sampler-created /tmp original is absent. Future sampling must use `sample ... -file .artifacts/...` directly. This remains a tracked performance-risk observation, not yet a defect classification or budget.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5: activate current corpus closeout`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3`
   Status: `proposed`
   Goal: `Qualify representative current profiles and freeze exact pinned-host/tool regression budgets.`
@@ -5079,3 +5079,22 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   after verification. Task/book/card/claim evidence and all doctrine gates
   must pass before commit. No producer, provider, simulator, measurement,
   recapture, budget, support, capacity, full CI, or push runs in this repair.
+
+## Acceptance Checklist (enforced) — `.17.5.2.5` current-corpus closeout activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean predecessor `9a2bf5246` proves the
+  exact current seal is complete and historically separated, but the bounded
+  capture claim still names independent real-publication mutation
+  falsification as missing under `.17.5.2.5`. The capture-time stack sample
+  also leaves CPU-bound canonicalization as an owned risk, not a diagnosed
+  defect or performance budget.
+- [x] **ADDRESSED (verified)** — `.17.5.2.5` is the sole active leaf; Memory and
+  the task index point first to an independently implemented read-only census,
+  followed by actual-publication copied mutations and canonicalization
+  characterization. Before -> after: proposed closeout becomes executable
+  without modifying or relabelling current evidence.
+- [x] **NO REGRESSION** — activation changes only task-tree continuity state.
+  Task integrity, Memory, relative paths, Knowledge Map, containment, claims,
+  and all doctrines are required green before commit. No source, test,
+  artifact, producer, provider, simulator, measurement, mutation, budget,
+  support, capacity, full CI, or push runs in this activation.

@@ -8,8 +8,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2`
   (`active`; current regression-promotion publication)
-- next_action: Activate `.17.5.2.5` from the clean `.4.3` seal commit for
-  independent corpus census, mutation falsification, and publication closeout.
+- next_action: Implement `.17.5.2.5`'s independent read-only current-corpus
+  census before firing copied actual-publication mutation controls.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: none.
