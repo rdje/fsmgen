@@ -923,7 +923,10 @@ sub _canonical_bundle($repo_root) {
     confess "canonical balanced composition schema changed\n"
         unless ($composition->{schema} // '') eq $COMPOSITION_SCHEMA
             && ($composition->{schema_version} // -1) == 1;
-    my $emission = $EMITTER->evaluate({construction => $construction});
+    my $emission = $EMITTER->_measurement_evaluate({
+        construction => $construction,
+        composition => $composition,
+    });
     confess "canonical balanced emission failed its oracle\n"
         unless $emission->{ok};
     confess "canonical balanced emission schema changed\n"

@@ -196,11 +196,39 @@ subtest 'guarded member retains validation plus three raw records' => sub {
         1_024, 'canonical emission retains exact operation cardinality');
     check_record($report->{validation_record}, 'validated_unmeasured');
     check_record($_, 'measured') for @{$report->{measurement_records}};
-    is($json->encode($class->validate_report({
-        repository_root => $repo_root,
-        report => $report,
-    })), $json->encode($report),
+    my $producer_evaluate = $producer->can('evaluate');
+    my $public_emitter_evaluate = $emitter->can('evaluate');
+    my $measurement_emitter_evaluate = $emitter->can('_measurement_evaluate');
+    my ($producer_calls, $public_emitter_calls, $measurement_emitter_calls) =
+        (0, 0, 0);
+    my $validated;
+    {
+        no warnings 'redefine';
+        local *FSM::VIAL::ArchitectureScaleBalancedPortable::evaluate = sub {
+            $producer_calls++;
+            goto &$producer_evaluate;
+        };
+        local *FSM::VIAL::ArchitectureScaleBalancedPortableEmission::evaluate = sub {
+            $public_emitter_calls++;
+            goto &$public_emitter_evaluate;
+        };
+        local *FSM::VIAL::ArchitectureScaleBalancedPortableEmission::_measurement_evaluate = sub {
+            $measurement_emitter_calls++;
+            goto &$measurement_emitter_evaluate;
+        };
+        $validated = $class->validate_report({
+            repository_root => $repo_root,
+            report => $report,
+        });
+    }
+    is($json->encode($validated), $json->encode($report),
         'complete report independently regenerates exactly');
+    is($producer_calls, 1,
+        'independent regeneration evaluates the six-gate composition once');
+    is($public_emitter_calls, 0,
+        'independent regeneration does not rebuild through public emission');
+    is($measurement_emitter_calls, 1,
+        'independent regeneration uses the exact-caller emission seam once');
 
     my $mutated = clone($report);
     $mutated->{canonical_emission}{artifact_oracle}{source_map_entries}++;

@@ -8,8 +8,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2`
   (`active`; current regression-promotion publication)
-- next_action: Implement `.17.5.2.5.3.2` by reusing the emitter's authenticated
-  composition seam without weakening balanced correctness reconstruction.
+- next_action: Execute `.17.5.2.5.4`'s clean independent and producer-free
+  closeout, then synchronize the final current-publication evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: none.

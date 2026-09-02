@@ -884,10 +884,37 @@ The fresh gates, independent routes, replay, emission, and byte comparisons
 are required correctness work. One rebuild is not: `_canonical_bundle`
 accepts a six-gate composition, then calls public emitter evaluation, which
 rebuilds that composition despite an existing exact-caller measurement seam
-designed to reuse it. `.3.1` closes the store-plan rebuild; `.3.2` owns the
-remaining balanced seam repair. These diagnostic point measurements are not a performance budget,
-support tier, or capacity claim; macOS footprint values cover only the
-three-second phase-start sample window.
+designed to reuse it.
+
+The second repair changes only that call site: `_canonical_bundle` passes its
+already accepted composition to `_measurement_evaluate`. The exact-caller seam
+still builds two independent emission routes, emits both, compares their bytes,
+and applies the complete artifact/report oracle. Guarded exact t1681 proves one
+six-gate producer evaluation, zero public-emitter evaluations, and one private-
+seam evaluation during independent report regeneration; it also retains exact
+report regeneration, foreign-caller rejection, replay, mutation rejection, all
+five structural stages, and cleanup.
+
+The guarded v3 comparison preserves the 1,244,823-byte input and exact
+1,241,948-byte returned report with SHA-256 `0999d139...edb5`. Canonical bytes
+fall 1,325,878,982→813,307,147; clone-encoding bytes
+121,737,844→70,814,879; hashed input 1,044,992,073→640,333,611; top-level
+clones 946,272→596,715; and recursive clone nodes
+68,435,593→42,088,166. The emitter's own operation counts remain exact at
+7,269 canonical calls/152,611,792 bytes, 358,230 clone calls/358,218 recursive
+nodes, and 22 hashes/75,749,997 input bytes, localizing the removed work to the
+composition rebuild. This host point records wall/user CPU
+492.563279/491.72→297.920989/294.52 seconds and rounded sampled
+reported/peak footprint 299.1M/325.6M→296.2M/320.5M. These are revision/host
+observations, not a performance or memory budget, support tier, capacity limit,
+or stable ratio.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-balanced-composition-reuse-v1 -->
+- Claim: The balanced regression-promotion measurement adapter evaluates its six-gate composition once and passes that accepted value through the emitter's exact-caller seam, while the seam retains two independent emission routes, byte-equal rerun, replay, complete artifact/report oracles, and foreign-caller rejection. Against production-source baseline fafe5d88b, one guarded v3 host point preserves the exact 1,241,948-byte report and SHA-256 0999d139...edb5 while canonical bytes fall from 1,325,878,982 to 813,307,147, clone-encoding bytes from 121,737,844 to 70,814,879, hashed input from 1,044,992,073 to 640,333,611, and user CPU from 491.72 to 294.52 seconds; rounded reported/peak footprint moves from 299.1M/325.6M to 296.2M/320.5M. This proves the targeted composition-rebuild removal, not a performance or memory budget, support tier, capacity limit, or stable ratio.
+- Re-derive: Run exact guarded t1681 and require one producer evaluation, zero public-emitter evaluations, and one private-seam evaluation during exact report regeneration. Then rerun guarded v3 balanced-validation with a fresh repository-local sample name; require exact input/output identities, before/after inventory 94c11e5c...bb57, empty staging, unchanged corpus bytes, and final result structure matching b03f7ea7...cf2. Treat timing and footprint only as revision/host observations.
+- Falsify: t1681 must retain exact report regeneration, both emission routes, replay, all artifact/report/member oracles, foreign-caller rejection, hostile report/applicability rejection, and cleanup. t1778 must prove `_canonical_bundle` passes its accepted composition to the private seam and contains no public-emitter call. Compare baseline and repaired module counters; any output change, nonzero public-emitter count, producer count other than one, or changed emitter operation count falsifies the repair.
+- Durability: Retain Measurement, Emission, t1681/t1778, task `.17.5.2.5.3.2`, this chapter, the compact regression-promotion fact card, bounded claim record, final result/sample identities, doctrine gates, and work-unit Git chain. Raw samples remain diagnostic supplements; tracked code, tests, and commands are the durable reproducer.
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-balanced-composition-reuse-v1 -->
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-canonicalization-characterization-v1 -->
 - Claim: On production-source baseline fafe5d88b, final-schema guarded diagnostics preserved the exact current publication and returned values while attributing complete-corpus load and balanced public validation. Corpus load consumed 6,220,126 artifact bytes, ran for 23.093509 seconds, created 36,790,450 canonical plus 13,558,259 clone-encoding bytes, and exposed twelve 1,374,727-byte policy encodes. Balanced validation consumed a 1,244,823-byte artifact, returned 1,241,948 canonical bytes, ran for 492.563279 seconds, created 1,325,878,982 canonical plus 121,737,844 clone-encoding bytes, hashed 1,044,992,073 bytes, and crossed 946,272 top-level clone boundaries. Source inspection binds the avoidable portions to twelve plan derivations and one bypassed accepted-composition seam; required fresh correctness recomputation remains in scope. This is defect characterization, not a performance budget, support tier, or capacity limit.
@@ -898,9 +925,9 @@ three-second phase-start sample window.
 
 This proves current capture, producer-free re-admission, and actual copied-
 artifact falsification, not a regression budget, support tier, capacity limit,
-or performance qualification. The corpus rebuild is repaired; balanced
-canonicalization remains under `.17.5.2.5.3.2`. Budget work remains solely
-`.17.5.3`.
+or performance qualification. Both characterized authority rebuilds are now
+repaired; clean independent/publication closeout remains under `.17.5.2.5.4`,
+and budget work remains solely `.17.5.3`.
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-real-current-corpus-capture-v1 -->
 - Claim: At clean revision 155aa22ea3099642eb6b7f5de81ea03633e72bcb, guarded production capture published the repaired eleven-profile current corpus as eleven validations, 33 fresh raw measurements, 44 accepted controller invocations, and zero exclusions; its complete report is 23,288 bytes with SHA-256 d6139d0f...84a1 and its manifest is 1,280 bytes with SHA-256 3de607e3...0273. A distinct guarded producer-free process resumed all eleven. A separately implemented read-only verifier imports no production module and reconstructs the exact 13-file/6,220,126-byte namespace, inventory SHA-256 94c11e5c...bb57, identities, records, providers, correctness oracles, cleanup, and nonclaims. Same-volume copied-artifact controls independently falsify every sealed content, semantic, file-shape, namespace, staging, and historical-substitution class that is safe to construct. This proves current capture, two distinct re-admission paths, and actual-artifact falsification, not a regression budget, support, performance, or capacity.

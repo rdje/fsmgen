@@ -95,7 +95,11 @@ Required fresh gates/determinism/replay remain. `.3.1` replaces eleven public
 profile reloads with one internally derived ordered all-profile result: policy
 whole-graph encodes fall 12→1 and this host point falls 23.09→6.55 seconds while
 exact bytes/identities remain; sampled footprint rises 210.2M→220.6M. `.3.2`
-owns the skipped accepted-composition seam. No budget or tier is promoted.
+routes the already accepted six-gate composition through the exact-caller seam:
+the exact 1,241,948-byte report remains while canonical bytes fall
+1,325,878,982→813,307,147 and this host point falls 492.56→297.92 seconds;
+sampled peak moves 325.6M→320.5M. `.5.4` owns clean closeout. No budget, stable
+ratio, support, or capacity tier is promoted.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]].

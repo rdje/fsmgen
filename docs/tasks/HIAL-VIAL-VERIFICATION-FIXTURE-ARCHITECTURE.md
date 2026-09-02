@@ -1525,11 +1525,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.2: falsify copied current corpus mutations`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3`
-  Status: `active`
+  Status: `done`
   Goal: `Characterize and, if warranted, repair current-corpus canonicalization cost before budget qualification.`
   Acceptance: `Measure the balanced-profile and complete-corpus phases under the repository RAM guard with project-local `sample -file` output and bounded instrumentation. Attribute CPU, wall, allocation/copying, input/output bytes, and canonicalization multiplicity separately; distinguish inherent evidence-size cost from avoidable repeated whole-graph encoding or hash/array copying. If a defect is proven, add a narrower child owner before source repair and prove byte/identity parity plus focused performance improvement; otherwise retain a measured nondefect rationale. Do not promote a regression budget.`
-  Verification: `The tracked v3 runner derives the repository root, requires the active RAM guard and one closed repository-local sample path, instruments each loaded FSM module without extra probe encodes, preserves imported prototypes, times top-level clone boundaries while separately counting recursive nodes, emits one bounded canonical result, and independently authenticates the complete current corpus before/after. t1778 proves exact clone/canonical/SHA value preservation and byte attribution, prototype restoration, closed invocation, public phase boundaries, and no off-volume path. On production-source baseline fafe5d88b, guarded corpus load consumed 13 files/6,220,126 bytes and returned 25,417 canonical bytes in 23.093509 seconds wall/9.41 seconds user CPU. It created 36,790,450 canonical bytes, 13,558,259 clone-encoding bytes, and hashed 30,407,371 input bytes; 12 policy encodes contributed 16,496,724 whole-graph bytes because CorpusStore derives once and eleven ProfileStore loads each derive again. Balanced public validation consumed the 1,244,823-byte ordinal-11 artifact, returned the exact 1,241,948-byte report, and took 492.563279 seconds wall/491.72 seconds user CPU. It created 1,325,878,982 canonical bytes plus 121,737,844 clone-encoding bytes, hashed 1,044,992,073 bytes, and crossed 946,272 top-level clone boundaries/68,435,593 recursive nodes; 178 canonical plus 31 clone encodes at or above the 622,412-byte half-input threshold materialized 1,348,045,927 bytes. Direct source audit separates required fresh gates/determinism/replay from two avoidable paths: complete load re-derives plan/policy 12 times, and measurement `_canonical_bundle` bypasses the existing exact-caller emission seam and rebuilds its already accepted six-gate composition. Final result/sample identities are corpus da17e6df...468ee/df29cfff...8b8c8 and balanced 87cbbc32...f5e2f/ea283779...56786; both retain inventory 94c11e5c...bb57, empty staging, and unchanged publication bytes. Superseded harness-development results are inadmissible. Children `.3.1` and `.3.2` own repairs before budget work; required correctness recomputation remains intact, and no performance budget, support, or capacity claim is promoted.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3: activate canonicalization cost characterization`
+  Verification: `The tracked v3 runner derives the repository root, requires the active RAM guard and one closed repository-local sample path, instruments each loaded FSM module without extra probe encodes, preserves imported prototypes, times top-level clones, counts recursive nodes separately, emits one bounded canonical result, and independently authenticates the current corpus before/after. Baseline fafe5d88b proves two avoidable authority rebuilds beside required fresh correctness work. Child .3.1 replaces twelve plan/policy derivations with one internally authenticated all-profile load while preserving corpus identity. Child .3.2 passes one already accepted six-gate composition through the exact-caller emission seam while retaining both emission routes, replay, every oracle, foreign-caller rejection, and report identity. The final corpus and balanced point measurements preserve exact outputs while reducing the attributed rebuild work; their timing and sampler observations promote no budget, support, memory, capacity, or stable ratio. Superseded development results are inadmissible.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3: activate canonicalization cost characterization; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3.1: derive corpus profile plan once; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3.2: reuse accepted balanced composition`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3.1`
@@ -1540,18 +1540,18 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3.1: derive corpus profile plan once`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Reuse the already authenticated balanced composition when constructing measurement emission.`
   Acceptance: `After .3.1 is clean, make measurement `_canonical_bundle` use the existing exact-caller `_measurement_evaluate` seam with its independently accepted composition instead of public emission evaluation that rebuilds the same six-gate composition. Retain fresh construction, six-gate composition, two-route determinism, replay, two-route emission, every report/member oracle, foreign-caller rejection, and exact returned report/publication identities. Prove focused v3 reductions against the .3 baseline without setting a performance budget.`
-  Verification: `Activated after .3.1's exact identity-preserving repair and guarded 12 -> 1 plan-derivation proof. `_canonical_bundle` first accepts `$PRODUCER->evaluate`, then calls `$EMITTER->evaluate`, whose `_evaluate` invokes the same producer again. The emitter already exposes caller-authenticated `_measurement_evaluate(construction, composition)` specifically so the measurement adapter does not charge or repeat accepted composition work, and the adapter already uses that seam for the emit-stage payload. This is a missing seam use, distinct from required fresh correctness recomputation.`
-  Commit: `pending`
+  Verification: `Measurement `_canonical_bundle` now passes its already accepted composition to Emission `_measurement_evaluate`; exact caller authentication, two independent emission routes, byte-equal rerun, replay, every artifact/report/member oracle, and foreign-caller rejection remain intact. Static t1778 proves the canonical bundle contains the private seam plus accepted composition and no public-emitter call. RAM-guarded exact t1681 passes Files=1/Tests=5 in 2,396 seconds and dynamically proves one producer evaluation, zero public-emitter evaluations, one private-seam evaluation, exact report regeneration, hostile report/applicability rejection, five-stage records, and cleanup. Final guarded v3 result b03f7ea7...cf2 plus sample 1a6a9c15...3be preserve the exact 1,244,823-byte input, 1,241,948-byte output 0999d139...edb5, corpus/inventory identities, empty staging, and publication bytes. Against baseline fafe5d88b, canonical bytes fall 1,325,878,982 -> 813,307,147, clone-encoding bytes 121,737,844 -> 70,814,879, hash input 1,044,992,073 -> 640,333,611, top-level clones 946,272 -> 596,715, and recursive clone nodes 68,435,593 -> 42,088,166. Emitter-local operation counts remain exact, localizing the reduction to the removed composition rebuild. This host point records 492.563279 -> 297.920989 seconds wall, 491.72 -> 294.52 seconds user CPU, and sampled reported/peak footprint 299.1M/325.6M -> 296.2M/320.5M; none is a budget, support, memory, capacity, or stable-ratio claim.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3.2: reuse accepted balanced composition`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Synchronize the independent result and close current-publication evidence for later budget qualification.`
   Acceptance: `Re-run the independent verifier and production producer-free validate/inventory from clean state; join their exact identities and counts, retain every falsification and canonicalization conclusion, close the bounded capture claim's missing leg only if earned, synchronize task/book/Knowledge Map/containment/claims, and mark .17.5.2 done without promoting performance budgets, support, or capacity.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Activated after both `.5.3` repair children preserve exact current-corpus and balanced-report identities under guarded v3 attribution. Clean producer-free public validate/inventory plus the independent verifier now own final publication closeout before `.17.5.2` can complete.`
+  Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3`
   Status: `proposed`
   Goal: `Qualify representative current profiles and freeze exact pinned-host/tool regression budgets.`
@@ -5335,3 +5335,34 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   6,422/138 parity, claim joins, containment, locality, task acceptance, all
   doctrines, exact seven-file diagnostic-artifact census, and clean Git after
   commit form final signoff; full CI and push remain intentionally deferred.
+
+## Acceptance Checklist (enforced) — `.17.5.2.5.3.2` accepted composition seam
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — characterization commit `0c3bf9773` and
+  `git log -S '$EMITTER->evaluate'` trace the path to `91ceaf9eb`:
+  Measurement `_canonical_bundle` reconstructs and accepts one complete
+  six-gate composition, then calls public Emission `evaluate`, whose private
+  `_evaluate` reconstructs the same composition before its two independent
+  emission routes. Emission already ships exact-caller `_measurement_evaluate`
+  for this adapter and the emit-stage worker already uses it; the canonical
+  bundle alone bypasses that seam. Baseline balanced validation returns the
+  exact 1,241,948-byte report while recording 1,325,878,982 canonical bytes,
+  121,737,844 clone-encoding bytes, and 1,044,992,073 hashed input bytes.
+- [x] **ADDRESSED (verified)** — `_canonical_bundle` now sends its accepted
+  composition to exact-caller `_measurement_evaluate`; no emitter or producer
+  contract changes. Static t1778 proves the bundle contains no public-emitter
+  call. Exact guarded t1681 dynamically records one producer evaluation, zero
+  public-emitter evaluations, and one private-seam evaluation during byte-exact
+  independent report regeneration while retaining both routes and all oracles.
+- [x] **NO REGRESSION** — exact RAM-guarded t1681 passes Files=1, Tests=5 in
+  2,396 seconds; the default t1681+t1778 pair passes Files=2, Tests=8. Repaired
+  guarded v3 output and sample retain SHA-256 b03f7ea7...cf2 and
+  1a6a9c15...3be with exact input/output identities, unchanged corpus and
+  inventory, empty staging, and localized counters. `mdbook test` covers all
+  59 chapters; the rendered 94-file/21,292,024-byte book contains the new seam
+  and claim before exact staging cleanup. Knowledge Map 6,422/138 parity,
+  claim inventory and 1,819/1,819 disposition join, maintained-reference
+  authority, zero ceiling increase, containment, and the exact nine-file
+  568,304-byte retained diagnostic census pass. Staged task acceptance, all
+  doctrines, and a clean task-scoped commit form final signoff; full CI and
+  push remain intentionally deferred.

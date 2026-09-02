@@ -16,10 +16,16 @@ my $root = realpath(File::Spec->catdir($FindBin::Bin, '..'))
 my $relative =
     'scripts/measure_vial_regression_promotion_canonicalization.pl';
 my $script = File::Spec->catfile($root, split m{/}, $relative);
+my $measurement = File::Spec->catfile(
+    $root, qw(perl FSM VIAL ArchitectureScaleBalancedPortableMeasurement.pm),
+);
 my $json = JSON::PP->new->canonical(1)->utf8(1);
 
 subtest 'tracked runner keeps closed local read-only measurement boundaries' => sub {
     my $source = read_raw($script);
+    my $measurement_source = read_raw($measurement);
+    my ($canonical_bundle) = $measurement_source =~
+        /(sub _canonical_bundle\b.*?)(?=\nsub \w)/s;
     like($source, qr/use FindBin;/,
         'runner derives the repository root from its tracked location');
     like($source, qr{/usr/bin/sample}, 'runner invokes the macOS sampler');
@@ -47,6 +53,14 @@ subtest 'tracked runner keeps closed local read-only measurement boundaries' => 
         qr/sub install_bindings\s*\{.*?\binstall_bindings\(/s,
         'wrapper installation does not recurse through the module set',
     );
+    ok(defined($canonical_bundle),
+        'measurement source exposes the canonical bundle boundary');
+    like($canonical_bundle, qr/\$EMITTER->_measurement_evaluate\s*\(/,
+        'canonical bundle uses the authenticated accepted-composition seam');
+    like($canonical_bundle, qr/composition\s*=>\s*\$composition/,
+        'canonical bundle passes its already accepted composition');
+    unlike($canonical_bundle, qr/\$EMITTER->evaluate\s*\(/,
+        'canonical bundle does not rebuild through public emission');
 };
 
 subtest 'synthetic underlay proves exact values and byte attribution' => sub {
