@@ -1477,8 +1477,30 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Capture and atomically publish the complete real current corpus at one clean implementation revision.`
   Acceptance: `From the clean .17.5.2.3 implementation revision, run the production capture CLI under the active repository RAM guard and repository-local providers. Capture or exact-resume all eleven selected profiles through their current canonical producers; require one validation and three fresh raw measurements per profile, all 44 controller records, zero exclusions, one common revision/host/tool/guard/provider identity, deterministic stage oracles, complete cleanup, and no revision-1 substitution. Publish the v2 complete seal only after all profiles reload successfully. If a route is unavailable or disagrees, retain honest partial publications, withhold the seal, root-cause the exact producer/provider/admission failure under this owner, and never relax validation, timing, guard, or evidence identity to force acceptance.`
-  Verification: `Clean predecessor 6702f48e0 completes the producer-free store/coordinator/CLI chain and passes its 65-test integration plus all twelve doctrines. Query-first review of the dedicated capture card and decision 0096 confirms this leaf is the sole next owner for real provider and simulator execution: eleven ordered gate profiles, one validation plus three fresh raw measurements each, 44 controller records, zero exclusions, and no revision-1 substitution. This activation changes continuity documents only; it does not execute a producer, provider, simulator, measurement, capture, validation, publication, full CI, or push.`
+  Verification: `Clean predecessor 6702f48e0 completes the producer-free store/coordinator/CLI chain and passes its 65-test integration plus all twelve doctrines. Query-first review of the dedicated capture card and decision 0096 confirms this leaf is the sole next owner for real provider and simulator execution: eleven ordered gate profiles, one validation plus three fresh raw measurements each, 44 controller records, zero exclusions, and no revision-1 substitution. The first guarded production attempt at clean revision 610ed7869 atomically retained ordinals one through four, then failed closed at ordinal five because the backend-emission report's legitimate artifact_graph primary_axis appeared where the plan exposed only the nullable selection coordinate; the corpus seal remains absent. Source audit proves all seven remaining producer reports carry fixed report axes while their policy selection axis is intentionally null, and synthetic capture/resume doubles copied the null selection coordinate and masked the distinction. Children .1-.3 own exact prefix archival, separate authenticated report-coordinate repair, and fresh capture.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4: activate real current-corpus capture`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.1`
+  Status: `active`
+  Goal: `Preserve the exact failed clean-revision capture prefix before changing its plan or implementation identity.`
+  Acceptance: `Admit only the four immutable ordinal-one-through-four publications under the active v2 profile namespace; require their exact revision 610ed7869, plan/policy identities, selected coordinates, canonical payloads, regular single-link shape, current-owner and same-volume state, individual hashes, 600,036 aggregate bytes, zero ordinal-five publication, absent corpus report/manifest, and no staging residue. Move the complete profile prefix atomically or rollback into a revision-keyed content-addressed same-volume history directory with one canonical manifest that records the ordinal-five primary_axis admission failure and explicit no-seal status. Independently reconstruct every archived byte/hash/identity and prove the active v2 namespace is empty before any source change.`
+  Verification: `Read-only census finds exactly four canonical profile publications and 600,036 bytes at revision 610ed7869 with plan identity 0b6a15ce...20c33 and policy identity 19cf4105...5ece; payload hashes are e4193516..., ad30fd73..., 32edcdc7..., and a55c3255.... Ordinal five, the corpus report/manifest, and a complete seal are absent. Established execution/checking precedent preserves incompatible prefixes under .artifacts/qualification/vial-scale/history/<revision>/ rather than deleting or relabelling them.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.1: activate failed-prefix archive`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.2`
+  Status: `proposed`
+  Goal: `Separate policy selection coordinates from producer-report coordinates and close the synthetic-test hole.`
+  Acceptance: `Retain decision-0096 selection keys and publication paths unchanged. Add one closed authenticated report-coordinate authority to every capture-plan entry, derive each expected family/level/primary_axis/backend_profile from canonical producer ownership rather than caller data, and make child/parent capture plus resume admission compare reports against that authority. Make synthetic reports reproduce the real producer axes for all eleven routes. Prove every individual coordinate mutation, omission, appearance, plan/identity forgery, and selection/report aliasing rejects while focused plan/capture/resume/coordinator/CLI integration stays green.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.3`
+  Status: `proposed`
+  Goal: `Capture the complete repaired current corpus from an empty active namespace.`
+  Acceptance: `From the clean report-coordinate repair revision and empty active v2 namespace, run production --capture under the RAM guard. Require all eleven current profiles, eleven validations, 33 fresh raw measurements, 44 accepted controller records, zero exclusions/diagnostics, one admitted common identity, route-specific provider identity, complete cleanup, and an atomic corpus report/manifest seal. Preserve any new honest failure prefix under the same revision-keyed doctrine; do not reuse revision-610ed7869 bytes.`
+  Verification: `pending`
+  Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5`
   Status: `proposed`
@@ -4867,3 +4889,26 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   script, book, generated artifact, producer, provider, simulator, controller,
   measurement, capture, validation, publication, budget, support, performance,
   capacity, full CI, push, or product behavior changes.
+
+## Acceptance Checklist (enforced) — `.17.5.2.4.1` failed-prefix archive activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — guarded production `--capture` failed at
+  `ArchitectureScaleRegressionPromotionProfileCapture.pm` line 235 with
+  `profile capture report coordinate 'primary_axis' appeared`. Inventory and
+  source tracing map ordinal five to backend emission: policy selection uses a
+  null axis, while its canonical report requires `artifact_graph`; all later
+  runtime/balanced producers likewise require a fixed report axis. Synthetic
+  doubles copied the nullable selection coordinate and therefore missed this.
+- [x] **ADDRESSED (verified)** — `.17.5.2.4` is decomposed into exact archive,
+  report-coordinate repair, and fresh-capture children; `.1` alone is active.
+  Read-only census binds the failed prefix to four files/600,036 bytes, clean
+  revision `610ed7869`, four exact payload hashes, absent ordinal five, absent
+  complete publication, and no active staging. Before -> after: the failure is
+  durably owned without changing or deleting evidence or touching source.
+- [x] **NO REGRESSION** — this continuity-only activation changes Memory, the
+  active task index, and owning task evidence. Task-tree integrity, Memory,
+  relative paths, Knowledge Map, live-document containment, claims, staged
+  result, and all registered doctrines are commit gates. No artifact is yet
+  moved; no source, test, script, book, producer, provider, simulator,
+  measurement, capture, publication, budget, support, performance, capacity,
+  full CI, push, or product behavior changes.
