@@ -1467,11 +1467,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.2: implement complete corpus coordinator`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Close the repository-relative corpus CLI and adversarial coordinator/publication contract before real capture.`
   Acceptance: `Add limits, inventory, capture, and validate CLI modes that derive the repository root from the script location, require guarded clean-state authority where applicable, emit only bounded canonical JSON, and document exact resume, unavailable-provider, cleanup, current-evidence, and nonclaim behavior. Exercise the public production paths with deterministic bounded workers and independently falsify interruption, collision, stage ambiguity, report/manifest mutation, stale or mixed common/provider identity, duplicate/missing/reordered profiles and records, malformed/oversized IPC, child exception/exit/signal, repository mutation, symlink/hard-link/cross-device state, and target/staging residue. Synchronize runnable mdBook, Knowledge Map, task, and claim evidence while leaving real capture exclusively to .17.5.2.4.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Clean predecessor 5ca220a80 implements closed inventory/capture/validate coordination and reuses the bounded fresh-worker profile boundary. Query-first review resolves current publication behavior to the dedicated regression-promotion capture card: production module APIs exist, while the repository-relative CLI and its public-path adversarial closeout remain the sole unimplemented child before real guarded capture. This activation selects .17.5.2.3.3 alone; real producer/provider/simulator execution remains proposed .17.5.2.4. No source, test, script, artifact, worker, producer, provider, simulator, capture, publication, budget, support, performance, capacity, CI, or product behavior changes in activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.3: activate corpus CLI closeout`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4`
   Status: `proposed`
@@ -4788,3 +4788,24 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   controller, measurement, v2 evidence publication, budget, support,
   performance, capacity, full CI, or push is run or promoted in this ordinary
   slice.
+
+## Acceptance Checklist (enforced) — `.17.5.2.3.3` corpus CLI closeout activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Knowledge Map query `how is the VIAL v2
+  current corpus resumed and published?` resolves to the dedicated capture
+  card. Clean predecessor `5ca220a80` supplies module-level inventory,
+  capture, and validate operations, while the active parent and `.3.3`
+  acceptance leave the repository-relative public CLI and hostile public-path
+  closeout as the final child before real capture.
+- [x] **ADDRESSED (verified)** — `.17.5.2.3.3` is active and owns only the CLI
+  plus synthetic adversarial closeout over the completed coordinator/store
+  stack. Real guarded producers, providers, simulators, measurements, and v2
+  evidence remain proposed `.17.5.2.4`. Before -> after: one proposed child
+  becomes the sole implementation frontier without changing behavior.
+- [x] **NO REGRESSION** — this continuity-only activation changes Memory, the
+  active task index, and owning task evidence. Task-tree integrity, Memory,
+  relative paths, Knowledge Map, live-document containment, claims, staged
+  result, and all registered doctrines are commit gates. No source, test,
+  script, book, generated artifact, worker, producer, provider, simulator,
+  capture, publication, budget, support, performance, capacity, full CI, push,
+  or product behavior changes.
