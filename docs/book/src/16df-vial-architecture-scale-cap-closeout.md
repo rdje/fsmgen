@@ -652,13 +652,14 @@ guard-visible profile worker, so capture uses eleven ordered worker lifecycles,
 not 44 publication workers.
 
 Implementation remains split into recoverable steps. `.17.5.2.1` derives the
-closed dispatch plan without running producers. `.2` adds isolated per-profile
-capture and v2 publication. `.3` adds exact resume, the complete coordinator,
-fresh-worker reload, and the bounded CLI. Only after those implementation
-commits are clean does `.4` run the real guarded capture at one revision. `.5`
-then independently reloads, falsifies, documents, and closes the publication
-for the still-separate budget qualification leaf. Activation itself runs no
-simulator, measurement producer, or artifact publication.
+closed dispatch plan without running producers. `.17.5.2.2` owns isolated
+per-profile capture, v2 publication, exact profile resume, and prerequisite
+legacy-store hardening. `.17.5.2.3` owns the complete coordinator,
+fresh-worker corpus reload, and bounded CLI. Only after those implementation
+commits are clean does `.17.5.2.4` run the real guarded capture at one revision.
+`.17.5.2.5` then independently reloads, falsifies, documents, and closes the
+publication for the still-separate budget qualification leaf. Activation
+itself runs no simulator, measurement producer, or artifact publication.
 
 The dispatch authority now implements the metadata-only first step. It
 authenticates the promotion policy internally, preserves policy order, and
@@ -721,6 +722,24 @@ doubles and repository-local Git fixtures; it proves dispatch and admission
 without running a scale producer, simulator, or real capture. The guarded real
 capture remains owned by `.17.5.2.4` after the coordinator and resume path ship.
 
+Exact single-profile resume is producer-free. Its public API accepts only the
+repository root and numeric plan ordinal, loads the existing publication in a
+fresh child, runs the selected adapter's public validator, and repeats report,
+dispatch, provider, applicability, cleanup, revision, host, guard, and tool
+admission. Foundation routes must reproduce the current in-process tool
+identity; qualified runtime routes remain bound to their complete external-tool
+profile. The parent reloads the same bytes and independently repeats validation
+after child completion. There is no capture fallback and resume never seals a
+complete corpus.
+
+Store reload now rejects same-profile staging residue even when an apparently
+valid target exists. Rehashed stale plan or dispatch envelopes, foreign
+providers, mixed records, stale common identities, target-census changes,
+revision-1 substitutions, noncanonical post-worker mutation, validator-side
+repository mutation, child exceptions, and signals all reject. The store's
+existing bounded topology tests continue to own malformed, oversized,
+symlink, hard-link, cross-device, collision, and ambiguous-stage controls.
+
 The storage audit also found a legacy gap: five newer revision-1 matrix
 publishers declare byte ceilings, but the older semantic/bridge and
 execution/checking publishers do not. The new v2 store does not inherit that
@@ -751,6 +770,13 @@ guard with:
 ```sh
 scripts/run_with_ram_guard.sh -- prove -Iperl \
   t/1768-vial-architecture-scale-regression-promotion-profile-capture.t
+```
+
+Run the producer-free fresh-worker resume watcher under the same guard with:
+
+```sh
+scripts/run_with_ram_guard.sh -- prove -Iperl \
+  t/1769-vial-architecture-scale-regression-promotion-profile-resume.t
 ```
 
 Authenticate both the selection policy and dispatch plan under the repository

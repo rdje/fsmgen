@@ -169,6 +169,29 @@ sub sampler_interval_ns($class) {
     return $SAMPLER_INTERVAL_NS;
 }
 
+sub current_environment_identity($class, @args) {
+    _exact_invocant($class, 'current_environment_identity');
+    confess __PACKAGE__ . "->current_environment_identity expects one closed hash\n"
+        unless @args == 1 && ref($args[0]) eq 'HASH'
+            && !blessed($args[0]);
+    _exact_keys(
+        $args[0], [qw(repository_root)],
+        'measurement environment identity request',
+    );
+    my ($repo_root) =
+        _validated_repository_root($args[0]{repository_root});
+    my $guard = _resource_guard('gate_measurement');
+    confess "measurement environment identity requires the active RAM guard\n"
+        unless _json_boolean(
+            $guard->{active}, 'measurement environment guard active',
+        );
+    return _clone({
+        host_profile => _host_profile($repo_root),
+        tool_profile => _foundation_tool_profile(),
+        resource_guard => $guard,
+    });
+}
+
 sub effective_timeout($class, @args) {
     _exact_invocant($class, 'effective_timeout');
     confess __PACKAGE__ . "->effective_timeout expects one closed hash\n"

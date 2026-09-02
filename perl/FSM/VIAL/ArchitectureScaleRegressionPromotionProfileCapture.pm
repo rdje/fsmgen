@@ -22,9 +22,11 @@ no warnings 'experimental::signatures';
 
 use FSM::VIAL::ArchitectureScaleRegressionPromotionCapturePlan;
 use FSM::VIAL::ArchitectureScaleRegressionPromotionProfileStore;
+use FSM::VIAL::ArchitectureScaleMeasurement;
 
 my $PLAN = 'FSM::VIAL::ArchitectureScaleRegressionPromotionCapturePlan';
 my $STORE = 'FSM::VIAL::ArchitectureScaleRegressionPromotionProfileStore';
+my $MEASUREMENT = 'FSM::VIAL::ArchitectureScaleMeasurement';
 my $SCHEMA =
     'fsmgen.vial_architecture_scale_regression_promotion_profile_capture.v1';
 my $WORKER_SCHEMA =
@@ -81,6 +83,7 @@ sub capture($class, @args) {
     my ($plan, $entry) = _current_entry($repo_root, $request->{ordinal});
     my $git_revision = _require_clean_revision($repo_root);
     my $result = _run_profile_worker({
+        operation => 'capture',
         repository_root => $repo_root,
         plan => $plan,
         entry => $entry,
@@ -88,7 +91,43 @@ sub capture($class, @args) {
     });
     _require_unchanged_clean_revision($repo_root, $git_revision);
     _validate_result($result, $plan, $entry, $git_revision);
+    confess "profile capture worker returned a resume artifact\n"
+        if ($result->{artifact}{status} // '') eq 'loaded';
+    _revalidate_in_parent(
+        'capture', $repo_root, $plan, $entry, $git_revision, $result,
+    );
+    return _clone($result);
+}
 
+sub resume($class, @args) {
+    _exact_invocant($class, 'resume');
+    my $request = _request(
+        'resume', \@args, [qw(repository_root ordinal)],
+    );
+    _require_active_guard();
+    my $repo_root = _repository_root($request->{repository_root});
+    my ($plan, $entry) = _current_entry($repo_root, $request->{ordinal});
+    my $git_revision = _require_clean_revision($repo_root);
+    my $result = _run_profile_worker({
+        operation => 'resume',
+        repository_root => $repo_root,
+        plan => $plan,
+        entry => $entry,
+        git_revision => $git_revision,
+    });
+    _require_unchanged_clean_revision($repo_root, $git_revision);
+    _validate_result($result, $plan, $entry, $git_revision);
+    confess "profile resume worker did not load an existing artifact\n"
+        unless ($result->{artifact}{status} // '') eq 'loaded';
+    _revalidate_in_parent(
+        'resume', $repo_root, $plan, $entry, $git_revision, $result,
+    );
+    return _clone($result);
+}
+
+sub _revalidate_in_parent(
+    $operation, $repo_root, $plan, $entry, $git_revision, $result,
+) {
     my $loaded = $STORE->load({
         repository_root => $repo_root,
         ordinal => $entry->{ordinal},
@@ -100,19 +139,21 @@ sub capture($class, @args) {
         repository_root => $repo_root,
         report => $report,
     });
-    confess "profile capture adapter changed the admitted report\n"
+    confess "profile $operation parent adapter changed the admitted report\n"
         unless _canonical_json($validated) eq _canonical_json($report);
     my ($common, $provider, $applicability) = _admit_report(
         $report, $entry, $git_revision,
     );
+    _require_current_resume_identity($repo_root, $entry, $common)
+        if $operation eq 'resume';
     my $expected = _result(
         $plan, $entry, $report, $common, $provider, $applicability,
         $result->{artifact},
     );
-    confess "profile capture worker metadata changed after publication\n"
+    confess "profile $operation worker metadata changed after publication\n"
         unless _canonical_json($result) eq _canonical_json($expected);
     _require_unchanged_clean_revision($repo_root, $git_revision);
-    return _clone($result);
+    return 1;
 }
 
 sub _capture_in_child($raw) {
@@ -151,6 +192,38 @@ sub _capture_in_child($raw) {
     return _result(
         $plan, $entry, $report, $common, $provider, $applicability,
         $artifact,
+    );
+}
+
+sub _resume_in_child($raw) {
+    my ($repo_root, $plan, $entry, $git_revision) =
+        @{$raw}{qw(repository_root plan entry git_revision)};
+    _require_unchanged_clean_revision($repo_root, $git_revision);
+    my $loaded = $STORE->load({
+        repository_root => $repo_root,
+        ordinal => $entry->{ordinal},
+    });
+    confess "profile resume store did not load an existing artifact\n"
+        unless ($loaded->{artifact}{status} // '') eq 'loaded';
+    my $report = $loaded->{publication}{report};
+    my $adapter = $entry->{adapter_class};
+    confess "profile resume adapter validator is unavailable\n"
+        unless defined($adapter) && !ref($adapter)
+            && $adapter->can('validate_report');
+    my $validated = $adapter->validate_report({
+        repository_root => $repo_root,
+        report => $report,
+    });
+    confess "profile resume adapter changed the stored report\n"
+        unless _canonical_json($validated) eq _canonical_json($report);
+    my ($common, $provider, $applicability) = _admit_report(
+        $report, $entry, $git_revision,
+    );
+    _require_current_resume_identity($repo_root, $entry, $common);
+    _require_unchanged_clean_revision($repo_root, $git_revision);
+    return _result(
+        $plan, $entry, $report, $common, $provider, $applicability,
+        $loaded->{artifact},
     );
 }
 
@@ -396,6 +469,25 @@ sub _provider_status($report, $entry, $common) {
     return _clone($required);
 }
 
+sub _require_current_resume_identity($repo_root, $entry, $common) {
+    my $current = $MEASUREMENT->current_environment_identity({
+        repository_root => $repo_root,
+    });
+    confess "profile resume host identity is stale\n"
+        unless _canonical_json($common->{host_profile}) eq
+            _canonical_json($current->{host_profile});
+    confess "profile resume guard identity is stale\n"
+        unless _canonical_json($common->{resource_guard}) eq
+            _canonical_json($current->{resource_guard});
+    if (($entry->{provider_requirement}{kind} // '') ne
+            'exact_tool_profile') {
+        confess "profile resume tool identity is stale\n"
+            unless _canonical_json($common->{tool_profile}) eq
+                _canonical_json($current->{tool_profile});
+    }
+    return 1;
+}
+
 sub _record_common_identity($record) {
     confess "profile capture record must be one unblessed hash\n"
         unless ref($record) eq 'HASH' && !blessed($record);
@@ -506,7 +598,7 @@ sub _validate_artifact($artifact, $entry) {
         unless ($artifact->{schema} // '') eq $ARTIFACT_SCHEMA
             && _json_integer_equals($artifact->{schema_version}, 1)
             && ($artifact->{status} // '')
-                =~ /\A(?:published|recovered|unchanged)\z/;
+                =~ /\A(?:loaded|published|recovered|unchanged)\z/;
     confess "profile capture artifact dispatch changed\n"
         unless _json_integer_equals($artifact->{ordinal}, $entry->{ordinal})
             && ($artifact->{selection_key} // '') eq $entry->{selection_key}
@@ -539,6 +631,8 @@ sub _require_loaded_artifact_match($worker, $loaded) {
 }
 
 sub _run_profile_worker($raw) {
+    confess "profile worker operation is invalid\n"
+        unless ($raw->{operation} // '') =~ /\A(?:capture|resume)\z/;
     pipe(my $reader, my $writer)
         or confess "cannot create profile capture worker pipe\n";
     my $descriptor_ok = eval {
@@ -568,7 +662,9 @@ sub _run_profile_worker($raw) {
         close $reader;
         my ($payload, $worker_error);
         my $ok = eval {
-            $payload = _capture_in_child($raw);
+            $payload = $raw->{operation} eq 'capture'
+                ? _capture_in_child($raw)
+                : _resume_in_child($raw);
             1;
         };
         $worker_error = $@ unless $ok;

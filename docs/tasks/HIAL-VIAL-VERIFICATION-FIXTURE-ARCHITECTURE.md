@@ -1423,11 +1423,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.2: implement isolated profile dispatch`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.3`
-  Status: `proposed`
+  Status: `done`
   Goal: `Close exact same-profile resume and adversarial v2 profile-publication validation.`
   Acceptance: `Resume without producer execution only when the exact plan, dispatch entry, repository revision, profile common identity, provider/applicability identity, complete report bytes, artifact census, and cleanup state revalidate in a fresh isolated worker. Reject stale revision/plan/tool/host/guard/provider, mixed records, missing/extra/reordered identities, partial/collided/revision-1 substitutions, post-validation mutation, staging or target residue, symlink/hard-link/cross-device aliases, and noncanonical or oversized state; synchronize runnable docs and leave complete-corpus sealing to .17.5.2.3.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `ProfileStore::load now rejects same-profile staging residue before target-byte use. ProfileCapture::resume accepts only repository_root plus numeric ordinal, requires the guard and unchanged clean revision, loads in a fresh child without a producer fallback, reruns the plan-selected public validator and exact report/provider/applicability/common-identity admission, re-derives current host/guard plus foundation-tool identity while exact external routes remain provider-bound, and returns only loaded metadata. The parent independently reloads the same artifact and repeats validation, admission, current identity, artifact metadata, and revision checks. Rehashed stale plan/dispatch publications, revision/host/guard/tool/provider drift, mixed records, target/staging residue, v1 substitution, post-worker mutation, repository mutation, exception, and signal controls reject; the bounded store watcher retains malformed/oversized/symlink/hard-link/cross-device/collision controls. Syntax passes; guarded focused t1769 reports Files=1/Tests=8 and policy/plan/store/capture/resume integration Files=5/Tests=45. The mdBook, compact Knowledge card/Map, claim inventory, and exact containment authority synchronize the producer-free resume boundary without running a producer, simulator, real capture, or complete-corpus seal.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.3: close exact profile resume`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.4`
   Status: `active`
@@ -4448,8 +4448,51 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   simulator, current capture evidence, corpus seal, budget, support,
   performance, capacity, full CI, or push is claimed or run.
 
-## Next Clean Frontier — `.17.5.2.2.3` exact same-profile resume
+## Acceptance Checklist (enforced) — `.17.5.2.2.3` exact profile resume
 
-- Query the Knowledge Map, audit the committed capture/store reload boundary,
-  then close same-revision/same-identity resume and its adversarial controls
-  without broadening into the complete-corpus coordinator.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Query-first review of the promotion-capture
+  card and clean predecessor `41808b11d` found exact v2 publication and isolated
+  capture, but no public resume route. `ProfileStore::load` authenticated target
+  bytes and topology without first rejecting a same-profile staging directory;
+  therefore a valid target plus interrupted same-profile residue could appear
+  complete. `git log -S'capture_or_resume' --oneline --
+  perl/FSM/VIAL/ArchitectureScale*MeasurementMatrix.pm` returns six revision-1
+  introduction commits from `b9463c663` through `118b3bfb6`; their
+  implementations remain bound to family-private schemas, inventories, paths,
+  and validators, so none can own heterogeneous v2 resume. Source inspection
+  also proved current environment identity was available only inside producer
+  execution rather than through a closed metadata-only derivation.
+- [x] **ADDRESSED (verified)** — Store load now censuses and rejects matching
+  staging residue before target use. `ProfileCapture::resume` accepts only root
+  plus numeric ordinal, forks one fresh child, loads without invoking the
+  producer, runs the selected public validator, and repeats exact report,
+  dispatch, provider, applicability, cleanup, revision, host, guard, and tool
+  admission. `ArchitectureScaleMeasurement::current_environment_identity`
+  exposes only current host/foundation-tool/active-guard metadata. The parent
+  reloads and revalidates exact bytes again. Rehashed plan/dispatch drift,
+  provider/common-identity drift, mixed records, topology/staging/v1 changes,
+  post-worker mutation, repository mutation, exception, and signal controls
+  reject. Before -> after: captured bytes can be exactly re-admitted without
+  recapture or complete-corpus authority; missing/stale state never falls back
+  to a producer.
+- [x] **NO REGRESSION** — Perl syntax passes. Guarded focused t1769 reports
+  `All tests successful` at Files=1/Tests=8; guarded t1765-t1769 integration
+  reports Files=5/Tests=45. The four-file claim suite passes Files=4/Tests=38;
+  claims retain 1,762/1,762 dispositions, 179 records, 988 gates, 595 reviewed
+  outcomes, and zero gaps/open owners. All 59 mdBook chapters test; the
+  inspected 94-file/21,054,583-byte repository-local render contains the exact
+  resume contract and runnable watcher before removal. The book is 59 files/
+  55,343 lines/2,988,716 bytes at exact +26 lines/+1,445 bytes. Knowledge Map
+  parity is 1,160 facts/6,242 questions/6,414 occurrences/138 shards; compacting
+  the capture card to 57 lines/3,948 bytes leaves the 1,159-card surface at
+  46,993 lines/3,469,998 bytes. All 22 containment surfaces, Memory, relative
+  paths, project-data locality, four-tree/1,048-node task integrity, generated-
+  book cleanup, staged acceptance, textual diff, and all 12 doctrines pass.
+  No producer, simulator, current capture evidence, corpus seal, budget,
+  support, performance, capacity, full CI, or push is claimed or run.
+
+## Next Clean Frontier — `.17.5.2.2.4.1` legacy coordinator isolation audit
+
+- From the clean `.17.5.2.2.3` commit, query the Knowledge Map and reproduce
+  semantic/bridge revision-1 reload under the unchanged RAM guard before
+  deciding whether its direct coordinator loop requires per-profile isolation.

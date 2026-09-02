@@ -103,6 +103,17 @@ sub load($class, @args) {
     my ($repo_root, $root_device) =
         _repository_root($request->{repository_root});
     my ($plan, $entry) = _current_entry($repo_root, $request->{ordinal});
+    my @staging = _same_profile_staging_candidates(
+        {
+            repository_root => $repo_root,
+            root_device => $root_device,
+            plan => $plan,
+            entry => $entry,
+        },
+        _profile_token($entry),
+    );
+    confess "regression-promotion profile publication retained staging residue\n"
+        if @staging;
     my ($publication, $artifact) = _read_publication({
         repository_root => $repo_root,
         root_device => $root_device,
@@ -344,15 +355,19 @@ sub _target_directory($raw) {
 }
 
 sub _staging_directory($raw, $digest) {
-    my $profile_token = sprintf(
-        '%02d-%s', $raw->{entry}{ordinal},
-        sha256_hex($raw->{entry}{selection_key}),
-    );
+    my $profile_token = _profile_token($raw->{entry});
     my $stage_rel = "$STAGING_BASE/$profile_token-$digest";
     my $stage_abs = _safe_destination(
         $raw->{repository_root}, $raw->{root_device}, $stage_rel,
     );
     return ($stage_rel, $stage_abs, $profile_token);
+}
+
+sub _profile_token($entry) {
+    return sprintf(
+        '%02d-%s', $entry->{ordinal},
+        sha256_hex($entry->{selection_key}),
+    );
 }
 
 sub _same_profile_staging_candidates($raw, $profile_token) {

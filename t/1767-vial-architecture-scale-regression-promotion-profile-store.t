@@ -268,6 +268,10 @@ subtest 'collisions and post-publication staging residue reject' => sub {
     make_path($stage, {mode => 0700});
     write_raw(File::Spec->catfile($stage, 'measurement-report.json'), $encoded);
     like(dies(sub {
+        $class->load({repository_root => $repo, ordinal => 1});
+    }), qr/retained staging residue/,
+        'published target plus matching stage cannot be loaded as complete');
+    like(dies(sub {
         $class->publish({repository_root => $repo, ordinal => 1,
             report => synthetic_report('first')});
     }), qr/retained staging residue/,
