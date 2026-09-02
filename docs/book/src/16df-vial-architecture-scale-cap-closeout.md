@@ -779,6 +779,42 @@ symlinks, hard links, and cleanup residue reject.
 - Durability: Retain CorpusStore, t1772, task `.17.5.2.3.1`, this chapter, the capture Knowledge card, this bounded claim record, doctrine gates, and the work-unit Git chain; real capture remains separately owned by `.17.5.2.4`.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-corpus-storage-contract-v1 -->
 
+The complete-corpus coordinator now supplies three closed operations over only
+the repository root. `inventory` performs a no-follow publication census and
+reports present, missing, or incomplete state without executing a worker.
+`capture` walks the internally derived plan in order, resumes an exact existing
+profile or captures a missing one, reloads its artifact again in the parent,
+and calls the complete store only after every route passes. `validate` requires
+an existing complete seal, repeats fresh-worker resume validation for the
+whole plan, and loads rather than republishes the seal. None of these methods
+accept a caller-supplied plan, profile, result, worker, or callback.
+
+Process isolation has one authority. The coordinator delegates each operation
+to `ArchitectureScaleRegressionPromotionProfileCapture`, whose bounded
+canonical child IPC already owns exceptions, exits, signals, malformed bytes,
+and independent child/parent adapter validation. Adding another coordinator
+fork would duplicate failure framing without strengthening admission. The
+coordinator instead owns whole-corpus order, clean-revision stability, common
+host/guard identity, route-specific provider identity, and seal timing. JSON
+numeric strings, mixed identities, reordered results, repository mutation,
+post-worker artifact mutation, or incomplete publications fail before sealing.
+
+Inspect the closed coordination limits without running a worker:
+
+```sh
+perl -Iperl \
+  -MFSM::VIAL::ArchitectureScaleRegressionPromotionCorpusCoordinator \
+  -MJSON::PP \
+  -e 'print JSON::PP->new->canonical(1)->encode(FSM::VIAL::ArchitectureScaleRegressionPromotionCorpusCoordinator->coordination_limits), "\n"'
+```
+
+Run the synthetic all-route coordinator watcher under the RAM guard:
+
+```sh
+scripts/run_with_ram_guard.sh -- prove -Iperl \
+  t/1773-vial-regression-promotion-corpus-coordinator.t
+```
+
 The legacy storage remediation is complete. Both publishers now expose their
 selected ceilings, encode and reject before staging, and require one
 newline-terminated canonical JSON file that is regular, same-volume, one-link,

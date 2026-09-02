@@ -1460,11 +1460,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.1: implement complete corpus store`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Coordinate exact ordered profile capture or resume and seal only a fully revalidated current corpus.`
   Acceptance: `Expose caller-sealed inventory, capture, and validate operations over repository_root only. Require the active guard and one unchanged clean revision; walk all eleven plan ordinals exactly once; capture a missing profile or exact-resume an existing one only at profile boundaries; independently reload and re-admit each through a fresh profile worker; enforce one common revision/host/guard identity plus the exact ordered route-specific tool/provider/applicability identities, 11 validations, 33 accepted raw records, zero exclusions and cleanup residue; and publish through .1 only after every profile passes. Return bounded metadata-only IPC and reject caller worker/result injection in production, exception, exit, signal, malformed/noncanonical/oversized IPC, duplicate/missing/reordered profile, mixed identity, repository mutation, and post-worker artifact mutation. Default tests use a sealed bounded test worker and run no real producer or tool.`
-  Verification: `Clean predecessor bdf24d883 implements and closes producer-free complete-corpus storage. Query-first review resolves the current resume/publication contract to the dedicated capture card and decision 0096: the next missing boundary is one caller-sealed coordinator that walks the exact eleven-profile plan, performs capture or exact profile-boundary resume, independently reloads/re-admits every result, and invokes the complete store only after full current closure. This activation selects .17.5.2.3.2 alone; CLI/adversarial closeout remains proposed .3 and real guarded capture remains proposed .17.5.2.4. No source, test, script, artifact, worker, producer, provider, simulator, capture, publication, budget, support, performance, capacity, CI, or product behavior changes in activation.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.2: activate complete corpus coordinator`
+  Verification: `ArchitectureScaleRegressionPromotionCorpusCoordinator exposes closed repository_root-only inventory, capture, and validate operations under the active RAM guard and one unchanged clean revision. Inventory performs no worker or producer execution. Capture walks the derived plan exactly once, resumes present profiles and captures only missing profiles through the existing ProfileCapture boundary, reloads the exact artifact again in the coordinator parent, enforces common revision/host/guard identity plus route-specific provider/applicability identity, and publishes through CorpusStore only after complete closure. Validate requires an existing complete seal, producer-free resumes every profile in fresh workers, and loads without republishing. This layering deliberately reuses ProfileCapture's bounded canonical child IPC and failure handling instead of introducing a weaker second fork framework. Numeric-looking JSON strings reject at every coordinator admission boundary. Guarded focused t1773 passes Files=1/Tests=7; policy/plan/store/capture/resume/corpus/coordinator integration passes Files=7/Tests=60. Synthetic adapters exercise all routes without a real producer, provider, simulator, controller, measurement, or v2 evidence publication; CLI closeout remains proposed .3 and real guarded capture remains proposed .17.5.2.4.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.2: implement complete corpus coordinator`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.3`
   Status: `proposed`
@@ -4748,3 +4748,43 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   provider, simulator, capture, publication, budget, support, performance,
   capacity, CI, or product behavior changes; full CI and push remain deferred
   by policy.
+
+## Acceptance Checklist (enforced) — `.17.5.2.3.2` complete-corpus coordinator implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the pre-implementation RED was the exact
+  Perl diagnostic `Can't locate FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusCoordinator.pm ... at t/1773-vial-regression-promotion-corpus-coordinator.t line 12.` The implemented store could authenticate a caller-supplied complete set, but no production authority yet owned discovery, exact profile-boundary capture/resume, parent reload, or withholding the seal after a partial failure. Signoff review then made the numeric-type control RED: direct scalar matching allowed JSON string `"1"` to impersonate number `1` at the new coordinator boundary.
+- [x] **ADDRESSED (verified)** — the coordinator accepts only `repository_root`,
+  requires the active guard and one unchanged clean revision, derives and walks
+  the exact plan once, delegates each missing capture or present resume to the
+  existing fresh ProfileCapture worker, reloads the exact artifact in the
+  parent, and publishes through CorpusStore only after complete admission.
+  Inventory is worker-free; validate requires a complete seal, performs only
+  producer-free fresh-worker resumes, and never republishes. Canonical JSON
+  encoding now distinguishes required numbers from numeric-looking strings.
+  Before -> after: isolated profile transactions have one ordered fail-closed
+  coordinator and one process-isolation authority, with CLI and real capture
+  still separately owned.
+- [x] **NO REGRESSION** — both new files report `syntax OK`. The corrected
+  guarded focused watcher reports `All tests successful` at Files=1/Tests=7;
+  it exercises fresh, complete, and partial corpora, capture/resume/validate,
+  no-producer inventory, exact worker process separation, bounded metadata,
+  numeric-string substitutions, mixed order/common/provider state, worker
+  exception/exit/signal/malformed/noncanonical propagation, repository and
+  artifact mutation, incomplete targets, seal withholding, and cleanup using
+  synthetic public adapters only. Final guarded policy/plan/profile-store/
+  capture/resume/corpus-store/coordinator integration reports Files=7,
+  Tests=60. The claim regression reports Files=4/Tests=38; its registries close
+  30 records (29 published/one fixture), 1,772 inventory candidates, and 1,772
+  dispositions through 988 derived gates/182 claim records/602 reviewed
+  records with zero gaps/open owners. All 59 mdBook chapters test; the inspected
+  94-file/21,109,483-byte repository-local render contains the exact
+  coordinator contract and is removed. The maintained book is 55,439 lines/
+  2,997,637 bytes at exact +36 lines/+1,880 bytes, and Knowledge Map parity is
+  1,160 facts/6,244 questions/6,416 occurrences/138 shards. Task integrity
+  reports four trees/1,051 nodes; all 22 live-document surfaces accept the
+  exact book authority and one Knowledge-card ratchet step with zero ceiling
+  increases. Staged acceptance and all registered doctrines are required green
+  immediately before commit. No real producer, provider, simulator,
+  controller, measurement, v2 evidence publication, budget, support,
+  performance, capacity, full CI, or push is run or promoted in this ordinary
+  slice.
