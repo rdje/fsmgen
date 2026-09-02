@@ -1587,8 +1587,27 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Qualify representative current profiles and freeze exact pinned-host/tool regression budgets.`
   Acceptance: `Consume only the .17.5.2 current publication; independently reproduce complete correctness and repetition evidence; apply the exact decision-0056 wall/CPU/RSS formulas and deterministic count oracles; bind workload, revision, host, tool, guard, provider, and applicability identities; retain recalibration and rollback history; and leave unmatched hosts informational. No budget may derive from historical v1 evidence, failed correctness, excluded samples, or a single slow-run rewrite.`
+  Verification: `Clean predecessor 307f31bfd independently closes the current v2 corpus at capture revision 155aa22ea and execution revision 1da11b2e3 with exact 11-profile/33-raw/44-controller/zero-exclusion evidence. Query-first review of decisions 0056/0095/0096, the current publication schemas, the historical calibration budget helper, tests, and Git history finds no current budget-qualification or publication owner. The parent is therefore partitioned into authenticated in-memory derivation, bounded versioned publication, and independent hostile/identity closeout. No source, test, artifact, budget, support, performance, capacity, CI, or product behavior changes in activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3: activate current budget qualification`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1`
+  Status: `active`
+  Goal: `Derive one authenticated in-memory budget qualification from the current v2 corpus without publishing it.`
+  Acceptance: `Accept only the repository root; load and authenticate the complete .17.5.2 corpus; independently reconstruct every accepted run total, aggregate statistic, deterministic count oracle, correctness/repetition/exclusion result, and common/provider/applicability identity; derive each profile's wall/CPU/RSS budget with integer-safe decision-0056 floors, multipliers, and rounding; and return a bounded defensive content-addressed qualification report. Reject caller evidence, historical v1 bytes or budgets, non-current or dirty evidence, failed correctness, exclusions, incomplete/reordered profiles or records, mixed identities, invalid numeric types, overflow, and mutation. Execute no producer, provider, simulator, measurement controller, or publication write.`
   Verification: `pending`
-  Commit: `pending activation`
+  Commit: `pending`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2`
+  Status: `proposed`
+  Goal: `Freeze the authenticated current budget qualification in one bounded versioned atomic publication.`
+  Acceptance: `Publish only a .17.5.3.1-accepted report beneath a non-colliding repository-relative same-volume qualification namespace; bind source corpus bytes and identities, formula authority, exact profile budgets, host/tool/guard/provider applicability, deterministic oracles, recalibration predecessor/trigger requirements, rollback, and nonclaims. Use closed canonical schemas, conservative byte ceilings, fsync plus atomic rename, exact reload, and owned cleanup; reject collisions, stale or mixed evidence, historical substitution, malformed/noncanonical/oversized state, file aliases, staging residue, or caller-selected paths and budgets.`
+  Verification: `pending`
+  Commit: `pending`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3`
+  Status: `proposed`
+  Goal: `Independently close current budget evidence, hostile admission, identity applicability, recalibration history, and residue.`
+  Acceptance: `Re-derive the current corpus and every formula result without trusting the qualification producer; authenticate the published namespace, exact bytes, identities, profile/order/count partition, deterministic oracles, and zero exclusions; prove copied mutations for content, schema, numeric type, formula, budget, host/tool/guard/provider/applicability, stale revision, historical substitution, collision, alias, and residue classes reject. Prove exact common identity is eligible for later performance enforcement while a changed host/tool/provider identity is explicitly informational, and prove recalibration requires separately owned old-versus-new version replacement. Leave publication bytes unchanged and owned staging absent.`
+  Verification: `pending`
+  Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4`
   Status: `proposed`
   Goal: `Implement stable architecture-scale regression gates with bounded CI placement and exact host/tool applicability.`
@@ -5521,3 +5540,26 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   acceptance, and all doctrines pass. No
   publication mutation, producer/provider/simulator/controller execution,
   budget, support, performance, memory, capacity, full CI, or push occurs.
+
+## Acceptance Checklist (enforced) — `.17.5.3` current budget qualification activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the Knowledge Map query for current
+  regression-budget qualification resolves to decisions `0056`, `0095`, and
+  `0096`: exact formulas and a complete current v2 prerequisite exist, but
+  `rg` across `perl/`, `scripts/`, and `t/` finds no current qualification or
+  frozen-budget publication owner. The only budget derivation helper is inside
+  the historical calibration closure, whose candidate values are explicitly
+  ineligible for current performance use.
+- [x] **ADDRESSED (verified)** — `.17.5.3` now has three ordered rollback
+  owners: `.1` independently authenticates current evidence and derives an
+  in-memory qualification, `.2` freezes it in a bounded versioned atomic
+  publication, and `.3` independently falsifies bytes/identities/formulas and
+  closes exact-match versus informational applicability. Before -> after: one
+  broad proposed implementation becomes one active derivation leaf followed
+  by publication and independent closeout, without touching executable state.
+- [x] **NO REGRESSION** — this activation changes only task-tree continuity
+  state. Task integrity, Memory, relative paths, Knowledge Map, containment,
+  claims, and all doctrines are required green before commit. No source, test,
+  artifact, producer, provider, simulator, measurement, publication, budget,
+  CI, support, capability, performance, capacity, or product behavior changes;
+  full CI and push remain deferred by policy.
