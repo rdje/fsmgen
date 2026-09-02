@@ -132,9 +132,21 @@ subtest 'eleven fresh profile workers publish one complete current corpus' => su
     my $repo = fresh_repository('complete-capture');
     $complete_repo = $repo;
     my $pid_log = repo_path($repo, '.artifacts/tmp/producer-pids');
-    my $result = with_synthetic_adapters(sub {
-        return $class->capture({repository_root => $repo});
-    }, producer_pid_log => $pid_log);
+    my $coordinator_pid_log = repo_path(
+        $repo, '.artifacts/tmp/coordinator-profile-pids',
+    );
+    my $run_in_child = $class->can('_run_profile_operation_in_child');
+    my $result;
+    {
+        no warnings 'redefine';
+        local *FSM::VIAL::ArchitectureScaleRegressionPromotionCorpusCoordinator::_run_profile_operation_in_child = sub {
+            append_raw($coordinator_pid_log, "$$\n");
+            goto &$run_in_child;
+        };
+        $result = with_synthetic_adapters(sub {
+            return $class->capture({repository_root => $repo});
+        }, producer_pid_log => $pid_log);
+    }
 
     is($result->{operation}, 'capture',
         'capture returns the exact coordination operation');
@@ -169,6 +181,17 @@ subtest 'eleven fresh profile workers publish one complete current corpus' => su
         'one producer call occurred per selected profile');
     ok(!grep({ $_ == $$ } @producer_pid),
         'every producer executed behind a fresh profile-worker boundary');
+    my @coordinator_pid = grep { length }
+        split /\n/, read_raw($coordinator_pid_log);
+    is(scalar(@coordinator_pid), 11,
+        'one whole ProfileCapture operation ran per coordinator child');
+    is(scalar(keys %{ {map { $_ => 1 } @coordinator_pid} }), 11,
+        'every whole ProfileCapture operation used a fresh process');
+    ok(!grep({ $_ == $$ } @coordinator_pid),
+        'long-lived coordinator performs no direct profile validation');
+    my %coordinator_pid = map { $_ => 1 } @coordinator_pid;
+    ok(!grep({ $coordinator_pid{$_} } @producer_pid),
+        'producer grandchildren remain distinct from profile parents');
 
     my $inventory = $class->inventory({repository_root => $repo});
     is($inventory->{present_profiles}, 11,
@@ -249,12 +272,17 @@ subtest 'complete validation separates sealed capture from clean execution' => s
         'foreign callers cannot invoke revision-separated resume');
 
     my $private_resume = $profile_capture->can('_corpus_validate_resume');
-    my @seen_capture_revisions;
+    my $capture_revision_log = repo_path(
+        $repo, '.artifacts/tmp/private-resume-capture-revisions',
+    );
     my $validated;
     {
         no warnings 'redefine';
         local *FSM::VIAL::ArchitectureScaleRegressionPromotionProfileCapture::_corpus_validate_resume = sub {
-            push @seen_capture_revisions, $_[1]{capture_revision};
+            append_raw(
+                $capture_revision_log,
+                "$_[1]{capture_revision}\n",
+            );
             goto &$private_resume;
         };
         $validated = with_synthetic_adapters(sub {
@@ -267,6 +295,8 @@ subtest 'complete validation separates sealed capture from clean execution' => s
         'validation separately reports the clean executing revision');
     is($validated->{common_identity}{git_revision}, $capture_revision,
         'validated common identity remains capture-revision evidence');
+    my @seen_capture_revisions = grep { length }
+        split /\n/, read_raw($capture_revision_log);
     is_deeply(
         \@seen_capture_revisions,
         [($capture_revision) x 11],
@@ -465,6 +495,58 @@ subtest 'worker failures and post-worker mutations propagate fail closed' => sub
         }
         ok(!complete_exists($repo),
             "$name worker failure withholds the complete seal");
+    }
+
+    for my $control (
+        ['outer-exception', sub { die "outer synthetic exception\n" },
+            qr/corpus profile worker failed: outer synthetic exception/],
+        ['outer-signal', sub { kill 'TERM', $$; return {} },
+            qr/corpus profile worker terminated by signal 15/],
+        ['outer-no-result', sub { POSIX::_exit(0) },
+            qr/corpus profile worker returned no result/],
+        ['outer-exit', sub { POSIX::_exit(75) },
+            qr/corpus profile worker returned no result with exit status 75/],
+        ['outer-oversize', sub {
+            return {
+                oversized => 'x' x
+                    ($class->coordination_limits
+                        ->{maximum_profile_ipc_bytes} + 1),
+            };
+        }, qr/corpus profile worker metadata exceeded the bounded envelope/],
+    ) {
+        my ($name, $worker, $diagnostic) = @$control;
+        my $repo = fresh_repository($name);
+        {
+            no warnings 'redefine';
+            local *FSM::VIAL::ArchitectureScaleRegressionPromotionCorpusCoordinator::_run_profile_operation_in_child = $worker;
+            like(dies(sub {
+                $class->capture({repository_root => $repo});
+            }), $diagnostic, "$name fails across the outer process boundary");
+        }
+        ok(!complete_exists($repo),
+            "$name failure withholds the complete seal");
+    }
+
+    for my $control (
+        ['outer-malformed', '{', qr/result is not valid JSON/],
+        ['outer-noncanonical', '{} ', qr/result is not canonical JSON/],
+    ) {
+        my ($name, $wire_bytes, $diagnostic) = @$control;
+        my $repo = fresh_repository($name);
+        {
+            no warnings 'redefine';
+            local *FSM::VIAL::ArchitectureScaleRegressionPromotionCorpusCoordinator::_run_profile_operation_in_child = sub {
+                return {};
+            };
+            local *FSM::VIAL::ArchitectureScaleRegressionPromotionCorpusCoordinator::_write_profile_worker_result = sub {
+                return defined(syswrite($_[0], $wire_bytes)) ? 1 : 0;
+            };
+            like(dies(sub {
+                $class->capture({repository_root => $repo});
+            }), $diagnostic, "$name fails across the outer process boundary");
+        }
+        ok(!complete_exists($repo),
+            "$name failure withholds the complete seal");
     }
 
     my $mutation_repo = prepared_repository('post-worker-mutation');

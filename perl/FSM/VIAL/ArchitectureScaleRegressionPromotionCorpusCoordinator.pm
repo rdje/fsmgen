@@ -7,10 +7,13 @@ use warnings;
 use bytes ();
 use Carp qw(confess);
 use Cwd ();
-use Errno qw(ENOENT);
+use Errno qw(EAGAIN EINTR ENOENT EWOULDBLOCK);
+use Fcntl qw(FD_CLOEXEC F_GETFD F_GETFL F_SETFD F_SETFL O_NONBLOCK);
 use File::Spec;
 use JSON::PP ();
+use POSIX qw(WEXITSTATUS WIFEXITED WIFSIGNALED WNOHANG WTERMSIG _exit);
 use Scalar::Util qw(blessed);
+use Time::HiRes qw(sleep);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
@@ -38,6 +41,8 @@ my $PROFILE_ARTIFACT_SCHEMA =
     'fsmgen.vial_architecture_scale_regression_promotion_profile_artifact.v1';
 my $CORPUS_ARTIFACT_SCHEMA =
     'fsmgen.vial_architecture_scale_regression_promotion_corpus_artifact.v1';
+my $PROFILE_WORKER_ERROR_SCHEMA =
+    'fsmgen.vial_architecture_scale_regression_promotion_corpus_profile_worker_error.v1';
 
 my $COORDINATION_REVISION =
     'regression_promotion_corpus_coordinator_v2';
@@ -89,6 +94,7 @@ my @APPLICABILITY_KEYS = qw(
     required predicate controller_applicable measurement_applicable
     validation_records raw_measurement_records sample_exclusions outcome
 );
+my @PROFILE_WORKER_ERROR_KEYS = qw(schema schema_version error);
 my $JSON = JSON::PP->new->canonical(1)->utf8(1);
 
 sub result_keys($class) {
@@ -399,6 +405,110 @@ sub _run_profile_operation(
 ) {
     confess "corpus profile operation is invalid\n"
         unless $operation =~ /\A(?:capture|resume|corpus_validate_resume)\z/;
+    pipe(my $reader, my $writer)
+        or confess "cannot create corpus profile worker pipe\n";
+    my $descriptor_ok = eval {
+        _set_profile_worker_close_on_exec($reader, 'reader');
+        _set_profile_worker_close_on_exec($writer, 'writer');
+        my $flags = fcntl($reader, F_GETFL, 0);
+        confess "cannot inspect corpus profile worker reader flags\n"
+            unless defined $flags;
+        confess "cannot make corpus profile worker reader nonblocking\n"
+            unless fcntl($reader, F_SETFL, $flags | O_NONBLOCK);
+        1;
+    };
+    if (!$descriptor_ok) {
+        my $error = $@;
+        close $reader;
+        close $writer;
+        die $error;
+    }
+
+    my $pid = fork();
+    if (!defined $pid) {
+        close $reader;
+        close $writer;
+        confess "cannot fork corpus profile worker\n";
+    }
+    if ($pid == 0) {
+        close $reader;
+        my ($encoded, $worker_error);
+        my $ok = eval {
+            my $result = _run_profile_operation_in_child(
+                $operation, $repo_root, $ordinal, $capture_revision,
+            );
+            $encoded = _canonical_json($result);
+            confess "corpus profile worker metadata exceeded the bounded envelope\n"
+                if bytes::length($encoded) > $MAX_PROFILE_IPC_BYTES;
+            1;
+        };
+        $worker_error = $@ unless $ok;
+        my $exit_code = 0;
+        if (defined $worker_error) {
+            $encoded = _canonical_json({
+                schema => $PROFILE_WORKER_ERROR_SCHEMA,
+                schema_version => 1,
+                error => _bounded_profile_worker_error($worker_error),
+            });
+            $exit_code = 70;
+        }
+        my $written = _write_profile_worker_result($writer, $encoded);
+        close $writer;
+        _exit($written ? $exit_code : 74);
+    }
+
+    close $writer;
+    my ($buffer, $read_error, $wait_status, $done) = ('', undef, undef, 0);
+    while (!$done) {
+        $read_error //= _drain_profile_worker_pipe($reader, \$buffer);
+        if (defined $read_error) {
+            kill 'TERM', $pid;
+            my $waited = waitpid($pid, 0);
+            $wait_status = $? if $waited == $pid;
+            last;
+        }
+        my $waited = waitpid($pid, WNOHANG);
+        if ($waited == $pid) {
+            $wait_status = $?;
+            $done = 1;
+        }
+        elsif ($waited == -1) {
+            $read_error = 'cannot wait for corpus profile worker';
+            $done = 1;
+        }
+        else {
+            sleep(0.01);
+        }
+    }
+    $read_error //= _drain_profile_worker_pipe($reader, \$buffer);
+    close $reader
+        or $read_error //= 'cannot close corpus profile worker reader';
+    confess "$read_error\n" if defined $read_error;
+
+    my $signal = defined($wait_status) && WIFSIGNALED($wait_status)
+        ? WTERMSIG($wait_status) : 0;
+    confess "corpus profile worker terminated by signal $signal\n"
+        if $signal;
+    my $exit_code = defined($wait_status) && WIFEXITED($wait_status)
+        ? WEXITSTATUS($wait_status) : undef;
+    if (defined($exit_code) && $exit_code == 0) {
+        return _decode_profile_worker_result($buffer);
+    }
+    my ($failure, $decode_error) =
+        _decode_profile_worker_failure($buffer);
+    if (defined $decode_error) {
+        my $status = defined($exit_code)
+            ? " with exit status $exit_code" : '';
+        confess "corpus profile worker $decode_error$status\n";
+    }
+    confess "corpus profile worker failed: $failure->{error}\n";
+}
+
+sub _run_profile_operation_in_child(
+    $operation, $repo_root, $ordinal, $capture_revision,
+) {
+    confess "corpus profile child operation is invalid\n"
+        unless $operation =~ /\A(?:capture|resume|corpus_validate_resume)\z/;
     my $result = $operation eq 'corpus_validate_resume'
         ? $PROFILE_CAPTURE->_corpus_validate_resume({
             repository_root => $repo_root,
@@ -413,6 +523,98 @@ sub _run_profile_operation(
     confess "corpus profile worker metadata exceeded the bounded envelope\n"
         if bytes::length($encoded) > $MAX_PROFILE_IPC_BYTES;
     return $result;
+}
+
+sub _decode_profile_worker_result($buffer) {
+    confess "corpus profile worker returned no result\n"
+        unless length($buffer // '');
+    confess "corpus profile worker result exceeded the bounded envelope\n"
+        if bytes::length($buffer) > $MAX_PROFILE_IPC_BYTES;
+    my $decoded = eval { JSON::PP->new->utf8(1)->decode($buffer) };
+    confess "corpus profile worker result is not valid JSON\n"
+        unless defined $decoded;
+    confess "corpus profile worker result is not canonical JSON\n"
+        unless _canonical_json($decoded) eq $buffer;
+    confess "corpus profile worker result is invalid\n"
+        unless ref($decoded) eq 'HASH' && !blessed($decoded);
+    return _clone($decoded);
+}
+
+sub _decode_profile_worker_failure($buffer) {
+    return (undef, 'returned no result') unless length($buffer // '');
+    return (undef, 'result exceeded the bounded envelope')
+        if bytes::length($buffer) > $MAX_PROFILE_IPC_BYTES;
+    my $decoded = eval { JSON::PP->new->utf8(1)->decode($buffer) };
+    return (undef, 'result is not valid JSON') unless defined $decoded;
+    return (undef, 'result is not canonical JSON')
+        unless _canonical_json($decoded) eq $buffer;
+    my $valid = eval {
+        _exact_keys(
+            $decoded, \@PROFILE_WORKER_ERROR_KEYS,
+            'corpus profile worker failure',
+        );
+        confess "corpus profile worker failure schema is invalid\n"
+            unless ($decoded->{schema} // '') eq $PROFILE_WORKER_ERROR_SCHEMA
+                && _json_integer_equals($decoded->{schema_version}, 1);
+        confess "corpus profile worker failure error is invalid\n"
+            unless defined($decoded->{error}) && !ref($decoded->{error})
+                && length($decoded->{error})
+                && bytes::length($decoded->{error}) <= $MAX_ERROR_BYTES;
+        1;
+    };
+    return (undef, _bounded_profile_worker_error($@)) unless $valid;
+    return ($decoded, undef);
+}
+
+sub _bounded_profile_worker_error($error) {
+    $error = 'corpus profile worker failed without an exception'
+        unless defined($error) && !ref($error) && length($error);
+    $error =~ s/[^\x20-\x7e]+/ /g;
+    $error =~ s/\s+/ /g;
+    $error =~ s/\A\s+|\s+\z//g;
+    $error = 'corpus profile worker failed without a usable exception'
+        unless length($error);
+    return substr($error, 0, $MAX_ERROR_BYTES);
+}
+
+sub _write_profile_worker_result($writer, $encoded) {
+    my $offset = 0;
+    while ($offset < bytes::length($encoded)) {
+        my $written = syswrite(
+            $writer, $encoded, bytes::length($encoded) - $offset, $offset,
+        );
+        if (!defined $written) {
+            next if $! == EINTR;
+            return 0;
+        }
+        return 0 unless $written > 0;
+        $offset += $written;
+    }
+    return 1;
+}
+
+sub _drain_profile_worker_pipe($reader, $buffer_ref) {
+    while (1) {
+        my $chunk = '';
+        my $read = sysread($reader, $chunk, 16_384);
+        if (!defined $read) {
+            next if $! == EINTR;
+            return undef if $! == EAGAIN || $! == EWOULDBLOCK;
+            return 'cannot read corpus profile worker result';
+        }
+        return undef if $read == 0;
+        $$buffer_ref .= $chunk;
+        return 'corpus profile worker result exceeded the bounded envelope'
+            if bytes::length($$buffer_ref) > $MAX_PROFILE_IPC_BYTES;
+    }
+}
+
+sub _set_profile_worker_close_on_exec($handle, $label) {
+    my $flags = fcntl($handle, F_GETFD, 0);
+    confess "cannot inspect corpus profile worker $label descriptor\n"
+        unless defined $flags;
+    confess "cannot protect corpus profile worker $label descriptor\n"
+        unless fcntl($handle, F_SETFD, $flags | FD_CLOEXEC);
 }
 
 sub _validate_profile_result(

@@ -1570,14 +1570,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Diagnose and repair aggregate-memory failure in complete-corpus validation.`
-  Acceptance: `Use the clean failed production run, source call graph, and bounded project-local process sampling or smaller exact controls to distinguish long-lived parent retention from one-profile child demand and unrelated host load. If the coordinator parent is the retained-state owner, execute each whole ProfileCapture operation in a fresh guard-visible coordinator child so ProfileCapture still performs its existing independent child and parent report validations, while the long-lived CorpusCoordinator receives only the existing bounded canonical result. Retain exact-caller revision authority, current clean revision checks around every process/load, closed nonblocking close-on-exec IPC, bounded success/error envelopes, signal/exit/malformed/noncanonical/oversized rejection, post-worker artifact reload, producer prohibition, operation order, and every existing public result/publication identity. Prove fresh process identity, parent-retention release, hostile worker controls, exact synthetic result parity, real corpus byte invariance, and a guarded production validate below both guard boundaries before claiming repair. Do not recapture, republish, weaken public resume or dual validation, increase a guard, or promote a performance, memory, support, or capacity budget.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `Use the clean failed production run, source call graph, and bounded project-local process sampling or smaller exact controls to distinguish long-lived parent retention from one-profile child demand and unrelated host load. If the coordinator parent is the retained-state owner, execute each whole ProfileCapture operation in a fresh guard-visible coordinator child so ProfileCapture still performs its existing independent child and parent report validations, while the long-lived CorpusCoordinator receives only the existing bounded canonical result. Retain exact-caller revision authority, current clean revision checks around every process/load, closed nonblocking close-on-exec IPC, bounded success/error envelopes, signal/exit/malformed/noncanonical/oversized rejection, post-worker artifact reload, producer prohibition, operation order, and every existing public result/publication identity. Prove fresh process identity and lifetime release by construction, hostile worker controls, exact synthetic result parity, and unchanged synthetic publication bytes. Classify this source repair as process-topology evidence only until child .2, from the required clean committed revision, independently proves real-corpus byte invariance and guarded production validate below both guard boundaries. Do not recapture, republish, weaken public resume or dual validation, increase a guard, or promote a performance, memory, support, or capacity budget.`
+  Verification: `The clean a802ec97f production failure, immediate independent reauthentication, and source call graph distinguish retained validator state from corpus corruption: ProfileCapture's inner report-validation child exited per profile, but its independent parent validation ran eleven times in the long-lived CorpusCoordinator. CorpusCoordinator now wraps each entire ProfileCapture operation in a fresh outer process, preserving the nested child plus independent short-lived parent validation; the long-lived coordinator receives only the existing bounded canonical result and still rechecks clean revision, exact result, and published profile afterward. The outer reader is nonblocking and both descriptors are close-on-exec; bounded canonical errors and success metadata cross the pipe. t1773 proves eleven unique outer workers distinct from the coordinator and producer grandchildren, and rejects exception, TERM, zero/nonzero no-result exit, oversized result, malformed JSON, noncanonical JSON, every retained inner-worker failure, and post-worker mutation without sealing. Focused guarded t1773 passes Files=1/Tests=8 in 37 seconds. An adjacent attempt begun under high external pressure was correctly terminated at the 88% host cutoff while an unrelated PGEN rustc was the largest resident process; after that compiler exited, the same exact guarded t1768/t1769/t1772/t1773/t1774 band passed Files=5/Tests=40 in 61 seconds from a 51.9% baseline. All 59 mdBook chapters test; the inspected same-volume render contains 94 files/21,322,531 bytes and is removed exactly. Knowledge Map parity is 1,160 facts/6,252 questions/6,424 occurrences/138 shards; claim inventory/disposition joins 1,819/1,819 with zero gaps/open migrations; maintained-reference authority, task integrity, diff hygiene, staged acceptance, and doctrines pass. No real publication byte, guard, public schema, producer/provider/simulator/controller path, validation count, budget, support, performance, memory, or capacity claim changes; active child .2 owns the clean real-corpus proof.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2.1: isolate profile validation parents`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Complete final current-publication closeout after the bounded validation repair.`
   Acceptance: `From clean .1, rerun the independent verifier, guarded production validate and inventory, historical separation verifier, adjacent exact-publication watchers, before/after corpus census, and cleanup checks. Join immutable capture and current execution revisions, exact identities/counts/providers, zero producer/provider/simulator/controller execution, bounded output, and all prior falsification/canonicalization evidence; synchronize task/book/Knowledge Map/claims/containment/resume pointers and close .17.5.2 only if every leg agrees. Promote no budget, support, performance, memory, or capacity claim.`
   Verification: `pending`
@@ -5459,3 +5459,36 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   capacity claim. Task integrity, Memory, relative paths, Knowledge Map,
   containment, claims, staged acceptance, and all doctrines are required green
   before the task-only commit; full CI and push remain deferred.
+
+## Acceptance Checklist (enforced) — `.17.5.2.5.4.2.1` profile-validation process isolation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the clean a802ec97f validate run preserved
+  every corpus byte yet drove host occupancy from 61.5% to the 88% guard while
+  no child reached the per-process ceiling. Source and PID inspection show why:
+  ProfileCapture forks one report-validation child, then repeats validation in
+  its caller; CorpusCoordinator was that caller for all eleven profiles, so its
+  long-lived Perl allocator spanned every parent-side validation. Exact
+  `git log -S'_run_profile_operation('` history locates that direct loop at
+  5ca220a803b559287535ce814c0f3260ff5f4242. A later guarded retry was
+  separately falsified as unrelated host load: an external PGEN rustc was the
+  largest resident process, and the same suite passed after it exited.
+- [x] **ADDRESSED (verified)** — CorpusCoordinator now forks once around each
+  complete ProfileCapture operation. The existing inner child and independent
+  parent validation remain nested inside that outer worker, whose exit is the
+  release boundary; only bounded canonical profile metadata returns. Both pipe
+  descriptors are close-on-exec, the reader is nonblocking, success and errors
+  are bounded, and clean-revision/result/publication checks remain in the
+  coordinator. t1773 records eleven unique outer PIDs distinct from the
+  coordinator and producer grandchildren and rejects exception, signal, zero/
+  nonzero empty exit, oversized, malformed, noncanonical, inner-worker, and
+  post-worker mutation controls before sealing.
+- [x] **NO REGRESSION** — Perl syntax and diff hygiene pass. Guarded focused
+  t1773 passes `Files=1, Tests=8` in 37 seconds; from a 51.9% host baseline the
+  exact t1768/t1769/t1772/t1773/t1774 band reports `All tests successful` and
+  `Files=5, Tests=40` in 61 seconds. All 59 mdBook chapters test; its inspected 94-file/21,322,531-byte
+  same-volume render is removed exactly. Knowledge Map 1,160/6,252/6,424/138,
+  claim inventory plus 1,819/1,819 disposition join, maintained-reference
+  authority, task integrity, Memory, staged acceptance, and all doctrines pass.
+  No real corpus or public result byte is changed by this slice, and no guard,
+  validation count, budget, support, performance, memory, or capacity claim is
+  promoted. Active `.2.2` owns the required clean real-corpus confirmation.

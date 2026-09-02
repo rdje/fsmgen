@@ -17,6 +17,7 @@ answers:
   - "why is balanced VIAL report validation expensive?"
   - "how is VIAL canonicalization cost measured without changing returned values?"
   - "why does VIAL complete-corpus validation separate capture and execution revisions?"
+  - "why does VIAL complete-corpus validation isolate each whole profile operation?"
 date: 2026-09-02
 status: current
 tags: [hial, vial, scalability, regression, measurement, publication]
@@ -102,12 +103,12 @@ the exact 1,241,948-byte report remains while canonical bytes fall
 sampled peak moves 325.6M→320.5M. `.5.4` owns clean closeout. No budget, stable
 ratio, support, or capacity tier is promoted.
 
-The `.5.4.1` repair keeps public profile resume same-revision strict but gives
-complete-corpus validation a closed exact-caller route. Capture revision is
-derived only from the authenticated seal, current clean execution revision is
-pinned separately, and coordination schema v2 reports both. Foreign or
-malformed revision input, seal/profile disagreement, and repository mutation
-reject without changing corpus bytes. `.5.4.2` owns the final real rerun.
+`.5.4.1` keeps public resume same-revision strict and gives complete validation
+a seal-derived capture revision plus separately pinned clean execution revision.
+Foreign/malformed input, disagreement, and mutation reject. `.5.4.2.1` now runs
+each whole ProfileCapture call in a fresh outer child: its nested dual
+validation remains, only bounded canonical metadata returns, and hostile IPC
+fails closed. `.5.4.2.2` owns clean real-corpus resource and byte proof.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]].

@@ -1250,3 +1250,32 @@ Validation remains producer-free and read-only and preserves publication bytes.
 - Falsify: Call the private seam outside CorpusCoordinator; inject capture/execution revision through every public coordinator method; mutate complete-versus-profile capture revision; corrupt the seam's revision; and dirty the executing repository after complete admission. Every control must reject, while existing stale host/guard/tool/provider, malformed result, child failure, mutation, bounded IPC, and cleanup controls remain green.
 - Durability: Retain the `.17.5.2.5.4.1` task record, ProfileCapture, CorpusCoordinator, t1769/t1773, this chapter, the compact regression-promotion fact card, bounded claim record, doctrine gates, and the work-unit Git chain. Child `.5.4.2` owns the real sealed-corpus closeout result.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-revision-separated-validation-v1 -->
+
+### Whole-profile validation process isolation
+
+Complete-corpus coordination processes profiles in plan order, but each whole
+ProfileCapture operation now runs in a fresh outer child. Inside that child,
+ProfileCapture still performs its existing report-validation child followed by
+the independent parent-side public validation. The outer child then exits, so
+the long-lived CorpusCoordinator retains only the existing bounded canonical
+profile result rather than the validator's temporary graph and allocator
+state. CorpusCoordinator still reloads the published profile and pins the
+current clean execution revision after each worker.
+
+The outer pipe is nonblocking and close-on-exec. Success uses the existing
+bounded profile IPC envelope; exceptions use a separately bounded
+canonical failure record. Missing output, signals, nonzero exits, malformed or
+noncanonical JSON, oversized results, and post-worker publication mutation all
+fail closed before a complete seal can be admitted. This process topology does
+not weaken dual validation or the exact-caller capture-revision authority.
+
+Run the synthetic process-identity and hostile-worker watcher with:
+
+```sh
+scripts/run_with_ram_guard.sh -- prove -Iperl \
+  t/1773-vial-regression-promotion-corpus-coordinator.t
+```
+
+The synthetic watcher proves the isolation boundary and unchanged result
+semantics. Real-publication resource and byte-invariance conclusions remain
+unclaimed until the subsequent clean-revision guarded closeout succeeds.
