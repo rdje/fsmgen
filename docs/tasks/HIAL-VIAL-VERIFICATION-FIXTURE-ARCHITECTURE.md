@@ -1453,16 +1453,16 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.3`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.1`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the bounded canonical complete-corpus report-plus-manifest store without profile execution.`
   Acceptance: `Derive only the selected v2 complete coordinate from the current plan; define closed report, manifest, artifact, and limit schemas; accept only all eleven ordered admitted profile results with 11 validations, 33 raw records, zero exclusions, one complete identity, and immutable profile artifacts; then atomically publish exactly a canonical report plus compact manifest on the repository volume before returning bounded metadata. Reload through stable no-follow directory/file handles with exact census, byte/hash/schema/identity/current-plan checks and reject collision, partial or ambiguous stage, extra/missing/reordered profile, stale or mixed identity, malformed/noncanonical/oversized bytes, symlink/hard-link/cross-device aliases, post-validation mutation, and cleanup residue. Default tests use synthetic admitted metadata and never invoke a profile worker, producer, provider, simulator, or measurement controller.`
-  Verification: `Clean activation predecessor 17f5b1623 partitions complete publication from coordination and CLI closure. The canonical capture card and decision 0096 require a non-colliding same-volume v2 seal only after all eleven current profiles independently revalidate; ArchitectureScaleRegressionPromotionProfileStore supplies a bounded one-file profile transaction but no complete authority, while the historical calibration-closure publisher proves the required two-file atomic shape but is coupled to revision-1 closure schemas and derivation. This leaf owns a new producer-free current-corpus report-plus-manifest store and synthetic adversarial watcher only; no worker, producer, provider, simulator, current measurement, or real v2 artifact runs during activation.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.1: activate complete corpus store`
+  Verification: `ArchitectureScaleRegressionPromotionCorpusStore accepts only repository_root plus eleven ordered admitted profile results, internally derives the current plan and exact complete coordinate, reloads every immutable profile artifact, requires 11 validations/33 raw records/44 invocations/zero exclusions, and separates globally common revision/host/guard identity from route-specific tool/provider identity. It projects transient profile artifact status out of the corpus hash, then atomically publishes canonical report plus manifest under fixed 1,048,576-byte/65,536-byte containment ceilings and reloads through stable no-follow two-file census and bounded reads. Exact recovery and byte-identical republish pass; missing/duplicate/reordered/mixed/stale/mutated profile, JSON string ordinal/count/version, collision, partial cleanup, ambiguous/residual stage, malformed/noncanonical/cap-plus-one report or manifest, late directory entry, symlink, and hard-link controls reject. Focused guarded t1772 passes Files=1/Tests=8; integrated t1765–t1769+t1772 passes Files=6/Tests=53. The store/test/book/card/claim evidence run no profile worker, producer, provider, simulator, controller, current measurement, or real v2 publication and promote no budget, support, performance, or capacity claim.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.1: implement complete corpus store`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.2`
   Status: `proposed`
   Goal: `Coordinate exact ordered profile capture or resume and seal only a fully revalidated current corpus.`
-  Acceptance: `Expose caller-sealed inventory, capture, and validate operations over repository_root only. Require the active guard and one unchanged clean revision; walk all eleven plan ordinals exactly once; capture a missing profile or exact-resume an existing one only at profile boundaries; independently reload and re-admit each through a fresh profile worker; enforce one complete host/tool/guard/revision/provider-applicability identity, 11 validations, 33 accepted raw records, zero exclusions and cleanup residue; and publish through .1 only after every profile passes. Return bounded metadata-only IPC and reject caller worker/result injection in production, exception, exit, signal, malformed/noncanonical/oversized IPC, duplicate/missing/reordered profile, mixed identity, repository mutation, and post-worker artifact mutation. Default tests use a sealed bounded test worker and run no real producer or tool.`
+  Acceptance: `Expose caller-sealed inventory, capture, and validate operations over repository_root only. Require the active guard and one unchanged clean revision; walk all eleven plan ordinals exactly once; capture a missing profile or exact-resume an existing one only at profile boundaries; independently reload and re-admit each through a fresh profile worker; enforce one common revision/host/guard identity plus the exact ordered route-specific tool/provider/applicability identities, 11 validations, 33 accepted raw records, zero exclusions and cleanup residue; and publish through .1 only after every profile passes. Return bounded metadata-only IPC and reject caller worker/result injection in production, exception, exit, signal, malformed/noncanonical/oversized IPC, duplicate/missing/reordered profile, mixed identity, repository mutation, and post-worker artifact mutation. Default tests use a sealed bounded test worker and run no real producer or tool.`
   Verification: `pending`
   Commit: `pending`
 
@@ -4682,3 +4682,47 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   gates. No source, test, script, book, generated artifact, provider,
   simulator, capture, publication, budget, support, performance, capacity, CI,
   or product behavior changes; full CI and push remain deferred by policy.
+
+## Acceptance Checklist (enforced) — `.17.5.2.3.1` complete-corpus store implementation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the pre-implementation RED was the exact
+  Perl diagnostic `Can't locate FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusStore.pm ... at t/1772-vial-regression-promotion-corpus-store.t line 19.` Query-first source
+  and history audit had already proved the current chain ended at per-profile
+  publication/resume. Schema derivation then exposed that one literal tool
+  profile cannot be common across repository-only, Verilator, GHDL, and
+  GHDL-plus-OSVVM routes, and that transient `published`/`loaded` status cannot
+  enter the immutable complete-corpus identity without creating false resume
+  collisions.
+- [x] **ADDRESSED (verified)** — the caller-sealed CorpusStore derives only the
+  current complete v2 path; converts eleven full admitted results into stable
+  ordered profile projections; shares exact revision/host/guard identity while
+  retaining each route's tool/provider/applicability identity; reloads all
+  referenced profile bytes; requires 11/33/44/0 counts; and atomically seals a
+  canonical report plus manifest. Stable no-follow handles, one-link/device/
+  owner/byte bounds, opening and closing directory censuses, exact stage
+  recovery, owned partial cleanup, and content identities protect both files.
+  Before -> after: independently admitted profile transactions can form one
+  deterministic producer-free complete publication; capture/resume status
+  cannot perturb its identity.
+- [x] **NO REGRESSION** — both new files report `syntax OK`. Guarded focused
+  t1772 reports `All tests successful` at Files=1/Tests=8; guarded policy/plan/
+  profile-store/capture/resume/corpus-store integration reports Files=6,
+  Tests=53. Controls cover strict JSON types, complete counts/order/identity,
+  exact and ambiguous recovery, collision, post-seal profile mutation, partial
+  cleanup, malformed/noncanonical/cap-plus-one bytes, late directory mutation,
+  symlink/hard-link state, and exact fixture cleanup. The claim regression
+  reports Files=4/Tests=38; its registries close 30 records (29 published/one
+  fixture), 1,772 inventory candidates, and 1,772 dispositions through 988
+  derived gates/182 claim records/602 reviewed records with zero gaps/open
+  owners. All 59 mdBook chapters test; the inspected 94-file/21,100,040-byte
+  repository-local render contains the exact storage contract and is removed.
+  The maintained book is 55,403 lines/2,995,757 bytes at exact +56 lines/+4,063
+  bytes, and Knowledge Map parity is 1,160 facts/6,244 questions/6,416
+  occurrences/138 shards. Task integrity reports four trees/1,051 nodes; Memory
+  is 16 lines; relative-path and project-locality checks pass; all 22
+  live-document surfaces accept the exact book and +69-byte Knowledge-card
+  allowances with no ceiling increase. Staged acceptance and all registered
+  doctrines are required green immediately before commit. No real worker,
+  producer, provider, simulator, controller, measurement, v2 seal, budget,
+  support, performance, capacity, full CI, or push is run or promoted in this
+  ordinary slice.

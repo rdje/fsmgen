@@ -18,10 +18,10 @@ evidence: >-
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16df-vial-architecture-scale-cap-closeout.md;
   perl/FSM/VIAL/ArchitectureScaleRegressionPromotionPolicy.pm; perl/FSM/VIAL/ArchitectureScaleMeasurement.pm;
-  perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCapturePlan.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileCapture.pm;
-  t/1765-vial-architecture-scale-regression-promotion-policy.t; t/1766-vial-architecture-scale-regression-promotion-capture-plan.t; t/1767-vial-architecture-scale-regression-promotion-profile-store.t; t/1768-vial-architecture-scale-regression-promotion-profile-capture.t; t/1769-vial-architecture-scale-regression-promotion-profile-resume.t
+  perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCapturePlan.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileCapture.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusStore.pm;
+  t/1765-vial-architecture-scale-regression-promotion-policy.t; t/1766-vial-architecture-scale-regression-promotion-capture-plan.t; t/1767-vial-architecture-scale-regression-promotion-profile-store.t; t/1768-vial-architecture-scale-regression-promotion-profile-capture.t; t/1769-vial-architecture-scale-regression-promotion-profile-resume.t; t/1772-vial-regression-promotion-corpus-store.t
 reverify: >-
-  scripts/run_with_ram_guard.sh -- prove -Iperl t/1766-vial-architecture-scale-regression-promotion-capture-plan.t t/1767-vial-architecture-scale-regression-promotion-profile-store.t t/1768-vial-architecture-scale-regression-promotion-profile-capture.t t/1769-vial-architecture-scale-regression-promotion-profile-resume.t
+  scripts/run_with_ram_guard.sh -- prove -Iperl t/1766-vial-architecture-scale-regression-promotion-capture-plan.t t/1767-vial-architecture-scale-regression-promotion-profile-store.t t/1768-vial-architecture-scale-regression-promotion-profile-capture.t t/1769-vial-architecture-scale-regression-promotion-profile-resume.t t/1772-vial-regression-promotion-corpus-store.t
 ---
 
 Decision 0096 selects eleven v2 gate profiles. Each adapter call owns one
@@ -52,6 +52,14 @@ Only clean `.17.5.2.3` may feed guarded capture in `.4`; unavailable providers
 or disagreement withhold the seal. `.5` independently falsifies v2 evidence.
 Historical substitution and budget promotion remain forbidden; budgets belong
 solely to `.17.5.3`.
+
+Complete-store child `.17.5.2.3.1` now derives the sole v2 complete coordinate,
+reloads all eleven immutable profile references, enforces 11/33/44/0, and
+atomically seals canonical report plus manifest under 1,048,576/65,536-byte
+containment limits. Revision/host/guard are globally common; heterogeneous
+tool/provider identities remain ordered per profile. Transient publication
+status is excluded from the corpus hash. The store executes no worker or tool;
+`.17.5.2.3.2` still owns ordered coordination and `.17.5.2.4` real capture.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]].

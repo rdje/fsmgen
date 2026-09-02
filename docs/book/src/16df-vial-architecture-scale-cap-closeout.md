@@ -740,6 +740,45 @@ repository mutation, child exceptions, and signals all reject. The store's
 existing bounded topology tests continue to own malformed, oversized,
 symlink, hard-link, cross-device, collision, and ambiguous-stage controls.
 
+The producer-free complete-corpus store is also implemented. Its public
+surface accepts only the repository root plus all eleven already-admitted
+profile results; it derives the plan, publication identity, and
+`.artifacts/qualification/vial-scale/v2/regression-promotion-corpus-v1/complete`
+coordinate internally. Before sealing, it reloads every referenced profile
+through the per-profile store and requires exact order, selection/report and
+artifact identities, eleven validations, 33 raw records, 44 controller
+invocations, and zero exclusions.
+
+The complete identity has two deliberate levels. Revision, host, and resource
+guard must be byte-equal across all profiles. Tool and provider identity stay
+inside each ordered profile because the selected set intentionally mixes
+repository-only routes, Verilator, GHDL, and GHDL plus OSVVM. Treating one tool
+profile as globally common would reject the valid heterogeneous corpus;
+dropping the ordered per-profile identities would admit substitution. The
+store also projects transient artifact status such as `published`, `loaded`,
+or `recovered` out of the content hash, so exact resume produces the same
+corpus instead of a false collision.
+
+The store writes canonical newline-terminated
+`regression-promotion-corpus.json` and `corpus-manifest.json` into one
+repository-local stage, synchronizes both files and the directory, and
+atomically renames the complete directory. The fixed 1,048,576-byte report and
+65,536-byte manifest ceilings contain storage and read failure; they say
+nothing about scale fit or capacity. Reload holds the no-follow directory
+identity while censusing and bounded-reading both regular, one-link,
+same-volume files, then recensuses before admission. Exact sole-stage recovery
+and byte-identical republish succeed. Partial/ambiguous stages, collisions,
+late entries, malformed/noncanonical/cap-plus-one bytes, mixed or reordered
+profiles, rehashed JSON type substitutions, mutated profile references,
+symlinks, hard links, and cleanup residue reject.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-corpus-storage-contract-v1 -->
+- Claim: The producer-free current-corpus store seals exactly eleven ordered admitted profile references representing eleven validations, 33 raw measurements, 44 controller invocations, and zero exclusions as one canonical same-volume report-plus-manifest directory. Report bytes are bounded at 1,048,576 and manifest bytes at 65,536; these are storage-containment limits, not performance, support, workload-fit, or capacity claims.
+- Re-derive: Run the guarded t1772 watcher, query `ArchitectureScaleRegressionPromotionCorpusStore->publication_limits`, and reload its synthetic two-file publication; the public limits, complete summary, file census, hashes, and current profile references must independently agree.
+- Falsify: t1772 must reject missing, duplicated, reordered, mixed-identity, stale, or mutated profile input; JSON string ordinal/count/version substitutions; collision, partial failure, ambiguous/residual staging, malformed/noncanonical/cap-plus-one report or manifest bytes, late directory entries, symlinks, and hard links while admitting exact recovery and status-independent byte-identical republish.
+- Durability: Retain CorpusStore, t1772, task `.17.5.2.3.1`, this chapter, the capture Knowledge card, this bounded claim record, doctrine gates, and the work-unit Git chain; real capture remains separately owned by `.17.5.2.4`.
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-corpus-storage-contract-v1 -->
+
 The legacy storage remediation is complete. Both publishers now expose their
 selected ceilings, encode and reject before staging, and require one
 newline-terminated canonical JSON file that is regular, same-volume, one-link,
@@ -795,6 +834,23 @@ Run the producer-free fresh-worker resume watcher under the same guard with:
 ```sh
 scripts/run_with_ram_guard.sh -- prove -Iperl \
   t/1769-vial-architecture-scale-regression-promotion-profile-resume.t
+```
+
+Inspect the complete-store contract without creating an artifact:
+
+```sh
+perl -Iperl \
+  -MFSM::VIAL::ArchitectureScaleRegressionPromotionCorpusStore \
+  -MJSON::PP \
+  -e 'print JSON::PP->new->canonical(1)->encode(FSM::VIAL::ArchitectureScaleRegressionPromotionCorpusStore->publication_limits), "\n"'
+```
+
+Run its producer-free complete-publication and hostile-storage watcher under
+the RAM guard:
+
+```sh
+scripts/run_with_ram_guard.sh -- prove -Iperl \
+  t/1772-vial-regression-promotion-corpus-store.t
 ```
 
 Authenticate both the selection policy and dispatch plan under the repository
