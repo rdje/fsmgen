@@ -1460,11 +1460,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.1: implement complete corpus store`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Coordinate exact ordered profile capture or resume and seal only a fully revalidated current corpus.`
   Acceptance: `Expose caller-sealed inventory, capture, and validate operations over repository_root only. Require the active guard and one unchanged clean revision; walk all eleven plan ordinals exactly once; capture a missing profile or exact-resume an existing one only at profile boundaries; independently reload and re-admit each through a fresh profile worker; enforce one common revision/host/guard identity plus the exact ordered route-specific tool/provider/applicability identities, 11 validations, 33 accepted raw records, zero exclusions and cleanup residue; and publish through .1 only after every profile passes. Return bounded metadata-only IPC and reject caller worker/result injection in production, exception, exit, signal, malformed/noncanonical/oversized IPC, duplicate/missing/reordered profile, mixed identity, repository mutation, and post-worker artifact mutation. Default tests use a sealed bounded test worker and run no real producer or tool.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Clean predecessor bdf24d883 implements and closes producer-free complete-corpus storage. Query-first review resolves the current resume/publication contract to the dedicated capture card and decision 0096: the next missing boundary is one caller-sealed coordinator that walks the exact eleven-profile plan, performs capture or exact profile-boundary resume, independently reloads/re-admits every result, and invokes the complete store only after full current closure. This activation selects .17.5.2.3.2 alone; CLI/adversarial closeout remains proposed .3 and real guarded capture remains proposed .17.5.2.4. No source, test, script, artifact, worker, producer, provider, simulator, capture, publication, budget, support, performance, capacity, CI, or product behavior changes in activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.2: activate complete corpus coordinator`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3.3`
   Status: `proposed`
@@ -4726,3 +4726,25 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   producer, provider, simulator, controller, measurement, v2 seal, budget,
   support, performance, capacity, full CI, or push is run or promoted in this
   ordinary slice.
+
+## Acceptance Checklist (enforced) — `.17.5.2.3.2` complete-corpus coordinator activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Knowledge Map query `how is the VIAL v2
+  current corpus resumed and published?` resolves to the dedicated capture
+  card. The clean `.17.5.2.3.1` predecessor supplies only producer-free complete
+  storage, while the card and decision 0096 leave exact eleven-profile ordered
+  capture/resume coordination as the next explicit owner.
+- [x] **ADDRESSED (verified)** — `.17.5.2.3.2` is active from clean predecessor
+  `bdf24d883` and owns only caller-sealed inventory/capture/validate
+  coordination over the completed profile transaction and corpus stores. CLI
+  closeout remains proposed `.3`; real guarded capture remains proposed
+  `.17.5.2.4`. Before -> after: one proposed coordinator leaf becomes the sole
+  active implementation frontier without changing runtime behavior.
+- [x] **NO REGRESSION** — this continuity-only activation changes Memory, the
+  active task index, and owning task evidence. Task-tree integrity, Memory
+  architecture, relative paths, Knowledge Map, live-document containment,
+  staged-result, claim, and all registered doctrine checks are the commit
+  gates. No source, test, script, book, generated artifact, worker, producer,
+  provider, simulator, capture, publication, budget, support, performance,
+  capacity, CI, or product behavior changes; full CI and push remain deferred
+  by policy.
