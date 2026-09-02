@@ -661,6 +661,36 @@ commits are clean does `.17.5.2.4` run the real guarded capture at one revision.
 publication for the still-separate budget qualification leaf. Activation
 itself runs no simulator, measurement producer, or artifact publication.
 
+The first real guarded capture at clean revision `610ed7869` retained the
+first four profiles, then failed closed before publishing ordinal five or a
+corpus seal. The backend-emission selection deliberately has no policy
+`primary_axis`, but its canonical producer report requires
+`primary_axis=artifact_graph`; the capture admission had incorrectly treated
+the nullable selection coordinate as the complete report-coordinate schema.
+The same distinction applies to the remaining runtime and balanced reports.
+Synthetic capture/resume doubles copied the null selection value and therefore
+did not expose the mismatch. This is an admission-contract defect, not a
+simulator result or a reason to weaken the producer report.
+
+The exact four-report prefix remains evidence rather than being deleted or
+relabelled. A rollback-capable same-volume move preserves its 600,036 report
+bytes plus a 4,503-byte canonical failure manifest under the exact capture
+revision in `.artifacts/qualification/vial-scale/history/`. Independent
+reconstruction yields archive identity
+`regression-promotion-failed-prefix/f46939aab1731f2b2a136a0d06cf161d4ff6ec99b2336559227a668c8b86e5a4`,
+five files/604,539 bytes, and an empty active v2 namespace with no archive
+staging. `.17.5.2.4.2` must add producer-authenticated report coordinates while
+leaving decision-0096 selection keys and publication paths unchanged; only a
+later clean revision may start fresh capture. None of this is a performance,
+capacity, simulator-support, or regression-budget claim.
+
+Reconstruct the retained failed prefix without measuring or invoking a
+simulator:
+
+```bash
+scripts/verify_vial_regression_promotion_failed_prefix.pl
+```
+
 The dispatch authority now implements the metadata-only first step. It
 authenticates the promotion policy internally, preserves policy order, and
 binds every selection to its current adapter, public measurement method,

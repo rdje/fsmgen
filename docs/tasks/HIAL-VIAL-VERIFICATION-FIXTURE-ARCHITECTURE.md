@@ -1482,11 +1482,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.3`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.1`
-  Status: `active`
+  Status: `done`
   Goal: `Preserve the exact failed clean-revision capture prefix before changing its plan or implementation identity.`
   Acceptance: `Admit only the four immutable ordinal-one-through-four publications under the active v2 profile namespace; require their exact revision 610ed7869, plan/policy identities, selected coordinates, canonical payloads, regular single-link shape, current-owner and same-volume state, individual hashes, 600,036 aggregate bytes, zero ordinal-five publication, absent corpus report/manifest, and no staging residue. Move the complete profile prefix atomically or rollback into a revision-keyed content-addressed same-volume history directory with one canonical manifest that records the ordinal-five primary_axis admission failure and explicit no-seal status. Independently reconstruct every archived byte/hash/identity and prove the active v2 namespace is empty before any source change.`
-  Verification: `Read-only census finds exactly four canonical profile publications and 600,036 bytes at revision 610ed7869 with plan identity 0b6a15ce...20c33 and policy identity 19cf4105...5ece; payload hashes are e4193516..., ad30fd73..., 32edcdc7..., and a55c3255.... Ordinal five, the corpus report/manifest, and a complete seal are absent. Established execution/checking precedent preserves incompatible prefixes under .artifacts/qualification/vial-scale/history/<revision>/ rather than deleting or relabelling them.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.1: activate failed-prefix archive`
+  Verification: `A rollback-capable same-volume move admitted exactly the four canonical ordinal-one-through-four publications at clean capture revision 610ed7869 and published them under history/610ed7869.../regression-promotion-report-coordinate-failure-ordinal-5-v1 with canonical archive identity f46939aa...e5a4. The tracked repository-relative verifier reconstructs five files/604,539 bytes: four reports/600,036 bytes plus one 4,503-byte manifest; manifest SHA-256 is 06cb9873...2223, profile-inventory digest is 286a4948...0f6d, and whole-archive file digest is ffb9197d...1654. Every report retains its exact individual hash, plan/policy/publication/report/selection identity and four clean accepted controller records. The manifest retains exit 70, failed ordinal five, the exact primary_axis diagnostic, absent failed profile/corpus report/corpus manifest, and no staging. The verifier is syntax-clean and emits the exact canonical census; a repository-local copied-report run_ordinal mutation rejects with archive file identity changed and empty stdout. The active v2 namespace and archive staging are both absent. No evidence was deleted, relabelled, or admitted into a later revision.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.1: archive failed report-coordinate prefix`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.2`
   Status: `proposed`
@@ -4912,3 +4912,45 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   moved; no source, test, script, book, producer, provider, simulator,
   measurement, capture, publication, budget, support, performance, capacity,
   full CI, push, or product behavior changes.
+
+## Acceptance Checklist (enforced) — `.17.5.2.4.1` failed-prefix archive
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — guarded production `--capture` exits 70
+  with `profile capture report coordinate 'primary_axis' appeared at
+  ArchitectureScaleRegressionPromotionProfileCapture.pm line 235`. Ordinal
+  five is the structural backend-emission route: its selected policy axis is
+  null, but the canonical producer validates `artifact_graph`. Source census
+  finds the same selection/report distinction for all seven remaining routes,
+  while synthetic capture/resume reports had copied the null selection axis.
+  `git log -S 'report coordinate' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileCapture.pm`
+  traces the admission mechanism to `41808b11d`.
+- [x] **ADDRESSED (verified)** — a rollback-capable same-volume move accepted
+  only ordinals one through four at clean revision `610ed7869`, preserved their
+  four exact hashes and 600,036 bytes, and added one canonical 4,503-byte
+  manifest recording exit 70, failed ordinal five, the exact diagnostic, and
+  absent failed-profile/corpus/staging state. Before -> after: the immutable
+  incompatible prefix is revision-archived and the active v2 namespace is
+  absent, without deletion, relabelling, source change, or historical reuse.
+- [x] **NO REGRESSION** — an independent verifier reconstructs exactly five
+  archive files/604,539 bytes, archive identity
+  `regression-promotion-failed-prefix/f46939aab1731f2b2a136a0d06cf161d4ff6ec99b2336559227a668c8b86e5a4`,
+  manifest SHA-256 `06cb98730ad4168cda68fd7864939c499a86766b8a6c0d13216fcc04819d2223`,
+  profile digest `286a4948fec76e6f126de2fdaef7af09d0c6665e854ce9e57756042706860f6d`,
+  and whole-file digest `ffb9197d464eea035ee8332f24e6cd869b4e9305f44b5001513cc225e5d91654`.
+  It rechecks every clean revision, record, plan/policy/publication/report,
+  coordinate, byte, and hash binding; active and archive-staging counts are
+  zero. Exact syntax output follows:
+  scripts/verify_vial_regression_promotion_failed_prefix.pl syntax OK
+  The tracked verifier emits the exact canonical census; a repository-local
+  copied-report `run_ordinal` mutation rejects with
+  `failed-prefix archive file identity changed` and empty stdout. The mdBook
+  and Knowledge Map retain the failure boundary and nonclaims; all 59 chapters
+  test, and the inspected 94-file/21,134,510-byte repository-local render
+  contains the archive identity and runnable verifier before exact removal.
+  Claim inventory/disposition closes all 1,776 candidates as 183 claim records,
+  991 derived gates, and 602 reviewed references with zero gaps/open owners.
+  Containment, task integrity, Memory, locality, staged result, and all doctrines
+  are required green before commit. No source, test, script, provider,
+  simulator, budget, support, performance, capacity, full CI, push, or product
+  behavior changes.
