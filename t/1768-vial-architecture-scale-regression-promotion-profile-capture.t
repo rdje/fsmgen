@@ -177,6 +177,50 @@ subtest 'every current route crosses the same one-entry child boundary' => sub {
     }
 };
 
+subtest 'producer report coordinates are exact and independent of selection' => sub {
+    my $backend = plan_entry(5);
+    ok(!defined($backend->{coordinates}{primary_axis}),
+        'the backend policy selection axis remains deliberately nullable');
+    is($backend->{report_coordinate_authority}{primary_axis},
+        'artifact_graph',
+        'the backend producer report axis remains independently explicit');
+
+    for my $control (
+        ['family-change', 5, sub { $_[0]{family} = 'foreign_family' },
+            qr/report coordinate 'family' changed/],
+        ['level-change', 5, sub { $_[0]{level} = 'foreign_level' },
+            qr/report coordinate 'level' changed/],
+        ['axis-change', 5, sub { $_[0]{primary_axis} = 'foreign_axis' },
+            qr/report coordinate 'primary_axis' changed/],
+        ['backend-change', 5,
+            sub { $_[0]{backend_profile} = 'foreign_backend' },
+            qr/report coordinate 'backend_profile' changed/],
+        ['family-omission', 5, sub { delete $_[0]{family} },
+            qr/report coordinate 'family' changed/],
+        ['level-omission', 5, sub { delete $_[0]{level} },
+            qr/report coordinate 'level' changed/],
+        ['axis-omission', 5, sub { delete $_[0]{primary_axis} },
+            qr/report coordinate 'primary_axis' changed/],
+        ['backend-omission', 5, sub { delete $_[0]{backend_profile} },
+            qr/report coordinate 'backend_profile' changed/],
+        ['backend-appearance', 1,
+            sub { $_[0]{backend_profile} = 'foreign_backend' },
+            qr/report coordinate 'backend_profile' appeared/],
+    ) {
+        my ($name, $ordinal, $mutation, $expected) = @{$control};
+        my $repo = fresh_repository("report-coordinate-$name");
+        like(dies(sub {
+            capture_with_report($repo, $ordinal, sub {
+                my $report = synthetic_report($repo, $ordinal);
+                $mutation->($report);
+                return $report;
+            });
+        }), $expected, "$name rejects");
+        ok(!-e(expected_profile_directory($repo, $ordinal)),
+            "$name never publishes");
+    }
+};
+
 subtest 'failed, mixed, reordered, excluded, and residual reports reject' => sub {
     my @controls = (
         ['coordinate', sub { $_[0]{family} = 'foreign_family' },
@@ -410,9 +454,10 @@ sub synthetic_report {
         report_identity => 'synthetic-capture/' . sha256_hex(
             join('/', $ordinal, $revision, $$),
         ),
-        family => $entry->{coordinates}{family},
-        level => $entry->{coordinates}{level},
-        primary_axis => $entry->{coordinates}{primary_axis},
+        family => $entry->{report_coordinate_authority}{family},
+        level => $entry->{report_coordinate_authority}{level},
+        primary_axis =>
+            $entry->{report_coordinate_authority}{primary_axis},
         mode => 'gate_measurement',
         controller_applicability => {
             applicable => JSON::PP::true, reason => undef,
@@ -433,8 +478,9 @@ sub synthetic_report {
             residue => [],
         },
     };
-    $report->{backend_profile} = $entry->{coordinates}{backend_profile}
-        if defined $entry->{coordinates}{backend_profile};
+    $report->{backend_profile} =
+        $entry->{report_coordinate_authority}{backend_profile}
+        if defined $entry->{report_coordinate_authority}{backend_profile};
     if ($entry->{provider_requirement}{kind} eq 'exact_tool_profile') {
         $report->{tool_profile} = clone($tool);
     }

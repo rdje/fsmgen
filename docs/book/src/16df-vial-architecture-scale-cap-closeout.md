@@ -679,10 +679,8 @@ revision in `.artifacts/qualification/vial-scale/history/`. Independent
 reconstruction yields archive identity
 `regression-promotion-failed-prefix/f46939aab1731f2b2a136a0d06cf161d4ff6ec99b2336559227a668c8b86e5a4`,
 five files/604,539 bytes, and an empty active v2 namespace with no archive
-staging. `.17.5.2.4.2` must add producer-authenticated report coordinates while
-leaving decision-0096 selection keys and publication paths unchanged; only a
-later clean revision may start fresh capture. None of this is a performance,
-capacity, simulator-support, or regression-budget claim.
+staging. None of this is a performance, capacity, simulator-support, or
+regression-budget claim.
 
 Reconstruct the retained failed prefix without measuring or invoking a
 simulator:
@@ -690,6 +688,45 @@ simulator:
 ```bash
 scripts/verify_vial_regression_promotion_failed_prefix.pl
 ```
+
+The repair keeps decision-0096 selection keys and all publication paths
+unchanged, but advances the dispatch contract to capture-plan schema v2. Every
+entry now carries a separate closed `report_coordinate_authority` with a
+content-addressed identity. Its family, level, primary axis, and backend
+profile come from a metadata-only public method on the selected adapter; that
+method runs the adapter's existing canonical producer-ownership validation.
+The plan pins all eleven resulting identities, so rehashing a forged plan or
+authority cannot make foreign coordinates current.
+
+| Producer group | Policy selection axis | Admitted report axis |
+| --- | --- | --- |
+| semantic/bridge | `actions` or `backend_bindings` | same selected axis |
+| execution/checking | `bindings` or `random_occurrences` | same selected axis |
+| backend emission | null | `artifact_graph` |
+| portable and OSVVM runtime | null | `runtime_trace_records` |
+| balanced portable | null | `interaction_profile` |
+
+Both child capture and parent resume compare reports against this new
+authority. Synthetic reports also use it, so all eleven doubles reproduce the
+real producer shape instead of copying a nullable selection axis. Focused
+controls change and omit every coordinate, add a backend coordinate where it
+is inapplicable, forge the adapter result and both plan identities, and prove
+that selection and report axes remain independent. Run the complete repaired
+contract without real producer or simulator execution:
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl \
+  t/1766-vial-architecture-scale-regression-promotion-capture-plan.t \
+  t/1767-vial-architecture-scale-regression-promotion-profile-store.t \
+  t/1768-vial-architecture-scale-regression-promotion-profile-capture.t \
+  t/1769-vial-architecture-scale-regression-promotion-profile-resume.t \
+  t/1772-vial-regression-promotion-corpus-store.t \
+  t/1773-vial-regression-promotion-corpus-coordinator.t \
+  t/1774-vial-regression-promotion-corpus-cli.t
+```
+
+Fresh real capture remains a separate operation owned by `.17.5.2.4.3`; this
+repair neither executes a provider nor promotes a budget or support claim.
 
 The dispatch authority now implements the metadata-only first step. It
 authenticates the promotion policy internally, preserves policy order, and

@@ -81,6 +81,16 @@ sub member_authority($class) {
     return _clone(_authority());
 }
 
+sub report_coordinates($class, @args) {
+    _exact_invocant($class, 'report_coordinates');
+    _request('report_coordinates', \@args, []);
+    my $authority = _authority();
+    return {
+        map { $_ => $authority->{$_} }
+            qw(family level primary_axis backend_profile)
+    };
+}
+
 sub construct($class, @args) {
     _exact_invocant($class, 'construct');
     my $request = _request('construct', \@args, [qw(repository_root)]);

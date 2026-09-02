@@ -93,6 +93,18 @@ sub owned_shapes($class) {
     return [map {{backend_profile => $PROFILE, level => $_}} @LEVELS];
 }
 
+sub report_coordinates($class, @args) {
+    _exact_invocant($class, 'report_coordinates');
+    my $request = _request('report_coordinates', \@args, [qw(level)]);
+    _selected_level($request->{level});
+    return {
+        family => $FAMILY,
+        level => $request->{level},
+        primary_axis => $PRIMARY_AXIS,
+        backend_profile => $PROFILE,
+    };
+}
+
 sub explicit_nonclaims($class) {
     _exact_invocant($class, 'explicit_nonclaims');
     return [@NONCLAIMS];

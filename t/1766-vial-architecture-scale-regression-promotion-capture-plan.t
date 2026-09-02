@@ -39,8 +39,9 @@ subtest 'plan exposes one caller-sealed metadata-only contract' => sub {
         ordinal selection_key coordinates worker_ordinal adapter_class
         adapter_method repository_root_binding adapter_arguments
         producer_authority producer_authority_identity provider_requirement
-        applicability_requirement validation_records raw_measurement_records
-        controller_invocations publication_relative_path
+        report_coordinate_authority applicability_requirement
+        validation_records raw_measurement_records controller_invocations
+        publication_relative_path
     )], 'dispatch entries have one closed schema');
     my $nonclaims = $class->explicit_nonclaims;
     ok((grep { $_ eq 'simulator_execution' } @{$nonclaims}),
@@ -69,8 +70,10 @@ subtest 'plan exposes one caller-sealed metadata-only contract' => sub {
 subtest 'eleven selected profiles map to exact public dispatch' => sub {
     my $plan = derive_plan();
     is($plan->{schema},
-        'fsmgen.vial_architecture_scale_regression_promotion_capture_plan.v1',
+        'fsmgen.vial_architecture_scale_regression_promotion_capture_plan.v2',
         'capture plan schema is versioned');
+    is($plan->{schema_version}, 2,
+        'the mandatory report-coordinate authority advances the schema');
     like($plan->{plan_identity},
         qr{\Aregression-promotion-capture-plan/[0-9a-f]{64}\z},
         'capture plan identity is content-addressed');
@@ -133,6 +136,59 @@ subtest 'eleven selected profiles map to exact public dispatch' => sub {
         ],
         'every adapter receives one exact closed non-root argument set',
     );
+    my @expected_report_coordinates = (
+        {family => 'semantic_catalog_v1', level => 'gate_candidate_v1',
+            primary_axis => 'actions', backend_profile => undef},
+        {family => 'bridge_fanout_v1', level => 'gate_candidate_v1',
+            primary_axis => 'backend_bindings', backend_profile => undef},
+        {family => 'execution_graph_v1', level => 'gate_candidate_v1',
+            primary_axis => 'bindings', backend_profile => undef},
+        {family => 'checking_state_v1', level => 'gate_candidate_v1',
+            primary_axis => 'random_occurrences', backend_profile => undef},
+        {family => 'backend_emission_v1', level => 'gate_candidate_v1',
+            primary_axis => 'artifact_graph',
+            backend_profile => 'sv_portable_verilator'},
+        {family => 'backend_emission_v1', level => 'gate_candidate_v1',
+            primary_axis => 'artifact_graph',
+            backend_profile => 'vhdl_portable_ghdl'},
+        {family => 'backend_emission_v1', level => 'gate_candidate_v1',
+            primary_axis => 'artifact_graph',
+            backend_profile => 'vhdl_osvvm_qualified'},
+        {family => 'runtime_stream_v1', level => 'gate_candidate_v1',
+            primary_axis => 'runtime_trace_records',
+            backend_profile => 'sv_portable_verilator'},
+        {family => 'runtime_stream_v1', level => 'gate_candidate_v1',
+            primary_axis => 'runtime_trace_records',
+            backend_profile => 'vhdl_portable_ghdl'},
+        {family => 'runtime_stream_v1', level => 'gate_candidate_v1',
+            primary_axis => 'runtime_trace_records',
+            backend_profile => 'vhdl_osvvm_qualified'},
+        {family => 'balanced_portable_v1', level => 'gate_candidate_v1',
+            primary_axis => 'interaction_profile',
+            backend_profile => 'sv_portable_verilator'},
+    );
+    is_deeply(
+        [map {
+            my $authority = $_->{report_coordinate_authority};
+            +{map { $_ => $authority->{$_} }
+                qw(family level primary_axis backend_profile)}
+        } @{$plan->{entries}}],
+        \@expected_report_coordinates,
+        'producer-owned report coordinates preserve all eleven real axes',
+    );
+    for my $entry (@{$plan->{entries}}) {
+        is_deeply(
+            [sort keys %{$entry->{report_coordinate_authority}}],
+            [sort qw(
+                authority_identity family level primary_axis backend_profile
+            )],
+            "route $entry->{ordinal} report-coordinate authority is closed",
+        );
+        like($entry->{report_coordinate_authority}{authority_identity},
+            qr{\Areport-coordinate-authority/[0-9a-f]{64}\z},
+            "route $entry->{ordinal} report-coordinate authority is authenticated",
+        );
+    }
     is_deeply(
         [map { $_->{repository_root_binding} } @{$plan->{entries}}],
         [('validated_capture_repository_root') x 11],
@@ -248,7 +304,7 @@ subtest 'policy and adapter drift fail closed' => sub {
         'a revision-1 publication path is rejected');
 
     {
-        no warnings 'redefine';
+        no warnings qw(once redefine);
         my $original =
             FSM::VIAL::ArchitectureScaleSemanticBridgeMeasurement
                 ->family_authorities;
@@ -272,6 +328,64 @@ subtest 'policy and adapter drift fail closed' => sub {
             qr/exact tool profile changed/,
             'exact provider drift is rejected');
     }
+
+    for my $control (
+        ['changed', {
+            family => 'backend_emission_v1',
+            level => 'gate_candidate_v1',
+            primary_axis => 'foreign_axis',
+            backend_profile => 'sv_portable_verilator',
+        }, qr/report coordinate authority changed/],
+        ['missing', {
+            family => 'backend_emission_v1',
+            level => 'gate_candidate_v1',
+            backend_profile => 'sv_portable_verilator',
+        }, qr/report coordinates is missing 'primary_axis'/],
+        ['extra', {
+            family => 'backend_emission_v1',
+            level => 'gate_candidate_v1',
+            primary_axis => 'artifact_graph',
+            backend_profile => 'sv_portable_verilator',
+            caller_coordinate => 'forged',
+        }, qr/report coordinates contains unknown key 'caller_coordinate'/],
+    ) {
+        my ($name, $coordinates, $expected) = @{$control};
+        no warnings 'redefine';
+        local *FSM::VIAL::ArchitectureScaleBackendEmissionMeasurement::report_coordinates =
+            sub { return $json->decode($json->encode($coordinates)) };
+        like(dies(sub { $derive->(derive_policy()) }), $expected,
+            "producer report-coordinate $name drift is rejected");
+    }
+
+    my $validate_plan = $class->can('_validate_plan');
+    {
+        my $forged = derive_plan();
+        $forged->{entries}[4]{report_coordinate_authority}{primary_axis} =
+            'foreign_axis';
+        rehash_report_authority($forged->{entries}[4]);
+        rehash_plan($forged);
+        like(dies(sub { $validate_plan->($forged) }),
+            qr/report-coordinate authority is invalid/,
+            'a rehashed plan cannot forge producer report coordinates');
+    }
+    {
+        my $forged = derive_plan();
+        $forged->{entries}[4]{report_coordinate_authority}
+            {authority_identity} =
+                'report-coordinate-authority/' . ('0' x 64);
+        rehash_plan($forged);
+        like(dies(sub { $validate_plan->($forged) }),
+            qr/report-coordinate authority is invalid/,
+            'a rehashed plan cannot forge report-coordinate identity');
+    }
+    {
+        my $aliased = derive_plan();
+        ok(!defined($aliased->{entries}[4]{coordinates}{primary_axis}),
+            'backend selection deliberately retains its nullable policy axis');
+        is($aliased->{entries}[4]{report_coordinate_authority}{primary_axis},
+            'artifact_graph',
+            'the producer report axis is independently non-null');
+    }
 };
 
 subtest 'returned plans are defensive and deterministic' => sub {
@@ -279,6 +393,8 @@ subtest 'returned plans are defensive and deterministic' => sub {
     my $identity = $first->{plan_identity};
     my $path = $first->{entries}[0]{publication_relative_path};
     $first->{entries}[0]{adapter_arguments}{family} = 'mutated';
+    $first->{entries}[0]{report_coordinate_authority}{primary_axis} =
+        'mutated';
     $first->{entries}[0]{publication_relative_path} = 'mutated';
 
     my $second = derive_plan();
@@ -287,6 +403,8 @@ subtest 'returned plans are defensive and deterministic' => sub {
     is($second->{entries}[0]{adapter_arguments}{family},
         'semantic_catalog_v1',
         'nested adapter arguments are defensive');
+    is($second->{entries}[0]{report_coordinate_authority}{primary_axis},
+        'actions', 'report-coordinate authority is defensive');
     is($second->{entries}[0]{publication_relative_path}, $path,
         'publication coordinates are defensive');
 };
@@ -326,6 +444,21 @@ sub rehash_policy {
     $policy->{policy_identity} = undef;
     $policy->{policy_identity} = 'regression-promotion-policy/'
         . sha256_hex($json->encode($policy));
+}
+
+sub rehash_report_authority {
+    my ($entry) = @_;
+    my $authority = $entry->{report_coordinate_authority};
+    $authority->{authority_identity} = undef;
+    $authority->{authority_identity} = 'report-coordinate-authority/'
+        . sha256_hex($json->encode($authority));
+}
+
+sub rehash_plan {
+    my ($plan) = @_;
+    $plan->{plan_identity} = undef;
+    $plan->{plan_identity} = 'regression-promotion-capture-plan/'
+        . sha256_hex($json->encode($plan));
 }
 
 sub read_json {

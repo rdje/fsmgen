@@ -1489,11 +1489,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.1: archive failed report-coordinate prefix`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.2`
-  Status: `active`
+  Status: `done`
   Goal: `Separate policy selection coordinates from producer-report coordinates and close the synthetic-test hole.`
   Acceptance: `Retain decision-0096 selection keys and publication paths unchanged. Add one closed authenticated report-coordinate authority to every capture-plan entry, derive each expected family/level/primary_axis/backend_profile from canonical producer ownership rather than caller data, and make child/parent capture plus resume admission compare reports against that authority. Make synthetic reports reproduce the real producer axes for all eleven routes. Prove every individual coordinate mutation, omission, appearance, plan/identity forgery, and selection/report aliasing rejects while focused plan/capture/resume/coordinator/CLI integration stays green.`
-  Verification: `Clean predecessor a1f33e2b1 archives and independently verifies the exact failed revision-610ed7869 prefix, empties the active v2 namespace, and leaves all twelve doctrines green. Query-first review of the dedicated capture card and source/history evidence confirms the defect boundary: policy selection coordinates remain decision-0096 inputs, while canonical producer reports own a distinct closed coordinate schema; all seven uncaptured real routes would fail the same admission rule, and synthetic capture/resume reports masked it by copying null selection axes. This activation grants .4.2 sole repair ownership without changing source, tests, artifacts, providers, simulators, identities, or product behavior.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.2: activate report-coordinate repair`
+  Verification: `A RED t1766 first proved the capture plan had no report_coordinate_authority, none of the seven adapters exposed canonical report coordinates, and changed/missing/extra producer-coordinate controls were not consumed. Capture-plan schema v2 now adds one closed content-addressed report-coordinate authority per entry while retaining every decision-0096 selection key and publication path. Each adapter derives family/level/primary_axis/backend_profile through its existing canonical ownership validator; eleven pinned digests prevent rehashed plan or identity forgery. ProfileCapture uses only that authority for both child capture and parent resume admission. Synthetic capture/resume/coordinator reports now reproduce all eleven real axes: semantic/bridge and execution/checking retain their selected axes, while backend, runtime, and balanced routes use artifact_graph, runtime_trace_records, and interaction_profile independently of their nullable selection axes. Tests change and omit each of four coordinates, make an inapplicable backend coordinate appear, challenge adapter output and plan/authority identities, and prove selection/report independence. All nine touched modules and four changed watchers are syntax-clean. The guarded plan/store/capture/resume/corpus/coordinator/CLI chain passes Files=7/Tests=58; no producer, provider, simulator, measurement, real capture, publication, budget, performance, support, or capacity work ran.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.2: authenticate producer report coordinates`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.3`
   Status: `proposed`
@@ -4973,3 +4973,37 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   acceptance exemption, and all doctrines must pass before commit. No source,
   test, artifact, producer, provider, simulator, capture, publication, budget,
   support, performance, capacity, full CI, push, or product behavior changes.
+
+## Acceptance Checklist (enforced) — `.17.5.2.4.2` authenticated report-coordinate repair
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the guarded RED
+  `t/1766-vial-architecture-scale-regression-promotion-capture-plan.t` run
+  failed four of ten subtests: every plan entry lacked
+  `report_coordinate_authority`, all eleven real-axis expectations were
+  absent, and changed/missing/extra adapter-coordinate controls were never
+  consumed. The first production failure and archived prefix independently
+  prove why: `ArchitectureScaleRegressionPromotionProfileCapture::_admit_report`
+  read nullable policy `coordinates`, while ordinal-five's canonical backend
+  report truthfully emitted `primary_axis=artifact_graph`. Synthetic reports
+  copied the policy value and hid the mismatch. `git log -S 'report coordinate'
+  --oneline -- perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileCapture.pm`
+  locates the original selection-coordinate admission mechanism.
+- [x] **ADDRESSED (verified)** — all seven measurement adapters now expose one
+  closed metadata-only `report_coordinates` method backed by their existing
+  canonical family/profile/owned-shape/member validators. Capture-plan schema
+  v2 stores and authenticates the four resulting coordinates under eleven
+  pinned producer-derived digests. Selection keys and publication paths are
+  unchanged. Child capture and parent resume admit against that separate
+  authority, and synthetic capture/resume/coordinator reports use the real
+  axes. Before -> after: a nullable selection axis no longer suppresses a
+  required producer-report axis, without weakening any producer report.
+- [x] **NO REGRESSION** — hostile watchers change and omit each family, level,
+  primary-axis, and backend coordinate; make an inapplicable backend appear;
+  change, omit, or extend adapter metadata; rehash forged plan and authority
+  identities; and prove the null-selection/non-null-report distinction. All
+  nine touched modules and four changed watchers are syntax-clean. The guarded
+  plan/profile/corpus/coordinator/CLI chain reports `All tests successful` at
+  `Files=7, Tests=58`. The mdBook and Knowledge Map explain schema v2, all real
+  axes, the runnable focused gate, and the separate `.4.3` fresh-capture owner.
+  No real producer, provider, simulator, measurement, capture, publication,
+  budget, performance, support, capacity, full CI, or push runs in this slice.

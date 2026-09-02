@@ -231,7 +231,7 @@ sub _admit_report($report, $entry, $git_revision) {
     confess "profile capture report must be one unblessed hash\n"
         unless ref($report) eq 'HASH' && !blessed($report);
     for my $key (qw(family level primary_axis backend_profile)) {
-        my $expected = $entry->{coordinates}{$key};
+        my $expected = $entry->{report_coordinate_authority}{$key};
         if (defined $expected) {
             confess "profile capture report coordinate '$key' changed\n"
                 unless defined($report->{$key}) && !ref($report->{$key})

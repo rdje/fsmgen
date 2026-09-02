@@ -99,6 +99,22 @@ sub profile_authorities($class) {
     return {map { $_ => _authority($_) } @PROFILES};
 }
 
+sub report_coordinates($class, @args) {
+    _exact_invocant($class, 'report_coordinates');
+    my $request = _request(
+        'report_coordinates', \@args, [qw(backend_profile level)],
+    );
+    _validate_profile_level(
+        $request->{backend_profile}, $request->{level},
+    );
+    return {
+        family => $FAMILY,
+        level => $request->{level},
+        primary_axis => $PRIMARY_AXIS,
+        backend_profile => $request->{backend_profile},
+    };
+}
+
 sub construct($class, @args) {
     _exact_invocant($class, 'construct');
     my $request = _request(

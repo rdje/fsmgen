@@ -163,6 +163,8 @@ subtest 'stale revision, host, guard, tool, and mixed records reject' => sub {
             $_[0]{measurement_records}[2]{host_profile}{cpu_model} =
                 'mixed-cpu';
         }],
+        ['report-coordinate', qr/report coordinate 'primary_axis' changed/,
+            sub { $_[0]{primary_axis} = 'foreign_axis' }],
     );
     for my $control (@controls) {
         my ($name, $expected, $mutate) = @$control;
@@ -387,9 +389,10 @@ sub synthetic_report {
         report_identity => 'synthetic-resume/' . sha256_hex(
             join('/', $ordinal, $revision, $repo),
         ),
-        family => $entry->{coordinates}{family},
-        level => $entry->{coordinates}{level},
-        primary_axis => $entry->{coordinates}{primary_axis},
+        family => $entry->{report_coordinate_authority}{family},
+        level => $entry->{report_coordinate_authority}{level},
+        primary_axis =>
+            $entry->{report_coordinate_authority}{primary_axis},
         mode => 'gate_measurement',
         controller_applicability => {
             applicable => JSON::PP::true, reason => undef,
@@ -410,8 +413,9 @@ sub synthetic_report {
             residue => [],
         },
     };
-    $report->{backend_profile} = $entry->{coordinates}{backend_profile}
-        if defined $entry->{coordinates}{backend_profile};
+    $report->{backend_profile} =
+        $entry->{report_coordinate_authority}{backend_profile}
+        if defined $entry->{report_coordinate_authority}{backend_profile};
     if ($entry->{provider_requirement}{kind} eq 'exact_tool_profile') {
         $report->{tool_profile} = clone($tool);
     }

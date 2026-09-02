@@ -10,6 +10,7 @@ answers:
   - "how are VIAL promotion dispatch paths content addressed?"
   - "how does one VIAL regression-promotion profile run in isolation?"
   - "how is the VIAL v2 current corpus resumed and published?"
+  - "how are regression-promotion report coordinates authenticated separately from policy selection?"
 date: 2026-09-02
 status: current
 tags: [hial, vial, scalability, regression, measurement, publication]
@@ -84,8 +85,20 @@ same-volume history archive with identity
 the active v2 namespace is empty. The repository-relative
 `verify_vial_regression_promotion_failed_prefix.pl` rechecks every fixed
 identity, byte, hash, record, path, device, link, owner, and residue invariant;
-a copied report mutation rejects before emitting a result. `.17.5.2.4.2` owns
-separate authenticated report coordinates before any fresh capture.
+a copied report mutation rejects before emitting a result.
+
+`.17.5.2.4.2` closes the admission defect without changing a selection key or
+publication path. Capture-plan schema v2 carries a distinct authenticated
+`report_coordinate_authority` on every entry. Each of the seven adapters
+derives its four report coordinates through canonical producer ownership, and
+the plan pins the resulting eleven identities. Capture and resume compare
+reports to this authority rather than to policy selection coordinates.
+Backend, runtime, and balanced selection axes remain null, while their real
+report axes are respectively `artifact_graph`, `runtime_trace_records`, and
+`interaction_profile`. Synthetic reports reproduce those real axes. Changed,
+missing, newly appearing, rehashed, or aliased coordinates reject before
+publication; the guarded seven-file integration passes 58 tests. Fresh real
+capture remains solely owned by `.17.5.2.4.3`.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]].

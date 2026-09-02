@@ -90,6 +90,22 @@ sub family_authorities($class) {
     };
 }
 
+sub report_coordinates($class, @args) {
+    _exact_invocant($class, 'report_coordinates');
+    my $request = _request(
+        'report_coordinates', \@args, [qw(family level primary_axis)],
+    );
+    _validate_family_axis_level(
+        @{$request}{qw(family level primary_axis)},
+    );
+    return {
+        family => $request->{family},
+        level => $request->{level},
+        primary_axis => $request->{primary_axis},
+        backend_profile => undef,
+    };
+}
+
 sub construct($class, @args) {
     _exact_invocant($class, 'construct');
     my $request = _request(

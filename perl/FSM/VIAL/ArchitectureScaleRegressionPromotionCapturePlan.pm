@@ -21,7 +21,7 @@ use FSM::VIAL::ArchitectureScaleSemanticBridgeMeasurement;
 
 my $POLICY = 'FSM::VIAL::ArchitectureScaleRegressionPromotionPolicy';
 my $SCHEMA =
-    'fsmgen.vial_architecture_scale_regression_promotion_capture_plan.v1';
+    'fsmgen.vial_architecture_scale_regression_promotion_capture_plan.v2';
 my $PUBLICATION_BASE = '.artifacts/qualification/vial-scale/v2';
 my $PUBLICATION_ID = 'regression-promotion-corpus-v1';
 my $PUBLICATION_SCHEMA =
@@ -42,11 +42,17 @@ my @ENTRY_KEYS = qw(
     ordinal selection_key coordinates worker_ordinal adapter_class
     adapter_method repository_root_binding adapter_arguments
     producer_authority producer_authority_identity provider_requirement
-    applicability_requirement validation_records raw_measurement_records
-    controller_invocations publication_relative_path
+    report_coordinate_authority applicability_requirement validation_records
+    raw_measurement_records controller_invocations publication_relative_path
 );
 my @COORDINATE_KEYS = qw(
     authority family level primary_axis backend_profile
+);
+my @REPORT_COORDINATE_KEYS = qw(
+    family level primary_axis backend_profile
+);
+my @REPORT_COORDINATE_AUTHORITY_KEYS = (
+    'authority_identity', @REPORT_COORDINATE_KEYS,
 );
 my @PROVIDER_KEYS = qw(
     kind external_verification_tool logical_name provider_identity
@@ -82,6 +88,8 @@ my @ROUTES = (
         ownership_key => 'semantic_catalog_v1',
         ownership_digest =>
             'e12f590edd984a5d140cce741df4d42474ba64c0d4c7bb683879fedd266ce4e8',
+        report_coordinates_digest =>
+            '80e8438cbdd92e07a773d994af0445babd6ff6003dded1e47a940d5f65fc66cf',
         applicability => 'accepted_validation_and_family_evaluation',
     },
     {
@@ -99,6 +107,8 @@ my @ROUTES = (
         ownership_key => 'bridge_fanout_v1',
         ownership_digest =>
             '9d4503da87edcaddd284968ddbb49697ea719b74fbf3dfb64ddfbb5119069236',
+        report_coordinates_digest =>
+            'da80402fd33fcda9c8c79087ae42a5101b90e37b6018434ecc2af59858844c3e',
         applicability => 'accepted_validation_and_family_evaluation',
     },
     {
@@ -116,6 +126,8 @@ my @ROUTES = (
         ownership_key => 'execution_graph_v1',
         ownership_digest =>
             '754c3ada61a11967d06fff4b86e413de4169aa95e61dec65dd162f28ab850aca',
+        report_coordinates_digest =>
+            'b6c5ad217c7f080a619dcda4d52b8d6c5e06fab63d66af582a232cfef8c20ab4',
         applicability => 'accepted_construction_and_canonical_evaluation',
     },
     {
@@ -133,6 +145,8 @@ my @ROUTES = (
         ownership_key => 'checking_state_v1',
         ownership_digest =>
             'c62bf4e00749d2e57e1d187d255a0aaf03f39694ae0edf14b6898f035af61684',
+        report_coordinates_digest =>
+            '5ddcbd50a30ff637d61bbb79c37def270e05e54c693d0d6499950f706b7db313',
         applicability => 'accepted_construction_and_canonical_evaluation',
     },
     {
@@ -149,6 +163,8 @@ my @ROUTES = (
         ownership_key => 'sv_portable_verilator',
         ownership_digest =>
             'eaedf84c302ecc476118584a7950a69c82360e63a5338b36fb97b8fb899105b8',
+        report_coordinates_digest =>
+            'f28dd646a152d4b621b5605d93a6c91c3f4c85b9408fff36a7b71472effaad36',
         applicability => 'accepted_validation_and_artifacts_emitted',
     },
     {
@@ -165,6 +181,8 @@ my @ROUTES = (
         ownership_key => 'vhdl_portable_ghdl',
         ownership_digest =>
             'f4f93c6378df2e91f683a4f5241fa2f5152229a97ef9911ee62f4c30da75092b',
+        report_coordinates_digest =>
+            '2f7cd1622928f84bb4a689bd4392dbdbd855813aa3e9928925320613f87314e5',
         applicability => 'accepted_validation_and_artifacts_emitted',
     },
     {
@@ -181,6 +199,8 @@ my @ROUTES = (
         ownership_key => 'vhdl_osvvm_qualified',
         ownership_digest =>
             '4a3a318f249a18d6685d04b9849190987774c48e64e1d1d967caa12512346b9b',
+        report_coordinates_digest =>
+            '4a6433482cab4ad58054295c12dc84d88391abd6caf33f9fb76e4a0219d34448',
         applicability => 'accepted_validation_and_artifacts_emitted',
         materialization_provider => 'external_exact_osvvm_2026_05',
     },
@@ -194,6 +214,8 @@ my @ROUTES = (
         ownership_method => 'owned_shapes',
         ownership_digest =>
             '235335570485b9d84b51fa028e5a695b654bcf384580dca418a0d89ebc77eba6',
+        report_coordinates_digest =>
+            '0a0f04cfb1318c87b58e5b39a3b19640a988af2289a35505974b10f6256d29fc',
         applicability =>
             'structurally_qualified_materialization_and_accepted_validation',
         tool_digest =>
@@ -211,6 +233,8 @@ my @ROUTES = (
         ownership_method => 'owned_shapes',
         ownership_digest =>
             '9e6b49f0b00b517a9aad0e354424286cc38dfe9165dd65a2aec66c70e9760cd3',
+        report_coordinates_digest =>
+            '6b585d8fda4c1c69023f784304eb622263698e6770fea6e4bc132b98775aaf25',
         applicability =>
             'structurally_qualified_materialization_and_accepted_validation',
         tool_digest =>
@@ -228,6 +252,8 @@ my @ROUTES = (
         ownership_method => 'owned_shapes',
         ownership_digest =>
             '73cc8ffecaae5428fe9508f948cb953c2d91c1ce00d83bdd602f052356886dd2',
+        report_coordinates_digest =>
+            'cf1895e9af13cab073e417f3b999d30030e08cb2cf343bd35ccb8c5b38c8724b',
         applicability =>
             'provider_structurally_qualified_and_accepted_validation',
         tool_digest =>
@@ -246,6 +272,8 @@ my @ROUTES = (
         ownership_method => 'member_authority',
         ownership_digest =>
             '57ea0cf228d807c11a4acce9e2b04729d24c1b93be8f3553a0fcc53cb328d1fd',
+        report_coordinates_digest =>
+            'fb8104156b8fb7b6457b8afbf13c302b947fd77fb530e9c89ed91bf0c3f2439b',
         applicability => 'accepted_validation',
     },
 );
@@ -290,7 +318,7 @@ sub _derive_from_policy($policy) {
 
     my $plan = {
         schema => $SCHEMA,
-        schema_version => 1,
+        schema_version => 2,
         plan_identity => undef,
         policy_identity => $policy->{policy_identity},
         publication_base => $PUBLICATION_BASE,
@@ -320,6 +348,8 @@ sub _entry($ordinal, $route, $selected) {
     my $producer_authority = _producer_authority($route, $selected);
     my $producer_digest = sha256_hex(_canonical_json($producer_authority));
     my $provider = _provider_requirement($route, $producer_authority);
+    my $report_coordinate_authority =
+        _report_coordinate_authority($route);
     my $profile_token = sha256_hex($selected->{selection_key});
     my $publication_path = join '/',
         $PUBLICATION_BASE, $PUBLICATION_ID, 'profiles',
@@ -341,6 +371,7 @@ sub _entry($ordinal, $route, $selected) {
         producer_authority_identity =>
             'capture-producer-authority/' . $producer_digest,
         provider_requirement => $provider,
+        report_coordinate_authority => $report_coordinate_authority,
         applicability_requirement => {
             required => JSON::PP::true,
             predicate => $route->{applicability},
@@ -350,6 +381,29 @@ sub _entry($ordinal, $route, $selected) {
         controller_invocations => $CONTROLLER_INVOCATIONS,
         publication_relative_path => $publication_path,
     };
+}
+
+sub _report_coordinate_authority($route) {
+    my $adapter = $route->{adapter_class};
+    confess "capture plan adapter report-coordinate method is unavailable\n"
+        unless $adapter->can('report_coordinates');
+    my $coordinates = $adapter->report_coordinates(
+        _clone($route->{adapter_arguments}),
+    );
+    _exact_keys(
+        $coordinates, \@REPORT_COORDINATE_KEYS,
+        'capture plan report coordinates',
+    );
+    my $authority = {
+        authority_identity => undef,
+        map { $_ => $coordinates->{$_} } @REPORT_COORDINATE_KEYS
+    };
+    my $digest = sha256_hex(_canonical_json($authority));
+    confess "capture plan report coordinate authority changed\n"
+        unless $digest eq $route->{report_coordinates_digest};
+    $authority->{authority_identity} =
+        'report-coordinate-authority/' . $digest;
+    return $authority;
 }
 
 sub _producer_authority($route, $selected) {
@@ -499,7 +553,7 @@ sub _validate_plan($plan) {
     _exact_keys($plan, \@REPORT_KEYS, 'capture plan');
     confess "capture plan schema is invalid\n"
         unless ($plan->{schema} // '') eq $SCHEMA
-            && ($plan->{schema_version} // 0) == 1;
+            && ($plan->{schema_version} // 0) == 2;
     my $projection = _clone($plan);
     my $identity = delete $projection->{plan_identity};
     $projection->{plan_identity} = undef;
@@ -529,6 +583,11 @@ sub _validate_plan($plan) {
             'capture plan provider requirement',
         );
         _exact_keys(
+            $entry->{report_coordinate_authority},
+            \@REPORT_COORDINATE_AUTHORITY_KEYS,
+            'capture plan report-coordinate authority',
+        );
+        _exact_keys(
             $entry->{applicability_requirement}, \@APPLICABILITY_KEYS,
             'capture plan applicability requirement',
         );
@@ -554,6 +613,42 @@ sub _validate_plan($plan) {
         confess "capture plan repository-root binding is invalid\n"
             unless $entry->{repository_root_binding} eq
                 $REPOSITORY_ROOT_BINDING;
+        my $report_authority = _clone(
+            $entry->{report_coordinate_authority},
+        );
+        my $report_authority_identity =
+            $report_authority->{authority_identity};
+        $report_authority->{authority_identity} = undef;
+        my $report_authority_digest =
+            sha256_hex(_canonical_json($report_authority));
+        confess "capture plan report-coordinate authority is invalid\n"
+            unless defined($report_authority_identity)
+                && !ref($report_authority_identity)
+                && $report_authority_identity eq
+                    'report-coordinate-authority/'
+                        . $report_authority_digest
+                && $report_authority_digest eq
+                    $ROUTES[$index]{report_coordinates_digest};
+        for my $key (qw(family level primary_axis)) {
+            confess "capture plan report coordinate '$key' is invalid\n"
+                unless defined($report_authority->{$key})
+                    && !ref($report_authority->{$key})
+                    && length($report_authority->{$key});
+        }
+        for my $key (qw(family level backend_profile)) {
+            confess "capture plan selection/report coordinate '$key' disagrees\n"
+                unless _canonical_json($entry->{coordinates}{$key}) eq
+                    _canonical_json($report_authority->{$key});
+        }
+        if (defined $entry->{coordinates}{primary_axis}) {
+            confess "capture plan selection/report coordinate 'primary_axis' disagrees\n"
+                unless $entry->{coordinates}{primary_axis} eq
+                    $report_authority->{primary_axis};
+        }
+        else {
+            confess "capture plan nullable selection axis aliases report coordinates\n"
+                unless length($report_authority->{primary_axis});
+        }
     }
     confess "capture plan nonclaims changed\n"
         unless _canonical_json($plan->{explicit_nonclaims}) eq
