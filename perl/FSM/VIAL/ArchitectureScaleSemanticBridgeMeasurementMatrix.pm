@@ -7,7 +7,8 @@ use bytes ();
 use Carp qw(confess);
 use Cwd ();
 use Digest::SHA qw(sha256_hex);
-use Fcntl qw(O_CREAT O_EXCL O_WRONLY);
+use Errno qw(EINTR);
+use Fcntl qw(O_CREAT O_EXCL O_NOFOLLOW O_RDONLY O_WRONLY);
 use File::Basename qw(dirname);
 use File::Path qw(remove_tree);
 use File::Spec;
@@ -29,6 +30,8 @@ my $STAGING_BASE = '.artifacts/tmp/vial-scale/matrix-publication';
 my $REPORT_FILENAME = 'measurement-set.json';
 my $MATRIX_FILENAME = 'matrix.json';
 my $COMPLETE_FILENAME = 'complete-matrix.json';
+my $PUBLICATION_REVISION = 'semantic_bridge_matrix_v1';
+my $MAX_PUBLICATION_BYTES = 524_288;
 my $ADAPTER = 'FSM::VIAL::ArchitectureScaleSemanticBridgeMeasurement';
 
 my @FAMILIES = qw(semantic_catalog_v1 bridge_fanout_v1);
@@ -115,6 +118,14 @@ sub matrix_keys($class) {
 sub explicit_nonclaims($class) {
     _exact_invocant($class, 'explicit_nonclaims');
     return [@NONCLAIMS];
+}
+
+sub publication_limits($class) {
+    _exact_invocant($class, 'publication_limits');
+    return {
+        publication_revision => $PUBLICATION_REVISION,
+        maximum_publication_bytes => $MAX_PUBLICATION_BYTES,
+    };
 }
 
 sub capture_family($class, @args) {
@@ -613,6 +624,10 @@ sub _profile_common_identity($report) {
 
 sub _publish_json($raw) {
     my $encoded = _canonical_json($raw->{value}) . "\n";
+    my $encoded_bytes = bytes::length($encoded);
+    confess "semantic/bridge matrix publication exceeds its calibrated ceiling "
+        . "(actual=$encoded_bytes bytes, maximum=$MAX_PUBLICATION_BYTES bytes)\n"
+        if $encoded_bytes > $MAX_PUBLICATION_BYTES;
     my $digest = sha256_hex($encoded);
     my $target_rel = join('/',
         $PUBLICATION_BASE, $raw->{profile_id},
@@ -643,7 +658,7 @@ sub _publish_json($raw) {
     if (-e $stage_abs || -l $stage_abs) {
         confess "semantic/bridge matrix publication staging is not recoverable\n"
             unless _exact_directory_content(
-                $stage_abs, $raw->{filename}, $encoded,
+                $stage_abs, $raw->{root_device}, $raw->{filename}, $encoded,
             );
         my @created;
         _ensure_publication_parent(
@@ -674,7 +689,8 @@ sub _publish_json($raw) {
         my $artifact_abs = File::Spec->catfile(
             $stage_abs, $raw->{filename},
         );
-        sysopen(my $fh, $artifact_abs, O_WRONLY | O_CREAT | O_EXCL)
+        sysopen(my $fh, $artifact_abs,
+            O_WRONLY | O_CREAT | O_EXCL | O_NOFOLLOW)
             or confess "cannot create semantic/bridge matrix publication\n";
         binmode($fh, ':raw')
             or confess "cannot set matrix publication byte mode\n";
@@ -718,21 +734,22 @@ sub _publish_json($raw) {
 }
 
 sub _read_json_publication($raw) {
-    my $publication = _publication_metadata($raw);
-    my @parts = split m{/}, $publication->{artifact_relative_path};
-    my $path = File::Spec->catfile($raw->{repository_root}, @parts);
-    open my $fh, '<:raw', $path
-        or confess "cannot read semantic/bridge matrix publication\n";
-    local $/;
-    my $encoded = <$fh>;
-    close $fh
-        or confess "cannot close semantic/bridge matrix publication\n";
+    my ($encoded, $publication) = _read_publication_artifact($raw);
+    confess "semantic/bridge matrix publication is not newline-terminated\n"
+        unless $encoded =~ /\n\z/;
     my $value = eval { JSON::PP->new->utf8(1)->decode($encoded) };
     confess "semantic/bridge matrix publication JSON is invalid\n" if $@;
+    confess "semantic/bridge matrix publication JSON is not canonical\n"
+        unless _canonical_json($value) . "\n" eq $encoded;
     return ($value, $publication);
 }
 
 sub _publication_metadata($raw) {
+    my (undef, $publication) = _read_publication_artifact($raw);
+    return $publication;
+}
+
+sub _read_publication_artifact($raw) {
     confess "semantic/bridge matrix publication profile ID is invalid\n"
         unless _safe_token($raw->{profile_id});
     confess "semantic/bridge matrix publication filename is invalid\n"
@@ -744,32 +761,106 @@ sub _publication_metadata($raw) {
     my $target_abs = _safe_destination(
         $raw->{repository_root}, $raw->{root_device}, $target_rel,
     );
-    confess "semantic/bridge matrix publication root is absent\n"
-        unless -d $target_abs && !-l $target_abs;
-    opendir my $dh, $target_abs
-        or confess "cannot inspect semantic/bridge matrix publication\n";
-    my @entries = sort grep { $_ ne '.' && $_ ne '..' } readdir $dh;
-    closedir $dh
-        or confess "cannot close semantic/bridge matrix publication\n";
-    confess "semantic/bridge matrix publication census changed\n"
-        unless @entries == 1 && $entries[0] eq $raw->{filename};
-    my $artifact_abs = File::Spec->catfile($target_abs, $raw->{filename});
-    confess "semantic/bridge matrix publication artifact is invalid\n"
-        unless -f $artifact_abs && !-l $artifact_abs;
-    my @stat = stat($artifact_abs);
-    confess "semantic/bridge matrix publication crossed repository volume\n"
-        unless @stat && $stat[0] == $raw->{root_device};
-    open my $fh, '<:raw', $artifact_abs
-        or confess "cannot read semantic/bridge matrix artifact\n";
-    local $/;
-    my $content = <$fh>;
-    close $fh or confess "cannot close semantic/bridge matrix artifact\n";
-    return {
+    my $content = _read_exact_publication_directory(
+        $target_abs, $raw->{root_device}, $raw->{filename},
+    );
+    my $publication = {
         status => 'loaded',
         artifact_relative_path => "$target_rel/$raw->{filename}",
         sha256 => sha256_hex($content),
         bytes => bytes::length($content),
     };
+    return ($content, $publication);
+}
+
+sub _read_exact_publication_directory($root, $root_device, $filename) {
+    my @path_stat = lstat($root);
+    confess "semantic/bridge matrix publication root is absent\n"
+        unless @path_stat && !-l _ && -d _;
+    confess "semantic/bridge matrix publication crossed repository volume\n"
+        unless $path_stat[0] == $root_device;
+    opendir my $dh, $root
+        or confess "cannot inspect semantic/bridge matrix publication\n";
+    my @opened_stat = stat($dh);
+    confess "semantic/bridge matrix publication directory changed\n"
+        unless @opened_stat && -d _
+            && _same_file_identity(\@path_stat, \@opened_stat);
+    my @entries = sort grep { $_ ne '.' && $_ ne '..' } readdir $dh;
+    confess "semantic/bridge matrix publication census changed\n"
+        unless @entries == 1 && $entries[0] eq $filename;
+    my ($content) = _read_exact_publication_file(
+        File::Spec->catfile($root, $filename), $root_device,
+    );
+    rewinddir $dh;
+    my @final_entries = sort grep { $_ ne '.' && $_ ne '..' } readdir $dh;
+    my @final_handle_stat = stat($dh);
+    closedir $dh
+        or confess "cannot close semantic/bridge matrix publication\n";
+    my @final_path_stat = lstat($root);
+    confess "semantic/bridge matrix publication directory changed while reading\n"
+        unless @final_entries == 1 && $final_entries[0] eq $filename
+            && @final_handle_stat && @final_path_stat
+            && _same_file_identity(\@path_stat, \@final_handle_stat)
+            && _same_file_identity(\@path_stat, \@final_path_stat);
+    return $content;
+}
+
+sub _read_exact_publication_file($path, $root_device) {
+    my @path_stat = lstat($path);
+    confess "semantic/bridge matrix publication artifact is invalid\n"
+        unless @path_stat && !-l _ && -f _;
+    confess "semantic/bridge matrix publication crossed repository volume\n"
+        unless $path_stat[0] == $root_device;
+    confess "semantic/bridge matrix publication artifact is hard-linked\n"
+        unless $path_stat[3] == 1;
+    confess "semantic/bridge matrix publication exceeds its calibrated ceiling "
+        . "(actual=$path_stat[7] bytes, maximum=$MAX_PUBLICATION_BYTES bytes)\n"
+        unless $path_stat[7] > 0
+            && $path_stat[7] <= $MAX_PUBLICATION_BYTES;
+    sysopen(my $fh, $path, O_RDONLY | O_NOFOLLOW)
+        or confess "cannot open semantic/bridge matrix publication artifact\n";
+    binmode($fh, ':raw')
+        or confess "cannot set semantic/bridge matrix publication byte mode\n";
+    my @handle_stat = stat($fh);
+    confess "semantic/bridge matrix publication artifact changed\n"
+        unless @handle_stat && -f _
+            && _same_file_identity(\@path_stat, \@handle_stat)
+            && $handle_stat[3] == 1;
+    my $content = '';
+    while (bytes::length($content) <= $MAX_PUBLICATION_BYTES) {
+        my $remaining = $MAX_PUBLICATION_BYTES + 1
+            - bytes::length($content);
+        my $wanted = $remaining < 65_536 ? $remaining : 65_536;
+        my $chunk = '';
+        my $read = sysread($fh, $chunk, $wanted);
+        if (!defined($read)) {
+            next if $! == EINTR;
+            confess "cannot read semantic/bridge matrix publication artifact\n";
+        }
+        last if $read == 0;
+        $content .= $chunk;
+    }
+    my @final_handle_stat = stat($fh);
+    close $fh
+        or confess "cannot close semantic/bridge matrix publication artifact\n";
+    my @final_path_stat = lstat($path);
+    confess "semantic/bridge matrix publication exceeds its calibrated ceiling "
+        . "(actual=" . bytes::length($content)
+        . " bytes, maximum=$MAX_PUBLICATION_BYTES bytes)\n"
+        if bytes::length($content) > $MAX_PUBLICATION_BYTES;
+    confess "semantic/bridge matrix publication artifact changed while reading\n"
+        unless bytes::length($content) == $path_stat[7]
+            && @final_handle_stat && @final_path_stat
+            && _same_file_identity(\@path_stat, \@final_handle_stat)
+            && _same_file_identity(\@path_stat, \@final_path_stat);
+    return ($content, \@path_stat);
+}
+
+sub _same_file_identity($left, $right) {
+    for my $index (0, 1, 2, 3, 4, 7, 9, 10) {
+        return 0 unless $left->[$index] == $right->[$index];
+    }
+    return 1;
 }
 
 sub _publication_exists($repo_root, $profile_id) {
@@ -778,18 +869,15 @@ sub _publication_exists($repo_root, $profile_id) {
     return -e $path || -l $path;
 }
 
-sub _exact_directory_content($root, $filename, $expected) {
-    return 0 unless -d $root && !-l $root;
-    opendir my $dh, $root or return 0;
-    my @entries = sort grep { $_ ne '.' && $_ ne '..' } readdir $dh;
-    closedir $dh or return 0;
-    return 0 unless @entries == 1 && $entries[0] eq $filename;
-    my $path = File::Spec->catfile($root, $filename);
-    return 0 unless -f $path && !-l $path;
-    open my $fh, '<:raw', $path or return 0;
-    local $/;
-    my $content = <$fh>;
-    close $fh or return 0;
+sub _exact_directory_content($root, $root_device, $filename, $expected) {
+    my $content;
+    my $ok = eval {
+        $content = _read_exact_publication_directory(
+            $root, $root_device, $filename,
+        );
+        1;
+    };
+    return 0 unless $ok;
     return defined($content) && $content eq $expected;
 }
 

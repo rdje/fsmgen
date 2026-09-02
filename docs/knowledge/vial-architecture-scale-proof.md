@@ -22,6 +22,7 @@ answers:
   - "what does semantic and bridge scale measurement claim?"
   - "how does semantic bridge measurement preserve semantic paths without allowing host paths?"
   - "how is the semantic bridge scale matrix resumed and published?"
+  - "how are legacy semantic bridge and execution checking matrix publications byte bounded?"
   - "does semantic bridge matrix validation require profile isolation?"
   - "how does semantic bridge measurement preserve a failed stage diagnostic?"
   - "how does the exact combined source byte profile stay below its timeout?"
@@ -115,6 +116,7 @@ evidence: >-
   t/1557-vial-portable-sv-backend-emission.t;
   t/1558-vial-verilator-run-integration.t;
   t/1770-vial-semantic-bridge-profile-isolation-audit.t;
+  t/1771-vial-legacy-matrix-publication-bounds.t;
   t/1662-vial-architecture-scale-backend-emission-measurement-matrix.t;
   t/1663-vial-architecture-scale-portable-runtime-materialization.t;
   t/1683-vial-architecture-scale-calibration-closure.t;
@@ -196,6 +198,7 @@ reverify: >-
   t/1648-vial-architecture-scale-backend-emission-osvvm.t t/1650-vial-architecture-scale-backend-emission-family-qualification.t t/1651-vial-architecture-scale-runtime-stream-construction.t t/1652-vial-balanced-portable-bridge-admission.t t/1653-vial-balanced-portable-composition.t t/1654-vial-balanced-portable-emission.t t/1655-vial-architecture-scale-runtime-balanced-qualification.t t/1656-vial-architecture-scale-measurement-foundation.t t/1657-vial-architecture-scale-semantic-bridge-measurement.t t/1658-vial-architecture-scale-semantic-bridge-measurement-matrix.t t/1659-vial-architecture-scale-execution-checking-measurement.t t/1660-vial-architecture-scale-execution-checking-measurement-matrix.t t/1661-vial-architecture-scale-backend-emission-measurement.t
   t/1662-vial-architecture-scale-backend-emission-measurement-matrix.t
   t/1770-vial-semantic-bridge-profile-isolation-audit.t
+  t/1771-vial-legacy-matrix-publication-bounds.t
 ---
 
 Decisions `0055` and `0056` select architecture-scale proof without claiming capacity.
@@ -255,12 +258,9 @@ matrix retains 186 raw records and zero exclusions. A first combined-byte run
 exposed masked timeout evidence and parser/value-normalization hot paths; the
 repair preserves rejected-stage diagnostics, Unicode semantics, the fixture,
 and the fixed timeout. Tasks, decisions, and Git retain the detailed evidence.
-A tracked read-only audit compares direct and fresh-child profile validation.
-Both reproduce 102 current matches plus decision 0095's six drifts. Direct
-full-corpus validation reaches 2,236,547,072-byte maximum RSS with
-2,058,420,224-byte 4-GiB guard headroom; isolation lowers retained parent state,
-but no direct failure is reproduced, so product code stays unchanged. One-run
-timings are witnesses, not budgets.
+A tracked read-only audit compares direct and fresh-child profile validation; both reproduce 102 current matches plus decision 0095's six drifts. Direct validation reaches 2,236,547,072-byte maximum RSS with 2,058,420,224-byte guard headroom; isolation lowers retained parent state, but no failure is reproduced.
+Separately, t1771 recenses and reloads every immutable legacy publication: the 111-file semantic/bridge set remains below its 524,288-byte storage ceiling and the 75-file execution/checking set below 1,048,576 bytes.
+Exact-cap controls pass; cap-plus-one and hostile topology/JSON controls reject. These are containment and process-lifetime witnesses, never budgets or capacity claims.
 
 `.17.3.3` reconstructs only the execution or
 checking producer and measures independently rerun `construct`,

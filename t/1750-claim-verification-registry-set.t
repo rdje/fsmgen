@@ -227,7 +227,7 @@ subtest 'the repository default consumes the exact finite registry set' => sub {
     ok($ok, 'repository default registry set passes') or diag($output);
     like(
         $output,
-        qr/shards=2, records=28, published=27, fixtures=1/,
+        qr/shards=2, records=29, published=28, fixtures=1/,
         'default reports the migrated two-shard global census'
     );
 };

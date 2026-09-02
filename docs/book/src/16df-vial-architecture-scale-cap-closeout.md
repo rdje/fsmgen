@@ -740,15 +740,33 @@ repository mutation, child exceptions, and signals all reject. The store's
 existing bounded topology tests continue to own malformed, oversized,
 symlink, hard-link, cross-device, collision, and ambiguous-stage controls.
 
-The storage audit also found a legacy gap: five newer revision-1 matrix
-publishers declare byte ceilings, but the older semantic/bridge and
-execution/checking publishers do not. The new v2 store does not inherit that
-gap. A separate tracked remediation must bound those historical public
-readers/writers before `.17.5.2.2` closes. That remediation also owns a bounded
-audit of the semantic/bridge matrix's older direct coordinator loop: unlike the
-six newer publishers, it does not isolate each full report validation in a
-fresh profile process. Historical success prevents calling this a failure
-without reproduction; v2 already isolates the route.
+The legacy storage remediation is complete. Both publishers now expose their
+selected ceilings, encode and reject before staging, and require one
+newline-terminated canonical JSON file that is regular, same-volume, one-link,
+within its ceiling, and stable across pathname and opened-handle checks. Reads
+stop at ceiling plus one. Exact interrupted staging passes through the same
+bounded reader before recovery.
+
+The independent watcher recenses the immutable legacy artifacts before
+using either product reader; every historical semantic/bridge and
+execution/checking file remains admitted without rewrite, rehash, or relabel.
+These ceilings contain storage and failure; they do not measure or enlarge
+workload capacity, supported scale, performance, or a reached boundary. The
+separately completed coordinator audit remains a process-lifetime result and
+does not alter these byte limits.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-legacy-matrix-publication-storage-ceilings-v1 -->
+- Claim: The immutable revision-1 semantic/bridge publisher admits all 111 existing canonical publications below a 524,288-byte storage ceiling, with a 253,882-byte current maximum; execution/checking admits all 75 existing canonical publications below a 1,048,576-byte ceiling, with a 759,867-byte current maximum. Both limits are fail-closed publication-containment bounds, not workload-capacity, support, performance, or reached-boundary claims.
+- Re-derive: Run `prove -Iperl -v t/1771-vial-legacy-matrix-publication-bounds.t`; its independent lstat/JSON census must reproduce 111 files/7,418,437 bytes/253,882-byte maximum and 75 files/7,312,415 bytes/759,867-byte maximum, then reload every file through the repaired readers and query both `publication_limits` methods.
+- Falsify: The watcher must admit exact-cap canonical write and reload for each publisher, reject cap-plus-one before staging, reject a pre-existing cap-plus-one file from stat, reject cap-plus-one recovery staging through the bounded reader, and reject malformed, missing-newline, noncanonical, extra-entry, during-read directory mutation, symlink, and hard-link substitutions.
+- Durability: Retain both publishers, t1771, task `.17.5.2.2.4`, this chapter, the architecture-scale Knowledge card, this bounded claim record, doctrine watcher, and work-unit Git chain; any artifact, limit, or admission drift must make the watcher fail.
+<!-- CLAIM-VERIFICATION:END vial-legacy-matrix-publication-storage-ceilings-v1 -->
+
+Run the legacy publication census and hostile boundary watcher with:
+
+```sh
+prove -Iperl -v t/1771-vial-legacy-matrix-publication-bounds.t
+```
 
 Run the bounded metadata-only watcher with:
 

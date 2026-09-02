@@ -1393,10 +1393,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.1: derive current capture dispatch`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement isolated current-profile capture, atomic v2 profile publication, and exact-profile resume.`
   Acceptance: `Consume only one .17.5.2.1 dispatch entry; execute its public current adapter in a separate guard-visible child; require the accepted validation plus three accepted raw records, zero exclusions, canonical workload/report/oracle identities, exact provider/applicability status, cleanup, and current clean revision/common identity; publish the complete canonical profile report atomically beneath the v2 corpus before returning bounded IPC. Resume only a byte-authenticated same-revision/same-identity profile; reject stale, mixed, partial, reordered, collided, oversized, malformed, noncanonical, symlinked, hard-linked, signalled, failed, or residue-bearing state without borrowing any revision-1 byte.`
-  Verification: `Clean predecessor 0e18a088d seals the eleven-entry v2 dispatch. Query-first source audit finds seven revision-1 matrix publishers independently duplicating private worker, atomic-publication, and resume mechanisms; every implementation hard-codes its own family schema, complete inventory, v1 path, and report admission, so none is a safe heterogeneous v2 service. The implementation is partitioned into a caller-sealed v2 profile-store substrate, isolated heterogeneous dispatch/admission, and exact-resume/adversarial closeout. No producer, worker, simulator, measurement, publication, or artifact runs during activation.`
+  Verification: `All four ordered children are complete. The caller-sealed v2 store, isolated heterogeneous dispatch/admission, and fresh-worker exact resume provide the selected current-profile transaction without corpus authority; the final legacy child independently closes both inherited unbounded revision-1 publishers and falsifies a current semantic/bridge coordinator guard failure. Focused default, guarded v2, historical-census, claim, mdBook, Knowledge Map, containment, task, and doctrine evidence is recorded in the child checklists and commits. No revision-1 artifact is rewritten or borrowed into v2, and no simulator, current corpus capture, budget, support, performance, or capacity claim is introduced. `.17.5.2.3` remains a separately activatable complete-corpus owner.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2: partition isolated profile publication`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.4`
 
@@ -1430,11 +1430,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.3: close exact profile resume`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.4`
-  Status: `active`
+  Status: `done`
   Goal: `Close the two inherited unbounded revision-1 semantic/execution publication readers and writers.`
   Acceptance: `Independently census current semantic/bridge and execution/checking publication bytes, select and three-leg verify conservative storage ceilings without implying capacity, and add encode-before-write plus stat-before-read enforcement to both legacy publishers. Require canonical newline-terminated JSON, exact single-file census, same-volume regular files with one link, bounded reads, and focused exact-cap/cap-plus-one/malformed/noncanonical/symlink/hard-link controls without changing historical artifact identities or weakening family admission. Keep this remediation separate from v2 evidence and complete it before closing .17.5.2.2.`
-  Verification: `Source audit during .17.5.2.2.1 found that backend-emission, portable-runtime, portable-VHDL-runtime, OSVVM-runtime, and balanced-portable revision-1 publishers declare explicit maximum publication bytes, while ArchitectureScaleSemanticBridgeMeasurementMatrix and ArchitectureScaleExecutionCheckingMeasurementMatrix encode, write, stat, and read without a byte ceiling. Existing artifacts falsify immediate oversize—execution/checking currently peaks below 1 MiB—but artifact history cannot substitute for a bound.`
-  Commit: `pending`
+  Verification: `Independent t1771 lstat/JSON census authenticates 111 semantic/bridge files totaling 7,418,437 bytes with a 253,882-byte maximum and 75 execution/checking files totaling 7,312,415 bytes with a 759,867-byte maximum; all 186 remain canonical, exact-directory, regular, same-volume, one-link, and admitted through the repaired readers. Semantic/bridge selects the conservative 524,288-byte binary envelope because the current maximum leaves only 8,262 bytes below 256 KiB; execution/checking selects 1,048,576 bytes above its current maximum. Both publishers expose closed limits, reject encoded cap-plus-one before staging, and require a stable opened directory census plus stable no-follow regular one-link file identity while reading no more than ceiling plus one. Exact-cap write/reload passes; cap-plus-one write/read/recovery, malformed, missing-newline, noncanonical, extra/late directory entry, symlink, and hard-link controls reject. Original matrix watchers preserve inventories, admission, child isolation, collision, and no-default-capture behavior; the registered claim, book, Knowledge Map, and doctrine watcher retain the limits and their explicit non-capacity meaning.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.4: bound legacy matrix publications`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.4.1`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.4.1`
@@ -4552,3 +4552,58 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   final commit gates. No revision-1 evidence is recaptured or rewritten; no
   validator/guard, timing budget, performance comparison, product behavior,
   full CI, or push is claimed or run in this ordinary audit slice.
+
+## Completed Frontier — `.17.5.2.2.4` legacy publication byte ceilings
+
+## Acceptance Checklist (enforced) — `.17.5.2.2.4` legacy publication hardening
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — query-first inspection retained
+  `vial-architecture-scale-proof` as the nearest canonical architecture card.
+  `git log -S'sub _publish_json($raw)' --oneline --
+  perl/FSM/VIAL/ArchitectureScaleSemanticBridgeMeasurementMatrix.pm
+  perl/FSM/VIAL/ArchitectureScaleExecutionCheckingMeasurementMatrix.pm`
+  identifies independent introducing commits `b3a03d285` and `3ccc4f5b9`.
+  Both helpers canonicalize before writing but declare no publication ceiling;
+  both metadata readers validate a one-file, regular, same-volume artifact and
+  then slurp it without a byte bound, one-link check, or canonical-newline
+  admission. An independent repository-local lstat/JSON census finds 111
+  semantic/bridge publications totaling 7,418,437 bytes with a 253,882-byte
+  maximum, and 75 execution/checking publications totaling 7,312,415 bytes
+  with a 759,867-byte maximum. All 186 are canonical, regular, same-volume,
+  one-link files in exact single-file directories. Present oversize is
+  falsified; bounded future admission is not.
+- [x] **ADDRESSED (verified)** — both legacy publishers expose closed revision
+  and maximum-byte metadata. Semantic/bridge selects 524,288 bytes after its
+  253,882-byte maximum leaves only 8,262 bytes below 256 KiB;
+  execution/checking selects 1,048,576 above 759,867. Canonical bytes reject
+  before staging when over limit. Target and recovery reads keep the exact
+  publication directory open across a ceiling-plus-one `sysread` loop,
+  recensus it before close, and require stable pathname/handle identity,
+  same-volume regular bytes, one link, a terminal newline, and canonical JSON.
+  t1771 independently recenses all 186 historical files, reloads every one
+  through the repaired reader, admits exact-cap write/reload for each family,
+  and turns RED for cap-plus-one write/existing/recovery bytes, malformed,
+  missing-newline, noncanonical, extra/late directory entry, symlink, and
+  hard-link controls. Claim legs are distinct: the independent census is
+  re-derivation; exact-cap/adjacent and hostile mutations are falsification;
+  modules, t1771, task, mdBook, Knowledge Map, bounded claim record, doctrine,
+  and Git are durability. The claim explicitly excludes capacity, support,
+  performance, and reached-boundary meaning.
+- [x] **NO REGRESSION** — both modules and t1771 pass Perl syntax. Final focused
+  t1658+t1660+t1771 reports `All tests successful` at Files=3/Tests=10, retaining
+  exact 108/72-profile inventories, family admission, execution/checking child
+  isolation, collision handling, all 186 historical byte identities, and no
+  default capture. The four-file claim suite passes Files=4/Tests=38; the
+  bounded registry is 29 records/28 published claims and the complete join is
+  1,767/1,767 candidates, 181 claim records, 988 gates, 598 reviewed outcomes,
+  and zero gaps/open owners. All 59 mdBook chapters test; the inspected
+  94-file/21,075,350-byte repository-local render contains the exact registered
+  claim and is removed afterward. The book source is 59 files/55,347 lines/
+  2,991,694 bytes under an exact +18-line/+1,964-byte no-ceiling-rise authority.
+  Knowledge Map parity is 1,160 facts/6,244 questions/6,416 occurrences/138
+  shards; compacting the updated card back to 422 lines keeps the 1,159-card
+  surface within its inherited allowance. Memory, relative paths, project
+  locality, task integrity, generated-output cleanup, staged acceptance, and
+  all doctrines are final commit gates. No artifact recapture, producer,
+  simulator, v2 corpus seal, budget, support, performance, capacity, full CI,
+  or push is claimed or run in this ordinary implementation slice.
