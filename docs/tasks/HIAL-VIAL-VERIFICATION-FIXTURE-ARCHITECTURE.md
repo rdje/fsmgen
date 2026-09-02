@@ -1398,13 +1398,21 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Consume only one .17.5.2.1 dispatch entry; execute its public current adapter in a separate guard-visible child; require the accepted validation plus three accepted raw records, zero exclusions, canonical workload/report/oracle identities, exact provider/applicability status, cleanup, and current clean revision/common identity; publish the complete canonical profile report atomically beneath the v2 corpus before returning bounded IPC. Resume only a byte-authenticated same-revision/same-identity profile; reject stale, mixed, partial, reordered, collided, oversized, malformed, noncanonical, symlinked, hard-linked, signalled, failed, or residue-bearing state without borrowing any revision-1 byte.`
   Verification: `Clean predecessor 0e18a088d seals the eleven-entry v2 dispatch. Query-first source audit finds seven revision-1 matrix publishers independently duplicating private worker, atomic-publication, and resume mechanisms; every implementation hard-codes its own family schema, complete inventory, v1 path, and report admission, so none is a safe heterogeneous v2 service. The implementation is partitioned into a caller-sealed v2 profile-store substrate, isolated heterogeneous dispatch/admission, and exact-resume/adversarial closeout. No producer, worker, simulator, measurement, publication, or artifact runs during activation.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2: partition isolated profile publication`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.3`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.4`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.1`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the bounded same-volume v2 single-profile publication store without producer execution.`
   Acceptance: `Add one caller-sealed storage authority for only a current dispatch entry's exact v2 report coordinate. Define closed canonical publication/artifact schemas and conservative report/IPC/error ceilings; create and fsync one repository-local staging directory and file, atomically rename only the complete directory, reload by lstat/stat/read/digest/canonical-JSON checks, and reject absolute/escaping/revision-1/unknown paths, extra entries, symlinks, hard links, cross-device state, collisions, oversized or malformed bytes, ambiguous recovery, and cleanup residue. Default tests use bounded synthetic publications and never invoke an adapter, provider, simulator, measurement controller, or real capture.`
-  Verification: `pending`
+  Verification: `Implementation and focused verification are green; final synchronized gate evidence is recorded in the fresh checklist below. The store derives the exact current entry from ordinal rather than accepting a path; wraps only JSON-object reports in a content-addressed plan/policy/profile envelope; fsyncs the repository-local file and staging directory before complete-directory rename; reopens by pathname/handle identity, exact census, one-link/device/owner/size, digest, canonical JSON, and current-plan checks; recovers only one byte-exact stage; and returns bounded closed artifact metadata. Synthetic current-plan tests install fatal producer/controller doubles and leave no fixture residue. Source/history audit also exposed two unbounded legacy revision-1 publishers, now owned by .17.5.2.2.4 rather than silently inherited.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.1: implement bounded v2 profile store`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.1.1`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.1.1`
+  Status: `proposed`
+  Goal: `Repair the stale repository-default claim-registry census watcher exposed by the profile-store broader gate.`
+  Acceptance: `Reproduce t1750 against the unchanged two-shard registry; prove by Git history and blame that d11fb2a4e added the twenty-seventh/26th-published record while leaving the repository-default watcher at 26/25; update only the exact expected census to 27/26; retain all positive, missing/extra/reordered/duplicate/oversized shard controls; run the focused claim suite plus doctrines; and synchronize the task/frontier without modifying a claim record or hiding future registry growth.`
+  Verification: `The .17.5.2.2.1 broader claim suite fails only t1750's repository-default message match: the checker reports shards=2, records=27, published=26, fixtures=1 while line 230 expects records=26, published=25. Git blame assigns that expectation to 0b6f25fba; git history shows d11fb2a4e subsequently added vial-common-bounded-cleanup-admission-v1 to claims-0002.jsonl without updating the watcher. The other five focused claim files pass and the registry checker itself passes, so this is a stale durability oracle rather than malformed claim data.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.2`
@@ -1419,6 +1427,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Goal: `Close exact same-profile resume and adversarial v2 profile-publication validation.`
   Acceptance: `Resume without producer execution only when the exact plan, dispatch entry, repository revision, profile common identity, provider/applicability identity, complete report bytes, artifact census, and cleanup state revalidate in a fresh isolated worker. Reject stale revision/plan/tool/host/guard/provider, mixed records, missing/extra/reordered identities, partial/collided/revision-1 substitutions, post-validation mutation, staging or target residue, symlink/hard-link/cross-device aliases, and noncanonical or oversized state; synchronize runnable docs and leave complete-corpus sealing to .17.5.2.3.`
   Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2.4`
+  Status: `proposed`
+  Goal: `Close the two inherited unbounded revision-1 semantic/execution publication readers and writers.`
+  Acceptance: `Independently census current semantic/bridge and execution/checking publication bytes, select and three-leg verify conservative storage ceilings without implying capacity, and add encode-before-write plus stat-before-read enforcement to both legacy publishers. Require canonical newline-terminated JSON, exact single-file census, same-volume regular files with one link, bounded reads, and focused exact-cap/cap-plus-one/malformed/noncanonical/symlink/hard-link controls without changing historical artifact identities or weakening family admission. Keep this remediation separate from v2 evidence and complete it before closing .17.5.2.2.`
+  Verification: `Source audit during .17.5.2.2.1 found that backend-emission, portable-runtime, portable-VHDL-runtime, OSVVM-runtime, and balanced-portable revision-1 publishers declare explicit maximum publication bytes, while ArchitectureScaleSemanticBridgeMeasurementMatrix and ArchitectureScaleExecutionCheckingMeasurementMatrix encode, write, stat, and read without a byte ceiling. Existing artifacts falsify immediate oversize—execution/checking currently peaks below 1 MiB—but artifact history cannot substitute for a bound.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3`
@@ -4300,7 +4315,63 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   capability, performance, capacity, or product behavior changes; full CI and
   push remain deferred by policy.
 
-## Next Clean Frontier — `.17.5.2.2` isolated profile capture/publication
+## Acceptance Checklist (enforced) — `.17.5.2.2.1` bounded v2 profile store
 
-- After `.17.5.2.1` commits cleanly, activate and implement one-entry isolated
-  capture, atomic v2 profile publication, and exact same-profile resume.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Query-first audit confirmed that the
+  current dispatch exposes exact v2 report coordinates but no heterogeneous
+  storage authority. `git log -S'sub _publish_json($raw)' --oneline --
+  perl/FSM/VIAL/ArchitectureScale*MeasurementMatrix.pm` returns seven
+  independently introduced revision-1 publishers. Each duplicates private
+  staging/publication/resume code around a family-specific schema, inventory,
+  path, and admission contract, so copying one would make the wrong family
+  authoritative. Source falsification found a second gap: only five newer
+  publishers declare byte ceilings; the semantic/bridge and execution/checking
+  readers/writers are unbounded. Current artifact census reports 108
+  semantic/bridge files with a 253,882-byte maximum and 72 execution/checking
+  files with a 759,867-byte maximum, which disproves present oversize but
+  cannot substitute for bounded admission.
+- [x] **ADDRESSED (verified)** —
+  `ArchitectureScaleRegressionPromotionProfileStore` now accepts only root,
+  ordinal, and one JSON-object report; authenticates the current plan; seals
+  its exact entry and content identity; and owns only that entry's v2 path.
+  Canonical bytes pass a provisional 67,108,864-byte storage ceiling, one-link
+  same-device lstat/open/stat checks, file and directory fsync, exact-directory
+  rename, bounded reload, digest/schema validation, and exact sole-stage
+  recovery. Absolute, escaping, revision-1, unknown, collided, extra,
+  malformed, noncanonical, oversized, symlinked, hard-linked, cross-device,
+  ambiguous, and residual controls reject. Fatal doubles prove no producer or
+  controller execution; repository-local synthetic fixtures clean exactly.
+  Before -> after: no reusable v2 store becomes one caller-sealed store without
+  creating capture evidence. Claim legs are distinct: source/census re-derives
+  the provisional ceiling context; the cap-plus-one sparse control falsifies
+  over-admission; this task, test, book, Knowledge Map card, and commit retain
+  the limit and its explicit non-capacity meaning. The two legacy unbounded
+  publishers remain honestly separate and are owned for repair by `.17.5.2.2.4`.
+- [x] **NO REGRESSION** — Perl syntax passes. Default and exact RAM-guarded
+  policy/dispatch/store suites report `All tests successful` at Files=3,
+  Tests=28. The focused store suite finishes in one second at Files=1,
+  Tests=10 after one guard-inheritance probe and one exact current-plan fixture;
+  it does not redundantly authenticate the 1.37-MiB closure per mutation. All
+  59 mdBook chapters test; the inspected 94-file/21,037,130-byte local render
+  contains the store, nonclaims, watcher, and legacy gap before exact removal.
+  Knowledge Map parity is 1,160 facts/6,241 questions/6,413 occurrences/138
+  shards. Claims dispose 1,762/1,762 candidates through 988 derived gates, 179
+  claim records, and 595 reviewed records with zero gaps/open owners; the
+  focused claim doctrine passes Files=3/Tests=31. The book is 59 files/55,278
+  lines/2,984,975 bytes at exact +31/+1,702 under its new no-ceiling-rise
+  authority. The 1,159-card surface returns to its inherited 46,999-line bound
+  at 3,469,944 bytes; the capture card is compacted to 63 lines/3,894 bytes.
+  All 22 containment surfaces, relative paths, generated-output cleanup,
+  four-tree/1,047-node task integrity, staged acceptance, and all 12 doctrines
+  pass; `[doctrine] all doctrine checks passed`. The independently reproduced
+  pre-existing t1750 default-census message mismatch remains RED only because
+  d11fb2a4e added record 27/published 26 without updating 26/25; child `.1.1`
+  owns the exact next clean repair. No v2 capture artifact, producer, provider,
+  simulator, measurement, budget, support, performance, capacity, full CI, or
+  push is claimed or run in this ordinary implementation slice.
+
+## Next Clean Frontier — `.17.5.2.2.1.1` claim-registry census repair
+
+- After `.17.5.2.2.1` commits cleanly, repair the proven stale t1750
+  repository-default census as its own commit. Then continue to `.17.5.2.2.2`
+  isolated profile dispatch/admission.

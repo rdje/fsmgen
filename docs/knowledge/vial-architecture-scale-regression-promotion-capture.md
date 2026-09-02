@@ -17,10 +17,10 @@ evidence: >-
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16df-vial-architecture-scale-cap-closeout.md;
   perl/FSM/VIAL/ArchitectureScaleRegressionPromotionPolicy.pm;
-  perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCapturePlan.pm;
-  t/1765-vial-architecture-scale-regression-promotion-policy.t; t/1766-vial-architecture-scale-regression-promotion-capture-plan.t
+  perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCapturePlan.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileStore.pm;
+  t/1765-vial-architecture-scale-regression-promotion-policy.t; t/1766-vial-architecture-scale-regression-promotion-capture-plan.t; t/1767-vial-architecture-scale-regression-promotion-profile-store.t
 reverify: >-
-  prove -Iperl t/1766-vial-architecture-scale-regression-promotion-capture-plan.t
+  prove -Iperl t/1766-vial-architecture-scale-regression-promotion-capture-plan.t t/1767-vial-architecture-scale-regression-promotion-profile-store.t
 ---
 
 Decision 0096 selects eleven current gate profiles under the non-colliding
@@ -43,10 +43,10 @@ external verification tool. Only the OSVVM runtime dispatch requires the exact
 qualified GHDL-plus-OSVVM tool profile. Metadata, provider, duplicate, missing,
 unknown-coordinate, and revision-1-path mutations all fail closed.
 
-Seven v1 matrices duplicate private family-specific worker/store code, so none
-is a safe heterogeneous v2 service. `.17.5.2.2` therefore partitions a bounded
-v2 profile store, isolated dispatch/admission, and exact-resume closeout. `.3`
-then adds complete coordination, sealing, reload, and the bounded CLI.
+Seven v1 matrices duplicate family-specific stores, so `.17.5.2.2.1` now owns
+plan-derived paths, canonical envelopes, same-volume directory rename, bounded
+identity reload, exact recovery, and fail-closed topology. Its provisional 64
+MiB ceiling proves no fit/capacity; `.17.5.2.2.4` owns two unbounded legacy stores.
 
 Only clean `.17.5.2.3` implementation may feed `.4`, which runs the guarded real
 capture at one revision and publishes only after all eleven profiles and all

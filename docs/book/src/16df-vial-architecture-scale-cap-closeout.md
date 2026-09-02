@@ -676,11 +676,42 @@ materialization but does not invoke an external verification tool. The runtime
 dispatch requires the exact qualified GHDL-plus-OSVVM tool profile. This keeps
 source materialization from masquerading as simulator execution.
 
+The first `.17.5.2.2` implementation slice adds a producer-free v2 profile
+store. Its public API accepts only the repository root, plan ordinal, and an
+already-admitted report; it derives the current plan internally, so callers
+cannot choose a path or substitute a revision-1 coordinate. The store wraps
+the report with the exact plan, policy, dispatch entry, and a content-addressed
+publication identity. It writes canonical newline-terminated JSON to one
+repository-local staging directory, synchronizes the file and directory, then
+renames the complete directory to the exact plan coordinate.
+
+Reload performs an exact directory census before a bounded read and compares
+pathname and opened-handle identities. Extra entries, malformed or
+noncanonical JSON, absolute/escaping/historical coordinates, cross-device
+state, symlinks, multiply linked files, collisions, and ambiguous or residual
+staging all fail closed. An exact sole interrupted stage may recover; anything
+ambiguous stays in place for diagnosis. The provisional 64 MiB file ceiling is
+a storage-admission limit, not evidence that a profile fits, performs, or has
+capacity. Real capture must fit or fail without relaxing the ceiling.
+
+The storage audit also found a legacy gap: five newer revision-1 matrix
+publishers declare byte ceilings, but the older semantic/bridge and
+execution/checking publishers do not. The new v2 store does not inherit that
+gap. A separate tracked remediation must bound those historical public
+readers/writers before `.17.5.2.2` closes.
+
 Run the bounded metadata-only watcher with:
 
 ```sh
 prove -Iperl \
   t/1766-vial-architecture-scale-regression-promotion-capture-plan.t
+```
+
+Run the producer-free v2 storage and adversarial admission watcher with:
+
+```sh
+prove -Iperl \
+  t/1767-vial-architecture-scale-regression-promotion-profile-store.t
 ```
 
 Authenticate both the selection policy and dispatch plan under the repository
