@@ -48,7 +48,10 @@ availability must therefore be an admission result; absence can never pass.
    resulting current identities.
 4. Each profile requires one fresh validation plus three fresh raw
    measurements: eleven validation records, 33 raw records, and 44 total
-   invocations. Zero exclusions are allowed for promotion.
+   common measurement-controller invocations. Capture groups those four
+   controller records inside one guard-visible profile-worker lifecycle, so
+   the publication topology is eleven workers rather than 44 workers. Zero
+   exclusions are allowed for promotion.
 5. The current corpus publishes atomically under
    `.artifacts/qualification/vial-scale/v2/regression-promotion-corpus-v1/`
    with schema

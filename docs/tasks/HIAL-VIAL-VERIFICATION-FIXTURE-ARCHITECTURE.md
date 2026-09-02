@@ -1378,11 +1378,47 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `Decision 0096 selects an independently versioned eleven-profile current corpus: semantic actions, bridge backend bindings, execution bindings, checking random occurrences, all three structural backend routes, all three qualified runtime routes, and the balanced structural route. The caller-sealed promotion policy authenticates closure v1, proves its 216-profile/92-candidate/356-raw-record historical scope, requires the eleven coordinates exactly once, and derives 33 historical comparator records versus 356 without treating timing as a budget. Current capture requires eleven validations plus 33 new raw records under a non-colliding v2 publication, exact current identities, zero exclusions, atomic publication, and same-volume cleanup. Exact provider absence is unavailable rather than pass; unmatched hosts retain correctness with informational performance; guarded current capture/gating runs at full pre-push or selected-important-step cadence. Default and RAM-guarded exact t1765 pass Files=1/Tests=8. No historical sample, budget, support, capacity, CI, or product behavior is promoted.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.1: select current regression corpus`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Capture and independently publish the .17.5.1-selected current calibration evidence under a new non-colliding version.`
   Acceptance: `Construct only selected canonical profiles through current producers; retain validation plus required raw samples, exact host/tool/guard/applicability identities, deterministic stage oracles, exclusions, cleanup, and nonclaims; atomically publish before bounded IPC; independently reload; and reject stale, partial, mixed, reordered, collided, oversized, symlinked, signalled, or residue-bearing state. Historical v1 bytes remain immutable and cannot satisfy a current-evidence field.`
+  Verification: `Clean predecessor e59d9ce02 selects and executable-seals the eleven-profile current corpus. Query-first code/history audit finds no v2 capture coordinator or publisher: the only regression-promotion-corpus implementation references are the policy and t1765. Seven current measurement adapters already own the selected canonical producers, while their existing matrix publishers hard-code broad revision-1 family inventories and publication paths that cannot be reused as current v2 evidence. The 44 required controller invocations are grouped as four records inside each of eleven guard-visible profile-worker lifecycles, not 44 publication workers. Activation partitions dispatch, isolated profile publication, complete coordination, clean guarded capture, and independent reload/closeout without running a producer, simulator, or measurement and without creating a v2 artifact.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2: activate current corpus publication`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.1`
+  Status: `proposed`
+  Goal: `Derive one closed eleven-entry current-capture dispatch plan from the promotion policy and current producer ownership.`
+  Acceptance: `Introduce a caller-sealed plan authority that accepts only the repository root, internally derives the .17.5.1 policy, and maps every ordered selection exactly once to its tracked measurement adapter, public measurement method, closed arguments, provider/applicability prerequisite, record count, and v2 publication coordinate. Require eleven profile workers and four common-controller invocations per worker—one validation followed by three measurements—while rejecting caller evidence, private seams, duplicate or missing coordinates, revision-1 paths, and unsupported adapters. Return bounded defensive content-addressed data without invoking a producer, provider, simulator, measurement controller, or publication transaction.`
   Verification: `pending`
-  Commit: `pending activation`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.2`
+  Status: `proposed`
+  Goal: `Implement isolated current-profile capture, atomic v2 profile publication, and exact-profile resume.`
+  Acceptance: `Consume only one .17.5.2.1 dispatch entry; execute its public current adapter in a separate guard-visible child; require the accepted validation plus three accepted raw records, zero exclusions, canonical workload/report/oracle identities, exact provider/applicability status, cleanup, and current clean revision/common identity; publish the complete canonical profile report atomically beneath the v2 corpus before returning bounded IPC. Resume only a byte-authenticated same-revision/same-identity profile; reject stale, mixed, partial, reordered, collided, oversized, malformed, noncanonical, symlinked, hard-linked, signalled, failed, or residue-bearing state without borrowing any revision-1 byte.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.3`
+  Status: `proposed`
+  Goal: `Coordinate the ordered eleven-profile corpus and atomically seal one independently reloadable complete publication.`
+  Acceptance: `Add a bounded repository-relative CLI and caller-sealed coordinator with inventory, capture, and validate operations. Walk the exact dispatch order, preserve exact profile-boundary resume under one clean revision and complete common host/tool/guard/provider identity, independently reload every profile in a fresh worker, census all eleven validations and 33 raw records with zero exclusions, and withhold the family/complete seal until every profile is present and current. Atomically publish a canonical corpus report plus manifest under the selected v2 path; prove collision, interruption, malformed/oversized IPC, child exception/exit/signal, mixed identity, duplicate/missing/reordered profile, post-validation mutation, staging ambiguity, and cleanup residue fail closed. Default tests use injected bounded workers and do not run real measurement producers or tools.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4`
+  Status: `proposed`
+  Goal: `Capture and atomically publish the complete real current corpus at one clean implementation revision.`
+  Acceptance: `From the clean .17.5.2.3 implementation revision, run the production capture CLI under the active repository RAM guard and repository-local providers. Capture or exact-resume all eleven selected profiles through their current canonical producers; require one validation and three fresh raw measurements per profile, all 44 controller records, zero exclusions, one common revision/host/tool/guard/provider identity, deterministic stage oracles, complete cleanup, and no revision-1 substitution. Publish the v2 complete seal only after all profiles reload successfully. If a route is unavailable or disagrees, retain honest partial publications, withhold the seal, root-cause the exact producer/provider/admission failure under this owner, and never relax validation, timing, guard, or evidence identity to force acceptance.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5`
+  Status: `proposed`
+  Goal: `Independently reload, census, falsify, document, and close the current v2 publication for budget qualification.`
+  Acceptance: `Validate the sealed publication in a distinct fresh process without capture authority; independently reproduce its exact file/byte/hash/device census, ordered profile/record counts, common identities, applicability/provider outcomes, correctness/oracle closure, exclusions, cleanup, and aggregate statistics. Falsify report, manifest, profile, ordering, identity, provider, count, digest, file-shape, extra-path, and historical-substitution controls; synchronize task/book/Knowledge Map/claim evidence and leave performance budgets entirely unpromoted for .17.5.3. Close .17.5.2 only when clean Git plus immutable same-volume evidence can recover the complete result without conversation state.`
+  Verification: `pending`
+  Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3`
   Status: `proposed`
   Goal: `Qualify representative current profiles and freeze exact pinned-host/tool regression budgets.`
@@ -4153,8 +4189,50 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   CI wiring, promoted budget, cap, capability, support, performance, capacity,
   or product-behavior change; full CI and push remain deferred by policy.
 
-## Next Clean Frontier — `.17.5.2` activation
+## Acceptance Checklist (enforced) — `.17.5.2` current publication activation
 
-- After `.17.5.1` commits cleanly, activate `.17.5.2` with a selection-only
-  implementation partition for the eleven-profile v2 capture/publication. No
-  measurement or immutable artifact capture begins in the activation slice.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Knowledge Map query `what must happen
+  before VIAL architecture scale regression budgets are promoted?` resolves to
+  the canonical scale-proof card and decision 0096. The command
+  `git log -S'regression-promotion-corpus-v1' --oneline -- perl scripts t`
+  returns only predecessor e59d9ce02; `rg -n
+  'regression-promotion-corpus-v1|vial_architecture_scale_regression_promotion_corpus'
+  perl scripts t` finds only the .17.5.1 policy and watcher: no v2 capture,
+  publisher, or coordinator exists. Source audit finds seven current public
+  measurement adapters, but their matrix publishers own broad revision-1
+  inventories and paths. Each selected adapter groups one validation plus
+  three raw common-controller calls in one measurement report, so 44 records
+  require eleven isolated profile lifecycles rather than 44 publication
+  workers.
+- [x] **ADDRESSED (verified)** — `.17.5.2` is active with five ordered rollback
+  owners: `.1` closed dispatch without execution, `.2` isolated per-profile v2
+  publication, `.3` complete coordination/resume/CLI, `.4` clean-revision real
+  capture, and `.5` independent reload/closeout. Decision 0096, the mdBook, and
+  the dedicated bounded Knowledge Map card clarify controller-record versus
+  worker cardinality. Before -> after: one unpartitioned proposed capture
+  parent becomes an implementation sequence that cannot touch revision-1
+  bytes or run real measurement before a clean coordinator exists.
+- [x] **NO REGRESSION** — the corrected focused documentation suite reports
+  `All tests successful` at Files=4/Tests=72. All 59 mdBook chapters test; the
+  inspected 94-file/20.05-MiB repository-local render contains the controller-
+  record/worker distinction and five implementation partitions before exact
+  removal. Knowledge Map parity is 1,160 facts/6,241 questions/6,413
+  occurrences/138 shards. Claims dispose 1,761/1,761 candidates through 987
+  derived gates, 179 claim records, and 595 reviewed records with zero gaps or
+  open owners. The 59-file book authority is 55,213 lines/2,981,778 bytes at
+  exact +13 lines/+829 bytes. The dedicated 63-line/3,977-byte capture card
+  avoids growing the 426-line/32,356-byte scale-proof card beyond its inherited
+  allowance; the 1,159-card surface is 46,999 lines/3,470,027 bytes. Rationale
+  is 97 files/9,004 lines/527,859 bytes; all 22 containment surfaces pass with
+  no ceiling rise. Memory, relative paths, four-tree/1,042-node task integrity,
+  staged result, claim registries, and textual diff pass. `[doctrine] all
+  doctrine checks passed` across all 12 registered checks. No producer,
+  provider, simulator, measurement, publication, artifact, budget, CI,
+  support, capability, performance, capacity, or product behavior changes in
+  activation; full CI and push remain deferred by policy.
+
+## Next Clean Frontier — `.17.5.2.1` dispatch-plan implementation
+
+- After `.17.5.2` commits cleanly, derive the closed eleven-entry current
+  dispatch plan without running producers, providers, simulators, measurements,
+  or publication transactions.

@@ -613,11 +613,11 @@ scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_EXACT=1 \
 ## What happens after cap closeout
 
 Architecture-scale regression promotion is active under `.17.5`, but no
-performance budget or support statement is promoted by activation. The first
-leaf must select current evidence and representative profiles before any new
-measurement. This ordering matters because the complete v1 calibration closure
-is authentic historical evidence, not current performance evidence; its
-candidate budgets cannot be copied into a live regression gate.
+performance budget or support statement is promoted by activation. The
+selection leaf is complete and `.17.5.2` now owns current capture and atomic
+publication. The complete v1 calibration closure remains authentic historical
+evidence, not current performance evidence; its candidate budgets cannot be
+copied into a live regression gate.
 
 [Decision 0096](../../decisions/0096-regression-promotion-uses-a-current-eleven-profile-corpus.md)
 selects the smaller independently versioned current corpus. Exact cap tests
@@ -646,6 +646,19 @@ all eleven profiles at the current revision, run one validation and three fresh
 measurements per profile, allow zero exclusions, and publish 44 records
 atomically below
 `.artifacts/qualification/vial-scale/v2/regression-promotion-corpus-v1/`.
+Here “44” means common measurement-controller invocations. Each selected
+measurement adapter groups its validation and three measurements inside one
+guard-visible profile worker, so capture uses eleven ordered worker lifecycles,
+not 44 publication workers.
+
+Implementation remains split into recoverable steps. `.17.5.2.1` derives the
+closed dispatch plan without running producers. `.2` adds isolated per-profile
+capture and v2 publication. `.3` adds exact resume, the complete coordinator,
+fresh-worker reload, and the bounded CLI. Only after those implementation
+commits are clean does `.4` run the real guarded capture at one revision. `.5`
+then independently reloads, falsifies, documents, and closes the publication
+for the still-separate budget qualification leaf. Activation itself runs no
+simulator, measurement producer, or artifact publication.
 
 Qualified tools are resolved through their exact profiles. A shell-global
 `ghdl` is not required; the repository-local GHDL provider is the authority.

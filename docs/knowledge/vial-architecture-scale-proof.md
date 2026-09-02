@@ -423,4 +423,4 @@ and whole-product capacity stays outside the claim.
 
 Related: [[vial-execution-scale-reachability]], [[vial-semantic-scale-catalog]],
 [[vial-execution-scale-source-cap-representation]],
-[[hial-vial-verification-fixture-architecture]].
+[[hial-vial-verification-fixture-architecture]], [[vial-architecture-scale-regression-promotion-capture]].
