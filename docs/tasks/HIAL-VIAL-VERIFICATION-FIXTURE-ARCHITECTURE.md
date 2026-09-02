@@ -1489,11 +1489,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.1: archive failed report-coordinate prefix`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Separate policy selection coordinates from producer-report coordinates and close the synthetic-test hole.`
   Acceptance: `Retain decision-0096 selection keys and publication paths unchanged. Add one closed authenticated report-coordinate authority to every capture-plan entry, derive each expected family/level/primary_axis/backend_profile from canonical producer ownership rather than caller data, and make child/parent capture plus resume admission compare reports against that authority. Make synthetic reports reproduce the real producer axes for all eleven routes. Prove every individual coordinate mutation, omission, appearance, plan/identity forgery, and selection/report aliasing rejects while focused plan/capture/resume/coordinator/CLI integration stays green.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Clean predecessor a1f33e2b1 archives and independently verifies the exact failed revision-610ed7869 prefix, empties the active v2 namespace, and leaves all twelve doctrines green. Query-first review of the dedicated capture card and source/history evidence confirms the defect boundary: policy selection coordinates remain decision-0096 inputs, while canonical producer reports own a distinct closed coordinate schema; all seven uncaptured real routes would fail the same admission rule, and synthetic capture/resume reports masked it by copying null selection axes. This activation grants .4.2 sole repair ownership without changing source, tests, artifacts, providers, simulators, identities, or product behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.2: activate report-coordinate repair`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.4.3`
   Status: `proposed`
@@ -4954,3 +4954,22 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   are required green before commit. No source, test, script, provider,
   simulator, budget, support, performance, capacity, full CI, push, or product
   behavior changes.
+
+## Acceptance Checklist (enforced) — `.17.5.2.4.2` report-coordinate repair activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Knowledge Map query `how is the VIAL v2
+  current corpus resumed and published?` routes to the dedicated capture card.
+  Clean predecessor `a1f33e2b1` preserves the first real failure:
+  policy selection legitimately omits `primary_axis`, canonical producers own
+  fixed report axes, and synthetic reports copied the selection coordinate.
+- [x] **ADDRESSED (verified)** — `.17.5.2.4.2` is the sole active repair leaf;
+  Memory and the active task index point to a RED control followed by
+  producer-authenticated report-coordinate admission. Before -> after: the
+  proposed repair becomes executable only after the failed prefix is durably
+  archived and the active namespace is empty.
+- [x] **NO REGRESSION** — this continuity-only activation changes Memory, the
+  active task index, and owning task evidence. Task-tree integrity, Memory,
+  relative paths, Knowledge Map, live-document containment, claims, staged
+  acceptance exemption, and all doctrines must pass before commit. No source,
+  test, artifact, producer, provider, simulator, capture, publication, budget,
+  support, performance, capacity, full CI, push, or product behavior changes.
