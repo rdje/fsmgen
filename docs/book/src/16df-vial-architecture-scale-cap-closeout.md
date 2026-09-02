@@ -848,6 +848,34 @@ bytes. Its 23.093509-second phase created 36,790,450 canonical bytes plus
 policy encodes account for 16,496,724 bytes: CorpusStore derives the plan once,
 then eleven public ProfileStore loads each derive it again.
 
+The first repair keeps plan authority inside ProfileStore. Its closed
+`load_all({repository_root})` derives once, preflights all eleven staging
+coordinates, reads the eleven publications in plan order, returns one closed
+plan/profile bundle, and postflights staging after the read. CorpusStore accepts
+no plan or bundle from its caller; it checks the returned plan, entries,
+publications, artifacts, count, and order before applying every existing report
+and profile-reference oracle. Focused hostile controls cover missing/reordered/
+string-typed bundles, changed plan/report data, early and late staging, and prove
+that complete load no longer calls the individual public profile loader.
+
+The final guarded v3 comparison preserves the exact 13-file/6,220,126-byte
+inventory, corpus/publication identities, and 25,417-byte returned value.
+Policy whole-graph encodes fall from 12/16,496,724 bytes to 1/1,374,727 bytes;
+total canonical materialization falls 36,790,450→20,186,110 bytes, top-level
+clones 1,091→124, recursive clone nodes 50,256→4,188, clone-encoding bytes
+13,558,259→12,567,517, and hashed input 30,407,371→13,981,715 bytes. This host
+point falls from 23.093509/9.41 seconds wall/user CPU to 6.554453/5.32 seconds,
+but the rounded three-second sampler footprint rises from 210.2M to 220.6M.
+Those observations prove the targeted multiplicity repair, not a performance or
+memory budget, support tier, capacity limit, or stable cross-host ratio.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-corpus-load-plan-derivation-repair-v1 -->
+- Claim: The closed regression-promotion all-profile load derives one current plan internally, preflights and postflights all eleven staging coordinates, returns eleven authenticated publications in plan order, and lets complete corpus reload retain every existing plan/report/profile/artifact oracle without accepting caller plan authority. Against production-source baseline fafe5d88b, guarded v3 point observations preserve the exact 13-file/6,220,126-byte inventory and 25,417-byte returned value while policy whole-graph encodes fall from 12/16,496,724 bytes to 1/1,374,727 bytes, total canonical bytes from 36,790,450 to 20,186,110, and user CPU from 9.41 to 5.32 seconds; rounded sampled footprint rises from 210.2M to 220.6M. This proves the targeted authority-rebuild repair, not a performance or memory budget, support tier, capacity limit, or stable ratio.
+- Re-derive: Run guarded t1767+t1772, then rerun the v3 corpus-load command with a fresh repository-local sample name. Require one policy whole-graph encode, exact output SHA-256 11e0c755...21e7, exact before/after inventory 94c11e5c...bb57, empty staging, and final result structure matching 5e1a9eec...ab6f; treat timing and sampler footprint only as revision/host observations.
+- Falsify: t1767 must reject caller coordinates, missing publications, every pre-existing profile staging coordinate, and residue introduced during the ordered read; t1772 must reject missing/reordered/string-typed/foreign-plan/changed-report bundles and prove complete load never falls back to individual profile loads. Compare the baseline and repaired guarded results; any changed corpus/output identity or policy count other than one falsifies the repair.
+- Durability: Retain ProfileStore, CorpusStore, t1767/t1772/t1778, task `.17.5.2.5.3.1`, this chapter, the compact regression-promotion fact card, bounded claim record, final result/sample identities, doctrine gates, and work-unit Git chain. Raw samples remain diagnostic supplements; tracked code, tests, and commands are the durable reproducer.
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-corpus-load-plan-derivation-repair-v1 -->
+
 Balanced public validation consumed the 1,244,823-byte ordinal-11 publication
 and returned its exact 1,241,948-byte report. Its 492.563279-second phase
 created 1,325,878,982 canonical bytes plus 121,737,844 clone-encoding bytes,
@@ -856,8 +884,8 @@ The fresh gates, independent routes, replay, emission, and byte comparisons
 are required correctness work. One rebuild is not: `_canonical_bundle`
 accepts a six-gate composition, then calls public emitter evaluation, which
 rebuilds that composition despite an existing exact-caller measurement seam
-designed to reuse it. Narrow repair children own both defects before source
-change. These diagnostic point measurements are not a performance budget,
+designed to reuse it. `.3.1` closes the store-plan rebuild; `.3.2` owns the
+remaining balanced seam repair. These diagnostic point measurements are not a performance budget,
 support tier, or capacity claim; macOS footprint values cover only the
 three-second phase-start sample window.
 
@@ -870,9 +898,8 @@ three-second phase-start sample window.
 
 This proves current capture, producer-free re-admission, and actual copied-
 artifact falsification, not a regression budget, support tier, capacity limit,
-or performance qualification. The next closeout must characterize the CPU-bound
-balanced/corpus canonicalization before deciding whether it is expected scale
-cost or a repairable performance defect. Budget work remains solely
+or performance qualification. The corpus rebuild is repaired; balanced
+canonicalization remains under `.17.5.2.5.3.2`. Budget work remains solely
 `.17.5.3`.
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-real-current-corpus-capture-v1 -->

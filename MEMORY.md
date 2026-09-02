@@ -8,8 +8,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2`
   (`active`; current regression-promotion publication)
-- next_action: Implement `.17.5.2.5.3.1`'s closed all-profile store load and
-  prove complete-corpus plan/policy derivation falls from twelve to one.
+- next_action: Implement `.17.5.2.5.3.2` by reusing the emitter's authenticated
+  composition seam without weakening balanced correctness reconstruction.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: none.

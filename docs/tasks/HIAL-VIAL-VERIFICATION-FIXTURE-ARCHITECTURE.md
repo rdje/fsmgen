@@ -1533,18 +1533,18 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3.1`
-  Status: `active`
+  Status: `done`
   Goal: `Eliminate repeated capture-plan derivation during complete current-corpus load without accepting caller authority.`
   Acceptance: `Start from the measured 12-full-policy-encode RED. Give ProfileStore one closed repository-root-only all-profile load that derives the current plan once, checks every profile staging coordinate, and loads all eleven exact entries in plan order; make CorpusStore consume that authenticated store result without accepting a caller-supplied plan or weakening any report/profile/artifact validation. Prove synthetic rejection parity, exact current 13-file/corpus/publication/result-byte identity, and a guarded v3 corpus characterization with one—not twelve—full policy encode; retain independent before/after census and no budget claim.`
-  Verification: `Activated by .3's tracked v3 characterization. CorpusStore::load derives the plan once, then _validate_profile_value invokes ProfileStore::load eleven times; each public load calls _current_entry and CapturePlan::derive. The instrument independently records exactly 12 policy encodes of 1,374,727 bytes, 16,496,724 policy whole-graph bytes total, and corresponding 12-plan CapturePlan multiplicity. This is avoidable authority reconstruction, not evidence-size cost. No production source changes until this child is committed active from a clean tree.`
-  Commit: `pending`
+  Verification: `ProfileStore now exposes only closed `load_all({repository_root})`: it derives the authenticated current plan internally once, requires exactly eleven ordered entries, preflights every profile staging coordinate, reads each exact immutable publication, clones one closed plan/profiles result, and postflights all coordinates again. CorpusStore checks the derived plan, every entry, publication, artifact, count, and order before using that bundle for its unchanged report/profile/reference validation; callers cannot inject a plan, ordinal, or bundle. Hostile synthetic controls reject absent/reordered/string-typed/foreign-plan/changed-report bundles, first-read mutation plus last-coordinate residue, and residue appearing during the ordered read. RAM-guarded t1767+t1772+t1778 pass `Files=3, Tests=23` in 13 seconds; t1778 locally clears inherited guard state so its four negative invocations reject without emitting an artifact. Final guarded v3 result `5e1a9eec...ab6f` plus sample `92cf97b8...98a5` preserve the exact 13-file/6,220,126-byte inventory `94c11e5c...bb57`, corpus/publication identities, empty staging, and exact 25,417-byte output `11e0c755...21e7`. Against baseline fafe5d88b, policy whole-graph encodes fall 12 -> 1 and bytes 16,496,724 -> 1,374,727; total canonical bytes fall 36,790,450 -> 20,186,110, top-level clones 1,091 -> 124, recursive clone nodes 50,256 -> 4,188, clone-encoding bytes 13,558,259 -> 12,567,517, and SHA input bytes 30,407,371 -> 13,981,715. This host point records 23.093509 -> 6.554453 seconds wall and 9.41 -> 5.32 seconds user CPU, while the sampler's rounded phase-start footprint rises 210.2M -> 220.6M; neither timing nor footprint is a budget, support, memory, or capacity claim. The r1 development pair and accidental inherited-guard sample are removed; only final r2 evidence remains.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3.1: derive corpus profile plan once`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Reuse the already authenticated balanced composition when constructing measurement emission.`
   Acceptance: `After .3.1 is clean, make measurement `_canonical_bundle` use the existing exact-caller `_measurement_evaluate` seam with its independently accepted composition instead of public emission evaluation that rebuilds the same six-gate composition. Retain fresh construction, six-gate composition, two-route determinism, replay, two-route emission, every report/member oracle, foreign-caller rejection, and exact returned report/publication identities. Prove focused v3 reductions against the .3 baseline without setting a performance budget.`
-  Verification: `Proposed from source plus runtime evidence. `_canonical_bundle` first accepts `$PRODUCER->evaluate`, then calls `$EMITTER->evaluate`, whose `_evaluate` invokes the same producer again. The emitter already exposes caller-authenticated `_measurement_evaluate(construction, composition)` specifically so the measurement adapter does not charge or repeat accepted composition work, and the adapter already uses that seam for the emit-stage payload. This is a missing seam use, distinct from required fresh correctness recomputation.`
-  Commit: `pending activation`
+  Verification: `Activated after .3.1's exact identity-preserving repair and guarded 12 -> 1 plan-derivation proof. `_canonical_bundle` first accepts `$PRODUCER->evaluate`, then calls `$EMITTER->evaluate`, whose `_evaluate` invokes the same producer again. The emitter already exposes caller-authenticated `_measurement_evaluate(construction, composition)` specifically so the measurement adapter does not charge or repeat accepted composition work, and the adapter already uses that seam for the emit-stage payload. This is a missing seam use, distinct from required fresh correctness recomputation.`
+  Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4`
   Status: `proposed`
@@ -5295,3 +5295,43 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   joins cover 1,797/1,797 candidates, 204 records, 991 gates, 602 reviewed,
   and zero gaps/open owners. Task integrity, Memory, relative paths, locality,
   exact final diagnostic-artifact census, and all twelve doctrines pass.
+
+## Acceptance Checklist (enforced) — `.17.5.2.5.3.1` single plan derivation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — committed characterization `0c3bf9773`
+  and `git log -S '$PROFILE_STORE->load'` identify the complete-load call chain
+  introduced at `bdf24d883`: CorpusStore derived once, then each of eleven
+  `_validate_profile_value` calls entered public ProfileStore load and derived
+  the same authenticated plan again. The final baseline instrument records
+  exactly twelve 1,374,727-byte policy whole-graph encodes, excluding unique
+  evidence size as a sufficient explanation. Final adjacent verification also
+  exposed that t1778's nominal unguarded negative matrix inherited an outer
+  RAM guard, turning its last rejection case into a real measurement; the test
+  had not locally cleared the three guard variables.
+- [x] **ADDRESSED (verified)** — closed ProfileStore `load_all` accepts only a
+  repository root, derives the plan internally once, verifies eleven ordered
+  entries, preflights/postflights every staging coordinate, loads all exact
+  publications, and returns one cloned closed bundle. CorpusStore validates the
+  bundle plan/entries/publications/artifacts/count/order and preserves every
+  existing corpus oracle without individual-load fallback or caller plan
+  authority. Before -> after: guarded v3 records 12 -> 1 policy whole-graph
+  encodes and exact unchanged corpus/publication/inventory/output identities.
+  t1778 now clears all guard variables only around its negative matrix, so it
+  remains a valid rejection test whether or not its parent prove is guarded.
+- [x] **NO REGRESSION** — syntax passes for both stores and all three focused
+  tests. RAM-guarded t1767+t1772+t1778 pass `Files=3, Tests=23` in 13 seconds,
+  including missing/reordered/string/foreign-plan/changed-report bundles,
+  early/late staging, and four locally unguarded invocation rejections with no
+  emitted measurement artifact. The adjacent guarded coordinator/CLI/prefix/
+  independent-verifier/mutation band t1773-t1777 passes `Files=5, Tests=25` in
+  144 seconds and leaves the real corpus byte-identical. Final result/sample `5e1a9eec...ab6f` /
+  `92cf97b8...98a5` retain 13 files/6,220,126 bytes, inventory
+  `94c11e5c...bb57`, empty staging, and output `11e0c755...21e7`; the r1 pair is
+  removed. The point observation reduces canonical, clone, hash, wall, and CPU
+  work but increases rounded sampled footprint 210.2M -> 220.6M, so no budget,
+  memory improvement, support, capacity, full CI, or push claim is made. The
+  independent corpus verifier, mdBook's 59 chapters, inspected 94-file/20,944-
+  KiB repository-local render and exact cleanup, Knowledge Map 1,160/6,250/
+  6,422/138 parity, claim joins, containment, locality, task acceptance, all
+  doctrines, exact seven-file diagnostic-artifact census, and clean Git after
+  commit form final signoff; full CI and push remain intentionally deferred.

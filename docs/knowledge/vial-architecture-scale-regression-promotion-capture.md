@@ -91,9 +91,11 @@ nodes, and independent pre/post corpus authentication. On `fafe5d88b`, complete
 load reads 6,220,126 unique bytes but its twelve plan/policy derivations encode
 16,496,724 bytes. Balanced validation returns the exact 1,241,948-byte report
 while materializing 1,447,616,826 tracked JSON bytes and hashing 1,044,992,073.
-Required fresh gates/determinism/replay remain; `.3.1` owns repeated store-plan
-derivation and `.3.2` the skipped accepted-composition emitter seam. These
-diagnostics promote no regression budget, support tier, or capacity.
+Required fresh gates/determinism/replay remain. `.3.1` replaces eleven public
+profile reloads with one internally derived ordered all-profile result: policy
+whole-graph encodes fall 12→1 and this host point falls 23.09→6.55 seconds while
+exact bytes/identities remain; sampled footprint rises 210.2M→220.6M. `.3.2`
+owns the skipped accepted-composition seam. No budget or tier is promoted.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]].

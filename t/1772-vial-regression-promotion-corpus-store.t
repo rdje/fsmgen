@@ -150,7 +150,23 @@ subtest 'complete synthetic metadata publishes atomically without execution' => 
         is($stat[3], 1, "$filename has exactly one link");
     }
 
-    my $loaded = $class->load({repository_root => $repo});
+    my $derive =
+        'FSM::VIAL::ArchitectureScaleRegressionPromotionCapturePlan'
+        ->can('derive');
+    my ($loaded, $derivations);
+    {
+        no warnings 'redefine';
+        local *FSM::VIAL::ArchitectureScaleRegressionPromotionCapturePlan::derive =
+            sub {
+                $derivations++;
+                return $derive->(@_);
+            };
+        local *FSM::VIAL::ArchitectureScaleRegressionPromotionProfileStore::load =
+            sub { die "individual profile load executed\n" };
+        $loaded = $class->load({repository_root => $repo});
+    }
+    is($derivations, 1,
+        'complete reload derives one store-authenticated plan');
     is($loaded->{report}{summary}{profile_count}, 11,
         'reload admits all eleven profiles');
     is($loaded->{report}{summary}{validation_records}, 11,
@@ -280,6 +296,43 @@ subtest 'profile order, counts, identities, and references fail closed' => sub {
         $class->publish({repository_root => $repo, profiles => $mutated});
     }), qr/profile publication (?:JSON|schema|plan|dispatch|is missing)/,
         'profile bytes mutated after admission cannot feed the complete seal');
+};
+
+subtest 'complete reload rejects malformed authenticated profile bundles' => sub {
+    my ($repo) = published_repository('loaded-bundle-admission');
+    my $exact = $profile_store->load_all({repository_root => $repo});
+    my @controls = (
+        ['missing profile', sub { pop @{$_[0]{profiles}} },
+            qr/loaded profile bundle count changed/],
+        ['reordered profiles', sub {
+            @{$_[0]{profiles}}[0, 1] = @{$_[0]{profiles}}[1, 0]
+        }, qr/loaded profile order changed/],
+        ['string artifact ordinal', sub {
+            $_[0]{profiles}[0]{artifact}{ordinal} = '1'
+        }, qr/loaded profile order changed/],
+        ['foreign plan identity', sub {
+            $_[0]{plan}{plan_identity} = 'foreign'
+        }, qr/report plan binding changed/],
+        ['changed publication report', sub {
+            $_[0]{profiles}[0]{publication}{report}{report_identity} =
+                'synthetic-report/' . ('f' x 64)
+        }, qr/profile report identity changed/],
+    );
+    for my $control (@controls) {
+        my ($name, $mutate, $expected) = @$control;
+        my $copy = clone($exact);
+        $mutate->($copy);
+        my $error;
+        {
+            no warnings 'redefine';
+            local *FSM::VIAL::ArchitectureScaleRegressionPromotionProfileStore::load_all =
+                sub { return clone($copy) };
+            local *FSM::VIAL::ArchitectureScaleRegressionPromotionProfileStore::load =
+                sub { die "individual profile load executed\n" };
+            $error = dies(sub { $class->load({repository_root => $repo}) });
+        }
+        like($error, $expected, "$name rejects");
+    }
 };
 
 subtest 'published file-set mutations and unsafe aliases reject' => sub {

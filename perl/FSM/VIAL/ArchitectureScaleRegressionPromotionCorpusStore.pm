@@ -189,16 +189,21 @@ sub load($class, @args) {
     my $request = _request('load', \@args, [qw(repository_root)]);
     my ($repo_root, $root_device) =
         _repository_root($request->{repository_root});
-    my $plan = $PLAN->derive({repository_root => $repo_root});
     confess "regression-promotion corpus retained staging residue\n"
         if _staging_candidates({
             repository_root => $repo_root,
             root_device => $root_device,
         });
+    my $profile_bundle = $PROFILE_STORE->load_all({
+        repository_root => $repo_root,
+    });
+    _validate_profile_load_bundle($profile_bundle);
+    my $plan = $profile_bundle->{plan};
     my ($report, $manifest, $artifact) = _read_publication({
         repository_root => $repo_root,
         root_device => $root_device,
         plan => $plan,
+        profile_loads => $profile_bundle->{profiles},
     }, 1);
     return _clone({
         report => $report,
@@ -390,6 +395,50 @@ sub _require_loaded_profile_match(
     return 1;
 }
 
+sub _validate_profile_load_bundle($bundle) {
+    _exact_keys(
+        $bundle, $PROFILE_STORE->load_all_result_keys,
+        'regression-promotion corpus loaded profile bundle',
+    );
+    _exact_keys(
+        $bundle->{plan}, $PLAN->report_keys,
+        'regression-promotion corpus loaded profile plan',
+    );
+    confess "regression-promotion corpus loaded profile bundle count changed\n"
+        unless ref($bundle->{plan}{entries}) eq 'ARRAY'
+            && @{$bundle->{plan}{entries}} == $PROFILE_COUNT
+            && ref($bundle->{profiles}) eq 'ARRAY'
+            && @{$bundle->{profiles}} == $PROFILE_COUNT;
+    for my $index (0 .. $PROFILE_COUNT - 1) {
+        my $entry = $bundle->{plan}{entries}[$index];
+        my $loaded = $bundle->{profiles}[$index];
+        _exact_keys(
+            $entry, $PLAN->entry_keys,
+            'regression-promotion corpus loaded profile plan entry',
+        );
+        _exact_keys(
+            $loaded, $PROFILE_STORE->load_result_keys,
+            'regression-promotion corpus loaded profile',
+        );
+        _exact_keys(
+            $loaded->{publication}, $PROFILE_STORE->publication_keys,
+            'regression-promotion corpus loaded profile publication',
+        );
+        _exact_keys(
+            $loaded->{artifact}, $PROFILE_STORE->artifact_keys,
+            'regression-promotion corpus loaded profile artifact',
+        );
+        confess "regression-promotion corpus loaded profile order changed\n"
+            unless _json_integer_equals($entry->{ordinal}, $index + 1)
+                && _json_integer_equals(
+                    $loaded->{artifact}{ordinal}, $entry->{ordinal},
+                )
+                && ($loaded->{artifact}{selection_key} // '') eq
+                    $entry->{selection_key};
+    }
+    return 1;
+}
+
 sub _validate_report($report, $raw, $validate_profiles) {
     _exact_keys($report, \@REPORT_KEYS, 'regression-promotion corpus report');
     confess "regression-promotion corpus report schema is invalid\n"
@@ -453,10 +502,12 @@ sub _validate_profile_value(
     _validate_applicability($profile->{applicability_status}, $entry);
     _validate_profile_artifact($profile->{artifact}, $entry);
     if ($validate_reference) {
-        my $loaded = $PROFILE_STORE->load({
-            repository_root => $raw->{repository_root},
-            ordinal => $entry->{ordinal},
-        });
+        my $loaded = exists($raw->{profile_loads})
+            ? $raw->{profile_loads}[$entry->{ordinal} - 1]
+            : $PROFILE_STORE->load({
+                repository_root => $raw->{repository_root},
+                ordinal => $entry->{ordinal},
+            });
         _require_loaded_profile_match(
             $profile->{artifact}, $loaded,
             $profile->{report_identity}, $entry,

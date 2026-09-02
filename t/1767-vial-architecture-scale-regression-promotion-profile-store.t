@@ -69,6 +69,10 @@ subtest 'public storage inherits current-plan guard authentication' => sub {
         $class->load({repository_root => $repo, ordinal => 1});
     }), qr/requires the active repository RAM guard/,
         'public load reaches the authenticated current-plan authority');
+    like(dies(sub {
+        $class->load_all({repository_root => $repo});
+    }), qr/requires the active repository RAM guard/,
+        'public all-profile load reaches the authenticated plan authority');
 };
 
 my $sealed_test_plan = derive_sealed_test_plan();
@@ -91,6 +95,8 @@ subtest 'store exposes closed caller-sealed contracts and conservative ceilings'
     )], 'artifact metadata has one closed schema');
     is_deeply([sort @{$class->load_result_keys}], [qw(artifact publication)],
         'load returns only publication bytes plus artifact metadata');
+    is_deeply([sort @{$class->load_all_result_keys}], [qw(plan profiles)],
+        'all-profile load returns only its derived plan and ordered profiles');
     is_deeply($class->publication_limits, {
         publication_revision => 'regression_promotion_profile_store_v1',
         report_filename => 'measurement-report.json',
@@ -137,6 +143,103 @@ subtest 'store exposes closed caller-sealed contracts and conservative ceilings'
             report => []});
     }), qr/report must be one JSON object/,
         'non-object reports are rejected before storage');
+    like(dies(sub {
+        $class->load_all({repository_root => $repo, ordinal => 1});
+    }), qr/unknown key 'ordinal'/,
+        'all-profile load accepts no caller-supplied plan coordinate');
+};
+
+subtest 'all-profile load derives once, preserves order, and preflights staging' => sub {
+    my $repo = fresh_repository('all-profile-load');
+    for my $ordinal (1 .. 11) {
+        $class->publish({
+            repository_root => $repo,
+            ordinal => $ordinal,
+            report => synthetic_report("all-profile-$ordinal"),
+        });
+    }
+
+    my $derive =
+        'FSM::VIAL::ArchitectureScaleRegressionPromotionCapturePlan'
+        ->can('derive');
+    my ($loaded, $derivations);
+    {
+        no warnings 'redefine';
+        local *FSM::VIAL::ArchitectureScaleRegressionPromotionCapturePlan::derive =
+            sub {
+                $derivations++;
+                return $derive->(@_);
+            };
+        $loaded = $class->load_all({repository_root => $repo});
+    }
+    is($derivations, 1, 'one all-profile load derives the plan exactly once');
+    is_deeply([sort keys %$loaded], [qw(plan profiles)],
+        'all-profile result remains closed');
+    is($loaded->{plan}{plan_identity}, $sealed_test_plan->{plan_identity},
+        'the result carries the store-derived current plan identity');
+    is(scalar(@{$loaded->{profiles}}), 11,
+        'all eleven exact profile publications load');
+    is_deeply(
+        [map { $_->{artifact}{ordinal} } @{$loaded->{profiles}}],
+        [1 .. 11],
+        'profile loads remain in plan order',
+    );
+    is_deeply(
+        [map { $_->{publication}{report}{identity} }
+            @{$loaded->{profiles}}],
+        [map { "all-profile-$_" } 1 .. 11],
+        'each ordered load retains its exact report',
+    );
+
+    my (undef, $last_entry) = current_entry($repo, 11);
+    my $last_token = sprintf(
+        '%02d-%s', 11, sha256_hex($last_entry->{selection_key}),
+    );
+    my $residue = repo_path(
+        $repo,
+        ".artifacts/tmp/vial-scale/regression-promotion-profile-publication/v1/$last_token-residue",
+    );
+    make_path($residue, {mode => 0700});
+    replace_artifact($repo, 1, "{not-json}\n");
+    like(dies(sub {
+        $class->load_all({repository_root => $repo});
+    }), qr/retained staging residue/,
+        'every staging coordinate is preflighted before any profile read');
+
+    my $late_repo = fresh_repository('all-profile-late-staging');
+    for my $ordinal (1 .. 11) {
+        $class->publish({
+            repository_root => $late_repo,
+            ordinal => $ordinal,
+            report => synthetic_report("all-profile-late-$ordinal"),
+        });
+    }
+    my $read = $class->can('_read_publication');
+    my $late_error;
+    {
+        no warnings 'redefine';
+        my $calls = 0;
+        local *FSM::VIAL::ArchitectureScaleRegressionPromotionProfileStore::_read_publication =
+            sub {
+                my @result = $read->(@_);
+                if (++$calls == 11) {
+                    my $entry = $_[0]{plan}{entries}[10];
+                    my $token = sprintf(
+                        '%02d-%s', 11, sha256_hex($entry->{selection_key}),
+                    );
+                    make_path(repo_path(
+                        $late_repo,
+                        ".artifacts/tmp/vial-scale/regression-promotion-profile-publication/v1/$token-late",
+                    ), {mode => 0700});
+                }
+                return @result;
+            };
+        $late_error = dies(sub {
+            $class->load_all({repository_root => $late_repo});
+        });
+    }
+    like($late_error, qr/retained staging residue/,
+        'postflight rejects staging that appears during the ordered read');
 };
 
 subtest 'public publication is canonical, atomic, reloadable, and producer-free' => sub {

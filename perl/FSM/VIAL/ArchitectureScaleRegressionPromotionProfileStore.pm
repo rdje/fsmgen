@@ -27,6 +27,7 @@ my $STAGING_BASE =
     '.artifacts/tmp/vial-scale/regression-promotion-profile-publication/v1';
 my $REPORT_FILENAME = 'measurement-report.json';
 my $PUBLICATION_REVISION = 'regression_promotion_profile_store_v1';
+my $PROFILE_COUNT = 11;
 
 # This is a provisional storage/admission ceiling, not a performance, fit, or
 # capacity claim. It matches the largest explicit bound among the five newer
@@ -45,6 +46,7 @@ my @ARTIFACT_KEYS = qw(
     artifact_relative_path artifact_sha256 artifact_bytes same_volume atomic
 );
 my @LOAD_RESULT_KEYS = qw(publication artifact);
+my @LOAD_ALL_RESULT_KEYS = qw(plan profiles);
 my $JSON = JSON::PP->new->canonical(1)->utf8(1);
 
 sub publication_keys($class) {
@@ -60,6 +62,11 @@ sub artifact_keys($class) {
 sub load_result_keys($class) {
     _exact_invocant($class, 'load_result_keys');
     return [@LOAD_RESULT_KEYS];
+}
+
+sub load_all_result_keys($class) {
+    _exact_invocant($class, 'load_all_result_keys');
+    return [@LOAD_ALL_RESULT_KEYS];
 }
 
 sub publication_limits($class) {
@@ -121,6 +128,56 @@ sub load($class, @args) {
         entry => $entry,
     });
     return _clone({publication => $publication, artifact => $artifact});
+}
+
+sub load_all($class, @args) {
+    _exact_invocant($class, 'load_all');
+    my $request = _request('load_all', \@args, [qw(repository_root)]);
+    my ($repo_root, $root_device) =
+        _repository_root($request->{repository_root});
+    my $plan = $PLAN->derive({repository_root => $repo_root});
+    confess "regression-promotion profile plan count changed\n"
+        unless ref($plan->{entries}) eq 'ARRAY'
+            && @{$plan->{entries}} == $PROFILE_COUNT;
+
+    _require_no_profile_staging($repo_root, $root_device, $plan);
+
+    my @profiles;
+    for my $entry (@{$plan->{entries}}) {
+        my ($publication, $artifact) = _read_publication({
+            repository_root => $repo_root,
+            root_device => $root_device,
+            plan => $plan,
+            entry => $entry,
+        });
+        push @profiles, {
+            publication => $publication,
+            artifact => $artifact,
+        };
+    }
+    my $result = _clone({plan => $plan, profiles => \@profiles});
+    _require_no_profile_staging($repo_root, $root_device, $plan);
+    return $result;
+}
+
+sub _require_no_profile_staging($repo_root, $root_device, $plan) {
+    for my $index (0 .. $PROFILE_COUNT - 1) {
+        my $entry = $plan->{entries}[$index];
+        confess "regression-promotion profile ordinal changed\n"
+            unless _json_integer_equals($entry->{ordinal}, $index + 1);
+        my @staging = _same_profile_staging_candidates(
+            {
+                repository_root => $repo_root,
+                root_device => $root_device,
+                plan => $plan,
+                entry => $entry,
+            },
+            _profile_token($entry),
+        );
+        confess "regression-promotion profile publication retained staging residue\n"
+            if @staging;
+    }
+    return 1;
 }
 
 sub _current_entry($repo_root, $ordinal) {

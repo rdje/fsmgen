@@ -100,6 +100,9 @@ subtest 'invocation is closed and real phases require guarded destinations' => s
     my $foreign_absolute = File::Spec->catfile(
         File::Spec->rootdir, 'foreign', 'x.sample.txt',
     );
+    local $ENV{FSMGEN_RAM_GUARD_ACTIVE};
+    local $ENV{FSMGEN_RAM_GUARD_EFFECTIVE_HOST_MAX_PCT};
+    local $ENV{FSMGEN_RAM_GUARD_EFFECTIVE_PROCESS_MAX_RSS_MB};
 
     for my $arguments (
         [],
