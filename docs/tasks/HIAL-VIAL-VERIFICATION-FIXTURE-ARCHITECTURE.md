@@ -1564,9 +1564,24 @@ decomposes the architecture needed to move beyond that bounded foundation.
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2`
   Status: `active`
   Goal: `Close and synchronize the independently authenticated current publication.`
-  Acceptance: `From the clean .1 repair, re-run the standalone verifier, guarded producer-free production validate, guarded inventory, historical separation verifier, and adjacent exact-publication watchers. Require exact immutable identities/counts, current execution-revision reporting, zero producer/provider/simulator/controller execution, unchanged real-publication census, empty staging, bounded output, and complete cleanup. Join all falsification and canonicalization evidence; synchronize task/book/Knowledge Map/claims/containment/resume pointers; close .17.5.2 only if every leg agrees, without budget, support, performance, memory, or capacity promotion.`
+  Acceptance: `After child .1 diagnoses and repairs the guarded aggregate-memory failure without weakening validation, child .2 must re-run the standalone verifier, guarded producer-free production validate, guarded inventory, historical separation verifier, and adjacent exact-publication watchers. Require exact immutable identities/counts, current execution-revision reporting, zero producer/provider/simulator/controller execution, unchanged real-publication census, empty staging, bounded output, and complete cleanup. Join all falsification and canonicalization evidence; synchronize task/book/Knowledge Map/claims/containment/resume pointers; close .17.5.2 only if every leg agrees, without budget, support, performance, memory, or capacity promotion.`
+  Verification: `At clean a802ec97f, the standalone independent verifier re-authenticated capture revision 155aa22ea, all 13 files/6,220,126 bytes, inventory 94c11e5c...bb57, and exact 11/33/44/0 counts. Guarded production validate began at 61.5% host occupancy, emitted no partial result, then the repository guard terminated its two-process tree with exit 137 after host occupancy reached 88.6%; no per-process 4,096-MiB event fired. Immediate post-termination guard sampling reported 52.2%, the independent verifier reproduced every pre-run byte/hash/identity, Git stayed clean, and no staging/process residue remained. The code path runs ProfileCapture's expensive child plus independent parent report validation once per profile while retaining that parent as the long-lived CorpusCoordinator process. Children .1 and .2 own bounded diagnosis/repair then a fresh clean closeout; the interrupted run is not admission, a performance budget, a memory improvement, support, or capacity evidence.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2: own guarded validation memory repair`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2.1`
+  Status: `active`
+  Goal: `Diagnose and repair aggregate-memory failure in complete-corpus validation.`
+  Acceptance: `Use the clean failed production run, source call graph, and bounded project-local process sampling or smaller exact controls to distinguish long-lived parent retention from one-profile child demand and unrelated host load. If the coordinator parent is the retained-state owner, execute each whole ProfileCapture operation in a fresh guard-visible coordinator child so ProfileCapture still performs its existing independent child and parent report validations, while the long-lived CorpusCoordinator receives only the existing bounded canonical result. Retain exact-caller revision authority, current clean revision checks around every process/load, closed nonblocking close-on-exec IPC, bounded success/error envelopes, signal/exit/malformed/noncanonical/oversized rejection, post-worker artifact reload, producer prohibition, operation order, and every existing public result/publication identity. Prove fresh process identity, parent-retention release, hostile worker controls, exact synthetic result parity, real corpus byte invariance, and a guarded production validate below both guard boundaries before claiming repair. Do not recapture, republish, weaken public resume or dual validation, increase a guard, or promote a performance, memory, support, or capacity budget.`
   Verification: `pending`
   Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2.2`
+  Status: `proposed`
+  Goal: `Complete final current-publication closeout after the bounded validation repair.`
+  Acceptance: `From clean .1, rerun the independent verifier, guarded production validate and inventory, historical separation verifier, adjacent exact-publication watchers, before/after corpus census, and cleanup checks. Join immutable capture and current execution revisions, exact identities/counts/providers, zero producer/provider/simulator/controller execution, bounded output, and all prior falsification/canonicalization evidence; synchronize task/book/Knowledge Map/claims/containment/resume pointers and close .17.5.2 only if every leg agrees. Promote no budget, support, performance, memory, or capacity claim.`
+  Verification: `pending`
+  Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3`
   Status: `proposed`
@@ -5418,3 +5433,29 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   all doctrines pass. No real publication byte, producer, provider, simulator,
   budget, support, performance, memory, capacity, full CI, or push changes;
   clean child `.5.4.2` owns the real closeout reruns.
+
+## Acceptance Checklist (enforced) — `.17.5.2.5.4.2` guarded-memory decomposition
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean `a802ec97f` makes the real validate
+  path revision-correct, but its guarded production run begins at 61.5% host
+  occupancy and ends with exit 137 when a two-process validator tree drives
+  host occupancy to 88.6%; the 4,096-MiB per-process boundary never fires.
+  Immediate cleanup sampling falls to 52.2%. Source inspection locates the
+  candidate retention boundary in CorpusCoordinator's direct repeated calls
+  to ProfileCapture: each call forks one report-validation child and then runs
+  the independent validation again in the same long-lived coordinator parent.
+- [x] **ADDRESSED (verified)** — `.5.4.2` now owns two ordered children: `.2.1`
+  must distinguish retained parent state, child demand, and external load and
+  repair only the proved process boundary while preserving dual validation;
+  `.2.2` owns the fresh real closeout. Before -> after: an unowned guard
+  termination becomes a bounded diagnosis/repair leaf with explicit process,
+  IPC, authority, byte-identity, hostile-control, and no-guard-widening rules.
+- [x] **NO REGRESSION** — the post-termination independent verifier again
+  authenticates capture `155aa22ea`, all 13 files/6,220,126 bytes, inventory
+  `94c11e5c...bb57`, and exact 11/33/44/0 counts; Git, staging, and process
+  state are clean. This decomposition changes only task-tree and Memory
+  continuity, runs no producer/provider/simulator/controller, and changes no
+  source, test, publication, guard, budget, support, performance, memory, or
+  capacity claim. Task integrity, Memory, relative paths, Knowledge Map,
+  containment, claims, staged acceptance, and all doctrines are required green
+  before the task-only commit; full CI and push remain deferred.
