@@ -1528,8 +1528,23 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Characterize and, if warranted, repair current-corpus canonicalization cost before budget qualification.`
   Acceptance: `Measure the balanced-profile and complete-corpus phases under the repository RAM guard with project-local `sample -file` output and bounded instrumentation. Attribute CPU, wall, allocation/copying, input/output bytes, and canonicalization multiplicity separately; distinguish inherent evidence-size cost from avoidable repeated whole-graph encoding or hash/array copying. If a defect is proven, add a narrower child owner before source repair and prove byte/identity parity plus focused performance improvement; otherwise retain a measured nondefect rationale. Do not promote a regression budget.`
-  Verification: `Activated from clean copied-falsification commit cb236fad9. Characterization is split into two exact read-only phases: current ordinal-11 balanced report validation through its public adapter, and current complete-corpus load through the production store. A tracked bounded diagnostic runner must report per-phase monotonic wall time, process user/system CPU, exact current input/output artifact bytes, and separately wrapped canonical-encode and clone call/time/encoded-byte totals for each participating module without changing returned values or publication bytes. Each phase runs under the repository RAM guard, launches macOS sample with `-file` directly into a repository-derived `.artifacts/diagnostics/vial-scale/` path, bounds its canonical result, and proves the real publication/staging census unchanged. The existing 2-second sample is only a coarse corroborating observation because it exposes Perl copy/hash/array opcodes but not production subroutine multiplicity. Classification must compare the unique evidence floor and required identity checks against measured repeated whole-graph encoding/copying; any source repair requires a narrower task-tree child activated before code change and must preserve exact bytes/identities while improving focused measurements. No budget, support, capacity, or performance qualification is authorized.`
+  Verification: `The tracked v3 runner derives the repository root, requires the active RAM guard and one closed repository-local sample path, instruments each loaded FSM module without extra probe encodes, preserves imported prototypes, times top-level clone boundaries while separately counting recursive nodes, emits one bounded canonical result, and independently authenticates the complete current corpus before/after. t1778 proves exact clone/canonical/SHA value preservation and byte attribution, prototype restoration, closed invocation, public phase boundaries, and no off-volume path. On production-source baseline fafe5d88b, guarded corpus load consumed 13 files/6,220,126 bytes and returned 25,417 canonical bytes in 23.093509 seconds wall/9.41 seconds user CPU. It created 36,790,450 canonical bytes, 13,558,259 clone-encoding bytes, and hashed 30,407,371 input bytes; 12 policy encodes contributed 16,496,724 whole-graph bytes because CorpusStore derives once and eleven ProfileStore loads each derive again. Balanced public validation consumed the 1,244,823-byte ordinal-11 artifact, returned the exact 1,241,948-byte report, and took 492.563279 seconds wall/491.72 seconds user CPU. It created 1,325,878,982 canonical bytes plus 121,737,844 clone-encoding bytes, hashed 1,044,992,073 bytes, and crossed 946,272 top-level clone boundaries/68,435,593 recursive nodes; 178 canonical plus 31 clone encodes at or above the 622,412-byte half-input threshold materialized 1,348,045,927 bytes. Direct source audit separates required fresh gates/determinism/replay from two avoidable paths: complete load re-derives plan/policy 12 times, and measurement `_canonical_bundle` bypasses the existing exact-caller emission seam and rebuilds its already accepted six-gate composition. Final result/sample identities are corpus da17e6df...468ee/df29cfff...8b8c8 and balanced 87cbbc32...f5e2f/ea283779...56786; both retain inventory 94c11e5c...bb57, empty staging, and unchanged publication bytes. Superseded harness-development results are inadmissible. Children `.3.1` and `.3.2` own repairs before budget work; required correctness recomputation remains intact, and no performance budget, support, or capacity claim is promoted.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3: activate canonicalization cost characterization`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3.1`
+  Status: `active`
+  Goal: `Eliminate repeated capture-plan derivation during complete current-corpus load without accepting caller authority.`
+  Acceptance: `Start from the measured 12-full-policy-encode RED. Give ProfileStore one closed repository-root-only all-profile load that derives the current plan once, checks every profile staging coordinate, and loads all eleven exact entries in plan order; make CorpusStore consume that authenticated store result without accepting a caller-supplied plan or weakening any report/profile/artifact validation. Prove synthetic rejection parity, exact current 13-file/corpus/publication/result-byte identity, and a guarded v3 corpus characterization with one—not twelve—full policy encode; retain independent before/after census and no budget claim.`
+  Verification: `Activated by .3's tracked v3 characterization. CorpusStore::load derives the plan once, then _validate_profile_value invokes ProfileStore::load eleven times; each public load calls _current_entry and CapturePlan::derive. The instrument independently records exactly 12 policy encodes of 1,374,727 bytes, 16,496,724 policy whole-graph bytes total, and corresponding 12-plan CapturePlan multiplicity. This is avoidable authority reconstruction, not evidence-size cost. No production source changes until this child is committed active from a clean tree.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.3.2`
+  Status: `proposed`
+  Goal: `Reuse the already authenticated balanced composition when constructing measurement emission.`
+  Acceptance: `After .3.1 is clean, make measurement `_canonical_bundle` use the existing exact-caller `_measurement_evaluate` seam with its independently accepted composition instead of public emission evaluation that rebuilds the same six-gate composition. Retain fresh construction, six-gate composition, two-route determinism, replay, two-route emission, every report/member oracle, foreign-caller rejection, and exact returned report/publication identities. Prove focused v3 reductions against the .3 baseline without setting a performance budget.`
+  Verification: `Proposed from source plus runtime evidence. `_canonical_bundle` first accepts `$PRODUCER->evaluate`, then calls `$EMITTER->evaluate`, whose `_evaluate` invokes the same producer again. The emitter already exposes caller-authenticated `_measurement_evaluate(construction, composition)` specifically so the measurement adapter does not charge or repeat accepted composition work, and the adapter already uses that seam for the emit-stage payload. This is a missing seam use, distinct from required fresh correctness recomputation.`
+  Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4`
   Status: `proposed`
@@ -5247,3 +5262,36 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   and all doctrines are required green before commit. No instrumentation,
   sample, producer, provider, simulator, measurement, source repair, budget,
   support, capacity, full CI, push, or publication write runs in activation.
+
+## Acceptance Checklist (enforced) — `.17.5.2.5.3` characterization and repair split
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the final v3 measurements separate two
+  avoidable authority rebuilds from required correctness work. Complete load
+  enters `CapturePlan::derive` once in CorpusStore and eleven times through
+  ProfileStore, producing exactly twelve 1,374,727-byte policy encodes.
+  Balanced `_canonical_bundle` accepts one complete composition and then calls
+  public emitter evaluation, whose `_evaluate` rebuilds that same composition
+  instead of using the already implemented exact-caller measurement seam.
+  `git log -S` traces the seam and bypass to `91ceaf9eb` and the per-profile
+  corpus load to `bdf24d883`, matching the two measured call chains.
+- [x] **ADDRESSED (verified)** — new tracked runner plus t1778 attribute exact
+  canonical/clone/hash bytes, calls, top-level clone time, recursive node
+  visits, wall/CPU, inputs/outputs, sampler evidence, and immutable pre/post
+  corpus identity without extra probe encodes. Guarded final-schema corpus and
+  balanced results are canonical and exact; two narrower children own the
+  distinct repairs before production source can change. Before -> after: a
+  coarse copy-op observation becomes reproducible module/phase evidence with
+  the avoidable and required portions explicitly separated.
+- [x] **NO REGRESSION** — both real phases returned exact production values and
+  retained the same 13-file/6,220,126-byte inventory 94c11e5c...bb57 with
+  empty staging; no producer, provider, simulator, publication write, budget,
+  support, capacity, full CI, or push ran. Syntax and diff hygiene pass; focused
+  prove reports `All tests successful` and `Files=1, Tests=3`. All 59 mdBook
+  chapters test; the inspected repository-local render contains 94 files/20,920
+  KiB and is removed. The exact 59-file/55,687-line/3,016,615-byte maintained-
+  reference authority passes with zero ceiling increases. The compacted fact
+  card leaves the Knowledge Map collection inside its pre-existing allowance;
+  parity is 1,160 facts/6,250 questions/6,422 occurrences/138 shards. Claim
+  joins cover 1,797/1,797 candidates, 204 records, 991 gates, 602 reviewed,
+  and zero gaps/open owners. Task integrity, Memory, relative paths, locality,
+  exact final diagnostic-artifact census, and all twelve doctrines pass.

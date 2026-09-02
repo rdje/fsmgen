@@ -822,6 +822,52 @@ and foreign-device mutations are not fabricated: the former needs privilege
 and the latter would violate the same-volume evidence policy; direct lstat
 enforcement and the same-owner/device baseline remain watched.
 
+Canonicalization diagnosis is a separate, read-only operation:
+
+```bash
+scripts/run_with_ram_guard.sh -- \
+  scripts/measure_vial_regression_promotion_canonicalization.pl \
+  --phase corpus-load \
+  --sample-relative .artifacts/diagnostics/vial-scale/corpus.sample.txt \
+  --sample-seconds 3
+scripts/run_with_ram_guard.sh -- \
+  scripts/measure_vial_regression_promotion_canonicalization.pl \
+  --phase balanced-validation \
+  --sample-relative .artifacts/diagnostics/vial-scale/balanced.sample.txt \
+  --sample-seconds 3
+```
+
+The runner instruments the JSON encoder already used by production; it does
+not add a second probe encoding. It preserves imported prototypes, times
+top-level clones, counts recursive clone nodes separately, launches macOS
+`sample -file` directly into the repository, and independently verifies the
+sealed corpus before and after. On production-source baseline `fafe5d88b`,
+complete load consumed 13 files/6,220,126 bytes and returned 25,417 canonical
+bytes. Its 23.093509-second phase created 36,790,450 canonical bytes plus
+13,558,259 clone-encoding bytes and hashed 30,407,371 bytes. Twelve complete
+policy encodes account for 16,496,724 bytes: CorpusStore derives the plan once,
+then eleven public ProfileStore loads each derive it again.
+
+Balanced public validation consumed the 1,244,823-byte ordinal-11 publication
+and returned its exact 1,241,948-byte report. Its 492.563279-second phase
+created 1,325,878,982 canonical bytes plus 121,737,844 clone-encoding bytes,
+hashed 1,044,992,073 bytes, and crossed 946,272 top-level clone boundaries.
+The fresh gates, independent routes, replay, emission, and byte comparisons
+are required correctness work. One rebuild is not: `_canonical_bundle`
+accepts a six-gate composition, then calls public emitter evaluation, which
+rebuilds that composition despite an existing exact-caller measurement seam
+designed to reuse it. Narrow repair children own both defects before source
+change. These diagnostic point measurements are not a performance budget,
+support tier, or capacity claim; macOS footprint values cover only the
+three-second phase-start sample window.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-canonicalization-characterization-v1 -->
+- Claim: On production-source baseline fafe5d88b, final-schema guarded diagnostics preserved the exact current publication and returned values while attributing complete-corpus load and balanced public validation. Corpus load consumed 6,220,126 artifact bytes, ran for 23.093509 seconds, created 36,790,450 canonical plus 13,558,259 clone-encoding bytes, and exposed twelve 1,374,727-byte policy encodes. Balanced validation consumed a 1,244,823-byte artifact, returned 1,241,948 canonical bytes, ran for 492.563279 seconds, created 1,325,878,982 canonical plus 121,737,844 clone-encoding bytes, hashed 1,044,992,073 bytes, and crossed 946,272 top-level clone boundaries. Source inspection binds the avoidable portions to twelve plan derivations and one bypassed accepted-composition seam; required fresh correctness recomputation remains in scope. This is defect characterization, not a performance budget, support tier, or capacity limit.
+- Re-derive: Run the two guarded commands above with new repository-local sample names. Require v3 instrumentation, exact input/output identities, before/after inventory 94c11e5c...bb57, empty staging, corpus result structure matching da17e6df...468ee, balanced result structure matching 87cbbc32...f5e2f, and the exact module/call/byte totals stated here; timing and sampler footprint are revision/host point observations, not frozen limits.
+- Falsify: Run t1778 to prove the underlay adds no encoder call, attributes exact existing clone/canonical bytes, preserves values and imported prototypes, restores every wrapper, rejects open/off-volume/unguarded invocation, and reaches only the public phase boundaries. Compare the independent macOS samples for active Perl hash/array/value-copy opcodes, and inspect the two source call chains to reject the competing hypothesis that unique artifact size alone explains the multiplicity.
+- Durability: Retain the tracked runner, t1778, task `.17.5.2.5.3` result and child owners, this chapter, the regression-promotion Knowledge card, bounded claim record, exact artifact hashes/commands, doctrine gates, and work-unit Git chain. The raw repository-local samples are diagnostic supplements; the tracked runner and commands are the durable reproducer.
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-canonicalization-characterization-v1 -->
+
 This proves current capture, producer-free re-admission, and actual copied-
 artifact falsification, not a regression budget, support tier, capacity limit,
 or performance qualification. The next closeout must characterize the CPU-bound
