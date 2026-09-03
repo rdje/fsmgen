@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **110** uniquely owned question entries.
+> **3** facts · **111** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -37,6 +37,7 @@
 - q="how does the common controller admit worker artifact files?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="how does the exact combined source byte profile stay below its timeout?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how is VIAL canonicalization cost measured without changing returned values?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
+- q="how is VIAL current-budget qualification closed?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="how is balanced portable measurement scoped?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how is execution checking matrix validation memory bounded?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how is structural backend emission measured without executing an HDL tool?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)

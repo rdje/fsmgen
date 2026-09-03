@@ -1461,11 +1461,31 @@ pass. Publication remains immutable: recalibration cannot overwrite the
 current version and requires a separately owned new version with distinct old
 and new current-corpus qualification evidence.
 
+### Final current-budget publication agreement
+
+The final watcher joins the independent and production authorities against the
+unchanged real publication:
+
+```sh
+scripts/run_with_ram_guard.sh -- prove -Iperl \
+  t/1784-vial-regression-promotion-budget-qualification-closeout.t
+```
+
+It takes inode-aware censuses of both real namespaces, runs the closed
+independent verifier and production `--validate`, then compares the publisher,
+source, report, publication, qualification, file-set, formula, summary, and
+applicability identities. Every ordered profile must also agree on measurement
+records, statistics, budgets, environment/provider state, and deterministic
+correctness. Only complete bounded canonical results are admitted. The final
+censuses must remain exact; qualification, profile, and corpus staging,
+copied-fixture residue, and child processes must all be absent. This closes the
+qualification evidence, but still does not activate performance enforcement.
+
 <!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-budget-qualification-publication-1c2a3832b-v1 -->
 - Claim: From clean publisher revision `8667f766cfb5721600c466568b432ac4432255f7`, the real two-file current-budget qualification contains a 764,010-byte report at SHA-256 `524fad65...a3fd` and a 28,148-byte manifest at SHA-256 `5eebce24...9c62`. It binds qualification `d8fb1813...0c97`, report identity `0da23249...622c`, publication identity `1c2a3832...945f`, file-set digest `28ba972c...9095`, source corpus/file-set `ab2df899...e505`/`dc5b315b...c66f`, Decision 0056, all eleven ordered budget/applicability bindings, and exact 11/33/44/0 evidence. A distinct validation emitted 793,084 canonical bytes at SHA-256 `19ac96ed...9d64`. This is an immutable qualification seal, not an active gate, fresh performance result, support tier, or capacity claim.
-- Re-derive: Run the guarded independent verifier and production `--validate`. Require independent source authentication/reload; exact measurement, correctness, statistic, budget, environment, provider, applicability, profile, qualification, publication, and file-set identities; and production's exact 793,084-byte result/digest against both stored files.
-- Falsify: T1782 began RED for the missing independent verifier; t1783 began RED for the missing hostile suite. Run t1780+t1781+t1782+t1783. Production controls must reject unsafe storage and invocation; the independent controls must reject caller input and every named copied content/schema/type/formula/budget/identity/provenance/path/alias/collision/staging/residue mutation without partial output, restore the copy exactly, distinguish environmental from deterministic drift, forbid provider-unavailable pass, and leave both real namespaces exact.
-- Durability: Retain the immutable publication, store/CLI, both independent verifiers, t1780/t1781/t1782/t1783, tasks `.17.5.3.2.3`/`.17.5.3.3.1`/`.17.5.3.3.2`, this chapter, the Knowledge card, claim record, doctrine gates, and Git commits. `.17.5.3.3.3` owns final real-artifact agreement before gate ownership.
+- Re-derive: Run t1784 under the repository RAM guard. It must execute the independent verifier and production `--validate`, independently authenticate/reload the source, join exact measurement, correctness, statistic, budget, environment, provider, applicability, profile, qualification, publication, and file-set identities, reproduce the exact 793,084-byte production result/digest, and preserve both real censuses.
+- Falsify: T1782 began RED for the missing independent verifier; t1783 began RED for the missing hostile suite; t1784 began RED for the missing final join. Run t1780+t1781+t1782+t1783+t1784. Production controls must reject unsafe storage and invocation; independent controls must reject every named copied content/schema/type/formula/budget/identity/provenance/path/alias/collision/staging/residue mutation without partial output, restore the copy exactly, distinguish environmental from deterministic drift, forbid provider-unavailable pass, and make any independent/production identity disagreement or residue fail final closeout.
+- Durability: Retain the immutable publication, store/CLI, both independent verifiers, t1780/t1781/t1782/t1783/t1784, completed `.17.5.3`, this chapter, the Knowledge card, claim record, doctrine gates, and Git commits. `.17.5.4` separately owns gate activation and CI placement.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-budget-qualification-publication-1c2a3832b-v1 -->
 
 Re-derive the selection and its closure comparison with:
@@ -1478,9 +1498,10 @@ scripts/run_with_ram_guard.sh -- env \
 ```
 
 Current capture, in-memory budget qualification, the publication store, its
-explicit CLI, and the real clean-revision qualification seal are complete.
-Final real-artifact closeout, gate/CI integration, and public truth remain
-separate rollback owners. Until those leaves pass, the sealed budgets remain
+explicit CLI, the real clean-revision qualification seal, hostile copied
+controls, and final independent/production agreement are complete. Gate/CI
+integration and public truth remain separate rollback owners. Until those
+leaves pass, the sealed budgets remain
 unenforced, all historical candidate budgets stay candidate-only, and whole-
 product big/really-big capacity remains unclaimed.
 

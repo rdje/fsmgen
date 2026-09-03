@@ -23,6 +23,7 @@ answers:
   - "what is the real current VIAL regression-promotion budget qualification publication identity?"
   - "how is the current VIAL regression-promotion budget qualification independently verified?"
   - "how are copied VIAL current-budget qualification mutations and later-run applicability falsified?"
+  - "how is VIAL current-budget qualification closed?"
 date: 2026-09-03
 status: current
 tags: [hial, vial, scalability, regression, measurement, publication]
@@ -33,11 +34,11 @@ evidence: >-
   perl/FSM/VIAL/ArchitectureScaleRegressionPromotionPolicy.pm; perl/FSM/VIAL/ArchitectureScaleMeasurement.pm;
   perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCapturePlan.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileCapture.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusCoordinator.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualification.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualificationStore.pm;
   scripts/run_vial_regression_promotion_corpus.pl; scripts/run_vial_regression_promotion_budget_qualification.pl; scripts/verify_vial_regression_promotion_failed_prefix.pl; scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; scripts/measure_vial_regression_promotion_canonicalization.pl;
-  t/1776-vial-regression-promotion-current-corpus-verifier.t; t/1777-vial-regression-promotion-current-corpus-mutations.t; t/1778-vial-regression-promotion-canonicalization-instrument.t; t/1779-vial-regression-promotion-qualification.t; t/1780-vial-regression-promotion-qualification-store.t; t/1781-vial-regression-promotion-qualification-cli.t; t/1782-vial-regression-promotion-budget-qualification-verifier.t; t/1783-vial-regression-promotion-budget-qualification-mutations.t
+  t/1776-vial-regression-promotion-current-corpus-verifier.t; t/1777-vial-regression-promotion-current-corpus-mutations.t; t/1778-vial-regression-promotion-canonicalization-instrument.t; t/1779-vial-regression-promotion-qualification.t; t/1780-vial-regression-promotion-qualification-store.t; t/1781-vial-regression-promotion-qualification-cli.t; t/1782-vial-regression-promotion-budget-qualification-verifier.t; t/1783-vial-regression-promotion-budget-qualification-mutations.t; t/1784-vial-regression-promotion-budget-qualification-closeout.t
 reverify: >-
   scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_corpus.pl --validate; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_corpus.pl --inventory; scripts/verify_vial_regression_promotion_failed_prefix.pl; scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/run_with_ram_guard.sh -- prove -v t/1777-vial-regression-promotion-current-corpus-mutations.t; scripts/run_with_ram_guard.sh -- scripts/measure_vial_regression_promotion_canonicalization.pl --phase corpus-load --sample-relative .artifacts/diagnostics/vial-scale/corpus.sample.txt --sample-seconds 3;
   scripts/run_with_ram_guard.sh -- scripts/measure_vial_regression_promotion_canonicalization.pl --phase balanced-validation --sample-relative .artifacts/diagnostics/vial-scale/balanced.sample.txt --sample-seconds 3; scripts/run_with_ram_guard.sh -- prove -Iperl t/1769-vial-architecture-scale-regression-promotion-profile-resume.t t/1773-vial-regression-promotion-corpus-coordinator.t;
-  scripts/run_with_ram_guard.sh -- prove -Iperl t/1779-vial-regression-promotion-qualification.t t/1780-vial-regression-promotion-qualification-store.t t/1781-vial-regression-promotion-qualification-cli.t; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_budget_qualification.pl --validate; scripts/run_with_ram_guard.sh -- scripts/verify_vial_regression_promotion_budget_qualification.pl; scripts/run_with_ram_guard.sh -- prove -v t/1782-vial-regression-promotion-budget-qualification-verifier.t t/1783-vial-regression-promotion-budget-qualification-mutations.t
+  scripts/run_with_ram_guard.sh -- prove -Iperl t/1779-vial-regression-promotion-qualification.t t/1780-vial-regression-promotion-qualification-store.t t/1781-vial-regression-promotion-qualification-cli.t; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_budget_qualification.pl --validate; scripts/run_with_ram_guard.sh -- scripts/verify_vial_regression_promotion_budget_qualification.pl; scripts/run_with_ram_guard.sh -- prove -v t/1782-vial-regression-promotion-budget-qualification-verifier.t t/1783-vial-regression-promotion-budget-qualification-mutations.t t/1784-vial-regression-promotion-budget-qualification-closeout.t
 ---
 
 Decision 0096 selects eleven v2 gate profiles. Each adapter call owns one
@@ -144,7 +145,10 @@ real namespaces exact. Its authenticated-contract oracle proves later-revision
 exact identity eligible after correctness, environmental drift informational,
 deterministic drift rejected before performance, unavailable providers not a
 pass, and recalibration restricted to separately owned immutable old/new
-qualification evidence. `.3.3.3` owns final real-artifact agreement.
+qualification evidence. T1784 brackets both real namespaces with inode-aware
+censuses, joins authorities and all profile identities, and requires no
+owned residue. `.17.5.3` is complete;
+`.17.5.4` owns enforcement and CI placement.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]].

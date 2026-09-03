@@ -1584,10 +1584,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2.2: close current corpus publication`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify representative current profiles and freeze exact pinned-host/tool regression budgets.`
   Acceptance: `Consume only the .17.5.2 current publication; independently reproduce complete correctness and repetition evidence; apply the exact decision-0056 wall/CPU/RSS formulas and deterministic count oracles; bind workload, revision, host, tool, guard, provider, and applicability identities; retain recalibration and rollback history; and leave unmatched hosts informational. No budget may derive from historical v1 evidence, failed correctness, excluded samples, or a single slow-run rewrite.`
-  Verification: `Clean predecessor 307f31bfd independently closes the current v2 corpus at capture revision 155aa22ea and execution revision 1da11b2e3 with exact 11-profile/33-raw/44-controller/zero-exclusion evidence. Query-first review of decisions 0056/0095/0096, the current publication schemas, the historical calibration budget helper, tests, and Git history finds no current budget-qualification or publication owner. The parent is therefore partitioned into authenticated in-memory derivation, bounded versioned publication, and independent hostile/identity closeout. No source, test, artifact, budget, support, performance, capacity, CI, or product behavior changes in activation.`
+  Verification: `The completed children derive all eleven current profiles from the authenticated v2 corpus, apply the exact Decision-0056 formulas, seal one immutable two-file qualification from clean publisher 8667f766c, and independently reconstruct every source, correctness, statistic, budget, environment, applicability, profile, qualification, publication, and file-set identity. Same-volume hostile copies reject the complete content/type/formula/identity/path/alias/staging/residue matrix without partial output and restore exactly. Final t1784 joins production validate with the independent result profile-by-profile beneath inode-aware real-artifact censuses; the complete guarded t1779-t1784 band passes at Files=6/Tests=39. Exact-environment later revisions are eligible only after correctness, environment drift is informational, deterministic drift rejects before performance, and recalibration requires separately owned immutable old/new evidence. Publication remains byte-identical and enforcement remains inactive.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3: activate current budget qualification`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1`
@@ -1635,10 +1635,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `From clean CLI revision 8667f766c, guarded --publish derived the authenticated current qualification and created exactly two same-volume/current-owner/single-link canonical files by atomic rename: the 764,010-byte report at SHA-256 524fad65...a3fd and 28,148-byte manifest at SHA-256 5eebce24...9c62. They bind publisher 8667f766c, qualification d8fb1813...0c97, source corpus ab2df899...e505, source file set dc5b315b...c66f, Decision 0056, the exact ordered eleven budget/environment/provider/applicability/correctness bindings, report identity 0da23249...622c, publication identity 1c2a3832...945f, and file-set digest 28ba972c...9095. A distinct guarded --validate emitted 793,084 canonical newline JSON bytes at SHA-256 19ac96ed...9d64 and exactly reloaded both stored objects. Independent canonicalization and digest reconstruction reproduced all three content identities; exact census, store/CLI watchers, immutable predecessor/recalibration/rollback/nonclaims, staging/process/temp cleanup, book, claims, and doctrines close before commit. No producer, provider, simulator, measurement controller, recapture, budget change, active gate, support, performance result, or capacity claim occurs.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.3: publish current budget qualification`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Independently close current budget evidence, hostile admission, identity applicability, recalibration history, and residue.`
   Acceptance: `Re-derive the current corpus and every formula result without trusting the qualification producer; authenticate the published namespace, exact bytes, identities, profile/order/count partition, deterministic oracles, and zero exclusions; prove copied mutations for content, schema, numeric type, formula, budget, host/tool/guard/provider/applicability, stale revision, historical substitution, collision, alias, and residue classes reject. Prove exact common identity is eligible for later performance enforcement while a changed host/tool/provider identity is explicitly informational, and prove recalibration requires separately owned old-versus-new version replacement. Leave publication bytes unchanged and owned staging absent.`
-  Verification: `Clean predecessor d127dba61 retains the real two-file qualification seal and exact production reload evidence, while this broad independent leaf combines three separately falsifiable responsibilities. It is therefore partitioned into a production-independent read-only verifier, copied hostile/applicability/recalibration mutation coverage, and final real-artifact closeout. No source, test, artifact, budget, publication, gate, support, performance result, capacity claim, CI, or product behavior changes in activation.`
+  Verification: `The production-independent verifier reconstructs the exact qualification from the authenticated current corpus; same-volume copied controls reject the full hostile seal and applicability/recalibration matrix with exact restoration; and final t1784 executes both independent and production authorities beneath one inode-aware before/after census, joins every ordered profile identity, verifies exact output and contract evidence, and leaves all staging/process residue absent. The guarded t1779-t1784 band passes at Files=6/Tests=39 in 214 wall-clock seconds. No immutable publication byte or enforcement state changes.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3: partition independent budget closeout`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.3`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.1`
@@ -1654,13 +1654,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `T1783 creates a same-volume copy of the qualification, complete current corpus, and both independent verifiers, then admits the exact baseline. Its complete named mutation matrix changes report/manifest/source content, schema, canonicality, numeric type, formula, budget, order/count, every environment/provider/applicability axis, publisher/source/revision provenance, history, namespace shape, aliases, collision, staging, and residue; every invocation rejects without partial stdout, restores the exact copied census, and the final baseline re-verifies. A separate oracle over the authenticated contract proves later-revision exact identity eligible only after correctness, environment drift informational, deterministic drift rejected before performance, unavailable provider not a pass, and recalibration eligible only as a separately owned immutable new version with distinct old/new evidence. The real qualification and corpus retain exact inode-aware before/after censuses.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.2: falsify current budget qualification`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Close the real current-budget publication from independent and production evidence.`
   Acceptance: `Run the independent verifier and mutation suite, guarded production validate, qualification/store/CLI watchers, exact before/after real-artifact census, identity comparison, and cleanup/process checks. Synchronize task, mdBook, Knowledge Map, claims, containment, and Memory; close .17.5.3 only when every independent and production leg agrees. Leave immutable publication bytes unchanged and do not activate a gate, support tier, performance result, or capacity claim.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `T1784 is a production-independent final join: it imports no FSMGEN module, captures inode-aware qualification and source-corpus censuses, runs the closed independent verifier and guarded production --validate, requires bounded canonical diagnostic-free results, and compares the fixed coordinate, publisher, source, report/publication/qualification/file-set/applicability/formula/count contracts plus every ordered profile's measurements, statistics, budgets, environment, provider, and correctness identities. Production returns the exact 793,084 bytes at SHA-256 19ac96ed...9d64; report and manifest retain one non-overwritable not-activated contract. Both real censuses remain exact, all three owned staging paths and hostile fixtures are absent, and no child process remains. Guarded t1779-t1784 reports All tests successful at Files=6/Tests=39 in 214 wall-clock seconds.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.3: close current budget qualification`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement stable architecture-scale regression gates with bounded CI placement and exact host/tool applicability.`
   Acceptance: `Run the .17.5.3-qualified representative profiles through canonical producers and stage-local oracles; enforce frozen performance budgets only on the exact pinned host/tool profile; run correctness, deterministic-output, safety, no-tool/qualified-tool, atomic publication, and cleanup checks everywhere applicable; report unmatched performance informationally; fail closed on evidence or identity drift; and place expensive guarded gates according to the selected CI cadence without making ordinary slice commits run full CI.`
   Verification: `pending`
@@ -5931,3 +5931,42 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   recapture, publication write, budget change, active gate, support tier,
   performance result, capacity claim, full CI, push, or product behavior
   changes.
+
+## Acceptance Checklist (enforced) — `.17.5.3.3.3` final current-budget publication closeout
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean predecessor `4916f2937` retains
+  independent derivation and copied falsification as separate authorities,
+  while
+  `git log -S'vial-regression-promotion-budget-qualification-closeout' -- t`
+  returns no matching history and t1784 initially fails because the final join
+  does not exist. No durable watcher executes independent and production
+  validation beneath one real-artifact census or makes a disagreement between
+  their ordered profile identities fail `.17.5.3` closeout.
+- [x] **ADDRESSED (verified)** — t1784 imports no FSMGEN module and brackets
+  the real qualification and source corpus with inode-aware censuses. It runs
+  the closed independent verifier and guarded production `--validate`, admits
+  only complete bounded canonical diagnostic-free results, and joins the
+  coordinate, publisher, source, report/publication/qualification/file-set,
+  formula, count, applicability, immutable-contract, and every ordered
+  profile's measurement/statistic/budget/environment/provider/correctness
+  bindings. It also requires absent qualification/profile/corpus staging,
+  copied hostile fixtures, and child processes. The first implementation run
+  caught an uncommitted mistyped expected full digest; fresh production bytes
+  and the already published full book value agreed on `19ac96edf6ea...9d64`,
+  and the assertion was corrected before GREEN.
+- [x] **NO REGRESSION** — guarded t1784 reports `All tests successful` at
+  `Files=1, Tests=3` in 34 wall-clock seconds; its profile join contains 205
+  internal assertions. The complete guarded t1779-t1784 qualification/store/
+  CLI/independent/mutation/closeout band reports `All tests successful` at
+  `Files=6, Tests=39` in 214 wall-clock seconds. Both real censuses remain
+  exact, all owned residue is absent, and the 793,084-byte production result
+  retains SHA-256 `19ac96edf6ea...9d64`. The mdBook, Knowledge Map, claim
+  record, containment authority, task/Memory pointers, staged acceptance, and
+  doctrines close before commit. All 59 book chapters test and its inspected
+  94-file/21,212-KiB render is removed exactly; a separate process census finds
+  no relevant process residue. Semantics-preserving card compression leaves
+  the 3,478,771-byte Knowledge-card collection only four bytes below its
+  existing transition allowance, so the next card change must compact first
+  or use the containment owner. No producer/provider/simulator/controller,
+  recapture, publication mutation, budget change, gate activation, CI change,
+  support tier, performance result, capacity claim, full CI, or push occurs.
