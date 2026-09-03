@@ -1668,14 +1668,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.1`
-  Status: `active`
+  Status: `done`
   Goal: `Select and freeze the stable regression-gate execution and applicability contract.`
   Acceptance: `Derive the exact eleven-profile gate plan only from the authenticated current corpus and budget qualification; define fresh canonical-producer execution, stage-local correctness and deterministic oracles, no-tool versus qualified-tool behavior, bounded worker/IPC/guard/output/publication/cleanup rules, and one closed result schema. Performance enforcement must require exact qualified workload, environment, guard, provider, and tool identities after correctness succeeds; unmatched environments remain informational, unavailable required providers remain unavailable rather than pass, deterministic or evidence drift rejects before performance, and caller evidence, historical substitution, budget rewriting, or qualification overwrite is forbidden. Select repository-derived commands and bounded local/hosted cadence without yet wiring CI or activating a performance result.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The caller-sealed metadata authority authenticates the immutable qualification store, independently derives the current plan, joins all eleven ordered dispatch/evidence/budget bindings, and content-addresses one closed execution/applicability/result/cadence contract. T1785 began RED on the absent module, poisons every producer/controller path, rejects guard/caller/invocant and evidence/applicability/dispatch/budget drift, and proves defensive deterministic output. Its default and exact real-evidence paths both pass at Files=1/Tests=12; the guarded policy/plan/qualification/store/contract band passes at Files=5/Tests=43 in 39 wall-clock seconds. Decision 0097 freezes maximum-per-metric evaluation after correctness, exact-identity enforcement, informational unmatched timing, unavailable-not-pass, no override, one bounded atomically replaceable latest observation, immutable qualification non-aliasing, and focused/full/hosted cadence without executing or wiring the gate.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.1: freeze stable regression gate contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the caller-sealed eleven-profile regression gate and its atomic result.`
   Acceptance: `Implement the .1 contract through canonical producers and the common measurement/lifecycle authorities, with fresh isolated profile execution and complete ordered admission. Prove correctness, deterministic outputs, stage-local measurements, exact applicability classification, performance enforcement only for the pinned qualification tuple, informational unmatched performance, unavailable-provider handling, bounded canonical diagnostics/results, signal/error/collision/recovery controls, immutable qualification input, atomic result publication, and exact same-volume cleanup. Add focused hostile watchers for mutation, stale or mixed identity, caller substitution, reordered/missing/extra profiles, threshold boundaries, tool/provider drift, timeouts, IPC failures, and residue without changing qualification bytes or generalizing support/capacity.`
   Verification: `pending`
@@ -5999,3 +5999,49 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   or use the containment owner. No producer/provider/simulator/controller,
   recapture, publication mutation, budget change, gate activation, CI change,
   support tier, performance result, capacity claim, full CI, or push occurs.
+
+## Acceptance Checklist (enforced) — `.17.5.4.1` stable regression-gate contract
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean predecessor `9bb8edd37` contains
+  the immutable current-budget qualification with enforcement explicitly
+  inactive, while `git log -S'ArchitectureScaleRegressionPromotionGateContract'
+  --all -- perl t scripts docs` and the equivalent
+  `git log -S'performance_enforcement_activation'` probe return no prior gate
+  contract. The initial t1785 RED names the absent module at
+  `t/1785-vial-regression-promotion-gate-contract.t line 14`; Decision 0096
+  leaves this exact execution/applicability boundary to `.17.5.4`.
+- [x] **ADDRESSED (verified)** — the new exact-invocant metadata authority
+  accepts only a repository root under the active guard, loads the
+  authenticated qualification, independently derives the current plan, joins
+  all eleven ordered dispatch/evidence/budget bindings, and returns defensive
+  content-addressed data without executing a producer. Decision 0097 freezes
+  correctness-before-performance, maximum-per-metric comparison, exact
+  environment enforcement, informational unmatched timing,
+  unavailable-not-pass, no override, bounded atomic latest-result replacement,
+  immutable qualification non-aliasing, cleanup, and local/hosted cadence.
+  The first doctrine run then exposed that Decision 0097 was the ninth file
+  beyond an eight-file rationale transition allowance; the exact unchanged
+  baseline now owns actual-minus-baseline plus one ratchet step for the four
+  exceeded dimensions, with every health target and ceiling unchanged.
+  Before -> after: an intentionally inactive qualification now has one closed
+  implementation contract; gate execution, result publication, and CI wiring
+  remain separately owned.
+- [x] **NO REGRESSION** — module and watcher report `syntax OK`. Default t1785
+  and its guarded exact real-qualification path each report `All tests
+  successful` at Files=1/Tests=12. The final guarded t1765+t1766+t1779+t1780+
+  t1785 policy/plan/qualification/store/contract integration reports `All
+  tests successful` at Files=5, Tests=43 in 39 wall-clock seconds. It retains
+  the exact 11/33/44 topology and real contract identity
+  `0150f4b3...e368`; derivation poisons every producer/controller and rejects
+  caller, guard, plan, order, manifest, provider, correctness, budget,
+  applicability, immutability, schema, dispatch, and returned-value drift.
+  The mdBook, compacted Knowledge card, Decision 0097, bounded claim record,
+  containment authority, task/Memory pointers, staged acceptance, and all
+  registered doctrines close before commit. The final driver reports
+  `[doctrine] all doctrine checks passed`: 42 claim records and all 1,849
+  inventory candidates close with zero gaps, the 59-file book is 56,126
+  lines/3,055,775 bytes at exact +46 lines/+3,932 bytes, and the Knowledge Map
+  is current at 1,160 facts/6,262 questions/6,434 occurrences/138 shards. No
+  gate execution, result write,
+  qualification mutation, budget change, CI change, observed performance,
+  support tier, capacity claim, full CI, or push occurs.

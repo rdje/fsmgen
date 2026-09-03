@@ -1488,6 +1488,52 @@ qualification evidence, but still does not activate performance enforcement.
 - Durability: Retain the immutable publication, store/CLI, both independent verifiers, t1780/t1781/t1782/t1783/t1784, completed `.17.5.3`, this chapter, the Knowledge card, claim record, doctrine gates, and Git commits. `.17.5.4` separately owns gate activation and CI placement.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-budget-qualification-publication-1c2a3832b-v1 -->
 
+### Stable regression-gate contract
+
+The regression gate now has a caller-sealed metadata contract before any
+execution or CI wiring. It accepts only the repository root under the active
+RAM guard, authenticates the immutable current qualification, derives the
+canonical capture plan independently, and joins every ordered adapter dispatch
+to its workload, correctness, provider, environment, applicability, and frozen
+budget binding. Contract derivation invokes no producer, provider, simulator,
+measurement controller, or publication path.
+
+Each future complete gate run is fixed at one validation plus three fresh raw
+measurements for every selected profile. Correctness and the exact selection,
+workload, and non-timing correctness identities are admitted before any timing
+classification. The maximum fresh wall, CPU, and tree-RSS value is compared to
+the corresponding frozen budget only when host, tool, guard, and provider
+identity all match. An unmatched environment still requires correctness but
+reports timing as informational; an unavailable exact provider is
+`unavailable`, never `pass`. There is no caller performance override.
+
+Gate observations and qualification evidence have deliberately different
+lifecycles. A completed result will atomically replace one bounded latest
+observation below
+`.artifacts/qualification/vial-scale/v2/regression-promotion-gate-v1/current/`.
+An interrupted run preserves the preceding result and removes owned staging.
+The latest observation cannot overwrite the qualification, supply calibration
+evidence, or rewrite a budget. Ordinary commits keep focused checks; the
+complete gate belongs to full pre-push and selected important steps, with
+hosted performance classification derived from identity rather than a bypass
+flag.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-gate-contract-v1 -->
+- Claim: The metadata-only regression-gate contract authenticates the current qualification publication/file set, joins all eleven ordered canonical dispatches to their exact frozen evidence, and requires 11 validations plus 33 fresh raw measurements (44 controller invocations). It fixes maximum-per-metric comparison after correctness, exact-environment-only enforcement, informational unmatched performance, unavailable-not-pass provider status, and no caller override. The real contract identity is `regression-promotion-gate-contract/0150f4b3...e368`; its selected result/profile/IPC/error ceilings are 1,048,576/67,108,864/65,536/4,096 bytes with one recovery entry. These are execution, applicability, and containment rules, not an executed gate, observed performance result, support tier, or capacity claim.
+- Re-derive: Run guarded exact t1785. Public derivation must authenticate qualification publication 1c2a3832...945f and file set 28ba972c...9095, reproduce contract 0150f4b3...e368, join all 11 profiles and 11/33/44 counts, preserve every frozen budget, and execute no producer.
+- Falsify: T1785 began RED for the absent authority, poisons every work entrypoint during successful derivation, and rejects plan, order, manifest, provider, correctness, budget, applicability, immutability, schema, and dispatch drift. Caller evidence, absent guards, borrowed invocants, and returned-value mutation cannot alter the contract.
+- Durability: Retain Decision 0097, ArchitectureScaleRegressionPromotionGateContract, t1785, task `.17.5.4.1`, the mdBook, compact regression-promotion Knowledge card, bounded claim record, doctrine watchers, and work-unit Git commit. Children `.17.5.4.2` through `.4` own execution, CI placement, and independent closeout.
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-gate-contract-v1 -->
+
+Re-derive the real metadata contract without running a scale producer:
+
+```sh
+scripts/run_with_ram_guard.sh -- env \
+  FSMGEN_VIAL_REGRESSION_GATE_CONTRACT_EXACT=1 \
+  prove -Iperl -v \
+  t/1785-vial-regression-promotion-gate-contract.t
+```
+
 Re-derive the selection and its closure comparison with:
 
 ```sh

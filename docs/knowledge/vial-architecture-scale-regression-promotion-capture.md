@@ -24,48 +24,38 @@ answers:
   - "how is the current VIAL regression-promotion budget qualification independently verified?"
   - "how are copied VIAL current-budget qualification mutations and later-run applicability falsified?"
   - "how is VIAL current-budget qualification closed?"
+  - "what is the VIAL regression-promotion gate contract?"
+  - "when does a VIAL regression-promotion gate enforce performance?"
+  - "does a VIAL regression gate recalibrate its own qualification?"
+  - "where does the VIAL regression gate publish its latest observation?"
 date: 2026-09-03
 status: current
 tags: [hial, vial, scalability, regression, measurement, publication]
 evidence: >-
-  docs/decisions/0096-regression-promotion-uses-a-current-eleven-profile-corpus.md;
+  docs/decisions/0096-regression-promotion-uses-a-current-eleven-profile-corpus.md; docs/decisions/0097-regression-gates-publish-replaceable-observations-without-recalibrating.md;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16df-vial-architecture-scale-cap-closeout.md;
   perl/FSM/VIAL/ArchitectureScaleRegressionPromotionPolicy.pm; perl/FSM/VIAL/ArchitectureScaleMeasurement.pm;
-  perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCapturePlan.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileCapture.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusCoordinator.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualification.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualificationStore.pm;
+  perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCapturePlan.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileCapture.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusCoordinator.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualification.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualificationStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateContract.pm;
   scripts/run_vial_regression_promotion_corpus.pl; scripts/run_vial_regression_promotion_budget_qualification.pl; scripts/verify_vial_regression_promotion_failed_prefix.pl; scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; scripts/measure_vial_regression_promotion_canonicalization.pl;
-  t/1776-vial-regression-promotion-current-corpus-verifier.t; t/1777-vial-regression-promotion-current-corpus-mutations.t; t/1778-vial-regression-promotion-canonicalization-instrument.t; t/1779-vial-regression-promotion-qualification.t; t/1780-vial-regression-promotion-qualification-store.t; t/1781-vial-regression-promotion-qualification-cli.t; t/1782-vial-regression-promotion-budget-qualification-verifier.t; t/1783-vial-regression-promotion-budget-qualification-mutations.t; t/1784-vial-regression-promotion-budget-qualification-closeout.t
+  t/1776-vial-regression-promotion-current-corpus-verifier.t; t/1777-vial-regression-promotion-current-corpus-mutations.t; t/1778-vial-regression-promotion-canonicalization-instrument.t; t/1779-vial-regression-promotion-qualification.t; t/1780-vial-regression-promotion-qualification-store.t; t/1781-vial-regression-promotion-qualification-cli.t; t/1782-vial-regression-promotion-budget-qualification-verifier.t; t/1783-vial-regression-promotion-budget-qualification-mutations.t; t/1784-vial-regression-promotion-budget-qualification-closeout.t; t/1785-vial-regression-promotion-gate-contract.t
 reverify: >-
   scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_corpus.pl --validate; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_corpus.pl --inventory; scripts/verify_vial_regression_promotion_failed_prefix.pl; scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/run_with_ram_guard.sh -- prove -v t/1777-vial-regression-promotion-current-corpus-mutations.t; scripts/run_with_ram_guard.sh -- scripts/measure_vial_regression_promotion_canonicalization.pl --phase corpus-load --sample-relative .artifacts/diagnostics/vial-scale/corpus.sample.txt --sample-seconds 3;
   scripts/run_with_ram_guard.sh -- scripts/measure_vial_regression_promotion_canonicalization.pl --phase balanced-validation --sample-relative .artifacts/diagnostics/vial-scale/balanced.sample.txt --sample-seconds 3; scripts/run_with_ram_guard.sh -- prove -Iperl t/1769-vial-architecture-scale-regression-promotion-profile-resume.t t/1773-vial-regression-promotion-corpus-coordinator.t;
-  scripts/run_with_ram_guard.sh -- prove -Iperl t/1779-vial-regression-promotion-qualification.t t/1780-vial-regression-promotion-qualification-store.t t/1781-vial-regression-promotion-qualification-cli.t; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_budget_qualification.pl --validate; scripts/run_with_ram_guard.sh -- scripts/verify_vial_regression_promotion_budget_qualification.pl; scripts/run_with_ram_guard.sh -- prove -v t/1782-vial-regression-promotion-budget-qualification-verifier.t t/1783-vial-regression-promotion-budget-qualification-mutations.t t/1784-vial-regression-promotion-budget-qualification-closeout.t
+  scripts/run_with_ram_guard.sh -- prove -Iperl t/1779-vial-regression-promotion-qualification.t t/1780-vial-regression-promotion-qualification-store.t t/1781-vial-regression-promotion-qualification-cli.t; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_budget_qualification.pl --validate; scripts/run_with_ram_guard.sh -- scripts/verify_vial_regression_promotion_budget_qualification.pl; scripts/run_with_ram_guard.sh -- prove -v t/1782-vial-regression-promotion-budget-qualification-verifier.t t/1783-vial-regression-promotion-budget-qualification-mutations.t t/1784-vial-regression-promotion-budget-qualification-closeout.t; scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_REGRESSION_GATE_CONTRACT_EXACT=1 prove -Iperl -v t/1785-vial-regression-promotion-gate-contract.t
 ---
 
 Decision 0096 selects eleven v2 gate profiles. Each adapter call owns one
 validation plus three raw calls: 44 records in eleven guarded lifecycles.
 Revision-1 matrices are inadmissible.
 
-`.17.5.2.1` authenticates policy order and seven adapters without execution;
-only OSVVM runtime binds qualified GHDL-plus-OSVVM execution. `.2` owns bounded
-canonical same-volume per-profile publication, isolated ordinal workers,
-parent reload, ordered admission, clean identities, and zero residue. `.3`
-resumes only exact root-plus-ordinal evidence through fresh public validation;
-stale coordinates, residue, mutation, exceptions, and signals reject, and
-resume never seals the complete corpus. `.4` owns the two unbounded legacy
-stores and separately audits semantic/bridge's direct coordinator loop.
-
-Only clean `.17.5.2.3` may feed guarded capture in `.4`; unavailable providers
-or disagreement withhold the seal. `.5` independently falsifies v2 evidence.
-Historical substitution and budget promotion remain forbidden; budgets belong
-solely to `.17.5.3`.
-
-`.17.5.2.3.1` derives the sole complete coordinate, reloads eleven immutable
-profiles, enforces 11/33/44/0, and atomically seals a bounded canonical report
-plus manifest; common revision/host/guard and ordered heterogeneous providers
-remain authenticated. `.3.2` supplies closed inventory/capture/validate
-coordination with isolated child IPC and parent reload; only capture seals.
-`.3.3` exposes explicit repository-derived CLI modes with bounded canonical
-stdout, while `.17.5.2.4` alone owns real capture.
+`.17.5.2` authenticates seven adapters without execution, bounds same-volume
+profile/corpus storage, isolates ordered workers and parent reload, permits
+exact resume without sealing, fixes legacy-store and coordinator gaps, exposes
+closed CLI modes, and independently falsifies copied v2 evidence. Only clean
+capture can seal; unavailable providers or disagreement withhold it. The
+complete coordinate enforces 11/33/44/0 and common host/guard plus ordered
+provider identities. Historical substitution remains forbidden.
 
 The first real capture at clean `610ed7869` sealed no corpus: structural
 backend-emission failed closed because its fixed report axis `artifact_graph`
@@ -95,60 +85,38 @@ present, zero missing, and no staging. Copied-artifact falsification is complete
 The read-only independent verifier imports no production module and authenticates 13 files/6,220,126 bytes, inventory `94c11e5c...bb57`, all identities, 11/33/44/0, cleanup, nonclaims, and seven foundation/one materialized/three external routes.
 That direct digest covers every file; production `file_set_sha256` directly covers report+manifest and transitively binds profiles. t1776 proves read-only identity; t1777 rejects 17 safe same-volume content/file/staging/history mutation classes, restores each copy, removes it, and leaves the real census exact.
 
-`.17.5.2.5.3` adds a value/prototype-preserving JSON/clone/SHA diagnostic
-underlay with no probe encode, separately counted top-level clones/recursive
-nodes, and independent pre/post corpus authentication. On `fafe5d88b`, complete
-load reads 6,220,126 unique bytes but its twelve plan/policy derivations encode
-16,496,724 bytes. Balanced validation returns the exact 1,241,948-byte report
-while materializing 1,447,616,826 tracked JSON bytes and hashing 1,044,992,073.
-Required fresh gates/determinism/replay remain. `.3.1` replaces eleven public
-profile reloads with one internally derived ordered all-profile result: policy
-whole-graph encodes fall 12→1 and this host point falls 23.09→6.55 seconds while
-exact bytes/identities remain; sampled footprint rises 210.2M→220.6M. `.3.2`
-routes the already accepted six-gate composition through the exact-caller seam:
-the exact 1,241,948-byte report remains while canonical bytes fall
-1,325,878,982→813,307,147 and this host point falls 492.56→297.92 seconds;
-sampled peak moves 325.6M→320.5M. `.5.4` owns clean closeout. No budget, stable
-ratio, support, or capacity tier is promoted.
+`.17.5.2.5.3` instruments JSON/clone/SHA work without changing values. At
+`fafe5d88b`, corpus load reads 6,220,126 unique bytes but twelve plan/policy
+derivations encode 16,496,724 bytes; balanced validation returns 1,241,948 bytes
+while tracking 1,447,616,826 canonical bytes and 1,044,992,073 hash-input bytes.
+Single-plan loading cuts policy encodes 12→1 and the observed 23.09→6.55 seconds;
+accepted-composition reuse cuts canonical bytes 1,325,878,982→813,307,147 and
+the observed 492.56→297.92 seconds. Exact outputs and required fresh checks
+remain. Revision-separated validation then puts each whole ProfileCapture in a
+fresh child; at `1da11b2e3`, production, independent, mutation, history, and
+cleanup proof agree. None of these observations is a stable budget or tier.
 
-`.5.4.1` separates seal capture from clean execution revision. `.5.4.2.1` puts
-each whole ProfileCapture call in a fresh child while retaining nested dual
-validation and bounded fail-closed IPC. At clean `1da11b2e3`, production
-validate/inventory, independent census, mutation watchers, and historical
-separation agree; resource and byte proof is complete without a budget claim.
+`.17.5.3` derives and atomically seals the current qualification in a fixed
+two-file v2 namespace, binding source, formula, budgets, environment/provider,
+correctness, applicability, publisher, and immutable recalibration/rollback.
+From `8667f766c`, its 764,010-byte report and 28,148-byte manifest bind
+publication `1c2a3832...945f` and file set `28ba972c...9095`; distinct validation
+returns 793,084 canonical bytes. Independent and copied-hostile verification
+rejects content, schema, type, formula, budget, identity, provenance, path,
+alias, staging, or residue drift. Later exact identity is eligible only after
+correctness; environment drift is informational, deterministic drift rejects,
+provider absence is not pass, and recalibration needs separately owned old/new
+immutable evidence. T1784 closes both real censuses with no owned residue.
 
-`.17.5.3.1.2` derives the exact current qualification in memory. `.3.2.1`
-adds its caller-sealed first-version store without creating the real seal: the
-fixed two-file v2 namespace nests the exact qualification and compactly binds
-source, formula, ordered budgets, environment/provider/applicability,
-correctness, clean publisher revision, and immutable recalibration/rollback
-rules. Exact census, bounded canonical no-follow reads, fsync, sole-stage
-recovery, atomic rename, collision refusal, and identity-scoped cleanup are
-hostile-tested. `.3.2.2` adds the repository-derived exact `--publish` and
-`--validate` CLI, with complete canonical output bounded at 1,048,576 bytes
-and one sanitized failure diagnostic bounded at 4,096 bytes. From clean CLI
-revision `8667f766c`, `.3.2.3` seals the 764,010-byte report and 28,148-byte
-manifest at publication `1c2a3832...945f` and file set `28ba972c...9095`;
-distinct validation returns 793,084 canonical bytes and exactly reloads both.
-The immutable contract has no predecessor or overwrite and requires separately
-owned old/new evidence for recalibration. Performance enforcement remains
-inactive. `.3.3.1` adds a producer-independent closed verifier: it authenticates
-the exact two-file seal and the existing independent current-corpus result,
-reloads every source profile, and reconstructs measurement, correctness,
-statistics, Decision-0056 budget, environment, provider, applicability,
-profile, qualification, publication, and file-set identities without importing
-production code. T1782 proves its fixed input surface and read-only behavior.
-T1783 admits an exact same-volume copy, independently rejects every named
-content/schema/type/formula/budget/environment/provenance/path/alias/staging
-mutation without partial output, restores every copied census, and leaves both
-real namespaces exact. Its authenticated-contract oracle proves later-revision
-exact identity eligible after correctness, environmental drift informational,
-deterministic drift rejected before performance, unavailable providers not a
-pass, and recalibration restricted to separately owned immutable old/new
-qualification evidence. T1784 brackets both real namespaces with inode-aware
-censuses, joins authorities and all profile identities, and requires no
-owned residue. `.17.5.3` is complete;
-`.17.5.4` owns enforcement and CI placement.
+Decision 0097 and `.17.5.4.1` add the metadata-only gate contract at
+`regression-promotion-gate-contract/0150f4b3...e368`. It joins all eleven
+canonical dispatches to the sealed qualification without executing work,
+requires correctness and exact deterministic identity before applicability,
+compares every fresh metric maximum only on an exact environment, and permits
+no enforcement override. Unmatched performance is informational; unavailable
+providers remain unavailable. Repeated gates will atomically replace one
+latest observation under the v2 gate namespace without changing qualification
+bytes or creating budget evidence. `.17.5.4.2` owns execution and publication.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]].
