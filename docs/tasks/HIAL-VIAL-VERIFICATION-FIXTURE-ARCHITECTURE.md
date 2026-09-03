@@ -1617,13 +1617,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2: partition current budget publication`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.3`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the bounded same-volume current-budget qualification publication store without creating the real publication.`
   Acceptance: `Add one caller-sealed authority that accepts only the repository root, derives and validates the complete .17.5.3.1 qualification internally, records the exact source corpus/file-set/qualification/formula/profile-budget/applicability identities plus predecessor, recalibration trigger, rollback, and nonclaims in closed canonical report/manifest/artifact schemas, and exposes conservative byte ceilings. Fsync files and directories before one non-colliding directory rename; reload through exact census, bounded no-follow reads, owner/device/link/identity checks, digests, canonical JSON, full revalidation, and exact re-derivation. Reject caller evidence, paths, budgets, historical or mixed state, collisions, ambiguous or malformed recovery, oversized/noncanonical bytes, symlink/hard-link/cross-device aliases, post-validation mutation, and staging residue. Synthetic tests execute no real producer, provider, simulator, measurement controller, or publication.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `ArchitectureScaleRegressionPromotionQualificationStore now accepts only a repository root beneath the active RAM guard, requires one clean publisher revision, internally derives and validates the complete current qualification, and fixes a non-colliding v2 report-plus-manifest coordinate. The outer report preserves the exact source qualification without rewriting its derivation-time nonclaims; report and manifest bind publisher/source/formula/profile-budget/environment/provider/applicability/correctness identities plus one closed initial-version/recalibration/rollback contract. The 1-MiB report and 64-KiB manifest ceilings, exact census, bounded no-follow stable reads, owner/device/single-link checks, canonical JSON, digests, fsync, sole-stage recovery, one directory rename, collision refusal, and identity-scoped cleanup are executable. Guarded real in-memory construction rederived qualification d8fb1813...0c97 and produced a 764,010-byte wrapper plus 28,148-byte manifest without writing the real publication. T1780 starts RED on the absent authority, then proves caller sealing, exact schemas, defensive contracts, publication/reload/unchanged status, drift, malformed/noncanonical/cap-plus-one bytes, extra entries, symlink/hard-link aliases, residue, exact/malformed/ambiguous recovery, collision, partial-failure cleanup, and late mutation. Guarded adjacent t1772+t1779+t1780 reports All tests successful at Files=3/Tests=21. No real publication or performance gate exists; .2 owns the CLI and .3 owns clean real publication.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.1: implement current budget publication store`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Expose explicit bounded publish and validate operations for the current-budget qualification store.`
   Acceptance: `Add one repository-relative executable that accepts exactly one explicit publish or validate operation, delegates only to the caller-sealed store under the active guard, emits bounded canonical newline JSON only after complete success, returns stable nonzero failure status with bounded sanitized diagnostics, and rejects defaults, abbreviations, extra arguments, caller paths/evidence/budgets, partial stdout, malformed worker state, or residue. Keep real publication for .3.`
   Verification: `pending`
@@ -5716,3 +5716,37 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   No source, test, script, artifact, budget, publication, producer, provider,
   simulator, measurement controller, performance gate, support, capacity,
   full CI, push, or product behavior changes.
+
+## Acceptance Checklist (enforced) — `.17.5.3.2.1` current-budget publication store
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the clean predecessor can return the exact
+  current qualification, but the initial focused t1780 run is RED before any
+  subtest because
+  `FSM::VIAL::ArchitectureScaleRegressionPromotionQualificationStore` does not
+  exist: `Can't locate FSM/VIAL/ArchitectureScaleRegressionPromotionQualificationStore.pm at t/1780-vial-regression-promotion-qualification-store.t line 22`.
+  Existing CorpusStore owns current measurement-corpus bytes, while the
+  historical CalibrationClosurePublication is a v1 candidate-only authority;
+  neither may accept or publish the new current budgets.
+- [x] **ADDRESSED (verified)** — the new caller-sealed store accepts only a
+  repository root, derives and validates Qualification internally under the
+  RAM guard, binds one clean publisher revision and the entire exact source
+  report inside closed report/manifest/artifact schemas, and fixes a
+  non-colliding v2 namespace. Its compact manifest separately binds source
+  corpus/file-set/formula and all eleven ordered budget/environment/provider/
+  applicability/correctness identities. A closed initial-version contract
+  forbids overwrite, requires separately owned old-versus-new recalibration,
+  and requires consumers and gates to be removed before retirement. Exact
+  census, ceilings, no-follow stable reads, device/owner/link checks, fsync,
+  sole-stage recovery, atomic rename, collision refusal, and owned cleanup all
+  fail closed. The real publication remains absent by construction.
+- [x] **NO REGRESSION** — module/test syntax and t1780 are green. A guarded
+  producer-free in-memory run rederives qualification `d8fb1813...0c97` and
+  fits the configured ceilings at 764,010 report bytes and 28,148 manifest
+  bytes without publishing. The independent hostile suite makes caller,
+  qualification-drift, byte, schema, size, census, alias, recovery, collision,
+  cleanup, and race controls RED; guarded t1772+t1779+t1780 remains green at
+  `Files=3, Tests=21`. mdBook, Knowledge Map, claims, containment, task,
+  Memory, staged acceptance, and doctrines close before commit. No real
+  publication, producer/provider/simulator/controller execution, active gate,
+  support, capacity, full CI, push, or existing corpus/qualification identity
+  changes.
