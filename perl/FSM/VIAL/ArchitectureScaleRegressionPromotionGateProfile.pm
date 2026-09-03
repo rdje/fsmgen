@@ -106,14 +106,30 @@ my @NONCLAIMS = qw(
 my @OSVVM_VOLATILE_LIFECYCLE_STAGES = qw(
     compile_analyze elaborate run trace_validate result_produce publish
 );
-my %OSVVM_VOLATILE_LIFECYCLE_STAGE = map {
-    ($_ => 1)
-} @OSVVM_VOLATILE_LIFECYCLE_STAGES;
+my @PORTABLE_VOLATILE_LIFECYCLE_STAGES = qw(
+    compile_analyze run trace_validate result_produce publish
+);
 my $OSVVM_RUNTIME_MEASUREMENT_SCHEMA =
     'fsmgen.vial_architecture_scale_osvvm_runtime_measurement_set.v1';
+my $PORTABLE_RUNTIME_MEASUREMENT_SCHEMA =
+    'fsmgen.vial_architecture_scale_portable_runtime_measurement_set.v1';
 my $CORRECTNESS_PROJECTION_SCHEMA =
     'fsmgen.vial_architecture_scale_regression_promotion_correctness.v1';
 my $VOLATILE_DIGEST_SENTINEL = 'process-telemetry-derived';
+my @STABLE_PROCESS_TELEMETRY_PROFILES = (
+    {
+        measurement_schema => $OSVVM_RUNTIME_MEASUREMENT_SCHEMA,
+        backend_profile => 'vhdl_osvvm_qualified',
+        lifecycle_prefix => 'osvvm_runtime',
+        volatile_stages => \@OSVVM_VOLATILE_LIFECYCLE_STAGES,
+    },
+    {
+        measurement_schema => $PORTABLE_RUNTIME_MEASUREMENT_SCHEMA,
+        backend_profile => 'sv_portable_verilator',
+        lifecycle_prefix => 'portable_runtime',
+        volatile_stages => \@PORTABLE_VOLATILE_LIFECYCLE_STAGES,
+    },
+);
 
 my $JSON = JSON::PP->new->canonical(1)->utf8(1);
 
@@ -478,48 +494,55 @@ sub _stable_correctness_projection($projection) {
         unless ref($projection) eq 'HASH' && !blessed($projection);
     my $stable = _clone($projection);
     my $report = $stable->{report_contract};
-    return $stable unless ref($report) eq 'HASH' && !blessed($report)
-        && ($report->{schema} // '') eq $OSVVM_RUNTIME_MEASUREMENT_SCHEMA
+    return $stable unless ref($report) eq 'HASH' && !blessed($report);
+    my ($profile) = grep {
+        ($report->{schema} // '') eq $_->{measurement_schema}
+            && ($report->{backend_profile} // '') eq $_->{backend_profile}
+    } @STABLE_PROCESS_TELEMETRY_PROFILES;
+    return $stable unless $profile
         && ($report->{family} // '') eq 'runtime_stream_v1'
         && ($report->{level} // '') eq 'gate_candidate_v1'
-        && ($report->{primary_axis} // '') eq 'runtime_trace_records'
-        && ($report->{backend_profile} // '') eq 'vhdl_osvvm_qualified';
+        && ($report->{primary_axis} // '') eq 'runtime_trace_records';
 
-    confess "regression gate stable OSVVM correctness projection schema changed\n"
+    confess "regression gate stable process-telemetry correctness projection schema changed\n"
         unless ($stable->{schema} // '') eq $CORRECTNESS_PROJECTION_SCHEMA
             && _json_integer_equals($stable->{schema_version}, 1);
     my $records = $stable->{record_projections};
-    confess "regression gate stable OSVVM correctness record topology changed\n"
+    confess "regression gate stable process-telemetry correctness record topology changed\n"
         unless ref($records) eq 'ARRAY' && @$records == 4;
     for my $index (0 .. $#$records) {
         my $record = $records->[$index];
         my $run_class = $index ? 'gate_measurement' : 'validation';
-        confess "regression gate stable OSVVM correctness record order changed\n"
+        confess "regression gate stable process-telemetry correctness record order changed\n"
             unless ref($record) eq 'HASH' && !blessed($record)
                 && ($record->{run_class} // '') eq $run_class
                 && _json_integer_equals($record->{run_ordinal}, $index);
-        _normalize_osvvm_lifecycle_artifacts($record, $index);
-        _normalize_osvvm_lifecycle_oracles($record, $index);
-        _normalize_osvvm_lifecycle_stage_bytes($record, $index);
+        _normalize_process_lifecycle_artifacts($record, $index, $profile);
+        _normalize_process_lifecycle_oracles($record, $index, $profile);
+        _normalize_process_lifecycle_stage_bytes($record, $index, $profile);
     }
     return $stable;
 }
 
-sub _normalize_osvvm_lifecycle_artifacts($record, $record_index) {
+sub _normalize_process_lifecycle_artifacts(
+    $record, $record_index, $profile,
+) {
     my $artifacts = $record->{artifact_records};
-    confess "regression gate stable OSVVM artifact records changed\n"
+    confess "regression gate stable process-telemetry artifact records changed\n"
         unless ref($artifacts) eq 'ARRAY';
+    my @stages = @{$profile->{volatile_stages}};
+    my %volatile_stage = map { ($_ => 1) } @stages;
     my %expected = map {
         ("outputs/$_/lifecycle-evidence.json" => [$_, 'evidence'])
-    } @OSVVM_VOLATILE_LIFECYCLE_STAGES;
+    } @stages;
     $expected{"outputs/$_/lifecycle-handle.json"} = [$_, 'handle']
-        for grep { $_ ne 'publish' } @OSVVM_VOLATILE_LIFECYCLE_STAGES;
+        for grep { $_ ne 'publish' } @stages;
     my %seen;
     for my $artifact (@$artifacts) {
         next unless ref($artifact) eq 'HASH' && !blessed($artifact);
         my $path = $artifact->{relative_path} // '';
         my $stage = $artifact->{stage} // '';
-        next unless $OSVVM_VOLATILE_LIFECYCLE_STAGE{$stage}
+        next unless $volatile_stage{$stage}
             && $path =~ m{/lifecycle-(?:evidence|handle)\.json\z};
         my $coordinate = $expected{$path};
         confess "regression gate unexpected volatile lifecycle artifact"
@@ -527,12 +550,20 @@ sub _normalize_osvvm_lifecycle_artifacts($record, $record_index) {
             unless $coordinate
                 && $coordinate->[0] eq $stage
                 && ($artifact->{kind} // '') eq
-                    "osvvm_runtime_lifecycle_$coordinate->[1]";
+                    "$profile->{lifecycle_prefix}_lifecycle_$coordinate->[1]";
         confess "regression gate duplicate volatile lifecycle artifact"
             . " at record $record_index stage '$stage' path '$path'\n"
             if $seen{$path}++;
+        confess "regression gate volatile lifecycle artifact digest changed shape\n"
+            unless ($artifact->{sha256} // '') =~ /\A[0-9a-f]{64}\z/;
         $artifact->{sha256} = $VOLATILE_DIGEST_SENTINEL;
-        $artifact->{bytes} = 0 if $coordinate->[1] eq 'evidence';
+        if ($coordinate->[1] eq 'evidence') {
+            _json_nonnegative_integer(
+                $artifact->{bytes},
+                'regression gate volatile lifecycle artifact bytes',
+            );
+            $artifact->{bytes} = 0;
+        }
     }
     for my $path (sort keys %expected) {
         my $stage = $expected{$path}[0];
@@ -543,25 +574,30 @@ sub _normalize_osvvm_lifecycle_artifacts($record, $record_index) {
     return 1;
 }
 
-sub _normalize_osvvm_lifecycle_oracles($record, $record_index) {
+sub _normalize_process_lifecycle_oracles($record, $record_index, $profile) {
     my $oracles = $record->{correctness_oracles};
-    confess "regression gate stable OSVVM correctness oracles changed\n"
+    confess "regression gate stable process-telemetry correctness oracles changed\n"
         unless ref($oracles) eq 'ARRAY';
+    my @stages = @{$profile->{volatile_stages}};
+    my %volatile_stage = map { ($_ => 1) } @stages;
     my %seen;
     for my $oracle (@$oracles) {
         next unless ref($oracle) eq 'HASH' && !blessed($oracle);
         my $stage = $oracle->{stage} // '';
-        next unless $OSVVM_VOLATILE_LIFECYCLE_STAGE{$stage};
-        my $expected = "osvvm_runtime_${stage}_lifecycle_canonical";
+        next unless $volatile_stage{$stage};
+        my $expected =
+            "$profile->{lifecycle_prefix}_${stage}_lifecycle_canonical";
         confess "regression gate volatile lifecycle oracle at record"
             . " $record_index stage '$stage' changed\n"
             unless ($oracle->{oracle_id} // '') eq $expected;
         confess "regression gate volatile lifecycle oracle at record"
             . " $record_index stage '$stage' must occur exactly once\n"
             if $seen{$stage}++;
+        confess "regression gate volatile lifecycle oracle identity changed shape\n"
+            unless ($oracle->{evidence_identity} // '') =~ /\A[0-9a-f]{64}\z/;
         $oracle->{evidence_identity} = $VOLATILE_DIGEST_SENTINEL;
     }
-    for my $stage (@OSVVM_VOLATILE_LIFECYCLE_STAGES) {
+    for my $stage (@stages) {
         confess "regression gate volatile lifecycle oracle at record"
             . " $record_index stage '$stage' must occur exactly once\n"
             unless ($seen{$stage} // 0) == 1;
@@ -569,24 +605,32 @@ sub _normalize_osvvm_lifecycle_oracles($record, $record_index) {
     return 1;
 }
 
-sub _normalize_osvvm_lifecycle_stage_bytes($record, $record_index) {
+sub _normalize_process_lifecycle_stage_bytes(
+    $record, $record_index, $profile,
+) {
     my $measurements = $record->{stage_measurements};
-    confess "regression gate stable OSVVM stage measurements changed\n"
+    confess "regression gate stable process-telemetry stage measurements changed\n"
         unless ref($measurements) eq 'ARRAY';
+    my @stages = @{$profile->{volatile_stages}};
+    my %volatile_stage = map { ($_ => 1) } @stages;
     my %seen;
     for my $measurement (@$measurements) {
         next unless ref($measurement) eq 'HASH' && !blessed($measurement);
         my $stage = $measurement->{stage} // '';
-        next unless $OSVVM_VOLATILE_LIFECYCLE_STAGE{$stage};
+        next unless $volatile_stage{$stage};
         confess "regression gate volatile lifecycle stage at record"
             . " $record_index stage '$stage' must occur exactly once\n"
             if $seen{$stage}++;
         confess "regression gate volatile lifecycle stage output bytes changed shape\n"
             unless ref($measurement->{output_counts}) eq 'HASH'
                 && exists($measurement->{output_counts}{bytes});
+        _json_nonnegative_integer(
+            $measurement->{output_counts}{bytes},
+            'regression gate volatile lifecycle stage output bytes',
+        );
         $measurement->{output_counts}{bytes} = 0;
     }
-    for my $stage (@OSVVM_VOLATILE_LIFECYCLE_STAGES) {
+    for my $stage (@stages) {
         confess "regression gate volatile lifecycle stage at record"
             . " $record_index stage '$stage' must occur exactly once\n"
             unless ($seen{$stage} // 0) == 1;

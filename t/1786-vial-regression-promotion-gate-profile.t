@@ -86,25 +86,27 @@ my $contract;
 my $availability;
 our $adapter_mode = 'ok';
 
-sub synthetic_stable_projection() {
-    my @stages = qw(
-        compile_analyze elaborate run trace_validate result_produce publish
-    );
-    my @artifact_stages = qw(
-        compile_analyze elaborate run trace_validate result_produce
-    );
+sub synthetic_stable_projection($profile = 'osvvm') {
+    die "unknown synthetic stable projection profile '$profile'\n"
+        unless $profile eq 'osvvm' || $profile eq 'portable';
+    my $portable = $profile eq 'portable';
+    my @stages = $portable
+        ? qw(compile_analyze run trace_validate result_produce publish)
+        : qw(compile_analyze elaborate run trace_validate result_produce publish);
+    my @artifact_stages = @stages[0 .. $#stages - 1];
+    my $prefix = $portable ? 'portable_runtime' : 'osvvm_runtime';
     my @artifacts = map {
         my $stage = $_;
         ({
             bytes => 100,
-            kind => 'osvvm_runtime_lifecycle_evidence',
+            kind => "${prefix}_lifecycle_evidence",
             lines => 1,
             relative_path => "outputs/$stage/lifecycle-evidence.json",
             sha256 => '1' x 64,
             stage => $stage,
         }, {
             bytes => 50,
-            kind => 'osvvm_runtime_lifecycle_handle',
+            kind => "${prefix}_lifecycle_handle",
             lines => 1,
             relative_path => "outputs/$stage/lifecycle-handle.json",
             sha256 => '2' x 64,
@@ -113,7 +115,7 @@ sub synthetic_stable_projection() {
     } @artifact_stages;
     push @artifacts, {
         bytes => 200,
-        kind => 'osvvm_runtime_lifecycle_evidence',
+        kind => "${prefix}_lifecycle_evidence",
         lines => 1,
         relative_path => 'outputs/publish/lifecycle-evidence.json',
         sha256 => '3' x 64,
@@ -124,12 +126,14 @@ sub synthetic_stable_projection() {
             'fsmgen.vial_architecture_scale_regression_promotion_correctness.v1',
         schema_version => 1,
         report_contract => {
-            schema =>
-                'fsmgen.vial_architecture_scale_osvvm_runtime_measurement_set.v1',
+            schema => $portable
+                ? 'fsmgen.vial_architecture_scale_portable_runtime_measurement_set.v1'
+                : 'fsmgen.vial_architecture_scale_osvvm_runtime_measurement_set.v1',
             family => 'runtime_stream_v1',
             level => 'gate_candidate_v1',
             primary_axis => 'runtime_trace_records',
-            backend_profile => 'vhdl_osvvm_qualified',
+            backend_profile => $portable
+                ? 'sv_portable_verilator' : 'vhdl_osvvm_qualified',
         },
         record_projections => [map {
             my $ordinal = $_;
@@ -140,7 +144,7 @@ sub synthetic_stable_projection() {
                 correctness_oracles => [map {
                     +{
                         stage => $_,
-                        oracle_id => "osvvm_runtime_${_}_lifecycle_canonical",
+                        oracle_id => "${prefix}_${_}_lifecycle_canonical",
                         evidence_identity => '4' x 64,
                     }
                 } @stages],
@@ -551,6 +555,50 @@ subtest 'OSVVM process telemetry drift admits only stable correctness' => sub {
         });
     }), qr/correctness changed after stable projection.*ordinal 1.*synthetic/s,
         'adjacent semantic drift rejects with the profile coordinate');
+};
+
+subtest 'portable process telemetry drift admits only stable correctness' => sub {
+    reset_fixture();
+    $qualified_correctness_projection = synthetic_stable_projection('portable');
+    $current_correctness_projection =
+        clone($qualified_correctness_projection);
+    ++$current_correctness_projection->{record_projections}[0]
+        {artifact_records}[0]{bytes};
+    $current_correctness_projection->{record_projections}[0]
+        {artifact_records}[0]{sha256} = '5' x 64;
+    $current_correctness_projection->{record_projections}[0]
+        {correctness_oracles}[0]{evidence_identity} = '6' x 64;
+    ++$current_correctness_projection->{record_projections}[0]
+        {stage_measurements}[0]{output_counts}{bytes};
+    my $qualified_identity = 'regression-promotion-correctness/'
+        . sha256_hex(canonical($qualified_correctness_projection));
+    my $current_identity = 'regression-promotion-correctness/'
+        . sha256_hex(canonical($current_correctness_projection));
+    $contract->{profiles}[0]{correctness_projection_identity} =
+        $qualified_identity;
+    $observation->{correctness_projection_identity} = $current_identity;
+    my $result = with_fixture(sub {
+        return $class->run({repository_root => $repo, ordinal => 1});
+    });
+    is(
+        $result->{observation}{correctness_projection_identity},
+        $qualified_identity,
+        'portable admission remains bound to immutable qualified identity',
+    );
+    is($result->{outcome}, 'accepted',
+        'portable telemetry-only projection drift is accepted before timing');
+
+    ++$current_correctness_projection->{record_projections}[0]
+        {stage_measurements}[0]{output_counts}{objects};
+    $observation->{correctness_projection_identity} =
+        'regression-promotion-correctness/'
+        . sha256_hex(canonical($current_correctness_projection));
+    like(with_fixture(sub {
+        return captured_error(sub {
+            $class->run({repository_root => $repo, ordinal => 1});
+        });
+    }), qr/correctness changed after stable projection.*ordinal 1.*synthetic/s,
+        'portable adjacent semantic drift rejects with the profile coordinate');
 };
 
 subtest 'unavailable exact provider cannot pass' => sub {

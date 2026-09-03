@@ -159,7 +159,7 @@ T1792 locks ordinals 1-7/11 informational, 8-10 unavailable-not-pass, required
 11/33/44 versus observed 8/24/32, and closed input/staging. Always-cleanup owns
 only evidence, OSVVM, latest-result, and stage; real execution remains `.4`.
 
-The gate isolated ordinal 10: each 165,285-byte projection differed at 29 telemetry fields in four records. Semantics agreed; ordinal 11 passed. Decision 0099 keeps raw equality, then admits OSVVM through a sealed fallback. It replaces those 116 positions, requires exact topology, and compares all else. Output retains the qualified identity; budgets stay fixed. T1786/T1793 retain hostile semantic/shape rejection.
+Clean gates found ordinal 10 at 4 x 29 fields in 165,285-byte projections, then ordinal 8 at 4 x 24 in 77,952-byte projections; semantics agreed and ordinal 11 passed. Decision 0099 keeps raw equality, normalizing only exact OSVVM/portable lifecycle coordinates. Nine other profiles and all semantic/topology fields stay exact; qualified identity and budgets stay fixed. T1786/T1793 retain hostile rejection.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]],

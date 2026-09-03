@@ -1780,23 +1780,23 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Complete independent real gate, applicability, CI-ownership, and residue closeout after repairing each exact correctness-admission defect exposed by clean production execution.`
   Acceptance: `Diagnose and repair the clean public gate's exact ordinal-8 correctness rejection without recalibrating immutable evidence, then rerun and independently authenticate the complete exact-pinned result. Exercise production entrypoints in safely simulated unmatched-host and provider-unavailable classifications without changing the host or immutable evidence; join every profile, correctness, determinism, measurement, budget, applicability, publication, non-aliasing, CI-inventory, and cleanup identity. Re-run focused hostile watchers plus the warranted bounded regression band; prove no historical substitution or recalibration, exact before/after censuses, zero staging/process residue, and synchronized task/book/Knowledge Map/claims/containment/Memory before closing .17.5.4, without broader support or capacity claims.`
-  Verification: `After committed ordinal-10 repair 072da37a6, a clean selected-important-step run authenticated and adopted the exact evidence, passed ordinals 1-7, then rejected ordinal 8 selection portable_runtime|runtime_stream_v1|gate_candidate_v1|-|sv_portable_verilator before publication. Cleanup released the adopted receipt and left result/staging/process coordinates absent. An isolated direct canonical measurement plus caller-sealed projection comparison re-derived equal 77,952-byte envelopes with qualified/current identities b95c62f1...47cb8/30e1110e...32a2 and exactly 96 changed leaves: 24 in each of four records. Falsification confines them to five lifecycle-evidence bytes/digests, four lifecycle-handle digests, five derived oracle evidence identities, and five stage output-byte totals per record; every other leaf agrees, and Decision 0099's exact OSVVM-only fallback correctly does not cover this portable schema. Child .1 durably owns exact diagnosis/repair; child .2 retains the complete real-gate/applicability/CI/residue closeout.`
+  Verification: `After committed ordinal-10 repair 072da37a6, a clean selected-important-step run authenticated and adopted the exact evidence, passed ordinals 1-7, then rejected ordinal 8 selection portable_runtime|runtime_stream_v1|gate_candidate_v1|-|sv_portable_verilator before publication. Cleanup released the adopted receipt and left result/staging/process coordinates absent. An isolated direct canonical measurement plus caller-sealed projection comparison re-derived equal 77,952-byte envelopes with qualified/current identities b95c62f1...47cb8/30e1110e...32a2 and exactly 96 changed leaves: 24 in each of four records. Falsification confines them to five lifecycle-evidence bytes/digests, four lifecycle-handle digests, five derived oracle evidence identities, and five stage output-byte totals per record; every other leaf agrees. Child .1 repairs the exact cause without evidence changes; child .2 is active for complete real-gate/applicability/CI/residue closeout.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2: partition ordinal-8 correctness repair`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Diagnose and repair the exact ordinal-8 regression-gate correctness drift without recalibration.`
   Acceptance: `From the clean reproducible ordinal-8 failure, independently compare every field in a fresh canonical portable-Verilator projection with the immutable qualified projection. Trace each of the exact 96 changed leaves to its first causal producer field; distinguish semantic regression from unstable or wrongly scoped correctness data using current authorities and history; then make the smallest fail-closed signoff repair under Decision 0099's raw-first, authenticated-full-projection semantics. Add focused RED/GREEN coverage for the exact schema, profile, stages, kinds, counts, order, uniqueness, and diagnostic coordinate; reject adjacent semantic and hostile topology changes; preserve qualification/corpus bytes and identities, workload shape, budgets, provider/environment admission, publication atomicity, and zero stage/process residue.`
-  Verification: `pending exact causal producer and implementation audit; the parent records the independent 4 x 24 field partition and clean failure lifecycle.`
-  Commit: `pending`
+  Verification: `The clean public gate failed ordinal 8 before publication, and an isolated canonical rerun compared equal 77,952-byte full projections at b95c62f1...47cb8/30e1110e...32a2 with exactly 96 differences, partitioned 4 x 24. Source tracing locates the first cause at VerilatorLifecycle::_capture_evidence: eight fresh ProcessSupervisor monotonic/duration values enter compile state evidence, which the portable adapter transitively copies through compile/run/trace/result/publish evidence and the first four handles; emit precedes capture and stays exact. Diffing capture revision 155aa22ea through HEAD finds no relevant adapter/lifecycle change and only GateProfile caller authorization in ProcessSupervisor. T1793's portable case began RED at line 324 with stable equality plus missing/new/duplicate controls failing; t1786 independently aborted at GateProfile.pm line 465 before timing. Decision 0099 now drives one exact table for OSVVM and portable schemas. Portable normalization admits only five evidence sizes/digests, four handle digests, five oracle identities, and five stage-byte totals per record; scalar/digest shapes and topology fail closed, the other nine profiles stay raw-exact, and successful admission retains the qualified identity. Focused GREEN reports All tests successful at Files=2, Tests=29. The guarded qualification/gate band reports All tests successful at Files=7, Tests=153. Production-independent verifiers reproduce the exact 13-file/6,220,126-byte corpus and 2-file/792,158-byte qualification; the regenerated claim inventory and dispositions close 1,887/1,887 candidates with zero open owners; all 58 SUMMARY chapters test and build, and the disposable render is removed. Workloads, budgets, providers, environment, publication, and cleanup are unchanged; child .2 owns clean production closeout.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.1: stabilize ordinal-8 correctness admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Complete independent real gate, applicability, CI-ownership, and residue closeout after all observed correctness-admission repairs.`
   Acceptance: `From the clean committed ordinal-8 repair, rerun the public exact-pinned gate and independently authenticate its complete result. Exercise production entrypoints in safely simulated unmatched-host and provider-unavailable classifications without changing the host or immutable evidence; join every profile, correctness, determinism, measurement, budget, applicability, publication, non-aliasing, CI-inventory, and cleanup identity. Re-run focused hostile watchers plus the warranted bounded regression band; prove no historical substitution or recalibration, exact before/after censuses, zero staging/process residue, and synchronized task/book/Knowledge Map/claims/containment/Memory before closing .17.5.4, without broader support or capacity claims.`
-  Verification: `pending activation after clean .1`
-  Commit: `pending activation`
+  Verification: `pending after clean committed .1`
+  Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5`
   Status: `proposed`
   Goal: `Publish exact architecture-scale commands, envelopes, variability policy, support/capability truth, and nonclaims.`
@@ -2739,3 +2739,20 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   commit. Qualification/corpus bytes and identities, workloads, budgets,
   provider/environment admission, atomic failure behavior, and residue remain
   unchanged; clean production closeout is separately owned by child `.2`.
+
+## Acceptance Checklist (enforced) — `.17.5.4.4.2.1` ordinal-8 correctness stability
+
+- [x] **ROOT CAUSE (WHY + WHERE; portable process telemetry in exact correctness)** —
+  the focused watcher began RED with `Failed test 'only portable telemetry-derived lifecycle drift normalizes equal' at t/1793-vial-regression-promotion-gate-correctness-stability.t line 324`; integration independently rejected at GateProfile.pm line 465. The real comparator's 96 changed leaves trace to fresh supervisor timing copied into Verilator lifecycle evidence from compile onward.
+- [x] **ADDRESSED (verified before -> after)** — Decision 0099's stable comparator
+  now selects two exact schema/backend table entries. Portable admission replaces
+  only its 4 x 24 derived fields, retains immutable qualified identity, and
+  rejects missing/new/duplicate/reordered or malformed coordinates plus adjacent
+  semantic drift. Focused t1786+t1793 is GREEN at Files=2/Tests=29.
+- [x] **NO REGRESSION (qualification/gate correctness band)** — the corrected
+  guarded band reports `All tests successful.` and `Files=7, Tests=153` across
+  t1779/t1780/t1785/t1786/t1787/t1788/t1793. Perl syntax, mdBook, Knowledge Map,
+  claim inventory/disposition joins close 1,887/1,887 candidates with zero open
+  owners. Containment, staged acceptance, and doctrine gates remain required
+  before commit. Qualification/corpus, budgets, providers, publication, and
+  cleanup are unchanged; child `.2.2` retains real production closeout.

@@ -2,31 +2,31 @@
 
 - **Status:** Accepted
 - **Date:** 2026-09-03
-- **Owner:** `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.1`
+- **Owner:** `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.1` + `.2.1`
 - **Refines:** [0097](0097-regression-gates-publish-replaceable-observations-without-recalibrating.md)
 
 ## Context
 
-The first clean exact-pinned gate reproducibly failed ordinal 10 correctness; isolated ordinal 11 passed. Ordinal 10's fresh and qualified projections were each 165,285 bytes and differed in 116 scalars (29 in each of four records): lifecycle evidence/handle digests, evidence byte sizes, oracle evidence identities, and stage output-byte totals. All other fields agreed.
+The clean gate failed ordinal 10 at 4 x 29 fields, then ordinal 8 at 4 x 24; fresh/qualified projection sizes were respectively 165,285 and 77,952 bytes. Only lifecycle evidence/handle digests, evidence sizes, oracle identities, and stage byte totals changed. Ordinal 11 passed.
 
-GHDL/OSVVM evidence embeds fresh monotonic process timings, so derived sizes, hashes, and identities vary. History from capture `155aa22ea3099642eb6b7f5de81ea03633e72bcb` showed no producer drift; recalibration would freeze another timestamp set.
+GHDL/OSVVM and portable-Verilator lifecycle evidence embed fresh process timings; portable emit precedes them and stays exact. Source/history comparison from capture `155aa22ea` found no relevant producer change. Recalibration would freeze another timing set.
 
 ## Decision
 
-1. Raw correctness identity remains every profile's fast path; fallback runs only after mismatch.
-2. Caller-sealed Qualification and GateContract seams authenticate both full projections, raw identities, qualification/publication/file-set, ordinal, and selection.
-3. Normalization is confined to `runtime_stream_v1` / `gate_candidate_v1` / `runtime_trace_records` / `vhdl_osvvm_qualified`; all other profiles stay byte-exact.
-4. It replaces only those 29 telemetry-derived scalars per record. Exact counts, kinds, order, and uniqueness are mandatory; topology drift rejects.
-5. All else compares canonically before performance. Success retains the qualified identity; no schema, evidence, qualification, budget, provider, environment, or publication rule changes.
+1. Raw identity remains the fast path; fallback runs only after mismatch.
+2. Caller-sealed seams authenticate both projections and every qualification coordinate.
+3. Only exact runtime-stream/gate-candidate/runtime-records schema/backend pairs normalize: OSVVM + `vhdl_osvvm_qualified`, and portable + `sv_portable_verilator`. The other nine profiles stay byte-exact.
+4. OSVVM replaces 29 derivatives per record across compile/elaborate/run/trace/result/publish; portable replaces 24 across compile/run/trace/result/publish. Scalar shape, digest form, count, kind, order, and uniqueness remain exact.
+5. All else compares canonically before performance; success retains the qualified identity. Evidence, qualification, budgets, providers, environment, and publication do not change.
 
 ## Rejected alternatives
 
-Recalibration preserves the defect. Removing telemetry changes a broader contract; broader normalization hides semantics; publishing the fresh identity contradicts qualified admission.
+Recalibration preserves the defect; changing producer evidence is broader; general normalization hides semantics; publishing a fresh identity contradicts qualified admission.
 
 ## Verification and consequences
 
-- **Re-derive:** task evidence records both sizes/identities and the 4 x 29 partition; t1793 reconstructs all 116 mutations from tracked evidence.
-- **Falsify:** ordinal 11 and history exclude aggregate/timing and producer drift. T1793 rejects semantic mutation, hostile topology, and non-OSVVM normalization; t1786 rejects adjacent semantics before timing.
-- **Durability:** retain the evidence, sealed seams, comparator, tests, synchronized docs/doctrines, and commit; the next real gate proves admission and residue.
+- **Re-derive:** task evidence records both comparisons; t1793 reconstructs the 116/96 partitions.
+- **Falsify:** history and ordinal 11 exclude producer/aggregate drift. T1793 rejects semantic, topology, shape, order, and foreign-profile changes; t1786 rejects adjacent semantics before timing.
+- **Durability:** retain both leaves, sealed seams, comparator, tests, synchronized surfaces, and Git; the next real gate proves production admission.
 
-Lifecycle bodies remain authenticated; only telemetry-derived summaries leave cross-run equality. Corpus/qualification, workloads, budgets, providers, publication, and cleanup are unchanged. No capability claim is added. Rollback restores raw-only equality and the known false rejection without editing evidence.
+Lifecycle bodies stay authenticated; only derived summaries leave cross-run equality. No capability claim is added. Rollback restores raw-only equality and its known false rejection without editing evidence.
