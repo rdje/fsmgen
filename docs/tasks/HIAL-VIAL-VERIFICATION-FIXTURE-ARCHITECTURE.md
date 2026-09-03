@@ -1837,8 +1837,23 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Independently close architecture-scale regression, evidence, public truth, and residue before completing .17.5.`
   Acceptance: `Re-derive the complete selected profile/gate/evidence/budget/support partition from current producers and publications; prove exact pinned-host enforcement, unmatched-host informational behavior, deterministic oracles, qualified tools, graceful boundaries, atomicity, same-volume cleanup, documentation commands, capability truth, and zero unowned residue. Reject missing, extra, stale, historical-substituted, reordered, mutated, mixed-identity, or caller-supplied evidence; then close .17.5 without generalizing to whole-product capacity.`
-  Verification: `Clean predecessor b4b93d181 completes machine-readable and human public scale truth with exact eleven-profile envelopes, runnable lifecycle commands, applicability, cleanup, supported scope, and nonclaims. Query-first review resolves the canonical regression-promotion capture card and decisions 0096-0099: independent closeout must authenticate the current corpus/qualification and tracked transport, execute or validate the exact gate path, join public machine and human projections, exercise the named hostile evidence classes, prove pinned/unmatched/unavailable outcomes and same-volume residue closure, and preserve every support/capacity nonclaim. This activation changes no gate, evidence, budget, result, CI, support, or capacity behavior.`
+  Verification: `Clean predecessor b4b93d181 completes machine-readable and human public scale truth with exact eleven-profile envelopes, runnable lifecycle commands, applicability, cleanup, supported scope, and nonclaims. Query-first review resolves the canonical regression-promotion capture card and decisions 0096-0099. The audit finds existing machine/evidence/qualification/gate oracles complete, but no durable cross-surface watcher joins both public machine entrypoints to the new human guide or proves its documented dry run side-effect free. Child .1 owns that watcher and hostile projection cases; child .2 owns clean exact execution, the complete independent hostile band, final public/evidence/result/residue joins, and parent closeout. This partition changes no gate, evidence, budget, result, CI, support, or capacity behavior.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6: activate independent scale regression closeout`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6.1`
+  Status: `done`
+  Goal: `Make public machine and human architecture-scale regression truth one independently watched contract.`
+  Acceptance: `Invoke the public VIAL JSON and complete capability-manifest entrypoints and require one exact nested regression contract. Treat that contract as the sole source for all eleven human workload/provider/budget rows, pinned host/guard/providers, result coordinate, topology, applicability, commands, supported scope, and nonclaims. Execute the documented dry run and prove it neither creates nor mutates the latest result. Reject missing or reordered rows, mixed providers, changed budgets or hosts, and capacity-nonclaim inversion without requiring generated evidence or a prior result.`
+  Verification: `T1795 invokes both public machine commands in fresh children and requires byte-semantic equality of the nested contract. It joins the README signpost and mdBook commands, all eleven escaped selection keys, providers, exact wall/CPU/RSS budgets, host/guard/provider tokens, 11/33/44/0 topology, applicability, result, recalibration, cleanup, scope, and nonclaims to public JSON. The real documented dry run returns its five ordered steps on stdout, stays quiet on stderr, and preserves the absent or existing latest-result bytes. Six in-memory mutations prove missing/reordered profiles, provider mixing, budget drift, host drift, and capacity-claim inversion reject. The initial watcher runs exposed and corrected command-continuation normalization and an exact combined-provider version omission; the rendered table remains well formed. Focused public capability/closeout regression reports All tests successful at Files=3/Tests=18. No gate execution, evidence, budget, result, CI, support, or capacity behavior changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6.1: lock public scale regression closeout`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6.2`
+  Status: `proposed`
+  Goal: `Execute and independently close the exact scale regression gate, hostile evidence band, public truth, and residue.`
+  Acceptance: `From the clean committed public watcher, run the selected exact gate and producer-free validation; run the complete regression-promotion policy, capture, corpus, qualification, gate, transport, materialization, hosted-outcome, correctness-stability, capability, and public-closeout oracle band. Independently join the published result to immutable evidence, exact profiles/budgets/applicability, both public machine entrypoints, the human guide, and CI selection; exercise pinned-host pass, unmatched-host informational, unavailable-provider non-pass, and every named hostile evidence class; prove qualification/evidence immutability, atomic latest-result publication, same-volume cleanup, and zero unowned process/staging/receipt residue; then synchronize durable surfaces and close `.17.5.6` and `.17.5` without promoting support or capacity.`
+  Verification: `pending`
+  Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.6`
   Status: `done`
@@ -2884,3 +2899,26 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   1,908/1,908 candidates with zero gaps; maintained-reference authority owns
   the 118-line/7,017-byte book delta without raising a ceiling. Staged
   acceptance, task integrity, and doctrine gates remain required before commit.
+
+## Acceptance Checklist (enforced) — `.17.5.6.1` public scale-regression closeout watcher
+
+- [x] **ROOT CAUSE (WHY + WHERE; no durable human/machine join)** —
+  `git log -S'architecture-scale regression public closeout' --oneline --
+  t/1795-vial-architecture-scale-regression-public-closeout.t` returns no
+  watcher. T1794 closes machine truth, but no permanent oracle joined both
+  public commands to every human guide row or checked dry-run side effects.
+- [x] **ADDRESSED (verified before -> after)** — T1795 invokes public VIAL JSON
+  and complete-manifest children, compares their nested contracts, derives all
+  eleven human rows and pinned environment/provider fields from that contract,
+  validates commands, topology, applicability, result/cleanup, scope, and
+  nonclaims, and executes the dry run while preserving latest-result state.
+  Six hostile in-memory cases reject missing/reordered rows, provider mixing,
+  budget or host drift, and capacity-nonclaim inversion.
+- [x] **NO REGRESSION (public capability and guide band)** — Perl syntax is
+  clean and t1555/t1794/t1795 report `All tests successful.` at
+  Files=3/Tests=18. The first watcher runs exposed command-continuation
+  normalization and exact combined-provider version gaps; both are corrected.
+  mdBook, Knowledge Map, claims, containment, staged acceptance, task
+  integrity, and doctrine gates remain required before commit. No generated
+  evidence or prior result is required and no gate/support/capacity behavior
+  changes.

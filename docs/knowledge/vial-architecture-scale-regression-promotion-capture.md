@@ -50,6 +50,7 @@ answers:
   - "did the exact-pinned VIAL regression promotion gate pass?"
   - "where is the machine-readable VIAL architecture-scale regression capability?"
   - "where is the human VIAL architecture-scale regression operator guide?"
+  - "how is VIAL architecture-scale regression public truth closed independently?"
 date: 2026-09-03
 status: current
 tags: [hial, vial, scalability, regression, measurement, publication]
@@ -60,7 +61,7 @@ reverify: >-
   scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; perl scripts/verify_vial_regression_promotion_evidence_transport.pl;
   env FSMGEN_VIAL_REGRESSION_GATE_CONTRACT_EXACT=1 scripts/run_with_ram_guard.sh -- prove -Iperl t/1785-vial-regression-promotion-gate-contract.t; prove -Iperl t/1786-vial-regression-promotion-gate-profile.t t/1787-vial-regression-promotion-gate-coordinator.t t/1788-vial-regression-promotion-gate-store.t t/1789-vial-regression-promotion-gate-cli.t t/1790-vial-regression-promotion-evidence-transport.t;
   scripts/run_with_ram_guard.sh -- prove -Iperl t/1791-vial-regression-promotion-evidence-materialization.t; prove -Iperl t/1183-ci-regression-tier-selection.t t/1792-vial-regression-promotion-hosted-result-verifier.t t/1793-vial-regression-promotion-gate-correctness-stability.t;
-  ./bin/fsmgen vial capabilities --json; ./bin/fsmgen --capability-manifest; prove -Iperl t/1555-vial-public-source-tooling.t t/1794-vial-architecture-scale-regression-capability.t; ./bin/ci-regression vial-gate --dry-run --no-book; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_gate.pl --validate-result
+  ./bin/fsmgen vial capabilities --json; ./bin/fsmgen --capability-manifest; prove -Iperl t/1555-vial-public-source-tooling.t t/1794-vial-architecture-scale-regression-capability.t t/1795-vial-architecture-scale-regression-public-closeout.t; ./bin/ci-regression vial-gate --dry-run --no-book; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_gate.pl --validate-result
 ---
 
 Decision 0096 selects eleven v2 profiles, each with one validation and three raw
@@ -145,7 +146,11 @@ dry-run, selected-gate, full-pre-push, producer-free validation, and evidence
 verification commands; all eleven exact workload/provider/budget envelopes;
 the pinned host, tool, guard, applicability, publication, cleanup, and
 recalibration rules; and the bounded claim with every capacity/support
-nonclaim.
+nonclaim. T1795 independently invokes both public machine entrypoints, joins
+all eleven human rows and pinned environment/provider fields back to that
+contract, executes the documented dry run without changing the latest result,
+and rejects missing/reordered rows, provider mixing, budget or host drift, and
+capacity-nonclaim inversion.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]],

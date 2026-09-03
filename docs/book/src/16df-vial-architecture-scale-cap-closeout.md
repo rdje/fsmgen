@@ -1988,9 +1988,9 @@ unchanged.
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-architecture-scale-regression-capability-v1 -->
 - Claim: Public VIAL discovery exposes one artifact-independent contract for eleven exact qualified gate-candidate profiles, required topology 11/33/44, immutable per-profile budgets, and exact environment/applicability rules under capability `vial.architecture_scale.regression_gate.v1`. It claims only the shipped bounded regression gate; it does not claim support promotion, architecture-scale capacity, whole-product capacity, arbitrary-tool capacity, or general cross-backend parity.
-- Re-derive: Run both capability commands above and T1794. Require identical nested contracts with the complete ordered profile projection, topology, evidence identities, provider requirements, budgets, applicability, result coordinate, cleanup, supported scope, and precise nonclaims.
-- Falsify: The initial CLI probe found the nested record absent even though the aggregate manifest carried it; T1555 now fails on that split. T1794 independently joins the static snapshot to tracked transport/qualification data and executable policy, store, limit, provider, and support authorities, exercises defensive rebuilding, and rejects aggregate `scale` ambiguity or support/capacity promotion.
-- Durability: Retain the pure support contract, both public embeddings, T1555/T1794, complete manifest watcher, task-tree evidence, this chapter, Knowledge Map card, bounded claim record, doctrine gates, and work-unit commit. Discovery reads no ignored or replaceable artifact.
+- Re-derive: Run both capability commands above, T1794, and T1795. Require identical nested contracts with the complete ordered profile projection, topology, evidence identities, provider requirements, budgets, applicability, result coordinate, cleanup, supported scope, precise nonclaims, and an exact human-guide projection.
+- Falsify: The initial CLI probe found the nested record absent even though the aggregate manifest carried it; T1555 now fails on that split. T1794 independently joins the static snapshot to tracked transport/qualification data and executable policy, store, limit, provider, and support authorities, exercises defensive rebuilding, and rejects aggregate `scale` ambiguity or support/capacity promotion. T1795 rejects missing or reordered guide rows, mixed providers, changed budgets or hosts, and capacity-nonclaim inversion.
+- Durability: Retain the pure support contract, both public embeddings, T1555/T1794/T1795, complete manifest watcher, task-tree evidence, this chapter, Knowledge Map card, bounded claim record, doctrine gates, and work-unit commits. Discovery reads no ignored or replaceable artifact, while the documented dry run remains executable and side-effect free.
 <!-- CLAIM-VERIFICATION:END vial-architecture-scale-regression-capability-v1 -->
 
 ### Run the bounded gate
@@ -2047,7 +2047,7 @@ External providers are equally pinned:
 | `external_exact_osvvm_2026_05` | repository materialization, OSVVM 2026.05 | revision `2f7c391051dfb11890fa4bdbda9918d1db492250` |
 | `qualified_verilator_5_046` | exact Verilator 5.046 | `tool-profile/40de18b1140d38a1ea081f6e3ccdb26628b2e848a76a4e24c3c2a3bee56bc9c6` |
 | `qualified_ghdl_6_0_0_llvm_jit` | exact GHDL 6.0.0-llvm-jit | revision `e589c698c351369ac5bcfe7abe1f1152ac5d4727`; `tool-profile/911258b328f62381fe59916c7d272d5f5cb5c31b6274e98b00bf3865ecf98191` |
-| `qualified_osvvm_2026_05_ghdl_6_0_0_llvm_jit` | exact GHDL 6.0.0-llvm-jit plus OSVVM 2026.05 | `tool-profile/cb9962d5707404479548b6f837c908a76b1316d08251828324023d3560be46c6` |
+| `qualified_osvvm_2026_05_ghdl_6_0_0_llvm_jit` | exact `6.0.0-llvm-jit+OSVVM-2026.05` | `tool-profile/cb9962d5707404479548b6f837c908a76b1316d08251828324023d3560be46c6` |
 
 Each row below is one immutable selected envelope. Times are exact decimal
 seconds derived from the integral nanosecond budgets, and RSS is exact MiB
