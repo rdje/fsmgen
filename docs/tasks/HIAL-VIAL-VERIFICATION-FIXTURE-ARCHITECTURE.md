@@ -1663,7 +1663,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement stable architecture-scale regression gates with bounded CI placement and exact host/tool applicability.`
   Acceptance: `Run the .17.5.3-qualified representative profiles through canonical producers and stage-local oracles; enforce frozen performance budgets only on the exact pinned host/tool profile; run correctness, deterministic-output, safety, no-tool/qualified-tool, atomic publication, and cleanup checks everywhere applicable; report unmatched performance informationally; fail closed on evidence or identity drift; and place expensive guarded gates according to the selected CI cadence without making ordinary slice commits run full CI.`
-  Verification: `Decision 0096, the current regression-promotion Knowledge card, the complete .17.5.3 qualification closeout, current bin/ci-regression shard ownership, and hosted workflow/docs were audited from clean commit 35dafe901. The delivery is partitioned into an executable gate contract, canonical gate implementation, bounded local/hosted CI placement, and production-independent closeout. No gate, workflow, qualification byte, performance enforcement, or public claim changes in this activation slice.`
+  Verification: `Decision 0096, the current regression-promotion Knowledge card, the complete .17.5.3 qualification closeout, current bin/ci-regression shard ownership, and hosted workflow/docs were audited from clean commit 35dafe901. Children .1 and .2 complete the frozen gate contract plus caller-sealed execution, aggregate admission, atomic latest-result storage, and explicit public CLI with synthetic hostile coverage. Child .3 is active for bounded local/hosted CI placement; .4 retains production-independent real closeout. Qualification bytes and support/capacity boundaries remain unchanged.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4: partition stable regression gate delivery`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4`
 
@@ -1675,10 +1675,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.1: freeze stable regression gate contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the caller-sealed eleven-profile regression gate and its atomic result.`
   Acceptance: `Implement the .1 contract through canonical producers and the common measurement/lifecycle authorities, with fresh isolated profile execution and complete ordered admission. Prove correctness, deterministic outputs, stage-local measurements, exact applicability classification, performance enforcement only for the pinned qualification tuple, informational unmatched performance, unavailable-provider handling, bounded canonical diagnostics/results, signal/error/collision/recovery controls, immutable qualification input, atomic result publication, and exact same-volume cleanup. Add focused hostile watchers for mutation, stale or mixed identity, caller substitution, reordered/missing/extra profiles, threshold boundaries, tool/provider drift, timeouts, IPC failures, and residue without changing qualification bytes or generalizing support/capacity.`
-  Verification: `Clean contract predecessor cc1cd18ac separates four implementation fault domains: one fresh profile worker and its classifier, eleven-profile ordered coordination and aggregate admission, replaceable result storage, and the public CLI plus adversarial integration closeout. Existing ProfileCapture/CorpusCoordinator/QualificationStore patterns were re-audited, but their immutable calibration-publication lifecycle cannot safely store repeatable gate observations. Four ordered children retain one caller-sealed production entry and reserve full real-gate execution for independent .17.5.4.4 closeout. Children .1-.3 are complete with fresh bounded profile execution, ordered in-memory aggregate admission, and atomic replaceable latest-result storage; child .4 is active for the explicit public CLI and adversarial integration closeout.`
+  Verification: `Clean contract predecessor cc1cd18ac separates four implementation fault domains: one fresh profile worker and classifier, eleven-profile ordered coordination and aggregate admission, replaceable latest-result storage, and the explicit public CLI. All four children are complete. Their caller-sealed path requires fresh isolated canonical execution, correctness-before-performance, exact applicability, bounded aggregate admission, qualification-distinct same-volume atomic publication/recovery, producer-free reload, and explicit no-default run/validate command selection. T1786-t1789 jointly falsify caller, evidence, order, threshold, provider, worker, IPC, filesystem, recovery, mutation, output, error, and residue attacks without running a real gate workload; .17.5.4.4 retains that real closeout.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2: partition stable regression gate implementation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.4`
 
@@ -1704,14 +1704,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.3: replace latest gate result atomically`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.4`
-  Status: `active`
+  Status: `done`
   Goal: `Close the explicit gate CLI and adversarial implementation contract before CI placement.`
   Acceptance: `Add one repository-relative executable with explicit --run and producer-free --validate-result operations, no default expensive execution, no abbreviation/case folding, bounded canonical stdout, stable nonzero failure, and sanitized bounded diagnostics. Exercise the complete public path with deterministic adapters and same-volume copied fixtures; falsify caller substitution, qualification/result aliasing, stale/mixed/reordered/missing/extra evidence, exact and adjacent budget thresholds, host/tool/guard/provider drift, unavailable providers, malformed/noncanonical/cap-plus-one IPC/result/error, timeout/exception/exit/signal, interruption/recovery/collision, file aliases, target/staging mutation, repository mutation, and process/filesystem residue. Synchronize runnable mdBook, Knowledge Map, claims, containment, task, and Memory evidence; leave full real producer execution and CI wiring to `.17.5.4.4` and `.17.5.4.3` respectively.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The executable repository-relative runner derives its root only from its tracked location and accepts exactly one case-sensitive, unabbreviated --run or producer-free --validate-result operation, with no default. Run publishes then reloads; validate only loads. Both re-admit the exact store envelope/artifact and coordinator result field sets before buffering canonical newline JSON at or below 1,048,576 bytes. Pre-output operational failure returns status 1 with empty stdout and one sanitized diagnostic at or below 4,096 bytes; closed usage returns status 2. T1789 began RED on the absent runner and uses copied fresh-process public store fixtures to cover exact dispatch/root derivation, malformed shapes, limit drift, exact-cap/cap-plus-one output, hostile errors, and cleanup. The complete guarded t1786-t1789 band reports All tests successful at Files=4/Tests=114 in eight wall-clock seconds and retains the full worker, aggregate, store, interruption, recovery, provider, threshold, mutation, and residue matrix without real execution. The runnable mdBook, compact Knowledge card, third claim shard, complete candidate dispositions, containment authority, task/Memory frontier, and doctrine gates close in the same slice.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.4: add explicit stable gate CLI`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Place the expensive guarded regression gate in bounded local and hosted CI cadence.`
   Acceptance: `Expose exact repository-relative pre-push/selected-important-step and hosted entrypoints around the .2 gate. Keep ordinary slice commits on focused checks, preserve the unsharded local full gate, give hosted execution explicit shard/provider/tool ownership, and require hosted nonmatching environments to run applicable correctness/determinism/safety/publication/cleanup checks while reporting performance informationally. Update CI inventory and workflow documentation so every tracked test remains exactly owned, no matrix tail is hidden, full CI remains reserved for push or selected important steps, and unavailable providers cannot yield a passing performance classification.`
   Verification: `pending`
@@ -6218,3 +6218,37 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   doctrines close before commit. No real producer, provider, simulator, gate
   workload, qualification/corpus/budget byte, CI, support, capacity, full CI,
   push, or observed-performance result changes.
+
+## Acceptance Checklist (enforced) — `.17.5.4.2.4` explicit gate CLI
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean predecessor `37a87a9ba` owns the
+  complete worker/coordinator/store path but no public command. The first
+  t1789 run is exact RED: Failed test 'regression-promotion gate CLI exists' at t/1789-vial-regression-promotion-gate-cli.t line 14. No existing executable
+  can select expensive publication explicitly or validate the stored result
+  without a producer.
+- [x] **ADDRESSED (verified)** — the executable runner derives repository root
+  only from its tracked location and admits exactly one case-sensitive,
+  unabbreviated `--run` or `--validate-result`, with no default. Run calls the
+  public store publish path then producer-free load; validate calls load only.
+  Both require the exact store limits, artifact schema, load envelope, and
+  coordinator result keys before buffering canonical newline output. The
+  1,048,576-byte exact result succeeds; cap-plus-one and all pre-output
+  operational failures return status 1 with empty stdout and a sanitized
+  4,096-byte-bounded diagnostic. Closed usage returns status 2. T1789's copied
+  fresh-process store fixtures prove public dispatch/root derivation without
+  executing a real producer and leave their complete fixture tree absent.
+- [x] **NO REGRESSION** — runner, t1789, Profile, Coordinator, and Store report
+  `syntax OK`. The final RAM-guarded t1786-t1789 band reports `All tests
+  successful` at `Files=4, Tests=114` in eight wall-clock seconds and retains
+  threshold/applicability, provider/unavailable, worker/IPC/error/signal/
+  timeout, order/identity, atomic replacement/interruption/recovery, file-
+  shape/alias/mutation, stdout/error-bound, and cleanup controls. All 59
+  mdBook chapters pass; maintained-reference authority accepts exactly 0
+  files/+43 lines/+4,000 bytes to 56,313 lines/3,073,648 bytes. The compacted
+  Knowledge collection decreases 140 bytes to 3,478,509 while the generated
+  map is current at 1,160 facts/6,271 questions/6,443 occurrences/138 shards.
+  Three claim shards hold 46 records; all 1,867 candidates are dispositioned
+  with zero gaps. Staged acceptance and `[doctrine] all doctrine checks passed`
+  are required before commit. No real producer/provider/simulator/gate
+  workload, result publication, qualification/corpus/budget byte, CI,
+  support, capacity, full CI, push, or observed-performance result changes.

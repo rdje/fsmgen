@@ -1677,6 +1677,49 @@ prove -Iperl -v \
 - Durability: Retain ArchitectureScaleRegressionPromotionGateStore, Coordinator's exact-store admission seam, t1787/t1788, task `.17.5.4.2.3`, the mdBook chapter, compact regression-promotion Knowledge card, bounded claim record, doctrine watchers, and work-unit commit. Child `.2.4` still owns the explicit CLI and adversarial public-path closeout; `.3` and `.4` still own CI placement and independent real execution.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-gate-latest-result-store-v1 -->
 
+### Explicit gate command
+
+The repository-relative gate command has no default operation. It accepts
+exactly one case-sensitive, unabbreviated `--run` or `--validate-result`:
+
+```sh
+# Expensive: execute all eleven profiles and replace the latest observation.
+scripts/run_with_ram_guard.sh -- \
+  scripts/run_vial_regression_promotion_gate.pl --run
+
+# Producer-free: authenticate and print the stored result.
+scripts/run_with_ram_guard.sh -- \
+  scripts/run_vial_regression_promotion_gate.pl --validate-result
+```
+
+`--run` invokes the result store's public publication operation, then reloads
+through its producer-free public load operation. `--validate-result` only
+loads. Both paths validate the store envelope, artifact metadata, and the
+coordinator's closed result field set before printing only the canonical gate
+result. The repository root comes from the tracked script location; callers
+cannot inject a path, result, qualification, budget, applicability identity,
+provider, worker, callback, or performance downgrade.
+
+Complete newline-terminated stdout is buffered through the same 1,048,576-byte
+gate-result ceiling. Exact-cap output succeeds and cap-plus-one returns status
+1 with no partial JSON. Operational failures emit one repository-path-
+sanitized printable diagnostic bounded at 4,096 bytes before output begins. Omitted, repeated,
+combined, abbreviated, case-variant, unknown, positional, or help-plus-
+operation selections return usage status 2; standalone `--help` is the only
+non-operation success.
+
+T1789 exercises copied fresh-process command/store fixtures without a real
+producer. Together, t1786-t1788 retain the deterministic profile, aggregate,
+and same-volume hostile storage controls beneath that public boundary. Full
+real execution and CI placement remain separate rollback owners.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-gate-cli-contract-v1 -->
+- Claim: The repository-relative regression-promotion gate CLI accepts exactly one explicit `--run` or producer-free `--validate-result`, derives its root only from the tracked script, validates the public store result and coordinator field set, and buffers only canonical newline gate-result JSON through a 1,048,576-byte stdout ceiling. Exact-cap output succeeds; cap-plus-one or any pre-output operational failure returns status 1 with empty stdout and one sanitized diagnostic bounded at 4,096 bytes. Closed usage returns status 2, and no caller flag supplies evidence, coordinates, applicability, or an enforcement downgrade. This is synthetic-watched command machinery, not a real gate result, CI activation, support, or capacity.
+- Re-derive: Run t1789 and inspect run_vial_regression_promotion_gate.pl. Require script-derived roots, `--run` dispatch to publish then producer-free load, `--validate-result` dispatch to load only, exact store/result field admission, canonical exact-cap stdout, stable statuses, bounded error text, and no copied fixture residue. Run t1786-t1788 alongside it to retain deterministic worker, aggregate, and atomic-store behavior beneath the command.
+- Falsify: T1789 began RED because the runner path was absent, then rejects no, repeated, combined, positional, unknown, abbreviated, case-variant, repeated-help, and help-plus-operation selection; malformed publish/load/artifact/result shapes; result-limit drift; cap-plus-one output; and hostile path, control-character, multiline, and oversized failures without partial stdout. T1786-t1788 separately reject threshold, identity, provider, worker, IPC, filesystem, interruption, recovery, mutation, and residue attacks.
+- Durability: Retain the executable gate runner, t1789 plus t1786-t1788, completed implementation parent `.17.5.4.2`, this mdBook chapter, compact regression-promotion Knowledge card, bounded third-shard claim record, doctrine watchers, and work-unit commit. `.17.5.4.3` and `.17.5.4.4` still own CI placement and independent real execution.
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-gate-cli-contract-v1 -->
+
 Re-derive the selection and its closure comparison with:
 
 ```sh
@@ -1686,12 +1729,12 @@ scripts/run_with_ram_guard.sh -- env \
   t/1765-vial-architecture-scale-regression-promotion-policy.t
 ```
 
-Current capture, in-memory budget qualification, the publication store, its
-explicit CLI, the real clean-revision qualification seal, hostile copied
-controls, final independent/production agreement, one-profile gate worker, and
-eleven-profile in-memory coordinator, and atomic latest-result store are
-complete. The explicit gate CLI, gate/CI integration, and public truth remain
-separate rollback owners. Until those leaves pass, the sealed budgets remain
+Current capture, in-memory budget qualification, its publication store and
+CLI, the real clean-revision qualification seal, hostile copied controls,
+final independent/production agreement, one-profile gate worker,
+eleven-profile coordinator, atomic latest-result store, and explicit gate CLI
+are complete. Gate/CI integration and public truth remain separate
+rollback owners. Until those leaves pass, the sealed budgets remain
 unenforced, all historical candidate budgets stay candidate-only, and whole-
 product big/really-big capacity remains unclaimed.
 

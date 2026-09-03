@@ -35,6 +35,8 @@ answers:
   - "what is the VIAL regression gate aggregate precedence?"
   - "how is the latest VIAL regression gate result replaced atomically?"
   - "can a prior VIAL gate result influence qualification or execution?"
+  - "how do I run or validate the latest VIAL regression gate result?"
+  - "does the VIAL regression gate CLI run work by default?"
 date: 2026-09-03
 status: current
 tags: [hial, vial, scalability, regression, measurement, publication]
@@ -44,13 +46,13 @@ evidence: >-
   docs/book/src/16df-vial-architecture-scale-cap-closeout.md;
   perl/FSM/VIAL/ArchitectureScaleRegressionPromotionPolicy.pm; perl/FSM/VIAL/ArchitectureScaleMeasurement.pm;
   perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCapturePlan.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileCapture.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusCoordinator.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualification.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualificationStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateContract.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateProfile.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateCoordinator.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateStore.pm;
-  scripts/run_vial_regression_promotion_corpus.pl; scripts/run_vial_regression_promotion_budget_qualification.pl; scripts/verify_vial_regression_promotion_failed_prefix.pl; scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; scripts/measure_vial_regression_promotion_canonicalization.pl;
-  t/1776-vial-regression-promotion-current-corpus-verifier.t; t/1777-vial-regression-promotion-current-corpus-mutations.t; t/1778-vial-regression-promotion-canonicalization-instrument.t; t/1779-vial-regression-promotion-qualification.t; t/1780-vial-regression-promotion-qualification-store.t; t/1781-vial-regression-promotion-qualification-cli.t; t/1782-vial-regression-promotion-budget-qualification-verifier.t; t/1783-vial-regression-promotion-budget-qualification-mutations.t; t/1784-vial-regression-promotion-budget-qualification-closeout.t; t/1785-vial-regression-promotion-gate-contract.t; t/1786-vial-regression-promotion-gate-profile.t; t/1787-vial-regression-promotion-gate-coordinator.t; t/1788-vial-regression-promotion-gate-store.t
+  scripts/run_vial_regression_promotion_corpus.pl; scripts/run_vial_regression_promotion_budget_qualification.pl; scripts/run_vial_regression_promotion_gate.pl; scripts/verify_vial_regression_promotion_failed_prefix.pl; scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; scripts/measure_vial_regression_promotion_canonicalization.pl;
+  t/1776-vial-regression-promotion-current-corpus-verifier.t; t/1777-vial-regression-promotion-current-corpus-mutations.t; t/1778-vial-regression-promotion-canonicalization-instrument.t; t/1779-vial-regression-promotion-qualification.t; t/1780-vial-regression-promotion-qualification-store.t; t/1781-vial-regression-promotion-qualification-cli.t; t/1782-vial-regression-promotion-budget-qualification-verifier.t; t/1783-vial-regression-promotion-budget-qualification-mutations.t; t/1784-vial-regression-promotion-budget-qualification-closeout.t; t/1785-vial-regression-promotion-gate-contract.t; t/1786-vial-regression-promotion-gate-profile.t; t/1787-vial-regression-promotion-gate-coordinator.t; t/1788-vial-regression-promotion-gate-store.t; t/1789-vial-regression-promotion-gate-cli.t
 reverify: >-
   scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_corpus.pl --validate; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_corpus.pl --inventory; scripts/verify_vial_regression_promotion_failed_prefix.pl; scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/run_with_ram_guard.sh -- prove -v t/1777-vial-regression-promotion-current-corpus-mutations.t; scripts/run_with_ram_guard.sh -- scripts/measure_vial_regression_promotion_canonicalization.pl --phase corpus-load --sample-relative .artifacts/diagnostics/vial-scale/corpus.sample.txt --sample-seconds 3;
   scripts/run_with_ram_guard.sh -- scripts/measure_vial_regression_promotion_canonicalization.pl --phase balanced-validation --sample-relative .artifacts/diagnostics/vial-scale/balanced.sample.txt --sample-seconds 3; scripts/run_with_ram_guard.sh -- prove -Iperl t/1769-vial-architecture-scale-regression-promotion-profile-resume.t t/1773-vial-regression-promotion-corpus-coordinator.t;
   scripts/run_with_ram_guard.sh -- prove -Iperl t/1779-vial-regression-promotion-qualification.t t/1780-vial-regression-promotion-qualification-store.t t/1781-vial-regression-promotion-qualification-cli.t; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_budget_qualification.pl --validate; scripts/run_with_ram_guard.sh -- scripts/verify_vial_regression_promotion_budget_qualification.pl;
-  scripts/run_with_ram_guard.sh -- prove -v t/1782-vial-regression-promotion-budget-qualification-verifier.t t/1783-vial-regression-promotion-budget-qualification-mutations.t t/1784-vial-regression-promotion-budget-qualification-closeout.t; scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_REGRESSION_GATE_CONTRACT_EXACT=1 prove -Iperl -v t/1785-vial-regression-promotion-gate-contract.t; prove -Iperl -v t/1786-vial-regression-promotion-gate-profile.t t/1787-vial-regression-promotion-gate-coordinator.t t/1788-vial-regression-promotion-gate-store.t
+  scripts/run_with_ram_guard.sh -- prove -v t/1782-vial-regression-promotion-budget-qualification-verifier.t t/1783-vial-regression-promotion-budget-qualification-mutations.t t/1784-vial-regression-promotion-budget-qualification-closeout.t; scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_REGRESSION_GATE_CONTRACT_EXACT=1 prove -Iperl -v t/1785-vial-regression-promotion-gate-contract.t; prove -Iperl -v t/1786-vial-regression-promotion-gate-profile.t t/1787-vial-regression-promotion-gate-coordinator.t t/1788-vial-regression-promotion-gate-store.t t/1789-vial-regression-promotion-gate-cli.t
 ---
 
 Decision 0096 selects eleven v2 gate profiles. Each adapter call owns one
@@ -62,18 +64,12 @@ workers and parent reload, supports exact resume, exposes closed CLI modes, and
 falsifies copied v2 evidence. Only clean capture can seal. Complete coordinates
 enforce 11/33/44/0, common host/guard, provider order, and no history swap.
 
-Clean `610ed7869` sealed no corpus: structural backend-emission's fixed
-`artifact_graph` report axis differs from the null policy-selection axis. The
-exact four-report/600,036-byte prefix remains in revision-keyed history as
-`regression-promotion-failed-prefix/f46939aab1731f2b2a136a0d06cf161d4ff6ec99b2336559227a668c8b86e5a4`.
-Its verifier accepts archive-only replay and rejects mutation, foreign paths,
-hard-link aliasing, or cross-history substitution.
-
-`.17.5.2.4.2` closes the defect without changing selection keys or paths:
-capture-plan schema v2 pins producer-derived `report_coordinate_authority` for
-all eleven entries, and capture/resume authenticate it independently of policy
-selection. Changed, missing, rehashed, or aliased coordinates reject; the real
-backend/runtime/balanced axes remain exact.
+Clean `610ed7869` exposed a policy/report-coordinate mismatch and sealed no
+corpus. Its exact four-report/600,036-byte prefix remains independently
+verifiable in revision-keyed failed history. `.17.5.2.4.2` corrected only the
+capture-plan coordinate authority: schema v2 authenticates producer-derived
+coordinates independently of unchanged selection keys and rejects coordinate
+mutation or aliasing.
 
 The repaired capture at clean `155aa22ea` contains 11 selected reports,
 11 validations, 33 fresh raw measurements, 44 accepted invocations, and zero
@@ -84,17 +80,12 @@ the complete file-set digest is `dc5b315b827389eb466776716f6851cdd9ddd13b2f1aec4
 Producer-free validate/inventory reproduced every identity/count with eleven
 present, zero missing, and no staging. Copied-artifact falsification is complete.
 
-The independent verifier imports no production module and authenticates 13
-files/6,220,126 bytes, inventory `94c11e5c...bb57`, all identities, 11/33/44/0,
-cleanup, nonclaims, and the 7/1/3 provider split. T1776 proves read-only
-identity; t1777 rejects 17 copied mutation classes and restores exact census.
-
-`.17.5.2.5.3` instruments JSON/clone/SHA without changing values. At
-`fafe5d88b`, single-plan load cuts policy encodes 12→1 and observed
-23.09→6.55 seconds; composition reuse cuts canonical bytes
-1,325,878,982→813,307,147 and observed 492.56→297.92 seconds. Exact outputs
-remain. Revision-separated validation then isolates each whole profile; at
-`1da11b2e3`, all verification paths agree. These are not stable budgets.
+The independent verifier imports no production module and authenticates the
+13-file/6,220,126-byte corpus, 11/33/44/0 counts, identities, cleanup,
+nonclaims, and 7/1/3 provider split; t1777 rejects 17 copied mutation classes.
+Value-preserving JSON/clone/SHA instrumentation guided plan reuse and
+whole-profile isolation, then all paths agreed at `1da11b2e3`. The sampled
+timings are characterization, never stable budgets.
 
 `.17.5.3` derives and atomically seals the current qualification in a fixed
 two-file v2 namespace, binding source, formula, budgets, environment/provider,
@@ -133,15 +124,20 @@ aggregate. It separates required 11/33/44 totals from honest observed counts
 when providers are unavailable; precedence is fail, unavailable,
 informational, pass. T1787 is synthetic and publishes nothing.
 
-`.17.5.4.2.3` independently rederives the contract, accepts only the complete
-aggregate through the coordinator's exact-store seam, and atomically replaces
-one canonical latest-result file through a same-volume content-addressed stage.
-The 1,048,576-byte store reloads before rename, preserves the prior valid file
-on pre-rename failure, recovers at most one exact current-revision stage, and
-cleans owned staging. Load is producer-free. Prior observations never supply
-qualification, budget, applicability, or execution input; T1788 rejects
-aliases, drift, malformed/oversized bytes, ambiguous recovery, unsafe file
-shapes, and post-validation mutation.
+`.17.5.4.2.3` rederives the contract, admits only the complete coordinator
+aggregate, and atomically replaces one canonical result through a same-volume
+content-addressed stage. The 1,048,576-byte store reloads before rename,
+preserves valid prior bytes on failure, recovers at most one exact stage, and
+cleans staging. Producer-free load never uses prior observations as evidence;
+t1788 rejects identity, byte, recovery, alias, file-shape, and mutation attacks.
+
+`.17.5.4.2.4` exposes only explicit `--run` and producer-free
+`--validate-result`; there is no default execution. Run publishes then reloads,
+while validate only loads. Both print canonical result JSON through the
+1,048,576-byte ceiling. Usage is status 2; operational failure is status 1
+with empty stdout and one sanitized diagnostic capped at 4,096 bytes. T1789
+uses copied fresh-process store fixtures and runs no real workload; t1786-t1788
+retain the worker, aggregate, and storage adversarial layers.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]].
