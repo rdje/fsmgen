@@ -1993,6 +1993,124 @@ unchanged.
 - Durability: Retain the pure support contract, both public embeddings, T1555/T1794, complete manifest watcher, task-tree evidence, this chapter, Knowledge Map card, bounded claim record, doctrine gates, and work-unit commit. Discovery reads no ignored or replaceable artifact.
 <!-- CLAIM-VERIFICATION:END vial-architecture-scale-regression-capability-v1 -->
 
+### Run the bounded gate
+
+Use the public commands from the repository root:
+
+```sh
+# Discover the contract without reading generated evidence or a prior result.
+./bin/fsmgen vial capabilities --json
+
+# Preview the selected lifecycle without executing it.
+./bin/ci-regression vial-gate --dry-run --no-book
+
+# Run only the selected VIAL gate.
+./bin/ci-regression vial-gate --no-book
+
+# Run the complete pre-push regression tier.
+./bin/ci-regression --no-book
+
+# Validate the latest result without invoking a profile producer.
+scripts/run_with_ram_guard.sh -- \
+  scripts/run_vial_regression_promotion_gate.pl --validate-result
+
+# Independently authenticate the tracked evidence transport.
+perl scripts/verify_vial_regression_promotion_evidence_transport.pl
+```
+
+The dry run prints the selected five-step transaction in order: materialize the
+tracked evidence without overwriting a pre-existing root, independently verify
+the current corpus, independently verify the qualification, execute all gate
+profiles under the repository RAM guard, and clean only roots named by the
+materialization receipt. `vial-gate` is the selected important-step command;
+the unqualified `ci-regression` command is the full pre-push tier. Ordinary
+slices continue to use focused checks.
+
+### Qualified reference envelope
+
+The performance reference is deliberately exact, not a class of similar
+machines:
+
+| Field | Exact qualified value |
+| --- | --- |
+| Operating system | Darwin 25.5.0, arm64 |
+| CPU | Apple M4 Pro, 12 logical cores |
+| Physical memory | 25,769,803,776 bytes |
+| Filesystem | APFS |
+| Process-tree sampler | `fsmgen.perl_process_tree_sampler.v1` |
+| Resource guard | active repository RAM guard; host maximum 88%; one descendant maximum 4096 MiB; sample interval 250,000,000 ns |
+
+External providers are equally pinned:
+
+| Provider identity | Kind and version | Exact revision/profile identity |
+| --- | --- | --- |
+| `external_exact_osvvm_2026_05` | repository materialization, OSVVM 2026.05 | revision `2f7c391051dfb11890fa4bdbda9918d1db492250` |
+| `qualified_verilator_5_046` | exact Verilator 5.046 | `tool-profile/40de18b1140d38a1ea081f6e3ccdb26628b2e848a76a4e24c3c2a3bee56bc9c6` |
+| `qualified_ghdl_6_0_0_llvm_jit` | exact GHDL 6.0.0-llvm-jit | revision `e589c698c351369ac5bcfe7abe1f1152ac5d4727`; `tool-profile/911258b328f62381fe59916c7d272d5f5cb5c31b6274e98b00bf3865ecf98191` |
+| `qualified_osvvm_2026_05_ghdl_6_0_0_llvm_jit` | exact GHDL 6.0.0-llvm-jit plus OSVVM 2026.05 | `tool-profile/cb9962d5707404479548b6f837c908a76b1316d08251828324023d3560be46c6` |
+
+Each row below is one immutable selected envelope. Times are exact decimal
+seconds derived from the integral nanosecond budgets, and RSS is exact MiB
+derived from the integral byte budget; none is a rounded recommendation.
+`not_applicable` means that profile has no external verification provider.
+
+| Ordinal | Exact selection key | Required provider | Wall | CPU | Peak tree RSS |
+| ---: | --- | --- | ---: | ---: | ---: |
+| 1 | `semantic_bridge\|semantic_catalog_v1\|gate_candidate_v1\|actions\|-` | `not_applicable` | 2.000 s | 2.000 s | 256 MiB |
+| 2 | `semantic_bridge\|bridge_fanout_v1\|gate_candidate_v1\|backend_bindings\|-` | `not_applicable` | 18.325 s | 18.165 s | 640 MiB |
+| 3 | `execution_checking\|execution_graph_v1\|gate_candidate_v1\|bindings\|-` | `not_applicable` | 31.479 s | 31.395 s | 1264 MiB |
+| 4 | `execution_checking\|checking_state_v1\|gate_candidate_v1\|random_occurrences\|-` | `not_applicable` | 34.683 s | 34.755 s | 992 MiB |
+| 5 | `backend_emission\|backend_emission_v1\|gate_candidate_v1\|-\|sv_portable_verilator` | `not_applicable` | 35.836 s | 36.390 s | 1040 MiB |
+| 6 | `backend_emission\|backend_emission_v1\|gate_candidate_v1\|-\|vhdl_portable_ghdl` | `not_applicable` | 24.033 s | 24.270 s | 880 MiB |
+| 7 | `backend_emission\|backend_emission_v1\|gate_candidate_v1\|-\|vhdl_osvvm_qualified` | `external_exact_osvvm_2026_05` | 27.891 s | 25.305 s | 912 MiB |
+| 8 | `portable_runtime\|runtime_stream_v1\|gate_candidate_v1\|-\|sv_portable_verilator` | `qualified_verilator_5_046` | 312.422 s | 298.875 s | 2512 MiB |
+| 9 | `portable_vhdl_runtime\|runtime_stream_v1\|gate_candidate_v1\|-\|vhdl_portable_ghdl` | `qualified_ghdl_6_0_0_llvm_jit` | 46.812 s | 46.515 s | 1104 MiB |
+| 10 | `osvvm_runtime\|runtime_stream_v1\|gate_candidate_v1\|-\|vhdl_osvvm_qualified` | `qualified_osvvm_2026_05_ghdl_6_0_0_llvm_jit` | 194.013 s | 176.235 s | 1616 MiB |
+| 11 | `balanced_portable\|balanced_portable_v1\|gate_candidate_v1\|-\|sv_portable_verilator` | `not_applicable` | 429.258 s | 462.510 s | 3984 MiB |
+
+The topology is fixed at eleven profile workers. Each profile contributes one
+validation record and three fresh raw measurements, producing 11 validation,
+33 raw, and 44 controller records with zero sample exclusions.
+
+### Applicability, publication, and cleanup
+
+Correctness is always the first decision. `selection_key`, `workload_identity`,
+and `correctness_projection_identity` must match exactly; deterministic drift
+rejects the profile before a performance comparison on every host. After that
+check, outcomes are:
+
+| Situation | Gate outcome |
+| --- | --- |
+| Host, tool, guard, and provider all exactly match | Every wall, CPU, and RSS maximum must be at or below its budget; the comparison is inclusive. |
+| Environment does not exactly match | Correctness remains required; performance is informational. |
+| An exact required provider is absent | `unavailable`, never pass. |
+| A provider is present but its pinned identity drifts | fail. |
+
+There is no performance override. A later matching revision can become
+performance-enforcement eligible only after correctness passes. Changing a
+budget is not a gate side effect: recalibration requires a separately owned
+version that retains immutable old and new evidence.
+
+The gate atomically replaces one latest observation at
+`.artifacts/qualification/vial-scale/v2/regression-promotion-gate-v1/current/regression-promotion-gate-result.json`.
+The result is capped at 1,048,576 bytes and is never qualification evidence.
+Profile report spools are anonymous and unlinked before worker exit; process
+and staging residue are forbidden. Evidence cleanup removes only exact roots
+owned by the current receipt, while the latest result is preserved.
+
+### Scope boundary
+
+The claim is intentionally narrow: FSMGen ships a bounded regression gate for
+these eleven exact qualified gate-candidate profiles. It requires correctness
+for every available profile, enforces performance only on the exact qualified
+environment, and treats provider absence as unavailable rather than pass.
+
+It does **not** claim architecture-scale capacity, a “big” or “really big”
+whole product, multi-unit or multi-domain capacity, mixed-language capacity,
+native UVM runtime, full-language coverage, synthesis capacity, arbitrary-tool
+capacity, support promotion, general cross-backend parity, performance
+enforcement on unmatched hosts, or a pass when a provider is unavailable.
+
 Re-derive the authenticated transport, hostile closure, and policy comparison
 with:
 

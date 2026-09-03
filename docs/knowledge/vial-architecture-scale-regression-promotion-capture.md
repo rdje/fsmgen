@@ -49,6 +49,7 @@ answers:
   - "does the VIAL gate ignore process telemetry or recalibrate?"
   - "did the exact-pinned VIAL regression promotion gate pass?"
   - "where is the machine-readable VIAL architecture-scale regression capability?"
+  - "where is the human VIAL architecture-scale regression operator guide?"
 date: 2026-09-03
 status: current
 tags: [hial, vial, scalability, regression, measurement, publication]
@@ -138,7 +139,13 @@ evidence seals, eleven ordered budgets, 11/33/44 topology, host/guard/providers,
 applicability, result/cleanup policy, supported bounded gate scope, and precise
 capacity/support nonclaims. T1555 proves the CLI path; T1794 joins tracked
 evidence and executable authorities. Discovery reads no ignored evidence or
-replaceable result and changes no fixture support classification.
+replaceable result and changes no fixture support classification. The mdBook
+closeout chapter is the human operator guide: it publishes runnable discovery,
+dry-run, selected-gate, full-pre-push, producer-free validation, and evidence
+verification commands; all eleven exact workload/provider/budget envelopes;
+the pinned host, tool, guard, applicability, publication, cleanup, and
+recalibration rules; and the bounded claim with every capacity/support
+nonclaim.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]],

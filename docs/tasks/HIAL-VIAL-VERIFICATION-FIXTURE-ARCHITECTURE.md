@@ -1813,10 +1813,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `From clean ordinal-9 repair ef59330ab, `./bin/ci-regression vial-gate --no-book` re-authenticated and adopted the exact 13-file/6,220,126-byte current corpus and 2-file/792,158-byte qualification, then completed all eleven profiles. The canonical mode-0600 one-link 60,097-byte result has file SHA-256 f04fac65...72f4 and gate identity c7787a02...02f2; it binds execution ef59330ab, contract 0150f4b3...e368, qualification d8fb1813...0c97, publication 1c2a3832...945f, and file set 28ba972c...9095. Aggregate and every profile are accepted/pass: required and observed topology is 11 validations/33 raw measurements/44 controller invocations, with zero failed, informational, unavailable, or excluded profiles. A production-module-free JSON::PP/Digest::SHA join rederived canonical file and aggregate/profile identities; exact qualification, selection, workload, correctness, environment, provider, measurement, budget, report, and publication joins; ordinals 1-11; 11 unique validations/reports and 33 unique raw identities; per-profile 1/3/4 topology; all metrics at or below frozen budgets; and zero residue. Producer-free `--validate-result` independently reloaded the publication. T1786+t1787 safely simulate unmatched host and unavailable provider plus aggregate precedence at Files=2/Tests=20. The guarded CI/qualification/gate/materialization/hosted-verifier/correctness band passes `Files=12, Tests=194` in 272 wall-clock seconds. Final census finds eleven spools removed, no worker/gate/GHDL/Verilator process, no evidence receipt or `.artifacts/tmp/vial-scale` tree, and the qualification-distinct latest observation intact; evidence and budgets were neither rewritten nor recalibrated. Synchronized task/book/decision/Knowledge Map/claim/containment/Memory and doctrine checks close `.17.5.4` without broader support or capacity claims.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2.2: close exact regression gate`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5`
-  Status: `active`
+  Status: `done`
   Goal: `Publish exact architecture-scale commands, envelopes, variability policy, support/capability truth, and nonclaims.`
   Acceptance: `Synchronize the mdBook, support/capability surfaces, Knowledge Map, task tree, and bounded resume pointer from executable gate and publication identities. Document runnable repository-relative commands, selected workload and host/tool envelopes, deterministic versus performance checks, unmatched-host behavior, recalibration, cleanup/residue, and exact supported claims. Preserve whole-product big/really-big, multi-unit/domain, mixed-language, native-UVM-runtime, full-language, synthesis, arbitrary-tool-capacity, and general-parity nonclaims.`
-  Verification: `Clean predecessor 7862b3030 closes the exact-pinned production gate with all eleven profiles accepted/pass, immutable 11/33/44 topology, one independently joined qualification-distinct result, honest simulated non-pass applicability, and zero process/staging residue. Query-first audit of the Knowledge Map, mdBook, public VIAL capabilities, complete capability manifest, support accounting, decisions 0056/0096, gate contract/result, immutable qualification, and tracked transport finds one precision gap: the executable bounded eleven-profile regression gate is public, but VIAL discovery retains only an undifferentiated scale nonclaim. Child .1 owns a machine-readable regression-capability record without support/capacity promotion; child .2 owns exact human-facing commands, envelopes, variability, cleanup, and preserved nonclaims. No gate, evidence, budget, support classification, or capacity behavior changes in partitioning.`
+  Verification: `Both publication children are complete. Public VIAL JSON/API and the complete manifest expose one artifact-independent eleven-profile contract whose profile, budget, evidence, topology, environment, provider, applicability, result, cleanup, cadence, supported-scope, and nonclaim fields join tracked or executable authorities. The README stays a bounded signpost, while the mdBook publishes the exact operator commands, all eleven workload/provider/budget envelopes, pinned host/tool/guard tuple, correctness-first and environment/provider outcome rules, separately owned recalibration, atomic latest-observation lifecycle, residue rules, bounded claim, and every required nonclaim. Machine and human surfaces remain claim-verified, Knowledge-mapped, containment-authorized, and support/capacity neutral.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5: partition public scale truth`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5.2`
 
@@ -1828,11 +1828,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5.1: publish scale regression capability`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5.2`
-  Status: `active`
+  Status: `done`
   Goal: `Publish exact human-facing architecture-scale commands, envelopes, variability policy, cleanup, supported claim, and nonclaims.`
   Acceptance: `From the completed machine-readable contract, synchronize README signposting, the mdBook, Knowledge Map, claim registry, task tree, and bounded resume pointer. Give runnable repository-relative dry-run, selected-gate, full-pre-push, producer-free validation, and evidence-verification commands; tabulate all eleven selected workload/provider/budget envelopes and the pinned host/tool/guard tuple; explain correctness-first deterministic rejection, exact-host inclusive performance enforcement, unmatched-host informational behavior, unavailable-provider non-pass behavior, separately owned recalibration, atomic latest observation, and exact cleanup/residue. State only the supported bounded regression-gate claim and preserve every whole-product, capacity, multi-unit/domain, mixed-language, native-UVM-runtime, full-language, synthesis, arbitrary-tool, support-promotion, and general-parity nonclaim.`
-  Verification: `Clean predecessor 2d16175c4 publishes the artifact-independent machine contract through VIAL JSON/API and the complete manifest, with all eleven profile/budget/evidence rows independently joined to tracked and executable authorities and precise support/capacity nonclaims. This activation selects only human-facing README/mdBook/Knowledge/claim publication from that completed contract; it changes no command, gate, evidence, budget, applicability, cleanup, runtime, support classification, or capacity boundary.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5.2: activate human scale publication`
+  Verification: `Historical grep proves the completed machine publication had no human "Run the bounded gate" section. The README now links the bounded dry-run command while remaining 240 lines/9,930 bytes under its strict ceiling. The mdBook publishes six runnable repository-relative commands, the exact five-step dry-run transaction, pinned host/guard and four-provider table, all eleven exact selection/provider/budget rows, fixed 11/33/44/0 topology, correctness-first applicability outcomes, separate recalibration, atomic capped result, receipt-owned cleanup, bounded supported claim, and all fourteen precise nonclaims. An independent parser compares every published row to public VIAL JSON exactly; the repaired escaped-pipe table renders with six columns, and the repository-local build contains 94 files before exact removal. T1555/T1794 pass All tests successful at Files=2/Tests=10; dry-run, independent tracked-evidence verification, and producer-free validation of accepted result c7787a02...02f2 all pass. mdBook tests pass; Knowledge Map closes at 1,160 facts/6,284 unique questions; claim inventory/dispositions close 1,908/1,908 candidates with zero gaps; fresh maintained-reference authority owns the 118-line/7,017-byte book delta without raising a ceiling. No command, gate, evidence, budget, applicability, runtime, support classification, or capacity boundary changed.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5.2: publish human scale regression guide`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6`
   Status: `proposed`
   Goal: `Independently close architecture-scale regression, evidence, public truth, and residue before completing .17.5.`
@@ -2858,3 +2858,29 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   authority owns the exact book delta without raising a ceiling, no generated
   book artifact remains, and staged acceptance, containment, task integrity,
   and doctrine gates remain required before commit.
+
+## Acceptance Checklist (enforced) — `.17.5.5.2` human scale-regression publication
+
+- [x] **ROOT CAUSE (WHY + WHERE; machine truth lacked an operator guide)** —
+  `git log -S'### Run the bounded gate' --oneline --
+  docs/book/src/16df-vial-architecture-scale-cap-closeout.md` returned no
+  historical match, while worktree `git grep` locates the new section at line
+  1996. The completed machine contract was exact, but readers lacked one
+  runnable command path and one complete human envelope/applicability view.
+- [x] **ADDRESSED (verified before -> after)** — the README remains a compact
+  signpost at 240 lines/9,930 bytes. The mdBook now carries six runnable
+  commands, the five-step transaction, pinned environment/providers, eleven
+  exact workload/provider/budget rows, 11/33/44/0 topology, applicability,
+  result, cleanup, recalibration, supported scope, and fourteen nonclaims. A
+  public-JSON-to-Markdown parser proves every row equal; mdBook rendering
+  exposed the initial pipe-splitting defect, and the repaired HTML has exactly
+  six columns with literal selection keys.
+- [x] **NO REGRESSION (public truth, docs, claims, containment)** — T1555/T1794
+  report `All tests successful.` at Files=2/Tests=10. The public dry run prints
+  all five lifecycle steps; independent tracked-evidence authentication and
+  guarded producer-free validation of accepted result c7787a02...02f2 pass.
+  mdBook tests pass and the 94-file repository-local render is removed exactly.
+  Knowledge Map closes at 1,160 facts/6,284 unique questions; claim joins close
+  1,908/1,908 candidates with zero gaps; maintained-reference authority owns
+  the 118-line/7,017-byte book delta without raising a ceiling. Staged
+  acceptance, task integrity, and doctrine gates remain required before commit.

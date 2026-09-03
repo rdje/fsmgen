@@ -7,10 +7,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5.2`
-  (`active`; exact human-facing scale-regression publication)
-- next_action: Audit the completed machine contract against current README,
-  mdBook, Knowledge, and claim surfaces, then publish exact runnable commands,
-  envelopes, applicability, cleanup, supported scope, and nonclaims.
+  (`done`; exact human-facing scale-regression publication)
+- next_action: From a clean tree, activate `.17.5.6` for independent
+  architecture-scale regression, evidence, public-truth, and residue closeout.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: none.

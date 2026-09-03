@@ -1,9 +1,8 @@
 # FSMGen
 
 FSMGen compiles Lisp-like state-machine and intent specifications into
-synthesizable HDL. It emphasizes explicit semantics, reviewable lowering,
-machine-readable diagnostics, and generated output that remains practical to
-inspect and verify.
+synthesizable HDL with explicit semantics, reviewable lowering, machine-readable
+diagnostics, and practical-to-inspect generated output.
 
 For exact current coverage, use the [mdBook](docs/book/src/SUMMARY.md) and
 capability manifest; parser acceptance alone does not imply support.
@@ -75,11 +74,12 @@ Preview higher-level lowering without writing HDL:
 ./bin/fsmgen --quiet --strict --emit-schedule-json ppif/axi_aw_valid_ready.ppif
 ```
 
-Inspect current product capabilities and VIAL source:
+Inspect capabilities and the bounded VIAL regression gate:
 
 ```bash
 ./bin/fsmgen --capability-manifest
 ./bin/fsmgen vial check vial/ahb_subordinate_base_output_arbitration.vial
+./bin/ci-regression vial-gate --dry-run --no-book
 ```
 
 Common modes are discoverable through `./bin/fsmgen --help`:

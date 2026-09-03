@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **136** uniquely owned question entries.
+> **3** facts · **137** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -108,6 +108,7 @@
 - q="where are the VIAL portable backend source byte boundaries?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="where are the authored portable runtime qualification sources and structural oracle?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="where does the VIAL regression gate publish its latest observation?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
+- q="where is the human VIAL architecture-scale regression operator guide?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="where is the machine checked VIAL resource cap inventory?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="where is the machine-readable VIAL architecture-scale regression capability?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="where is the revision e4b95dbd execution checking prefix archived?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
