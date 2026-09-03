@@ -1663,8 +1663,37 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement stable architecture-scale regression gates with bounded CI placement and exact host/tool applicability.`
   Acceptance: `Run the .17.5.3-qualified representative profiles through canonical producers and stage-local oracles; enforce frozen performance budgets only on the exact pinned host/tool profile; run correctness, deterministic-output, safety, no-tool/qualified-tool, atomic publication, and cleanup checks everywhere applicable; report unmatched performance informationally; fail closed on evidence or identity drift; and place expensive guarded gates according to the selected CI cadence without making ordinary slice commits run full CI.`
+  Verification: `Decision 0096, the current regression-promotion Knowledge card, the complete .17.5.3 qualification closeout, current bin/ci-regression shard ownership, and hosted workflow/docs were audited from clean commit 35dafe901. The delivery is partitioned into an executable gate contract, canonical gate implementation, bounded local/hosted CI placement, and production-independent closeout. No gate, workflow, qualification byte, performance enforcement, or public claim changes in this activation slice.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4: partition stable regression gate delivery`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.1`
+  Status: `active`
+  Goal: `Select and freeze the stable regression-gate execution and applicability contract.`
+  Acceptance: `Derive the exact eleven-profile gate plan only from the authenticated current corpus and budget qualification; define fresh canonical-producer execution, stage-local correctness and deterministic oracles, no-tool versus qualified-tool behavior, bounded worker/IPC/guard/output/publication/cleanup rules, and one closed result schema. Performance enforcement must require exact qualified workload, environment, guard, provider, and tool identities after correctness succeeds; unmatched environments remain informational, unavailable required providers remain unavailable rather than pass, deterministic or evidence drift rejects before performance, and caller evidence, historical substitution, budget rewriting, or qualification overwrite is forbidden. Select repository-derived commands and bounded local/hosted cadence without yet wiring CI or activating a performance result.`
   Verification: `pending`
-  Commit: `pending activation`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2`
+  Status: `proposed`
+  Goal: `Implement the caller-sealed eleven-profile regression gate and its atomic result.`
+  Acceptance: `Implement the .1 contract through canonical producers and the common measurement/lifecycle authorities, with fresh isolated profile execution and complete ordered admission. Prove correctness, deterministic outputs, stage-local measurements, exact applicability classification, performance enforcement only for the pinned qualification tuple, informational unmatched performance, unavailable-provider handling, bounded canonical diagnostics/results, signal/error/collision/recovery controls, immutable qualification input, atomic result publication, and exact same-volume cleanup. Add focused hostile watchers for mutation, stale or mixed identity, caller substitution, reordered/missing/extra profiles, threshold boundaries, tool/provider drift, timeouts, IPC failures, and residue without changing qualification bytes or generalizing support/capacity.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3`
+  Status: `proposed`
+  Goal: `Place the expensive guarded regression gate in bounded local and hosted CI cadence.`
+  Acceptance: `Expose exact repository-relative pre-push/selected-important-step and hosted entrypoints around the .2 gate. Keep ordinary slice commits on focused checks, preserve the unsharded local full gate, give hosted execution explicit shard/provider/tool ownership, and require hosted nonmatching environments to run applicable correctness/determinism/safety/publication/cleanup checks while reporting performance informationally. Update CI inventory and workflow documentation so every tracked test remains exactly owned, no matrix tail is hidden, full CI remains reserved for push or selected important steps, and unavailable providers cannot yield a passing performance classification.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4`
+  Status: `proposed`
+  Goal: `Independently close the real regression gate, applicability, CI ownership, and residue.`
+  Acceptance: `From clean committed implementation and CI placement, independently authenticate the immutable qualification, execute production gate entrypoints in exact pinned and safely simulated unmatched/provider-unavailable classifications, and join every profile, correctness, determinism, measurement, budget, applicability, result-publication, CI-inventory, and cleanup identity. Re-run focused hostile watchers plus the warranted bounded regression band; prove qualification/result non-aliasing, no historical substitution or recalibration, exact before/after censuses, zero staging/process residue, and synchronized task/book/Knowledge Map/claims/containment/Memory before closing .17.5.4. Promote no broader support or capacity claim.`
+  Verification: `pending`
+  Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5`
   Status: `proposed`
   Goal: `Publish exact architecture-scale commands, envelopes, variability policy, support/capability truth, and nonclaims.`
