@@ -20,6 +20,8 @@ my $CONTRACT =
     'FSM::VIAL::ArchitectureScaleRegressionPromotionGateContract';
 my $PROFILE =
     'FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile';
+my $STORE =
+    'FSM::VIAL::ArchitectureScaleRegressionPromotionGateStore';
 my $SCHEMA =
     'fsmgen.vial_architecture_scale_regression_promotion_gate_result.v1';
 my $IDENTITY_PREFIX = 'regression-promotion-gate-result/';
@@ -193,6 +195,32 @@ sub run($class, @args) {
         $repository_root, $execution_revision,
     );
     return _clone($result);
+}
+
+sub _admit_for_store($class, @args) {
+    _exact_invocant($class, '_admit_for_store');
+    confess "regression gate result store admission is caller-sealed\n"
+        unless (caller)[0] eq $STORE;
+    my $request = _request(
+        '_admit_for_store', \@args,
+        [qw(result contract execution_revision)],
+    );
+    confess "regression gate result store value is invalid\n"
+        unless ref($request->{result}) eq 'HASH'
+            && !blessed($request->{result});
+    confess "regression gate result store contract is invalid\n"
+        unless ref($request->{contract}) eq 'HASH'
+            && !blessed($request->{contract});
+    confess "regression gate result store revision is invalid\n"
+        unless defined($request->{execution_revision})
+            && !ref($request->{execution_revision})
+            && $request->{execution_revision} =~ /\A[0-9a-f]{40}\z/;
+    _validate_contract_boundary($request->{contract});
+    _validate_result(
+        $request->{result}, $request->{contract},
+        $request->{execution_revision},
+    );
+    return _clone($request->{result});
 }
 
 sub _validate_contract_boundary($contract) {

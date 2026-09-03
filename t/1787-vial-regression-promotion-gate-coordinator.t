@@ -14,11 +14,14 @@ no warnings 'experimental::signatures';
 
 use FSM::VIAL::ArchitectureScaleRegressionPromotionGateCoordinator;
 use FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile;
+use FSM::VIAL::ArchitectureScaleRegressionPromotionGateStore;
 
 my $class =
     'FSM::VIAL::ArchitectureScaleRegressionPromotionGateCoordinator';
 my $profile_class =
     'FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile';
+my $store_class =
+    'FSM::VIAL::ArchitectureScaleRegressionPromotionGateStore';
 my $revision = 'a' x 40;
 my $json = JSON::PP->new->canonical(1)->utf8(1);
 my $repo = tempdir(CLEANUP => 1);
@@ -181,6 +184,23 @@ sub fixture($requested = undef) {
             maximum_profile_report_bytes => 67_108_864,
             maximum_profile_ipc_bytes => 65_536,
             maximum_error_bytes => 4_096,
+            publication_relative_path => join('/', qw(
+                .artifacts qualification vial-scale v2
+                regression-promotion-gate-v1 current
+                regression-promotion-gate-result.json
+            )),
+            staging_relative_path => join('/', qw(
+                .artifacts tmp vial-scale
+                regression-promotion-gate-publication v1
+            )),
+            publication_mode => 'atomic_replaceable_latest_observation',
+            maximum_recovery_entries => 1,
+            same_volume => bool(1),
+            atomic => bool(1),
+            interrupted_run_preserves_previous_result => bool(1),
+            result_is_qualification_evidence => bool(0),
+            qualification_overwrite => bool(0),
+            cleanup => 'owned_staging_absent_after_result_reload',
         },
         profiles => \@profiles,
     };
@@ -432,6 +452,14 @@ BEGIN {
     }
 }
 
+BEGIN {
+    package FSM::VIAL::ArchitectureScaleRegressionPromotionGateStore;
+    sub _test_coordinator_admission {
+        shift;
+        return _admit_result($_[0]);
+    }
+}
+
 is_deeply($class->result_keys, [qw(
     schema schema_version gate_result_identity contract_identity
     qualification_identity qualification_publication_identity
@@ -524,6 +552,16 @@ subtest 'eleven ordered workers yield one complete in-memory pass' => sub {
         'aggregate is content addressed');
     cmp_ok(length(canonical($result)), '<=', 1_048_576,
         'aggregate stays inside the result ceiling');
+    my ($store_admitted, $store_bytes) =
+        $store_class->_test_coordinator_admission({
+            result => $result,
+            contract => $contract,
+            execution_revision => $revision,
+        });
+    is_deeply($store_admitted, $result,
+        'the exact store path readmits the complete aggregate');
+    is($store_bytes, canonical($result) . "\n",
+        'store admission yields the exact bounded publication bytes');
     ok(!-e File::Spec->catdir($repo, '.artifacts'),
         'coordination publishes no result or calibration evidence');
 

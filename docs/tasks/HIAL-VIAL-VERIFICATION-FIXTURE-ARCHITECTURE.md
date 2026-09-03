@@ -1678,7 +1678,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement the caller-sealed eleven-profile regression gate and its atomic result.`
   Acceptance: `Implement the .1 contract through canonical producers and the common measurement/lifecycle authorities, with fresh isolated profile execution and complete ordered admission. Prove correctness, deterministic outputs, stage-local measurements, exact applicability classification, performance enforcement only for the pinned qualification tuple, informational unmatched performance, unavailable-provider handling, bounded canonical diagnostics/results, signal/error/collision/recovery controls, immutable qualification input, atomic result publication, and exact same-volume cleanup. Add focused hostile watchers for mutation, stale or mixed identity, caller substitution, reordered/missing/extra profiles, threshold boundaries, tool/provider drift, timeouts, IPC failures, and residue without changing qualification bytes or generalizing support/capacity.`
-  Verification: `Clean contract predecessor cc1cd18ac separates four implementation fault domains: one fresh profile worker and its classifier, eleven-profile ordered coordination and aggregate admission, replaceable result storage, and the public CLI plus adversarial integration closeout. Existing ProfileCapture/CorpusCoordinator/QualificationStore patterns were re-audited, but their immutable calibration-publication lifecycle cannot safely store repeatable gate observations. Four ordered children retain one caller-sealed production entry and reserve full real-gate execution for independent .17.5.4.4 closeout. Children .1 and .2 are complete with fresh bounded profile execution plus ordered in-memory aggregate admission; child .3 is active for atomic replaceable latest-result storage only.`
+  Verification: `Clean contract predecessor cc1cd18ac separates four implementation fault domains: one fresh profile worker and its classifier, eleven-profile ordered coordination and aggregate admission, replaceable result storage, and the public CLI plus adversarial integration closeout. Existing ProfileCapture/CorpusCoordinator/QualificationStore patterns were re-audited, but their immutable calibration-publication lifecycle cannot safely store repeatable gate observations. Four ordered children retain one caller-sealed production entry and reserve full real-gate execution for independent .17.5.4.4 closeout. Children .1-.3 are complete with fresh bounded profile execution, ordered in-memory aggregate admission, and atomic replaceable latest-result storage; child .4 is active for the explicit public CLI and adversarial integration closeout.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2: partition stable regression gate implementation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.4`
 
@@ -1697,14 +1697,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.2: coordinate stable gate profiles in memory`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Publish and reload one bounded atomically replaceable latest gate observation.`
   Acceptance: `Implement the fixed result coordinate and same-volume staging from Decision 0097. Accept a complete .2 result only through the exact coordinator path, independently rederive the current contract and validate every aggregate/profile/result identity, encode at or below the 1,048,576-byte ceiling, fsync the file and directories, and atomically replace current only after exact reload. Preserve a preceding valid result on interruption; recover at most one identity-scoped stage; leave staging absent after success/failure/reload; never read a prior result as qualification, calibration, budget, applicability, or execution input. Reject caller-selected paths/results, qualification/result aliasing, stale/mixed evidence, malformed/noncanonical/oversized bytes, collision or ambiguous recovery, symlink/hard-link/cross-device/special-file state, post-validation mutation, and cleanup residue.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `ArchitectureScaleRegressionPromotionGateStore exposes exact-class repository_root-only publish and producer-free load operations under the active guard. It independently derives the current contract, accepts new or reloaded aggregates only through Coordinator's exact-store validator, binds contract/qualification/publication/file-set/execution identities, encodes canonical newline JSON at or below 1,048,576 bytes, and never accepts caller evidence or coordinates. Publication runs the coordinator before reading any prior target, writes one mode-0600 current-owner/one-link same-device content-addressed stage, fsyncs file and directories, reopens and re-admits exact bytes, checks unchanged target/stage identities, and atomically renames over the fixed qualification-distinct latest-result path. A pre-rename failure preserves the exact prior result; one exact current-revision stage recovers without producer execution; successful, failed, recovered, unchanged, and loaded controls leave staging absent. T1788 began RED on the absent module and covers first/unchanged/replaced/recovered results, producer-free load, direct-seam rejection, caller injection, interruption, invalid/ambiguous/digest-mismatched stages, mixed/stale evidence, coordinate aliasing, noncanonical/cap-plus-one data, symlink/hardlink/FIFO/wrong-device identity, post-validation mutation, and cleanup. T1787 additionally proves the real store-to-coordinator admission path for one complete aggregate. No real producer, provider, simulator, gate workload, or qualification mutation runs.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.3: replace latest gate result atomically`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Close the explicit gate CLI and adversarial implementation contract before CI placement.`
   Acceptance: `Add one repository-relative executable with explicit --run and producer-free --validate-result operations, no default expensive execution, no abbreviation/case folding, bounded canonical stdout, stable nonzero failure, and sanitized bounded diagnostics. Exercise the complete public path with deterministic adapters and same-volume copied fixtures; falsify caller substitution, qualification/result aliasing, stale/mixed/reordered/missing/extra evidence, exact and adjacent budget thresholds, host/tool/guard/provider drift, unavailable providers, malformed/noncanonical/cap-plus-one IPC/result/error, timeout/exception/exit/signal, interruption/recovery/collision, file aliases, target/staging mutation, repository mutation, and process/filesystem residue. Synchronize runnable mdBook, Knowledge Map, claims, containment, task, and Memory evidence; leave full real producer execution and CI wiring to `.17.5.4.4` and `.17.5.4.3` respectively.`
   Verification: `pending`
@@ -6180,3 +6180,41 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   No result publication, qualification/corpus/budget mutation, CI change,
   observed performance, support tier, capacity claim, full CI, push, or real
   gate execution occurs.
+
+## Acceptance Checklist (enforced) — `.17.5.4.2.3` atomic latest-result storage
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean predecessor `a32bdd89f`
+  coordinates and validates one complete in-memory aggregate but deliberately
+  publishes nothing. The first t1788 run is exact RED: Can't locate FSM/VIAL/ArchitectureScaleRegressionPromotionGateStore.pm at t/1788-vial-regression-promotion-gate-store.t line 8. No authority owns
+  Decision 0097's repeatable latest-observation lifecycle without misusing the
+  immutable qualification store.
+- [x] **ADDRESSED (verified)** — the new exact-class store derives the current
+  contract independently, admits aggregate bytes only through Coordinator's
+  exact-store seam, and binds the full contract/qualification/publication/
+  file-set/execution identity before encoding. It accepts no caller result or
+  coordinate. One private current-owner/one-link same-device stage is
+  content-addressed, file- and directory-synced, exactly reloaded, identity-
+  rechecked, then atomically renamed over the fixed qualification-distinct
+  target. A preceding valid result is read only after fresh coordination and
+  solely as a replacement target; it supplies no qualification, calibration,
+  budget, applicability, or execution input. Load is producer-free. One exact
+  current-revision stage can recover without coordination; all owned success,
+  rejection, recovery, unchanged, and load controls leave staging absent.
+- [x] **NO REGRESSION** — Store, Coordinator, and both focused watchers report
+  `syntax OK`; the final Profile/Coordinator/Store band reports `All tests
+  successful` at `Files=3, Tests=109` in four wall-clock seconds. T1788's 92
+  assertions cover first/unchanged/replaced/recovered publication, injected
+  interruption with byte-exact prior preservation, producer-free load,
+  caller/seam rejection, qualification aliasing, stale/mixed evidence,
+  malformed/noncanonical/cap-plus-one bytes, invalid/digest-mismatched/
+  ambiguous stages, symlink/hardlink/FIFO/wrong-device state, post-validation
+  mutation, and cleanup. T1787 exercises the real store-to-coordinator
+  readmission seam on a complete aggregate. The 59-file mdBook grows exactly
+  49 lines/4,728 bytes to 56,270 lines/3,069,648 bytes; compact Knowledge prose
+  grows only 959 bytes to 3,478,649, leaving 126 bytes below its existing
+  transition allowance. The bounded registry set has 45 claim records; all
+  1,862 current candidates are disposed with zero gaps. Generated Knowledge
+  Map, containment authority, task/Memory pointers, staged acceptance, and all
+  doctrines close before commit. No real producer, provider, simulator, gate
+  workload, qualification/corpus/budget byte, CI, support, capacity, full CI,
+  push, or observed-performance result changes.

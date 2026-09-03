@@ -1628,6 +1628,55 @@ prove -Iperl -v \
 - Durability: Retain ArchitectureScaleRegressionPromotionGateCoordinator, GateProfile's sealed seams, t1786/t1787, task `.17.5.4.2.2`, this chapter, the compact regression-promotion Knowledge card, bounded claim record, doctrine watchers, and the work-unit Git commit. Children `.2.3` and `.2.4` still own latest-result publication, CLI integration, and adversarial closeout; `.3` and `.4` still own CI placement and independent real execution.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-gate-coordination-v1 -->
 
+### Atomic latest gate-result storage
+
+The result store exposes exact-class `publish({repository_root})` and
+producer-free `load({repository_root})` operations. It independently derives
+the current gate contract; neither operation accepts a result, contract, path,
+budget, applicability tuple, or qualification from its caller. Publication
+executes the coordinator only when no recovery stage exists, then re-admits
+the complete aggregate through the coordinator's store-only validator. Load
+re-admits stored bytes but never executes a producer.
+
+The only current coordinate is
+`.artifacts/qualification/vial-scale/v2/regression-promotion-gate-v1/current/regression-promotion-gate-result.json`.
+Its canonical newline-terminated JSON is bounded at 1,048,576 bytes. The store
+writes a mode-0600 content-addressed file beneath the contract's same-volume
+staging root, flushes and syncs the file and directories, reloads and validates
+the exact bytes, checks that the preceding target did not change, and only
+then atomically renames over `current`. The preceding valid observation
+therefore remains visible if execution or staging fails before replacement.
+
+At startup, publication recovers at most one valid stage whose filename,
+digest, current execution revision, current contract, qualification
+publication, qualification identity, and qualification file set all agree.
+Malformed or ambiguous owned stages are rejected and removed. Successful,
+failed, recovered, unchanged, and loaded paths leave no staging tree. Result
+files and staging entries must be real current-owner, same-device, one-link
+regular files whose pathname and handle identities remain unchanged; aliases,
+special files, oversized or noncanonical bytes, and post-validation mutation
+fail closed.
+
+The store reads a preceding result only after new coordination, solely to
+validate the replacement target. It never treats that observation as
+qualification, calibration, budget, applicability, or execution input. The
+immutable two-file qualification namespace remains byte-separate. This layer
+provides storage machinery, not a CLI, CI activation, real gate execution,
+observed performance, support, or capacity. Its synthetic watcher is:
+
+```sh
+prove -Iperl -v \
+  t/1787-vial-regression-promotion-gate-coordinator.t \
+  t/1788-vial-regression-promotion-gate-store.t
+```
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-gate-latest-result-store-v1 -->
+- Claim: The exact-caller regression-gate result store accepts only a complete coordinator result against an independently derived current contract and publishes canonical newline-terminated JSON at one fixed qualification-distinct coordinate under a 1,048,576-byte ceiling. It fsyncs one same-volume content-addressed stage and its directories, reloads exact bytes, then atomically replaces the latest observation; interruption before replacement preserves the preceding valid result. It recovers at most one exact current-revision stage and leaves owned staging absent after success, rejection, recovery, unchanged publication, or load. Prior results are never qualification, calibration, budget, applicability, or execution inputs. This is synthetic-watched storage machinery, not a real gate run, CI activation, observed performance, support, or capacity.
+- Re-derive: Run t1787 plus t1788 and inspect GateStore with Coordinator's store-only admission seam. Require the fixed coordinate, 1,048,576-byte ceiling, independent contract derivation, producer-free load, exact canonical bytes, file/directory sync, one same-volume stage, atomic published/replaced/recovered/unchanged states, prior-byte preservation on injected pre-rename failure, and absent staging.
+- Falsify: T1788 began RED on the absent store, then rejects caller-selected results or paths, qualification/result coordinate aliasing, stale or mixed evidence, malformed, noncanonical, or cap-plus-one bytes, digest mismatch, invalid or ambiguous stages, symlink, hardlink, FIFO, wrong-device identity, post-validation target mutation, and direct coordinator-seam use. Every owned-stage failure control proves cleanup; adjacent t1787 proves only the exact store path readmits a complete aggregate.
+- Durability: Retain ArchitectureScaleRegressionPromotionGateStore, Coordinator's exact-store admission seam, t1787/t1788, task `.17.5.4.2.3`, the mdBook chapter, compact regression-promotion Knowledge card, bounded claim record, doctrine watchers, and work-unit commit. Child `.2.4` still owns the explicit CLI and adversarial public-path closeout; `.3` and `.4` still own CI placement and independent real execution.
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-gate-latest-result-store-v1 -->
+
 Re-derive the selection and its closure comparison with:
 
 ```sh
@@ -1640,9 +1689,9 @@ scripts/run_with_ram_guard.sh -- env \
 Current capture, in-memory budget qualification, the publication store, its
 explicit CLI, the real clean-revision qualification seal, hostile copied
 controls, final independent/production agreement, one-profile gate worker, and
-eleven-profile in-memory coordinator are complete. Latest-result publication,
-gate/CI integration, and public truth remain separate rollback owners. Until those
-leaves pass, the sealed budgets remain
+eleven-profile in-memory coordinator, and atomic latest-result store are
+complete. The explicit gate CLI, gate/CI integration, and public truth remain
+separate rollback owners. Until those leaves pass, the sealed budgets remain
 unenforced, all historical candidate budgets stay candidate-only, and whole-
 product big/really-big capacity remains unclaimed.
 
