@@ -1678,6 +1678,35 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement the caller-sealed eleven-profile regression gate and its atomic result.`
   Acceptance: `Implement the .1 contract through canonical producers and the common measurement/lifecycle authorities, with fresh isolated profile execution and complete ordered admission. Prove correctness, deterministic outputs, stage-local measurements, exact applicability classification, performance enforcement only for the pinned qualification tuple, informational unmatched performance, unavailable-provider handling, bounded canonical diagnostics/results, signal/error/collision/recovery controls, immutable qualification input, atomic result publication, and exact same-volume cleanup. Add focused hostile watchers for mutation, stale or mixed identity, caller substitution, reordered/missing/extra profiles, threshold boundaries, tool/provider drift, timeouts, IPC failures, and residue without changing qualification bytes or generalizing support/capacity.`
+  Verification: `Clean contract predecessor cc1cd18ac separates four implementation fault domains: one fresh profile worker and its classifier, eleven-profile ordered coordination and aggregate admission, replaceable result storage, and the public CLI plus adversarial integration closeout. Existing ProfileCapture/CorpusCoordinator/QualificationStore patterns were re-audited, but their immutable calibration-publication lifecycle cannot safely store repeatable gate observations. Four ordered children retain one caller-sealed production entry and reserve full real-gate execution for independent .17.5.4.4 closeout.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2: partition stable regression gate implementation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.4`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.1`
+  Status: `active`
+  Goal: `Execute and classify one qualified gate profile through a fresh bounded worker.`
+  Acceptance: `Add one caller-sealed profile authority that accepts only repository_root plus ordinal, derives the exact gate contract internally, requires the active guard and unchanged clean execution revision, and invokes the selected canonical adapter once in a fresh child for one validation plus three raw measurements. Revalidate the closed bounded canonical report in the parent; require exact selection/workload/correctness projection before timing; derive provider and host/tool/guard applicability without caller override; reduce each fresh metric by maximum; classify exact-environment budgets at inclusive pass/fail boundaries, unmatched timing as informational, and unavailable exact providers as unavailable rather than pass. Return one bounded defensive profile result with exact evidence identities and sanitized failure; reject caller evidence, stale/mixed identity, reordered records, numeric strings, malformed/oversized IPC, timeout/exception/exit/signal, producer/report mutation, and residue. Default tests use deterministic synthetic adapter reports and run no real provider or simulator.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.2`
+  Status: `proposed`
+  Goal: `Coordinate all eleven fresh profile workers and admit one complete in-memory gate result.`
+  Acceptance: `Add one repository_root-only coordinator that derives the contract once, walks every ordinal exactly once in plan order, delegates only through .1's exact-caller worker seam, and admits the eleven returned profile results under one unchanged clean execution revision. Require complete qualification/contract/file-set identity, 11 validations, 33 fresh raw measurements, 44 controller invocations, zero exclusions, exact correctness and deterministic evidence, ordered per-profile performance classifications, and aggregate fail/unavailable/informational/pass precedence without publishing. Content-address one closed bounded canonical aggregate; reject missing/extra/duplicate/reordered profiles, mixed contract/qualification/revision/environment/provider state, threshold or classification forgery, malformed/oversized worker output, child failure, repository mutation, post-worker evidence mutation, and residue. Default tests remain synthetic and producer-free outside the sealed worker double.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.3`
+  Status: `proposed`
+  Goal: `Publish and reload one bounded atomically replaceable latest gate observation.`
+  Acceptance: `Implement the fixed result coordinate and same-volume staging from Decision 0097. Accept a complete .2 result only through the exact coordinator path, independently rederive the current contract and validate every aggregate/profile/result identity, encode at or below the 1,048,576-byte ceiling, fsync the file and directories, and atomically replace current only after exact reload. Preserve a preceding valid result on interruption; recover at most one identity-scoped stage; leave staging absent after success/failure/reload; never read a prior result as qualification, calibration, budget, applicability, or execution input. Reject caller-selected paths/results, qualification/result aliasing, stale/mixed evidence, malformed/noncanonical/oversized bytes, collision or ambiguous recovery, symlink/hard-link/cross-device/special-file state, post-validation mutation, and cleanup residue.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.4`
+  Status: `proposed`
+  Goal: `Close the explicit gate CLI and adversarial implementation contract before CI placement.`
+  Acceptance: `Add one repository-relative executable with explicit --run and producer-free --validate-result operations, no default expensive execution, no abbreviation/case folding, bounded canonical stdout, stable nonzero failure, and sanitized bounded diagnostics. Exercise the complete public path with deterministic adapters and same-volume copied fixtures; falsify caller substitution, qualification/result aliasing, stale/mixed/reordered/missing/extra evidence, exact and adjacent budget thresholds, host/tool/guard/provider drift, unavailable providers, malformed/noncanonical/cap-plus-one IPC/result/error, timeout/exception/exit/signal, interruption/recovery/collision, file aliases, target/staging mutation, repository mutation, and process/filesystem residue. Synchronize runnable mdBook, Knowledge Map, claims, containment, task, and Memory evidence; leave full real producer execution and CI wiring to `.17.5.4.4` and `.17.5.4.3` respectively.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6045,3 +6074,28 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   gate execution, result write,
   qualification mutation, budget change, CI change, observed performance,
   support tier, capacity claim, full CI, or push occurs.
+
+## Acceptance Checklist (enforced) — `.17.5.4.2` gate implementation partition
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean predecessor `cc1cd18ac` supplies
+  the frozen metadata contract, while
+  `git log -S'ArchitectureScaleRegressionPromotionGateProfile' --all -- perl t
+  scripts docs` returns no gate worker, coordinator, result store, or CLI.
+  Source audit locates immutable evidence capture, coordination, and storage in
+  existing ProfileCapture/CorpusCoordinator/QualificationStore authorities;
+  their non-replaceable calibration lifecycle is the wrong owner for repeated
+  gate observations.
+- [x] **ADDRESSED (verified)** — `.17.5.4.2` now has four ordered children:
+  `.1` owns caller-sealed fresh one-profile execution and classification, `.2`
+  owns complete eleven-profile coordination and aggregate admission, `.3` owns
+  bounded atomic latest-result replacement, and `.4` owns the explicit CLI
+  plus adversarial implementation closeout. `.1` alone is active. Before ->
+  after: one cross-cutting implementation leaf becomes four independently
+  reviewable fault domains without changing behavior.
+- [x] **NO REGRESSION** — this partition changes task-tree continuity state
+  only. Task-tree integrity, bounded Memory, relative paths, Knowledge Map,
+  claim inventory, live-document containment, and `[doctrine] all doctrine
+  checks passed` are required before commit. No source, test, script, book,
+  decision, generated artifact, worker, producer, provider, simulator,
+  controller, measurement, result, qualification, budget, CI, support,
+  capacity, full CI, or push changes.
