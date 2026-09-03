@@ -195,7 +195,8 @@ sub language_surface_vial_tooling_keys {
         schema_version status contract_source implementation_entrypoints
         request_schema result_schema semantic_projection_schema
         source_styles supported_actions capabilities diagnostics limits
-        writes_files public_embedding_api explicit_nonclaims guidance
+        architecture_scale_regression writes_files public_embedding_api
+        explicit_nonclaims guidance
     )];
 }
 

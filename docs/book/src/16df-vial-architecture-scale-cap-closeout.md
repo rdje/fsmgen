@@ -1959,6 +1959,40 @@ provider-unavailable non-pass, and aggregate-precedence behavior.
 - Durability: Retain Decision 0099, the result identity/hash and exact evidence transcript in task `.17.5.4.4.2.2.2`, the public runner and stores, t1183 and t1779-t1793, the mdBook chapter, Knowledge card, bounded claim record, doctrine gates, and work-unit Git commit. The latest-result file is deliberately replaceable; Git preserves this observation while future runs produce their own identity.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-production-gate-observation-ef59330ab-v1 -->
 
+### Machine-readable regression-gate capability
+
+Both public capability entrypoints now expose the same bounded discovery
+record without reading generated evidence or the replaceable latest result:
+
+```sh
+./bin/fsmgen vial capabilities --json
+./bin/fsmgen --capability-manifest
+```
+
+The VIAL result places it at
+`capability_evidence.architecture_scale_regression`; the complete manifest
+places it at `language_surface.vial_tooling.architecture_scale_regression`.
+Capability `vial.architecture_scale.regression_gate.v1` names the selected gate
+commands and schemas, exact evidence and qualification identities, ordered
+profile coordinates and budgets, topology, reference host/guard/providers,
+applicability, cadence, latest-result coordinate, cleanup, supported scope, and
+nonclaims. The tracked support snapshot is pure and defensive; T1794 joins every
+field to the immutable transport/qualification or an executable gate authority.
+
+This publishes a bounded regression capability, not an architecture-scale or
+whole-product capacity tier. The former ambiguous aggregate `scale` nonclaim is
+therefore replaced only on VIAL tooling discovery by precise capacity, product
+size, composition, language, tool, parity, and support-promotion nonclaims.
+Fixture-level support classifications and their narrower `scale` nonclaims are
+unchanged.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-architecture-scale-regression-capability-v1 -->
+- Claim: Public VIAL discovery exposes one artifact-independent contract for eleven exact qualified gate-candidate profiles, required topology 11/33/44, immutable per-profile budgets, and exact environment/applicability rules under capability `vial.architecture_scale.regression_gate.v1`. It claims only the shipped bounded regression gate; it does not claim support promotion, architecture-scale capacity, whole-product capacity, arbitrary-tool capacity, or general cross-backend parity.
+- Re-derive: Run both capability commands above and T1794. Require identical nested contracts with the complete ordered profile projection, topology, evidence identities, provider requirements, budgets, applicability, result coordinate, cleanup, supported scope, and precise nonclaims.
+- Falsify: The initial CLI probe found the nested record absent even though the aggregate manifest carried it; T1555 now fails on that split. T1794 independently joins the static snapshot to tracked transport/qualification data and executable policy, store, limit, provider, and support authorities, exercises defensive rebuilding, and rejects aggregate `scale` ambiguity or support/capacity promotion.
+- Durability: Retain the pure support contract, both public embeddings, T1555/T1794, complete manifest watcher, task-tree evidence, this chapter, Knowledge Map card, bounded claim record, doctrine gates, and work-unit commit. Discovery reads no ignored or replaceable artifact.
+<!-- CLAIM-VERIFICATION:END vial-architecture-scale-regression-capability-v1 -->
+
 Re-derive the authenticated transport, hostile closure, and policy comparison
 with:
 

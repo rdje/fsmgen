@@ -1821,11 +1821,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5.1`
-  Status: `active`
+  Status: `done`
   Goal: `Publish one bounded machine-readable VIAL architecture-scale regression capability contract.`
   Acceptance: `Add a closed support contract to public VIAL capabilities and the complete capability manifest that identifies the shipped gate command, schemas and immutable qualification bindings, eleven selected profile coordinates, 11/33/44 topology, qualified budget envelopes, exact deterministic and environment applicability fields, fixed guard/provider requirements, atomic latest-result coordinate, cadence, cleanup, and supported regression claim. Cross-check every field against tracked evidence and executable gate authorities without requiring ignored generated artifacts at discovery time. Replace the ambiguous scale nonclaim only at this aggregate capability boundary with explicit architecture-scale-capacity, whole-product big/really-big, multi-unit/domain, mixed-language, native-UVM-runtime, full-language, synthesis, arbitrary-tool-capacity, support-promotion, and general-parity nonclaims. Preserve all source/runtime fixture support classifications and their narrower scale nonclaims.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `The pure argument-free FSM::Support::VIALArchitectureScaleRegressionContract now publishes one closed defensive tracked snapshot through the VIAL capability API, fsmgen vial capabilities --json, and the complete capability manifest. Its eleven ordered rows exactly join every selection/workload/correctness/environment/provider/budget field to the authenticated transport and immutable qualification; topology is exact 11/33/44/0; host, guard, OSVVM, Verilator, GHDL, applicability, cadence, latest-result, cleanup, supported bounded-gate scope, and precise nonclaims join their distinct executable authorities. Discovery reads no ignored evidence or replaceable result. The first T1794 run proved the owner absent; a subsequent public JSON probe exposed and drove repair of the filtered CLI record. Final public JSON reports capability vial.architecture_scale.regression_gate.v1, eleven profiles, and 44 controller invocations. Five modules compile; the impacted capability/language-surface/gate band reports All tests successful at Files=8, Tests=37, with only the existing opt-in Darwin runtime integration skipped. mdBook tests pass; the repository-local HTML build contains 94 files before exact removal, and fresh maintained-reference authority owns its exact 34-line/2,959-byte aggregate delta without raising a ceiling. Knowledge Map generation/check passes at 1,160 facts; claim verification closes 52 records and inventory/dispositions close 1,891/1,891 candidates with no gap. The optional rationale ledger remains unchanged because the root live-document surface is at its line ceiling; the same rationale is durable in this task, the book, Knowledge card, tests, and Git. Existing VIAL fixture support entries retain their narrower scale nonclaim, and no gate execution, evidence, budget, support classification, runtime behavior, human CLI publication, or capacity claim changed.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5.1: publish scale regression capability`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5.2`
   Status: `proposed`
@@ -2831,3 +2831,30 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   qualification-distinct latest result intact. mdBook, Knowledge Map, claims,
   containment, staged acceptance, and doctrine gates are required before
   commit; `.17.5.5` remains a separate public-truth publication owner.
+
+## Acceptance Checklist (enforced) — `.17.5.5.1` machine-readable regression capability
+
+- [x] **ROOT CAUSE (WHY + WHERE; no precise public scale-regression record)** —
+  aggregate VIAL discovery retained only an ambiguous `scale` nonclaim even
+  after the bounded regression gate shipped. T1794 began RED with `Can't locate
+  FSM/Support/VIALArchitectureScaleRegressionContract.pm at t/1794-vial-architecture-scale-regression-capability.t line 13`;
+  after the
+  aggregate contract existed, a direct CLI JSON probe separately found its
+  nested record missing because `_capabilities_result` still selected the old
+  field subset.
+- [x] **ADDRESSED (verified before -> after)** — one pure closed support module
+  now owns the complete artifact-independent snapshot and is embedded unchanged
+  in the public VIAL API, JSON CLI result, language surface, and complete
+  manifest. T1794 independently joins all eleven rows, 11/33/44 topology,
+  budgets, evidence identities, host/guard/providers, applicability, cadence,
+  latest-result, cleanup, supported bounded-gate scope, and precise nonclaims to
+  tracked evidence or executable authorities; T1555 locks the formerly missing
+  CLI path and every fixture support row retains its narrower `scale` nonclaim.
+- [x] **NO REGRESSION (capabilities, docs, claims, containment)** — five changed
+  modules report `syntax OK`; the impacted band reports `All tests successful.`
+  and `Files=8, Tests=37`. mdBook tests and the rendered chapter pass; Knowledge
+  Map generation/check passes at 1,160 facts; claim registry and inventory joins
+  close 1,891/1,891 candidates with zero gaps. Fresh maintained-reference
+  authority owns the exact book delta without raising a ceiling, no generated
+  book artifact remains, and staged acceptance, containment, task integrity,
+  and doctrine gates remain required before commit.

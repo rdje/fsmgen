@@ -990,6 +990,8 @@ sub _capabilities_result {
             capabilities => [@{$contract->{capabilities}}],
             diagnostics => [@{$contract->{diagnostics}}],
             limits => _clone($contract->{limits}),
+            architecture_scale_regression =>
+                _clone($contract->{architecture_scale_regression}),
             explicit_nonclaims => [@{$contract->{explicit_nonclaims}}],
         },
         support_accounting => _support_accounting(),

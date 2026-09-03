@@ -267,6 +267,11 @@ subtest 'CLI is one adapter over the API and preserves legacy dispatch' => sub {
     my $cap_result = JSON::PP->new->decode($json_out);
     is($cap_result->{schema}, 'fsmgen.vial_tool_result.v1', 'CLI JSON uses the API result schema');
     is_deeply($cap_result->{capability_evidence}{supported_actions}, [qw(capabilities check format plan run)], 'CLI capability actions are exact');
+    is_deeply(
+        $cap_result->{capability_evidence}{architecture_scale_regression},
+        build_vial_tooling_contract()->{architecture_scale_regression},
+        'CLI JSON publishes the complete bounded scale-regression contract',
+    );
     is($json_err, '', 'JSON capabilities has no stderr');
 
     my ($check_status, $check_out, $check_err) = run_cli('vial', 'check', $source_id);
@@ -309,6 +314,18 @@ subtest 'capability and support accounting compose source tooling with shipped p
     ok($contract->{public_embedding_api}, 'tooling contract advertises bounded public API');
     my %nonclaim = map { $_ => 1 } @{$contract->{explicit_nonclaims}};
     ok($nonclaim{complete_four_state} && $nonclaim{general_cross_backend_parity}, 'four-state/general-parity non-claims remain explicit');
+    ok(
+        !$nonclaim{scale}
+            && $nonclaim{architecture_scale_capacity}
+            && $nonclaim{whole_product_big}
+            && $nonclaim{arbitrary_tool_capacity},
+        'aggregate discovery replaces ambiguous scale with exact capacity nonclaims',
+    );
+    is(
+        $contract->{architecture_scale_regression}{capability},
+        'vial.architecture_scale.regression_gate.v1',
+        'VIAL tooling exposes the bounded regression-gate capability record',
+    );
 
     my $manifest = build_capability_manifest();
     is_deeply($manifest->{language_surface}{vial_tooling}, $contract, 'ordinary manifest embeds exact VIAL-only tooling contract');

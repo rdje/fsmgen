@@ -323,6 +323,10 @@ use FSM::Support::VIALToolingContract qw(
     build_vial_tooling_contract
     vial_tooling_contract_source
 );
+use FSM::Support::VIALArchitectureScaleRegressionContract qw(
+    build_vial_architecture_scale_regression_contract
+    vial_architecture_scale_regression_contract_source
+);
 use FSM::Support::ProducerContract qw(
     producer_contract_source
     producer_presence_key_family_map
@@ -3034,6 +3038,30 @@ subtest 'manifest captures the first downstream tool contract surface' => sub {
     ok(
         $manifest->{language_surface}{vial_tooling}{writes_files},
         'manifest records that VIAL planning writes atomic repository-local artifacts',
+    );
+    is_deeply(
+        $manifest->{language_surface}{vial_tooling}
+            {architecture_scale_regression},
+        build_vial_architecture_scale_regression_contract(),
+        'manifest publishes the canonical bounded architecture-scale regression contract',
+    );
+    is(
+        $manifest->{language_surface}{vial_tooling}
+            {architecture_scale_regression}{contract_source},
+        vial_architecture_scale_regression_contract_source(),
+        'manifest names the scale-regression discovery owner',
+    );
+    is(
+        $manifest->{language_surface}{vial_tooling}
+            {architecture_scale_regression}{topology}
+            {total_controller_invocations},
+        44,
+        'manifest reports the qualified eleven-profile 11/33/44 topology',
+    );
+    like(
+        $file_surface_by_suffix{'.vial'}{current_boundary},
+        qr/separate public CI regression capability gates eleven exact qualified architecture-scale component profiles.*does not expand.*runtime support boundary or establish capacity/i,
+        'manifest separates bounded scale regression from runtime support and capacity',
     );
     my %isf_cli_modes = map { $_ => 1 } @{$file_surface_by_suffix{'.isf'}{supported_cli_modes} || []};
     ok(

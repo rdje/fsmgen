@@ -5,6 +5,9 @@ use warnings;
 
 use Exporter 'import';
 use JSON::PP ();
+use FSM::Support::VIALArchitectureScaleRegressionContract qw(
+    build_vial_architecture_scale_regression_contract
+);
 
 our @EXPORT_OK = qw(
     build_vial_tooling_contract
@@ -21,7 +24,8 @@ sub vial_tooling_contract_keys {
         schema_version status contract_source implementation_entrypoints
         request_schema result_schema semantic_projection_schema
         source_styles supported_actions capabilities diagnostics limits
-        writes_files public_embedding_api explicit_nonclaims guidance
+        architecture_scale_regression writes_files public_embedding_api
+        explicit_nonclaims guidance
     )];
 }
 
@@ -61,6 +65,7 @@ sub build_vial_tooling_contract {
             vial.parity.ahb_base_output_arbitration.v1
             vial.parity_report.v1
             vial.result_manifest.v1
+            vial.architecture_scale.regression_gate.v1
         )],
         diagnostics => [qw(
             VIAL_TOOL_INVOCATION_ERROR
@@ -94,10 +99,16 @@ sub build_vial_tooling_contract {
             artifacts => 256,
             artifact_bytes => 67_108_864,
         },
+        architecture_scale_regression =>
+            build_vial_architecture_scale_regression_contract(),
         writes_files => JSON::PP::true,
         public_embedding_api => JSON::PP::true,
         explicit_nonclaims => [qw(
-            complete_four_state general_cross_backend_parity uvm vhdl_methodology mixed_language scale
+            complete_four_state general_cross_backend_parity uvm
+            vhdl_methodology mixed_language architecture_scale_capacity
+            whole_product_big whole_product_really_big multi_unit
+            multi_domain native_uvm_runtime full_language synthesis
+            arbitrary_tool_capacity support_promotion
         )],
         guidance => [
             'Normal and terse are deterministic projections of one typed VIAL meaning; they are not separate semantic profiles.',
@@ -105,7 +116,9 @@ sub build_vial_tooling_contract {
             'Capabilities, check, and format never bind HIAL or write an artifact; plan and run bind one canonical HIAL review route, while only run selects a backend.',
             'The in-memory plan/run API publishes one complete virtual artifact sink; the CLI atomically commits the same graph below a repository-relative same-volume root.',
             'Run selects the exact qualified Verilator profile, compiles and executes repository-local generated SystemVerilog, validates its closed trace, and publishes a verification result manifest.',
-            'Known-value runtime evidence and bounded parity with the handwritten AHB oracle are shipped for the selected one-unit, one-clock, declared-probe profile; complete four-state observation, general cross-backend parity, UVM, VHDL, mixed-language execution, and scale remain explicit non-claims.',
+            'Known-value runtime evidence and bounded parity with the handwritten AHB oracle are shipped for the selected one-unit, one-clock, declared-probe profile.',
+            'A separate public eleven-profile architecture-scale regression gate enforces deterministic correctness everywhere and immutable performance budgets only on the exact qualified environment; it does not promote general support or capacity.',
+            'Complete four-state observation, general cross-backend parity, UVM, VHDL methodology, mixed-language execution, whole-product big/really-big, multi-unit/domain, native-UVM runtime, full-language, synthesis, arbitrary-tool capacity, support promotion, and architecture-scale capacity remain explicit nonclaims.',
         ],
     };
 }

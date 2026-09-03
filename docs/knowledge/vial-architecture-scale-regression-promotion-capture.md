@@ -48,26 +48,27 @@ answers:
   - "which VIAL lifecycle correctness fields are stable?"
   - "does the VIAL gate ignore process telemetry or recalibrate?"
   - "did the exact-pinned VIAL regression promotion gate pass?"
+  - "where is the machine-readable VIAL architecture-scale regression capability?"
 date: 2026-09-03
 status: current
 tags: [hial, vial, scalability, regression, measurement, publication]
 evidence: >-
   docs/decisions/0096-regression-promotion-uses-a-current-eleven-profile-corpus.md; docs/decisions/0097-regression-gates-publish-replaceable-observations-without-recalibrating.md; docs/decisions/0098-hosted-regression-gates-materialize-immutable-tracked-evidence.md; docs/decisions/0099-regression-correctness-excludes-only-sealed-process-telemetry-derivatives.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16df-vial-architecture-scale-cap-closeout.md;
-  perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualification.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateContract.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateProfile.pm; .github/workflows/regression.yml; bin/ci-regression; scripts/run_vial_regression_promotion_gate.pl; vial/qualification/regression_promotion_gate/evidence-v1/transport-manifest.json; t/1786-vial-regression-promotion-gate-profile.t; t/1790-vial-regression-promotion-evidence-transport.t; t/1793-vial-regression-promotion-gate-correctness-stability.t
+  perl/FSM/Support/VIALArchitectureScaleRegressionContract.pm; perl/FSM/Support/VIALToolingContract.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualification.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateContract.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateProfile.pm; .github/workflows/regression.yml; bin/ci-regression; scripts/run_vial_regression_promotion_gate.pl; vial/qualification/regression_promotion_gate/evidence-v1/transport-manifest.json; t/1555-vial-public-source-tooling.t; t/1786-vial-regression-promotion-gate-profile.t; t/1790-vial-regression-promotion-evidence-transport.t; t/1793-vial-regression-promotion-gate-correctness-stability.t; t/1794-vial-architecture-scale-regression-capability.t
 reverify: >-
   scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; perl scripts/verify_vial_regression_promotion_evidence_transport.pl;
   env FSMGEN_VIAL_REGRESSION_GATE_CONTRACT_EXACT=1 scripts/run_with_ram_guard.sh -- prove -Iperl t/1785-vial-regression-promotion-gate-contract.t; prove -Iperl t/1786-vial-regression-promotion-gate-profile.t t/1787-vial-regression-promotion-gate-coordinator.t t/1788-vial-regression-promotion-gate-store.t t/1789-vial-regression-promotion-gate-cli.t t/1790-vial-regression-promotion-evidence-transport.t;
   scripts/run_with_ram_guard.sh -- prove -Iperl t/1791-vial-regression-promotion-evidence-materialization.t; prove -Iperl t/1183-ci-regression-tier-selection.t t/1792-vial-regression-promotion-hosted-result-verifier.t t/1793-vial-regression-promotion-gate-correctness-stability.t;
-  ./bin/ci-regression vial-gate --dry-run --no-book; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_gate.pl --validate-result
+  ./bin/fsmgen vial capabilities --json; ./bin/fsmgen --capability-manifest; prove -Iperl t/1555-vial-public-source-tooling.t t/1794-vial-architecture-scale-regression-capability.t; ./bin/ci-regression vial-gate --dry-run --no-book; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_gate.pl --validate-result
 ---
 
-Decision 0096 selects eleven v2 gate profiles. Each adapter call owns one
-validation plus three raw calls: 44 records in eleven guarded lifecycles.
-Revision-1 matrices are inadmissible.
-
-`.17.5.2` authenticates seven adapters, bounds same-volume storage, isolates workers and parent reload, supports exact resume, exposes closed CLI modes, and falsifies copied v2 evidence. Only clean capture can seal. Complete coordinates enforce 11/33/44/0, common host/guard, provider order, and no history swap.
-
-Clean `610ed7869` exposed a policy/report-coordinate mismatch and sealed no corpus. Its exact four-report/600,036-byte prefix remains independently verifiable in revision-keyed failed history. `.17.5.2.4.2` corrected only the capture-plan coordinate authority: schema v2 authenticates producer-derived coordinates independently of unchanged selection keys and rejects coordinate mutation or aliasing.
+Decision 0096 selects eleven v2 profiles, each with one validation and three raw
+calls: 44 controller records across eleven guarded lifecycles. `.17.5.2`
+authenticates seven adapters, bounds same-volume storage, isolates workers and
+reload, supports exact resume, and falsifies copied evidence. Clean `610ed7869`
+sealed nothing after exposing a report-coordinate mismatch; `.17.5.2.4.2`
+corrected only producer-derived coordinate authority. Revision-1 matrices,
+coordinate mutation, aliasing, and history swaps remain inadmissible.
 
 The repaired capture at clean `155aa22ea` contains 11 selected reports,
 11 validations, 33 fresh raw measurements, 44 accepted invocations, and zero
@@ -78,24 +79,18 @@ the complete file-set digest is `dc5b315b827389eb466776716f6851cdd9ddd13b2f1aec4
 Producer-free validate/inventory reproduced every identity/count with eleven
 present, zero missing, and no staging. Copied-artifact falsification is complete.
 
-The independent verifier imports no production module and authenticates the
-13-file/6,220,126-byte corpus, 11/33/44/0 counts, identities, cleanup,
-nonclaims, and 7/1/3 provider split; t1777 rejects 17 copied mutation classes.
-Value-preserving JSON/clone/SHA instrumentation guided plan reuse and
-whole-profile isolation, then all paths agreed at `1da11b2e3`. The sampled
-timings are characterization, never stable budgets.
+The production-independent verifier authenticates the 13-file/6,220,126-byte
+corpus, 11/33/44/0 counts, identities, cleanup, nonclaims, and 7/1/3 provider
+split; t1777 rejects 17 copied mutation classes. All paths agreed at
+`1da11b2e3`; sampled timings remain characterization, never budgets.
 
-`.17.5.3` derives and atomically seals the current qualification in a fixed
-two-file v2 namespace, binding source, formula, budgets, environment/provider,
-correctness, applicability, publisher, and immutable recalibration/rollback.
-From `8667f766c`, its 764,010-byte report and 28,148-byte manifest bind
-publication `1c2a3832...945f` and file set `28ba972c...9095`; distinct validation
-returns 793,084 canonical bytes. Independent and copied-hostile verification
-rejects content, schema, type, formula, budget, identity, provenance, path,
-alias, staging, or residue drift. Later exact identity is eligible only after
-correctness; environment drift is informational, deterministic drift rejects,
-provider absence is not pass, and recalibration needs separately owned old/new
-immutable evidence. T1784 closes both real censuses with no owned residue.
+`.17.5.3` atomically seals source, formula, budgets, environment/provider,
+correctness, applicability, publisher, and recalibration authority in a fixed
+two-file v2 namespace. From `8667f766c`, publication `1c2a3832...945f` and file
+set `28ba972c...9095` reject content, schema, formula, identity, provenance,
+path, alias, staging, or residue drift. Correctness precedes eligibility;
+environment drift is informational, deterministic drift rejects, provider
+absence is not pass, and recalibration needs separately owned old/new evidence.
 
 Decision 0097 and `.17.5.4.1` add the metadata-only gate contract at
 `regression-promotion-gate-contract/0150f4b3...e368`. It joins all eleven
@@ -107,35 +102,16 @@ providers remain unavailable. Repeated gates will atomically replace one
 latest observation under the v2 gate namespace without changing qualification
 bytes or creating budget evidence. `.17.5.4.2` owns execution and publication.
 
-`.17.5.4.2.1` implements one profile only. One fresh child calls the selected
-adapter once; child and parent validate the full canonical report through an
-immediately unlinked same-volume spool, while IPC carries bounded metadata.
-The qualification's caller-sealed projection verifies correctness before
-maximum timing. Exact environment uses inclusive pass/fail, mismatch is
-informational, absence is unavailable, and present provider drift rejects.
-T1786 is synthetic and leaves no spool or process residue; all three real
-exact-provider preflights report available without running a workload.
-
-`.17.5.4.2.2` derives one contract, visits ordinals 1-11 once through the
-sealed profile seams, and re-admits every full result into one bounded in-memory
-aggregate. It separates required 11/33/44 totals from honest observed counts
-when providers are unavailable; precedence is fail, unavailable,
-informational, pass. T1787 is synthetic and publishes nothing.
-
-`.17.5.4.2.3` rederives the contract, admits only the complete coordinator
-aggregate, and atomically replaces one canonical result through a same-volume
-content-addressed stage. The 1,048,576-byte store reloads before rename,
-preserves valid prior bytes on failure, recovers at most one exact stage, and
-cleans staging. Producer-free load never uses prior observations as evidence;
-t1788 rejects identity, byte, recovery, alias, file-shape, and mutation attacks.
-
-`.17.5.4.2.4` exposes only explicit `--run` and producer-free
-`--validate-result`; there is no default execution. Run publishes then reloads,
-while validate only loads. Both print canonical result JSON through the
-1,048,576-byte ceiling. Usage is status 2; operational failure is status 1
-with empty stdout and one sanitized diagnostic capped at 4,096 bytes. T1789
-uses copied fresh-process store fixtures and runs no real workload; t1786-t1788
-retain the worker, aggregate, and storage adversarial layers.
+`.17.5.4.2` runs each adapter once in a fresh child, validates full reports in
+child and parent through anonymous same-volume spools, and carries only bounded
+IPC metadata. It visits ordinals in order and re-admits them into a bounded
+aggregate with fail, unavailable, informational, pass precedence and honest
+required-versus-observed topology. The store atomically replaces one canonical
+latest result, reloads before rename, preserves valid prior bytes on failure,
+and cleans exact staging. The CLI exposes only explicit `--run` and
+producer-free `--validate-result`; prior observations never become evidence.
+T1786-T1789 own worker, aggregate, storage, command, mutation, and residue
+attacks.
 
 Decision 0098 tracks the exact 13 corpus plus two qualification payloads:
 15 files/7,012,284 canonical bytes. Manifest `3b4c486e...2bbc6` binds every
@@ -155,6 +131,14 @@ unavailable-not-pass 8-10, required 11/33/44 versus observed 8/24/32, and closed
 input/staging; cleanup owns only evidence, OSVVM, result, and stage.
 
 Gates found ordinal 10 at 4 x 29/165,285 bytes, ordinal 8 at 4 x 24/77,952, and ordinal 9 at 4 x 29/81,709; semantics agreed. Decision 0099 normalizes only those exact telemetry derivatives; eight profiles and all semantic/topology fields stay exact. Clean ef59330ab then passed all eleven pinned profiles and published canonical 60,097-byte result c7787a02...02f2 with exact 11/33/44 topology, zero exclusions, and no process/stage residue. This observation neither recalibrates nor promotes support/capacity; t1786/t1787/t1793 retain hostile and non-pass classifications.
+
+Public VIAL JSON and the complete manifest embed one pure
+`vial.architecture_scale.regression_gate.v1` snapshot: commands, schemas,
+evidence seals, eleven ordered budgets, 11/33/44 topology, host/guard/providers,
+applicability, result/cleanup policy, supported bounded gate scope, and precise
+capacity/support nonclaims. T1555 proves the CLI path; T1794 joins tracked
+evidence and executable authorities. Discovery reads no ignored evidence or
+replaceable result and changes no fixture support classification.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]],
