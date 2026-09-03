@@ -1660,10 +1660,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `T1784 is a production-independent final join: it imports no FSMGEN module, captures inode-aware qualification and source-corpus censuses, runs the closed independent verifier and guarded production --validate, requires bounded canonical diagnostic-free results, and compares the fixed coordinate, publisher, source, report/publication/qualification/file-set/applicability/formula/count contracts plus every ordered profile's measurements, statistics, budgets, environment, provider, and correctness identities. Production returns the exact 793,084 bytes at SHA-256 19ac96ed...9d64; report and manifest retain one non-overwritable not-activated contract. Both real censuses remain exact, all three owned staging paths and hostile fixtures are absent, and no child process remains. Guarded t1779-t1784 reports All tests successful at Files=6/Tests=39 in 214 wall-clock seconds.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.3: close current budget qualification`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4`
-  Status: `active`
+  Status: `done`
   Goal: `Implement stable architecture-scale regression gates with bounded CI placement and exact host/tool applicability.`
   Acceptance: `Run the .17.5.3-qualified representative profiles through canonical producers and stage-local oracles; enforce frozen performance budgets only on the exact pinned host/tool profile; run correctness, deterministic-output, safety, no-tool/qualified-tool, atomic publication, and cleanup checks everywhere applicable; report unmatched performance informationally; fail closed on evidence or identity drift; and place expensive guarded gates according to the selected CI cadence without making ordinary slice commits run full CI.`
-  Verification: `Decision 0096, the current regression-promotion Knowledge card, the complete .17.5.3 qualification closeout, current bin/ci-regression shard ownership, and hosted workflow/docs were audited from clean commit 35dafe901. Children .1 and .2 complete the frozen gate contract plus caller-sealed execution, aggregate admission, atomic latest-result storage, and explicit public CLI with synthetic hostile coverage. Child .3 now completes authenticated evidence transport plus bounded local/hosted CI placement; .4 is active for production-independent real closeout. Qualification bytes and support/capacity boundaries remain unchanged.`
+  Verification: `All four children are complete. Decision 0096 and the immutable current corpus/qualification feed the caller-sealed gate contract, fresh isolated execution, correctness-before-performance admission, aggregate coordination, atomic latest-result store, explicit CLI, authenticated evidence transport, and bounded local/hosted CI placement. Child .4 independently closes production execution: clean revision ef59330ab passes all eleven exact-pinned profiles with required/observed 11 validation, 33 raw, and 44 controller records, zero exclusions or residue, and one qualification-distinct canonical result. Synthetic unmatched-host/provider-unavailable routes remain non-pass as designed. No evidence, qualification, budget, support, or capacity boundary changed; `.17.5.5` owns broader public truth publication.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4: partition stable regression gate delivery`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4`
 
@@ -1762,10 +1762,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.3: wire the hosted regression gate`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4`
-  Status: `active`
+  Status: `done`
   Goal: `Independently close the real regression gate, applicability, CI ownership, and residue.`
   Acceptance: `From clean committed implementation and CI placement, independently authenticate the immutable qualification, execute production gate entrypoints in exact pinned and safely simulated unmatched/provider-unavailable classifications, and join every profile, correctness, determinism, measurement, budget, applicability, result-publication, CI-inventory, and cleanup identity. Re-run focused hostile watchers plus the warranted bounded regression band; prove qualification/result non-aliasing, no historical substitution or recalibration, exact before/after censuses, zero staging/process residue, and synchronized task/book/Knowledge Map/claims/containment/Memory before closing .17.5.4. Promote no broader support or capacity claim.`
-  Verification: `The clean selected-important-step path independently authenticated the immutable corpus and qualification, then reproducibly rejected ordinal 10 because its fresh OSVVM/GHDL runtime correctness projection differs from the frozen qualification. The lifecycle published no result and removed its receipt/staging/process state. A separate exact ordinal-11 run passes correctness, all pinned budgets, and cleanup, isolating the failure from the later balanced-portable profile. Children .1 and .2 now separate root-cause repair from the remaining execution/applicability/CI/residue closeout; no evidence byte or qualification identity changes.`
+  Verification: `Children .1 and .2 diagnose all three real-gate false rejections, seal Decision 0099's exact process-telemetry boundary, and independently close the repaired production path. From clean ef59330ab, the public gate authenticates the fixed corpus and qualification, passes all eleven exact-environment profiles and budgets, publishes canonical result c7787a02...02f2, and leaves eleven removed spools with no process or staging residue. Independent JSON/identity joins, simulated unmatched/provider-unavailable production routes, and the 12-file/194-test closeout band agree. No recalibration, historical substitution, support promotion, or capacity claim occurs.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4: partition failed real gate closeout`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2`
 
@@ -1777,10 +1777,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.1: stabilize ordinal-10 correctness admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2`
-  Status: `active`
+  Status: `done`
   Goal: `Complete independent real gate, applicability, CI-ownership, and residue closeout after repairing each exact correctness-admission defect exposed by clean production execution.`
   Acceptance: `Diagnose and repair the clean public gate's exact ordinal-8 correctness rejection without recalibrating immutable evidence, then rerun and independently authenticate the complete exact-pinned result. Exercise production entrypoints in safely simulated unmatched-host and provider-unavailable classifications without changing the host or immutable evidence; join every profile, correctness, determinism, measurement, budget, applicability, publication, non-aliasing, CI-inventory, and cleanup identity. Re-run focused hostile watchers plus the warranted bounded regression band; prove no historical substitution or recalibration, exact before/after censuses, zero staging/process residue, and synchronized task/book/Knowledge Map/claims/containment/Memory before closing .17.5.4, without broader support or capacity claims.`
-  Verification: `After committed ordinal-10 repair 072da37a6, a clean selected-important-step run authenticated and adopted the exact evidence, passed ordinals 1-7, then rejected ordinal 8 selection portable_runtime|runtime_stream_v1|gate_candidate_v1|-|sv_portable_verilator before publication. Cleanup released the adopted receipt and left result/staging/process coordinates absent. An isolated direct canonical measurement plus caller-sealed projection comparison re-derived equal 77,952-byte envelopes with qualified/current identities b95c62f1...47cb8/30e1110e...32a2 and exactly 96 changed leaves: 24 in each of four records. Falsification confines them to five lifecycle-evidence bytes/digests, four lifecycle-handle digests, five derived oracle evidence identities, and five stage output-byte totals per record; every other leaf agrees. Child .1 repairs the exact cause without evidence changes; child .2 is active for complete real-gate/applicability/CI/residue closeout.`
+  Verification: `Children .1 and .2 repair the exact ordinal-8 and ordinal-9 process-telemetry-derived correctness false rejections without changing evidence or qualification, then close the clean public gate. The accepted result c7787a02...02f2 joins all eleven qualified selections and budgets at exact-host pass with complete 11/33/44 topology, zero exclusions, eleven removed spools, and no process/staging residue. Production simulations retain informational unmatched-host and unavailable-not-pass behavior; focused hostile and bounded regression watchers pass.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2: partition ordinal-8 correctness repair`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2`
 
@@ -1792,10 +1792,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.1: stabilize ordinal-8 correctness admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Complete independent real gate, applicability, CI-ownership, and residue closeout after all observed correctness-admission repairs.`
   Acceptance: `From the clean committed ordinal-8 repair, rerun the public exact-pinned gate and independently authenticate its complete result. Exercise production entrypoints in safely simulated unmatched-host and provider-unavailable classifications without changing the host or immutable evidence; join every profile, correctness, determinism, measurement, budget, applicability, publication, non-aliasing, CI-inventory, and cleanup identity. Re-run focused hostile watchers plus the warranted bounded regression band; prove no historical substitution or recalibration, exact before/after censuses, zero staging/process residue, and synchronized task/book/Knowledge Map/claims/containment/Memory before closing .17.5.4, without broader support or capacity claims.`
-  Verification: `From clean committed ordinal-8 repair ea97a62c6, the selected-important-step public command re-authenticated the exact 13-file/6,220,126-byte corpus and 2-file/792,158-byte qualification, passed correctness admission through ordinal 8, then rejected ordinal 9 selection portable_vhdl_runtime|runtime_stream_v1|gate_candidate_v1|-|vhdl_portable_ghdl after stable projection. No latest result was published; evidence receipt, gate root, transport root, staging, and FSMGen child-process residue are absent. Child .1 owns exact diagnosis and repair; child .2 retains complete clean real-gate/applicability/CI/residue closeout.`
+  Verification: `Child .1 repairs ordinal 9's exact telemetry-derived correctness boundary without recalibration. Child .2 then completes the clean public path: all eleven profiles pass the frozen exact environment and budgets; the canonical latest result is independently joined to the immutable corpus, qualification, contract, per-profile correctness, measurements, applicability, topology, publication, and cleanup identities. Simulated unmatched-host and unavailable-provider routes remain honest non-pass classifications, and the complete focused band passes with zero process/staging residue.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2: partition ordinal-9 correctness repair`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2.2`
 
@@ -1807,11 +1807,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2.1: stabilize ordinal-9 correctness admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Complete independent real gate, applicability, CI-ownership, and residue closeout after the ordinal-9 repair.`
   Acceptance: `From the clean committed ordinal-9 repair, rerun and independently authenticate the complete exact-pinned public result; safely exercise unmatched-host and provider-unavailable classifications; join every profile, correctness, measurement, budget, applicability, publication, non-aliasing, CI-inventory, and cleanup identity; then close the active regression-gate activity with exact censuses and zero residue.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `From clean ordinal-9 repair ef59330ab, `./bin/ci-regression vial-gate --no-book` re-authenticated and adopted the exact 13-file/6,220,126-byte current corpus and 2-file/792,158-byte qualification, then completed all eleven profiles. The canonical mode-0600 one-link 60,097-byte result has file SHA-256 f04fac65...72f4 and gate identity c7787a02...02f2; it binds execution ef59330ab, contract 0150f4b3...e368, qualification d8fb1813...0c97, publication 1c2a3832...945f, and file set 28ba972c...9095. Aggregate and every profile are accepted/pass: required and observed topology is 11 validations/33 raw measurements/44 controller invocations, with zero failed, informational, unavailable, or excluded profiles. A production-module-free JSON::PP/Digest::SHA join rederived canonical file and aggregate/profile identities; exact qualification, selection, workload, correctness, environment, provider, measurement, budget, report, and publication joins; ordinals 1-11; 11 unique validations/reports and 33 unique raw identities; per-profile 1/3/4 topology; all metrics at or below frozen budgets; and zero residue. Producer-free `--validate-result` independently reloaded the publication. T1786+t1787 safely simulate unmatched host and unavailable provider plus aggregate precedence at Files=2/Tests=20. The guarded CI/qualification/gate/materialization/hosted-verifier/correctness band passes `Files=12, Tests=194` in 272 wall-clock seconds. Final census finds eleven spools removed, no worker/gate/GHDL/Verilator process, no evidence receipt or `.artifacts/tmp/vial-scale` tree, and the qualification-distinct latest observation intact; evidence and budgets were neither rewritten nor recalibrated. Synchronized task/book/decision/Knowledge Map/claim/containment/Memory and doctrine checks close `.17.5.4` without broader support or capacity claims.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2.2: close exact regression gate`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5`
   Status: `proposed`
   Goal: `Publish exact architecture-scale commands, envelopes, variability policy, support/capability truth, and nonclaims.`
@@ -2789,3 +2789,30 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   files/792,158 bytes with unchanged identities. Perl syntax, mdBook, Knowledge
   Map, claims, containment, staged acceptance, and doctrine gates are required
   before commit; child `.2.2` retains production closeout.
+
+## Acceptance Checklist (enforced) — `.17.5.4.4.2.2.2` exact production gate closeout
+
+- [x] **ROOT CAUSE (WHY + WHERE; no complete accepted production observation)** —
+  synthetic gate/CI coverage did not prove the real eleven-profile path, and
+  the first three clean public executions correctly stopped before publication
+  at ordinals 10, 8, and 9 because sealed process telemetry derivatives were
+  still compared as stable correctness. The retained focused diagnostic locates
+  rejection ` at perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateProfile.pm line 465`.
+  Their owning repair leaves changed no corpus, qualification, budget,
+  provider, environment, or support boundary.
+- [x] **ADDRESSED (verified before -> after)** — from clean repaired revision
+  ef59330ab, `./bin/ci-regression vial-gate --no-book` authenticates the exact
+  13-file corpus and two-file qualification, passes all eleven exact-pinned
+  profiles, and publishes canonical 60,097-byte result c7787a02...02f2. A
+  production-module-free raw-JSON join independently verifies every immutable
+  identity, ordinal, 11/33/44 topology, correctness, measurement, budget,
+  applicability, publication, uniqueness, and cleanup coordinate.
+- [x] **NO REGRESSION (applicability, CI ownership, hostile band, residue)** —
+  t1786+t1787 pass Files=2/Tests=20 for unmatched informational,
+  unavailable-not-pass, and aggregate precedence. The guarded t1183 plus
+  t1779-t1793 closeout band passes `Files=12, Tests=194` in 272 wall-clock
+  seconds. Producer-free result validation passes; final census finds eleven
+  removed spools, zero child/process/staging/receipt residue, and the canonical
+  qualification-distinct latest result intact. mdBook, Knowledge Map, claims,
+  containment, staged acceptance, and doctrine gates are required before
+  commit; `.17.5.5` remains a separate public-truth publication owner.

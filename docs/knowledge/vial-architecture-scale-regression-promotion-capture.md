@@ -47,6 +47,7 @@ answers:
   - "why did VIAL regression gate ordinals 8-10 report correctness changed?"
   - "which VIAL lifecycle correctness fields are stable?"
   - "does the VIAL gate ignore process telemetry or recalibrate?"
+  - "did the exact-pinned VIAL regression promotion gate pass?"
 date: 2026-09-03
 status: current
 tags: [hial, vial, scalability, regression, measurement, publication]
@@ -57,7 +58,7 @@ reverify: >-
   scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; perl scripts/verify_vial_regression_promotion_evidence_transport.pl;
   env FSMGEN_VIAL_REGRESSION_GATE_CONTRACT_EXACT=1 scripts/run_with_ram_guard.sh -- prove -Iperl t/1785-vial-regression-promotion-gate-contract.t; prove -Iperl t/1786-vial-regression-promotion-gate-profile.t t/1787-vial-regression-promotion-gate-coordinator.t t/1788-vial-regression-promotion-gate-store.t t/1789-vial-regression-promotion-gate-cli.t t/1790-vial-regression-promotion-evidence-transport.t;
   scripts/run_with_ram_guard.sh -- prove -Iperl t/1791-vial-regression-promotion-evidence-materialization.t; prove -Iperl t/1183-ci-regression-tier-selection.t t/1792-vial-regression-promotion-hosted-result-verifier.t t/1793-vial-regression-promotion-gate-correctness-stability.t;
-  ./bin/ci-regression vial-gate --dry-run --no-book
+  ./bin/ci-regression vial-gate --dry-run --no-book; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_gate.pl --validate-result
 ---
 
 Decision 0096 selects eleven v2 gate profiles. Each adapter call owns one
@@ -136,30 +137,24 @@ with empty stdout and one sanitized diagnostic capped at 4,096 bytes. T1789
 uses copied fresh-process store fixtures and runs no real workload; t1786-t1788
 retain the worker, aggregate, and storage adversarial layers.
 
-Decision 0098's durable source now tracks the exact 13 corpus plus two
-qualification payloads, 7,012,284 byte-identical canonical JSON bytes, beneath
-`vial/qualification/regression_promotion_gate/evidence-v1/`. Its 8,725-byte
-closed manifest binds transport `3b4c486e...2bbc6`, every safe fixed
-source/destination path, byte count, digest, classification, and the accepted
-corpus/qualification seals. The repository-derived verifier takes no caller
-input, imports no production module, writes nothing, and re-derives both source
-content identities and file sets. T1790 copies the bundle and rejects schema,
-order, path, canonicality, byte, digest, source-seal, identity, extra/missing,
-link, alias, and special-file mutations while proving generated coordinates
-unchanged.
+Decision 0098 tracks the exact 13 corpus plus two qualification payloads:
+15 files/7,012,284 canonical bytes. Manifest `3b4c486e...2bbc6` binds every
+safe path, byte, digest, class, and seal. The caller-free,
+production-independent verifier re-derives both source identities/file sets;
+T1790 rejects schema, order, path, canonicality, content, seal, census, link,
+alias, and special-file mutations without touching generated coordinates.
 
-The fixed materializer owns one no-overwrite same-volume transaction; exact
-prior evidence stays unowned. Local `vial-gate` and unsharded `full` run the
+The materializer owns one no-overwrite same-volume transaction; exact prior
+evidence stays unowned. Local `vial-gate` and unsharded `full` share the
 five-step lifecycle; T1183/T1791 retain selection, recovery, and cleanup.
 
-Hosted CI now adds one required unsharded Ubuntu 24.04 family. It rejects
-ambient Verilator/fixed GHDL, materializes exact OSVVM 2026.05, calls public
-`vial-gate`, and guards a production-independent canonical-result verifier.
-T1792 locks ordinals 1-7/11 informational, 8-10 unavailable-not-pass, required
-11/33/44 versus observed 8/24/32, and closed input/staging. Always-cleanup owns
-only evidence, OSVVM, latest-result, and stage; real execution remains `.4`.
+Hosted CI adds one required unsharded Ubuntu-24.04 family: reject ambient
+Verilator/fixed GHDL, materialize OSVVM 2026.05, run public `vial-gate`, then
+guard the independent result verifier. T1792 locks informational 1-7/11,
+unavailable-not-pass 8-10, required 11/33/44 versus observed 8/24/32, and closed
+input/staging; cleanup owns only evidence, OSVVM, result, and stage.
 
-Gates found ordinal 10 at 4 x 29/165,285 bytes, ordinal 8 at 4 x 24/77,952 bytes, and ordinal 9 at 4 x 29/81,709 bytes; semantics agreed and ordinal 11 passed. Decision 0099 keeps raw equality and normalizes only exact OSVVM, portable-Verilator, and portable-VHDL/GHDL lifecycle coordinates. Eight other profiles plus all semantic/topology fields stay exact; qualified identity and budgets stay fixed. T1786/T1793 retain hostile rejection.
+Gates found ordinal 10 at 4 x 29/165,285 bytes, ordinal 8 at 4 x 24/77,952, and ordinal 9 at 4 x 29/81,709; semantics agreed. Decision 0099 normalizes only those exact telemetry derivatives; eight profiles and all semantic/topology fields stay exact. Clean ef59330ab then passed all eleven pinned profiles and published canonical 60,097-byte result c7787a02...02f2 with exact 11/33/44 topology, zero exclusions, and no process/stage residue. This observation neither recalibrates nor promotes support/capacity; t1786/t1787/t1793 retain hostile and non-pass classifications.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]],

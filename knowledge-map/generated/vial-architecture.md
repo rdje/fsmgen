@@ -1,13 +1,14 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **134** uniquely owned question entries.
+> **3** facts · **135** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="are VIAL declared resource limits public capacity claims?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="are VIAL scale gate and qualification candidates supported capacity?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="can a prior VIAL gate result influence qualification or execution?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
+- q="did the exact-pinned VIAL regression promotion gate pass?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="did the repaired VIAL regression-promotion current corpus complete?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="does VIAL architecture scale prove whole product big and really big designs?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="does VIAL recheck selected unit and domain cardinality after SemanticIR and bridge validation?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)

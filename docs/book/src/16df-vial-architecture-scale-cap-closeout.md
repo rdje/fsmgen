@@ -1913,6 +1913,52 @@ guard, and staging mutations all reject with no partial acceptance output.
 - Durability: Retain the regression workflow and README, hosted-result verifier, t1183, t1792, Decision 0098, owning task, Knowledge Map card, mdBook chapters, bounded claim record, doctrine gates, and work-unit commit. `.17.5.4.4` independently owns real gate execution and residue closeout.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-hosted-ci-placement-v1 -->
 
+### Exact-pinned production gate observation
+
+From clean execution revision
+`ef59330ab17328a03a316fa7d8ed19b4ff6e9d4a`, the selected-important-step
+command completed the real local lifecycle:
+
+```sh
+./bin/ci-regression vial-gate --no-book
+```
+
+It re-authenticated and adopted the exact current corpus and qualification,
+then passed all eleven profiles on their pinned host, guard, provider, and tool
+identities. Required and observed topology exactly match the qualified
+validation, raw-measurement, and controller counts. There are no failed,
+informational, unavailable, or excluded profiles. All measured maxima remain at
+or below their immutable qualified budgets.
+
+The qualification-distinct latest observation is canonical JSON; its exact
+byte count and file SHA-256 are retained in the verified claim below. The hash is
+`f04fac651d1dfe7b2c90e47ba5ba219a949256f05a27e2b80cdc61f50eac72f4`
+and gate identity
+`regression-promotion-gate-result/c7787a020db6f63a816ad6616a979151966a96d84d9008fc7497127bb3dd02f2`.
+It binds contract `0150f4b3...e368`, qualification `d8fb1813...0c97`,
+qualification publication `1c2a3832...945f`, and file set
+`28ba972c...9095`. Producer-free reload is explicit:
+
+```sh
+scripts/run_with_ram_guard.sh -- \
+  scripts/run_vial_regression_promotion_gate.pl --validate-result
+```
+
+An independent raw-JSON join re-derived the file and content identities, every
+profile's selection/workload/correctness/environment/provider/measurement/budget
+binding, unique validation/raw identity sets, inclusive budget checks, and
+cleanup. Eleven anonymous report spools were removed; final
+census found no gate, GHDL, Verilator, receipt, or staging residue. T1786 and
+T1787 separately retain safely simulated unmatched-host informational,
+provider-unavailable non-pass, and aggregate-precedence behavior.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-production-gate-observation-ef59330ab-v1 -->
+- Claim: Clean revision `ef59330ab17328a03a316fa7d8ed19b4ff6e9d4a` completed the public exact-pinned VIAL regression gate and published canonical 60,097-byte result `c7787a02...02f2` with all eleven profiles accepted/pass, required and observed 11/33/44 validation/raw/controller topology, zero exclusions, eleven removed spools, and zero process or staging residue. This is one environment- and revision-bound observation; it is not qualification evidence, recalibration, historical reuse, support promotion, architecture-scale capacity, or whole-product capacity.
+- Re-derive: Run `./bin/ci-regression vial-gate --no-book` from an exact clean qualified environment, reload with guarded `scripts/run_vial_regression_promotion_gate.pl --validate-result`, then independently parse the canonical result and immutable qualification with JSON::PP/Digest::SHA. Require exact aggregate/profile content joins, the complete ordered ordinal set, unique qualified topology, qualification/publication/file-set identities, all observed maxima within fixed budgets, and absent residue.
+- Falsify: The real gate successively rejected each affected runtime ordinal before publication, proving correctness drift does not become a pass. The profile/correctness watchers retain semantic, schema, topology, provider, threshold, worker, IPC, and telemetry-boundary attacks; the coordinator watcher retains fail > unavailable > informational > pass precedence. Simulated unmatched and unavailable routes cannot become exact-host pass.
+- Durability: Retain Decision 0099, the result identity/hash and exact evidence transcript in task `.17.5.4.4.2.2.2`, the public runner and stores, t1183 and t1779-t1793, the mdBook chapter, Knowledge card, bounded claim record, doctrine gates, and work-unit Git commit. The latest-result file is deliberately replaceable; Git preserves this observation while future runs produce their own identity.
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-production-gate-observation-ef59330ab-v1 -->
+
 Re-derive the authenticated transport, hostile closure, and policy comparison
 with:
 
@@ -1925,16 +1971,15 @@ scripts/run_with_ram_guard.sh -- env \
   t/1765-vial-architecture-scale-regression-promotion-policy.t
 ```
 
-Current capture, in-memory budget qualification, its publication store and
-CLI, the real clean-revision qualification seal, hostile copied controls,
-final independent/production agreement, one-profile gate worker,
-eleven-profile coordinator, atomic latest-result store, explicit gate CLI,
-authenticated transport, and transactional materialization are complete.
-The selected local and hosted CI entrypoints are complete; independent real
-execution remains a separate rollback owner. Until that leaf passes, the
-sealed budgets have no complete execution closure, all historical
-candidate budgets stay candidate-only, and whole-product big/really-big capacity
-remains unclaimed.
+Current capture, budget qualification/publication, independent agreement,
+profile and aggregate gate execution, latest-result storage, explicit CLI,
+authenticated transport/materialization, and local/hosted CI placement are
+complete. The exact-pinned local production observation now closes the sealed
+budgets' execution path. Historical candidate budgets remain candidate-only,
+the current result remains a replaceable observation rather than calibration,
+and whole-product big/really-big capacity remains unclaimed. `.17.5.5` owns the
+broader command, envelope, variability, support/capability, and nonclaim
+publication.
 
 ## Revision-separated complete-corpus validation
 
