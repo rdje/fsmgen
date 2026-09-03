@@ -1795,8 +1795,23 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Complete independent real gate, applicability, CI-ownership, and residue closeout after all observed correctness-admission repairs.`
   Acceptance: `From the clean committed ordinal-8 repair, rerun the public exact-pinned gate and independently authenticate its complete result. Exercise production entrypoints in safely simulated unmatched-host and provider-unavailable classifications without changing the host or immutable evidence; join every profile, correctness, determinism, measurement, budget, applicability, publication, non-aliasing, CI-inventory, and cleanup identity. Re-run focused hostile watchers plus the warranted bounded regression band; prove no historical substitution or recalibration, exact before/after censuses, zero staging/process residue, and synchronized task/book/Knowledge Map/claims/containment/Memory before closing .17.5.4, without broader support or capacity claims.`
-  Verification: `pending after clean committed .1`
+  Verification: `From clean committed ordinal-8 repair ea97a62c6, the selected-important-step public command re-authenticated the exact 13-file/6,220,126-byte corpus and 2-file/792,158-byte qualification, passed correctness admission through ordinal 8, then rejected ordinal 9 selection portable_vhdl_runtime|runtime_stream_v1|gate_candidate_v1|-|vhdl_portable_ghdl after stable projection. No latest result was published; evidence receipt, gate root, transport root, staging, and FSMGen child-process residue are absent. Child .1 owns exact diagnosis and repair; child .2 retains complete clean real-gate/applicability/CI/residue closeout.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2: partition ordinal-9 correctness repair`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2.1`
+  Status: `active`
+  Goal: `Diagnose and repair the exact ordinal-9 regression-gate correctness drift without recalibration.`
+  Acceptance: `From the clean reproducible ordinal-9 failure, independently capture a fresh canonical portable-VHDL/GHDL correctness projection and compare every field with the immutable qualified projection. Locate every changed leaf and its first causal producer; distinguish semantic regression from unstable or wrongly scoped correctness data using current authorities and history; then make the smallest fail-closed signoff repair under Decision 0099's raw-first, authenticated-full-projection semantics. Add focused RED/GREEN coverage for the exact schema, profile, stages, kinds, counts, order, uniqueness, digest/scalar shapes, and diagnostic coordinate; reject adjacent semantic and hostile topology changes; preserve qualification/corpus bytes and identities, workload shape, budgets, provider/environment admission, publication atomicity, and zero stage/process residue.`
+  Verification: `pending exact projection comparison`
   Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2.2`
+  Status: `proposed`
+  Goal: `Complete independent real gate, applicability, CI-ownership, and residue closeout after the ordinal-9 repair.`
+  Acceptance: `From the clean committed ordinal-9 repair, rerun and independently authenticate the complete exact-pinned public result; safely exercise unmatched-host and provider-unavailable classifications; join every profile, correctness, measurement, budget, applicability, publication, non-aliasing, CI-inventory, and cleanup identity; then close the active regression-gate activity with exact censuses and zero residue.`
+  Verification: `pending`
+  Commit: `pending activation`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5`
   Status: `proposed`
   Goal: `Publish exact architecture-scale commands, envelopes, variability policy, support/capability truth, and nonclaims.`

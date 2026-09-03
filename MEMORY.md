@@ -6,11 +6,11 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2`
-  (`active`; independent real-gate/applicability/CI/residue closeout)
-- next_action: From the clean committed ordinal-8 repair, rerun the public
-  exact-pinned gate and independently authenticate its complete result before
-  exercising simulated unmatched-host and provider-unavailable classifications.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2.1`
+  (`active`; diagnose and repair ordinal-9 correctness admission)
+- next_action: Independently compare a fresh canonical portable-VHDL/GHDL
+  correctness projection with the immutable qualified projection, trace every
+  changed leaf to its producer, then add the smallest fail-closed repair.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: none.
