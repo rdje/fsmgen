@@ -44,34 +44,29 @@ answers:
   - "how does VIAL regression gate evidence cleanup avoid deleting pre-existing evidence?"
   - "which VIAL regression gate profiles run in hosted CI?"
   - "why does hosted VIAL regression CI not install substitute HDL tools?"
+  - "why did VIAL regression gate ordinal 10 report correctness changed?"
+  - "which OSVVM lifecycle correctness fields are stable across fresh runs?"
+  - "does the VIAL gate ignore GHDL process telemetry or recalibrate ordinal 10?"
 date: 2026-09-03
 status: current
 tags: [hial, vial, scalability, regression, measurement, publication]
 evidence: >-
-  docs/decisions/0096-regression-promotion-uses-a-current-eleven-profile-corpus.md; docs/decisions/0097-regression-gates-publish-replaceable-observations-without-recalibrating.md; docs/decisions/0098-hosted-regression-gates-materialize-immutable-tracked-evidence.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16df-vial-architecture-scale-cap-closeout.md;
-  perl/FSM/VIAL/ArchitectureScaleRegressionPromotionPolicy.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCapturePlan.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualificationStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateContract.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateProfile.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateCoordinator.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateStore.pm;
-  .github/workflows/regression.yml; bin/ci-regression; scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; scripts/verify_vial_regression_promotion_evidence_transport.pl; scripts/materialize_vial_regression_promotion_gate_evidence.pl; scripts/run_vial_regression_promotion_gate.pl; scripts/verify_vial_regression_promotion_hosted_result.pl; vial/qualification/regression_promotion_gate/evidence-v1/transport-manifest.json; t/1183-ci-regression-tier-selection.t; t/1789-vial-regression-promotion-gate-cli.t; t/1790-vial-regression-promotion-evidence-transport.t; t/1791-vial-regression-promotion-evidence-materialization.t; t/1792-vial-regression-promotion-hosted-result-verifier.t
+  docs/decisions/0096-regression-promotion-uses-a-current-eleven-profile-corpus.md; docs/decisions/0097-regression-gates-publish-replaceable-observations-without-recalibrating.md; docs/decisions/0098-hosted-regression-gates-materialize-immutable-tracked-evidence.md; docs/decisions/0099-regression-correctness-excludes-only-sealed-process-telemetry-derivatives.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16df-vial-architecture-scale-cap-closeout.md;
+  perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualification.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateContract.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateProfile.pm; .github/workflows/regression.yml; bin/ci-regression; scripts/run_vial_regression_promotion_gate.pl; vial/qualification/regression_promotion_gate/evidence-v1/transport-manifest.json; t/1786-vial-regression-promotion-gate-profile.t; t/1790-vial-regression-promotion-evidence-transport.t; t/1793-vial-regression-promotion-gate-correctness-stability.t
 reverify: >-
-  scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; perl scripts/verify_vial_regression_promotion_evidence_transport.pl; env FSMGEN_VIAL_REGRESSION_GATE_CONTRACT_EXACT=1 scripts/run_with_ram_guard.sh -- prove -Iperl t/1785-vial-regression-promotion-gate-contract.t;
-  prove -Iperl t/1786-vial-regression-promotion-gate-profile.t t/1787-vial-regression-promotion-gate-coordinator.t t/1788-vial-regression-promotion-gate-store.t t/1789-vial-regression-promotion-gate-cli.t t/1790-vial-regression-promotion-evidence-transport.t; scripts/run_with_ram_guard.sh -- prove -Iperl t/1791-vial-regression-promotion-evidence-materialization.t;
-  prove -Iperl t/1183-ci-regression-tier-selection.t t/1792-vial-regression-promotion-hosted-result-verifier.t; ./bin/ci-regression vial-gate --dry-run --no-book
+  scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; perl scripts/verify_vial_regression_promotion_evidence_transport.pl;
+  env FSMGEN_VIAL_REGRESSION_GATE_CONTRACT_EXACT=1 scripts/run_with_ram_guard.sh -- prove -Iperl t/1785-vial-regression-promotion-gate-contract.t; prove -Iperl t/1786-vial-regression-promotion-gate-profile.t t/1787-vial-regression-promotion-gate-coordinator.t t/1788-vial-regression-promotion-gate-store.t t/1789-vial-regression-promotion-gate-cli.t t/1790-vial-regression-promotion-evidence-transport.t;
+  scripts/run_with_ram_guard.sh -- prove -Iperl t/1791-vial-regression-promotion-evidence-materialization.t; prove -Iperl t/1183-ci-regression-tier-selection.t t/1792-vial-regression-promotion-hosted-result-verifier.t t/1793-vial-regression-promotion-gate-correctness-stability.t;
+  ./bin/ci-regression vial-gate --dry-run --no-book
 ---
 
 Decision 0096 selects eleven v2 gate profiles. Each adapter call owns one
 validation plus three raw calls: 44 records in eleven guarded lifecycles.
 Revision-1 matrices are inadmissible.
 
-`.17.5.2` authenticates seven adapters, bounds same-volume storage, isolates
-workers and parent reload, supports exact resume, exposes closed CLI modes, and
-falsifies copied v2 evidence. Only clean capture can seal. Complete coordinates
-enforce 11/33/44/0, common host/guard, provider order, and no history swap.
+`.17.5.2` authenticates seven adapters, bounds same-volume storage, isolates workers and parent reload, supports exact resume, exposes closed CLI modes, and falsifies copied v2 evidence. Only clean capture can seal. Complete coordinates enforce 11/33/44/0, common host/guard, provider order, and no history swap.
 
-Clean `610ed7869` exposed a policy/report-coordinate mismatch and sealed no
-corpus. Its exact four-report/600,036-byte prefix remains independently
-verifiable in revision-keyed failed history. `.17.5.2.4.2` corrected only the
-capture-plan coordinate authority: schema v2 authenticates producer-derived
-coordinates independently of unchanged selection keys and rejects coordinate
-mutation or aliasing.
+Clean `610ed7869` exposed a policy/report-coordinate mismatch and sealed no corpus. Its exact four-report/600,036-byte prefix remains independently verifiable in revision-keyed failed history. `.17.5.2.4.2` corrected only the capture-plan coordinate authority: schema v2 authenticates producer-derived coordinates independently of unchanged selection keys and rejects coordinate mutation or aliasing.
 
 The repaired capture at clean `155aa22ea` contains 11 selected reports,
 11 validations, 33 fresh raw measurements, 44 accepted invocations, and zero
@@ -163,6 +158,8 @@ ambient Verilator/fixed GHDL, materializes exact OSVVM 2026.05, calls public
 T1792 locks ordinals 1-7/11 informational, 8-10 unavailable-not-pass, required
 11/33/44 versus observed 8/24/32, and closed input/staging. Always-cleanup owns
 only evidence, OSVVM, latest-result, and stage; real execution remains `.4`.
+
+The gate isolated ordinal 10: each 165,285-byte projection differed at 29 telemetry fields in four records. Semantics agreed; ordinal 11 passed. Decision 0099 keeps raw equality, then admits OSVVM through a sealed fallback. It replaces those 116 positions, requires exact topology, and compares all else. Output retains the qualified identity; budgets stay fixed. T1786/T1793 retain hostile semantic/shape rejection.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]],

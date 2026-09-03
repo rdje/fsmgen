@@ -1770,14 +1770,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.1`
-  Status: `active`
+  Status: `done`
   Goal: `Diagnose and repair the exact ordinal-10 regression-gate correctness drift without recalibration.`
   Acceptance: `From the clean reproducible ordinal-10 failure, independently capture its current deterministic correctness projection and compare every field with the immutable qualified projection. Locate the first causal producer/oracle divergence, distinguish product regression from an unstable or wrongly scoped correctness field using current authorities and history, and make the smallest signoff-quality repair under the existing qualification semantics. Add a focused RED/GREEN watcher for the exact cause and diagnostic coordinate; preserve all qualification/corpus bytes and identities, provider admission, workload shape, budgets, atomic no-result-on-failure behavior, and zero stage/process residue.`
-  Verification: `pending current-versus-qualified projection diff`
-  Commit: `pending`
+  Verification: `The clean public gate reproducibly failed only at ordinal 10; an independently isolated ordinal-11 run passed correctness and all three exact budgets. A production projection comparator re-executed ordinal 10 and found equal 165,285-byte fresh/qualified envelopes with raw identities aedd15cc...3010/c41a8f10...74b3 and exactly 116 scalar differences: 29 in each of four records, partitioned as eleven lifecycle-artifact digests, six lifecycle-evidence byte sizes, six lifecycle-oracle evidence identities, and six stage output-byte totals. Inspection traced all four derived sets to fresh monotonic/process timings inside lifecycle evidence; every semantic workload/source/provider/result/status/count field agreed, and history from capture 155aa22ea through HEAD showed no corresponding producer drift. Decision 0099 keeps raw identity as the normal path, authenticates both full projections only after mismatch, and applies one fail-closed exact-schema OSVVM-runtime normalization while retaining every other field. T1793 began RED at line 13 on the absent comparator, then proves the exact 4 x 29 partition, all ten non-target profiles raw-exact, defensive input, and rejection of semantic count, missing/new artifact, duplicate oracle, and invalid-shape drift. T1786 proves stable-only integration, immutable qualified result identity, adjacent semantic rejection with ordinal/selection coordinates, and both caller-sealed seams. The guarded qualification/gate band passes All tests successful at Files=7/Tests=151; the focused pair passes Files=2/Tests=27. Qualification/corpus bytes, identities, workloads, budgets, provider/environment admission, atomic failure behavior, and existing residue are unchanged. Clean real-gate and complete residue closeout remain child .2.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.1: stabilize ordinal-10 correctness admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Complete independent real gate, applicability, CI-ownership, and residue closeout after the ordinal-10 repair.`
   Acceptance: `From the clean committed repair, rerun the public exact-pinned gate and independently authenticate its complete result. Exercise production entrypoints in safely simulated unmatched-host and provider-unavailable classifications without changing the host or immutable evidence; join every profile, correctness, determinism, measurement, budget, applicability, publication, non-aliasing, CI-inventory, and cleanup identity. Re-run the focused hostile watchers plus the warranted bounded regression band; prove no historical substitution or recalibration, exact before/after censuses, zero staging/process residue, and synchronized task/book/Knowledge Map/claims/containment/Memory before closing .17.5.4, without broader support or capacity claims.`
   Verification: `pending after .1`
@@ -2699,3 +2699,28 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   Knowledge Map, claims, containment, staged acceptance, and complete doctrine
   gates are required before commit; full CI and hosted performance/support/
   capacity claims remain outside this slice.
+
+## Acceptance Checklist (enforced) — `.17.5.4.4.1` ordinal-10 correctness stability
+
+- [x] **ROOT CAUSE (WHY + WHERE; process telemetry in exact correctness)** — the
+  focused watcher began RED with
+  `Failed test 'gate profile exposes its private stable correctness projection' at t/1793-vial-regression-promotion-gate-correctness-stability.t line 13`.
+  The real fresh/qualified comparator then isolated 116 differences to byte
+  counts and identities derived from monotonic GHDL lifecycle process telemetry,
+  while every semantic field agreed and ordinal 11 independently passed.
+- [x] **ADDRESSED (verified before -> after)** — after raw identity mismatch,
+  two caller-sealed seams now authenticate the fresh and immutable qualified
+  full projections. Only the exact OSVVM-runtime 4 x 29 telemetry-derived
+  coordinates normalize; topology fails closed, all other fields remain exact,
+  and successful admission retains the immutable qualified identity without
+  recalibration or evidence mutation. T1786 and T1793 prove stable-only pass,
+  adjacent semantic rejection with ordinal/selection diagnostics, all ten
+  non-target projections unchanged, and caller/shape/coordinate closure.
+- [x] **NO REGRESSION (qualification/gate correctness band)** — the guarded
+  focused band reports `All tests successful.` and `Files=7, Tests=151` across
+  t1779/t1780/t1785/t1786/t1787/t1788/t1793; the focused pair independently
+  reports Files=2/Tests=27. Perl syntax, mdBook, Knowledge Map, claims,
+  containment, staged acceptance, and doctrine gates are required before
+  commit. Qualification/corpus bytes and identities, workloads, budgets,
+  provider/environment admission, atomic failure behavior, and residue remain
+  unchanged; clean production closeout is separately owned by child `.2`.

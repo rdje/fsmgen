@@ -274,6 +274,43 @@ sub _gate_observation($class, @args) {
     );
     return _clone($result);
 }
+
+# The gate profile may need the full projection only after its compact raw
+# identity detects drift.  Keep that fallback caller-sealed and separate from
+# the public observation so neither the result schema nor the immutable
+# qualification contract gains an evidence-injection surface.
+sub _gate_correctness_projection($class, @args) {
+    confess __PACKAGE__
+        . "->_gate_correctness_projection requires the exact class invocant\n"
+        unless defined($class) && !ref($class) && $class eq __PACKAGE__;
+    confess "regression-promotion gate correctness projection is caller-sealed\n"
+        unless (scalar caller) eq $GATE_PROFILE;
+    confess "regression-promotion gate correctness projection expects one closed hash\n"
+        unless @args == 1 && ref($args[0]) eq 'HASH'
+            && !blessed($args[0]);
+    _exact_keys(
+        $args[0], [qw(measurement_set)],
+        'regression-promotion gate correctness projection request',
+    );
+    my $measurement_set = $args[0]{measurement_set};
+    confess "regression-promotion gate correctness measurement set is invalid\n"
+        unless ref($measurement_set) eq 'HASH' && !blessed($measurement_set)
+            && ref($measurement_set->{validation_record}) eq 'HASH'
+            && !blessed($measurement_set->{validation_record})
+            && ref($measurement_set->{measurement_records}) eq 'ARRAY'
+            && @{$measurement_set->{measurement_records}} == 3;
+    my $projection = _correctness_projection(
+        $measurement_set,
+        [
+            $measurement_set->{validation_record},
+            @{$measurement_set->{measurement_records}},
+        ],
+    );
+    my $bytes = _canonical_json($projection);
+    confess "regression-promotion gate correctness projection exceeds its bound\n"
+        if bytes::length($bytes) > $MAX_CORRECTNESS_PROJECTION_BYTES;
+    return _clone($projection);
+}
 my $JSON = JSON::PP->new->canonical(1)->utf8(1);
 
 sub report_keys($class) {

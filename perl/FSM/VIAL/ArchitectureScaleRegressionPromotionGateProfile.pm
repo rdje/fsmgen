@@ -44,6 +44,7 @@ my $SCHEMA =
 my $WORKER_SCHEMA =
     'fsmgen.vial_architecture_scale_regression_promotion_gate_profile_worker.v1';
 my $RESULT_IDENTITY_PREFIX = 'regression-promotion-gate-profile-result/';
+my $CORRECTNESS_IDENTITY_PREFIX = 'regression-promotion-correctness/';
 my $REVISION = 'regression_promotion_gate_profile_v1';
 my $WORKER_TIMEOUT_SECONDS = 4_000;
 my $VERSION_TIMEOUT_SECONDS = 10;
@@ -102,6 +103,17 @@ my @NONCLAIMS = qw(
     architecture_scale_capacity
     whole_product_capacity
 );
+my @OSVVM_VOLATILE_LIFECYCLE_STAGES = qw(
+    compile_analyze elaborate run trace_validate result_produce publish
+);
+my %OSVVM_VOLATILE_LIFECYCLE_STAGE = map {
+    ($_ => 1)
+} @OSVVM_VOLATILE_LIFECYCLE_STAGES;
+my $OSVVM_RUNTIME_MEASUREMENT_SCHEMA =
+    'fsmgen.vial_architecture_scale_osvvm_runtime_measurement_set.v1';
+my $CORRECTNESS_PROJECTION_SCHEMA =
+    'fsmgen.vial_architecture_scale_regression_promotion_correctness.v1';
+my $VOLATILE_DIGEST_SENTINEL = 'process-telemetry-derived';
 
 my $JSON = JSON::PP->new->canonical(1)->utf8(1);
 
@@ -301,7 +313,7 @@ sub _revalidate_worker_result($raw) {
         confess "regression gate profile parent adapter changed the report\n"
             unless _canonical_json($validated) eq $bytes;
         $expected = _result_from_report(
-            $contract, $profile, $revision, $report,
+            $repo, $contract, $profile, $revision, $report,
         );
     }
     confess "regression gate profile worker metadata changed in parent\n"
@@ -345,23 +357,23 @@ sub _execute_child($raw) {
     confess "regression gate profile report exceeds its byte bound\n"
         if bytes::length($report_bytes) > $maximum;
     my $result = _result_from_report(
-        $contract, $profile, $revision, $report,
+        $repo, $contract, $profile, $revision, $report,
     );
     _write_spool($spool, $report_bytes);
     _require_unchanged_clean_revision($repo, $revision);
     return $result;
 }
 
-sub _result_from_report($contract, $profile, $revision, $report) {
+sub _result_from_report($repo, $contract, $profile, $revision, $report) {
     my ($common, $provider_status) =
         _admit_report($report, $profile, $revision);
     my $observation = _observe_report($report, $common);
     confess "regression gate profile workload identity changed\n"
         unless ($observation->{workload_identity} // '') eq
             ($profile->{workload_identity} // '');
-    confess "regression gate profile correctness changed\n"
-        unless ($observation->{correctness_projection_identity} // '') eq
-            ($profile->{correctness_projection_identity} // '');
+    _admit_correctness_projection(
+        $repo, $contract, $profile, $report, $observation,
+    );
 
     my $environment = {
         environment_identity => undef,
@@ -417,6 +429,169 @@ sub _result_from_report($contract, $profile, $revision, $report) {
             ? 'accepted_informational'
             : 'accepted';
     return _finalize_result($result, $contract, $profile, $revision);
+}
+
+sub _admit_correctness_projection(
+    $repo, $contract, $profile, $report, $observation,
+) {
+    my $current_identity =
+        $observation->{correctness_projection_identity} // '';
+    my $qualified_identity =
+        $profile->{correctness_projection_identity} // '';
+    return 1 if $current_identity eq $qualified_identity;
+
+    my $current = $QUALIFICATION->_gate_correctness_projection({
+        measurement_set => $report,
+    });
+    confess "regression gate profile current correctness projection identity changed\n"
+        unless $current_identity eq $CORRECTNESS_IDENTITY_PREFIX
+            . sha256_hex(_canonical_json($current));
+    my $evidence = $contract->{qualification_evidence};
+    my $qualified = $CONTRACT->_qualified_correctness_projection({
+        repository_root => $repo,
+        ordinal => $profile->{ordinal},
+        selection_key => $profile->{selection_key},
+        correctness_projection_identity => $qualified_identity,
+        qualification_identity => $evidence->{qualification_identity},
+        publication_identity => $evidence->{publication_identity},
+        qualification_file_set_sha256 =>
+            $evidence->{qualification_file_set_sha256},
+    });
+    confess "regression gate profile qualified correctness projection identity changed\n"
+        unless $qualified_identity eq $CORRECTNESS_IDENTITY_PREFIX
+            . sha256_hex(_canonical_json($qualified));
+    my $stable_current = _stable_correctness_projection($current);
+    my $stable_qualified = _stable_correctness_projection($qualified);
+    confess "regression gate profile correctness changed after stable projection"
+        . " at ordinal $profile->{ordinal} selection '$profile->{selection_key}'\n"
+        unless _canonical_json($stable_current) eq
+            _canonical_json($stable_qualified);
+
+    # The result records admission against the immutable qualification, not a
+    # second public identity for volatile process telemetry.
+    $observation->{correctness_projection_identity} = $qualified_identity;
+    return 1;
+}
+
+sub _stable_correctness_projection($projection) {
+    confess "regression gate correctness projection must be one unblessed hash\n"
+        unless ref($projection) eq 'HASH' && !blessed($projection);
+    my $stable = _clone($projection);
+    my $report = $stable->{report_contract};
+    return $stable unless ref($report) eq 'HASH' && !blessed($report)
+        && ($report->{schema} // '') eq $OSVVM_RUNTIME_MEASUREMENT_SCHEMA
+        && ($report->{family} // '') eq 'runtime_stream_v1'
+        && ($report->{level} // '') eq 'gate_candidate_v1'
+        && ($report->{primary_axis} // '') eq 'runtime_trace_records'
+        && ($report->{backend_profile} // '') eq 'vhdl_osvvm_qualified';
+
+    confess "regression gate stable OSVVM correctness projection schema changed\n"
+        unless ($stable->{schema} // '') eq $CORRECTNESS_PROJECTION_SCHEMA
+            && _json_integer_equals($stable->{schema_version}, 1);
+    my $records = $stable->{record_projections};
+    confess "regression gate stable OSVVM correctness record topology changed\n"
+        unless ref($records) eq 'ARRAY' && @$records == 4;
+    for my $index (0 .. $#$records) {
+        my $record = $records->[$index];
+        my $run_class = $index ? 'gate_measurement' : 'validation';
+        confess "regression gate stable OSVVM correctness record order changed\n"
+            unless ref($record) eq 'HASH' && !blessed($record)
+                && ($record->{run_class} // '') eq $run_class
+                && _json_integer_equals($record->{run_ordinal}, $index);
+        _normalize_osvvm_lifecycle_artifacts($record, $index);
+        _normalize_osvvm_lifecycle_oracles($record, $index);
+        _normalize_osvvm_lifecycle_stage_bytes($record, $index);
+    }
+    return $stable;
+}
+
+sub _normalize_osvvm_lifecycle_artifacts($record, $record_index) {
+    my $artifacts = $record->{artifact_records};
+    confess "regression gate stable OSVVM artifact records changed\n"
+        unless ref($artifacts) eq 'ARRAY';
+    my %expected = map {
+        ("outputs/$_/lifecycle-evidence.json" => [$_, 'evidence'])
+    } @OSVVM_VOLATILE_LIFECYCLE_STAGES;
+    $expected{"outputs/$_/lifecycle-handle.json"} = [$_, 'handle']
+        for grep { $_ ne 'publish' } @OSVVM_VOLATILE_LIFECYCLE_STAGES;
+    my %seen;
+    for my $artifact (@$artifacts) {
+        next unless ref($artifact) eq 'HASH' && !blessed($artifact);
+        my $path = $artifact->{relative_path} // '';
+        my $stage = $artifact->{stage} // '';
+        next unless $OSVVM_VOLATILE_LIFECYCLE_STAGE{$stage}
+            && $path =~ m{/lifecycle-(?:evidence|handle)\.json\z};
+        my $coordinate = $expected{$path};
+        confess "regression gate unexpected volatile lifecycle artifact"
+            . " at record $record_index stage '$stage' path '$path'\n"
+            unless $coordinate
+                && $coordinate->[0] eq $stage
+                && ($artifact->{kind} // '') eq
+                    "osvvm_runtime_lifecycle_$coordinate->[1]";
+        confess "regression gate duplicate volatile lifecycle artifact"
+            . " at record $record_index stage '$stage' path '$path'\n"
+            if $seen{$path}++;
+        $artifact->{sha256} = $VOLATILE_DIGEST_SENTINEL;
+        $artifact->{bytes} = 0 if $coordinate->[1] eq 'evidence';
+    }
+    for my $path (sort keys %expected) {
+        my $stage = $expected{$path}[0];
+        confess "regression gate missing volatile lifecycle artifact"
+            . " at record $record_index stage '$stage' path '$path'\n"
+            unless ($seen{$path} // 0) == 1;
+    }
+    return 1;
+}
+
+sub _normalize_osvvm_lifecycle_oracles($record, $record_index) {
+    my $oracles = $record->{correctness_oracles};
+    confess "regression gate stable OSVVM correctness oracles changed\n"
+        unless ref($oracles) eq 'ARRAY';
+    my %seen;
+    for my $oracle (@$oracles) {
+        next unless ref($oracle) eq 'HASH' && !blessed($oracle);
+        my $stage = $oracle->{stage} // '';
+        next unless $OSVVM_VOLATILE_LIFECYCLE_STAGE{$stage};
+        my $expected = "osvvm_runtime_${stage}_lifecycle_canonical";
+        confess "regression gate volatile lifecycle oracle at record"
+            . " $record_index stage '$stage' changed\n"
+            unless ($oracle->{oracle_id} // '') eq $expected;
+        confess "regression gate volatile lifecycle oracle at record"
+            . " $record_index stage '$stage' must occur exactly once\n"
+            if $seen{$stage}++;
+        $oracle->{evidence_identity} = $VOLATILE_DIGEST_SENTINEL;
+    }
+    for my $stage (@OSVVM_VOLATILE_LIFECYCLE_STAGES) {
+        confess "regression gate volatile lifecycle oracle at record"
+            . " $record_index stage '$stage' must occur exactly once\n"
+            unless ($seen{$stage} // 0) == 1;
+    }
+    return 1;
+}
+
+sub _normalize_osvvm_lifecycle_stage_bytes($record, $record_index) {
+    my $measurements = $record->{stage_measurements};
+    confess "regression gate stable OSVVM stage measurements changed\n"
+        unless ref($measurements) eq 'ARRAY';
+    my %seen;
+    for my $measurement (@$measurements) {
+        next unless ref($measurement) eq 'HASH' && !blessed($measurement);
+        my $stage = $measurement->{stage} // '';
+        next unless $OSVVM_VOLATILE_LIFECYCLE_STAGE{$stage};
+        confess "regression gate volatile lifecycle stage at record"
+            . " $record_index stage '$stage' must occur exactly once\n"
+            if $seen{$stage}++;
+        confess "regression gate volatile lifecycle stage output bytes changed shape\n"
+            unless ref($measurement->{output_counts}) eq 'HASH'
+                && exists($measurement->{output_counts}{bytes});
+        $measurement->{output_counts}{bytes} = 0;
+    }
+    for my $stage (@OSVVM_VOLATILE_LIFECYCLE_STAGES) {
+        confess "regression gate volatile lifecycle stage at record"
+            . " $record_index stage '$stage' must occur exactly once\n"
+            unless ($seen{$stage} // 0) == 1;
+    }
+    return 1;
 }
 
 sub _unavailable_result($contract, $profile, $revision, $availability) {

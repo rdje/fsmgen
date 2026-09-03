@@ -30,6 +30,8 @@ my $QUALIFICATION =
     'FSM::VIAL::ArchitectureScaleRegressionPromotionQualification';
 my $QUALIFICATION_STORE =
     'FSM::VIAL::ArchitectureScaleRegressionPromotionQualificationStore';
+my $GATE_PROFILE =
+    'FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile';
 
 my $SCHEMA =
     'fsmgen.vial_architecture_scale_regression_promotion_gate_contract.v1';
@@ -175,6 +177,65 @@ sub derive($class, @args) {
     });
     my $plan = $PLAN->derive({repository_root => $repository_root});
     return _clone(_derive_from_evidence($qualification_load, $plan));
+}
+
+# The compact gate contract intentionally carries only the qualified
+# correctness identity.  On a raw mismatch, the gate profile may retrieve the
+# already-authenticated full projection through this sealed read-only seam.
+# This neither exposes qualification bytes publicly nor permits recalibration.
+sub _qualified_correctness_projection($class, @args) {
+    _exact_invocant($class, '_qualified_correctness_projection');
+    confess "regression gate qualified correctness projection is caller-sealed\n"
+        unless (scalar caller) eq $GATE_PROFILE;
+    my $request = _request(
+        '_qualified_correctness_projection', \@args,
+        [qw(
+            repository_root ordinal selection_key
+            correctness_projection_identity qualification_identity
+            publication_identity qualification_file_set_sha256
+        )],
+    );
+    _require_active_guard();
+    my $repository_root = _repository_root($request->{repository_root});
+    confess "regression gate qualified correctness ordinal is invalid\n"
+        unless _positive_integer($request->{ordinal});
+    my $load = $QUALIFICATION_STORE->load({
+        repository_root => $repository_root,
+    });
+    my $report = $load->{report};
+    my $manifest = $load->{manifest};
+    my $artifact = $load->{artifact};
+    my $qualification = $report->{qualification};
+    confess "regression gate qualified correctness evidence binding changed\n"
+        unless ($qualification->{qualification_identity} // '') eq
+                ($request->{qualification_identity} // '')
+            && ($manifest->{publication_identity} // '') eq
+                ($request->{publication_identity} // '')
+            && ($artifact->{file_set_sha256} // '') eq
+                ($request->{qualification_file_set_sha256} // '');
+    my $index = $request->{ordinal} - 1;
+    my $profiles = $qualification->{profiles};
+    confess "regression gate qualified correctness profile is absent\n"
+        unless ref($profiles) eq 'ARRAY'
+            && $index >= 0 && $index <= $#$profiles
+            && ref($profiles->[$index]) eq 'HASH'
+            && !blessed($profiles->[$index]);
+    my $profile = $profiles->[$index];
+    confess "regression gate qualified correctness profile binding changed\n"
+        unless _json_integer_equals(
+                $profile->{ordinal}, $request->{ordinal},
+            )
+            && ($profile->{selection_key} // '') eq
+                ($request->{selection_key} // '')
+            && ($profile->{correctness_projection_identity} // '') eq
+                ($request->{correctness_projection_identity} // '');
+    my $projection = $profile->{correctness_projection};
+    confess "regression gate qualified correctness projection is invalid\n"
+        unless ref($projection) eq 'HASH' && !blessed($projection)
+            && ($request->{correctness_projection_identity} // '') eq
+                'regression-promotion-correctness/'
+                . sha256_hex(_canonical_json($projection));
+    return _clone($projection);
 }
 
 sub _derive_from_evidence($qualification_load, $plan) {

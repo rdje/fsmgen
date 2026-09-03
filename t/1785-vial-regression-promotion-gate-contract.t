@@ -34,6 +34,15 @@ my $repo_root = File::Spec->rel2abs(
 my $json = JSON::PP->new->canonical(1)->utf8(1);
 my $derive_from_evidence = $class->can('_derive_from_evidence');
 
+{
+    package FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile;
+
+    sub qualified_correctness_projection_for_test {
+        return FSM::VIAL::ArchitectureScaleRegressionPromotionGateContract
+            ->_qualified_correctness_projection(@_);
+    }
+}
+
 my @routes = (
     [
         'semantic_bridge|semantic_catalog_v1|gate_candidate_v1|actions|-',
@@ -336,6 +345,67 @@ subtest 'public derivation is caller-sealed and returned values are defensive' =
         'nested budget values are defensive');
     is($second->{cadence}{performance_override}, 'none',
         'nested cadence values are defensive');
+};
+
+subtest 'qualified full projection fallback is authenticated and defensive' => sub {
+    my ($load) = fixtures();
+    my $profile = $load->{report}{qualification}{profiles}[9];
+    my $binding = $load->{manifest}{profile_bindings}[9];
+    my $projection = {
+        schema => 'synthetic.qualified.correctness.v1',
+        ordinal => 10,
+    };
+    my $identity = 'regression-promotion-correctness/'
+        . sha256_hex($json->encode($projection));
+    $profile->{correctness_projection} = clone($projection);
+    $profile->{correctness_projection_identity} = $identity;
+    $binding->{correctness_projection_identity} = $identity;
+    local $ENV{FSMGEN_RAM_GUARD_ACTIVE} = 1;
+    local $ENV{FSMGEN_RAM_GUARD_EFFECTIVE_HOST_MAX_PCT} = 88;
+    local $ENV{FSMGEN_RAM_GUARD_EFFECTIVE_PROCESS_MAX_RSS_MB} = 4096;
+    no warnings 'redefine';
+    local *FSM::VIAL::ArchitectureScaleRegressionPromotionQualificationStore::load =
+        sub { return clone($load) };
+    my $request = {
+        repository_root => $repo_root,
+        ordinal => 10,
+        selection_key => $profile->{selection_key},
+        correctness_projection_identity => $identity,
+        qualification_identity =>
+            $load->{report}{qualification}{qualification_identity},
+        publication_identity => $load->{manifest}{publication_identity},
+        qualification_file_set_sha256 =>
+            $load->{artifact}{file_set_sha256},
+    };
+    my $first =
+        FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile::qualified_correctness_projection_for_test(
+            $request,
+        );
+    is_deeply($first, $projection,
+        'sealed fallback returns the selected authenticated full projection');
+    $first->{ordinal} = 1;
+    is_deeply(
+        FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile::qualified_correctness_projection_for_test(
+            $request,
+        ),
+        $projection,
+        'returned full projection is defensive',
+    );
+    my $wrong_selection = clone($request);
+    $wrong_selection->{selection_key} = 'foreign';
+    like(dies(sub {
+        FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile::qualified_correctness_projection_for_test(
+            $wrong_selection,
+        );
+    }), qr/profile binding changed/,
+        'selection substitution rejects');
+    $profile->{correctness_projection}{ordinal} = 11;
+    like(dies(sub {
+        FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile::qualified_correctness_projection_for_test(
+            $request,
+        );
+    }), qr/projection is invalid/,
+        'projection mutation under the qualified identity rejects');
 };
 
 SKIP: {

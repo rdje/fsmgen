@@ -1563,6 +1563,23 @@ required exact executable or repository-local provider is `unavailable`, never
 `pass`; a present wrong version or changed provider bytes is identity drift and
 rejects.
 
+One qualified route needs a narrower definition of cross-run correctness.
+Ordinal 10's OSVVM/GHDL lifecycle evidence includes fresh monotonic process
+telemetry. Its evidence byte sizes and digests, transitive lifecycle-handle
+digests, oracle evidence identities, and stage byte totals therefore change on
+every genuine execution even when the workload, generated source, provider
+reports, normalized result, oracle outcomes, and all semantic counts agree.
+The gate still tries raw projection identity equality first. Only after that
+fails does it retrieve authenticated full current and qualified projections
+through caller-sealed seams. For the exact OSVVM runtime schema and coordinates,
+it normalizes the fixed six evidence, five handle, six oracle-identity, and six
+stage-byte positions in each of four ordered records—116 scalar positions—and
+compares every other field canonically. Missing, duplicate, new, or reshaped
+coordinates fail closed; every non-OSVVM profile stays raw-exact. Stable
+admission publishes the unchanged qualified correctness identity, not a second
+identity. This is not recalibration and changes no qualification byte, budget,
+provider rule, or semantic oracle.
+
 The worker envelope and error text remain bounded and canonical. Timeout,
 exception, exit, signal, malformed or oversized IPC/report bytes, record
 reordering, numeric-looking strings, mixed revisions, adapter mutation, or a
@@ -1572,14 +1589,15 @@ provider or simulator:
 
 ```sh
 prove -Iperl -v \
-  t/1786-vial-regression-promotion-gate-profile.t
+  t/1786-vial-regression-promotion-gate-profile.t \
+  t/1793-vial-regression-promotion-gate-correctness-stability.t
 ```
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-gate-profile-execution-v1 -->
-- Claim: The caller-sealed one-profile regression-gate authority derives the authenticated contract, runs one selected canonical adapter in a fresh child for one validation plus three raw measurements, and revalidates the complete canonical report in both child and parent. An immediately unlinked same-volume spool separates the 67,108,864-byte report ceiling from the 65,536-byte IPC ceiling and leaves no path residue. Correctness and exact deterministic identity precede maximum-per-metric classification; inclusive exact-environment thresholds pass or fail, unmatched environments are informational, and unavailable exact providers cannot pass. This is one-profile execution machinery, not the complete eleven-profile gate, a published result, CI activation, an observed performance claim, support, or capacity.
-- Re-derive: Run t1786 and inspect ArchitectureScaleRegressionPromotionGateProfile plus Qualification's exact-caller observation seam. Require one producer marker in a child, two adapter-validation markers, ordered 1/3/4 evidence, maximum reduction, equal-threshold pass, plus-one fail, unmatched informational, unavailable-not-pass, content addressing, bounded metadata, and no spool path. Separately run the bounded provider preflight for qualified ordinals 8-10; all must report available without running a gate workload.
-- Falsify: T1786 began RED on the absent authority, then rejects caller evidence, absent guard, borrowed invocant, numeric strings, reordered or mixed-revision records, correctness drift before timing, present wrong provider version, adapter mutation, exception, early exit, signal, timeout, malformed or cap-plus-one IPC, oversized report, and process residue. Its fake-repository missing Verilator and GHDL controls must classify unavailable rather than pass.
-- Durability: Retain ArchitectureScaleRegressionPromotionGateProfile, the caller-sealed Qualification and ProcessSupervisor extensions, t1786, task `.17.5.4.2.1`, this chapter, the compact regression-promotion Knowledge card, bounded claim record, doctrine watchers, and the work-unit Git commit. Children `.2.2` through `.2.4` still own eleven-profile coordination, latest-result publication, CLI integration, and adversarial closeout.
+- Claim: The one-profile gate runs one validation and three raw measurements in a fresh child, revalidates the report in its parent, and passes the complete report through an unlinked same-volume spool with 67,108,864-byte report and 65,536-byte IPC ceilings. Correctness precedes timing: raw projection identity remains exact, while ordinal 10 alone authenticates both full projections, excludes exactly 116 sealed process-telemetry-derived scalar positions, and requires every other field to match. Exact-host thresholds pass or fail, unmatched hosts are informational, and unavailable providers cannot pass. This is a correctness-comparison repair, not recalibration, a complete real-gate result, support, or capacity.
+- Re-derive: Run guarded t1785+t1786+t1793. Require authenticated defensive full-projection retrieval, one child producer and two report validations, exact 1/3/4 record accounting, ordinal 10's 4 x 29 stable partition, all ten other profiles raw-exact, inclusive thresholds, identity-derived classifications, and no spool residue.
+- Falsify: T1793 began RED at line 13, then rejects semantic count drift, missing/new lifecycle artifacts, duplicate oracles, invalid shape, and non-target normalization. T1786 rejects other correctness drift before timing plus caller, guard, record, provider, worker, IPC, report, and residue attacks.
+- Durability: Retain Decision 0099, the two caller-sealed projection seams, stable comparator, t1785/t1786/t1793, task `.17.5.4.4.1`, this chapter, its Knowledge card and claim record, doctrine gates, and Git. Child `.2` separately owns clean production closeout.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-gate-profile-execution-v1 -->
 
 ### Eleven-profile in-memory gate coordination

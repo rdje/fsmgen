@@ -77,17 +77,95 @@ our $common = {
 };
 my $provider = provider_not_applicable();
 my $workload_identity = 'workload/' . ('1' x 64);
-my $correctness_identity =
-    'regression-promotion-correctness/' . ('2' x 64);
+my $correctness_identity;
+our $qualified_correctness_projection;
+our $current_correctness_projection;
 our $report;
 my $observation;
 my $contract;
 my $availability;
 our $adapter_mode = 'ok';
 
+sub synthetic_stable_projection() {
+    my @stages = qw(
+        compile_analyze elaborate run trace_validate result_produce publish
+    );
+    my @artifact_stages = qw(
+        compile_analyze elaborate run trace_validate result_produce
+    );
+    my @artifacts = map {
+        my $stage = $_;
+        ({
+            bytes => 100,
+            kind => 'osvvm_runtime_lifecycle_evidence',
+            lines => 1,
+            relative_path => "outputs/$stage/lifecycle-evidence.json",
+            sha256 => '1' x 64,
+            stage => $stage,
+        }, {
+            bytes => 50,
+            kind => 'osvvm_runtime_lifecycle_handle',
+            lines => 1,
+            relative_path => "outputs/$stage/lifecycle-handle.json",
+            sha256 => '2' x 64,
+            stage => $stage,
+        })
+    } @artifact_stages;
+    push @artifacts, {
+        bytes => 200,
+        kind => 'osvvm_runtime_lifecycle_evidence',
+        lines => 1,
+        relative_path => 'outputs/publish/lifecycle-evidence.json',
+        sha256 => '3' x 64,
+        stage => 'publish',
+    };
+    return {
+        schema =>
+            'fsmgen.vial_architecture_scale_regression_promotion_correctness.v1',
+        schema_version => 1,
+        report_contract => {
+            schema =>
+                'fsmgen.vial_architecture_scale_osvvm_runtime_measurement_set.v1',
+            family => 'runtime_stream_v1',
+            level => 'gate_candidate_v1',
+            primary_axis => 'runtime_trace_records',
+            backend_profile => 'vhdl_osvvm_qualified',
+        },
+        record_projections => [map {
+            my $ordinal = $_;
+            +{
+                run_class => $ordinal ? 'gate_measurement' : 'validation',
+                run_ordinal => $ordinal,
+                artifact_records => clone(\@artifacts),
+                correctness_oracles => [map {
+                    +{
+                        stage => $_,
+                        oracle_id => "osvvm_runtime_${_}_lifecycle_canonical",
+                        evidence_identity => '4' x 64,
+                    }
+                } @stages],
+                stage_measurements => [map {
+                    +{
+                        stage => $_,
+                        output_counts => {bytes => 300, objects => 2},
+                    }
+                } @stages],
+            }
+        } 0 .. 3],
+    };
+}
+
 sub reset_fixture() {
     unlink $marker if -e $marker;
     $adapter_mode = 'ok';
+    $qualified_correctness_projection = {
+        schema => 'synthetic.correctness.v1',
+        stable_value => 'qualified',
+    };
+    $current_correctness_projection =
+        clone($qualified_correctness_projection);
+    $correctness_identity = 'regression-promotion-correctness/'
+        . sha256_hex(canonical($qualified_correctness_projection));
     $provider = provider_not_applicable();
     $common->{host_profile} = {host_identity => 'synthetic-host'};
     $common->{tool_profile} = {
@@ -299,6 +377,10 @@ sub with_fixture($code) {
         sub { return clone($availability) };
     local *FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile::_observe_report =
         sub { return clone($observation) };
+    local *FSM::VIAL::ArchitectureScaleRegressionPromotionQualification::_gate_correctness_projection =
+        sub { return clone($current_correctness_projection) };
+    local *FSM::VIAL::ArchitectureScaleRegressionPromotionGateContract::_qualified_correctness_projection =
+        sub { return clone($qualified_correctness_projection) };
     return $code->();
 }
 
@@ -411,8 +493,10 @@ subtest 'unmatched environment remains informational' => sub {
 
 subtest 'correctness rejects before timing' => sub {
     reset_fixture();
+    $current_correctness_projection->{stable_value} = 'changed';
     $observation->{correctness_projection_identity} =
-        'regression-promotion-correctness/' . ('e' x 64);
+        'regression-promotion-correctness/'
+        . sha256_hex(canonical($current_correctness_projection));
     $observation->{observed_maximum}{wall_time_ns} = 101;
     my $error = with_fixture(sub {
         return captured_error(sub {
@@ -423,6 +507,50 @@ subtest 'correctness rejects before timing' => sub {
         'correctness identity drift rejects');
     unlike($error, qr/budget|threshold/i,
         'performance is not classified after correctness drift');
+};
+
+subtest 'OSVVM process telemetry drift admits only stable correctness' => sub {
+    reset_fixture();
+    $qualified_correctness_projection = synthetic_stable_projection();
+    $current_correctness_projection =
+        clone($qualified_correctness_projection);
+    ++$current_correctness_projection->{record_projections}[0]
+        {artifact_records}[0]{bytes};
+    $current_correctness_projection->{record_projections}[0]
+        {artifact_records}[0]{sha256} = '5' x 64;
+    $current_correctness_projection->{record_projections}[0]
+        {correctness_oracles}[0]{evidence_identity} = '6' x 64;
+    ++$current_correctness_projection->{record_projections}[0]
+        {stage_measurements}[0]{output_counts}{bytes};
+    my $qualified_identity = 'regression-promotion-correctness/'
+        . sha256_hex(canonical($qualified_correctness_projection));
+    my $current_identity = 'regression-promotion-correctness/'
+        . sha256_hex(canonical($current_correctness_projection));
+    $contract->{profiles}[0]{correctness_projection_identity} =
+        $qualified_identity;
+    $observation->{correctness_projection_identity} = $current_identity;
+    my $result = with_fixture(sub {
+        return $class->run({repository_root => $repo, ordinal => 1});
+    });
+    is(
+        $result->{observation}{correctness_projection_identity},
+        $qualified_identity,
+        'accepted result remains bound to immutable qualified identity',
+    );
+    is($result->{outcome}, 'accepted',
+        'telemetry-only projection drift is accepted before timing');
+
+    ++$current_correctness_projection->{record_projections}[0]
+        {stage_measurements}[0]{output_counts}{objects};
+    $observation->{correctness_projection_identity} =
+        'regression-promotion-correctness/'
+        . sha256_hex(canonical($current_correctness_projection));
+    like(with_fixture(sub {
+        return captured_error(sub {
+            $class->run({repository_root => $repo, ordinal => 1});
+        });
+    }), qr/correctness changed after stable projection.*ordinal 1.*synthetic/s,
+        'adjacent semantic drift rejects with the profile coordinate');
 };
 
 subtest 'unavailable exact provider cannot pass' => sub {
@@ -611,6 +739,16 @@ subtest 'closed caller and record identities reject substitution' => sub {
             ->_gate_observation({measurement_set => {}, common_identity => {}});
     }), qr/caller-sealed/,
         'qualification projection seam rejects direct callers');
+    like(captured_error(sub {
+        FSM::VIAL::ArchitectureScaleRegressionPromotionQualification
+            ->_gate_correctness_projection({measurement_set => {}});
+    }), qr/caller-sealed/,
+        'full current correctness seam rejects direct callers');
+    like(captured_error(sub {
+        FSM::VIAL::ArchitectureScaleRegressionPromotionGateContract
+            ->_qualified_correctness_projection({});
+    }), qr/caller-sealed/,
+        'full qualified correctness seam rejects direct callers');
 };
 
 subtest 'worker failures are bounded, sanitized, and contained' => sub {
