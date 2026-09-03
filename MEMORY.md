@@ -6,10 +6,11 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5.2`
-  (`done`; exact human-facing scale-regression publication)
-- next_action: From a clean tree, activate `.17.5.6` for independent
-  architecture-scale regression, evidence, public-truth, and residue closeout.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6`
+  (`active`; independent architecture-scale regression closeout)
+- next_action: Audit the current gate, evidence, public machine/human truth,
+  hostile coverage, environment outcomes, and residue authorities; select the
+  smallest complete independent closeout execution plan.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: none.
