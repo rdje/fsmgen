@@ -1765,7 +1765,22 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Independently close the real regression gate, applicability, CI ownership, and residue.`
   Acceptance: `From clean committed implementation and CI placement, independently authenticate the immutable qualification, execute production gate entrypoints in exact pinned and safely simulated unmatched/provider-unavailable classifications, and join every profile, correctness, determinism, measurement, budget, applicability, result-publication, CI-inventory, and cleanup identity. Re-run focused hostile watchers plus the warranted bounded regression band; prove qualification/result non-aliasing, no historical substitution or recalibration, exact before/after censuses, zero staging/process residue, and synchronized task/book/Knowledge Map/claims/containment/Memory before closing .17.5.4. Promote no broader support or capacity claim.`
-  Verification: `pending`
+  Verification: `The clean selected-important-step path independently authenticated the immutable corpus and qualification, then reproducibly rejected ordinal 10 because its fresh OSVVM/GHDL runtime correctness projection differs from the frozen qualification. The lifecycle published no result and removed its receipt/staging/process state. A separate exact ordinal-11 run passes correctness, all pinned budgets, and cleanup, isolating the failure from the later balanced-portable profile. Children .1 and .2 now separate root-cause repair from the remaining execution/applicability/CI/residue closeout; no evidence byte or qualification identity changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4: partition failed real gate closeout`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.1`
+  Status: `active`
+  Goal: `Diagnose and repair the exact ordinal-10 regression-gate correctness drift without recalibration.`
+  Acceptance: `From the clean reproducible ordinal-10 failure, independently capture its current deterministic correctness projection and compare every field with the immutable qualified projection. Locate the first causal producer/oracle divergence, distinguish product regression from an unstable or wrongly scoped correctness field using current authorities and history, and make the smallest signoff-quality repair under the existing qualification semantics. Add a focused RED/GREEN watcher for the exact cause and diagnostic coordinate; preserve all qualification/corpus bytes and identities, provider admission, workload shape, budgets, atomic no-result-on-failure behavior, and zero stage/process residue.`
+  Verification: `pending current-versus-qualified projection diff`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2`
+  Status: `pending`
+  Goal: `Complete independent real gate, applicability, CI-ownership, and residue closeout after the ordinal-10 repair.`
+  Acceptance: `From the clean committed repair, rerun the public exact-pinned gate and independently authenticate its complete result. Exercise production entrypoints in safely simulated unmatched-host and provider-unavailable classifications without changing the host or immutable evidence; join every profile, correctness, determinism, measurement, budget, applicability, publication, non-aliasing, CI-inventory, and cleanup identity. Re-run the focused hostile watchers plus the warranted bounded regression band; prove no historical substitution or recalibration, exact before/after censuses, zero staging/process residue, and synchronized task/book/Knowledge Map/claims/containment/Memory before closing .17.5.4, without broader support or capacity claims.`
+  Verification: `pending after .1`
   Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5`
   Status: `proposed`
