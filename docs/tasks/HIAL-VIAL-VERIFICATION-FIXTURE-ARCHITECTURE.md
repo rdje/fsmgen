@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
-- Last updated: `2026-09-02`
+- Last updated: `2026-09-03`
 - Owner: repo-local workflow
 - Segment manifest: `docs/tasks/segments/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/manifest.jsonl`
 
@@ -1613,6 +1613,25 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Freeze the authenticated current budget qualification in one bounded versioned atomic publication.`
   Acceptance: `Publish only a .17.5.3.1-accepted report beneath a non-colliding repository-relative same-volume qualification namespace; bind source corpus bytes and identities, formula authority, exact profile budgets, host/tool/guard/provider applicability, deterministic oracles, recalibration predecessor/trigger requirements, rollback, and nonclaims. Use closed canonical schemas, conservative byte ceilings, fsync plus atomic rename, exact reload, and owned cleanup; reject collisions, stale or mixed evidence, historical substitution, malformed/noncanonical/oversized state, file aliases, staging residue, or caller-selected paths and budgets.`
+  Verification: `Clean predecessor 8fc4b6e2d supplies the authenticated in-memory qualification but cannot safely create immutable evidence from uncommitted publisher code. The leaf is therefore partitioned into a caller-sealed store, a bounded explicit CLI, and a clean-revision real publication/closeout. No source, test, artifact, budget, publication, support, performance, capacity, CI, or product behavior changes in activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2: partition current budget publication`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.3`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.1`
+  Status: `active`
+  Goal: `Implement the bounded same-volume current-budget qualification publication store without creating the real publication.`
+  Acceptance: `Add one caller-sealed authority that accepts only the repository root, derives and validates the complete .17.5.3.1 qualification internally, records the exact source corpus/file-set/qualification/formula/profile-budget/applicability identities plus predecessor, recalibration trigger, rollback, and nonclaims in closed canonical report/manifest/artifact schemas, and exposes conservative byte ceilings. Fsync files and directories before one non-colliding directory rename; reload through exact census, bounded no-follow reads, owner/device/link/identity checks, digests, canonical JSON, full revalidation, and exact re-derivation. Reject caller evidence, paths, budgets, historical or mixed state, collisions, ambiguous or malformed recovery, oversized/noncanonical bytes, symlink/hard-link/cross-device aliases, post-validation mutation, and staging residue. Synthetic tests execute no real producer, provider, simulator, measurement controller, or publication.`
+  Verification: `pending`
+  Commit: `pending`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.2`
+  Status: `proposed`
+  Goal: `Expose explicit bounded publish and validate operations for the current-budget qualification store.`
+  Acceptance: `Add one repository-relative executable that accepts exactly one explicit publish or validate operation, delegates only to the caller-sealed store under the active guard, emits bounded canonical newline JSON only after complete success, returns stable nonzero failure status with bounded sanitized diagnostics, and rejects defaults, abbreviations, extra arguments, caller paths/evidence/budgets, partial stdout, malformed worker state, or residue. Keep real publication for .3.`
+  Verification: `pending`
+  Commit: `pending`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.3`
+  Status: `proposed`
+  Goal: `Create and exactly reload the real current-budget qualification publication from one clean implementation revision.`
+  Acceptance: `Run only the completed explicit publish operation from a clean revision under the unchanged RAM guard; authenticate the current corpus and all eleven qualified budgets; publish one bounded non-colliding same-volume namespace; then run a distinct validate operation and exact file census. Record publisher revision, source corpus/file-set/qualification identities, formula authority, ordered profile budgets and applicability identities, publication/file-set identities, byte counts, rollback/recalibration contract, and nonclaims; prove staging and process residue absent. Do not execute a producer, provider, simulator, or measurement controller, and do not activate performance enforcement.`
   Verification: `pending`
   Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3`
@@ -5676,3 +5695,24 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   artifact, capture policy/plan/corpus identity,
   producer/provider/simulator/controller run, publication, active gate,
   support, capacity, full CI, push, or project data locality changes.
+
+## Acceptance Checklist (enforced) — `.17.5.3.2` publication partition activation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean predecessor `8fc4b6e2d` can derive
+  and authenticate the complete current budget report, but the active leaf
+  also requires immutable clean-revision publication. Creating that evidence
+  from uncommitted publisher code would make the implementation revision and
+  recovery boundary unverifiable; no current qualification store or explicit
+  publication command exists in `perl/`, `scripts/`, or `t/`.
+- [x] **ADDRESSED (verified)** — `.17.5.3.2` now has three ordered children:
+  `.1` implements and adversarially tests the caller-sealed store without real
+  publication, `.2` adds a bounded explicit publish/validate CLI, and `.3`
+  creates and reloads the real publication from their clean committed
+  revision. Before -> after: one broad active leaf becomes one exact active
+  implementation frontier followed by CLI and evidence owners.
+- [x] **NO REGRESSION** — this activation changes only task-tree continuity
+  state. Task integrity, Memory, relative paths, containment, staged
+  acceptance, and all registered doctrines are required green before commit.
+  No source, test, script, artifact, budget, publication, producer, provider,
+  simulator, measurement controller, performance gate, support, capacity,
+  full CI, push, or product behavior changes.
