@@ -50,11 +50,11 @@ tags: [hial, vial, scalability, regression, measurement, publication]
 evidence: >-
   docs/decisions/0096-regression-promotion-uses-a-current-eleven-profile-corpus.md; docs/decisions/0097-regression-gates-publish-replaceable-observations-without-recalibrating.md; docs/decisions/0098-hosted-regression-gates-materialize-immutable-tracked-evidence.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16df-vial-architecture-scale-cap-closeout.md;
   perl/FSM/VIAL/ArchitectureScaleRegressionPromotionPolicy.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCapturePlan.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualificationStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateContract.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateProfile.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateCoordinator.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateStore.pm;
-  bin/ci-regression; scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; scripts/verify_vial_regression_promotion_evidence_transport.pl; scripts/materialize_vial_regression_promotion_gate_evidence.pl; scripts/run_vial_regression_promotion_gate.pl; vial/qualification/regression_promotion_gate/evidence-v1/transport-manifest.json; t/1183-ci-regression-tier-selection.t; t/1784-vial-regression-promotion-budget-qualification-closeout.t; t/1785-vial-regression-promotion-gate-contract.t; t/1789-vial-regression-promotion-gate-cli.t; t/1790-vial-regression-promotion-evidence-transport.t; t/1791-vial-regression-promotion-evidence-materialization.t
+  .github/workflows/regression.yml; bin/ci-regression; scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; scripts/verify_vial_regression_promotion_evidence_transport.pl; scripts/materialize_vial_regression_promotion_gate_evidence.pl; scripts/run_vial_regression_promotion_gate.pl; scripts/verify_vial_regression_promotion_hosted_result.pl; vial/qualification/regression_promotion_gate/evidence-v1/transport-manifest.json; t/1183-ci-regression-tier-selection.t; t/1789-vial-regression-promotion-gate-cli.t; t/1790-vial-regression-promotion-evidence-transport.t; t/1791-vial-regression-promotion-evidence-materialization.t; t/1792-vial-regression-promotion-hosted-result-verifier.t
 reverify: >-
   scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; perl scripts/verify_vial_regression_promotion_evidence_transport.pl; env FSMGEN_VIAL_REGRESSION_GATE_CONTRACT_EXACT=1 scripts/run_with_ram_guard.sh -- prove -Iperl t/1785-vial-regression-promotion-gate-contract.t;
   prove -Iperl t/1786-vial-regression-promotion-gate-profile.t t/1787-vial-regression-promotion-gate-coordinator.t t/1788-vial-regression-promotion-gate-store.t t/1789-vial-regression-promotion-gate-cli.t t/1790-vial-regression-promotion-evidence-transport.t; scripts/run_with_ram_guard.sh -- prove -Iperl t/1791-vial-regression-promotion-evidence-materialization.t;
-  prove -Iperl t/1183-ci-regression-tier-selection.t; ./bin/ci-regression vial-gate --dry-run --no-book; git ls-files '.artifacts/qualification/vial-scale/v2/**'
+  prove -Iperl t/1183-ci-regression-tier-selection.t t/1792-vial-regression-promotion-hosted-result-verifier.t; ./bin/ci-regression vial-gate --dry-run --no-book
 ---
 
 Decision 0096 selects eleven v2 gate profiles. Each adapter call owns one
@@ -153,16 +153,16 @@ order, path, canonicality, byte, digest, source-seal, identity, extra/missing,
 link, alias, and special-file mutations while proving generated coordinates
 unchanged.
 
-The fixed materializer owns one no-overwrite same-volume transaction; exact prior evidence stays unowned, and T1791 retains hostile recovery and cleanup.
-Local `vial-gate` and unsharded `full` run both validators, one RAM-guarded gate, then receipt cleanup after successful materialization.
-T1183 preserves prior evidence/result and keeps quick, smoke, ISF, direct tests, and hosted shards gate-free.
+The fixed materializer owns one no-overwrite same-volume transaction; exact
+prior evidence stays unowned. Local `vial-gate` and unsharded `full` run the
+five-step lifecycle; T1183/T1791 retain selection, recovery, and cleanup.
 
-The selected hosted job materializes exact OSVVM 2026.05 but no substitute
-Verilator or GHDL. Ordinals 1-7 and 11 execute with informational Ubuntu
-timing; exact-runtime ordinals 8-10 remain unavailable-not-pass. The job must
-reject an ambient conflicting provider before gate execution, validate the
-latest result under the RAM guard, and remove only its owned materialized
-evidence, provider, result, and staging paths.
+Hosted CI now adds one required unsharded Ubuntu 24.04 family. It rejects
+ambient Verilator/fixed GHDL, materializes exact OSVVM 2026.05, calls public
+`vial-gate`, and guards a production-independent canonical-result verifier.
+T1792 locks ordinals 1-7/11 informational, 8-10 unavailable-not-pass, required
+11/33/44 versus observed 8/24/32, and closed input/staging. Always-cleanup owns
+only evidence, OSVVM, latest-result, and stage; real execution remains `.4`.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]],

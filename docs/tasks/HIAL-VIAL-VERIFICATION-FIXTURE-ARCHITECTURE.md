@@ -1663,7 +1663,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement stable architecture-scale regression gates with bounded CI placement and exact host/tool applicability.`
   Acceptance: `Run the .17.5.3-qualified representative profiles through canonical producers and stage-local oracles; enforce frozen performance budgets only on the exact pinned host/tool profile; run correctness, deterministic-output, safety, no-tool/qualified-tool, atomic publication, and cleanup checks everywhere applicable; report unmatched performance informationally; fail closed on evidence or identity drift; and place expensive guarded gates according to the selected CI cadence without making ordinary slice commits run full CI.`
-  Verification: `Decision 0096, the current regression-promotion Knowledge card, the complete .17.5.3 qualification closeout, current bin/ci-regression shard ownership, and hosted workflow/docs were audited from clean commit 35dafe901. Children .1 and .2 complete the frozen gate contract plus caller-sealed execution, aggregate admission, atomic latest-result storage, and explicit public CLI with synthetic hostile coverage. Child .3 is active for bounded local/hosted CI placement; .4 retains production-independent real closeout. Qualification bytes and support/capacity boundaries remain unchanged.`
+  Verification: `Decision 0096, the current regression-promotion Knowledge card, the complete .17.5.3 qualification closeout, current bin/ci-regression shard ownership, and hosted workflow/docs were audited from clean commit 35dafe901. Children .1 and .2 complete the frozen gate contract plus caller-sealed execution, aggregate admission, atomic latest-result storage, and explicit public CLI with synthetic hostile coverage. Child .3 now completes authenticated evidence transport plus bounded local/hosted CI placement; .4 is active for production-independent real closeout. Qualification bytes and support/capacity boundaries remain unchanged.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4: partition stable regression gate delivery`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4`
 
@@ -1711,10 +1711,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.4: add explicit stable gate CLI`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3`
-  Status: `active`
+  Status: `done`
   Goal: `Place the expensive guarded regression gate in bounded local and hosted CI cadence.`
   Acceptance: `Expose exact repository-relative pre-push/selected-important-step and hosted entrypoints around the .2 gate. Keep ordinary slice commits on focused checks, preserve the unsharded local full gate, give hosted execution explicit shard/provider/tool ownership, and require hosted nonmatching environments to run applicable correctness/determinism/safety/publication/cleanup checks while reporting performance informationally. Update CI inventory and workflow documentation so every tracked test remains exactly owned, no matrix tail is hidden, full CI remains reserved for push or selected important steps, and unavailable providers cannot yield a passing performance classification.`
-  Verification: `Fresh-checkout audit found that the complete gate could not run in hosted CI: all 15 authenticated corpus/qualification files were beneath ignored .artifacts, git ls-files supplied none, and the exact local census was 7,012,284 bytes. Three ordered children separate durable non-recalibrating evidence transport selection, authenticated materialization plus local driver entrypoints, and hosted workflow/inventory closeout. Decision 0098 and child .1 select the tracked canonical-JSON bundle and exact OSVVM-present/runtime-provider-absent hosted contract. Child .2 is complete: the source, verifier, transactional materializer, copied hostile watcher, explicit local vial-gate mode, and exactly-once unsharded full placement are green. Child .3 is active for the still-absent guarded hosted family and aggregate/inventory closeout.`
+  Verification: `Fresh-checkout audit found that the complete gate could not run in hosted CI: all 15 authenticated corpus/qualification files were beneath ignored .artifacts, git ls-files supplied none, and the exact local census was 7,012,284 bytes. Three completed children now provide the durable non-recalibrating transport and provider selection, authenticated materialization plus selected/unsharded-local driver entrypoints, and one required hosted family with exact provider preflight, guarded canonical-result validation, aggregate ownership, and bounded cleanup. Decision 0098, t1183, t1790-t1792, workflow inventory, mdBook, Knowledge Map, and claim record retain the closed cadence without a real gate run or broader claim.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3: partition evidence-backed CI placement`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.3`
 
@@ -1755,14 +1755,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2.3: place the guarded gate in local CI`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Wire and close the hosted regression-gate job, inventory, and cadence documentation.`
   Acceptance: `Add one explicit guarded hosted job that materializes the authenticated current evidence and exact OSVVM 2026.05 provider, leaves exact Verilator/GHDL runtime providers absent rather than drifted, executes the gate through the .2 public command, validates canonical result/qualification identities and unavailable-not-pass plus informational-host outcomes, and cleans materialized evidence/provider/result staging. Extend the final aggregate, workflow action/tool/provider inventory, and focused CI watcher so the seventh family cannot be skipped and every tracked t/*.t still has exactly one ordinary/dedicated/corpus/dynamic owner. Synchronize workflow README, mdBook, Knowledge Map, claims, containment, task, and Memory without running full CI or claiming hosted performance/support/capacity.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The regression workflow now has one unsharded Ubuntu-24.04/Perl-5.32 VIAL gate family in addition to doctrine, book, ordinary, dedicated, corpus, and dynamic families; terminal build consumes all seven results. The job installs no HDL runtime package, rejects ambient Verilator and both fixed GHDL coordinates, recursively materializes exact OSVVM 2026.05 at 2f7c391051dfb11890fa4bdbda9918d1db492250, and invokes the .2-owned ./bin/ci-regression vial-gate --no-book public command. A guarded argument-free production-independent verifier authenticates the fixed canonical latest-result path, aggregate/profile content identities, exact qualification d8fb1813...0c97/publication 1c2a3832...945f/file-set 28ba972c...9095 references, unavailable aggregate, informational ordinals 1-7/11, unavailable-not-pass ordinals 8-10, required 11/33/44 and observed 8/24/32 topology. Always-cleanup re-enters receipt-bounded evidence cleanup, removes only the preflight-proved OSVVM/result/stage coordinates, and asserts the selected census absent. T1183 began RED at line 841 on the absent hosted job; its extended workflow/action/test-owner inventory plus new copied-result t1792 pass guarded at Files=2/Tests=21 in 40 wallclock seconds. T1792 alone passes Files=1/Tests=5 and rejects rehashed qualification/topology/classification drift, content/canonical/caller/guard/staging attacks without a producer. Workflow YAML parses, all action uses remain immutable, every tracked t/*.t retains exactly one ordinary/dedicated/corpus/dynamic owner, and no real gate, full CI, hosted observation, performance, support, or capacity claim ran in this slice.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.3: wire the hosted regression gate`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Independently close the real regression gate, applicability, CI ownership, and residue.`
   Acceptance: `From clean committed implementation and CI placement, independently authenticate the immutable qualification, execute production gate entrypoints in exact pinned and safely simulated unmatched/provider-unavailable classifications, and join every profile, correctness, determinism, measurement, budget, applicability, result-publication, CI-inventory, and cleanup identity. Re-run focused hostile watchers plus the warranted bounded regression band; prove qualification/result non-aliasing, no historical substitution or recalibration, exact before/after censuses, zero staging/process residue, and synchronized task/book/Knowledge Map/claims/containment/Memory before closing .17.5.4. Promote no broader support or capacity claim.`
   Verification: `pending`
@@ -2664,3 +2664,23 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   copied fixture residue is absent. Syntax, mdBook, Knowledge Map, claims,
   containment, staged acceptance, and doctrine gates remain required before
   commit; no real gate or hosted workflow runs in this slice.
+
+## Acceptance Checklist (enforced) — `.17.5.4.3.3` hosted gate placement
+
+- [x] **ROOT CAUSE (WHY + WHERE; missing seventh hosted family)** — the guarded
+  workflow watcher began RED with `Failed test 'the unsharded VIAL gate pins its hosted platform' at t/1183-ci-regression-tier-selection.t line 841`; it also found no gate
+  aggregate dependency/result or the two required immutable action uses.
+- [x] **ADDRESSED (verified before -> after)** — one non-matrix Ubuntu-24.04
+  job now establishes the exact absent-runtime/OSVVM-present provider state,
+  calls public `vial-gate`, independently authenticates the canonical latest
+  result and 8-informational/3-unavailable, 11/33/44-to-8/24/32 contract, and
+  always cleans exact owned evidence/provider/result/stage coordinates. The
+  terminal aggregate consumes its result.
+- [x] **NO REGRESSION (hosted workflow and result-verifier band)** — guarded
+  t1183+t1792 reports `All tests successful.` and `Files=2, Tests=21` in 40
+  wallclock seconds. It retains all four disjoint tracked-test ownership
+  families, 17 immutable action uses, every prior shard coordinate, verifier
+  hostile closure, and no real workload. Syntax, workflow-YAML, mdBook,
+  Knowledge Map, claims, containment, staged acceptance, and complete doctrine
+  gates are required before commit; full CI and hosted performance/support/
+  capacity claims remain outside this slice.

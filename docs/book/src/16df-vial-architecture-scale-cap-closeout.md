@@ -1819,13 +1819,14 @@ T1183 first failed on the absent mode and zero full-path gate commands. Its
 GREEN watcher checks dry-run order and command cardinality, then uses a copied
 driver plus five fixed command stubs to inject materializer, validator, guard, gate, and
 cleanup failures without executing the real eleven-profile workload. Hosted
-workflow wiring and independent real gate execution remain separate owners.
+workflow wiring is now complete; independent real gate execution remains a
+separate owner.
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-local-ci-placement-v1 -->
 - Claim: Local `vial-gate` and unsharded `full` share one ordered five-step regression-promotion lifecycle: authenticated materialization, two production evidence validators, one RAM-guarded `--run`, and receipt-bounded cleanup. Full enters it once after ordinary Perl regression. Quick, smoke, ISF, direct tests, and each current hosted shard family remain gate-free. Cleanup is attempted once after successful materialization on success or downstream failure, preserves adopted evidence and the latest observation, and propagates cleanup or primary failure without converting either to success. This is local CI placement, not a real gate observation, hosted activation, recalibration, support, or capacity evidence.
 - Re-derive: Run `prove -Iperl t/1183-ci-regression-tier-selection.t`, inspect `bin/ci-regression`, and compare `vial-gate --dry-run --no-book` with unsharded and each hosted-shard `full --dry-run --no-book`. Require the selected five-command order, one post-regression full occurrence, one RAM-guarded gate command, and zero occurrences in every excluded mode.
 - Falsify: T1183 began RED because `vial-gate` was unknown and unsharded full selected zero gate commands. Its copied-driver stubs now fail materialization, either validator, the guard, gate, and cleanup independently at status 23; every post-materialization failure attempts cleanup exactly once, failure remains nonzero, case-variant mode and selected/hosted mixing reject, and no real gate runs.
-- Durability: Retain `bin/ci-regression`, t1183, the materializer and production validators, common RAM guard, gate CLI, Decision 0098, owning task, Knowledge Map card, this chapter, bounded claim record, doctrine watchers, and work-unit commit. `.17.5.4.3.3` separately owns hosted wiring and `.17.5.4.4` independently owns real execution closeout.
+- Durability: Retain `bin/ci-regression`, t1183, the materializer and production validators, common RAM guard, gate CLI, Decision 0098, owning task, Knowledge Map card, this chapter, bounded claim record, doctrine watchers, and work-unit commit. Hosted wiring is retained by `.17.5.4.3.3`; `.17.5.4.4` independently owns real execution closeout.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-local-ci-placement-v1 -->
 
 The hosted provider contract installs no substitute runtime tool. It
@@ -1841,8 +1842,49 @@ or a near-version tool into a performance pass.
 - Claim: A tracked-only fresh checkout keeps the current corpus and qualification absent from ignored generated coordinates but carries their exact 15-file/7,012,284-byte canonical transport under `vial/qualification/regression_promotion_gate/evidence-v1/`. The 8,725-byte manifest binds transport `3b4c486e...2bbc6` and the accepted corpus/qualification seals; a caller-closed, read-only, production-independent verifier reproduces them. Hosted selection remains 8 available profiles with informational timing plus three unavailable exact-runtime profiles. This is authenticated source and provider selection, not materialization, CI activation, a gate result, support, or capacity.
 - Re-derive: Run the transport verifier and require verification `ae9c67c9...55b6`, census 15/7,012,284, manifest 8,725/`d20cae85...94f7`, and source file sets `dc5b315b...c66f`/`28ba972c...9095`. Run both generated-source verifiers, byte-compare generated and tracked payloads, and inspect the qualification for the 8-available/3-unavailable provider partition.
 - Falsify: T1790 copies the source and rejects schema, order, path, byte, digest, identity, source-seal, canonicality, payload-schema, extra/missing, link, alias, FIFO, and caller-input mutations with empty result output, then restores the identity. Running only the verifier against empty generated coordinates proves source authentication does not materialize; regeneration, mutable cache/artifacts, substitute tools, archives, and caller evidence fail the fixed seal.
-- Durability: The tracked payloads, manifest, verifier, t1790, Decision 0098, task tree, Knowledge Map card, claim record, chapter, and work-unit commit retain the source/provider selection. `.17.5.4.3.2.2` separately supplies authenticated materialization; hosted wiring remains forbidden.
+- Durability: The tracked payloads, manifest, verifier, t1790, Decision 0098, task tree, Knowledge Map card, claim record, chapter, and work-unit commit retain the source/provider selection. `.17.5.4.3.2.2` supplies authenticated materialization and `.17.5.4.3.3` supplies the distinct hosted consumer.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-hosted-evidence-selection-v1 -->
+
+### Hosted regression-gate placement
+
+The regression workflow now has a seventh required family: one unsharded VIAL
+gate on Ubuntu 24.04 with exact Perl 5.32. It installs no HDL runtime package,
+rejects ambient Verilator and both fixed GHDL 6.0.0 coordinates, recursively
+materializes OSVVM 2026.05 at commit
+`2f7c391051dfb11890fa4bdbda9918d1db492250`, and invokes the same public
+`./bin/ci-regression vial-gate --no-book` command as local selected execution.
+The terminal `build` job consumes this family's result alongside the six prior
+families, so it cannot silently skip the gate.
+
+After the public lifecycle publishes and reloads its result, a separate
+argument-free verifier reads only the fixed latest-result coordinate beneath
+the RAM guard. It independently requires canonical newline JSON and
+content-addressed aggregate/profile identities, the exact immutable
+qualification references, aggregate `unavailable`, ordinals 1-7 and 11 as
+`accepted_informational`, ordinals 8-10 as `unavailable` rather than `pass`,
+required topology 11/33/44, and honest observed topology 8/24/32. Run that
+postcondition against a retained result with:
+
+```sh
+./scripts/run_with_ram_guard.sh -- \
+  scripts/verify_vial_regression_promotion_hosted_result.pl
+```
+
+An `always()` step re-enters receipt-bounded evidence cleanup, then removes the
+preflight-proved OSVVM source, latest-result directory, and result publication
+stage and asserts every selected coordinate is absent. T1183 inventories all
+seven family dependencies, 17 immutable action uses, and exact ordinary,
+dedicated, corpus, and dynamic test ownership. T1792 exercises the verifier in
+a copied repository without a real gate: qualification, topology, host
+classification, unavailable-not-pass, content identity, canonicality, caller,
+guard, and staging mutations all reject with no partial acceptance output.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-hosted-ci-placement-v1 -->
+- Claim: Hosted regression CI configures seven required families, including one unsharded VIAL gate on Ubuntu 24.04 with Perl 5.32. That family installs no HDL runtime package, rejects ambient Verilator and fixed GHDL coordinates, materializes exact OSVVM 2026.05, invokes the public `vial-gate` command, and independently requires an unavailable aggregate with eight informational and three unavailable-not-pass profiles plus required 11/33/44 and observed 8/24/32 topology. The final aggregate consumes the gate result, and always-cleanup covers only owned evidence, OSVVM, result, and staging coordinates. This is workflow placement, not evidence that hosted execution completed and not a performance, support, or capacity claim.
+- Re-derive: Inspect `.github/workflows/regression.yml`, run guarded t1183+t1792, and require one non-matrix `vial_gate` job, exact provider preflight/materialization, the public gate command, guarded independent verifier, always-cleanup, seven aggregate dependencies, 17 pinned action uses, and complete disjoint ownership of every tracked `t/*.t` by the four existing test families.
+- Falsify: T1183 began RED with no seventh job, gate dependency, result variable, or two associated action uses. Its workflow oracle rejects a missing provider boundary, OSVVM pin, public command, guarded verifier, cleanup, aggregate edge, test owner, or immutable action pin. T1792 rehashes hostile canonical fixtures and rejects qualification, topology, informational-host, unavailable-not-pass, profile identity, canonical-byte, caller, guard, and staging drift without executing a producer.
+- Durability: Retain the regression workflow and README, hosted-result verifier, t1183, t1792, Decision 0098, owning task, Knowledge Map card, mdBook chapters, bounded claim record, doctrine gates, and work-unit commit. `.17.5.4.4` independently owns real gate execution and residue closeout.
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-hosted-ci-placement-v1 -->
 
 Re-derive the authenticated transport, hostile closure, and policy comparison
 with:
@@ -1861,9 +1903,9 @@ CLI, the real clean-revision qualification seal, hostile copied controls,
 final independent/production agreement, one-profile gate worker,
 eleven-profile coordinator, atomic latest-result store, explicit gate CLI,
 authenticated transport, and transactional materialization are complete.
-The selected and unsharded local CI entrypoints are complete; hosted placement
-and independent real execution remain separate rollback owners. Until those
-leaves pass, the sealed budgets have no complete CI closure, all historical
+The selected local and hosted CI entrypoints are complete; independent real
+execution remains a separate rollback owner. Until that leaf passes, the
+sealed budgets have no complete execution closure, all historical
 candidate budgets stay candidate-only, and whole-product big/really-big capacity
 remains unclaimed.
 

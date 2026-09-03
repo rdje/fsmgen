@@ -267,10 +267,68 @@ jobs:
     - name: Run dynamic transaction-ID case shard
       run: ./bin/ci-regression full --no-book --hosted-dynamic-shard "${{ matrix.shard }}/68"
 
+  vial_gate:
+    name: VIAL regression-promotion gate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+    - name: Set up Perl
+      uses: shogo82148/actions-setup-perl@53e33bb27be492a926eee378e8a5f7ff6618b061 # v1.43.1
+      with:
+        perl-version: '5.32'
+
+    - name: Require the selected hosted provider boundary
+      run: |
+        if command -v verilator >/dev/null 2>&1; then
+          echo 'ambient Verilator conflicts with the selected hosted gate' >&2
+          exit 1
+        fi
+        test ! -e .artifacts/cache/providers/ghdl/6.0.0/llvm-jit-tool/ghdl-llvm-jit-6.0.0-macos15-aarch64/bin/ghdl
+        test ! -e .artifacts/cache/providers/ghdl/6.0.0/llvm-jit-archive/ghdl-llvm-jit-6.0.0-macos15-aarch64.tar.gz
+        test ! -e .artifacts/cache/providers/osvvm/2026.05/source
+        test ! -e .artifacts/qualification/vial-scale/v2/regression-promotion-corpus-v1
+        test ! -e .artifacts/qualification/vial-scale/v2/regression-promotion-budget-qualification-v1
+        test ! -e .artifacts/tmp/vial-scale/regression-promotion-gate-evidence-transport/v1
+        test ! -e .artifacts/qualification/vial-scale/v2/regression-promotion-gate-v1/current
+        test ! -e .artifacts/tmp/vial-scale/regression-promotion-gate-publication/v1
+
+    - name: Materialize exact OSVVM 2026.05 for the gate
+      run: |
+        mkdir -p .artifacts/cache/providers/osvvm/2026.05
+        git clone --recursive --branch 2026.05 --single-branch https://github.com/OSVVM/OsvvmLibraries.git .artifacts/cache/providers/osvvm/2026.05/source
+        test "$(git -C .artifacts/cache/providers/osvvm/2026.05/source rev-parse HEAD)" = \
+          2f7c391051dfb11890fa4bdbda9918d1db492250
+
+    - name: Run the guarded VIAL regression-promotion gate
+      run: ./bin/ci-regression vial-gate --no-book
+
+    - name: Verify the exact hosted VIAL gate result
+      run: ./scripts/run_with_ram_guard.sh -- scripts/verify_vial_regression_promotion_hosted_result.pl
+
+    - name: Clean hosted VIAL gate state
+      if: ${{ always() }}
+      run: |
+        cleanup_status=0
+        scripts/materialize_vial_regression_promotion_gate_evidence.pl cleanup || cleanup_status=$?
+        rm -rf .artifacts/cache/providers/osvvm/2026.05/source || cleanup_status=$?
+        rm -rf .artifacts/qualification/vial-scale/v2/regression-promotion-gate-v1/current || cleanup_status=$?
+        rm -rf .artifacts/tmp/vial-scale/regression-promotion-gate-publication/v1 || cleanup_status=$?
+        rmdir .artifacts/cache/providers/osvvm/2026.05 2>/dev/null || true
+        test ! -e .artifacts/qualification/vial-scale/v2/regression-promotion-corpus-v1 || cleanup_status=1
+        test ! -e .artifacts/qualification/vial-scale/v2/regression-promotion-budget-qualification-v1 || cleanup_status=1
+        test ! -e .artifacts/tmp/vial-scale/regression-promotion-gate-evidence-transport/v1 || cleanup_status=1
+        test ! -e .artifacts/cache/providers/osvvm/2026.05/source || cleanup_status=1
+        test ! -e .artifacts/qualification/vial-scale/v2/regression-promotion-gate-v1/current || cleanup_status=1
+        test ! -e .artifacts/tmp/vial-scale/regression-promotion-gate-publication/v1 || cleanup_status=1
+        exit "$cleanup_status"
+
   build:
     name: build
     if: ${{ always() }}
-    needs: [doctrines, book, perl_files, perl_dedicated, perl_corpus, perl_dynamic]
+    needs: [doctrines, book, perl_files, perl_dedicated, perl_corpus, perl_dynamic, vial_gate]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -282,6 +340,7 @@ jobs:
         PERL_DEDICATED_RESULT: ${{ needs.perl_dedicated.result }}
         PERL_CORPUS_RESULT: ${{ needs.perl_corpus.result }}
         PERL_DYNAMIC_RESULT: ${{ needs.perl_dynamic.result }}
+        VIAL_GATE_RESULT: ${{ needs.vial_gate.result }}
       run: |
         printf 'doctrines=%s\n' "$DOCTRINES_RESULT"
         printf 'book=%s\n' "$BOOK_RESULT"
@@ -289,9 +348,11 @@ jobs:
         printf 'perl-dedicated=%s\n' "$PERL_DEDICATED_RESULT"
         printf 'perl-corpus=%s\n' "$PERL_CORPUS_RESULT"
         printf 'perl-dynamic=%s\n' "$PERL_DYNAMIC_RESULT"
+        printf 'vial-gate=%s\n' "$VIAL_GATE_RESULT"
         test "$DOCTRINES_RESULT" = success
         test "$BOOK_RESULT" = success
         test "$PERL_FILES_RESULT" = success
         test "$PERL_DEDICATED_RESULT" = success
         test "$PERL_CORPUS_RESULT" = success
         test "$PERL_DYNAMIC_RESULT" = success
+        test "$VIAL_GATE_RESULT" = success

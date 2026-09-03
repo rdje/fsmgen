@@ -775,7 +775,8 @@ subtest 'hosted workflow runs every shard family to a terminal aggregate' => sub
     my ($file_job) = $yaml =~ /\n  perl_files:(.*?)\n  perl_dedicated:/s;
     my ($dedicated_job) = $yaml =~ /\n  perl_dedicated:(.*?)\n  perl_corpus:/s;
     my ($corpus_job) = $yaml =~ /\n  perl_corpus:(.*?)\n  perl_dynamic:/s;
-    my ($dynamic_job) = $yaml =~ /\n  perl_dynamic:(.*?)\n  build:/s;
+    my ($dynamic_job) = $yaml =~ /\n  perl_dynamic:(.*?)\n  vial_gate:/s;
+    my ($gate_job) = $yaml =~ /\n  vial_gate:(.*?)\n  build:/s;
 
     is(scalar(@non_fail_fast), 4, 'all four hosted Perl matrices disable fail-fast cancellation');
     like($yaml, qr/timeout-minutes:\s+300/, 'long-running shard jobs have a five-hour ceiling');
@@ -838,6 +839,51 @@ subtest 'hosted workflow runs every shard family to a terminal aggregate' => sub
         'corpus shards avoid unrelated HDL tools and provider materialization',
     );
     like(
+        $gate_job || '',
+        qr/runs-on:\s+ubuntu-24\.04/,
+        'the unsharded VIAL gate pins its hosted platform',
+    );
+    like(
+        $gate_job || '',
+        qr/timeout-minutes:\s+300/,
+        'the unsharded VIAL gate has the bounded long-job ceiling',
+    );
+    unlike(
+        $gate_job || '',
+        qr/apt-get|Install hosted HDL validation tools/,
+        'the VIAL gate installs no substitute runtime provider package',
+    );
+    like(
+        $gate_job || '',
+        qr/command -v verilator.*?test ! -e \.artifacts\/cache\/providers\/ghdl\/6\.0\.0\/llvm-jit-tool\/ghdl-llvm-jit-6\.0\.0-macos15-aarch64\/bin\/ghdl.*?test ! -e \.artifacts\/cache\/providers\/ghdl\/6\.0\.0\/llvm-jit-archive\/ghdl-llvm-jit-6\.0\.0-macos15-aarch64\.tar\.gz/s,
+        'the VIAL gate rejects ambient Verilator and both exact GHDL provider coordinates',
+    );
+    like(
+        $gate_job || '',
+        qr/test ! -e \.artifacts\/qualification\/vial-scale\/v2\/regression-promotion-corpus-v1.*?test ! -e \.artifacts\/qualification\/vial-scale\/v2\/regression-promotion-budget-qualification-v1.*?test ! -e \.artifacts\/tmp\/vial-scale\/regression-promotion-gate-evidence-transport\/v1/s,
+        'the VIAL gate proves authenticated evidence coordinates absent before claiming cleanup ownership',
+    );
+    like(
+        $gate_job || '',
+        qr/git clone --recursive --branch 2026\.05 --single-branch\s+https:\/\/github\.com\/OSVVM\/OsvvmLibraries\.git\s+\.artifacts\/cache\/providers\/osvvm\/2026\.05\/source.*?2f7c391051dfb11890fa4bdbda9918d1db492250/s,
+        'the VIAL gate materializes and verifies exact OSVVM 2026.05',
+    );
+    like(
+        $gate_job || '',
+        qr{\./bin/ci-regression\s+vial-gate\s+--no-book},
+        'the hosted family uses the public selected-important-step gate command',
+    );
+    like(
+        $gate_job || '',
+        qr{scripts/run_with_ram_guard\.sh\s+--\s+scripts/verify_vial_regression_promotion_hosted_result\.pl},
+        'the hosted family independently validates the stored result beneath the guard',
+    );
+    like(
+        $gate_job || '',
+        qr/name:\s+Clean hosted VIAL gate state\s+if:\s+\$\{\{ always\(\) \}\}.*?materialize_vial_regression_promotion_gate_evidence\.pl cleanup.*?rm -rf \.artifacts\/cache\/providers\/osvvm\/2026\.05\/source.*?rm -rf \.artifacts\/qualification\/vial-scale\/v2\/regression-promotion-gate-v1\/current.*?rm -rf \.artifacts\/tmp\/vial-scale\/regression-promotion-gate-publication\/v1/s,
+        'the always cleanup covers owned evidence, provider, result, and staging coordinates',
+    );
+    like(
         $yaml,
         qr/shard:\s+\[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15\]/,
         'workflow schedules all sixteen ordinary file shards',
@@ -893,12 +939,12 @@ subtest 'hosted workflow runs every shard family to a terminal aggregate' => sub
     like($yaml, qr/if:\s+\$\{\{ always\(\) \}\}/, 'aggregate runs after success or failure');
     like(
         $yaml,
-        qr/needs:\s+\[doctrines, book, perl_files, perl_dedicated, perl_corpus, perl_dynamic\]/,
+        qr/needs:\s+\[doctrines, book, perl_files, perl_dedicated, perl_corpus, perl_dynamic, vial_gate\]/,
         'aggregate waits for every required CI family',
     );
     for my $result_name (qw(
         DOCTRINES_RESULT BOOK_RESULT PERL_FILES_RESULT PERL_DEDICATED_RESULT
-        PERL_CORPUS_RESULT PERL_DYNAMIC_RESULT
+        PERL_CORPUS_RESULT PERL_DYNAMIC_RESULT VIAL_GATE_RESULT
     )) {
         like($yaml, qr/\Q$result_name\E:/, "aggregate consumes $result_name");
     }
@@ -913,8 +959,8 @@ subtest 'hosted workflows pin audited actions and exact official mdBook' => sub 
     my $all = join "\n", values %yaml;
 
     my %pins = (
-        'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' => 8,
-        'shogo82148/actions-setup-perl@53e33bb27be492a926eee378e8a5f7ff6618b061' => 4,
+        'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' => 9,
+        'shogo82148/actions-setup-perl@53e33bb27be492a926eee378e8a5f7ff6618b061' => 5,
         'actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d' => 1,
         'actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9' => 1,
         'actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128' => 1,
@@ -925,7 +971,7 @@ subtest 'hosted workflows pin audited actions and exact official mdBook' => sub 
     }
 
     my @uses = $all =~ /^\s*uses:\s+(\S+)/mg;
-    is(scalar(@uses), 15, 'all fifteen direct workflow action uses are inventoried');
+    is(scalar(@uses), 17, 'all seventeen direct workflow action uses are inventoried');
     for my $use (@uses) {
         like($use, qr/\A[^@\s]+\@[0-9a-f]{40}\z/, "$use is pinned to an immutable commit");
     }

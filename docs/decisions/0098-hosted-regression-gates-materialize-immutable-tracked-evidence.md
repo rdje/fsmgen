@@ -119,8 +119,9 @@ substituted by an Ubuntu package.
   producer-independent verifier, root-derived transactional materializer,
   hostile copied transport/materialization watchers, production corpus and
   qualification validators, `bin/ci-regression`, its copied-command inventory
-  watcher, and work-unit commits retain the selection and exact audit. Hosted
-  wiring remains separately owned after the local-driver child closes.
+  watcher, the hosted-result verifier, explicit seventh workflow family, and
+  work-unit commits retain the selection and exact audit. Independent real
+  execution remains separately owned after hosted placement closes.
 
 ## Consequences and nonclaims
 
@@ -132,11 +133,11 @@ substituted by an Ubuntu package.
   validator, RAM-guarded gate, and receipt-cleanup lifecycle. Full enters it
   once after ordinary regression; hosted shard modes, quick, smoke, and ISF do
   not. Exact pre-existing evidence and the latest gate observation survive.
-- Hosted CI will exercise every route that is honestly available and preserve
-  distinct unavailable and informational truth for the rest.
-- The local driver placement is inventory-tested without running the real gate;
-  hosted workflow activation and an independently authenticated real execution
-  remain separately owned.
+- Hosted CI now configures one required unsharded family that calls the public
+  gate, verifies eight informational plus three unavailable-not-pass profiles,
+  and cleans its exact evidence/provider/result/stage coordinates.
+- Local and hosted placement are inventory-tested without running the real
+  gate; independently authenticated real execution remains separately owned.
 
 ## Rollback
 

@@ -497,12 +497,20 @@ disjoint ordinary-file shards, five dedicated long/provider-dependent tests,
 16 entry shards for each of three supported-corpus audits, and one isolated job
 for each of the 68 cases in the large dynamic transaction-ID focused test. All
 four Perl matrices continue after individual failures. A final required result
-succeeds only when every shard, doctrine enforcement, and the separate mdBook
-build succeed. Exactly the dedicated `t/1598`, `t/1648`, and `t/1650`
+succeeds only when every shard, doctrine enforcement, the separate mdBook
+build, and one unsharded VIAL regression-promotion gate succeed. Exactly the
+dedicated `t/1598`, `t/1648`, and `t/1650`
 coordinates materialize exact OSVVM 2026.05 beneath their isolated repository-
 local caches; only `t/1436` receives its pinned HDL tools. Hosted shards do not
 inherit the local VIAL gate lifecycle. The ordinary local `./bin/ci-regression`
 command remains unsharded and includes both that lifecycle and the book build.
+The separate hosted gate pins Ubuntu 24.04 and Perl 5.32, rejects ambient
+Verilator or the fixed GHDL coordinates, materializes exact OSVVM 2026.05,
+calls `./bin/ci-regression vial-gate --no-book`, and independently authenticates
+the expected eight-informational/three-unavailable latest result before an
+always-running cleanup removes its owned evidence, provider, result, and stage.
+This is configured CI coverage; independent execution closeout remains a
+separate step and no hosted performance or support claim follows from it.
 The GitHub Pages workflow builds this mdBook from `docs/book` and publishes the
 generated `docs/book/book` artifact when Pages is configured to use GitHub
 Actions.
