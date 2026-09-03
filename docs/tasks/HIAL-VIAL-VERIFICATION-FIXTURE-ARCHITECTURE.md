@@ -1729,6 +1729,28 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement authenticated evidence materialization and bounded local CI gate entrypoints.`
   Acceptance: `Implement the .1-selected repository-owned evidence transport and fail-closed materializer with exact file census/bytes/digests, safe relative paths, no aliases, same-volume atomic destination, immutable-source validation, collision/interruption/recovery/cleanup controls, and byte-exact production load after materialization. Add an explicit selected-important-step driver mode and include the guarded gate exactly once in the unsharded local full pre-push path while quick/smoke/isf and ordinary test execution remain focused. Add hostile tests without running the real gate by default.`
+  Verification: `Decision 0098 closes transport/lifecycle selection. Three ordered children separate the immutable fifteen-file bundle and producer-independent source watcher, fixed-coordinate transactional materialization/recovery/owned cleanup, and local selected/full driver placement with inventory coverage. Child .1 is active; no payload, materializer, driver, or CI behavior changes in this partition slice.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2: partition evidence materialization and local CI`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2.1`
+  Status: `active`
+  Goal: `Import and independently authenticate the immutable current-evidence transport bundle.`
+  Acceptance: `Track the exact thirteen corpus and two qualification canonical JSON payloads under Decision 0098's version-1 source root without changing a byte. Add one closed canonical transport manifest with ordered safe source/destination paths, classifications, per-file bytes/digests, exact aggregate census, source seal identities, bounded schema, and content identity. Add a repository-derived production-independent verifier and focused RED/GREEN plus copied hostile tests for manifest/payload schema, order, path, file-set, canonicality, bytes, digest, alias, extra/missing, source-seal, and deterministic identity drift. The verifier must write nothing, accept no caller source/evidence/root, leave generated coordinates untouched, and keep materialization/CI separately owned.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2.2`
+  Status: `proposed`
+  Goal: `Implement transactional fixed-coordinate evidence materialization and owned cleanup.`
+  Acceptance: `Build the root-derived explicit materializer around .1's authenticated source. Use one nonblocking process lock, identity-scoped same-volume stage and journal, corpus-first/qualification-last commit, exact-existing idempotence, mismatch no-overwrite, bounded canonical result/diagnostic output, recovery of only the one valid transaction, and a receipt that lets cleanup remove only invocation-owned exact roots. Falsify caller input, concurrent collision, interruption at every install boundary, malformed/stale/mixed journal/receipt/stage, links/aliases/special files, source/destination mutation, partial output, and residue; prove byte-exact production corpus and qualification validation after fresh materialization.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2.3`
+  Status: `proposed`
+  Goal: `Add bounded local selected-important-step and full pre-push gate entrypoints.`
+  Acceptance: `Extend bin/ci-regression with one explicit selected gate mode and one exact gate invocation in unsharded local full after ordinary regression, both using the common RAM guard and authenticated materializer. Full preserves byte-exact preexisting evidence and the latest local observation; a fresh materialized run cleans only owned evidence after validation. Quick, smoke, ISF, direct test, and every hosted shard option remain gate-free. Extend t1183 or one focused inventory watcher to prove exact command count/order, no double execution, closed options, failure propagation, and unchanged hosted test ownership without running the real gate by default.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6336,3 +6358,22 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   all doctrines close before commit. No payload, manifest, materializer,
   executable watcher, CI driver/workflow, provider, gate/result,
   qualification/corpus byte, support, capacity, full CI, or push changes.
+
+## Acceptance Checklist (enforced) — `.17.5.4.3.2` implementation partition
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Decision 0098 makes three distinct
+  guarantees prerequisites for local CI: exact durable source bytes, a
+  transactional generated-coordinate lifecycle, and driver cadence. Leaving
+  all three inside one leaf would combine a large evidence import, destructive
+  cleanup authority, and command-selection behavior in one rollback boundary.
+- [x] **ADDRESSED (verified)** — `.17.5.4.3.2` now owns three ordered children:
+  `.1` imports and independently authenticates the immutable bundle, `.2`
+  materializes/recovers/cleans only fixed exact destinations, and `.3` changes
+  local CI cadence only after both evidence layers are durable. Before ->
+  after: every fault domain has a bounded acceptance contract and independent
+  commit boundary; `.1` alone is active.
+- [x] **NO REGRESSION** — task-tree integrity, bounded Memory, Knowledge Map,
+  relative paths, live containment, claims, and all doctrine checks are
+  required before commit. No evidence payload/manifest/verifier, materializer,
+  test, driver, CI/workflow, artifact, provider, gate/result, support,
+  capacity, full CI, or push changes.
