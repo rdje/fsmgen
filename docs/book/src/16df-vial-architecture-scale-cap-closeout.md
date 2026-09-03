@@ -1582,6 +1582,52 @@ prove -Iperl -v \
 - Durability: Retain ArchitectureScaleRegressionPromotionGateProfile, the caller-sealed Qualification and ProcessSupervisor extensions, t1786, task `.17.5.4.2.1`, this chapter, the compact regression-promotion Knowledge card, bounded claim record, doctrine watchers, and the work-unit Git commit. Children `.2.2` through `.2.4` still own eleven-profile coordination, latest-result publication, CLI integration, and adversarial closeout.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-gate-profile-execution-v1 -->
 
+### Eleven-profile in-memory gate coordination
+
+The aggregate layer exposes one root-only `run` operation. It derives the
+authenticated gate contract once, freezes the clean execution revision and
+contract bytes, then visits ordinals 1 through 11 exactly once in plan order.
+Each visit uses the profile authority's coordinator-only execution seam; the
+public one-profile route remains root-plus-ordinal and continues to derive its
+own authority. The coordinator re-admits every returned profile through a
+separate caller-sealed profile validator before retaining it.
+
+The in-memory result carries all eleven complete profile results and their
+qualification, publication, file-set, contract, selection, revision,
+correctness, environment, provider, performance, cleanup, and content
+identities. A second complete readmission pass reconstructs every count and
+classification. Changed contract bytes, a worker mutating an earlier returned
+result, mixed observed host or guard state, duplicate identity, or changed
+profile order therefore rejects rather than entering the aggregate.
+
+Required workload and observed work are deliberately separate. The contract
+always retains 11 validation, 33 raw-measurement, and 44 controller-invocation
+requirements with zero exclusions. When every provider is available, observed
+counts must reproduce all three totals. An unavailable exact provider reports
+zero fabricated observations for that profile, so the aggregate preserves the
+required totals while reporting lower observed totals and an incomplete
+observation. Aggregate precedence is `fail`, then `unavailable`, then
+`informational`, then `pass`.
+
+The canonical aggregate is content-addressed and must fit the contract's
+1,048,576-byte result ceiling. This layer writes no result, qualification,
+corpus, staging tree, or other artifact; atomic latest-result replacement
+remains the next child. The default watcher substitutes only the sealed
+profile-worker boundary and executes no producer or simulator:
+
+```sh
+prove -Iperl -v \
+  t/1786-vial-regression-promotion-gate-profile.t \
+  t/1787-vial-regression-promotion-gate-coordinator.t
+```
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-gate-coordination-v1 -->
+- Claim: The root-only regression-gate coordinator derives one authenticated contract, visits all eleven ordinals exactly once in plan order through the caller-sealed profile authority, re-admits every full profile result, and content-addresses one canonical in-memory aggregate bounded at 1,048,576 bytes. Its required 11 validation, 33 raw-measurement, and 44 controller-invocation totals remain distinct from honest observed counts when an exact provider is unavailable; zero exclusions are admitted. Aggregate precedence is fail, unavailable, informational, then pass. This is synthetic-watched coordination machinery, not result publication, a real gate run, an observed performance claim, CI activation, support, or capacity.
+- Re-derive: Run t1786 plus t1787 and inspect ArchitectureScaleRegressionPromotionGateCoordinator with GateProfile's exact-caller execution and admission seams. Require one contract derivation, ordinals 1 through 11 once in order, exact complete 11/33/44/0 evidence for the all-available control, bounded content identity, no artifact, honest unavailable counts, and all four aggregate precedence outcomes.
+- Falsify: T1787 began RED on the absent coordinator, then rejects caller authority, missing/extra/duplicate/reordered profiles, mixed contract/qualification/file-set/revision/host/guard/provider state, classification or threshold forgery, malformed or oversized results, child failure, repository mutation, worker-side contract mutation, post-admission evidence mutation, and process residue. The synthetic worker boundary poisons real production execution by construction.
+- Durability: Retain ArchitectureScaleRegressionPromotionGateCoordinator, GateProfile's sealed seams, t1786/t1787, task `.17.5.4.2.2`, this chapter, the compact regression-promotion Knowledge card, bounded claim record, doctrine watchers, and the work-unit Git commit. Children `.2.3` and `.2.4` still own latest-result publication, CLI integration, and adversarial closeout; `.3` and `.4` still own CI placement and independent real execution.
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-gate-coordination-v1 -->
+
 Re-derive the selection and its closure comparison with:
 
 ```sh
@@ -1593,9 +1639,9 @@ scripts/run_with_ram_guard.sh -- env \
 
 Current capture, in-memory budget qualification, the publication store, its
 explicit CLI, the real clean-revision qualification seal, hostile copied
-controls, final independent/production agreement, and one-profile gate worker
-are complete. Eleven-profile coordination, latest-result publication, gate/CI
-integration, and public truth remain separate rollback owners. Until those
+controls, final independent/production agreement, one-profile gate worker, and
+eleven-profile in-memory coordinator are complete. Latest-result publication,
+gate/CI integration, and public truth remain separate rollback owners. Until those
 leaves pass, the sealed budgets remain
 unenforced, all historical candidate budgets stay candidate-only, and whole-
 product big/really-big capacity remains unclaimed.

@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **118** uniquely owned question entries.
+> **3** facts · **120** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -23,6 +23,7 @@
 - q="how are VIAL promotion dispatch paths content addressed?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="how are VIAL runtime-stream measurement inputs constructed without tools?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how are VIAL scale performance budgets selected?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="how are all eleven VIAL regression gate profiles coordinated in memory?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="how are copied VIAL current-budget qualification mutations and later-run applicability falsified?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="how are legacy semantic bridge and execution checking matrix publications byte bounded?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how are regression-promotion report coordinates authenticated separately from policy selection?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
@@ -69,6 +70,7 @@
 - q="what exact workloads prove VIAL backend emission scale?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="what happens when an earlier VIAL layer rejects before a selected limit?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="what is the VIAL architecture scale cap policy?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
+- q="what is the VIAL regression gate aggregate precedence?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="what is the VIAL regression-promotion gate contract?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="what is the current VIAL regression-promotion corpus identity and how can it be independently verified?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="what is the portable SystemVerilog 16 MiB boundary after scheduler repair?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)

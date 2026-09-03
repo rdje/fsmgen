@@ -37,6 +37,8 @@ my $QUALIFICATION =
     'FSM::VIAL::ArchitectureScaleRegressionPromotionQualification';
 my $OSVVM = 'FSM::VIAL::Backend::OSVVM2026_05Materialization';
 my $SUPERVISOR = 'FSM::VIAL::Backend::ProcessSupervisor';
+my $COORDINATOR =
+    'FSM::VIAL::ArchitectureScaleRegressionPromotionGateCoordinator';
 my $SCHEMA =
     'fsmgen.vial_architecture_scale_regression_promotion_gate_profile_result.v1';
 my $WORKER_SCHEMA =
@@ -140,6 +142,81 @@ sub run($class, @args) {
     });
     my $profile = _contract_profile($contract, $request->{ordinal});
     my $execution_revision = _require_clean_revision($repository_root);
+    return _clone(_run_authorized({
+        repository_root => $repository_root,
+        contract => $contract,
+        profile => $profile,
+        execution_revision => $execution_revision,
+    }));
+}
+
+sub _run_for_coordinator($class, @args) {
+    _exact_invocant($class, '_run_for_coordinator');
+    confess "regression gate profile coordinator execution is caller-sealed\n"
+        unless (caller)[0] eq $COORDINATOR;
+    my $request = _request(
+        '_run_for_coordinator', \@args,
+        [qw(repository_root ordinal contract execution_revision)],
+    );
+    _require_active_guard();
+    my $repository_root = _repository_root($request->{repository_root});
+    confess "regression gate profile ordinal is invalid\n"
+        unless _json_positive_integer($request->{ordinal});
+    confess "regression gate profile coordinator contract is invalid\n"
+        unless ref($request->{contract}) eq 'HASH'
+            && !blessed($request->{contract});
+    confess "regression gate profile coordinator revision is invalid\n"
+        unless defined($request->{execution_revision})
+            && !ref($request->{execution_revision})
+            && $request->{execution_revision} =~ /\A[0-9a-f]{40}\z/;
+    my $profile = _contract_profile(
+        $request->{contract}, $request->{ordinal},
+    );
+    _require_unchanged_clean_revision(
+        $repository_root, $request->{execution_revision},
+    );
+    return _clone(_run_authorized({
+        repository_root => $repository_root,
+        contract => $request->{contract},
+        profile => $profile,
+        execution_revision => $request->{execution_revision},
+    }));
+}
+
+sub _admit_for_coordinator($class, @args) {
+    _exact_invocant($class, '_admit_for_coordinator');
+    confess "regression gate profile coordinator admission is caller-sealed\n"
+        unless (caller)[0] eq $COORDINATOR;
+    my $request = _request(
+        '_admit_for_coordinator', \@args,
+        [qw(result contract execution_revision)],
+    );
+    confess "regression gate profile coordinator result is invalid\n"
+        unless ref($request->{result}) eq 'HASH'
+            && !blessed($request->{result});
+    confess "regression gate profile coordinator contract is invalid\n"
+        unless ref($request->{contract}) eq 'HASH'
+            && !blessed($request->{contract});
+    confess "regression gate profile coordinator revision is invalid\n"
+        unless defined($request->{execution_revision})
+            && !ref($request->{execution_revision})
+            && $request->{execution_revision} =~ /\A[0-9a-f]{40}\z/;
+    my $ordinal = $request->{result}{ordinal};
+    confess "regression gate profile coordinator result ordinal is invalid\n"
+        unless _json_positive_integer($ordinal);
+    my $profile = _contract_profile($request->{contract}, $ordinal);
+    _validate_result(
+        $request->{result}, $request->{contract}, $profile,
+        $request->{execution_revision},
+    );
+    return _clone($request->{result});
+}
+
+sub _run_authorized($request) {
+    my ($repository_root, $contract, $profile, $execution_revision) =
+        @{$request}{qw(
+            repository_root contract profile execution_revision
+        )};
     my ($spool, $spool_removed) = _anonymous_report_spool($repository_root);
     my $worker_result;
     my $result;
@@ -173,7 +250,7 @@ sub run($class, @args) {
         unless $close_ok && $spool_removed;
     die $worker_error unless $ok;
     _validate_result($result, $contract, $profile, $execution_revision);
-    return _clone($result);
+    return $result;
 }
 
 sub _revalidate_worker_result($raw) {

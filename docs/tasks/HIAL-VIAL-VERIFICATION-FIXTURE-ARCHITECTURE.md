@@ -1678,7 +1678,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement the caller-sealed eleven-profile regression gate and its atomic result.`
   Acceptance: `Implement the .1 contract through canonical producers and the common measurement/lifecycle authorities, with fresh isolated profile execution and complete ordered admission. Prove correctness, deterministic outputs, stage-local measurements, exact applicability classification, performance enforcement only for the pinned qualification tuple, informational unmatched performance, unavailable-provider handling, bounded canonical diagnostics/results, signal/error/collision/recovery controls, immutable qualification input, atomic result publication, and exact same-volume cleanup. Add focused hostile watchers for mutation, stale or mixed identity, caller substitution, reordered/missing/extra profiles, threshold boundaries, tool/provider drift, timeouts, IPC failures, and residue without changing qualification bytes or generalizing support/capacity.`
-  Verification: `Clean contract predecessor cc1cd18ac separates four implementation fault domains: one fresh profile worker and its classifier, eleven-profile ordered coordination and aggregate admission, replaceable result storage, and the public CLI plus adversarial integration closeout. Existing ProfileCapture/CorpusCoordinator/QualificationStore patterns were re-audited, but their immutable calibration-publication lifecycle cannot safely store repeatable gate observations. Four ordered children retain one caller-sealed production entry and reserve full real-gate execution for independent .17.5.4.4 closeout. Child .1 is complete with a fresh bounded one-profile worker, exact classifier, anonymous full-report spool, and hostile synthetic watcher; child .2 is active for ordered in-memory eleven-profile coordination only.`
+  Verification: `Clean contract predecessor cc1cd18ac separates four implementation fault domains: one fresh profile worker and its classifier, eleven-profile ordered coordination and aggregate admission, replaceable result storage, and the public CLI plus adversarial integration closeout. Existing ProfileCapture/CorpusCoordinator/QualificationStore patterns were re-audited, but their immutable calibration-publication lifecycle cannot safely store repeatable gate observations. Four ordered children retain one caller-sealed production entry and reserve full real-gate execution for independent .17.5.4.4 closeout. Children .1 and .2 are complete with fresh bounded profile execution plus ordered in-memory aggregate admission; child .3 is active for atomic replaceable latest-result storage only.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2: partition stable regression gate implementation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.4`
 
@@ -1690,14 +1690,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.1: execute one stable gate profile`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Coordinate all eleven fresh profile workers and admit one complete in-memory gate result.`
   Acceptance: `Add one repository_root-only coordinator that derives the contract once, walks every ordinal exactly once in plan order, delegates only through .1's exact-caller worker seam, and admits the eleven returned profile results under one unchanged clean execution revision. Require complete qualification/contract/file-set identity, 11 validations, 33 fresh raw measurements, 44 controller invocations, zero exclusions, exact correctness and deterministic evidence, ordered per-profile performance classifications, and aggregate fail/unavailable/informational/pass precedence without publishing. Content-address one closed bounded canonical aggregate; reject missing/extra/duplicate/reordered profiles, mixed contract/qualification/revision/environment/provider state, threshold or classification forgery, malformed/oversized worker output, child failure, repository mutation, post-worker evidence mutation, and residue. Default tests remain synthetic and producer-free outside the sealed worker double.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `ArchitectureScaleRegressionPromotionGateCoordinator accepts only repository_root, requires the exact class and active guard, derives the authenticated contract once, snapshots its bytes, and walks ordinals 1-11 once in contract order under one unchanged clean revision. GateProfile now exposes exact-coordinator-only execution and readmission seams while its public root-plus-ordinal API remains unchanged. Every full result is size-bounded, readmitted through the profile validator, snapshotted against later alias mutation, required to preserve exact contract/qualification/file-set/revision/order/content identities and common observed host/guard state, then readmitted again from the completed aggregate. The closed content-addressed result distinguishes fixed required 11/33/44 workload from honest observed counts when an exact provider is unavailable, admits zero exclusions, applies fail/unavailable/informational/pass precedence, and writes no artifact. T1787 began RED on the absent module and uses a synthetic sealed-worker double to prove one derivation, exact order/cardinality, complete pass, all precedence cases, defensive output, and missing/extra/duplicate/reordered/mixed/forged/malformed/oversized/failure/mutation/residue rejection without executing a producer.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.2: coordinate stable gate profiles in memory`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Publish and reload one bounded atomically replaceable latest gate observation.`
   Acceptance: `Implement the fixed result coordinate and same-volume staging from Decision 0097. Accept a complete .2 result only through the exact coordinator path, independently rederive the current contract and validate every aggregate/profile/result identity, encode at or below the 1,048,576-byte ceiling, fsync the file and directories, and atomically replace current only after exact reload. Preserve a preceding valid result on interruption; recover at most one identity-scoped stage; leave staging absent after success/failure/reload; never read a prior result as qualification, calibration, budget, applicability, or execution input. Reject caller-selected paths/results, qualification/result aliasing, stale/mixed evidence, malformed/noncanonical/oversized bytes, collision or ambiguous recovery, symlink/hard-link/cross-device/special-file state, post-validation mutation, and cleanup residue.`
   Verification: `pending`
@@ -6140,3 +6140,43 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   result publication, qualification or corpus mutation, budget change, CI
   change, observed performance, support tier, capacity claim, full CI, push,
   or real gate workload occurs.
+
+## Acceptance Checklist (enforced) — `.17.5.4.2.2` in-memory gate coordination
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean predecessor `cd8bda416`
+  implements only one selected worker, while
+  `git log -S'ArchitectureScaleRegressionPromotionGateCoordinator' --all --
+  perl t scripts docs` returns no aggregate authority. T1787 initially fails
+  with `Can't locate FSM/VIAL/ArchitectureScaleRegressionPromotionGateCoordinator.pm`
+  at `t/1787-vial-regression-promotion-gate-coordinator.t line 8`; no existing
+  code can derive one contract, visit all eleven gate profiles, or admit one
+  bounded in-memory result without publishing it.
+- [x] **ADDRESSED (verified)** — the root-only coordinator requires the guard
+  and one clean revision, derives and snapshots the authenticated contract
+  once, visits ordinals 1-11 once in exact plan order through GateProfile's
+  caller-sealed execution seam, and re-admits every complete profile through
+  its separately sealed validator. Immediate and final snapshots reject
+  contract/result alias mutation. Exact ordinal, selection, contract,
+  qualification, file-set, revision, content, correctness, environment,
+  provider, classification, cleanup, and common host/guard bindings precede
+  summary admission. The bounded canonical aggregate distinguishes fixed
+  required 11/33/44 counts from honest observed work when a provider is
+  unavailable, admits zero exclusions, and applies fail, unavailable,
+  informational, pass precedence without writing any artifact.
+- [x] **NO REGRESSION** — GateProfile, GateCoordinator, and t1787 report
+  `syntax OK`. T1786+t1787 report `All tests successful` at `Files=2,
+  Tests=17` in three wall-clock seconds; the final guarded Contract/Profile/
+  Coordinator band reports `All tests successful` at `Files=3, Tests=29` in
+  three wall-clock seconds. T1787's sealed synthetic worker
+  executes no real producer, provider, simulator, or gate workload and covers
+  absent guard, caller injection, borrowed invocant, direct private caller,
+  missing/extra/duplicate/reordered profiles, mixed evidence/revision/host/
+  guard/provider state, forged classification/threshold, malformed/oversized
+  output, child failure, repository/contract/post-admission mutation, and
+  residue. The mdBook, compact Knowledge card, claim registry, containment
+  authority, generated Knowledge Map, task/Memory frontier, staged acceptance,
+  and `[doctrine] all doctrine checks passed` close before commit. Knowledge
+  prose is compacted from 3,478,018 to 3,477,690 bytes while adding this fact.
+  No result publication, qualification/corpus/budget mutation, CI change,
+  observed performance, support tier, capacity claim, full CI, push, or real
+  gate execution occurs.
