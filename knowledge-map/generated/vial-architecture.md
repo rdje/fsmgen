@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **109** uniquely owned question entries.
+> **3** facts · **110** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -22,6 +22,7 @@
 - q="how are VIAL promotion dispatch paths content addressed?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="how are VIAL runtime-stream measurement inputs constructed without tools?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how are VIAL scale performance budgets selected?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="how are copied VIAL current-budget qualification mutations and later-run applicability falsified?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="how are legacy semantic bridge and execution checking matrix publications byte bounded?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how are regression-promotion report coordinates authenticated separately from policy selection?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="how are total and simultaneous VIAL fibers counted before materialization?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)

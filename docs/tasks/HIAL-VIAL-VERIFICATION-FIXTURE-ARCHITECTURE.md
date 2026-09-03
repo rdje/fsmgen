@@ -1648,13 +1648,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `The tracked repository-derived verifier imports no FSMGEN module and exposes no production library path or caller-controlled root, path, evidence, formula, budget, or profile input. It rejects any argument, requires absent qualification staging, and independently authenticates the exact 764,010-byte report plus 28,148-byte manifest, their hashes, canonical schemas, content identities, 28ba972c...9095 file set, publisher 8667f766c, immutable contract, source bindings, counts, order, and nonclaims. It first requires the producer-independent 13-file corpus verifier, then independently reloads every authenticated profile and reconstructs every measurement identity, correctness projection, three-sample statistic, Decision-0056 budget, environment, provider, applicability, profile qualification, whole qualification, outer report, manifest, and both file-set identities. Its canonical result is bounded at 262,144 bytes. T1782 starts RED on the missing executable, then proves no production import/library exposure, exact identity/count/result contract, closed invocation, and before/after byte identity for both real namespaces. Guarded t1776+t1782 reports All tests successful at Files=2/Tests=6; no producer, provider, simulator, measurement controller, publication mutation, gate, support, performance result, or capacity claim occurs.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.1: independently verify current budgets`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Falsify copied publication mutations and close performance-applicability and recalibration boundaries.`
   Acceptance: `Use only same-volume copied fixtures and the independent verifier. Prove exact baseline admission, then reject content, schema, canonicality, numeric type, formula, budget, order/count, host/tool/guard/provider/applicability, publisher/source/stale revision, historical substitution, extra/missing path, symlink/hard-link/special file, collision, staging, and residue mutations with no partial result and exact restoration. Prove exact common identity is eligible for later performance enforcement, environment drift is informational, deterministic drift rejects before performance, and recalibration requires a separately owned old/new immutable version rather than overwrite. Leave the real namespace byte-identical.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `T1783 creates a same-volume copy of the qualification, complete current corpus, and both independent verifiers, then admits the exact baseline. Its complete named mutation matrix changes report/manifest/source content, schema, canonicality, numeric type, formula, budget, order/count, every environment/provider/applicability axis, publisher/source/revision provenance, history, namespace shape, aliases, collision, staging, and residue; every invocation rejects without partial stdout, restores the exact copied census, and the final baseline re-verifies. A separate oracle over the authenticated contract proves later-revision exact identity eligible only after correctness, environment drift informational, deterministic drift rejected before performance, unavailable provider not a pass, and recalibration eligible only as a separately owned immutable new version with distinct old/new evidence. The real qualification and corpus retain exact inode-aware before/after censuses.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.2: falsify current budget qualification`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Close the real current-budget publication from independent and production evidence.`
   Acceptance: `Run the independent verifier and mutation suite, guarded production validate, qualification/store/CLI watchers, exact before/after real-artifact census, identity comparison, and cleanup/process checks. Synchronize task, mdBook, Knowledge Map, claims, containment, and Memory; close .17.5.3 only when every independent and production leg agrees. Leave immutable publication bytes unchanged and do not activate a gate, support tier, performance result, or capacity claim.`
   Verification: `pending`
@@ -5890,3 +5890,44 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   No source evidence, publication byte, producer/provider/simulator/controller,
   active gate, support tier, performance result, capacity claim, full CI, or
   push changes.
+
+## Acceptance Checklist (enforced) — `.17.5.3.3.2` copied hostile qualification and applicability
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean predecessor `0975e9be2` supplies
+  an independent exact-current verifier, but the Knowledge Map has no hostile
+  qualification fact,
+  `git log -S'vial-regression-promotion-budget-qualification-mutations' -- t`
+  returns no matching history, and t1783 initially fails before parsing
+  because the test source does not exist. T1780's production-store doubles
+  and t1782's
+  read-only real-artifact checks cannot prove that destructive copied
+  publication/source mutations leave no partial result, nor can they separate
+  immutable-seal authentication from later-run applicability and separately
+  owned recalibration semantics.
+- [x] **ADDRESSED (verified)** — t1783 copies the qualification, complete
+  source corpus, and both independent verifiers beneath one repository-local
+  same-volume fixture. It admits the exact copy, then makes every accepted
+  content, schema, canonicality, numeric-type, formula, budget, order/count,
+  host/tool/guard/provider/applicability, publisher/source/revision, history,
+  path-shape, alias, collision, staging, and residue class independently RED.
+  Each rejection has empty stdout and bounded diagnostics; each restoration
+  exactly matches the copied path/mode/link/owner/device/byte/hash census.
+  The authenticated contract oracle separately proves revision-only exact
+  identity eligible after correctness, all environment drift informational,
+  all deterministic drift rejected before performance, unavailable provider
+  not-pass, immutable replacement, separate task ownership, and distinct
+  old/new evidence.
+- [x] **NO REGRESSION** — after an initial harness cleanup defect correctly
+  exposed leftover empty staging parents, complete fixture-subtree restoration
+  makes guarded t1783 green at `Files=1, Tests=16` in 144 wall-clock seconds.
+  Its final exact baseline admission succeeds, its fixture is absent, and
+  inode-aware before/after censuses prove both real namespaces unchanged.
+  The adjacent guarded t1782+t1783 band reports `All tests successful` at
+  `Files=2, Tests=19` in 171 wall-clock seconds. The mdBook, Knowledge Map,
+  bounded claim record, containment authority, task/Memory pointers, staged
+  acceptance, and all doctrines close before commit. All 59 book chapters
+  test and its inspected 94-file/21,204-KiB render is removed exactly. No
+  producer/provider/simulator/controller,
+  recapture, publication write, budget change, active gate, support tier,
+  performance result, capacity claim, full CI, push, or product behavior
+  changes.

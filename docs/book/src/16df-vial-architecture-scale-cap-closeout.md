@@ -1429,14 +1429,43 @@ succeeds and must fit its declared result ceiling.
 
 This verifier is read-only evidence for the sealed budgets. It does not
 recapture measurements, mutate the publication, or activate performance
-enforcement. Copied hostile mutations and changed-environment applicability
-remain the next independent closeout step.
+enforcement.
+
+### Copied hostile qualification and applicability
+
+Run the destructive controls only against a same-volume copy:
+
+```sh
+scripts/run_with_ram_guard.sh -- prove -Iperl \
+  t/1783-vial-regression-promotion-budget-qualification-mutations.t
+```
+
+The suite copies the exact qualification, complete current corpus, and both
+independent verifiers beneath `.artifacts/tmp/`. It first admits the copied
+baseline. It then rejects independent changes to content, schema,
+canonicality, numeric type, formula, budget, profile order/count,
+host/tool/guard/provider/applicability fields, publisher/source/revision
+provenance, historical evidence, namespace membership and shape, links,
+collision, staging, and residue. Every rejection emits no partial JSON result;
+every control restores the exact copied path/mode/link/owner/device/byte/hash
+census, and a final complete verification must pass before the fixture is
+removed. Inode-aware before/after censuses protect both real namespaces.
+
+The authenticated applicability contract deliberately separates a later
+revision from later evidence. Once correctness passes, exact deterministic and
+environment identities are eligible for later performance enforcement. Host,
+tool, guard, or provider drift keeps correctness mandatory but makes
+performance informational. Selection, workload, or correctness-projection
+drift rejects before performance, and an unavailable exact provider is never a
+pass. Publication remains immutable: recalibration cannot overwrite the
+current version and requires a separately owned new version with distinct old
+and new current-corpus qualification evidence.
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-budget-qualification-publication-1c2a3832b-v1 -->
 - Claim: From clean publisher revision `8667f766cfb5721600c466568b432ac4432255f7`, the real two-file current-budget qualification contains a 764,010-byte report at SHA-256 `524fad65...a3fd` and a 28,148-byte manifest at SHA-256 `5eebce24...9c62`. It binds qualification `d8fb1813...0c97`, report identity `0da23249...622c`, publication identity `1c2a3832...945f`, file-set digest `28ba972c...9095`, source corpus/file-set `ab2df899...e505`/`dc5b315b...c66f`, Decision 0056, all eleven ordered budget/applicability bindings, and exact 11/33/44/0 evidence. A distinct validation emitted 793,084 canonical bytes at SHA-256 `19ac96ed...9d64`. This is an immutable qualification seal, not an active gate, fresh performance result, support tier, or capacity claim.
 - Re-derive: Run the guarded independent verifier and production `--validate`. Require independent source authentication/reload; exact measurement, correctness, statistic, budget, environment, provider, applicability, profile, qualification, publication, and file-set identities; and production's exact 793,084-byte result/digest against both stored files.
-- Falsify: T1782 began RED. Run t1780+t1781+t1782: production mutation controls must reject; the independent verifier must reject caller input, production imports, changed identities, or changed bytes while leaving both real namespaces exact. `.17.5.3.3.2` owns copied hostile qualification mutations.
-- Durability: Retain the immutable publication, store/CLI, both independent verifiers, t1780/t1781/t1782, tasks `.17.5.3.2.3`/`.17.5.3.3.1`, this chapter, the Knowledge card, claim record, doctrine gates, and Git commits. `.17.5.3.3.2` closes copied applicability/recalibration evidence before gate ownership.
+- Falsify: T1782 began RED for the missing independent verifier; t1783 began RED for the missing hostile suite. Run t1780+t1781+t1782+t1783. Production controls must reject unsafe storage and invocation; the independent controls must reject caller input and every named copied content/schema/type/formula/budget/identity/provenance/path/alias/collision/staging/residue mutation without partial output, restore the copy exactly, distinguish environmental from deterministic drift, forbid provider-unavailable pass, and leave both real namespaces exact.
+- Durability: Retain the immutable publication, store/CLI, both independent verifiers, t1780/t1781/t1782/t1783, tasks `.17.5.3.2.3`/`.17.5.3.3.1`/`.17.5.3.3.2`, this chapter, the Knowledge card, claim record, doctrine gates, and Git commits. `.17.5.3.3.3` owns final real-artifact agreement before gate ownership.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-budget-qualification-publication-1c2a3832b-v1 -->
 
 Re-derive the selection and its closure comparison with:
@@ -1450,7 +1479,7 @@ scripts/run_with_ram_guard.sh -- env \
 
 Current capture, in-memory budget qualification, the publication store, its
 explicit CLI, and the real clean-revision qualification seal are complete.
-Independent publication closeout, gate/CI integration, and public truth remain
+Final real-artifact closeout, gate/CI integration, and public truth remain
 separate rollback owners. Until those leaves pass, the sealed budgets remain
 unenforced, all historical candidate budgets stay candidate-only, and whole-
 product big/really-big capacity remains unclaimed.
