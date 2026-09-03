@@ -1638,6 +1638,25 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Independently close current budget evidence, hostile admission, identity applicability, recalibration history, and residue.`
   Acceptance: `Re-derive the current corpus and every formula result without trusting the qualification producer; authenticate the published namespace, exact bytes, identities, profile/order/count partition, deterministic oracles, and zero exclusions; prove copied mutations for content, schema, numeric type, formula, budget, host/tool/guard/provider/applicability, stale revision, historical substitution, collision, alias, and residue classes reject. Prove exact common identity is eligible for later performance enforcement while a changed host/tool/provider identity is explicitly informational, and prove recalibration requires separately owned old-versus-new version replacement. Leave publication bytes unchanged and owned staging absent.`
+  Verification: `Clean predecessor d127dba61 retains the real two-file qualification seal and exact production reload evidence, while this broad independent leaf combines three separately falsifiable responsibilities. It is therefore partitioned into a production-independent read-only verifier, copied hostile/applicability/recalibration mutation coverage, and final real-artifact closeout. No source, test, artifact, budget, publication, gate, support, performance result, capacity claim, CI, or product behavior changes in activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3: partition independent budget closeout`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.3`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.1`
+  Status: `active`
+  Goal: `Independently rederive and authenticate the current-budget qualification publication without importing production code.`
+  Acceptance: `Add one repository-derived read-only verifier with no FSMGEN production-module import. Independently census and boundedly read the exact two-file namespace; validate closed canonical report, manifest, qualification, formula, summary, source, publication, contract, nonclaim, and ordered profile schemas; reload the authenticated current corpus and every source profile; independently reconstruct exact correctness projections, three-run statistics, Decision-0056 budgets, environment/provider/applicability bindings, and all content/file-set identities. Emit bounded canonical newline JSON only after full success; reject caller input and leave publication/staging bytes unchanged.`
+  Verification: `pending`
+  Commit: `pending`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.2`
+  Status: `proposed`
+  Goal: `Falsify copied publication mutations and close performance-applicability and recalibration boundaries.`
+  Acceptance: `Use only same-volume copied fixtures and the independent verifier. Prove exact baseline admission, then reject content, schema, canonicality, numeric type, formula, budget, order/count, host/tool/guard/provider/applicability, publisher/source/stale revision, historical substitution, extra/missing path, symlink/hard-link/special file, collision, staging, and residue mutations with no partial result and exact restoration. Prove exact common identity is eligible for later performance enforcement, environment drift is informational, deterministic drift rejects before performance, and recalibration requires a separately owned old/new immutable version rather than overwrite. Leave the real namespace byte-identical.`
+  Verification: `pending`
+  Commit: `pending`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.3`
+  Status: `proposed`
+  Goal: `Close the real current-budget publication from independent and production evidence.`
+  Acceptance: `Run the independent verifier and mutation suite, guarded production validate, qualification/store/CLI watchers, exact before/after real-artifact census, identity comparison, and cleanup/process checks. Synchronize task, mdBook, Knowledge Map, claims, containment, and Memory; close .17.5.3 only when every independent and production leg agrees. Leave immutable publication bytes unchanged and do not activate a gate, support tier, performance result, or capacity claim.`
   Verification: `pending`
   Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4`
@@ -5815,3 +5834,26 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   No producer/provider/simulator/controller execution, recapture, budget
   rewrite, active gate, support, performance result, capacity claim, full CI,
   or push occurs.
+
+## Acceptance Checklist (enforced) — `.17.5.3.3` independent closeout partition
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean predecessor `d127dba61` retains one
+  production-derived publication, while empty
+  `git log -S'current_budget_qualification_verification' -- scripts t`
+  history confirms there is no independent verifier or mutation owner. The
+  broad leaf combines read-only formula/evidence derivation, destructive
+  copied controls, and final real-artifact closeout; one rollback boundary
+  would strand all three if interrupted.
+- [x] **ADDRESSED (verified)** — `.17.5.3.3` now has three ordered children:
+  `.1` independently derives and authenticates without production imports,
+  `.2` owns same-volume hostile copies plus applicability/recalibration
+  semantics, and `.3` joins independent and production evidence against the
+  unchanged real seal. Before -> after: one broad active leaf becomes one
+  precise verifier frontier followed by mutation and closeout owners.
+- [x] **NO REGRESSION** — this activation changes task-tree continuity only.
+  Task integrity, Knowledge Map, Memory, relative paths, containment, staged
+  acceptance, and `[doctrine] all doctrine checks passed` are required green
+  before commit. No source, test, artifact, budget, publication, producer,
+  provider, simulator, measurement controller, active gate, support,
+  performance result, capacity claim, full CI, push, or product behavior
+  changes.
