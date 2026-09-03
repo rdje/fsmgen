@@ -1407,11 +1407,36 @@ measurement controller; publication alone does not activate enforcement.
 - Durability: Retain QualificationStore, t1780, task `.17.5.3.2.1`, this chapter, the regression-promotion Knowledge card, bounded claim record, doctrine gates, and the work-unit Git commit. The explicit CLI and real clean-revision publication are separately retained by `.17.5.3.2.2` and `.17.5.3.2.3`.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-budget-qualification-store-contract-v1 -->
 
+### Independent current-budget verification
+
+The publication can be checked without loading any FSMGEN production module:
+
+```sh
+scripts/run_with_ram_guard.sh -- \
+  scripts/verify_vial_regression_promotion_budget_qualification.pl
+```
+
+The verifier derives the repository root from its own tracked location and
+accepts no arguments. It requires the exact canonical two-file namespace and
+absent publication staging, authenticates the existing producer-independent
+current-corpus result, then reloads every source profile itself. From those
+records it reconstructs measurement and correctness identities, three-sample
+statistics, Decision-0056 budgets, exact environment/provider/applicability
+bindings, every profile qualification, the complete qualification, both outer
+publication identities, and both length-delimited file-set identities. Its
+single canonical newline JSON result appears only after every comparison
+succeeds and must fit its declared result ceiling.
+
+This verifier is read-only evidence for the sealed budgets. It does not
+recapture measurements, mutate the publication, or activate performance
+enforcement. Copied hostile mutations and changed-environment applicability
+remain the next independent closeout step.
+
 <!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-budget-qualification-publication-1c2a3832b-v1 -->
 - Claim: From clean publisher revision `8667f766cfb5721600c466568b432ac4432255f7`, the real two-file current-budget qualification contains a 764,010-byte report at SHA-256 `524fad65...a3fd` and a 28,148-byte manifest at SHA-256 `5eebce24...9c62`. It binds qualification `d8fb1813...0c97`, report identity `0da23249...622c`, publication identity `1c2a3832...945f`, file-set digest `28ba972c...9095`, source corpus/file-set `ab2df899...e505`/`dc5b315b...c66f`, Decision 0056, all eleven ordered budget/applicability bindings, and exact 11/33/44/0 evidence. A distinct validation emitted 793,084 canonical bytes at SHA-256 `19ac96ed...9d64`. This is an immutable qualification seal, not an active gate, fresh performance result, support tier, or capacity claim.
-- Re-derive: Run the guarded `--validate` command, require its exact 793,084-byte canonical result and digest, and compare the returned report and manifest byte-for-value with the two stored files. Independently recompute both content identities and the length-delimited report-plus-manifest file-set digest; require the exact publisher/source/formula/count/budget/applicability bindings above.
-- Falsify: Run t1780 and t1781, then census the real coordinate. Content, schema, canonicality, size, census, symlink/hard-link, staging, source-qualification, budget, applicability, publisher, and late-mutation controls must reject while exact reload succeeds. Any extra/missing artifact, changed identity/count/order, retained stage/temp file, or producer/provider/simulator/controller execution falsifies the seal.
-- Durability: Retain the immutable repository-local publication, QualificationStore and CLI, t1780/t1781, task `.17.5.3.2.3`, this chapter, the regression-promotion Knowledge card, bounded claim record, doctrine gates, and the work-unit Git commit. `.17.5.3.3` independently closes hostile content/applicability/recalibration evidence before `.17.5.4` may own enforcement.
+- Re-derive: Run the guarded independent verifier and production `--validate`. Require independent source authentication/reload; exact measurement, correctness, statistic, budget, environment, provider, applicability, profile, qualification, publication, and file-set identities; and production's exact 793,084-byte result/digest against both stored files.
+- Falsify: T1782 began RED. Run t1780+t1781+t1782: production mutation controls must reject; the independent verifier must reject caller input, production imports, changed identities, or changed bytes while leaving both real namespaces exact. `.17.5.3.3.2` owns copied hostile qualification mutations.
+- Durability: Retain the immutable publication, store/CLI, both independent verifiers, t1780/t1781/t1782, tasks `.17.5.3.2.3`/`.17.5.3.3.1`, this chapter, the Knowledge card, claim record, doctrine gates, and Git commits. `.17.5.3.3.2` closes copied applicability/recalibration evidence before gate ownership.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-budget-qualification-publication-1c2a3832b-v1 -->
 
 Re-derive the selection and its closure comparison with:

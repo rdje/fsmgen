@@ -1642,13 +1642,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3: partition independent budget closeout`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.3`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.1`
-  Status: `active`
+  Status: `done`
   Goal: `Independently rederive and authenticate the current-budget qualification publication without importing production code.`
   Acceptance: `Add one repository-derived read-only verifier with no FSMGEN production-module import. Independently census and boundedly read the exact two-file namespace; validate closed canonical report, manifest, qualification, formula, summary, source, publication, contract, nonclaim, and ordered profile schemas; reload the authenticated current corpus and every source profile; independently reconstruct exact correctness projections, three-run statistics, Decision-0056 budgets, environment/provider/applicability bindings, and all content/file-set identities. Emit bounded canonical newline JSON only after full success; reject caller input and leave publication/staging bytes unchanged.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The tracked repository-derived verifier imports no FSMGEN module and exposes no production library path or caller-controlled root, path, evidence, formula, budget, or profile input. It rejects any argument, requires absent qualification staging, and independently authenticates the exact 764,010-byte report plus 28,148-byte manifest, their hashes, canonical schemas, content identities, 28ba972c...9095 file set, publisher 8667f766c, immutable contract, source bindings, counts, order, and nonclaims. It first requires the producer-independent 13-file corpus verifier, then independently reloads every authenticated profile and reconstructs every measurement identity, correctness projection, three-sample statistic, Decision-0056 budget, environment, provider, applicability, profile qualification, whole qualification, outer report, manifest, and both file-set identities. Its canonical result is bounded at 262,144 bytes. T1782 starts RED on the missing executable, then proves no production import/library exposure, exact identity/count/result contract, closed invocation, and before/after byte identity for both real namespaces. Guarded t1776+t1782 reports All tests successful at Files=2/Tests=6; no producer, provider, simulator, measurement controller, publication mutation, gate, support, performance result, or capacity claim occurs.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.1: independently verify current budgets`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Falsify copied publication mutations and close performance-applicability and recalibration boundaries.`
   Acceptance: `Use only same-volume copied fixtures and the independent verifier. Prove exact baseline admission, then reject content, schema, canonicality, numeric type, formula, budget, order/count, host/tool/guard/provider/applicability, publisher/source/stale revision, historical substitution, extra/missing path, symlink/hard-link/special file, collision, staging, and residue mutations with no partial result and exact restoration. Prove exact common identity is eligible for later performance enforcement, environment drift is informational, deterministic drift rejects before performance, and recalibration requires a separately owned old/new immutable version rather than overwrite. Leave the real namespace byte-identical.`
   Verification: `pending`
@@ -5857,3 +5857,36 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   provider, simulator, measurement controller, active gate, support,
   performance result, capacity claim, full CI, push, or product behavior
   changes.
+
+## Acceptance Checklist (enforced) — `.17.5.3.3.1` independent budget verifier
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean predecessor `d2d7ba98b` retains
+  only production derivation/reload and the independent current-corpus
+  verifier. Empty
+  `git log -S'verify_vial_regression_promotion_budget_qualification.pl' -- scripts t`
+  history confirms the authority had no predecessor. The first t1782 run is RED because
+  `scripts/verify_vial_regression_promotion_budget_qualification.pl` does not
+  exist. Therefore no production-independent authority can reconstruct the
+  persisted qualification's formula, profile projections, applicability, or
+  nested identities from the authenticated source records.
+- [x] **ADDRESSED (verified)** — the new closed executable derives the
+  repository only from its tracked location, imports no FSMGEN module, rejects
+  caller input, requires absent publication staging, and safely reads the
+  exact two-file current seal. After requiring the independent corpus
+  verifier, it reloads all eleven authenticated profile publications and
+  independently reconstructs 44 measurement identities, eleven correctness
+  projections/environments/profile qualifications/applicability bindings,
+  33 run totals, three statistics and Decision-0056 budgets per profile, the
+  complete qualification/report/manifest content identities, and both
+  length-delimited file-set digests. It emits one canonical newline JSON result
+  only below its 262,144-byte ceiling.
+- [x] **NO REGRESSION** — t1782 proves the verifier has no production import or
+  library exposure, rejects positional input without stdout, reproduces the
+  exact publisher/source/publication/qualification/applicability/formula/count
+  contract, and leaves both real namespaces byte-identical. The guarded
+  t1776+t1782 band reports `All tests successful` at `Files=2, Tests=6`.
+  mdBook, Knowledge Map, bounded claim evidence, containment authority,
+  task/Memory pointers, staged acceptance, and doctrines close before commit.
+  No source evidence, publication byte, producer/provider/simulator/controller,
+  active gate, support tier, performance result, capacity claim, full CI, or
+  push changes.
