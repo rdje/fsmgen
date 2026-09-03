@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **106** uniquely owned question entries.
+> **3** facts · **107** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -41,6 +41,7 @@
 - q="how is structural backend emission measured without executing an HDL tool?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how is the VIAL serialized plan cap enforced before random decision materialization?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how is the VIAL v2 current corpus resumed and published?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
+- q="how is the current VIAL regression-promotion budget qualification published or validated explicitly?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="how is the current VIAL regression-promotion budget qualification stored atomically?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="how is the execution checking scale matrix resumed without borrowing identity?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="how is the immutable VIAL calibration publication dispositioned?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)

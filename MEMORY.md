@@ -8,8 +8,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3`
   (`active`; current regression-budget qualification)
-- next_action: Implement `.17.5.3.2.2`'s explicit bounded publish/validate CLI
-  for the caller-sealed current-budget qualification store.
+- next_action: Run `.17.5.3.2.3`'s explicit guarded publish and distinct
+  validate operations from the clean CLI revision, then record the exact
+  current-budget publication census and identities.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: none.

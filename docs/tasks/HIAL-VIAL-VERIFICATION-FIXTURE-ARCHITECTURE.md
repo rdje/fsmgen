@@ -1623,13 +1623,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `ArchitectureScaleRegressionPromotionQualificationStore now accepts only a repository root beneath the active RAM guard, requires one clean publisher revision, internally derives and validates the complete current qualification, and fixes a non-colliding v2 report-plus-manifest coordinate. The outer report preserves the exact source qualification without rewriting its derivation-time nonclaims; report and manifest bind publisher/source/formula/profile-budget/environment/provider/applicability/correctness identities plus one closed initial-version/recalibration/rollback contract. The 1-MiB report and 64-KiB manifest ceilings, exact census, bounded no-follow stable reads, owner/device/single-link checks, canonical JSON, digests, fsync, sole-stage recovery, one directory rename, collision refusal, and identity-scoped cleanup are executable. Guarded real in-memory construction rederived qualification d8fb1813...0c97 and produced a 764,010-byte wrapper plus 28,148-byte manifest without writing the real publication. T1780 starts RED on the absent authority, then proves caller sealing, exact schemas, defensive contracts, publication/reload/unchanged status, drift, malformed/noncanonical/cap-plus-one bytes, extra entries, symlink/hard-link aliases, residue, exact/malformed/ambiguous recovery, collision, partial-failure cleanup, and late mutation. Guarded adjacent t1772+t1779+t1780 reports All tests successful at Files=3/Tests=21. No real publication or performance gate exists; .2 owns the CLI and .3 owns clean real publication.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.1: implement current budget publication store`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Expose explicit bounded publish and validate operations for the current-budget qualification store.`
   Acceptance: `Add one repository-relative executable that accepts exactly one explicit publish or validate operation, delegates only to the caller-sealed store under the active guard, emits bounded canonical newline JSON only after complete success, returns stable nonzero failure status with bounded sanitized diagnostics, and rejects defaults, abbreviations, extra arguments, caller paths/evidence/budgets, partial stdout, malformed worker state, or residue. Keep real publication for .3.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The repository-relative executable derives its root only from its tracked script location and accepts exactly one case-sensitive, unabbreviated --publish or --validate operation; standalone --help is the only non-operation success. It delegates once to the caller-sealed store, validates the store's exact result shape, buffers canonical newline JSON through a 1,048,576-byte ceiling before stdout, and reports usage with status 2 or operational failure with status 1 and one sanitized 4,096-byte diagnostic. T1781 starts RED because the executable is absent, then proves both dispatches with fresh process doubles, exact-cap acceptance, cap-plus-one rejection without partial stdout, malformed state, hostile path/control/oversize diagnostics, closed options/arguments, and exact fixture cleanup. Script/test syntax and t1780+t1781 report All tests successful at Files=2/Tests=11. The real namespace remains absent; no producer, provider, simulator, measurement controller, performance gate, support tier, result, or capacity claim is activated.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.2: add current budget publication CLI`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Create and exactly reload the real current-budget qualification publication from one clean implementation revision.`
   Acceptance: `Run only the completed explicit publish operation from a clean revision under the unchanged RAM guard; authenticate the current corpus and all eleven qualified budgets; publish one bounded non-colliding same-volume namespace; then run a distinct validate operation and exact file census. Record publisher revision, source corpus/file-set/qualification identities, formula authority, ordered profile budgets and applicability identities, publication/file-set identities, byte counts, rollback/recalibration contract, and nonclaims; prove staging and process residue absent. Do not execute a producer, provider, simulator, or measurement controller, and do not activate performance enforcement.`
   Verification: `pending`
@@ -5750,3 +5750,36 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   publication, producer/provider/simulator/controller execution, active gate,
   support, capacity, full CI, push, or existing corpus/qualification identity
   changes.
+
+## Acceptance Checklist (enforced) — `.17.5.3.2.2` current-budget publication CLI
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — after the caller-sealed store landed, the
+  empty
+  `git log -S'run_vial_regression_promotion_budget_qualification.pl' -- scripts t`
+  history confirms no predecessor owned this command. The first focused t1781
+  run was RED before its first subtest because
+  `scripts/run_vial_regression_promotion_budget_qualification.pl` did not
+  exist: `Can't open perl script ".../scripts/run_vial_regression_promotion_budget_qualification.pl": No such file or directory`.
+  Calling the Perl store directly would leave operation selection, repository
+  derivation, output atomicity, and diagnostic containment outside a tracked
+  executable contract.
+- [x] **ADDRESSED (verified)** — the new repository-relative executable accepts
+  exactly one explicit case-sensitive, unabbreviated `--publish` or
+  `--validate`; standalone `--help` is its only other success. It derives the
+  repository from its own tracked location, delegates once to the public
+  caller-sealed store, validates the exact returned key set, and accepts no
+  caller root, path, evidence, budget, publisher, predecessor, worker, or
+  callback. Complete canonical newline JSON is buffered through 1,048,576
+  bytes before stdout. Usage is status 2; operational failure is status 1 with
+  one repository-path/control-sanitized diagnostic bounded at 4,096 bytes.
+- [x] **NO REGRESSION** — script and watcher syntax pass. T1781 proves strict
+  option closure, exact dispatch/root derivation, canonical output at the
+  exact ceiling, cap-plus-one and malformed-result failure without partial
+  stdout, bounded hostile diagnostics, fresh-process isolation, and complete
+  fixture cleanup. The adjacent t1780+t1781 band reports `All tests successful`
+  at `Files=2, Tests=11`. The mdBook, Knowledge Map, bounded claim record,
+  containment authority, task/Memory pointers, staged acceptance, and
+  doctrines close before commit. The real publication coordinate remains
+  absent; no producer/provider/simulator/controller execution, budget change,
+  active gate, support, performance result, capacity claim, full CI, or push
+  occurs.

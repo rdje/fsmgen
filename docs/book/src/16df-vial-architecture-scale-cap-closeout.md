@@ -1283,14 +1283,15 @@ prove -Iperl -v t/1779-vial-regression-promotion-qualification.t
 - Durability: Retain Qualification, Policy's canonical-number repair, t1765/t1779, task `.17.5.3.1.2`, this chapter, bounded claim record, authenticated current-corpus claim and artifact, doctrine gates, and the work-unit Git commit. Publication and enforcement remain separately owned by `.17.5.3.2` and `.17.5.4`.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-current-budget-qualification-v1 -->
 
-### Immutable qualification-publication store
+### Immutable qualification publication and CLI
 
-The current-budget store is implemented, but this slice deliberately creates
-no real publication. `publish` and `load` accept only the repository root and
-run beneath the repository RAM guard. Publication additionally requires one
-unchanged clean Git revision. The store derives and validates the qualifier's
-complete report internally; callers cannot supply evidence, paths, budgets, a
-publisher revision, or a recalibration choice.
+The current-budget store and its explicit command are implemented, but these
+slices deliberately create no real publication. Store `publish` and `load`
+accept only the repository root and run beneath the repository RAM guard.
+Publication additionally requires one unchanged clean Git revision. The store
+derives and validates the qualifier's complete report internally; callers
+cannot supply evidence, paths, budgets, a publisher revision, or a
+recalibration choice.
 
 The fixed first-version coordinate is
 `.artifacts/qualification/vial-scale/v2/regression-promotion-budget-qualification-v1/current/`.
@@ -1325,6 +1326,33 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -v \
   t/1780-vial-regression-promotion-qualification-store.t
 ```
 
+The executable exposes only explicit `--publish` and `--validate` operations:
+
+```sh
+scripts/run_with_ram_guard.sh -- \
+  scripts/run_vial_regression_promotion_budget_qualification.pl --publish
+
+scripts/run_with_ram_guard.sh -- \
+  scripts/run_vial_regression_promotion_budget_qualification.pl --validate
+```
+
+It derives the repository root from its own tracked location and admits no
+caller root, evidence, budget, publisher, predecessor, worker, or callback.
+Each operation delegates to the caller-sealed store exactly once. A successful
+result is emitted only after the complete canonical newline JSON value fits
+the 1,048,576-byte output envelope. Usage failures return status 2; operational
+failures return status 1 with no JSON result and one sanitized diagnostic no
+larger than 4,096 bytes. Standalone `--help` is the only success without an
+operation. These commands do not execute a producer, provider, simulator, or
+measurement controller; publication alone does not activate enforcement.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-budget-qualification-cli-contract-v1 -->
+- Claim: The qualification CLI exposes only exact `--publish` and `--validate` operations, caps complete canonical newline JSON stdout at 1,048,576 bytes and one sanitized failure diagnostic at 4,096 bytes, uses status 2 for closed usage errors and status 1 for operational failures, and accepts no caller repository, evidence, budget, publication, or recovery input. This interface contract creates no real publication and activates no performance gate, support tier, performance result, or capacity claim.
+- Re-derive: Run t1781 and inspect the executable's exact options, store dispatch, result-key validation, canonical encoder, output ceiling, diagnostic ceiling, and repository-root derivation. Require fresh `publish` and `load` doubles to receive only the script-derived root and canonical output at the exact admitted ceiling.
+- Falsify: Run t1781. No/multiple/case-variant/abbreviated/unknown options, positional arguments, help mixed with an operation, cap-plus-one output, malformed store state, and hostile multiline path-bearing oversized failures must reject with the exact status class, no partial JSON, bounded sanitized diagnostics, and no residue.
+- Durability: Retain the executable, t1781, caller-sealed store, task `.17.5.3.2.2`, this chapter, the regression-promotion Knowledge card, bounded claim record, doctrine gates, and the work-unit Git commit. Real clean-revision publication remains separately owned by `.17.5.3.2.3`.
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-budget-qualification-cli-contract-v1 -->
+
 <!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-budget-qualification-store-contract-v1 -->
 - Claim: The caller-sealed current-budget qualification store fixes one two-file v2 coordinate for all 11 ordered qualified profiles, bounds report bytes at 1,048,576 and manifest bytes at 65,536, and permits at most one exact recovery stage before an atomic same-volume rename. These are immutable-storage containment and recovery limits; the store implementation has not created the real publication or activated a performance gate, support tier, performance result, or capacity claim.
 - Re-derive: Run guarded t1780, query `ArchitectureScaleRegressionPromotionQualificationStore->publication_limits`, and construct the private publication value from the public real qualification without invoking `publish`. Require the API, fixed file census, limits, exact 11-profile bindings, canonical bytes, and source qualification identity to agree.
@@ -1341,8 +1369,8 @@ scripts/run_with_ram_guard.sh -- env \
   t/1765-vial-architecture-scale-regression-promotion-policy.t
 ```
 
-Current capture, in-memory budget qualification, and the publication store are
-complete. The explicit CLI, real clean-revision publication, independent
+Current capture, in-memory budget qualification, the publication store, and
+its explicit CLI are complete. Real clean-revision publication, independent
 publication closeout, gate/CI integration, and public truth remain separate
 rollback owners. Until those leaves pass, the new budgets remain unpublished
 and unenforced, all historical candidate budgets stay candidate-only, and

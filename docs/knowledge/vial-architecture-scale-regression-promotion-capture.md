@@ -19,6 +19,7 @@ answers:
   - "why does VIAL complete-corpus validation separate capture and execution revisions?"
   - "why does VIAL complete-corpus validation isolate each whole profile operation?"
   - "how is the current VIAL regression-promotion budget qualification stored atomically?"
+  - "how is the current VIAL regression-promotion budget qualification published or validated explicitly?"
 date: 2026-09-03
 status: current
 tags: [hial, vial, scalability, regression, measurement, publication]
@@ -27,11 +28,11 @@ evidence: >-
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16df-vial-architecture-scale-cap-closeout.md;
   perl/FSM/VIAL/ArchitectureScaleRegressionPromotionPolicy.pm; perl/FSM/VIAL/ArchitectureScaleMeasurement.pm;
-  perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCapturePlan.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileCapture.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusCoordinator.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualification.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualificationStore.pm; scripts/run_vial_regression_promotion_corpus.pl; scripts/verify_vial_regression_promotion_failed_prefix.pl; scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/measure_vial_regression_promotion_canonicalization.pl;
-  t/1776-vial-regression-promotion-current-corpus-verifier.t; t/1777-vial-regression-promotion-current-corpus-mutations.t; t/1778-vial-regression-promotion-canonicalization-instrument.t; t/1779-vial-regression-promotion-qualification.t; t/1780-vial-regression-promotion-qualification-store.t
+  perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCapturePlan.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileCapture.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusCoordinator.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualification.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualificationStore.pm; scripts/run_vial_regression_promotion_corpus.pl; scripts/run_vial_regression_promotion_budget_qualification.pl; scripts/verify_vial_regression_promotion_failed_prefix.pl; scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/measure_vial_regression_promotion_canonicalization.pl;
+  t/1776-vial-regression-promotion-current-corpus-verifier.t; t/1777-vial-regression-promotion-current-corpus-mutations.t; t/1778-vial-regression-promotion-canonicalization-instrument.t; t/1779-vial-regression-promotion-qualification.t; t/1780-vial-regression-promotion-qualification-store.t; t/1781-vial-regression-promotion-qualification-cli.t
 reverify: >-
   scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_corpus.pl --validate; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_corpus.pl --inventory; scripts/verify_vial_regression_promotion_failed_prefix.pl; scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/run_with_ram_guard.sh -- prove -v t/1777-vial-regression-promotion-current-corpus-mutations.t; scripts/run_with_ram_guard.sh -- scripts/measure_vial_regression_promotion_canonicalization.pl --phase corpus-load --sample-relative .artifacts/diagnostics/vial-scale/corpus.sample.txt --sample-seconds 3;
-  scripts/run_with_ram_guard.sh -- scripts/measure_vial_regression_promotion_canonicalization.pl --phase balanced-validation --sample-relative .artifacts/diagnostics/vial-scale/balanced.sample.txt --sample-seconds 3; scripts/run_with_ram_guard.sh -- prove -Iperl t/1769-vial-architecture-scale-regression-promotion-profile-resume.t t/1773-vial-regression-promotion-corpus-coordinator.t; scripts/run_with_ram_guard.sh -- prove -Iperl t/1779-vial-regression-promotion-qualification.t t/1780-vial-regression-promotion-qualification-store.t
+  scripts/run_with_ram_guard.sh -- scripts/measure_vial_regression_promotion_canonicalization.pl --phase balanced-validation --sample-relative .artifacts/diagnostics/vial-scale/balanced.sample.txt --sample-seconds 3; scripts/run_with_ram_guard.sh -- prove -Iperl t/1769-vial-architecture-scale-regression-promotion-profile-resume.t t/1773-vial-regression-promotion-corpus-coordinator.t; scripts/run_with_ram_guard.sh -- prove -Iperl t/1779-vial-regression-promotion-qualification.t t/1780-vial-regression-promotion-qualification-store.t t/1781-vial-regression-promotion-qualification-cli.t
 ---
 
 Decision 0096 selects eleven v2 gate profiles. Each adapter call owns one
@@ -117,8 +118,10 @@ source, formula, ordered budgets, environment/provider/applicability,
 correctness, clean publisher revision, and immutable recalibration/rollback
 rules. Exact census, bounded canonical no-follow reads, fsync, sole-stage
 recovery, atomic rename, collision refusal, and identity-scoped cleanup are
-hostile-tested. Performance enforcement remains inactive; `.3.2.2` owns the
-explicit CLI and `.3.2.3` owns real clean-revision publication.
+hostile-tested. `.3.2.2` adds the repository-derived exact `--publish` and
+`--validate` CLI, with complete canonical output bounded at 1,048,576 bytes
+and one sanitized failure diagnostic bounded at 4,096 bytes. Performance
+enforcement remains inactive; `.3.2.3` owns real clean-revision publication.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]].
