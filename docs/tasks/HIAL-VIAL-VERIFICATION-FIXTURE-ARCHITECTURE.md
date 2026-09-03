@@ -1610,10 +1610,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `ArchitectureScaleRegressionPromotionQualification accepts only a repository root below the active RAM guard, invokes the authenticated corpus/profile stores once each, and emits no file. It requires the exact current policy, ordered eleven-profile plan, 11 validations, 33 measured records, 44 total accepted invocations, zero exclusions, clean immutable capture revision, exact common/provider environment, complete oracle/cleanup success, and canonical JSON integer types. For every record it independently verifies stage order, process success, stage count integers, oracle membership/evidence hashes, artifact count/hash rows, and workload/common identity; its bounded correctness projection retains all four records' exact non-timing stage counts, artifact identities, and oracle identities. It reconstructs per-run wall/CPU sums and maximum process-tree RSS, then min/median/max/MAD and the integer-safe Decision 0056 floor/multiplier/ceiling formula. The real corpus derives a 762,664-byte report at d8fb1813...0c97; its eleven per-profile projections are each below 262,144 bytes and its exact first/last budgets are 2,000,000,000/2,000,000,000/268,435,456 and 429,258,000,000/462,510,000,000/4,177,526,784 wall/CPU/RSS units. T1779 proves the closed API, formulas, defensive output, exact projections, and hostile historical/missing/reordered/excluded/failed/mixed/string/unsafe/overflow/rehashed controls. The audit also repairs Policy's JSON-number helper so a rehashed string `"1"` cannot impersonate numeric schema version 1. Focused t1765+t1779 and guarded real derivation pass; broader guarded source/store watchers, book, claims, containment, acceptance, and doctrines close before commit. No artifact, producer, provider, simulator, measurement-controller, publication, gate, support, capacity, full-CI, push, or existing policy/corpus identity changes.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.2: derive current regression budgets`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Freeze the authenticated current budget qualification in one bounded versioned atomic publication.`
   Acceptance: `Publish only a .17.5.3.1-accepted report beneath a non-colliding repository-relative same-volume qualification namespace; bind source corpus bytes and identities, formula authority, exact profile budgets, host/tool/guard/provider applicability, deterministic oracles, recalibration predecessor/trigger requirements, rollback, and nonclaims. Use closed canonical schemas, conservative byte ceilings, fsync plus atomic rename, exact reload, and owned cleanup; reject collisions, stale or mixed evidence, historical substitution, malformed/noncanonical/oversized state, file aliases, staging residue, or caller-selected paths and budgets.`
-  Verification: `Clean predecessor 8fc4b6e2d supplies the authenticated in-memory qualification but cannot safely create immutable evidence from uncommitted publisher code. The leaf is therefore partitioned into a caller-sealed store, a bounded explicit CLI, and a clean-revision real publication/closeout. No source, test, artifact, budget, publication, support, performance, capacity, CI, or product behavior changes in activation.`
+  Verification: `Clean predecessor 8fc4b6e2d supplied the authenticated in-memory qualification but could not safely create immutable evidence from uncommitted publisher code. Child .1 implemented the caller-sealed bounded store, child .2 added the exact publish/validate CLI, and child .3 used their clean commit 8667f766c to atomically create and distinctly reload the real two-file publication. The seal fixes qualification d8fb1813...0c97, report/publication/file-set identities 0da23249...622c / 1c2a3832...945f / 28ba972c...9095, and exact 11/33/44/0 evidence plus all ordered budgets/applicability bindings. Publication does not activate enforcement.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2: partition current budget publication`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.3`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.1`
@@ -1629,13 +1629,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `The repository-relative executable derives its root only from its tracked script location and accepts exactly one case-sensitive, unabbreviated --publish or --validate operation; standalone --help is the only non-operation success. It delegates once to the caller-sealed store, validates the store's exact result shape, buffers canonical newline JSON through a 1,048,576-byte ceiling before stdout, and reports usage with status 2 or operational failure with status 1 and one sanitized 4,096-byte diagnostic. T1781 starts RED because the executable is absent, then proves both dispatches with fresh process doubles, exact-cap acceptance, cap-plus-one rejection without partial stdout, malformed state, hostile path/control/oversize diagnostics, closed options/arguments, and exact fixture cleanup. Script/test syntax and t1780+t1781 report All tests successful at Files=2/Tests=11. The real namespace remains absent; no producer, provider, simulator, measurement controller, performance gate, support tier, result, or capacity claim is activated.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.2: add current budget publication CLI`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Create and exactly reload the real current-budget qualification publication from one clean implementation revision.`
   Acceptance: `Run only the completed explicit publish operation from a clean revision under the unchanged RAM guard; authenticate the current corpus and all eleven qualified budgets; publish one bounded non-colliding same-volume namespace; then run a distinct validate operation and exact file census. Record publisher revision, source corpus/file-set/qualification identities, formula authority, ordered profile budgets and applicability identities, publication/file-set identities, byte counts, rollback/recalibration contract, and nonclaims; prove staging and process residue absent. Do not execute a producer, provider, simulator, or measurement controller, and do not activate performance enforcement.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `From clean CLI revision 8667f766c, guarded --publish derived the authenticated current qualification and created exactly two same-volume/current-owner/single-link canonical files by atomic rename: the 764,010-byte report at SHA-256 524fad65...a3fd and 28,148-byte manifest at SHA-256 5eebce24...9c62. They bind publisher 8667f766c, qualification d8fb1813...0c97, source corpus ab2df899...e505, source file set dc5b315b...c66f, Decision 0056, the exact ordered eleven budget/environment/provider/applicability/correctness bindings, report identity 0da23249...622c, publication identity 1c2a3832...945f, and file-set digest 28ba972c...9095. A distinct guarded --validate emitted 793,084 canonical newline JSON bytes at SHA-256 19ac96ed...9d64 and exactly reloaded both stored objects. Independent canonicalization and digest reconstruction reproduced all three content identities; exact census, store/CLI watchers, immutable predecessor/recalibration/rollback/nonclaims, staging/process/temp cleanup, book, claims, and doctrines close before commit. No producer, provider, simulator, measurement controller, recapture, budget change, active gate, support, performance result, or capacity claim occurs.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.3: publish current budget qualification`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Independently close current budget evidence, hostile admission, identity applicability, recalibration history, and residue.`
   Acceptance: `Re-derive the current corpus and every formula result without trusting the qualification producer; authenticate the published namespace, exact bytes, identities, profile/order/count partition, deterministic oracles, and zero exclusions; prove copied mutations for content, schema, numeric type, formula, budget, host/tool/guard/provider/applicability, stale revision, historical substitution, collision, alias, and residue classes reject. Prove exact common identity is eligible for later performance enforcement while a changed host/tool/provider identity is explicitly informational, and prove recalibration requires separately owned old-versus-new version replacement. Leave publication bytes unchanged and owned staging absent.`
   Verification: `pending`
@@ -5783,3 +5783,35 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   absent; no producer/provider/simulator/controller execution, budget change,
   active gate, support, performance result, capacity claim, full CI, or push
   occurs.
+
+## Acceptance Checklist (enforced) — `.17.5.3.2.3` real budget publication
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — empty
+  `git log -S'1c2a3832b2b4163e1a6a8124feff2b452f8522c2929098447f3903115ad2945f' -- .`
+  history and the clean predecessor's exact absence check prove that neither
+  Git history nor the fixed v2 coordinate retained a real current-budget
+  qualification seal. Store and CLI behavior were committed, but no durable
+  publisher revision, publication identity, or independently reloadable
+  artifact existed for later gate ownership.
+- [x] **ADDRESSED (verified)** — guarded `--publish` ran only from clean commit
+  `8667f766c`, internally authenticated qualification `d8fb1813...0c97`, and
+  atomically created the exact report-plus-manifest coordinate. The report is
+  764,010 bytes/SHA-256 `524fad65...a3fd`; the manifest is 28,148 bytes/SHA-256
+  `5eebce24...9c62`; their independently reconstructed file-set identity is
+  `28ba972c...9095`. The manifest binds report identity `0da23249...622c`,
+  publication identity `1c2a3832...945f`, source corpus/file-set, Decision
+  0056, exact 11/33/44/0 counts, and every ordered budget, environment,
+  provider, applicability, and correctness identity. Its closed contract has
+  no predecessor or overwrite, requires separately owned old/new evidence for
+  recalibration, and removes consumers/gates before immutable retirement.
+- [x] **NO REGRESSION** — a distinct guarded `--validate` returns 793,084
+  canonical newline JSON bytes at SHA-256 `19ac96ed...9d64` and exactly reloads
+  both stored objects. Independent canonicalization, report/publication/file-
+  set digest reconstruction, lstat census, and ownership/device/link checks
+  all agree; staging, temporary output, and relevant process residue are
+  absent. The guarded t1780+t1781 watcher band reports `All tests successful`
+  at `Files=2, Tests=11`; mdBook, Knowledge Map, claims, containment,
+  task/Memory pointers, staged acceptance, and doctrines close before commit.
+  No producer/provider/simulator/controller execution, recapture, budget
+  rewrite, active gate, support, performance result, capacity claim, full CI,
+  or push occurs.

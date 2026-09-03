@@ -1243,7 +1243,8 @@ passing as numeric schema version or count `1`.
 For each metric, the qualifier sorts the three accepted run totals, records
 minimum/median/maximum/median absolute deviation, and applies the Decision 0056
 formula with checked safe-integer addition and multiplication. The resulting
-qualified-but-unpublished budget rows are:
+qualification rows are now sealed by the publication below, but remain
+unenforced:
 
 | # | selected route | wall ns | CPU ns | peak tree RSS bytes |
 |---:|---|---:|---:|---:|
@@ -1277,21 +1278,20 @@ prove -Iperl -v t/1779-vial-regression-promotion-qualification.t
 ```
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-current-budget-qualification-v1 -->
-- Claim: From the authenticated current v2 corpus, the in-memory qualifier independently reconstructs 11 validation and 33 measured records (44 accepted controller invocations, zero exclusions), retains all four records' exact non-timing correctness facts for each profile, and applies Decision 0056's integer-safe formulas. The resulting 11-profile report is 762,664 canonical bytes at identity `regression-promotion-qualification/d8fb1813...0c97`; its largest correctness projection is 165,285 bytes. The table above is qualified but unpublished: it does not activate a regression gate, support tier, performance result, or capacity claim.
+- Claim: From the authenticated current v2 corpus, the in-memory qualifier independently reconstructs 11 validation and 33 measured records (44 accepted controller invocations, zero exclusions), retains all four records' exact non-timing correctness facts for each profile, and applies Decision 0056's integer-safe formulas. The resulting 11-profile report is 762,664 canonical bytes at identity `regression-promotion-qualification/d8fb1813...0c97`; its largest correctness projection is 165,285 bytes. The qualifier itself remains in-memory; its separately sealed publication does not activate a regression gate, support tier, performance result, or capacity claim.
 - Re-derive: Run the guarded public derivation above against the authenticated current corpus. Require the exact 11/33/44/0 summary, 762,664-byte canonical report, d8fb1813...0c97 identity, eleven ordered budgets, and maximum 165,285-byte correctness projection; inspect the separate source-evidence, environment, correctness, formula, and applicability identities.
 - Falsify: Run t1779. Historical policy, missing/reordered profiles, exclusions, failed or rewritten oracle evidence, mixed host, string-typed schema/count/artifact/run values, unsafe integers, addition overflow, rehashed budget changes, and rehashed applicability changes must all reject; the closed synthetic fixture must reproduce independently calculated floor, multiplier, and rounding examples.
-- Durability: Retain Qualification, Policy's canonical-number repair, t1765/t1779, task `.17.5.3.1.2`, this chapter, bounded claim record, authenticated current-corpus claim and artifact, doctrine gates, and the work-unit Git commit. Publication and enforcement remain separately owned by `.17.5.3.2` and `.17.5.4`.
+- Durability: Retain Qualification, Policy's canonical-number repair, t1765/t1779, task `.17.5.3.1.2`, this chapter, bounded claim record, authenticated current-corpus and qualification-publication evidence, doctrine gates, and the work-unit Git commit. Enforcement remains separately owned by `.17.5.4`.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-current-budget-qualification-v1 -->
 
 ### Immutable qualification publication and CLI
 
-The current-budget store and its explicit command are implemented, but these
-slices deliberately create no real publication. Store `publish` and `load`
-accept only the repository root and run beneath the repository RAM guard.
-Publication additionally requires one unchanged clean Git revision. The store
-derives and validates the qualifier's complete report internally; callers
-cannot supply evidence, paths, budgets, a publisher revision, or a
-recalibration choice.
+The current-budget store and its explicit command now retain the real
+first-version publication. Store `publish` and `load` accept only the
+repository root and run beneath the repository RAM guard. Publication
+additionally requires one unchanged clean Git revision. The store derives and
+validates the qualifier's complete report internally; callers cannot supply
+evidence, paths, budgets, a publisher revision, or a recalibration choice.
 
 The fixed first-version coordinate is
 `.artifacts/qualification/vial-scale/v2/regression-promotion-budget-qualification-v1/current/`.
@@ -1317,6 +1317,53 @@ stable reads, and post-read identity checks. Publication fsyncs both files and
 directories before one directory rename. Only an exact sole interrupted stage
 can recover; collisions, ambiguous or malformed stages, residue, aliases,
 oversized state, and post-validation mutation reject.
+
+The real publication was created from clean CLI revision
+`8667f766cfb5721600c466568b432ac4432255f7`. It binds qualification
+`regression-promotion-qualification/d8fb18132ebb52d85f30f40edc46f8e81a47bba90eb61f9bf02ae0821da60c97`,
+source corpus
+`regression-promotion-corpus/ab2df8992d85b8466f4afca530a5af36984031c453002534fc92ff5678a2e505`,
+source file set
+`dc5b315b827389eb466776716f6851cdd9ddd13b2f1aec441f8a51b7d72dc66f`,
+and `decision-0056`. Its exact immutable identities and files are:
+
+| item | exact value |
+|---|---|
+| publication report identity | `regression-promotion-budget-qualification-report/0da2324912a8ffcaa0c167e75a5ecac87911eb3bc44f6d8c2b128d07e869622c` |
+| publication identity | `regression-promotion-budget-qualification-publication/1c2a3832b2b4163e1a6a8124feff2b452f8522c2929098447f3903115ad2945f` |
+| complete file-set SHA-256 | `28ba972c3f8cbcc00d1d32c9db0d4015de57f0df49d11d7076262cd050069095` |
+| report | 764,010 bytes; SHA-256 `524fad657f5f1b5d3bc6eb0287d86729af2d8ae9e725838a8305bd09f696a3fd` |
+| manifest | 28,148 bytes; SHA-256 `5eebce24d05ef5493a4b42ab90c0114e45a49c2a169e22cb46c6af336ef69c62` |
+
+The ordered applicability identities paired with the eleven budget rows above
+are:
+
+```text
+ 1 regression-promotion-profile-applicability/19ce6ee465015507745c6d8b4756af37771ac31bb6485a62ebc2b07c8dc69a29
+ 2 regression-promotion-profile-applicability/992ed88be3790e7dde0de8ff939902fbe32c2656487d5862f560dd75c29d9182
+ 3 regression-promotion-profile-applicability/405a1a9c981b0a640ea973d6328a4483fd59b62db39e38f7dc956320967fdb2b
+ 4 regression-promotion-profile-applicability/a13a3d33fb25a83480521a4c4b3283fe509ce1ca45e9c184c5ef251f0d0f24db
+ 5 regression-promotion-profile-applicability/352d896bd84b5a040158f2b92af65c9b7c6235ffe0412aa58cb184e852e23b91
+ 6 regression-promotion-profile-applicability/f61a57e40519c0d009c1e53ee0bfadcd18546fa58deed3a593ef44389cb74344
+ 7 regression-promotion-profile-applicability/10cff79f1ca3633c470f2cccb8af7cadfe909113e72c096d53dd06e045e09f24
+ 8 regression-promotion-profile-applicability/7985b5a4b9db7e69f5a00f390422e6b5064d40cffc13f742fd7912c517230dbc
+ 9 regression-promotion-profile-applicability/f8b0375359b6db5d3f9a4f6374844ff5460569ba8878d140d64279077945740d
+10 regression-promotion-profile-applicability/302b0b561728d18d348d765f75269c16bc0eb579034ca9bbf367841f3de16339
+11 regression-promotion-profile-applicability/25eeb66c5f3cd55d2192d924ca720810d74469d454dfc3d1e80ebfc410afeb7a
+```
+
+A distinct guarded `--validate` emitted 793,084 canonical newline JSON bytes
+at SHA-256 `19ac96edf6ea6aafad80672084bf3f528a4944a6cf5df6264d524bc9e93f9d64`
+and exactly reloaded both objects. Independent canonicalization and content-
+identity reconstruction reproduced the report, publication, and file-set
+identities above. The exact two-file census consists only of current-owner,
+same-volume, single-link regular files; publication staging and temporary
+validation output are absent. The manifest records 11 qualified profiles,
+11 validation records, 33 raw records, 44 accepted controller invocations,
+and zero exclusions. Its explicit nonclaims forbid interpreting publication
+as a promoted gate, observed performance result, support promotion,
+architecture-scale capacity, historical reuse, producer/provider/simulator/
+controller execution, or profile recapture/resume.
 
 Run the caller-sealing, storage, recovery, collision, cleanup, and race watcher
 without creating the real publication:
@@ -1347,18 +1394,25 @@ operation. These commands do not execute a producer, provider, simulator, or
 measurement controller; publication alone does not activate enforcement.
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-budget-qualification-cli-contract-v1 -->
-- Claim: The qualification CLI exposes only exact `--publish` and `--validate` operations, caps complete canonical newline JSON stdout at 1,048,576 bytes and one sanitized failure diagnostic at 4,096 bytes, uses status 2 for closed usage errors and status 1 for operational failures, and accepts no caller repository, evidence, budget, publication, or recovery input. This interface contract creates no real publication and activates no performance gate, support tier, performance result, or capacity claim.
+- Claim: The qualification CLI exposes only exact `--publish` and `--validate` operations, caps complete canonical newline JSON stdout at 1,048,576 bytes and one sanitized failure diagnostic at 4,096 bytes, uses status 2 for closed usage errors and status 1 for operational failures, and accepts no caller repository, evidence, budget, publication, or recovery input. The interface can invoke the separately authenticated real publication, but does not itself activate a performance gate, support tier, performance result, or capacity claim.
 - Re-derive: Run t1781 and inspect the executable's exact options, store dispatch, result-key validation, canonical encoder, output ceiling, diagnostic ceiling, and repository-root derivation. Require fresh `publish` and `load` doubles to receive only the script-derived root and canonical output at the exact admitted ceiling.
 - Falsify: Run t1781. No/multiple/case-variant/abbreviated/unknown options, positional arguments, help mixed with an operation, cap-plus-one output, malformed store state, and hostile multiline path-bearing oversized failures must reject with the exact status class, no partial JSON, bounded sanitized diagnostics, and no residue.
-- Durability: Retain the executable, t1781, caller-sealed store, task `.17.5.3.2.2`, this chapter, the regression-promotion Knowledge card, bounded claim record, doctrine gates, and the work-unit Git commit. Real clean-revision publication remains separately owned by `.17.5.3.2.3`.
+- Durability: Retain the executable, t1781, caller-sealed store, task `.17.5.3.2.2`, this chapter, the regression-promotion Knowledge card, bounded claim record, doctrine gates, and the work-unit Git commit. The real clean-revision publication is separately retained by `.17.5.3.2.3`.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-budget-qualification-cli-contract-v1 -->
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-budget-qualification-store-contract-v1 -->
-- Claim: The caller-sealed current-budget qualification store fixes one two-file v2 coordinate for all 11 ordered qualified profiles, bounds report bytes at 1,048,576 and manifest bytes at 65,536, and permits at most one exact recovery stage before an atomic same-volume rename. These are immutable-storage containment and recovery limits; the store implementation has not created the real publication or activated a performance gate, support tier, performance result, or capacity claim.
+- Claim: The caller-sealed current-budget qualification store fixes one two-file v2 coordinate for all 11 ordered qualified profiles, bounds report bytes at 1,048,576 and manifest bytes at 65,536, and permits at most one exact recovery stage before an atomic same-volume rename. These are immutable-storage containment and recovery limits; the stored real publication does not activate a performance gate, support tier, performance result, or capacity claim.
 - Re-derive: Run guarded t1780, query `ArchitectureScaleRegressionPromotionQualificationStore->publication_limits`, and construct the private publication value from the public real qualification without invoking `publish`. Require the API, fixed file census, limits, exact 11-profile bindings, canonical bytes, and source qualification identity to agree.
 - Falsify: Begin with t1780 RED against the missing store, then run it against the implementation. Caller evidence/path/budget input, qualification drift, malformed/noncanonical/cap-plus-one bytes, extra entries, symlink/hard-link aliases, exact/malformed/ambiguous recovery, collision, injected partial write, retained staging, and a late directory mutation must separate fail-closed behavior from the accepted exact publication and recovery controls.
-- Durability: Retain QualificationStore, t1780, task `.17.5.3.2.1`, this chapter, the regression-promotion Knowledge card, bounded claim record, doctrine gates, and the work-unit Git commit. The explicit CLI and real clean-revision publication remain separately owned by `.17.5.3.2.2` and `.17.5.3.2.3`.
+- Durability: Retain QualificationStore, t1780, task `.17.5.3.2.1`, this chapter, the regression-promotion Knowledge card, bounded claim record, doctrine gates, and the work-unit Git commit. The explicit CLI and real clean-revision publication are separately retained by `.17.5.3.2.2` and `.17.5.3.2.3`.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-budget-qualification-store-contract-v1 -->
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-budget-qualification-publication-1c2a3832b-v1 -->
+- Claim: From clean publisher revision `8667f766cfb5721600c466568b432ac4432255f7`, the real two-file current-budget qualification contains a 764,010-byte report at SHA-256 `524fad65...a3fd` and a 28,148-byte manifest at SHA-256 `5eebce24...9c62`. It binds qualification `d8fb1813...0c97`, report identity `0da23249...622c`, publication identity `1c2a3832...945f`, file-set digest `28ba972c...9095`, source corpus/file-set `ab2df899...e505`/`dc5b315b...c66f`, Decision 0056, all eleven ordered budget/applicability bindings, and exact 11/33/44/0 evidence. A distinct validation emitted 793,084 canonical bytes at SHA-256 `19ac96ed...9d64`. This is an immutable qualification seal, not an active gate, fresh performance result, support tier, or capacity claim.
+- Re-derive: Run the guarded `--validate` command, require its exact 793,084-byte canonical result and digest, and compare the returned report and manifest byte-for-value with the two stored files. Independently recompute both content identities and the length-delimited report-plus-manifest file-set digest; require the exact publisher/source/formula/count/budget/applicability bindings above.
+- Falsify: Run t1780 and t1781, then census the real coordinate. Content, schema, canonicality, size, census, symlink/hard-link, staging, source-qualification, budget, applicability, publisher, and late-mutation controls must reject while exact reload succeeds. Any extra/missing artifact, changed identity/count/order, retained stage/temp file, or producer/provider/simulator/controller execution falsifies the seal.
+- Durability: Retain the immutable repository-local publication, QualificationStore and CLI, t1780/t1781, task `.17.5.3.2.3`, this chapter, the regression-promotion Knowledge card, bounded claim record, doctrine gates, and the work-unit Git commit. `.17.5.3.3` independently closes hostile content/applicability/recalibration evidence before `.17.5.4` may own enforcement.
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-budget-qualification-publication-1c2a3832b-v1 -->
 
 Re-derive the selection and its closure comparison with:
 
@@ -1369,12 +1423,12 @@ scripts/run_with_ram_guard.sh -- env \
   t/1765-vial-architecture-scale-regression-promotion-policy.t
 ```
 
-Current capture, in-memory budget qualification, the publication store, and
-its explicit CLI are complete. Real clean-revision publication, independent
-publication closeout, gate/CI integration, and public truth remain separate
-rollback owners. Until those leaves pass, the new budgets remain unpublished
-and unenforced, all historical candidate budgets stay candidate-only, and
-whole-product big/really-big capacity remains unclaimed.
+Current capture, in-memory budget qualification, the publication store, its
+explicit CLI, and the real clean-revision qualification seal are complete.
+Independent publication closeout, gate/CI integration, and public truth remain
+separate rollback owners. Until those leaves pass, the sealed budgets remain
+unenforced, all historical candidate budgets stay candidate-only, and whole-
+product big/really-big capacity remains unclaimed.
 
 ## Revision-separated complete-corpus validation
 
