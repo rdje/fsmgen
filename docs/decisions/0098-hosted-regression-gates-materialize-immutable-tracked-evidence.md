@@ -115,19 +115,23 @@ substituted by an Ubuntu package.
   caller-input, substitute-tool, and application-archive alternatives fail at
   least one identity, immutability, provider, or reviewability requirement.
 - **Durability:** this decision, the owning task, synchronized mdBook and
-  Knowledge Map fact, and the work-unit commit retain the selection and exact
-  audit. The payload, manifest, materializer, and executable watcher are a
-  deliberate missing durability leg owned by `.17.5.4.3.2`; hosted wiring is
-  forbidden until that child closes it.
+  Knowledge Map fact, the fifteen tracked payloads, canonical manifest,
+  producer-independent verifier, hostile copied watcher, and work-unit commits
+  retain the selection and exact audit. The transactional materializer remains
+  a deliberate missing execution leg owned by `.17.5.4.3.2.2`; hosted wiring
+  is forbidden until that child and the local-driver child close.
 
 ## Consequences and nonclaims
 
-- A fresh checkout will gain a repository-authenticated route to the exact
-  current evidence without turning generated `.artifacts` into source.
+- A fresh checkout contains a repository-authenticated source for the exact
+  current evidence without turning generated `.artifacts` into source. It
+  still has no authorized route to create the generated coordinates until the
+  separately owned materializer lands.
 - Hosted CI will exercise every route that is honestly available and preserve
   distinct unavailable and informational truth for the rest.
-- The selection itself transports no bytes and runs no gate. Until `.3.2`
-  ships, a fresh checkout still cannot execute the real gate.
+- The tracked bundle transports bytes but neither materializes nor runs the
+  gate. Until `.17.5.4.3.2.2` and `.17.5.4.3.2.3` ship, a fresh checkout still
+  cannot execute the real gate through local CI.
 
 ## Rollback
 

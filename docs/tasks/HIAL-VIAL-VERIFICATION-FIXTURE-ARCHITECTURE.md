@@ -1729,19 +1729,19 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement authenticated evidence materialization and bounded local CI gate entrypoints.`
   Acceptance: `Implement the .1-selected repository-owned evidence transport and fail-closed materializer with exact file census/bytes/digests, safe relative paths, no aliases, same-volume atomic destination, immutable-source validation, collision/interruption/recovery/cleanup controls, and byte-exact production load after materialization. Add an explicit selected-important-step driver mode and include the guarded gate exactly once in the unsharded local full pre-push path while quick/smoke/isf and ordinary test execution remain focused. Add hostile tests without running the real gate by default.`
-  Verification: `Decision 0098 closes transport/lifecycle selection. Three ordered children separate the immutable fifteen-file bundle and producer-independent source watcher, fixed-coordinate transactional materialization/recovery/owned cleanup, and local selected/full driver placement with inventory coverage. Child .1 is active; no payload, materializer, driver, or CI behavior changes in this partition slice.`
+  Verification: `Decision 0098 closes transport/lifecycle selection. Three ordered children separate the immutable fifteen-file bundle and producer-independent source watcher, fixed-coordinate transactional materialization/recovery/owned cleanup, and local selected/full driver placement with inventory coverage. Child .1 closes the tracked authenticated source at transport 3b4c486e...2bbc6; child .2 is active for fixed-coordinate materialization, while driver and CI behavior remain unchanged.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2: partition evidence materialization and local CI`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2.3`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Import and independently authenticate the immutable current-evidence transport bundle.`
   Acceptance: `Track the exact thirteen corpus and two qualification canonical JSON payloads under Decision 0098's version-1 source root without changing a byte. Add one closed canonical transport manifest with ordered safe source/destination paths, classifications, per-file bytes/digests, exact aggregate census, source seal identities, bounded schema, and content identity. Add a repository-derived production-independent verifier and focused RED/GREEN plus copied hostile tests for manifest/payload schema, order, path, file-set, canonicality, bytes, digest, alias, extra/missing, source-seal, and deterministic identity drift. The verifier must write nothing, accept no caller source/evidence/root, leave generated coordinates untouched, and keep materialization/CI separately owned.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The version-1 bundle tracks the exact fifteen canonical payloads byte-for-byte at 7,012,284 bytes. Its 8,725-byte manifest binds transport 3b4c486e...2bbc6, manifest SHA-256 d20cae85...94f7, ordered fixed paths/classifications/bytes/digests, and corpus/qualification file sets dc5b315b...c66f/28ba972c...9095. The repository-derived verifier emits deterministic canonical verification ae9c67c9...55b6, imports no production module, accepts no caller evidence, writes nothing, and independently re-derives both source content seals. T1790 began RED at line 18 on the absent verifier, then its copied fixture rejects closed-schema/order/path/byte/digest/identity/source-seal/canonicality/payload-schema/extra/missing/symlink/hardlink/FIFO/caller mutation and restores the exact result; focused prove reports All tests successful, Files=1, Tests=4. Generated corpus and qualification coordinates remain byte-identical. Materialization and CI remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2.1: authenticate immutable gate evidence`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement transactional fixed-coordinate evidence materialization and owned cleanup.`
   Acceptance: `Build the root-derived explicit materializer around .1's authenticated source. Use one nonblocking process lock, identity-scoped same-volume stage and journal, corpus-first/qualification-last commit, exact-existing idempotence, mismatch no-overwrite, bounded canonical result/diagnostic output, recovery of only the one valid transaction, and a receipt that lets cleanup remove only invocation-owned exact roots. Falsify caller input, concurrent collision, interruption at every install boundary, malformed/stale/mixed journal/receipt/stage, links/aliases/special files, source/destination mutation, partial output, and residue; prove byte-exact production corpus and qualification validation after fresh materialization.`
   Verification: `pending`
@@ -6377,3 +6377,35 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   required before commit. No evidence payload/manifest/verifier, materializer,
   test, driver, CI/workflow, artifact, provider, gate/result, support,
   capacity, full CI, or push changes.
+
+## Acceptance Checklist (enforced) — `.17.5.4.3.2.1` authenticated evidence transport
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the focused watcher began RED with
+  `Failed test: tracked evidence-transport verifier exists`; its exact locus
+  was ` at t/1790-vial-regression-promotion-evidence-transport.t line 18`.
+  The prior selection had no tracked payload, manifest, or independent source
+  verifier, so a fresh checkout could not authenticate the ignored generated
+  gate inputs without recreating evidence.
+- [x] **ADDRESSED (verified)** — fifteen source JSON files are copied without
+  byte drift beneath `evidence-v1`, and the canonical 8,725-byte manifest
+  binds the 7,012,284-byte payload as transport `3b4c486e...2bbc6`. The closed
+  read-only verifier independently reproduces corpus/qualification file sets
+  `dc5b315b...c66f`/`28ba972c...9095` and deterministic result
+  `ae9c67c9...55b6`; copied hostile schema/order/path/census/canonicality/
+  byte/digest/identity/seal/link/alias/special-node/input controls all reject
+  with empty stdout, and the baseline restores exactly.
+- [x] **NO REGRESSION** — the RAM-guarded adjacent t1776+t1782+t1790 band
+  reports `All tests successful` and `Files=3, Tests=10`; all 59 mdBook
+  chapters test, the rendered transport section is present, and generated
+  output is removed. Maintained-reference authority admits 0 files/+24
+  lines/+822 bytes to 56,365 lines/3,077,956 bytes with zero ceiling increase.
+  Knowledge Map parity is 1,160 facts/6,276 questions/6,448 occurrences/138
+  shards and reports `knowledge-map: OK`; three claim shards hold 47 records,
+  all 1,873 candidates are dispositioned, and gaps/open owners are zero.
+  This checklist moved the largest task-evidence part to 6,411/8,000 lines
+  (80.1%), so its existing partitioned surface now declares `warning_debt`
+  without changing a target or ceiling.
+  Memory, task-tree, containment, relative-path, staged acceptance, and all
+  doctrines remain the final commit gate. No materializer, generated evidence
+  mutation, CI driver/workflow, provider, gate/result, support, capacity, full
+  CI, or push is part of this slice.

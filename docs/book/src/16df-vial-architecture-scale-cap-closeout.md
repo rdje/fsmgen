@@ -1722,15 +1722,36 @@ real execution and CI placement remain separate rollback owners.
 
 ### Regression-gate CI evidence contract
 
-The real gate cannot start from a fresh checkout yet. Its current corpus and
-budget qualification are generated beneath ignored `.artifacts`, so none of
-their fifteen authenticated JSON files is tracked. Decision 0098 selects a
-versioned source bundle under
-`vial/qualification/regression_promotion_gate/evidence-v1/`: byte-identical
-canonical JSON plus one closed manifest will reproduce the fixed generated
-coordinates without recalibration or overwrite. A later materializer owns the
-copy, transaction, recovery, idempotence, and cleanup controls; hosted wiring
-is deliberately forbidden until those controls exist.
+The real gate still cannot start from a fresh checkout because its generated
+current corpus and budget qualification coordinates live beneath ignored
+`.artifacts`. Decision 0098's durable source now exists under
+`vial/qualification/regression_promotion_gate/evidence-v1/`: fifteen
+byte-identical canonical JSON payloads plus one closed manifest. The manifest
+orders all 13 corpus and two qualification files, fixes each generated
+destination, and binds the 7,012,284-byte payload as transport
+`regression-promotion-gate-evidence-transport/3b4c486e...2bbc6`. Its 8,388,608-
+byte payload ceiling and 32,768-byte manifest ceiling are transport bounds,
+not product capacities.
+
+Authenticate the tracked source without creating or changing `.artifacts`:
+
+```sh
+perl scripts/verify_vial_regression_promotion_evidence_transport.pl
+```
+
+The repository-derived command accepts no caller path, root, source, evidence,
+identity, or destination. It imports no production module; requires the exact
+ordinary same-device, single-link file/directory census; rejects unsafe paths,
+links, aliases, special nodes, noncanonical JSON, and byte/digest/identity
+drift; and independently re-derives the corpus and qualification content
+seals. Its canonical result inventories all fifteen payloads and is itself
+content addressed. T1790 repeats the valid pass from a copied bundle, mutates
+each admission boundary, and proves the tracked source and existing generated
+coordinates remain byte-identical.
+
+A later materializer still owns copy, transaction, recovery, idempotence, and
+cleanup controls. Hosted and local CI wiring remain forbidden until those
+controls exist.
 
 The hosted provider contract installs no substitute runtime tool. It
 materializes exact OSVVM 2026.05, rejects an ambient Verilator or fixed GHDL
@@ -1742,15 +1763,18 @@ qualification. This preserves useful correctness work without turning absence
 or a near-version tool into a performance pass.
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-hosted-evidence-selection-v1 -->
-- Claim: A tracked-only fresh checkout contains none of the current regression-promotion gate's 15 source files because all 13 corpus and two qualification files live below ignored `.artifacts`; the audited source is exactly 7,012,284 bytes and binds corpus/file-set `ab2df899...e505`/`dc5b315b...c66f` plus qualification/file-set `d8fb1813...0c97`/`28ba972c...9095`. Decision 0098 selects byte-identical canonical JSON plus a closed manifest under `vial/qualification/regression_promotion_gate/evidence-v1/`. Hosted execution will materialize OSVVM 2026.05, execute ordinals 1-7 and 11 with informational timing, and require exact-runtime ordinals 8-10 to be unavailable, yielding required 11/33/44 and honest observed 8/24/32 topology. This is a transport/provider selection, not implemented materialization, CI activation, a gate result, support, or capacity.
-- Re-derive: Run the independent current-corpus and budget-qualification verifiers, enumerate both fixed source namespaces, and recompute every regular-file byte count and digest. Require 13+2 files, 7,012,284 bytes, and the named identities; compare `git ls-files` to prove the tracked source set is empty. Inspect the qualification's ordered provider requirements to recover the exact 8-available/3-unavailable hosted partition.
-- Falsify: A tracked-only checkout refutes any claim that current CI can already load the seal. Regeneration cannot retain the M4 capture/publisher identity; cache or prior-run artifacts are mutable; substitute Verilator/GHDL versions produce drift rather than absence; an archive adds extraction/path surface; and caller-selected evidence violates the sealed gate contract. Any alternative must preserve exact bytes, identities, fixed destinations, reviewability, and unavailable-not-pass truth simultaneously.
-- Durability: MISSING - The selection and audit are tracked, but the byte payload, manifest, materializer, and executable watcher do not exist until the next child implements them; hosted wiring remains forbidden meanwhile. (owner: HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2)
+- Claim: A tracked-only fresh checkout keeps the current corpus and qualification absent from ignored generated coordinates but carries their exact 15-file/7,012,284-byte canonical transport under `vial/qualification/regression_promotion_gate/evidence-v1/`. The 8,725-byte manifest binds transport `3b4c486e...2bbc6` and the accepted corpus/qualification seals; a caller-closed, read-only, production-independent verifier reproduces them. Hosted selection remains 8 available profiles with informational timing plus three unavailable exact-runtime profiles. This is authenticated source and provider selection, not materialization, CI activation, a gate result, support, or capacity.
+- Re-derive: Run the transport verifier and require verification `ae9c67c9...55b6`, census 15/7,012,284, manifest 8,725/`d20cae85...94f7`, and source file sets `dc5b315b...c66f`/`28ba972c...9095`. Run both generated-source verifiers, byte-compare generated and tracked payloads, and inspect the qualification for the 8-available/3-unavailable provider partition.
+- Falsify: T1790 copies the source and rejects schema, order, path, byte, digest, identity, source-seal, canonicality, payload-schema, extra/missing, link, alias, FIFO, and caller-input mutations with empty result output, then restores the identity. Empty generated coordinates refute materialization; regeneration, mutable cache/artifacts, substitute tools, archives, and caller evidence fail the fixed seal.
+- Durability: The tracked payloads, manifest, verifier, t1790, Decision 0098, task tree, Knowledge Map card, claim record, chapter, and work-unit commit retain the source/provider selection. `.17.5.4.3.2.2` still owns materialization; hosted wiring remains forbidden.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-hosted-evidence-selection-v1 -->
 
-Re-derive the selection and its closure comparison with:
+Re-derive the authenticated transport, hostile closure, and policy comparison
+with:
 
 ```sh
+perl scripts/verify_vial_regression_promotion_evidence_transport.pl
+prove -Iperl t/1790-vial-regression-promotion-evidence-transport.t
 scripts/run_with_ram_guard.sh -- env \
   FSMGEN_VIAL_SCALE_PROMOTION_POLICY_EXACT=1 \
   prove -Iperl \
