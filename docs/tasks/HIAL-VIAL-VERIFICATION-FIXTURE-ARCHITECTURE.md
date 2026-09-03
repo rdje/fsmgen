@@ -1828,11 +1828,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5.1: publish scale regression capability`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Publish exact human-facing architecture-scale commands, envelopes, variability policy, cleanup, supported claim, and nonclaims.`
   Acceptance: `From the completed machine-readable contract, synchronize README signposting, the mdBook, Knowledge Map, claim registry, task tree, and bounded resume pointer. Give runnable repository-relative dry-run, selected-gate, full-pre-push, producer-free validation, and evidence-verification commands; tabulate all eleven selected workload/provider/budget envelopes and the pinned host/tool/guard tuple; explain correctness-first deterministic rejection, exact-host inclusive performance enforcement, unmatched-host informational behavior, unavailable-provider non-pass behavior, separately owned recalibration, atomic latest observation, and exact cleanup/residue. State only the supported bounded regression-gate claim and preserve every whole-product, capacity, multi-unit/domain, mixed-language, native-UVM-runtime, full-language, synthesis, arbitrary-tool, support-promotion, and general-parity nonclaim.`
-  Verification: `pending activation`
-  Commit: `pending activation`
+  Verification: `Clean predecessor 2d16175c4 publishes the artifact-independent machine contract through VIAL JSON/API and the complete manifest, with all eleven profile/budget/evidence rows independently joined to tracked and executable authorities and precise support/capacity nonclaims. This activation selects only human-facing README/mdBook/Knowledge/claim publication from that completed contract; it changes no command, gate, evidence, budget, applicability, cleanup, runtime, support classification, or capacity boundary.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5.2: activate human scale publication`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6`
   Status: `proposed`
   Goal: `Independently close architecture-scale regression, evidence, public truth, and residue before completing .17.5.`

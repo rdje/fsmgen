@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5.1`
-  (`done`; clean handoff boundary before human publication)
-- next_action: From the committed clean `.17.5.5.1` handoff, activate
-  `.17.5.5.2` and publish exact human-facing commands, profile/environment
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5.2`
+  (`active`; exact human-facing scale-regression publication)
+- next_action: Audit the completed machine contract against current README,
+  mdBook, Knowledge, and claim surfaces, then publish exact runnable commands,
   envelopes, applicability, cleanup, supported scope, and nonclaims.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
