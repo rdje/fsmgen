@@ -47,7 +47,7 @@ unset IFS
 
 usage() {
   cat <<'USAGE'
-Usage: ./bin/ci-regression [quick|smoke|isf|full] [options]
+Usage: ./bin/ci-regression [quick|smoke|isf|vial-gate|full] [options]
 
 Modes:
   quick  Curated smoke set for fast turnaround across direct FSM,
@@ -55,6 +55,9 @@ Modes:
          ISF schedule, and the ISF public contract.
   smoke  Alias for quick.
   isf    All ISF-focused tests in the 109x, 11xx, 12xx, and 13xx numbered bands.
+  vial-gate
+         Selected-important-step execution of the authenticated, guarded VIAL
+         regression-promotion gate lifecycle without the ordinary Perl suite.
   full   Complete Perl regression suite. This is the default.
 
 Options:
@@ -71,7 +74,7 @@ Options:
   --help                        Show this help text.
 
 Hosted shard options are full-mode CI plumbing. They are zero-based, mutually
-exclusive, require --no-book, and leave the default local full gate unchanged.
+exclusive, require --no-book, and bypass the unsharded local gate lifecycle.
 USAGE
 }
 
@@ -80,6 +83,8 @@ list_modes() {
   printf '  %s\n' "${QUICK_TESTS[@]}"
   printf 'isf tests:\n'
   printf '  %s\n' "${ISF_TESTS[@]}"
+  printf 'selected important step:\n'
+  printf '  vial-gate\n'
 }
 
 require_tool() {
@@ -100,6 +105,43 @@ run_step() {
     return 0
   fi
   "$@"
+}
+
+run_vial_regression_promotion_gate_lifecycle() {
+  local primary_status=0
+  local cleanup_status=0
+
+  run_step "VIAL regression-promotion evidence materialization" \
+    perl scripts/materialize_vial_regression_promotion_gate_evidence.pl \
+    materialize || return $?
+
+  run_step "VIAL regression-promotion current-corpus validation" \
+    perl scripts/verify_vial_regression_promotion_current_corpus.pl \
+    || primary_status=$?
+  if (( primary_status == 0 )); then
+    run_step "VIAL regression-promotion budget-qualification validation" \
+      perl scripts/verify_vial_regression_promotion_budget_qualification.pl \
+      || primary_status=$?
+  fi
+  if (( primary_status == 0 )); then
+    run_step "VIAL regression-promotion guarded gate" \
+      scripts/run_with_ram_guard.sh -- \
+      scripts/run_vial_regression_promotion_gate.pl --run \
+      || primary_status=$?
+  fi
+
+  run_step "VIAL regression-promotion evidence cleanup" \
+    perl scripts/materialize_vial_regression_promotion_gate_evidence.pl \
+    cleanup || cleanup_status=$?
+
+  if (( primary_status != 0 )); then
+    if (( cleanup_status != 0 )); then
+      printf 'ci-regression: evidence cleanup failed with status %s after gate lifecycle status %s\n' \
+        "$cleanup_status" "$primary_status" >&2
+    fi
+    return "$primary_status"
+  fi
+  return "$cleanup_status"
 }
 
 require_test_files() {
@@ -277,7 +319,7 @@ run_hosted_corpus_shard() {
 
 while (($#)); do
   case "$1" in
-    quick|smoke|isf|full)
+    quick|smoke|isf|vial-gate|full)
       MODE="$1"
       ;;
     --no-book)
@@ -386,7 +428,13 @@ if (( hosted_shard_family_count > 0 )) && [[ "$RUN_BOOK" -ne 0 ]]; then
 fi
 
 if (( ! DRY_RUN )); then
-  require_tool prove
+  if [[ "$MODE" != "vial-gate" ]]; then
+    require_tool prove
+  fi
+  if [[ "$MODE" == "vial-gate" ]] \
+      || { [[ "$MODE" == "full" ]] && (( hosted_shard_family_count == 0 )); }; then
+    require_tool perl
+  fi
   if (( RUN_BOOK )); then
     require_tool mdbook
   fi
@@ -401,6 +449,9 @@ case "$MODE" in
     require_test_files "${ISF_TESTS[@]}"
     run_step "Perl ISF regression suite" prove -I perl "${ISF_TESTS[@]}"
     ;;
+  vial-gate)
+    run_vial_regression_promotion_gate_lifecycle
+    ;;
   full)
     if [[ -n "$HOSTED_FILE_SHARD" ]]; then
       select_hosted_file_shard "$HOSTED_FILE_SHARD"
@@ -412,6 +463,7 @@ case "$MODE" in
       run_hosted_corpus_shard "$HOSTED_CORPUS_SHARD"
     else
       run_step "Perl regression suite" prove -I perl t
+      run_vial_regression_promotion_gate_lifecycle
     fi
     ;;
 esac

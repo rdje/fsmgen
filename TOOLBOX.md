@@ -204,6 +204,7 @@ Use the repo-owned local regression tiers for broader checks:
 ./bin/ci-regression quick
 ./bin/ci-regression smoke
 ./bin/ci-regression isf
+./bin/ci-regression vial-gate
 ./bin/ci-regression
 ```
 

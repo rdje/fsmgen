@@ -473,14 +473,16 @@ Before landing behavior changes, run the local regression suite:
 ./bin/ci-regression quick
 ./bin/ci-regression smoke
 ./bin/ci-regression isf
+./bin/ci-regression vial-gate
 ./bin/ci-regression
 ```
 
 Use `quick` for a small smoke set when you need fast feedback on basic direct
 `.fsm`, composition, and ISF functionality. `smoke` is an alias for the same
 tier. Use `isf` for the current ISF-focused 109x, 11xx, 12xx, and 13xx
-numbered bands. With no mode argument, `./bin/ci-regression` runs the full Perl suite
-and remains the pre-push gate.
+numbered bands. Use `vial-gate` only for the selected authenticated architecture-
+scale gate. With no mode argument, `./bin/ci-regression` runs the full Perl suite,
+then that VIAL gate, and remains the unsharded pre-push gate.
 
 For focused work, run the nearby targeted `prove` suites first, then the
 smallest `ci-regression` tier that covers the changed surface. The gate builds
@@ -498,9 +500,10 @@ four Perl matrices continue after individual failures. A final required result
 succeeds only when every shard, doctrine enforcement, and the separate mdBook
 build succeed. Exactly the dedicated `t/1598`, `t/1648`, and `t/1650`
 coordinates materialize exact OSVVM 2026.05 beneath their isolated repository-
-local caches; only `t/1436` receives its pinned HDL tools. The ordinary local
-`./bin/ci-regression` command remains unsharded and includes the book build. The
-GitHub Pages workflow builds this mdBook from `docs/book` and publishes the
+local caches; only `t/1436` receives its pinned HDL tools. Hosted shards do not
+inherit the local VIAL gate lifecycle. The ordinary local `./bin/ci-regression`
+command remains unsharded and includes both that lifecycle and the book build.
+The GitHub Pages workflow builds this mdBook from `docs/book` and publishes the
 generated `docs/book/book` artifact when Pages is configured to use GitHub
 Actions.
 

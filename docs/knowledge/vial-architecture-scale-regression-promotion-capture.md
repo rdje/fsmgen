@@ -37,7 +37,7 @@ answers:
   - "can a prior VIAL gate result influence qualification or execution?"
   - "how do I run or validate the latest VIAL regression gate result?"
   - "does the VIAL regression gate CLI run work by default?"
-  - "why can a fresh checkout not run the real VIAL regression gate yet?"
+  - "how do I run the authenticated VIAL regression gate through local CI?"
   - "how will VIAL regression gate evidence reach hosted CI?"
   - "how is the tracked VIAL regression gate evidence bundle authenticated?"
   - "how do I materialize the tracked VIAL regression gate evidence?"
@@ -50,11 +50,11 @@ tags: [hial, vial, scalability, regression, measurement, publication]
 evidence: >-
   docs/decisions/0096-regression-promotion-uses-a-current-eleven-profile-corpus.md; docs/decisions/0097-regression-gates-publish-replaceable-observations-without-recalibrating.md; docs/decisions/0098-hosted-regression-gates-materialize-immutable-tracked-evidence.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16df-vial-architecture-scale-cap-closeout.md;
   perl/FSM/VIAL/ArchitectureScaleRegressionPromotionPolicy.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCapturePlan.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualificationStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateContract.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateProfile.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateCoordinator.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateStore.pm;
-  scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; scripts/verify_vial_regression_promotion_evidence_transport.pl; scripts/materialize_vial_regression_promotion_gate_evidence.pl; scripts/run_vial_regression_promotion_gate.pl; vial/qualification/regression_promotion_gate/evidence-v1/transport-manifest.json; t/1765-vial-architecture-scale-regression-promotion-policy.t; t/1776-vial-regression-promotion-current-corpus-verifier.t; t/1784-vial-regression-promotion-budget-qualification-closeout.t; t/1785-vial-regression-promotion-gate-contract.t; t/1789-vial-regression-promotion-gate-cli.t; t/1790-vial-regression-promotion-evidence-transport.t; t/1791-vial-regression-promotion-evidence-materialization.t
+  bin/ci-regression; scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; scripts/verify_vial_regression_promotion_evidence_transport.pl; scripts/materialize_vial_regression_promotion_gate_evidence.pl; scripts/run_vial_regression_promotion_gate.pl; vial/qualification/regression_promotion_gate/evidence-v1/transport-manifest.json; t/1183-ci-regression-tier-selection.t; t/1784-vial-regression-promotion-budget-qualification-closeout.t; t/1785-vial-regression-promotion-gate-contract.t; t/1789-vial-regression-promotion-gate-cli.t; t/1790-vial-regression-promotion-evidence-transport.t; t/1791-vial-regression-promotion-evidence-materialization.t
 reverify: >-
   scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; perl scripts/verify_vial_regression_promotion_evidence_transport.pl; env FSMGEN_VIAL_REGRESSION_GATE_CONTRACT_EXACT=1 scripts/run_with_ram_guard.sh -- prove -Iperl t/1785-vial-regression-promotion-gate-contract.t;
   prove -Iperl t/1786-vial-regression-promotion-gate-profile.t t/1787-vial-regression-promotion-gate-coordinator.t t/1788-vial-regression-promotion-gate-store.t t/1789-vial-regression-promotion-gate-cli.t t/1790-vial-regression-promotion-evidence-transport.t; scripts/run_with_ram_guard.sh -- prove -Iperl t/1791-vial-regression-promotion-evidence-materialization.t;
-  git ls-files '.artifacts/qualification/vial-scale/v2/**'
+  prove -Iperl t/1183-ci-regression-tier-selection.t; ./bin/ci-regression vial-gate --dry-run --no-book; git ls-files '.artifacts/qualification/vial-scale/v2/**'
 ---
 
 Decision 0096 selects eleven v2 gate profiles. Each adapter call owns one
@@ -153,9 +153,9 @@ order, path, canonicality, byte, digest, source-seal, identity, extra/missing,
 link, alias, and special-file mutations while proving generated coordinates
 unchanged.
 
-The fixed `materialize`/`cleanup` command authenticates one identity-scoped,
-same-volume transaction and installs corpus before qualification without
-overwrite. Exact existing evidence stays unowned; a receipt bounds cleanup; T1791 covers recovery and hostile state while gate/CI execution stays separate.
+The fixed materializer owns one no-overwrite same-volume transaction; exact prior evidence stays unowned, and T1791 retains hostile recovery and cleanup.
+Local `vial-gate` and unsharded `full` run both validators, one RAM-guarded gate, then receipt cleanup after successful materialization.
+T1183 preserves prior evidence/result and keeps quick, smoke, ISF, direct tests, and hosted shards gate-free.
 
 The selected hosted job materializes exact OSVVM 2026.05 but no substitute
 Verilator or GHDL. Ordinals 1-7 and 11 execute with informational Ubuntu

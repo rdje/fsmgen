@@ -1788,6 +1788,46 @@ the regression gate.
 - Durability: The executable materializer, authenticated tracked bundle/verifier, t1791, production corpus/qualification validators, Decision 0098, owning task, Knowledge Map card, claim record, mdBook chapter, doctrine gates, and work-unit commit retain the behavior. Local and hosted CI remain separately owned by `.17.5.4.3.2.3` and `.17.5.4.3.3`.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-evidence-materialization-v1 -->
 
+### Local regression-gate placement
+
+The selected-important-step and unsharded pre-push entrypoints are now:
+
+```sh
+# Run only the authenticated architecture-scale gate lifecycle, then the book.
+./bin/ci-regression vial-gate
+
+# Run ordinary Perl regression, the same gate lifecycle once, then the book.
+./bin/ci-regression
+```
+
+Pass `--no-book` only when the book check is deliberately owned elsewhere.
+Both paths materialize authenticated evidence, run the current-corpus and
+budget-qualification validators, execute `--run` beneath
+`scripts/run_with_ram_guard.sh`, and invoke receipt-bounded cleanup. Unsharded
+`full` enters that sequence only after ordinary regression succeeds. Quick,
+smoke, ISF, direct tests, and all current hosted shard options remain gate-free.
+
+After materialization succeeds, cleanup is attempted exactly once even when a
+validator, the RAM guard, or the gate fails. The primary failure status wins;
+a simultaneous cleanup failure is also diagnosed. A cleanup-only failure after
+a successful gate becomes the command failure. Materializer receipt semantics
+preserve exact adopted evidence, while newly installed evidence is removed.
+Cleanup never targets the qualification-distinct latest observation, so a
+successful gate result remains available for producer-free validation.
+
+T1183 first failed on the absent mode and zero full-path gate commands. Its
+GREEN watcher checks dry-run order and command cardinality, then uses a copied
+driver plus five fixed command stubs to inject materializer, validator, guard, gate, and
+cleanup failures without executing the real eleven-profile workload. Hosted
+workflow wiring and independent real gate execution remain separate owners.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-local-ci-placement-v1 -->
+- Claim: Local `vial-gate` and unsharded `full` share one ordered five-step regression-promotion lifecycle: authenticated materialization, two production evidence validators, one RAM-guarded `--run`, and receipt-bounded cleanup. Full enters it once after ordinary Perl regression. Quick, smoke, ISF, direct tests, and each current hosted shard family remain gate-free. Cleanup is attempted once after successful materialization on success or downstream failure, preserves adopted evidence and the latest observation, and propagates cleanup or primary failure without converting either to success. This is local CI placement, not a real gate observation, hosted activation, recalibration, support, or capacity evidence.
+- Re-derive: Run `prove -Iperl t/1183-ci-regression-tier-selection.t`, inspect `bin/ci-regression`, and compare `vial-gate --dry-run --no-book` with unsharded and each hosted-shard `full --dry-run --no-book`. Require the selected five-command order, one post-regression full occurrence, one RAM-guarded gate command, and zero occurrences in every excluded mode.
+- Falsify: T1183 began RED because `vial-gate` was unknown and unsharded full selected zero gate commands. Its copied-driver stubs now fail materialization, either validator, the guard, gate, and cleanup independently at status 23; every post-materialization failure attempts cleanup exactly once, failure remains nonzero, case-variant mode and selected/hosted mixing reject, and no real gate runs.
+- Durability: Retain `bin/ci-regression`, t1183, the materializer and production validators, common RAM guard, gate CLI, Decision 0098, owning task, Knowledge Map card, this chapter, bounded claim record, doctrine watchers, and work-unit commit. `.17.5.4.3.3` separately owns hosted wiring and `.17.5.4.4` independently owns real execution closeout.
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-local-ci-placement-v1 -->
+
 The hosted provider contract installs no substitute runtime tool. It
 materializes exact OSVVM 2026.05, rejects an ambient Verilator or fixed GHDL
 artifact before execution, and runs every provider-free or
@@ -1821,10 +1861,11 @@ CLI, the real clean-revision qualification seal, hostile copied controls,
 final independent/production agreement, one-profile gate worker,
 eleven-profile coordinator, atomic latest-result store, explicit gate CLI,
 authenticated transport, and transactional materialization are complete.
-Gate/CI integration and public truth remain separate rollback owners. Until
-those leaves pass, the sealed budgets remain unenforced, all historical
-candidate budgets stay candidate-only, and whole-product big/really-big
-capacity remains unclaimed.
+The selected and unsharded local CI entrypoints are complete; hosted placement
+and independent real execution remain separate rollback owners. Until those
+leaves pass, the sealed budgets have no complete CI closure, all historical
+candidate budgets stay candidate-only, and whole-product big/really-big capacity
+remains unclaimed.
 
 ## Revision-separated complete-corpus validation
 

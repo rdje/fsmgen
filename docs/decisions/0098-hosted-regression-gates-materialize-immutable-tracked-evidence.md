@@ -118,9 +118,9 @@ substituted by an Ubuntu package.
   Knowledge Map fact, the fifteen tracked payloads, canonical manifest,
   producer-independent verifier, root-derived transactional materializer,
   hostile copied transport/materialization watchers, production corpus and
-  qualification validators, and work-unit commits retain the selection and
-  exact audit. Hosted wiring remains forbidden until the local-driver child
-  closes.
+  qualification validators, `bin/ci-regression`, its copied-command inventory
+  watcher, and work-unit commits retain the selection and exact audit. Hosted
+  wiring remains separately owned after the local-driver child closes.
 
 ## Consequences and nonclaims
 
@@ -128,11 +128,15 @@ substituted by an Ubuntu package.
   current evidence without turning generated `.artifacts` into source. The
   explicit fixed-coordinate materializer can now construct and independently
   validate those generated coordinates or remove only receipt-owned roots.
+- Local `vial-gate` and unsharded `full` now share the exact materialize, two-
+  validator, RAM-guarded gate, and receipt-cleanup lifecycle. Full enters it
+  once after ordinary regression; hosted shard modes, quick, smoke, and ISF do
+  not. Exact pre-existing evidence and the latest gate observation survive.
 - Hosted CI will exercise every route that is honestly available and preserve
   distinct unavailable and informational truth for the rest.
-- The tracked bundle and separate explicit materializer transport bytes but do
-  not run the gate. Until `.17.5.4.3.2.3` ships, local CI has no selected or
-  full entrypoint for the real gate.
+- The local driver placement is inventory-tested without running the real gate;
+  hosted workflow activation and an independently authenticated real execution
+  remain separately owned.
 
 ## Rollback
 

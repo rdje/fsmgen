@@ -2,6 +2,8 @@
 use strict;
 use warnings;
 use Test::More;
+use File::Basename qw(basename);
+use File::Path qw(make_path remove_tree);
 use File::Spec;
 use FindBin;
 use IPC::Cmd qw(run);
@@ -56,11 +58,25 @@ my $mdbook_installer = File::Spec->catfile(
     'scripts',
     'install_hosted_mdbook.sh',
 );
+my $gate_fixture_root = File::Spec->catdir(
+    $repo_root,
+    '.artifacts',
+    'tmp',
+    "ci-regression-gate-fixture-$$",
+);
+
+END {
+    remove_tree($gate_fixture_root) if -d $gate_fixture_root;
+}
 
 sub run_ci {
-    my (@args) = @_;
+    return run_ci_at($ci, @_);
+}
+
+sub run_ci_at {
+    my ($ci_path, @args) = @_;
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
-        command => [$ci, @args],
+        command => [$ci_path, @args],
     );
 
     return {
@@ -77,6 +93,111 @@ sub slurp {
     my $text = do { local $/; <$fh> };
     close $fh or die "cannot close $path: $!";
     return $text;
+}
+
+sub write_raw {
+    my ($path, $bytes) = @_;
+    open my $fh, '>', $path or die "cannot write $path: $!";
+    print {$fh} $bytes or die "cannot populate $path: $!";
+    close $fh or die "cannot close $path: $!";
+}
+
+sub create_gate_fixture {
+    remove_tree($gate_fixture_root) if -d $gate_fixture_root;
+    make_path(
+        File::Spec->catdir($gate_fixture_root, 'bin'),
+        File::Spec->catdir($gate_fixture_root, 'scripts'),
+    );
+
+    my $fixture_ci = File::Spec->catfile(
+        $gate_fixture_root, 'bin', 'ci-regression',
+    );
+    my $locality = File::Spec->catfile(
+        $gate_fixture_root, 'scripts', 'project_data_locality_env.sh',
+    );
+    write_raw($fixture_ci, slurp($ci));
+    write_raw(
+        $locality,
+        slurp(File::Spec->catfile(
+            $repo_root, 'scripts', 'project_data_locality_env.sh',
+        )),
+    );
+    chmod 0755, $fixture_ci, $locality
+        or die "cannot make copied CI fixture executable: $!";
+
+    my $stub = <<'STUB';
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use File::Basename qw(basename);
+
+my $base = basename($0);
+my $key = $base eq 'materialize_vial_regression_promotion_gate_evidence.pl'
+    ? ($ARGV[0] // 'missing')
+    : $base eq 'verify_vial_regression_promotion_current_corpus.pl'
+        ? 'corpus'
+        : $base eq 'verify_vial_regression_promotion_budget_qualification.pl'
+            ? 'qualification'
+            : $base eq 'run_with_ram_guard.sh'
+                ? 'guard'
+                : $base eq 'run_vial_regression_promotion_gate.pl'
+                    ? 'gate'
+                    : die "unknown stub: $base\n";
+
+my $log = $ENV{FSMGEN_CI_GATE_FIXTURE_LOG}
+    // die "missing fixture log\n";
+open my $log_fh, '>>', $log or die "cannot open fixture log: $!\n";
+print {$log_fh} join(' ', $key, @ARGV), "\n"
+    or die "cannot write fixture log: $!\n";
+close $log_fh or die "cannot close fixture log: $!\n";
+
+exit 23 if ($ENV{FSMGEN_CI_GATE_FIXTURE_FAIL} // '') eq $key;
+if ($key eq 'guard') {
+    shift @ARGV if @ARGV && $ARGV[0] eq '--';
+    die "guard stub has no command\n" unless @ARGV;
+    system {$ARGV[0]} @ARGV;
+    exit 127 if $? == -1;
+    exit 128 + ($? & 127) if $? & 127;
+    exit $? >> 8;
+}
+
+print "{}\n";
+exit 0;
+STUB
+
+    for my $name (qw(
+        materialize_vial_regression_promotion_gate_evidence.pl
+        verify_vial_regression_promotion_current_corpus.pl
+        verify_vial_regression_promotion_budget_qualification.pl
+        run_with_ram_guard.sh
+        run_vial_regression_promotion_gate.pl
+    )) {
+        my $path = File::Spec->catfile(
+            $gate_fixture_root, 'scripts', $name,
+        );
+        write_raw($path, $stub);
+        chmod 0755, $path
+            or die "cannot make gate fixture stub executable: $!";
+    }
+
+    return $fixture_ci;
+}
+
+sub run_gate_fixture {
+    my ($fixture_ci, $failure) = @_;
+    my $log = File::Spec->catfile($gate_fixture_root, 'gate.log');
+    unlink $log if -e $log;
+    local $ENV{FSMGEN_CI_GATE_FIXTURE_LOG} = $log;
+    local $ENV{FSMGEN_CI_GATE_FIXTURE_FAIL};
+    if (defined $failure) {
+        $ENV{FSMGEN_CI_GATE_FIXTURE_FAIL} = $failure;
+    } else {
+        delete $ENV{FSMGEN_CI_GATE_FIXTURE_FAIL};
+    }
+
+    my $result = run_ci_at($fixture_ci, 'vial-gate', '--no-book');
+    $result->{log} = -e $log ? slurp($log) : '';
+    return $result;
 }
 
 sub run_dynamic_case_list {
@@ -251,6 +372,131 @@ subtest 'dry-run modes select the expected command families' => sub {
     is($full->{stderr}, '', 'full dry-run keeps stderr clean');
     like($full->{stdout}, qr/==> Perl regression suite/, 'full dry-run selects full suite');
     like($full->{stdout}, qr/\bprove\s+-I\s+perl\s+t\b/, 'full dry-run preserves default prove command');
+};
+
+subtest 'selected and unsharded full modes own one ordered guarded gate lifecycle' => sub {
+    my @gate_labels = (
+        'VIAL regression-promotion evidence materialization',
+        'VIAL regression-promotion current-corpus validation',
+        'VIAL regression-promotion budget-qualification validation',
+        'VIAL regression-promotion guarded gate',
+        'VIAL regression-promotion evidence cleanup',
+    );
+
+    my $selected = run_ci('vial-gate', '--dry-run', '--no-book');
+    ok($selected->{success}, 'selected VIAL gate dry-run succeeds');
+    is($selected->{stderr}, '', 'selected VIAL gate dry-run keeps stderr clean');
+    my @selected_labels = $selected->{stdout} =~ /^==> (.+)$/mg;
+    is_deeply(
+        \@selected_labels,
+        \@gate_labels,
+        'selected mode exposes only the ordered authenticated gate lifecycle',
+    );
+    my @selected_gate_runs = $selected->{stdout}
+        =~ /run_vial_regression_promotion_gate\.pl\s+--run/g;
+    is(scalar(@selected_gate_runs), 1, 'selected mode invokes the real gate exactly once');
+    like(
+        $selected->{stdout},
+        qr{run_with_ram_guard\.sh\s+--\s+scripts/run_vial_regression_promotion_gate\.pl\s+--run},
+        'selected mode puts the gate beneath the common RAM guard',
+    );
+
+    my $full = run_ci('full', '--dry-run', '--no-book');
+    ok($full->{success}, 'unsharded full gate dry-run succeeds');
+    is($full->{stderr}, '', 'unsharded full gate dry-run keeps stderr clean');
+    my @full_labels = $full->{stdout} =~ /^==> (.+)$/mg;
+    is_deeply(
+        \@full_labels,
+        ['Perl regression suite', @gate_labels],
+        'unsharded full runs the gate lifecycle exactly once after ordinary regression',
+    );
+    my @full_gate_runs = $full->{stdout}
+        =~ /run_vial_regression_promotion_gate\.pl\s+--run/g;
+    is(scalar(@full_gate_runs), 1, 'unsharded full does not double-execute the gate');
+
+    my $with_book = run_ci('vial-gate', '--dry-run');
+    ok($with_book->{success}, 'selected VIAL gate retains the ordinary default book check');
+    like($with_book->{stdout}, qr/==> mdBook build/, 'selected mode builds the book unless suppressed');
+};
+
+subtest 'focused modes and every hosted shard family stay gate-free' => sub {
+    for my $mode (qw(quick smoke isf)) {
+        my $result = run_ci($mode, '--dry-run', '--no-book');
+        ok($result->{success}, "$mode dry-run succeeds");
+        unlike(
+            $result->{stdout},
+            qr/VIAL regression-promotion|materialize_vial_regression|run_vial_regression_promotion_gate/,
+            "$mode remains free of the expensive gate lifecycle",
+        );
+    }
+
+    my @hosted = (
+        '--hosted-file-shard=0/16',
+        '--hosted-dedicated-shard=0/5',
+        '--hosted-dynamic-shard=0/68',
+        '--hosted-corpus-shard=301:0/16',
+    );
+    for my $option (@hosted) {
+        my $result = run_ci('full', '--dry-run', '--no-book', $option);
+        ok($result->{success}, "$option dry-run succeeds");
+        unlike(
+            $result->{stdout},
+            qr/VIAL regression-promotion|materialize_vial_regression|run_vial_regression_promotion_gate/,
+            "$option remains free of the unsharded local gate lifecycle",
+        );
+    }
+};
+
+subtest 'selected gate lifecycle propagates failure and always cleans successful materialization' => sub {
+    my $fixture_ci = create_gate_fixture();
+
+    my $success = run_gate_fixture($fixture_ci, undef);
+    ok($success->{success}, 'copied selected gate lifecycle succeeds');
+    is_deeply(
+        [map { /^([^ ]+)/ ? $1 : () } grep { length } split /\n/, $success->{log}],
+        [qw(materialize corpus qualification guard gate cleanup)],
+        'successful copied lifecycle has one exact ordered command census',
+    );
+
+    my $materialize_failure = run_gate_fixture($fixture_ci, 'materialize');
+    ok(!$materialize_failure->{success}, 'materialization failure propagates');
+    like($materialize_failure->{error}, qr/exited with value 23\z/,
+        'materialization failure status is retained');
+    is($materialize_failure->{log}, "materialize materialize\n",
+        'failed materialization does not claim a cleanup-owned receipt');
+
+    for my $failure (qw(corpus qualification guard gate)) {
+        my $result = run_gate_fixture($fixture_ci, $failure);
+        ok(!$result->{success}, "$failure failure propagates");
+        like($result->{error}, qr/exited with value 23\z/,
+            "$failure failure status is retained");
+        like($result->{log}, qr/^materialize materialize\n/, "$failure begins after materialization");
+        like($result->{log}, qr/^cleanup cleanup$/m,
+            "$failure still invokes receipt-bounded cleanup");
+        my @cleanup = $result->{log} =~ /^cleanup cleanup$/mg;
+        is(scalar(@cleanup), 1, "$failure invokes cleanup exactly once");
+    }
+
+    my $cleanup_failure = run_gate_fixture($fixture_ci, 'cleanup');
+    ok(!$cleanup_failure->{success}, 'cleanup failure propagates after a successful gate');
+    like($cleanup_failure->{error}, qr/exited with value 23\z/,
+        'cleanup failure status is retained');
+    like($cleanup_failure->{log}, qr/^gate --run$/m,
+        'cleanup failure occurs after the gate has completed');
+};
+
+subtest 'selected gate mode and hosted boundary fail closed' => sub {
+    my $case_variant = run_ci('VIAL-gate', '--dry-run', '--no-book');
+    ok(!$case_variant->{success}, 'case-variant selected mode fails');
+    like($case_variant->{stderr}, qr/unknown argument: VIAL-gate/,
+        'case-variant diagnostic names the rejected mode');
+
+    my $hosted = run_ci(
+        'vial-gate', '--dry-run', '--no-book', '--hosted-file-shard=0/16',
+    );
+    ok(!$hosted->{success}, 'selected mode cannot acquire a hosted shard option');
+    like($hosted->{stderr}, qr/hosted shards require full mode/,
+        'selected/hosted mixing fails at the closed ownership boundary');
 };
 
 subtest 'hosted file shards form one exact disjoint full-suite inventory' => sub {
@@ -750,7 +996,8 @@ subtest 'ISF tier remains ready for the next numbered band' => sub {
 subtest 'smoke remains an explicit alias for quick turnaround' => sub {
     my $script = slurp($ci);
 
-    like($script, qr/quick\|smoke\|isf\|full/, 'mode parser accepts smoke beside quick');
+    like($script, qr/quick\|smoke\|isf\|vial-gate\|full/,
+        'mode parser accepts smoke beside quick and the selected VIAL gate');
     like($script, qr/quick\|smoke\)\n\s+require_test_files "\$\{QUICK_TESTS\[@\]\}"/,
         'smoke and quick use the same curated test list');
 };

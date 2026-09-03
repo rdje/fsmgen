@@ -1714,7 +1714,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Place the expensive guarded regression gate in bounded local and hosted CI cadence.`
   Acceptance: `Expose exact repository-relative pre-push/selected-important-step and hosted entrypoints around the .2 gate. Keep ordinary slice commits on focused checks, preserve the unsharded local full gate, give hosted execution explicit shard/provider/tool ownership, and require hosted nonmatching environments to run applicable correctness/determinism/safety/publication/cleanup checks while reporting performance informationally. Update CI inventory and workflow documentation so every tracked test remains exactly owned, no matrix tail is hidden, full CI remains reserved for push or selected important steps, and unavailable providers cannot yield a passing performance classification.`
-  Verification: `Fresh-checkout audit found that the complete gate cannot yet run in hosted CI: all 15 authenticated corpus/qualification files are beneath ignored .artifacts, git ls-files supplies none, and the exact local census is 7,012,284 bytes. The existing six-family hosted union therefore runs only synthetic gate watchers through ordinary file shards. Three ordered children separate durable non-recalibrating evidence transport selection, authenticated materialization plus local driver entrypoints, and hosted workflow/inventory closeout. Decision 0098 completes child .1 with a tracked canonical-JSON bundle and exact OSVVM-present/runtime-provider-absent hosted contract; child .2 is active to implement the still-missing payload, materializer, watcher, and local driver paths before any hosted workflow is wired.`
+  Verification: `Fresh-checkout audit found that the complete gate could not run in hosted CI: all 15 authenticated corpus/qualification files were beneath ignored .artifacts, git ls-files supplied none, and the exact local census was 7,012,284 bytes. Three ordered children separate durable non-recalibrating evidence transport selection, authenticated materialization plus local driver entrypoints, and hosted workflow/inventory closeout. Decision 0098 and child .1 select the tracked canonical-JSON bundle and exact OSVVM-present/runtime-provider-absent hosted contract. Child .2 is complete: the source, verifier, transactional materializer, copied hostile watcher, explicit local vial-gate mode, and exactly-once unsharded full placement are green. Child .3 is active for the still-absent guarded hosted family and aggregate/inventory closeout.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3: partition evidence-backed CI placement`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.3`
 
@@ -1726,10 +1726,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.1: select authenticated hosted gate evidence`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement authenticated evidence materialization and bounded local CI gate entrypoints.`
   Acceptance: `Implement the .1-selected repository-owned evidence transport and fail-closed materializer with exact file census/bytes/digests, safe relative paths, no aliases, same-volume atomic destination, immutable-source validation, collision/interruption/recovery/cleanup controls, and byte-exact production load after materialization. Add an explicit selected-important-step driver mode and include the guarded gate exactly once in the unsharded local full pre-push path while quick/smoke/isf and ordinary test execution remain focused. Add hostile tests without running the real gate by default.`
-  Verification: `Decision 0098 closes transport/lifecycle selection. Three ordered children separate the immutable fifteen-file bundle and producer-independent source watcher, fixed-coordinate transactional materialization/recovery/owned cleanup, and local selected/full driver placement with inventory coverage. Child .1 closes the tracked authenticated source at transport 3b4c486e...2bbc6. Child .2 now materializes that exact source through fixed nonblocking-lock, same-volume journal/stage, corpus-first/qualification-last commit, recovery, receipt, and owned-cleanup controls; child .3 is active for driver placement while local and hosted CI remain unchanged.`
+  Verification: `Decision 0098 closes transport/lifecycle selection. Three completed children provide the immutable fifteen-file bundle and producer-independent source watcher, fixed-coordinate transactional materialization/recovery/owned cleanup, and local selected/full driver placement with inventory coverage. Child .1 closes the tracked authenticated source at transport 3b4c486e...2bbc6. Child .2 materializes that exact source through fixed nonblocking-lock, same-volume journal/stage, corpus-first/qualification-last commit, recovery, receipt, and owned-cleanup controls. Child .3 adds the explicit vial-gate mode and one post-regression unsharded full invocation through the same materialize/two-validator/RAM-guarded-run/cleanup lifecycle; all hosted shards and focused modes remain gate-free.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2: partition evidence materialization and local CI`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2.3`
 
@@ -1748,14 +1748,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2.2: materialize authenticated gate evidence`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Add bounded local selected-important-step and full pre-push gate entrypoints.`
   Acceptance: `Extend bin/ci-regression with one explicit selected gate mode and one exact gate invocation in unsharded local full after ordinary regression, both using the common RAM guard and authenticated materializer. Full preserves byte-exact preexisting evidence and the latest local observation; a fresh materialized run cleans only owned evidence after validation. Quick, smoke, ISF, direct test, and every hosted shard option remain gate-free. Extend t1183 or one focused inventory watcher to prove exact command count/order, no double execution, closed options, failure propagation, and unchanged hosted test ownership without running the real gate by default.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The local driver now accepts exact case-sensitive vial-gate as a selected-important-step mode and runs the same five-step lifecycle once after ordinary regression on only the unsharded full path. Authenticated materialization precedes both production evidence validators; the gate runs once beneath the common RAM guard; receipt cleanup runs once after every successful materialization and preserves adopted exact evidence plus the qualification-distinct latest observation. Primary failures remain primary, simultaneous cleanup failure is diagnosed, and cleanup-only failure propagates. Quick, smoke, ISF, direct tests, and all four existing hosted shard families remain gate-free. T1183 began RED at line 389 because vial-gate was unknown and full selected zero gate commands. Its copied five-stub fault matrix exercises success plus materializer, both validator, guard, gate, and cleanup failures without a real workload; the guarded GREEN run reports All tests successful, Files=1, Tests=16 in 38 wallclock seconds with no copied residue.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2.3: place the guarded gate in local CI`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Wire and close the hosted regression-gate job, inventory, and cadence documentation.`
   Acceptance: `Add one explicit guarded hosted job that materializes the authenticated current evidence and exact OSVVM 2026.05 provider, leaves exact Verilator/GHDL runtime providers absent rather than drifted, executes the gate through the .2 public command, validates canonical result/qualification identities and unavailable-not-pass plus informational-host outcomes, and cleans materialized evidence/provider/result staging. Extend the final aggregate, workflow action/tool/provider inventory, and focused CI watcher so the seventh family cannot be skipped and every tracked t/*.t still has exactly one ordinary/dedicated/corpus/dynamic owner. Synchronize workflow README, mdBook, Knowledge Map, claims, containment, task, and Memory without running full CI or claiming hosted performance/support/capacity.`
   Verification: `pending`
@@ -2034,9 +2034,10 @@ therefore closes deterministic generation. Measurement, publication, and
 regression-gate implementation now extend through authenticated transport
 child `.17.5.4.3.2.1`. Completed child `.17.5.4.3.2.2` adds the fixed-
 coordinate materializer, recoverable corpus-first/qualification-last
-transaction, and receipt-bounded cleanup. Active child `.17.5.4.3.2.3` owns
-the selected-important-step and unsharded local-full driver entrypoints;
-hosted workflow wiring remains separately proposed.
+transaction, and receipt-bounded cleanup. Completed child `.17.5.4.3.2.3`
+places the shared authenticated lifecycle in exact `vial-gate` and unsharded
+local-full entrypoints while excluding focused and hosted-shard paths. Active
+child `.17.5.4.3.3` now owns hosted workflow, aggregate, and inventory closure.
 
 ## Decisions
 
@@ -2619,7 +2620,7 @@ hosted workflow wiring remains separately proposed.
 
 - Acceptance history manifest: `docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl`
 
-The manifest binds the complete predecessor task file and its exact suffix from the prior `## Version-Retrievable Historical Views` heading through end of file to revision `7e7dc8158bc790e4b2ddaf1f5ba77ae32552e11a`. That predecessor transitively retains the earlier acceptance-history pointer. The live task tree above remains authoritative; acceptance evidence for the current materialization slice appends after this bounded pointer.
+The manifest binds the complete predecessor task file and its exact suffix from the prior `## Version-Retrievable Historical Views` heading through end of file to revision `7e7dc8158bc790e4b2ddaf1f5ba77ae32552e11a`. That predecessor transitively retains the earlier acceptance-history pointer. The live task tree above remains authoritative; current local-CI acceptance evidence appends after this bounded pointer.
 
 ## Acceptance Checklist (enforced) — `.17.5.4.3.2.2` authenticated evidence materialization
 
@@ -2641,3 +2642,25 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   Knowledge Map, mdBook, claim, containment, staged acceptance, and complete
   doctrine gates are required before commit; local/hosted CI and real gate
   execution remain unchanged.
+
+## Acceptance Checklist (enforced) — `.17.5.4.3.2.3` bounded local CI placement
+
+- [x] **ROOT CAUSE (WHY + WHERE; missing local driver path)** — the focused watcher began RED with
+  `Failed test 'selected VIAL gate dry-run succeeds' at t/1183-ci-regression-tier-selection.t line 389`.
+  The CI driver accepted no
+  selected gate mode, and its unsharded full dry-run contained zero real-gate
+  commands after ordinary regression.
+- [x] **ADDRESSED (verified before -> after)** — exact `vial-gate` and only
+  unsharded `full` now share ordered authenticated materialization, current-
+  corpus validation, budget-qualification validation, one common-RAM-guarded
+  `--run`, and one receipt cleanup. Copied fixed command stubs prove every
+  downstream status propagates while cleanup still runs exactly once; adopted
+  evidence and the latest observation remain outside owned cleanup.
+- [x] **NO REGRESSION (local CI inventory band)** — the guarded focused watcher
+  reports `All tests successful.` and `Files=1, Tests=16` in 38 wallclock
+  seconds. It proves quick/smoke/ISF and ordinary direct tests remain focused,
+  all file/dedicated/dynamic/corpus hosted shard modes stay gate-free, complete
+  hosted test ownership is unchanged, invalid mode/shard mixing rejects, and
+  copied fixture residue is absent. Syntax, mdBook, Knowledge Map, claims,
+  containment, staged acceptance, and doctrine gates remain required before
+  commit; no real gate or hosted workflow runs in this slice.
