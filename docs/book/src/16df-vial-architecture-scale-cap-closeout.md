@@ -1720,6 +1720,34 @@ real execution and CI placement remain separate rollback owners.
 - Durability: Retain the executable gate runner, t1789 plus t1786-t1788, completed implementation parent `.17.5.4.2`, this mdBook chapter, compact regression-promotion Knowledge card, bounded third-shard claim record, doctrine watchers, and work-unit commit. `.17.5.4.3` and `.17.5.4.4` still own CI placement and independent real execution.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-gate-cli-contract-v1 -->
 
+### Regression-gate CI evidence contract
+
+The real gate cannot start from a fresh checkout yet. Its current corpus and
+budget qualification are generated beneath ignored `.artifacts`, so none of
+their fifteen authenticated JSON files is tracked. Decision 0098 selects a
+versioned source bundle under
+`vial/qualification/regression_promotion_gate/evidence-v1/`: byte-identical
+canonical JSON plus one closed manifest will reproduce the fixed generated
+coordinates without recalibration or overwrite. A later materializer owns the
+copy, transaction, recovery, idempotence, and cleanup controls; hosted wiring
+is deliberately forbidden until those controls exist.
+
+The hosted provider contract installs no substitute runtime tool. It
+materializes exact OSVVM 2026.05, rejects an ambient Verilator or fixed GHDL
+artifact before execution, and runs every provider-free or
+repository-materialization profile under the RAM guard. The exact
+Verilator/GHDL runtime profiles must report `unavailable`; available Ubuntu
+measurements remain informational because their host identity differs from the
+qualification. This preserves useful correctness work without turning absence
+or a near-version tool into a performance pass.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-hosted-evidence-selection-v1 -->
+- Claim: A tracked-only fresh checkout contains none of the current regression-promotion gate's 15 source files because all 13 corpus and two qualification files live below ignored `.artifacts`; the audited source is exactly 7,012,284 bytes and binds corpus/file-set `ab2df899...e505`/`dc5b315b...c66f` plus qualification/file-set `d8fb1813...0c97`/`28ba972c...9095`. Decision 0098 selects byte-identical canonical JSON plus a closed manifest under `vial/qualification/regression_promotion_gate/evidence-v1/`. Hosted execution will materialize OSVVM 2026.05, execute ordinals 1-7 and 11 with informational timing, and require exact-runtime ordinals 8-10 to be unavailable, yielding required 11/33/44 and honest observed 8/24/32 topology. This is a transport/provider selection, not implemented materialization, CI activation, a gate result, support, or capacity.
+- Re-derive: Run the independent current-corpus and budget-qualification verifiers, enumerate both fixed source namespaces, and recompute every regular-file byte count and digest. Require 13+2 files, 7,012,284 bytes, and the named identities; compare `git ls-files` to prove the tracked source set is empty. Inspect the qualification's ordered provider requirements to recover the exact 8-available/3-unavailable hosted partition.
+- Falsify: A tracked-only checkout refutes any claim that current CI can already load the seal. Regeneration cannot retain the M4 capture/publisher identity; cache or prior-run artifacts are mutable; substitute Verilator/GHDL versions produce drift rather than absence; an archive adds extraction/path surface; and caller-selected evidence violates the sealed gate contract. Any alternative must preserve exact bytes, identities, fixed destinations, reviewability, and unavailable-not-pass truth simultaneously.
+- Durability: MISSING - The selection and audit are tracked, but the byte payload, manifest, materializer, and executable watcher do not exist until the next child implements them; hosted wiring remains forbidden meanwhile. (owner: HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2)
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-hosted-evidence-selection-v1 -->
+
 Re-derive the selection and its closure comparison with:
 
 ```sh

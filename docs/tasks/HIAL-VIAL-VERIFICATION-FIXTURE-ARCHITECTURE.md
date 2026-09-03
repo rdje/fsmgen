@@ -1714,19 +1714,19 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Place the expensive guarded regression gate in bounded local and hosted CI cadence.`
   Acceptance: `Expose exact repository-relative pre-push/selected-important-step and hosted entrypoints around the .2 gate. Keep ordinary slice commits on focused checks, preserve the unsharded local full gate, give hosted execution explicit shard/provider/tool ownership, and require hosted nonmatching environments to run applicable correctness/determinism/safety/publication/cleanup checks while reporting performance informationally. Update CI inventory and workflow documentation so every tracked test remains exactly owned, no matrix tail is hidden, full CI remains reserved for push or selected important steps, and unavailable providers cannot yield a passing performance classification.`
-  Verification: `Fresh-checkout audit found that the complete gate cannot yet run in hosted CI: all 15 authenticated corpus/qualification files are beneath ignored .artifacts, git ls-files supplies none, and the exact local census is 7,012,284 bytes. The existing six-family hosted union therefore runs only synthetic gate watchers through ordinary file shards. Three ordered children now separate durable non-recalibrating evidence transport selection, authenticated materialization plus local driver entrypoints, and hosted workflow/inventory closeout. Child .1 is active; no predictably failing workflow is wired in the partition slice.`
+  Verification: `Fresh-checkout audit found that the complete gate cannot yet run in hosted CI: all 15 authenticated corpus/qualification files are beneath ignored .artifacts, git ls-files supplies none, and the exact local census is 7,012,284 bytes. The existing six-family hosted union therefore runs only synthetic gate watchers through ordinary file shards. Three ordered children separate durable non-recalibrating evidence transport selection, authenticated materialization plus local driver entrypoints, and hosted workflow/inventory closeout. Decision 0098 completes child .1 with a tracked canonical-JSON bundle and exact OSVVM-present/runtime-provider-absent hosted contract; child .2 is active to implement the still-missing payload, materializer, watcher, and local driver paths before any hosted workflow is wired.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3: partition evidence-backed CI placement`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.3`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.1`
-  Status: `active`
+  Status: `done`
   Goal: `Select a durable current-evidence transport and exact hosted provider contract.`
   Acceptance: `Prove the evidence/files a fresh checkout lacks, their exact current census and identities, and why source-only regeneration, cross-run cache, ambient tools, or caller-supplied evidence cannot authenticate the immutable qualification. Select one bounded repository-owned transport/materialization lifecycle that reproduces the exact fixed corpus and qualification coordinates without recalibration, overwrite, history substitution, or aliasing. Freeze hosted provider ownership: exact structural OSVVM materialization, absent exact runtime providers as unavailable-not-pass, all other available correctness paths, informational unmatched performance, one guarded job, atomic result/cleanup, and no public support/capacity promotion. Record the choice in a decision, task, Knowledge Map, and mdBook before implementation.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Decision 0098 records the fresh-checkout blocker and closes the transport/provider selection before code. The exact ignored source is 13 corpus plus two qualification files and 7,012,284 bytes; independent verification reproduces corpus/file-set ab2df899...e505/dc5b315b...c66f and qualification/file-set d8fb1813...0c97/28ba972c...9095, while git ls-files returns none. The selected version-1 repository source keeps all fifteen canonical JSON payloads byte-identical under vial/qualification/regression_promotion_gate/evidence-v1 with one closed ordered manifest, 8-MiB payload and 32-KiB manifest transport ceilings, and fixed no-overwrite generated destinations. Materialization will validate/stage both roots, install corpus before qualification as commit point, recover only the exact transaction, and clean only owned paths. Hosted ownership is one guarded Ubuntu 24.04 seventh family: exact OSVVM 2026.05 is materialized, ambient Verilator and fixed GHDL artifacts must be absent, ordinals 1-7/11 execute with informational timing, and exact-runtime ordinals 8-10 produce unavailable rather than pass, for honest 8/24/32 observed versus 11/33/44 required topology. Source regeneration, caches/run artifacts, forced .artifacts tracking, application archives, substitute tools, and caller evidence are rejected. The mdBook and compact existing Knowledge card carry the same choice; the claim record explicitly names the not-yet-tracked payload/materializer durability gap owned by .2. No evidence copy, code, workflow, gate execution, result, support, or capacity changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.1: select authenticated hosted gate evidence`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement authenticated evidence materialization and bounded local CI gate entrypoints.`
   Acceptance: `Implement the .1-selected repository-owned evidence transport and fail-closed materializer with exact file census/bytes/digests, safe relative paths, no aliases, same-volume atomic destination, immutable-source validation, collision/interruption/recovery/cleanup controls, and byte-exact production load after materialization. Add an explicit selected-important-step driver mode and include the guarded gate exactly once in the unsharded local full pre-push path while quick/smoke/isf and ordinary test execution remain focused. Add hostile tests without running the real gate by default.`
   Verification: `pending`
@@ -6295,3 +6295,44 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   are required before commit. No gate/workload/provider/simulator execution,
   corpus or qualification mutation, evidence copy, workflow, CI driver,
   test, book, claim, support, capacity, full CI, or push changes.
+
+## Acceptance Checklist (enforced) — `.17.5.4.3.1` hosted evidence selection
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — independent corpus/qualification
+  verification and an exact regular-file census find thirteen current-corpus
+  files plus two qualification files at 7,012,284 bytes, with the accepted
+  corpus/file-set and qualification/file-set identities. `git ls-files` finds
+  none because `.gitignore` owns `.artifacts/`; `git log -S'.artifacts/' --
+  .gitignore` identifies `ed081b05a`, the generated-artifact placement commit
+  that introduced that durable boundary. Therefore the real gate cannot
+  authenticate its inputs in a fresh checkout. Ubuntu package Verilator is
+  also a wrong-version drift rather than the qualified 5.046 provider, and the
+  exact GHDL artifact is repository-local macOS arm64 material.
+- [x] **ADDRESSED (verified)** — Decision 0098 selects one versioned tracked
+  canonical-JSON payload plus a closed ordered manifest outside `.artifacts`,
+  with fixed destinations, exact admission, same-volume stage/install,
+  qualification-last commit, exact recovery, no overwrite/recalibration, and
+  owned cleanup. It also freezes the seventh hosted family: exact OSVVM
+  2026.05 is present; substitute runtime tools are absent; ordinals 1-7/11 run
+  with informational timing; ordinals 8-10 remain unavailable-not-pass; and
+  the required 11/33/44 topology remains distinct from observed 8/24/32.
+  Source-only regeneration, cache/run artifacts, forced `.artifacts` tracking,
+  application archives, substitute tools, and caller evidence are rejected.
+- [x] **NO REGRESSION** — independent qualification verification returns file
+  set `28ba972c...9095` and source file set `dc5b315b...c66f`; the exact
+  file census retains fifteen/7,012,284. All 59 mdBook chapters test, the
+  rendered evidence section is present, and generated book output is removed
+  exactly. Maintained-reference authority admits 0 files/+28 lines/+3,486
+  bytes to 56,341 lines/3,077,134 bytes. The compact existing Knowledge card
+  adds four answers while the collection decreases 1,213 bytes to 47,091
+  lines/3,477,296 bytes; its generated map is current at 1,160 facts/6,275
+  questions/6,447 occurrences/138 shards and reports `knowledge-map: OK`.
+  Three claim shards contain 47
+  records, the selection record explicitly names `.2`'s missing durability
+  leg, and all 1,869 candidates are dispositioned with zero open group gaps.
+  Rationale transition headroom and the book aggregate authority are
+  re-declared without a ceiling increase. Memory, relative paths, task
+  integrity, live containment, claim/Knowledge checks, staged acceptance, and
+  all doctrines close before commit. No payload, manifest, materializer,
+  executable watcher, CI driver/workflow, provider, gate/result,
+  qualification/corpus byte, support, capacity, full CI, or push changes.
