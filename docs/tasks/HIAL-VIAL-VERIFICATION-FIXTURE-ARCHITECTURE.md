@@ -1714,6 +1714,28 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Place the expensive guarded regression gate in bounded local and hosted CI cadence.`
   Acceptance: `Expose exact repository-relative pre-push/selected-important-step and hosted entrypoints around the .2 gate. Keep ordinary slice commits on focused checks, preserve the unsharded local full gate, give hosted execution explicit shard/provider/tool ownership, and require hosted nonmatching environments to run applicable correctness/determinism/safety/publication/cleanup checks while reporting performance informationally. Update CI inventory and workflow documentation so every tracked test remains exactly owned, no matrix tail is hidden, full CI remains reserved for push or selected important steps, and unavailable providers cannot yield a passing performance classification.`
+  Verification: `Fresh-checkout audit found that the complete gate cannot yet run in hosted CI: all 15 authenticated corpus/qualification files are beneath ignored .artifacts, git ls-files supplies none, and the exact local census is 7,012,284 bytes. The existing six-family hosted union therefore runs only synthetic gate watchers through ordinary file shards. Three ordered children now separate durable non-recalibrating evidence transport selection, authenticated materialization plus local driver entrypoints, and hosted workflow/inventory closeout. Child .1 is active; no predictably failing workflow is wired in the partition slice.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3: partition evidence-backed CI placement`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.1`
+  Status: `active`
+  Goal: `Select a durable current-evidence transport and exact hosted provider contract.`
+  Acceptance: `Prove the evidence/files a fresh checkout lacks, their exact current census and identities, and why source-only regeneration, cross-run cache, ambient tools, or caller-supplied evidence cannot authenticate the immutable qualification. Select one bounded repository-owned transport/materialization lifecycle that reproduces the exact fixed corpus and qualification coordinates without recalibration, overwrite, history substitution, or aliasing. Freeze hosted provider ownership: exact structural OSVVM materialization, absent exact runtime providers as unavailable-not-pass, all other available correctness paths, informational unmatched performance, one guarded job, atomic result/cleanup, and no public support/capacity promotion. Record the choice in a decision, task, Knowledge Map, and mdBook before implementation.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.2`
+  Status: `proposed`
+  Goal: `Implement authenticated evidence materialization and bounded local CI gate entrypoints.`
+  Acceptance: `Implement the .1-selected repository-owned evidence transport and fail-closed materializer with exact file census/bytes/digests, safe relative paths, no aliases, same-volume atomic destination, immutable-source validation, collision/interruption/recovery/cleanup controls, and byte-exact production load after materialization. Add an explicit selected-important-step driver mode and include the guarded gate exactly once in the unsharded local full pre-push path while quick/smoke/isf and ordinary test execution remain focused. Add hostile tests without running the real gate by default.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.3.3`
+  Status: `proposed`
+  Goal: `Wire and close the hosted regression-gate job, inventory, and cadence documentation.`
+  Acceptance: `Add one explicit guarded hosted job that materializes the authenticated current evidence and exact OSVVM 2026.05 provider, leaves exact Verilator/GHDL runtime providers absent rather than drifted, executes the gate through the .2 public command, validates canonical result/qualification identities and unavailable-not-pass plus informational-host outcomes, and cleans materialized evidence/provider/result staging. Extend the final aggregate, workflow action/tool/provider inventory, and focused CI watcher so the seventh family cannot be skipped and every tracked t/*.t still has exactly one ordinary/dedicated/corpus/dynamic owner. Synchronize workflow README, mdBook, Knowledge Map, claims, containment, task, and Memory without running full CI or claiming hosted performance/support/capacity.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6252,3 +6274,24 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   are required before commit. No real producer/provider/simulator/gate
   workload, result publication, qualification/corpus/budget byte, CI,
   support, capacity, full CI, push, or observed-performance result changes.
+
+## Acceptance Checklist (enforced) — `.17.5.4.3` CI placement partition
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean predecessor `5aa53ee1e` exposes the
+  public gate CLI, but `git ls-files '.artifacts/qualification/vial-scale/v2/**'`
+  returns no files and `.gitignore` owns the entire `.artifacts/` root. A
+  direct census finds the required 15 current corpus/qualification files at
+  7,012,284 bytes. Therefore a fresh hosted checkout cannot authenticate the
+  gate even though its ordinary shards already own synthetic t1786-t1789.
+- [x] **ADDRESSED (verified)** — `.17.5.4.3` now has three dependency-ordered
+  children: `.1` selects bounded durable evidence transport and hosted
+  provider truth, `.2` implements authenticated materialization plus local
+  full/selected driver entrypoints, and `.3` owns the hosted job, terminal
+  aggregate, exact test inventory, and documentation closeout. Before ->
+  after: the missing cross-machine evidence prerequisite is explicit and
+  owned before workflow wiring; no artifact bytes or CI behavior change.
+- [x] **NO REGRESSION** — task-tree integrity, bounded Memory, relative paths,
+  Knowledge Map freshness, claims, containment, and all registered doctrines
+  are required before commit. No gate/workload/provider/simulator execution,
+  corpus or qualification mutation, evidence copy, workflow, CI driver,
+  test, book, claim, support, capacity, full CI, or push changes.
