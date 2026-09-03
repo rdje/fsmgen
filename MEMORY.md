@@ -6,11 +6,11 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
-  (`active`; architecture-scale regression stabilization and closeout)
-- next_action: From the clean committed `.17.5.4` production-gate closeout,
-  activate proposed `.17.5.5` to publish exact commands, envelopes,
-  variability policy, capability truth, and nonclaims.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5`
+  (`active`; publish exact architecture-scale public truth)
+- next_action: Query-first audit the mdBook and executable support/capability
+  surfaces against the committed corpus, qualification, gate result, and
+  applicability contracts; then select the smallest publication slices.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: none.
