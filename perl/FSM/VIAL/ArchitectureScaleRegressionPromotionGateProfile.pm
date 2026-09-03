@@ -113,6 +113,8 @@ my $OSVVM_RUNTIME_MEASUREMENT_SCHEMA =
     'fsmgen.vial_architecture_scale_osvvm_runtime_measurement_set.v1';
 my $PORTABLE_RUNTIME_MEASUREMENT_SCHEMA =
     'fsmgen.vial_architecture_scale_portable_runtime_measurement_set.v1';
+my $PORTABLE_VHDL_RUNTIME_MEASUREMENT_SCHEMA =
+    'fsmgen.vial_architecture_scale_portable_vhdl_runtime_measurement_set.v1';
 my $CORRECTNESS_PROJECTION_SCHEMA =
     'fsmgen.vial_architecture_scale_regression_promotion_correctness.v1';
 my $VOLATILE_DIGEST_SENTINEL = 'process-telemetry-derived';
@@ -122,12 +124,25 @@ my @STABLE_PROCESS_TELEMETRY_PROFILES = (
         backend_profile => 'vhdl_osvvm_qualified',
         lifecycle_prefix => 'osvvm_runtime',
         volatile_stages => \@OSVVM_VOLATILE_LIFECYCLE_STAGES,
+        artifact_kind_overrides => {},
     },
     {
         measurement_schema => $PORTABLE_RUNTIME_MEASUREMENT_SCHEMA,
         backend_profile => 'sv_portable_verilator',
         lifecycle_prefix => 'portable_runtime',
         volatile_stages => \@PORTABLE_VOLATILE_LIFECYCLE_STAGES,
+        artifact_kind_overrides => {},
+    },
+    {
+        measurement_schema => $PORTABLE_VHDL_RUNTIME_MEASUREMENT_SCHEMA,
+        backend_profile => 'vhdl_portable_ghdl',
+        lifecycle_prefix => 'portable_runtime',
+        volatile_stages => \@OSVVM_VOLATILE_LIFECYCLE_STAGES,
+        artifact_kind_overrides => {
+            publish => {
+                evidence => 'portable_vhdl_lifecycle_evidence',
+            },
+        },
     },
 );
 
@@ -545,12 +560,20 @@ sub _normalize_process_lifecycle_artifacts(
         next unless $volatile_stage{$stage}
             && $path =~ m{/lifecycle-(?:evidence|handle)\.json\z};
         my $coordinate = $expected{$path};
+        my $expected_kind;
+        if ($coordinate) {
+            my $overrides =
+                $profile->{artifact_kind_overrides}{$stage};
+            $expected_kind = $overrides->{$coordinate->[1]}
+                if ref($overrides) eq 'HASH';
+            $expected_kind //=
+                "$profile->{lifecycle_prefix}_lifecycle_$coordinate->[1]";
+        }
         confess "regression gate unexpected volatile lifecycle artifact"
             . " at record $record_index stage '$stage' path '$path'\n"
             unless $coordinate
                 && $coordinate->[0] eq $stage
-                && ($artifact->{kind} // '') eq
-                    "$profile->{lifecycle_prefix}_lifecycle_$coordinate->[1]";
+                && ($artifact->{kind} // '') eq $expected_kind;
         confess "regression gate duplicate volatile lifecycle artifact"
             . " at record $record_index stage '$stage' path '$path'\n"
             if $seen{$path}++;

@@ -1563,12 +1563,13 @@ required exact executable or repository-local provider is `unavailable`, never
 `pass`; a present wrong version or changed provider bytes is identity drift and
 rejects.
 
-Two runtime routes need a narrower definition of cross-run correctness.
-OSVVM/GHDL and portable-Verilator lifecycle evidence include fresh monotonic
-process telemetry. Evidence sizes/digests, transitive handle digests, oracle
-evidence identities, and stage byte totals can therefore change even when the
-workload, source, provider, normalized result, outcomes, and semantic counts
-agree. The portable emit stage precedes process capture and remains exact.
+Three runtime routes need a narrower definition of cross-run correctness.
+OSVVM/GHDL, portable-Verilator, and portable-VHDL/GHDL lifecycle evidence
+include fresh monotonic process telemetry. Evidence sizes/digests, transitive
+handle digests, oracle evidence identities, and stage byte totals can therefore
+change even when the workload, source, provider, normalized result, outcomes,
+and semantic counts agree. The portable emit stage precedes process capture and
+remains exact.
 
 Raw projection identity equality is still the first path. Only a mismatch
 retrieves authenticated full current and qualified projections through the
@@ -1576,10 +1577,13 @@ caller-sealed seams. Exact schema/backend coordinates select one table entry:
 
 - ordinal 10 OSVVM normalizes six evidence, five handles, six oracle identities,
   and six stage-byte positions per record: `4 x 29 = 116` fields;
+- ordinal 9 portable VHDL/GHDL normalizes the same six/five/six/six partition,
+  with an explicitly authenticated distinct publish-evidence kind:
+  `4 x 29 = 116` fields;
 - ordinal 8 portable Verilator normalizes five evidence, four handles, five
   oracle identities, and five stage-byte positions: `4 x 24 = 96` fields.
 
-The other nine profiles remain raw-exact. Scalar shape, digest form, stage,
+The other eight profiles remain raw-exact. Scalar shape, digest form, stage,
 kind, count, order, and uniqueness fail closed; every unlisted field compares
 canonically. Admission retains the immutable qualified identity. This is not
 recalibration and changes no qualification byte, budget, provider rule, or
@@ -1599,10 +1603,10 @@ prove -Iperl -v \
 ```
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-gate-profile-execution-v1 -->
-- Claim: The one-profile gate runs one validation and three raw measurements in a fresh child, revalidates the report in its parent, and passes the complete report through an unlinked same-volume spool with 67,108,864-byte report and 65,536-byte IPC ceilings. Correctness precedes timing: raw identity remains exact, while exact ordinal 10 and ordinal 8 projections exclude respectively 116 and 96 sealed process-telemetry derivatives and require every other field to match; the other nine profiles remain raw-exact. Exact-host thresholds pass or fail, unmatched hosts are informational, and unavailable providers cannot pass. This is a correctness-comparison repair, not recalibration, a complete real-gate result, support, or capacity.
-- Re-derive: Run guarded t1785+t1786+t1793. Require authenticated defensive full-projection retrieval, one child producer and two report validations, exact 1/3/4 record accounting, ordinal 10's 4 x 29 and ordinal 8's 4 x 24 partitions, nine other profiles raw-exact, inclusive thresholds, identity-derived classifications, and no spool residue.
-- Falsify: T1793's portable case began RED at line 324, then rejects semantic, missing/new/duplicate, digest/byte shape, order, and foreign-backend changes while retaining the OSVVM matrix. T1786 rejects both routes' adjacent correctness drift before timing plus caller, guard, record, provider, worker, IPC, report, and residue attacks.
-- Durability: Retain Decision 0099, both caller-sealed seams, table-driven comparator, t1785/t1786/t1793, repair leaves `.17.5.4.4.1` and `.17.5.4.4.2.1`, this chapter, its Knowledge card and claim record, doctrine gates, and Git. Child `.2.2` owns clean production closeout.
+- Claim: The one-profile gate runs one validation and three raw measurements in a fresh child, revalidates the report in its parent, and passes the complete report through an unlinked same-volume spool with 67,108,864-byte report and 65,536-byte IPC ceilings. Correctness precedes timing: raw identity remains exact, while exact ordinal 10, 9, and 8 projections exclude respectively 116, 116, and 96 sealed process-telemetry derivatives and require every other field to match; the other eight profiles remain raw-exact. Exact-host thresholds pass or fail, unmatched hosts are informational, and unavailable providers cannot pass. This is a correctness-comparison repair, not recalibration, a complete real-gate result, support, or capacity.
+- Re-derive: Run guarded t1785+t1786+t1793. Require authenticated defensive full-projection retrieval, one child producer and two report validations, exact 1/3/4 record accounting, ordinal 10 and 9's 4 x 29 plus ordinal 8's 4 x 24 partitions, eight other profiles raw-exact, inclusive thresholds, identity-derived classifications, and no spool residue.
+- Falsify: T1793's portable-Verilator and portable-VHDL cases began RED at lines 324 and 490, then reject semantic, missing/new/duplicate, digest/byte shape, order, and foreign-backend changes while retaining the OSVVM matrix. T1786 rejects all three routes' adjacent correctness drift before timing plus caller, guard, record, provider, worker, IPC, report, and residue attacks.
+- Durability: Retain Decision 0099, both caller-sealed seams, table-driven comparator, t1785/t1786/t1793, repair leaves `.17.5.4.4.1`, `.17.5.4.4.2.1`, and `.17.5.4.4.2.2.1`, this chapter, its Knowledge card and claim record, doctrine gates, and Git. Child `.2.2.2` owns clean production closeout.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-gate-profile-execution-v1 -->
 
 ### Eleven-profile in-memory gate coordination

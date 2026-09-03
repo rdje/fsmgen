@@ -1800,18 +1800,18 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Diagnose and repair the exact ordinal-9 regression-gate correctness drift without recalibration.`
   Acceptance: `From the clean reproducible ordinal-9 failure, independently capture a fresh canonical portable-VHDL/GHDL correctness projection and compare every field with the immutable qualified projection. Locate every changed leaf and its first causal producer; distinguish semantic regression from unstable or wrongly scoped correctness data using current authorities and history; then make the smallest fail-closed signoff repair under Decision 0099's raw-first, authenticated-full-projection semantics. Add focused RED/GREEN coverage for the exact schema, profile, stages, kinds, counts, order, uniqueness, digest/scalar shapes, and diagnostic coordinate; reject adjacent semantic and hostile topology changes; preserve qualification/corpus bytes and identities, workload shape, budgets, provider/environment admission, publication atomicity, and zero stage/process residue.`
-  Verification: `pending exact projection comparison`
-  Commit: `pending`
+  Verification: `The clean public gate failed ordinal 9 before publication. An isolated canonical rerun compared equal 81,709-byte full projections at bc278bd0...004c/4cce3bf9...42e2 with exactly 116 differences, partitioned 4 x 29: six lifecycle-evidence byte sizes/digests, five lifecycle-handle digests, six oracle evidence identities, and six stage output-byte totals per record. Source tracing locates the first cause at GHDLLifecycle::_capture_evidence: fresh ProcessSupervisor monotonic/duration fields enter lifecycle stage evidence, which ArchitectureScalePortableVHDLRuntimeMeasurement transitively copies through compile/elaborate/run/trace/result/publish evidence and the first five handles; emit precedes capture and stays exact. Diffing capture revision 155aa22ea through HEAD finds no portable-VHDL adapter/lifecycle change and only GateProfile caller authorization in ProcessSupervisor. T1793's exact ordinal-9 case began RED at line 490 with seven intended stable/topology/shape failures. Decision 0099's exact table now admits portable-VHDL/GHDL, including its distinct publish evidence kind, while retaining raw-first comparison, authenticated full projections, immutable qualified identity, and fail-closed topology. T1786 proves stable-only integration and adjacent semantic rejection. Focused GREEN reports All tests successful at Files=2, Tests=31; the corrected guarded qualification/gate band reports Files=7, Tests=155. Independent verifiers reproduce the exact 13-file/6,220,126-byte corpus and 2-file/792,158-byte qualification with unchanged identities. Result, gate/transport staging, measurement staging, and child-process residue are absent. Workloads, evidence, qualification, budgets, providers, environment, publication, and cleanup are unchanged; child .2.2 owns complete production closeout.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2.1: stabilize ordinal-9 correctness admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.4.2.2.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Complete independent real gate, applicability, CI-ownership, and residue closeout after the ordinal-9 repair.`
   Acceptance: `From the clean committed ordinal-9 repair, rerun and independently authenticate the complete exact-pinned public result; safely exercise unmatched-host and provider-unavailable classifications; join every profile, correctness, measurement, budget, applicability, publication, non-aliasing, CI-inventory, and cleanup identity; then close the active regression-gate activity with exact censuses and zero residue.`
   Verification: `pending`
-  Commit: `pending activation`
+  Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5`
   Status: `proposed`
   Goal: `Publish exact architecture-scale commands, envelopes, variability policy, support/capability truth, and nonclaims.`
@@ -2771,3 +2771,21 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   owners. Containment, staged acceptance, and doctrine gates remain required
   before commit. Qualification/corpus, budgets, providers, publication, and
   cleanup are unchanged; child `.2.2` retains real production closeout.
+
+## Acceptance Checklist (enforced) — `.17.5.4.4.2.2.1` ordinal-9 correctness stability
+
+- [x] **ROOT CAUSE (WHY + WHERE; portable-VHDL process telemetry in exact correctness)** —
+  T1793 began RED with `Failed test 'only portable VHDL telemetry-derived lifecycle drift normalizes equal' at t/1793-vial-regression-promotion-gate-correctness-stability.t line 490`. The real comparator's 116 changed leaves trace to fresh supervisor timing copied into GHDL lifecycle evidence from compile onward; every semantic field agrees.
+- [x] **ADDRESSED (verified before -> after)** — Decision 0099's exact table now
+  selects three schema/backend entries. Portable-VHDL admission replaces only
+  its 4 x 29 derived fields, explicitly authenticates the distinct publish
+  evidence kind, retains immutable qualified identity, and rejects
+  missing/new/duplicate/reordered or malformed coordinates plus adjacent
+  semantic drift. Focused t1786+t1793 is GREEN at Files=2/Tests=31.
+- [x] **NO REGRESSION (qualification/gate correctness band)** — the corrected
+  guarded band reports `All tests successful.` and `Files=7, Tests=155` across
+  t1779/t1780/t1785/t1786/t1787/t1788/t1793. Independent corpus and
+  qualification verifiers reproduce 13 files/6,220,126 bytes and 2
+  files/792,158 bytes with unchanged identities. Perl syntax, mdBook, Knowledge
+  Map, claims, containment, staged acceptance, and doctrine gates are required
+  before commit; child `.2.2` retains production closeout.

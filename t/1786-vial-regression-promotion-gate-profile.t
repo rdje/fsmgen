@@ -88,13 +88,17 @@ our $adapter_mode = 'ok';
 
 sub synthetic_stable_projection($profile = 'osvvm') {
     die "unknown synthetic stable projection profile '$profile'\n"
-        unless $profile eq 'osvvm' || $profile eq 'portable';
+        unless $profile eq 'osvvm'
+            || $profile eq 'portable'
+            || $profile eq 'portable_vhdl';
     my $portable = $profile eq 'portable';
+    my $portable_vhdl = $profile eq 'portable_vhdl';
     my @stages = $portable
         ? qw(compile_analyze run trace_validate result_produce publish)
         : qw(compile_analyze elaborate run trace_validate result_produce publish);
     my @artifact_stages = @stages[0 .. $#stages - 1];
-    my $prefix = $portable ? 'portable_runtime' : 'osvvm_runtime';
+    my $prefix = $portable || $portable_vhdl
+        ? 'portable_runtime' : 'osvvm_runtime';
     my @artifacts = map {
         my $stage = $_;
         ({
@@ -115,7 +119,9 @@ sub synthetic_stable_projection($profile = 'osvvm') {
     } @artifact_stages;
     push @artifacts, {
         bytes => 200,
-        kind => "${prefix}_lifecycle_evidence",
+        kind => $portable_vhdl
+            ? 'portable_vhdl_lifecycle_evidence'
+            : "${prefix}_lifecycle_evidence",
         lines => 1,
         relative_path => 'outputs/publish/lifecycle-evidence.json',
         sha256 => '3' x 64,
@@ -128,12 +134,16 @@ sub synthetic_stable_projection($profile = 'osvvm') {
         report_contract => {
             schema => $portable
                 ? 'fsmgen.vial_architecture_scale_portable_runtime_measurement_set.v1'
-                : 'fsmgen.vial_architecture_scale_osvvm_runtime_measurement_set.v1',
+                : $portable_vhdl
+                    ? 'fsmgen.vial_architecture_scale_portable_vhdl_runtime_measurement_set.v1'
+                    : 'fsmgen.vial_architecture_scale_osvvm_runtime_measurement_set.v1',
             family => 'runtime_stream_v1',
             level => 'gate_candidate_v1',
             primary_axis => 'runtime_trace_records',
             backend_profile => $portable
-                ? 'sv_portable_verilator' : 'vhdl_osvvm_qualified',
+                ? 'sv_portable_verilator'
+                : $portable_vhdl
+                    ? 'vhdl_portable_ghdl' : 'vhdl_osvvm_qualified',
         },
         record_projections => [map {
             my $ordinal = $_;
@@ -599,6 +609,51 @@ subtest 'portable process telemetry drift admits only stable correctness' => sub
         });
     }), qr/correctness changed after stable projection.*ordinal 1.*synthetic/s,
         'portable adjacent semantic drift rejects with the profile coordinate');
+};
+
+subtest 'portable VHDL process telemetry drift admits only stable correctness' => sub {
+    reset_fixture();
+    $qualified_correctness_projection =
+        synthetic_stable_projection('portable_vhdl');
+    $current_correctness_projection =
+        clone($qualified_correctness_projection);
+    ++$current_correctness_projection->{record_projections}[0]
+        {artifact_records}[0]{bytes};
+    $current_correctness_projection->{record_projections}[0]
+        {artifact_records}[0]{sha256} = '5' x 64;
+    $current_correctness_projection->{record_projections}[0]
+        {correctness_oracles}[0]{evidence_identity} = '6' x 64;
+    ++$current_correctness_projection->{record_projections}[0]
+        {stage_measurements}[0]{output_counts}{bytes};
+    my $qualified_identity = 'regression-promotion-correctness/'
+        . sha256_hex(canonical($qualified_correctness_projection));
+    my $current_identity = 'regression-promotion-correctness/'
+        . sha256_hex(canonical($current_correctness_projection));
+    $contract->{profiles}[0]{correctness_projection_identity} =
+        $qualified_identity;
+    $observation->{correctness_projection_identity} = $current_identity;
+    my $result = with_fixture(sub {
+        return $class->run({repository_root => $repo, ordinal => 1});
+    });
+    is(
+        $result->{observation}{correctness_projection_identity},
+        $qualified_identity,
+        'portable VHDL admission remains bound to immutable qualified identity',
+    );
+    is($result->{outcome}, 'accepted',
+        'portable VHDL telemetry-only drift is accepted before timing');
+
+    ++$current_correctness_projection->{record_projections}[0]
+        {stage_measurements}[0]{output_counts}{objects};
+    $observation->{correctness_projection_identity} =
+        'regression-promotion-correctness/'
+        . sha256_hex(canonical($current_correctness_projection));
+    like(with_fixture(sub {
+        return captured_error(sub {
+            $class->run({repository_root => $repo, ordinal => 1});
+        });
+    }), qr/correctness changed after stable projection.*ordinal 1.*synthetic/s,
+        'portable VHDL semantic drift rejects with the profile coordinate');
 };
 
 subtest 'unavailable exact provider cannot pass' => sub {

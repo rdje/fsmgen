@@ -44,9 +44,9 @@ answers:
   - "how does VIAL regression gate evidence cleanup avoid deleting pre-existing evidence?"
   - "which VIAL regression gate profiles run in hosted CI?"
   - "why does hosted VIAL regression CI not install substitute HDL tools?"
-  - "why did VIAL regression gate ordinal 10 report correctness changed?"
-  - "which OSVVM lifecycle correctness fields are stable across fresh runs?"
-  - "does the VIAL gate ignore GHDL process telemetry or recalibrate ordinal 10?"
+  - "why did VIAL regression gate ordinals 8-10 report correctness changed?"
+  - "which VIAL lifecycle correctness fields are stable?"
+  - "does the VIAL gate ignore process telemetry or recalibrate?"
 date: 2026-09-03
 status: current
 tags: [hial, vial, scalability, regression, measurement, publication]
@@ -159,7 +159,7 @@ T1792 locks ordinals 1-7/11 informational, 8-10 unavailable-not-pass, required
 11/33/44 versus observed 8/24/32, and closed input/staging. Always-cleanup owns
 only evidence, OSVVM, latest-result, and stage; real execution remains `.4`.
 
-Clean gates found ordinal 10 at 4 x 29 fields in 165,285-byte projections, then ordinal 8 at 4 x 24 in 77,952-byte projections; semantics agreed and ordinal 11 passed. Decision 0099 keeps raw equality, normalizing only exact OSVVM/portable lifecycle coordinates. Nine other profiles and all semantic/topology fields stay exact; qualified identity and budgets stay fixed. T1786/T1793 retain hostile rejection.
+Gates found ordinal 10 at 4 x 29/165,285 bytes, ordinal 8 at 4 x 24/77,952 bytes, and ordinal 9 at 4 x 29/81,709 bytes; semantics agreed and ordinal 11 passed. Decision 0099 keeps raw equality and normalizes only exact OSVVM, portable-Verilator, and portable-VHDL/GHDL lifecycle coordinates. Eight other profiles plus all semantic/topology fields stay exact; qualified identity and budgets stay fixed. T1786/T1793 retain hostile rejection.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]],

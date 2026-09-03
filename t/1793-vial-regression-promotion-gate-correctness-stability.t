@@ -243,7 +243,7 @@ SKIP: {
         'duplicate volatile oracle coordinate rejects');
 
     my @foreign_drift;
-    for my $index (grep { $_ != 7 && $_ != 9 } 0 .. $#$profiles) {
+    for my $index (grep { $_ != 7 && $_ != 8 && $_ != 9 } 0 .. $#$profiles) {
         my $foreign_projection =
             clone($profiles->[$index]{correctness_projection});
         push @foreign_drift, $profiles->[$index]{ordinal}
@@ -254,7 +254,7 @@ SKIP: {
             ) eq canonical($foreign_projection);
     }
     is_deeply(\@foreign_drift, [],
-        'all nine non-telemetry-normalized profiles remain byte-exact');
+        'all eight non-telemetry-normalized profiles remain byte-exact');
     my $foreign = clone($profiles->[0]{correctness_projection});
     my $foreign_raw = canonical($foreign);
     is(canonical($foreign), $foreign_raw,
@@ -431,6 +431,172 @@ subtest 'portable Verilator process telemetry drift admits only stable correctne
         ),
         $foreign_raw,
         'portable schema with a foreign backend remains byte-exact',
+    );
+};
+
+subtest 'portable VHDL process telemetry drift admits only stable correctness' => sub {
+    my $portable_vhdl = $profiles->[8];
+    is($portable_vhdl->{ordinal}, 9, 'fixture selects exact ordinal 9');
+    is(
+        $portable_vhdl->{selection_key},
+        'portable_vhdl_runtime|runtime_stream_v1|gate_candidate_v1|-|vhdl_portable_ghdl',
+        'fixture selects exact portable VHDL/GHDL runtime profile',
+    );
+    my $expected = clone($portable_vhdl->{correctness_projection});
+    is(
+        'regression-promotion-correctness/' . sha256_hex(canonical($expected)),
+        $portable_vhdl->{correctness_projection_identity},
+        'portable VHDL projection has its immutable qualified identity',
+    );
+
+    my $source_report = join '/', qw(
+        vial qualification regression_promotion_gate evidence-v1 payload
+        regression-promotion-corpus-v1 profiles
+        09-9ae0db7cad98f9abcbd73fb2e7f7b6589e049e25a67b170c034b019b0c4693f8
+        measurement-report.json
+    );
+    open my $source_fh, '<', $source_report
+        or die "cannot read tracked ordinal-9 source report: $!";
+    local $/;
+    my $source = $json->decode(<$source_fh>);
+    close $source_fh
+        or die "cannot close tracked ordinal-9 source report: $!";
+    is(
+        canonical(
+            FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile::current_correctness_projection_for_test({
+                measurement_set => $source->{report},
+            }),
+        ),
+        canonical($expected),
+        'sealed seam reproduces the qualified portable VHDL projection',
+    );
+
+    my $current = clone($expected);
+    is(
+        mutate_process_telemetry_derivatives($current),
+        116,
+        'fixture mutates the exact 29 portable VHDL telemetry derivatives per record',
+    );
+    isnt(canonical($current), canonical($expected),
+        'raw portable VHDL current and qualified projections differ');
+    my $stable_expected =
+        FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile::_stable_correctness_projection(
+            $expected,
+        );
+    my $stable_current =
+        FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile::_stable_correctness_projection(
+            $current,
+        );
+    is(canonical($stable_current), canonical($stable_expected),
+        'only portable VHDL telemetry-derived lifecycle drift normalizes equal');
+    isnt(canonical($current), canonical($stable_current),
+        'portable VHDL normalization returns a defensive projection');
+
+    my $semantic = clone($current);
+    my ($run_measurement) = grep {
+        ($_->{stage} // '') eq 'run'
+    } @{$semantic->{record_projections}[0]{stage_measurements}};
+    ++$run_measurement->{output_counts}{objects};
+    isnt(
+        canonical(
+            FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile::_stable_correctness_projection(
+                $semantic,
+            ),
+        ),
+        canonical($stable_expected),
+        'portable VHDL non-telemetry output-count drift remains visible',
+    );
+
+    my $missing = clone($expected);
+    @{$missing->{record_projections}[0]{artifact_records}} = grep {
+        ($_->{relative_path} // '') ne
+            'outputs/compile_analyze/lifecycle-evidence.json'
+    } @{$missing->{record_projections}[0]{artifact_records}};
+    like(captured_error(sub {
+        FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile::_stable_correctness_projection(
+            $missing,
+        );
+    }), qr/missing volatile lifecycle artifact.*compile_analyze/s,
+        'missing portable VHDL volatile artifact coordinate rejects');
+
+    my $extra = clone($expected);
+    my ($handle) = grep {
+        ($_->{relative_path} // '') eq
+            'outputs/result_produce/lifecycle-handle.json'
+    } @{$extra->{record_projections}[0]{artifact_records}};
+    my $unexpected = clone($handle);
+    $unexpected->{stage} = 'publish';
+    $unexpected->{relative_path} = 'outputs/publish/lifecycle-handle.json';
+    push @{$extra->{record_projections}[0]{artifact_records}}, $unexpected;
+    like(captured_error(sub {
+        FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile::_stable_correctness_projection(
+            $extra,
+        );
+    }), qr/unexpected volatile lifecycle artifact.*publish/s,
+        'new portable VHDL volatile artifact coordinate rejects');
+
+    my $duplicate_oracle = clone($expected);
+    my ($run_oracle) = grep {
+        ($_->{stage} // '') eq 'run'
+    } @{$duplicate_oracle->{record_projections}[0]{correctness_oracles}};
+    push @{$duplicate_oracle->{record_projections}[0]{correctness_oracles}},
+        clone($run_oracle);
+    like(captured_error(sub {
+        FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile::_stable_correctness_projection(
+            $duplicate_oracle,
+        );
+    }), qr/volatile lifecycle oracle.*run.*exactly once/s,
+        'duplicate portable VHDL volatile oracle coordinate rejects');
+
+    my $invalid_digest = clone($expected);
+    my ($compile_evidence) = grep {
+        ($_->{relative_path} // '') eq
+            'outputs/compile_analyze/lifecycle-evidence.json'
+    } @{$invalid_digest->{record_projections}[0]{artifact_records}};
+    $compile_evidence->{sha256} = undef;
+    like(captured_error(sub {
+        FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile::_stable_correctness_projection(
+            $invalid_digest,
+        );
+    }), qr/volatile lifecycle artifact digest changed shape/s,
+        'invalid portable VHDL lifecycle digest shape rejects');
+
+    my $invalid_bytes = clone($expected);
+    my ($run_stage) = grep {
+        ($_->{stage} // '') eq 'run'
+    } @{$invalid_bytes->{record_projections}[0]{stage_measurements}};
+    $run_stage->{output_counts}{bytes} = '1';
+    like(captured_error(sub {
+        FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile::_stable_correctness_projection(
+            $invalid_bytes,
+        );
+    }), qr/volatile lifecycle stage output bytes.*not a safe nonnegative JSON integer/s,
+        'non-numeric portable VHDL lifecycle byte shape rejects');
+
+    my $reordered = clone($current);
+    @{$reordered->{record_projections}[0]{artifact_records}}[8, 9] =
+        @{$reordered->{record_projections}[0]{artifact_records}}[9, 8];
+    isnt(
+        canonical(
+            FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile::_stable_correctness_projection(
+                $reordered,
+            ),
+        ),
+        canonical($stable_expected),
+        'portable VHDL lifecycle artifact order drift remains visible',
+    );
+
+    my $foreign = clone($expected);
+    $foreign->{report_contract}{backend_profile} = 'vhdl_foreign';
+    my $foreign_raw = canonical($foreign);
+    is(
+        canonical(
+            FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile::_stable_correctness_projection(
+                $foreign,
+            ),
+        ),
+        $foreign_raw,
+        'portable VHDL schema with a foreign backend remains byte-exact',
     );
 };
 
