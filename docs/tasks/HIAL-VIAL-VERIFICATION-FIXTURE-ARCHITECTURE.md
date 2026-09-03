@@ -1849,11 +1849,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6.1: lock public scale regression closeout`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Execute and independently close the exact scale regression gate, hostile evidence band, public truth, and residue.`
   Acceptance: `From the clean committed public watcher, run the selected exact gate and producer-free validation; run the complete regression-promotion policy, capture, corpus, qualification, gate, transport, materialization, hosted-outcome, correctness-stability, capability, and public-closeout oracle band. Independently join the published result to immutable evidence, exact profiles/budgets/applicability, both public machine entrypoints, the human guide, and CI selection; exercise pinned-host pass, unmatched-host informational, unavailable-provider non-pass, and every named hostile evidence class; prove qualification/evidence immutability, atomic latest-result publication, same-volume cleanup, and zero unowned process/staging/receipt residue; then synchronize durable surfaces and close `.17.5.6` and `.17.5` without promoting support or capacity.`
-  Verification: `pending`
-  Commit: `pending activation`
+  Verification: `Clean predecessor b0f5d74f1 adds the independent public closeout watcher: both public machine entrypoints, every human guide row and pinned environment/provider field, ordered dry-run behavior, latest-result non-mutation, and six hostile projection cases are green without generated evidence. This final leaf now owns clean exact gate execution, the complete independent hostile oracle band, result/evidence/public/CI joins, and residue closure before `.17.5.6` and `.17.5` can complete. Activation changes no executable, evidence, budget, result, CI, support, or capacity behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6.2: activate exact scale regression closeout`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.6`
   Status: `done`
