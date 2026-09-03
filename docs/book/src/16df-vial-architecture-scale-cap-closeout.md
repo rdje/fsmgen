@@ -1534,6 +1534,54 @@ scripts/run_with_ram_guard.sh -- env \
   t/1785-vial-regression-promotion-gate-contract.t
 ```
 
+### One-profile gate execution and classification
+
+The first execution layer now accepts only `repository_root` plus one qualified
+ordinal, derives the authenticated gate contract internally, and requires one
+unchanged clean revision under the active RAM guard. For an available profile,
+one fresh child invokes the selected canonical adapter exactly once; that
+adapter owns the required validation record and three raw measurement records.
+The adapter validates the complete report in the child and again in the parent.
+
+The report may be much larger than the 65,536-byte worker IPC envelope. The
+profile authority therefore creates a current-owner, mode-0600, same-volume
+temporary file at the repository root and unlinks its name immediately. The
+child writes canonical report bytes through the inherited descriptor, while
+IPC carries only bounded content-addressed result metadata. The parent reloads
+the complete anonymous spool, checks its byte count and SHA-256, revalidates the
+report, reconstructs the result, and closes the last descriptor. No report path
+or repeatable calibration artifact remains.
+
+Admission reuses the qualification authority's exact non-timing projection and
+record accounting through an exact-caller seam. Selection coordinates,
+workload, ordered validation/measurement records, clean common identity,
+correctness projection, oracle/artifact facts, and zero residue must agree
+before timing is considered. Each fresh metric is reduced by maximum. Exact
+environment equality applies the inclusive frozen threshold as `pass` or
+`fail`; a different host/tool/guard/provider tuple is `informational`. A missing
+required exact executable or repository-local provider is `unavailable`, never
+`pass`; a present wrong version or changed provider bytes is identity drift and
+rejects.
+
+The worker envelope and error text remain bounded and canonical. Timeout,
+exception, exit, signal, malformed or oversized IPC/report bytes, record
+reordering, numeric-looking strings, mixed revisions, adapter mutation, or a
+surviving process-group member reject without leaving the anonymous spool.
+The default watcher uses deterministic synthetic reports and invokes no real
+provider or simulator:
+
+```sh
+prove -Iperl -v \
+  t/1786-vial-regression-promotion-gate-profile.t
+```
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-gate-profile-execution-v1 -->
+- Claim: The caller-sealed one-profile regression-gate authority derives the authenticated contract, runs one selected canonical adapter in a fresh child for one validation plus three raw measurements, and revalidates the complete canonical report in both child and parent. An immediately unlinked same-volume spool separates the 67,108,864-byte report ceiling from the 65,536-byte IPC ceiling and leaves no path residue. Correctness and exact deterministic identity precede maximum-per-metric classification; inclusive exact-environment thresholds pass or fail, unmatched environments are informational, and unavailable exact providers cannot pass. This is one-profile execution machinery, not the complete eleven-profile gate, a published result, CI activation, an observed performance claim, support, or capacity.
+- Re-derive: Run t1786 and inspect ArchitectureScaleRegressionPromotionGateProfile plus Qualification's exact-caller observation seam. Require one producer marker in a child, two adapter-validation markers, ordered 1/3/4 evidence, maximum reduction, equal-threshold pass, plus-one fail, unmatched informational, unavailable-not-pass, content addressing, bounded metadata, and no spool path. Separately run the bounded provider preflight for qualified ordinals 8-10; all must report available without running a gate workload.
+- Falsify: T1786 began RED on the absent authority, then rejects caller evidence, absent guard, borrowed invocant, numeric strings, reordered or mixed-revision records, correctness drift before timing, present wrong provider version, adapter mutation, exception, early exit, signal, timeout, malformed or cap-plus-one IPC, oversized report, and process residue. Its fake-repository missing Verilator and GHDL controls must classify unavailable rather than pass.
+- Durability: Retain ArchitectureScaleRegressionPromotionGateProfile, the caller-sealed Qualification and ProcessSupervisor extensions, t1786, task `.17.5.4.2.1`, this chapter, the compact regression-promotion Knowledge card, bounded claim record, doctrine watchers, and the work-unit Git commit. Children `.2.2` through `.2.4` still own eleven-profile coordination, latest-result publication, CLI integration, and adversarial closeout.
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-gate-profile-execution-v1 -->
+
 Re-derive the selection and its closure comparison with:
 
 ```sh
@@ -1545,8 +1593,9 @@ scripts/run_with_ram_guard.sh -- env \
 
 Current capture, in-memory budget qualification, the publication store, its
 explicit CLI, the real clean-revision qualification seal, hostile copied
-controls, and final independent/production agreement are complete. Gate/CI
-integration and public truth remain separate rollback owners. Until those
+controls, final independent/production agreement, and one-profile gate worker
+are complete. Eleven-profile coordination, latest-result publication, gate/CI
+integration, and public truth remain separate rollback owners. Until those
 leaves pass, the sealed budgets remain
 unenforced, all historical candidate budgets stay candidate-only, and whole-
 product big/really-big capacity remains unclaimed.

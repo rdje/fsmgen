@@ -28,6 +28,7 @@ my %CALLER = map { $_ => 1 } qw(
     FSM::VIAL::Backend::VerilatorLifecycle
     FSM::VIAL::Backend::GHDLLifecycle
     FSM::VIAL::Backend::VHDLPortableGHDLQualification
+    FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile
 );
 
 sub capture($class, @args) {

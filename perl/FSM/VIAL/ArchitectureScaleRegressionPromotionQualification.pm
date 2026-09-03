@@ -23,6 +23,8 @@ my $CORPUS_STORE =
 my $POLICY = 'FSM::VIAL::ArchitectureScaleRegressionPromotionPolicy';
 my $PROFILE_STORE =
     'FSM::VIAL::ArchitectureScaleRegressionPromotionProfileStore';
+my $GATE_PROFILE =
+    'FSM::VIAL::ArchitectureScaleRegressionPromotionGateProfile';
 my $SCHEMA =
     'fsmgen.vial_architecture_scale_regression_promotion_qualification.v1';
 my $CORPUS_SCHEMA =
@@ -123,6 +125,13 @@ my @ORACLE_KEYS = qw(stage oracle_id ok evidence_identity evidence);
 my @ARTIFACT_RECORD_KEYS = qw(
     stage kind relative_path bytes lines sha256
 );
+my @GATE_OBSERVATION_KEYS = qw(
+    workload_identity validation_identity raw_measurement_identities
+    accepted_run_totals observed_maximum correctness_projection_identity
+);
+my @GATE_MAXIMUM_KEYS = qw(
+    wall_time_ns cpu_time_ns peak_tree_rss_bytes
+);
 my @NONCLAIMS = qw(
     qualification_publication
     promoted_performance_gate
@@ -163,6 +172,108 @@ my $FORMULA = {
         quantum => $MIB_16,
     },
 };
+
+# The stable regression gate must use the exact same deterministic projection
+# and record accounting as the immutable qualification.  This private seam is
+# available only to the one-profile gate authority; it does not expose a new
+# public evidence-injection surface and it never reads or mutates qualification
+# artifacts.
+sub _gate_observation($class, @args) {
+    confess __PACKAGE__
+        . "->_gate_observation requires the exact class invocant\n"
+        unless defined($class) && !ref($class) && $class eq __PACKAGE__;
+    confess "regression-promotion gate observation is caller-sealed\n"
+        unless (scalar caller) eq $GATE_PROFILE;
+    confess "regression-promotion gate observation expects one closed hash\n"
+        unless @args == 1 && ref($args[0]) eq 'HASH'
+            && !blessed($args[0]);
+    _exact_keys(
+        $args[0], [qw(measurement_set common_identity)],
+        'regression-promotion gate observation request',
+    );
+    my $measurement_set = $args[0]{measurement_set};
+    my $common = $args[0]{common_identity};
+    confess "regression-promotion gate measurement set is invalid\n"
+        unless ref($measurement_set) eq 'HASH' && !blessed($measurement_set);
+    confess "regression-promotion gate common identity is invalid\n"
+        unless ref($common) eq 'HASH' && !blessed($common);
+    my $workload_identity = $measurement_set->{workload_identity};
+    confess "regression-promotion gate workload identity is invalid\n"
+        unless defined($workload_identity) && !ref($workload_identity)
+            && $workload_identity =~ /\Aworkload\/[0-9a-f]{64}\z/;
+    confess "regression-promotion gate measurement set is not accepted\n"
+        unless ($measurement_set->{outcome} // '') eq 'accepted'
+            && ref($measurement_set->{diagnostics}) eq 'ARRAY'
+            && !@{$measurement_set->{diagnostics}};
+    confess "regression-promotion gate exclusions are invalid\n"
+        unless ref($measurement_set->{sample_exclusions}) eq 'ARRAY'
+            && !@{$measurement_set->{sample_exclusions}};
+    confess "regression-promotion gate measurement records are invalid\n"
+        unless ref($measurement_set->{measurement_records}) eq 'ARRAY'
+            && @{$measurement_set->{measurement_records}} == 3;
+
+    my $validation = $measurement_set->{validation_record};
+    _validate_measurement_record({
+        record => $validation,
+        common => $common,
+        workload_identity => $workload_identity,
+        run_class => 'validation',
+        run_ordinal => 0,
+        measured => 0,
+    });
+    my (@totals, @identities);
+    for my $index (0 .. 2) {
+        my $record = $measurement_set->{measurement_records}[$index];
+        confess "regression-promotion gate workload specification changed\n"
+            unless _canonical_json($record->{workload_specification}) eq
+                _canonical_json($validation->{workload_specification});
+        my $total = _validate_measurement_record({
+            record => $record,
+            common => $common,
+            workload_identity => $workload_identity,
+            run_class => 'gate_measurement',
+            run_ordinal => $index + 1,
+            measured => 1,
+        });
+        push @identities, $record->{measurement_identity};
+        push @totals, {
+            measurement_identity => $record->{measurement_identity},
+            run_ordinal => $index + 1,
+            %$total,
+        };
+    }
+    my $correctness = _correctness_projection(
+        $measurement_set,
+        [$validation, @{$measurement_set->{measurement_records}}],
+    );
+    my $correctness_bytes = _canonical_json($correctness);
+    confess "regression-promotion gate correctness projection exceeds its bound\n"
+        if bytes::length($correctness_bytes) >
+            $MAX_CORRECTNESS_PROJECTION_BYTES;
+    my %maximum = map {
+        my $metric = $_;
+        ($metric => _statistics([map { $_->{$metric} } @totals])->{maximum})
+    } @GATE_MAXIMUM_KEYS;
+    my $result = {
+        workload_identity => $workload_identity,
+        validation_identity => $validation->{measurement_identity},
+        raw_measurement_identities => \@identities,
+        accepted_run_totals => \@totals,
+        observed_maximum => \%maximum,
+        correctness_projection_identity =>
+            'regression-promotion-correctness/'
+            . sha256_hex($correctness_bytes),
+    };
+    _exact_keys(
+        $result, \@GATE_OBSERVATION_KEYS,
+        'regression-promotion gate observation',
+    );
+    _exact_keys(
+        $result->{observed_maximum}, \@GATE_MAXIMUM_KEYS,
+        'regression-promotion gate observed maximum',
+    );
+    return _clone($result);
+}
 my $JSON = JSON::PP->new->canonical(1)->utf8(1);
 
 sub report_keys($class) {

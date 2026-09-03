@@ -6,10 +6,11 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.1`
-  (`active`; fresh bounded gate-profile execution and exact classification)
-- next_action: Start t1786 RED for the absent caller-sealed one-profile gate
-  worker, then implement its fresh canonical execution and classification only.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.2`
+  (`active`; ordered in-memory eleven-profile gate coordination)
+- next_action: Start t1787 RED for the absent repository-root-only gate
+  coordinator, then admit one complete ordered eleven-profile aggregate in
+  memory without publishing it.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: none.

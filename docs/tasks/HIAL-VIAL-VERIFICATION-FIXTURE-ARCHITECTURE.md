@@ -1678,19 +1678,19 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement the caller-sealed eleven-profile regression gate and its atomic result.`
   Acceptance: `Implement the .1 contract through canonical producers and the common measurement/lifecycle authorities, with fresh isolated profile execution and complete ordered admission. Prove correctness, deterministic outputs, stage-local measurements, exact applicability classification, performance enforcement only for the pinned qualification tuple, informational unmatched performance, unavailable-provider handling, bounded canonical diagnostics/results, signal/error/collision/recovery controls, immutable qualification input, atomic result publication, and exact same-volume cleanup. Add focused hostile watchers for mutation, stale or mixed identity, caller substitution, reordered/missing/extra profiles, threshold boundaries, tool/provider drift, timeouts, IPC failures, and residue without changing qualification bytes or generalizing support/capacity.`
-  Verification: `Clean contract predecessor cc1cd18ac separates four implementation fault domains: one fresh profile worker and its classifier, eleven-profile ordered coordination and aggregate admission, replaceable result storage, and the public CLI plus adversarial integration closeout. Existing ProfileCapture/CorpusCoordinator/QualificationStore patterns were re-audited, but their immutable calibration-publication lifecycle cannot safely store repeatable gate observations. Four ordered children retain one caller-sealed production entry and reserve full real-gate execution for independent .17.5.4.4 closeout.`
+  Verification: `Clean contract predecessor cc1cd18ac separates four implementation fault domains: one fresh profile worker and its classifier, eleven-profile ordered coordination and aggregate admission, replaceable result storage, and the public CLI plus adversarial integration closeout. Existing ProfileCapture/CorpusCoordinator/QualificationStore patterns were re-audited, but their immutable calibration-publication lifecycle cannot safely store repeatable gate observations. Four ordered children retain one caller-sealed production entry and reserve full real-gate execution for independent .17.5.4.4 closeout. Child .1 is complete with a fresh bounded one-profile worker, exact classifier, anonymous full-report spool, and hostile synthetic watcher; child .2 is active for ordered in-memory eleven-profile coordination only.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2: partition stable regression gate implementation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.4`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Execute and classify one qualified gate profile through a fresh bounded worker.`
   Acceptance: `Add one caller-sealed profile authority that accepts only repository_root plus ordinal, derives the exact gate contract internally, requires the active guard and unchanged clean execution revision, and invokes the selected canonical adapter once in a fresh child for one validation plus three raw measurements. Revalidate the closed bounded canonical report in the parent; require exact selection/workload/correctness projection before timing; derive provider and host/tool/guard applicability without caller override; reduce each fresh metric by maximum; classify exact-environment budgets at inclusive pass/fail boundaries, unmatched timing as informational, and unavailable exact providers as unavailable rather than pass. Return one bounded defensive profile result with exact evidence identities and sanitized failure; reject caller evidence, stale/mixed identity, reordered records, numeric strings, malformed/oversized IPC, timeout/exception/exit/signal, producer/report mutation, and residue. Default tests use deterministic synthetic adapter reports and run no real provider or simulator.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `ArchitectureScaleRegressionPromotionGateProfile accepts only repository_root plus numeric ordinal, derives the authenticated contract internally, requires the active guard and unchanged clean revision, and runs exactly one selected canonical adapter in a fresh process group. One immediately unlinked same-volume spool carries the complete report outside the 65,536-byte metadata pipe; child and parent independently validate the report, exact qualification selection/workload/correctness bindings, provider/environment applicability, maximum metric reduction, classification, content identity, bounds, and cleanup. Qualification exposes only an exact-caller observation seam that reuses its existing measurement/oracle/statistic authorities; ProcessSupervisor admits only the gate authority's bounded provider-version preflight. T1786 began RED on the absent module, then covers exact-threshold pass, adjacent fail, informational mismatch, unavailable-not-pass, available/missing/drifted provider preflight, correctness-before-timing, caller/guard/type/order/revision/mutation rejection, exception/exit/signal/timeout/IPC/report ceilings, and residue with deterministic synthetic reports. Exact preflight separately reports qualified Verilator, GHDL, and OSVVM/GHDL providers available without running a gate workload. No result is published and no qualification byte changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.1: execute one stable gate profile`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4.2.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Coordinate all eleven fresh profile workers and admit one complete in-memory gate result.`
   Acceptance: `Add one repository_root-only coordinator that derives the contract once, walks every ordinal exactly once in plan order, delegates only through .1's exact-caller worker seam, and admits the eleven returned profile results under one unchanged clean execution revision. Require complete qualification/contract/file-set identity, 11 validations, 33 fresh raw measurements, 44 controller invocations, zero exclusions, exact correctness and deterministic evidence, ordered per-profile performance classifications, and aggregate fail/unavailable/informational/pass precedence without publishing. Content-address one closed bounded canonical aggregate; reject missing/extra/duplicate/reordered profiles, mixed contract/qualification/revision/environment/provider state, threshold or classification forgery, malformed/oversized worker output, child failure, repository mutation, post-worker evidence mutation, and residue. Default tests remain synthetic and producer-free outside the sealed worker double.`
   Verification: `pending`
@@ -6099,3 +6099,44 @@ only a clean closure may activate proposed cross-family closeout `.17.4.8`.
   decision, generated artifact, worker, producer, provider, simulator,
   controller, measurement, result, qualification, budget, CI, support,
   capacity, full CI, or push changes.
+
+## Acceptance Checklist (enforced) — `.17.5.4.2.1` one-profile gate execution
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean predecessor `63ac5bee6`
+  partitions the implementation but contains no profile worker:
+  `git log -S'ArchitectureScaleRegressionPromotionGateProfile' --all -- perl
+  t scripts docs` returns no earlier authority. The first t1786 run is exact
+  RED with `Can't locate FSM/VIAL/ArchitectureScaleRegressionPromotionGateProfile.pm`
+  at `t/1786-vial-regression-promotion-gate-profile.t line 8`; the frozen
+  contract deliberately owns metadata only and cannot execute or classify one
+  selected profile.
+- [x] **ADDRESSED (verified)** — the new exact-invocant authority derives the
+  authenticated contract from repository root plus integer ordinal, requires
+  the guard and one clean revision, executes one selected canonical adapter in
+  a fresh process group, and transports its complete bounded report through an
+  immediately unlinked same-volume spool while only bounded metadata crosses
+  IPC. Child and parent independently revalidate exact selection, 1/3/4
+  workload, correctness and deterministic evidence, provider/environment
+  applicability, maximum-per-metric statistics, classification, content
+  identity, report bounds, cleanup, and revision. Qualification's
+  exact-caller observation seam reuses its existing admission/oracle/statistic
+  logic; ProcessSupervisor contains exact provider-version probes. Exact
+  thresholds pass inclusively or fail, unmatched environments remain
+  informational, and unavailable exact providers cannot pass.
+- [x] **NO REGRESSION** — module, shared-authority extensions, and t1786 report
+  `syntax OK`. T1786 reports `All tests successful` at `Files=1, Tests=10`;
+  its synthetic fixtures run no real provider, simulator, or gate workload.
+  The adjacent guarded ProfileCapture/Qualification/Contract/Profile band
+  reports `All tests successful` at `Files=4, Tests=38` in 16 wall-clock
+  seconds; the shared
+  ProcessSupervisor stress subset separately passes outside the restricted
+  process-inspection sandbox. Bounded real preflight reports the exact
+  qualified Verilator, GHDL, and OSVVM/GHDL providers available without
+  invoking a producer. The mdBook, compact Knowledge card, claim registry,
+  containment authority, generated Knowledge Map, task/Memory frontier, staged
+  acceptance, and `[doctrine] all doctrine checks passed` close before commit.
+  The 59-file book grows only 49 lines/4,781 bytes and the Knowledge-card
+  collection remains 759 bytes below its existing ceiling. No aggregate gate,
+  result publication, qualification or corpus mutation, budget change, CI
+  change, observed performance, support tier, capacity claim, full CI, push,
+  or real gate workload occurs.

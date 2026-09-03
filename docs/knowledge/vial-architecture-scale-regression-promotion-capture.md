@@ -28,6 +28,9 @@ answers:
   - "when does a VIAL regression-promotion gate enforce performance?"
   - "does a VIAL regression gate recalibrate its own qualification?"
   - "where does the VIAL regression gate publish its latest observation?"
+  - "how does one VIAL regression gate profile execute without publishing calibration evidence?"
+  - "why does the VIAL regression gate use an anonymous report spool?"
+  - "how does the VIAL regression gate distinguish provider absence from provider drift?"
 date: 2026-09-03
 status: current
 tags: [hial, vial, scalability, regression, measurement, publication]
@@ -36,13 +39,14 @@ evidence: >-
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/book/src/16df-vial-architecture-scale-cap-closeout.md;
   perl/FSM/VIAL/ArchitectureScaleRegressionPromotionPolicy.pm; perl/FSM/VIAL/ArchitectureScaleMeasurement.pm;
-  perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCapturePlan.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileCapture.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusCoordinator.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualification.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualificationStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateContract.pm;
+  perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCapturePlan.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionProfileCapture.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionCorpusCoordinator.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualification.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualificationStore.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateContract.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateProfile.pm;
   scripts/run_vial_regression_promotion_corpus.pl; scripts/run_vial_regression_promotion_budget_qualification.pl; scripts/verify_vial_regression_promotion_failed_prefix.pl; scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; scripts/measure_vial_regression_promotion_canonicalization.pl;
-  t/1776-vial-regression-promotion-current-corpus-verifier.t; t/1777-vial-regression-promotion-current-corpus-mutations.t; t/1778-vial-regression-promotion-canonicalization-instrument.t; t/1779-vial-regression-promotion-qualification.t; t/1780-vial-regression-promotion-qualification-store.t; t/1781-vial-regression-promotion-qualification-cli.t; t/1782-vial-regression-promotion-budget-qualification-verifier.t; t/1783-vial-regression-promotion-budget-qualification-mutations.t; t/1784-vial-regression-promotion-budget-qualification-closeout.t; t/1785-vial-regression-promotion-gate-contract.t
+  t/1776-vial-regression-promotion-current-corpus-verifier.t; t/1777-vial-regression-promotion-current-corpus-mutations.t; t/1778-vial-regression-promotion-canonicalization-instrument.t; t/1779-vial-regression-promotion-qualification.t; t/1780-vial-regression-promotion-qualification-store.t; t/1781-vial-regression-promotion-qualification-cli.t; t/1782-vial-regression-promotion-budget-qualification-verifier.t; t/1783-vial-regression-promotion-budget-qualification-mutations.t; t/1784-vial-regression-promotion-budget-qualification-closeout.t; t/1785-vial-regression-promotion-gate-contract.t; t/1786-vial-regression-promotion-gate-profile.t
 reverify: >-
   scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_corpus.pl --validate; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_corpus.pl --inventory; scripts/verify_vial_regression_promotion_failed_prefix.pl; scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/run_with_ram_guard.sh -- prove -v t/1777-vial-regression-promotion-current-corpus-mutations.t; scripts/run_with_ram_guard.sh -- scripts/measure_vial_regression_promotion_canonicalization.pl --phase corpus-load --sample-relative .artifacts/diagnostics/vial-scale/corpus.sample.txt --sample-seconds 3;
   scripts/run_with_ram_guard.sh -- scripts/measure_vial_regression_promotion_canonicalization.pl --phase balanced-validation --sample-relative .artifacts/diagnostics/vial-scale/balanced.sample.txt --sample-seconds 3; scripts/run_with_ram_guard.sh -- prove -Iperl t/1769-vial-architecture-scale-regression-promotion-profile-resume.t t/1773-vial-regression-promotion-corpus-coordinator.t;
-  scripts/run_with_ram_guard.sh -- prove -Iperl t/1779-vial-regression-promotion-qualification.t t/1780-vial-regression-promotion-qualification-store.t t/1781-vial-regression-promotion-qualification-cli.t; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_budget_qualification.pl --validate; scripts/run_with_ram_guard.sh -- scripts/verify_vial_regression_promotion_budget_qualification.pl; scripts/run_with_ram_guard.sh -- prove -v t/1782-vial-regression-promotion-budget-qualification-verifier.t t/1783-vial-regression-promotion-budget-qualification-mutations.t t/1784-vial-regression-promotion-budget-qualification-closeout.t; scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_REGRESSION_GATE_CONTRACT_EXACT=1 prove -Iperl -v t/1785-vial-regression-promotion-gate-contract.t
+  scripts/run_with_ram_guard.sh -- prove -Iperl t/1779-vial-regression-promotion-qualification.t t/1780-vial-regression-promotion-qualification-store.t t/1781-vial-regression-promotion-qualification-cli.t; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_budget_qualification.pl --validate; scripts/run_with_ram_guard.sh -- scripts/verify_vial_regression_promotion_budget_qualification.pl;
+  scripts/run_with_ram_guard.sh -- prove -v t/1782-vial-regression-promotion-budget-qualification-verifier.t t/1783-vial-regression-promotion-budget-qualification-mutations.t t/1784-vial-regression-promotion-budget-qualification-closeout.t; scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_REGRESSION_GATE_CONTRACT_EXACT=1 prove -Iperl -v t/1785-vial-regression-promotion-gate-contract.t; prove -Iperl -v t/1786-vial-regression-promotion-gate-profile.t
 ---
 
 Decision 0096 selects eleven v2 gate profiles. Each adapter call owns one
@@ -117,6 +121,15 @@ no enforcement override. Unmatched performance is informational; unavailable
 providers remain unavailable. Repeated gates will atomically replace one
 latest observation under the v2 gate namespace without changing qualification
 bytes or creating budget evidence. `.17.5.4.2` owns execution and publication.
+
+`.17.5.4.2.1` implements one profile only. One fresh child calls the selected
+adapter once; child and parent validate the full canonical report through an
+immediately unlinked same-volume spool, while IPC carries bounded metadata.
+The qualification's caller-sealed projection verifies correctness before
+maximum timing. Exact environment uses inclusive pass/fail, mismatch is
+informational, absence is unavailable, and present provider drift rejects.
+T1786 is synthetic and leaves no spool or process residue; all three real
+exact-provider preflights report available without running a workload.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]].
