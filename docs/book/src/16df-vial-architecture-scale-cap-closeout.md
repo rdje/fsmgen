@@ -1722,9 +1722,9 @@ real execution and CI placement remain separate rollback owners.
 
 ### Regression-gate CI evidence contract
 
-The real gate still cannot start from a fresh checkout because its generated
-current corpus and budget qualification coordinates live beneath ignored
-`.artifacts`. Decision 0098's durable source now exists under
+A fresh checkout initially has no generated current corpus or budget
+qualification because those coordinates live beneath ignored `.artifacts`.
+Decision 0098's durable source exists under
 `vial/qualification/regression_promotion_gate/evidence-v1/`: fifteen
 byte-identical canonical JSON payloads plus one closed manifest. The manifest
 orders all 13 corpus and two qualification files, fixes each generated
@@ -1749,9 +1749,44 @@ content addressed. T1790 repeats the valid pass from a copied bundle, mutates
 each admission boundary, and proves the tracked source and existing generated
 coordinates remain byte-identical.
 
-A later materializer still owns copy, transaction, recovery, idempotence, and
-cleanup controls. Hosted and local CI wiring remain forbidden until those
-controls exist.
+Materialize the authenticated bytes at their fixed generated coordinates,
+validate both production consumers, then remove only roots owned by that
+invocation:
+
+```sh
+perl scripts/materialize_vial_regression_promotion_gate_evidence.pl materialize
+perl scripts/verify_vial_regression_promotion_current_corpus.pl
+perl scripts/verify_vial_regression_promotion_budget_qualification.pl
+perl scripts/materialize_vial_regression_promotion_gate_evidence.pl cleanup
+```
+
+The materializer accepts only `materialize` or `cleanup`; no option supplies a
+root, source, destination, identity, receipt, or overwrite policy. It takes one
+nonblocking exclusive lock through the read-only authenticated manifest, stages
+the complete bundle below an identity-scoped repository-volume transaction,
+writes a closed canonical journal and pending receipt, atomically installs the
+corpus first, and installs qualification last as the commit point. An exact
+existing pair is idempotent. A mismatch is never replaced.
+
+The committed receipt distinguishes a fresh invocation's two created roots
+from an exact pair that the command merely adopted. Cleanup reauthenticates the
+source, receipt, complete destination census, file bytes/digests, and
+filesystem identities; it removes qualification before corpus only when the
+receipt owns both. An interrupted invocation resumes only the exact journal,
+stage, pending receipt, and installed-root combinations reachable at the named
+commit boundaries. T1791 exercises those recoveries in a copied fresh checkout,
+runs both production validators after each recovery, and rejects malformed,
+stale, mixed, linked, aliased, special-file, partial, mutated, concurrent, and
+caller-controlled state. Both operations emit one canonical result bounded at
+32,768 bytes and emit no partial result on failure. Neither operation executes
+the regression gate.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-evidence-materialization-v1 -->
+- Claim: The repository-derived evidence materializer accepts exactly `materialize` or `cleanup`, stages the authenticated 15-file/7,012,284-byte transport through one nonblocking manifest lock and one identity-scoped same-volume journal, installs corpus before qualification, and records whether it created two exact roots or adopted zero. Exact existing evidence is idempotent, mismatches never overwrite, recovery admits only reachable transaction states, cleanup removes only receipt-owned exact roots, and canonical result output is bounded at 32,768 bytes. This transports accepted evidence; it does not execute the gate, providers, CI, performance enforcement, support promotion, or capacity qualification.
+- Re-derive: Run t1791 under the repository RAM guard. Its copied fresh checkout must materialize the exact bundle, pass the production current-corpus and budget-qualification validators after fresh installation and every interrupted-boundary recovery, return canonical content-addressed results, preserve adopted roots, and leave no owned state after cleanup.
+- Falsify: T1791 starts from the absent executable, then rejects missing/extra/unknown caller operations, concurrent lock ownership, source and destination drift, partial destinations, stale identity namespaces, noncanonical or mixed journal/receipt/stage state, extra/missing payloads, symlinks, hardlinks, FIFO nodes, and unsafe cleanup with empty stdout. Boundary interruptions must recover the exact transaction; hostile nodes and unowned adopted roots must survive cleanup.
+- Durability: The executable materializer, authenticated tracked bundle/verifier, t1791, production corpus/qualification validators, Decision 0098, owning task, Knowledge Map card, claim record, mdBook chapter, doctrine gates, and work-unit commit retain the behavior. Local and hosted CI remain separately owned by `.17.5.4.3.2.3` and `.17.5.4.3.3`.
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-evidence-materialization-v1 -->
 
 The hosted provider contract installs no substitute runtime tool. It
 materializes exact OSVVM 2026.05, rejects an ambient Verilator or fixed GHDL
@@ -1765,8 +1800,8 @@ or a near-version tool into a performance pass.
 <!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-hosted-evidence-selection-v1 -->
 - Claim: A tracked-only fresh checkout keeps the current corpus and qualification absent from ignored generated coordinates but carries their exact 15-file/7,012,284-byte canonical transport under `vial/qualification/regression_promotion_gate/evidence-v1/`. The 8,725-byte manifest binds transport `3b4c486e...2bbc6` and the accepted corpus/qualification seals; a caller-closed, read-only, production-independent verifier reproduces them. Hosted selection remains 8 available profiles with informational timing plus three unavailable exact-runtime profiles. This is authenticated source and provider selection, not materialization, CI activation, a gate result, support, or capacity.
 - Re-derive: Run the transport verifier and require verification `ae9c67c9...55b6`, census 15/7,012,284, manifest 8,725/`d20cae85...94f7`, and source file sets `dc5b315b...c66f`/`28ba972c...9095`. Run both generated-source verifiers, byte-compare generated and tracked payloads, and inspect the qualification for the 8-available/3-unavailable provider partition.
-- Falsify: T1790 copies the source and rejects schema, order, path, byte, digest, identity, source-seal, canonicality, payload-schema, extra/missing, link, alias, FIFO, and caller-input mutations with empty result output, then restores the identity. Empty generated coordinates refute materialization; regeneration, mutable cache/artifacts, substitute tools, archives, and caller evidence fail the fixed seal.
-- Durability: The tracked payloads, manifest, verifier, t1790, Decision 0098, task tree, Knowledge Map card, claim record, chapter, and work-unit commit retain the source/provider selection. `.17.5.4.3.2.2` still owns materialization; hosted wiring remains forbidden.
+- Falsify: T1790 copies the source and rejects schema, order, path, byte, digest, identity, source-seal, canonicality, payload-schema, extra/missing, link, alias, FIFO, and caller-input mutations with empty result output, then restores the identity. Running only the verifier against empty generated coordinates proves source authentication does not materialize; regeneration, mutable cache/artifacts, substitute tools, archives, and caller evidence fail the fixed seal.
+- Durability: The tracked payloads, manifest, verifier, t1790, Decision 0098, task tree, Knowledge Map card, claim record, chapter, and work-unit commit retain the source/provider selection. `.17.5.4.3.2.2` separately supplies authenticated materialization; hosted wiring remains forbidden.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-hosted-evidence-selection-v1 -->
 
 Re-derive the authenticated transport, hostile closure, and policy comparison
@@ -1784,11 +1819,12 @@ scripts/run_with_ram_guard.sh -- env \
 Current capture, in-memory budget qualification, its publication store and
 CLI, the real clean-revision qualification seal, hostile copied controls,
 final independent/production agreement, one-profile gate worker,
-eleven-profile coordinator, atomic latest-result store, and explicit gate CLI
-are complete. Gate/CI integration and public truth remain separate
-rollback owners. Until those leaves pass, the sealed budgets remain
-unenforced, all historical candidate budgets stay candidate-only, and whole-
-product big/really-big capacity remains unclaimed.
+eleven-profile coordinator, atomic latest-result store, explicit gate CLI,
+authenticated transport, and transactional materialization are complete.
+Gate/CI integration and public truth remain separate rollback owners. Until
+those leaves pass, the sealed budgets remain unenforced, all historical
+candidate budgets stay candidate-only, and whole-product big/really-big
+capacity remains unclaimed.
 
 ## Revision-separated complete-corpus validation
 

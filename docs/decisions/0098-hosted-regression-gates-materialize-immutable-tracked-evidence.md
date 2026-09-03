@@ -116,22 +116,23 @@ substituted by an Ubuntu package.
   least one identity, immutability, provider, or reviewability requirement.
 - **Durability:** this decision, the owning task, synchronized mdBook and
   Knowledge Map fact, the fifteen tracked payloads, canonical manifest,
-  producer-independent verifier, hostile copied watcher, and work-unit commits
-  retain the selection and exact audit. The transactional materializer remains
-  a deliberate missing execution leg owned by `.17.5.4.3.2.2`; hosted wiring
-  is forbidden until that child and the local-driver child close.
+  producer-independent verifier, root-derived transactional materializer,
+  hostile copied transport/materialization watchers, production corpus and
+  qualification validators, and work-unit commits retain the selection and
+  exact audit. Hosted wiring remains forbidden until the local-driver child
+  closes.
 
 ## Consequences and nonclaims
 
 - A fresh checkout contains a repository-authenticated source for the exact
-  current evidence without turning generated `.artifacts` into source. It
-  still has no authorized route to create the generated coordinates until the
-  separately owned materializer lands.
+  current evidence without turning generated `.artifacts` into source. The
+  explicit fixed-coordinate materializer can now construct and independently
+  validate those generated coordinates or remove only receipt-owned roots.
 - Hosted CI will exercise every route that is honestly available and preserve
   distinct unavailable and informational truth for the rest.
-- The tracked bundle transports bytes but neither materializes nor runs the
-  gate. Until `.17.5.4.3.2.2` and `.17.5.4.3.2.3` ship, a fresh checkout still
-  cannot execute the real gate through local CI.
+- The tracked bundle and separate explicit materializer transport bytes but do
+  not run the gate. Until `.17.5.4.3.2.3` ships, local CI has no selected or
+  full entrypoint for the real gate.
 
 ## Rollback
 
