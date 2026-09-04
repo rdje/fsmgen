@@ -1924,11 +1924,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.4: publish runnable AHB tutorial`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.5`
-  Status: `proposed`
+  Status: `active`
   Goal: `Publish explicit migration guidance from legacy observation skeletons and handwritten fixtures to VIAL.`
   Acceptance: `Map IAL1 observe metadata, legacy UVM 1.2 passive-monitor output, the inert VHDL observation package, and the handwritten AHB harness to retain/parallel-successor/migrate states. Give source and command examples, compatibility guarantees, manifest/schema boundaries, typed bridge/probe replacements, rollback, and precise compile/runtime/parity nonclaims; do not silently deprecate or reinterpret legacy output.`
-  Verification: `pending .18.4 and separate clean activation`
-  Commit: `pending activation`
+  Verification: `Clean predecessor commit 3adaf729dd918bbba2c7bfbd839d73756ae291cc publishes and closes the runnable AHB tutorial with its full doctrine gate green, zero scratch-message bytes, no worktree residue, and no background state. Required Knowledge Map queries for legacy observe/UVM/VHDL-skeleton/handwritten-fixture migration returned no direct answer. This continuity-only transition activates the exact migration guide at docs/book/src/16di-vial-legacy-migration.md and its executable documentation watcher at t/1799-hial-vial-legacy-migration.t. It changes no legacy output, deprecation state, source, command, schema, manifest, artifact, backend, runtime, parity, capability, support, or product behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.5: activate VIAL migration guidance`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.6`
   Status: `proposed`
