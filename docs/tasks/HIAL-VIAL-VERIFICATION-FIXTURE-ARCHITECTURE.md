@@ -1887,10 +1887,60 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.9: repair failed-stage cleanup`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18`
-  Status: `proposed`
+  Status: `active`
   Goal: `Complete user documentation, runnable examples, migration guidance, backend/parity matrix, and architecture closeout.`
-  Acceptance: `The mdBook fully documents shipped .vial/bridge/plan/tool/backend/result behavior with runnable examples and honest profile limits; public contracts, capability/support accounting, migration from observe and inert skeletons, AHB example, diagnostics, scale evidence, Knowledge Map, roadmap, task index, Memory, changelog, and all exact regression/doctrine gates agree before the tree closes.`
-  Verification: `pending`
+  Acceptance: `The mdBook fully documents shipped .vial/bridge/plan/tool/backend/result behavior with runnable examples and honest profile limits; public contracts, capability/support accounting, migration from observe and inert skeletons, AHB example, diagnostics, scale evidence, Knowledge Map, roadmap, task index, bounded Memory, retired-changelog non-reference, and all exact regression/doctrine gates agree before the tree closes.`
+  Verification: `Clean predecessor 35d06790a closes the complete architecture-scale activity and leaves no dirty or untracked work. The required Knowledge Map query returns no direct documentation/migration-closeout answer. Decision and public-surface review resolves decisions 0032, 0035, 0039, 0043, 0050, and 0051; an mdBook heading/content census finds the shipped architecture spread across one 4,610-line core chapter, six specialist follow-ons, and a backlog chapter that still contains historical implementation-progress narration. This activation decomposes exact audit, user journey, lifecycle reference, runnable AHB tutorial, legacy migration, capability/diagnostic consolidation, and independent closeout owners; only audit child .1 becomes active. No book, contract, example, command, capability, support, migration, or product behavior changes in activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18: activate documentation and migration closeout`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.7`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.1`
+  Status: `active`
+  Goal: `Audit and select the exact user-documentation, runnable-example, migration, matrix, containment, and closeout work.`
+  Acceptance: `Query durable knowledge first, then compare README/SUMMARY, the HIAL/VIAL backlog and shipped chapters, public contracts and capability JSON, runnable source/CLI/gallery routes, legacy observe/UVM/VHDL skeleton surfaces, diagnostics, support matrices, parity, scale, Knowledge Cards, roadmap/task/Memory truth, and retired-document non-reference. Publish one closed retain/merge/repair/supersede matrix with exact owners, examples, tests, claims, containment strategy, rollback, and nonclaims before changing user documentation or behavior.`
+  Verification: `pending audit from clean activation`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.2`
+  Status: `proposed`
+  Goal: `Make the mdBook entry path distinguish shipped HIAL/VIAL behavior, qualified profiles, unavailable profiles, and future work without progress-ledger drift.`
+  Acceptance: `Implement the .18.1-selected SUMMARY, backlog, overview, and chapter-boundary changes; give a bounded learning path and stable reference routing; remove or historical-label stale implementation narration; preserve exact semantics, links, claims, and containment without hiding unsupported or proposed capabilities.`
+  Verification: `pending .18.1 selection and separate clean activation`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.3`
+  Status: `proposed`
+  Goal: `Publish one exact public VIAL source-to-result lifecycle reference.`
+  Acceptance: `Document normal/terse source equivalence; capabilities/check/format/plan/run CLI and portable API; accepted HIAL review routes; semantic/bridge/plan/tool/output/result schemas; virtual and atomic artifacts; diagnostics, collision/failure cleanup, and repository-local paths. Every command is runnable and watched against public machine truth; private IR or backend plumbing is never presented as API.`
+  Verification: `pending .18.2 and separate clean activation`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.4`
+  Status: `proposed`
+  Goal: `Publish a runnable end-to-end AHB HIAL/VIAL tutorial and exact backend/parity walkthrough.`
+  Acceptance: `Start from the checked AHB HIAL and .vial sources; run check, normal/terse formatting, plan, supported portable-SystemVerilog execution, and the selected VHDL/OSVVM inspection or qualification routes; explain generated review artifacts, logical time, typed probes, normalized result, the exact bounded parity oracle, expected diagnostics, cleanup, and unavailable paths. Tests execute or byte-check every promised command/output without widening support.`
+  Verification: `pending .18.3 and separate clean activation`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.5`
+  Status: `proposed`
+  Goal: `Publish explicit migration guidance from legacy observation skeletons and handwritten fixtures to VIAL.`
+  Acceptance: `Map IAL1 observe metadata, legacy UVM 1.2 passive-monitor output, the inert VHDL observation package, and the handwritten AHB harness to retain/parallel-successor/migrate states. Give source and command examples, compatibility guarantees, manifest/schema boundaries, typed bridge/probe replacements, rollback, and precise compile/runtime/parity nonclaims; do not silently deprecate or reinterpret legacy output.`
+  Verification: `pending .18.4 and separate clean activation`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.6`
+  Status: `proposed`
+  Goal: `Consolidate backend, capability, parity, scale, and troubleshooting truth into bounded navigable references.`
+  Acceptance: `Derive one exact profile matrix for portable SystemVerilog, native UVM emission/experiment/qualified runtime, provider-free VHDL, OSVVM, and mixed-language availability; align capability/support stages, parity scope, regression-scale evidence, provider setup, error interpretation, and residue cleanup with public JSON and current evidence. Link specialist measurements instead of duplicating them, preserve all nonclaims, and raise no documentation ceiling without separate authority.`
+  Verification: `pending .18.5 and separate clean activation`
+  Commit: `pending activation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.7`
+  Status: `proposed`
+  Goal: `Independently close documentation, runnable examples, migration, public truth, containment, and architecture continuity.`
+  Acceptance: `Re-derive every user-visible command, schema, example result, migration state, profile capability, support/nonclaim, parity boundary, and scale statement from independent executable or tracked authorities. Run all promised examples and focused regressions plus mdBook, claims, Knowledge Map, relative-path, task, containment, and doctrine gates; prove no stale progress wording, broken link, generated book, staging, log, or receipt residue; synchronize roadmap/task/Memory and close .18.`
+  Verification: `pending .18.6 and separate clean activation`
   Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19`
@@ -2109,12 +2159,12 @@ partition. Completed runtime/balanced parent `.17.2.7` owns runtime-stream
 construction `.1`, balanced revision-2 composition and portable structural
 emission `.2`, and unified provider-free qualification `.3`; parent `.17.2`
 therefore closes deterministic generation. Architecture-scale activity `.17`
-is complete. Its current evidence, qualification, local/hosted gate, public
-machine and human contracts, independent hostile closeout, and residue proof
-agree at clean execution revision `840c895f3`, while every whole-product and
-broader support/capacity nonclaim remains explicit. Documentation and migration
-closeout `.18` is the next proposed architecture activity and requires a
-separate clean activation.
+is complete at clean closeout commit `35d06790a`. Documentation and migration
+closeout `.18` is now active after a clean pivot; audit `.18.1` owns the exact
+public-surface gap/retention matrix before any user documentation changes.
+Children `.18.2` through `.18.7` retain entry-path, lifecycle-reference,
+runnable-AHB, legacy-migration, profile/diagnostic consolidation, and
+independent-closeout ownership respectively.
 
 ## Decisions
 

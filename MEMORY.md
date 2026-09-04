@@ -6,11 +6,11 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: none (`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6.2`
-  and architecture-scale parent `.17` are complete)
-- next_action: From the clean scale-closeout commit, activate
-  `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18` separately, then audit and
-  decompose its documentation and migration closeout.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.1`
+  (`active`; documentation and migration closeout audit)
+- next_action: From the clean `.18` activation, build the exact retain/merge/
+  repair/supersede matrix across public docs, runnable examples, legacy
+  migration, profile truth, claims, and containment before changing prose.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: none.
