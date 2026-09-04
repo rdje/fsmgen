@@ -323,3 +323,7 @@ qualified host/tool conditions. Continue with the
 [end-to-end AHB tutorial](16dh-vial-ahb-end-to-end-tutorial.md) to apply this
 lifecycle to the checked fixture, public result, bounded parity oracle, and
 separate VHDL/OSVVM qualification routes.
+
+For side-by-side use with IAL1 observation metadata, inert UVM/VHDL outputs,
+and handwritten fixtures, continue with the
+[legacy migration guide](16di-vial-legacy-migration.md).

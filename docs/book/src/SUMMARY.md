@@ -51,6 +51,7 @@
   - [HIAL/VIAL Verification: Start Here](16d-hial-vial-verification-architecture.md)
     - [Public VIAL Lifecycle Reference](16dg-vial-public-lifecycle-reference.md)
     - [End-to-End AHB HIAL/VIAL Tutorial](16dh-vial-ahb-end-to-end-tutorial.md)
+    - [Migrating Legacy Verification to VIAL](16di-vial-legacy-migration.md)
     - [Balanced Portable Composition](16da-vial-balanced-portable-composition.md)
     - [Structural Backend-Emission Matrix](16db-vial-structural-backend-emission-matrix.md)
     - [Portable Verilator Runtime Measurement](16dc-vial-portable-verilator-runtime-measurement.md)

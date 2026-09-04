@@ -24,6 +24,11 @@ not additional values accepted by public `fsmgen vial run`. Their checked
 galleries and qualification reports are evidence, not a promise of a public
 VHDL execution command.
 
+If this workflow will replace an IAL1 observation skeleton or a handwritten
+fixture in an existing consumer, use the
+[legacy migration guide](16di-vial-legacy-migration.md) to keep the old route
+stable until the new result and parity evidence are accepted.
+
 ## Read the two authored inputs
 
 The HIAL source is `ppif/ahb_lite_subordinate.ppif`. It declares the AHB

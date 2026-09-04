@@ -7,9 +7,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.5`
-  (`active`; legacy observation and handwritten-fixture migration guidance)
-- next_action: Audit the exact legacy observe, UVM 1.2, inert VHDL package, and
-  handwritten AHB surfaces before writing 16di and its t1799 watcher.
-- in_flight_uncommitted: none.
+  (`done`; explicit legacy-to-VIAL migration guidance)
+- next_action: Commit `.18.5`, prove a clean handoff, then activate `.18.6` as a
+  separate continuity-only capability/support-reference slice.
+- in_flight_uncommitted: `.18.5` final candidate is staged for required gates.
 - in_flight_background: none.
 - blockers: none.

@@ -27,7 +27,7 @@ answers:
   - "where should I start reading about HIAL and VIAL?"
   - "how is the HIAL VIAL mdBook being organized?"
   - "how do I run the checked AHB HIAL VIAL tutorial?"
-  - "where is migration from observe and legacy verification skeletons tracked?"
+  - "how do I migrate observe metadata and legacy verification skeletons to VIAL?"
 date: 2026-09-04
 status: current
 tags: [hial, vial, ial0, ial1, ial2, verification, semantic-ir, execution-ir, bridge, simulator-profile, architecture, task-tree]
@@ -55,11 +55,13 @@ evidence: >-
   t/1559-vial-ahb-runtime-parity.t;
   t/1796-hial-vial-book-entry-path.t;
   t/1798-hial-vial-ahb-end-to-end-tutorial.t;
+  t/1799-hial-vial-legacy-migration.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/TASK_TREE.md; README.md; ROADMAP_V2.md;
   docs/book/src/14e-hial-vial-verification.md;
   docs/book/src/16d-hial-vial-verification-architecture.md;
-  docs/book/src/16dh-vial-ahb-end-to-end-tutorial.md
+  docs/book/src/16dh-vial-ahb-end-to-end-tutorial.md;
+  docs/book/src/16di-vial-legacy-migration.md
 reverify: >-
   scripts/check_task_tree_integrity.pl &&
   rg -n 'sv_portable_verilator|vhdl_portable_ghdl|vhdl_osvvm_qualified|mixed_language_qualified|drive|sample|react|check'
@@ -72,6 +74,7 @@ reverify: >-
   t/1559-vial-ahb-runtime-parity.t
   t/1796-hial-vial-book-entry-path.t
   t/1798-hial-vial-ahb-end-to-end-tutorial.t
+  t/1799-hial-vial-legacy-migration.t
 ---
 
 Hardware IAL (HIAL) names FSMGen's synthesizable IAL0/IAL1/IAL2 stack;
@@ -111,13 +114,12 @@ experimental evidence, not a qualified product runtime. Separate
 Verilator/GHDL qualifications cannot satisfy `mixed_language_qualified`;
 `.16` remains proposed until one exact compatible mixed-language route exists.
 
-Documentation closeout `.18` routes README and SUMMARY through the stable
-overview and specialist evidence; the backlog is future-only. The selected
-lifecycle and checked AHB tutorial cover HIAL review, planning, public portable-
-SystemVerilog execution, normalized outcomes, the 19-path parity oracle, and
-distinct VHDL/OSVVM qualification. T1796 watches the entry path; t1798 derives
-the tutorial from machine truth. Later children own legacy migration and the
-capability reference.
+Documentation closeout `.18` routes README/SUMMARY through the overview and
+selected lifecycle, tutorial, and migration guides; backlog is future-only.
+Together they cover HIAL review, planning, public portable-SystemVerilog runs,
+normalized outcomes, 19-path parity, VHDL/OSVVM qualification, and stable
+legacy outputs beside VIAL successors. T1796/T1798/T1799 watch these routes; a
+later child owns the capability reference.
 
 The architecture is selected, not proposed. `HIAL-VIAL-VERIFICATION-FIXTURE-
 ARCHITECTURE` is the owning tree and the only authority for the current

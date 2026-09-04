@@ -1793,18 +1793,12 @@ cannot be called cross-backend portable.
 
 ## Migration and current boundary
 
-The migration order is additive:
-
-1. keep all current HIAL names and synthesized behavior unchanged;
-2. keep IAL1 checks/properties on the existing HIAL property route;
-3. treat `(observe ...)` as an initial bridge observation source, not a VIAL
-   scenario language;
-4. preserve the current UVM/VHDL target IDs, paths, manifest contract, and
-   explicit non-claims until their migration owners act;
-5. add versioned bridge, plan, artifact, and result reports without exposing
-   raw IR;
-6. keep `.ppif` verification output unsupported; and
-7. keep native extensions typed, external, capability-qualified, and reported.
+Migration is additive and preserves the legacy IAL1 observation metadata,
+UVM 1.2 passive-monitor skeleton, inert VHDL observation package, and
+handwritten AHB oracle. The task-oriented
+[legacy migration guide](16di-vial-legacy-migration.md) gives the exact
+retain/parallel-successor/migrate matrix, runnable side-by-side commands,
+typed bridge/probe replacements, rollback path, and nonclaims.
 
 The canonical architecture record is
 [HIAL/VIAL Verification Fixture Architecture Audit](../../HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md),

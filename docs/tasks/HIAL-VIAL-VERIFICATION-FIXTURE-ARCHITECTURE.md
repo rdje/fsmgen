@@ -1924,11 +1924,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.4: publish runnable AHB tutorial`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.5`
-  Status: `active`
+  Status: `done`
   Goal: `Publish explicit migration guidance from legacy observation skeletons and handwritten fixtures to VIAL.`
   Acceptance: `Map IAL1 observe metadata, legacy UVM 1.2 passive-monitor output, the inert VHDL observation package, and the handwritten AHB harness to retain/parallel-successor/migrate states. Give source and command examples, compatibility guarantees, manifest/schema boundaries, typed bridge/probe replacements, rollback, and precise compile/runtime/parity nonclaims; do not silently deprecate or reinterpret legacy output.`
-  Verification: `Clean predecessor commit 3adaf729dd918bbba2c7bfbd839d73756ae291cc publishes and closes the runnable AHB tutorial with its full doctrine gate green, zero scratch-message bytes, no worktree residue, and no background state. Required Knowledge Map queries for legacy observe/UVM/VHDL-skeleton/handwritten-fixture migration returned no direct answer. This continuity-only transition activates the exact migration guide at docs/book/src/16di-vial-legacy-migration.md and its executable documentation watcher at t/1799-hial-vial-legacy-migration.t. It changes no legacy output, deprecation state, source, command, schema, manifest, artifact, backend, runtime, parity, capability, support, or product behavior.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.5: activate VIAL migration guidance`
+  Verification: `Clean activation commit 4ca781693 owns the slice. Required Knowledge Map queries found no direct migration answer, while history traces observation selection to f3fa55646, UVM 1.2 output to d867815f3, VHDL observation output to ab06754e7, and handwritten AHB parity to c95160d53. Selected 16di defines exact retain/parallel-successor/migrate states: IAL1 observe remains HIAL schedule/bridge metadata; UVM 1.2 and inert VHDL outputs remain stable beside native-UVM and portable-VHDL/OSVVM successors; the handwritten AHB harness remains the bounded qualification oracle while checked .vial becomes the authoring path. It gives runnable legacy and VIAL commands, artifact/schema/bridge/probe boundaries, side-by-side rollout, rollback, exact cleanup roots, and compile/runtime/parity nonclaims without deprecation or reinterpretation. T1799 derives the legacy capability manifest, executes both retained generators and the typed VIAL plan, proves artifact trees and source preservation, checks the unsupported public native-UVM run atomically, runs all three successor galleries, joins the exact t1559 parity outcomes, and rejects hostile documentation mutations. Standalone t1799 passes Files=1/Tests=5; the guarded legacy/reader band passes Files=7/Tests=28; and the guarded full HIAL/VIAL contract/backend/documentation band passes Files=18/Tests=103, with only the two pre-existing Darwin runtime qualification guards skipped. Every mdBook chapter tests, the repository-local HTML build succeeds before exact removal, and all three gallery checks pass. Claim inventory/dispositions close 1,895/1,895 with zero gaps. The Knowledge Card was compacted after containment exposed a 34-byte ratchet excess; the final Knowledge Map has 1,160 facts/6,294 questions/6,466 occurrences/138 shards. Containment accepts 62 book files/57,345 lines/3,125,843 bytes under the authorized +1/+330/+13,855 delta, with no ceiling or allowance rise. Final staged acceptance and all 12 registered doctrine checks are green. No legacy byte, public command, source, schema, manifest, backend, runtime, parity, capability, support, or product behavior changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.5: publish VIAL migration guidance`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.6`
   Status: `proposed`
@@ -3081,3 +3081,34 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   locality, README, and `[doctrine] all doctrine checks passed` remain required
   before commit; no command, schema, backend, runtime, parity, capability,
   support, or product behavior changes.
+
+## Acceptance Checklist (.18.5, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — required Knowledge Map queries returned no
+  direct legacy-to-VIAL migration answer. `git log -S` locates IAL1 observation
+  selection at `f3fa55646`, the UVM passive-monitor implementation at
+  `d867815f3`, the VHDL observation-package implementation at `ab06754e7`, and
+  the handwritten AHB parity closure at `c95160d53`. Those independently stable
+  surfaces had exact specialist evidence but no single consumer-safe migration
+  policy joining retain, parallel-successor, behavioral migration, and rollback.
+- [x] **ADDRESSED (verified)** — selected 16di gives an exact four-row state
+  matrix, executes the retained schedule/UVM/VHDL commands, distinguishes the
+  native-UVM and portable-VHDL/OSVVM successors, maps legacy observation shapes
+  to typed bridge endpoints/probes and logical-time behavior, preserves the
+  handwritten AHB oracle, and defines side-by-side rollout, rollback, cleanup,
+  and nonclaims. T1799 derives public legacy target/manifest truth, executes the
+  typed VIAL plan and unavailable-backend failure, checks all three galleries,
+  binds the parity source/producer/watcher, and rejects hostile prose changes.
+- [x] **NO REGRESSION (legacy, bridge, reader path, and residue)** — t1799 and
+  the guarded seven-file legacy/entry/lifecycle/tutorial/migration band report
+  `All tests successful.` at `Files=1, Tests=5` and `Files=7, Tests=28`.
+  The guarded full HIAL/VIAL contract/backend/documentation band reports
+  `All tests successful.` at `Files=18, Tests=103`; only the two explicit
+  Darwin runtime qualification guards skip. Every mdBook chapter tests, the
+  repository-local HTML build succeeds before exact removal, and all three
+  successor gallery checks pass. Knowledge Map is current, claim dispositions
+  close 1,895/1,895 with zero gaps, and containment accepts the authorized book
+  delta without a ceiling or allowance rise. Relative-path, task-integrity,
+  staged-acceptance, locality, README, and all 12 registered doctrine checks
+  are green; no legacy byte, public command, source, schema, manifest,
+  backend, runtime, parity, capability, support, or product behavior changes.
