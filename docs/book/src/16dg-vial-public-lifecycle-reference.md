@@ -3,7 +3,9 @@
 This is the task-oriented reference for both public VIAL versions. Version 1
 follows one verification source from discovery and checking through HIAL
 review, target-neutral planning, the selected public backend, and normalized
-results. Version 2 currently stops at empty-family planning. Read
+results. Version 2 accepts the `lifecycle_control@1` family through typed,
+target-neutral planning and normalized-result validation, but still has no
+backend or `run` route. Read
 [HIAL/VIAL Verification: Start Here](16d-hial-vial-verification-architecture.md)
 first when you need the availability boundary between public, private,
 review-only, experimental, and unavailable profiles.
@@ -34,11 +36,13 @@ below. Select the additive v2 foundation with `--language-version 2`:
   vial/ahb_subordinate_base_output_arbitration.vial
 ```
 
-The checked v2 fixture has the same base meaning as the v1 AHB fixture and an
-explicit empty `(intents)` section. It does not claim an implemented expressive
-family. `check` and `format` write no artifact, and formatting preserves
-language version 2. Normal and terse output report `normal_v2` and `terse_v2`
-and reparse to one `fsmgen.vial_semantic_projection.v2` digest.
+The base v2 fixture has the same base meaning as the v1 AHB fixture and keeps
+the explicit empty-family `(intents)` planning boundary. Its maintained
+`ahb_subordinate_base_output_arbitration_lifecycle_v2.vial` companion adds the
+implemented lifecycle block below. `check` and `format` write no artifact, and
+formatting preserves language version 2. Normal and terse output
+report `normal_v2` and `terse_v2` and reparse to one
+`fsmgen.vial_semantic_projection.v2` digest.
 
 The public v2 action matrix is:
 
@@ -47,10 +51,10 @@ The public v2 action matrix is:
 | `capabilities` | supported smoke | exact v2 contract, including unavailable states |
 | `check` / `format` | supported smoke | sanitized v2 report or canonical v2 source; no artifacts |
 | `migrate` | supported smoke | non-mutating whole-catalog v1-to-v2 result; no artifacts |
-| `plan` | supported smoke for the empty-family base | atomic v2 plan tree or virtual sink |
+| `plan` | supported smoke for the base and lifecycle family | atomic v2 plan tree or virtual sink with typed lifecycle records |
 | `run` | unavailable | `VIAL_VERSION_UNSUPPORTED`; no plan, workspace, or artifact |
 
-Plan the checked empty-family v2 fixture with:
+Plan the checked v2 fixture with:
 
 ```bash
 ./bin/fsmgen vial plan --language-version 2 \
@@ -81,13 +85,15 @@ Successful migration records use `fsmgen.vial_source_migration.v1`; see the
 [legacy migration guide](16di-vial-legacy-migration.md) before adopting any
 returned source bytes.
 
-## Selected lifecycle-control intent (not implemented)
+## Implemented lifecycle-control compiler
 
 The public command lifecycle described by this chapter is distinct from the
-selected VIAL v2 `lifecycle_control` intent family. That family now has a
-target-neutral revision-1 source and semantic contract, but no accepted source,
-backend, runtime, result, capability, or support yet. A nonempty family block
-therefore still fails `VIAL_FAMILY_UNSUPPORTED` without partial output.
+VIAL v2 `lifecycle_control` intent family. Revision 1 is accepted by `check`,
+`format`, and `plan`. Public capability discovery names
+`vial.family.lifecycle_control.v1` and
+`vial.family.lifecycle_control.deadline.v1`. All version-2 backends and `run`
+remain unavailable, so this is a compiler and planning contract rather than a
+runtime-support claim.
 
 The compact family form owns one fixture's dependencies, readiness, background
 service, stimulus start, completion, drain, shutdown, finalization, deadlines,
@@ -120,7 +126,34 @@ and failure policy:
 
 Normal source wraps this exact block in `(intents ...)`; terse source places the
 same block directly in package declaration order. No family-specific alias or
-hidden target default exists. The compiler supplies only fixed semantic
+hidden target default exists. Check, format, and plan the maintained complete
+fixture directly:
+
+```bash
+./bin/fsmgen vial check --language-version 2 \
+  vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial
+
+./bin/fsmgen vial format --language-version 2 --style terse \
+  vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial
+
+./bin/fsmgen vial plan --language-version 2 \
+  --dut ppif/ahb_lite_subordinate.ppif \
+  --fixture base_output_arbitration \
+  --profile core_directed_single_clock_execution_v2 \
+  --outdir .artifacts/manual/vial-v2-lifecycle-plan \
+  --json \
+  vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial
+```
+
+After reviewing the plan, remove only that example root. The executable
+contract watcher runs the same complete fixture through all compiler phases:
+
+```bash
+prove -Iperl t/1808-vial-v2-lifecycle-compiler-phases.t
+rm -rf .artifacts/manual/vial-v2-lifecycle-plan
+```
+
+The compiler supplies only fixed semantic
 defaults: all dependencies and services precede readiness; readiness precedes
 stimulus; selected scenarios must terminate before completion; transactions,
 scoreboards, and services must settle before drain; shutdown precedes service
@@ -134,12 +167,25 @@ plus ordered evidence, and can never become pass. All time remains the VIAL
 `(domain, cycle, phase, ordinal)` model; target schedules and host wall time are
 not source semantics.
 
+For the block above, `plan.semantic_families` contains twelve records: two
+dependencies, one service, six lifecycle points, two deadlines, and one
+failure policy. Every record carries its semantic node, two typed bindings
+(fixture and domain), explicit operation IDs, required capabilities, and a
+cumulative source map from authored span through HIAL bridge, execution, and
+plan paths. Result validation requires those exact plan records, adds one
+result-bearing map for every record, and accepts only the closed
+`fsmgen.vial_lifecycle_result.v1` shape. It rejects omitted or substituted
+record identities, changed deadline bounds or provenance, target timestamps,
+process identifiers, exclusive or overrun deadline endpoints, regressed
+logical-time chronology, and any pass result that retains a failure cause or
+incomplete dependency, service, or lifecycle point.
+
 Read the normative
 [lifecycle-control family contract](../../vial-spec/lifecycle-control-v2.md)
 for the complete grammar, conditions, exact defaults, typed record/result
 shapes, bounds, diagnostics, backend-private mapping boundary, and nonclaims.
-Do not copy this selected fragment into a production fixture until capability
-discovery advertises `vial.family.lifecycle_control.v1`.
+Do not infer emission or runtime support from successful planning; inspect
+capability discovery and require a separately qualified version-2 backend.
 
 ## Start with machine truth
 
@@ -436,6 +482,11 @@ VIAL_PARSE_ERROR
 VIAL_SCHEMA_ERROR
 VIAL_SEMANTIC_ERROR
 VIAL_LIMIT_ERROR
+VIAL_BIND_REFERENCE_ERROR
+VIAL_LIFECYCLE_DEADLINE_EXPIRED
+VIAL_LIFECYCLE_SERVICE_ERROR
+VIAL_LIFECYCLE_DRAIN_INCOMPLETE
+VIAL_LIFECYCLE_CLEANUP_TIMEOUT
 VIAL_HIAL_SOURCE_ERROR
 VIAL_ARTIFACT_PATH_ERROR
 VIAL_ARTIFACT_COLLISION

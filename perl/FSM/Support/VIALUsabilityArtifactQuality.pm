@@ -176,7 +176,7 @@ sub build_vial_usability_artifact_quality_contract {
         schema => 'fsmgen.vial_usability_artifact_quality_contract.v1',
         schema_version => 1,
         contract_id => undef,
-        status => 'executable_foundation_quality_gate',
+        status => 'executable_foundation_and_lifecycle_compiler_quality_gate',
         author_surface_kinds => [qw(
             public_example canonical_normal canonical_terse source_diagnostic
         )],
@@ -186,6 +186,7 @@ sub build_vial_usability_artifact_quality_contract {
         public_fixture_paths => [qw(
             vial/ahb_subordinate_base_output_arbitration.vial
             vial/ahb_subordinate_base_output_arbitration_v2.vial
+            vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial
             vial/qualification/sv_portable_verilator_runtime_gate.vial
             vial/qualification/sv_portable_verilator_runtime_qualification.vial
             vial/qualification/vhdl_portable_ghdl_runtime_gate.vial
@@ -200,7 +201,7 @@ sub build_vial_usability_artifact_quality_contract {
         profile_ids => [map { $_->{profile_id} } @profiles],
         profiles => \@profiles,
         explicit_nonclaims => [qw(
-            public_api support_promotion family_implementation
+            public_api support_promotion non_lifecycle_family_implementation
             backend_byte_change runtime_qualification subjective_style_proof
             arbitrary_generated_language_quality
         )],

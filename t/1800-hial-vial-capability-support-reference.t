@@ -406,6 +406,7 @@ sub reference_errors {
         'fsmgen.vial_tool_manifest.v2',
         'feature.vial_v2_public_source_migration',
         'feature.vial_v2_public_empty_base_plan',
+        'feature.vial_v2_public_lifecycle_plan',
         'no v2 backend, compile, runtime, complete-result, or parity capability exists',
     ) {
         push @errors, "missing token $token" if index($text, $token) < 0;

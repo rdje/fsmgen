@@ -190,8 +190,10 @@ subtest 'v1 remains byte-exact while v2 capability truth is distinct' => sub {
         && $capability{'vial.source_migration.v1'}
         && $capability{'vial.plan.v2'},
         'v2 source, semantic, migration, and empty-plan capabilities are exact');
-    is_deeply([grep { /\Avial[.]family[.]/ } keys %capability], [],
-        'no expressive family is advertised');
+    is_deeply([sort grep { /\Avial[.]family[.]/ } keys %capability], [qw(
+        vial.family.lifecycle_control.deadline.v1
+        vial.family.lifecycle_control.v1
+    )], 'only the implemented lifecycle family is advertised');
     ok(!$capability{'vial.backend.sv_portable_verilator.v2'}
         && !$capability{'vial.result_manifest.v2'},
         'no v2 backend or complete-result capability is advertised');
@@ -501,16 +503,17 @@ subtest 'CLI selects v2 explicitly and preserves the v1 default' => sub {
         'v2 unavailable run creates no artifact root');
 };
 
-subtest 'support and usability authorities include only the shipped v2 foundation' => sub {
+subtest 'support and usability authorities include the exact shipped v2 frontier' => sub {
     my @entries = grep { $_->{id} =~ /\Afeature[.]vial_v2_public_/ }
         regression_corpus_entries();
     is_deeply([map { $_->{id} } @entries], [qw(
         feature.vial_v2_public_source_migration
         feature.vial_v2_public_empty_base_plan
-    )], 'support corpus has exactly the two public v2 foundation entries');
+        feature.vial_v2_public_lifecycle_plan
+    )], 'support corpus has exactly the three public v2 compiler entries');
     is_deeply([map { $_->{classification} } @entries],
-        [qw(supported_smoke supported_smoke)],
-        'source/migration and empty-base plan have exact smoke support');
+        [qw(supported_smoke supported_smoke supported_smoke)],
+        'source/migration, empty-base plan, and lifecycle plan have exact smoke support');
     my %contract_capability = map { $_ => 1 }
         @{build_vial_tooling_contract_v2()->{capabilities}};
     for my $entry (@entries) {
@@ -518,16 +521,19 @@ subtest 'support and usability authorities include only the shipped v2 foundatio
                 @{$entry->{required_capabilities}}),
             "$entry->{id} requires only advertised v2 capabilities");
         my %nonclaim = map { $_ => 1 } @{$entry->{explicit_nonclaims}};
+        my $family_nonclaim = $entry->{id} =~ /lifecycle_plan\z/
+            ? $nonclaim{non_lifecycle_expressive_family}
+                && $nonclaim{result_production}
+            : $nonclaim{expressive_family} && $nonclaim{result};
         ok($nonclaim{backend} && $nonclaim{runtime}
-                && $nonclaim{result} && $nonclaim{parity}
-                && $nonclaim{expressive_family},
+                && $nonclaim{parity} && $family_nonclaim,
             "$entry->{id} retains backend/family nonclaims");
     }
     my %fixture = map { $_ => 1 }
         @{build_vial_usability_artifact_quality_contract()
             ->{public_fixture_paths}};
     ok($fixture{$v1_name} && $fixture{$v2_name},
-        'the executable author-quality gate owns both public source versions');
+        'the executable author-quality gate owns both base source versions');
 };
 
 done_testing();

@@ -1,6 +1,6 @@
 ---
 id: vial-v2-lifecycle-control-selection
-title: VIAL v2 lifecycle control has one target-neutral revision-1 contract
+title: VIAL v2 lifecycle control compiles through target-neutral planning
 answers:
   - "what is the selected VIAL v2 lifecycle_control syntax?"
   - "how does VIAL express readiness without UVM phases?"
@@ -10,7 +10,7 @@ answers:
   - "how are VIAL lifecycle deadlines measured?"
   - "what happens when a VIAL lifecycle deadline expires?"
   - "is VIAL lifecycle_control implemented or public?"
-  - "which task implements VIAL lifecycle SemanticIR next?"
+  - "which VIAL lifecycle compiler phases are implemented?"
 date: 2026-09-04
 status: current
 tags: [vial, hial, lifecycle, semantic-ir, logical-time, deadlines, target-neutral]
@@ -20,11 +20,13 @@ evidence: >-
   docs/decisions/0034-vial-expressiveness-is-not-bounded-by-synthesizability.md;
   docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md;
   perl/FSM/Support/VIALSemanticFamilyRegistry.pm;
+  perl/FSM/VIAL/LifecycleControl.pm;
   t/1807-vial-v2-lifecycle-selection.t;
+  t/1808-vial-v2-lifecycle-compiler-phases.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md
 reverify: >-
-  prove -Iperl t/1807-vial-v2-lifecycle-selection.t &&
-  rg -n 'lifecycle_control|fixture_background|Intrinsic order and defaults|Finite bounds|implementation unavailable' docs/vial-spec/lifecycle-control-v2.md docs/VIAL_SOURCE_AND_SEMANTIC_IR_V2_CONTRACT.md docs/book/src/16dg-vial-public-lifecycle-reference.md perl/FSM/Support/VIALSemanticFamilyRegistry.pm
+  prove -Iperl t/1807-vial-v2-lifecycle-selection.t t/1808-vial-v2-lifecycle-compiler-phases.t &&
+  rg -n 'lifecycle_control|fixture_background|Intrinsic order and defaults|Finite bounds|public_lifecycle_planning' docs/vial-spec/lifecycle-control-v2.md docs/VIAL_SOURCE_AND_SEMANTIC_IR_V2_CONTRACT.md docs/book/src/16dg-vial-public-lifecycle-reference.md perl/FSM/Support/VIALSemanticFamilyRegistry.pm perl/FSM/VIAL/Tool.pm
 ---
 
 `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.1` selects revision 1 of
@@ -47,9 +49,12 @@ Failure stops new stimulus, requests cooperative cancellation and service
 stop, and attempts finalization under an independent default 256-cycle bound.
 A failed lifecycle can never return to pass.
 
-The registry still reports only `selection: selected`. Source, SemanticIR,
-binding, execution, plan, emission, compile, runtime, result, parity, and public
-maturity are unavailable on every profile. Until `.19.2.2` implements the
-family, public parsing rejects a nonempty block with
-`VIAL_FAMILY_UNSUPPORTED` and no partial semantic report. No lifecycle
-capability is advertised.
+`HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.2` implements the closed
+grammar, typed SemanticIR expansion, HIAL-backed fixture/domain binding,
+execution operations, target-neutral plan records, cumulative source maps,
+and closed normalized-result validation against the exact plan identity,
+record, deadline, and provenance set. Public `check`, `format`, and `plan`
+accept the family, while discovery advertises
+`vial.family.lifecycle_control.v1` and its deadline capability. All backend
+emission, compile, runtime, produced-result, parity, and support maturity stays
+unavailable; public version-2 `run` still rejects before allocation.

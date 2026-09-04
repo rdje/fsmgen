@@ -804,12 +804,12 @@ sub _execute_plan_action_v2 {
         capability_evidence => _v2_capability_evidence(
             'plan', $meaning_sha256, $compatibility_sha256,
         ),
-        support_accounting => _v2_support_accounting('plan'),
+        support_accounting => _v2_support_accounting('plan', $plan),
         diagnostics => [],
         implementation => {
             component => 'FSM::VIAL::Tool',
             version => 2,
-            stage => 'public_empty_base_planning',
+            stage => 'public_lifecycle_planning',
         },
     });
     push @{$validated->{artifact_sink}}, map { _clone($_) } @$artifacts;
@@ -1167,7 +1167,7 @@ sub _build_plan_artifacts_v2 {
         capability_evidence => _v2_capability_evidence(
             'plan', $args{meaning_sha256}, $args{compatibility_sha256},
         ),
-        support_accounting => _v2_support_accounting('plan'),
+        support_accounting => _v2_support_accounting('plan', $args{plan}),
         diagnostics => [],
         cleanup => {
             staging_identity => $args{artifact_mode} eq 'repository'
@@ -1816,7 +1816,7 @@ sub _v2_plan_error_result {
             component => 'FSM::VIAL::Tool',
             version => 2,
             stage => $action eq 'run'
-                ? 'v2_runtime_unavailable' : 'public_empty_base_planning',
+                ? 'v2_runtime_unavailable' : 'public_lifecycle_planning',
         },
     });
 }
@@ -1883,21 +1883,31 @@ sub _v2_capability_evidence {
 }
 
 sub _v2_support_accounting {
-    my ($action) = @_;
+    my ($action, $plan) = @_;
+    my $has_lifecycle = $action eq 'plan'
+        && ref($plan) eq 'HASH'
+        && ref($plan->{semantic_families}) eq 'ARRAY'
+        && @{$plan->{semantic_families}};
     return {
         feature_id => $action eq 'plan'
-            ? 'feature.vial_v2_public_empty_base_plan'
+            ? $has_lifecycle
+                ? 'feature.vial_v2_public_lifecycle_plan'
+                : 'feature.vial_v2_public_empty_base_plan'
             : $action eq 'run'
                 ? 'feature.vial_v2_run_unavailable'
                 : 'feature.vial_v2_public_source_migration',
         coverage => $action eq 'plan'
-            ? 'vial_v2_public_empty_base_plan_cli_api'
+            ? $has_lifecycle
+                ? 'vial_v2_public_lifecycle_plan_cli_api'
+                : 'vial_v2_public_empty_base_plan_cli_api'
             : $action eq 'run'
                 ? 'vial_v2_run_pre_artifact_rejection'
                 : 'vial_v2_public_source_migration_cli_api',
         classification => $action eq 'run'
             ? 'unsupported' : 'supported_smoke',
-        evidence => 't/1806-vial-v2-public-foundation.t',
+        evidence => $has_lifecycle
+            ? 't/1808-vial-v2-lifecycle-compiler-phases.t'
+            : 't/1806-vial-v2-public-foundation.t',
     };
 }
 

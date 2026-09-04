@@ -35,6 +35,7 @@ my %allowed_coverages = map { $_ => 1 } qw(
     vial_public_plan_cli_api
     vial_v2_public_source_migration_cli_api
     vial_v2_public_empty_base_plan_cli_api
+    vial_v2_public_lifecycle_plan_cli_api
     vial_sv_portable_verilator_runtime_cli_api
     vial_ahb_handwritten_oracle_parity
     vial_native_uvm_selected_matrix_review_private_api
@@ -407,6 +408,7 @@ my %coverage_classification = (
     vial_public_plan_cli_api => 'supported_smoke',
     vial_v2_public_source_migration_cli_api => 'supported_smoke',
     vial_v2_public_empty_base_plan_cli_api => 'supported_smoke',
+    vial_v2_public_lifecycle_plan_cli_api => 'supported_smoke',
     vial_sv_portable_verilator_runtime_cli_api => 'supported_smoke',
     vial_ahb_handwritten_oracle_parity => 'supported_smoke',
     vial_native_uvm_selected_matrix_review_private_api => 'supported_smoke',
@@ -1374,6 +1376,24 @@ for my $entry (@entries) {
             "VIAL v2 plan entry '$entry->{id}' preserves every backend and family non-claim",
         );
     }
+    elsif ($entry->{source_kind} eq 'vial'
+        && $entry->{coverage} eq 'vial_v2_public_lifecycle_plan_cli_api') {
+        is_deeply(
+            $entry->{supported_phases},
+            [qw(parse typecheck semantic_expansion hial_review bridge_binding execution_plan result_contract source_map artifact_generation atomic_publication)],
+            "VIAL v2 lifecycle entry '$entry->{id}' claims the exact compiler and result-contract phases",
+        );
+        is_deeply(
+            $entry->{required_capabilities},
+            [qw(vial.artifact_layout.v2 vial.execution_ir.v2 vial.family.lifecycle_control.deadline.v1 vial.family.lifecycle_control.v1 vial.plan.v2 vial.semantic_family_envelope.v2 vial.tool_manifest.v2 vial.tooling.api.v2 vial.tooling.cli.v2)],
+            "VIAL v2 lifecycle entry '$entry->{id}' keeps exact compiler capabilities",
+        );
+        is_deeply(
+            $entry->{explicit_nonclaims},
+            [qw(backend compile simulation runtime result_production parity non_lifecycle_expressive_family mixed_language scale)],
+            "VIAL v2 lifecycle entry '$entry->{id}' preserves every backend and runtime non-claim",
+        );
+    }
     elsif ($entry->{source_kind} eq 'vial' && $entry->{coverage} eq 'vial_sv_portable_verilator_runtime_cli_api') {
         is_deeply(
             $entry->{supported_phases},
@@ -1504,8 +1524,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    382,
-    'catalog now keeps three hundred eighty-two named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, verification-output, and bounded VIAL v1/v2 semantic/tooling/migration/planning/runtime/parity/native-emission fixtures',
+    383,
+    'catalog now keeps three hundred eighty-three named supported-smoke entries including direct, composition, ISF, PPIF, profile-alias, verification-output, and bounded VIAL v1/v2 semantic/tooling/migration/planning/runtime/parity/native-emission fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),

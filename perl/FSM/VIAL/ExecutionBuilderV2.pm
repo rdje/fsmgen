@@ -12,6 +12,9 @@ use FSM::Support::VIALSemanticFamilyRegistry qw(
     vial_family_requirements_from_semantic_ir
     vial_semantic_family_negotiation_message
 );
+use FSM::VIAL::LifecycleControl qw(
+    build_vial_lifecycle_execution_records
+);
 
 my $PROFILE = 'core_directed_single_clock_execution_v2';
 my %CAPABILITY_REPLACEMENT = (
@@ -38,7 +41,15 @@ sub build {
 
     my $result = eval { _build($args[0]) };
     return $result if defined $result;
-    my $message = _sanitize_exception($@);
+    my $error = $@;
+    if (blessed($error)
+        && $error->isa('FSM::VIAL::LifecycleControl::ExecutionDiagnostic')) {
+        return _failure(
+            $error->{code}, $error->{phase}, $error->{message},
+            $error->{semantic_path}, $error->{source_location},
+        );
+    }
+    my $message = _sanitize_exception($error);
     return _failure(
         'VIAL_EXECUTION_INTERNAL_ERROR', 'internal', $message, '/',
     );
@@ -111,9 +122,15 @@ sub _build {
         root_content_sha256 => $semantic->{root_source}{content_sha256},
         selected_fixture_id => $data->{fixture}{fixture_id},
     };
-    $data->{semantic_families} = [];
-    $data->{capability_ledger} = _v2_capability_ledger($data->{capability_ledger});
-    $data->{resource_summary}{semantic_family_nodes} = 0;
+    my $bridge = $raw->{bridge_manifest}->as_hashref;
+    $data->{semantic_families} = build_vial_lifecycle_execution_records({
+        semantic => $semantic, execution => $data, bridge => $bridge,
+    });
+    $data->{capability_ledger} = _v2_capability_ledger(
+        $data->{capability_ledger}, $data->{semantic_families},
+    );
+    $data->{resource_summary}{semantic_family_nodes}
+        = scalar(@{$data->{semantic_families}});
     my $identity = _clone($data);
     delete $identity->{plan_id};
     delete $identity->{diagnostics};
@@ -132,7 +149,7 @@ sub _build {
 }
 
 sub _v2_capability_ledger {
-    my ($records) = @_;
+    my ($records, $families) = @_;
     my @result = map {
         my $record = _clone($_);
         my $replacement = $CAPABILITY_REPLACEMENT{$record->{capability_id}};
@@ -146,6 +163,23 @@ sub _v2_capability_ledger {
         portable_class => 'portable',
         evidence_ids => ['execution_profile'],
     };
+    my %present = map { $_->{capability_id} => 1 } @result;
+    my %evidence;
+    for my $family (@{$families}) {
+        push @{$evidence{$_}}, $family->{semantic}{semantic_id}
+            for @{$family->{required_capabilities}};
+    }
+    for my $capability (sort keys %evidence) {
+        next if $present{$capability}++;
+        my %seen;
+        push @result, {
+            capability_id => $capability,
+            origins => ['semantic_family'],
+            classification => 'satisfied_by_execution_profile',
+            portable_class => 'portable',
+            evidence_ids => [grep { !$seen{$_}++ } @{$evidence{$capability}}],
+        };
+    }
     return [sort { $a->{capability_id} cmp $b->{capability_id} } @result];
 }
 
@@ -160,7 +194,7 @@ sub _upgrade_failure {
 }
 
 sub _failure {
-    my ($code, $phase, $message, $path) = @_;
+    my ($code, $phase, $message, $path, $source_location) = @_;
     $message =~ s/[\r\n]+/ /g;
     return {
         ok => JSON::PP::false,
@@ -174,7 +208,7 @@ sub _failure {
             phase => $phase,
             message => $message,
             semantic_path => $path,
-            source_location => undef,
+            source_location => _clone($source_location),
             bridge_fact_paths => [],
             related => [],
         }],

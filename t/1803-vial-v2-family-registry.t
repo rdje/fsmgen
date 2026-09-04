@@ -92,8 +92,8 @@ subtest 'registry is closed, bounded, deterministic, and support-conservative' =
     like($registry->{registry_id},
         qr{\Avial-family-registry/[0-9a-f]{64}\z},
         'registry identity is content-addressed');
-    is($registry->{status}, 'selected_taxonomy_no_implemented_family',
-        'selected identities do not claim family implementation');
+    is($registry->{status}, 'selected_taxonomy_lifecycle_compiler_implemented',
+        'registry status names the implemented lifecycle compiler frontier');
 
     my @expected = qw(
         lifecycle_control notification_interception timed_interface
@@ -111,10 +111,13 @@ subtest 'registry is closed, bounded, deterministic, and support-conservative' =
             "$family->{family_id} maps to its vertical activity");
         is($family->{maturity}{selection}, 'selected',
             "$family->{family_id} records selection maturity");
+        my @functional = grep { $family->{maturity}{$_} ne 'unavailable' }
+            grep { $_ ne 'selection' } @{$registry->{maturity_keys}};
         is_deeply(
-            [grep { $family->{maturity}{$_} ne 'unavailable' }
-                grep { $_ ne 'selection' } @{$registry->{maturity_keys}}],
-            [], "$family->{family_id} advertises no functional maturity");
+            \@functional,
+            $family->{family_id} eq 'lifecycle_control'
+                ? [qw(source semantic binding execution plan result)] : [],
+            "$family->{family_id} advertises its exact functional maturity");
         ok(@{$family->{effect_kinds}},
             "$family->{family_id} reserves a target-neutral effect vocabulary");
         is($family->{bound_profile_id}, 'vial_common_envelope_v2',
@@ -139,7 +142,7 @@ subtest 'registry is closed, bounded, deterministic, and support-conservative' =
     is($json->encode($second), $json->encode($registry),
         'registry bytes are deterministic');
     $registry->{families}[0]{maturity}{source} = 'qualified';
-    is($second->{families}[0]{maturity}{source}, 'unavailable',
+    is($second->{families}[0]{maturity}{source}, 'implemented',
         'registry callers receive defensive data');
 };
 
@@ -212,16 +215,17 @@ subtest 'negotiation reports the complete unsupported set from one profile' => s
 
 subtest 'parser and planner reject all unavailable families before allocation' => sub {
     my $source = with_intents($v2_source,
-        '(intents (family lifecycle_control (revision 1)) '
+        '(intents (family notification_interception (revision 1)) '
         . '(family native_uvm (revision 1)))');
     my $checked = FSM::VIAL::Parser->check_source({
         text => $source,
         source_name => $vial_name,
     });
-    ok(!$checked->{ok}, 'parser rejects selected-but-unimplemented and unknown families');
+    ok(!$checked->{ok}, 'parser rejects unavailable and unknown families');
     is($checked->{diagnostics}[0]{code}, 'VIAL_FAMILY_UNSUPPORTED',
         'parser uses the stable family diagnostic');
-    like($checked->{diagnostics}[0]{message}, qr/lifecycle_control.*native_uvm/s,
+    like($checked->{diagnostics}[0]{message},
+        qr/notification_interception.*native_uvm/s,
         'parser diagnostic reports the complete unsupported family set');
     is($checked->{semantic_report}, undef,
         'parser returns no partial SemanticIR report');
@@ -243,14 +247,14 @@ subtest 'parser and planner reject all unavailable families before allocation' =
         source_name => $vial_name,
     });
     $semantic_ir->{data}{packages}[0]{intent_families} = [{
-        family_id => 'lifecycle_control', revision => 1, nodes => [],
+        family_id => 'notification_interception', revision => 1, nodes => [],
     }];
     my $planned = FSM::VIAL::PlanBuilder->build(
         plan_args($semantic_ir, 'not valid HIAL'));
     ok(!$planned->{ok}, 'planner independently rejects a hostile family carrier');
     is($planned->{diagnostics}[0]{code}, 'VIAL_FAMILY_UNSUPPORTED',
         'planner rejects through registry negotiation');
-    like($planned->{diagnostics}[0]{message}, qr/lifecycle_control/,
+    like($planned->{diagnostics}[0]{message}, qr/notification_interception/,
         'planner rejection names the unsupported family');
     is_deeply($planned->{review_artifacts}, [],
         'planner rejects before HIAL review or artifact allocation');

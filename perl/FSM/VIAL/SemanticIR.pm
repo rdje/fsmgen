@@ -3,6 +3,7 @@ package FSM::VIAL::SemanticIR;
 use strict;
 use warnings;
 
+use JSON::PP ();
 use Scalar::Util qw(blessed reftype);
 
 use FSM::Support::VIALSemanticFamilyContract qw(
@@ -128,8 +129,6 @@ sub _v1_base_projection {
         unless ref($self) eq __PACKAGE__ && $self->{data}{schema_version} == 2;
     my $data = $self->as_hashref;
     for my $package (@{$data->{packages}}) {
-        die "VIALSemanticIR v1 base projection requires empty intent families\n"
-            if @{$package->{intent_families}};
         delete $package->{intent_families};
     }
     delete $data->{provenance}{$_}
@@ -150,6 +149,7 @@ sub _assert_plain_data {
     my ($value, $path) = @_;
     return unless ref($value);
 
+    return if blessed($value) && $value->isa('JSON::PP::Boolean');
     die "VIALSemanticIR contains blessed data at $path\n" if blessed($value);
     my $type = reftype($value) || '';
     if ($type eq 'HASH') {
@@ -171,6 +171,8 @@ sub _assert_plain_data {
 sub _clone {
     my ($value) = @_;
     return undef unless defined $value;
+    return $value ? JSON::PP::true : JSON::PP::false
+        if blessed($value) && $value->isa('JSON::PP::Boolean');
     return { map { $_ => _clone($value->{$_}) } sort keys %{$value} } if ref($value) eq 'HASH';
     return [map { _clone($_) } @{$value}] if ref($value) eq 'ARRAY';
     return $value;

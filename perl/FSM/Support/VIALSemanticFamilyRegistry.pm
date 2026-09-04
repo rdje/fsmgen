@@ -143,6 +143,12 @@ sub build_vial_semantic_family_registry {
     my $unavailable = _unavailable_maturity();
     my @families = map {
         my ($family_id, $activity, $effects) = @{$_};
+        my $maturity = _clone($unavailable);
+        $maturity->{selection} = 'selected';
+        if ($family_id eq 'lifecycle_control') {
+            $maturity->{$_} = 'implemented'
+                for qw(source semantic binding execution plan result);
+        }
         {
             family_id => $family_id,
             revision => 1,
@@ -150,10 +156,7 @@ sub build_vial_semantic_family_registry {
             dependencies => [],
             effect_kinds => [sort @{$effects}],
             bound_profile_id => 'vial_common_envelope_v2',
-            maturity => {
-                %{$unavailable},
-                selection => 'selected',
-            },
+            maturity => $maturity,
             backend_profiles => [map { +{
                 profile_id => $_,
                 maturity => {
@@ -174,17 +177,19 @@ sub build_vial_semantic_family_registry {
             accepted_execution_profiles => [
                 'core_directed_single_clock_execution_v2',
             ],
-            supported_family_revisions => [],
+            supported_family_revisions => ['lifecycle_control@1'],
             supported_capabilities => [qw(
                 vial.execution_ir.v2
                 vial.execution_profile.core_directed_single_clock_execution_v2
+                vial.family.lifecycle_control.deadline.v1
+                vial.family.lifecycle_control.v1
                 vial.plan.v2
                 vial.profile.core_directed_single_clock_v2
                 vial.semantic_family_envelope.v2
                 vial.semantic_ir.v2
                 vial.source.v2
             )],
-            supported_effect_kinds => [],
+            supported_effect_kinds => [@{$FAMILY_SPEC[0][2]}],
         },
         {
             profile_id => 'sv_portable_verilator',
@@ -245,20 +250,23 @@ sub build_vial_semantic_family_registry {
             accepted_language_versions => [2],
             accepted_execution_schemas => [],
             accepted_execution_profiles => [],
-            supported_family_revisions => [],
+            supported_family_revisions => ['lifecycle_control@1'],
             supported_capabilities => [qw(
+                vial.family.lifecycle_control.deadline.v1
+                vial.family.lifecycle_control.v1
                 vial.profile.core_directed_single_clock_v2
+                vial.semantic_family_envelope.v2
                 vial.semantic_ir.v2
                 vial.source.v2
             )],
-            supported_effect_kinds => [],
+            supported_effect_kinds => [@{$FAMILY_SPEC[0][2]}],
         },
     );
     my $registry = {
         schema => 'fsmgen.vial_semantic_family_registry.v1',
         schema_version => 1,
         registry_id => undef,
-        status => 'selected_taxonomy_no_implemented_family',
+        status => 'selected_taxonomy_lifecycle_compiler_implemented',
         contract_source => __PACKAGE__,
         family_keys => [@FAMILY_KEYS],
         profile_keys => [@PROFILE_KEYS],
@@ -278,8 +286,7 @@ sub build_vial_semantic_family_registry {
         profiles => \@profiles,
         public_tool_capabilities => [@PUBLIC_TOOL_CAPABILITIES],
         explicit_nonclaims => [qw(
-            compatibility_adapter complete_result_manifest family_grammar
-            family_implementation family_runtime mixed_language
+            compatibility_adapter complete_result_manifest family_runtime mixed_language
             qualified_v2_backend reverse_migration support_promotion
         )],
     };

@@ -895,14 +895,17 @@ portable-VHDL delegation or provider verification. Rejection returns no
 operation identity, source map, artifact graph, workspace, or process; target
 mechanisms remain absent from semantic and execution-family records.
 
-The public v2 foundation uses distinct `fsmgen.vial_tool_request.v2`,
+The public v2 surface uses distinct `fsmgen.vial_tool_request.v2`,
 `fsmgen.vial_tool_result.v2`, and `fsmgen.vial_tool_manifest.v2` records. It
 supports capabilities, check, format, non-mutating whole-catalog v1 migration,
-and empty-family planning. The v1 request still rejects v2 and its capability
-bytes remain unchanged. V2 `run` rejects before parse, planning, backend work,
-or artifacts because no v2 backend/result/parity route is qualified. Registered
-family semantics and every v2 backend/runtime/complete-result/parity state
-remain owned by the vertical family activities.
+empty-family planning, and lifecycle-control planning. The lifecycle compiler
+expands typed source through HIAL-backed binding, execution operations,
+cumulative source maps, and normalized-result validation. The v1 request still
+rejects v2 and its capability bytes remain unchanged. V2 `run` rejects before
+parse, planning, backend work, or artifacts because no v2 backend/result/parity
+route is qualified. The other registered families and every v2 backend,
+runtime, produced-result, and parity state remain owned by their vertical
+activities.
 
 ## Native extensions
 

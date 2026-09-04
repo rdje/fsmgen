@@ -1,8 +1,8 @@
 # VIAL v2 lifecycle-control family
 
 Date: 2026-09-04
-Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.1`
-Status: semantic and source contract selected; implementation unavailable
+Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.2`
+Status: source through target-neutral plan and normalized-result validation implemented; backends unavailable
 
 ## Outcome and boundary
 
@@ -12,13 +12,19 @@ and finalizes. It also owns bounded background-service lifetime, logical-cycle
 deadlines, and fail-closed cleanup. It does not describe a simulator schedule,
 target-language process, or verification-methodology API.
 
-This is a selection contract. The family registry already reserves
-`lifecycle_control@1`, capability `vial.family.lifecycle_control.v1`, and the
-effects listed below, but every functional and backend maturity remains
-`unavailable`. Until `.19.2.2` implements the closed grammar and semantic
-records, a nonempty family block fails `VIAL_FAMILY_UNSUPPORTED` and returns no
-partial SemanticIR. This document does not change accepted source or advertise
-backend, runtime, result, parity, or support.
+The public version-2 `check`, `format`, and `plan` routes accept this family.
+The compiler parses the closed grammar, expands typed SemanticIR nodes, binds
+fixture and coordination-domain ports through reviewed HIAL facts, emits
+deterministic execution operations and a target-neutral plan, and validates
+the normalized lifecycle-result record defined below. Public discovery
+advertises `vial.family.lifecycle_control.v1` and
+`vial.family.lifecycle_control.deadline.v1`.
+
+This frontier does not emit or run a version-2 backend. Every lifecycle backend
+mapping remains `unavailable`, public `run` fails before allocation, and no
+runtime producer, complete result manifest, parity, or support state is
+claimed. Result-contract validation is not a claim that such a result has been
+produced by a backend.
 
 The common family envelope and source-version rules remain authoritative in
 [the semantic-family contract](semantic-family-envelope-and-registry.md) and
@@ -202,10 +208,11 @@ The same family block in terse package order is:
 ```
 <!-- lifecycle-terse-example:end -->
 
-These are selected insertable fragments, not currently runnable examples. The
+These are executable insertable fragments for a valid version-2 package. The
 normal fragment's family form and the terse fragment are byte-identical after
-removing the normal-only `intents` wrapper. Once implemented, formatting either
-style must reparse to one `fsmgen.vial_semantic_projection.v2` digest.
+removing the normal-only `intents` wrapper. The compiler accepts both, and
+formatting either style reparses to one
+`fsmgen.vial_semantic_projection.v2` digest.
 
 ## Intrinsic order and defaults
 
@@ -301,7 +308,49 @@ finalize_result, deadline_results, failure_result, source_map
 Status is `pass`, `fail`, `timeout`, `cancelled`, or `error`. Times are VIAL
 logical `(domain, cycle, phase, ordinal)` records. Target timestamps, process
 IDs, hierarchy handles, and scheduler-region names are evidence-only and never
-enter this semantic result.
+enter this semantic result. Validation always receives the exact typed plan
+records for the lifecycle: lifecycle, fixture, and domain identities must
+match; dependency, service, point, deadline, and failure record IDs must cover
+that plan exactly; deadline bounds cannot change; a `met` interval must end on
+or before its inclusive last cycle; and a passing lifecycle's logical times
+must preserve every intrinsic dependency, service, and point edge.
+
+The implemented compiler phases have these boundaries:
+
+| Phase | Added typed information |
+| --- | --- |
+| source | exact ordered forms, identifiers, positive cycle literals, and target-neutral conditions |
+| SemanticIR | common family nodes, normalized conditions/defaults, intrinsic/additional order edges, effects, and result contracts |
+| binding | fixture/domain ports resolved to bridge fact paths with explicit type-relation proofs |
+| execution | deterministic operation IDs and execution paths |
+| plan | stable plan paths without a backend selection |
+| result validation | closed lifecycle record plus cumulative result paths; no runtime production claim |
+
+Every execution record has exactly two input bindings: its fixture and logical
+domain. The optional result output remains unbound until a backend produces a
+result. Dependency/readiness/stimulus/completion/drain/shutdown/finalize
+records expand to `evaluate` then `commit` operations; service records expand
+to `start`, `ready`, `quiescent`, and `stop`; deadlines expand to `start`,
+`check`, and `close`; failure expands to `latch`, `cancel`, `cleanup`, and
+`seal`.
+
+Nested result records are also closed:
+
+| Result part | Exact keys | Status values |
+| --- | --- | --- |
+| dependency | `record_id`, `status`, `reached_at` | `pending`, `satisfied` |
+| lifecycle point | `record_id`, `status`, `reached_at` | `pending`, `reached`, `failed`, `cancelled` |
+| service | `record_id`, `status`, `started_at`, `ready_at`, `quiescent_at`, `stopped_at`, `diagnostic_ids` | `pending`, `started`, `ready`, `quiescent`, `stopped`, `failed`, `cancelled` |
+| deadline | `record_id`, `status`, `started_at`, `ended_at`, `max_cycles`, `last_cycle_inclusive` | `pending`, `met`, `expired`, `cancelled` |
+| failure | `record_id`, `primary_diagnostic_id`, `cleanup_status`, `cleanup_deadline_cycle`, `diagnostic_ids` | cleanup is `not_required`, `pending`, `finalized`, or `expired` |
+
+Each logical time has exactly `domain_id`, `cycle`, `phase`, and `ordinal`;
+`phase` is always `check`. Each source map has exactly its schema/version and
+content-derived identity, semantic identity/path, bridge, execution, plan, and
+result path arrays, and one or more repository-relative source locations. A
+result map must retain every prior phase path and add at least one result path.
+The result contains exactly one such map for every planned lifecycle record;
+omitted, repeated, unrelated, or mutated plan provenance fails validation.
 
 The family always requires `vial.family.lifecycle_control.v1` and
 `vial.family.lifecycle_control.deadline.v1`. The latter is mandatory because
@@ -370,21 +419,22 @@ are ordered by logical time, semantic rank, and semantic ID; later independent
 causes become notes or failure-result entries according to `diagnostics`.
 Every failure is atomic at its stage: no partial SemanticIR, binding, plan,
 artifact graph, or success result is returned. The four lifecycle-specific
-codes become public only with the implementing/result leaves; selection alone
-does not add them to capability discovery.
+codes are part of version-2 public discovery so a later backend can report the
+same normalized failure taxonomy. This compiler slice exercises their result
+contracts but produces none at runtime.
 
 ## Backend-private realization and nonclaims
 
-Portable SystemVerilog and VHDL routes will lower the typed graph to one
-bounded static controller. A native UVM route may map construction,
+Portable SystemVerilog and VHDL routes may lower the typed graph to one bounded
+static controller. A native UVM route may map construction,
 configuration, readiness, execution, drain, and finalization to its phase
 machinery and one root-test-owned objection. Those names and mechanisms are
 mapping evidence only. They are forbidden in authored family forms and cannot
 alter logical order, deadline inclusivity, cleanup, or normalized results.
 
-This selection does not qualify any of those mappings. It does not implement
-source parsing, SemanticIR, binding, planning, emission, compilation, runtime,
-results, parity, mixed-language behavior, provider access, public capability,
-support, scale, or HIAL behavior. Rollback removes this part, its landing/book
-links, Knowledge Card, and selection evidence; the v2 foundation and immutable
-v1 contract remain unchanged.
+This compiler implementation does not qualify any of those mappings. It does
+not implement emission, compilation, runtime execution, complete result
+production, parity, mixed-language behavior, provider access, support, scale,
+or new HIAL behavior. Rollback removes the lifecycle compiler module and its
+parser/execution/public-contract integrations while the v2 foundation and
+immutable v1 contract remain unchanged.

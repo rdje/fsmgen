@@ -10,6 +10,9 @@ use FSM::Support::VIALSemanticFamilyRegistry qw(
     negotiate_vial_semantic_family_requirements
     vial_semantic_family_negotiation_message
 );
+use FSM::VIAL::LifecycleControl qw(
+    build_vial_lifecycle_semantic_family
+);
 
 use constant {
     MAX_FAMILY_BLOCKS_PER_PACKAGE => 256,
@@ -41,8 +44,10 @@ sub build {
     _invocation_error($args, "builder key 'sources' must be an unblessed array")
         unless ref($args->{sources}) eq 'ARRAY' && !blessed($args->{sources});
 
-    my (%family_revision, @family_requirements, @intent_spans);
+    my (%family_revision, @family_requirements, @intent_spans,
+        @package_family_blocks);
     my $family_nodes_total = 0;
+    my $expanded_lifecycle_nodes_total = 0;
     my %v1_forms;
     for my $package_index (0 .. $#{$args->{sources}}) {
         my $source = $args->{sources}[$package_index];
@@ -98,6 +103,7 @@ sub build {
         }
 
         my $blocks = $section{intents}{items};
+        $package_family_blocks[$package_index] = [];
         _fail(
             'VIAL_LIMIT_ERROR', 'limit',
             'package exceeds the 256 intent-family-block limit',
@@ -162,6 +168,12 @@ sub build {
                 location => _clone($items->[1]{span}),
                 path => $path,
             };
+            push @{$package_family_blocks[$package_index]}, {
+                form => $blocks->[$index],
+                family_id => $family_id,
+                revision => 0 + $revision,
+                family_index => $index,
+            };
         }
 
         my $v1_root = _clone($root);
@@ -224,12 +236,34 @@ sub build {
     $data->{schema_version} = 2;
     $data->{language_version} = 2;
     $data->{profile} = 'core_directed_single_clock_v2';
-    $data->{required_capabilities} = [@CAPABILITIES];
+    my %required_capability = map { $_ => 1 } @CAPABILITIES;
     for my $package_index (0 .. $#{$data->{packages}}) {
-        $data->{packages}[$package_index]{intent_families} = [];
+        my @families;
+        for my $block (@{$package_family_blocks[$package_index]}) {
+            my $family = build_vial_lifecycle_semantic_family({
+                form => $block->{form},
+                package => $data->{packages}[$package_index],
+                package_index => $package_index,
+                family_index => $block->{family_index},
+                expanded_nodes_before => $expanded_lifecycle_nodes_total,
+            });
+            $expanded_lifecycle_nodes_total += @{$family->{nodes}};
+            push @families, $family;
+            $required_capability{'vial.family.lifecycle_control.v1'} = 1;
+            $required_capability{'vial.family.lifecycle_control.deadline.v1'} = 1;
+            $required_capability{'vial.semantic_family_envelope.v2'} = 1;
+            $data->{provenance}{$family->{semantic_path}}
+                = _clone($family->{source_span});
+            for my $node (@{$family->{nodes}}) {
+                $data->{provenance}{$node->{semantic_path}}
+                    = _clone($node->{source_span});
+            }
+        }
+        $data->{packages}[$package_index]{intent_families} = \@families;
         $data->{provenance}{"/packages/$package_index/intent_families"}
             = _clone($intent_spans[$package_index]);
     }
+    $data->{required_capabilities} = [sort keys %required_capability];
 
     require FSM::VIAL::SemanticIR;
     return FSM::VIAL::SemanticIR->_new_validated($data);

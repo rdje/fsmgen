@@ -8,8 +8,9 @@ The short answer is:
 
 - public VIAL v1 check, format, plan, and `sv_portable_verilator` run are
   shipped;
-- public VIAL v2 capabilities, check, format, opt-in v1 migration, and
-  empty-family plan are shipped, while v2 run is unavailable;
+- public VIAL v2 capabilities, check, format, opt-in v1 migration,
+  empty-family plan, and lifecycle-control plan are shipped, while v2 run is
+  unavailable;
 - portable VHDL/GHDL and OSVVM have exact private fixture qualifications;
 - native UVM has deterministic private emission and a separate tool-limited
   experiment, but no qualified product runtime;
@@ -41,8 +42,8 @@ support_accounting.catalog_entries
 
 The v1 VIAL-only projection must equal the corresponding fields of the complete
 public-tooling record, including the complete nested scale contract. The v2
-contract instead derives its parser and empty-plan capabilities from the
-semantic-family registry and reports `run` unavailable. The full manifest
+contract derives its parser, empty-plan, and lifecycle compiler capabilities
+from the semantic-family registry and reports `run` unavailable. The full manifest
 additionally carries schemas, entrypoints, and API/publication flags.
 The private native-UVM and VHDL records are discoverable evidence, not extra
 backends accepted by public `fsmgen vial run`.
@@ -67,14 +68,15 @@ These terms are deliberately different:
 | Language/tool version | Supported public actions | Unavailable public action | Backend boundary |
 | --- | --- | --- | --- |
 | v1, the CLI default | `capabilities`, `check`, `format`, `plan`, `run` | none in the action grammar | `run` accepts only the separately negotiated `sv_portable_verilator` profile |
-| v2, selected by `--language-version 2` | `capabilities`, `check`, `format`, `migrate`, `plan` | `run` | plan accepts only the inherited empty-family base; no v2 backend, compile, runtime, complete-result, or parity capability exists |
+| v2, selected by `--language-version 2` | `capabilities`, `check`, `format`, `migrate`, `plan` | `run` | plan accepts the inherited base and `lifecycle_control@1`; no v2 backend, compile, runtime, complete-result, or parity capability exists |
 
 The v2 request/result schemas are `fsmgen.vial_tool_request.v2` and
 `fsmgen.vial_tool_result.v2`. Migration returns
 `fsmgen.vial_source_migration.v1`; planning returns
 `fsmgen.vial_plan.v2` and `fsmgen.vial_tool_manifest.v2` while unchanged HIAL
-facts remain in `fsmgen.hial_vial_bridge_manifest.v1`. No v2 capability list
-contains a `vial.family.*` identity.
+facts remain in `fsmgen.hial_vial_bridge_manifest.v1`. The v2 capability list
+contains only `vial.family.lifecycle_control.v1` and its mandatory deadline
+capability from the expressive-family namespace.
 
 ## Exact profile matrix
 
@@ -105,6 +107,7 @@ regression corpus:
 | `feature.vial_public_plan` | `supported_smoke` | `vial_public_plan_cli_api` |
 | `feature.vial_v2_public_source_migration` | `supported_smoke` | `vial_v2_public_source_migration_cli_api` |
 | `feature.vial_v2_public_empty_base_plan` | `supported_smoke` | `vial_v2_public_empty_base_plan_cli_api` |
+| `feature.vial_v2_public_lifecycle_plan` | `supported_smoke` | `vial_v2_public_lifecycle_plan_cli_api` |
 | `feature.vial_sv_portable_verilator_runtime` | `supported_smoke` | `vial_sv_portable_verilator_runtime_cli_api` |
 | `feature.vial_ahb_base_output_runtime_parity` | `supported_smoke` | `vial_ahb_handwritten_oracle_parity` |
 | `feature.vial_native_uvm_emission_foundation` | `supported_smoke` | `vial_native_uvm_selected_matrix_review_private_api` |
@@ -224,8 +227,9 @@ test failure.
 | Phase | Public codes | First check |
 | --- | --- | --- |
 | request and source | `VIAL_TOOL_INVOCATION_ERROR`, `VIAL_SOURCE_STYLE_ERROR`, `VIAL_HIAL_SOURCE_ERROR` | command shape, source style, and the selected HIAL review route |
-| v2 version, imports, migration, and families | `VIAL_VERSION_UNSUPPORTED`, `VIAL_IMPORT_VERSION_MISMATCH`, `VIAL_COMPATIBILITY_ADAPTER_UNAVAILABLE`, `VIAL_COMPATIBILITY_ADAPTER_INVALID`, `VIAL_MIGRATION_ERROR`, `VIAL_FAMILY_UNSUPPORTED`, `VIAL_FAMILY_REVISION_MISMATCH` | explicit version selector, same-version catalog, migration direction, and empty-family boundary |
+| v2 version, imports, migration, and families | `VIAL_VERSION_UNSUPPORTED`, `VIAL_IMPORT_VERSION_MISMATCH`, `VIAL_COMPATIBILITY_ADAPTER_UNAVAILABLE`, `VIAL_COMPATIBILITY_ADAPTER_INVALID`, `VIAL_MIGRATION_ERROR`, `VIAL_FAMILY_UNSUPPORTED`, `VIAL_FAMILY_REVISION_MISMATCH` | explicit version selector, same-version catalog, migration direction, and selected family/revision |
 | v2 parsing and semantics | `VIAL_PARSE_ERROR`, `VIAL_SCHEMA_ERROR`, `VIAL_SEMANTIC_ERROR`, `VIAL_LIMIT_ERROR` | grammar, closed schema, typed meaning, and the first exceeded source limit |
+| lifecycle binding and normalized result | `VIAL_BIND_REFERENCE_ERROR`, `VIAL_LIFECYCLE_DEADLINE_EXPIRED`, `VIAL_LIFECYCLE_SERVICE_ERROR`, `VIAL_LIFECYCLE_DRAIN_INCOMPLETE`, `VIAL_LIFECYCLE_CLEANUP_TIMEOUT` | fixture/domain bridge facts, logical deadlines, service/drain completion, and bounded cleanup; no v2 runtime producer is claimed |
 | backend negotiation | `VIAL_BACKEND_UNSUPPORTED` | profile spelling and the public/private matrix above |
 | artifact publication | `VIAL_ARTIFACT_PATH_ERROR`, `VIAL_ARTIFACT_COLLISION`, `VIAL_MANIFEST_SCHEMA_ERROR` | repository-relative output, pre-existing content, and schema identity |
 | run setup | `VIAL_RUN_INVOCATION_ERROR`, `VIAL_RUN_PATH_ERROR`, `VIAL_RUN_TOOL_ERROR`, `VIAL_RUN_COMMAND_ERROR`, `VIAL_RUN_COLLISION` | option compatibility, provider identity, command evidence, and output ownership |

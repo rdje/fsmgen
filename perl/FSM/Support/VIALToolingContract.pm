@@ -144,7 +144,7 @@ sub build_vial_tooling_contract_v2 {
     my @capabilities = sort keys %capability;
     return {
         schema_version => 2,
-        status => 'shipped_public_v2_source_migration_and_empty_base_planning',
+        status => 'shipped_public_v2_lifecycle_source_and_planning',
         contract_source => vial_tooling_contract_source(),
         implementation_entrypoints => [
             'fsmgen vial capabilities --language-version 2 [--json]',
@@ -211,6 +211,11 @@ sub build_vial_tooling_contract_v2 {
             VIAL_SCHEMA_ERROR
             VIAL_SEMANTIC_ERROR
             VIAL_LIMIT_ERROR
+            VIAL_BIND_REFERENCE_ERROR
+            VIAL_LIFECYCLE_DEADLINE_EXPIRED
+            VIAL_LIFECYCLE_SERVICE_ERROR
+            VIAL_LIFECYCLE_DRAIN_INCOMPLETE
+            VIAL_LIFECYCLE_CLEANUP_TIMEOUT
             VIAL_HIAL_SOURCE_ERROR
             VIAL_ARTIFACT_PATH_ERROR
             VIAL_ARTIFACT_COLLISION
@@ -230,7 +235,7 @@ sub build_vial_tooling_contract_v2 {
         writes_files => JSON::PP::true,
         public_embedding_api => JSON::PP::true,
         explicit_nonclaims => [qw(
-            compatibility_adapter complete_result_manifest expressive_family
+            compatibility_adapter complete_result_manifest non_lifecycle_expressive_family
             family_backend family_parity family_runtime mixed_language
             qualified_v2_backend reverse_migration support_promotion
             v2_backend_emission v2_compile v2_result v2_run
@@ -239,7 +244,8 @@ sub build_vial_tooling_contract_v2 {
             'Select request schema version 2 or --language-version 2 explicitly; the default version-1 route is unchanged and never upgrades source.',
             'Check and format accept only VIAL language version 2 and preserve its language version; normal_v2 and terse_v2 are one typed meaning.',
             'Migrate accepts one complete valid version-1 catalog, returns canonical version-2 bytes plus source maps and one compatibility digest, and never overwrites source or publishes artifacts.',
-            'Plan accepts only the implemented empty-family version-2 base and atomically publishes a version-2 plan graph; no expressive family is implied.',
+            'Check, format, and plan accept the implemented lifecycle_control revision-1 family; all other expressive families remain unavailable.',
+            'Plan atomically publishes typed lifecycle binding, execution, operation, capability, and cumulative source-map records without selecting a backend.',
             'Run and every version-2 backend, compile, runtime, complete-result, and parity state remain unavailable and reject before artifacts.',
         ],
     };

@@ -2025,11 +2025,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.1: activate lifecycle semantic selection; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.1: select target-neutral lifecycle contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement lifecycle SemanticIR, binding, execution, plan, result, source-map, and capability propagation.`
   Acceptance: `Typed lifecycle dependencies and terminal conditions remain deterministic through every phase, cycles/deadlines are bounded, deadlock and incomplete drain fail closed, and results expose logical seams rather than backend scheduling folklore.`
-  Verification: `Clean lifecycle-selection commit e4f37d641 supplies the exact revision-1 source, typed-expansion, deadline, failure, result, diagnostic, and nonclaim contract. The required Knowledge Map query returned no implemented lifecycle compiler-phase answer. This isolated continuity transition activates only parser-to-result implementation; it changes no VIAL source acceptance, schema, SemanticIR, binding, execution, plan, result, source map, capability, backend, runtime, provider, support, HIAL, or product behavior.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.2: activate lifecycle compiler phases`
+  Verification: `Clean lifecycle-selection commit e4f37d641 supplies the exact revision-1 contract and clean activation 16ac8564f isolates this compiler slice. FSM::VIAL::LifecycleControl implements the closed grammar, finite admission, acyclic monotone expansion, twelve typed records for the maintained AHB lifecycle, fixture/domain type-proof bindings, execution operations, target-neutral plan records, capability propagation, cumulative content-addressed source maps, and plan-relative normalized-result validation. Result acceptance requires exact lifecycle/fixture/domain identities, record-ID sets, deadline bounds, one preserved source map per planned record, inclusive observed deadline windows, and monotone pass chronology; a pass additionally requires every dependency satisfied, service stopped, lifecycle point reached, deadline met, and no retained failure. Public v2 check/format/plan, discovery, regression accounting, usability authority, maintained references, mdBook, and Knowledge Map reflect that exact compiler frontier while every backend mapping and v2 run/result production/parity/support state remains unavailable. The public fixture check reports VIAL check passed (normal_v2). The final RAM-guarded focused band reports All tests successful at Files=14, Tests=7191. All 63 mdBook chapters test; the repository-local render contains 98 files/22,228 KiB and is removed exactly. Knowledge Map is current at 1,161 facts/6,315 questions/6,486 occurrences/139 shards. Exact claim, containment, task/path/locality/README, staged acceptance, doctrine, and residue evidence closes in the checklist below.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.2: activate lifecycle compiler phases; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.2: implement lifecycle compiler phases`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3`
   Status: `proposed`
@@ -2880,8 +2880,10 @@ tooling, non-mutating v1-to-v2 migration, and empty-family planning while every
 expressive family and v2 backend/run/result/parity route remains unavailable.
 Lifecycle-control parent `.19.2` is active. Clean foundation closeout commit
 `984271755` and activation commit `06c331cb7` permit child `.19.2.1` to select
-the target-neutral lifecycle semantic/source contract. That child is complete;
-`.19.2.2` is the next proposed clean activation for typed compiler phases.
+the target-neutral lifecycle semantic/source contract. Selection child
+`.19.2.1` and target-neutral compiler child `.19.2.2` are complete; `.19.2.3`
+is the next proposed clean activation for portable-SystemVerilog lifecycle
+emission and runtime qualification. No version-2 backend is promoted yet.
 
 ## Decisions
 
@@ -4203,3 +4205,44 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   build/artifact/log/brief residue checks are green. No v1 byte/meaning or v2
   accepted-source, compiler, backend, result, capability, support, provider,
   or HIAL behavior changes.
+
+## Acceptance Checklist (.19.2.2, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean lifecycle-selection commit
+  `e4f37d641` deliberately left the selected family unimplemented, and clean
+  activation `16ac8564f` isolated the compiler work. The required Knowledge Map
+  query returned no implemented lifecycle compiler-phase answer. The initial
+  watcher reproduced `VIAL_FAMILY_UNSUPPORTED: intent family
+  'lifecycle_control@1' is selected but has no implemented source stage`.
+  `git log -S` traces the parser's selected-but-unimplemented family stop to
+  `6927bfcfb` and the empty execution-family placeholder to `c246314be`; neither
+  could preserve lifecycle records, order, bindings, operations, result
+  completeness, temporal truth, or cumulative provenance.
+- [x] **ADDRESSED (verified)** — `FSM::VIAL::LifecycleControl` now parses and
+  expands the selected bounded lifecycle grammar, rejects duplicate/unknown/
+  cyclic/over-limit meaning atomically, binds every node to reviewed fixture
+  and domain facts with two type relations, and carries deterministic operation
+  IDs and content-addressed source maps through the public v2 plan. Result
+  validation requires the exact typed plan context, exact planned record,
+  deadline, and provenance sets, inclusive deadline compliance, and monotone
+  passing chronology before accepting a terminal status. T1808
+  independently proves the maintained normal/terse fixture's twelve typed
+  records, compatibility digest, public plan, capability ledger, support row,
+  target/methodology exclusions, bounds, plan-relative result completeness,
+  unavailable run, inclusive-deadline and passing-chronology rejection, and all
+  three unavailable backend profiles.
+- [x] **NO REGRESSION (v1/v2, readers, accounting, docs, and residue)** — the
+  final repository-local, RAM-guarded focused band reports `All tests
+  successful.` at `Files=14, Tests=7191`; all changed Perl modules and tests
+  report `syntax OK`, and the public complete fixture reports `VIAL check passed
+  (normal_v2)`. All 63 mdBook chapters test; its inspected 98-file/22,228-KiB
+  repository-local render and scratch root are removed. `knowledge-map: OK`
+  reports 1,161 facts/6,315 questions/6,486 occurrences/139 shards. Containment
+  authorizes the exact 63-file/58,157-line/3,169,983-byte book and
+  4-file/1,135-line/59,770-byte VIAL reference with zero ceiling increases.
+  Claim dispositions, task/path/locality/README checks, staged acceptance,
+  `[doctrine] all doctrine checks passed`, diff hygiene, and the exact
+  build/artifact/log/binary/brief residue census are green. No successful v1
+  bytes or meaning, v2 backend/emission/compile/runtime/result production/
+  parity, non-lifecycle family, mixed-language, provider, support, or HIAL
+  behavior changes.

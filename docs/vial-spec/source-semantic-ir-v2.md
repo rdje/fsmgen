@@ -121,9 +121,10 @@ backend or public-tool schema. `FSM::VIAL::Parser` dispatches the connected
 catalog by its root version. A separate version-2 builder validates the exact
 seven-section envelope, rejects every non-empty family block whose registered
 source stage is not implemented, and reuses the unchanged v1 semantic builder
-only for the inherited base grammar. It then constructs a new immutable v2
-record with an empty typed `intent_families` collection and the authored
-`intents` span.
+for the inherited base grammar. It then constructs a new immutable v2 record
+with typed `intent_families` and the authored `intents` span. The collection is
+empty for the base fixture; `lifecycle_control@1` expands through its separately
+closed compiler contract.
 
 Normal-v2 and terse-v2 formatting preserve language version and reparse to one
 `fsmgen.vial_semantic_projection.v2` digest. Empty-intents v2 and v1 also
@@ -136,14 +137,15 @@ through the legacy normalizer and retains its prior import diagnostics.
 The existing public `fsmgen.vial_tool_request.v1` rejects v2 rather than
 mislabeling it or loading a v2 CLI catalog. The additive v2 request exposes
 check, format, migration, and empty-base planning through distinct records.
-The plan builder carries only the empty-intents base through the unchanged v1
-HIAL bridge into distinct v2 ExecutionIR and plan envelopes. Expressive
-families, v2 backend execution, complete result manifests, and parity remain
-owned by later leaves. The focused
+The plan builder carries the empty-intents base or implemented lifecycle nodes
+through the unchanged v1 HIAL bridge into distinct v2 ExecutionIR and plan
+envelopes. Other expressive families, v2 backend execution, complete result
+manifests, and parity remain owned by later leaves. The focused
 executable authorities are `t/1801-vial-v2-source-projections.t` and
-`t/1802-vial-v2-semantic-family-envelope.t`.
+`t/1802-vial-v2-semantic-family-envelope.t`; lifecycle compiler authority is
+`t/1808-vial-v2-lifecycle-compiler-phases.t`.
 
-The separate executable usability gate checks the six maintained public VIAL
+The separate executable usability gate checks the seven maintained public VIAL
 fixtures, both canonical v2 projections, a deterministic source diagnostic,
 both semantic versions, and the v2 family carrier against one finite
 target/methodology vocabulary. This is not a ban on verification concepts such
@@ -175,7 +177,9 @@ it cannot mutate v1.
 The base v2 required capabilities are sorted and include
 `vial.source.v2`, `vial.semantic_ir.v2`, and
 `vial.profile.core_directed_single_clock_v2`. A registered family additionally
-reserves `vial.family.<family_id>.v<revision>`; later source, stage, and backend
+reserves `vial.family.<family_id>.v<revision>`; implemented lifecycle source
+also requires `vial.semantic_family_envelope.v2` and
+`vial.family.lifecycle_control.deadline.v1`. Later stage and backend
 capabilities remain distinct and are added only by their implementation owner.
 Presence of a registry identity or source syntax never implies planning,
 emission, compile, run, result, parity, methodology, scale, or support.
@@ -187,19 +191,20 @@ selected family registry, exact fail-closed negotiation, and common backend
 adapter admission contract live in
 [their dedicated semantic part](semantic-family-envelope-and-registry.md).
 
-### Private empty-base execution
+### Private base and lifecycle execution
 
 The private `FSM::VIAL::ExecutionBuilderV2` accepts exactly
 `core_directed_single_clock_execution_v2` and a v2 SemanticIR whose family
-collections are empty. It projects only the inherited base meaning through the
-unchanged v1 binder, then creates a new immutable
+collections are empty or contain implemented lifecycle nodes. It projects the
+inherited base meaning through the unchanged v1 binder, then creates a new immutable
 `fsmgen.vial_execution_ir.v2`; it never relabels the v1 object. The carrier
 adds `semantic_families`, records the authored v2 semantic identity, replaces
 the versioned source/semantic/profile/execution/plan capability IDs, adds
-`vial.semantic_family_envelope.v2`, and derives a new plan identity. The plan
-is `fsmgen.vial_plan.v2` with the same empty family carrier. The HIAL facts
-remain `fsmgen.hial_vial_bridge_manifest.v1` because their meaning did not
-change.
+`vial.semantic_family_envelope.v2`, and derives a new plan identity. Lifecycle
+records additionally carry typed fixture/domain bindings, operation IDs,
+family/deadline capabilities, and cumulative source maps. The plan is
+`fsmgen.vial_plan.v2`; the HIAL facts remain
+`fsmgen.hial_vial_bridge_manifest.v1` because their meaning did not change.
 
 V1 ExecutionIR and plan key sets, content hashes, and plan identity remain
 exact. The v1 portable backend rejects the v2 ExecutionIR during capability
@@ -209,12 +214,12 @@ a future v2 result from being mislabeled as v1. The result-family schema above
 is an implemented common validator and traceability contract, not yet the
 complete `fsmgen.verification_result_manifest.v2` producer.
 
-No nonempty family can reach these carriers until its vertical activity marks
-the necessary registry stages implemented and supplies its closed grammar and
-semantics. The common adapter preflight maps each family to all four current
-routes but keeps every mapping unavailable. Public v2 source, migration, and
-empty-base plan tooling ships through `.19.1.7`; backend mappings remain
-unavailable.
+No other nonempty family can reach these carriers until its vertical activity
+marks the necessary registry stages implemented and supplies its closed grammar
+and semantics. The common adapter preflight maps each family to all four
+current routes but keeps every mapping unavailable. Public v2 source,
+migration, empty-base plan, and lifecycle plan tooling now ship; backend
+mappings remain unavailable.
 
 ## Import and adapter compatibility
 
@@ -411,7 +416,10 @@ cascade suppression, sanitization, and one-line thrown form remain unchanged.
 V2 adds `VIAL_VERSION_UNSUPPORTED`, `VIAL_IMPORT_VERSION_MISMATCH`,
 `VIAL_COMPATIBILITY_ADAPTER_UNAVAILABLE`,
 `VIAL_COMPATIBILITY_ADAPTER_INVALID`, `VIAL_MIGRATION_ERROR`,
-`VIAL_FAMILY_UNSUPPORTED`, and `VIAL_FAMILY_REVISION_MISMATCH`. Version/style
+`VIAL_FAMILY_UNSUPPORTED`, `VIAL_FAMILY_REVISION_MISMATCH`,
+`VIAL_BIND_REFERENCE_ERROR`, `VIAL_LIFECYCLE_DEADLINE_EXPIRED`,
+`VIAL_LIFECYCLE_SERVICE_ERROR`, `VIAL_LIFECYCLE_DRAIN_INCOMPLETE`, and
+`VIAL_LIFECYCLE_CLEANUP_TIMEOUT`. Version/style
 and import/adapter errors stop before semantic construction; independent family
 errors order by source, package, family-block, and node position. No failure
 returns partial SemanticIR, migrated source catalog, plan, or artifact graph.
@@ -423,15 +431,19 @@ normal-v2/terse-v2 equivalence; empty-intents v1 migration equivalence;
 same-version import order; mixed/unknown version, adapter, family/revision,
 shape, limit, and hostile backend-escape rejection; immutable defensive
 records; deterministic diagnostics; no partial output; repository-relative
-identities; public capability truth; and exact cleanup. Family syntax cannot
-ship until its own vertical source-to-qualified-result owner passes.
+identities; public capability truth; and exact cleanup. Family syntax and
+planning cannot ship until its vertical compiler owner passes; backend and
+support claims require their own later qualification owners.
 
 Implemented leaves `.19.1.2-.19.1.7` provide v2 source, semantic,
 common-family contract, empty-base execution/plan, registry, backend-adapter
-preflight, quality, public source/migration/plan tooling, and rejection behavior.
+preflight, quality, public source/migration/plan tooling, and rejection
+behavior. Lifecycle child `.19.2.2` adds the first closed family from source
+through target-neutral planning and normalized-result validation.
 V1 source, meaning, public capability bytes, successful plan/backend output,
-support, and HIAL behavior remain unchanged. No expressive family, complete v2
-verification result, family backend emission/runtime, parity, provider, reverse
+support, and HIAL behavior remain unchanged. No other expressive family,
+complete v2 verification result, family backend emission/runtime, parity,
+provider, reverse
 migration, mixed-version catalog, raw native block,
 arbitrary SV/UVM/VHDL feature, mixed-language route, full-language claim,
 scale claim, or support promotion ships. VIAL remains simpler intent above

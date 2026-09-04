@@ -130,18 +130,21 @@ Foundation `.19.1.1-.19.1.7` implements v2 parsing/projections/imports, the
 common family envelope, empty-family plans, and content-addressed family and
 backend-adapter registries with exact v1 preservation. Public v2 tooling is an
 explicit opt-in through `--language-version 2`: capabilities, check, format,
-non-mutating whole-catalog v1-to-v2 migration, and empty-family planning are
-shipped. Migration returns canonical source records, semantic-path source maps,
-and an independently rechecked compatibility digest without overwriting input.
-V2 run, backend emission, compile, runtime, complete results, parity, and every
-expressive family remain unavailable and reject before artifacts. The twelve
-selected family namespaces still have no functional or backend maturity.
+non-mutating whole-catalog v1-to-v2 migration, empty-family planning, and
+lifecycle-control planning are shipped. Migration returns canonical source
+records, semantic-path source maps, and an independently rechecked
+compatibility digest without overwriting input. Lifecycle control compiles from
+its closed source grammar through typed SemanticIR, HIAL binding, execution
+operations, plan provenance, and normalized-result validation. V2 run, backend
+emission, compile, runtime, produced results, parity, and the other eleven
+expressive families remain unavailable and reject before artifacts. Every
+selected family still has unavailable backend maturity.
 
 All four private emitters admit only exact typed ExecutionIR and reject complete
 unsupported sets before rendering; OSVVM also rejects before portable
 delegation or provider access. The adapter registry keeps the public portable-
 SV v1, review-only native-UVM, private portable-VHDL, and private OSVVM maturity
-states distinct; the public v2 foundation does not promote any of them.
+states distinct; the public v2 compiler does not promote any of them.
 
 The content-addressed private VIAL quality contract makes author abstraction
 and generated-artifact quality executable. It checks maintained examples,

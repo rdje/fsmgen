@@ -31,6 +31,8 @@ use FSM::VIAL::SourceProjection;
 
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my $vial_name = 'vial/ahb_subordinate_base_output_arbitration.vial';
+my $lifecycle_name =
+    'vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial';
 my $hial_name = 'ppif/ahb_lite_subordinate.ppif';
 my $artifact_root = '.artifacts/test/vial-usability-artifact-quality';
 my $dependency_root = '.artifacts/cache/providers/osvvm/2026.05/source';
@@ -175,6 +177,10 @@ my $v1_ir = FSM::VIAL::Parser->parse_source({
 my $v2_ir = FSM::VIAL::Parser->parse_source({
     text => $normal, source_name => $vial_name, source_catalog => {},
 });
+my $lifecycle_ir = FSM::VIAL::Parser->parse_source({
+    text => slurp_raw(repo_path($lifecycle_name)),
+    source_name => $lifecycle_name, source_catalog => {},
+});
 my $unknown_version = $normal;
 $unknown_version =~ s/\(version 2\)/\(version 3\)/
     or die "normal version selector not found\n";
@@ -204,7 +210,7 @@ my $author_args = {
             value => $v2_ir->as_hashref},
         {document_id => 'semantic-families/v2',
             kind => 'semantic_family_carrier',
-            value => $v2_ir->as_hashref->{packages}[0]{intent_families}},
+            value => $lifecycle_ir->as_hashref->{packages}[0]{intent_families}},
     ],
 };
 

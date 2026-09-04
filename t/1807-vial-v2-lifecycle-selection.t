@@ -57,10 +57,10 @@ sub marked_vial {
     return $body;
 }
 
-subtest 'the bounded maintained reference and mdBook route one selection' => sub {
+subtest 'the bounded maintained reference and mdBook route the compiler frontier' => sub {
     like(
         $landing,
-        qr{\[Selected lifecycle-control revision-1 source and semantic contract\]\(vial-spec/lifecycle-control-v2[.]md\)},
+        qr{\[Implemented lifecycle-control revision-1 compiler contract\]\(vial-spec/lifecycle-control-v2[.]md\)},
         'the mandatory v2 landing routes the lifecycle part',
     );
     like(
@@ -68,10 +68,10 @@ subtest 'the bounded maintained reference and mdBook route one selection' => sub
         qr{\[lifecycle-control family contract\]\(../../vial-spec/lifecycle-control-v2[.]md\)},
         'the task-oriented book routes the normative part',
     );
-    like($book, qr{not implemented}i,
-        'the book labels selection separately from implementation');
-    like($book, qr{VIAL_FAMILY_UNSUPPORTED},
-        'the book states the current pre-implementation diagnostic');
+    like($book, qr{## Implemented lifecycle-control compiler},
+        'the book labels the implemented compiler frontier');
+    like($book, qr{All version-2 backends and `run`\s+remain unavailable},
+        'the book keeps compiler and backend maturity separate');
 };
 
 subtest 'normal and terse forms retain one target-free family spelling' => sub {
@@ -182,7 +182,7 @@ subtest 'family-specific bounds and diagnostic ownership are finite' => sub {
     }
 };
 
-subtest 'registry reservation agrees while all functional maturity stays unavailable' => sub {
+subtest 'registry maturity reaches the implemented target-neutral compiler only' => sub {
     my $registry = build_vial_semantic_family_registry();
     my ($family) = grep {
         $_->{family_id} eq 'lifecycle_control' && $_->{revision} == 1
@@ -200,8 +200,8 @@ subtest 'registry reservation agrees while all functional maturity stays unavail
         [grep {
             $_ ne 'selection' && $family->{maturity}{$_} ne 'unavailable'
         } @{$registry->{maturity_keys}}],
-        [],
-        'no functional family maturity is promoted by selection',
+        [qw(source semantic binding execution plan result)],
+        'source through result-contract maturity is implemented',
     );
     for my $backend (@{$family->{backend_profiles}}) {
         is_deeply(
@@ -213,7 +213,7 @@ subtest 'registry reservation agrees while all functional maturity stays unavail
     }
 };
 
-subtest 'current public tooling rejects before semantic output or promotion' => sub {
+subtest 'public tooling accepts compiler phases without backend promotion' => sub {
     my $selected_source = $fixture;
     my $normal = marked_vial($spec, 'normal');
     $selected_source =~ s/\(intents\)/$normal/
@@ -223,17 +223,17 @@ subtest 'current public tooling rejects before semantic output or promotion' => 
         source_name => $fixture_rel,
         source_catalog => {},
     });
-    ok(!$checked->{ok}, 'selected source is not accepted before implementation');
-    is($checked->{diagnostics}[0]{code}, 'VIAL_FAMILY_UNSUPPORTED',
-        'current rejection retains the common family diagnostic');
-    is($checked->{semantic_report}, undef,
-        'rejection returns no partial semantic report');
+    ok($checked->{ok}, 'selected lifecycle source is accepted');
+    is($checked->{semantic_report}{packages}[0]{intent_families}[0]{node_count},
+        12, 'public semantic report exposes twelve typed lifecycle records');
+    is_deeply($checked->{diagnostics}, [],
+        'accepted lifecycle source returns no diagnostic');
 
     my $tooling = build_vial_tooling_contract_v2();
     my %capability = map { $_ => 1 } @{$tooling->{capabilities}};
-    ok(!$capability{'vial.family.lifecycle_control.v1'}
-        && !$capability{'vial.family.lifecycle_control.deadline.v1'},
-        'public discovery advertises no lifecycle capability');
+    ok($capability{'vial.family.lifecycle_control.v1'}
+        && $capability{'vial.family.lifecycle_control.deadline.v1'},
+        'public discovery advertises both lifecycle compiler capabilities');
     is_deeply($tooling->{unavailable_actions}, ['run'],
         'v2 run remains unavailable');
 };

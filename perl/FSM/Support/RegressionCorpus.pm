@@ -143,6 +143,35 @@ my @REGRESSION_CORPUS = (
         )],
     },
     {
+        id => 'feature.vial_v2_public_lifecycle_plan',
+        relpath => 'vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial',
+        family => 'verification_intent_tooling',
+        classification => 'supported_smoke',
+        coverage => 'vial_v2_public_lifecycle_plan_cli_api',
+        source_kind => 'vial',
+        strict_supported => 0,
+        supported_phases => [qw(
+            parse typecheck semantic_expansion hial_review bridge_binding
+            execution_plan result_contract source_map artifact_generation
+            atomic_publication
+        )],
+        required_capabilities => [qw(
+            vial.artifact_layout.v2
+            vial.execution_ir.v2
+            vial.family.lifecycle_control.deadline.v1
+            vial.family.lifecycle_control.v1
+            vial.plan.v2
+            vial.semantic_family_envelope.v2
+            vial.tool_manifest.v2
+            vial.tooling.api.v2
+            vial.tooling.cli.v2
+        )],
+        explicit_nonclaims => [qw(
+            backend compile simulation runtime result_production parity
+            non_lifecycle_expressive_family mixed_language scale
+        )],
+    },
+    {
         id => 'feature.vial_sv_portable_verilator_runtime',
         relpath => 'vial/ahb_subordinate_base_output_arbitration.vial',
         family => 'verification_intent_tooling',

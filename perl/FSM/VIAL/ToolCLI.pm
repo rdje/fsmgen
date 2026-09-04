@@ -447,9 +447,9 @@ Usage:
 
 Planning and execution write one atomic repository-local artifact tree. Runtime
 staging stays repository-local and is removed before publication. All persisted
-paths are repository-root-relative. Version 2 exposes only source tooling,
-non-mutating v1-to-v2 migration, and empty-family planning; its backend, run,
-complete-result, and parity routes are unavailable.
+paths are repository-root-relative. Version 2 exposes source tooling,
+non-mutating v1-to-v2 migration, empty-family planning, and lifecycle-control
+planning; its backend, run, complete-result, and parity routes are unavailable.
 USAGE
 }
 

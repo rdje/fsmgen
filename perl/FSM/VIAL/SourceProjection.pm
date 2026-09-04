@@ -157,8 +157,6 @@ sub compatibility_projection {
     my $packages = _without_source_spans($data->{packages});
     if ($version == 2) {
         for my $package (@{$packages}) {
-            die "VIAL v2 compatibility projection requires empty intent families\n"
-                if @{$package->{intent_families} || []};
             delete $package->{intent_families};
         }
     }
