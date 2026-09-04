@@ -2003,11 +2003,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.6: activate VIAL usability and artifact quality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.6: enforce VIAL usability and artifact quality`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.7`
-  Status: `proposed`
+  Status: `active`
   Goal: `Close the version-2 foundation with public tooling, migration guidance, compatibility, containment, and support truth.`
   Acceptance: `Capabilities/check/format/plan expose exact version-aware states, v1 regression remains byte-exact, v2 migration is explicit and reviewable, mdBook examples are runnable, every schema and diagnostic is documented, residues are absent, and no expressive family is falsely advertised by the foundation alone.`
-  Verification: `pending`
-  Commit: `pending closeout`
+  Verification: `Clean quality-gate commit 714eef6e4 completes the private v2 foundation through source, semantic, execution, registry, backend-adapter, and usability/artifact-quality contracts while leaving public tooling version 1. The required Knowledge Map query returned no direct v2 public-foundation closeout answer. Decision 0039 requires explicit intent-oriented, versioned, artifact-atomic public records; decision 0034 requires additive v2 without redefining v1. Git history traces Tool's deliberate _v1_tool_version_diagnostic boundary to fe480cd24, while the maintained v2 contract already selects distinct fsmgen.vial_tool_request.v2, fsmgen.vial_tool_result.v2, fsmgen.vial_source_migration.v1, normal_v2/terse_v2 identities, and compatibility-projection proof. This continuity-only activation therefore selects additive v2 capabilities/check/format/plan and opt-in whole-catalog v1-to-v2 migration without widening the byte-stable v1 request/result/capability route. V2 plan may expose only the implemented empty-family base; run/backend/result/parity remain unavailable and must reject before artifacts. The slice must publish exact schemas, CLI/API selection, atomic no-overwrite/no-partial-output behavior, source maps, compatibility digests, migration rollback, support accounting, runnable mdBook examples, hostile controls, and residue/containment evidence. It may not silently upgrade v1, admit a mixed-version catalog, reverse-migrate, expose private IR, implement a family, change a successful v1 byte, or promote backend/runtime/parity/support.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.7: activate VIAL v2 foundation closeout`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2`
   Status: `active`
