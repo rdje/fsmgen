@@ -1945,11 +1945,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.7: close documentation and migration activity`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select and decompose the post-first-backend expressive VIAL frontier without a synthesizability ceiling.`
   Acceptance: `Decision 0034 is converted into detailed task-tree leaves for terse/normal syntax equivalence and the complete selected verification-intent taxonomy: notification/interception, lifecycle control, stimulus orchestration, producer/observer communication, implementation selection/substitution, scoped configuration, register intent, constrained decisions, coverage/properties, timed interface interaction, debugging/introspection, and later justified intent families. Each records semantic compression, native/portable SV/UVM/VHDL mappings, backend-private mechanisms (including factories/config DB/TLM plumbing), fail-closed profiles, tests, docs, and non-claims; each applies the author test that no SV/UVM/VHDL knowledge is required and the backend test that generated artifacts remain efficient, readable, and source-mapped, without cloning raw target syntax or allowing the initial portable/native slices to masquerade as the language ceiling.`
-  Verification: `pending activation after the first bounded backend/profile evidence establishes concrete decomposition inputs`
-  Commit: `pending activation`
+  Verification: `Clean predecessor commit 69d8ff8d2 independently closes documentation/migration activity .18 with its final guarded 19-file/7,189-test band, mdBook, claims, containment, residue, task, and all 12 doctrine checks green; the worktree and index are clean, git_message_brief.txt is zero bytes, and no background result remains. The required Knowledge Map query returned no direct expressive-VIAL taxonomy/decomposition answer. This continuity-only transition activates selection/decomposition against decision 0034 and current language/backend evidence; it changes no VIAL syntax, semantic IR, bridge, plan, backend, artifact, runtime, parity, capability, support, documentation, or product behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19: activate expressive VIAL frontier selection`
 
 ## Current Frontier
 
