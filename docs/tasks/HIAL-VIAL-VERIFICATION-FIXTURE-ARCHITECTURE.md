@@ -1975,11 +1975,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.2: activate VIAL v2 parser implementation; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.2: implement VIAL v2 source projections`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the immutable common semantic-family envelope across SemanticIR, bridge binding, ExecutionIR, plan, result, and source maps.`
   Acceptance: `Every common field remains closed, typed, bounded, deterministic, defensively copied, source-derived, and traceable through each phase; versioned v1 paths retain exact projections; incomplete or contradictory nodes fail before downstream allocation.`
-  Verification: `pending`
-  Commit: `pending implementation`
+  Verification: `Clean parser/projection commit fe480cd24 owns the complete private base-v2 source boundary with exact v1 preservation. The required Knowledge Map query returned no common-envelope implementation answer. This continuity-only activation selects the shared cross-phase family envelope as the next isolated slice; no SemanticIR, bridge, ExecutionIR, plan, result, source-map, public capability, or product behavior changes in the activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3: activate common VIAL family envelope`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.4`
   Status: `proposed`
