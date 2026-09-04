@@ -2018,11 +2018,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.6`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Select lifecycle semantics and target-free normal/terse source.`
   Acceptance: `Define dependency, readiness, service, completion/drain, shutdown/finalize, deadline, and failure records with finite bounds, explicit order/defaults, examples, diagnostics, and semantic compression; reject UVM phase/objection vocabulary.`
-  Verification: `Clean foundation closeout commit 984271755 completes .19.1 before this pivot. The required Knowledge Map query returned no lifecycle-selection answer. This isolated continuity transition activates only the lifecycle semantic/source selection; it changes no VIAL source, schema, semantic IR, bridge, plan, artifact, backend, runtime, result, parity, capability, support, provider, HIAL, or product behavior.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.1: activate lifecycle semantic selection`
+  Verification: `Clean foundation closeout commit 984271755 completes .19.1 before this pivot, and clean continuity commit 06c331cb7 activates only this selection. The required Knowledge Map query returned no lifecycle-selection answer; decisions 0034/0036 and the common v2 envelope are the normative parents. New bounded lifecycle-control reference selects one fixture/local-domain program, exact dependency/readiness/single fixture-background service/stimulus/completion/drain/shutdown/finalize/deadline/failure grammar, identical normal/terse family spelling, monotone conditions, non-weakenable intrinsic order, exact defaults, typed semantic expansion/result shapes, inclusive C+N-1 logical deadlines, bounded failure finalization, finite family limits, stable diagnostics, backend-private mappings, and explicit nonclaims. T1807 independently checks all nine target/methodology exclusions, grammar/record/default/bound/diagnostic coverage, registry equality, unchanged unavailable maturity, and current atomic VIAL_FAMILY_UNSUPPORTED rejection. The RAM-guarded focused reference/v2 band passes Files=12/Tests=65. All 63 mdBook chapters test; the repository-local 98-file/22,204-KiB HTML build succeeds and is removed exactly. Knowledge Map is current at 1,161 facts/6,315 questions/6,486 occurrences/139 shards. Containment accepts the 63-file/58,099-line/3,167,016-byte book and partitioned 4-file/1,073-line/55,582-byte VIAL reference with no ceiling rise; the new lifecycle part itself is 390 lines/17,260 bytes. Claim, task, relative-path, locality, README, diff, staged acceptance, doctrine, and residue gates close in the checklist below. No accepted source, SemanticIR, bridge, plan, backend, runtime, result, parity, capability, support, provider, HIAL, or product behavior changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.1: activate lifecycle semantic selection; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.1: select target-neutral lifecycle contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.2`
   Status: `proposed`
@@ -2879,10 +2879,18 @@ additive v2 source/compiler substrate now includes explicit public source
 tooling, non-mutating v1-to-v2 migration, and empty-family planning while every
 expressive family and v2 backend/run/result/parity route remains unavailable.
 Lifecycle-control parent `.19.2` is active. Clean foundation closeout commit
-`984271755` permits child `.19.2.1` to become the active lifecycle semantic and
-target-free source selection frontier through a separate continuity commit.
+`984271755` and activation commit `06c331cb7` permit child `.19.2.1` to select
+the target-neutral lifecycle semantic/source contract. That child is complete;
+`.19.2.2` is the next proposed clean activation for typed compiler phases.
 
 ## Decisions
+
+- `2026-09-04`: Select lifecycle-control revision 1 as one fixture-scoped,
+  coordination-domain program that expands to typed records. Intrinsic order
+  and a mandatory full deadline cannot be weakened; optional requirements add
+  conjunctions only. Failure always remains failure and receives a separately
+  bounded finalization attempt. Normal and terse projections retain one family
+  spelling, while backend scheduling and methodology plumbing stay private.
 
 - `2026-08-22`: Activate unified provider-free construction qualification
   `.17.2.7.3` only after clean balanced-emission commit `ebf98fbbd` completes
@@ -4163,3 +4171,35 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   v2 backend,
   runtime/result/parity, mixed-language, provider, support, or HIAL behavior
   changes.
+
+## Acceptance Checklist (.19.2.1, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean foundation closeout `984271755`
+  deliberately left every expressive family unavailable, and clean activation
+  `06c331cb7` isolated lifecycle selection before any change. The required
+  Knowledge Map query returned no lifecycle-source answer. Decisions 0034 and
+  0036 state only the architectural intent. `git log -S` traces the rule that
+  methodology lifecycle remains backend-private to `be9c74163` and the common
+  registry's selection-only lifecycle reservation to `6927bfcfb`; neither
+  defines source records, intrinsic order, defaults, logical deadline
+  inclusivity, failure cleanup, or result meaning.
+- [x] **ADDRESSED (verified)** — `docs/vial-spec/lifecycle-control-v2.md`
+  selects one closed revision-1 grammar and typed expansion for dependency,
+  readiness, fixture-background service, stimulus, completion, drain,
+  shutdown, finalization, deadline, and failure records. Intrinsic ordering is
+  non-weakenable; normal and terse retain one target-free family spelling; all
+  waits and cleanup are finite logical-cycle intervals. T1807 derives the
+  reserved registry effects and current public support independently, applies
+  every executable author-vocabulary exclusion, and proves pre-implementation
+  rejection returns no partial semantic report.
+- [x] **NO REGRESSION (public truth, readers, claims, and residue)** — the
+  RAM-guarded v2/reference band passes `Files=12, Tests=65`; all 63 mdBook
+  chapters test, and the inspected repository-local 98-file/22,204-KiB HTML
+  build is removed. The Knowledge Map validates at 1,161/6,315/6,486/139.
+  Maintained-reference authorities accept the exact 63-file/58,099-line/
+  3,167,016-byte book and 4-file/1,073-line/55,582-byte VIAL reference with
+  zero ceiling increases. Claim inventory/dispositions, task/path/locality/
+  README checks, staged acceptance, all registered doctrines, and exact
+  build/artifact/log/brief residue checks are green. No v1 byte/meaning or v2
+  accepted-source, compiler, backend, result, capability, support, provider,
+  or HIAL behavior changes.

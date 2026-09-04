@@ -274,6 +274,15 @@ shutdown, finalization ordering, deadlines, and failure policy. UVM phase
 selection, raise/drop objections, and phase-transition calls are compiler-
 generated backend plumbing rather than authored VIAL concepts.
 
+Lifecycle selection `.19.2.1` now makes that principle exact in
+`docs/vial-spec/lifecycle-control-v2.md`. One fixture-scoped program expands to
+typed dependency, readiness, service, stimulus, completion, drain, shutdown,
+finalize, deadline, and failure nodes. Intrinsic ordering cannot be weakened;
+all time is one reviewed logical domain; a full-lifetime deadline and bounded
+failure finalization are mandatory. Normal and terse source retain the same
+family form without target vocabulary. Implementation and every backend/public
+maturity remain unavailable until their separate children close.
+
 Terse and verbose normal source forms must produce the same typed semantic
 records. Capability negotiation fails before output when a backend has no
 selected equivalent. Decision `0034` records the ceiling rule; activity `.19`

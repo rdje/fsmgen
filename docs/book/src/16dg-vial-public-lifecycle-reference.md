@@ -81,6 +81,66 @@ Successful migration records use `fsmgen.vial_source_migration.v1`; see the
 [legacy migration guide](16di-vial-legacy-migration.md) before adopting any
 returned source bytes.
 
+## Selected lifecycle-control intent (not implemented)
+
+The public command lifecycle described by this chapter is distinct from the
+selected VIAL v2 `lifecycle_control` intent family. That family now has a
+target-neutral revision-1 source and semantic contract, but no accepted source,
+backend, runtime, result, capability, or support yet. A nonempty family block
+therefore still fails `VIAL_FAMILY_UNSUPPORTED` without partial output.
+
+The compact family form owns one fixture's dependencies, readiness, background
+service, stimulus start, completion, drain, shutdown, finalization, deadlines,
+and failure policy:
+
+```vial
+(family lifecycle_control
+  (revision 1)
+  (lifecycle fixture_flow
+    (fixture base_output_arbitration)
+    (domain bus)
+    (dependencies
+      (dependency configured_gate (when (configured)))
+      (dependency reset_gate (when (reset_inactive bus))))
+    (readiness ready)
+    (services
+      (service background (target fixture_background)))
+    (stimulus_start stimulus)
+    (completion complete)
+    (drain drained)
+    (shutdown stopped)
+    (finalize finalized)
+    (deadlines
+      (deadline total
+        (from (lifecycle_entered))
+        (until (lifecycle_point finalized))
+        (within 1024)))
+    (failure lifecycle_failure)))
+```
+
+Normal source wraps this exact block in `(intents ...)`; terse source places the
+same block directly in package declaration order. No family-specific alias or
+hidden target default exists. The compiler supplies only fixed semantic
+defaults: all dependencies and services precede readiness; readiness precedes
+stimulus; selected scenarios must terminate before completion; transactions,
+scoreboards, and services must settle before drain; shutdown precedes service
+stop; finalization waits for stopped services. Optional conditions can add
+constraints but cannot weaken this chain.
+
+Every lifecycle has one full logical-cycle deadline and bounded failure
+finalization. An expired deadline or service failure stops new stimulus,
+requests cooperative cancellation and service stop, preserves the first cause
+plus ordered evidence, and can never become pass. All time remains the VIAL
+`(domain, cycle, phase, ordinal)` model; target schedules and host wall time are
+not source semantics.
+
+Read the normative
+[lifecycle-control family contract](../../vial-spec/lifecycle-control-v2.md)
+for the complete grammar, conditions, exact defaults, typed record/result
+shapes, bounds, diagnostics, backend-private mapping boundary, and nonclaims.
+Do not copy this selected fragment into a production fixture until capability
+discovery advertises `vial.family.lifecycle_control.v1`.
+
 ## Start with machine truth
 
 Ask the installed FSMGen tree what the public VIAL surface advertises:
