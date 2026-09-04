@@ -1931,11 +1931,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.5: publish VIAL migration guidance`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.6`
-  Status: `proposed`
+  Status: `active`
   Goal: `Consolidate backend, capability, parity, scale, and troubleshooting truth into bounded navigable references.`
   Acceptance: `Derive one exact profile matrix for portable SystemVerilog, native UVM emission/experiment/qualified runtime, provider-free VHDL, OSVVM, and mixed-language availability; align capability/support stages, parity scope, regression-scale evidence, provider setup, error interpretation, and residue cleanup with public JSON and current evidence. Link specialist measurements instead of duplicating them, preserve all nonclaims, and raise no documentation ceiling without separate authority.`
-  Verification: `pending .18.5 and separate clean activation`
-  Commit: `pending activation`
+  Verification: `Clean predecessor commit 9d0aabc5e publishes and closes the explicit legacy-to-VIAL migration guide with all 12 doctrine checks green, zero scratch-message bytes, no worktree residue, and no background state. The required Knowledge Map query for a VIAL backend/capability/parity/scale/troubleshooting matrix returned no direct consolidated answer. This continuity-only transition activates the exact bounded reference at docs/book/src/16dj-vial-capability-support-reference.md and its machine-derived watcher at t/1800-hial-vial-capability-support-reference.t. It changes no book prose, contract, command, schema, artifact, backend, runtime, parity, scale, capability, support, diagnostic, provider, or product behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.6: activate VIAL capability reference`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.7`
   Status: `proposed`
