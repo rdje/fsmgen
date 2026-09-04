@@ -7,9 +7,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.6`
-  (`proposed`; target-free usability and generated-artifact quality)
-- next_action: Activate `.19.1.6`, then make its target-free author and
-  deterministic readable generated-artifact requirements executable.
-- in_flight_uncommitted: none.
+  (`active`; target-free usability and generated-artifact quality)
+- next_action: Commit this continuity-only activation, then implement one
+  shared executable source-usability and backend-artifact quality contract.
+- in_flight_uncommitted: continuity-only `.19.1.6` activation candidate.
 - in_flight_background: none.
 - blockers: none.

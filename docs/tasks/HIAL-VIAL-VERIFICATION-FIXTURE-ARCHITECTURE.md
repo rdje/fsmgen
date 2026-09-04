@@ -1996,11 +1996,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.5: activate common VIAL backend adapters; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.5: implement common VIAL backend adapters`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.6`
-  Status: `proposed`
+  Status: `active`
   Goal: `Make target-free author usability and generated-artifact quality executable requirements.`
   Acceptance: `Fixtures and hostile controls prove public examples/diagnostics/normal forms need no SV/UVM/VHDL knowledge; backend checks prove deterministic readable minimally shaped source-mapped output, absence-driven component elision, bounded cost, and zero methodology-plumbing leakage into VIAL semantics.`
-  Verification: `pending`
-  Commit: `pending implementation`
+  Verification: `Clean backend-adapter commit 94356f175 owns one typed preflight across the four existing routes while leaving every v2 family unavailable. The required pre-selection Knowledge Map query returned no direct target-free-usability/generated-artifact-quality answer. The audit found canonical v1 and empty-family v2 normal/terse fixtures, deterministic source diagnostics, typed SemanticIR/ExecutionIR, and backend-specific deterministic in-memory artifact graphs, source maps, artifact-count checks, and 16 MiB source-byte caps. The two governing author/book passages require that VIAL users need no SystemVerilog, UVM, VHDL, or methodology API knowledge while allowing generated target code to remain inspectable. This continuity-only activation selects one private closed evaluator with separate source-usability and backend-artifact reports: it will scan authored fixtures, canonical projections, diagnostics, and semantic carriers for a finite forbidden target/methodology vocabulary; validate stable readable generated text, exact source-map coverage, deterministic artifact identity, minimal profile-specific role sets, absence-driven optional-role elision, and bounded counts/bytes; and prove through RED controls that each dimension fails independently. It must consume existing outputs without changing source acceptance, semantic meaning, emitted bytes, runtime, result, parity, public APIs, capabilities, support, or provider access.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.6: activate VIAL usability and artifact quality`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.7`
   Status: `proposed`
