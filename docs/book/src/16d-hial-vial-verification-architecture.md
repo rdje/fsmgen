@@ -783,7 +783,8 @@ Run the focused source gate from the repository root:
 ```sh
 prove -Iperl t/1801-vial-v2-source-projections.t \
   t/1802-vial-v2-semantic-family-envelope.t \
-  t/1803-vial-v2-family-registry.t
+  t/1803-vial-v2-family-registry.t \
+  t/1804-vial-v2-backend-adapter-seams.t
 ```
 
 The private planner now accepts the empty-family v2 base, binds it through the
@@ -803,10 +804,11 @@ mapping facts. It reserves the twelve `.19.2-.19.13` family namespaces while
 reporting only `selection: selected`; source, semantic, binding, execution,
 plan, emission, compile, runtime, result, parity, and public maturity all remain
 `unavailable`. Dependencies are explicitly empty until cross-family semantics
-select otherwise. The current portable-Verilator mapping also supports no v2
-family revision.
+select otherwise. Each family maps independently to portable SystemVerilog,
+native UVM, portable VHDL, and OSVVM; every mapping supports no v2 family
+revision and reports unavailable emission/compile/runtime/result/parity.
 
-The registry's parser, empty-base planner, and portable-backend profile records
+The registry's parser, empty-base planner, and four backend profile records
 drive one closed negotiation result. Parser and planner reject before semantic
 or HIAL work; emitter rejects before artifact rendering; runner rejects before
 lifecycle workspace or process creation. A rejection retains the complete
@@ -815,12 +817,28 @@ and it never borrows support from an unselected profile. The unchanged public
 v1 tooling capability list and v1 backend supported-capability set are derived
 from this registry, so machine truth has one owner without advertising v2.
 
+`FSM::Support::VIALSemanticFamilyBackendAdapter` adds a separate
+content-addressed registry for the four target routes. Every record names one
+exact private emitter, target mechanism, accepted ExecutionIR schema/profile,
+output/source-map schema, atomic artifact model, and independent
+emission/compile/runtime/result/parity/public maturity. Portable SystemVerilog
+is public and qualified; native UVM is implemented for emission/review only;
+the bounded portable-VHDL and OSVVM routes are qualified but private. Those
+base v1 route facts cannot confer family maturity.
+
+All four emitters call one exact-typed ExecutionIR preflight before rendering.
+It checks schema/profile/version consistency and reports every unsupported
+family, revision, capability, and effect. OSVVM performs this check before
+portable-VHDL delegation or provider verification. Rejection returns no
+operation identity, source map, artifact graph, workspace, or process; target
+mechanisms remain absent from semantic and execution-family records.
+
 This is deliberately not public v2 tooling yet. The v1 tool request rejects v2
 before exposing a report or loading a v2 CLI import. Existing v1 backend and
 result producers reject v2 before artifacts or a mislabeled v1 manifest.
 Public v2 request/result schemas, migration, registered family semantics,
-backend adapters, runtime, complete results, parity, and support remain owned
-by `.19.1.5` through `.19.1.7` and the vertical family activities.
+runtime, complete results, parity, and support remain owned by `.19.1.7` and
+the vertical family activities.
 
 ## Native extensions
 

@@ -11,6 +11,9 @@ use Scalar::Util qw(blessed refaddr reftype);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
+use FSM::Support::VIALSemanticFamilyBackendAdapter qw(
+    preflight_vial_semantic_family_backend_adapter
+);
 use FSM::VIAL::Backend::OSVVM2026_05Materialization;
 use FSM::VIAL::Backend::VHDLOSVVMStaticValidator;
 use FSM::VIAL::Backend::VHDLPortableGHDL;
@@ -158,6 +161,20 @@ sub _emit($raw, $provider_context = undef) {
     confess "backend_profile must be '$BACKEND_PROFILE'\n"
         unless defined($raw->{backend_profile}) && !ref($raw->{backend_profile})
             && $raw->{backend_profile} eq $BACKEND_PROFILE;
+    confess "execution_ir must be an exact FSM::VIAL::ExecutionIR object\n"
+        unless blessed($raw->{execution_ir})
+            && ref($raw->{execution_ir}) eq 'FSM::VIAL::ExecutionIR';
+    my $adapter_preflight =
+        preflight_vial_semantic_family_backend_adapter({
+            profile_id => $BACKEND_PROFILE,
+            execution_ir => $raw->{execution_ir},
+        });
+    return _failure(
+        'VIAL_OSVVM_BACKEND_UNSUPPORTED',
+        'OSVVM backend adapter preflight rejected the typed ExecutionIR',
+        '/negotiation',
+        $adapter_preflight,
+    ) unless $adapter_preflight->{accepted};
     confess "dependency_root must be the exact repository-local OSVVM 2026.05 root\n"
         unless defined($raw->{dependency_root}) && !ref($raw->{dependency_root})
             && $raw->{dependency_root} eq $DEPENDENCY_ROOT;
@@ -964,7 +981,7 @@ sub _require_keys($value, $expected) {
         unless join("\0", sort keys %$value) eq join("\0", sort @$expected);
 }
 
-sub _failure($code, $message, $path) {
+sub _failure($code, $message, $path, $negotiation = undef) {
     return {
         ok => JSON::PP::false,
         status => 'failed',
@@ -972,7 +989,8 @@ sub _failure($code, $message, $path) {
         plan_id => undef,
         generated_top => undef,
         operation_id => undef,
-        negotiation => undef,
+        negotiation => defined($negotiation)
+            ? _clone_json($negotiation) : undef,
         provider_materialization => undef,
         mapping_matrix => undef,
         semantic_preservation => undef,

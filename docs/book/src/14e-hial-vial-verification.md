@@ -63,16 +63,25 @@ tool still rejects v2.
 
 One content-addressed registry now reserves revision 1 of the twelve selected
 family namespaces and their target-neutral effect vocabularies. Registration
-does not mean support: every functional family stage and every current
-portable-Verilator family mapping is explicitly `unavailable`. Parser,
+does not mean support: every functional family stage and all four current
+backend mappings are explicitly `unavailable`. Parser,
 planner, emitter, and runner negotiate the selected profile's exact schema,
 family, revision, dependency, capability, and effect set. Any missing set is
 reported in full before a semantic object, HIAL review graph, artifact,
 workspace, or process is created. Existing public v1 capability bytes and
 successful v1 backend behavior are unchanged and now derive from the same
-registry rather than a second list. Public v2 CLI/API schemas, migration,
-family semantics, v2 backend adapters, runtime results, parity, and support
-remain later work.
+registry rather than a second list.
+
+A second content-addressed authority now gives portable SystemVerilog, native
+UVM, provider-free VHDL, and OSVVM one typed backend-admission seam while
+keeping their mechanisms and maturity separate. Every emitter accepts only an
+exact versioned ExecutionIR and rejects unsupported v2 schema, profile,
+family, capability, and effect requirements before rendering; OSVVM rejects
+before portable delegation or provider access. The registry records portable
+SystemVerilog as public and qualified, native UVM as emission-only, and both
+bounded VHDL routes as qualified but private. This is adapter architecture,
+not expressive-family support. Public v2 CLI/API schemas, migration, family
+implementations, v2 runtime results, parity, and support remain later work.
 
 Each family advances vertically. Its normal and terse forms must produce one
 typed meaning; IR and plans must preserve identity, bounds, source maps, and

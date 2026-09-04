@@ -100,6 +100,12 @@ my @SV_PORTABLE_CAPABILITIES = qw(
     vial.semantic_ir.v1
     vial.source.v1
 );
+my @BACKEND_PROFILE_IDS = qw(
+    sv_portable_verilator
+    sv_uvm_emit.accellera_2020_3_1
+    vhdl_osvvm_qualified
+    vhdl_portable_ghdl
+);
 
 my @FAMILY_SPEC = (
     [lifecycle_control => 2 => [qw(
@@ -148,12 +154,12 @@ sub build_vial_semantic_family_registry {
                 %{$unavailable},
                 selection => 'selected',
             },
-            backend_profiles => [{
-                profile_id => 'sv_portable_verilator',
+            backend_profiles => [map { +{
+                profile_id => $_,
                 maturity => {
                     map { $_ => 'unavailable' } @BACKEND_MATURITY_KEYS
                 },
-            }],
+            } } @BACKEND_PROFILE_IDS],
             task_owner =>
                 "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.$activity",
         }
@@ -184,6 +190,45 @@ sub build_vial_semantic_family_registry {
             profile_id => 'sv_portable_verilator',
             profile_kind => 'backend',
             stages => [qw(emitter runner)],
+            accepted_language_versions => [],
+            accepted_execution_schemas => ['fsmgen.vial_execution_ir.v1'],
+            accepted_execution_profiles => [
+                'core_directed_single_clock_execution_v1',
+            ],
+            supported_family_revisions => [],
+            supported_capabilities => [sort @SV_PORTABLE_CAPABILITIES],
+            supported_effect_kinds => [],
+        },
+        {
+            profile_id => 'sv_uvm_emit.accellera_2020_3_1',
+            profile_kind => 'backend',
+            stages => ['emitter'],
+            accepted_language_versions => [],
+            accepted_execution_schemas => ['fsmgen.vial_execution_ir.v1'],
+            accepted_execution_profiles => [
+                'core_directed_single_clock_execution_v1',
+            ],
+            supported_family_revisions => [],
+            supported_capabilities => [sort @SV_PORTABLE_CAPABILITIES],
+            supported_effect_kinds => [],
+        },
+        {
+            profile_id => 'vhdl_osvvm_qualified',
+            profile_kind => 'backend',
+            stages => ['emitter'],
+            accepted_language_versions => [],
+            accepted_execution_schemas => ['fsmgen.vial_execution_ir.v1'],
+            accepted_execution_profiles => [
+                'core_directed_single_clock_execution_v1',
+            ],
+            supported_family_revisions => [],
+            supported_capabilities => [sort @SV_PORTABLE_CAPABILITIES],
+            supported_effect_kinds => [],
+        },
+        {
+            profile_id => 'vhdl_portable_ghdl',
+            profile_kind => 'backend',
+            stages => ['emitter'],
             accepted_language_versions => [],
             accepted_execution_schemas => ['fsmgen.vial_execution_ir.v1'],
             accepted_execution_profiles => [
@@ -650,13 +695,19 @@ sub _validate_registry {
         die "semantic-family bound profile is unavailable\n"
             unless $bound{$entry->{bound_profile_id}};
         _validate_maturity($entry->{maturity}, \@MATURITY_KEYS);
+        my %backend_mapping;
         for my $mapping (@{$entry->{backend_profiles}}) {
             _exact_hash($mapping, \@BACKEND_MAPPING_KEYS,
                 'semantic-family backend mapping');
             die "semantic-family backend mapping profile is unavailable\n"
                 unless $profile{$mapping->{profile_id}};
+            die "semantic-family backend mapping profile is duplicated\n"
+                if $backend_mapping{$mapping->{profile_id}}++;
             _validate_maturity($mapping->{maturity}, \@BACKEND_MATURITY_KEYS);
         }
+        die "semantic-family backend mapping set is incomplete\n"
+            unless join("\0", sort keys %backend_mapping)
+                eq join("\0", @BACKEND_PROFILE_IDS);
         die "semantic-family task owner is invalid\n"
             unless $entry->{task_owner}
                 =~ /\AHIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE\.19\.[0-9]+\z/;

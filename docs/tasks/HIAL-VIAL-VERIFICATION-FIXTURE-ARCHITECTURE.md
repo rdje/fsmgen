@@ -1,5 +1,5 @@
 # HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE: Hardware And Verification Intent Architecture
-
+  Verification: `Clean registry commit 6927bfcfb owns the twelve selected family namespaces and clean activation c7685a046 owns this isolated adapter slice. The required Knowledge Map query returned no common v2 backend-adapter answer. Git history traces the independent native-UVM v1 schema guard to 5a1805f52, portable-VHDL capability list to ab8b1af24, and portable-SV registry entry to 6927bfcfb. Decisions 0050/0051 require distinct public portable-SV, review-only native-UVM, private portable-VHDL, and private OSVVM states. FSM::Support::VIALSemanticFamilyBackendAdapter now publishes one closed content-addressed four-route authority for exact emitter, target mechanism, typed ExecutionIR boundary, accepted v1 schema/profile, output/source-map schemas, atomic artifact model, and independent emission/compile/runtime/result/parity/public maturity. The family registry maps every selected family to all four profiles while every mapping remains unavailable. All four emitters preflight the exact typed/version-consistent IR and complete family/revision/capability/effect set before target rendering; OSVVM rejects before portable delegation or provider verification. T1804 covers deterministic/defensive registry shape, exact maturity isolation, target-mechanism absence from ExecutionIR, untyped/inconsistent/unknown-profile rejection, complete hostile v2 requirement reporting, zero provider/delegation calls, and zero artifact output. Existing successful v1 emitter result shapes remain unchanged, and the public tooling JSON remains exact at SHA-256 42db05da519dffd97c3e40ec254c82d09b5f20ef53a849e53025b976f5aded4e. The final RAM-guarded eighteen-file compiler/backend/reader band passes Files=18/Tests=224, with only the two existing explicit Darwin runtime skips. Every mdBook chapter tests; the inspected repository-local build has 98 files/22,088 KiB and is removed exactly. Knowledge Map parity is 1,160/6,300/6,471/138; claim dispositions close 1,896/1,896 candidates with 316 records, 979 gates, 601 reviewed, and zero gaps/open owners. Containment authorizes the exact 63-file/57,778-line/3,150,863-byte book and 3-file/535-line/29,616-byte VIAL reference, adjusts only existing transition allowances by their prescribed ratchet steps, and raises no ceiling. Final task/path/locality/README/claim/Knowledge/containment/staged-acceptance/doctrine gates and task-local residue checks pass. No family implementation, accepted v2 emission, new compile/runtime/result/parity, public v2 tooling, provider access, support promotion, or HIAL behavior ships.`
 ## Metadata
 
 - Tree ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`
@@ -1989,11 +1989,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.4: activate VIAL family registry; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.4: implement VIAL family registry`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.5`
-  Status: `active`
+  Status: `done`
   Goal: `Implement common portable-SystemVerilog, native-UVM, and VHDL/OSVVM backend adapter seams.`
   Acceptance: `Adapters consume only typed versioned IR, report exact emitted/compile/run/result/parity maturity, isolate target mechanisms, preserve deterministic source maps and atomic artifacts, and cannot accept an unknown family or silently omit a semantic effect.`
-  Verification: `Clean registry commit 6927bfcfb owns the twelve selected family namespaces, exact profile-local capability negotiation, and conservative zero-family maturity. The required Knowledge Map query returned no common v2 backend-adapter answer. Decisions 0050 and 0051 preserve four distinct existing routes: public executable v1 sv_portable_verilator, private review-only v1 sv_uvm_emit.accellera_2020_3_1, private qualified v1 vhdl_portable_ghdl, and private qualified v1 vhdl_osvvm_qualified layered over the portable core. Their current emitters independently own schema/profile/capability checks and must retain their exact v1 bytes and maturity. This continuity-only activation selects one typed profile-specific v2 adapter contract and preflight seam across those routes, with target mechanisms isolated and every family still unavailable until its vertical owner lands; no source, IR, emitter, artifact, runtime, result, parity, public capability, support, or product behavior changes in the activation.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.5: activate common VIAL backend adapters`
+  Verification: `Clean registry commit 6927bfcfb owns the twelve selected family namespaces and clean activation c7685a046 owns this isolated adapter slice. The required Knowledge Map query returned no common v2 backend-adapter answer. Git history traces the independent native-UVM v1 schema guard to 5a1805f52, portable-VHDL capability list to ab8b1af24, and portable-SV registry entry to 6927bfcfb. Decisions 0050/0051 require distinct public portable-SV, review-only native-UVM, private portable-VHDL, and private OSVVM states. FSM::Support::VIALSemanticFamilyBackendAdapter now publishes one closed content-addressed four-route authority for exact emitter, target mechanism, typed ExecutionIR boundary, accepted v1 schema/profile, output/source-map schemas, atomic artifact model, and independent emission/compile/runtime/result/parity/public maturity. The family registry maps every selected family to all four profiles while every mapping remains unavailable. All four emitters preflight the exact typed/version-consistent IR and complete family/revision/capability/effect set before target rendering; OSVVM rejects before portable delegation or provider verification. T1804 covers deterministic/defensive registry shape, exact maturity isolation, target-mechanism absence from ExecutionIR, untyped/inconsistent/unknown-profile rejection, complete hostile v2 requirement reporting, zero provider/delegation calls, and zero artifact output. Existing successful v1 emitter result shapes remain unchanged. Focused adapter/backend preservation passes at Files=13/Tests=212; final compiler/reader, mdBook, Knowledge Map, claims, containment, task acceptance, doctrine, and residue evidence is recorded in the checklist below. No family implementation, accepted v2 emission, new compile/runtime/result/parity, public v2 tooling, provider access, support promotion, or HIAL behavior ships.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.5: activate common VIAL backend adapters; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.5: implement common VIAL backend adapters`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.6`
   Status: `proposed`
@@ -4049,3 +4049,34 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   task, paths, locality, README, containment, staged acceptance, all doctrines,
   and binary/log/build residue checks are green. No family implementation,
   v2 backend/runtime/result/parity, public-v2, support, or v1-success change.
+
+## Acceptance Checklist (.19.1.5, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean registry commit `6927bfcfb`
+  intentionally registered only the portable-SV backend, while `git log -S`
+  traces native-UVM's local v1 schema admission to `5a1805f52` and portable-
+  VHDL's duplicate capability list to `ab8b1af24`. The required Knowledge Map
+  query returned no common adapter answer. The four emitters therefore had no
+  one typed/version-consistent family preflight or shared place to report exact
+  target mechanism and maturity without risking cross-profile inference.
+- [x] **ADDRESSED (verified)** — one closed content-addressed adapter registry
+  owns all four exact private emitters, target mechanisms, typed ExecutionIR
+  boundary, accepted v1 schema/profile, output/source-map schemas, atomic
+  artifact model, and independent emission/compile/runtime/result/parity/public
+  maturity. Every family maps to all four profiles but remains unavailable on
+  each. T1804 proves deterministic defensive data, target-mechanism isolation,
+  exact maturity, typed/version consistency, complete unknown-family/effect
+  rejection, backend-local diagnostics, zero partial artifacts, and OSVVM
+  rejection before portable delegation or provider verification.
+- [x] **NO REGRESSION (backend behavior and documentation)** — the final
+  RAM-guarded compiler/backend/reader band reports `All tests successful.` at
+  `Files=18, Tests=224`, with only the two existing explicit Darwin runtime
+  skips. Every mdBook chapter tests; the inspected 98-file/22,088-KiB local
+  build is removed. The v1 tooling SHA-256 remains exact. Knowledge Map reports
+  1,160 facts/6,300 questions/6,471 occurrences/138 shards; claim dispositions
+  close 1,896/1,896 with zero gaps. Exact book/VIAL reference authorities,
+  containment, syntax, task/path/locality/README, staged acceptance,
+  `[doctrine] all doctrine checks passed`, and task-local residue checks are
+  green without a ceiling rise. No successful v1 output shape or byte, family
+  implementation, v2 emission/runtime/result/parity, public v2 tooling,
+  provider access, support state, or HIAL behavior changes.

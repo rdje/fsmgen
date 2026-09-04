@@ -23,6 +23,8 @@ answers:
   - "what is the VIAL version 2 source and migration contract?"
   - "is the VIAL v2 common envelope implemented?"
   - "where is the VIAL semantic family registry and profile negotiation?"
+  - "where is the common VIAL backend adapter preflight?"
+  - "which VIAL backend profiles have compile runtime result parity maturity?"
   - "what is the next HIAL VIAL task?"
   - "is a mixed-language HIAL VIAL simulator available?"
   - "why is mixed-language qualification not active?"
@@ -52,7 +54,7 @@ evidence: >-
   docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md;
   t/1555-vial-public-source-tooling.t;
   t/1801-vial-v2-source-projections.t; t/1802-vial-v2-semantic-family-envelope.t;
-  t/1803-vial-v2-family-registry.t;
+  t/1803-vial-v2-family-registry.t; t/1804-vial-v2-backend-adapter-seams.t;
   t/1556-vial-public-planning-artifacts.t;
   t/1557-vial-portable-sv-backend-emission.t;
   t/1558-vial-verilator-run-integration.t;
@@ -75,7 +77,7 @@ reverify: >-
   docs/book/src/16d-hial-vial-verification-architecture.md &&
   prove -Iperl t/1555-vial-public-source-tooling.t
   t/1801-vial-v2-source-projections.t t/1802-vial-v2-semantic-family-envelope.t
-  t/1803-vial-v2-family-registry.t
+  t/1803-vial-v2-family-registry.t t/1804-vial-v2-backend-adapter-seams.t
   t/1556-vial-public-planning-artifacts.t
   t/1557-vial-portable-sv-backend-emission.t
   t/1558-vial-verilator-run-integration.t
@@ -114,12 +116,15 @@ parity. VHDL/GHDL and OSVVM are qualified private profiles; native UVM is
 review/experiment evidence. Separate successes cannot satisfy the proposed
 mixed-language route.
 
-Foundation `.19.1.1-.19.1.4` implements private v2 parsing/projections/imports,
-the common family envelope, empty-family plans, and one content-addressed
-registry with exact v1 preservation. Its twelve selected namespaces have no
-functional or backend maturity. Parser through runner reject complete missing
-sets before semantic, review, artifact, workspace, or process output. Public
-v2 tooling, family semantics/backends/results/parity/support remain later.
+Foundation `.19.1.1-.19.1.5` implements private v2 parsing/projections/imports,
+the common family envelope, empty-family plans, and content-addressed family
+and backend-adapter registries with exact v1 preservation. Its twelve selected
+namespaces have no functional or backend maturity. All four emitters admit only
+exact typed ExecutionIR and reject complete unsupported sets before rendering;
+OSVVM also rejects before portable delegation or provider access. The adapter
+registry keeps the public portable-SV, review-only native-UVM, private portable-
+VHDL, and private OSVVM maturity states distinct. Public v2 tooling and family
+implementations/results/parity/support remain later.
 
 The architecture is selected. `HIAL-VIAL-VERIFICATION-FIXTURE-
 ARCHITECTURE` is the owning tree and the only authority for the current

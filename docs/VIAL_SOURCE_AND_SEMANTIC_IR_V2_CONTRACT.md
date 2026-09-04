@@ -2,12 +2,12 @@
 
 Date: 2026-09-04
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1`
-Status: source/projections, common private phase envelope, and family registry implemented through `.19.1.4`
+Status: source/projections, common private phase envelope, family registry, and backend adapter preflight implemented through `.19.1.5`
 
 This bounded landing page is the mandatory entrypoint for the additive VIAL
 version-2 source and compatibility reference. Read its semantic parts:
 
-- [Source, schema, compatibility, import, and migration contract](vial-spec/source-semantic-ir-v2.md) and [common semantic-family envelope, registry, and negotiation contract](vial-spec/semantic-family-envelope-and-registry.md)
+- [Source, schema, compatibility, import, and migration contract](vial-spec/source-semantic-ir-v2.md) and [common semantic-family envelope, registry, negotiation, and backend-adapter contract](vial-spec/semantic-family-envelope-and-registry.md)
 
 VIAL version 1 remains independently authoritative in
 [its frozen behavior contract](VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md).

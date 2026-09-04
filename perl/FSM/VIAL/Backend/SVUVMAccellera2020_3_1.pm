@@ -11,6 +11,9 @@ use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
+use FSM::Support::VIALSemanticFamilyBackendAdapter qw(
+    preflight_vial_semantic_family_backend_adapter
+);
 use FSM::VIAL::Backend::SVUVMStaticValidator;
 use FSM::VIAL::Backend::SVUVMReviewClosure;
 
@@ -110,6 +113,17 @@ sub _emit($raw) {
             && $raw->{backend_profile} eq $BACKEND_PROFILE;
 
     my $execution = $raw->{execution_ir}->as_hashref;
+    my $adapter_preflight =
+        preflight_vial_semantic_family_backend_adapter({
+            profile_id => $BACKEND_PROFILE,
+            execution_ir => $raw->{execution_ir},
+        });
+    return _failure(
+        'VIAL_UVM_BACKEND_UNSUPPORTED',
+        'native UVM backend adapter preflight rejected the typed ExecutionIR',
+        '/negotiation',
+        $adapter_preflight,
+    ) unless $adapter_preflight->{accepted};
     my $bridge = $raw->{bridge_manifest}->as_hashref;
     my $negotiation = _negotiate($execution, $bridge, $raw->{backend_inputs});
     if (@{$negotiation->{unsatisfied}}) {

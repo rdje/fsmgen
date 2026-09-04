@@ -2,7 +2,7 @@
 
 Date: 2026-09-04
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1`
-Status: source/projections, common private phase envelope, and fail-closed family registry implemented through `.19.1.4`
+Status: source/projections, common private phase envelope, fail-closed family registry, and backend-adapter preflight implemented through `.19.1.5`
 
 ## Outcome and authority
 
@@ -19,8 +19,8 @@ Decision `0034` is its design authority. The v1 contract remains the complete
 authority for language version 1. Later family leaves own the closed grammar
 and semantics below each registered family block; `.19.1.3` owns the common
 typed envelope through execution and results; `.19.1.4` owns the selected
-taxonomy registry and fail-closed negotiation; `.19.1.7` owns public
-migration/tooling exposure.
+taxonomy registry and fail-closed negotiation; `.19.1.5` owns common backend
+adapter admission; `.19.1.7` owns public migration/tooling exposure.
 
 ## Immutable version-1 boundary
 
@@ -171,7 +171,8 @@ emission, compile, run, result, parity, methodology, scale, or support.
 ### Semantic-family envelope and registry
 
 The immutable common family records, phase traceability rules, bounds,
-selected family registry, and exact fail-closed negotiation contract live in
+selected family registry, exact fail-closed negotiation, and common backend
+adapter admission contract live in
 [their dedicated semantic part](semantic-family-envelope-and-registry.md).
 
 ### Private empty-base execution
@@ -198,8 +199,9 @@ complete `fsmgen.verification_result_manifest.v2` producer.
 
 No nonempty family can reach these carriers until its vertical activity marks
 the necessary registry stages implemented and supplies its closed grammar and
-semantics. No v2 backend adapter maps the common family envelope until
-`.19.1.5`; no public v2 tool or migration ships until `.19.1.7`.
+semantics. The common adapter preflight maps each family to all four current
+routes but keeps every mapping unavailable; no public v2 tool or migration
+ships until `.19.1.7`.
 
 ## Import and adapter compatibility
 
@@ -327,12 +329,12 @@ records; deterministic diagnostics; no partial output; repository-relative
 identities; public capability truth; and exact cleanup. Family syntax cannot
 ship until its own vertical source-to-qualified-result owner passes.
 
-Implemented leaves `.19.1.2-.19.1.4` change private v2 source, semantic,
-common-family contract, empty-base execution/plan, registry, and rejection
-behavior. V1 source, meaning, public capability bytes, successful plan/backend
-output, support, and HIAL behavior remain unchanged. No expressive family,
-public v2 tool, adapter, complete v2 result, backend emission/runtime, parity,
-provider, reverse migration, mixed-version catalog, raw native block,
+Implemented leaves `.19.1.2-.19.1.5` change private v2 source, semantic,
+common-family contract, empty-base execution/plan, registry, backend-adapter
+preflight, and rejection behavior. V1 source, meaning, public capability bytes,
+successful plan/backend output, support, and HIAL behavior remain unchanged.
+No expressive family, public v2 tool, complete v2 result, family backend
+emission/runtime, parity, provider, reverse migration, mixed-version catalog, raw native block,
 arbitrary SV/UVM/VHDL feature, mixed-language route, full-language claim,
 scale claim, or support promotion ships. VIAL remains simpler intent above
 qualified target mechanisms, not a renamed target API.

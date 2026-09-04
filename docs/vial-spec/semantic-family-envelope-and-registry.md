@@ -1,8 +1,8 @@
 # VIAL Semantic-Family Envelope And Registry
 
 Date: 2026-09-04
-Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3-.19.1.4`
-Status: common private phase envelope and fail-closed selected-family registry implemented
+Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3-.19.1.5`
+Status: common private phase envelope, fail-closed registry, and backend adapter preflight implemented
 
 This semantic part defines the common facts every expressive family must carry
 and the registry negotiation every compiler stage must pass. The surrounding
@@ -105,16 +105,18 @@ entry points to its `.19.2-.19.13` activity, uses the common v2 bound profile,
 has an explicitly empty dependency list pending cross-family selection, records
 its reserved effect kinds, and reports `selection: selected`. Every functional
 maturity dimension—source, semantic, binding, execution, plan, emission,
-compile, runtime, result, parity, and public—is `unavailable`. The only current
-backend mapping is `sv_portable_verilator`, with every family maturity there
-also unavailable. Later vertical owners must update this same record; they may
-not maintain a shadow registry.
+compile, runtime, result, parity, and public—is `unavailable`. The current
+backend mappings are `sv_portable_verilator`,
+`sv_uvm_emit.accellera_2020_3_1`, `vhdl_portable_ghdl`, and
+`vhdl_osvvm_qualified`; every family maturity is unavailable independently on
+all four. Later vertical owners must update this same record; they may not
+maintain a shadow registry or borrow another route's maturity.
 
-The registry also owns three exact current profile records: the v2 parser, the
-empty-family v2 execution planner, and the shipped v1 portable-Verilator
-backend. A profile lists accepted source or ExecutionIR versions plus its own
-supported family revisions, capabilities, and effects. Negotiation reads only
-the selected profile. Support recorded for any other profile cannot satisfy a
+The registry also owns six exact current profile records: the v2 parser, the
+empty-family v2 execution planner, and the four v1 backend routes above. A
+profile lists accepted source or ExecutionIR versions plus its own supported
+family revisions, capabilities, and effects. Negotiation reads only the
+selected profile. Support recorded for any other profile cannot satisfy a
 requirement.
 
 `fsmgen.vial_semantic_family_negotiation.v1` contains its registry identity,
@@ -131,3 +133,42 @@ The existing public v1 tooling capability list and portable-backend capability
 set are registry projections. Observable bytes remain unchanged, removing a
 duplicate authority without exposing v2. The executable authority is
 `t/1803-vial-v2-family-registry.t`.
+
+## Common backend adapter preflight
+
+`FSM::Support::VIALSemanticFamilyBackendAdapter` is the common adapter
+authority. Its closed
+`fsmgen.vial_semantic_family_backend_adapter_registry.v1` record has a
+content-derived `vial-backend-adapters/<sha256>` identity. Each adapter names
+the exact private emitter, target language and mechanism, accepted ExecutionIR
+schema/profile, output and source-map schemas, artifact model, and independent
+emission/compile/runtime/result/parity/public maturity:
+
+| Profile | Emission | Compile/runtime/result/parity | Public |
+| --- | --- | --- | --- |
+| `sv_portable_verilator` | qualified | qualified | qualified |
+| `sv_uvm_emit.accellera_2020_3_1` | implemented review output | unavailable | unavailable |
+| `vhdl_portable_ghdl` | qualified | qualified for the bounded selected fixture | unavailable |
+| `vhdl_osvvm_qualified` | qualified | qualified for the bounded fixture/provider probe | unavailable |
+
+These are base v1 route states, not family support. The family registry's four
+per-family mappings remain independently unavailable. In particular, native
+UVM cannot inherit portable-SystemVerilog runtime evidence, and private VHDL
+qualification cannot become public API support.
+
+`fsmgen.vial_semantic_family_backend_preflight.v1` accepts only the exact
+immutable `FSM::VIAL::ExecutionIR` class. It checks that schema, profile,
+version, and the v2 family carrier agree, then negotiates the complete family,
+revision, capability, and effect set for the selected adapter. All four
+emitters invoke it before target rendering; the OSVVM route invokes it before
+portable-VHDL delegation or provider verification. A rejection has no
+operation identity, source map, artifact graph, provider access, workspace, or
+process. Successful v1 output records and bytes are unchanged because the
+preflight is an admission boundary, not an output field.
+
+Target mechanisms exist only in adapter records and generated artifacts; they
+do not enter SemanticIR or ExecutionIR family meaning. All current emitters
+retain deterministic in-memory artifact graphs for atomic publication and
+their existing source-map schemas. The executable authority is
+`t/1804-vial-v2-backend-adapter-seams.t`, together with the existing per-route
+emission and qualification tests.

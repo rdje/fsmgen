@@ -119,14 +119,20 @@ subtest 'registry is closed, bounded, deterministic, and support-conservative' =
             "$family->{family_id} reserves a target-neutral effect vocabulary");
         is($family->{bound_profile_id}, 'vial_common_envelope_v2',
             "$family->{family_id} uses the common finite bound profile");
-        is_deeply($family->{backend_profiles}, [{
-            profile_id => 'sv_portable_verilator',
-            maturity => {
+        is_deeply([map { $_->{profile_id} } @{$family->{backend_profiles}}],
+            [qw(
+                sv_portable_verilator
+                sv_uvm_emit.accellera_2020_3_1
+                vhdl_osvvm_qualified
+                vhdl_portable_ghdl
+            )], "$family->{family_id} maps every selected backend profile");
+        for my $mapping (@{$family->{backend_profiles}}) {
+            is_deeply($mapping->{maturity}, {
                 emission => 'unavailable', compile => 'unavailable',
                 runtime => 'unavailable', result => 'unavailable',
                 parity => 'unavailable',
-            },
-        }], "$family->{family_id} cannot borrow another backend's maturity");
+            }, "$family->{family_id}/$mapping->{profile_id} cannot borrow maturity");
+        }
     }
 
     my $second = build_vial_semantic_family_registry();

@@ -11,6 +11,12 @@ use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
+use FSM::Support::VIALSemanticFamilyBackendAdapter qw(
+    preflight_vial_semantic_family_backend_adapter
+);
+use FSM::Support::VIALSemanticFamilyRegistry qw(
+    vial_profile_supported_capabilities
+);
 use FSM::VIAL::Backend::VHDLPortableReviewClosure;
 use FSM::VIAL::Backend::VHDLPortableStaticValidator;
 use FSM::VIAL::Backend::VHDLResultSchema;
@@ -46,25 +52,8 @@ my @SOURCE_MAP_ENTRY_KEYS = qw(
     generated_start_column generated_end_column generated_symbol role
     plan_paths semantic_paths bridge_fact_paths source_locations
 );
-my %SUPPORTED_CAPABILITY = map { $_ => 1 } qw(
-    hial_vial.bridge_manifest.v1
-    hial_vial.bridge_probe.equivalent_adapter_required
-    hial_vial.bridge_profile.core_single_unit_v1
-    hial_vial.bridge_protocol.ahb_subordinate_v1
-    hial_vial.bridge_source.ial0_direct
-    hial_vial.bridge_source.ial1_via_generated_ial0
-    hial_vial.bridge_source.ial2_via_generated_ial1
-    vial.binding.directional_representation.v1
-    vial.execution_ir.v1
-    vial.execution_profile.core_directed_single_clock_execution_v1
-    vial.logical_time.drive_sample_react_check_v1
-    vial.plan.v1
-    vial.profile.core_directed_single_clock_v1
-    vial.random.sha256_counter_rejection_v1
-    vial.replay.v1
-    vial.semantic_ir.v1
-    vial.source.v1
-);
+my %SUPPORTED_CAPABILITY = map { $_ => 1 }
+    @{vial_profile_supported_capabilities($BACKEND_PROFILE)};
 my %SUPPORTED_RELATION = map { $_ => 1 } qw(
     bit_domain_identity_v1 known_value_injection_v1 enum_encoding_injection_v1
 );
@@ -138,6 +127,17 @@ sub _emit($raw) {
             && $raw->{backend_profile} eq $BACKEND_PROFILE;
 
     my $execution = $raw->{execution_ir}->as_hashref;
+    my $adapter_preflight =
+        preflight_vial_semantic_family_backend_adapter({
+            profile_id => $BACKEND_PROFILE,
+            execution_ir => $raw->{execution_ir},
+        });
+    return _failure(
+        'VIAL_VHDL_BACKEND_UNSUPPORTED',
+        'portable VHDL backend adapter preflight rejected the typed ExecutionIR',
+        '/negotiation',
+        $adapter_preflight,
+    ) unless $adapter_preflight->{accepted};
     my $bridge = $raw->{bridge_manifest}->as_hashref;
     my $negotiation = _negotiate($execution, $bridge, $raw->{backend_inputs});
     if (@{$negotiation->{unsatisfied}}) {

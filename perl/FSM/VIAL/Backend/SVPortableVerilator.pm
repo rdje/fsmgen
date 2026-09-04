@@ -12,11 +12,10 @@ use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
-use FSM::Support::VIALSemanticFamilyRegistry qw(
-    negotiate_vial_semantic_family_requirements
-    vial_family_requirements_from_execution_ir
-    vial_profile_supported_capabilities
+use FSM::Support::VIALSemanticFamilyBackendAdapter qw(
+    preflight_vial_semantic_family_backend_adapter
 );
+use FSM::Support::VIALSemanticFamilyRegistry qw(vial_profile_supported_capabilities);
 
 my $BACKEND_PROFILE = 'sv_portable_verilator';
 my $BACKEND_SCHEMA = 'fsmgen.vial_backend.sv_portable_verilator.v1';
@@ -158,6 +157,17 @@ sub _emit($raw, $qualification_profile = undef) {
             && $raw->{backend_profile} eq $BACKEND_PROFILE;
 
     my $execution = $raw->{execution_ir}->as_hashref;
+    my $adapter_preflight =
+        preflight_vial_semantic_family_backend_adapter({
+            profile_id => $BACKEND_PROFILE,
+            execution_ir => $raw->{execution_ir},
+        });
+    return _failure(
+        'VIAL_BACKEND_UNSUPPORTED',
+        'portable SystemVerilog backend adapter preflight rejected the typed ExecutionIR',
+        '/negotiation',
+        $adapter_preflight,
+    ) unless $adapter_preflight->{accepted};
     my $bridge = $raw->{bridge_manifest}->as_hashref;
     my $negotiation = _negotiate(
         $execution, $bridge, $raw->{backend_inputs},
@@ -403,32 +413,6 @@ sub _negotiate(
         $execution, $bridge, $backend_inputs,
     ) if ($qualification_profile // '') eq 'balanced_portable_v2';
     my (@required, @satisfied, @unsatisfied, @native_only, @limitations);
-    if (($execution->{schema_version} // 0) == 2
-        || exists($execution->{semantic_families})) {
-        my $family_requirements;
-        my $requirements_ok = eval {
-            $family_requirements =
-                vial_family_requirements_from_execution_ir($execution);
-            1;
-        };
-        if (!$requirements_ok) {
-            push @unsatisfied, 'family_registry:invalid_execution_family_carrier';
-        }
-        else {
-            my $family_negotiation =
-                negotiate_vial_semantic_family_requirements({
-                    stage => 'emitter',
-                    profile_id => $BACKEND_PROFILE,
-                    source_language_version => undef,
-                    execution_schema => $execution->{schema},
-                    execution_profile => $execution->{profile},
-                    requirements => $family_requirements,
-                });
-            push @required, @{$family_negotiation->{required}};
-            push @satisfied, @{$family_negotiation->{satisfied}};
-            push @unsatisfied, @{$family_negotiation->{unsupported}};
-        }
-    }
     push @unsatisfied, 'execution schema must be fsmgen.vial_execution_ir.v1'
         unless ($execution->{schema} // '') eq 'fsmgen.vial_execution_ir.v1';
     push @unsatisfied, 'execution profile must be core_directed_single_clock_execution_v1'

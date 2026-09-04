@@ -279,18 +279,25 @@ records. Capability negotiation fails before output when a backend has no
 selected equivalent. Decision `0034` records the ceiling rule; activity `.19`
 preserves closed v1 and the bounded v2 contract landing selects exact roots,
 schemas, imports, migration, limits, diagnostics, and vertical family lanes.
-Leaves `.19.1.2-.19.1.4` implement the private base v2 parser, normal/terse and
+Leaves `.19.1.2-.19.1.5` implement the private base v2 parser, normal/terse and
 cross-version compatibility projections, same-version catalog imports, typed
 empty family container, v2 diagnostics, the closed common family envelope,
 distinct empty-family v2 ExecutionIR/plan carriers through the unchanged HIAL
 bridge, and one content-addressed family/profile registry. The registry reserves
 the twelve selected family revision/effect namespaces but marks every
-functional and backend maturity unavailable. Parser, planner, emitter, and
+functional maturity unavailable. Each family maps independently to all four
+current backend routes with unavailable backend maturity. Parser, planner,
+emitter, and
 runner negotiate the complete requirement set before their respective output
 boundaries; the existing v1 public capability bytes and successful backend
-behavior remain exact and registry-derived. The v1 public tool still rejects
-v2; public v2 tooling, family semantics, backend adapters, runtime results,
-parity, and support remain unshipped.
+behavior remain exact and registry-derived. A second content-addressed
+authority admits only exact typed ExecutionIR, isolates target mechanisms, and
+reports independent emission/compile/runtime/result/parity/public maturity for
+portable SystemVerilog, native UVM, portable VHDL, and OSVVM. All four emitters
+reject v2 family requirements before rendering; OSVVM rejects before portable
+delegation or provider access. The v1 public tool still rejects v2; family
+implementations, public v2 tooling, runtime results, parity, and support remain
+unshipped.
 
 ## Typed Native Extensions
 
@@ -343,9 +350,9 @@ The current UVM 1.2 skeleton and VHDL observation package stay unchanged. A
 native UVM contract selects IEEE 1800.2-2020 / Accellera 2020-3.1 instead of
 inheriting `1.2` accidentally. Decision `0051` now selects provider-free
 VHDL-2008 plus an OSVVM-qualified advanced tier without promoting the inert
-package. GHDL remains unavailable, so no full-language, PSL, methodology, or
-mixed-language claim can be derived from this selection or artifact-shape
-tests.
+package. Other VHDL simulator profiles remain unavailable, so no full-language,
+PSL, methodology, or mixed-language claim can be derived from the selected
+GHDL qualification or artifact-shape tests.
 
 Decision `0043` now freezes the exact first profile. It statically partially
 evaluates the bound plan into a small runtime package and fixture module rather
