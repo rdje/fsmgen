@@ -102,14 +102,14 @@ tools, safety boundary, and examples are documented in
 
 ## Documentation
 
-The mdBook is the user-facing product manual:
+The mdBook is the product manual:
 
 - [Introduction](docs/book/src/00-introduction.md)
 - [Your First FSM](docs/book/src/01-first-fsm.md)
 - [Language Basics](docs/book/src/02-language-basics.md)
 - [Cookbook](docs/book/src/12-cookbook.md)
-- [Implementation Blueprint](docs/book/src/15-implementation-blueprint.md)
-- [Full table of contents](docs/book/src/SUMMARY.md)
+- [HIAL/VIAL Verification](docs/book/src/16d-hial-vial-verification-architecture.md)
+- [Contents](docs/book/src/SUMMARY.md)
 
 Build or serve it from the repository:
 

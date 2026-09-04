@@ -1,62 +1,48 @@
-# HIAL/VIAL Verification Architecture
+# HIAL/VIAL Verification: Start Here
 
-FSMGen has selected the architecture for its verification-intent language and future generated executable fixtures. This chapter explains the shipped semantic frontend and public tooling, the shipped private HIAL bridge producer, the shipped portable-SystemVerilog/Verilator execution path, and the compatibility boundary. Public `run`, exact external compilation, simulation, closed runtime traces, and normalized results now ship for the bounded `sv_portable_verilator` profile. The selected AHB fixture now has bounded
-runtime parity with its handwritten oracle; general cross-backend parity does
-**not** ship yet. Native UVM now has an exact open-source-first architecture
-and deterministic emission of the selected topology, lifecycle,
-notification/interception, stimulus, TLM, factory/configuration, RAL,
-constrained-decision, coverage, property, model, scoreboard, fault,
-diagnostic, and result-collection structures; its parse, compile, elaboration,
-runtime, and produced-result profiles do not ship yet. A separately identified
-Verilator/UVM experiment now supplies partial feasibility evidence without
-changing that product-support boundary.
+FSMGen separates synthesizable hardware intent (HIAL) from non-synthesizable
+verification intent (VIAL). This chapter is the stable architecture overview:
+start here for the boundary between the public workflow, privately qualified
+profiles, review or experiment evidence, unavailable profiles, and future
+work. The capability manifest remains the machine authority when status can
+change.
 
-Completed native-UVM emission slice `.13.1.5` closes the selected mapping
-matrix, examples, deterministic review workflow, and deferred-runtime defect
-boundary without waiting for a simulator. Visual review and every parser-
-through-runtime qualification state remain independent and honestly pending.
+## Current availability at a glance
 
-Completed experimental slice `.13.2` now ships a reusable exact open-source
-probe and checked evidence. Its isolated UVM control compiles, elaborates, and
-runs; the generated fixture remains tool-limited before runtime. This is
-explicitly experimental evidence, not a supported native-UVM execution
-profile.
+| Availability | Current meaning | Continue with |
+| --- | --- | --- |
+| **Public and shipped** | `.vial` capabilities, check, normal/terse format, plan, and run; the public run backend is `sv_portable_verilator`. | [Public tooling](#shipped-public-source-planning-and-execution-tooling) |
+| **Qualified, private** | Provider-free VHDL/GHDL and the additive OSVVM profile have bounded fixture runtime/result evidence, but are not accepted by public `vial run`. | [VHDL architecture](#selected-vhdl-2008-architecture) |
+| **Review or experiment evidence** | Native-UVM deterministic emission is review-only. Its separately named open-source probe is unqualified experimental evidence. | [Native UVM](#selected-open-source-native-uvm-architecture) |
+| **Unavailable** | A supported native-UVM product runtime and mixed-language HIAL/VIAL execution are not available. | [Backend boundaries](#backend-profiles-and-honest-claims) |
+| **Regression evidence, not support** | The bounded architecture-scale gate protects selected workloads; it does not establish product capacity or widen backend support. | [Scale closeout](16df-vial-architecture-scale-cap-closeout.md) |
 
-Completed slice `.14` now selects the VHDL-2008 verification contract. The
-portable core is provider-free, OSVVM 2026.05 is the exact advanced-methodology
-provider, and GHDL 6.0.0 is the first exact qualification tool. UVVM was
-audited but is not selected. Completed `.15.5` now qualifies the exact official
-macOS ARM64 GHDL 6.0.0 LLVM-JIT package through analysis, elaboration, bounded
-execution, normalized results, and applicable portable-SV parity. OSVVM remains
-separately isolated from that provider-free qualification; completed `.15.6`
-now installs its exact recursive 2026.05 graph and emits the advanced adapter.
-Completed `.15.7` qualifies their bounded combination through provider
-compilation, adapter/fixture analysis, execution, unchanged result/parity,
-supplementary reports, deterministic rerun, and cleanup.
+## Recommended reader path
 
-Implementation parent `.15` is active and decomposed. Completed `.15.1` now
-ships the provider-free emitter substrate and first deterministic review
-gallery. Completed `.15.2` adds typed drivers and samplers, the single
-inactive-edge scheduler, bounded scenarios and fibers, deterministic models,
-and a declared-probe adapter. Completed `.15.3` adds bounded scoreboards,
-coverage counters, substitution faults, procedural checks, diagnostics,
-closed trace framing, and normalized-result projection. Completed `.15.4`
-closes the portable review matrix. Completed `.15.5` qualifies the available
-exact official macOS ARM64 GHDL 6.0.0 LLVM-JIT package. Completed `.15.6`
-installs exact recursive OSVVM 2026.05 and emits its isolated advanced adapter;
-completed `.15.7` qualifies the combined exact tuple. NEXSIM-dependent
-runtime qualification is director-deferred until capability-ready releases
-provide exact evidence.
+1. Read [the peer intent systems](#two-peer-intent-systems) and the public
+   source-to-result topology.
+2. Use [public tooling](#shipped-public-source-planning-and-execution-tooling)
+   for the commands and artifact boundary that ship now.
+3. Use [backend profiles](#backend-profiles-and-honest-claims) to distinguish
+   public execution, private qualification, review-only emission, experiments,
+   and unavailable paths.
+4. Open the specialist chapters for
+   [balanced composition](16da-vial-balanced-portable-composition.md),
+   [structural emission](16db-vial-structural-backend-emission-matrix.md),
+   [Verilator runtime](16dc-vial-portable-verilator-runtime-measurement.md),
+   [VHDL runtime](16dd-vial-portable-vhdl-runtime-measurement.md),
+   [OSVVM runtime](16de-vial-osvvm-runtime-execution-plan.md), or
+   [scale-gate evidence](16df-vial-architecture-scale-cap-closeout.md) only
+   when that depth is needed.
+5. Use the [future-only backlog](14e-hial-vial-verification.md) for work that
+   does not ship.
 
-The current shipped verification-output targets remain deliberately narrow:
-
-- `uvm-passive-monitor` emits inert UVM 1.2 snapshot and passive-monitor class
-  declarations;
-- `vhdl-observation-package` emits an inert VHDL metadata package; and
-- neither target drives a DUT, samples a transaction stream, runs a scenario,
-  compares expected outcomes, scoreboards, covers behavior, or injects faults.
-
-The selected architecture closes that gap in exact later slices while keeping the current IAL routes stable.
+Three boundaries apply throughout this chapter: private compiler IR is never a
+public API; a qualification result applies only to its named profile and
+evidence; and separate backend successes never imply mixed-language or general
+cross-backend support. Legacy `uvm-passive-monitor` and
+`vhdl-observation-package` outputs remain inert compatibility surfaces, not
+VIAL execution backends.
 
 ## Two peer intent systems
 

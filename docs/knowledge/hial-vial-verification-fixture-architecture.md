@@ -53,6 +53,7 @@ evidence: >-
   t/1557-vial-portable-sv-backend-emission.t;
   t/1558-vial-verilator-run-integration.t;
   t/1559-vial-ahb-runtime-parity.t;
+  t/1796-hial-vial-book-entry-path.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/TASK_TREE.md; README.md; ROADMAP_V2.md;
   docs/book/src/14e-hial-vial-verification.md;
@@ -67,6 +68,7 @@ reverify: >-
   t/1557-vial-portable-sv-backend-emission.t
   t/1558-vial-verilator-run-integration.t
   t/1559-vial-ahb-runtime-parity.t
+  t/1796-hial-vial-book-entry-path.t
 ---
 
 Hardware IAL (HIAL) names FSMGen's synthesizable IAL0/IAL1/IAL2 stack;
@@ -89,10 +91,10 @@ SystemVerilog lowering, inactive-edge scheduling, declared-probe adapters, a
 closed result trace, and exact Verilator 5.046 `--binary --timing --assert`
 gates. It is explicitly a known-value/two-state runtime profile, not complete
 four-state, SystemVerilog, or UVM authority. `sv_uvm_qualified`,
-`vhdl_portable_ghdl`, `vhdl_methodology_qualified`, and
-`mixed_language_qualified` remain separate claims with exact tools, versions,
-providers, and exercised capabilities. Existing UVM 1.2 and VHDL observation
-outputs remain inert compatibility surfaces.
+`vhdl_portable_ghdl`, methodology, and mixed-language profiles remain separate
+claims whose public/private/review/unavailable state must be reported exactly.
+Existing UVM 1.2 and VHDL observation outputs remain inert compatibility
+surfaces.
 
 The shipped stack now covers the typed `.vial` frontend, review-routed bridge,
 bound deterministic ExecutionIR, public source/planning/run tools, atomic
@@ -106,12 +108,12 @@ experimental evidence, not a qualified product runtime. Separate
 Verilator/GHDL qualifications cannot satisfy `mixed_language_qualified`;
 `.16` remains proposed until one exact compatible mixed-language route exists.
 
-Documentation closeout `.18` is task-oriented: compact architecture overview,
-public lifecycle reference, runnable AHB tutorial, legacy migration guide, and
-capability/support reference. Root contracts keep normative schema detail and
-the specialist book chapters keep exact qualification/scale evidence; neither
-is the first-use path. The public capability manifest remains current status
-authority. `.18.1` owns the closed disposition and exact downstream owners.
+Documentation closeout `.18` is task-oriented. README and SUMMARY now route to
+the stable availability-classified architecture overview; its specialist
+children retain deep qualification/scale evidence, while the HIAL/VIAL backlog
+contains future work only. The public capability manifest remains mutable
+status authority, and t1796 locks this entry path. Later `.18` children own the
+public lifecycle, AHB tutorial, legacy migration, and capability reference.
 
 The architecture is selected, not proposed. `HIAL-VIAL-VERIFICATION-FIXTURE-
 ARCHITECTURE` is the owning tree and the only authority for the current
