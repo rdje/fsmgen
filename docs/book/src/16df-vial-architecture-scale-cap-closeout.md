@@ -2190,3 +2190,29 @@ semantics. A subsequent clean-revision guarded production validation completed
 every stored profile through this topology and emitted one canonical result.
 Guarded inventory and independent before/after census preserved the exact seal,
 so real-publication resource and byte-invariance closeout is now complete.
+
+## Independent final regression closeout
+
+From clean revision `840c895f3`, `./bin/ci-regression vial-gate --no-book`
+completed the exact pinned gate with all eleven profiles accepted and PASS.
+The latest result's exact bytes, identity, topology, exclusions, and SHA-256
+are retained in the verified claim below. Producer-free validation, every
+independent evidence verifier, and a production-module-free JSON::PP/Digest::SHA
+reconstruction all agree on its qualification, transport, budgets, unique
+records, both public machine entrypoints, and every maximum.
+
+The complete guarded policy-through-public hostile band passed. It retains
+pinned-host pass, unmatched-host informational,
+unavailable-provider non-pass, CI selection, evidence mutations, atomicity,
+and public-guide falsifiers. Every evidence hash remained unchanged; the latest
+result changed inode atomically; all report spools were removed; and the final
+process, staging, and receipt censuses were empty. This observation does not
+recalibrate, promote support, or establish architecture or whole-product
+capacity.
+
+<!-- CLAIM-VERIFICATION:BEGIN vial-regression-promotion-production-gate-observation-840c895f-v1 -->
+- Claim: Clean revision `840c895f3af08e80b05853b531011ddb2c5c4e1e` completed the public exact-pinned VIAL regression gate and published canonical 60,100-byte result `f4b022fa...f5f97` with all eleven profiles accepted/pass, exact 11/33/44 validation/raw/controller topology, zero exclusions, eleven removed spools, unchanged evidence, atomic latest replacement, and zero process, staging, or receipt residue. This is one revision- and environment-bound observation, not qualification, recalibration, support promotion, architecture-scale capacity, or whole-product capacity.
+- Re-derive: Run the public gate from that clean qualified revision, producer-free result validation, every independent evidence verifier, and a production-module-free JSON::PP/Digest::SHA join. Require the exact result bytes/hash and aggregate/profile/qualification/public/transport joins, all qualified record-identity sets at their required cardinalities, every maximum within frozen budgets, unchanged evidence, and absent residue.
+- Falsify: Run the guarded t1183, t1555, and t1765-t1795 policy-through-public band. Require pinned pass, simulated unmatched informational and unavailable-provider non-pass, plus every capture/store/resume/isolation/corpus/qualification/gate/transport/materialization/hosted/correctness/capability/public hostile mutation to reject. Atomic replacement or any evidence/residue drift invalidates closeout.
+- Durability: Retain task `.17.5.6.2`, this chapter, the regression-promotion Knowledge Card, bounded claim record, public gate/store, independent verifiers, t1183/t1555/t1765-t1795, doctrine gates, and the work-unit Git commit. The latest result remains replaceable; Git preserves this exact observation and its nonclaims.
+<!-- CLAIM-VERIFICATION:END vial-regression-promotion-production-gate-observation-840c895f-v1 -->

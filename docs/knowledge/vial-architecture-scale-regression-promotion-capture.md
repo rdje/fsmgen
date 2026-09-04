@@ -48,15 +48,16 @@ answers:
   - "which VIAL lifecycle correctness fields are stable?"
   - "does the VIAL gate ignore process telemetry or recalibrate?"
   - "did the exact-pinned VIAL regression promotion gate pass?"
+  - "what is the final independently closed VIAL regression gate observation?"
   - "where is the machine-readable VIAL architecture-scale regression capability?"
   - "where is the human VIAL architecture-scale regression operator guide?"
   - "how is VIAL architecture-scale regression public truth closed independently?"
-date: 2026-09-03
+date: 2026-09-04
 status: current
 tags: [hial, vial, scalability, regression, measurement, publication]
 evidence: >-
   docs/decisions/0096-regression-promotion-uses-a-current-eleven-profile-corpus.md; docs/decisions/0097-regression-gates-publish-replaceable-observations-without-recalibrating.md; docs/decisions/0098-hosted-regression-gates-materialize-immutable-tracked-evidence.md; docs/decisions/0099-regression-correctness-excludes-only-sealed-process-telemetry-derivatives.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16df-vial-architecture-scale-cap-closeout.md;
-  perl/FSM/Support/VIALArchitectureScaleRegressionContract.pm; perl/FSM/Support/VIALToolingContract.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualification.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateContract.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateProfile.pm; .github/workflows/regression.yml; bin/ci-regression; scripts/run_vial_regression_promotion_gate.pl; vial/qualification/regression_promotion_gate/evidence-v1/transport-manifest.json; t/1555-vial-public-source-tooling.t; t/1786-vial-regression-promotion-gate-profile.t; t/1790-vial-regression-promotion-evidence-transport.t; t/1793-vial-regression-promotion-gate-correctness-stability.t; t/1794-vial-architecture-scale-regression-capability.t
+  perl/FSM/Support/VIALArchitectureScaleRegressionContract.pm; perl/FSM/Support/VIALToolingContract.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualification.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateContract.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateProfile.pm; .github/workflows/regression.yml; bin/ci-regression; scripts/run_vial_regression_promotion_gate.pl; vial/qualification/regression_promotion_gate/evidence-v1/transport-manifest.json; t/1555-vial-public-source-tooling.t; t/1786-vial-regression-promotion-gate-profile.t; t/1790-vial-regression-promotion-evidence-transport.t; t/1793-vial-regression-promotion-gate-correctness-stability.t; t/1794-vial-architecture-scale-regression-capability.t; t/1795-vial-architecture-scale-regression-public-closeout.t
 reverify: >-
   scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; perl scripts/verify_vial_regression_promotion_evidence_transport.pl;
   env FSMGEN_VIAL_REGRESSION_GATE_CONTRACT_EXACT=1 scripts/run_with_ram_guard.sh -- prove -Iperl t/1785-vial-regression-promotion-gate-contract.t; prove -Iperl t/1786-vial-regression-promotion-gate-profile.t t/1787-vial-regression-promotion-gate-coordinator.t t/1788-vial-regression-promotion-gate-store.t t/1789-vial-regression-promotion-gate-cli.t t/1790-vial-regression-promotion-evidence-transport.t;
@@ -134,23 +135,20 @@ input/staging; cleanup owns only evidence, OSVVM, result, and stage.
 
 Gates found ordinal 10 at 4 x 29/165,285 bytes, ordinal 8 at 4 x 24/77,952, and ordinal 9 at 4 x 29/81,709; semantics agreed. Decision 0099 normalizes only those exact telemetry derivatives; eight profiles and all semantic/topology fields stay exact. Clean ef59330ab then passed all eleven pinned profiles and published canonical 60,097-byte result c7787a02...02f2 with exact 11/33/44 topology, zero exclusions, and no process/stage residue. This observation neither recalibrates nor promotes support/capacity; t1786/t1787/t1793 retain hostile and non-pass classifications.
 
-Public VIAL JSON and the complete manifest embed one pure
-`vial.architecture_scale.regression_gate.v1` snapshot: commands, schemas,
-evidence seals, eleven ordered budgets, 11/33/44 topology, host/guard/providers,
-applicability, result/cleanup policy, supported bounded gate scope, and precise
-capacity/support nonclaims. T1555 proves the CLI path; T1794 joins tracked
-evidence and executable authorities. Discovery reads no ignored evidence or
-replaceable result and changes no fixture support classification. The mdBook
-closeout chapter is the human operator guide: it publishes runnable discovery,
-dry-run, selected-gate, full-pre-push, producer-free validation, and evidence
-verification commands; all eleven exact workload/provider/budget envelopes;
-the pinned host, tool, guard, applicability, publication, cleanup, and
-recalibration rules; and the bounded claim with every capacity/support
-nonclaim. T1795 independently invokes both public machine entrypoints, joins
-all eleven human rows and pinned environment/provider fields back to that
-contract, executes the documented dry run without changing the latest result,
-and rejects missing/reordered rows, provider mixing, budget or host drift, and
-capacity-nonclaim inversion.
+Public VIAL JSON and the complete manifest expose one pure
+`vial.architecture_scale.regression_gate.v1` snapshot: commands, evidence,
+ordered budgets, 11/33/44 topology, applicability, cleanup, bounded scope, and
+nonclaims. T1555/T1794 join it to executable and tracked authorities without
+reading ignored evidence or the replaceable result. The mdBook is the operator
+guide; T1795 joins both machine entrypoints to every human row, runs its dry run
+without result mutation, and rejects row, provider, budget, host, or nonclaim
+drift.
+
+The independent final closeout ran clean `840c895f3`: all profiles passed and
+canonical result `f4b022fa...f5f97` has SHA-256 `d9d8788c...54729` and exact
+11/33/44/0 topology. Independent joins and the full hostile band passed; all
+evidence stayed immutable and atomic publication left no owned residue. This is
+one revision/environment observation, not recalibration, support, or capacity.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]],

@@ -126,12 +126,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `pending activation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17`
-  Status: `active`
+  Status: `done`
   Goal: `Define and prove architecture-specific large-fixture scalability and bounded failure.`
   Acceptance: `Deterministic workload profiles scale bridge units/endpoints/domains/transactions/probes and VIAL declarations/scenarios/fibers/events/checks/models/scoreboards/coverage/random decisions; stage correctness oracles, wall/CPU time, descendant RSS, artifact/result size, compile/simulation cost, explicit caps, graceful failures, and stable gates are measured without substituting for the separately owned whole-product big/really-big qualification.`
   Verification: `Clean predecessor 6d23b5843 closes the selected AXI/mdBook activity before this task-tree pivot. The 2026-08-10 eligibility census leaves .16 unavailable, while the shipped and independently qualified portable SystemVerilog, VHDL, and OSVVM profiles provide stable concrete inputs for architecture-specific scale measurement. This activation selects .17.1 alone; it changes no parser, IR, bridge, generator, artifact, runtime, capability, support, or scale claim.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17: activate scale-proof contract`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.9`
+  Closure: `All nine children are complete. The scale contract, deterministic workload and oracle families, current measurements, cap consistency, representative promotion corpus, qualified budgets, exact public gate, support-limit alignment, containment repair, decision reconciliation, and failed-stage cleanup now form one fail-closed architecture-scale proof. The final clean exact observation at revision 840c895f3 independently closes 11 selected profiles, 11 validations, 33 raw records, 44 controller invocations, zero exclusions, exact public/documentation joins, immutable evidence, atomic latest publication, and zero staging/process/receipt residue. This is bounded HIAL/VIAL regression evidence, not whole-product capacity, mixed-language, arbitrary-tool, native-UVM-runtime, full-language, synthesis, support-promotion, or general-parity qualification.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.1`
   Status: `done`
@@ -1364,12 +1365,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Closure: `The complete cap-consistency authority verifies all 23 groups across all seven required dimensions (161 verified joins) and unlocks explicit calibration revalidation without relabelling measurement as cap implementation. The caller-sealed disposition authenticates the complete immutable publication, versions the atomic 232-file selected lineage as historical after exactly six semantic/bridge current mismatches, derives the separate 239-byte VHDL graph/evaluation drift and portable-VHDL/OSVVM materialization changes, validates the 22-file legacy lineage plus two closure files, and requires their exact 256-file/32,007,521-byte partition. Guarded exact t1764 passes in 785 seconds; focused policy/consistency/disposition passes Files=3/Tests=92 and adjacent closure/publication passes Files=2/Tests=8. Recapture is required before future current-performance use, not cap closeout; immutable bytes remain unchanged and budgets, support, capacity, and reached-boundary claims remain prohibited.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5`
-  Status: `active`
+  Status: `done`
   Goal: `Stabilize architecture-scale regression gates, public documentation, capability truth, and closeout.`
   Acceptance: `Promote representative bounded profiles into stable non-flaky gates; document exact measured envelopes, budgets, commands, variability policy, cleanup, supported claims, and residue; synchronize support/capability/Knowledge Map/task/Memory surfaces without claiming whole-product big/really-big qualification.`
   Verification: `Clean predecessor da26959cf closes all .17.4 cap hardening and atomically versions the immutable calibration closure as authentic historical evidence. Query-first review of decisions 0056/0095, the Knowledge Map, current calibration modules/tests, CI inventory, and Git history finds no promoted architecture-scale regression-gate owner. Decision 0056 requires complete current evidence before promotion, while decision 0095 forbids using the historical candidate budgets as current performance evidence. The activation therefore selects .17.5.1 first and partitions current-evidence capture, budget qualification, gate implementation, public truth, and independent closeout into separate rollback owners. No source, test, artifact, CI, capability, support, budget, performance, capacity, or product behavior changes in activation.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5: activate scale regression closeout`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6`
+  Closure: `All six children are complete. A fresh eleven-profile corpus and independent qualification publication feed the exact gate through authenticated materialization, local and hosted CI placement, stable correctness rules, machine and human public truth, and independent closeout. The final production observation is PASS on its exact pinned host/providers, with all 11 profiles accepted, 11 validation records, 33 raw records, 44 controller invocations, zero exclusions, unchanged evidence, atomic result replacement, and no owned residue. Unmatched hosts remain informational, unavailable providers remain non-pass, recalibration remains separate, and no capacity or support claim is inferred.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.1`
   Status: `done`
@@ -1834,12 +1836,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `Historical grep proves the completed machine publication had no human "Run the bounded gate" section. The README now links the bounded dry-run command while remaining 240 lines/9,930 bytes under its strict ceiling. The mdBook publishes six runnable repository-relative commands, the exact five-step dry-run transaction, pinned host/guard and four-provider table, all eleven exact selection/provider/budget rows, fixed 11/33/44/0 topology, correctness-first applicability outcomes, separate recalibration, atomic capped result, receipt-owned cleanup, bounded supported claim, and all fourteen precise nonclaims. An independent parser compares every published row to public VIAL JSON exactly; the repaired escaped-pipe table renders with six columns, and the repository-local build contains 94 files before exact removal. T1555/T1794 pass All tests successful at Files=2/Tests=10; dry-run, independent tracked-evidence verification, and producer-free validation of accepted result c7787a02...02f2 all pass. mdBook tests pass; Knowledge Map closes at 1,160 facts/6,284 unique questions; claim inventory/dispositions close 1,908/1,908 candidates with zero gaps; fresh maintained-reference authority owns the 118-line/7,017-byte book delta without raising a ceiling. No command, gate, evidence, budget, applicability, runtime, support classification, or capacity boundary changed.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.5.2: publish human scale regression guide`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6`
-  Status: `active`
+  Status: `done`
   Goal: `Independently close architecture-scale regression, evidence, public truth, and residue before completing .17.5.`
   Acceptance: `Re-derive the complete selected profile/gate/evidence/budget/support partition from current producers and publications; prove exact pinned-host enforcement, unmatched-host informational behavior, deterministic oracles, qualified tools, graceful boundaries, atomicity, same-volume cleanup, documentation commands, capability truth, and zero unowned residue. Reject missing, extra, stale, historical-substituted, reordered, mutated, mixed-identity, or caller-supplied evidence; then close .17.5 without generalizing to whole-product capacity.`
   Verification: `Clean predecessor b4b93d181 completes machine-readable and human public scale truth with exact eleven-profile envelopes, runnable lifecycle commands, applicability, cleanup, supported scope, and nonclaims. Query-first review resolves the canonical regression-promotion capture card and decisions 0096-0099. The audit finds existing machine/evidence/qualification/gate oracles complete, but no durable cross-surface watcher joins both public machine entrypoints to the new human guide or proves its documented dry run side-effect free. Child .1 owns that watcher and hostile projection cases; child .2 owns clean exact execution, the complete independent hostile band, final public/evidence/result/residue joins, and parent closeout. This partition changes no gate, evidence, budget, result, CI, support, or capacity behavior.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6: activate independent scale regression closeout`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6.2`
+  Closure: `Both children are complete. T1795 permanently joins the two public machine entrypoints to the human guide and proves dry-run non-mutation. The final leaf executes the clean exact gate, validates it without producers, authenticates both evidence stores independently, reconstructs every public/result/evidence identity and count, runs all policy-through-public hostile oracles, and proves unchanged evidence plus atomic and residue-free publication.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6.1`
   Status: `done`
@@ -1849,11 +1852,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6.1: lock public scale regression closeout`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6.2`
-  Status: `active`
+  Status: `done`
   Goal: `Execute and independently close the exact scale regression gate, hostile evidence band, public truth, and residue.`
   Acceptance: `From the clean committed public watcher, run the selected exact gate and producer-free validation; run the complete regression-promotion policy, capture, corpus, qualification, gate, transport, materialization, hosted-outcome, correctness-stability, capability, and public-closeout oracle band. Independently join the published result to immutable evidence, exact profiles/budgets/applicability, both public machine entrypoints, the human guide, and CI selection; exercise pinned-host pass, unmatched-host informational, unavailable-provider non-pass, and every named hostile evidence class; prove qualification/evidence immutability, atomic latest-result publication, same-volume cleanup, and zero unowned process/staging/receipt residue; then synchronize durable surfaces and close `.17.5.6` and `.17.5` without promoting support or capacity.`
-  Verification: `Clean predecessor b0f5d74f1 adds the independent public closeout watcher: both public machine entrypoints, every human guide row and pinned environment/provider field, ordered dry-run behavior, latest-result non-mutation, and six hostile projection cases are green without generated evidence. This final leaf now owns clean exact gate execution, the complete independent hostile oracle band, result/evidence/public/CI joins, and residue closure before `.17.5.6` and `.17.5` can complete. Activation changes no executable, evidence, budget, result, CI, support, or capacity behavior.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6.2: activate exact scale regression closeout`
+  Verification: `From clean execution revision 840c895f3, the real public vial-gate command completed PASS with gate identity f4b022fa4302ccb944eccf84a179b74c4ef66ad9b83ce72afd947f5bae7f5f97, exact qualification d8fb18132ebb52d85f30f40edc46f8e81a47bba90eb61f9bf02ae0821da60c97, all eleven profiles accepted, 11 validation records, 33 raw records, 44 controller invocations, and zero failed, informational, unavailable, or excluded profiles. Its canonical 60,100-byte result has SHA-256 d9d8788c12e7929b588694c7b65bf7854a61a2dbf88fe0cdec9669c503954729 and replaced the prior inode atomically. Producer-free validation, independent transport/corpus/qualification verifiers, and a production-module-free JSON::PP/Digest::SHA join all pass; the latter proves exact profile/result/report/validation/raw-record uniqueness, budgets, evidence/public identities, and semantic equality of both machine entrypoints. The complete guarded policy-through-public band reports All tests successful at Files=33/Tests=332 in 763 wallclock seconds, including pinned pass, unmatched informational, unavailable-provider non-pass, every hostile evidence mutation, CI placement, transport/materialization, hosted outcome, correctness stability, capability, and public closeout. All 15 evidence files retain their pre-run hashes; eleven report spools were removed; process, staging, and adopted-receipt censuses are empty. No executable, evidence, budget, CI, support, capacity, or whole-product claim changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.6.2: close scale regression promotion`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.6`
   Status: `done`
@@ -2105,14 +2108,13 @@ are complete and freeze the exact thirteen-emitted/seven-rejected profile
 partition. Completed runtime/balanced parent `.17.2.7` owns runtime-stream
 construction `.1`, balanced revision-2 composition and portable structural
 emission `.2`, and unified provider-free qualification `.3`; parent `.17.2`
-therefore closes deterministic generation. Measurement, publication, and
-regression-gate implementation now extend through authenticated transport
-child `.17.5.4.3.2.1`. Completed child `.17.5.4.3.2.2` adds the fixed-
-coordinate materializer, recoverable corpus-first/qualification-last
-transaction, and receipt-bounded cleanup. Completed child `.17.5.4.3.2.3`
-places the shared authenticated lifecycle in exact `vial-gate` and unsharded
-local-full entrypoints while excluding focused and hosted-shard paths. Active
-child `.17.5.4.3.3` now owns hosted workflow, aggregate, and inventory closure.
+therefore closes deterministic generation. Architecture-scale activity `.17`
+is complete. Its current evidence, qualification, local/hosted gate, public
+machine and human contracts, independent hostile closeout, and residue proof
+agree at clean execution revision `840c895f3`, while every whole-product and
+broader support/capacity nonclaim remains explicit. Documentation and migration
+closeout `.18` is the next proposed architecture activity and requires a
+separate clean activation.
 
 ## Decisions
 
@@ -2922,3 +2924,40 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   integrity, and doctrine gates remain required before commit. No generated
   evidence or prior result is required and no gate/support/capacity behavior
   changes.
+
+## Acceptance Checklist (enforced) — `.17.5.6.2` exact scale-regression closeout
+
+- [x] **ROOT CAUSE (WHY + WHERE; final observation was not independently closed)** —
+  clean predecessor `b0f5d74f1` permanently joined public machine and human
+  contracts, but the final leaf still required one fresh exact production run,
+  producer-free and production-module-free joins, the complete hostile oracle
+  band, evidence immutability, atomic result replacement, and residue proof
+  before `.17.5.6`, `.17.5`, or `.17` could close. `git log -S'shards=2,
+  records=31' --oneline -- t/1750-claim-verification-registry-set.t` separately
+  identifies `6702f48e0` as the stale bounded-registry census origin.
+- [x] **ADDRESSED (verified)** — before -> after: the public gate at revision
+  `840c895f3` publishes PASS identity `f4b022fa...f5f97` in 60,100 canonical
+  bytes, with exact 11/33/44/0 topology and all eleven profiles accepted. The
+  producer-free validator, three independent evidence verifiers, and a raw
+  JSON::PP/Digest::SHA reconstruction agree on every profile, result, report,
+  validation, measurement, qualification, transport, budget, and public
+  identity. All 15 evidence hashes are unchanged, the result inode changed
+  atomically, and report-spool, process, staging, and receipt residue is zero.
+- [x] **NO REGRESSION (complete hostile and public band)** — the guarded exact
+  policy/capture/store/resume/isolation/corpus/qualification/gate/transport/
+  materialization/hosted/correctness/capability/public band reports
+  `All tests successful.` at Files=33/Tests=332 in 763 wallclock seconds. It includes
+  pinned-host pass, unmatched-host informational behavior, unavailable-provider
+  non-pass, CI selection, and every named hostile mutation. T1750/T1794/T1795
+  pass at Files=3/Tests=20; all mdBook chapters test and the 94-file render was
+  removed exactly. Knowledge Map closes at 1,160 facts/6,286 questions; claim
+  inventory/dispositions close 1,909/1,909 with no gap, and live-document
+  containment passes after removing duplicated card prose rather than raising
+  an allowance. Staged acceptance and doctrines retain final commit ownership;
+  no support, capacity, or whole-product claim expands.
+  The claim-set regression also exposed a stale repository-default census:
+  T1750 last changed at `6702f48e0`, before later tracked records populated the
+  third shard, yet still expected two shards and 31 records. The watcher now
+  derives the current bounded registry result exactly at three shards, 53
+  records, 52 published claims, and one fixture; its hostile finite-set,
+  ordering, tracking, duplicate, and cap controls are unchanged.
