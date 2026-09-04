@@ -2043,16 +2043,16 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Select the exact portable-SystemVerilog lifecycle mapping and versioned backend evidence contract.`
   Acceptance: `Specify the static controller state, record-to-control mapping, scenario-scheduler relationship, logical cycle/phase observation points, inclusive deadline enforcement, failure/finalization policy, lifecycle trace records, normalized result production, schema/version isolation, source-map duties, artifact atomicity, and exact rejection/nonclaim boundaries before behavior changes; preserve the version-1 emitted graph and public result byte-for-byte.`
-  Verification: `A direct canonical-plan probe at clean decomposition commit 12e2fe50b found malformed readiness condition data before the mapping contract could be selected: the service-ready condition object was nested inside a dependency-satisfied reference_id. The root cause is an unparenthesized pair of adjacent Perl map expressions in FSM::VIAL::LifecycleControl, which lets the first map consume the second map's result objects as additional input. Existing lifecycle tests proved record count, order, and result chronology but not recursive condition scalar types. Child .1 repairs and independently watches that compiler prerequisite; child .2 then selects the backend contract from valid typed input.`
+  Verification: `A direct canonical-plan probe at clean decomposition commit 12e2fe50b found malformed readiness condition data before the mapping contract could be selected: the service-ready condition object was nested inside a dependency-satisfied reference_id. The root cause is an unparenthesized pair of adjacent Perl map expressions in FSM::VIAL::LifecycleControl, which lets the first map consume the second map's result objects as additional input. Existing lifecycle tests proved record count, order, and result chronology but not recursive condition scalar types. Child .1 now repairs and independently watches that compiler prerequisite; child .2 remains the next contract-selection action from valid typed input.`
   Commit: `pending implementation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.1`
-  Status: `active`
+  Status: `done`
   Goal: `Repair malformed intrinsic readiness conditions before portable-backend mapping.`
   Acceptance: `Every normalized lifecycle condition recursively contains exactly scalar-or-null reference_id/domain_id fields and an array of condition operands; readiness retains separate dependency_satisfied and service_ready operands in deterministic order; SemanticIR, execution, and plan preserve that shape; hostile nested-reference substitutions fail closed; existing lifecycle semantics, v1 behavior, and all backend availability remain unchanged.`
-  Verification: `The Knowledge Map has no existing answer for this malformed condition. The canonical maintained plan proves that readiness operand 2 currently has kind dependency_satisfied and an object-valued reference_id whose payload is the intended service_ready condition. Source inspection localizes the cause to adjacent unparenthesized map expressions in _build_lifecycle; no parser, HIAL bridge, backend, trace, result, or runtime path participates.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.1: activate readiness-condition repair`
+  Verification: `Clean activation commit 3af8b5b34 owns the defect isolated by the pre-contract canonical-plan probe. The required Knowledge Map query returned no prior answer. The added RED oracle failed exactly because readiness operand 2 was dependency_satisfied instead of service_ready and its reference_id was an object. Parenthesized, separately materialized dependency and service map results remove the Perl list-capture ambiguity. A lifecycle-specific recursive validator now admits only the closed four-key condition shape, scalar-or-null IDs, exact leaf kinds, finite all operands/depth/count, and rejects the reproduced object-valued substitution. T1808 proves the corrected dependency/dependency/service-ready operand sequence and byte-equal condition preservation through SemanticIR, ExecutionIR, and plan. Standalone T1808 passes Files=1/Tests=5; the final RAM-guarded v1 emitter plus complete v2 projection/envelope/registry/adapter/usability/foundation/selection/compiler band passes Files=9/Tests=53. Both changed Perl/test files compile, all 63 mdBook chapters test, and Knowledge Map regeneration reports 1,161 facts/6,317 questions/6,488 occurrences/139 shards. The book authority records 63 files/58,163 lines/3,170,330 bytes from an exact 0/+6/+347 clarification with no ceiling rise. Final containment, task/path/locality/README, staged acceptance, doctrine, and residue evidence is recorded below. No v1 behavior, lifecycle source meaning, HIAL binding, backend availability/emission/runtime/result/parity, support, provider, or other family changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.1: activate readiness-condition repair; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.1: repair lifecycle readiness condition shape`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2`
   Status: `proposed`
@@ -2935,10 +2935,10 @@ Lifecycle-control parent `.19.2` is active. Clean foundation closeout commit
 the target-neutral lifecycle semantic/source contract. Selection child
 `.19.2.1` and target-neutral compiler child `.19.2.2` are complete.
 Portable-SystemVerilog lifecycle child `.19.2.3` is active. Its contract
-selection parent `.19.2.3.1` first owns prerequisite readiness-condition repair
-`.19.2.3.1.1`, after the canonical plan exposed malformed typed condition
-data, then selects the mapping in `.19.2.3.1.2`. No version-2 backend is
-promoted yet.
+selection parent `.19.2.3.1` has completed prerequisite readiness-condition
+repair `.19.2.3.1.1`; clean commit of that verified repair must precede
+activation of mapping selection `.19.2.3.1.2`. No version-2 backend is promoted
+yet.
 
 ## Decisions
 
@@ -4301,3 +4301,38 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   bytes or meaning, v2 backend/emission/compile/runtime/result production/
   parity, non-lifecycle family, mixed-language, provider, support, or HIAL
   behavior changes.
+
+## Acceptance Checklist (.19.2.3.1.1, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the canonical maintained lifecycle plan
+  at clean decomposition commit `12e2fe50b` placed a complete `service_ready`
+  condition object inside readiness operand 2's `dependency_satisfied`
+  `reference_id`. The new RED assertions failed on both the wrong kind and the
+  non-scalar reference. Source inspection localized the defect to adjacent
+  unparenthesized `map` expressions in
+  `FSM::VIAL::LifecycleControl::_build_lifecycle`: Perl included the second
+  map's objects in the first map's input list. `git log -S` independently
+  traces both `dependency_satisfied` and `service_ready` construction to
+  lifecycle compiler commit `bc137fc2f`. The Knowledge Map had no answer, and
+  existing T1808 assertions did not recursively validate condition types.
+- [x] **ADDRESSED (verified)** — dependency and service readiness conditions
+  are now materialized by separately parenthesized maps before assembly. The
+  module validates every normalized payload condition recursively against the
+  exact four-key shape, permitted leaf vocabulary, scalar-or-null identities,
+  and finite operand/depth/count limits. T1808 proves the exact
+  dependency/dependency/service-ready order, rejects a reproduced
+  object-valued reference substitution, and compares the corrected condition
+  byte-for-byte across SemanticIR, ExecutionIR, and plan. The Knowledge Card
+  and mdBook explain the repaired invariant.
+- [x] **NO REGRESSION (compiler, backend boundary, docs, and residue)** — both
+  changed Perl/test files report `syntax OK`; standalone T1808 passes
+  `Files=1, Tests=5`; and the final RAM-guarded T1557/T1801-T1808 band reports
+  `All tests successful.` at `Files=9, Tests=53`. Every one of the 63
+  mdBook chapters tests. Knowledge Map regeneration reports 1,161 facts, 6,317
+  questions, 6,488 occurrences, and 139 shards. Maintained-reference authority
+  records the exact 63-file/58,163-line/3,170,330-byte book from a 0/+6/+347
+  delta without raising any ceiling. Final task, path, locality, README,
+  containment, staged acceptance, doctrine, diff, generated-artifact, log,
+  binary, and brief checks are green. No v1 behavior, source grammar, HIAL
+  bridge, backend/emission/compile/runtime/result/parity, capability/support,
+  provider, or other-family change ships.

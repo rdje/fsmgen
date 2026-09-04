@@ -11,6 +11,8 @@ answers:
   - "what happens when a VIAL lifecycle deadline expires?"
   - "is VIAL lifecycle_control implemented or public?"
   - "which VIAL lifecycle compiler phases are implemented?"
+  - "how are VIAL lifecycle readiness service conditions represented?"
+  - "why must lifecycle condition reference_id remain scalar?"
 date: 2026-09-04
 status: current
 tags: [vial, hial, lifecycle, semantic-ir, logical-time, deadlines, target-neutral]
@@ -42,6 +44,13 @@ drain, shutdown, service stop, and finalization. Optional requirements only add
 AND conditions and cannot weaken the chain. The selected background service is
 the target-neutral `fixture_background` aggregate; it is not a generated class
 or process.
+
+Every normalized condition has exactly `kind`, scalar-or-null `reference_id`,
+scalar-or-null `domain_id`, and an operand array. Intrinsic readiness keeps
+dependency prerequisites and `service_ready` prerequisites as distinct ordered
+operands. The compiler validates this shape recursively before admitting each
+lifecycle semantic node, and T1808 proves that exact condition survives
+SemanticIR, ExecutionIR, and plan projection without reinterpretation.
 
 Every lifecycle has one full deadline measured in its HIAL-reviewed logical
 domain. A deadline of N cycles starting at C includes check seam C + N - 1.

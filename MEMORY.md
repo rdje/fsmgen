@@ -7,9 +7,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.1`
-  (`active`; lifecycle readiness-condition compiler repair)
-- next_action: Add the recursive condition-shape RED oracle, repair the adjacent-map
-  construction bug, and prove SemanticIR/execution/plan preservation without backend change.
-- in_flight_uncommitted: none after the `.19.2.3.1.1` activation commit.
+  (`done`; lifecycle readiness-condition compiler repair)
+- next_action: Commit the verified `.19.2.3.1.1` repair, then activate
+  `.19.2.3.1.2` for the portable-SystemVerilog lifecycle mapping contract.
+- in_flight_uncommitted: none after the `.19.2.3.1.1` implementation commit.
 - in_flight_background: none.
 - blockers: none.

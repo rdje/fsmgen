@@ -180,6 +180,12 @@ process identifiers, exclusive or overrun deadline endpoints, regressed
 logical-time chronology, and any pass result that retains a failure cause or
 incomplete dependency, service, or lifecycle point.
 
+Normalized conditions also stay closed across compiler stages: `reference_id`
+and `domain_id` are scalar or null, while nested conditions exist only in the
+`operands` array. Readiness therefore retains its dependency checks and
+`service_ready` check as distinct ordered operands; malformed object-valued
+references fail before backend admission.
+
 Read the normative
 [lifecycle-control family contract](../../vial-spec/lifecycle-control-v2.md)
 for the complete grammar, conditions, exact defaults, typed record/result

@@ -18,9 +18,11 @@ use FSM::Support::VIALToolingContract qw(
     build_vial_tooling_contract_v2
 );
 use FSM::VIAL::LifecycleControl qw(
+    validate_vial_lifecycle_condition
     validate_vial_lifecycle_result
 );
 use FSM::VIAL::Parser;
+use FSM::VIAL::PlanBuilder;
 use FSM::VIAL::SourceProjection;
 use FSM::VIAL::Tool qw(execute_vial_tool_request);
 
@@ -74,6 +76,49 @@ subtest 'normal and terse source produce one target-neutral SemanticIR' => sub {
         cleanup => 'finalize', cleanup_max_cycles => 256,
         diagnostics => 'all', disposition => 'fail',
     }, 'failure defaults are materialized in typed payload data');
+    my ($readiness) = grep {
+        $_->{node_kind} eq 'readiness'
+    } @{$family->{nodes}};
+    is_deeply(
+        [map { $_->{kind} } @{$readiness->{payload}{condition}{operands}}],
+        [qw(dependency_satisfied dependency_satisfied service_ready)],
+        'readiness keeps dependency and service prerequisites as distinct conditions',
+    );
+    my @condition_shape_error;
+    for my $node (@{$family->{nodes}}) {
+        my $payload = $node->{payload};
+        push @condition_shape_error,
+            condition_shape_errors($payload->{condition}, "$node->{node_kind}/condition")
+                if defined($payload->{condition});
+        if ($node->{node_kind} eq 'service') {
+            push @condition_shape_error,
+                condition_shape_errors(
+                    $payload->{detail}{$_}, "service/$_",
+                ) for qw(
+                    start_condition ready_condition quiescent_condition
+                    stop_condition
+                );
+        }
+        if ($node->{node_kind} eq 'deadline') {
+            push @condition_shape_error,
+                condition_shape_errors(
+                    $payload->{detail}{$_}, "deadline/$_",
+                ) for qw(from until);
+        }
+    }
+    is_deeply(
+        \@condition_shape_error, [],
+        'every lifecycle condition recursively keeps the exact scalar-or-null shape',
+    );
+    my $hostile_condition = clone($readiness->{payload}{condition});
+    $hostile_condition->{operands}[2]{reference_id} = {
+        kind => 'service_ready', reference_id => 'forged/service',
+        domain_id => undef, operands => [],
+    };
+    dies_like(sub {
+        validate_vial_lifecycle_condition($hostile_condition)
+    }, qr/reference_id must be a stable non-empty identity/,
+        'object-valued lifecycle reference substitution fails closed');
     my ($total) = grep {
         $_->{node_kind} eq 'deadline'
             && $_->{payload}{detail}{max_cycles} == 1024
@@ -143,6 +188,7 @@ subtest 'grammar, identity, order, references, and bounds fail atomically' => su
 };
 
 subtest 'binding, execution, and plan stages retain typed provenance' => sub {
+    my $built = build_plan($selected_source);
     my $first = execute_vial_tool_request(
         request_v2(action => 'plan'), environment([]),
     );
@@ -155,6 +201,26 @@ subtest 'binding, execution, and plan stages retain typed provenance' => sub {
         'repeated lifecycle planning is deterministic');
     is(scalar(@{$first->{plan}{semantic_families}}), 12,
         'plan carries all twelve lifecycle records');
+    my $semantic = parse_source($selected_source)->as_hashref;
+    my ($semantic_readiness) = grep {
+        $_->{node_kind} eq 'readiness'
+    } @{$semantic->{packages}[0]{intent_families}[0]{nodes}};
+    my ($execution_readiness) = grep {
+        $_->{semantic}{node_kind} eq 'readiness'
+    } @{$built->{execution_ir}->as_hashref->{semantic_families}};
+    my ($plan_readiness) = grep {
+        $_->{semantic}{node_kind} eq 'readiness'
+    } @{$built->{plan}{semantic_families}};
+    is_deeply(
+        $execution_readiness->{semantic}{payload}{condition},
+        $semantic_readiness->{payload}{condition},
+        'execution preserves the corrected readiness condition exactly',
+    );
+    is_deeply(
+        $plan_readiness->{semantic}{payload}{condition},
+        $semantic_readiness->{payload}{condition},
+        'plan preserves the corrected readiness condition exactly',
+    );
 
     my $all_traces_complete = 1;
     my $all_bindings_typed = 1;
@@ -430,6 +496,33 @@ sub changed {
     return $copy;
 }
 
+sub condition_shape_errors {
+    my ($condition, $path) = @_;
+    return ("$path is not one plain object")
+        unless ref($condition) eq 'HASH';
+    my @error;
+    my @keys = sort keys %{$condition};
+    push @error, "$path has the wrong keys"
+        unless join("\0", @keys)
+            eq join("\0", sort qw(domain_id kind operands reference_id));
+    push @error, "$path kind is not scalar"
+        if !defined($condition->{kind}) || ref($condition->{kind});
+    push @error, "$path reference_id is not scalar-or-null"
+        if defined($condition->{reference_id}) && ref($condition->{reference_id});
+    push @error, "$path domain_id is not scalar-or-null"
+        if defined($condition->{domain_id}) && ref($condition->{domain_id});
+    if (ref($condition->{operands}) ne 'ARRAY') {
+        push @error, "$path operands is not one array";
+        return @error;
+    }
+    for my $index (0 .. $#{$condition->{operands}}) {
+        push @error, condition_shape_errors(
+            $condition->{operands}[$index], "$path/operands/$index",
+        );
+    }
+    return @error;
+}
+
 sub check_source {
     my ($text) = @_;
     return FSM::VIAL::Parser->check_source({
@@ -442,6 +535,22 @@ sub parse_source {
     return FSM::VIAL::Parser->parse_source({
         text => $text, source_name => $source_name, source_catalog => {},
     });
+}
+
+sub build_plan {
+    my ($text) = @_;
+    my $built = FSM::VIAL::PlanBuilder->build({
+        semantic_ir => parse_source($text),
+        hial_source => {
+            source_id => $hial_name, format => 'ppif', text => $hial_source,
+        },
+        fixture_id => 'base_output_arbitration', scenario_ids => [],
+        execution_profile => 'core_directed_single_clock_execution_v2',
+        replay_manifest => undef, native_extension_catalog => [],
+    });
+    die 'lifecycle plan did not build: ' . $json->encode($built->{diagnostics})
+        unless $built->{ok};
+    return $built;
 }
 
 sub check_failure {

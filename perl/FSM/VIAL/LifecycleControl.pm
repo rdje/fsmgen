@@ -19,6 +19,7 @@ our @EXPORT_OK = qw(
     build_vial_lifecycle_control_contract
     build_vial_lifecycle_execution_records
     build_vial_lifecycle_semantic_family
+    validate_vial_lifecycle_condition
     validate_vial_lifecycle_result
 );
 
@@ -101,6 +102,15 @@ sub build_vial_lifecycle_control_contract {
             cross_backend_parity methodology_support support_promotion
         )],
     });
+}
+
+sub validate_vial_lifecycle_condition {
+    die "lifecycle condition validation expects one condition object\n"
+        unless @_ == 1;
+    my $term_count = 0;
+    return _validate_condition_shape(
+        $_[0], '/condition', 1, \$term_count,
+    );
 }
 
 sub build_vial_lifecycle_semantic_family {
@@ -485,10 +495,17 @@ sub _build_program {
             },
         };
     }
+    my @readiness_conditions = (
+        (map {
+            _reference_condition('dependency_satisfied', $_)
+        } @dependency_ids),
+        (map {
+            _reference_condition('service_ready', $_)
+        } @service_ready),
+    );
     my @point_specs = (
         [$readiness, [@dependency_ids, @service_ready], [
-            map { _reference_condition('dependency_satisfied', $_) } @dependency_ids,
-            map { _reference_condition('service_ready', $_) } @service_ready,
+            @readiness_conditions,
         ]],
         [$stimulus, [$readiness->{semantic_id}], [
             _reference_condition('lifecycle_point', $readiness->{semantic_id}),
@@ -788,6 +805,93 @@ sub _milestone {
     return _condition($node, $path, $ctx, 1);
 }
 
+sub _validate_payload_conditions {
+    my ($payload, $kind) = @_;
+    validate_vial_lifecycle_condition($payload->{condition})
+        if defined($payload->{condition});
+    if ($kind eq 'service') {
+        validate_vial_lifecycle_condition($payload->{detail}{$_})
+            for qw(
+                start_condition ready_condition quiescent_condition
+                stop_condition
+            );
+    }
+    if ($kind eq 'deadline') {
+        validate_vial_lifecycle_condition($payload->{detail}{$_})
+            for qw(from until);
+    }
+}
+
+sub _validate_condition_shape {
+    my ($condition, $path, $depth, $term_count) = @_;
+    _exact_hash(
+        $condition, [qw(kind reference_id domain_id operands)],
+        "lifecycle condition $path",
+    );
+    die "lifecycle condition $path exceeds the $LIMIT{condition_depth}-level nesting limit\n"
+        if $depth > $LIMIT{condition_depth};
+    ++${$term_count};
+    die "lifecycle condition exceeds the $LIMIT{condition_terms_per_lifecycle}-term limit\n"
+        if ${$term_count} > $LIMIT{condition_terms_per_lifecycle};
+    die "lifecycle condition $path kind must be one scalar identifier\n"
+        unless defined($condition->{kind}) && !ref($condition->{kind})
+            && $condition->{kind} =~ /\A[A-Za-z_][A-Za-z0-9_]*\z/;
+    die "lifecycle condition $path operands must be one unblessed array\n"
+        unless ref($condition->{operands}) eq 'ARRAY'
+            && !blessed($condition->{operands});
+
+    my $kind = $condition->{kind};
+    if ($kind eq 'all') {
+        die "lifecycle condition $path all node cannot carry an identity or domain\n"
+            if defined($condition->{reference_id})
+                || defined($condition->{domain_id});
+        die "lifecycle condition $path all node requires at least one operand\n"
+            unless @{$condition->{operands}};
+        die "lifecycle condition $path all node exceeds the $LIMIT{all_operands}-operand limit\n"
+            if @{$condition->{operands}} > $LIMIT{all_operands};
+        my @operands;
+        for my $index (0 .. $#{$condition->{operands}}) {
+            push @operands, _validate_condition_shape(
+                $condition->{operands}[$index],
+                "$path/operands/$index", $depth + 1, $term_count,
+            );
+        }
+        return _clone({%{$condition}, operands => \@operands});
+    }
+
+    die "lifecycle condition $path leaf node cannot carry operands\n"
+        if @{$condition->{operands}};
+    if ($kind eq 'reset_inactive') {
+        die "lifecycle condition $path reset_inactive cannot carry reference_id\n"
+            if defined($condition->{reference_id});
+        _id($condition->{domain_id},
+            "lifecycle condition $path domain_id");
+        return _clone($condition);
+    }
+
+    my %terminal = map { $_ => 1 } qw(
+        configured scenarios_terminal transactions_terminal scoreboards_empty
+    );
+    if ($terminal{$kind}) {
+        die "lifecycle condition $path $kind cannot carry an identity or domain\n"
+            if defined($condition->{reference_id})
+                || defined($condition->{domain_id});
+        return _clone($condition);
+    }
+
+    my %reference = map { $_ => 1 } qw(
+        lifecycle_entered dependency_satisfied lifecycle_point
+        service_started service_ready service_quiescent service_stopped
+    );
+    die "lifecycle condition $path has unknown kind '$kind'\n"
+        unless $reference{$kind};
+    die "lifecycle condition $path $kind cannot carry domain_id\n"
+        if defined($condition->{domain_id});
+    _id($condition->{reference_id},
+        "lifecycle condition $path reference_id");
+    return _clone($condition);
+}
+
 sub _semantic_node {
     my ($args) = @_;
     my $record = $args->{record};
@@ -815,6 +919,7 @@ sub _semantic_node {
         additional_after => _clone($args->{additional_after}),
         detail => _clone($record->{detail}),
     };
+    _validate_payload_conditions($payload, $kind);
     return {
         schema => 'fsmgen.vial_semantic_family.v2', schema_version => 2,
         stage => 'semantic', semantic_id => $semantic_id,
