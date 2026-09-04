@@ -1968,11 +1968,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1: activate VIAL v2 source contract selection; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1: select VIAL v2 source compatibility contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement version-2 parsing and equivalent normal/terse source projections.`
   Acceptance: `Both projections parse through one normalizer and builder, inserted target-neutral facts retain rule identity and authored provenance, format/reparse identities agree, v1 output is unchanged, mixed/unknown versions reject, and hostile defaults or backend-shaped syntax cannot enter.`
-  Verification: `pending`
-  Commit: `pending implementation`
+  Verification: `Clean contract-selection commit c43e158e8 owns the exact additive-v2 root, schema, import, migration, diagnostic, compatibility, and rollback boundary. This continuity-only activation selects parser/normalizer/projection implementation as the next isolated slice; no source acceptance or other product behavior changes in the activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.2: activate VIAL v2 parser implementation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3`
   Status: `proposed`
