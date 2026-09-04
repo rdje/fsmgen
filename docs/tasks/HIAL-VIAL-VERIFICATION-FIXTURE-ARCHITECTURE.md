@@ -1938,11 +1938,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.6: publish VIAL capability reference`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.7`
-  Status: `proposed`
+  Status: `active`
   Goal: `Independently close documentation, runnable examples, migration, public truth, containment, and architecture continuity.`
   Acceptance: `Re-derive every user-visible command, schema, example result, migration state, profile capability, support/nonclaim, parity boundary, and scale statement from independent executable or tracked authorities. Run all promised examples and focused regressions plus mdBook, claims, Knowledge Map, relative-path, task, containment, and doctrine gates; prove no stale progress wording, broken link, generated book, staging, log, or receipt residue; synchronize roadmap/task/Memory and close .18.`
-  Verification: `pending .18.6 and separate clean activation`
-  Commit: `pending activation`
+  Verification: `Clean predecessor commit 43f730f6f publishes the bounded VIAL capability/support reference after its exact 19-file/7,189-test guarded band and all 12 doctrine checks passed; the worktree and index are clean, git_message_brief.txt is zero bytes, and no background result remains. The required Knowledge Map query returned no direct independent documentation-closeout answer. This continuity-only transition activates the existing-evidence closeout leaf; it changes no book prose, command, source, schema, artifact, backend, runtime, parity, scale, capability, support, diagnostic, provider, or product behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.7: activate documentation closeout`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19`
   Status: `proposed`
