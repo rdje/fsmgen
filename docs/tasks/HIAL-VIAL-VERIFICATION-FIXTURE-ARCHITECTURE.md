@@ -2043,7 +2043,22 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Select the exact portable-SystemVerilog lifecycle mapping and versioned backend evidence contract.`
   Acceptance: `Specify the static controller state, record-to-control mapping, scenario-scheduler relationship, logical cycle/phase observation points, inclusive deadline enforcement, failure/finalization policy, lifecycle trace records, normalized result production, schema/version isolation, source-map duties, artifact atomicity, and exact rejection/nonclaim boundaries before behavior changes; preserve the version-1 emitted graph and public result byte-for-byte.`
-  Verification: `pending contract selection`
+  Verification: `A direct canonical-plan probe at clean decomposition commit 12e2fe50b found malformed readiness condition data before the mapping contract could be selected: the service-ready condition object was nested inside a dependency-satisfied reference_id. The root cause is an unparenthesized pair of adjacent Perl map expressions in FSM::VIAL::LifecycleControl, which lets the first map consume the second map's result objects as additional input. Existing lifecycle tests proved record count, order, and result chronology but not recursive condition scalar types. Child .1 repairs and independently watches that compiler prerequisite; child .2 then selects the backend contract from valid typed input.`
+  Commit: `pending implementation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.1`
+  Status: `active`
+  Goal: `Repair malformed intrinsic readiness conditions before portable-backend mapping.`
+  Acceptance: `Every normalized lifecycle condition recursively contains exactly scalar-or-null reference_id/domain_id fields and an array of condition operands; readiness retains separate dependency_satisfied and service_ready operands in deterministic order; SemanticIR, execution, and plan preserve that shape; hostile nested-reference substitutions fail closed; existing lifecycle semantics, v1 behavior, and all backend availability remain unchanged.`
+  Verification: `The Knowledge Map has no existing answer for this malformed condition. The canonical maintained plan proves that readiness operand 2 currently has kind dependency_satisfied and an object-valued reference_id whose payload is the intended service_ready condition. Source inspection localizes the cause to adjacent unparenthesized map expressions in _build_lifecycle; no parser, HIAL bridge, backend, trace, result, or runtime path participates.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.1: activate readiness-condition repair`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2`
+  Status: `proposed`
+  Goal: `Select the exact portable-SystemVerilog lifecycle mapping and versioned backend evidence contract from valid typed lifecycle records.`
+  Acceptance: `A decision, bounded VIAL reference part, executable contract watcher, mdBook guidance, and Knowledge Map card close the static controller, trace/result, schema-isolation, source-map, atomicity, rejection, rollback, and nonclaim boundaries while every version-2 backend remains unavailable.`
+  Verification: `pending`
   Commit: `pending implementation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.2`
@@ -2919,9 +2934,10 @@ Lifecycle-control parent `.19.2` is active. Clean foundation closeout commit
 `984271755` and activation commit `06c331cb7` permit child `.19.2.1` to select
 the target-neutral lifecycle semantic/source contract. Selection child
 `.19.2.1` and target-neutral compiler child `.19.2.2` are complete.
-Portable-SystemVerilog lifecycle child `.19.2.3` is active at its
-contract-selection child `.19.2.3.1` after the current-route audit isolated
-five exact implementation and qualification slices. No version-2 backend is
+Portable-SystemVerilog lifecycle child `.19.2.3` is active. Its contract
+selection parent `.19.2.3.1` first owns prerequisite readiness-condition repair
+`.19.2.3.1.1`, after the canonical plan exposed malformed typed condition
+data, then selects the mapping in `.19.2.3.1.2`. No version-2 backend is
 promoted yet.
 
 ## Decisions
