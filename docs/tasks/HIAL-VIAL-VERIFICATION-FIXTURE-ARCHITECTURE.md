@@ -2032,11 +2032,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.2: activate lifecycle compiler phases; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.2: implement lifecycle compiler phases`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement and qualify lifecycle control in portable SystemVerilog.`
   Acceptance: `The static scheduler realizes selected readiness, service, completion, drain, shutdown, and finalization semantics with bounded execution and normalized results; emitted control is minimal/readable/source-mapped and runtime failures cleanly publish no false success.`
-  Verification: `pending`
-  Commit: `pending implementation`
+  Verification: `Clean lifecycle-compiler commit bc137fc2f9 is the sole behavior-bearing predecessor. The required Knowledge Map query returned no existing portable-SystemVerilog lifecycle mapping answer. Decisions 0036/0043 preserve target-neutral logical time above one statically partially evaluated portable scheduler; decisions 0080-0082 retain exact phase rollover, root-owned direct drive, and single-await child admission boundaries. This activation therefore selects a read-only current-route/history audit first, followed by explicit child decomposition before any emitter, trace, result, runtime, capability, or support change.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3: activate portable-SystemVerilog lifecycle mapping`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.4`
   Status: `proposed`
@@ -2876,14 +2876,16 @@ reference; `.18.7` independently closes their commands, links, truth
 boundaries, containment, and continuity. Expressive VIAL activity `.19` is
 active. Foundation parent `.19.1` and all seven children are complete: the
 additive v2 source/compiler substrate now includes explicit public source
-tooling, non-mutating v1-to-v2 migration, and empty-family planning while every
-expressive family and v2 backend/run/result/parity route remains unavailable.
+tooling, non-mutating v1-to-v2 migration, empty-family planning, and
+target-neutral lifecycle-control compilation. Every other expressive family
+and every v2 backend/run/result/parity route remains unavailable.
 Lifecycle-control parent `.19.2` is active. Clean foundation closeout commit
 `984271755` and activation commit `06c331cb7` permit child `.19.2.1` to select
 the target-neutral lifecycle semantic/source contract. Selection child
-`.19.2.1` and target-neutral compiler child `.19.2.2` are complete; `.19.2.3`
-is the next proposed clean activation for portable-SystemVerilog lifecycle
-emission and runtime qualification. No version-2 backend is promoted yet.
+`.19.2.1` and target-neutral compiler child `.19.2.2` are complete.
+Portable-SystemVerilog lifecycle child `.19.2.3` is active at its
+current-route/history audit before implementation decomposition. No version-2
+backend is promoted yet.
 
 ## Decisions
 
