@@ -2025,11 +2025,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.1: activate lifecycle semantic selection; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.1: select target-neutral lifecycle contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement lifecycle SemanticIR, binding, execution, plan, result, source-map, and capability propagation.`
   Acceptance: `Typed lifecycle dependencies and terminal conditions remain deterministic through every phase, cycles/deadlines are bounded, deadlock and incomplete drain fail closed, and results expose logical seams rather than backend scheduling folklore.`
-  Verification: `pending`
-  Commit: `pending implementation`
+  Verification: `Clean lifecycle-selection commit e4f37d641 supplies the exact revision-1 source, typed-expansion, deadline, failure, result, diagnostic, and nonclaim contract. The required Knowledge Map query returned no implemented lifecycle compiler-phase answer. This isolated continuity transition activates only parser-to-result implementation; it changes no VIAL source acceptance, schema, SemanticIR, binding, execution, plan, result, source map, capability, backend, runtime, provider, support, HIAL, or product behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.2: activate lifecycle compiler phases`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3`
   Status: `proposed`
