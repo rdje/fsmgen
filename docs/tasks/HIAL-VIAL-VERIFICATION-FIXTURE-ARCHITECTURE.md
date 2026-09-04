@@ -2035,8 +2035,44 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Implement and qualify lifecycle control in portable SystemVerilog.`
   Acceptance: `The static scheduler realizes selected readiness, service, completion, drain, shutdown, and finalization semantics with bounded execution and normalized results; emitted control is minimal/readable/source-mapped and runtime failures cleanly publish no false success.`
-  Verification: `Clean lifecycle-compiler commit bc137fc2f9 is the sole behavior-bearing predecessor. The required Knowledge Map query returned no existing portable-SystemVerilog lifecycle mapping answer. Decisions 0036/0043 preserve target-neutral logical time above one statically partially evaluated portable scheduler; decisions 0080-0082 retain exact phase rollover, root-owned direct drive, and single-await child admission boundaries. This activation therefore selects a read-only current-route/history audit first, followed by explicit child decomposition before any emitter, trace, result, runtime, capability, or support change.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3: activate portable-SystemVerilog lifecycle mapping`
+  Verification: `Clean lifecycle-compiler commit bc137fc2f9 is the sole behavior-bearing predecessor. The required Knowledge Map query returned no existing portable-SystemVerilog lifecycle mapping answer. Decisions 0036/0043 preserve target-neutral logical time above one statically partially evaluated portable scheduler; decisions 0080-0082 retain exact phase rollover, root-owned direct drive, and single-await child admission boundaries. The read-only current-route audit proves that version-2 ExecutionIR preserves the existing scenario graph and adds twelve lifecycle-family records, while the common adapter registry, portable emitter negotiation, trace validator, result producer, runner, and public run route each still fail closed at an explicit version-1 boundary. The generated scenario scheduler already owns target-neutral drive/sample/react/check rollover, whereas VerilatorLifecycle owns repository-local host-process staging and supervision; neither may become the semantic authority for the other. Five children therefore isolate contract selection, static controller emission, lifecycle trace/result normalization, public runtime qualification, and portable-profile closeout before any code change.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3: activate portable-SystemVerilog lifecycle mapping; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3: decompose portable-SystemVerilog lifecycle mapping`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.5`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1`
+  Status: `active`
+  Goal: `Select the exact portable-SystemVerilog lifecycle mapping and versioned backend evidence contract.`
+  Acceptance: `Specify the static controller state, record-to-control mapping, scenario-scheduler relationship, logical cycle/phase observation points, inclusive deadline enforcement, failure/finalization policy, lifecycle trace records, normalized result production, schema/version isolation, source-map duties, artifact atomicity, and exact rejection/nonclaim boundaries before behavior changes; preserve the version-1 emitted graph and public result byte-for-byte.`
+  Verification: `pending contract selection`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.2`
+  Status: `proposed`
+  Goal: `Implement deterministic portable-SystemVerilog lifecycle admission and static controller emission.`
+  Acceptance: `The common adapter and portable emitter accept only the selected lifecycle-control revision and exact version-2 profile, lower all planned lifecycle records into one finite statically scheduled controller beside the unchanged scenario machinery, enforce bounded readiness/service/stimulus/completion/drain/shutdown/finalization order, emit no target interpreter or UVM mechanism, source-map every lifecycle control seam, remain deterministic/minimal/readable, and claim emission only.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.3`
+  Status: `proposed`
+  Goal: `Implement version-2 portable lifecycle trace validation and normalized result production.`
+  Acceptance: `Additive lifecycle trace records preserve exact plan/run/lifecycle/fixture/domain identities and monotone logical chronology; validators reject malformed, incomplete, late, reordered, or false-pass evidence; result production calls the target-neutral lifecycle validator, publishes one complete normalized lifecycle result with source maps and backend evidence, and leaves version-1 trace/result bytes unchanged.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.4`
+  Status: `proposed`
+  Goal: `Qualify the exact portable-SystemVerilog lifecycle route through compile, runtime, and public version-2 run.`
+  Acceptance: `The runner and shared Verilator host-process lifecycle admit the exact version-2 lifecycle emission without confusing process states with VIAL lifecycle meaning; exact Verilator 5.046 compiles and executes the maintained fixture, public run atomically publishes only validated artifacts/results, nonzero/timeout/truncated/malformed/deadline/finalization failures publish no false success, repository-local staging is removed, and version-1 run remains unchanged.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.5`
+  Status: `proposed`
+  Goal: `Close portable-SystemVerilog lifecycle capability, documentation, quality, and continuity.`
+  Acceptance: `Independent executable gates re-derive the selected mapping, source-map completeness, deterministic artifacts, exact runtime/result behavior, cleanup, and version-1 preservation; public capability/support rows and runnable mdBook examples claim only the qualified portable lifecycle slice; other expressive families, native UVM, VHDL/OSVVM, mixed-language, and general parity remain unavailable; task, claims, Knowledge Map, containment, locality, and doctrine evidence close the child without drift.`
+  Verification: `pending`
+  Commit: `pending closeout`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.4`
   Status: `proposed`
@@ -2884,8 +2920,9 @@ Lifecycle-control parent `.19.2` is active. Clean foundation closeout commit
 the target-neutral lifecycle semantic/source contract. Selection child
 `.19.2.1` and target-neutral compiler child `.19.2.2` are complete.
 Portable-SystemVerilog lifecycle child `.19.2.3` is active at its
-current-route/history audit before implementation decomposition. No version-2
-backend is promoted yet.
+contract-selection child `.19.2.3.1` after the current-route audit isolated
+five exact implementation and qualification slices. No version-2 backend is
+promoted yet.
 
 ## Decisions
 
