@@ -748,6 +748,53 @@ required capability before output instead of silently weakening it. Decision
 `0034` owns this long-term boundary; `.19` preserves the bounded v1 profile
 and selects additive v2 growth through end-to-end intent families.
 
+### Executable usability and generated-code quality
+
+`FSM::Support::VIALUsabilityArtifactQuality` makes the author and backend tests
+machine-checkable. It is private qualification infrastructure: no CLI/API or
+support state changes, and successful backend bytes remain unchanged.
+
+The author gate evaluates four kinds of text together: maintained public VIAL
+examples, canonical normal form, canonical terse form, and source diagnostics.
+It also walks SemanticIR and the semantic-family carrier. Nine finite,
+witnessed rules detect target-language names and directives, backend-profile
+names, SystemVerilog process forms, UVM plumbing/transport names, VHDL type or
+edge forms, OSVVM package names, and methodology-configuration names. Each
+witness is injected into both an author surface and a semantic carrier to prove
+the gate goes red. Verification concepts remain legal: the boundary rejects
+methodology leakage, not `transaction`, `coverage`, `property`, or
+`constraint` intent.
+
+The backend gate reruns each current emitter and produces a closed report over
+six dimensions:
+
+| Dimension | What the report proves |
+| --- | --- |
+| deterministic | The complete repeated emission is canonically identical. |
+| readable | Sources end in newlines, contain no tab or NUL, keep at least 90% of lines within 160 bytes, and cap every line at 4,096 bytes. |
+| minimal shape | Sorted paths and unique roles equal the selected profile's exact required plus present-feature inventory. |
+| source mapped | Every generated source has an exact hash/length reference and at least one in-range named mapping. |
+| bounded cost | Artifact, source, byte, and source-map counts remain within the profile's limits. |
+| absence-driven elision | A conditional generated component cannot survive after its semantic feature disappears. |
+
+The positive corpus runs portable SystemVerilog, native UVM review emission,
+portable VHDL, and OSVVM twice over the same typed plan. Their current exact
+total/source artifact ceilings are respectively 8/3, 16/10, 17/6, and 16/7;
+all keep the existing 16 MiB source and 1,000,000 source-map-entry ceilings.
+Portable VHDL and OSVVM declare their probe-adapter source as conditional on a
+verification probe. The RED corpus changes one rerun, inserts a tab, removes a
+required role, removes map coverage, adds one excess artifact, and retains an
+adapter after the feature is absent. A paired projection proves that removing
+the adapter and its map facts together restores a valid five-source portable-
+VHDL graph.
+
+This does not claim that formatting is universally optimal or that arbitrary
+future languages are qualified. It gives each later VIAL family an objective,
+versioned regression boundary: extending generated structure requires an
+explicit profile-role or feature-condition update instead of accidental
+methodology growth. `t/1805-vial-usability-artifact-quality.t` is the
+executable authority.
+
 The exact v2 source contract keeps the v1 declaration and fixture grammar,
 then inserts a mandatory ordered `intents` section before `fixtures`:
 

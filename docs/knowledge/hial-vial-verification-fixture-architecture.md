@@ -24,6 +24,9 @@ answers:
   - "is the VIAL v2 common envelope implemented?"
   - "where is the VIAL semantic family registry and profile negotiation?"
   - "where is the common VIAL backend adapter preflight?"
+  - "how is target-free VIAL author usability checked?"
+  - "where is VIAL generated artifact quality checked?"
+  - "how does VIAL require absent backend components to be elided?"
   - "which VIAL backend profiles have compile runtime result parity maturity?"
   - "what is the next HIAL VIAL task?"
   - "is a mixed-language HIAL VIAL simulator available?"
@@ -55,6 +58,7 @@ evidence: >-
   t/1555-vial-public-source-tooling.t;
   t/1801-vial-v2-source-projections.t; t/1802-vial-v2-semantic-family-envelope.t;
   t/1803-vial-v2-family-registry.t; t/1804-vial-v2-backend-adapter-seams.t;
+  t/1805-vial-usability-artifact-quality.t;
   t/1556-vial-public-planning-artifacts.t;
   t/1557-vial-portable-sv-backend-emission.t;
   t/1558-vial-verilator-run-integration.t;
@@ -116,7 +120,7 @@ parity. VHDL/GHDL and OSVVM are qualified private profiles; native UVM is
 review/experiment evidence. Separate successes cannot satisfy the proposed
 mixed-language route.
 
-Foundation `.19.1.1-.19.1.5` implements private v2 parsing/projections/imports,
+Foundation `.19.1.1-.19.1.6` implements private v2 parsing/projections/imports,
 the common family envelope, empty-family plans, and content-addressed family
 and backend-adapter registries with exact v1 preservation. Its twelve selected
 namespaces have no functional or backend maturity. All four emitters admit only
@@ -125,6 +129,15 @@ OSVVM also rejects before portable delegation or provider access. The adapter
 registry keeps the public portable-SV, review-only native-UVM, private portable-
 VHDL, and private OSVVM maturity states distinct. Public v2 tooling and family
 implementations/results/parity/support remain later.
+
+The content-addressed private VIAL quality contract makes author abstraction
+and generated-artifact quality executable. It checks maintained examples,
+normal/terse forms, source diagnostics, SemanticIR, and family carriers against
+nine witnessed target/methodology rules. It reruns all four registered emitters
+and reports deterministic, readable, minimal-shape, source-mapped, bounded-cost,
+and absence-driven-elision dimensions. Conditional VHDL probe-adapter roles
+must disappear with their semantic feature; no public API or support state is
+created by this qualification gate.
 
 The architecture is selected. `HIAL-VIAL-VERIFICATION-FIXTURE-
 ARCHITECTURE` is the owning tree and the only authority for the current

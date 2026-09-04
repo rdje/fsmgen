@@ -99,6 +99,23 @@ source-mapped. Later semantic families remain admissible through the same
 owned gate, so this programme is a bounded delivery order rather than a new
 language ceiling.
 
+That requirement is now executable rather than aspirational. One private
+quality contract checks all maintained public `.vial` examples, canonical v2
+normal and terse forms, source diagnostics, SemanticIR, and the v2 family
+carrier for backend-language or methodology-plumbing leakage. Every forbidden
+vocabulary rule has an injected failing control. The same contract evaluates
+two emissions from each of the four current backend profiles for deterministic
+bytes, exact minimal roles, complete source maps, bounded cost, and objective
+readability. Conditional VHDL probe-adapter roles must disappear when the
+corresponding semantic feature is absent.
+
+For example, authors say `(await (within (event write completed) 1 256))`.
+They do not select a UVM sequencer, a SystemVerilog process, a VHDL edge
+function, or an OSVVM package. Those are backend implementation choices. The
+gate does not forbid target-neutral concepts such as transactions, coverage,
+properties, or constraints; it forbids their backend plumbing from becoming
+the source language or semantic definition.
+
 ## Nonclaims retained by this backlog
 
 The backlog does not claim complete SystemVerilog, UVM, VHDL, property,

@@ -1,8 +1,8 @@
 # VIAL Semantic-Family Envelope And Registry
 
 Date: 2026-09-04
-Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3-.19.1.5`
-Status: common private phase envelope, fail-closed registry, and backend adapter preflight implemented
+Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3-.19.1.6`
+Status: common private phase envelope, fail-closed registry, backend adapter preflight, and executable quality gates implemented
 
 This semantic part defines the common facts every expressive family must carry
 and the registry negotiation every compiler stage must pass. The surrounding
@@ -172,3 +172,51 @@ retain deterministic in-memory artifact graphs for atomic publication and
 their existing source-map schemas. The executable authority is
 `t/1804-vial-v2-backend-adapter-seams.t`, together with the existing per-route
 emission and qualification tests.
+
+## Executable author and generated-artifact quality
+
+`FSM::Support::VIALUsabilityArtifactQuality` turns the two architectural tests
+into a closed, content-addressed private contract. Its identity is
+`vial-quality/<sha256>`; rebuilding returns defensive data. It does not add a
+public command or alter an emitted byte.
+
+The author report, `fsmgen.vial_author_quality_report.v1`, requires all four
+surface kinds: maintained public example, canonical normal form, canonical
+terse form, and source diagnostic. It also requires SemanticIR and the semantic-
+family carrier. A finite nine-rule vocabulary rejects target-language names,
+backend-profile names, SystemVerilog process syntax, UVM plumbing and transport
+identifiers, VHDL type/edge syntax, OSVVM package identifiers, methodology
+configuration identifiers, and target-language directives. Each rule carries
+a matching RED witness, and the test injects every witness separately into an
+author surface and a semantic carrier. The gate deliberately permits target-
+neutral verification concepts; it tests abstraction leakage, not ordinary
+words such as transaction, coverage, property, or constraint.
+
+The backend report, `fsmgen.vial_backend_artifact_quality_report.v1`, evaluates
+six independent dimensions:
+
+| Dimension | Executable requirement |
+| --- | --- |
+| deterministic | Two independent emissions have identical canonical records and bytes. |
+| readable | Every source is nonempty, newline-terminated, tab/NUL-free, at least 90% of lines are at most 160 bytes, and no line exceeds 4,096 bytes. |
+| minimal shape | The sorted in-memory artifact graph has exactly the profile's required and present-feature roles, with unique relative paths and roles. |
+| source mapped | Every source has one content/length-verified map reference and at least one valid, uniquely identified in-range symbol/role entry. |
+| bounded cost | Total artifacts, source artifacts, generated source bytes, and source-map entries stay within the profile record. |
+| absence-driven elision | A conditional role is forbidden when its semantic feature is absent. |
+
+The current role ceilings are exact to the existing route shapes: portable
+SystemVerilog is 8 total/3 source artifacts, native UVM is 16/10, OSVVM is
+16/7, and portable VHDL is 17/6. Every route retains the emitter's 16 MiB
+generated-source and 1,000,000-entry map ceilings. The VHDL probe-adapter roles
+are conditional on a declared verification probe. The positive gate evaluates
+all four real emitters twice; the OSVVM case reuses one sealed, repository-local
+provider evaluation. RED controls separately perturb rerun identity,
+readability, required roles, source-map coverage, bounded inventory, and
+conditional-role presence. A paired absent-probe projection removes the
+portable-VHDL adapter, its map reference, and its map entries atomically.
+
+This foundation is qualification infrastructure, not support promotion or a
+claim that arbitrary generated languages meet subjective style preferences.
+Future family slices must extend a profile's explicit roles and feature
+conditions rather than silently adding plumbing. The executable authority is
+`t/1805-vial-usability-artifact-quality.t`.

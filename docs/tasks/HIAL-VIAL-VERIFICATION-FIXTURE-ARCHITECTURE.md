@@ -1996,11 +1996,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.5: activate common VIAL backend adapters; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.5: implement common VIAL backend adapters`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.6`
-  Status: `active`
+  Status: `done`
   Goal: `Make target-free author usability and generated-artifact quality executable requirements.`
   Acceptance: `Fixtures and hostile controls prove public examples/diagnostics/normal forms need no SV/UVM/VHDL knowledge; backend checks prove deterministic readable minimally shaped source-mapped output, absence-driven component elision, bounded cost, and zero methodology-plumbing leakage into VIAL semantics.`
-  Verification: `Clean backend-adapter commit 94356f175 owns one typed preflight across the four existing routes while leaving every v2 family unavailable. The required pre-selection Knowledge Map query returned no direct target-free-usability/generated-artifact-quality answer. The audit found canonical v1 and empty-family v2 normal/terse fixtures, deterministic source diagnostics, typed SemanticIR/ExecutionIR, and backend-specific deterministic in-memory artifact graphs, source maps, artifact-count checks, and 16 MiB source-byte caps. The two governing author/book passages require that VIAL users need no SystemVerilog, UVM, VHDL, or methodology API knowledge while allowing generated target code to remain inspectable. This continuity-only activation selects one private closed evaluator with separate source-usability and backend-artifact reports: it will scan authored fixtures, canonical projections, diagnostics, and semantic carriers for a finite forbidden target/methodology vocabulary; validate stable readable generated text, exact source-map coverage, deterministic artifact identity, minimal profile-specific role sets, absence-driven optional-role elision, and bounded counts/bytes; and prove through RED controls that each dimension fails independently. It must consume existing outputs without changing source acceptance, semantic meaning, emitted bytes, runtime, result, parity, public APIs, capabilities, support, or provider access.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.6: activate VIAL usability and artifact quality`
+  Verification: `Clean backend-adapter commit 94356f175 owns one typed preflight across the four existing routes and clean activation cd0667098 owns this isolated quality slice. The required Knowledge Map query returned no direct target-free-usability/generated-artifact-quality answer. Git history traces the four independent emitter result graphs to 201590d84, 5a1805f52, 3291217e8, and 4f350f29c. FSM::Support::VIALUsabilityArtifactQuality now publishes one closed content-addressed private contract for all maintained public fixtures, v2 normal/terse forms, source diagnostics, v1/v2 SemanticIR, the family carrier, nine witnessed target/methodology exclusions, and four exact backend profiles. Its author evaluator enforces exact maintained-fixture membership. Its backend evaluator checks repeated canonical identity, exact artifact and source-role/language sets, safe sorted paths, unique roles, newline/tab/NUL and 90%-at-160-byte/4,096-byte-hard line bounds, content/length-verified source-map references, complete in-range uniquely identified mappings, exact conditional probe elision, and artifact/source/16-MiB/1,000,000-map-entry budgets. T1805 runs all four actual emitters twice, uses one sealed OSVVM provider evaluation, and carries RED controls for all nine author rules plus determinism, readability, required roles, relabeled source roles, map coverage, bounded inventory, retained absent-feature roles, and valid paired elision. Standalone t1805 passes Files=1/Tests=7; the focused v2 foundation band passes Files=5/Tests=27; and the guarded compiler/backend/reader band passes Files=19/Tests=146 with only the two existing explicit Darwin runtime guards skipped. Every mdBook chapter tests; the inspected 98-file/22,112-KiB repository-local build is removed. Knowledge Map is current at 1,160 facts/6,303 questions/6,474 occurrences/138 shards. Claim inventory/disposition and exact maintained-reference authorities close the book at 63 files/57,842 lines/3,154,862 bytes and the VIAL reference at 3 files/594 lines/33,673 bytes without a ceiling rise. Final syntax, diff, task, relative-path, locality, README, staged acceptance, doctrine, and residue evidence is recorded in the checklist below. No accepted source, semantic meaning, emitter byte, runtime/result/parity evidence, public API, capability, support state, provider access, or HIAL behavior changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.6: activate VIAL usability and artifact quality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.6: enforce VIAL usability and artifact quality`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.7`
   Status: `proposed`
@@ -4080,3 +4080,40 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   green without a ceiling rise. No successful v1 output shape or byte, family
   implementation, v2 emission/runtime/result/parity, public v2 tooling,
   provider access, support state, or HIAL behavior changes.
+
+## Acceptance Checklist (.19.1.6, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean adapter commit `94356f175`
+  deliberately stopped at typed backend seams and unavailable family maturity.
+  The required Knowledge Map query returned no usability/generated-artifact
+  quality answer. `git log -S 'my @RESULT_KEYS'` traces the four independently
+  evolved emitter result shapes to `201590d84`, `5a1805f52`, `3291217e8`, and
+  `4f350f29c`; before this slice, no common executable contract checked their
+  readability, exact artifact shape, source-map integrity, bounded cost, or
+  absence-driven elision, and no finite gate kept public VIAL text and typed
+  semantics free of target-language and methodology vocabulary.
+- [x] **ADDRESSED (verified)** — one closed content-addressed quality contract
+  now owns four author-surface kinds, all maintained public VIAL fixtures,
+  target-free semantic carriers, nine witnessed forbidden-vocabulary rules,
+  and the four exact backend artifact profiles. Its evaluators report six
+  objective backend dimensions, exact role sets, conditional probe elision,
+  complete source-map identity/coverage/span checks, readability bounds, and
+  source/artifact/map budgets. T1805 applies the contract to real repeated
+  emissions from every backend and proves each author rule and backend
+  dimension through focused hostile controls without changing an emitter.
+- [x] **NO REGRESSION (v1/v2 semantics and all backend routes)** — the
+  RAM-guarded t1801–t1805 band reports `All tests successful.` at `Files=5,
+  Tests=27`; standalone t1805 reports `Files=1, Tests=7`, and the final
+  compiler/backend/reader band reports `Files=19, Tests=146` with only the two
+  existing explicit Darwin runtime skips. The quality module and regression
+  each report `syntax OK`. Every mdBook chapter tests; its inspected
+  repository-local 98-file/22,112-KiB build is removed. Knowledge Map is
+  current at 1,160/6,303/6,474/138; claim dispositions close 1,899/1,899 with
+  316 claim records, 982 gates, 601 reviewed incidentals, and zero gaps/open
+  owners. Containment accepts the exact 63-file/57,842-line/3,154,862-byte book
+  and 3-file/594-line/33,673-byte VIAL reference with no ceiling rise. Existing
+  v1/v2 projections, the common family envelope, registry, and all four adapter
+  seams remain green. Task/path/locality/README, staged acceptance,
+  `[doctrine] all doctrine checks passed`, and exact build/artifact/log/brief
+  residue checks are green with no accepted-source, semantic, backend-byte,
+  runtime, parity, capability, support, provider, or HIAL behavior change.

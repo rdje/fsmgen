@@ -2,7 +2,7 @@
 
 Date: 2026-09-04
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1`
-Status: source/projections, common private phase envelope, fail-closed family registry, and backend-adapter preflight implemented through `.19.1.5`
+Status: source/projections, common private phase envelope, fail-closed family registry, backend-adapter preflight, and quality gates implemented through `.19.1.6`
 
 ## Outcome and authority
 
@@ -141,6 +141,17 @@ migration, expressive families, backend adapters, runtime, complete result
 manifests, parity, and support remain owned by later leaves. The focused
 executable authorities are `t/1801-vial-v2-source-projections.t` and
 `t/1802-vial-v2-semantic-family-envelope.t`.
+
+The separate executable usability gate checks the five maintained public VIAL
+fixtures, both canonical v2 projections, a deterministic source diagnostic,
+both semantic versions, and the v2 family carrier against one finite
+target/methodology vocabulary. This is not a ban on verification concepts such
+as coverage, properties, transactions, or constrained choices. It rejects
+backend language, profile, syntax, package, and methodology-plumbing names
+from the author and semantic layers so those layers remain usable without
+SystemVerilog, UVM, VHDL, Verilator, GHDL, or OSVVM knowledge. The full quality
+contract and backend checks are specified in
+[the semantic-family foundation](semantic-family-envelope-and-registry.md#executable-author-and-generated-artifact-quality).
 
 The private v2 semantic record starts with exactly:
 
