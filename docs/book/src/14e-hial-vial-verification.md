@@ -59,9 +59,20 @@ distinct `fsmgen.vial_execution_ir.v2` and `fsmgen.vial_plan.v2` envelopes.
 The exact common family contract closes scope, lifetime, order, typed ports,
 effects, failure/result, and content-derived source maps across semantic,
 binding, execution, plan, and per-family result stages. The version-1 public
-tool still rejects v2. Public v2 CLI/API schemas, migration, registered family
-semantics, backend adapters, runtime results, parity, and support remain later
-work.
+tool still rejects v2.
+
+One content-addressed registry now reserves revision 1 of the twelve selected
+family namespaces and their target-neutral effect vocabularies. Registration
+does not mean support: every functional family stage and every current
+portable-Verilator family mapping is explicitly `unavailable`. Parser,
+planner, emitter, and runner negotiate the selected profile's exact schema,
+family, revision, dependency, capability, and effect set. Any missing set is
+reported in full before a semantic object, HIAL review graph, artifact,
+workspace, or process is created. Existing public v1 capability bytes and
+successful v1 backend behavior are unchanged and now derive from the same
+registry rather than a second list. Public v2 CLI/API schemas, migration,
+family semantics, v2 backend adapters, runtime results, parity, and support
+remain later work.
 
 Each family advances vertically. Its normal and terse forms must produce one
 typed meaning; IR and plans must preserve identity, bounds, source maps, and

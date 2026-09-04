@@ -6,6 +6,11 @@ use warnings;
 use Math::BigInt;
 use Scalar::Util qw(blessed reftype);
 
+use FSM::Support::VIALSemanticFamilyRegistry qw(
+    negotiate_vial_semantic_family_requirements
+    vial_semantic_family_negotiation_message
+);
+
 use constant {
     MAX_FAMILY_BLOCKS_PER_PACKAGE => 256,
     MAX_FAMILY_NODES_PER_BLOCK    => 4_096,
@@ -36,7 +41,7 @@ sub build {
     _invocation_error($args, "builder key 'sources' must be an unblessed array")
         unless ref($args->{sources}) eq 'ARRAY' && !blessed($args->{sources});
 
-    my (%family_revision, @unsupported, @intent_spans);
+    my (%family_revision, @family_requirements, @intent_spans);
     my $family_nodes_total = 0;
     my %v1_forms;
     for my $package_index (0 .. $#{$args->{sources}}) {
@@ -151,8 +156,9 @@ sub build {
                 'intent families across the catalog exceed the 65536-node limit',
                 $blocks->[$index]{span}, "$path/nodes",
             ) if $family_nodes_total > MAX_FAMILY_NODES_PER_CATALOG;
-            push @unsupported, {
+            push @family_requirements, {
                 family_id => $family_id,
+                revision => 0 + $revision,
                 location => _clone($items->[1]{span}),
                 path => $path,
             };
@@ -168,13 +174,37 @@ sub build {
         $v1_forms{$source_name} = $v1_root;
     }
 
-    if (@unsupported) {
-        my $first = $unsupported[0];
+    if (@family_requirements) {
+        my $negotiation = negotiate_vial_semantic_family_requirements({
+            stage => 'parser',
+            profile_id => 'vial_parser_v2',
+            source_language_version => 2,
+            execution_schema => undef,
+            execution_profile => undef,
+            requirements => [map {{
+                family_id => $_->{family_id},
+                revision => $_->{revision},
+                required_capabilities => [],
+                effect_kinds => [],
+            }} @family_requirements],
+        });
+        my $first = $family_requirements[0];
+        my $revision_mismatch = grep {
+            $_->{kind} eq 'family_revision'
+        } @{$negotiation->{issues}};
         _fail(
-            'VIAL_FAMILY_UNSUPPORTED', 'semantic',
-            "intent family '$first->{family_id}' has no registered semantic grammar",
-            $first->{location}, "$first->{path}/family_id",
-        );
+            $revision_mismatch
+                ? 'VIAL_FAMILY_REVISION_MISMATCH'
+                : 'VIAL_FAMILY_UNSUPPORTED',
+            'semantic',
+            vial_semantic_family_negotiation_message($negotiation),
+            $first->{location},
+            "$first->{path}/" . ($revision_mismatch ? 'revision' : 'family_id'),
+            [map {{
+                message => "required intent family '$_->{family_id}\@$_->{revision}'",
+                source_location => _clone($_->{location}),
+            }} @family_requirements[1 .. $#family_requirements]],
+        ) unless $negotiation->{accepted};
     }
 
     require FSM::VIAL::SemanticBuilder;

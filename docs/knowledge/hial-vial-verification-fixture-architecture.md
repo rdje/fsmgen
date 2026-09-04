@@ -22,6 +22,7 @@ answers:
   - "does Verilator support events with timing enabled?"
   - "what is the VIAL version 2 source and migration contract?"
   - "is the VIAL v2 common envelope implemented?"
+  - "where is the VIAL semantic family registry and profile negotiation?"
   - "what is the next HIAL VIAL task?"
   - "is a mixed-language HIAL VIAL simulator available?"
   - "why is mixed-language qualification not active?"
@@ -37,7 +38,7 @@ evidence: >-
   docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md;
   docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md;
   docs/VIAL_SOURCE_AND_SEMANTIC_IR_V2_CONTRACT.md;
-  docs/vial-spec/source-semantic-ir-v2.md;
+  docs/vial-spec/semantic-family-envelope-and-registry.md;
   docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md;
   docs/VIAL_EXECUTION_IR_V1_CONTRACT.md;
   docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md;
@@ -51,6 +52,7 @@ evidence: >-
   docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md;
   t/1555-vial-public-source-tooling.t;
   t/1801-vial-v2-source-projections.t; t/1802-vial-v2-semantic-family-envelope.t;
+  t/1803-vial-v2-family-registry.t;
   t/1556-vial-public-planning-artifacts.t;
   t/1557-vial-portable-sv-backend-emission.t;
   t/1558-vial-verilator-run-integration.t;
@@ -73,6 +75,7 @@ reverify: >-
   docs/book/src/16d-hial-vial-verification-architecture.md &&
   prove -Iperl t/1555-vial-public-source-tooling.t
   t/1801-vial-v2-source-projections.t t/1802-vial-v2-semantic-family-envelope.t
+  t/1803-vial-v2-family-registry.t
   t/1556-vial-public-planning-artifacts.t
   t/1557-vial-portable-sv-backend-emission.t
   t/1558-vial-verilator-run-integration.t
@@ -98,27 +101,25 @@ logical results, not generated source or waveforms. IAL2 facts remain
 reviewable through generated IAL1; there is no direct `.ppif` verification-
 output path.
 
-The first runnable profile is `sv_portable_verilator`, using static plain-
-SystemVerilog lowering, inactive-edge scheduling, declared-probe adapters, a
-closed result trace, and exact Verilator 5.046 `--binary --timing --assert`
-gates. It is explicitly a known-value/two-state runtime profile, not complete
-four-state, SystemVerilog, or UVM authority. `sv_uvm_qualified`,
-`vhdl_portable_ghdl`, methodology, and mixed-language profiles remain separate
-claims whose public/private/review/unavailable state must be reported exactly.
-Existing UVM 1.2 and VHDL observation outputs remain inert compatibility
-surfaces.
+The first runnable profile, `sv_portable_verilator`, uses plain-SystemVerilog
+lowering, inactive-edge scheduling, declared probes, a closed trace, and exact
+Verilator 5.046 gates. It is known-value/two-state, not complete four-state,
+SystemVerilog, or UVM authority. UVM, VHDL, methodology, and mixed-language
+profiles keep separate exact capability states; legacy observation outputs are
+inert compatibility surfaces.
 
-Shipped behavior covers the typed frontend, review-routed bridge, ExecutionIR,
-public source/plan/run tools, atomic artifacts, portable-SystemVerilog results,
-and selected 19-path AHB parity; general parity stays unclaimed. VHDL/GHDL and
-OSVVM are qualified private profiles. Native UVM is review/experiment evidence,
-not qualified runtime. Separate successes cannot satisfy
-`mixed_language_qualified`; `.16` remains proposed pending one exact route.
+Shipped behavior covers typed frontend, review-routed bridge, ExecutionIR,
+public source/plan/run tools, atomic portable-SV results, and bounded AHB
+parity. VHDL/GHDL and OSVVM are qualified private profiles; native UVM is
+review/experiment evidence. Separate successes cannot satisfy the proposed
+mixed-language route.
 
-Foundation `.19.1.1-.19.1.3` freezes the v2 contract and implements its private
-parser/projections/imports, common family contract, and empty-family
-ExecutionIR/plan with exact v1 identities. Public v2 tools, registered
-families, backends, runtime/results, parity, and support remain later work.
+Foundation `.19.1.1-.19.1.4` implements private v2 parsing/projections/imports,
+the common family envelope, empty-family plans, and one content-addressed
+registry with exact v1 preservation. Its twelve selected namespaces have no
+functional or backend maturity. Parser through runner reject complete missing
+sets before semantic, review, artifact, workspace, or process output. Public
+v2 tooling, family semantics/backends/results/parity/support remain later.
 
 The architecture is selected. `HIAL-VIAL-VERIFICATION-FIXTURE-
 ARCHITECTURE` is the owning tree and the only authority for the current

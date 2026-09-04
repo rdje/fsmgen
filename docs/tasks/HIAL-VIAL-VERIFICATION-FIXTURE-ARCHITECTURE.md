@@ -1982,11 +1982,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3: activate common VIAL family envelope; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3: implement immutable VIAL family envelope`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.4`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the semantic-family registry and fail-closed profile capability negotiation.`
   Acceptance: `One registry owns family/revision identities, dependencies, effects, bounds, maturity stages, and backend profile mappings; public capabilities derive from it; parser, planner, emitter, and runner reject the complete unsupported requirement set before partial output without borrowing another profile's support.`
-  Verification: `Clean common-envelope commit c246314be owns the complete immutable cross-phase v2 carrier while preserving exact v1 identities and rejecting v2 at unimplemented public/backend/result boundaries. The required Knowledge Map query returned no registry/profile-negotiation answer. Decisions 0039 and 0043 require capability dimensions to remain distinct and backend support to stay profile-specific. This continuity-only activation selects the single registry and fail-closed negotiation boundary as the next isolated slice; no parser, plan, emitter, runner, artifact, public capability, or product behavior changes in the activation.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.4: activate VIAL family registry`
+  Verification: `Clean common-envelope commit c246314be owns the complete immutable cross-phase v2 carrier and clean activation f62831b10 owns this isolated registry slice. The required Knowledge Map query initially returned no registry/profile-negotiation answer. Decisions 0039 and 0043 require distinct capability dimensions and profile-local backend support. FSM::Support::VIALSemanticFamilyRegistry now supplies one closed, content-addressed, defensively copied authority for all twelve selected family/revision/task identities, reserved target-neutral effects, dependencies, common bounds, exact stage/backend maturity, three current profiles, and the unchanged v1 public capability set. Every functional family stage remains explicitly unavailable. Parser, planner, portable emitter, and runner negotiate their own profile and report the complete unsupported schema/profile/family/revision/dependency/capability/effect set before SemanticIR, HIAL review artifacts, emitted artifacts, workspace, or process creation; the planner also rejects an empty-family wrong-profile request before invalid HIAL is inspected. The public tooling contract remains byte-exact at SHA-256 42db05da519dffd97c3e40ec254c82d09b5f20ef53a849e53025b976f5aded4e. T1803 passes five top-level subtests and the final RAM-guarded twelve-file v1/v2 compiler/tool/backend/reader band passes Files=12/Tests=75, with only the existing opt-in Darwin runtime qualification skip. Every mdBook chapter tests; the inspected repository-local render has 98 files/22,080 KiB and was removed. The VIAL reference was semantically partitioned into three directly indexed parts after the size checker exposed the source part at 90.2%; the final largest part is 344 lines/18,690 bytes and the exact aggregate is 3 files/492 lines/26,982 bytes, with no debt, allowance, or ceiling increase. The book authority is exact at 63 files/57,751 lines/3,149,097 bytes. Knowledge Map parity is 1,160 facts/6,298 questions/6,469 occurrences/138 shards; claim dispositions close 1,896/1,896 candidates with 316 claim records, 979 gates, 601 reviewed, and zero gaps/open owners. Syntax, diff hygiene, relative paths, task integrity, locality, README, containment, staged acceptance, and all registered doctrines pass; .bin/.log and generated-build residue censuses are empty. No expressive family grammar/implementation, v2 backend adapter/emission/runtime/result/parity, public v2 tooling/migration, support promotion, provider, or changed successful v1 behavior ships.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.4: activate VIAL family registry; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.4: implement VIAL family registry`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.5`
   Status: `proposed`
@@ -4017,3 +4017,35 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   12 doctrines are green with no ceiling rise or generated residue. The
   saturated 1,200-line rationale ledger is unchanged; durable rationale lives
   in this task, the maintained contract, Knowledge Card, regression, and Git.
+
+## Acceptance Checklist (.19.1.4, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean carrier commit `c246314be`
+  deliberately stopped at an empty-family v2 envelope. The required Knowledge
+  Map query had no registry/profile answer. `git log -S` traces public capability
+  ownership to `50a0d7d39` through `2d16175c4`, portable emission support to
+  `201590d84`, the first-family-only v2 semantic rejection to `fe480cd24`, and
+  runner lifecycle delegation to `037c962fd`. Those separate lists and local
+  guards could neither express one selected taxonomy nor prove complete,
+  profile-isolated rejection before downstream work.
+- [x] **ADDRESSED (verified)** — one immutable content-addressed registry owns
+  twelve selected revision-1 family namespaces, task owners, reserved effects,
+  dependencies, common bounds, stage/backend maturity, three exact profiles,
+  and v1 public capabilities. Functional maturity remains unavailable. Parser,
+  planner, portable emitter, and runner consume the same negotiator; complete
+  schema/profile/family/revision/dependency/capability/effect failures precede
+  SemanticIR, HIAL review, artifact, workspace, and process output. The v1
+  tooling JSON hash remains exact. T1803 covers defensive/deterministic shape,
+  profile isolation, complete rejection, wrong revisions, wrong profiles,
+  hostile phase carriers, and absence of partial or filesystem output.
+- [x] **NO REGRESSION (compiler, references, claims, and residue)** — the final
+  RAM-guarded v1/v2 compiler/tool/backend/reader band reports `All tests
+  successful.` at `Files=12, Tests=75`, with only the existing explicit Darwin
+  runtime skip. Every mdBook chapter tests; the inspected 98-file/22,080-KiB
+  repository-local render is removed. Semantic partitioning keeps the exact
+  three-file VIAL reference at 492 lines/26,982 bytes with its largest part at
+  344 lines/18,690 bytes and no debt or ceiling rise. Knowledge Map parity is
+  1,160/6,298/6,469/138; claims close 1,896/1,896 with zero gaps. Syntax, diff,
+  task, paths, locality, README, containment, staged acceptance, all doctrines,
+  and binary/log/build residue checks are green. No family implementation,
+  v2 backend/runtime/result/parity, public-v2, support, or v1-success change.

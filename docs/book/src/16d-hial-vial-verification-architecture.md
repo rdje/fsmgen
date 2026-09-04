@@ -782,7 +782,8 @@ Run the focused source gate from the repository root:
 
 ```sh
 prove -Iperl t/1801-vial-v2-source-projections.t \
-  t/1802-vial-v2-semantic-family-envelope.t
+  t/1802-vial-v2-semantic-family-envelope.t \
+  t/1803-vial-v2-family-registry.t
 ```
 
 The private planner now accepts the empty-family v2 base, binds it through the
@@ -796,12 +797,30 @@ and per-family result records. Contradiction, missing data, parser residue,
 forged provenance, duplicate identity, or a bound violation fails before the
 next object is allocated. V1 ExecutionIR and plan identities remain exact.
 
+`FSM::Support::VIALSemanticFamilyRegistry` is now the single machine authority
+for revision, dependency, reserved effect, bound-profile, maturity, and backend
+mapping facts. It reserves the twelve `.19.2-.19.13` family namespaces while
+reporting only `selection: selected`; source, semantic, binding, execution,
+plan, emission, compile, runtime, result, parity, and public maturity all remain
+`unavailable`. Dependencies are explicitly empty until cross-family semantics
+select otherwise. The current portable-Verilator mapping also supports no v2
+family revision.
+
+The registry's parser, empty-base planner, and portable-backend profile records
+drive one closed negotiation result. Parser and planner reject before semantic
+or HIAL work; emitter rejects before artifact rendering; runner rejects before
+lifecycle workspace or process creation. A rejection retains the complete
+unsupported schema/profile/family/revision/dependency/capability/effect set,
+and it never borrows support from an unselected profile. The unchanged public
+v1 tooling capability list and v1 backend supported-capability set are derived
+from this registry, so machine truth has one owner without advertising v2.
+
 This is deliberately not public v2 tooling yet. The v1 tool request rejects v2
 before exposing a report or loading a v2 CLI import. Existing v1 backend and
 result producers reject v2 before artifacts or a mislabeled v1 manifest.
 Public v2 request/result schemas, migration, registered family semantics,
 backend adapters, runtime, complete results, parity, and support remain owned
-by `.19.1.4` through `.19.1.7`.
+by `.19.1.5` through `.19.1.7` and the vertical family activities.
 
 ## Native extensions
 

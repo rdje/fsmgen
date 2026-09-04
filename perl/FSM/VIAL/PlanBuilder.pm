@@ -19,6 +19,11 @@ use FSM::Pipeline::DirectGenerationOrchestrator;
 use FSM::Pipeline::HDLGenerator;
 use FSM::Pipeline::SourceFrontend;
 use FSM::Scheduler::ISF;
+use FSM::Support::VIALSemanticFamilyRegistry qw(
+    negotiate_vial_semantic_family_requirements
+    vial_family_requirements_from_semantic_ir
+    vial_semantic_family_negotiation_message
+);
 use FSM::VIAL::ExecutionBuilder;
 use FSM::VIAL::SemanticIR;
 
@@ -92,6 +97,24 @@ sub _build($raw) {
         unless ref($raw->{scenario_ids}) eq 'ARRAY';
     confess 'native_extension_catalog must be an array'
         unless ref($raw->{native_extension_catalog}) eq 'ARRAY';
+
+    if ($raw->{semantic_ir}->language_version == 2) {
+        my $semantic = $raw->{semantic_ir}->as_hashref;
+        my $requirements = vial_family_requirements_from_semantic_ir($semantic);
+        my $negotiation = negotiate_vial_semantic_family_requirements({
+            stage => 'planner',
+            profile_id => 'core_directed_single_clock_execution_v2',
+            source_language_version => 2,
+            execution_schema => undef,
+            execution_profile => $raw->{execution_profile},
+            requirements => $requirements,
+        });
+        return _failure(
+            'VIAL_FAMILY_UNSUPPORTED',
+            vial_semantic_family_negotiation_message($negotiation),
+            '/semantic_ir/packages',
+        ) unless $negotiation->{accepted};
+    }
 
     my $route = eval { _build_hial_route($raw->{hial_source}) };
     return _failure(

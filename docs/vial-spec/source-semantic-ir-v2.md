@@ -2,7 +2,7 @@
 
 Date: 2026-09-04
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1`
-Status: source/projections and common private phase envelope implemented through `.19.1.3`
+Status: source/projections, common private phase envelope, and fail-closed family registry implemented through `.19.1.4`
 
 ## Outcome and authority
 
@@ -18,8 +18,9 @@ This contract freezes the source/version boundary before implementation.
 Decision `0034` is its design authority. The v1 contract remains the complete
 authority for language version 1. Later family leaves own the closed grammar
 and semantics below each registered family block; `.19.1.3` owns the common
-typed envelope through execution and results; `.19.1.4` owns the registry and
-capability implementation; `.19.1.7` owns public migration/tooling exposure.
+typed envelope through execution and results; `.19.1.4` owns the selected
+taxonomy registry and fail-closed negotiation; `.19.1.7` owns public
+migration/tooling exposure.
 
 ## Immutable version-1 boundary
 
@@ -118,10 +119,11 @@ version requires a real HIAL fact-shape change, not merely a v2 VIAL source.
 Leaf `.19.1.2` implements the source-semantic foundation without advancing a
 backend or public-tool schema. `FSM::VIAL::Parser` dispatches the connected
 catalog by its root version. A separate version-2 builder validates the exact
-seven-section envelope, rejects every non-empty family block because the
-registry is still empty, and reuses the unchanged v1 semantic builder only for
-the inherited base grammar. It then constructs a new immutable v2 record with
-an empty typed `intent_families` collection and the authored `intents` span.
+seven-section envelope, rejects every non-empty family block whose registered
+source stage is not implemented, and reuses the unchanged v1 semantic builder
+only for the inherited base grammar. It then constructs a new immutable v2
+record with an empty typed `intent_families` collection and the authored
+`intents` span.
 
 Normal-v2 and terse-v2 formatting preserve language version and reparse to one
 `fsmgen.vial_semantic_projection.v2` digest. Empty-intents v2 and v1 also
@@ -161,82 +163,16 @@ it cannot mutate v1.
 The base v2 required capabilities are sorted and include
 `vial.source.v2`, `vial.semantic_ir.v2`, and
 `vial.profile.core_directed_single_clock_v2`. A registered family additionally
-requires `vial.family.<family_id>.r<revision>.semantic`; later stage/backend
-capabilities are distinct. Presence of source syntax never implies planning,
+reserves `vial.family.<family_id>.v<revision>`; later source, stage, and backend
+capabilities remain distinct and are added only by their implementation owner.
+Presence of a registry identity or source syntax never implies planning,
 emission, compile, run, result, parity, methodology, scale, or support.
 
-### Immutable semantic-family envelope
+### Semantic-family envelope and registry
 
-`FSM::Support::VIALSemanticFamilyContract` is the machine authority for the
-common facts every later family must supply. An `intent_families` entry has
-exactly `semantic_id`, `family_id`, `revision`, `semantic_path`, `source_span`,
-and one-or-more `nodes`. Family IDs and semantic IDs are unique in their
-collection. Each node is an immutable
-`fsmgen.vial_semantic_family.v2` record with exactly:
-
-```text
-schema, schema_version, stage
-semantic_id, family_id, revision, node_id, node_kind
-scope, lifetime, order
-ports, effects, failure, result
-semantic_path, source_span, payload
-```
-
-`scope` names one `catalog`, `package`, `fixture`, `scenario`, or `fiber`
-owner. `lifetime` gives distinct start/end seams and a `forbidden`,
-`cooperative`, or `required` cancellation policy. `order` carries a domain,
-phase, nonnegative rank, and disjoint before/after identity lists. Ports carry
-stable identity, name, input/output/inout direction, type identity,
-one/optional/many cardinality, and a JSON Boolean required flag. Effects carry
-stable identity, target, and visibility. Failure and result contracts state
-their typed outcome before any backend choice. `payload` is family-typed plain
-JSON data: lexer/parser nodes and raw source residue are rejected.
-
-The containing family span must enclose every node span in the same
-repository-relative source. The family registry owns each payload's exact
-keys and tighter limits; the common validator does not accept a family merely
-because its generic envelope is well formed. The source grammar can recognize
-an empty family block so semantic diagnostics own that error, but a zero-node
-family never enters SemanticIR.
-
-### Phase records and traceability
-
-The exact per-node stage schemas are:
-
-| Phase | Schema | Additional common facts |
-| --- | --- | --- |
-| semantic | `fsmgen.vial_semantic_family.v2` | unbound meaning above |
-| bridge binding | `fsmgen.vial_semantic_family_binding.v2` | typed port bindings and HIAL bridge fact paths |
-| execution | `fsmgen.vial_execution_family.v2` | operation IDs and complete required capabilities |
-| plan | `fsmgen.vial_plan_family.v2` | sanitized execution projection |
-| result | `fsmgen.vial_result_family.v2` | status, typed outputs, observed effects, diagnostic IDs |
-
-Binding, execution, and plan records have exactly `schema`, `schema_version`,
-`stage`, `semantic`, `bindings`, `operation_ids`, `required_capabilities`, and
-`source_map`. Result adds exactly `status`, `outputs`, `observed_effects`, and
-`diagnostic_ids`. Required ports must be bound once to known semantic ports;
-each binding cites at least one HIAL bridge fact and type-relation proof, and
-the source map contains exactly the binding records' ordered bridge-fact union;
-plan and result preserve execution operations and sorted capabilities; every
-later phase preserves the exact semantic and binding meaning. An execution may
-add requirements but cannot lose a binding requirement. A passing result must
-provide its required typed output and account for every result-visible effect.
-
-Each stage embeds `fsmgen.vial_source_map.v2` with a content-derived
-`source-map/<sha256>` identity, semantic identity/path, bridge fact paths,
-execution paths, plan paths, result paths, and authored locations. The
-validator requires the first location to be the exact node span and paths to
-accumulate in phase order. Forged identity, lost span, missing phase path,
-mutation of earlier meaning, unknown key, blessed value, duplicate identity,
-or unbounded collection fails before a downstream object is allocated.
-
-The common per-node ceilings are 256 ports, effects, bindings, capabilities,
-diagnostics, or source locations; 256 entries in each before/after relation;
-and 4,096 operations, observed effects, source paths, or payload values. A
-payload is also limited to depth 64 and 262,144 canonical JSON bytes. A family
-has at most 4,096 nodes and at least one. The catalog ceilings in
-[Bounds](#bounds) remain independent and may be tighter. These are safety
-limits, not capacity claims.
+The immutable common family records, phase traceability rules, bounds,
+selected family registry, and exact fail-closed negotiation contract live in
+[their dedicated semantic part](semantic-family-envelope-and-registry.md).
 
 ### Private empty-base execution
 
@@ -260,8 +196,9 @@ a future v2 result from being mislabeled as v1. The result-family schema above
 is an implemented common validator and traceability contract, not yet the
 complete `fsmgen.verification_result_manifest.v2` producer.
 
-No nonempty family can reach these carriers until `.19.1.4` registers its
-grammar and semantics. No backend maps the common family envelope until
+No nonempty family can reach these carriers until its vertical activity marks
+the necessary registry stages implemented and supplies its closed grammar and
+semantics. No v2 backend adapter maps the common family envelope until
 `.19.1.5`; no public v2 tool or migration ships until `.19.1.7`.
 
 ## Import and adapter compatibility
@@ -390,15 +327,15 @@ records; deterministic diagnostics; no partial output; repository-relative
 identities; public capability truth; and exact cleanup. Family syntax cannot
 ship until its own vertical source-to-qualified-result owner passes.
 
-Implemented leaves `.19.1.2-.19.1.3` change only private v2 source, semantic,
-common-family contract, empty-base execution, and plan behavior. They change no
-v1 byte or meaning, public tool action or capability/support record, HIAL bridge
-fact, artifact, backend output, compile, runtime, complete result, parity,
-provider, or HIAL behavior. They implement no expressive family, adapter,
-reverse migration, mixed-version catalog, raw native block, arbitrary
-SV/UVM/VHDL feature, mixed-language route, full-language claim, scale claim, or
-support promotion. VIAL remains simpler intent above qualified target
-mechanisms, not a renamed target API.
+Implemented leaves `.19.1.2-.19.1.4` change private v2 source, semantic,
+common-family contract, empty-base execution/plan, registry, and rejection
+behavior. V1 source, meaning, public capability bytes, successful plan/backend
+output, support, and HIAL behavior remain unchanged. No expressive family,
+public v2 tool, adapter, complete v2 result, backend emission/runtime, parity,
+provider, reverse migration, mixed-version catalog, raw native block,
+arbitrary SV/UVM/VHDL feature, mixed-language route, full-language claim,
+scale claim, or support promotion ships. VIAL remains simpler intent above
+qualified target mechanisms, not a renamed target API.
 
 Selection rollback removes this v2 maintained reference, book, Knowledge Map,
 task, and index links. Implementation rollback removes only private v2 routes

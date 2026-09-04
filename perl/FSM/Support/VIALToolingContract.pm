@@ -8,6 +8,9 @@ use JSON::PP ();
 use FSM::Support::VIALArchitectureScaleRegressionContract qw(
     build_vial_architecture_scale_regression_contract
 );
+use FSM::Support::VIALSemanticFamilyRegistry qw(
+    vial_public_tool_capabilities
+);
 
 our @EXPORT_OK = qw(
     build_vial_tooling_contract
@@ -30,6 +33,7 @@ sub vial_tooling_contract_keys {
 }
 
 sub build_vial_tooling_contract {
+    my $public_capabilities = vial_public_tool_capabilities();
     return {
         schema_version => 1,
         status => 'shipped_public_verilator_execution_result_and_ahb_parity',
@@ -48,25 +52,7 @@ sub build_vial_tooling_contract {
         semantic_projection_schema => 'fsmgen.vial_semantic_projection.v1',
         source_styles => [qw(normal_v1 terse_v1)],
         supported_actions => [qw(capabilities check format plan run)],
-        capabilities => [qw(
-            vial.tooling.cli.v1
-            vial.tooling.api.v1
-            vial.source_projection.normal_v1
-            vial.source_projection.terse_v1
-            vial.semantic_projection.v1
-            vial.artifact_layout.v1
-            vial.tool_manifest.v1
-            vial.verification_output_manifest.v2
-            vial.backend.sv_portable_verilator.v1
-            vial.backend.sv_portable_verilator.known_value_runtime_v1
-            vial.backend.sv_portable_verilator.inactive_edge_scheduler_v1
-            vial.backend.sv_portable_verilator.declared_probe_adapter_v1
-            vial.backend.sv_portable_verilator.runtime_trace_v1
-            vial.parity.ahb_base_output_arbitration.v1
-            vial.parity_report.v1
-            vial.result_manifest.v1
-            vial.architecture_scale.regression_gate.v1
-        )],
+        capabilities => $public_capabilities,
         diagnostics => [qw(
             VIAL_TOOL_INVOCATION_ERROR
             VIAL_SOURCE_STYLE_ERROR

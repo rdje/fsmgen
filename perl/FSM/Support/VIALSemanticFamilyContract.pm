@@ -89,7 +89,7 @@ sub vial_semantic_family_contract_keys {
 sub build_vial_semantic_family_contract {
     return _clone({
         schema_version => 1,
-        status => 'private_v2_common_envelope_shipped_no_registered_families',
+        status => 'private_v2_common_envelope_and_registry_shipped_no_implemented_family',
         contract_source => __PACKAGE__,
         stage_schemas => {%STAGE_SCHEMA, source_map => 'fsmgen.vial_source_map.v2'},
         semantic_family_keys => [@SEMANTIC_FAMILY_KEYS],
@@ -110,8 +110,9 @@ sub build_vial_semantic_family_contract {
         limits => {%LIMIT},
         explicit_nonclaims => [qw(
             backend_adapter backend_emission compatibility_adapter
-            complete_result_manifest family_grammar family_registry migration
-            parity public_v2_tooling runtime_support support_classification
+            complete_result_manifest family_grammar family_implementation
+            migration parity public_v2_tooling runtime_support
+            support_classification
         )],
     });
 }

@@ -12,6 +12,12 @@ use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
+use FSM::Support::VIALSemanticFamilyRegistry qw(
+    negotiate_vial_semantic_family_requirements
+    vial_family_requirements_from_execution_ir
+    vial_profile_supported_capabilities
+);
+
 my $BACKEND_PROFILE = 'sv_portable_verilator';
 my $BACKEND_SCHEMA = 'fsmgen.vial_backend.sv_portable_verilator.v1';
 my $SOURCE_MAP_SCHEMA = 'fsmgen.vial_backend_source_map.v1';
@@ -40,25 +46,8 @@ my @SOURCE_MAP_ENTRY_KEYS = qw(
     generated_symbol role plan_paths semantic_paths bridge_fact_paths
     source_locations
 );
-my %SUPPORTED_CAPABILITY = map { $_ => 1 } qw(
-    hial_vial.bridge_manifest.v1
-    hial_vial.bridge_probe.equivalent_adapter_required
-    hial_vial.bridge_profile.core_single_unit_v1
-    hial_vial.bridge_protocol.ahb_subordinate_v1
-    hial_vial.bridge_source.ial0_direct
-    hial_vial.bridge_source.ial1_via_generated_ial0
-    hial_vial.bridge_source.ial2_via_generated_ial1
-    vial.binding.directional_representation.v1
-    vial.execution_ir.v1
-    vial.execution_profile.core_directed_single_clock_execution_v1
-    vial.logical_time.drive_sample_react_check_v1
-    vial.plan.v1
-    vial.profile.core_directed_single_clock_v1
-    vial.random.sha256_counter_rejection_v1
-    vial.replay.v1
-    vial.semantic_ir.v1
-    vial.source.v1
-);
+my %SUPPORTED_CAPABILITY = map { $_ => 1 }
+    @{vial_profile_supported_capabilities($BACKEND_PROFILE)};
 my %SUPPORTED_RELATION = map { $_ => 1 } qw(
     bit_domain_identity_v1 known_value_injection_v1 enum_encoding_injection_v1
 );
@@ -414,6 +403,32 @@ sub _negotiate(
         $execution, $bridge, $backend_inputs,
     ) if ($qualification_profile // '') eq 'balanced_portable_v2';
     my (@required, @satisfied, @unsatisfied, @native_only, @limitations);
+    if (($execution->{schema_version} // 0) == 2
+        || exists($execution->{semantic_families})) {
+        my $family_requirements;
+        my $requirements_ok = eval {
+            $family_requirements =
+                vial_family_requirements_from_execution_ir($execution);
+            1;
+        };
+        if (!$requirements_ok) {
+            push @unsatisfied, 'family_registry:invalid_execution_family_carrier';
+        }
+        else {
+            my $family_negotiation =
+                negotiate_vial_semantic_family_requirements({
+                    stage => 'emitter',
+                    profile_id => $BACKEND_PROFILE,
+                    source_language_version => undef,
+                    execution_schema => $execution->{schema},
+                    execution_profile => $execution->{profile},
+                    requirements => $family_requirements,
+                });
+            push @required, @{$family_negotiation->{required}};
+            push @satisfied, @{$family_negotiation->{satisfied}};
+            push @unsatisfied, @{$family_negotiation->{unsupported}};
+        }
+    }
     push @unsatisfied, 'execution schema must be fsmgen.vial_execution_ir.v1'
         unless ($execution->{schema} // '') eq 'fsmgen.vial_execution_ir.v1';
     push @unsatisfied, 'execution profile must be core_directed_single_clock_execution_v1'

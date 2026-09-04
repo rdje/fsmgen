@@ -279,13 +279,18 @@ records. Capability negotiation fails before output when a backend has no
 selected equivalent. Decision `0034` records the ceiling rule; activity `.19`
 preserves closed v1 and the bounded v2 contract landing selects exact roots,
 schemas, imports, migration, limits, diagnostics, and vertical family lanes.
-Leaves `.19.1.2-.19.1.3` implement the private base v2 parser, normal/terse and
+Leaves `.19.1.2-.19.1.4` implement the private base v2 parser, normal/terse and
 cross-version compatibility projections, same-version catalog imports, typed
-empty family container, v2 diagnostics, the closed common family envelope, and
+empty family container, v2 diagnostics, the closed common family envelope,
 distinct empty-family v2 ExecutionIR/plan carriers through the unchanged HIAL
-bridge. The v1 public tool still rejects v2; public v2 tooling, registered
-families, backend adapters, runtime results, parity, and support remain
-unshipped.
+bridge, and one content-addressed family/profile registry. The registry reserves
+the twelve selected family revision/effect namespaces but marks every
+functional and backend maturity unavailable. Parser, planner, emitter, and
+runner negotiate the complete requirement set before their respective output
+boundaries; the existing v1 public capability bytes and successful backend
+behavior remain exact and registry-derived. The v1 public tool still rejects
+v2; public v2 tooling, family semantics, backend adapters, runtime results,
+parity, and support remain unshipped.
 
 ## Typed Native Extensions
 

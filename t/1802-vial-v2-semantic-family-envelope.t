@@ -213,8 +213,8 @@ subtest 'common semantic-family contract is closed and bounded at every phase' =
         [sort @{vial_semantic_family_contract_keys()}],
         'machine contract has exactly its declared top-level keys');
     is($contract->{status},
-        'private_v2_common_envelope_shipped_no_registered_families',
-        'machine truth separates the carrier from family admission');
+        'private_v2_common_envelope_and_registry_shipped_no_implemented_family',
+        'machine truth separates registered identities from implementation');
     is($contract->{stage_schemas}{source_map}, 'fsmgen.vial_source_map.v2',
         'the common provenance carrier has an exact schema identity');
     is($contract->{limits}{families_per_package}, 256,

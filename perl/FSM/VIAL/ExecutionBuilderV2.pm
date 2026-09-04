@@ -7,6 +7,12 @@ use Digest::SHA qw(sha256_hex);
 use JSON::PP ();
 use Scalar::Util qw(blessed reftype);
 
+use FSM::Support::VIALSemanticFamilyRegistry qw(
+    negotiate_vial_semantic_family_requirements
+    vial_family_requirements_from_semantic_ir
+    vial_semantic_family_negotiation_message
+);
+
 my $PROFILE = 'core_directed_single_clock_execution_v2';
 my %CAPABILITY_REPLACEMENT = (
     'vial.source.v1' => 'vial.source.v2',
@@ -71,11 +77,19 @@ sub _build {
         && !ref($raw->{execution_profile}) && $raw->{execution_profile} eq $PROFILE;
 
     my $semantic = $raw->{semantic_ir}->as_hashref;
+    my $family_negotiation = negotiate_vial_semantic_family_requirements({
+        stage => 'planner',
+        profile_id => $PROFILE,
+        source_language_version => 2,
+        execution_schema => undef,
+        execution_profile => $PROFILE,
+        requirements => vial_family_requirements_from_semantic_ir($semantic),
+    });
     return _failure(
         'VIAL_FAMILY_UNSUPPORTED', 'capability',
-        'version-2 base execution requires every intent-family collection to be empty',
+        vial_semantic_family_negotiation_message($family_negotiation),
         '/semantic_ir/packages',
-    ) if grep { @{$_->{intent_families}} } @{$semantic->{packages}};
+    ) unless $family_negotiation->{accepted};
 
     my $v1_semantic = $raw->{semantic_ir}->_v1_base_projection;
     my $base = _clone($raw);

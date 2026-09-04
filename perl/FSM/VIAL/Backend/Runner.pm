@@ -9,6 +9,11 @@ use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
+use FSM::Support::VIALSemanticFamilyRegistry qw(
+    negotiate_vial_semantic_family_requirements
+    vial_family_requirements_from_execution_ir
+    vial_semantic_family_negotiation_message
+);
 use FSM::VIAL::Backend::VerilatorLifecycle;
 
 my @RESULT_KEYS = qw(
@@ -32,6 +37,33 @@ sub run($class, @args) {
         'run expects one closed argument hash', '/', undef,
     ) unless @args == 1 && ref($args[0]) eq 'HASH'
         && !blessed($args[0]);
+
+    my $execution_ir = $args[0]{execution_ir};
+    if (blessed($execution_ir)
+        && ref($execution_ir) eq 'FSM::VIAL::ExecutionIR') {
+        my $execution = $execution_ir->as_hashref;
+        if (($execution->{schema_version} // 0) == 2
+            || exists($execution->{semantic_families})) {
+            my $negotiation = eval {
+                negotiate_vial_semantic_family_requirements({
+                    stage => 'runner',
+                    profile_id => 'sv_portable_verilator',
+                    source_language_version => undef,
+                    execution_schema => $execution->{schema},
+                    execution_profile => $execution->{profile},
+                    requirements =>
+                        vial_family_requirements_from_execution_ir($execution),
+                });
+            };
+            return _failure(
+                'VIAL_BACKEND_UNSUPPORTED',
+                defined($negotiation)
+                    ? vial_semantic_family_negotiation_message($negotiation)
+                    : 'semantic-family negotiation rejected an invalid execution carrier',
+                '/negotiation', undef,
+            ) unless defined($negotiation) && $negotiation->{accepted};
+        }
+    }
 
     my $lifecycle = eval {
         FSM::VIAL::Backend::VerilatorLifecycle
