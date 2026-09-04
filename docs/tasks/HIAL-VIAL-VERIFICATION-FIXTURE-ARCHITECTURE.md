@@ -1903,11 +1903,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.1: select task-oriented HIAL/VIAL documentation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Make the mdBook entry path distinguish shipped HIAL/VIAL behavior, qualified profiles, unavailable profiles, and future work without progress-ledger drift.`
   Acceptance: `Implement the .18.1-selected SUMMARY, backlog, overview, and chapter-boundary changes; give a bounded learning path and stable reference routing; remove or historical-label stale implementation narration; preserve exact semantics, links, claims, and containment without hiding unsupported or proposed capabilities.`
-  Verification: `pending .18.1 selection and separate clean activation`
-  Commit: `pending activation`
+  Verification: `Clean predecessor 367dc4aca closes .18.1 with the exact retain/merge/repair/supersede matrix, the stale completed VHDL parent repaired, generated Knowledge Map and claim inventory synchronized, all doctrine checks green, an empty commit brief, and no dirty or untracked work. This activation owns only the selected README/SUMMARY navigation, future-only backlog, bounded stable overview, and chapter-boundary repair plus its t1796 watcher; no user documentation, source, contract, example, schema, capability, support, runtime, parity, scale claim, containment authority, or product behavior changes during activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.2: activate HIAL/VIAL reader-path repair`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.3`
   Status: `proposed`
