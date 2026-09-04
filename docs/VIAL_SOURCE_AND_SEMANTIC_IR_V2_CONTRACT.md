@@ -2,7 +2,7 @@
 
 Date: 2026-09-04
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1`
-Status: selected contract; base parser/projections implemented by `.19.1.2`
+Status: source/projections and common private phase envelope implemented through `.19.1.3`
 
 This bounded landing page is the mandatory entrypoint for the additive VIAL
 version-2 source and compatibility reference. Read its one semantic part:

@@ -10,17 +10,27 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
 use FSM::VIAL::ExecutionIR;
+use FSM::Support::VIALSemanticFamilyContract qw(
+    project_vial_semantic_family_plan
+);
 
-my @TOP_LEVEL_KEYS = qw(
+my @TOP_LEVEL_KEYS_V1 = qw(
     schema schema_version profile plan_id status semantic_identity
     bridge_identity fixture bindings logical_time scenarios random_decisions
     capability_ledger native_extensions resource_summary source_map diagnostics
 );
+my @TOP_LEVEL_KEYS_V2 = (@TOP_LEVEL_KEYS_V1, 'semantic_families');
 
 sub top_level_keys($class) {
     confess "$class->top_level_keys requires the exact class invocant\n"
         unless defined($class) && !ref($class) && $class eq __PACKAGE__;
-    return [@TOP_LEVEL_KEYS];
+    return [@TOP_LEVEL_KEYS_V1];
+}
+
+sub top_level_keys_v2($class) {
+    confess "$class->top_level_keys_v2 requires the exact class invocant\n"
+        unless defined($class) && !ref($class) && $class eq __PACKAGE__;
+    return [@TOP_LEVEL_KEYS_V2];
 }
 
 sub build($class, @args) {
@@ -45,10 +55,11 @@ sub _build_from_builder_projection($class, @args) {
 }
 
 sub _build_plan($data) {
+    my $version = $data->{schema_version};
     my $bindings = _plan_bindings($data->{bindings});
     my $plan = {
-        schema => 'fsmgen.vial_plan.v1',
-        schema_version => 1,
+        schema => "fsmgen.vial_plan.v$version",
+        schema_version => 0 + $version,
         profile => $data->{profile},
         plan_id => $data->{plan_id},
         status => 'bound_target_neutral',
@@ -79,6 +90,13 @@ sub _build_plan($data) {
         source_map => _clone($data->{source_map}),
         diagnostics => [],
     };
+    if ($version == 2) {
+        $plan->{semantic_families} = [map {
+            project_vial_semantic_family_plan(
+                $data->{semantic_families}[$_], "/semantic_families/$_",
+            )
+        } 0 .. $#{$data->{semantic_families}}];
+    }
     return _clone($plan);
 }
 

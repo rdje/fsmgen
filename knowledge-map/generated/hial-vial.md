@@ -22,7 +22,7 @@
 - q="is Verilator a traditional event-driven simulator?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md), [ial2-post-exact-three-paired-composition-next-owner-selection](../../docs/knowledge/ial2-post-exact-three-paired-composition-next-owner-selection.md)
 - q="is Verilator enough to validate full SystemVerilog and UVM VIAL output?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="is a mixed-language HIAL VIAL simulator available?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
-- q="is the VIAL version 2 base parser implemented?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
+- q="is the VIAL v2 common envelope implemented?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="should HIAL lower to SystemVerilog and VHDL?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="should VIAL lower to SV UVM and VHDL verification code?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="what are VIAL drive sample react check phases?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)

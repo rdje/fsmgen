@@ -86,11 +86,6 @@ sub _build($raw) {
     confess 'semantic_ir must be an exact FSM::VIAL::SemanticIR object'
         unless blessed($raw->{semantic_ir})
             && ref($raw->{semantic_ir}) eq 'FSM::VIAL::SemanticIR';
-    return _failure(
-        'VIAL_VERSION_UNSUPPORTED',
-        'plan builder version 1 accepts only VIAL semantic IR version 1',
-        '/semantic_ir/language_version',
-    ) unless $raw->{semantic_ir}->language_version == 1;
     confess 'hial_source must be an unblessed hash'
         unless ref($raw->{hial_source}) eq 'HASH' && !blessed($raw->{hial_source});
     confess 'scenario_ids must be an array'
@@ -129,7 +124,12 @@ sub _build($raw) {
         '/options',
     ) unless defined $selection;
     my ($fixture_id, $scenario_ids) = @$selection;
-    my $execution = FSM::VIAL::ExecutionBuilder->build({
+    my $execution_builder = 'FSM::VIAL::ExecutionBuilder';
+    if ($raw->{semantic_ir}->language_version == 2) {
+        require FSM::VIAL::ExecutionBuilderV2;
+        $execution_builder = 'FSM::VIAL::ExecutionBuilderV2';
+    }
+    my $execution = $execution_builder->build({
         semantic_ir => $raw->{semantic_ir},
         bridge_manifest => $bridge->{manifest},
         fixture_id => $fixture_id,

@@ -2,7 +2,7 @@
 
 Date: 2026-09-04
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1`
-Status: selected contract; base parser/projections implemented by `.19.1.2`
+Status: source/projections and common private phase envelope implemented through `.19.1.3`
 
 ## Outcome and authority
 
@@ -91,8 +91,8 @@ file name, `schema_version` alone, or a v1 object shape.
 
 | Record or capability | Version-2 identity | Implementation owner |
 | --- | --- | --- |
-| private semantic record | `fsmgen.vial_semantic_ir.v2` / `schema_version: 2` | `.19.1.2-.19.1.3` |
-| sanitized semantic report | `fsmgen.vial_semantic_report.v2` | `.19.1.2-.19.1.3` |
+| private semantic record | `fsmgen.vial_semantic_ir.v2` / `schema_version: 2` | implemented by `.19.1.2-.19.1.3` |
+| sanitized semantic report | `fsmgen.vial_semantic_report.v2` | implemented by `.19.1.2` |
 | format/reparse meaning | `fsmgen.vial_semantic_projection.v2` | `.19.1.2` |
 | cross-version base meaning | `fsmgen.vial_compatibility_projection.v1` | `.19.1.2` |
 | source diagnostic | `fsmgen.vial_diagnostic.v2` | `.19.1.2` |
@@ -101,18 +101,19 @@ file name, `schema_version` alone, or a v1 object shape.
 | semantic capability | `vial.semantic_ir.v2` | `.19.1.2` IR requirement; `.19.1.7` public discovery |
 | base profile | `vial.profile.core_directed_single_clock_v2` | `.19.1.2-.19.1.3` |
 
-The downstream identities selected for typed v2 data are
-`fsmgen.vial_execution_ir.v2`, `fsmgen.vial_plan.v2`,
+The implemented private downstream base carriers are
+`fsmgen.vial_execution_ir.v2` and `fsmgen.vial_plan.v2`.
+The selected later result identities are
 `fsmgen.verification_result_manifest.v2`,
 `fsmgen.vial_parity_projection.v2`, `fsmgen.vial_parity_report.v2`, and
 `fsmgen.vial_source_map.v2`. Public v2 tooling uses
 `fsmgen.vial_tool_request.v2` and `fsmgen.vial_tool_result.v2`. Their exact
-fields and implementation remain owned by `.19.1.3` and `.19.1.7`; naming them
-here prevents a v1 schema from being silently widened. The unchanged HIAL
+fields and remaining implementation are owned by `.19.1.3` and `.19.1.7`;
+naming them here prevents a v1 schema from being silently widened. The unchanged HIAL
 facts continue to use `fsmgen.hial_vial_bridge_manifest.v1`; a new bridge
 version requires a real HIAL fact-shape change, not merely a v2 VIAL source.
 
-## Implemented base-source boundary
+## Implemented source and common phase boundary
 
 Leaf `.19.1.2` implements the source-semantic foundation without advancing a
 backend or public-tool schema. `FSM::VIAL::Parser` dispatches the connected
@@ -130,11 +131,14 @@ reserved adapters, unknown versions, unknown families, backend-shaped forms,
 and family bounds fail with closed v2 diagnostics. A v1-root catalog continues
 through the legacy normalizer and retains its prior import diagnostics.
 
-The existing public `fsmgen.vial_tool_request.v1` and version-1 plan builder
-reject v2 rather than mislabeling it or passing it downstream. Public v2 tool
-requests, CLI catalog loading, migration, expressive families, bridges, plans,
-backends, runtime, results, parity, and support remain owned by later leaves.
-The focused executable authority is `t/1801-vial-v2-source-projections.t`.
+The existing public `fsmgen.vial_tool_request.v1` rejects v2 rather than
+mislabeling it or loading a v2 CLI catalog. The private plan builder now accepts
+only the empty-intents v2 base and carries it through the unchanged v1 HIAL
+bridge into distinct v2 ExecutionIR and plan envelopes. Public v2 requests,
+migration, expressive families, backend adapters, runtime, complete result
+manifests, parity, and support remain owned by later leaves. The focused
+executable authorities are `t/1801-vial-v2-source-projections.t` and
+`t/1802-vial-v2-semantic-family-envelope.t`.
 
 The private v2 semantic record starts with exactly:
 
@@ -151,8 +155,8 @@ A package retains every v1 field and adds `intent_families` between
 `scoreboards` and `fixtures`. Each entry initially has exactly `semantic_id`,
 `family_id`, `revision`, `semantic_path`, `source_span`, and `nodes`. `nodes`
 is a closed union selected by the family registry, never raw parser forms.
-`.19.1.3` may add the already-owned common family envelope only by completing
-the v2 schema before any expressive node is accepted; it cannot mutate v1.
+The common family envelope is complete before any expressive node is accepted;
+it cannot mutate v1.
 
 The base v2 required capabilities are sorted and include
 `vial.source.v2`, `vial.semantic_ir.v2`, and
@@ -160,6 +164,105 @@ The base v2 required capabilities are sorted and include
 requires `vial.family.<family_id>.r<revision>.semantic`; later stage/backend
 capabilities are distinct. Presence of source syntax never implies planning,
 emission, compile, run, result, parity, methodology, scale, or support.
+
+### Immutable semantic-family envelope
+
+`FSM::Support::VIALSemanticFamilyContract` is the machine authority for the
+common facts every later family must supply. An `intent_families` entry has
+exactly `semantic_id`, `family_id`, `revision`, `semantic_path`, `source_span`,
+and one-or-more `nodes`. Family IDs and semantic IDs are unique in their
+collection. Each node is an immutable
+`fsmgen.vial_semantic_family.v2` record with exactly:
+
+```text
+schema, schema_version, stage
+semantic_id, family_id, revision, node_id, node_kind
+scope, lifetime, order
+ports, effects, failure, result
+semantic_path, source_span, payload
+```
+
+`scope` names one `catalog`, `package`, `fixture`, `scenario`, or `fiber`
+owner. `lifetime` gives distinct start/end seams and a `forbidden`,
+`cooperative`, or `required` cancellation policy. `order` carries a domain,
+phase, nonnegative rank, and disjoint before/after identity lists. Ports carry
+stable identity, name, input/output/inout direction, type identity,
+one/optional/many cardinality, and a JSON Boolean required flag. Effects carry
+stable identity, target, and visibility. Failure and result contracts state
+their typed outcome before any backend choice. `payload` is family-typed plain
+JSON data: lexer/parser nodes and raw source residue are rejected.
+
+The containing family span must enclose every node span in the same
+repository-relative source. The family registry owns each payload's exact
+keys and tighter limits; the common validator does not accept a family merely
+because its generic envelope is well formed. The source grammar can recognize
+an empty family block so semantic diagnostics own that error, but a zero-node
+family never enters SemanticIR.
+
+### Phase records and traceability
+
+The exact per-node stage schemas are:
+
+| Phase | Schema | Additional common facts |
+| --- | --- | --- |
+| semantic | `fsmgen.vial_semantic_family.v2` | unbound meaning above |
+| bridge binding | `fsmgen.vial_semantic_family_binding.v2` | typed port bindings and HIAL bridge fact paths |
+| execution | `fsmgen.vial_execution_family.v2` | operation IDs and complete required capabilities |
+| plan | `fsmgen.vial_plan_family.v2` | sanitized execution projection |
+| result | `fsmgen.vial_result_family.v2` | status, typed outputs, observed effects, diagnostic IDs |
+
+Binding, execution, and plan records have exactly `schema`, `schema_version`,
+`stage`, `semantic`, `bindings`, `operation_ids`, `required_capabilities`, and
+`source_map`. Result adds exactly `status`, `outputs`, `observed_effects`, and
+`diagnostic_ids`. Required ports must be bound once to known semantic ports;
+each binding cites at least one HIAL bridge fact and type-relation proof, and
+the source map contains exactly the binding records' ordered bridge-fact union;
+plan and result preserve execution operations and sorted capabilities; every
+later phase preserves the exact semantic and binding meaning. An execution may
+add requirements but cannot lose a binding requirement. A passing result must
+provide its required typed output and account for every result-visible effect.
+
+Each stage embeds `fsmgen.vial_source_map.v2` with a content-derived
+`source-map/<sha256>` identity, semantic identity/path, bridge fact paths,
+execution paths, plan paths, result paths, and authored locations. The
+validator requires the first location to be the exact node span and paths to
+accumulate in phase order. Forged identity, lost span, missing phase path,
+mutation of earlier meaning, unknown key, blessed value, duplicate identity,
+or unbounded collection fails before a downstream object is allocated.
+
+The common per-node ceilings are 256 ports, effects, bindings, capabilities,
+diagnostics, or source locations; 256 entries in each before/after relation;
+and 4,096 operations, observed effects, source paths, or payload values. A
+payload is also limited to depth 64 and 262,144 canonical JSON bytes. A family
+has at most 4,096 nodes and at least one. The catalog ceilings in
+[Bounds](#bounds) remain independent and may be tighter. These are safety
+limits, not capacity claims.
+
+### Private empty-base execution
+
+The private `FSM::VIAL::ExecutionBuilderV2` accepts exactly
+`core_directed_single_clock_execution_v2` and a v2 SemanticIR whose family
+collections are empty. It projects only the inherited base meaning through the
+unchanged v1 binder, then creates a new immutable
+`fsmgen.vial_execution_ir.v2`; it never relabels the v1 object. The carrier
+adds `semantic_families`, records the authored v2 semantic identity, replaces
+the versioned source/semantic/profile/execution/plan capability IDs, adds
+`vial.semantic_family_envelope.v2`, and derives a new plan identity. The plan
+is `fsmgen.vial_plan.v2` with the same empty family carrier. The HIAL facts
+remain `fsmgen.hial_vial_bridge_manifest.v1` because their meaning did not
+change.
+
+V1 ExecutionIR and plan key sets, content hashes, and plan identity remain
+exact. The v1 portable backend rejects the v2 ExecutionIR during capability
+negotiation before returning artifacts. The v1 result producer rejects it
+with `VIAL_RESULT_VERSION_UNSUPPORTED` before producing a manifest, preventing
+a future v2 result from being mislabeled as v1. The result-family schema above
+is an implemented common validator and traceability contract, not yet the
+complete `fsmgen.verification_result_manifest.v2` producer.
+
+No nonempty family can reach these carriers until `.19.1.4` registers its
+grammar and semantics. No backend maps the common family envelope until
+`.19.1.5`; no public v2 tool or migration ships until `.19.1.7`.
 
 ## Import and adapter compatibility
 
@@ -287,16 +390,18 @@ records; deterministic diagnostics; no partial output; repository-relative
 identities; public capability truth; and exact cleanup. Family syntax cannot
 ship until its own vertical source-to-qualified-result owner passes.
 
-This selection changes no parser, source acceptance, semantic object, public
-tool action, capability/support record, bridge, execution plan, artifact,
-backend, compile, runtime, result, parity, provider, or HIAL behavior. It does
-not implement any expressive family, adapter, reverse migration, mixed-version
-catalog, raw native block, arbitrary SV/UVM/VHDL feature, mixed-language route,
-full-language claim, scale claim, or support promotion. VIAL remains simpler
-intent above qualified target mechanisms, not a renamed target API.
+Implemented leaves `.19.1.2-.19.1.3` change only private v2 source, semantic,
+common-family contract, empty-base execution, and plan behavior. They change no
+v1 byte or meaning, public tool action or capability/support record, HIAL bridge
+fact, artifact, backend output, compile, runtime, complete result, parity,
+provider, or HIAL behavior. They implement no expressive family, adapter,
+reverse migration, mixed-version catalog, raw native block, arbitrary
+SV/UVM/VHDL feature, mixed-language route, full-language claim, scale claim, or
+support promotion. VIAL remains simpler intent above qualified target
+mechanisms, not a renamed target API.
 
-Selection rollback removes this v2 maintained reference and its registry,
-book, Knowledge Map, task, and index links. Later implementation rollback must
-remove only v2 routes and advertised v2 capabilities, restore this status to
-selected, and prove v1 bytes/behavior still equal. Neither rollback alters the
-v1 contract or any HIAL source/lowering/backend path.
+Selection rollback removes this v2 maintained reference, book, Knowledge Map,
+task, and index links. Implementation rollback removes only private v2 routes
+and v2 capability identities, restores this status to selected, and proves v1
+bytes/behavior still equal. Neither rollback alters the v1 contract or any
+HIAL source/lowering/backend path.

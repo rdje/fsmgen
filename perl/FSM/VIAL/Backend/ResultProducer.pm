@@ -101,6 +101,13 @@ sub _produce($raw) {
         unless ref($raw->{generated_artifact_sha256s}) eq 'ARRAY';
 
     my $execution = $raw->{execution_ir}->as_hashref;
+    _throw(
+        'VIAL_RESULT_VERSION_UNSUPPORTED',
+        'result producer version 1 accepts only the exact VIAL execution version-1 envelope',
+        '/execution_ir/schema',
+    ) unless ($execution->{schema} // '') eq 'fsmgen.vial_execution_ir.v1'
+        && ($execution->{schema_version} // 0) == 1
+        && ($execution->{profile} // '') eq 'core_directed_single_clock_execution_v1';
     my @records = @{$raw->{trace_validation}{records}};
     my (%stream, %ordinal, %maximum_cycle);
     for my $record (@records) {

@@ -5,6 +5,10 @@ use warnings;
 
 use Scalar::Util qw(blessed reftype);
 
+use FSM::Support::VIALSemanticFamilyContract qw(
+    validate_vial_semantic_family_collection
+);
+
 my @TOP_LEVEL_KEYS_V1 = qw(
     schema_version
     language
@@ -23,7 +27,8 @@ sub _new_validated {
     my $caller = caller;
     die "FSM::VIAL::SemanticIR->_new_validated is private\n"
         unless $caller eq 'FSM::VIAL::SemanticBuilder'
-            || $caller eq 'FSM::VIAL::SemanticBuilderV2';
+            || $caller eq 'FSM::VIAL::SemanticBuilderV2'
+            || $caller eq __PACKAGE__;
     die "VIALSemanticIR data must be an unblessed hash\n"
         unless ref($data) eq 'HASH' && !blessed($data);
 
@@ -53,6 +58,9 @@ sub _new_validated {
         for my $index (0 .. $#{$data->{packages}}) {
             die "VIALSemanticIR v2 package $index is missing intent_families\n"
                 unless ref($data->{packages}[$index]{intent_families}) eq 'ARRAY';
+            validate_vial_semantic_family_collection(
+                'semantic_family', $data->{packages}[$index]{intent_families},
+            );
         }
     }
 
@@ -110,6 +118,32 @@ sub source_location_for {
 sub as_hashref {
     my ($self) = @_;
     return _clone($self->{data});
+}
+
+sub _v1_base_projection {
+    my ($self) = @_;
+    die "VIALSemanticIR v1 base projection is private\n"
+        unless caller eq 'FSM::VIAL::ExecutionBuilderV2';
+    die "VIALSemanticIR v1 base projection requires exact v2 SemanticIR\n"
+        unless ref($self) eq __PACKAGE__ && $self->{data}{schema_version} == 2;
+    my $data = $self->as_hashref;
+    for my $package (@{$data->{packages}}) {
+        die "VIALSemanticIR v1 base projection requires empty intent families\n"
+            if @{$package->{intent_families}};
+        delete $package->{intent_families};
+    }
+    delete $data->{provenance}{$_}
+        for grep { m{/intent_families(?:/|\z)} } keys %{$data->{provenance}};
+    delete $data->{schema};
+    $data->{schema_version} = 1;
+    $data->{language_version} = 1;
+    $data->{profile} = 'core_directed_single_clock_v1';
+    $data->{required_capabilities} = [qw(
+        vial.profile.core_directed_single_clock_v1
+        vial.semantic_ir.v1
+        vial.source.v1
+    )];
+    return __PACKAGE__->_new_validated($data);
 }
 
 sub _assert_plain_data {

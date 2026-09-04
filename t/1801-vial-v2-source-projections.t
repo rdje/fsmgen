@@ -12,7 +12,6 @@ use Test::More;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::VIAL::Parser;
-use FSM::VIAL::PlanBuilder;
 use FSM::VIAL::SemanticReport;
 use FSM::VIAL::SourceProjection;
 use FSM::VIAL::Tool qw(execute_vial_tool_request vial_tool_capabilities);
@@ -551,24 +550,6 @@ subtest 'public v1 tooling does not mislabel or advertise the private v2 foundat
     is($catalog_result->{diagnostics}[0]{code}, 'VIAL_VERSION_UNSUPPORTED',
         'the v1 tool rejects a valid v2 catalog root before import resolution');
 
-    my $v2_ir = FSM::VIAL::Parser->parse_source({
-        text => $v2_source,
-        source_name => $source_name,
-    });
-    my $plan = FSM::VIAL::PlanBuilder->build({
-        semantic_ir => $v2_ir,
-        hial_source => {},
-        fixture_id => undef,
-        scenario_ids => [],
-        execution_profile => undef,
-        replay_manifest => undef,
-        native_extension_catalog => [],
-    });
-    ok(!$plan->{ok}, 'version-1 planning rejects the private v2 SemanticIR before HIAL work');
-    is($plan->{diagnostics}[0]{code}, 'VIAL_VERSION_UNSUPPORTED',
-        'planning rejection names the unimplemented downstream version boundary');
-    is($plan->{diagnostics}[0]{semantic_path}, '/semantic_ir/language_version',
-        'planning rejection points at the semantic version boundary');
 };
 
 done_testing();

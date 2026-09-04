@@ -50,12 +50,18 @@ only that outer wrapper. Every non-empty block still names its VIAL family and
 revision. Unknown families, revisions, nodes, mixed-version imports, or
 unregistered compatibility adapters fail before typed SemanticIR exists.
 
-Version 1 is not deprecated or silently upgraded. The base v2 parser now
-accepts the exact seven-section normal form and its equivalent terse form,
-constructs immutable `fsmgen.vial_semantic_ir.v2`, and proves empty-intents v2
-equivalent to v1 through `fsmgen.vial_compatibility_projection.v1`. The
-version-1 public tool and planner still reject v2; public v2 CLI/API schemas,
-migration, family semantics, and downstream execution remain later work.
+Version 1 is not deprecated or silently upgraded. The base v2 parser accepts
+the exact seven-section normal form and its equivalent terse form, constructs
+immutable `fsmgen.vial_semantic_ir.v2`, and proves empty-intents v2 equivalent
+to v1 through `fsmgen.vial_compatibility_projection.v1`. The private planner
+can carry that empty-family base through the unchanged HIAL bridge into
+distinct `fsmgen.vial_execution_ir.v2` and `fsmgen.vial_plan.v2` envelopes.
+The exact common family contract closes scope, lifetime, order, typed ports,
+effects, failure/result, and content-derived source maps across semantic,
+binding, execution, plan, and per-family result stages. The version-1 public
+tool still rejects v2. Public v2 CLI/API schemas, migration, registered family
+semantics, backend adapters, runtime results, parity, and support remain later
+work.
 
 Each family advances vertically. Its normal and terse forms must produce one
 typed meaning; IR and plans must preserve identity, bounds, source maps, and

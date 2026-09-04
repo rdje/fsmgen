@@ -7,9 +7,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3`
-  (`active`; immutable common semantic-family envelope)
-- next_action: Commit the continuity-only `.19.1.3` activation, then inspect
-  the selected v2 and phase contracts and implement only their common envelope.
-- in_flight_uncommitted: continuity-only `.19.1.3` activation candidate.
+  (`done`; implementation commit pending)
+- next_action: Commit completed `.19.1.3`, verify clean handoff, then activate
+  `.19.1.4` for the family registry and fail-closed profile negotiation.
+- in_flight_uncommitted: completed and verified `.19.1.3` implementation.
 - in_flight_background: none.
 - blockers: none.

@@ -781,14 +781,27 @@ family bounds fail closed.
 Run the focused source gate from the repository root:
 
 ```sh
-prove -Iperl t/1801-vial-v2-source-projections.t
+prove -Iperl t/1801-vial-v2-source-projections.t \
+  t/1802-vial-v2-semantic-family-envelope.t
 ```
 
-This is deliberately not public v2 tooling yet. The v1 tool request and v1
-planner reject v2 before exposing a report, loading a v2 CLI import, binding
-HIAL, or constructing execution IR. Public v2 request/result schemas,
-migration, registered family semantics, bridges, plans, backends, runtime,
-results, parity, and support remain owned by `.19.1.3` through `.19.1.7`.
+The private planner now accepts the empty-family v2 base, binds it through the
+unchanged `fsmgen.hial_vial_bridge_manifest.v1`, and returns distinct immutable
+`fsmgen.vial_execution_ir.v2` and `fsmgen.vial_plan.v2` carriers. Their empty
+`semantic_families` array is not an expressive-family claim. The common
+machine contract closes family/revision, scope, lifetime, order, typed ports,
+effects, failure/result, phase bindings/operations/capabilities, and
+content-derived source maps through semantic, bridge-binding, execution, plan,
+and per-family result records. Contradiction, missing data, parser residue,
+forged provenance, duplicate identity, or a bound violation fails before the
+next object is allocated. V1 ExecutionIR and plan identities remain exact.
+
+This is deliberately not public v2 tooling yet. The v1 tool request rejects v2
+before exposing a report or loading a v2 CLI import. Existing v1 backend and
+result producers reject v2 before artifacts or a mislabeled v1 manifest.
+Public v2 request/result schemas, migration, registered family semantics,
+backend adapters, runtime, complete results, parity, and support remain owned
+by `.19.1.4` through `.19.1.7`.
 
 ## Native extensions
 

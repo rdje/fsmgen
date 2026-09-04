@@ -1975,11 +1975,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.2: activate VIAL v2 parser implementation; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.2: implement VIAL v2 source projections`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the immutable common semantic-family envelope across SemanticIR, bridge binding, ExecutionIR, plan, result, and source maps.`
   Acceptance: `Every common field remains closed, typed, bounded, deterministic, defensively copied, source-derived, and traceable through each phase; versioned v1 paths retain exact projections; incomplete or contradictory nodes fail before downstream allocation.`
-  Verification: `Clean parser/projection commit fe480cd24 owns the complete private base-v2 source boundary with exact v1 preservation. The required Knowledge Map query returned no common-envelope implementation answer. This continuity-only activation selects the shared cross-phase family envelope as the next isolated slice; no SemanticIR, bridge, ExecutionIR, plan, result, source-map, public capability, or product behavior changes in the activation.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3: activate common VIAL family envelope`
+  Verification: `Clean parser/projection commit fe480cd24 owns the private base-v2 source boundary and clean activation 32b045d3f owns this isolated implementation. The required Knowledge Map query returned no common-envelope answer. History traces the v1-only ExecutionIR/plan boundary to 44dbecd1a, the temporary v2 planning rejection to fe480cd24, and the v1 result producer to dfe87f536. FSM::Support::VIALSemanticFamilyContract now defines exact closed semantic, binding, execution, plan, result, and content-derived source-map schemas; validates family/revision, scope, lifetime, order, typed ports/bindings, bridge/type proofs, effects, failure/result, phase preservation, repository-relative provenance, defensive JSON data, duplicate identities, and finite collection/depth/value/byte limits; and publishes explicit nonclaims. SemanticIR validates the typed family carrier. The isolated ExecutionBuilderV2 privately carries only empty-family v2 through the unchanged v1 HIAL bridge/base binder into distinct immutable fsmgen.vial_execution_ir.v2 and fsmgen.vial_plan.v2 envelopes with authored-v2 identity, versioned capabilities, deterministic plan identity, and no invented family. V1 ExecutionIR and plan key sets retain exact hashes 7d54be68bc691e3c05c4c94405f0ad278b9206032f8b9cde5dc3d7bf13714509 and eaa8cc70fa25a4382921f40112c0f3f50aec4045caccff2e6a8f98cfbc1c0942 plus plan/e236297c8b434a9b374d1800112841e00327bdbd5d8d9130440bd20681fbed6e. Existing v1 backend negotiation rejects v2 before artifacts, and ResultProducer now rejects it before a mislabeled v1 manifest. The guarded eleven-file source/semantic/bridge/execution/public-tool/plan/backend/reader band passes Files=11/Tests=70 with only the existing opt-in Darwin runtime qualification skip; t1802 separately proves complete and hostile phase chains at Files=1/Tests=5. Every mdBook chapter tests; its repository-local render contains 98 files/22,064 KiB, exposes both new reader sections, and is removed exactly. Knowledge Map closes at 1,160 facts/6,297 questions/6,468 occurrences/138 shards. Claim inventory/dispositions close 1,896/1,896 with zero gaps. Containment authorizes the exact 63-file/57,721-line/3,147,138-byte book and 2-file/422-line/23,011-byte VIAL reference from the prior exact baselines with no ceiling rise; the 138-line Knowledge Card remains below its prior byte size. Final task, path, locality, README, claims, Knowledge Map, containment, staged acceptance, and all 12 doctrines are green, with no generated build, artifact, log, binary, temporary, or brief residue. No nonempty family, registry, backend adapter/emission, compile/runtime/result-manifest/parity, public v2 tool/migration, support, provider, or HIAL behavior ships.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3: activate common VIAL family envelope; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3: implement immutable VIAL family envelope`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.4`
   Status: `proposed`
@@ -3982,3 +3982,38 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   Task integrity, relative paths, locality, README, staged acceptance, and all
   doctrines pass with no generated build, temporary artifact, or brief
   residue and no family/backend/runtime/support promotion.
+
+## Acceptance Checklist (.19.1.3, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean v2 parser commit `fe480cd24`
+  stopped before all downstream phases: `git log -S` traces the exact v1-only
+  ExecutionIR and plan schemas to `44dbecd1a`, the temporary v2 PlanBuilder
+  rejection to `fe480cd24`, and the v1 result producer to `dfe87f536`. The
+  required Knowledge Map query returned no common-envelope implementation
+  answer. Without a separate versioned carrier and shared validator, accepting
+  families next would either widen frozen v1 records or permit phase-specific
+  shapes to lose typed meaning and provenance.
+- [x] **ADDRESSED (verified)** — the new machine contract closes and bounds
+  every common semantic-family record from typed semantic node through bridge
+  binding, execution, plan, per-family result, and content-derived source map.
+  It rejects missing/duplicate/contradictory meaning, unproved or unmapped
+  bindings, parser residue, forged provenance, missing required results/effects,
+  and excessive depth/count/bytes. SemanticIR consumes the same family
+  validator. A separate v2 execution wrapper carries only empty-family base
+  meaning through the unchanged HIAL bridge/v1 binder, then constructs distinct
+  v2 ExecutionIR/plan identities and capabilities. Focused tests independently
+  pin v1 hashes, exercise the complete synthetic phase chain and hostile
+  mutations, prove deterministic defensive v2 carriers, and enforce v1
+  backend/result rejection before artifacts or mislabeled manifests.
+- [x] **NO REGRESSION (compiler, docs, claims, and containment)** — the final
+  RAM-guarded eleven-file frontend/bridge/execution/public-tool/plan/backend/
+  reader band reports `All tests successful.` at `Files=11, Tests=70`, with
+  only the existing opt-in Darwin runtime qualification skip; standalone t1802
+  reports `Files=1, Tests=5`. Every mdBook chapter tests, and the inspected
+  repository-local HTML render contains 98 files/22,064 KiB before exact
+  removal. V1 ExecutionIR/plan hashes and plan identity remain pinned. Knowledge
+  Map, claim inventory/dispositions, exact maintained-reference authorities,
+  relative paths, task integrity, locality, README, staged acceptance, and all
+  12 doctrines are green with no ceiling rise or generated residue. The
+  saturated 1,200-line rationale ledger is unchanged; durable rationale lives
+  in this task, the maintained contract, Knowledge Card, regression, and Git.
