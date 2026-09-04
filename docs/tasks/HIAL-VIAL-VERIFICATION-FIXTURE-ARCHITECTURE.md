@@ -2043,7 +2043,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Select the exact portable-SystemVerilog lifecycle mapping and versioned backend evidence contract.`
   Acceptance: `Specify the static controller state, record-to-control mapping, scenario-scheduler relationship, logical cycle/phase observation points, inclusive deadline enforcement, failure/finalization policy, lifecycle trace records, normalized result production, schema/version isolation, source-map duties, artifact atomicity, and exact rejection/nonclaim boundaries before behavior changes; preserve the version-1 emitted graph and public result byte-for-byte.`
-  Verification: `A direct canonical-plan probe at clean decomposition commit 12e2fe50b found malformed readiness condition data before the mapping contract could be selected: the service-ready condition object was nested inside a dependency-satisfied reference_id. The root cause is an unparenthesized pair of adjacent Perl map expressions in FSM::VIAL::LifecycleControl, which lets the first map consume the second map's result objects as additional input. Existing lifecycle tests proved record count, order, and result chronology but not recursive condition scalar types. Child .1 now repairs and independently watches that compiler prerequisite; child .2 remains the next contract-selection action from valid typed input.`
+  Verification: `A direct canonical-plan probe at clean decomposition commit 12e2fe50b found malformed readiness condition data before the mapping contract could be selected: the service-ready condition object was nested inside a dependency-satisfied reference_id. The root cause is an unparenthesized pair of adjacent Perl map expressions in FSM::VIAL::LifecycleControl, which lets the first map consume the second map's result objects as additional input. Existing lifecycle tests proved record count, order, and result chronology but not recursive condition scalar types. Child .1 repaired and independently watches that compiler prerequisite at clean commit 1b25880f8; child .2 is now active to select the backend contract from valid typed input.`
   Commit: `pending implementation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2`
 
@@ -2055,11 +2055,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.1: activate readiness-condition repair; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.1: repair lifecycle readiness condition shape`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select the exact portable-SystemVerilog lifecycle mapping and versioned backend evidence contract from valid typed lifecycle records.`
   Acceptance: `A decision, bounded VIAL reference part, executable contract watcher, mdBook guidance, and Knowledge Map card close the static controller, trace/result, schema-isolation, source-map, atomicity, rejection, rollback, and nonclaim boundaries while every version-2 backend remains unavailable.`
-  Verification: `pending`
-  Commit: `pending implementation`
+  Verification: `Clean compiler-repair commit 1b25880f8 supplies recursively valid typed lifecycle conditions. The required Knowledge Map query returned no existing portable-SystemVerilog lifecycle backend mapping answer. This slice owns a decision, bounded VIAL reference part, executable contract watcher, mdBook guidance, and Knowledge Map update before any backend behavior changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2: activate portable-SystemVerilog lifecycle contract selection`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.2`
   Status: `proposed`
@@ -2936,9 +2936,9 @@ the target-neutral lifecycle semantic/source contract. Selection child
 `.19.2.1` and target-neutral compiler child `.19.2.2` are complete.
 Portable-SystemVerilog lifecycle child `.19.2.3` is active. Its contract
 selection parent `.19.2.3.1` has completed prerequisite readiness-condition
-repair `.19.2.3.1.1`; clean commit of that verified repair must precede
-activation of mapping selection `.19.2.3.1.2`. No version-2 backend is promoted
-yet.
+repair `.19.2.3.1.1` at clean commit `1b25880f8`. Mapping selection
+`.19.2.3.1.2` is active; it must close the exact static-controller and backend
+evidence contract before emission begins. No version-2 backend is promoted yet.
 
 ## Decisions
 
