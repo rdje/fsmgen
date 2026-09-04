@@ -31,10 +31,11 @@ sub run {
         return $action eq '' ? 2 : 0;
     }
     return _emit_cli_error($action, 0, 'unknown VIAL action', "unknown action '$action'")
-        unless $action =~ /\A(?:capabilities|check|format|plan|run)\z/;
+        unless $action =~ /\A(?:capabilities|check|format|migrate|plan|run)\z/;
 
     my ($json, $quiet, $style, $dut, $fixture, $profile, $replay, $outdir, $backend)
         = (0, 0, undef, undef, undef, undef, undef, undef, undef);
+    my $language_version = 1;
     my (@scenarios, @native_catalogs);
     my $parse_ok;
     {
@@ -54,13 +55,16 @@ sub run {
             'native-catalog=s@' => \@native_catalogs,
             'outdir=s' => \$outdir,
             'backend=s' => \$backend,
+            'language-version=i' => \$language_version,
         );
     }
-    return _emit_cli_error($action, $json, 'invalid command options', 'invalid or unknown option')
+    return _emit_cli_error($action, $json, 'invalid command options', 'invalid or unknown option', $language_version)
         unless $parse_ok;
+    return _emit_cli_error($action, $json, 'language version', '--language-version must be 1 or 2', $language_version)
+        unless $language_version == 1 || $language_version == 2;
 
     if ($action eq 'capabilities') {
-        return _emit_cli_error($action, $json, 'capabilities arguments', 'capabilities accepts only --json or --quiet')
+        return _emit_cli_error($action, $json, 'capabilities arguments', 'capabilities accepts only --language-version 1|2, --json, or --quiet', $language_version)
             if @argv || defined($style) || defined($dut) || defined($fixture)
                 || @scenarios || defined($profile) || defined($replay)
                 || @native_catalogs || defined($outdir) || defined($backend);
@@ -69,6 +73,7 @@ sub run {
             source => undef,
             source_style => undef,
             output_style => undef,
+            language_version => $language_version,
             quiet => $quiet,
         );
         my $result = execute_vial_tool_request($request, {
@@ -79,68 +84,83 @@ sub run {
         return _emit_result($result, $json, $quiet);
     }
 
-    return _emit_cli_error($action, $json, 'source cardinality', "$action requires exactly one repository-relative SOURCE.vial")
+    return _emit_cli_error($action, $json, 'source cardinality', "$action requires exactly one repository-relative SOURCE.vial", $language_version)
         unless @argv == 1;
-    return _emit_cli_error($action, $json, 'source style', "--style must be auto, normal, or terse for check")
+    return _emit_cli_error($action, $json, 'source style', "--style must be auto, normal, or terse for check", $language_version)
         if $action eq 'check' && defined($style) && $style !~ /\A(?:auto|normal|terse)\z/;
-    return _emit_cli_error($action, $json, 'format style', 'format requires --style normal or --style terse')
+    return _emit_cli_error($action, $json, 'format style', 'format requires --style normal or --style terse', $language_version)
         if $action eq 'format' && (!defined($style) || $style !~ /\A(?:normal|terse)\z/);
-    return _emit_cli_error($action, $json, 'format JSON', 'format writes source text to stdout and does not accept --json')
+    return _emit_cli_error($action, $json, 'migration style', 'migrate accepts no --style or --style normal|terse', $language_version)
+        if $action eq 'migrate' && defined($style) && $style !~ /\A(?:normal|terse)\z/;
+    return _emit_cli_error($action, $json, 'migration request version', 'migrate requires --language-version 2', $language_version)
+        if $action eq 'migrate' && $language_version != 2;
+    return _emit_cli_error($action, $json, 'format JSON', 'format writes source text to stdout and does not accept --json', $language_version)
         if $action eq 'format' && $json;
-    return _emit_cli_error($action, $json, 'format quiet', 'format writes source text to stdout and does not accept --quiet')
+    return _emit_cli_error($action, $json, 'format quiet', 'format writes source text to stdout and does not accept --quiet', $language_version)
         if $action eq 'format' && $quiet;
-    if ($action eq 'check' || $action eq 'format') {
-        return _emit_cli_error($action, $json, 'incompatible options', "$action does not accept planning options")
+    if ($action eq 'check' || $action eq 'format' || $action eq 'migrate') {
+        return _emit_cli_error($action, $json, 'incompatible options', "$action does not accept planning options", $language_version)
             if defined($dut) || defined($fixture) || @scenarios || defined($profile)
                 || defined($replay) || @native_catalogs || defined($outdir) || defined($backend);
     }
     if ($action eq 'plan' || $action eq 'run') {
-        return _emit_cli_error($action, $json, 'source style', '--style must be auto, normal, or terse')
+        return _emit_cli_error($action, $json, 'source style', '--style must be auto, normal, or terse', $language_version)
             if defined($style) && $style !~ /\A(?:auto|normal|terse)\z/;
-        return _emit_cli_error($action, $json, 'DUT source', "$action requires exactly one --dut repository-relative .fsm, .isf, or .ppif source")
+        return _emit_cli_error($action, $json, 'DUT source', "$action requires exactly one --dut repository-relative .fsm, .isf, or .ppif source", $language_version)
             unless defined($dut);
-        return _emit_cli_error($action, $json, 'execution profile', '--profile must be core_directed_single_clock_execution_v1')
-            if defined($profile) && $profile ne 'core_directed_single_clock_execution_v1';
-        return _emit_cli_error($action, $json, 'backend option', 'plan does not accept --backend')
+        my $expected_profile = "core_directed_single_clock_execution_v$language_version";
+        return _emit_cli_error($action, $json, 'execution profile', "--profile must be $expected_profile", $language_version)
+            if defined($profile) && $profile ne $expected_profile;
+        return _emit_cli_error($action, $json, 'backend option', 'plan does not accept --backend', $language_version)
             if $action eq 'plan' && defined($backend);
-        return _emit_cli_error($action, $json, 'backend option', 'run requires --backend BACKEND_PROFILE')
-            if $action eq 'run' && !defined($backend);
+        return _emit_cli_error($action, $json, 'backend option', 'run requires --backend BACKEND_PROFILE', $language_version)
+            if $action eq 'run' && $language_version == 1 && !defined($backend);
     }
 
     my $source_id = $argv[0];
     my ($text, $read_error) = _read_repo_source($args->{repo_root}, $source_id, 'vial');
-    return _emit_cli_error($action, $json, 'source read', $read_error) if defined $read_error;
-    my $catalog = _load_import_catalog($args->{repo_root}, $source_id, $text);
+    return _emit_cli_error($action, $json, 'source read', $read_error, $language_version)
+        if defined $read_error;
+    my $catalog = _load_import_catalog(
+        $args->{repo_root}, $source_id, $text,
+        $action eq 'migrate' ? 1 : $language_version,
+    );
     my ($hial_source, $replay_manifest, @native_extension_catalogs);
     if ($action eq 'plan' || $action eq 'run') {
         my ($hial_text, $hial_error) = _read_repo_source($args->{repo_root}, $dut, 'hial');
-        return _emit_cli_error($action, $json, 'source read', $hial_error) if defined $hial_error;
+        return _emit_cli_error($action, $json, 'source read', $hial_error, $language_version)
+            if defined $hial_error;
         $hial_source = _source_envelope($dut, $hial_text, _hial_kind_hint($dut));
         if (defined $replay) {
             my ($decoded, $decode_error) = _read_repo_json($args->{repo_root}, $replay, 'replay manifest');
-            return _emit_cli_error($action, $json, 'source read', $decode_error) if defined $decode_error;
-            return _emit_cli_error($action, $json, 'replay manifest', 'replay manifest must contain one JSON object')
+            return _emit_cli_error($action, $json, 'source read', $decode_error, $language_version)
+                if defined $decode_error;
+            return _emit_cli_error($action, $json, 'replay manifest', 'replay manifest must contain one JSON object', $language_version)
                 unless ref($decoded) eq 'HASH' && !blessed($decoded);
             $replay_manifest = $decoded;
         }
         for my $native_path (@native_catalogs) {
             my ($decoded, $decode_error) = _read_repo_json($args->{repo_root}, $native_path, 'native catalog');
-            return _emit_cli_error($action, $json, 'source read', $decode_error) if defined $decode_error;
-            return _emit_cli_error($action, $json, 'native catalog', "native catalog '$native_path' must contain one JSON array")
+            return _emit_cli_error($action, $json, 'source read', $decode_error, $language_version)
+                if defined $decode_error;
+            return _emit_cli_error($action, $json, 'native catalog', "native catalog '$native_path' must contain one JSON array", $language_version)
                 unless ref($decoded) eq 'ARRAY';
             push @native_extension_catalogs, @$decoded;
         }
     }
     my $request = _request(
         action => $action,
+        language_version => $language_version,
         source => _source_envelope($source_id, $text, 'vial'),
         hial_source => $hial_source,
-        source_style => $action eq 'format' ? 'auto' : (defined($style) ? $style : 'auto'),
-        output_style => $action eq 'format' ? $style : undef,
+        source_style => ($action eq 'format' || $action eq 'migrate')
+            ? 'auto' : (defined($style) ? $style : 'auto'),
+        output_style => ($action eq 'format' || $action eq 'migrate')
+            ? $style : undef,
         fixture_id => $fixture,
         scenario_ids => \@scenarios,
         execution_profile => ($action eq 'plan' || $action eq 'run')
-            ? ($profile // 'core_directed_single_clock_execution_v1') : undef,
+            ? ($profile // "core_directed_single_clock_execution_v$language_version") : undef,
         backend_profile => $backend,
         replay_manifest => $replay_manifest,
         native_extension_catalogs => \@native_extension_catalogs,
@@ -163,7 +183,7 @@ sub run {
         });
         if (!$published->{ok}) {
             $result = FSM::VIAL::Tool->_cli_artifact_error_result(
-                $action, $published->{diagnostics},
+                $action, $published->{diagnostics}, $language_version,
             );
         }
         elsif ($published->{status} eq 'unchanged') {
@@ -175,9 +195,10 @@ sub run {
 
 sub _request {
     my (%args) = @_;
+    my $version = $args{language_version} // 1;
     return {
-        schema => 'fsmgen.vial_tool_request.v1',
-        schema_version => 1,
+        schema => "fsmgen.vial_tool_request.v$version",
+        schema_version => $version,
         action => $args{action},
         vial_source => $args{source},
         hial_source => $args{hial_source},
@@ -197,14 +218,17 @@ sub _request {
 }
 
 sub _load_import_catalog {
-    my ($repo_root, $root_id, $root_text) = @_;
+    my ($repo_root, $root_id, $root_text, $language_version) = @_;
+    $language_version //= 1;
     my %catalog = ($root_id => $root_text);
     my %queued = ($root_id => 1);
     my @queue = ([$root_id, $root_text]);
     while (@queue) {
         my ($source_id, $text) = @{shift @queue};
         my $imports = eval {
-            FSM::VIAL::SourceProjection->import_source_names({
+            my $method = $language_version == 2
+                ? 'import_source_names_v2' : 'import_source_names';
+            FSM::VIAL::SourceProjection->$method({
                 text => $text,
                 source_name => $source_id,
             });
@@ -323,12 +347,17 @@ sub _emit_result {
     }
     elsif (!$result->{success}) {
         for my $diagnostic (@{$result->{diagnostics}}) {
-            my $location = @{$diagnostic->{source_locations}}
+            my $first_location = exists($diagnostic->{source_locations})
+                && ref($diagnostic->{source_locations}) eq 'ARRAY'
+                && @{$diagnostic->{source_locations}}
+                    ? $diagnostic->{source_locations}[0]
+                    : $diagnostic->{source_location};
+            my $location = defined($first_location)
                 ? sprintf(
                     ' %s:%d:%d',
-                    $diagnostic->{source_locations}[0]{source_name},
-                    $diagnostic->{source_locations}[0]{start_line},
-                    $diagnostic->{source_locations}[0]{start_column},
+                    $first_location->{source_name},
+                    $first_location->{start_line},
+                    $first_location->{start_column},
                 )
                 : '';
             print STDERR "Error [$diagnostic->{code}]$location $diagnostic->{semantic_path}: $diagnostic->{message}\n";
@@ -338,10 +367,25 @@ sub _emit_result {
         print $result->{formatted_source};
     }
     elsif (!$quiet && $result->{action} eq 'capabilities') {
-        print "VIAL tooling: capabilities, check, format, plan, run\n";
-        print "Source styles: normal_v1, terse_v1\n";
-        print "Planning artifacts: atomic repository-local or virtual\n";
-        print "Backend/runtime: sv_portable_verilator (Verilator 5.046)\n";
+        if ($result->{schema_version} == 2) {
+            print "VIAL v2 tooling: capabilities, check, format, migrate, plan\n";
+            print "Source styles: normal_v2, terse_v2\n";
+            print "Planning artifacts: atomic repository-local or virtual\n";
+            print "Backend/runtime/result/parity: unavailable for VIAL v2\n";
+        }
+        else {
+            print "VIAL tooling: capabilities, check, format, plan, run\n";
+            print "Source styles: normal_v1, terse_v1\n";
+            print "Planning artifacts: atomic repository-local or virtual\n";
+            print "Backend/runtime: sv_portable_verilator (Verilator 5.046)\n";
+        }
+    }
+    elsif (!$quiet && $result->{action} eq 'migrate') {
+        my $migration = $result->{source_migration};
+        print "VIAL migration $result->{status} ($migration->{input_style} -> $migration->{output_style})\n";
+        for my $source (@{$migration->{sources}}) {
+            print "$source->{source_name} $source->{output_sha256}\n";
+        }
     }
     elsif (!$quiet && $result->{action} eq 'plan') {
         print "VIAL plan $result->{status} ($result->{tool_manifest}{artifact_root})\n";
@@ -356,11 +400,12 @@ sub _emit_result {
 }
 
 sub _emit_cli_error {
-    my ($action, $json, $label, $message) = @_;
+    my ($action, $json, $label, $message, $version) = @_;
     my $result = FSM::VIAL::Tool->_cli_error_result(
         $action,
         $label eq 'source read' ? 'VIAL_HOST_ERROR' : 'VIAL_TOOL_INVOCATION_ERROR',
         $message,
+        $version,
     );
     return _emit_result($result, $json, 0);
 }
@@ -379,24 +424,32 @@ sub _usage {
 FSMGen VIAL tooling
 
 Usage:
-  ./bin/fsmgen vial capabilities [--json]
-  ./bin/fsmgen vial check [--style auto|normal|terse] [--json] SOURCE.vial
-  ./bin/fsmgen vial format --style normal|terse SOURCE.vial
-  ./bin/fsmgen vial plan --dut SOURCE.fsm|SOURCE.isf|SOURCE.ppif
+  ./bin/fsmgen vial capabilities [--language-version 1|2] [--json]
+  ./bin/fsmgen vial check [--language-version 1|2]
+    [--style auto|normal|terse] [--json] SOURCE.vial
+  ./bin/fsmgen vial format [--language-version 1|2]
+    --style normal|terse SOURCE.vial
+  ./bin/fsmgen vial migrate --language-version 2
+    [--style normal|terse] [--json] SOURCE.vial
+  ./bin/fsmgen vial plan [--language-version 1|2]
+    --dut SOURCE.fsm|SOURCE.isf|SOURCE.ppif
     [--fixture ID] [--scenario ID ...]
-    [--profile core_directed_single_clock_execution_v1]
+    [--profile core_directed_single_clock_execution_v1|core_directed_single_clock_execution_v2]
     [--replay REPLAY.json] [--native-catalog CATALOG.json ...]
     [--outdir RELDIR] [--json] SOURCE.vial
-  ./bin/fsmgen vial run --dut SOURCE.fsm|SOURCE.isf|SOURCE.ppif
+  ./bin/fsmgen vial run [--language-version 1|2]
+    --dut SOURCE.fsm|SOURCE.isf|SOURCE.ppif
     --backend sv_portable_verilator
     [--fixture ID] [--scenario ID ...]
-    [--profile core_directed_single_clock_execution_v1]
+    [--profile core_directed_single_clock_execution_v1|core_directed_single_clock_execution_v2]
     [--replay REPLAY.json] [--native-catalog CATALOG.json ...]
     [--outdir RELDIR] [--json] SOURCE.vial
 
 Planning and execution write one atomic repository-local artifact tree. Runtime
 staging stays repository-local and is removed before publication. All persisted
-paths are repository-root-relative.
+paths are repository-root-relative. Version 2 exposes only source tooling,
+non-mutating v1-to-v2 migration, and empty-family planning; its backend, run,
+complete-result, and parity routes are unavailable.
 USAGE
 }
 

@@ -2,7 +2,7 @@
 
 Date: 2026-09-04
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1`
-Status: source/projections, common private phase envelope, fail-closed family registry, backend-adapter preflight, and quality gates implemented through `.19.1.6`
+Status: v2 source/migration/empty-base public tooling and the complete common foundation implemented through `.19.1.7`
 
 ## Outcome and authority
 
@@ -109,7 +109,7 @@ The selected later result identities are
 `fsmgen.vial_parity_projection.v2`, `fsmgen.vial_parity_report.v2`, and
 `fsmgen.vial_source_map.v2`. Public v2 tooling uses
 `fsmgen.vial_tool_request.v2` and `fsmgen.vial_tool_result.v2`. Their exact
-fields and remaining implementation are owned by `.19.1.3` and `.19.1.7`;
+fields and implementation are owned by `.19.1.3` and `.19.1.7`;
 naming them here prevents a v1 schema from being silently widened. The unchanged HIAL
 facts continue to use `fsmgen.hial_vial_bridge_manifest.v1`; a new bridge
 version requires a real HIAL fact-shape change, not merely a v2 VIAL source.
@@ -134,15 +134,16 @@ and family bounds fail with closed v2 diagnostics. A v1-root catalog continues
 through the legacy normalizer and retains its prior import diagnostics.
 
 The existing public `fsmgen.vial_tool_request.v1` rejects v2 rather than
-mislabeling it or loading a v2 CLI catalog. The private plan builder now accepts
-only the empty-intents v2 base and carries it through the unchanged v1 HIAL
-bridge into distinct v2 ExecutionIR and plan envelopes. Public v2 requests,
-migration, expressive families, backend adapters, runtime, complete result
-manifests, parity, and support remain owned by later leaves. The focused
+mislabeling it or loading a v2 CLI catalog. The additive v2 request exposes
+check, format, migration, and empty-base planning through distinct records.
+The plan builder carries only the empty-intents base through the unchanged v1
+HIAL bridge into distinct v2 ExecutionIR and plan envelopes. Expressive
+families, v2 backend execution, complete result manifests, and parity remain
+owned by later leaves. The focused
 executable authorities are `t/1801-vial-v2-source-projections.t` and
 `t/1802-vial-v2-semantic-family-envelope.t`.
 
-The separate executable usability gate checks the five maintained public VIAL
+The separate executable usability gate checks the six maintained public VIAL
 fixtures, both canonical v2 projections, a deterministic source diagnostic,
 both semantic versions, and the v2 family carrier against one finite
 target/methodology vocabulary. This is not a ban on verification concepts such
@@ -211,8 +212,9 @@ complete `fsmgen.verification_result_manifest.v2` producer.
 No nonempty family can reach these carriers until its vertical activity marks
 the necessary registry stages implemented and supplies its closed grammar and
 semantics. The common adapter preflight maps each family to all four current
-routes but keeps every mapping unavailable; no public v2 tool or migration
-ships until `.19.1.7`.
+routes but keeps every mapping unavailable. Public v2 source, migration, and
+empty-base plan tooling ships through `.19.1.7`; backend mappings remain
+unavailable.
 
 ## Import and adapter compatibility
 
@@ -290,6 +292,90 @@ Reverse v2-to-v1 migration is not selected. A v2 catalog with any v2-only fact
 must fail `VIAL_MIGRATION_ERROR`; it is never approximated, dropped, or emitted
 as target-language text.
 
+## Public version-2 tooling
+
+Public v2 tooling is now an explicit additive surface. Omitting the selector
+keeps the complete v1 behavior; no command or API request infers v2 from source
+bytes. The CLI selector and commands are:
+
+```bash
+./bin/fsmgen vial capabilities --language-version 2 --json
+./bin/fsmgen vial check --language-version 2 --json SOURCE.vial
+./bin/fsmgen vial format --language-version 2 --style normal SOURCE.vial
+./bin/fsmgen vial migrate --language-version 2 --json SOURCE_V1.vial
+./bin/fsmgen vial plan --language-version 2 --dut HIAL_SOURCE SOURCE_V2.vial
+```
+
+The embedding capability entrypoint is
+`FSM::VIAL::Tool::vial_tool_capabilities_v2()`. Both versions use
+`FSM::VIAL::Tool::execute_vial_tool_request($request, $environment)`, dispatch
+on the exact request schema, and never expose parser forms or private IR
+objects. `vial_tool_capabilities()` and a CLI command without
+`--language-version` remain exactly v1.
+
+The v2 request has exactly `schema`, `schema_version`, `action`, `vial_source`,
+`hial_source`, and `options`. Its schema is `fsmgen.vial_tool_request.v2` and
+`schema_version` is 2. The options record retains exactly the v1 field family:
+`source_style`, `output_style`, `fixture_id`, `scenario_ids`,
+`execution_profile`, `backend_profile`, `replay_manifest`,
+`native_extension_catalogs`, `artifact_policy`, and `quiet`. Inapplicable
+fields are null or empty arrays rather than omitted.
+
+The v2 result schema is `fsmgen.vial_tool_result.v2`. It contains exactly:
+
+```text
+schema, schema_version, action, success, status
+source_identities, source_style, semantic_report, formatted_source
+bridge_manifest, plan, tool_manifest, verification_output_manifest
+result_manifest, artifacts, capability_evidence, support_accounting
+diagnostics, implementation, source_migration
+```
+
+`source_migration` is non-null only for the migration action. V2 diagnostics
+retain the exact `fsmgen.vial_diagnostic.v2` shape: `schema`, `schema_version`,
+`severity`, `code`, `phase`, `message`, `semantic_path`, singular nullable
+`source_location`, and `notes`. The v1 result and its plural-location public
+diagnostic shape do not change.
+
+The public action states are exact:
+
+| Action | Accepted source | Writes | Current v2 state |
+| --- | --- | --- | --- |
+| `capabilities` | none | none | supported smoke |
+| `check` | v2 | none | supported smoke |
+| `format` | v2 | stdout only | supported smoke |
+| `migrate` | complete valid v1 catalog | none | supported smoke |
+| `plan` | empty-family v2 plus HIAL | virtual API or atomic repository tree | supported smoke |
+| `run` | none accepted for execution | none | unavailable; rejects before parse, plan, backend, workspace, or artifact allocation |
+
+The plan result carries `fsmgen.vial_plan.v2` and
+`fsmgen.vial_tool_manifest.v2`. Its canonical source is v2; the unchanged HIAL
+facts retain `fsmgen.hial_vial_bridge_manifest.v1`. The tool-manifest field set
+is unchanged from v1 while the schema, source style, execution profile, plan
+record, capability evidence, and support accounting are distinctly v2. The CLI
+publishes its complete graph atomically below a repository-relative same-volume
+root; API virtual mode returns the same complete ordered graph in the caller's
+initially empty artifact sink.
+
+Migration accepts null `output_style` for per-file style preservation or
+`normal`/`terse` to select one style for the whole catalog. Its result reports
+root `input_style` as `normal_v1` or `terse_v1`; `output_style` is
+`preserve_v2`, `normal_v2`, or `terse_v2`. Each ordered source record contains
+exactly `source_name`, `input_sha256`, `output_sha256`, `formatted_source`, and
+`source_map`. Each source-map entry contains exactly `semantic_path`,
+`input_location`, and `output_location`; locations retain repository-relative
+source identity plus byte and line/column bounds. All pre-existing semantic
+paths must map and remain in range. The inserted empty `intent_families` path
+has no false v1 origin and is therefore not invented in the cross-version map.
+
+The v2 capability contract derives its source and empty-plan capabilities from
+the semantic-family registry's parser and planner profiles. It publishes no
+`vial.family.*`, v2 backend, compile, runtime, complete-result, or parity
+capability. `run` returns `VIAL_VERSION_UNSUPPORTED` with unavailable action
+evidence and an empty sink/artifact graph. Source and migration plus empty-base
+planning have separate `supported_smoke` records; these do not promote any
+expressive family or backend.
+
 ## Bounds
 
 V2 preserves every v1 lexical, source-file, combined-catalog, import, token,
@@ -340,12 +426,13 @@ records; deterministic diagnostics; no partial output; repository-relative
 identities; public capability truth; and exact cleanup. Family syntax cannot
 ship until its own vertical source-to-qualified-result owner passes.
 
-Implemented leaves `.19.1.2-.19.1.5` change private v2 source, semantic,
+Implemented leaves `.19.1.2-.19.1.7` provide v2 source, semantic,
 common-family contract, empty-base execution/plan, registry, backend-adapter
-preflight, and rejection behavior. V1 source, meaning, public capability bytes,
-successful plan/backend output, support, and HIAL behavior remain unchanged.
-No expressive family, public v2 tool, complete v2 result, family backend
-emission/runtime, parity, provider, reverse migration, mixed-version catalog, raw native block,
+preflight, quality, public source/migration/plan tooling, and rejection behavior.
+V1 source, meaning, public capability bytes, successful plan/backend output,
+support, and HIAL behavior remain unchanged. No expressive family, complete v2
+verification result, family backend emission/runtime, parity, provider, reverse
+migration, mixed-version catalog, raw native block,
 arbitrary SV/UVM/VHDL feature, mixed-language route, full-language claim,
 scale claim, or support promotion ships. VIAL remains simpler intent above
 qualified target mechanisms, not a renamed target API.

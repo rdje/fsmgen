@@ -1,4 +1,4 @@
-# Migrating Legacy Observation Outputs and Handwritten Fixtures to VIAL
+# Migrating Legacy Outputs, Handwritten Fixtures, and VIAL v1 Sources
 
 FSMGen does not replace its older verification surfaces in place. Migration is
 additive: keep the legacy artifact when a consumer still needs its exact
@@ -16,6 +16,70 @@ Use these terms precisely:
 
 Nothing in this guide deprecates `(observe ...)`, `uvm-passive-monitor`,
 `vhdl-observation-package`, or the handwritten AHB qualification harness.
+
+## Migrate a VIAL v1 catalog to the v2 foundation
+
+VIAL v1 remains supported. Migration is an explicit, non-mutating operation;
+ordinary `check`, `format`, `plan`, and `run` commands never upgrade source.
+Review the complete migration record with:
+
+```bash
+./bin/fsmgen vial migrate --language-version 2 --json \
+  vial/ahb_subordinate_base_output_arbitration.vial \
+  | jq '{status,
+         direction: [.source_migration.source_language_version,
+                     .source_migration.target_language_version],
+         input_style: .source_migration.input_style,
+         output_style: .source_migration.output_style,
+         compatibility: .source_migration.compatibility_projection_sha256,
+         sources: [.source_migration.sources[] |
+           {source_name, input_sha256, output_sha256,
+            mappings: (.source_map | length)}]}'
+```
+
+The default `preserve_v2` output keeps each file's input projection. Select one
+canonical projection for the whole connected catalog with `--style normal` or
+`--style terse`. The operation traverses the root and imports depth-first in
+authored order, validates the complete v1 catalog, converts every reachable
+source, reparses the complete v2 catalog, and returns success only when both
+versions independently produce the same
+`fsmgen.vial_compatibility_projection.v1` digest.
+
+The result is `fsmgen.vial_source_migration.v1`. Each source record contains
+the original and returned SHA-256 identities, canonical v2 bytes, and an
+ordered source map from every pre-existing semantic path's input location to
+its output location. The inserted empty v2 `intent_families` container has no
+invented v1 source origin. Comments are not semantic and canonical migration
+does not promise to retain them.
+
+Migration publishes no artifact tree and never overwrites the input. A caller
+that chooses to adopt the returned bytes must review all source records and
+write them through its own version-controlled workflow. The maintained checked
+v2 counterpart for this example is:
+
+```text
+vial/ahb_subordinate_base_output_arbitration_v2.vial
+```
+
+Check and plan that separate v2 source explicitly:
+
+```bash
+./bin/fsmgen vial check --language-version 2 \
+  vial/ahb_subordinate_base_output_arbitration_v2.vial
+
+./bin/fsmgen vial plan --language-version 2 \
+  --dut ppif/ahb_lite_subordinate.ppif \
+  --profile core_directed_single_clock_execution_v2 \
+  --outdir .artifacts/manual/vial-v2-migration-plan \
+  vial/ahb_subordinate_base_output_arbitration_v2.vial
+```
+
+V2 planning currently accepts only the inherited empty-family base. V2
+backend emission, run, complete results, and parity are unavailable and reject
+before artifacts. Reverse migration, mixed-version catalogs, and dropping a
+v2-only family fact are also unavailable. Rollback is simply retaining the
+untouched v1 catalog and removing only the separately reviewed v2 source or
+operation-owned plan root.
 
 ## Choose the migration state
 
@@ -304,6 +368,7 @@ rm -rf .artifacts/manual/vial-legacy-uvm
 rm -rf .artifacts/manual/vial-legacy-vhdl
 rm -rf .artifacts/manual/vial-migration-plan
 rm -rf .artifacts/manual/vial-migration-run
+rm -rf .artifacts/manual/vial-v2-migration-plan
 ```
 
 ## Nonclaims that survive migration

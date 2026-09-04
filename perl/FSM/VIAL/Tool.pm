@@ -9,16 +9,21 @@ use Exporter 'import';
 use JSON::PP ();
 use Scalar::Util qw(blessed);
 
-use FSM::Support::VIALToolingContract qw(build_vial_tooling_contract);
+use FSM::Support::VIALToolingContract qw(
+    build_vial_tooling_contract
+    build_vial_tooling_contract_v2
+);
 use FSM::VIAL::Backend::Runner;
 use FSM::VIAL::Backend::SVPortableVerilator;
 use FSM::VIAL::Parser;
 use FSM::VIAL::PlanBuilder;
+use FSM::VIAL::SourceMigration;
 use FSM::VIAL::SourceProjection;
 
 our @EXPORT_OK = qw(
     execute_vial_tool_request
     vial_tool_capabilities
+    vial_tool_capabilities_v2
 );
 
 my @RESULT_KEYS = qw(
@@ -27,6 +32,7 @@ my @RESULT_KEYS = qw(
     verification_output_manifest result_manifest artifacts capability_evidence
     support_accounting diagnostics implementation
 );
+my @RESULT_KEYS_V2 = (@RESULT_KEYS, 'source_migration');
 
 my @OPTION_KEYS = qw(
     source_style output_style fixture_id scenario_ids execution_profile
@@ -38,12 +44,29 @@ sub vial_tool_capabilities {
     return _clone(build_vial_tooling_contract());
 }
 
+sub vial_tool_capabilities_v2 {
+    die "vial_tool_capabilities_v2 accepts no arguments\n" if @_;
+    return _clone(build_vial_tooling_contract_v2());
+}
+
 sub execute_vial_tool_request {
     my ($request, $environment, @extra) = @_;
     my $action = ref($request) eq 'HASH' && !blessed($request)
         && defined($request->{action}) && !ref($request->{action})
         ? $request->{action}
         : 'unknown';
+    my $request_version = _requested_tool_schema_version($request);
+    if ($request_version == 2) {
+        return _v2_error_result(
+            $action,
+            _v2_diagnostic(
+                'VIAL_TOOL_INVOCATION_ERROR',
+                'execute accepts a request and optional environment only',
+                'invocation', undef, '/',
+            ),
+        ) if @extra;
+        return _execute_v2_tool_request($request, $environment);
+    }
     return _error_result($action, _invocation_diagnostic('execute accepts a request and optional environment only'))
         if @extra;
 
@@ -70,23 +93,315 @@ sub execute_vial_tool_request {
     return _error_result($action, _host_diagnostic(_sanitize_exception($@)));
 }
 
+sub _requested_tool_schema_version {
+    my ($request) = @_;
+    return 1 unless ref($request) eq 'HASH' && !blessed($request);
+    return 2 if defined($request->{schema}) && !ref($request->{schema})
+        && $request->{schema} eq 'fsmgen.vial_tool_request.v2';
+    return 2 if defined($request->{schema_version})
+        && !ref($request->{schema_version})
+        && $request->{schema_version} =~ /\A2\z/;
+    return 1;
+}
+
+sub _execute_v2_tool_request {
+    my ($request, $environment) = @_;
+    my $action = ref($request) eq 'HASH' && !blessed($request)
+        && defined($request->{action}) && !ref($request->{action})
+        ? $request->{action} : 'unknown';
+    my $validated = eval { _validate_invocation_v2($request, $environment) };
+    if (!$validated) {
+        return _v2_error_result(
+            $action,
+            _v2_diagnostic(
+                'VIAL_TOOL_INVOCATION_ERROR', _sanitize_exception($@),
+                'invocation', undef, '/',
+            ),
+        );
+    }
+
+    $action = $validated->{request}{action};
+    return _v2_capabilities_result() if $action eq 'capabilities';
+    if ($action eq 'run') {
+        return _v2_plan_error_result(
+            action => $action,
+            diagnostics => [_v2_diagnostic(
+                'VIAL_VERSION_UNSUPPORTED',
+                'VIAL tool request version 2 has no qualified backend, run, complete-result, or parity route',
+                'capability', undef, '/action',
+            )],
+        );
+    }
+    if ($action eq 'migrate') {
+        my $result = eval { _execute_migration_action_v2($validated) };
+        return $result if defined $result;
+        return _v2_error_result(
+            $action,
+            _v2_diagnostic(
+                'VIAL_HOST_ERROR', _sanitize_exception($@),
+                'host', undef, '/',
+            ),
+        );
+    }
+    if ($action eq 'plan') {
+        my $result = eval { _execute_plan_action_v2($validated) };
+        return $result if defined $result;
+        return _v2_error_result(
+            $action,
+            _v2_diagnostic(
+                'VIAL_HOST_ERROR', _sanitize_exception($@),
+                'host', undef, '/',
+            ),
+        );
+    }
+    my $result = eval { _execute_source_action_v2($validated) };
+    return $result if defined $result;
+    return _v2_error_result(
+        $action,
+        _v2_diagnostic(
+            'VIAL_HOST_ERROR', _sanitize_exception($@),
+            'host', undef, '/',
+        ),
+    );
+}
+
+sub _execute_source_action_v2 {
+    my ($validated) = @_;
+    my $request = $validated->{request};
+    my $source = $request->{vial_source};
+    my $options = $request->{options};
+    my $action = $request->{action};
+    my $source_version = _source_language_version_if_valid($source);
+    if (defined($source_version) && $source_version != 2) {
+        return _v2_source_result(
+            action => $action,
+            success => 0,
+            status => 'error',
+            diagnostics => [_v2_version_diagnostic(
+                $source->{source_id}, $source_version, 2,
+            )],
+        );
+    }
+    my $parser_args = {
+        text => $source->{text},
+        source_name => $source->{source_id},
+        source_catalog => $validated->{source_catalog},
+    };
+    my $checked = FSM::VIAL::Parser->check_source($parser_args);
+    if (!$checked->{ok}) {
+        return _v2_source_result(
+            action => $action,
+            success => 0,
+            status => 'error',
+            diagnostics => [_v2_public_diagnostics($checked->{diagnostics})],
+        );
+    }
+    my $report = $checked->{semantic_report};
+    if ($report->{language_version} != 2) {
+        return _v2_source_result(
+            action => $action,
+            success => 0,
+            status => 'error',
+            diagnostics => [_v2_version_diagnostic(
+                $source->{source_id}, $report->{language_version}, 2,
+            )],
+        );
+    }
+    my $style = FSM::VIAL::SourceProjection->source_style({
+        text => $source->{text}, source_name => $source->{source_id},
+    });
+    if ($options->{source_style} ne 'auto'
+            && $options->{source_style} ne $style) {
+        return _v2_source_result(
+            action => $action,
+            success => 0,
+            status => 'error',
+            source_style => $style . '_v2',
+            diagnostics => [_v2_style_diagnostic(
+                $source->{source_id},
+                "source is $style but --style requested $options->{source_style}",
+            )],
+        );
+    }
+    my $semantic_ir = FSM::VIAL::Parser->parse_source($parser_args);
+    my $meaning_sha256 =
+        FSM::VIAL::SourceProjection->semantic_projection_sha256($semantic_ir);
+    my $compatibility_sha256 =
+        FSM::VIAL::SourceProjection->compatibility_projection_sha256($semantic_ir);
+    my $formatted_source;
+    if ($action eq 'format') {
+        $formatted_source = FSM::VIAL::SourceProjection->format_source({
+            text => $source->{text},
+            source_name => $source->{source_id},
+            output_style => $options->{output_style},
+        })->{text};
+        my $formatted_ir = FSM::VIAL::Parser->parse_source({
+            text => $formatted_source,
+            source_name => $source->{source_id},
+            source_catalog => $validated->{source_catalog},
+        });
+        my $formatted_digest =
+            FSM::VIAL::SourceProjection->semantic_projection_sha256($formatted_ir);
+        die 'formatted v2 source did not preserve the checked semantic projection'
+            unless $formatted_digest eq $meaning_sha256;
+    }
+    return _v2_source_result(
+        action => $action,
+        success => 1,
+        status => $action eq 'check' ? 'checked' : 'formatted',
+        source_style => $style . '_v2',
+        source_identities => [map { _clone($_) } @{$report->{sources}}],
+        semantic_report => _clone($report),
+        formatted_source => $formatted_source,
+        meaning_sha256 => $meaning_sha256,
+        compatibility_sha256 => $compatibility_sha256,
+        diagnostics => [],
+    );
+}
+
+sub _execute_migration_action_v2 {
+    my ($validated) = @_;
+    my $request = $validated->{request};
+    my $source = $request->{vial_source};
+    my $options = $request->{options};
+    my $source_version = _source_language_version_if_valid($source);
+    my $style = eval {
+        FSM::VIAL::SourceProjection->source_style({
+            text => $source->{text}, source_name => $source->{source_id},
+        });
+    };
+    my $input_style = defined($style) ? $style . '_v1' : undef;
+    my $output_style = defined($options->{output_style})
+        ? $options->{output_style} . '_v2' : 'preserve_v2';
+    if (defined($source_version) && $source_version != 1) {
+        my $diagnostics = [_v2_diagnostic(
+            'VIAL_MIGRATION_ERROR',
+            "VIAL source migration accepts language version 1, not version $source_version",
+            'migration', _source_start_location($source->{source_id}),
+            '/source_language_version',
+        )];
+        my $migration = FSM::VIAL::SourceMigration->empty_failure_result({
+            input_style => undef,
+            output_style => $output_style,
+            diagnostics => $diagnostics,
+        });
+        return _v2_migration_result(
+            success => 0, status => 'error', source_migration => $migration,
+            diagnostics => $diagnostics,
+        );
+    }
+    my $parser_args = {
+        text => $source->{text}, source_name => $source->{source_id},
+        source_catalog => $validated->{source_catalog},
+    };
+    if (my $diagnostic = _v2_migration_import_version_diagnostic(
+            $source, $validated->{source_catalog})) {
+        my $diagnostics = [$diagnostic];
+        my $migration = FSM::VIAL::SourceMigration->empty_failure_result({
+            input_style => $input_style,
+            output_style => $output_style,
+            diagnostics => $diagnostics,
+        });
+        return _v2_migration_result(
+            success => 0, status => 'error', source_migration => $migration,
+            diagnostics => $diagnostics,
+        );
+    }
+    my $checked = FSM::VIAL::Parser->check_source($parser_args);
+    if (!$checked->{ok}) {
+        my $diagnostics = [_v2_public_diagnostics($checked->{diagnostics})];
+        my $migration = FSM::VIAL::SourceMigration->empty_failure_result({
+            input_style => $input_style,
+            output_style => $output_style,
+            diagnostics => $diagnostics,
+        });
+        return _v2_migration_result(
+            success => 0, status => 'error', source_migration => $migration,
+            diagnostics => $diagnostics,
+        );
+    }
+    if ($checked->{semantic_report}{language_version} != 1) {
+        my $diagnostics = [_v2_diagnostic(
+            'VIAL_MIGRATION_ERROR',
+            'VIAL source migration accepts only a complete language-version-1 catalog',
+            'migration', _source_start_location($source->{source_id}),
+            '/source_language_version',
+        )];
+        my $migration = FSM::VIAL::SourceMigration->empty_failure_result({
+            input_style => undef,
+            output_style => $output_style,
+            diagnostics => $diagnostics,
+        });
+        return _v2_migration_result(
+            success => 0, status => 'error', source_migration => $migration,
+            diagnostics => $diagnostics,
+        );
+    }
+    my $migration = eval {
+        FSM::VIAL::SourceMigration->migrate_v1_to_v2({
+            text => $source->{text},
+            source_name => $source->{source_id},
+            source_catalog => $validated->{source_catalog},
+            output_style => $options->{output_style},
+        });
+    };
+    if (!$migration) {
+        my $diagnostics = [_v2_diagnostic(
+            'VIAL_MIGRATION_ERROR', _sanitize_exception($@),
+            'migration', undef, '/',
+        )];
+        my $failed = FSM::VIAL::SourceMigration->empty_failure_result({
+            input_style => $input_style,
+            output_style => $output_style,
+            diagnostics => $diagnostics,
+        });
+        return _v2_migration_result(
+            success => 0, status => 'error', source_migration => $failed,
+            diagnostics => $diagnostics,
+        );
+    }
+    return _v2_migration_result(
+        success => 1,
+        status => 'migrated',
+        source_style => $migration->{input_style},
+        source_identities => [map { _clone($_) }
+            @{$checked->{semantic_report}{sources}}],
+        source_migration => $migration,
+        compatibility_sha256 =>
+            $migration->{compatibility_projection_sha256},
+        diagnostics => [],
+    );
+}
+
 sub _cli_error_result {
-    my ($class, $action, $code, $message) = @_;
+    my ($class, $action, $code, $message, $version) = @_;
     die "VIAL CLI error construction is private to FSM::VIAL::ToolCLI\n"
         unless caller eq 'FSM::VIAL::ToolCLI';
     my %allowed = map { $_ => 1 } qw(VIAL_TOOL_INVOCATION_ERROR VIAL_HOST_ERROR);
     die "unsupported VIAL CLI diagnostic code\n" unless $allowed{$code};
+    if (defined($version) && $version == 2) {
+        return _v2_error_result(
+            $action,
+            _v2_diagnostic($code, $message, 'invocation', undef, '/'),
+        );
+    }
     return _error_result($action, _diagnostic($code, $message, [], '/'));
 }
 
 sub _cli_artifact_error_result {
-    my ($class, $action, $diagnostics) = @_;
+    my ($class, $action, $diagnostics, $version) = @_;
     die "VIAL artifact error construction is private to FSM::VIAL::ToolCLI\n"
         unless caller eq 'FSM::VIAL::ToolCLI';
     die "artifact action must be plan or run\n"
         unless defined($action) && !ref($action) && $action =~ /\A(?:plan|run)\z/;
     die "artifact diagnostics must be a non-empty array\n"
         unless ref($diagnostics) eq 'ARRAY' && @$diagnostics;
+    if (defined($version) && $version == 2) {
+        return _v2_plan_error_result(
+            action => $action,
+            diagnostics => [_v2_public_diagnostics($diagnostics)],
+        );
+    }
     return _finalize_result({
         %{_empty_result($action)},
         success => JSON::PP::false,
@@ -361,6 +676,143 @@ sub _execute_plan_action {
     });
     my $sink = $validated->{artifact_sink};
     push @$sink, map { _clone($_) } @$artifacts;
+    return $result;
+}
+
+sub _execute_plan_action_v2 {
+    my ($validated) = @_;
+    my $request = $validated->{request};
+    my $source = $request->{vial_source};
+    my $options = $request->{options};
+    my $source_version = _source_language_version_if_valid($source);
+    if (defined($source_version) && $source_version != 2) {
+        return _v2_plan_error_result(
+            action => 'plan',
+            diagnostics => [_v2_version_diagnostic(
+                $source->{source_id}, $source_version, 2,
+            )],
+        );
+    }
+    my $parser_args = {
+        text => $source->{text}, source_name => $source->{source_id},
+        source_catalog => $validated->{source_catalog},
+    };
+    my $checked = FSM::VIAL::Parser->check_source($parser_args);
+    if (!$checked->{ok}) {
+        return _v2_plan_error_result(
+            action => 'plan',
+            diagnostics => [_v2_public_diagnostics($checked->{diagnostics})],
+        );
+    }
+    if ($checked->{semantic_report}{language_version} != 2) {
+        return _v2_plan_error_result(
+            action => 'plan',
+            diagnostics => [_v2_version_diagnostic(
+                $source->{source_id},
+                $checked->{semantic_report}{language_version}, 2,
+            )],
+        );
+    }
+    my $style = FSM::VIAL::SourceProjection->source_style({
+        text => $source->{text}, source_name => $source->{source_id},
+    });
+    if ($options->{source_style} ne 'auto'
+            && $options->{source_style} ne $style) {
+        return _v2_plan_error_result(
+            action => 'plan', source_style => $style . '_v2',
+            diagnostics => [_v2_style_diagnostic(
+                $source->{source_id},
+                "source is $style but --style requested $options->{source_style}",
+            )],
+        );
+    }
+    my $semantic_ir = FSM::VIAL::Parser->parse_source($parser_args);
+    my $meaning_sha256 =
+        FSM::VIAL::SourceProjection->semantic_projection_sha256($semantic_ir);
+    my $compatibility_sha256 =
+        FSM::VIAL::SourceProjection->compatibility_projection_sha256($semantic_ir);
+    my $normal = FSM::VIAL::SourceProjection->format_source({
+        text => $source->{text}, source_name => $source->{source_id},
+        output_style => 'normal',
+    })->{text};
+    my $built = FSM::VIAL::PlanBuilder->build({
+        semantic_ir => $semantic_ir,
+        hial_source => $request->{hial_source},
+        fixture_id => $options->{fixture_id},
+        scenario_ids => $options->{scenario_ids},
+        execution_profile => $options->{execution_profile},
+        replay_manifest => $options->{replay_manifest},
+        native_extension_catalog => $options->{native_extension_catalogs},
+    });
+    return _v2_plan_error_result(
+        action => 'plan', source_style => $style . '_v2',
+        diagnostics => [_v2_public_diagnostics($built->{diagnostics})],
+    ) unless $built->{ok};
+
+    my $plan = $built->{plan};
+    my $fixture_slug = _slug($plan->{fixture}{fixture_name});
+    my ($plan_digest) = $plan->{plan_id} =~ m{\Aplan/([0-9a-f]{64})\z};
+    die 'v2 plan identity is invalid' unless defined $plan_digest;
+    my $policy = $options->{artifact_policy};
+    my $artifact_root = defined($policy->{artifact_root})
+        ? $policy->{artifact_root}
+        : ".artifacts/vial-v2/$fixture_slug/$plan_digest";
+    my $operation_id = 'op-' . sha256_hex(_canonical_json({
+        action => 'plan',
+        language_version => 2,
+        plan_id => $plan->{plan_id},
+        artifact_root => $artifact_root,
+        source_sha256 => sha256_hex($source->{text}),
+        hial_sha256 => sha256_hex($request->{hial_source}{text}),
+    }));
+    my $source_identities = [
+        map { _clone($_) } @{$checked->{semantic_report}{sources}},
+        _source_identity($request->{hial_source}),
+    ];
+    my ($artifacts, $tool_manifest) = _build_plan_artifacts_v2(
+        normal_source => $normal,
+        vial_source_id => $source->{source_id},
+        hial_source_id => $request->{hial_source}{source_id},
+        bridge => $built->{bridge_report},
+        plan => $plan,
+        review_artifacts => $built->{review_artifacts},
+        source_style => $style . '_v2',
+        source_identities => $source_identities,
+        artifact_root => $artifact_root,
+        operation_id => $operation_id,
+        artifact_mode => $policy->{mode},
+        meaning_sha256 => $meaning_sha256,
+        compatibility_sha256 => $compatibility_sha256,
+    );
+    if (my $diagnostic = _plan_artifact_graph_diagnostic($artifacts)) {
+        return _v2_plan_error_result(
+            action => 'plan', source_style => $style . '_v2',
+            diagnostics => [_v2_public_diagnostics([$diagnostic])],
+        );
+    }
+    my $result = _finalize_result_v2({
+        %{_empty_result_v2('plan')},
+        success => JSON::PP::true,
+        status => 'planned',
+        source_identities => $source_identities,
+        source_style => $style . '_v2',
+        semantic_report => _clone($checked->{semantic_report}),
+        bridge_manifest => _clone($built->{bridge_report}),
+        plan => _clone($plan),
+        tool_manifest => _clone($tool_manifest),
+        artifacts => _clone($artifacts),
+        capability_evidence => _v2_capability_evidence(
+            'plan', $meaning_sha256, $compatibility_sha256,
+        ),
+        support_accounting => _v2_support_accounting('plan'),
+        diagnostics => [],
+        implementation => {
+            component => 'FSM::VIAL::Tool',
+            version => 2,
+            stage => 'public_empty_base_planning',
+        },
+    });
+    push @{$validated->{artifact_sink}}, map { _clone($_) } @$artifacts;
     return $result;
 }
 
@@ -651,6 +1103,91 @@ sub _build_plan_artifacts {
     return (\@artifacts, $tool_manifest);
 }
 
+sub _build_plan_artifacts_v2 {
+    my (%args) = @_;
+    my @artifacts;
+    push @artifacts, _virtual_artifact(
+        relpath => 'source/vial-normal.vial',
+        kind => 'source', language => 'vial',
+        role => 'canonical_normal_source',
+        content => $args{normal_source},
+        source_layer => 'VIAL',
+        generated_from => [$args{vial_source_id}],
+    );
+    for my $review (@{$args{review_artifacts}}) {
+        push @artifacts, _virtual_artifact(
+            relpath => 'review/' . $review->{artifact_name},
+            kind => 'source', language => lc($review->{layer}),
+            role => 'generated_hial_review',
+            content => $review->{text}, source_layer => $review->{layer},
+            generated_from => [$review->{source_id}],
+        );
+    }
+    push @artifacts, _virtual_artifact(
+        relpath => 'hial-vial-bridge.json',
+        kind => 'report', language => 'json',
+        role => 'hial_vial_bridge_manifest',
+        content => _canonical_pretty_json($args{bridge}),
+        source_layer => 'HIAL',
+        generated_from => [$args{hial_source_id}],
+    );
+    push @artifacts, _virtual_artifact(
+        relpath => 'vial-plan.json',
+        kind => 'report', language => 'json', role => 'vial_plan',
+        content => _canonical_pretty_json($args{plan}),
+        source_layer => 'VIAL',
+        generated_from => [$args{plan}{plan_id}],
+    );
+    @artifacts = sort { $a->{relpath} cmp $b->{relpath} } @artifacts;
+
+    my @persisted = map { _persisted_artifact_v2($_) } @artifacts;
+    my %by_path = map { $_->{relpath} => $_ } @persisted;
+    my $reports = {
+        normal_source => _report_identity($by_path{'source/vial-normal.vial'}),
+        bridge => _report_identity($by_path{'hial-vial-bridge.json'}),
+        plan => _report_identity($by_path{'vial-plan.json'}),
+        verification_output => undef,
+        result => undef,
+    };
+    my $tool_manifest = {
+        schema => 'fsmgen.vial_tool_manifest.v2',
+        schema_version => 2,
+        operation_id => $args{operation_id},
+        status => 'planned',
+        action => 'plan',
+        source_style => $args{source_style},
+        source_identities => _clone($args{source_identities}),
+        fixture_id => $args{plan}{fixture}{fixture_id},
+        scenario_ids => _clone($args{plan}{fixture}{scenario_ids}),
+        execution_profile => $args{plan}{profile},
+        backend_profile => undef,
+        artifact_root => $args{artifact_root},
+        artifacts => \@persisted,
+        reports => $reports,
+        capability_evidence => _v2_capability_evidence(
+            'plan', $args{meaning_sha256}, $args{compatibility_sha256},
+        ),
+        support_accounting => _v2_support_accounting('plan'),
+        diagnostics => [],
+        cleanup => {
+            staging_identity => $args{artifact_mode} eq 'repository'
+                ? ".artifacts/tmp/vial/$args{operation_id}" : undef,
+            staging_removed => $args{artifact_mode} eq 'repository'
+                ? JSON::PP::true : JSON::PP::false,
+            atomic_commit_completed => $args{artifact_mode} eq 'repository'
+                ? JSON::PP::true : JSON::PP::false,
+        },
+    };
+    push @artifacts, _virtual_artifact(
+        relpath => 'vial-tool-manifest.json',
+        kind => 'manifest', language => 'json', role => 'vial_tool_manifest',
+        content => _canonical_pretty_json($tool_manifest),
+        source_layer => 'VIAL', generated_from => [$args{plan}{plan_id}],
+    );
+    @artifacts = sort { $a->{relpath} cmp $b->{relpath} } @artifacts;
+    return (\@artifacts, $tool_manifest);
+}
+
 sub _virtual_artifact {
     my (%args) = @_;
     return {
@@ -690,6 +1227,14 @@ sub _persisted_artifact {
         if $artifact->{role} eq 'verification_result_manifest';
     $entry->{backend_profile} = 'sv_portable_verilator'
         if $artifact->{relpath} =~ m{\Abackends/sv_portable_verilator/};
+    return $entry;
+}
+
+sub _persisted_artifact_v2 {
+    my ($artifact) = @_;
+    my $entry = _persisted_artifact($artifact);
+    $entry->{schema} = 'fsmgen.vial_plan.v2'
+        if $artifact->{role} eq 'vial_plan';
     return $entry;
 }
 
@@ -770,6 +1315,186 @@ sub _plan_artifact_graph_diagnostic {
         '/artifacts',
     ) if $bytes > $contract->{limits}{artifact_bytes};
     return undef;
+}
+
+sub _validate_invocation_v2 {
+    my ($request, $environment) = @_;
+    die 'request must be one unblessed hash'
+        unless ref($request) eq 'HASH' && !blessed($request);
+    _assert_json_safe($request, 'request');
+    my @request_keys = qw(
+        schema schema_version action vial_source hial_source options
+    );
+    _require_exact_keys($request, \@request_keys, 'request');
+    die 'request schema must be fsmgen.vial_tool_request.v2'
+        unless defined($request->{schema}) && !ref($request->{schema})
+            && $request->{schema} eq 'fsmgen.vial_tool_request.v2';
+    die 'request schema_version must be 2'
+        unless defined($request->{schema_version})
+            && !ref($request->{schema_version})
+            && $request->{schema_version} =~ /\A2\z/;
+    die 'request action must be a scalar'
+        unless defined($request->{action}) && !ref($request->{action});
+    my %known_action = map { $_ => 1 }
+        qw(capabilities check format migrate plan run);
+    die "request action '$request->{action}' is unknown"
+        unless $known_action{$request->{action}};
+    die 'hial_source must be null for capabilities, check, format, and migrate'
+        if $request->{action} =~ /\A(?:capabilities|check|format|migrate)\z/
+            && defined($request->{hial_source});
+    _validate_hial_source($request->{hial_source})
+        if $request->{action} eq 'plan' || $request->{action} eq 'run';
+
+    die 'request options must be one unblessed hash'
+        unless ref($request->{options}) eq 'HASH'
+            && !blessed($request->{options});
+    _require_exact_keys($request->{options}, \@OPTION_KEYS, 'request options');
+    _validate_options_v2($request->{action}, $request->{options});
+    if ($request->{action} eq 'capabilities') {
+        die 'vial_source must be null for capabilities'
+            if defined $request->{vial_source};
+    }
+    else {
+        _validate_vial_source($request->{vial_source});
+    }
+
+    $environment = {source_catalog => {}, artifact_sink => []}
+        unless defined $environment;
+    die 'environment must be one unblessed hash'
+        unless ref($environment) eq 'HASH' && !blessed($environment);
+    _assert_json_safe($environment, 'environment');
+    my %environment_key = map { $_ => 1 }
+        qw(source_catalog artifact_sink repository_root);
+    my @unknown_environment =
+        sort grep { !$environment_key{$_} } keys %$environment;
+    die "environment has unknown key '$unknown_environment[0]'"
+        if @unknown_environment;
+    die 'environment is missing source_catalog or artifact_sink'
+        unless exists($environment->{source_catalog})
+            && exists($environment->{artifact_sink});
+    die 'source_catalog must be one unblessed hash'
+        unless ref($environment->{source_catalog}) eq 'HASH'
+            && !blessed($environment->{source_catalog});
+    my %catalog;
+    for my $source_name (sort keys %{$environment->{source_catalog}}) {
+        die "source_catalog key '$source_name' is unsafe"
+            unless _safe_catalog_source_id($source_name);
+        my $text = $environment->{source_catalog}{$source_name};
+        die "source_catalog value for '$source_name' must be scalar"
+            unless defined($text) && !ref($text);
+        $catalog{$source_name} = $text;
+    }
+    die 'artifact_sink must be an empty array'
+        unless ref($environment->{artifact_sink}) eq 'ARRAY'
+            && !@{$environment->{artifact_sink}};
+    return {
+        request => _clone($request),
+        source_catalog => \%catalog,
+        artifact_sink => $environment->{artifact_sink},
+        repository_root => $environment->{repository_root},
+    };
+}
+
+sub _validate_options_v2 {
+    my ($action, $options) = @_;
+    my $source_style = $options->{source_style};
+    if ($action eq 'capabilities') {
+        die 'capabilities requires null source_style'
+            if defined $source_style;
+    }
+    else {
+        die 'source_style must be auto, normal, or terse'
+            unless defined($source_style) && !ref($source_style)
+                && $source_style =~ /\A(?:auto|normal|terse)\z/;
+    }
+    if ($action eq 'format') {
+        die 'format output_style must be normal or terse'
+            unless defined($options->{output_style})
+                && !ref($options->{output_style})
+                && $options->{output_style} =~ /\A(?:normal|terse)\z/;
+    }
+    elsif ($action eq 'migrate') {
+        die 'migrate source_style must be auto'
+            unless $source_style eq 'auto';
+        die 'migrate output_style must be null, normal, or terse'
+            if defined($options->{output_style})
+                && (ref($options->{output_style})
+                    || $options->{output_style} !~ /\A(?:normal|terse)\z/);
+    }
+    else {
+        die "$action requires null output_style"
+            if defined $options->{output_style};
+    }
+
+    if ($action eq 'plan' || $action eq 'run') {
+        die 'fixture_id must be null or a non-empty scalar'
+            if defined($options->{fixture_id})
+                && (ref($options->{fixture_id})
+                    || !length($options->{fixture_id}));
+        die 'scenario_ids must be an array'
+            unless ref($options->{scenario_ids}) eq 'ARRAY';
+        for my $index (0 .. $#{$options->{scenario_ids}}) {
+            die "scenario_ids/$index must be a non-empty scalar"
+                unless defined($options->{scenario_ids}[$index])
+                    && !ref($options->{scenario_ids}[$index])
+                    && length($options->{scenario_ids}[$index]);
+        }
+        die 'execution_profile must be core_directed_single_clock_execution_v2'
+            unless defined($options->{execution_profile})
+                && !ref($options->{execution_profile})
+                && $options->{execution_profile}
+                    eq 'core_directed_single_clock_execution_v2';
+        die 'plan requires null backend_profile'
+            if $action eq 'plan' && defined($options->{backend_profile});
+        die 'run backend_profile must be null or a non-empty scalar'
+            if $action eq 'run' && defined($options->{backend_profile})
+                && (ref($options->{backend_profile})
+                    || !length($options->{backend_profile}));
+        die 'replay_manifest must be null or an unblessed hash'
+            if defined($options->{replay_manifest})
+                && (ref($options->{replay_manifest}) ne 'HASH'
+                    || blessed($options->{replay_manifest}));
+        die 'native_extension_catalogs must be an empty array for VIAL v2 foundation planning'
+            unless ref($options->{native_extension_catalogs}) eq 'ARRAY'
+                && !@{$options->{native_extension_catalogs}};
+        die 'artifact_policy must be one unblessed hash'
+            unless ref($options->{artifact_policy}) eq 'HASH'
+                && !blessed($options->{artifact_policy});
+        _require_exact_keys(
+            $options->{artifact_policy}, [qw(mode artifact_root)],
+            'artifact_policy',
+        );
+        die 'artifact_policy mode must be virtual or repository'
+            unless defined($options->{artifact_policy}{mode})
+                && !ref($options->{artifact_policy}{mode})
+                && $options->{artifact_policy}{mode}
+                    =~ /\A(?:virtual|repository)\z/;
+        die 'artifact_policy artifact_root must be null or a safe repository-relative directory'
+            if defined($options->{artifact_policy}{artifact_root})
+                && !_safe_artifact_root(
+                    $options->{artifact_policy}{artifact_root},
+                );
+    }
+    else {
+        for my $key (qw(
+            fixture_id execution_profile backend_profile replay_manifest
+            artifact_policy
+        )) {
+            die "$action requires null $key in the source-tooling slice"
+                if defined $options->{$key};
+        }
+        for my $key (qw(scenario_ids native_extension_catalogs)) {
+            die "$key must be an empty array in the source-tooling slice"
+                unless ref($options->{$key}) eq 'ARRAY'
+                    && !@{$options->{$key}};
+        }
+    }
+    my $quiet_is_boolean = blessed($options->{quiet})
+        && blessed($options->{quiet})->isa('JSON::PP::Boolean');
+    my $quiet_is_scalar = defined($options->{quiet})
+        && !ref($options->{quiet}) && $options->{quiet} =~ /\A(?:0|1)\z/;
+    die 'quiet must be a JSON Boolean-compatible scalar'
+        unless $quiet_is_boolean || $quiet_is_scalar;
 }
 
 sub _validate_invocation {
@@ -1022,6 +1747,160 @@ sub _safe_artifact_root {
         && !grep { $_ eq '' || $_ eq '.' || $_ eq '..' } split m{/}, $value, -1;
 }
 
+sub _v2_capabilities_result {
+    return _finalize_result_v2({
+        %{_empty_result_v2('capabilities')},
+        success => JSON::PP::true,
+        status => 'checked',
+        capability_evidence => _v2_capability_evidence(
+            'capabilities', undef, undef,
+        ),
+        support_accounting => _v2_support_accounting('capabilities'),
+        diagnostics => [],
+    });
+}
+
+sub _v2_source_result {
+    my (%args) = @_;
+    return _finalize_result_v2({
+        %{_empty_result_v2($args{action})},
+        success => $args{success} ? JSON::PP::true : JSON::PP::false,
+        status => $args{status},
+        source_style => $args{source_style},
+        source_identities => $args{source_identities} || [],
+        semantic_report => $args{semantic_report},
+        formatted_source => $args{formatted_source},
+        capability_evidence => _v2_capability_evidence(
+            $args{action}, $args{meaning_sha256},
+            $args{compatibility_sha256},
+        ),
+        support_accounting => _v2_support_accounting($args{action}),
+        diagnostics => $args{diagnostics} || [],
+    });
+}
+
+sub _v2_migration_result {
+    my (%args) = @_;
+    return _finalize_result_v2({
+        %{_empty_result_v2('migrate')},
+        success => $args{success} ? JSON::PP::true : JSON::PP::false,
+        status => $args{status},
+        source_style => $args{source_style},
+        source_identities => $args{source_identities} || [],
+        source_migration => _clone($args{source_migration}),
+        capability_evidence => _v2_capability_evidence(
+            'migrate', undef, $args{compatibility_sha256},
+        ),
+        support_accounting => _v2_support_accounting('migrate'),
+        diagnostics => $args{diagnostics} || [],
+        implementation => {
+            component => 'FSM::VIAL::Tool',
+            version => 2,
+            stage => 'public_source_migration',
+        },
+    });
+}
+
+sub _v2_plan_error_result {
+    my (%args) = @_;
+    my $action = $args{action} // 'plan';
+    return _finalize_result_v2({
+        %{_empty_result_v2($action)},
+        source_style => $args{source_style},
+        capability_evidence => _v2_capability_evidence(
+            $action, undef, undef,
+        ),
+        support_accounting => _v2_support_accounting($action),
+        diagnostics => _clone($args{diagnostics} || []),
+        implementation => {
+            component => 'FSM::VIAL::Tool',
+            version => 2,
+            stage => $action eq 'run'
+                ? 'v2_runtime_unavailable' : 'public_empty_base_planning',
+        },
+    });
+}
+
+sub _v2_error_result {
+    my ($action, $diagnostic) = @_;
+    return _finalize_result_v2({
+        %{_empty_result_v2($action)},
+        capability_evidence => _v2_capability_evidence(
+            $action, undef, undef,
+        ),
+        support_accounting => _v2_support_accounting($action),
+        diagnostics => [$diagnostic],
+    });
+}
+
+sub _empty_result_v2 {
+    my ($action) = @_;
+    return {
+        schema => 'fsmgen.vial_tool_result.v2',
+        schema_version => 2,
+        action => $action,
+        success => JSON::PP::false,
+        status => 'error',
+        source_identities => [],
+        source_style => undef,
+        semantic_report => undef,
+        formatted_source => undef,
+        bridge_manifest => undef,
+        plan => undef,
+        tool_manifest => undef,
+        verification_output_manifest => undef,
+        result_manifest => undef,
+        artifacts => [],
+        capability_evidence => {},
+        support_accounting => {},
+        diagnostics => [],
+        implementation => {
+            component => 'FSM::VIAL::Tool',
+            version => 2,
+            stage => 'public_v2_source_tooling',
+        },
+        source_migration => undef,
+    };
+}
+
+sub _v2_capability_evidence {
+    my ($action, $semantic_sha256, $compatibility_sha256) = @_;
+    my $contract = build_vial_tooling_contract_v2();
+    my ($state) = grep { $_->{action} eq $action }
+        @{$contract->{action_states}};
+    $state ||= {
+        action => $action,
+        maturity => 'unavailable',
+        writes_files => JSON::PP::false,
+        artifact_atomic => JSON::PP::true,
+    };
+    return {
+        contract => _clone($contract),
+        action_state => _clone($state),
+        semantic_projection_sha256 => $semantic_sha256,
+        compatibility_projection_sha256 => $compatibility_sha256,
+    };
+}
+
+sub _v2_support_accounting {
+    my ($action) = @_;
+    return {
+        feature_id => $action eq 'plan'
+            ? 'feature.vial_v2_public_empty_base_plan'
+            : $action eq 'run'
+                ? 'feature.vial_v2_run_unavailable'
+                : 'feature.vial_v2_public_source_migration',
+        coverage => $action eq 'plan'
+            ? 'vial_v2_public_empty_base_plan_cli_api'
+            : $action eq 'run'
+                ? 'vial_v2_run_pre_artifact_rejection'
+                : 'vial_v2_public_source_migration_cli_api',
+        classification => $action eq 'run'
+            ? 'unsupported' : 'supported_smoke',
+        evidence => 't/1806-vial-v2-public-foundation.t',
+    };
+}
+
 sub _capabilities_result {
     my $contract = build_vial_tooling_contract();
     return _finalize_result({
@@ -1231,6 +2110,66 @@ sub _public_diagnostics {
     } @{$diagnostics};
 }
 
+sub _v2_public_diagnostics {
+    my ($diagnostics) = @_;
+    return map {
+        ref($_) eq 'HASH'
+            && ($_->{schema} || '') eq 'fsmgen.vial_diagnostic.v2'
+            ? _clone($_)
+            : _v2_diagnostic(
+                $_->{code} || 'VIAL_SEMANTIC_ERROR',
+                $_->{message} || 'VIAL source validation failed',
+                $_->{phase} || 'source',
+                defined($_->{source_location})
+                    ? $_->{source_location}
+                    : ref($_->{source_locations}) eq 'ARRAY'
+                        && @{$_->{source_locations}}
+                            ? $_->{source_locations}[0] : undef,
+                $_->{semantic_path} || '/',
+                $_->{notes} || [],
+            )
+    } @$diagnostics;
+}
+
+sub _v2_migration_import_version_diagnostic {
+    my ($root_source, $catalog) = @_;
+    my %visited;
+    my @pending = ([$root_source->{source_id}, $root_source->{text}]);
+    while (@pending) {
+        my ($source_name, $text) = @{shift @pending};
+        next if $visited{$source_name}++;
+        my $imports = eval {
+            FSM::VIAL::SourceProjection->import_source_names({
+                text => $text,
+                source_name => $source_name,
+            });
+        };
+        next unless $imports;
+        for my $import_name (@$imports) {
+            next unless exists $catalog->{$import_name};
+            my $import_text = $catalog->{$import_name};
+            my $version = _source_language_version_if_valid({
+                source_id => $import_name,
+                text => $import_text,
+            });
+            if (defined($version) && $version != 1) {
+                return _v2_diagnostic(
+                    'VIAL_IMPORT_VERSION_MISMATCH',
+                    "imported source '$import_name' uses VIAL language version $version; migration catalog root requires version 1",
+                    'import', _source_start_location($source_name),
+                    '/packages/0/imports', [{
+                        message => "imported root declares VIAL language version $version",
+                        source_location => _source_start_location($import_name),
+                    }],
+                );
+            }
+            push @pending, [$import_name, $import_text]
+                if defined($version) && $version == 1;
+        }
+    }
+    return undef;
+}
+
 sub _invocation_diagnostic {
     my ($message) = @_;
     return _diagnostic('VIAL_TOOL_INVOCATION_ERROR', $message, [], '/');
@@ -1247,6 +2186,52 @@ sub _style_diagnostic {
         end_line => 1,
         end_column => 1,
     }], '/');
+}
+
+sub _v2_style_diagnostic {
+    my ($source_id, $message) = @_;
+    return _v2_diagnostic(
+        'VIAL_SOURCE_STYLE_ERROR', $message, 'source',
+        _source_start_location($source_id), '/',
+    );
+}
+
+sub _v2_version_diagnostic {
+    my ($source_id, $language_version, $request_version) = @_;
+    return _v2_diagnostic(
+        'VIAL_VERSION_UNSUPPORTED',
+        "VIAL tool request version $request_version does not accept VIAL language version $language_version",
+        'version', _source_start_location($source_id), '/language_version',
+    );
+}
+
+sub _source_start_location {
+    my ($source_id) = @_;
+    return {
+        source_name => $source_id,
+        start_byte => 0,
+        end_byte_exclusive => 0,
+        start_line => 1,
+        start_column => 1,
+        end_line => 1,
+        end_column => 1,
+    };
+}
+
+sub _v2_diagnostic {
+    my ($code, $message, $phase, $location, $path, $notes) = @_;
+    $message =~ s/[\r\n]+/ /g;
+    return {
+        schema => 'fsmgen.vial_diagnostic.v2',
+        schema_version => 2,
+        severity => 'error',
+        code => $code,
+        phase => $phase,
+        message => $message,
+        semantic_path => $path,
+        source_location => defined($location) ? _clone($location) : undef,
+        notes => _clone($notes || []),
+    };
 }
 
 sub _v1_tool_version_diagnostic {
@@ -1304,6 +2289,13 @@ sub _finalize_result {
     my ($result) = @_;
     _require_exact_keys($result, \@RESULT_KEYS, 'result');
     _assert_json_safe($result, 'result');
+    return _clone($result);
+}
+
+sub _finalize_result_v2 {
+    my ($result) = @_;
+    _require_exact_keys($result, \@RESULT_KEYS_V2, 'v2 result');
+    _assert_json_safe($result, 'v2 result');
     return _clone($result);
 }
 

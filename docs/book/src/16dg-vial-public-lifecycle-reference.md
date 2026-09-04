@@ -1,13 +1,14 @@
 # Public VIAL Lifecycle Reference
 
-This is the task-oriented reference for the public VIAL path that ships now.
-It follows one verification source from discovery and checking through HIAL
+This is the task-oriented reference for both public VIAL versions. Version 1
+follows one verification source from discovery and checking through HIAL
 review, target-neutral planning, the selected public backend, and normalized
-results. Read [HIAL/VIAL Verification: Start Here](16d-hial-vial-verification-architecture.md)
+results. Version 2 currently stops at empty-family planning. Read
+[HIAL/VIAL Verification: Start Here](16d-hial-vial-verification-architecture.md)
 first when you need the availability boundary between public, private,
 review-only, experimental, and unavailable profiles.
 
-The public lifecycle is:
+The complete v1 lifecycle is:
 
 ```text
 .vial source -> check/format -> reviewed HIAL bridge -> public plan
@@ -18,6 +19,68 @@ Private compiler objects exist between those steps, but they are not an API.
 Use only the command family, the portable request/result records, and the
 sanitized artifacts documented here.
 
+## Select the language/tool contract explicitly
+
+Commands without a version selector retain the complete v1 behavior described
+below. Select the additive v2 foundation with `--language-version 2`:
+
+```bash
+./bin/fsmgen vial capabilities --language-version 2 --json
+./bin/fsmgen vial check --language-version 2 \
+  vial/ahb_subordinate_base_output_arbitration_v2.vial
+./bin/fsmgen vial format --language-version 2 --style terse \
+  vial/ahb_subordinate_base_output_arbitration_v2.vial
+./bin/fsmgen vial migrate --language-version 2 --json \
+  vial/ahb_subordinate_base_output_arbitration.vial
+```
+
+The checked v2 fixture has the same base meaning as the v1 AHB fixture and an
+explicit empty `(intents)` section. It does not claim an implemented expressive
+family. `check` and `format` write no artifact, and formatting preserves
+language version 2. Normal and terse output report `normal_v2` and `terse_v2`
+and reparse to one `fsmgen.vial_semantic_projection.v2` digest.
+
+The public v2 action matrix is:
+
+| Action | Current state | Output boundary |
+| --- | --- | --- |
+| `capabilities` | supported smoke | exact v2 contract, including unavailable states |
+| `check` / `format` | supported smoke | sanitized v2 report or canonical v2 source; no artifacts |
+| `migrate` | supported smoke | non-mutating whole-catalog v1-to-v2 result; no artifacts |
+| `plan` | supported smoke for the empty-family base | atomic v2 plan tree or virtual sink |
+| `run` | unavailable | `VIAL_VERSION_UNSUPPORTED`; no plan, workspace, or artifact |
+
+Plan the checked empty-family v2 fixture with:
+
+```bash
+./bin/fsmgen vial plan --language-version 2 \
+  --dut ppif/ahb_lite_subordinate.ppif \
+  --fixture base_output_arbitration \
+  --profile core_directed_single_clock_execution_v2 \
+  --outdir .artifacts/manual/vial-v2-foundation-plan \
+  --json \
+  vial/ahb_subordinate_base_output_arbitration_v2.vial
+```
+
+The tree uses `fsmgen.vial_plan.v2` and
+`fsmgen.vial_tool_manifest.v2`; unchanged HIAL facts stay in
+`fsmgen.hial_vial_bridge_manifest.v1`. Remove only the example root after
+inspection:
+
+```bash
+rm -rf .artifacts/manual/vial-v2-foundation-plan
+```
+
+V2 public requests and results are `fsmgen.vial_tool_request.v2` and
+`fsmgen.vial_tool_result.v2`. The v2 result retains the v1 field family and adds
+nullable `source_migration`. Embedding code uses
+`vial_tool_capabilities_v2()` for v2 discovery and the common
+`execute_vial_tool_request(...)` entrypoint with an exact v2 request schema.
+The legacy `vial_tool_capabilities()` entrypoint remains byte-exact v1.
+Successful migration records use `fsmgen.vial_source_migration.v1`; see the
+[legacy migration guide](16di-vial-legacy-migration.md) before adopting any
+returned source bytes.
+
 ## Start with machine truth
 
 Ask the installed FSMGen tree what the public VIAL surface advertises:
@@ -26,14 +89,14 @@ Ask the installed FSMGen tree what the public VIAL surface advertises:
 ./bin/fsmgen vial capabilities --json
 ```
 
-The result uses `fsmgen.vial_tool_result.v1`. Inspect
+Without the version selector, the result uses `fsmgen.vial_tool_result.v1`. Inspect
 `capability_evidence.supported_actions`, `capability_evidence.capabilities`,
 `capability_evidence.diagnostics`, and
 `capability_evidence.explicit_nonclaims` before selecting a backend or making a
 support claim. Discovery describes the selected product contract; `run` still
 validates the required external tool and exact profile before execution.
 
-The public actions have deliberately different effects:
+The complete v1 public actions have deliberately different effects:
 
 | Action | Needs HIAL | Writes artifacts | Meaning |
 | --- | --- | --- | --- |
@@ -294,6 +357,29 @@ VIAL_RUN_TRACE_ERROR
 VIAL_RUN_RESULT_ERROR
 VIAL_RUN_CLEANUP_ERROR
 VIAL_RUN_HOST_ERROR
+VIAL_HOST_ERROR
+```
+
+The explicit v2 contract uses the same closed record shape and enumerates:
+
+```text
+VIAL_TOOL_INVOCATION_ERROR
+VIAL_SOURCE_STYLE_ERROR
+VIAL_VERSION_UNSUPPORTED
+VIAL_IMPORT_VERSION_MISMATCH
+VIAL_COMPATIBILITY_ADAPTER_UNAVAILABLE
+VIAL_COMPATIBILITY_ADAPTER_INVALID
+VIAL_MIGRATION_ERROR
+VIAL_FAMILY_UNSUPPORTED
+VIAL_FAMILY_REVISION_MISMATCH
+VIAL_PARSE_ERROR
+VIAL_SCHEMA_ERROR
+VIAL_SEMANTIC_ERROR
+VIAL_LIMIT_ERROR
+VIAL_HIAL_SOURCE_ERROR
+VIAL_ARTIFACT_PATH_ERROR
+VIAL_ARTIFACT_COLLISION
+VIAL_MANIFEST_SCHEMA_ERROR
 VIAL_HOST_ERROR
 ```
 

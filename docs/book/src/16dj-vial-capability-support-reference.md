@@ -6,8 +6,10 @@ contracts, machine-readable capability records, or specialist evidence.
 
 The short answer is:
 
-- public `.vial` check, format, plan, and `sv_portable_verilator` run are
+- public VIAL v1 check, format, plan, and `sv_portable_verilator` run are
   shipped;
+- public VIAL v2 capabilities, check, format, opt-in v1 migration, and
+  empty-family plan are shipped, while v2 run is unavailable;
 - portable VHDL/GHDL and OSVVM have exact private fixture qualifications;
 - native UVM has deterministic private emission and a separate tool-limited
   experiment, but no qualified product runtime;
@@ -21,11 +23,14 @@ Run both public discovery commands from the repository root:
 
 ```bash
 ./bin/fsmgen vial capabilities --json
+./bin/fsmgen vial capabilities --language-version 2 --json
 ./bin/fsmgen --capability-manifest
 ```
 
-The VIAL-only result carries public tooling truth at `capability_evidence`.
-The complete manifest carries the same public record plus private evidence at:
+The first VIAL-only result and the complete manifest carry the byte-stable v1
+public tooling record. The explicit v2 result carries its distinct contract at
+`capability_evidence.contract`; it is not folded into or confused with the v1
+record. The complete manifest carries private evidence at:
 
 ```text
 language_surface.vial_tooling
@@ -34,9 +39,11 @@ language_surface.vial_vhdl_emission
 support_accounting.catalog_entries
 ```
 
-The VIAL-only projection must equal the corresponding fields of the complete
-public-tooling record, including the complete nested scale contract. The full
-manifest additionally carries schemas, entrypoints, and API/publication flags.
+The v1 VIAL-only projection must equal the corresponding fields of the complete
+public-tooling record, including the complete nested scale contract. The v2
+contract instead derives its parser and empty-plan capabilities from the
+semantic-family registry and reports `run` unavailable. The full manifest
+additionally carries schemas, entrypoints, and API/publication flags.
 The private native-UVM and VHDL records are discoverable evidence, not extra
 backends accepted by public `fsmgen vial run`.
 
@@ -54,6 +61,20 @@ These terms are deliberately different:
   and
 - **regression evidence** protects named behavior but does not establish
   arbitrary design capacity.
+
+## Exact public version matrix
+
+| Language/tool version | Supported public actions | Unavailable public action | Backend boundary |
+| --- | --- | --- | --- |
+| v1, the CLI default | `capabilities`, `check`, `format`, `plan`, `run` | none in the action grammar | `run` accepts only the separately negotiated `sv_portable_verilator` profile |
+| v2, selected by `--language-version 2` | `capabilities`, `check`, `format`, `migrate`, `plan` | `run` | plan accepts only the inherited empty-family base; no v2 backend, compile, runtime, complete-result, or parity capability exists |
+
+The v2 request/result schemas are `fsmgen.vial_tool_request.v2` and
+`fsmgen.vial_tool_result.v2`. Migration returns
+`fsmgen.vial_source_migration.v1`; planning returns
+`fsmgen.vial_plan.v2` and `fsmgen.vial_tool_manifest.v2` while unchanged HIAL
+facts remain in `fsmgen.hial_vial_bridge_manifest.v1`. No v2 capability list
+contains a `vial.family.*` identity.
 
 ## Exact profile matrix
 
@@ -82,6 +103,8 @@ regression corpus:
 | `verification.vial_ahb_subordinate_base_output_arbitration` | `supported_smoke` | `vial_semantic_report_private_api` |
 | `feature.vial_public_check_format` | `supported_smoke` | `vial_public_check_format_cli_api` |
 | `feature.vial_public_plan` | `supported_smoke` | `vial_public_plan_cli_api` |
+| `feature.vial_v2_public_source_migration` | `supported_smoke` | `vial_v2_public_source_migration_cli_api` |
+| `feature.vial_v2_public_empty_base_plan` | `supported_smoke` | `vial_v2_public_empty_base_plan_cli_api` |
 | `feature.vial_sv_portable_verilator_runtime` | `supported_smoke` | `vial_sv_portable_verilator_runtime_cli_api` |
 | `feature.vial_ahb_base_output_runtime_parity` | `supported_smoke` | `vial_ahb_handwritten_oracle_parity` |
 | `feature.vial_native_uvm_emission_foundation` | `supported_smoke` | `vial_native_uvm_selected_matrix_review_private_api` |
@@ -92,8 +115,8 @@ coverage field still says whether that evidence is public CLI/API, private API,
 review emission, runtime, or parity. Therefore the native-UVM and VHDL rows do
 not contradict the public-backend boundary above.
 
-The public VIAL action list is exactly `capabilities`, `check`, `format`,
-`plan`, and `run`. See the
+The default v1 action list is exactly `capabilities`, `check`, `format`,
+`plan`, and `run`; the explicit v2 list replaces `run` with `migrate`. See the
 [Public VIAL Lifecycle Reference](16dg-vial-public-lifecycle-reference.md) for
 request/result fields, artifact publication, and command examples.
 
@@ -201,6 +224,8 @@ test failure.
 | Phase | Public codes | First check |
 | --- | --- | --- |
 | request and source | `VIAL_TOOL_INVOCATION_ERROR`, `VIAL_SOURCE_STYLE_ERROR`, `VIAL_HIAL_SOURCE_ERROR` | command shape, source style, and the selected HIAL review route |
+| v2 version, imports, migration, and families | `VIAL_VERSION_UNSUPPORTED`, `VIAL_IMPORT_VERSION_MISMATCH`, `VIAL_COMPATIBILITY_ADAPTER_UNAVAILABLE`, `VIAL_COMPATIBILITY_ADAPTER_INVALID`, `VIAL_MIGRATION_ERROR`, `VIAL_FAMILY_UNSUPPORTED`, `VIAL_FAMILY_REVISION_MISMATCH` | explicit version selector, same-version catalog, migration direction, and empty-family boundary |
+| v2 parsing and semantics | `VIAL_PARSE_ERROR`, `VIAL_SCHEMA_ERROR`, `VIAL_SEMANTIC_ERROR`, `VIAL_LIMIT_ERROR` | grammar, closed schema, typed meaning, and the first exceeded source limit |
 | backend negotiation | `VIAL_BACKEND_UNSUPPORTED` | profile spelling and the public/private matrix above |
 | artifact publication | `VIAL_ARTIFACT_PATH_ERROR`, `VIAL_ARTIFACT_COLLISION`, `VIAL_MANIFEST_SCHEMA_ERROR` | repository-relative output, pre-existing content, and schema identity |
 | run setup | `VIAL_RUN_INVOCATION_ERROR`, `VIAL_RUN_PATH_ERROR`, `VIAL_RUN_TOOL_ERROR`, `VIAL_RUN_COMMAND_ERROR`, `VIAL_RUN_COLLISION` | option compatibility, provider identity, command evidence, and output ownership |
@@ -228,6 +253,10 @@ finished and the result has been inspected, remove only that exact owned root:
 ```bash
 rm -rf .artifacts/manual/vial-capability-reference-run
 ```
+
+V2 migration writes no artifact. A v2 plan follows the same atomic publication
+rules under its selected root; `run --language-version 2` creates no root at
+all because it rejects at capability negotiation.
 
 The real architecture-scale gate atomically replaces its declared latest
 observation at

@@ -814,7 +814,8 @@ registered initially. Opt-in v1 migration converts every reachable source,
 retains v1 base meaning through a compatibility projection, and leaves the
 v1 inputs untouched.
 
-The base source boundary is now executable. `FSM::VIAL::Parser` routes a
+The base source boundary and explicit public v2 tooling are now executable.
+`FSM::VIAL::Parser` routes a
 connected catalog by its root version and uses a separate v2 builder. That
 builder validates the seven-section envelope, records the authored `intents`
 span, and reuses the frozen v1 builder only for unchanged declarations and
@@ -831,7 +832,21 @@ Run the focused source gate from the repository root:
 prove -Iperl t/1801-vial-v2-source-projections.t \
   t/1802-vial-v2-semantic-family-envelope.t \
   t/1803-vial-v2-family-registry.t \
-  t/1804-vial-v2-backend-adapter-seams.t
+  t/1804-vial-v2-backend-adapter-seams.t \
+  t/1805-vial-usability-artifact-quality.t \
+  t/1806-vial-v2-public-foundation.t
+```
+
+Select the public v2 route explicitly; leaving the option out keeps v1:
+
+```sh
+./bin/fsmgen vial capabilities --language-version 2 --json
+./bin/fsmgen vial check --language-version 2 \
+  vial/ahb_subordinate_base_output_arbitration_v2.vial
+./bin/fsmgen vial format --language-version 2 --style terse \
+  vial/ahb_subordinate_base_output_arbitration_v2.vial
+./bin/fsmgen vial migrate --language-version 2 --json \
+  vial/ahb_subordinate_base_output_arbitration.vial
 ```
 
 The private planner now accepts the empty-family v2 base, binds it through the
@@ -880,12 +895,14 @@ portable-VHDL delegation or provider verification. Rejection returns no
 operation identity, source map, artifact graph, workspace, or process; target
 mechanisms remain absent from semantic and execution-family records.
 
-This is deliberately not public v2 tooling yet. The v1 tool request rejects v2
-before exposing a report or loading a v2 CLI import. Existing v1 backend and
-result producers reject v2 before artifacts or a mislabeled v1 manifest.
-Public v2 request/result schemas, migration, registered family semantics,
-runtime, complete results, parity, and support remain owned by `.19.1.7` and
-the vertical family activities.
+The public v2 foundation uses distinct `fsmgen.vial_tool_request.v2`,
+`fsmgen.vial_tool_result.v2`, and `fsmgen.vial_tool_manifest.v2` records. It
+supports capabilities, check, format, non-mutating whole-catalog v1 migration,
+and empty-family planning. The v1 request still rejects v2 and its capability
+bytes remain unchanged. V2 `run` rejects before parse, planning, backend work,
+or artifacts because no v2 backend/result/parity route is qualified. Registered
+family semantics and every v2 backend/runtime/complete-result/parity state
+remain owned by the vertical family activities.
 
 ## Native extensions
 

@@ -18,7 +18,10 @@ use FSM::Support::HIALVIALBridgeContract qw(
     build_hial_vial_bridge_contract
 );
 use FSM::Support::VIALExecutionContract qw(build_vial_execution_contract);
-use FSM::Support::VIALToolingContract qw(build_vial_tooling_contract);
+use FSM::Support::VIALToolingContract qw(
+    build_vial_tooling_contract
+    build_vial_tooling_contract_v2
+);
 use FSM::VIAL::Parser;
 use FSM::VIAL::SourceProjection;
 use FSM::VIAL::Tool qw(execute_vial_tool_request);
@@ -45,6 +48,7 @@ my $hial_text = slurp(repo_path(split m{/}, $hial_id));
 my $test_root_rel = ".artifacts/test/hial-vial-lifecycle-$$";
 my $test_root = repo_path(split m{/}, $test_root_rel);
 my $tooling = build_vial_tooling_contract();
+my $tooling_v2 = build_vial_tooling_contract_v2();
 my $bridge = build_hial_vial_bridge_contract();
 my $execution = build_vial_execution_contract();
 my $json = JSON::PP->new->canonical;
@@ -93,6 +97,13 @@ subtest 'book routing and lifecycle prose are derived from public contracts' => 
             $chapter,
             qr{[.]\/bin\/fsmgen vial \Q$action\E\b},
             "the $action action has a runnable repository-root command",
+        );
+    }
+    for my $action (@{$tooling_v2->{supported_actions}}) {
+        like(
+            $chapter,
+            qr{[.]\/bin\/fsmgen vial \Q$action\E\b.*?--language-version 2}s,
+            "the v2 $action action has an explicit version-selected command",
         );
     }
     like(
@@ -370,11 +381,28 @@ sub lifecycle_errors {
         $execution->{selected_future_schemas}{result_manifest}{schema},
         'fsmgen.vial_tool_manifest.v1',
         'fsmgen.verification_output_manifest.v2',
+        $tooling_v2->{request_schema},
+        $tooling_v2->{result_schema},
+        'fsmgen.vial_plan.v2',
+        $tooling_v2->{tool_manifest_schema},
+        $tooling_v2->{migration_schema},
     ) {
         push @errors, "missing schema $schema" if index($text, $schema) < 0;
     }
     for my $code (@{$tooling->{diagnostics}}) {
         push @errors, "missing diagnostic $code" if index($text, $code) < 0;
+    }
+    for my $code (@{$tooling_v2->{diagnostics}}) {
+        push @errors, "missing v2 diagnostic $code"
+            if index($text, $code) < 0;
+    }
+    for my $action (@{$tooling_v2->{supported_actions}}) {
+        push @errors, "missing v2 action $action"
+            if index($text, "`$action`") < 0;
+    }
+    for my $style (@{$tooling_v2->{source_styles}}) {
+        push @errors, "missing v2 source style $style"
+            if index($text, "`$style`") < 0;
     }
     for my $key (@result_keys) {
         push @errors, "missing result key $key" if index($text, $key) < 0;
@@ -390,6 +418,10 @@ sub lifecycle_errors {
         'private IR or backend construction APIs',
         'mixed-language execution',
         'general cross-backend parity',
+        '--language-version 2',
+        'source_migration',
+        'empty-family',
+        'VIAL_VERSION_UNSUPPORTED',
     ) {
         push @errors, "missing boundary $token" if index($text, $token) < 0;
     }

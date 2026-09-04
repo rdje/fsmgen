@@ -90,6 +90,59 @@ my @REGRESSION_CORPUS = (
         )],
     },
     {
+        id => 'feature.vial_v2_public_source_migration',
+        relpath => 'vial/ahb_subordinate_base_output_arbitration_v2.vial',
+        family => 'verification_intent_tooling',
+        classification => 'supported_smoke',
+        coverage => 'vial_v2_public_source_migration_cli_api',
+        source_kind => 'vial',
+        strict_supported => 0,
+        supported_phases => [qw(
+            capabilities parse typecheck semantic_report format migration
+            compatibility_projection source_map
+        )],
+        required_capabilities => [qw(
+            vial.compatibility_projection.v1
+            vial.semantic_ir.v2
+            vial.semantic_projection.v2
+            vial.source.v2
+            vial.source_migration.v1
+            vial.source_projection.normal_v2
+            vial.source_projection.terse_v2
+            vial.tooling.api.v2
+            vial.tooling.cli.v2
+        )],
+        explicit_nonclaims => [qw(
+            backend compile simulation runtime result parity expressive_family
+            reverse_migration mixed_language scale
+        )],
+    },
+    {
+        id => 'feature.vial_v2_public_empty_base_plan',
+        relpath => 'vial/ahb_subordinate_base_output_arbitration_v2.vial',
+        family => 'verification_intent_tooling',
+        classification => 'supported_smoke',
+        coverage => 'vial_v2_public_empty_base_plan_cli_api',
+        source_kind => 'vial',
+        strict_supported => 0,
+        supported_phases => [qw(
+            parse typecheck hial_review bridge_binding execution_plan
+            artifact_generation atomic_publication
+        )],
+        required_capabilities => [qw(
+            vial.artifact_layout.v2
+            vial.execution_ir.v2
+            vial.plan.v2
+            vial.tool_manifest.v2
+            vial.tooling.api.v2
+            vial.tooling.cli.v2
+        )],
+        explicit_nonclaims => [qw(
+            backend compile simulation runtime result parity expressive_family
+            mixed_language scale
+        )],
+    },
+    {
         id => 'feature.vial_sv_portable_verilator_runtime',
         relpath => 'vial/ahb_subordinate_base_output_arbitration.vial',
         family => 'verification_intent_tooling',

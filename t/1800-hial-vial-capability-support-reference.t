@@ -18,7 +18,10 @@ use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::VIALNativeUVMEmissionContract qw(
     build_vial_native_uvm_emission_contract
 );
-use FSM::Support::VIALToolingContract qw(build_vial_tooling_contract);
+use FSM::Support::VIALToolingContract qw(
+    build_vial_tooling_contract
+    build_vial_tooling_contract_v2
+);
 use FSM::Support::VIALVHDLEmissionContract qw(
     build_vial_vhdl_emission_contract
 );
@@ -47,6 +50,7 @@ my @route_sources = map { [$_->[0], slurp(repo_path(@{$_->[1]}))] } (
     )]],
 );
 my $tooling = build_vial_tooling_contract();
+my $tooling_v2 = build_vial_tooling_contract_v2();
 my $native_uvm = build_vial_native_uvm_emission_contract();
 my $vhdl = build_vial_vhdl_emission_contract();
 my $manifest = build_capability_manifest();
@@ -89,6 +93,26 @@ subtest 'public commands and in-process contracts publish one machine truth' => 
     is_deeply($tooling->{supported_actions},
         [qw(capabilities check format plan run)],
         'public action set is exact');
+
+    my ($v2_status, $v2_out, $v2_err) = run_command(
+        $^X, $fsmgen,
+        qw(vial capabilities --language-version 2 --json),
+    );
+    is($v2_status, 0, 'explicit v2 capability command succeeds');
+    is($v2_err, '', 'explicit v2 capability command is quiet on stderr');
+    my $v2_result = JSON::PP->new->decode($v2_out);
+    is_deeply(
+        $v2_result->{capability_evidence}{contract},
+        $tooling_v2,
+        'explicit v2 capability command equals its distinct authority',
+    );
+    is_deeply(
+        $tooling_v2->{supported_actions},
+        [qw(capabilities check format migrate plan)],
+        'v2 action set is exact',
+    );
+    is_deeply($tooling_v2->{unavailable_actions}, ['run'],
+        'v2 run is explicitly unavailable');
 };
 
 subtest 'reader routes and exact profile matrix agree with machine stages' => sub {
@@ -172,6 +196,14 @@ subtest 'support accounting and diagnostics are complete machine projections' =>
         [sort @documented],
         [sort @{$tooling->{diagnostics}}],
         'diagnostic table contains every and only public VIAL code',
+    );
+    my @documented_v2 = public_diagnostics(
+        $chapter, $tooling_v2->{diagnostics},
+    );
+    is_deeply(
+        [sort @documented_v2],
+        [sort @{$tooling_v2->{diagnostics}}],
+        'diagnostic table contains every and only public v2 code',
     );
     like($chapter, qr{`VIAL_UVM_BACKEND_UNSUPPORTED` is private},
         'private UVM negotiation remains separate from the public code');
@@ -344,6 +376,12 @@ sub reference_errors {
     push @errors, 'public diagnostics differ'
         unless join("\0", sort @documented)
             eq join("\0", sort @{$tooling->{diagnostics}});
+    my @documented_v2 = public_diagnostics(
+        $text, $tooling_v2->{diagnostics},
+    );
+    push @errors, 'public v2 diagnostics differ'
+        unless join("\0", sort @documented_v2)
+            eq join("\0", sort @{$tooling_v2->{diagnostics}});
 
     for my $token (
         './bin/fsmgen vial capabilities --json',
@@ -360,6 +398,15 @@ sub reference_errors {
         'never broadly',
         '.artifacts/manual/vial-capability-reference-run',
         't/1800-hial-vial-capability-support-reference.t',
+        './bin/fsmgen vial capabilities --language-version 2 --json',
+        'fsmgen.vial_tool_request.v2',
+        'fsmgen.vial_tool_result.v2',
+        'fsmgen.vial_source_migration.v1',
+        'fsmgen.vial_plan.v2',
+        'fsmgen.vial_tool_manifest.v2',
+        'feature.vial_v2_public_source_migration',
+        'feature.vial_v2_public_empty_base_plan',
+        'no v2 backend, compile, runtime, complete-result, or parity capability exists',
     ) {
         push @errors, "missing token $token" if index($text, $token) < 0;
     }

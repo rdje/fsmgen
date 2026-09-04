@@ -510,7 +510,7 @@ subtest 'unknown versions, adapters, families, escapes, and family bounds fail c
     );
 };
 
-subtest 'public v1 tooling does not mislabel or advertise the private v2 foundation' => sub {
+subtest 'public v1 tooling remains isolated from the public v2 foundation' => sub {
     my $result = execute_vial_tool_request(
         v1_tool_request($v2_source),
         { source_catalog => {}, artifact_sink => [] },
@@ -529,7 +529,7 @@ subtest 'public v1 tooling does not mislabel or advertise the private v2 foundat
                 || $_ eq 'vial.profile.core_directed_single_clock_v2'
         } @{$capabilities->{capabilities}}],
         [],
-        'public capability discovery advertises no v2 source foundation before the tooling owner ships it');
+        'the v1 capability route advertises no v2 source capability');
     my $v2_with_import = changed(
         $v2_source,
         '(imports)',
@@ -542,7 +542,7 @@ subtest 'public v1 tooling does not mislabel or advertise the private v2 foundat
             source_name => $source_name,
         }),
         [],
-        'the v1 CLI catalog loader receives no v2 import path before v2 tooling exists');
+        'the v1 import-discovery route remains isolated from v2 source');
     my $catalog_result = execute_vial_tool_request(
         v1_tool_request($v2_with_import),
         { source_catalog => {}, artifact_sink => [] },

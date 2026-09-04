@@ -185,6 +185,7 @@ sub build_vial_usability_artifact_quality_contract {
         )],
         public_fixture_paths => [qw(
             vial/ahb_subordinate_base_output_arbitration.vial
+            vial/ahb_subordinate_base_output_arbitration_v2.vial
             vial/qualification/sv_portable_verilator_runtime_gate.vial
             vial/qualification/sv_portable_verilator_runtime_qualification.vial
             vial/qualification/vhdl_portable_ghdl_runtime_gate.vial

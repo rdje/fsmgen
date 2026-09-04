@@ -1953,11 +1953,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.9, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.10, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.11, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.12, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.13, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.14`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1`
-  Status: `active`
+  Status: `done`
   Goal: `Establish the additive VIAL version-2 semantic-family, compatibility, projection, capability, and backend foundation without changing version-1 meaning.`
   Acceptance: `Decision 0034 and the .19 selection are implemented as a closed common envelope and vertical-delivery substrate: v1 stays byte/meaning compatible; v2 normal and terse forms have one typed identity; family/revision, scope, lifetime, order, typed ports, effects, failure, provenance, result, and source-map facts survive every private phase; imports and migration fail closed; backend profiles negotiate before artifacts; usability and generated-code quality are executable gates.`
-  Verification: `pending children .19.1.1-.19.1.7`
-  Commit: `pending activation`
+  Verification: `All seven children are complete. V1 remains byte/meaning compatible while v2 now has distinct source/projection/SemanticIR/common-family/ExecutionIR/plan records, an immutable selected-family registry, fail-closed backend adapters, executable author/artifact-quality gates, and explicit public capabilities/check/format/migration/empty-family planning. No expressive family or v2 backend/compile/runtime/complete-result/parity route is claimed; each remains unavailable before artifacts. Child .19.1.7 supplies the final public-tooling, migration, compatibility, support, documentation, containment, and residue evidence.`
+  Commit: `children .19.1.1-.19.1.7 task-scoped activation and implementation commits`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.7`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1`
@@ -2003,11 +2003,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.6: activate VIAL usability and artifact quality; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.6: enforce VIAL usability and artifact quality`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.7`
-  Status: `active`
+  Status: `done`
   Goal: `Close the version-2 foundation with public tooling, migration guidance, compatibility, containment, and support truth.`
   Acceptance: `Capabilities/check/format/plan expose exact version-aware states, v1 regression remains byte-exact, v2 migration is explicit and reviewable, mdBook examples are runnable, every schema and diagnostic is documented, residues are absent, and no expressive family is falsely advertised by the foundation alone.`
-  Verification: `Clean quality-gate commit 714eef6e4 completes the private v2 foundation through source, semantic, execution, registry, backend-adapter, and usability/artifact-quality contracts while leaving public tooling version 1. The required Knowledge Map query returned no direct v2 public-foundation closeout answer. Decision 0039 requires explicit intent-oriented, versioned, artifact-atomic public records; decision 0034 requires additive v2 without redefining v1. Git history traces Tool's deliberate _v1_tool_version_diagnostic boundary to fe480cd24, while the maintained v2 contract already selects distinct fsmgen.vial_tool_request.v2, fsmgen.vial_tool_result.v2, fsmgen.vial_source_migration.v1, normal_v2/terse_v2 identities, and compatibility-projection proof. This continuity-only activation therefore selects additive v2 capabilities/check/format/plan and opt-in whole-catalog v1-to-v2 migration without widening the byte-stable v1 request/result/capability route. V2 plan may expose only the implemented empty-family base; run/backend/result/parity remain unavailable and must reject before artifacts. The slice must publish exact schemas, CLI/API selection, atomic no-overwrite/no-partial-output behavior, source maps, compatibility digests, migration rollback, support accounting, runnable mdBook examples, hostile controls, and residue/containment evidence. It may not silently upgrade v1, admit a mixed-version catalog, reverse-migrate, expose private IR, implement a family, change a successful v1 byte, or promote backend/runtime/parity/support.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.7: activate VIAL v2 foundation closeout`
+  Verification: `Clean quality-gate commit 714eef6e4 and activation commit 061530478 own this closeout. The required Knowledge Map query returned no prior public-v2 answer; decisions 0034/0039 require additive version isolation and explicit artifact-atomic public records. FSM::Support::VIALToolingContract now publishes one distinct v2 contract while the canonical v1 JSON remains byte-exact at SHA-256 42db05da519dffd97c3e40ec254c82d09b5f20ef53a849e53025b976f5aded4e. The CLI/API select v2 explicitly and expose capabilities, check, format, non-mutating whole-catalog v1-to-v2 migration, and empty-family plan. Migration canonicalizes every reachable source, returns original/output SHA-256 identities and semantic-path maps, reparses the v2 catalog, independently matches one compatibility projection, rejects mixed versions and reverse migration, writes no source/artifact, and leaves ordinary v1 operations unchanged. V2 plans publish distinct plan/tool-manifest schemas atomically while retaining the unchanged HIAL bridge; v2 run rejects before plan or artifacts. Two exact supported-smoke rows and the six-fixture usability gate advertise only shipped source/migration and empty-base planning. T1806 plus strengthened t1797/t1799/t1800 derive runnable docs, schemas, diagnostics, actions, support, and nonclaims. The guarded final VIAL/accounting/reader band passes Files=19/Tests=7,203 with only the two established opt-in Darwin runtime skips; the focused repaired accounting/foundation band passes Files=2/Tests=7,118. All changed Perl files and tests compile. Every mdBook chapter tests; the 98-file/22,188-KiB HTML build succeeds and is removed with exact scratch. The Knowledge Card and generated map are current at 1,160 facts/6,306 questions/6,477 occurrences/138 shards. Claim inventory derives 1,899 candidates, and dispositions close 1,899/1,899 with 316 claim records, 982 gates, 601 reviewed incidentals, and zero gaps/open owners. Containment authorizes the exact 63-file/58,039-line/3,164,374-byte book and 3-file/681-line/38,218-byte VIAL reference, records the latter as bounded warning debt, ratchets its ceilings downward, and raises no ceiling. Task, path, locality, README, diff, staged acceptance, all 12 registered doctrines, and exact build/artifact/log/binary/brief residue gates are green. No expressive family, v2 backend/emission/compile/runtime/complete-result/parity, mixed-language route, support promotion, private IR exposure, provider access, or HIAL behavior ships.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.7: activate VIAL v2 foundation closeout; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.7: close VIAL v2 public foundation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2`
   Status: `active`
@@ -2873,8 +2873,14 @@ activity `.18` is complete. Child `.18.1` selected the exact public-surface
 matrix; `.18.2` through `.18.6` published the stable entry path, lifecycle
 reference, runnable AHB tutorial, migration guidance, and capability/support
 reference; `.18.7` independently closes their commands, links, truth
-boundaries, containment, and continuity. Expressive VIAL activity `.19`
-remains proposed pending a separate clean activation.
+boundaries, containment, and continuity. Expressive VIAL activity `.19` is
+active. Foundation parent `.19.1` and all seven children are complete: the
+additive v2 source/compiler substrate now includes explicit public source
+tooling, non-mutating v1-to-v2 migration, and empty-family planning while every
+expressive family and v2 backend/run/result/parity route remains unavailable.
+Lifecycle-control parent `.19.2` is active; proposed child `.19.2.1` is the
+next clean frontier and is not activated from the dirty `.19.1.7`
+implementation tree.
 
 ## Decisions
 
@@ -4117,3 +4123,43 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   `[doctrine] all doctrine checks passed`, and exact build/artifact/log/brief
   residue checks are green with no accepted-source, semantic, backend-byte,
   runtime, parity, capability, support, provider, or HIAL behavior change.
+
+## Acceptance Checklist (.19.1.7, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean quality commit `714eef6e4`
+  deliberately stopped with public tooling at v1. The required Knowledge Map
+  query returned no public-v2 closeout answer. `git log -S
+  '_v1_tool_version_diagnostic'` traces the intentional v1-only public guard
+  to `fe480cd24`; the selected v2 contract already required distinct request,
+  result, migration, plan, projection, style, compatibility, and diagnostic
+  identities. A hostile mixed-catalog control additionally exposed the v1
+  parser's earlier `VIAL_LIMIT_ERROR` ordering at imported version 2.
+- [x] **ADDRESSED (verified)** — one explicit v2 CLI/API dispatch now exposes
+  capabilities/check/format, non-mutating whole-catalog v1-to-v2 migration,
+  and empty-family planning without changing the no-selector v1 route.
+  Migration returns canonical bytes, source identities/maps, and an
+  independently reproduced compatibility digest; its v2-only preflight
+  converts mixed-catalog input to `VIAL_IMPORT_VERSION_MISMATCH` without
+  changing the frozen v1 parser. Distinct schemas, action maturity, atomic
+  publication, support rows, maintained fixtures, normative/user docs, and
+  Knowledge Map truth close the public surface while v2 run, every expressive
+  family, backend, compile, runtime, result, and parity remain unavailable.
+- [x] **NO REGRESSION (v1/v2, readers, accounting, and residue)** — the final
+  RAM-guarded band reports `All tests successful.` at `Files=19, Tests=7203`,
+  with only the two established opt-in Darwin runtime qualification skips; the
+  focused repaired accounting/foundation band passes at `Files=2, Tests=7118`.
+  All changed Perl modules and tests report `syntax OK`. Every mdBook chapter
+  tests, and its 98-file/22,188-KiB repository-local HTML build succeeds before
+  exact removal with its scratch root. Knowledge Map validation reports
+  `knowledge-map: OK` at 1,160 facts/6,306 questions/6,477 occurrences/138
+  shards. Claim inventory derives 1,899 candidates; dispositions close
+  1,899/1,899 with 316 claim records, 982 gates, 601 reviewed incidentals, and
+  zero gaps/open owners. Containment authorizes the exact 63-file/58,039-line/
+  3,164,374-byte book and 3-file/681-line/38,218-byte VIAL reference, records
+  bounded warning debt, ratchets the latter's ceilings downward, and raises no
+  ceiling. Task, path, locality, README, diff, staged acceptance, `[doctrine]
+  all doctrine checks passed`, and exact build/artifact/log/binary/brief
+  residue gates are green; no successful v1 byte/meaning, expressive family,
+  v2 backend,
+  runtime/result/parity, mixed-language, provider, support, or HIAL behavior
+  changes.

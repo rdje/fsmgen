@@ -279,7 +279,7 @@ sub build_vial_semantic_family_registry {
         public_tool_capabilities => [@PUBLIC_TOOL_CAPABILITIES],
         explicit_nonclaims => [qw(
             compatibility_adapter complete_result_manifest family_grammar
-            family_implementation family_runtime mixed_language public_v2_tooling
+            family_implementation family_runtime mixed_language
             qualified_v2_backend reverse_migration support_promotion
         )],
     };

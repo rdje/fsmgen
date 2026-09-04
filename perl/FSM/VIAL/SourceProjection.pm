@@ -54,6 +54,27 @@ sub import_source_names {
     return [@names];
 }
 
+sub import_source_names_v2 {
+    my ($class, $args) = @_;
+    my ($form) = _parse_invocation($args);
+    my ($normal, undef, $version) = $class->_normalize_parsed_form({
+        form => $form,
+        source_name => $args->{source_name},
+    });
+    return [] unless defined($version) && $version == 2;
+    my $package = $normal->{items}[2];
+    my $imports = $package->{items}[2];
+    my @names;
+    for my $index (1 .. $#{$imports->{items}}) {
+        my $import = $imports->{items}[$index];
+        next unless _is_list($import) && _head($import) eq 'import';
+        next unless @{$import->{items}} == 3 || @{$import->{items}} == 4;
+        next unless ($import->{items}[2]{atom_kind} || '') eq 'string';
+        push @names, $import->{items}[2]{value};
+    }
+    return [@names];
+}
+
 sub _source_language_version {
     my ($class, $args) = @_;
     die "VIAL source language-version inspection is private\n"

@@ -437,6 +437,14 @@ subtest 'rollback, compatibility, and hostile edits fail closed' => sub {
         'arbitrary hierarchy access',
         'general cross-backend parity',
         'retirement or deprecation',
+        'fsmgen.vial_source_migration.v1',
+        'fsmgen.vial_compatibility_projection.v1',
+        'preserve_v2',
+        'whole connected catalog',
+        'source map',
+        'never overwrites the input',
+        'Reverse migration',
+        'vial/ahb_subordinate_base_output_arbitration_v2.vial',
     ) {
         like($chapter, qr{\Q$nonclaim\E}, "guide retains nonclaim $nonclaim");
     }
@@ -517,6 +525,9 @@ sub migration_errors {
         './bin/fsmgen vial run',
         './bin/fsmgen --capability-manifest',
         './bin/fsmgen vial capabilities --json',
+        './bin/fsmgen vial migrate --language-version 2 --json',
+        './bin/fsmgen vial check --language-version 2',
+        './bin/fsmgen vial plan --language-version 2',
     ) {
         push @errors, "missing migration command $command"
             if index($text, $command) < 0;
@@ -526,6 +537,7 @@ sub migration_errors {
         .artifacts/manual/vial-legacy-vhdl
         .artifacts/manual/vial-migration-plan
         .artifacts/manual/vial-migration-run
+        .artifacts/manual/vial-v2-migration-plan
     )) {
         push @errors, "missing migration root $root"
             if index($text, $root) < 0;

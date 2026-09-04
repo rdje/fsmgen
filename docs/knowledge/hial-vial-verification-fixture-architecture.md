@@ -22,6 +22,9 @@ answers:
   - "does Verilator support events with timing enabled?"
   - "what is the VIAL version 2 source and migration contract?"
   - "is the VIAL v2 common envelope implemented?"
+  - "is public VIAL v2 tooling available?"
+  - "how do I migrate a VIAL v1 catalog to v2?"
+  - "can public VIAL v2 run a backend?"
   - "where is the VIAL semantic family registry and profile negotiation?"
   - "where is the common VIAL backend adapter preflight?"
   - "how is target-free VIAL author usability checked?"
@@ -59,6 +62,7 @@ evidence: >-
   t/1801-vial-v2-source-projections.t; t/1802-vial-v2-semantic-family-envelope.t;
   t/1803-vial-v2-family-registry.t; t/1804-vial-v2-backend-adapter-seams.t;
   t/1805-vial-usability-artifact-quality.t;
+  t/1806-vial-v2-public-foundation.t;
   t/1556-vial-public-planning-artifacts.t;
   t/1557-vial-portable-sv-backend-emission.t;
   t/1558-vial-verilator-run-integration.t;
@@ -82,6 +86,8 @@ reverify: >-
   prove -Iperl t/1555-vial-public-source-tooling.t
   t/1801-vial-v2-source-projections.t t/1802-vial-v2-semantic-family-envelope.t
   t/1803-vial-v2-family-registry.t t/1804-vial-v2-backend-adapter-seams.t
+  t/1805-vial-usability-artifact-quality.t
+  t/1806-vial-v2-public-foundation.t
   t/1556-vial-public-planning-artifacts.t
   t/1557-vial-portable-sv-backend-emission.t
   t/1558-vial-verilator-run-integration.t
@@ -120,15 +126,22 @@ parity. VHDL/GHDL and OSVVM are qualified private profiles; native UVM is
 review/experiment evidence. Separate successes cannot satisfy the proposed
 mixed-language route.
 
-Foundation `.19.1.1-.19.1.6` implements private v2 parsing/projections/imports,
-the common family envelope, empty-family plans, and content-addressed family
-and backend-adapter registries with exact v1 preservation. Its twelve selected
-namespaces have no functional or backend maturity. All four emitters admit only
-exact typed ExecutionIR and reject complete unsupported sets before rendering;
-OSVVM also rejects before portable delegation or provider access. The adapter
-registry keeps the public portable-SV, review-only native-UVM, private portable-
-VHDL, and private OSVVM maturity states distinct. Public v2 tooling and family
-implementations/results/parity/support remain later.
+Foundation `.19.1.1-.19.1.7` implements v2 parsing/projections/imports, the
+common family envelope, empty-family plans, and content-addressed family and
+backend-adapter registries with exact v1 preservation. Public v2 tooling is an
+explicit opt-in through `--language-version 2`: capabilities, check, format,
+non-mutating whole-catalog v1-to-v2 migration, and empty-family planning are
+shipped. Migration returns canonical source records, semantic-path source maps,
+and an independently rechecked compatibility digest without overwriting input.
+V2 run, backend emission, compile, runtime, complete results, parity, and every
+expressive family remain unavailable and reject before artifacts. The twelve
+selected family namespaces still have no functional or backend maturity.
+
+All four private emitters admit only exact typed ExecutionIR and reject complete
+unsupported sets before rendering; OSVVM also rejects before portable
+delegation or provider access. The adapter registry keeps the public portable-
+SV v1, review-only native-UVM, private portable-VHDL, and private OSVVM maturity
+states distinct; the public v2 foundation does not promote any of them.
 
 The content-addressed private VIAL quality contract makes author abstraction
 and generated-artifact quality executable. It checks maintained examples,
