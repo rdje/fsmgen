@@ -748,6 +748,27 @@ required capability before output instead of silently weakening it. Decision
 `0034` owns this long-term boundary; `.19` preserves the bounded v1 profile
 and selects additive v2 growth through end-to-end intent families.
 
+The exact v2 source contract keeps the v1 declaration and fixture grammar,
+then inserts a mandatory ordered `intents` section before `fixtures`:
+
+```text
+(vial (version 2)
+  (package NAME
+    (imports) (types) (transactions) (models) (scoreboards)
+    (intents (family FAMILY_ID (revision REVISION) FAMILY_NODE...))
+    (fixtures ...)))
+```
+
+The terse root is `(vial 2 ...)`; it may omit the outer `intents` wrapper but
+never family or revision identity. Each family node is a closed grammar from
+the compiler's exact registry, not an extension hash. Catalog imports are
+same-version unless an explicit compiler-owned adapter is selected; none is
+registered initially. Opt-in v1 migration converts every reachable source,
+retains v1 base meaning through a compatibility projection, and leaves the
+v1 inputs untouched. The contract is selected documentation only: v2 parsing,
+migration, public schemas, family semantics, and backend support remain later
+owned work.
+
 ## Native extensions
 
 Portable `.vial` does not embed anonymous raw SystemVerilog/UVM or VHDL

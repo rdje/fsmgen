@@ -1,7 +1,7 @@
 # Knowledge Map: `ial2-post`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **181** facts · **809** uniquely owned question entries.
+> **181** facts · **810** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -126,6 +126,7 @@
 - q="is sv2v selected after depth-3 dynamic RLAST queue read-data?" · facts=[ial2-post-dynamic-read-burst-last-depth3-same-id-issue-order-queue-read-data-next-slice-selection](../../docs/knowledge/ial2-post-dynamic-read-burst-last-depth3-same-id-issue-order-queue-read-data-next-slice-selection.md)
 - q="is sv2v selected after depth-3 dynamic RLAST queue runtime validation?" · facts=[ial2-post-dynamic-read-burst-last-depth3-same-id-issue-order-queue-read-data-runtime-validation-next-slice-selection](../../docs/knowledge/ial2-post-dynamic-read-burst-last-depth3-same-id-issue-order-queue-read-data-runtime-validation-next-slice-selection.md)
 - q="is the AHB requester WRAP progression defect proven?" · facts=[ial2-post-two-subordinate-paired-busy-alias-next-owner-selection](../../docs/knowledge/ial2-post-two-subordinate-paired-busy-alias-next-owner-selection.md)
+- q="is the HIAL VIAL architecture selected now?" · facts=[ial2-post-task-tree-integrity-next-owner-selection](../../docs/knowledge/ial2-post-task-tree-integrity-next-owner-selection.md)
 - q="is the exact-four paired AHB profile alias selected?" · facts=[ial2-post-exact-four-paired-composition-next-owner-selection](../../docs/knowledge/ial2-post-exact-four-paired-composition-next-owner-selection.md)
 - q="is the exact-three paired AHB alias next?" · facts=[ial2-post-exact-three-paired-composition-next-owner-selection](../../docs/knowledge/ial2-post-exact-three-paired-composition-next-owner-selection.md)
 - q="is the full-write .axi alias next?" · facts=[ial2-post-axi-full-write-next-increment-selection](../../docs/knowledge/ial2-post-axi-full-write-next-increment-selection.md)

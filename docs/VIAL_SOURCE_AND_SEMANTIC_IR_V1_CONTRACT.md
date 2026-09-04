@@ -904,3 +904,6 @@ t1550, and the `.vial` support/capability/language-surface entries, then
 restores this contract and its book/fact/task continuity to selected-only
 state. It must not alter HIAL parsing/lowering, existing HDL or verification
 artifacts, or the separately tracked regression-oracle repairs.
+
+Additive post-v1 language work is independently versioned; see the bounded
+[VIAL v2 contract landing](VIAL_SOURCE_AND_SEMANTIC_IR_V2_CONTRACT.md).

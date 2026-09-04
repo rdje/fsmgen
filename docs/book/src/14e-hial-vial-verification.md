@@ -43,6 +43,19 @@ configuration; register intent; constrained decisions; coverage and
 properties; faults; and semantic results, diagnostics, debugging, and
 introspection.
 
+The selected v2 source envelope adds exactly one ordered `intents` section
+between `scoreboards` and `fixtures`. Normal source uses `(version 2)` and an
+explicit `(intents ...)` wrapper; terse source uses root integer `2` and omits
+only that outer wrapper. Every non-empty block still names its VIAL family and
+revision. Unknown families, revisions, nodes, mixed-version imports, or
+unregistered compatibility adapters fail before typed SemanticIR exists.
+
+Version 1 is not deprecated or silently upgraded. The future migration action
+will convert an entire valid v1 import catalog atomically, insert an empty v2
+intent section, and compare a base-meaning compatibility digest without
+overwriting the original sources. This is a selected contract, not current
+parser/tool capability; current commands continue to accept and emit v1 only.
+
 Each family advances vertically. Its normal and terse forms must produce one
 typed meaning; IR and plans must preserve identity, bounds, source maps, and
 fail-closed capabilities; portable SystemVerilog, native UVM, and VHDL/OSVVM

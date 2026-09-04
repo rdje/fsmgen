@@ -1961,11 +1961,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.7`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1`
-  Status: `active`
+  Status: `done`
   Goal: `Select the exact version-2 source, schema, compatibility, import, and migration contract.`
   Acceptance: `Specify roots and sections, immutable v1 behavior, v2 schema identities, same-version import rules, explicit future compatibility adapters, deterministic non-deprecating migration, limits, diagnostics, rollback, and complete nonclaims before parser changes.`
-  Verification: `Clean predecessor commit 98d6b69cf selects the complete additive-v2 vertical-family programme with all focused, mdBook, claim, Knowledge Map, containment, task, acceptance, and doctrine gates green. The worktree and index are clean, git_message_brief.txt is zero bytes, the generated book tree is absent, and no background result remains. This continuity-only transition activates the exact source/schema/compatibility contract selection before any parser, projection, IR, capability, tooling, backend, artifact, runtime, result, or support change.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1: activate VIAL v2 source contract selection`
+  Verification: `Clean predecessor commit 98d6b69cf selects the complete additive-v2 vertical-family programme; activation commit 4f6fa126d owns this contract-only slice. The required pre-selection Knowledge Map query returned no exact v2 contract, while git history traces the closed v1 root to 08f59167b and additive-v2 choice to 98d6b69cf. The new bounded maintained VIAL reference has a 15-line/715-byte mandatory landing and one 275-line/14,604-byte semantic part. It freezes the normal/terse v2 roots, the sole ordered intents section, registered family/revision grammar boundary, immutable v1 route, source/downstream schema identities, same-version catalog rule, explicit initially-empty adapter registry, opt-in atomic whole-catalog v1 migration and compatibility projection, safety limits, diagnostics, validation, nonclaims, and rollback. Focused v1/tooling, containment, claim, reader, and support evidence passes at Files=7/Tests=60. Every mdBook chapter tests; the repository-local render contains 98 files/22,048 KiB, contains both v2 sections, and is removed exactly. Knowledge Map closes at 1,160 facts/6,296 questions/6,467 occurrences/138 shards and now resolves the exact v2 contract question. Claim inventory/dispositions close 1,896/1,896 candidates with 316 claim records, 979 gates, 601 reviewed incidentals, and zero gaps; maintained-reference authority records the exact 63-file/57,680-line/3,144,793-byte book at 0/+34/+1,805 and the new 2-file/290-line/15,319-byte VIAL reference without raising a ceiling. Focused-document classification, task integrity, relative paths, locality, README, live containment, staged acceptance, and all 12 doctrines pass. No parser, source acceptance, semantic object, public tool, capability/support record, bridge, execution plan, artifact, backend, runtime, result, parity, provider, HIAL, or other product behavior changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1: activate VIAL v2 source contract selection; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1: select VIAL v2 source compatibility contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.2`
   Status: `proposed`
@@ -3425,8 +3425,8 @@ remains proposed pending a separate clean activation.
 - `.16` must choose the first available mixed-language tool/profile.
 - `.17` must select measured architecture-specific capacity budgets; the
   separate whole-product scale tree retains big/really-big qualification.
-- `.19` must convert decision `0034` into detailed implementable native-
-  verification semantic-family leaves before the architecture closes.
+- `.19.1.2` is next to implement v2 parsing and equivalent normal/terse
+  projections against the closed `.19.1.1` contract without changing v1.
 - `.17.4` inherits an exact cross-layer defect from decision `0072`:
   `VIALExecutionContract` declares `bindings` 65,536, `execution_types` 65,536,
   and `source_map_records` 1,000,000 while `HIALVIALBridgeContract` declares
@@ -3920,3 +3920,31 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   pass with no build, artifact, task-local, or brief residue and no source,
   semantic, bridge, plan, backend, runtime, parity, capability, support,
   diagnostic, provider, or product behavior change.
+
+## Acceptance Checklist (.19.1.1, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the required Knowledge Map query had no
+  exact version-2 source/versioning answer. `git log -S` locates the closed v1
+  grammar at contract commit `08f59167b` and the additive-v2 decision at
+  `98d6b69cf`; the current parser and projection route accept only version 1.
+  Widening those records in place would mutate v1 compatibility, while adding
+  a monolithic root contract would consume the focused-doc transition's final
+  line allowance.
+- [x] **ADDRESSED (verified)** — a bounded maintained VIAL reference selects
+  one new `intents` section, normal/terse roots, exact schema names, immutable
+  v1 dispatch, same-version imports, explicit initially unavailable adapters,
+  deterministic non-mutating whole-catalog migration, compatibility identity,
+  limits, diagnostics, validation, nonclaims, and rollback. Its direct landing
+  and semantic part are independently registered with exact aggregate-change
+  authority; the generated focused index classifies the landing, the mdBook
+  publishes the selected/not-shipped boundary, and the Knowledge Card answers
+  the durable v2 contract question.
+- [x] **NO REGRESSION (v1, references, claims, and residue)** — the focused
+  v1/source-tooling/index/claim/reader/support band reports `All tests
+  successful.` at `Files=7, Tests=60`. Every mdBook chapter tests and the
+  98-file/22,048-KiB repository-local render is inspected and removed. The
+  Knowledge Map is current at 1,160 facts/6,296 questions/6,467 occurrences/138
+  shards; claims close 1,896/1,896 with zero gaps; live-document authority and
+  containment accept both exact references with no ceiling increase. Task,
+  paths, locality, README, staged acceptance, all 12 doctrines, and exact
+  build/brief cleanup pass; no product behavior or support claim changes.

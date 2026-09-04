@@ -20,7 +20,7 @@ answers:
   - "what simulator capability profiles does VIAL require?"
   - "is Verilator a traditional event-driven simulator?"
   - "does Verilator support events with timing enabled?"
-  - "is the HIAL VIAL architecture selected now?"
+  - "what is the VIAL version 2 source and migration contract?"
   - "what is the next HIAL VIAL task?"
   - "is a mixed-language HIAL VIAL simulator available?"
   - "why is mixed-language qualification not active?"
@@ -35,6 +35,8 @@ tags: [hial, vial, ial0, ial1, ial2, verification, semantic-ir, execution-ir, br
 evidence: >-
   docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md;
   docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md;
+  docs/VIAL_SOURCE_AND_SEMANTIC_IR_V2_CONTRACT.md;
+  docs/vial-spec/source-semantic-ir-v2.md;
   docs/HIAL_VIAL_BRIDGE_MANIFEST_V1_CONTRACT.md;
   docs/VIAL_EXECUTION_IR_V1_CONTRACT.md;
   docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md;
@@ -46,9 +48,6 @@ evidence: >-
   docs/decisions/0037-vial-semantic-types-bind-to-hial-carriers-through-directional-proof-relations.md;
   docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md;
   docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md;
-  perl/FSM/VIAL/Backend/SVPortableVerilator.pm;
-  perl/FSM/VIAL/Backend/TraceValidator.pm;
-  perl/FSM/VIAL/Parity/AHBBaseOutput.pm;
   t/1555-vial-public-source-tooling.t;
   t/1556-vial-public-planning-artifacts.t;
   t/1557-vial-portable-sv-backend-emission.t;
@@ -113,13 +112,11 @@ OSVVM are qualified private profiles. Native UVM is review/experiment evidence,
 not qualified runtime. Separate successes cannot satisfy
 `mixed_language_qualified`; `.16` remains proposed pending one exact route.
 
-Documentation `.18` routes README/SUMMARY through bounded lifecycle, tutorial,
-migration, and capability/support guides; backlog is future-only.
-T1796/T1798-T1800 derive those routes from current machine truth.
-
-The `.19` selection preserves closed v1 and chooses additive v2 vertical
-families: equivalent projections, typed IR, fail-closed SV/UVM/VHDL mappings,
-qualification, quality, support/docs/nonclaims, and the same later-family gate.
+Documentation `.18` publishes lifecycle, tutorial, migration, and capability
+guides from machine truth. `.19` keeps v1 closed and selects additive v2
+families with typed, fail-closed vertical delivery. Its bounded v2 reference
+freezes roots, schemas, imports, explicit adapters, opt-in catalog migration,
+limits, diagnostics, nonclaims, and rollback before parsing; v2 is not shipped.
 
 The architecture is selected, not proposed. `HIAL-VIAL-VERIFICATION-FIXTURE-
 ARCHITECTURE` is the owning tree and the only authority for the current

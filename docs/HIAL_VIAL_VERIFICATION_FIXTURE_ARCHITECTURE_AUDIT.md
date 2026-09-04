@@ -277,8 +277,8 @@ generated backend plumbing rather than authored VIAL concepts.
 Terse and verbose normal source forms must produce the same typed semantic
 records. Capability negotiation fails before output when a backend has no
 selected equivalent. Decision `0034` records the ceiling rule; activity `.19`
-preserves the closed version-1 contract, selects additive version-2 growth,
-and decomposes the programme into end-to-end intent-family lanes.
+preserves closed v1 and the bounded v2 contract landing selects exact roots,
+schemas, imports, migration, limits, diagnostics, and vertical family lanes.
 
 ## Typed Native Extensions
 

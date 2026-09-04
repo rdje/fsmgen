@@ -109,6 +109,9 @@ my %exact_group = (
         docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md
         docs/ISF_PUBLIC_INTERFACE_CONTRACT.md
     )],
+    maintained_vial_reference => [qw(
+        docs/VIAL_SOURCE_AND_SEMANTIC_IR_V2_CONTRACT.md
+    )],
     live_maintainer_reference => [qw(
         docs/BIN_FSMGEN_IMPORT_TREE.md
         docs/COMPOSITION_SCOPE.md
@@ -147,6 +150,7 @@ my %exact_group = (
 
 my @group_order = qw(
     maintained_isf_reference
+    maintained_vial_reference
     live_maintainer_reference
     project_governance
     historical_design
@@ -162,6 +166,13 @@ my %group_metadata = (
         lifecycle => 'maintained_reference',
         owner => 'ISF language and public-contract slices',
         role => 'bounded landing pages for the semantically partitioned ISF reference',
+    },
+    maintained_vial_reference => {
+        title => 'Maintained VIAL reference landing',
+        audience => 'VIAL authors, backend implementers, integrators, and reviewers',
+        lifecycle => 'maintained_reference',
+        owner => 'the active HIAL/VIAL architecture task-tree',
+        role => 'bounded landing page for the semantically partitioned VIAL v2 reference',
     },
     live_maintainer_reference => {
         title => 'Live maintainer reference',

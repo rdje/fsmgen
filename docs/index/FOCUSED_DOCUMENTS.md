@@ -21,6 +21,15 @@ Git history remain the authoritative chronology for completed work.
 - [ISF_PUBLIC_INTERFACE_CONTRACT.md](../ISF_PUBLIC_INTERFACE_CONTRACT.md)
 - [ISF_SPEC.md](../ISF_SPEC.md)
 
+## Maintained VIAL reference landing
+
+- Audience: VIAL authors, backend implementers, integrators, and reviewers
+- Lifecycle: `maintained_reference`
+- Owner: the active HIAL/VIAL architecture task-tree
+- Role: bounded landing page for the semantically partitioned VIAL v2 reference
+
+- [VIAL_SOURCE_AND_SEMANTIC_IR_V2_CONTRACT.md](../VIAL_SOURCE_AND_SEMANTIC_IR_V2_CONTRACT.md)
+
 ## Live maintainer reference
 
 - Audience: FSMGen maintainers and implementation reviewers
