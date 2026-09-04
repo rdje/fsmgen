@@ -1917,11 +1917,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.3: publish public VIAL lifecycle reference`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Publish a runnable end-to-end AHB HIAL/VIAL tutorial and exact backend/parity walkthrough.`
   Acceptance: `Start from the checked AHB HIAL and .vial sources; run check, normal/terse formatting, plan, supported portable-SystemVerilog execution, and the selected VHDL/OSVVM inspection or qualification routes; explain generated review artifacts, logical time, typed probes, normalized result, the exact bounded parity oracle, expected diagnostics, cleanup, and unavailable paths. Tests execute or byte-check every promised command/output without widening support.`
-  Verification: `pending .18.3 and separate clean activation`
-  Commit: `pending activation`
+  Verification: `Clean predecessor commit 9576f38b2d92386d26e0095bd7e3e73244c9f887 closes .18.3 with its full doctrine gate green and no remaining worktree, scratch-message, or background state. This continuity-only activation selects the checked-source AHB tutorial at docs/book/src/16dh-vial-ahb-end-to-end-tutorial.md and executable watcher t/1798-hial-vial-ahb-end-to-end-tutorial.t. It changes no book prose, public contract, command, source, schema, artifact, backend, runtime, parity, support, capability, or product behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.4: activate runnable AHB tutorial`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.5`
   Status: `proposed`
