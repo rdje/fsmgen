@@ -1917,11 +1917,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.3: publish public VIAL lifecycle reference`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.4`
-  Status: `active`
+  Status: `done`
   Goal: `Publish a runnable end-to-end AHB HIAL/VIAL tutorial and exact backend/parity walkthrough.`
   Acceptance: `Start from the checked AHB HIAL and .vial sources; run check, normal/terse formatting, plan, supported portable-SystemVerilog execution, and the selected VHDL/OSVVM inspection or qualification routes; explain generated review artifacts, logical time, typed probes, normalized result, the exact bounded parity oracle, expected diagnostics, cleanup, and unavailable paths. Tests execute or byte-check every promised command/output without widening support.`
-  Verification: `Clean predecessor commit 9576f38b2d92386d26e0095bd7e3e73244c9f887 closes .18.3 with its full doctrine gate green and no remaining worktree, scratch-message, or background state. This continuity-only activation selects the checked-source AHB tutorial at docs/book/src/16dh-vial-ahb-end-to-end-tutorial.md and executable watcher t/1798-hial-vial-ahb-end-to-end-tutorial.t. It changes no book prose, public contract, command, source, schema, artifact, backend, runtime, parity, support, capability, or product behavior.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.4: activate runnable AHB tutorial`
+  Verification: `Clean activation commit b262887e4 owns the slice. Required Knowledge Map queries found the separate public-runtime, handwritten-parity, portable-VHDL, and OSVVM authorities but no direct checked-source tutorial; history traces those families to dfe87f536, c95160d53, ab8b1af24, and 4f350f29c. Selected 16dh now starts from ppif/ahb_lite_subordinate.ppif and vial/ahb_subordinate_base_output_arbitration.vial; gives runnable check, normal/terse format, plan, capabilities, and public portable-SystemVerilog run commands with exact outputs; explains the IAL2-to-generated-IAL1-to-IAL0 review tree, logical drive/sample/react/check time, typed HREADYOUT/HRESP/HRDATA plus probe/reg_data_q observations, atomic artifacts, success and unsupported-size results, the exact nineteen handwritten-oracle paths, and distinct provider-free VHDL and OSVVM inspection/qualification routes; and names unsupported native-UVM/mixed-language paths, stable diagnostics, and cleanup without widening support. T1798 executes the public source/planning paths, exact tree and deterministic replay, binds runtime/result/parity truth to t1558/t1559 and FSM::VIAL::Parity::AHBBaseOutput, byte-checks both VHDL galleries and reports, executes the unavailable backend failure, proves residue absence, and rejects six hostile documentation families. Standalone t1798 passes Files=1/Tests=6; the entry/lifecycle/tutorial band passes Files=3/Tests=16; and the guarded eleven-file source/planning/emission/runtime/parity/VHDL/OSVVM/documentation band passes Files=11/Tests=64, with only the pre-existing exact-provider qualification guards skipped. Both gallery refresh checks pass, every mdBook chapter tests, and the repository-local HTML build succeeds before exact removal. Claim inventory/dispositions close 1,895/1,895 with zero gaps. The Knowledge Card was compacted after the first size gate exposed a 145-byte ratchet excess; final Knowledge Map closes at 1,160 facts/6,294 questions/6,466 occurrences/138 shards, containment accepts 61 book files/57,015 lines/3,111,988 bytes from an authorized +1/+377/+14,726 change, no ceiling or allowance rises, and all scratch/build/runtime residues are absent. Final staged acceptance and doctrines own commit closure. No source language, command, schema, backend, runtime, parity, capability, support, or product behavior changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.4: publish runnable AHB tutorial`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.5`
   Status: `proposed`
@@ -3052,3 +3052,32 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   Map, claims, containment, relative paths, task integrity, staged acceptance,
   locality, README, and doctrines remain required before commit; no product or
   support claim expands.
+
+## Acceptance Checklist (.18.4, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` locates the public portable
+  runtime at commit `dfe87f536`, the handwritten AHB parity closure at
+  `c95160d53`, the portable-VHDL gallery at `ab8b1af24`, and the OSVVM gallery
+  at `4f350f29c`; required Knowledge Map queries returned those specialist
+  authorities but no direct checked-source AHB tutorial. The shipped path was
+  therefore executable yet required readers to reconstruct one workflow from
+  four separately introduced evidence families.
+- [x] **ADDRESSED (verified)** — selected 16dh starts from the checked AHB HIAL
+  and `.vial` sources, gives runnable check/normal/terse/plan/public-run
+  commands and exact outputs, explains the IAL2-to-IAL1-to-IAL0 review route,
+  typed observations and logical time, compares the two normalized outcomes,
+  enumerates the exact nineteen handwritten parity paths, and keeps portable
+  VHDL and OSVVM inspection/qualification distinct. T1798 executes or
+  byte-checks every promised path, checks atomic replay and cleanup, and rejects
+  hostile documentation mutations without widening public support.
+- [x] **NO REGRESSION (runtime, qualification, book, and residue)** — t1798 and
+  the entry/lifecycle/tutorial band report `All tests successful.` at `Files=1,
+  Tests=6` and `Files=3, Tests=16`; the guarded eleven-file runtime/parity/VHDL/
+  OSVVM/documentation band reports `All tests successful.` at `Files=11,
+  Tests=64`, with only the existing exact-provider qualification guards skipped.
+  Both VHDL gallery refresh checks pass, every mdBook chapter tests, and the
+  repository-local HTML build succeeds before exact removal. Knowledge Map,
+  claims, containment, relative paths, task integrity, staged acceptance,
+  locality, README, and `[doctrine] all doctrine checks passed` remain required
+  before commit; no command, schema, backend, runtime, parity, capability,
+  support, or product behavior changes.

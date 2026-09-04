@@ -24,10 +24,13 @@ change.
 2. Use the [public lifecycle reference](16dg-vial-public-lifecycle-reference.md)
    for the commands, API, review routes, schemas, artifacts, diagnostics, and
    cleanup boundary that ship now.
-3. Use [backend profiles](#backend-profiles-and-honest-claims) to distinguish
+3. Work through the [end-to-end AHB tutorial](16dh-vial-ahb-end-to-end-tutorial.md)
+   for one runnable checked-source plan, public result, bounded parity oracle,
+   and the separate VHDL/OSVVM qualification routes.
+4. Use [backend profiles](#backend-profiles-and-honest-claims) to distinguish
    public execution, private qualification, review-only emission, experiments,
    and unavailable paths.
-4. Open the specialist chapters for
+5. Open the specialist chapters for
    [balanced composition](16da-vial-balanced-portable-composition.md),
    [structural emission](16db-vial-structural-backend-emission-matrix.md),
    [Verilator runtime](16dc-vial-portable-verilator-runtime-measurement.md),
@@ -35,7 +38,7 @@ change.
    [OSVVM runtime](16de-vial-osvvm-runtime-execution-plan.md), or
    [scale-gate evidence](16df-vial-architecture-scale-cap-closeout.md) only
    when that depth is needed.
-5. Use the [future-only backlog](14e-hial-vial-verification.md) for work that
+6. Use the [future-only backlog](14e-hial-vial-verification.md) for work that
    does not ship.
 
 Three boundaries apply throughout this chapter: private compiler IR is never a

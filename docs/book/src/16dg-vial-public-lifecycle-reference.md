@@ -319,4 +319,7 @@ For normative fields and invariants, use:
 The focused regression for this reference is
 `t/1797-hial-vial-public-lifecycle-reference.t`. The backend runtime route is
 independently executed by `t/1558-vial-verilator-run-integration.t` under its
-qualified host/tool conditions.
+qualified host/tool conditions. Continue with the
+[end-to-end AHB tutorial](16dh-vial-ahb-end-to-end-tutorial.md) to apply this
+lifecycle to the checked fixture, public result, bounded parity oracle, and
+separate VHDL/OSVVM qualification routes.
