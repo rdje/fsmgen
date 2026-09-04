@@ -21,6 +21,7 @@ answers:
   - "is Verilator a traditional event-driven simulator?"
   - "does Verilator support events with timing enabled?"
   - "what is the VIAL version 2 source and migration contract?"
+  - "is the VIAL version 2 base parser implemented?"
   - "what is the next HIAL VIAL task?"
   - "is a mixed-language HIAL VIAL simulator available?"
   - "why is mixed-language qualification not active?"
@@ -49,6 +50,7 @@ evidence: >-
   docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md;
   docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md;
   t/1555-vial-public-source-tooling.t;
+  t/1801-vial-v2-source-projections.t;
   t/1556-vial-public-planning-artifacts.t;
   t/1557-vial-portable-sv-backend-emission.t;
   t/1558-vial-verilator-run-integration.t;
@@ -70,6 +72,7 @@ reverify: >-
   docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md
   docs/book/src/16d-hial-vial-verification-architecture.md &&
   prove -Iperl t/1555-vial-public-source-tooling.t
+  t/1801-vial-v2-source-projections.t
   t/1556-vial-public-planning-artifacts.t
   t/1557-vial-portable-sv-backend-emission.t
   t/1558-vial-verilator-run-integration.t
@@ -112,13 +115,14 @@ OSVVM are qualified private profiles. Native UVM is review/experiment evidence,
 not qualified runtime. Separate successes cannot satisfy
 `mixed_language_qualified`; `.16` remains proposed pending one exact route.
 
-Documentation `.18` publishes lifecycle, tutorial, migration, and capability
-guides from machine truth. `.19` keeps v1 closed and selects additive v2
-families with typed, fail-closed vertical delivery. Its bounded v2 reference
-freezes roots, schemas, imports, explicit adapters, opt-in catalog migration,
-limits, diagnostics, nonclaims, and rollback before parsing; v2 is not shipped.
+Documentation `.18` publishes its user guides.
+`.19.1.1` freezes additive v2 roots, schemas,
+imports, migration, limits, and rollback. `.19.1.2` now implements the private
+base parser, normal/terse and compatibility projections, same-version imports,
+empty typed family container, and v2 diagnostics while v1 identities stay
+exact. Public v2 tools and downstream execution remain.
 
-The architecture is selected, not proposed. `HIAL-VIAL-VERIFICATION-FIXTURE-
+The architecture is selected. `HIAL-VIAL-VERIFICATION-FIXTURE-
 ARCHITECTURE` is the owning tree and the only authority for the current
 frontier; read its live frontier row rather than any copied value. Each backend
 family, runtime and native framework direction, and the scale programme keeps

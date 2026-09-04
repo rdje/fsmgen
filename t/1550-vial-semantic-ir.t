@@ -333,7 +333,7 @@ subtest 'lexer chunk advancement preserves UTF-8 byte and scalar coordinates' =>
 
 subtest 'closed root and package sections reject wrong, duplicate, misordered, and unknown forms' => sub {
     failure_is('wrong root', changed($source, '(vial', '(verification', 'root'), 'VIAL_PARSE_ERROR', qr/expected 'vial'/, qr{^/$});
-    failure_is('wrong version', changed($source, '(version 1)', '(version 2)', 'version'), 'VIAL_LIMIT_ERROR', qr/bounded range 1 through 1/, qr{/language_version$});
+    failure_is('invalid version selector', changed($source, '(version 1)', '(version true)', 'version'), 'VIAL_TYPE_ERROR', qr/expected a literal positive integer/, qr{/language_version$});
     failure_is('misordered sections', changed($source, "    (imports)\n    (types", "    (types)\n    (imports", 'section order'), 'VIAL_PARSE_ERROR', qr/expected 'imports'/, qr{/packages/0/imports$});
     failure_is('duplicate package section', changed($source, "    (imports)\n", "    (imports)\n    (imports)\n", 'duplicate section'), 'VIAL_PARSE_ERROR', qr/requires 8 items/, qr{/packages/0$});
     failure_is('unknown action extension', changed($source, '(reset bus 3)', '(raw_systemverilog "x")', 'unknown action'), 'VIAL_PARSE_ERROR', qr/unknown action/, qr{/actions/0$});
@@ -489,13 +489,13 @@ subtest 'bounded time, storage, concurrency, and profile limits fail before IR c
 };
 
 subtest 'thrown diagnostics are stable, sanitized, and contain no stack or host path' => sub {
-    my $bad = changed($source, '(version 1)', '(version 2)', 'throw form');
+    my $bad = changed($source, '(version 1)', '(version true)', 'throw form');
     my $ok = eval {
         FSM::VIAL::Parser->parse_source({ text => $bad, source_name => $source_name });
         1;
     };
     ok(!$ok, 'parse_source throws on invalid source');
-    like($@, qr{\AError \[VIAL_LIMIT_ERROR\] vial/ahb_subordinate_base_output_arbitration\.vial:2:12 /language_version: integer is outside the bounded range 1 through 1\n\z}, 'throw format is exact and one-line');
+    like($@, qr{\AError \[VIAL_TYPE_ERROR\] vial/ahb_subordinate_base_output_arbitration\.vial:2:12 /language_version: expected a literal positive integer\n\z}, 'throw format is exact and one-line');
     unlike($@, qr{(?:/Volumes/|/Users/| at \S+ line \d+)}, 'throw contains no machine path or Perl stack');
 
     my $unknown = FSM::VIAL::Parser->check_source({ text => $source, source_name => $source_name, unexpected => 1 });

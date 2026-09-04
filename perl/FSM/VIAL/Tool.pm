@@ -111,6 +111,19 @@ sub _execute_source_action {
         source_catalog => $validated->{source_catalog},
     };
 
+    my $source_version = _source_language_version_if_valid($source);
+    if (defined($source_version) && $source_version != 1) {
+        return _source_result(
+            action => $action,
+            success => 0,
+            status => 'error',
+            source_style => undef,
+            diagnostics => [_v1_tool_version_diagnostic(
+                $source->{source_id}, $source_version,
+            )],
+        );
+    }
+
     my $checked = FSM::VIAL::Parser->check_source($parser_args);
     if (!$checked->{ok}) {
         return _source_result(
@@ -119,6 +132,18 @@ sub _execute_source_action {
             status => 'error',
             source_style => undef,
             diagnostics => [_public_diagnostics($checked->{diagnostics})],
+        );
+    }
+    my $report = $checked->{semantic_report};
+    if ($report->{language_version} != 1) {
+        return _source_result(
+            action => $action,
+            success => 0,
+            status => 'error',
+            source_style => undef,
+            diagnostics => [_v1_tool_version_diagnostic(
+                $source->{source_id}, $report->{language_version},
+            )],
         );
     }
 
@@ -167,7 +192,6 @@ sub _execute_source_action {
         }
     }
 
-    my $report = $checked->{semantic_report};
     return _source_result(
         action => $action,
         success => 1,
@@ -192,12 +216,32 @@ sub _execute_plan_action {
         source_name => $source->{source_id},
         source_catalog => $validated->{source_catalog},
     };
+    my $source_version = _source_language_version_if_valid($source);
+    if (defined($source_version) && $source_version != 1) {
+        return _plan_error_result(
+            action => $action,
+            source_style => undef,
+            diagnostics => [_v1_tool_version_diagnostic(
+                $source->{source_id}, $source_version,
+            )],
+        );
+    }
     my $checked = FSM::VIAL::Parser->check_source($parser_args);
     if (!$checked->{ok}) {
         return _plan_error_result(
             action => $action,
             source_style => undef,
             diagnostics => [_public_diagnostics($checked->{diagnostics})],
+        );
+    }
+    if ($checked->{semantic_report}{language_version} != 1) {
+        return _plan_error_result(
+            action => $action,
+            source_style => undef,
+            diagnostics => [_v1_tool_version_diagnostic(
+                $source->{source_id},
+                $checked->{semantic_report}{language_version},
+            )],
         );
     }
     my $style = FSM::VIAL::SourceProjection->source_style({
@@ -1203,6 +1247,37 @@ sub _style_diagnostic {
         end_line => 1,
         end_column => 1,
     }], '/');
+}
+
+sub _v1_tool_version_diagnostic {
+    my ($source_id, $language_version) = @_;
+    return _diagnostic(
+        'VIAL_VERSION_UNSUPPORTED',
+        "VIAL tool request version 1 does not accept VIAL language version $language_version",
+        [{
+            source_name => $source_id,
+            start_byte => 0,
+            end_byte_exclusive => 0,
+            start_line => 1,
+            start_column => 1,
+            end_line => 1,
+            end_column => 1,
+        }],
+        '/language_version',
+    );
+}
+
+sub _source_language_version_if_valid {
+    my ($source) = @_;
+    my $version;
+    my $ok = eval {
+        $version = FSM::VIAL::SourceProjection->_source_language_version({
+            text => $source->{text},
+            source_name => $source->{source_id},
+        });
+        1;
+    };
+    return $ok ? $version : undef;
 }
 
 sub _host_diagnostic {

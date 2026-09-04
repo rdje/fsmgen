@@ -1968,11 +1968,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1: activate VIAL v2 source contract selection; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1: select VIAL v2 source compatibility contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement version-2 parsing and equivalent normal/terse source projections.`
   Acceptance: `Both projections parse through one normalizer and builder, inserted target-neutral facts retain rule identity and authored provenance, format/reparse identities agree, v1 output is unchanged, mixed/unknown versions reject, and hostile defaults or backend-shaped syntax cannot enter.`
-  Verification: `Clean contract-selection commit c43e158e8 owns the exact additive-v2 root, schema, import, migration, diagnostic, compatibility, and rollback boundary. This continuity-only activation selects parser/normalizer/projection implementation as the next isolated slice; no source acceptance or other product behavior changes in the activation.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.2: activate VIAL v2 parser implementation`
+  Verification: `Clean contract-selection commit c43e158e8 owns the exact additive-v2 boundary and clean activation ef4ebfcd0 owns this isolated implementation. Root-version dispatch now preserves the complete v1 path and sends v2 through one shared normalizer plus a separate closed builder. The v2 builder validates the seven-section catalog, reserved adapter form, family/revision shapes and catalog bounds, reuses the unchanged v1 builder only for inherited base forms, then constructs immutable schema/report/projection v2 records with an authored empty intent-family collection. Same-version imports, deterministic v2 diagnostics, normal/terse format-reparse equality, v1/v2 empty-intents compatibility, defensive copies, and explicit v1 public-tool/plan rejection are executable. Five pre-change v1 IR/report/projection/format digests remain exact. The audit also corrected the selected prose after blame to be9c74163/50a0d7d393 proved reachable legacy normal/terse version diagnostics differed from its nominal dead parse-error branch. Focused source/tool/plan tests, portable emission, every mdBook chapter, repository-local build inspection/removal, Knowledge Map, claims, containment, task acceptance, and doctrines pass; Darwin runtime gates retain their existing explicit skips. No non-empty family, registry, public v2 tool, migration, bridge, execution IR, backend, runtime, result, parity, support, provider, or HIAL behavior ships.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.2: activate VIAL v2 parser implementation; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.2: implement VIAL v2 source projections`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3`
   Status: `proposed`
@@ -3948,3 +3948,37 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   containment accept both exact references with no ceiling increase. Task,
   paths, locality, README, staged acceptance, all 12 doctrines, and exact
   build/brief cleanup pass; no product behavior or support claim changes.
+
+## Acceptance Checklist (.19.1.2, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean contract commit `c43e158e8`
+  requires additive v2 without widening v1, but `FSM::VIAL::Parser`,
+  `SourceProjection`, `SemanticBuilder`, `SemanticIR`, and `SemanticReport`
+  admitted only version 1. Pre-change executable identities are pinned in
+  t1801. `git log -S` plus blame also prove the selected prose misnamed one
+  legacy diagnostic: commit `be9c74163` made bounded version validation reject normal non-v1
+  imports before its later parse-error branch, while `50a0d7d393` owns the
+  terse style error. The first Knowledge Map query had no implementation
+  answer; the v2 contract card supplied the selected boundary.
+- [x] **ADDRESSED (verified)** — root-version dispatch retains a v1-only
+  catalog normalizer and sends v2 to one version-aware projection normalizer
+  plus isolated `SemanticBuilderV2`. The new builder validates the closed
+  envelope, import adapters, family shapes/revisions, and all selected family
+  bounds before reusing the frozen v1 builder for base declarations and
+  fixtures. It constructs exact immutable v2 IR/report/diagnostic/projection
+  records, authored empty-intents provenance, and a cross-version base
+  compatibility projection. Public tool and planning v1 guards reject v2;
+  the CLI import helper exposes no v2 path before `.19.1.7`.
+- [x] **NO REGRESSION (source, downstream, docs, and containment)** — the
+  source/semantic/tool/plan band reports `All tests successful.` at
+  `Files=4, Tests=34`; the portable-emission/runtime band reports success at
+  `Files=3, Tests=9`, retaining two explicit Darwin qualification skips. The
+  five pinned v1 identities remain exact. Every mdBook chapter tests; the
+  inspected repository-local build contains 98 files/22,056 KiB and is
+  removed exactly. Knowledge Map and claim joins are current; maintained
+  references accept the exact book and VIAL deltas with no ceiling increase.
+  The saturated 1,200-line rationale ledger correctly rejected another entry,
+  so the rationale remains in this task, reference, card, regression, and Git.
+  Task integrity, relative paths, locality, README, staged acceptance, and all
+  doctrines pass with no generated build, temporary artifact, or brief
+  residue and no family/backend/runtime/support promotion.

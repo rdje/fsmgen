@@ -84,15 +84,21 @@ sub _build_ir {
         combined_bytes => 0,
         import_count => 0,
         token_count => 0,
+        catalog_version => undef,
     };
     _visit_source($state, $input->{source_name}, $input->{text}, undef);
 
-    require FSM::VIAL::SemanticBuilder;
-    return FSM::VIAL::SemanticBuilder->build({
+    my $builder_args = {
         root_source_name => $input->{source_name},
         forms => $state->{forms},
         sources => $state->{source_records},
-    });
+    };
+    if ($state->{catalog_version} == 2) {
+        require FSM::VIAL::SemanticBuilderV2;
+        return FSM::VIAL::SemanticBuilderV2->build($builder_args);
+    }
+    require FSM::VIAL::SemanticBuilder;
+    return FSM::VIAL::SemanticBuilder->build($builder_args);
 }
 
 sub _validate_invocation {
@@ -161,6 +167,8 @@ sub _validate_invocation {
 sub _visit_source {
     my ($state, $source_name, $text, $import_span) = @_;
     return if $state->{visited}{$source_name};
+    my $diagnostic_version = defined($state->{catalog_version})
+        && $state->{catalog_version} == 2 ? 2 : 1;
 
     my %visiting = map { $_ => 1 } @{$state->{visiting}};
     if ($visiting{$source_name}) {
@@ -174,6 +182,7 @@ sub _visit_source {
             'VIAL_IMPORT_ERROR', 'import',
             "import cycle reaches '$source_name'",
             $import_span || _zero_location($source_name), '/packages/0/imports', \@notes,
+            $diagnostic_version,
         );
     }
 
@@ -183,7 +192,7 @@ sub _visit_source {
         _throw(
             'VIAL_LIMIT_ERROR', 'limit',
             "source exceeds the 1048576-byte limit",
-            _zero_location($source_name), '/',
+            _zero_location($source_name), '/', [], $diagnostic_version,
         );
     }
     $state->{combined_bytes} += $byte_length;
@@ -191,7 +200,8 @@ sub _visit_source {
         _throw(
             'VIAL_LIMIT_ERROR', 'limit',
             'combined imported source bytes exceed the 16777216-byte limit',
-            $import_span || _zero_location($source_name), '/packages/0/imports',
+            $import_span || _zero_location($source_name), '/packages/0/imports', [],
+            $diagnostic_version,
         );
     }
 
@@ -202,15 +212,34 @@ sub _visit_source {
         _throw(
             'VIAL_LIMIT_ERROR', 'limit',
             'tokens across imported sources exceed the 1000000-token limit',
-            $parsed_form->{span}, '/',
+            $parsed_form->{span}, '/', [], $diagnostic_version,
         );
     }
 
     require FSM::VIAL::SourceProjection;
-    my ($form) = FSM::VIAL::SourceProjection->_normalize_parsed_form({
+    my ($form, undef, $source_version) = FSM::VIAL::SourceProjection->_normalize_parsed_form({
         form => $parsed_form,
         source_name => $source_name,
+        v1_only => defined($state->{catalog_version}) && $state->{catalog_version} == 1 ? 1 : 0,
     });
+    if (!defined $state->{catalog_version}) {
+        $state->{catalog_version} = defined($source_version) ? $source_version : 1;
+        $diagnostic_version = $state->{catalog_version} == 2 ? 2 : 1;
+    }
+    elsif ($state->{catalog_version} == 2
+        && (!defined($source_version) || $source_version != 2)) {
+        my $shown_version = defined($source_version) ? $source_version : 'unrecognized';
+        _throw(
+            'VIAL_IMPORT_VERSION_MISMATCH', 'import',
+            "imported source '$source_name' uses VIAL language version $shown_version; catalog root requires version 2",
+            $import_span || _zero_location($source_name), '/packages/0/imports',
+            [{
+                message => "imported root declares VIAL language version $shown_version",
+                source_location => _root_version_location($parsed_form),
+            }],
+            2,
+        );
+    }
 
     $state->{forms}{$source_name} = $form;
     $state->{source_text}{$source_name} = $bytes;
@@ -221,33 +250,44 @@ sub _visit_source {
         line_ending => _line_ending($bytes),
     };
 
-    my @imports = _imports_from_form($form);
+    my @imports = _imports_from_form($form, $state->{catalog_version});
     my $remaining_imports = MAX_IMPORTS - $state->{import_count};
     if (@imports > $remaining_imports) {
         my $span = $imports[$remaining_imports][2];
         _throw(
             'VIAL_LIMIT_ERROR', 'limit',
             'imported sources exceed the 64-source limit',
-            $span, '/packages/0/imports',
+            $span, '/packages/0/imports', [], $diagnostic_version,
         );
     }
 
     for my $import (@imports) {
-        my ($alias, $path, $span) = @{$import};
-        _validate_source_name($path, $span, 'VIAL_IMPORT_ERROR');
+        my ($alias, $path, $span, $adapter) = @{$import};
+        if ($state->{catalog_version} == 2 && defined $adapter) {
+            my ($adapter_id, $adapter_span) = _v2_adapter($adapter, $source_name);
+            _throw(
+                'VIAL_COMPATIBILITY_ADAPTER_UNAVAILABLE', 'import',
+                "compatibility adapter '$adapter_id' is not registered",
+                $adapter_span, '/packages/0/imports', [], 2,
+            );
+        }
+        _validate_source_name(
+            $path, $span, 'VIAL_IMPORT_ERROR',
+            $state->{catalog_version} == 2 ? 2 : 1,
+        );
         ++$state->{import_count};
         if ($state->{import_count} > MAX_IMPORTS) {
             _throw(
                 'VIAL_LIMIT_ERROR', 'limit',
                 'imported sources exceed the 64-source limit',
-                $span, '/packages/0/imports',
+                $span, '/packages/0/imports', [], $diagnostic_version,
             );
         }
         if (!exists $state->{catalog}{$path}) {
             _throw(
                 'VIAL_IMPORT_ERROR', 'import',
                 "import '$alias' requires missing catalog source '$path'",
-                $span, '/packages/0/imports',
+                $span, '/packages/0/imports', [], $diagnostic_version,
             );
         }
         _visit_source($state, $path, $state->{catalog}{$path}, $span);
@@ -281,7 +321,7 @@ sub _parse_source_form_for_projection {
 }
 
 sub _imports_from_form {
-    my ($root) = @_;
+    my ($root, $catalog_version) = @_;
     return () unless _is_list($root) && @{$root->{items}} == 3;
     return () unless _atom_value($root->{items}[0]) eq 'vial';
     my $package = $root->{items}[2];
@@ -293,7 +333,9 @@ sub _imports_from_form {
 
     my @result;
     for my $import (@{$imports->{items}}[1 .. $#{$imports->{items}}]) {
-        next unless _is_list($import) && @{$import->{items}} == 3;
+        next unless _is_list($import)
+            && (@{$import->{items}} == 3
+                || ($catalog_version == 2 && @{$import->{items}} == 4));
         next unless _atom_value($import->{items}[0]) eq 'import';
         next unless ($import->{items}[1]{atom_kind} || '') eq 'identifier';
         next unless ($import->{items}[2]{atom_kind} || '') eq 'string';
@@ -301,9 +343,39 @@ sub _imports_from_form {
             $import->{items}[1]{value},
             $import->{items}[2]{value},
             $import->{items}[2]{span},
+            @{$import->{items}} == 4 ? $import->{items}[3] : undef,
         ];
     }
     return @result;
+}
+
+sub _v2_adapter {
+    my ($node, $source_name) = @_;
+    my $valid = _is_list($node)
+        && @{$node->{items}} == 2
+        && _atom_value($node->{items}[0]) eq 'adapter'
+        && ($node->{items}[1]{atom_kind} || '') eq 'identifier'
+        && $node->{items}[1]{value} !~ /\./;
+    _throw(
+        'VIAL_PARSE_ERROR', 'parse',
+        'VIAL v2 import adapter must be an (adapter ID) form',
+        ref($node) eq 'HASH' && ref($node->{span}) eq 'HASH'
+            ? $node->{span} : _zero_location($source_name),
+        '/packages/0/imports', [], 2,
+    ) unless $valid;
+    return ($node->{items}[1]{value}, $node->{items}[1]{span});
+}
+
+sub _root_version_location {
+    my ($root) = @_;
+    return undef unless _is_list($root) && @{$root->{items}} == 3;
+    my $selector = $root->{items}[1];
+    if (_is_list($selector) && @{$selector->{items}} == 2
+        && _atom_value($selector->{items}[0]) eq 'version') {
+        return _clone($selector->{items}[1]{span});
+    }
+    return _clone($selector->{span}) if ref($selector->{span}) eq 'HASH';
+    return undef;
 }
 
 sub _lex_and_parse {
@@ -552,7 +624,7 @@ sub _line_ending {
 }
 
 sub _validate_source_name {
-    my ($source_name, $span, $code) = @_;
+    my ($source_name, $span, $code, $schema_version) = @_;
     $code ||= 'VIAL_SEMANTIC_ERROR';
     my $phase = $code eq 'VIAL_IMPORT_ERROR' ? 'import' : 'semantic';
     my $valid = defined($source_name)
@@ -564,7 +636,10 @@ sub _validate_source_name {
         my @segments = split m{/}, $source_name, -1;
         $valid = !grep { $_ eq '' || $_ eq '.' || $_ eq '..' } @segments;
     }
-    _throw($code, $phase, "unsafe VIAL source name", $span, '/') unless $valid;
+    _throw(
+        $code, $phase, 'unsafe VIAL source name', $span, '/', [],
+        defined($schema_version) ? $schema_version : 1,
+    ) unless $valid;
 }
 
 sub _safe_diagnostic_source_name {
@@ -627,10 +702,11 @@ sub _zero_location {
 }
 
 sub _throw {
-    my ($code, $phase, $message, $location, $semantic_path, $notes) = @_;
+    my ($code, $phase, $message, $location, $semantic_path, $notes, $schema_version) = @_;
+    $schema_version ||= 1;
     $message =~ s/[\r\n]+/ /g;
-    die bless({
-        schema_version => 1,
+    my $diagnostic = {
+        schema_version => 0 + $schema_version,
         severity => 'error',
         code => $code,
         phase => $phase,
@@ -638,7 +714,9 @@ sub _throw {
         semantic_path => defined($semantic_path) ? $semantic_path : '/',
         source_location => _clone($location),
         notes => _clone($notes || []),
-    }, 'FSM::VIAL::Diagnostic');
+    };
+    $diagnostic->{schema} = 'fsmgen.vial_diagnostic.v2' if $schema_version == 2;
+    die bless($diagnostic, 'FSM::VIAL::Diagnostic');
 }
 
 sub _diagnostics_from_exception {

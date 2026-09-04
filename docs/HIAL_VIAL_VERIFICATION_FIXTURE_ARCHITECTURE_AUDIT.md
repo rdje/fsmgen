@@ -279,6 +279,10 @@ records. Capability negotiation fails before output when a backend has no
 selected equivalent. Decision `0034` records the ceiling rule; activity `.19`
 preserves closed v1 and the bounded v2 contract landing selects exact roots,
 schemas, imports, migration, limits, diagnostics, and vertical family lanes.
+Leaf `.19.1.2` now implements the private base v2 parser, normal/terse and
+cross-version compatibility projections, same-version catalog imports, typed
+empty family container, v2 diagnostics, and explicit v1 tool/plan rejection;
+public v2 tooling and every non-empty family remain unshipped.
 
 ## Typed Native Extensions
 

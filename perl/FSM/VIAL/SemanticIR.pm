@@ -5,7 +5,7 @@ use warnings;
 
 use Scalar::Util qw(blessed reftype);
 
-my @TOP_LEVEL_KEYS = qw(
+my @TOP_LEVEL_KEYS_V1 = qw(
     schema_version
     language
     language_version
@@ -16,26 +16,45 @@ my @TOP_LEVEL_KEYS = qw(
     required_capabilities
     provenance
 );
+my @TOP_LEVEL_KEYS_V2 = ('schema', @TOP_LEVEL_KEYS_V1);
 
 sub _new_validated {
     my ($class, $data) = @_;
     my $caller = caller;
     die "FSM::VIAL::SemanticIR->_new_validated is private\n"
-        unless $caller eq 'FSM::VIAL::SemanticBuilder';
+        unless $caller eq 'FSM::VIAL::SemanticBuilder'
+            || $caller eq 'FSM::VIAL::SemanticBuilderV2';
     die "VIALSemanticIR data must be an unblessed hash\n"
         unless ref($data) eq 'HASH' && !blessed($data);
 
-    my %expected = map { $_ => 1 } @TOP_LEVEL_KEYS;
+    my $version = $data->{schema_version};
+    my @top_level_keys = defined($version) && $version == 2
+        ? @TOP_LEVEL_KEYS_V2 : @TOP_LEVEL_KEYS_V1;
+    my %expected = map { $_ => 1 } @top_level_keys;
     my @actual = sort keys %{$data};
     my @unknown = grep { !$expected{$_} } @actual;
-    my @missing = grep { !exists $data->{$_} } @TOP_LEVEL_KEYS;
+    my @missing = grep { !exists $data->{$_} } @top_level_keys;
     die "VIALSemanticIR has unknown top-level key '$unknown[0]'\n" if @unknown;
     die "VIALSemanticIR is missing top-level key '$missing[0]'\n" if @missing;
-    die "VIALSemanticIR schema_version must be 1\n" unless $data->{schema_version} == 1;
+    die "VIALSemanticIR schema_version must be 1 or 2\n"
+        unless $data->{schema_version} == 1 || $data->{schema_version} == 2;
     die "VIALSemanticIR language must be vial\n" unless $data->{language} eq 'vial';
-    die "VIALSemanticIR language_version must be 1\n" unless $data->{language_version} == 1;
-    die "VIALSemanticIR profile is invalid\n"
-        unless $data->{profile} eq 'core_directed_single_clock_v1';
+    die "VIALSemanticIR language version must match its schema version\n"
+        unless $data->{language_version} == $data->{schema_version};
+    if ($data->{schema_version} == 1) {
+        die "VIALSemanticIR profile is invalid\n"
+            unless $data->{profile} eq 'core_directed_single_clock_v1';
+    }
+    else {
+        die "VIALSemanticIR schema is invalid\n"
+            unless $data->{schema} eq 'fsmgen.vial_semantic_ir.v2';
+        die "VIALSemanticIR profile is invalid\n"
+            unless $data->{profile} eq 'core_directed_single_clock_v2';
+        for my $index (0 .. $#{$data->{packages}}) {
+            die "VIALSemanticIR v2 package $index is missing intent_families\n"
+                unless ref($data->{packages}[$index]{intent_families}) eq 'ARRAY';
+        }
+    }
 
     _assert_plain_data($data, '$');
     return bless({ data => _clone($data) }, $class);

@@ -9,12 +9,13 @@ sub build {
         unless ref($semantic_ir) eq 'FSM::VIAL::SemanticIR';
 
     my $data = $semantic_ir->as_hashref;
+    my $version = $data->{language_version};
     my @unresolved;
-    my @packages = map { _package_summary($_, \@unresolved) } @{$data->{packages}};
+    my @packages = map { _package_summary($_, \@unresolved, $version) } @{$data->{packages}};
     my $report = {
-        schema_version => 1,
+        schema_version => 0 + $version,
         language => 'vial',
-        language_version => 1,
+        language_version => 0 + $version,
         profile => $data->{profile},
         root_source => {
             source_name => $data->{root_source}{source_name},
@@ -31,12 +32,13 @@ sub build {
         unresolved_bridge_refs => \@unresolved,
         diagnostics => [],
     };
+    $report->{schema} = 'fsmgen.vial_semantic_report.v2' if $version == 2;
     return _clone($report);
 }
 
 sub _package_summary {
-    my ($package, $unresolved) = @_;
-    return {
+    my ($package, $unresolved, $version) = @_;
+    my $summary = {
         semantic_id => $package->{semantic_id},
         name => $package->{name},
         source_name => $package->{source_name},
@@ -53,6 +55,17 @@ sub _package_summary {
         scoreboards => [_named_summaries($package->{scoreboards})],
         fixtures => [map { _fixture_summary($_, $unresolved) } @{$package->{fixtures}}],
     };
+    if ($version == 2) {
+        $summary->{intent_families} = [map {
+            {
+                semantic_id => $_->{semantic_id},
+                family_id => $_->{family_id},
+                revision => $_->{revision},
+                node_count => scalar(@{$_->{nodes}}),
+            }
+        } @{$package->{intent_families}}];
+    }
+    return $summary;
 }
 
 sub _named_summaries {

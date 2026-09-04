@@ -50,11 +50,12 @@ only that outer wrapper. Every non-empty block still names its VIAL family and
 revision. Unknown families, revisions, nodes, mixed-version imports, or
 unregistered compatibility adapters fail before typed SemanticIR exists.
 
-Version 1 is not deprecated or silently upgraded. The future migration action
-will convert an entire valid v1 import catalog atomically, insert an empty v2
-intent section, and compare a base-meaning compatibility digest without
-overwriting the original sources. This is a selected contract, not current
-parser/tool capability; current commands continue to accept and emit v1 only.
+Version 1 is not deprecated or silently upgraded. The base v2 parser now
+accepts the exact seven-section normal form and its equivalent terse form,
+constructs immutable `fsmgen.vial_semantic_ir.v2`, and proves empty-intents v2
+equivalent to v1 through `fsmgen.vial_compatibility_projection.v1`. The
+version-1 public tool and planner still reject v2; public v2 CLI/API schemas,
+migration, family semantics, and downstream execution remain later work.
 
 Each family advances vertically. Its normal and terse forms must produce one
 typed meaning; IR and plans must preserve identity, bounds, source maps, and

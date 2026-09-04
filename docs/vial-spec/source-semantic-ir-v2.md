@@ -2,7 +2,7 @@
 
 Date: 2026-09-04
 Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1`
-Status: selected contract; implementation starts in `.19.1.2`
+Status: selected contract; base parser/projections implemented by `.19.1.2`
 
 ## Outcome and authority
 
@@ -30,11 +30,14 @@ IDs, import behavior, diagnostics and messages, limits, public v1 request and
 result records, bridge/planning/backend behavior, artifacts, and support
 classifications remain byte-for-byte or deeply equal to the pre-v2 behavior.
 
-In particular, v1 keeps six mandatory package sections, does not accept an
-`intents` or adapter clause, and keeps its current `VIAL_PARSE_ERROR` for a
-non-v1 source encountered by the v1 route. A v2 implementation may share
-private helpers only when focused regression proves this observable boundary.
-Neither formatting nor capability discovery silently upgrades v1 source.
+In particular, v1 keeps six mandatory package sections and does not accept an
+`intents` or adapter clause. A v1-root catalog keeps the pre-v2 diagnostic
+order: an imported normal non-v1 root reaches the existing bounded-version
+`VIAL_LIMIT_ERROR`, while an imported terse non-v1 root keeps the existing
+`VIAL_SOURCE_STYLE_ERROR`. The later explicit parse error was unreachable
+because bounded integer validation ran first. A v2 implementation may share
+private helpers only when focused regression proves this observable boundary;
+neither formatting nor capability discovery silently upgrades v1 source.
 
 ## Roots and closed package envelope
 
@@ -94,8 +97,8 @@ file name, `schema_version` alone, or a v1 object shape.
 | cross-version base meaning | `fsmgen.vial_compatibility_projection.v1` | `.19.1.2` |
 | source diagnostic | `fsmgen.vial_diagnostic.v2` | `.19.1.2` |
 | migration result | `fsmgen.vial_source_migration.v1` | `.19.1.7` |
-| source capability | `vial.source.v2` | `.19.1.2`, only after implementation |
-| semantic capability | `vial.semantic_ir.v2` | `.19.1.2`, only after implementation |
+| source capability | `vial.source.v2` | `.19.1.2` IR requirement; `.19.1.7` public discovery |
+| semantic capability | `vial.semantic_ir.v2` | `.19.1.2` IR requirement; `.19.1.7` public discovery |
 | base profile | `vial.profile.core_directed_single_clock_v2` | `.19.1.2-.19.1.3` |
 
 The downstream identities selected for typed v2 data are
@@ -108,6 +111,30 @@ fields and implementation remain owned by `.19.1.3` and `.19.1.7`; naming them
 here prevents a v1 schema from being silently widened. The unchanged HIAL
 facts continue to use `fsmgen.hial_vial_bridge_manifest.v1`; a new bridge
 version requires a real HIAL fact-shape change, not merely a v2 VIAL source.
+
+## Implemented base-source boundary
+
+Leaf `.19.1.2` implements the source-semantic foundation without advancing a
+backend or public-tool schema. `FSM::VIAL::Parser` dispatches the connected
+catalog by its root version. A separate version-2 builder validates the exact
+seven-section envelope, rejects every non-empty family block because the
+registry is still empty, and reuses the unchanged v1 semantic builder only for
+the inherited base grammar. It then constructs a new immutable v2 record with
+an empty typed `intent_families` collection and the authored `intents` span.
+
+Normal-v2 and terse-v2 formatting preserve language version and reparse to one
+`fsmgen.vial_semantic_projection.v2` digest. Empty-intents v2 and v1 also
+produce one `fsmgen.vial_compatibility_projection.v1` digest. Same-version v2
+catalog imports preserve root-then-depth-first authored order; v2-to-v1 imports,
+reserved adapters, unknown versions, unknown families, backend-shaped forms,
+and family bounds fail with closed v2 diagnostics. A v1-root catalog continues
+through the legacy normalizer and retains its prior import diagnostics.
+
+The existing public `fsmgen.vial_tool_request.v1` and version-1 plan builder
+reject v2 rather than mislabeling it or passing it downstream. Public v2 tool
+requests, CLI catalog loading, migration, expressive families, bridges, plans,
+backends, runtime, results, parity, and support remain owned by later leaves.
+The focused executable authority is `t/1801-vial-v2-source-projections.t`.
 
 The private v2 semantic record starts with exactly:
 

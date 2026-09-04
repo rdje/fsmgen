@@ -765,9 +765,30 @@ the compiler's exact registry, not an extension hash. Catalog imports are
 same-version unless an explicit compiler-owned adapter is selected; none is
 registered initially. Opt-in v1 migration converts every reachable source,
 retains v1 base meaning through a compatibility projection, and leaves the
-v1 inputs untouched. The contract is selected documentation only: v2 parsing,
-migration, public schemas, family semantics, and backend support remain later
-owned work.
+v1 inputs untouched.
+
+The base source boundary is now executable. `FSM::VIAL::Parser` routes a
+connected catalog by its root version and uses a separate v2 builder. That
+builder validates the seven-section envelope, records the authored `intents`
+span, and reuses the frozen v1 builder only for unchanged declarations and
+fixtures. Normal-v2 and terse-v2 reparse to one
+`fsmgen.vial_semantic_projection.v2` digest; an empty-intents v2 catalog and
+its v1 base produce one `fsmgen.vial_compatibility_projection.v1` digest.
+Same-version v2 imports work in caller-supplied catalogs, while mixed versions,
+unknown versions, adapters, family syntax, backend-shaped escape forms, and
+family bounds fail closed.
+
+Run the focused source gate from the repository root:
+
+```sh
+prove -Iperl t/1801-vial-v2-source-projections.t
+```
+
+This is deliberately not public v2 tooling yet. The v1 tool request and v1
+planner reject v2 before exposing a report, loading a v2 CLI import, binding
+HIAL, or constructing execution IR. Public v2 request/result schemas,
+migration, registered family semantics, bridges, plans, backends, runtime,
+results, parity, and support remain owned by `.19.1.3` through `.19.1.7`.
 
 ## Native extensions
 
