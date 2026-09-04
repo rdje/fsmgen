@@ -49,6 +49,7 @@ subtest 'README and SUMMARY provide one bounded reader entry path' => sub {
 
     my $cluster = <<'MARKDOWN';
   - [HIAL/VIAL Verification: Start Here](16d-hial-vial-verification-architecture.md)
+    - [Public VIAL Lifecycle Reference](16dg-vial-public-lifecycle-reference.md)
     - [Balanced Portable Composition](16da-vial-balanced-portable-composition.md)
     - [Structural Backend-Emission Matrix](16db-vial-structural-backend-emission-matrix.md)
     - [Portable Verilator Runtime Measurement](16dc-vial-portable-verilator-runtime-measurement.md)
@@ -70,6 +71,7 @@ MARKDOWN
     for my $path (qw(
         14e-hial-vial-verification.md
         16d-hial-vial-verification-architecture.md
+        16dg-vial-public-lifecycle-reference.md
         16da-vial-balanced-portable-composition.md
         16db-vial-structural-backend-emission-matrix.md
         16dc-vial-portable-verilator-runtime-measurement.md

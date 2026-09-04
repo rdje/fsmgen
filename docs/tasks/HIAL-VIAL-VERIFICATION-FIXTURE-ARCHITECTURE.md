@@ -1910,11 +1910,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.2: repair HIAL/VIAL reader entry path`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.3`
-  Status: `active`
+  Status: `done`
   Goal: `Publish one exact public VIAL source-to-result lifecycle reference.`
   Acceptance: `Document normal/terse source equivalence; capabilities/check/format/plan/run CLI and portable API; accepted HIAL review routes; semantic/bridge/plan/tool/output/result schemas; virtual and atomic artifacts; diagnostics, collision/failure cleanup, and repository-local paths. Every command is runnable and watched against public machine truth; private IR or backend plumbing is never presented as API.`
-  Verification: `Clean predecessor 750671c6847971fce06d87edccd5bfe8d397d930 closes the HIAL/VIAL reader-path repair with all doctrines green and no modified or untracked files. This separate activation selects only the public lifecycle reference and executable documentation watcher; it changes no book prose, command, source language, API, schema, artifact, diagnostic, cleanup, capability, support, runtime, parity, or product behavior.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.3: activate public VIAL lifecycle reference`
+  Verification: `Clean activation 9e5576814 owns the lifecycle slice. The mandatory Knowledge Map query had no direct source-to-result answer, and history traced the normative public contract to d34da3254 plus the duplicated architecture-section chronology to dfe87f536. New selected 16dg is one task-oriented source-to-result reference covering machine discovery, all five commands, normal/terse equivalence, all three HIAL review routes, the closed portable request/result API, semantic/bridge/plan/tool/output/result boundaries, virtual and atomic repository artifacts, exact diagnostic vocabulary, collision/failure cleanup, relative same-volume paths, precise run-provider conditions, and nonclaims. The 4,596-line architecture chapter replaces its duplicate workflow with a stable route and falls to 4,459 lines; SUMMARY nests the selected chapter. New t1797 derives actions/styles/schemas/diagnostics from the tooling, bridge, and execution machine contracts; executes capabilities/check/both formats, virtual planning, and atomic repository planning; proves IAL2-through-reparsed-IAL1 review, deterministic unchanged replay, collision/traversal preservation, private-object/path non-leakage, unsupported-run atomicity, exact cleanup, independent runtime-gate linkage, and hostile documentation mutations. Standalone t1797 passes Files=1/Tests=6; the guarded source/planning/emission/runtime-reference/entry/lifecycle band passes Files=6/Tests=30, with the full runtime integration intentionally skipped under its Darwin qualification guard. Every mdBook chapter tests and the repository-local HTML build succeeds; exact build/test roots and watcher artifacts are absent after cleanup. The public-tooling Knowledge Card routes the lifecycle and Knowledge Map closes at 1,160 facts/6,294 questions/6,466 occurrences/138 shards. Claim inventory and dispositions close 1,895/1,895 with zero gaps after retiring the one deleted chronology candidate. The maintained-reference authority records 60 files/56,638 lines/3,097,262 bytes from a +1/+186/+7,527 change, no ceiling rises, and the largest chapter shrinks. No public command, API, source language, schema, artifact, diagnostic, capability, support, runtime, parity, or product behavior changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.3: publish public VIAL lifecycle reference`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.4`
   Status: `proposed`
@@ -3024,3 +3024,31 @@ The manifest binds the complete predecessor task file and its exact suffix from 
 - [x] **ROOT CAUSE (WHY + WHERE)** — the reader-facing entrypoints encoded an implementation timeline instead of a current product model: README commit `ecd29b6a4` routed its short manual list to the implementation blueprint; SUMMARY commit `2e2f7d25e` flattened the HIAL/VIAL overview beside specialist evidence; and `git log -S` for the stale `.15`-active sentence traces the contradictory book wording to `9729f1f0c` and its later duplicate to `6a489464d`, after every VHDL child had closed.
 - [x] **ADDRESSED (verified)** — README and SUMMARY now route one Start Here overview with nested specialist evidence; the backlog is future-only; the overview opens with public/private/review/unavailable/evidence availability classes and stable navigation; the existing Knowledge Card points at that route; and the 13 removed duplicate quantitative candidates are retired from the exact claim-disposition join rather than left stale.
 - [x] **NO REGRESSION (machine truth, book, and containment)** — t1796 and the guarded capability/scale/entry-path band each report `All tests successful.` at `Files=1, Tests=4` and `Files=5, Tests=28`; hostile category removal is covered. Every mdBook chapter tests, the repository-local HTML build succeeds, and the claim inventory/disposition join closes without gaps. The staged Knowledge Map, relative-path, task-integrity, containment, README, locality, and `[doctrine] all doctrine checks passed` gates are green; no product or support claim changes.
+
+## Acceptance Checklist (.18.3, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the public source-to-result lifecycle was
+  implemented but not available as one task-oriented user reference. `git log
+  -S'# VIAL Public Tooling Version-1 Contract'` identifies selection commit
+  `d34da3254`, while `git log -S'## Shipped public source, planning, and
+  execution tooling'` identifies closeout commit `dfe87f536` as the long
+  architecture-chapter workflow origin. The required Knowledge Map query
+  returned no direct lifecycle answer, confirming the reader still had to
+  reconstruct the path across the overview and normative contracts.
+- [x] **ADDRESSED (verified)** — selected 16dg now owns the runnable public
+  lifecycle; the architecture overview routes to it instead of duplicating
+  workflow prose; SUMMARY and the public-tooling Knowledge Card expose the
+  route; and t1797 derives and executes its source, review, plan, schema,
+  artifact, diagnostic, atomicity, cleanup, private-boundary, and runtime-gate
+  claims from current machine contracts. The one deleted chronology candidate
+  is retired from the exact claim-disposition join, and maintained-reference
+  growth is authorized without raising a ceiling.
+- [x] **NO REGRESSION (public contract, book, and residue)** — t1797 and the
+  guarded six-file focused band report `All tests successful.` at `Files=1,
+  Tests=6` and `Files=6, Tests=30`; the full runtime integration keeps its
+  intentional Darwin qualification guard. Every mdBook chapter tests and the
+  repository-local HTML build succeeds. Generated book/test roots, public-plan
+  targets, collision fixtures, and VIAL staging residue are absent. Knowledge
+  Map, claims, containment, relative paths, task integrity, staged acceptance,
+  locality, README, and doctrines remain required before commit; no product or
+  support claim expands.

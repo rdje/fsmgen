@@ -11,7 +11,7 @@ change.
 
 | Availability | Current meaning | Continue with |
 | --- | --- | --- |
-| **Public and shipped** | `.vial` capabilities, check, normal/terse format, plan, and run; the public run backend is `sv_portable_verilator`. | [Public tooling](#shipped-public-source-planning-and-execution-tooling) |
+| **Public and shipped** | `.vial` capabilities, check, normal/terse format, plan, and run; the public run backend is `sv_portable_verilator`. | [Public lifecycle reference](16dg-vial-public-lifecycle-reference.md) |
 | **Qualified, private** | Provider-free VHDL/GHDL and the additive OSVVM profile have bounded fixture runtime/result evidence, but are not accepted by public `vial run`. | [VHDL architecture](#selected-vhdl-2008-architecture) |
 | **Review or experiment evidence** | Native-UVM deterministic emission is review-only. Its separately named open-source probe is unqualified experimental evidence. | [Native UVM](#selected-open-source-native-uvm-architecture) |
 | **Unavailable** | A supported native-UVM product runtime and mixed-language HIAL/VIAL execution are not available. | [Backend boundaries](#backend-profiles-and-honest-claims) |
@@ -21,8 +21,9 @@ change.
 
 1. Read [the peer intent systems](#two-peer-intent-systems) and the public
    source-to-result topology.
-2. Use [public tooling](#shipped-public-source-planning-and-execution-tooling)
-   for the commands and artifact boundary that ship now.
+2. Use the [public lifecycle reference](16dg-vial-public-lifecycle-reference.md)
+   for the commands, API, review routes, schemas, artifacts, diagnostics, and
+   cleanup boundary that ship now.
 3. Use [backend profiles](#backend-profiles-and-honest-claims) to distinguish
    public execution, private qualification, review-only emission, experiments,
    and unavailable paths.
@@ -562,154 +563,16 @@ IR objects.
 
 ## Shipped public source, planning, and execution tooling
 
-Decision `0039` selects one intent-oriented command family without exposing
-private compiler objects:
+The shipped intent-oriented command family is `capabilities`, `check`,
+`format`, `plan`, and `run`. The CLI and portable in-memory API expose closed,
+JSON-safe records while the parser objects, semantic and execution IRs, bridge
+builder, and backend machinery stay private.
 
-```text
-fsmgen vial capabilities
-fsmgen vial check source.vial
-fsmgen vial format --style normal|terse source.vial
-fsmgen vial plan --dut dut.ppif source.vial
-fsmgen vial run --dut dut.ppif --backend PROFILE source.vial
-```
-
-The first three commands ship through `.10.1`, `plan` ships through `.10.2`,
-private backend emission/trace validation ships through `.10.3`, and `run`
-ships through `.10.4`. The CLI is an adapter over the same closed, JSON-safe
-request/result contract available to embedding hosts. Only
-`sv_portable_verilator` is currently accepted by `run`; any other backend ID
-fails atomically before compilation.
-
-The source and DUT are deliberately separate. The VIAL file says how to verify
-meaning; `--dut` names the HIAL source that supplies ports, transactions,
-events, domains, and probes. A `.ppif` DUT is not handed directly to a
-verification backend: FSMGen first generates and reparses IAL1, then generates
-IAL0, and only the review-routed HIAL bridge may bind the VIAL plan.
-
-All three canonical HIAL entry routes are supported. Direct IAL0 has structural
-unit/domain/endpoint truth but no transaction contract, so it can plan a
-transaction-free reset/sample/check fixture. A transaction-bearing fixture
-must bind direct IAL1 metadata or IAL2 protocol facts that have first become
-reviewable generated IAL1. This is capability honesty, not name inference.
-
-Normal and terse VIAL are reversible views of the same semantics. Normal form
-is fully explicit:
-
-```text
-(vial
-  (version 1)
-  (package demo
-    (imports)
-    (types (type data_t (logic 32)))
-    (transactions)
-    (models)
-    (scoreboards)
-    (fixtures ...)))
-```
-
-Terse form removes only closed structural wrappers:
-
-```text
-(vial 1
-  (package demo
-    (type data_t (logic 32))
-    (fixture ...)))
-```
-
-It does not infer types, values, clocks, timeouts, seeds, DUT bindings, or
-target behavior. Formatting either view and reparsing it must produce the same
-semantic meaning digest; source hashes and spans remain different and honest.
-This is what “terse or normal” means in VIAL: less ceremony, never less
-meaning. Both forms enter the same existing typed `SemanticBuilder`; there is
-no second terse semantic pipeline.
-
-Check a normal source without generating a DUT, plan, or HDL:
-
-```console
-$ ./bin/fsmgen vial check vial/ahb_subordinate_base_output_arbitration.vial
-VIAL check passed (normal_v1)
-```
-
-Format that source into terse form on standard output:
-
-```bash
-./bin/fsmgen vial format --style terse \
-  vial/ahb_subordinate_base_output_arbitration.vial
-```
-
-`check --style normal|terse` can require an exact authored style; a mismatch
-is `VIAL_SOURCE_STYLE_ERROR`. `capabilities --json` and `check --json` return
-the closed public result envelope. Formatting intentionally returns source
-text rather than mixing JSON with authored VIAL. These source operations read only
-repository-root-relative, non-symlink `.vial` files and write nothing.
-
-Plan the checked AHB fixture against its canonical IAL2 source:
-
-```console
-$ ./bin/fsmgen vial plan \
-    --dut ppif/ahb_lite_subordinate.ppif \
-    vial/ahb_subordinate_base_output_arbitration.vial
-VIAL plan planned (.artifacts/vial/base-output-arbitration/<full-plan-digest>)
-```
-
-The action publishes only reviewable projections:
-
-```text
-.artifacts/vial/<fixture>/<full-plan-digest>/
-  vial-tool-manifest.json
-  source/vial-normal.vial
-  review/...
-  hial-vial-bridge.json
-  vial-plan.json
-```
-
-The selected tree is repository-local, same-volume, content-addressed, and
-committed atomically. Failed planning leaves no partial tree; a non-identical
-existing tree is never overwritten. Repeating the same plan against the exact
-tree returns `unchanged`; it does not rewrite files. Generated IAL1 and IAL0
-sources appear below `review/`, while a direct IAL0 source is referenced by
-identity/digest and is not copied as a generated artifact. The first bounded
-direct-IAL0 route accepts one root `.fsm`; package imports fail closed until a
-later slice defines their complete review graph.
-
-A failure after staging begins removes the exact operation-owned staging tree
-before returning its diagnostic, so the same operation can retry without
-residue blocking atomic publication.
-
-Embedding callers choose an exact `artifact_policy`: `virtual` returns the
-same ordered graph in an initially empty caller-owned sink, while `repository`
-delegates atomic publication to a filesystem adapter such as the CLI. The
-optional artifact root is always repository-relative; null selects the default
-content-addressed root. Every artifact has exact content metadata. The tool
-manifest inventories every artifact except itself, because a self-hash would
-be recursively undefined; exact-tree validation still includes the manifest
-file. Neither mode exposes Perl objects or absolute host paths.
-
-Existing `.isf` UVM/VHDL skeleton commands and their
-`verification-output-manifest.json` version 1 stay unchanged. A VIAL
-`run` uses explicit manifest schema
-`fsmgen.verification_output_manifest.v2`; consumers select by schema rather
-than guessing from the shared filename. The full normative field, diagnostic,
-compatibility, and rollback contract is
-[VIAL Public Tooling Version 1](../../VIAL_PUBLIC_TOOLING_V1_CONTRACT.md).
-
-Run the checked AHB fixture with the exact qualified backend:
-
-```console
-$ ./bin/fsmgen vial run \
-    --dut ppif/ahb_lite_subordinate.ppif \
-    --backend sv_portable_verilator \
-    vial/ahb_subordinate_base_output_arbitration.vial
-VIAL run executed (.artifacts/vial/base-output-arbitration/<full-plan-digest>)
-```
-
-The run tree contains the plan graph plus generated SystemVerilog, exact
-compile/run command records, the executed tool profile, normalized compile and
-run transcripts, validated JSONL, backend/output manifests, and one
-content-addressed `verification-result-manifest.json`. Both the `success` and
-`unsupported_size` scenarios must pass. Repeating the same run produces the
-same bytes and returns `unchanged`; a failed tool, trace, schema, scenario, or
-publication gate leaves no partial output tree.
+Use the [Public VIAL Lifecycle Reference](16dg-vial-public-lifecycle-reference.md)
+for runnable commands, normal/terse equivalence, accepted HIAL review routes,
+the request/result API, artifact and manifest schemas, atomic publication,
+diagnostics, failure cleanup, and exact nonclaims. The normative contract
+remains [VIAL Public Tooling](../../VIAL_PUBLIC_TOOLING_V1_CONTRACT.md).
 
 ## Shipped portable-SystemVerilog emission and execution
 

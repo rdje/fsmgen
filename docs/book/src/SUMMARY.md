@@ -49,6 +49,7 @@
   - [APB IAL2 Examples](16b-ial2-apb.md)
   - [AHB Current Boundary](16c-ial2-ahb.md)
   - [HIAL/VIAL Verification: Start Here](16d-hial-vial-verification-architecture.md)
+    - [Public VIAL Lifecycle Reference](16dg-vial-public-lifecycle-reference.md)
     - [Balanced Portable Composition](16da-vial-balanced-portable-composition.md)
     - [Structural Backend-Emission Matrix](16db-vial-structural-backend-emission-matrix.md)
     - [Portable Verilator Runtime Measurement](16dc-vial-portable-verilator-runtime-measurement.md)
