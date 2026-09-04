@@ -1989,11 +1989,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.4: activate VIAL family registry; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.4: implement VIAL family registry`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.5`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement common portable-SystemVerilog, native-UVM, and VHDL/OSVVM backend adapter seams.`
   Acceptance: `Adapters consume only typed versioned IR, report exact emitted/compile/run/result/parity maturity, isolate target mechanisms, preserve deterministic source maps and atomic artifacts, and cannot accept an unknown family or silently omit a semantic effect.`
-  Verification: `pending`
-  Commit: `pending implementation`
+  Verification: `Clean registry commit 6927bfcfb owns the twelve selected family namespaces, exact profile-local capability negotiation, and conservative zero-family maturity. The required Knowledge Map query returned no common v2 backend-adapter answer. Decisions 0050 and 0051 preserve four distinct existing routes: public executable v1 sv_portable_verilator, private review-only v1 sv_uvm_emit.accellera_2020_3_1, private qualified v1 vhdl_portable_ghdl, and private qualified v1 vhdl_osvvm_qualified layered over the portable core. Their current emitters independently own schema/profile/capability checks and must retain their exact v1 bytes and maturity. This continuity-only activation selects one typed profile-specific v2 adapter contract and preflight seam across those routes, with target mechanisms isolated and every family still unavailable until its vertical owner lands; no source, IR, emitter, artifact, runtime, result, parity, public capability, support, or product behavior changes in the activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.5: activate common VIAL backend adapters`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.6`
   Status: `proposed`
