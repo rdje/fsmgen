@@ -745,7 +745,8 @@ mechanisms rather than automatic VIAL vocabulary. Terse authored forms and a
 verbose normal form must lower to the same typed SemanticIR; terseness removes
 ceremony, never meaning. A backend without an exact native mapping rejects the
 required capability before output instead of silently weakening it. Decision
-`0034` owns this long-term boundary; the bounded v1 profile remains unchanged.
+`0034` owns this long-term boundary; `.19` preserves the bounded v1 profile
+and selects additive v2 growth through end-to-end intent families.
 
 ## Native extensions
 

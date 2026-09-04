@@ -33,6 +33,32 @@ cleanup coverage, support accounting, and explicit nonclaims.
 | Expressive VIAL families | Extend verification intent by semantic compression, with readable source-mapped backend output and no requirement that authors learn backend methodology machinery. |
 | Native intent simulation | Select executable reference semantics before treating direct HIAL/VIAL execution as authoritative or comparable with generated HDL backends. |
 
+### Selected expressive-language programme
+
+Decision `0034` and activity `.19` preserve the closed VIAL v1 contract and select additive v2
+growth. The first programme covers lifecycle; notification and interception;
+timed interfaces; transactions, scenarios, and stimulus orchestration; typed
+communication, models, and scoreboards; implementation substitution; scoped
+configuration; register intent; constrained decisions; coverage and
+properties; faults; and semantic results, diagnostics, debugging, and
+introspection.
+
+Each family advances vertically. Its normal and terse forms must produce one
+typed meaning; IR and plans must preserve identity, bounds, source maps, and
+fail-closed capabilities; portable SystemVerilog, native UVM, and VHDL/OSVVM
+must each implement the exact selected mapping or reject before output; and
+qualification, support accounting, runnable documentation, generated-code
+quality, cleanup, and nonclaims close the family. A private emitter preview is
+useful implementation evidence, but it is not public authoring or runtime
+support.
+
+The author-facing test is simple: a VIAL user must not need to learn backend
+methodology APIs. The generated-artifact test is equally strict: backend code
+must remain deterministic, efficient, readable, minimally shaped, and
+source-mapped. Later semantic families remain admissible through the same
+owned gate, so this programme is a bounded delivery order rather than a new
+language ceiling.
+
 ## Nonclaims retained by this backlog
 
 The backlog does not claim complete SystemVerilog, UVM, VHDL, property,

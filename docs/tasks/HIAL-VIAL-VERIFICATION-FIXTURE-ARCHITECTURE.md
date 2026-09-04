@@ -1948,8 +1948,716 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Select and decompose the post-first-backend expressive VIAL frontier without a synthesizability ceiling.`
   Acceptance: `Decision 0034 is converted into detailed task-tree leaves for terse/normal syntax equivalence and the complete selected verification-intent taxonomy: notification/interception, lifecycle control, stimulus orchestration, producer/observer communication, implementation selection/substitution, scoped configuration, register intent, constrained decisions, coverage/properties, timed interface interaction, debugging/introspection, and later justified intent families. Each records semantic compression, native/portable SV/UVM/VHDL mappings, backend-private mechanisms (including factories/config DB/TLM plumbing), fail-closed profiles, tests, docs, and non-claims; each applies the author test that no SV/UVM/VHDL knowledge is required and the backend test that generated artifacts remain efficient, readable, and source-mapped, without cloning raw target syntax or allowing the initial portable/native slices to masquerade as the language ceiling.`
-  Verification: `Clean predecessor commit 69d8ff8d2 independently closes documentation/migration activity .18 with its final guarded 19-file/7,189-test band, mdBook, claims, containment, residue, task, and all 12 doctrine checks green; the worktree and index are clean, git_message_brief.txt is zero bytes, and no background result remains. The required Knowledge Map query returned no direct expressive-VIAL taxonomy/decomposition answer. This continuity-only transition activates selection/decomposition against decision 0034 and current language/backend evidence; it changes no VIAL syntax, semantic IR, bridge, plan, backend, artifact, runtime, parity, capability, support, documentation, or product behavior.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19: activate expressive VIAL frontier selection`
+  Verification: `Clean activation commit 48b600a5b owns the selection. The required Knowledge Map query returned no direct taxonomy/decomposition answer, so the audit inspected decision 0034, the closed v1 source/SemanticIR contract, bridge and ExecutionIR contracts, public tooling/capability truth, portable-SystemVerilog and VHDL/OSVVM routes, the private native-UVM contract/emitter/gallery, and the complete architecture taxonomy. Because v1 fixes an exact closed grammar, projection, semantic record, diagnostic, and compatibility boundary while the native-UVM breadth is explicitly private preview rather than public semantics/runtime, the selector preserves v1 and chooses additive v2 growth through vertical intent families. Fourteen active activity containers and 85 proposed executable leaves now cover the common version/profile foundation; lifecycle; notification/interception; timed interaction; transactions/scenarios/stimulus; producer/observer communication/models/scoreboards; implementation substitution; scoped configuration; register intent; constrained decisions; coverage/properties; faults; results/diagnostics/debugging/introspection; and cross-family composition, parity, scale, documentation, later-family admission, and closeout. Every family has target-free source, typed compiler, portable-SystemVerilog, native-UVM, VHDL/OSVVM, and qualification/documentation lanes; the foundation has seven exact compatibility/infrastructure lanes. Task integrity proves 1,205 nodes. A first separate-ADR draft correctly tripped the rationale and Knowledge-Card transition allowances; the duplicate was removed, the refinement was folded into decision 0034 without changing its 113-line size, and the card was compacted to 139 lines before containment passed. Focused relative-path, containment, claim-inventory/disposition, reader-entry, and capability-reference tests pass at Files=6/Tests=40. Every mdBook chapter tests; the repository-local HTML build succeeds with 98 files/22,040 KiB and is removed exactly. Claim inventory remains 1,895 candidates and dispositions close 1,895/1,895 with zero gaps. Knowledge Map remains current at 1,160 facts/6,295 questions/6,467 occurrences/138 shards. Maintained-reference authority records 63 book files/57,646 lines/3,142,988 bytes from a 0/+27/+1,525 delta, no ceiling or allowance rises, and all live-document invariants pass. Final task, relative-path, claims, Knowledge Map, locality, README, staged acceptance, and all 12 doctrine checks are green; generated build and task-local residue are absent. This selection changes no VIAL source acceptance, semantic IR, bridge, plan, backend, artifact, runtime, parity, capability, support, diagnostic, provider, or product behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19: activate expressive VIAL frontier selection; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19: select versioned expressive VIAL programme`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.9, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.10, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.11, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.12, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.13, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.14`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1`
+  Status: `active`
+  Goal: `Establish the additive VIAL version-2 semantic-family, compatibility, projection, capability, and backend foundation without changing version-1 meaning.`
+  Acceptance: `Decision 0034 and the .19 selection are implemented as a closed common envelope and vertical-delivery substrate: v1 stays byte/meaning compatible; v2 normal and terse forms have one typed identity; family/revision, scope, lifetime, order, typed ports, effects, failure, provenance, result, and source-map facts survive every private phase; imports and migration fail closed; backend profiles negotiate before artifacts; usability and generated-code quality are executable gates.`
+  Verification: `pending children .19.1.1-.19.1.7`
+  Commit: `pending activation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.7`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1`
+  Status: `proposed`
+  Goal: `Select the exact version-2 source, schema, compatibility, import, and migration contract.`
+  Acceptance: `Specify roots and sections, immutable v1 behavior, v2 schema identities, same-version import rules, explicit future compatibility adapters, deterministic non-deprecating migration, limits, diagnostics, rollback, and complete nonclaims before parser changes.`
+  Verification: `pending`
+  Commit: `pending selection`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.2`
+  Status: `proposed`
+  Goal: `Implement version-2 parsing and equivalent normal/terse source projections.`
+  Acceptance: `Both projections parse through one normalizer and builder, inserted target-neutral facts retain rule identity and authored provenance, format/reparse identities agree, v1 output is unchanged, mixed/unknown versions reject, and hostile defaults or backend-shaped syntax cannot enter.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3`
+  Status: `proposed`
+  Goal: `Implement the immutable common semantic-family envelope across SemanticIR, bridge binding, ExecutionIR, plan, result, and source maps.`
+  Acceptance: `Every common field remains closed, typed, bounded, deterministic, defensively copied, source-derived, and traceable through each phase; versioned v1 paths retain exact projections; incomplete or contradictory nodes fail before downstream allocation.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.4`
+  Status: `proposed`
+  Goal: `Implement the semantic-family registry and fail-closed profile capability negotiation.`
+  Acceptance: `One registry owns family/revision identities, dependencies, effects, bounds, maturity stages, and backend profile mappings; public capabilities derive from it; parser, planner, emitter, and runner reject the complete unsupported requirement set before partial output without borrowing another profile's support.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.5`
+  Status: `proposed`
+  Goal: `Implement common portable-SystemVerilog, native-UVM, and VHDL/OSVVM backend adapter seams.`
+  Acceptance: `Adapters consume only typed versioned IR, report exact emitted/compile/run/result/parity maturity, isolate target mechanisms, preserve deterministic source maps and atomic artifacts, and cannot accept an unknown family or silently omit a semantic effect.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.6`
+  Status: `proposed`
+  Goal: `Make target-free author usability and generated-artifact quality executable requirements.`
+  Acceptance: `Fixtures and hostile controls prove public examples/diagnostics/normal forms need no SV/UVM/VHDL knowledge; backend checks prove deterministic readable minimally shaped source-mapped output, absence-driven component elision, bounded cost, and zero methodology-plumbing leakage into VIAL semantics.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.7`
+  Status: `proposed`
+  Goal: `Close the version-2 foundation with public tooling, migration guidance, compatibility, containment, and support truth.`
+  Acceptance: `Capabilities/check/format/plan expose exact version-aware states, v1 regression remains byte-exact, v2 migration is explicit and reviewable, mdBook examples are runnable, every schema and diagnostic is documented, residues are absent, and no expressive family is falsely advertised by the foundation alone.`
+  Verification: `pending`
+  Commit: `pending closeout`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2`
+  Status: `active`
+  Goal: `Deliver lifecycle-control intent end to end.`
+  Acceptance: `VIAL expresses readiness dependencies, service start/stop, stimulus start, completion/drain, shutdown/finalization order, deadlines, and failure policy without authored phases or objections; all six child lanes close with exact portable-SV, native-UVM, and VHDL/OSVVM mappings or pre-artifact rejection.`
+  Verification: `pending children .19.2.1-.19.2.6`
+  Commit: `pending activation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.6`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.1`
+  Status: `proposed`
+  Goal: `Select lifecycle semantics and target-free normal/terse source.`
+  Acceptance: `Define dependency, readiness, service, completion/drain, shutdown/finalize, deadline, and failure records with finite bounds, explicit order/defaults, examples, diagnostics, and semantic compression; reject UVM phase/objection vocabulary.`
+  Verification: `pending`
+  Commit: `pending selection`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.2`
+  Status: `proposed`
+  Goal: `Implement lifecycle SemanticIR, binding, execution, plan, result, source-map, and capability propagation.`
+  Acceptance: `Typed lifecycle dependencies and terminal conditions remain deterministic through every phase, cycles/deadlines are bounded, deadlock and incomplete drain fail closed, and results expose logical seams rather than backend scheduling folklore.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3`
+  Status: `proposed`
+  Goal: `Implement and qualify lifecycle control in portable SystemVerilog.`
+  Acceptance: `The static scheduler realizes selected readiness, service, completion, drain, shutdown, and finalization semantics with bounded execution and normalized results; emitted control is minimal/readable/source-mapped and runtime failures cleanly publish no false success.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.4`
+  Status: `proposed`
+  Goal: `Implement lifecycle control through compiler-private native-UVM mechanisms.`
+  Acceptance: `Generated phases and one root-owned objection realize VIAL lifecycle order; child objections, phase jumps, implicit drain folklore, and authored UVM terms are absent; emission/static evidence and exact runtime qualification retain separate capability states.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.5`
+  Status: `proposed`
+  Goal: `Implement and qualify lifecycle control in provider-free VHDL and negotiated OSVVM.`
+  Acceptance: `Processes/controller services preserve the same logical seams and completion/result policy; provider services are additive only, exact GHDL/OSVVM identities are gated, and absent equivalents reject before output.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.6`
+  Status: `proposed`
+  Goal: `Close lifecycle parity, usability, quality, documentation, support, and nonclaims.`
+  Acceptance: `Independent tests cover dependency order, drain/deadline/failure, normal/terse identity, profile negotiation, applicable normalized parity, component elision, source maps, cleanup, and runnable docs; no general UVM/VHDL or scheduler claim leaks.`
+  Verification: `pending`
+  Commit: `pending closeout`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.3`
+  Status: `active`
+  Goal: `Deliver notification and interception intent end to end.`
+  Acceptance: `VIAL expresses typed occurrences, registration scope, strict ranks, filters, transformations, observation, cancellation, persistence, trigger policy, and bounded reentrancy without exposing event/callback classes; the existing private UVM preview is audited and migrated rather than treated as public meaning.`
+  Verification: `pending children .19.3.1-.19.3.6`
+  Commit: `pending activation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.3.6`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.3.1`
+  Status: `proposed`
+  Goal: `Select notification/interception semantics and normal/terse source.`
+  Acceptance: `Specify payloads, lifetimes, ranks, filters, closed effects, transformation typing, cancellation commit point, persistence/trigger/reentrancy policy, queue bounds, examples, and diagnostics without backend callback vocabulary.`
+  Verification: `pending`
+  Commit: `pending selection`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.3.2`
+  Status: `proposed`
+  Goal: `Implement notification/interception through typed compiler phases.`
+  Acceptance: `SemanticIR, ExecutionIR, plans, results, source maps, and capabilities preserve original/effective payload, evaluated/skipped interceptors, bounded nested occurrences, logical time, and deterministic rank-plus-ID ordering; invalid recursion/effects reject early.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.3.3`
+  Status: `proposed`
+  Goal: `Implement and qualify portable-SystemVerilog notification/interception.`
+  Acceptance: `Static typed dispatch realizes filter/transform/cancel/observe and bounded queue-or-reject behavior without dynamic callback dependence; runtime/result evidence and hostile ordering/reentrancy controls close the exact supported subset.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.3.4`
+  Status: `proposed`
+  Goal: `Implement native-UVM notification/interception with compiler-owned event/callback machinery.`
+  Acceptance: `Generated typed events and one ordered dispatcher preserve VIAL ranks/effects independently of registration/allocation order; preview fixtures migrate to public semantic IDs; exact emission, compile/runtime maturity, and UVM nonclaims remain distinct.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.3.5`
+  Status: `proposed`
+  Goal: `Implement and qualify VHDL/OSVVM notification/interception.`
+  Acceptance: `Protected records, queues, alerts, or other selected mechanisms remain backend-private while preserving identical ordering/effects/bounds/results; provider-free and OSVVM capability states are separate and unsupported effects reject before artifacts.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.3.6`
+  Status: `proposed`
+  Goal: `Close notification parity, usability, quality, documentation, support, and nonclaims.`
+  Acceptance: `Independent definition-oriented, metamorphic, seeded-defect, nested-trigger, cancellation, profile, parity, source-map, elision, cleanup, and runnable-book gates prove intent semantics without promoting target callback APIs or broad methodology support.`
+  Verification: `pending`
+  Commit: `pending closeout`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.4`
+  Status: `active`
+  Goal: `Deliver timed-interface interaction intent end to end.`
+  Acceptance: `VIAL expresses domains, roles, directions, drive/sample edges and skews, reset behavior, race policy, and typed access without authored virtual interfaces, modports, clocking blocks, processes, or delta-cycle folklore.`
+  Verification: `pending children .19.4.1-.19.4.6`
+  Commit: `pending activation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.4.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.4.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.4.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.4.6`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.4.1`
+  Status: `proposed`
+  Goal: `Select timed-interface semantics and normal/terse source.`
+  Acceptance: `Define domain/role/direction, edge/skew, reset, contention, sampling stability, race resolution, bounds, examples, and diagnostics in logical-time terms, including multi-domain capability boundaries without target syntax.`
+  Verification: `pending`
+  Commit: `pending selection`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.4.2`
+  Status: `proposed`
+  Goal: `Implement timed-interface binding and execution semantics.`
+  Acceptance: `Bridge carrier relations, SemanticIR, ExecutionIR, schedules, plans, results, and source maps preserve typed direction and drive/sample ordering; ambiguous clocks/resets/skews/cross-domain interactions reject before emission.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.4.3`
+  Status: `proposed`
+  Goal: `Implement and qualify portable-SystemVerilog timed interfaces.`
+  Acceptance: `Generated static adapters implement the selected logical-time contract without races, preserve four-state/known-value profile limits, remain minimal/readable/source-mapped, and produce closed timing/result evidence under the exact tool profile.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.4.4`
+  Status: `proposed`
+  Goal: `Implement native-UVM timed interfaces through private interfaces, modports, virtual bindings, and clocking blocks.`
+  Acceptance: `Compiler-generated mechanisms reproduce VIAL edge/skew/direction/reset semantics; config lookup and UVM hierarchy remain private; exact static versus runtime maturity and unavailable multi-domain cases are reported.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.4.5`
+  Status: `proposed`
+  Goal: `Implement and qualify VHDL/OSVVM timed interfaces.`
+  Acceptance: `Selected processes, signal/clock/reset adapters, and provider services implement the same logical phases and race policy; delta cycles remain backend evidence, and unsupported skew or access forms reject before artifacts.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.4.6`
+  Status: `proposed`
+  Goal: `Close timed-interface parity, usability, quality, documentation, support, and nonclaims.`
+  Acceptance: `Independent race, phase, reset, direction, carrier, profile, parity, source-map, component-elision, cleanup, and runnable-example gates distinguish exact supported domains from multi-domain/full-four-state/mixed-language nonclaims.`
+  Verification: `pending`
+  Commit: `pending closeout`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.5`
+  Status: `active`
+  Goal: `Deliver transactions, scenarios, and stimulus orchestration end to end.`
+  Acceptance: `VIAL composes typed exchanges, correlation, arbitration, parallel scenario graphs, responses, timeouts, cancellation, reusable stimulus, and finite iteration without exposing sequences, sequencers, drivers, processes, or host threads.`
+  Verification: `pending children .19.5.1-.19.5.6`
+  Commit: `pending activation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.5.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.5.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.5.6`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.5.1`
+  Status: `proposed`
+  Goal: `Select transaction/scenario/stimulus semantics and normal/terse source.`
+  Acceptance: `Specify typed requests/responses, identity/correlation, arbitration, reusable flows, parallelism, joins/cancellation, deadlines, finite loops, examples, defaults, limits, and diagnostics while retaining v1 scenario compatibility.`
+  Verification: `pending`
+  Commit: `pending selection`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.5.2`
+  Status: `proposed`
+  Goal: `Implement transaction/scenario/stimulus compiler semantics.`
+  Acceptance: `Parser, SemanticIR, HIAL bindings, ExecutionIR graph, scheduling, plan, result, source-map, and capability records preserve typed correlation and deterministic concurrency; cycles, deadlocks, runaway expansion, and unsupported topology fail early.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.5.3`
+  Status: `proposed`
+  Goal: `Implement and qualify portable-SystemVerilog stimulus orchestration.`
+  Acceptance: `Static tasks/state machines implement the selected graphs and arbitration within bounded scheduler/resource profiles, produce deterministic results, and avoid unnecessary generated services or dynamic target-language machinery.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.5.4`
+  Status: `proposed`
+  Goal: `Implement native-UVM stimulus orchestration through private sequence infrastructure.`
+  Acceptance: `Generated items, sequences, sequencers, drivers, and virtual coordination preserve VIAL identities/order/cancellation and are emitted only when selected; authors see no UVM types/APIs and runtime qualification remains explicit.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.5.5`
+  Status: `proposed`
+  Goal: `Implement and qualify VHDL/OSVVM stimulus orchestration.`
+  Acceptance: `Controller processes and selected verification components implement identical typed exchanges, correlation, arbitration, timeouts, and results; provider services cannot perturb pre-resolved logical order or decisions.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.5.6`
+  Status: `proposed`
+  Goal: `Close stimulus parity, usability, quality, documentation, support, and nonclaims.`
+  Acceptance: `Independent graph, concurrency, timeout, cancellation, deterministic replay, profile, applicable parity, source-map, minimal topology, scale, cleanup, and runnable-example gates retain explicit unsupported dynamic/unbounded/general-UVM boundaries.`
+  Verification: `pending`
+  Commit: `pending closeout`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.6`
+  Status: `active`
+  Goal: `Deliver producer/observer communication, deterministic models, and scoreboards end to end.`
+  Acceptance: `VIAL expresses typed streams, fanout, ordering, backpressure/loss, deterministic model transitions, expected/actual matching, keys, capacity, drain, and mismatch results without authored TLM ports, subscribers, FIFOs, or component classes.`
+  Verification: `pending children .19.6.1-.19.6.6`
+  Commit: `pending activation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.6.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.6.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.6.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.6.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.6.6`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.6.1`
+  Status: `proposed`
+  Goal: `Select communication/model/scoreboard semantics and normal/terse source.`
+  Acceptance: `Define publishers/subscribers, stream type and order, fanout/backpressure/loss, model state/rules, scoreboard matching/key/order/capacity/drain, examples, bounds, and diagnostics as verification intent.`
+  Verification: `pending`
+  Commit: `pending selection`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.6.2`
+  Status: `proposed`
+  Goal: `Implement communication/model/scoreboard compiler semantics.`
+  Acceptance: `Typed immutable channels, deterministic model transitions, bounded queues and matching state propagate through IR/plan/result/source maps/capabilities; cycles, ambiguous fanout, overflow/loss violations, and incomplete drain reject exactly.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.6.3`
+  Status: `proposed`
+  Goal: `Implement and qualify portable-SystemVerilog communication, models, and scoreboards.`
+  Acceptance: `Static queues/services realize typed fanout and deterministic bounded checking with exact mismatch/overflow results; generated state is compact, readable, source-mapped, and absent when the family is unused.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.6.4`
+  Status: `proposed`
+  Goal: `Implement native-UVM communication, models, and scoreboards through private TLM/component machinery.`
+  Acceptance: `Generated ports/exports/imps/FIFOs/subscribers preserve VIAL stream and order semantics, component graph is minimal, no TLM API leaks to authors, and static/runtime maturity remains exact per capability.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.6.5`
+  Status: `proposed`
+  Goal: `Implement and qualify VHDL/OSVVM communication, models, and scoreboards.`
+  Acceptance: `Selected protected queues, records, scoreboards, and provider services preserve identical type/order/capacity/drain/result semantics; unsupported backpressure or matching forms reject before output.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.6.6`
+  Status: `proposed`
+  Goal: `Close communication/checking parity, usability, quality, documentation, support, and nonclaims.`
+  Acceptance: `Independent fanout/order/loss/overflow/model/matching/drain/profile/parity/source-map/elision/scale/cleanup gates and runnable docs prove selected meaning without claiming arbitrary TLM or unbounded scoreboard breadth.`
+  Verification: `pending`
+  Commit: `pending closeout`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.7`
+  Status: `active`
+  Goal: `Deliver implementation selection and scoped substitution end to end.`
+  Acceptance: `VIAL selects abstract roles, defaults, compatible replacements, scope, precedence, and result evidence without factory classes, registration macros, overrides, target hierarchy, or provider-specific plug-ins.`
+  Verification: `pending children .19.7.1-.19.7.6`
+  Commit: `pending activation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.7.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.7.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.7.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.7.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.7.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.7.6`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.7.1`
+  Status: `proposed`
+  Goal: `Select role/substitution semantics and normal/terse source.`
+  Acceptance: `Define abstract roles, implementation declarations, defaults, scopes, precedence, compatibility predicates, conflicts, examples, limits, and diagnostics without UVM factory vocabulary.`
+  Verification: `pending`
+  Commit: `pending selection`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.7.2`
+  Status: `proposed`
+  Goal: `Implement role/substitution compiler semantics.`
+  Acceptance: `IR and planning resolve one compatible implementation per role and scope with stable identities/source maps/capabilities/results; cycles, ambiguity, incompatible shape, and late mutation reject before backend construction.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.7.3`
+  Status: `proposed`
+  Goal: `Implement and qualify portable-SystemVerilog role substitution.`
+  Acceptance: `Compile-time generated selection realizes the exact role graph without dynamic target factories, emits only chosen implementations, and records deterministic selection evidence in the normalized result.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.7.4`
+  Status: `proposed`
+  Goal: `Implement native-UVM role substitution through private factory machinery.`
+  Acceptance: `Generated registrations and type/instance overrides preserve VIAL scope/precedence, readiness verifies the realized graph, source maps identify semantic owners, and authors never spell UVM type or factory APIs.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.7.5`
+  Status: `proposed`
+  Goal: `Implement and qualify VHDL/OSVVM role substitution.`
+  Acceptance: `Static generic/configuration or generated composition mappings realize the same selected role graph; unsupported dynamic/provider substitutions reject before output and cannot be inferred from UVM capability.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.7.6`
+  Status: `proposed`
+  Goal: `Close substitution parity, usability, quality, documentation, support, and nonclaims.`
+  Acceptance: `Independent scope/precedence/conflict/compatibility/profile/parity/source-map/elision/cleanup and target-free example gates prove role intent while retaining arbitrary plug-in/runtime mutation nonclaims.`
+  Verification: `pending`
+  Commit: `pending closeout`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.8`
+  Status: `active`
+  Goal: `Deliver scoped typed configuration end to end.`
+  Acceptance: `VIAL expresses keys, types, values, ownership scopes, precedence, required/default/locked policy, consumption, and unused/conflict outcomes without config-DB calls, hierarchy wildcards, or target-specific generics.`
+  Verification: `pending children .19.8.1-.19.8.6`
+  Commit: `pending activation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.8.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.8.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.8.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.8.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.8.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.8.6`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.8.1`
+  Status: `proposed`
+  Goal: `Select scoped-configuration semantics and normal/terse source.`
+  Acceptance: `Define typed declarations/assignments/reads, lexical semantic scopes, precedence, defaults, required/locked policy, conflicts, unused values, examples, limits, and diagnostics without backend hierarchy patterns.`
+  Verification: `pending`
+  Commit: `pending selection`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.8.2`
+  Status: `proposed`
+  Goal: `Implement scoped-configuration compiler semantics.`
+  Acceptance: `IR/plans resolve every read deterministically with stable scope/value/source/result evidence; missing required, incompatible, ambiguous, late-locked, unused-error, and cyclic-derived configurations fail before emission.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.8.3`
+  Status: `proposed`
+  Goal: `Implement and qualify portable-SystemVerilog scoped configuration.`
+  Acceptance: `Generated immutable configuration tables/constants realize selected scope and precedence without runtime hierarchy lookup; only consumed state is emitted and results report semantic keys rather than target names.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.8.4`
+  Status: `proposed`
+  Goal: `Implement native-UVM scoped configuration through private configuration objects and config DB.`
+  Acceptance: `Compiler-owned set/get/check plumbing preserves VIAL resolution, readiness proves required consumption, wildcard target scopes are absent, and UVM paths/APIs do not enter public source or result meaning.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.8.5`
+  Status: `proposed`
+  Goal: `Implement and qualify VHDL/OSVVM scoped configuration.`
+  Acceptance: `Generated records/constants/generics or provider services preserve typed scope/precedence/lock behavior; static elaboration limitations are explicit and unsupported late configuration rejects before artifacts.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.8.6`
+  Status: `proposed`
+  Goal: `Close configuration parity, usability, quality, documentation, support, and nonclaims.`
+  Acceptance: `Independent resolution/conflict/required/default/lock/unused/profile/parity/source-map/elision/cleanup and target-free example gates prove exact meaning without claiming arbitrary runtime/hierarchy configuration.`
+  Verification: `pending`
+  Commit: `pending closeout`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.9`
+  Status: `active`
+  Goal: `Deliver register intent end to end.`
+  Acceptance: `VIAL expresses register blocks, maps, fields, address/endianness, access/reset/volatility, prediction, mirror, frontdoor/backdoor choice, and access results without authored UVM RAL, hierarchy paths, or VHDL methodology APIs.`
+  Verification: `pending children .19.9.1-.19.9.6`
+  Commit: `pending activation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.9.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.9.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.9.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.9.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.9.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.9.6`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.9.1`
+  Status: `proposed`
+  Goal: `Select register semantics and normal/terse source.`
+  Acceptance: `Define map/block/register/field identities, addresses, widths, access/reset/volatility, mirror/prediction, frontdoor/backdoor policy, sequences, examples, bounds, diagnostics, and HIAL binding requirements target-neutrally.`
+  Verification: `pending`
+  Commit: `pending selection`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.9.2`
+  Status: `proposed`
+  Goal: `Implement register compiler semantics and HIAL binding.`
+  Acceptance: `IR/plans prove address/field non-overlap, carrier/access compatibility, reset/mirror/prediction transitions, adapter identity, source maps, capabilities, and results; undeclared raw backdoors and ambiguous maps fail before emission.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.9.3`
+  Status: `proposed`
+  Goal: `Implement and qualify portable-SystemVerilog register intent.`
+  Acceptance: `Generated frontdoor transactions, mirror/predictor state, and selected declared-probe access preserve policy and results without UVM; backdoor use requires an exact HIAL capability and all emitted tables/services are bounded and source-mapped.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.9.4`
+  Status: `proposed`
+  Goal: `Implement native-UVM register intent through private RAL machinery.`
+  Acceptance: `Generated blocks/maps/adapters/predictors/sequences match VIAL IDs and policies, omit unused RAL structures, never infer hierarchy backdoors, and separate source emission/static review from exact executable qualification.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.9.5`
+  Status: `proposed`
+  Goal: `Implement and qualify VHDL/OSVVM register intent.`
+  Acceptance: `Generated map/access/mirror/prediction services and selected OSVVM transaction facilities preserve identical policy/results; unsupported backdoor/provider semantics reject before output rather than weakening intent.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.9.6`
+  Status: `proposed`
+  Goal: `Close register parity, usability, quality, documentation, support, and nonclaims.`
+  Acceptance: `Independent layout/access/reset/volatile/predict/frontdoor/backdoor/profile/parity/source-map/elision/scale/cleanup and runnable-example gates retain explicit arbitrary hierarchy and complete-RAL nonclaims.`
+  Verification: `pending`
+  Commit: `pending closeout`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.10`
+  Status: `active`
+  Goal: `Deliver constrained-decision intent end to end.`
+  Acceptance: `VIAL expresses decision identity, typed domains, constraints, distributions, seed/replay, attempt/exhaustion policy, accepted values, and solver evidence without authored randomize calls, solver objects, or backend-specific constraint syntax.`
+  Verification: `pending children .19.10.1-.19.10.6`
+  Commit: `pending activation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.10.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.10.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.10.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.10.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.10.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.10.6`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.10.1`
+  Status: `proposed`
+  Goal: `Select constrained-decision semantics and normal/terse source.`
+  Acceptance: `Define types/domains, composable constraints, distributions, dependence, seeds, stable occurrence IDs, attempt/exhaustion, replay, examples, bounds, and diagnostics while preserving fixed v1 decision behavior.`
+  Verification: `pending`
+  Commit: `pending selection`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.10.2`
+  Status: `proposed`
+  Goal: `Implement constrained-decision compiler and replay semantics.`
+  Acceptance: `SemanticIR/ExecutionIR/plans/results carry canonical constraints, dependencies, solver/profile identity, accepted normalized values, attempts, and replay records; unsatisfiable, cyclic, non-replayable, or over-limit decisions fail deterministically.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.10.3`
+  Status: `proposed`
+  Goal: `Implement and qualify portable-SystemVerilog constrained decisions.`
+  Acceptance: `A selected target-neutral bounded solver or pre-resolved plan produces deterministic values and replay; the backend never silently invokes native randomization, and result evidence distinguishes generation from replay.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.10.4`
+  Status: `proposed`
+  Goal: `Implement native-UVM constrained decisions through controlled private randomization.`
+  Acceptance: `Generated constraints/randomize calls are used only for selected native nodes, exact solver/tool identity and accepted value enter evidence, portable decisions are never rerandomized, and replay bypasses solver variance.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.10.5`
+  Status: `proposed`
+  Goal: `Implement and qualify VHDL/OSVVM constrained decisions.`
+  Acceptance: `Provider-free or OSVVM solvers preserve selected domains/distributions/constraints and exact replay; provider algorithm identity is capability evidence, and unavailable constraint classes reject before output.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.10.6`
+  Status: `proposed`
+  Goal: `Close decision parity, usability, quality, documentation, support, and nonclaims.`
+  Acceptance: `Independent satisfiable/unsatisfiable/distribution/dependency/seed/attempt/replay/profile/parity/source-map/scale/cleanup and runnable-example gates distinguish accepted-value parity from solver-sequence identity and retain statistical nonclaims.`
+  Verification: `pending`
+  Commit: `pending closeout`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.11`
+  Status: `active`
+  Goal: `Deliver coverage and property intent end to end.`
+  Acceptance: `VIAL expresses sample events, typed coverpoints/bins/crosses/goals/illegal policy and temporal assumptions/assertions/covers/results without covergroup, SVA, PSL, callback, or simulator database syntax.`
+  Verification: `pending children .19.11.1-.19.11.6`
+  Commit: `pending activation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.11.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.11.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.11.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.11.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.11.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.11.6`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.11.1`
+  Status: `proposed`
+  Goal: `Select coverage/property semantics and normal/terse source.`
+  Acceptance: `Define sampling, typed expressions, bins/transitions/wildcards/crosses/goals/illegal handling, temporal operators/clock/reset/vacuity, outcomes, examples, finite expansion, diagnostics, and shared HIAL property reuse.`
+  Verification: `pending`
+  Commit: `pending selection`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.11.2`
+  Status: `proposed`
+  Goal: `Implement coverage/property compiler semantics.`
+  Acceptance: `IR/plans preserve exact sample identities, normalized bins/crosses/hits/goals, temporal state/outcomes/source maps/capabilities/results; cardinality and monitor state are preflighted and unsupported operators reject early.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.11.3`
+  Status: `proposed`
+  Goal: `Implement and qualify portable-SystemVerilog coverage/properties.`
+  Acceptance: `Generated counters and procedural/bound-checker mechanisms implement exact selected semantics under the qualified subset, distinguish scenario and assertion success, and avoid raw target text or unbounded bin expansion.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.11.4`
+  Status: `proposed`
+  Goal: `Implement native-UVM coverage/properties through private covergroups and bound SVA.`
+  Acceptance: `Generated covergroups sample only declared VIAL events, bound checkers preserve shared temporal meaning, result collection separates coverage/assertion/scenario outcomes, and unsupported tool features remain exact capability gaps.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.11.5`
+  Status: `proposed`
+  Goal: `Implement and qualify VHDL/OSVVM coverage/properties.`
+  Acceptance: `Provider-free monitors plus selected OSVVM coverage and exact PSL subset preserve the same bins/temporal/result contract; supplementary databases/reports cannot replace normalized results and unsupported constructs reject before output.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.11.6`
+  Status: `proposed`
+  Goal: `Close coverage/property parity, usability, quality, documentation, support, and nonclaims.`
+  Acceptance: `Independent sample/bin/cross/illegal/vacuity/reset/temporal/profile/parity/source-map/elision/scale/cleanup and runnable-example gates preserve exact LRM/PSL/methodology subset and no database-identity claim.`
+  Verification: `pending`
+  Commit: `pending closeout`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.12`
+  Status: `active`
+  Goal: `Deliver bounded fault intent end to end.`
+  Acceptance: `VIAL expresses declared targets, activation windows, substitution/perturbation/omission/delay policies, restoration, composition/conflicts, and observability without raw force/release, deposit, hierarchy mutation, VPI, or simulator commands.`
+  Verification: `pending children .19.12.1-.19.12.6`
+  Commit: `pending activation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.12.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.12.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.12.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.12.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.12.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.12.6`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.12.1`
+  Status: `proposed`
+  Goal: `Select fault semantics and normal/terse source.`
+  Acceptance: `Define target/access capabilities, activation/restoration windows, finite fault actions, priority/conflicts, visibility, examples, limits, and diagnostics while preserving bounded v1 transaction substitution.`
+  Verification: `pending`
+  Commit: `pending selection`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.12.2`
+  Status: `proposed`
+  Goal: `Implement fault compiler and execution semantics.`
+  Acceptance: `Binding proves declared access; IR/plans/results preserve original/effective values, activation/restoration/effect identities and source maps; illegal overlap, undeclared target, unbounded duration, and inaccessible native residual reject early.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.12.3`
+  Status: `proposed`
+  Goal: `Implement and qualify portable-SystemVerilog faults.`
+  Acceptance: `Generated driver/model/interface interception realizes only selected declared access and deterministic restoration, records exact outcomes, and rejects unsupported hierarchy mutation without partial artifacts.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.12.4`
+  Status: `proposed`
+  Goal: `Implement native-UVM faults through private driver/interface/model interception.`
+  Acceptance: `Generated components apply selected faults at VIAL lifecycle seams, never infer force/VPI/backdoor authority, preserve restoration/result evidence, and keep tool-native access behind explicit capabilities.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.12.5`
+  Status: `proposed`
+  Goal: `Implement and qualify VHDL/OSVVM faults.`
+  Acceptance: `Selected driver/model/resolution mechanisms preserve activation/effect/restoration semantics; force/deposit/external-name features require exact separate capability and unsupported forms reject before output.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.12.6`
+  Status: `proposed`
+  Goal: `Close fault parity, usability, quality, documentation, support, and nonclaims.`
+  Acceptance: `Independent target/access/window/action/conflict/restoration/profile/parity/source-map/elision/cleanup and runnable-example gates retain explicit raw hierarchy, analog, arbitrary simulator, and destructive native-access nonclaims.`
+  Verification: `pending`
+  Commit: `pending closeout`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.13`
+  Status: `active`
+  Goal: `Deliver semantic results, diagnostics, debugging, and introspection end to end.`
+  Acceptance: `VIAL tooling exposes sanitized semantic state, causality, logical time, break/watch/query intent, replay/checkpoint identity, framework state, evidence, and closed results without raw target hierarchy, object handles, vendor commands, license data, or private compiler objects.`
+  Verification: `pending children .19.13.1-.19.13.6`
+  Commit: `pending activation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.13.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.13.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.13.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.13.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.13.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.13.6`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.13.1`
+  Status: `proposed`
+  Goal: `Select results/debugging/introspection semantics and normal/terse query/control source.`
+  Acceptance: `Define observable state/causality/time, watch/break/query/control permissions, checkpoint/replay, framework-state and evidence projections, diagnostics, bounds, security/privacy, examples, and read-only versus mutating operations target-neutrally.`
+  Verification: `pending`
+  Commit: `pending selection`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.13.2`
+  Status: `proposed`
+  Goal: `Implement semantic result, diagnostic, debugging, and introspection compiler/runtime contracts.`
+  Acceptance: `Versioned APIs and IR/result projections preserve semantic IDs, logical snapshots, causality, source maps, capability/evidence identities, bounded pagination and control authorization; raw private objects/paths/handles and inconsistent checkpoints fail closed.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.13.3`
+  Status: `proposed`
+  Goal: `Implement and qualify portable-SystemVerilog semantic debugging and introspection.`
+  Acceptance: `Generated trace/checkpoint hooks and host adapters expose only the selected closed model, preserve deterministic results/replay, remain optional and bounded, and do not perturb scheduler meaning or require target hierarchy knowledge.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.13.4`
+  Status: `proposed`
+  Goal: `Implement native-UVM semantic debugging and introspection through private framework/tool adapters.`
+  Acceptance: `Generated collectors/projectors translate phases, objections, topology, events, TLM, factory/config/RAL, coverage, and reports into VIAL semantics; raw UVM handles/names remain evidence-only and NEXSIM control requires an exact qualified API.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.13.5`
+  Status: `proposed`
+  Goal: `Implement and qualify VHDL/OSVVM semantic debugging and introspection.`
+  Acceptance: `Generated trace/checkpoint/report adapters expose identical semantic records, distinguish supplementary provider reports, and fail closed for unavailable live-control or internal-state capabilities.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.13.6`
+  Status: `proposed`
+  Goal: `Close results/debugging/introspection usability, parity, quality, documentation, support, and nonclaims.`
+  Acceptance: `Independent schema/causality/snapshot/replay/control/authentication/pagination/sanitization/profile/parity/source-map/non-perturbation/cleanup and runnable API/MCP examples distinguish inspection from simulator support and retain private/tool-state nonclaims.`
+  Verification: `pending`
+  Commit: `pending closeout`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.14`
+  Status: `active`
+  Goal: `Close cross-family VIAL version-2 composition and retain an exact admission path beyond the first expressive programme.`
+  Acceptance: `All selected families compose under one bounded identity/order/effect/result model; dependencies and conflicting effects fail closed; profile support and applicable parity are exact; representative scale and generated-code quality pass; public docs/migration are complete; later families require the same semantic-compression and vertical-evidence gate rather than a frozen ceiling.`
+  Verification: `pending children .19.14.1-.19.14.6`
+  Commit: `pending activation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.14.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.14.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.14.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.14.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.14.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.14.6`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.14.1`
+  Status: `proposed`
+  Goal: `Prove cross-family semantic composition and deterministic conflict resolution.`
+  Acceptance: `A closed dependency/effect matrix proves ordering, lifetime nesting, typed communication, cancellation/fault/substitution/configuration interactions, finalization, diagnostic precedence, and result closure; cycles and unselected conflict policies reject before output.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.14.2`
+  Status: `proposed`
+  Goal: `Close cross-backend profile capability and applicable semantic parity.`
+  Acceptance: `Machine manifests join every family/revision to parse/plan/emit/compile/run/result/parity maturity per exact profile; portable shared meanings compare normalized outcomes, native-only meanings retain explicit oracles/nonclaims, and no single backend defines VIAL breadth.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.14.3`
+  Status: `proposed`
+  Goal: `Qualify representative expressive-family scale, limits, and generated-code efficiency.`
+  Acceptance: `Orthogonal and balanced workloads measure parser/IR/plan/backend/runtime/result dimensions with stage-local correctness, explicit component ceilings, graceful over-limit failure, minimal topology, repository-local evidence, and no inference of whole-product capacity.`
+  Verification: `pending`
+  Commit: `pending qualification`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.14.4`
+  Status: `proposed`
+  Goal: `Publish complete VIAL version-2 language, profile, migration, and generated-artifact documentation.`
+  Acceptance: `The mdBook teaches target-free intent with runnable normal/terse examples, exact capabilities and unavailable paths, v1 coexistence/migration, backend review routes, diagnostics/results, troubleshooting, and cleanup while machine contracts remain mutable truth.`
+  Verification: `pending`
+  Commit: `pending documentation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.14.5`
+  Status: `proposed`
+  Goal: `Implement the admission gate for later expressive VIAL families.`
+  Acceptance: `A tracked template/check requires semantic compression, common-envelope fields, bounded behavior, normal/terse equivalence, capability/profile mappings, backend-private mechanisms, at least one executable qualified route before runtime support, tests/docs/nonclaims, source maps, quality, and cleanup; raw target wrappers fail admission.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.14.6`
+  Status: `proposed`
+  Goal: `Independently close the first expressive VIAL programme and architecture continuity.`
+  Acceptance: `Re-derive every family/lane status from code, machine manifests, executable profiles, parity, scale, examples, docs, claims, task/roadmap/Knowledge Map/Memory, containment, locality, cleanup, and doctrines; repair drift, preserve exact nonclaims, close .19 and the parent only if no owned architecture item remains.`
+  Verification: `pending`
+  Commit: `pending closeout`
 
 ## Current Frontier
 
@@ -3174,3 +3882,41 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   Relative-path, task-integrity, staged-acceptance, locality, README, and
   all 12 registered doctrine checks are green; no public or product behavior
   changes.
+
+## Acceptance Checklist (.19, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — decision `0034` establishes that VIAL's
+  expressive ceiling is verification intent rather than synthesizability, but
+  the live tree retained only one undecomposed `.19` selector. The version-1
+  source contract fixes a closed grammar and typed projection, while
+  `FSM::Support::VIALNativeUVMEmissionContract` labels its broader UVM
+  structures private previews with runtime/result/parity unqualified. Thus
+  widening v1 or exposing preview records would break compatibility and claim
+  backend scaffolding as language meaning. The required Knowledge Map query
+  had no direct decomposition answer; `git log -S` traces both the terse/normal
+  rule and proposed `.19` owner to semantic implementation commit `be9c74163`;
+  t/1796 and t/1800 remain the independent public-boundary watchers.
+- [x] **ADDRESSED (verified)** — decision `0034` now preserves v1 and selects
+  additive v2 normal/terse growth; `.19` owns 14 active activity containers
+  and 85 proposed executable lanes spanning the full selected taxonomy. Each
+  family has target-free source, typed compiler, portable-SystemVerilog,
+  native-UVM, VHDL/OSVVM, and qualification/documentation ownership, while the
+  foundation and closeout own compatibility, capabilities, quality, scale,
+  migration, and later-family admission. The first duplicate ADR draft was
+  removed after containment rejected it. The existing decision remains 113
+  lines; the Knowledge Card is compacted to 139 lines;
+  `doctrine/live_document_size/surfaces.jsonl` carries only the exact mdBook
+  delta authority; and `doctrine/claim_verification/inventory.jsonl` is the
+  fresh producer-derived inventory.
+- [x] **NO REGRESSION (independent selection closeout)** — task integrity
+  reconstructs 1,205 nodes. The focused relative-path, containment,
+  claim-inventory/disposition, reader-entry, and capability suite passes at
+  `Files=6, Tests=40`. Every mdBook chapter tests and the HTML build succeeds
+  at 98 files/22,040 KiB before exact removal. Knowledge Map is current at
+  1,160 facts/6,295 questions/6,467 occurrences/138 shards; claim dispositions
+  close 1,895/1,895 with zero gaps; maintained-reference authority closes the
+  exact 63-file/57,646-line/3,142,988-byte book with a 0/+27/+1,525 delta and
+  no ceiling or allowance rise. Final staged acceptance and all 12 doctrines
+  pass with no build, artifact, task-local, or brief residue and no source,
+  semantic, bridge, plan, backend, runtime, parity, capability, support,
+  diagnostic, provider, or product behavior change.

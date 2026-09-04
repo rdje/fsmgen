@@ -117,6 +117,10 @@ Documentation `.18` routes README/SUMMARY through bounded lifecycle, tutorial,
 migration, and capability/support guides; backlog is future-only.
 T1796/T1798-T1800 derive those routes from current machine truth.
 
+The `.19` selection preserves closed v1 and chooses additive v2 vertical
+families: equivalent projections, typed IR, fail-closed SV/UVM/VHDL mappings,
+qualification, quality, support/docs/nonclaims, and the same later-family gate.
+
 The architecture is selected, not proposed. `HIAL-VIAL-VERIFICATION-FIXTURE-
 ARCHITECTURE` is the owning tree and the only authority for the current
 frontier; read its live frontier row rather than any copied value. Each backend

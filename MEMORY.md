@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19`
-  (`active`; expressive VIAL frontier selection/decomposition)
-- next_action: Commit the continuity-only activation, then read decision 0034
-  and current VIAL syntax/IR/backend authorities to derive executable leaves.
-- in_flight_uncommitted: `.19` continuity-only activation candidate.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1`
+  (`proposed`; exact additive-v2 source/schema/compatibility contract)
+- next_action: Commit completed `.19` selection, then activate `.19.1.1` and
+  select roots, schemas, imports, migration, bounds, diagnostics, and rollback.
+- in_flight_uncommitted: `.19` selection/decomposition candidate.
 - in_flight_background: none.
 - blockers: none.

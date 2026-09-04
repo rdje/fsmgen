@@ -276,8 +276,9 @@ generated backend plumbing rather than authored VIAL concepts.
 
 Terse and verbose normal source forms must produce the same typed semantic
 records. Capability negotiation fails before output when a backend has no
-selected equivalent. Decision `0034` records the rule; proposed `.19` owns the
-post-first-backend expressive-family taxonomy and detailed task decomposition.
+selected equivalent. Decision `0034` records the ceiling rule; activity `.19`
+preserves the closed version-1 contract, selects additive version-2 growth,
+and decomposes the programme into end-to-end intent-family lanes.
 
 ## Typed Native Extensions
 
@@ -789,8 +790,8 @@ The complete family taxonomy selected here is:
 
 This table is a mapping contract, not a source grammar. `.13.1` may emit
 representative structures for every row from typed-IR fixtures before every
-family has public VIAL syntax; `.19` still owns the complete post-first-backend
-source taxonomy and leaf decomposition. The emission matrix distinguishes
+family has public VIAL syntax; `.19` now owns the complete post-first-backend
+source taxonomy and vertical leaf decomposition. The emission matrix distinguishes
 private preview fixtures, publicly authorable paths, visually/static-reviewed
 artifacts, experimental-tool outcomes, and qualified runtime. Broad generated
 code therefore neither falsely claims full public VIAL breadth nor lets the

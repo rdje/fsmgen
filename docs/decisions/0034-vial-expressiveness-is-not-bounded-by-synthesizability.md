@@ -79,10 +79,10 @@ selects phases and emits raise/drop-objection or phase-transition plumbing. An
 authored VIAL surface does not expose `run_phase`, `raise_objection`,
 `drop_objection`, or `phase.jump()` merely because the backend uses them.
 
-VIAL will support a terse surface and a verbose normal surface that lower to
-the same typed semantic records. Tooling must be able to expose the normal
-form for review and diagnostics. Terseness may remove ceremony, never semantic
-facts.
+Post-first-backend growth uses additive VIAL language version 2; version-1
+meaning, projections, capabilities, and diagnostics remain unchanged. Version
+2 keeps terse and normal surfaces over one typed model, and tooling preserves
+the source version by default. Terseness removes ceremony, never facts.
 
 Portable features map across qualified backends. Native features use explicit
 profile capabilities. A VHDL backend either provides a selected equivalent
@@ -108,6 +108,6 @@ silently weaken UVM-native meaning.
 - Backend contracts own efficiency/readability criteria for generated target
   artifacts; simplification of the source surface may not excuse inefficient
   lowering or opaque output.
-- Proposed architecture leaf `.19` owns the detailed post-first-backend
-  expressive-frontier taxonomy and task-tree decomposition before the
-  architecture can close.
+- Architecture activity `.19` owns the additive version-2 taxonomy and vertical
+  source/IR/profile/qualification/documentation lanes. That programme is a
+  bounded delivery order, not VIAL's expressive ceiling.
