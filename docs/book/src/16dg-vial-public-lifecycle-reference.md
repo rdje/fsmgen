@@ -193,6 +193,86 @@ shapes, bounds, diagnostics, backend-private mapping boundary, and nonclaims.
 Do not infer emission or runtime support from successful planning; inspect
 capability discovery and require a separately qualified version-2 backend.
 
+## Portable-SystemVerilog lifecycle mapping: selected, not implemented
+
+Decision `0100` selects the future `sv_portable_verilator` mapping without
+changing current availability. The normative
+[portable-SystemVerilog lifecycle mapping contract](../../vial-spec/portable-systemverilog-lifecycle-v2.md)
+defines one finite, statically emitted fixture controller beside the existing
+scenario scheduler. It emits no interpreter, class framework, callback, UVM
+phase/objection mechanism, DPI/VPI escape, or host semantic callback.
+
+The controller advances only at compiler-owned check seams: once after
+initialization, after each inactive-edge barrier has committed its work, and
+after a scenario becomes terminal. At one seam it repeatedly evaluates records
+in semantic rank and ID order until no state changes. Later records can observe
+earlier same-seam commits; each transition advances its ordinal, not its cycle.
+
+Scenario and lifecycle time remain deliberately separate:
+
+- scenario-local cycles keep the existing operation/deadline/result meaning;
+- one monotone lifecycle cycle spans the fixture and every selected scenario;
+- both use the reviewed domain identity, but comparison stays inside the owning
+  scenario or lifecycle result scope.
+
+This prevents a later selected scenario from resetting fixture lifecycle time.
+The scenario scheduler remains the sole owner of drive/sample/react/check
+operations, fibers, transactions, models, scoreboards, coverage, and faults.
+The lifecycle controller gates scenario admission and observes only terminal,
+transaction-active, and scoreboard-settled facts.
+
+On the normal path, configured/reset dependencies and background-service
+readiness open stimulus. Terminal scenarios permit completion; settled
+transactions, scoreboards, and service work permit drain; shutdown permits
+service stop and finalization. All plan-ready transitions may commit at one
+check seam in distinct ordinal slots. Deadline milestones commit before expiry
+is evaluated, so a bound starting at cycle `C` includes `C + N - 1`.
+
+The first scenario, service, deadline, trace, or controller failure closes
+admission, latches one primary cause, requests cooperative cancellation and
+service stop, cancels unreached normal records, and runs the independently
+bounded failure cleanup. Cleanup does not forge normal drain, shutdown, or
+finalize milestones. A failure can never become pass.
+
+The selected evidence route is version-isolated:
+
+| Evidence | Selected schema |
+| --- | --- |
+| backend manifest | `fsmgen.vial_backend.sv_portable_verilator.v2` |
+| backend source map | `fsmgen.vial_backend_source_map.v2` |
+| runtime trace | `fsmgen.vial_sv_runtime_trace.v2` |
+| trace projection | `fsmgen.vial_sv_trace_projection.v2` |
+| normalized result manifest | `fsmgen.verification_result_manifest.v2` |
+| nested lifecycle result | `fsmgen.vial_lifecycle_result.v1` |
+
+The v2 result preserves v1 field meanings and adds only
+`lifecycle_results`. The target-neutral lifecycle validator still requires
+exact plan identities, deadlines, chronology, terminal completeness, and
+one-for-one cumulative source maps. The selected contract forbids labeling v2
+data as a v1 trace or result.
+
+One private prerequisite remains before emission: the current standalone v1
+trace validator checks the ExecutionIR object type but not its v1
+schema/version/profile envelope. A canonical v1-shaped stream can therefore
+be parsed against v2 IR in a direct private call. The adapter, emitter, runner,
+result producer, and public v2 route still reject v2, so this cannot currently
+publish a false public result. Task `.19.2.3.1.2.1` owns the required validator
+guard and must close before emitter implementation.
+
+Run the selection watcher with:
+
+```bash
+prove -Iperl t/1809-vial-v2-portable-sv-lifecycle-contract.t
+```
+
+It derives the exact record-to-controller operation map from the maintained v2
+plan, checks every public/backend v2 route remains unavailable and
+artifact-free, characterizes the private trace-validator prerequisite, and
+freezes the complete v1 emitted graph and normalized-result bytes. Emission,
+compile, runtime, result production, parity, and public v2 `run` remain
+unavailable until their separately owned implementation and qualification
+slices complete.
+
 ## Start with machine truth
 
 Ask the installed FSMGen tree what the public VIAL surface advertises:

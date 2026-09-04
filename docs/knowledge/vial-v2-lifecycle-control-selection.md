@@ -13,21 +13,27 @@ answers:
   - "which VIAL lifecycle compiler phases are implemented?"
   - "how are VIAL lifecycle readiness service conditions represented?"
   - "why must lifecycle condition reference_id remain scalar?"
+  - "how is VIAL v2 lifecycle control mapped to portable SystemVerilog?"
+  - "which check seams advance the portable VIAL lifecycle controller?"
+  - "does the VIAL v1 trace validator reject execution IR v2?"
 date: 2026-09-04
 status: current
 tags: [vial, hial, lifecycle, semantic-ir, logical-time, deadlines, target-neutral]
 evidence: >-
   docs/vial-spec/lifecycle-control-v2.md;
+  docs/vial-spec/portable-systemverilog-lifecycle-v2.md;
   docs/VIAL_SOURCE_AND_SEMANTIC_IR_V2_CONTRACT.md;
+  docs/decisions/0100-portable-systemverilog-lifecycle-uses-a-static-check-seam-controller.md;
   docs/decisions/0034-vial-expressiveness-is-not-bounded-by-synthesizability.md;
   docs/decisions/0036-vial-execution-is-deterministic-logical-time-above-backend-methodology.md;
   perl/FSM/Support/VIALSemanticFamilyRegistry.pm;
   perl/FSM/VIAL/LifecycleControl.pm;
   t/1807-vial-v2-lifecycle-selection.t;
   t/1808-vial-v2-lifecycle-compiler-phases.t;
+  t/1809-vial-v2-portable-sv-lifecycle-contract.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md
 reverify: >-
-  prove -Iperl t/1807-vial-v2-lifecycle-selection.t t/1808-vial-v2-lifecycle-compiler-phases.t &&
+  prove -Iperl t/1807-vial-v2-lifecycle-selection.t t/1808-vial-v2-lifecycle-compiler-phases.t t/1809-vial-v2-portable-sv-lifecycle-contract.t &&
   rg -n 'lifecycle_control|fixture_background|Intrinsic order and defaults|Finite bounds|public_lifecycle_planning' docs/vial-spec/lifecycle-control-v2.md docs/VIAL_SOURCE_AND_SEMANTIC_IR_V2_CONTRACT.md docs/book/src/16dg-vial-public-lifecycle-reference.md perl/FSM/Support/VIALSemanticFamilyRegistry.pm perl/FSM/VIAL/Tool.pm
 ---
 
@@ -67,3 +73,19 @@ accept the family, while discovery advertises
 `vial.family.lifecycle_control.v1` and its deadline capability. All backend
 emission, compile, runtime, produced-result, parity, and support maturity stays
 unavailable; public version-2 `run` still rejects before allocation.
+
+Decision `0100` selects one finite statically emitted fixture-level controller
+beside the unchanged scenario scheduler. It advances only after initialization,
+after an inactive-edge barrier, and after scenario terminal publication. One
+monotone fixture-wide lifecycle counter prevents later selected scenarios from
+resetting deadline time; reachable milestones commit before inclusive expiry
+checks. Version-2 backend, source-map, trace, projection, and result-manifest
+schemas remain distinct, while the target-neutral lifecycle result retains its
+already versioned v1 schema. No v2 backend maturity advances at selection.
+
+The private v1 `FSM::VIAL::Backend::TraceValidator` does not currently validate
+the ExecutionIR schema/version/profile envelope before parsing. T1809 therefore
+characterizes that a canonical v1-shaped trace is accepted against lifecycle
+ExecutionIR v2. Adapter, emitter, runner, result producer, and public v2 `run`
+still reject before a false result can be published. Proposed repair child
+`.19.2.3.1.2.1` must close this isolation gap before emitter implementation.

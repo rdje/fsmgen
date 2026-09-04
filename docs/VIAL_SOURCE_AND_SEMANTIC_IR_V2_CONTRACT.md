@@ -10,6 +10,7 @@ version-2 source and compatibility reference. Read its semantic parts:
 - [Source, schema, compatibility, import, and migration contract](vial-spec/source-semantic-ir-v2.md)
 - [Common semantic-family envelope, registry, negotiation, and backend-adapter contract](vial-spec/semantic-family-envelope-and-registry.md)
 - [Implemented lifecycle-control revision-1 compiler contract](vial-spec/lifecycle-control-v2.md)
+- [Selected portable-SystemVerilog lifecycle mapping and backend evidence contract](vial-spec/portable-systemverilog-lifecycle-v2.md)
 
 VIAL version 1 remains independently authoritative in
 [its frozen behavior contract](VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md).

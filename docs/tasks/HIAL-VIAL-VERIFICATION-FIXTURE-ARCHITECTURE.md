@@ -2058,8 +2058,16 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Select the exact portable-SystemVerilog lifecycle mapping and versioned backend evidence contract from valid typed lifecycle records.`
   Acceptance: `A decision, bounded VIAL reference part, executable contract watcher, mdBook guidance, and Knowledge Map card close the static controller, trace/result, schema-isolation, source-map, atomicity, rejection, rollback, and nonclaim boundaries while every version-2 backend remains unavailable.`
-  Verification: `Clean compiler-repair commit 1b25880f8 supplies recursively valid typed lifecycle conditions. The required Knowledge Map query returned no existing portable-SystemVerilog lifecycle backend mapping answer. This slice owns a decision, bounded VIAL reference part, executable contract watcher, mdBook guidance, and Knowledge Map update before any backend behavior changes.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2: activate portable-SystemVerilog lifecycle contract selection`
+  Verification: `Clean compiler-repair commit 1b25880f8 supplies recursively valid typed lifecycle conditions. The required Knowledge Map query returned no existing portable-SystemVerilog lifecycle backend mapping answer. Decision 0100 and the bounded normative part select one finite static fixture controller beside the v1-derived scenario scheduler, three compiler-owned check seams, a monotone fixture-wide lifecycle cycle, inclusive milestone-before-expiry checks, irreversible bounded failure cleanup, and distinct v2 backend/source-map/trace/projection/result-manifest schemas. T1809 independently derives all record operations from the maintained typed plan, keeps all v2 maturity unavailable, proves adapter/emitter/runner/result/public rejection with no artifact or host call, and freezes the exact v1 emitted graph and normalized-result digests. It also exposes and characterizes one pre-existing private trace-validator envelope gap; proposed repair child .1 must close that prerequisite before emitter work. The final guarded focused band passes Files=11/Tests=65, all 63 mdBook chapters test, the inspected 98-file/22,260-KiB repository-local render is removed, and exact containment/Knowledge Map/claim/doctrine evidence closes in the checklist below.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2: activate portable-SystemVerilog lifecycle contract selection; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2: select portable-SystemVerilog lifecycle contract`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.1`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.1`
+  Status: `proposed`
+  Goal: `Repair standalone version-1 trace-validator isolation before portable-SystemVerilog lifecycle emission.`
+  Acceptance: `FSM::VIAL::Backend::TraceValidator admits only an exact FSM::VIAL::ExecutionIR carrier whose schema, schema_version, and profile are fsmgen.vial_execution_ir.v1, 1, and core_directed_single_clock_execution_v1 and which has no semantic_families member; an unsupported carrier rejects before trace parsing with a stable version-boundary diagnostic and no records or projection; canonical version-1 trace and normalized-result identities remain exact.`
+  Verification: `The required Knowledge Map query returned no answer. Read-only source and history audits show that TraceValidator verifies the exact ExecutionIR object type but never its envelope: git log -S traces the validator to 201590d84 and finds no fsmgen.vial_execution_ir.v1 guard. T1809 owns the bounded characterization that a canonical v1-shaped trace is presently accepted against lifecycle ExecutionIR v2, while adapter, emitter, runner, result producer, and public v2 run remain unavailable. Repair is required before child .19.2.3.2 may begin emission.`
+  Commit: `pending implementation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.2`
   Status: `proposed`
@@ -2937,10 +2945,21 @@ the target-neutral lifecycle semantic/source contract. Selection child
 Portable-SystemVerilog lifecycle child `.19.2.3` is active. Its contract
 selection parent `.19.2.3.1` has completed prerequisite readiness-condition
 repair `.19.2.3.1.1` at clean commit `1b25880f8`. Mapping selection
-`.19.2.3.1.2` is active; it must close the exact static-controller and backend
-evidence contract before emission begins. No version-2 backend is promoted yet.
+`.19.2.3.1.2` has selected and executable-contract-watched the exact static
+controller and backend evidence contract without promoting a version-2
+backend. Its proposed repair child `.19.2.3.1.2.1` must close the independently
+characterized private v1 trace-validator envelope gap before emission begins.
+The selection commit reaches the 300-local-commit cadence, so full pre-push and
+hosted qualification precede activation of that child.
 
 ## Decisions
+
+- `2026-09-04`: Map portable-SystemVerilog lifecycle control to one finite
+  fixture-level controller invoked at three compiler-owned check seams beside
+  the unchanged scenario scheduler. Preserve scenario-local time and use one
+  monotone fixture lifecycle cycle; isolate every content-bearing v2 backend
+  evidence schema. Keep all v2 maturity unavailable, and require the owned
+  private v1 trace-validator envelope repair before emitter work.
 
 - `2026-09-04`: Select lifecycle-control revision 1 as one fixture-scoped,
   coordination-domain program that expands to typed records. Intrinsic order
@@ -4336,3 +4355,46 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   binary, and brief checks are green. No v1 behavior, source grammar, HIAL
   bridge, backend/emission/compile/runtime/result/parity, capability/support,
   provider, or other-family change ships.
+
+## Acceptance Checklist (.19.2.3.1.2, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — clean compiler-repair commit `1b25880f8`
+  supplies valid typed lifecycle conditions, while clean activation commit
+  `6b7c761d7` isolates backend-contract selection. The required Knowledge Map
+  query returned no portable-SystemVerilog lifecycle mapping answer. Decisions
+  0036/0043 and source inspection show one existing static scenario scheduler
+  with scenario-local cycles plus a separate host-process supervisor, but no
+  selected fixture-wide lifecycle clock, check seams, failure policy, or v2
+  evidence schemas. The boundary audit additionally found that the private v1
+  TraceValidator checks the exact object class but not its execution envelope;
+  `git log -S` traces its introduction to `201590d84` and finds no exact v1
+  schema guard.
+- [x] **ADDRESSED (verified)** — Decision 0100 and the bounded normative VIAL
+  part select one finite static fixture controller, three compiler-owned check
+  seams, monotone fixture lifecycle time beside unchanged scenario-local time,
+  inclusive deadline ordering, irreversible bounded failure cleanup, distinct
+  v2 evidence schemas, cumulative source-map duties, atomic publication, and
+  explicit nonclaims. T1809 derives the record/operation map from the maintained
+  v2 plan, proves every public/backend route remains unavailable and
+  artifact-free, proves Runner invokes no host process, and freezes the exact
+  v1 emitted graph and normalized-result identities. It honestly characterizes
+  the private validator's cross-version admission, which proposed child
+  `.19.2.3.1.2.1` must repair before emitter work. The mdBook and Knowledge Map
+  expose both the selected architecture and that prerequisite.
+- [x] **NO REGRESSION (v1, public boundary, docs, claims, and residue)** — T1809
+  syntax is valid and its standalone run passes `Files=1, Tests=6`; the final
+  RAM-guarded v1 emitter/public reference plus complete T1801-T1809 band passes
+  `Files=11, Tests=65`. Every one of the 63 mdBook chapters tests; the inspected
+  repository-local HTML render contains 98 files/22,260 KiB and is removed with
+  its empty test scratch root. Knowledge Map is current at 1,161 facts/6,320
+  questions/6,491 occurrences/139 shards. Claim inventory derives 1,899
+  candidates and dispositions close 1,899/1,899 with zero gaps/open owners.
+  Maintained-reference authority accepts the exact 63-file/58,243-line/
+  3,174,606-byte book and 5-file/1,496-line/76,666-byte VIAL reference with no
+  ceiling increase. The rationale transition allowance is advanced to the
+  exact 101-file/9,414-line/554,979-byte measurement plus one unchanged ratchet
+  step; health targets and ceilings stay fixed. Task, path, locality, README,
+  containment, generated-index, staged acceptance, doctrine, diff, artifact,
+  log, binary, and brief checks are green. No v1 byte/meaning, backend behavior,
+  v2 emission/compile/runtime/result/parity/public-run maturity, support,
+  provider, other-family, or HIAL behavior changes.
