@@ -1,7 +1,7 @@
 # Knowledge Map: `hial-vial`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **33** uniquely owned question entries.
+> **2** facts · **37** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -16,6 +16,7 @@
 - q="how does the architecture scale bridge fanout generator work?" · facts=[hial-vial-bridge-manifest-v1-contract](../../docs/knowledge/hial-vial-bridge-manifest-v1-contract.md)
 - q="how is portable VIAL backend parity judged?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="how is the HIAL VIAL bridge generated?" · facts=[hial-vial-bridge-manifest-v1-contract](../../docs/knowledge/hial-vial-bridge-manifest-v1-contract.md)
+- q="how is the HIAL VIAL mdBook being organized?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="is Verilator a traditional event-driven simulator?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md), [ial2-post-exact-three-paired-composition-next-owner-selection](../../docs/knowledge/ial2-post-exact-three-paired-composition-next-owner-selection.md)
 - q="is Verilator enough to validate full SystemVerilog and UVM VIAL output?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="is a mixed-language HIAL VIAL simulator available?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
@@ -33,7 +34,10 @@
 - q="what is the first runnable VIAL backend?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="what is the next HIAL VIAL task?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md), [vial-public-tooling-v1-contract](../../docs/knowledge/vial-public-tooling-v1-contract.md)
 - q="what simulator capability profiles does VIAL require?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
+- q="where is migration from observe and legacy verification skeletons tracked?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="where is powerful verification fixture generation tracked?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
+- q="where is the VIAL AHB tutorial tracked?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
+- q="where should I start reading about HIAL and VIAL?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
 - q="which bridge IDs bind the AHB VIAL fixture?" · facts=[hial-vial-bridge-manifest-v1-contract](../../docs/knowledge/hial-vial-bridge-manifest-v1-contract.md)
 - q="which bridge scale limits are reached exactly?" · facts=[hial-vial-bridge-manifest-v1-contract](../../docs/knowledge/hial-vial-bridge-manifest-v1-contract.md)
 - q="why is mixed-language qualification not active?" · facts=[hial-vial-verification-fixture-architecture](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)
@@ -52,5 +56,5 @@ _HIALVIALBridgeManifest v1 is produced only from reviewable HIAL routes_
 
 _VIAL uses one public source, two private IRs, and a versioned HIAL bridge_
 
-- **date:** 2026-08-10 · **status:** current
+- **date:** 2026-09-04 · **status:** current
 - **source and verification:** [`docs/knowledge/hial-vial-verification-fixture-architecture.md`](../../docs/knowledge/hial-vial-verification-fixture-architecture.md)

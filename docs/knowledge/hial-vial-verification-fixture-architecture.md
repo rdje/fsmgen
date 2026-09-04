@@ -24,7 +24,11 @@ answers:
   - "what is the next HIAL VIAL task?"
   - "is a mixed-language HIAL VIAL simulator available?"
   - "why is mixed-language qualification not active?"
-date: 2026-08-10
+  - "where should I start reading about HIAL and VIAL?"
+  - "how is the HIAL VIAL mdBook being organized?"
+  - "where is the VIAL AHB tutorial tracked?"
+  - "where is migration from observe and legacy verification skeletons tracked?"
+date: 2026-09-04
 status: current
 tags: [hial, vial, ial0, ial1, ial2, verification, semantic-ir, execution-ir, bridge, simulator-profile, architecture, task-tree]
 evidence: >-
@@ -50,13 +54,12 @@ evidence: >-
   t/1558-vial-verilator-run-integration.t;
   t/1559-vial-ahb-runtime-parity.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
-  docs/tasks/IAL1-VERIFICATION-CODE-GENERATION-FRONTIER.md;
   docs/TASK_TREE.md; README.md; ROADMAP_V2.md;
-  docs/book/src/14-feature-backlog.md;
+  docs/book/src/14e-hial-vial-verification.md;
   docs/book/src/16d-hial-vial-verification-architecture.md
 reverify: >-
   scripts/check_task_tree_integrity.pl &&
-  rg -n 'sv_portable_verilator|mixed_language_qualified|drive|sample|react|check'
+  rg -n 'sv_portable_verilator|vhdl_portable_ghdl|vhdl_osvvm_qualified|mixed_language_qualified|drive|sample|react|check'
   docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md
   docs/book/src/16d-hial-vial-verification-architecture.md &&
   prove -Iperl t/1555-vial-public-source-tooling.t
@@ -66,31 +69,20 @@ reverify: >-
   t/1559-vial-ahb-runtime-parity.t
 ---
 
-Hardware IAL (HIAL) is the collective architecture name for FSMGen's current
-synthesizable IAL0/IAL1/IAL2 stack. Its public names and review route remain
-unchanged. Verification IAL (VIAL) is its pure-verification peer.
+Hardware IAL (HIAL) names FSMGen's synthesizable IAL0/IAL1/IAL2 stack;
+Verification IAL (VIAL) is its pure-verification peer. Decision `0032` selects
+one public `.vial` language, not VIAL0/VIAL1/VIAL2. Private immutable
+`VIALSemanticIR` owns unbound typed meaning, a versioned
+`HIALVIALBridgeManifest` supplies sanitized reviewable HIAL facts, and private
+immutable `VIALExecutionIR` owns the bound deterministic plan.
 
-Decision `0032` selects one public, reviewable `.vial` source language rather
-than VIAL0/VIAL1/VIAL2. Private immutable `VIALSemanticIR` owns unbound typed
-verification meaning. A bounded versioned `HIALVIALBridgeManifest` supplies
-sanitized HIAL units, configuration, types, endpoints, clocks/resets,
-transactions/events, protocol facts, observations/probes, backend bindings,
-capabilities, source identity, and source maps. Private immutable
-`VIALExecutionIR` owns the bound, capability-checked deterministic plan.
-
-Portable VIAL covers typed stimulus, transactions, scenarios, deterministic
-fibers, expected outcomes, temporal checks, reference models, scoreboards,
-coverage, bounded fault injection, and reproducible randomness. Execution uses
-logical `drive`, `sample`, `react`, and `check` phases. Native target power is
-provided by typed external repository-relative extensions, never anonymous raw
-SV/UVM or VHDL embedded in portable source.
-
-Portable backend parity compares normalized logical result manifests, not
-generated source or waveforms. Public ports are the portable access baseline;
-declared HIAL verification probes require capability-qualified equivalent
-adapters; raw hierarchy is native-only. IAL2 facts must remain reviewable
-through generated IAL1 before the bridge consumes them, so there is still no
-direct `.ppif` verification-output path.
+Portable VIAL covers typed stimulus, scenarios, fibers, checks, models,
+scoreboards, coverage, faults, and reproducible randomness through logical
+`drive`, `sample`, `react`, and `check` phases. Typed native extensions retain
+target power without anonymous raw target code. Parity compares normalized
+logical results, not generated source or waveforms. IAL2 facts remain
+reviewable through generated IAL1; there is no direct `.ppif` verification-
+output path.
 
 The first runnable profile is `sv_portable_verilator`, using static plain-
 SystemVerilog lowering, inactive-edge scheduling, declared-probe adapters, a
@@ -108,10 +100,18 @@ artifacts, portable-SystemVerilog execution, normalized results, and the
 selected 19-path AHB parity oracle. General cross-backend parity remains
 unclaimed.
 
-The 2026-08-10 mixed-language census finds Verilator and Icarus on `PATH` and
-exact GHDL 6.0.0 LLVM-JIT under the repository-local provider cache, but no
-compatible mixed-language simulator. Separate Verilator/GHDL qualifications
-cannot satisfy `mixed_language_qualified`; `.16` stays proposed.
+Provider-free VHDL/GHDL and the additive OSVVM tier are exact qualified private
+profiles. Native UVM has deterministic review emission and separate
+experimental evidence, not a qualified product runtime. Separate
+Verilator/GHDL qualifications cannot satisfy `mixed_language_qualified`;
+`.16` remains proposed until one exact compatible mixed-language route exists.
+
+Documentation closeout `.18` is task-oriented: compact architecture overview,
+public lifecycle reference, runnable AHB tutorial, legacy migration guide, and
+capability/support reference. Root contracts keep normative schema detail and
+the specialist book chapters keep exact qualification/scale evidence; neither
+is the first-use path. The public capability manifest remains current status
+authority. `.18.1` owns the closed disposition and exact downstream owners.
 
 The architecture is selected, not proposed. `HIAL-VIAL-VERIFICATION-FIXTURE-
 ARCHITECTURE` is the owning tree and the only authority for the current

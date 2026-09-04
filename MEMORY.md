@@ -6,11 +6,11 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.1`
-  (`active`; documentation and migration closeout audit)
-- next_action: From the clean `.18` activation, build the exact retain/merge/
-  repair/supersede matrix across public docs, runnable examples, legacy
-  migration, profile truth, claims, and containment before changing prose.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.2`
+  (`proposed`; HIAL/VIAL mdBook entry-path repair)
+- next_action: After the `.18.1` selection commits cleanly, activate `.18.2`
+  alone to implement its bounded README/SUMMARY, backlog, overview, and
+  chapter-boundary repair.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: none.
