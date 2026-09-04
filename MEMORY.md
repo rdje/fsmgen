@@ -7,9 +7,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1`
-  (`proposed`; exact additive-v2 source/schema/compatibility contract)
-- next_action: Commit completed `.19` selection, then activate `.19.1.1` and
-  select roots, schemas, imports, migration, bounds, diagnostics, and rollback.
-- in_flight_uncommitted: `.19` selection/decomposition candidate.
+  (`active`; exact additive-v2 source/schema/compatibility contract)
+- next_action: Commit the continuity-only activation, query durable knowledge,
+  then select roots, schemas, imports, migration, bounds, diagnostics, rollback.
+- in_flight_uncommitted: `.19.1.1` continuity-only activation candidate.
 - in_flight_background: none.
 - blockers: none.

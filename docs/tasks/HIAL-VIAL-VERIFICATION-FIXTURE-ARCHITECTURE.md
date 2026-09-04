@@ -1961,11 +1961,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.7`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select the exact version-2 source, schema, compatibility, import, and migration contract.`
   Acceptance: `Specify roots and sections, immutable v1 behavior, v2 schema identities, same-version import rules, explicit future compatibility adapters, deterministic non-deprecating migration, limits, diagnostics, rollback, and complete nonclaims before parser changes.`
-  Verification: `pending`
-  Commit: `pending selection`
+  Verification: `Clean predecessor commit 98d6b69cf selects the complete additive-v2 vertical-family programme with all focused, mdBook, claim, Knowledge Map, containment, task, acceptance, and doctrine gates green. The worktree and index are clean, git_message_brief.txt is zero bytes, the generated book tree is absent, and no background result remains. This continuity-only transition activates the exact source/schema/compatibility contract selection before any parser, projection, IR, capability, tooling, backend, artifact, runtime, result, or support change.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.1: activate VIAL v2 source contract selection`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.2`
   Status: `proposed`
