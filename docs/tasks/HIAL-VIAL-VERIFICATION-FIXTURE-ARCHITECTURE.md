@@ -2018,11 +2018,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.6`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.1`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select lifecycle semantics and target-free normal/terse source.`
   Acceptance: `Define dependency, readiness, service, completion/drain, shutdown/finalize, deadline, and failure records with finite bounds, explicit order/defaults, examples, diagnostics, and semantic compression; reject UVM phase/objection vocabulary.`
-  Verification: `pending`
-  Commit: `pending selection`
+  Verification: `Clean foundation closeout commit 984271755 completes .19.1 before this pivot. The required Knowledge Map query returned no lifecycle-selection answer. This isolated continuity transition activates only the lifecycle semantic/source selection; it changes no VIAL source, schema, semantic IR, bridge, plan, artifact, backend, runtime, result, parity, capability, support, provider, HIAL, or product behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.1: activate lifecycle semantic selection`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.2`
   Status: `proposed`
@@ -2878,9 +2878,9 @@ active. Foundation parent `.19.1` and all seven children are complete: the
 additive v2 source/compiler substrate now includes explicit public source
 tooling, non-mutating v1-to-v2 migration, and empty-family planning while every
 expressive family and v2 backend/run/result/parity route remains unavailable.
-Lifecycle-control parent `.19.2` is active; proposed child `.19.2.1` is the
-next clean frontier and is not activated from the dirty `.19.1.7`
-implementation tree.
+Lifecycle-control parent `.19.2` is active. Clean foundation closeout commit
+`984271755` permits child `.19.2.1` to become the active lifecycle semantic and
+target-free source selection frontier through a separate continuity commit.
 
 ## Decisions
 
