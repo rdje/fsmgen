@@ -7,10 +7,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.3`
-  (`proposed`; public VIAL source-to-result lifecycle reference)
-- next_action: After `.18.2` commits cleanly, activate `.18.3` alone to publish
-  the selected public lifecycle reference and its executable documentation
-  watcher.
+  (`active`; public VIAL source-to-result lifecycle reference)
+- next_action: Implement the selected `16dg` public lifecycle reference and
+  executable `t/1797` watcher from the exact public CLI/API and machine-contract
+  truth, without presenting private IR/backend plumbing as API.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: none.

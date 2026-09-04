@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
-- Last updated: `2026-09-03`
+- Last updated: `2026-09-04`
 - Owner: repo-local workflow
 - Segment manifest: `docs/tasks/segments/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/manifest.jsonl`
 
@@ -1910,11 +1910,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.2: repair HIAL/VIAL reader entry path`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Publish one exact public VIAL source-to-result lifecycle reference.`
   Acceptance: `Document normal/terse source equivalence; capabilities/check/format/plan/run CLI and portable API; accepted HIAL review routes; semantic/bridge/plan/tool/output/result schemas; virtual and atomic artifacts; diagnostics, collision/failure cleanup, and repository-local paths. Every command is runnable and watched against public machine truth; private IR or backend plumbing is never presented as API.`
-  Verification: `pending .18.2 and separate clean activation`
-  Commit: `pending activation`
+  Verification: `Clean predecessor 750671c6847971fce06d87edccd5bfe8d397d930 closes the HIAL/VIAL reader-path repair with all doctrines green and no modified or untracked files. This separate activation selects only the public lifecycle reference and executable documentation watcher; it changes no book prose, command, source language, API, schema, artifact, diagnostic, cleanup, capability, support, runtime, parity, or product behavior.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.3: activate public VIAL lifecycle reference`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.4`
   Status: `proposed`
