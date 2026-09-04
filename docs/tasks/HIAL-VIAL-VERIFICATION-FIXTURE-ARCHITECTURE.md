@@ -1982,11 +1982,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3: activate common VIAL family envelope; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.3: implement immutable VIAL family envelope`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the semantic-family registry and fail-closed profile capability negotiation.`
   Acceptance: `One registry owns family/revision identities, dependencies, effects, bounds, maturity stages, and backend profile mappings; public capabilities derive from it; parser, planner, emitter, and runner reject the complete unsupported requirement set before partial output without borrowing another profile's support.`
-  Verification: `pending`
-  Commit: `pending implementation`
+  Verification: `Clean common-envelope commit c246314be owns the complete immutable cross-phase v2 carrier while preserving exact v1 identities and rejecting v2 at unimplemented public/backend/result boundaries. The required Knowledge Map query returned no registry/profile-negotiation answer. Decisions 0039 and 0043 require capability dimensions to remain distinct and backend support to stay profile-specific. This continuity-only activation selects the single registry and fail-closed negotiation boundary as the next isolated slice; no parser, plan, emitter, runner, artifact, public capability, or product behavior changes in the activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.4: activate VIAL family registry`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.1.5`
   Status: `proposed`
