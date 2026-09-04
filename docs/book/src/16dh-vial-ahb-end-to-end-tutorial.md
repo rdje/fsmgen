@@ -372,4 +372,6 @@ For field-by-field public tooling details, return to the
 [Public VIAL Lifecycle Reference](16dg-vial-public-lifecycle-reference.md).
 For backend architecture and evidence depth, use
 [HIAL/VIAL Verification: Start Here](16d-hial-vial-verification-architecture.md)
-and its specialist chapters.
+and its specialist chapters. The
+[capability and support reference](16dj-vial-capability-support-reference.md)
+is the compact status, provider, parity, scale, and troubleshooting index.

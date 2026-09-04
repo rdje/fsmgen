@@ -1931,11 +1931,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.5: publish VIAL migration guidance`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.6`
-  Status: `active`
+  Status: `done`
   Goal: `Consolidate backend, capability, parity, scale, and troubleshooting truth into bounded navigable references.`
   Acceptance: `Derive one exact profile matrix for portable SystemVerilog, native UVM emission/experiment/qualified runtime, provider-free VHDL, OSVVM, and mixed-language availability; align capability/support stages, parity scope, regression-scale evidence, provider setup, error interpretation, and residue cleanup with public JSON and current evidence. Link specialist measurements instead of duplicating them, preserve all nonclaims, and raise no documentation ceiling without separate authority.`
-  Verification: `Clean predecessor commit 9d0aabc5e publishes and closes the explicit legacy-to-VIAL migration guide with all 12 doctrine checks green, zero scratch-message bytes, no worktree residue, and no background state. The required Knowledge Map query for a VIAL backend/capability/parity/scale/troubleshooting matrix returned no direct consolidated answer. This continuity-only transition activates the exact bounded reference at docs/book/src/16dj-vial-capability-support-reference.md and its machine-derived watcher at t/1800-hial-vial-capability-support-reference.t. It changes no book prose, contract, command, schema, artifact, backend, runtime, parity, scale, capability, support, diagnostic, provider, or product behavior.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.6: activate VIAL capability reference`
+  Verification: `Clean activation commit 5ab976934 owns the slice. Required Knowledge Map queries found no direct consolidated backend/capability/parity/scale/troubleshooting answer; history traces public tooling to c95160d53, native-UVM matrix truth to 7725789a4, qualified VHDL truth to 895ea33bd, and scale-regression capability truth to 2d16175c4. Selected 16dj derives an exact seven-row public/private/review/experimental/unavailable matrix from the public capability JSON and private contracts; separates seven support-accounting stages from public availability; preserves compile/runtime/result/parity and scale-capacity nonclaims; gives provider-bound UVM behavior, galleries, diagnostics, decision routes, and exact cleanup. T1800 derives those profiles, support rows, diagnostic codes, gallery/provider/scale behavior, and cleanup coordinates from machine authorities and rejects hostile prose mutations. Standalone t1800 passes Files=1/Tests=5; the reader band passes Files=5/Tests=26; and the guarded full HIAL/VIAL contract/backend/scale/documentation band passes Files=19/Tests=7,189, with only two explicit Darwin runtime qualification guards skipped. Every mdBook chapter tests, the repository-local HTML build succeeds before exact removal, and three gallery checks pass. Knowledge Map is current at 1,160 facts/6,295 questions/6,467 occurrences/138 shards; claim dispositions close 1,895/1,895 with zero gaps. Containment accepts 63 book files/57,616 lines/3,141,413 bytes under the authorized +1/+271/+15,570 delta, with no ceiling or allowance rise. Final staged acceptance and all 12 registered doctrine checks are green. No command, source, schema, artifact, backend, runtime, parity, scale, capability, support, diagnostic, provider, or product behavior changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.6: publish VIAL capability reference`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.7`
   Status: `proposed`
@@ -3112,3 +3112,34 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   staged-acceptance, locality, README, and all 12 registered doctrine checks
   are green; no legacy byte, public command, source, schema, manifest,
   backend, runtime, parity, capability, support, or product behavior changes.
+
+## Acceptance Checklist (.18.6, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — required Knowledge Map queries returned no
+  direct consolidated VIAL backend/capability/parity/scale/troubleshooting
+  answer. `git log -S` traces public tooling to `c95160d53`, native-UVM matrix
+  truth to `7725789a4`, qualified VHDL truth to `895ea33bd`, and public
+  scale-regression capability truth to `2d16175c4`; no history exists for the
+  selected 16dj reference. Readers therefore had exact specialist authorities
+  but no bounded support matrix or diagnostic route joining them.
+- [x] **ADDRESSED (verified)** — selected 16dj derives seven exact profiles and
+  seven support-accounting rows from current machine contracts, distinguishes
+  public, private-qualified, review-only, experimental, unavailable, and
+  regression evidence, preserves every compile/runtime/result/parity and
+  capacity nonclaim, and gives galleries, provider behavior, diagnostic phases,
+  decision routes, cleanup, and specialist links. T1800 independently derives
+  the profiles, stages, diagnostic vocabulary, gallery/provider/scale behavior,
+  and cleanup coordinates, then rejects hostile availability, version, support,
+  parity, provider, and residue mutations.
+- [x] **NO REGRESSION (machine truth, readers, claims, and containment)** —
+  standalone t1800 and the five-file reader band report `All tests successful.`
+  at `Files=1, Tests=5` and `Files=5, Tests=26`. The guarded full HIAL/VIAL
+  contract/backend/scale/documentation band reports `All tests successful.` at
+  `Files=19, Tests=7,189`; only the two explicit Darwin runtime qualification
+  guards skip. Every mdBook chapter tests, the repository-local HTML build
+  succeeds before exact removal, and all three gallery checks pass. Knowledge
+  Map is current, claim dispositions close 1,895/1,895 with zero gaps, and
+  containment accepts the authorized book delta without a ceiling or allowance
+  rise. Relative-path, task-integrity, staged-acceptance, locality, README, and
+  all 12 registered doctrine checks are green; no public or product behavior
+  changes.

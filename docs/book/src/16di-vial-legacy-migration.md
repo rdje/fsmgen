@@ -323,4 +323,7 @@ Migration does not claim any of the following:
 Check mutable availability with `./bin/fsmgen --capability-manifest` and
 `./bin/fsmgen vial capabilities --json`. Treat the generated manifests and
 checked contracts as authority, not this chapter's prose, if the capability
-set later evolves.
+set later evolves. Use the
+[capability and support reference](16dj-vial-capability-support-reference.md)
+to decide which successor is public, privately qualified, review-only,
+experimental, or unavailable.

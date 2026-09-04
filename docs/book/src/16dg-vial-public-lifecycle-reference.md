@@ -324,6 +324,11 @@ qualified host/tool conditions. Continue with the
 lifecycle to the checked fixture, public result, bounded parity oracle, and
 separate VHDL/OSVVM qualification routes.
 
+Use the
+[capability and support reference](16dj-vial-capability-support-reference.md)
+to compare public, private, review, experimental, unavailable, parity, and
+scale evidence without widening any claim.
+
 For side-by-side use with IAL1 observation metadata, inert UVM/VHDL outputs,
 and handwritten fixtures, continue with the
 [legacy migration guide](16di-vial-legacy-migration.md).

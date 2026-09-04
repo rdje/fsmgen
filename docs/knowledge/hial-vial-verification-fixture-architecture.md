@@ -28,6 +28,7 @@ answers:
   - "how is the HIAL VIAL mdBook being organized?"
   - "how do I run the checked AHB HIAL VIAL tutorial?"
   - "how do I migrate observe metadata and legacy verification skeletons to VIAL?"
+  - "where is the exact VIAL capability support parity and troubleshooting matrix?"
 date: 2026-09-04
 status: current
 tags: [hial, vial, ial0, ial1, ial2, verification, semantic-ir, execution-ir, bridge, simulator-profile, architecture, task-tree]
@@ -56,12 +57,14 @@ evidence: >-
   t/1796-hial-vial-book-entry-path.t;
   t/1798-hial-vial-ahb-end-to-end-tutorial.t;
   t/1799-hial-vial-legacy-migration.t;
+  t/1800-hial-vial-capability-support-reference.t;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   docs/TASK_TREE.md; README.md; ROADMAP_V2.md;
   docs/book/src/14e-hial-vial-verification.md;
   docs/book/src/16d-hial-vial-verification-architecture.md;
   docs/book/src/16dh-vial-ahb-end-to-end-tutorial.md;
-  docs/book/src/16di-vial-legacy-migration.md
+  docs/book/src/16di-vial-legacy-migration.md;
+  docs/book/src/16dj-vial-capability-support-reference.md
 reverify: >-
   scripts/check_task_tree_integrity.pl &&
   rg -n 'sv_portable_verilator|vhdl_portable_ghdl|vhdl_osvvm_qualified|mixed_language_qualified|drive|sample|react|check'
@@ -75,6 +78,7 @@ reverify: >-
   t/1796-hial-vial-book-entry-path.t
   t/1798-hial-vial-ahb-end-to-end-tutorial.t
   t/1799-hial-vial-legacy-migration.t
+  t/1800-hial-vial-capability-support-reference.t
 ---
 
 Hardware IAL (HIAL) names FSMGen's synthesizable IAL0/IAL1/IAL2 stack;
@@ -102,24 +106,16 @@ claims whose public/private/review/unavailable state must be reported exactly.
 Existing UVM 1.2 and VHDL observation outputs remain inert compatibility
 surfaces.
 
-The shipped stack now covers the typed `.vial` frontend, review-routed bridge,
-bound deterministic ExecutionIR, public source/planning/run tools, atomic
-artifacts, portable-SystemVerilog execution, normalized results, and the
-selected 19-path AHB parity oracle. General cross-backend parity remains
-unclaimed.
+Shipped behavior covers the typed frontend, review-routed bridge, ExecutionIR,
+public source/plan/run tools, atomic artifacts, portable-SystemVerilog results,
+and selected 19-path AHB parity; general parity stays unclaimed. VHDL/GHDL and
+OSVVM are qualified private profiles. Native UVM is review/experiment evidence,
+not qualified runtime. Separate successes cannot satisfy
+`mixed_language_qualified`; `.16` remains proposed pending one exact route.
 
-Provider-free VHDL/GHDL and the additive OSVVM tier are exact qualified private
-profiles. Native UVM has deterministic review emission and separate
-experimental evidence, not a qualified product runtime. Separate
-Verilator/GHDL qualifications cannot satisfy `mixed_language_qualified`;
-`.16` remains proposed until one exact compatible mixed-language route exists.
-
-Documentation closeout `.18` routes README/SUMMARY through the overview and
-selected lifecycle, tutorial, and migration guides; backlog is future-only.
-Together they cover HIAL review, planning, public portable-SystemVerilog runs,
-normalized outcomes, 19-path parity, VHDL/OSVVM qualification, and stable
-legacy outputs beside VIAL successors. T1796/T1798/T1799 watch these routes; a
-later child owns the capability reference.
+Documentation `.18` routes README/SUMMARY through bounded lifecycle, tutorial,
+migration, and capability/support guides; backlog is future-only.
+T1796/T1798-T1800 derive those routes from current machine truth.
 
 The architecture is selected, not proposed. `HIAL-VIAL-VERIFICATION-FIXTURE-
 ARCHITECTURE` is the owning tree and the only authority for the current

@@ -27,9 +27,9 @@ change.
 3. Work through the [end-to-end AHB tutorial](16dh-vial-ahb-end-to-end-tutorial.md)
    for one runnable checked-source plan, public result, bounded parity oracle,
    and the separate VHDL/OSVVM qualification routes.
-4. Use [backend profiles](#backend-profiles-and-honest-claims) to distinguish
-   public execution, private qualification, review-only emission, experiments,
-   and unavailable paths.
+4. Use the [capability and support reference](16dj-vial-capability-support-reference.md)
+   to distinguish public execution, private qualification, review-only
+   emission, experiments, support accounting, and unavailable paths.
 5. Open the specialist chapters for
    [balanced composition](16da-vial-balanced-portable-composition.md),
    [structural emission](16db-vial-structural-backend-emission-matrix.md),
