@@ -1888,11 +1888,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.9: repair failed-stage cleanup`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18`
-  Status: `active`
+  Status: `done`
   Goal: `Complete user documentation, runnable examples, migration guidance, backend/parity matrix, and architecture closeout.`
   Acceptance: `The mdBook fully documents shipped .vial/bridge/plan/tool/backend/result behavior with runnable examples and honest profile limits; public contracts, capability/support accounting, migration from observe and inert skeletons, AHB example, diagnostics, scale evidence, Knowledge Map, roadmap, task index, bounded Memory, retired-changelog non-reference, and all exact regression/doctrine gates agree before the tree closes.`
-  Verification: `Clean predecessor 35d06790a closes the complete architecture-scale activity and leaves no dirty or untracked work. The required Knowledge Map query returns no direct documentation/migration-closeout answer. Decision and public-surface review resolves decisions 0032, 0035, 0039, 0043, 0050, and 0051; an mdBook heading/content census finds the shipped architecture spread across one 4,610-line core chapter, six specialist follow-ons, and a backlog chapter that still contains historical implementation-progress narration. This activation decomposes exact audit, user journey, lifecycle reference, runnable AHB tutorial, legacy migration, capability/diagnostic consolidation, and independent closeout owners; only audit child .1 becomes active. No book, contract, example, command, capability, support, migration, or product behavior changes in activation.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18: activate documentation and migration closeout`
+  Verification: `Clean predecessor 35d06790a activated this bounded documentation activity. Children .18.1-.18.6 selected and published the stable reader entry, public lifecycle, runnable checked-AHB tutorial, explicit legacy migration guide, and exact capability/support/parity/scale/troubleshooting reference with machine-derived hostile-mutation watchers. Final child .18.7 independently executes every selected reader command and example route, closes the remaining stale activation-era narration, proves links, schemas, results, compatibility states, profile/nonclaim boundaries, parity and scale evidence, containment, and exact residue absence, and leaves R14's directional roadmap outcome aligned without duplicating task status. All seven children are done; public/product behavior and unsupported-profile boundaries remain unchanged.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18: activate documentation and migration closeout; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.7: close documentation and migration activity`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.7`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.1`
@@ -1938,11 +1938,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.6: publish VIAL capability reference`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.7`
-  Status: `active`
+  Status: `done`
   Goal: `Independently close documentation, runnable examples, migration, public truth, containment, and architecture continuity.`
   Acceptance: `Re-derive every user-visible command, schema, example result, migration state, profile capability, support/nonclaim, parity boundary, and scale statement from independent executable or tracked authorities. Run all promised examples and focused regressions plus mdBook, claims, Knowledge Map, relative-path, task, containment, and doctrine gates; prove no stale progress wording, broken link, generated book, staging, log, or receipt residue; synchronize roadmap/task/Memory and close .18.`
-  Verification: `Clean predecessor commit 43f730f6f publishes the bounded VIAL capability/support reference after its exact 19-file/7,189-test guarded band and all 12 doctrine checks passed; the worktree and index are clean, git_message_brief.txt is zero bytes, and no background result remains. The required Knowledge Map query returned no direct independent documentation-closeout answer. This continuity-only transition activates the existing-evidence closeout leaf; it changes no book prose, command, source, schema, artifact, backend, runtime, parity, scale, capability, support, diagnostic, provider, or product behavior.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.7: activate documentation closeout`
+  Verification: `Clean activation commit 2927d94cf owns the independent closeout. The required Knowledge Map query returned no direct closeout answer. A verbose five-file reader suite independently executes capabilities/check/normal-and-terse-format/plan/run behavior, retained legacy generators, all three galleries, provider-absent experimental-UVM handling, scale dry-run, exact cleanup, and hostile controls at Files=5/Tests=26. A direct reader-path search then found six stale activation-era progress phrases in deep 16d prose; history traces them to 125e4981e, f6b2f8504, 02768a427, 4ee0dc12a, and 897c72532. The strengthened t1796 began RED at its machine/human availability join, then completed-state wording and a six-phrase negative oracle made it green at Files=1/Tests=4. Every selected local Markdown destination and linked anchor resolves. The final guarded 19-file machine/backend/UVM/VHDL/OSVVM/scale/reader band passes Files=19/Tests=7,189, with only two explicit Darwin runtime qualification guards skipped. Every mdBook chapter tests; the HTML build succeeds and its exact repository-local 98-file/22,032-KiB tree is removed. Claim inventory remains 1,895 candidates and dispositions close 1,895/1,895 with zero gaps; Knowledge Map remains current at 1,160 facts/6,295 questions/6,467 occurrences/138 shards. Containment authority records 63 book files/57,619 lines/3,141,463 bytes from a 0/+3/+50 wording-only delta with no ceiling increase. Exact manual/build/staging roots, Rust-target .bin/.log census, Git status, and watcher cleanup show no residue. R14 already states the directional HIAL/VIAL outcome and exact frontier ownership, so no roadmap prose change is needed. Final staged acceptance and all 12 registered doctrine checks are green. No command, source, schema, artifact, backend, runtime, parity, scale, capability, support, diagnostic, provider, or product behavior changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18.7: close documentation and migration activity`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19`
   Status: `proposed`
@@ -2161,11 +2161,12 @@ construction `.1`, balanced revision-2 composition and portable structural
 emission `.2`, and unified provider-free qualification `.3`; parent `.17.2`
 therefore closes deterministic generation. Architecture-scale activity `.17`
 is complete at clean closeout commit `35d06790a`. Documentation and migration
-closeout `.18` is now active after a clean pivot; audit `.18.1` owns the exact
-public-surface gap/retention matrix before any user documentation changes.
-Children `.18.2` through `.18.7` retain entry-path, lifecycle-reference,
-runnable-AHB, legacy-migration, profile/diagnostic consolidation, and
-independent-closeout ownership respectively.
+activity `.18` is complete. Child `.18.1` selected the exact public-surface
+matrix; `.18.2` through `.18.6` published the stable entry path, lifecycle
+reference, runnable AHB tutorial, migration guidance, and capability/support
+reference; `.18.7` independently closes their commands, links, truth
+boundaries, containment, and continuity. Expressive VIAL activity `.19`
+remains proposed pending a separate clean activation.
 
 ## Decisions
 
@@ -3141,5 +3142,35 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   Map is current, claim dispositions close 1,895/1,895 with zero gaps, and
   containment accepts the authorized book delta without a ceiling or allowance
   rise. Relative-path, task-integrity, staged-acceptance, locality, README, and
+  all 12 registered doctrine checks are green; no public or product behavior
+  changes.
+
+## Acceptance Checklist (.18.7, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — after the committed five-reader suite
+  passed, a separate exact phrase search found six activation-era progress
+  claims still presented in deep 16d architecture prose. `git log -S` traces
+  them to generator, backend-cap, cross-family-cap, cap-parent, and measurement
+  activation commits `125e4981e`, `f6b2f8504`, `02768a427`, `4ee0dc12a`, and
+  `897c72532`; the existing entry-path watcher checked only the stale `.15`
+  parent sentence. Strengthening t1796 first produced the expected RED at its
+  machine/human availability join.
+- [x] **ADDRESSED (verified)** — the six sentences now state the completed
+  generator, backend/runtime cap, cross-family closeout, and measurement state
+  without changing any technical contract or support boundary. T1796 retains
+  an exact six-phrase negative oracle. Independent local-destination and anchor
+  checks close every selected reader link, while the existing lifecycle,
+  tutorial, migration, and capability watchers continue deriving commands,
+  schemas, results, profiles, diagnostics, parity, scale, providers, and
+  cleanup from machine authorities.
+- [x] **NO REGRESSION (independent activity closeout)** — post-repair t1796
+  passes at `Files=1, Tests=4`; the final guarded 19-file HIAL/VIAL band reports
+  `All tests successful.` at `Files=19, Tests=7,189`, with only two explicit
+  Darwin runtime qualification guards skipped. Every mdBook chapter tests and
+  the HTML build succeeds before exact removal. Knowledge Map remains current;
+  claim dispositions close 1,895/1,895 with zero gaps; containment records only
+  the authorized 0/+3/+50 book delta and no ceiling increase; exact manual,
+  build, staging, log, binary, Git, and watcher residue checks are clean.
+  Relative-path, task-integrity, staged-acceptance, locality, README, and
   all 12 registered doctrine checks are green; no public or product behavior
   changes.

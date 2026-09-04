@@ -212,6 +212,17 @@ sub availability_errors {
     }
     push @errors, 'stale VHDL parent status'
         if index($text, 'Implementation parent `.15` is active') >= 0;
+    for my $stale_progress (
+        'owned by later slices of the active generator task',
+        'Backend-emission hardening is now active',
+        'Active `.17.4.8`',
+        'Cap hardening is now active under `.17.4`',
+        'backend-emission cap hardening is now active',
+        'Measurement is active under `.17.3`',
+    ) {
+        push @errors, "stale progress narration $stale_progress"
+            if index($text, $stale_progress) >= 0;
+    }
 
     return @errors;
 }

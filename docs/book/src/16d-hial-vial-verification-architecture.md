@@ -2170,8 +2170,8 @@ The corrected multi-scenario plan identity was propagated through the native-
 UVM, portable-VHDL, and OSVVM galleries and requalified with the repository-
 local GHDL 6.0.0 and OSVVM 2026.05 tool/provider tuple. No backend or runtime
 capability was added. The type and large-map gates below retain the same
-boundary; random/replay, exact plan-byte boundaries, and higher levels remain
-owned by later slices of the active generator task.
+boundary; random/replay, exact plan-byte boundaries, and higher levels were
+closed by the later generator slices recorded below.
 
 The scenario ladder now extends that same checked-AHB construction to its
 selected qualification, limit, and adjacent rejection boundaries:
@@ -2358,7 +2358,8 @@ boundary, and excess level through its canonical oracle. Focused precedence
 witnesses cover each selected cap group, and the literal-repeat/action
 interaction retains its explicitly reported earlier authority. Bridge-cap
 hardening, execution-graph hardening, and checking-state hardening are complete.
-Backend-emission hardening is now active; later layers remain separate work.
+Backend-emission and runtime/result hardening are also complete; the
+profile-specific admission order follows.
 
 ### Portable SystemVerilog backend-cap admission order
 
@@ -2456,7 +2457,8 @@ Completed task-tree leaf `.17.4.7` owns the bounded-failure layer for executable
 portable-SystemVerilog, portable-VHDL, and qualified-OSVVM runtime streams,
 together with their transcript, timeout, trace, result, and public-artifact
 envelopes. Native UVM remains emission-only and is not promoted into this
-runtime scope. Its complete RAM-guarded closure suite is green. Active `.17.4.8` is tracked in [Architecture-Scale Cap Closeout](16df-vial-architecture-scale-cap-closeout.md); no cap, publication, support statement, budget, capacity claim, or product behavior changes.
+runtime scope. Its complete RAM-guarded closure suite is green. Completed
+cross-family closeout `.17.4.8` is tracked in [Architecture-Scale Cap Closeout](16df-vial-architecture-scale-cap-closeout.md); no cap, publication, support statement, budget, capacity claim, or product behavior changes.
 
 The first portable-SystemVerilog slice now applies the existing public graph
 validator to the exact plan artifacts plus successful backend emission before
@@ -3055,10 +3057,11 @@ stage identity, and records both a `VIAL_SCALE_LIMIT_INTERACTION` and a
 `VIAL_SCALE_ROUTE_BOUNDARY` routed to `.17.4` — the same shape
 `preflight_dominated` already uses for a level that is deliberately not run.
 
-Cap hardening is now active under `.17.4`. Its first leaf reconciles the closed
+Completed cap-hardening activity `.17.4` first reconciled the closed
 measurement evidence with parser/semantic, bridge, execution/checking, backend,
-and runtime/result authorities before any cap change; later leaves own those
-layers separately, while decision `0072` forbids hiding an unreachable declared cap by rewriting selected measurement levels.
+and runtime/result authorities before any cap change; its later leaves then
+hardened those layers separately, while decision `0072` forbids hiding an
+unreachable declared cap by rewriting selected measurement levels.
 
 Bridge normalization now admits the raw actor parameter count against the
 4,096-configuration ceiling before constructing configuration values or their
@@ -3088,8 +3091,8 @@ Serialized-manifest bytes deliberately remain terminal: canonical encoding is
 the exact authority, with boundary acceptance and adjacent excess both frozen.
 The RAM-guarded exact bridge matrix closes every selected bridge qualification,
 limit, excess, identity, interaction, atomicity, staging, and cleanup contract.
-Execution-graph and checking-state cap hardening are complete; backend-emission
-cap hardening is now active. No product behavior or matrix level changes.
+Execution-graph, checking-state, backend-emission, and runtime/result cap
+hardening are complete. No product behavior or matrix level changes.
 
 ### Execution-profile admission order
 
@@ -3927,7 +3930,7 @@ a killed or exhausted host is never accepted as a cap result.
 Performance never substitutes for correctness. One validation plus three measured gate runs, or one plus five qualification runs, must first pass every stage oracle.
 Measurements retain wall/CPU time, process-tree/single-descendant RSS, files/lines/bytes, semantic counts, exact tool/host identity, and raw samples.
 The RAM guard retains its 88% host and 4,096-MiB descendant ceilings; unknown hosts run correctness, determinism, safety, and cleanup without flaky performance failure.
-Measurement is active under `.17.3`; the common foundation and seven capture/publication authorities are complete.
+Measurement completed under `.17.3`; the common foundation and seven capture/publication authorities are complete.
 `.17.3.9.1` reloads them, requires exact validation plus three/five accepted records, retains raw references/exclusions, and partitions FSMGen/external-tool/artifact costs.
 It derives minimum/median/maximum/MAD and integer decision-0056 candidates; promotion still requires separate clean calibration with explicit headroom.
 Its first exact join rejected backend-emission v1 after the portable-SV oracle moved to revision 2; non-colliding v2 names preserve that historical evidence.
