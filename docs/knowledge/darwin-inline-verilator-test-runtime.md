@@ -9,7 +9,8 @@ answers:
   - "how should t296 resume after a RAM guard interruption?"
   - "does t296 support checkpointed corpus-matrix recovery?"
   - "can an interrupted uncheckpointed t296 run be resumed?"
-date: 2026-08-26
+  - "why must external-command tests avoid PATH-selected true or false fixtures?"
+date: 2026-09-05
 status: current
 tags: [verilator, tests, runtime, darwin, process-supervision, qualification]
 evidence: >-
@@ -25,7 +26,7 @@ evidence: >-
   t/lib/FSM/Test/T296Checkpoint.pm;
   t/1597-t296-checkpoint.t;
   t/1498-ial2-ahb-requester-busy-insert.t;
-  t/1559-vial-ahb-runtime-parity.t
+  t/1559-vial-ahb-runtime-parity.t; t/313-hdl-external-validation-contract.t; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md
 reverify: >-
   prove -Iperl -It/lib t/1597-t296-checkpoint.t
   t/1668-darwin-inline-verilator-test-runtime.t &&
@@ -84,3 +85,6 @@ after the complete parent passes. An uncheckpointed interruption has no
 reconstructable credit and must restart t296. A host-pressure interruption may
 resume the exact command with the same checkpoint after headroom returns; it
 does not justify raising either RAM ceiling or weakening the matrix.
+
+External-command doubles follow the same identity rule: generate them below the repository-local test temp root and name the canonical already-running interpreter instead of resolving `true` or `false` through mutable host `PATH`.
+T313 proves explicit success/failure fixtures keep their exit truth beside hostile same-named PATH traps; production deadline, capture, and containment policy remains separate.

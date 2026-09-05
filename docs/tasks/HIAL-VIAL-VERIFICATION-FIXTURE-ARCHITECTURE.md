@@ -2093,11 +2093,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Remove T313's PATH-selected success and failure fixture executables.`
   Acceptance: `T313 constructs explicit repository-local success and failure programs whose shebang names the canonical already-running Perl interpreter; a hostile PATH containing same-named trap executables cannot change the selected programs or their exit truth; no can_run true/false fallback, host-global fixture, production behavior, or off-volume residue remains.`
-  Verification: `pending`
-  Commit: `pending implementation`
+  Verification: `The required Knowledge Map query returned no answer. git log -S independently traces the success-fixture PATH lookup to ba8ea7840 and the failure-fixture lookup to 602906bf1; the latter introduced both true and false host-command fallbacks. T313 now resolves the already-running Perl interpreter once, generates explicit executable success/failure programs in its repository-local test temp root, and passes those exact paths to the mocked tool inventory. A hostile PATH exposes same-named exit-97/98 traps while a valid two-step run succeeds, unsupported-top rejection retains its prefix, and the explicit failure fixture retains both the tool-step prefix and its own diagnostic. The source contains no can_run true/false or fixed /usr/bin fallback. Perl syntax is valid and standalone T313 passes Files=1/Tests=4. The updated Knowledge Card preserves the fixture-identity rule; the generated map validates at 1,161 facts/6,322 questions/6,493 occurrences/139 shards. Claim inventory's independent census agrees at 12,270 numeric lines while all 1,899 candidates remain disposed with zero gaps/open owners. No production module, validation contract, public behavior, VIAL/HIAL behavior, support claim, or artifact path changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.1: make validator fixtures PATH-independent`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2`
   Status: `proposed`
@@ -4466,3 +4466,30 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   driver reports `[doctrine] all doctrine checks passed`. No registry, ceiling,
   maintained-reference, product, VIAL/HIAL, capability, support, or runtime
   behavior changes.
+
+## Acceptance Checklist (.19.2.3.1.2.2.2.1, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the clean full-CI run stalled because
+  T313 delegated its success fixture to `can_run('true')`; mutable host `PATH`
+  selected a Homebrew executable that remained before `main`. The production
+  validator then waited without a deadline. The required Knowledge Map query
+  returned no answer. Independent `git log -S` searches trace the success
+  lookup to `ba8ea7840` and the success/failure pair to `602906bf1`.
+- [x] **ADDRESSED (verified)** — T313 resolves the canonical already-running
+  Perl interpreter and generates explicit success and failure programs below
+  the repository-local test temp root. It passes their exact paths to the
+  mocked validator inventory while hostile same-named PATH traps exit 97/98.
+  The success route, unsupported-top prefix, tool-failure prefix, and unique
+  failure-fixture diagnostic all pass; the source has no true/false lookup or
+  fixed host-global fallback. The Knowledge Card makes the rule durable.
+- [x] **NO REGRESSION (fixture identity, validation contract, and locality)** —
+  T313 reports `syntax OK` and its standalone run reports
+  `All tests successful.` at `Files=1, Tests=4`. The real-tool success subtest
+  remains conditional on the unchanged validator discovery contract. No
+  production module, contract/schema, VIAL/HIAL behavior, support claim, or
+  artifact path changes; generated programs remain cleanup-owned under the
+  standard repository-local test-temp environment. Knowledge Map validation
+  reports 1,161 facts/6,322 questions/6,493 occurrences/139 shards. Claim
+  inventory independently agrees at 12,270 numeric lines/1,899 candidates,
+  and dispositions close 1,899/1,899 with zero gaps or open owners. Final
+  staged task acceptance and the complete doctrine driver pass.

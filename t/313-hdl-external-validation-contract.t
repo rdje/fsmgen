@@ -3,10 +3,10 @@
 use strict;
 use warnings;
 use Test::More;
+use Cwd qw(abs_path);
 use File::Spec;
 use File::Temp qw(tempdir);
 use FindBin;
-use IPC::Cmd qw(can_run);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
@@ -34,6 +34,9 @@ use FSM::Support::HDLExternalValidationContract qw(
     hdl_external_validation_success_step_names
     hdl_external_validation_success_top_level_keys
 );
+
+my $perl = abs_path($^X)
+    or die "Cannot resolve the running Perl interpreter: $!";
 
 subtest 'contract exposes the bounded external validation surface' => sub {
     my $contract = build_hdl_external_validation_contract();
@@ -194,13 +197,13 @@ subtest 'ABC mapping executable discovery is optional and non-gating' => sub {
         'runtime probes the supported ABC executable names in priority order',
     );
 
-    my $true = can_run('true') || '/usr/bin/true';
+    my $success = write_exit_program(tempdir(CLEANUP => 1), 'success', 0);
     {
         no warnings 'redefine';
         local *FSM::Support::HDLExternalValidation::hdl_external_validation_tools = sub {
             return {
-                verilator => $true,
-                yosys => $true,
+                verilator => $success,
+                yosys => $success,
                 abc_mapping => undef,
                 abc_mapping_tool => undef,
             };
@@ -285,15 +288,29 @@ SV
         );
     }
 
-    my $true = can_run('true') || '/usr/bin/true';
+    my $success = write_exit_program($tempdir, 'success', 0);
+    my $failure = write_exit_program($tempdir, 'failure', 1);
+    my $path_trap = tempdir(CLEANUP => 1);
+    write_exit_program($path_trap, 'true', 97);
+    write_exit_program($path_trap, 'false', 98);
+    local $ENV{PATH} = $path_trap;
+
     {
         no warnings 'redefine';
         local *FSM::Support::HDLExternalValidation::hdl_external_validation_tools = sub {
             return {
-                verilator => $true,
-                yosys => $true,
+                verilator => $success,
+                yosys => $success,
             };
         };
+        my $report = validate_systemverilog_file(
+            source_file => $sv_path,
+            top_module => 'demo_top',
+        );
+        ok(
+            $report->{ok},
+            'explicit repository-local success fixture ignores hostile PATH aliases',
+        );
         like(
             capture_error(sub {
                 validate_systemverilog_file(
@@ -306,24 +323,29 @@ SV
         );
     }
 
-    my $false = can_run('false') || '/usr/bin/false';
     {
         no warnings 'redefine';
         local *FSM::Support::HDLExternalValidation::hdl_external_validation_tools = sub {
             return {
-                verilator => $false,
-                yosys => $true,
+                verilator => $failure,
+                yosys => $success,
             };
         };
-        like(
-            capture_error(sub {
+        my $failure_text = capture_error(sub {
                 validate_systemverilog_file(
                     source_file => $sv_path,
                     top_module => 'demo_top',
                 );
-            }),
+            });
+        like(
+            $failure_text,
             qr/^\Q$prefixes->{tool_step_failed}\E/,
             'tool-step failure keeps the bounded prefix',
+        );
+        like(
+            $failure_text,
+            qr/deterministic failure fixture/,
+            'explicit repository-local failure fixture keeps its failure truth',
         );
     }
 };
@@ -394,4 +416,20 @@ sub write_file {
     open my $fh, '>', $path or die "Cannot open $path for write: $!";
     print {$fh} $content or die "Cannot write $path: $!";
     close $fh or die "Cannot close $path: $!";
+}
+
+sub write_exit_program {
+    my ($directory, $name, $status) = @_;
+    die "Fixture status must be a non-negative integer"
+        unless defined($status) && !ref($status) && $status =~ /\A[0-9]+\z/;
+    my $path = File::Spec->catfile($directory, $name);
+    my $diagnostic = $status
+        ? qq{print STDERR "deterministic failure fixture\\n";\n}
+        : '';
+    write_file(
+        $path,
+        "#!$perl\nuse strict;\nuse warnings;\n${diagnostic}exit $status;\n",
+    );
+    chmod 0755, $path or die "Cannot make $path executable: $!";
+    return $path;
 }
