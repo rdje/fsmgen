@@ -2115,10 +2115,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.1: select shared HDL process supervision`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement and verify the selected shared supervisor plus sealed HDL-validation policy.`
   Acceptance: `The selected mechanism is moved rather than copied; the test compatibility boundary retains exact behavior; HDLExternalValidation has no IPC::Cmd launch, uses fixed 120-second/8,388,608-byte process-group policy from repository cwd, preserves shell-free argv, separate stdout/stderr, success shape, and failure prefix, maps timeout/overflow/exec/signal/nonzero/cleanup truth without retry, and publishes accurate manifest/book guidance; hostile and real-tool focused gates pass without residue.`
-  Verification: `pending`
+  Verification: `Decision 0101 is committed at 9d3c55290d with the repository clean and the commit-message brief cleared. This implementation child is now the sole active owner for moving the reviewed supervisor mechanics, sealing production HDL policy, updating its contract/book surfaces, and running the focused gates named by its acceptance.`
   Commit: `pending implementation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.2`
