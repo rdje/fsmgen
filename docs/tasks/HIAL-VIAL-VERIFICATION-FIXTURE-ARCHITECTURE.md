@@ -2060,13 +2060,35 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `A decision, bounded VIAL reference part, executable contract watcher, mdBook guidance, and Knowledge Map card close the static controller, trace/result, schema-isolation, source-map, atomicity, rejection, rollback, and nonclaim boundaries while every version-2 backend remains unavailable.`
   Verification: `Clean compiler-repair commit 1b25880f8 supplies recursively valid typed lifecycle conditions. The required Knowledge Map query returned no existing portable-SystemVerilog lifecycle backend mapping answer. Decision 0100 and the bounded normative part select one finite static fixture controller beside the v1-derived scenario scheduler, three compiler-owned check seams, a monotone fixture-wide lifecycle cycle, inclusive milestone-before-expiry checks, irreversible bounded failure cleanup, and distinct v2 backend/source-map/trace/projection/result-manifest schemas. T1809 independently derives all record operations from the maintained typed plan, keeps all v2 maturity unavailable, proves adapter/emitter/runner/result/public rejection with no artifact or host call, and freezes the exact v1 emitted graph and normalized-result digests. It also exposes and characterizes one pre-existing private trace-validator envelope gap; proposed repair child .1 must close that prerequisite before emitter work. The final guarded focused band passes Files=11/Tests=65, all 63 mdBook chapters test, the inspected 98-file/22,260-KiB repository-local render is removed, and exact containment/Knowledge Map/claim/doctrine evidence closes in the checklist below.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2: activate portable-SystemVerilog lifecycle contract selection; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2: select portable-SystemVerilog lifecycle contract`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.1`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.1`
   Status: `proposed`
   Goal: `Repair standalone version-1 trace-validator isolation before portable-SystemVerilog lifecycle emission.`
   Acceptance: `FSM::VIAL::Backend::TraceValidator admits only an exact FSM::VIAL::ExecutionIR carrier whose schema, schema_version, and profile are fsmgen.vial_execution_ir.v1, 1, and core_directed_single_clock_execution_v1 and which has no semantic_families member; an unsupported carrier rejects before trace parsing with a stable version-boundary diagnostic and no records or projection; canonical version-1 trace and normalized-result identities remain exact.`
   Verification: `The required Knowledge Map query returned no answer. Read-only source and history audits show that TraceValidator verifies the exact ExecutionIR object type but never its envelope: git log -S traces the validator to 201590d84 and finds no fsmgen.vial_execution_ir.v1 guard. T1809 owns the bounded characterization that a canonical v1-shaped trace is presently accepted against lifecycle ExecutionIR v2, while adapter, emitter, runner, result producer, and public v2 run remain unavailable. Repair is required before child .19.2.3.2 may begin emission.`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2`
+  Status: `active`
+  Goal: `Repair blockers exposed by the portable-SystemVerilog lifecycle contract selection pre-push qualification.`
+  Acceptance: `The full pre-push gate reaches a deterministic terminal result without duplicating the maintained-reference surface count or depending on an arbitrary PATH-selected no-op executable; each independently rooted blocker is repaired and committed in its own child before the full gate is rerun.`
+  Verification: `The first full-gate attempt was cleanly RAM-guarded at 88% host memory because unrelated host workloads raised measured pressure to 88.3%. The second clean attempt advanced through T303 and exposed two exact blockers: T1553 expected the common containment checker's obsolete 22-surface success text after the selected VIAL reference became the twenty-third maintained surface, and T313 selected Homebrew GNU true as a test stub; that otherwise valid binary reproducibly remained before main in _dyld_start while /usr/bin/true exited immediately. Required Knowledge Map queries returned no existing answer for either blocker. Children .1 and .2 own the independent repairs before qualification restarts.`
+  Commit: `pending implementation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.1`
+  Status: `done`
+  Goal: `Remove T1553's duplicated live-document surface-count authority.`
+  Acceptance: `T1553 recognizes the exact common containment checker's success contract without owning its changing registered-surface count; T1553 and T1554 pass together against the authoritative twenty-three-surface registry; no maintained-reference ceiling, registration, or content changes.`
+  Verification: `The second clean full-CI attempt failed exactly one T1553 assertion because the test hard-coded all live-document size-containment invariants hold (22 surfaces), while the authoritative common checker correctly reported 23 surfaces after the committed VIAL maintained-reference registration. The required Knowledge Map query returned no answer. git log -S'22 surfaces' traces the copied count to ea1b76dd5, where the same assertion was manually advanced from 20 to 22. T1553 now retains the stable common-checker success phrase and numeric-count shape without owning its live cardinality; T1554 retains exact counts for fixed synthetic registries. The focused pair passes Files=2/Tests=27, T1553 syntax is valid, all 63 mdBook chapters test, and the inspected repository-local render contains 98 files/22,260 KiB before exact removal. The updated adoption guide is rendered into the mdBook, the Knowledge Map validates at 1,161 facts/6,321 questions/6,492 occurrences/139 shards, live-document containment passes at 23 surfaces with zero ceiling increases, and docs-path/task-tree checks are green. Claim inventory regeneration changes only its source census digest while retaining 12,270 numeric lines, 1,899 candidates, and 2,670 constants; its independent census agrees and dispositions remain closed 1,899/1,899 with zero gaps or open owners. DEVELOPMENT_NOTES and its sealed rationale ledger remain byte-unchanged because that root document is exactly at its 1,200-line ceiling; the task, guide, card, generated map, and Git commit own the durable rationale. No registry, ceiling, maintained-reference content, product behavior, VIAL/HIAL behavior, or support claim changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.1: delegate live surface-count authority`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2`
+  Status: `proposed`
+  Goal: `Make T313's no-op external-validator stubs deterministic and bounded.`
+  Acceptance: `T313 uses explicit known-safe no-op/failing executables rather than arbitrary PATH-selected Homebrew aliases, and external validation steps have a finite timeout that reports one stable bounded failure instead of hanging the full gate; focused contract tests reproduce the former Homebrew-stub exposure and pass without off-volume artifacts.`
+  Verification: `During the second clean full-CI attempt, T313's PATH-resolved /opt/homebrew/opt/coreutils/libexec/gnubin/true remained alive for more than seven minutes before main in _dyld_start. A standalone invocation reproduced the stall; /usr/bin/true exited immediately; the binary is native arm64, code-signature-valid, unquarantined, and linked only to libSystem; host memory was 60% free and 678 processes were below the 4,000 soft limit. HDLExternalValidation uses IPC::Cmd::run without a timeout, so an external-tool launch stall can block the gate indefinitely. The required Knowledge Map query returned no answer. The interrupted run and exact sampler artifacts were terminated/removed with residue checks.`
   Commit: `pending implementation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.2`
@@ -4398,3 +4420,34 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   log, binary, and brief checks are green. No v1 byte/meaning, backend behavior,
   v2 emission/compile/runtime/result/parity/public-run maturity, support,
   provider, other-family, or HIAL behavior changes.
+
+## Acceptance Checklist (.19.2.3.1.2.2.1, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the second clean pre-push gate reported
+  `Failed test 'common project-wide checker is delegated' at
+  t/1553-readme-routed-destination-pressure.t line 29` because T1553 copied the
+  then-current `22 surfaces` output while the authoritative registry/checker
+  correctly reported 23 after the selected VIAL reference joined the graph.
+  The required Knowledge Map query returned no answer. `git log -S'22
+  surfaces'` traces the recurrence to `ea1b76dd5`, where the same integration
+  assertion was manually advanced from 20 to 22 instead of delegating the live
+  cardinality.
+- [x] **ADDRESSED (verified)** — T1553 now matches the stable common-checker
+  success phrase and requires a numeric surface count without copying its exact
+  value. T1554 deliberately retains exact counts for its fixed synthetic
+  registries. The GREEN focused run proves both roles together against the live
+  23-surface graph, and the adoption guide, mdBook include, Knowledge Card, and
+  generated map record the authority distinction.
+- [x] **NO REGRESSION (checker, docs, containment, and residue)** — the focused
+  run reports `All tests successful.` at `Files=2, Tests=27`; T1553 reports
+  `syntax OK`. All 63 mdBook chapters test, and its repository-local 98-file/
+  22,260-KiB render succeeds before exact removal. `knowledge-map: OK` reports
+  1,161 facts/6,321 questions/6,492 occurrences/139 shards. Live-document
+  containment reports all invariants green at 23 surfaces, unchanged
+  1,200-line DEVELOPMENT_NOTES, and zero ceiling increases. Claim inventory's
+  independent census agrees at 12,270 numeric lines/1,899 candidates/2,670
+  constants, and dispositions close 1,899/1,899 with zero gaps/open owners;
+  documentation-path and task-tree gates pass, and the final staged doctrine
+  driver reports `[doctrine] all doctrine checks passed`. No registry, ceiling,
+  maintained-reference, product, VIAL/HIAL, capability, support, or runtime
+  behavior changes.

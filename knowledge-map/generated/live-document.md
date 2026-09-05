@@ -1,7 +1,7 @@
 # Knowledge Map: `live-document`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **90** uniquely owned question entries.
+> **4** facts · **91** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -56,6 +56,7 @@
 - q="may I delete knowledge cards or prose to fit a live-document budget?" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 - q="should I raise lines_each or lower bytes_each on a live-document surface?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="should an obsolete live document be partitioned or retired?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="should integration tests hard-code the live-document surface count?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="surface focused_documents transition debt exceeded its owned allowance" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="surface is at 80.0% and must declare warning_debt" · facts=[live-document-surface-growth-procedure](../../docs/knowledge/live-document-surface-growth-procedure.md)
 - q="surface is at 81.7% and must declare warning_debt" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
@@ -102,7 +103,7 @@
 
 _Live documents use bounded views over durable stores_
 
-- **date:** 2026-09-01 · **status:** current
+- **date:** 2026-09-05 · **status:** current
 - **source and verification:** [`docs/knowledge/live-document-size-containment.md`](../../docs/knowledge/live-document-size-containment.md)
 
 ### live-document-surface-growth-procedure

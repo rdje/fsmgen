@@ -328,6 +328,13 @@ source. Field-level derived-state declarations close the decidable exact-value
 case; they still cannot prove authored intent. Do not infer staleness globally
 from dates, file age, number shapes, or prose.
 
+Integration tests that delegate to this checker should recognize its stable
+success contract without copying the current registry cardinality. The checker
+owns that live count and prints it for observation; adding or retiring a
+registered surface must not require unrelated route tests to update a second
+exact number. Exact counts remain appropriate in tests whose own fixed
+synthetic fixture is the authority for its complete graph.
+
 ### 9. Wire discovery without duplicating authority
 
 Point every harness bootstrap at the receiving project's root doctrine files.

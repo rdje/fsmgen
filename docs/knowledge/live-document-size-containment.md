@@ -53,7 +53,8 @@ answers:
   - "is immutable task evidence the same as mutable current derived state?"
   - "what is the main downstream entry point for containment doctrine updates?"
   - "how are repeated task-tree acceptance checklists contained?"
-date: 2026-09-01
+  - "should integration tests hard-code the live-document surface count?"
+date: 2026-09-05
 status: current
 tags: [documentation, doctrine, continuity, size, derived-state, sharding, rollover, archive, harness-neutral]
 evidence: >-
@@ -77,6 +78,12 @@ partitions, generated projections shard from small canonical sources, rolling
 ledgers rotate and later archive, and exact old evidence uses an immutable
 query-first terminal with digest/retrieval proof. Sharding alone is insufficient:
 collections also need file-count and aggregate transitions.
+
+The common checker is the sole authority for the current registered-surface
+count. An integration test may assert the stable success phrase and that a
+numeric count is reported, but must not duplicate the live cardinality. A test
+may assert an exact count only when its own fixed synthetic registry is the
+complete authority for that fixture. T1553 and T1554 enforce that distinction.
 
 Decision `0054` adds the content-truth rule for mechanically exact current
 fields. A `derive_on_read` contract forbids the declared stored marker and

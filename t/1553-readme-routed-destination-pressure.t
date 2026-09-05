@@ -26,7 +26,8 @@ subtest 'live README routes use the common pressure-controlled surface graph' =>
     ok($ok, 'live README and common surface registries pass') or diag($output);
     like($output, qr/all README entry-point invariants hold/, 'landing-page invariant remains explicit');
     like($output, qr/all routed-destination pressure invariants hold/, 'route-pressure invariant remains explicit');
-    like($output, qr/all live-document size-containment invariants hold \(22 surfaces\)/, 'common project-wide checker is delegated');
+    like($output, qr/all live-document size-containment invariants hold \(\d+ surfaces\)/,
+        'common project-wide checker is delegated without duplicating its live surface count');
     like($output, qr/containment pressure migrated: 10 surface\(s\)/,
         'migrated pressure is reported separately');
     like($output, qr/containment pressure pinned_deferred: 3 surface\(s\)/,
