@@ -2088,7 +2088,22 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Make T313's no-op external-validator stubs deterministic and bounded.`
   Acceptance: `T313 uses explicit known-safe no-op/failing executables rather than arbitrary PATH-selected Homebrew aliases, and external validation steps have a finite timeout that reports one stable bounded failure instead of hanging the full gate; focused contract tests reproduce the former Homebrew-stub exposure and pass without off-volume artifacts.`
-  Verification: `During the second clean full-CI attempt, T313's PATH-resolved /opt/homebrew/opt/coreutils/libexec/gnubin/true remained alive for more than seven minutes before main in _dyld_start. A standalone invocation reproduced the stall; /usr/bin/true exited immediately; the binary is native arm64, code-signature-valid, unquarantined, and linked only to libSystem; host memory was 60% free and 678 processes were below the 4,000 soft limit. HDLExternalValidation uses IPC::Cmd::run without a timeout, so an external-tool launch stall can block the gate indefinitely. The required Knowledge Map query returned no answer. The interrupted run and exact sampler artifacts were terminated/removed with residue checks.`
+  Verification: `During the second clean full-CI attempt, T313's PATH-resolved /opt/homebrew/opt/coreutils/libexec/gnubin/true remained alive for more than seven minutes before main in _dyld_start. A standalone invocation reproduced the stall; /usr/bin/true exited immediately; the binary is native arm64, code-signature-valid, unquarantined, and linked only to libSystem; host memory was 60% free and 678 processes were below the 4,000 soft limit. HDLExternalValidation uses IPC::Cmd::run without a timeout, so an external-tool launch stall can block the gate indefinitely. The required Knowledge Map query returned no answer. Decisions 0086 and 0087 independently reject an IPC::Cmd alarm without owned process-group cleanup, so children .1 and .2 isolate deterministic fixture identity from production lifecycle supervision. The interrupted run and exact sampler artifacts were terminated/removed with residue checks.`
+  Commit: `pending implementation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.1`
+  Status: `active`
+  Goal: `Remove T313's PATH-selected success and failure fixture executables.`
+  Acceptance: `T313 constructs explicit repository-local success and failure programs whose shebang names the canonical already-running Perl interpreter; a hostile PATH containing same-named trap executables cannot change the selected programs or their exit truth; no can_run true/false fallback, host-global fixture, production behavior, or off-volume residue remains.`
+  Verification: `pending`
+  Commit: `pending implementation`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2`
+  Status: `proposed`
+  Goal: `Give HDL external-validation steps one finite, contained process lifecycle.`
+  Acceptance: `Replace HDLExternalValidation's direct IPC::Cmd execution with a caller-sealed policy that reuses or extracts one reviewed supervision mechanism, launches shell-free argv from a repository-derived working directory, applies fixed wall and aggregate-capture bounds, preserves separate stdout/stderr and existing success/failure prefixes, owns and verifies process-group TERM/KILL cleanup, never retries, and exposes stable timeout failure evidence; no third drifting process engine or VIAL authority leak is introduced.`
+  Verification: `pending`
   Commit: `pending implementation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.2`
