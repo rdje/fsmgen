@@ -2103,6 +2103,21 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Give HDL external-validation steps one finite, contained process lifecycle.`
   Acceptance: `Replace HDLExternalValidation's direct IPC::Cmd execution with a caller-sealed policy that reuses or extracts one reviewed supervision mechanism, launches shell-free argv from a repository-derived working directory, applies fixed wall and aggregate-capture bounds, preserves separate stdout/stderr and existing success/failure prefixes, owns and verifies process-group TERM/KILL cleanup, never retries, and exposes stable timeout failure evidence; no third drifting process engine or VIAL authority leak is introduced.`
+  Verification: `Read-only architecture audit found two reviewed but deliberately separate mechanisms: FSM::Test::ProcessSupervisor owns the split-stream process-group mechanics selected by decisions 0086/0087, while FSM::VIAL::Backend::ProcessSupervisor owns stronger VIAL-specific detached-descendant and outer-worker semantics. Direct reuse of the latter would leak VIAL authority; copying the former would create a third engine. Children .1 and .2 own selection and implementation separately.`
+  Commit: `pending implementation`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.1`
+  Status: `active`
+  Goal: `Select the shared-mechanism and sealed-policy boundary for HDL external validation.`
+  Acceptance: `An accepted decision selects whether and how to promote the reviewed split-stream test process mechanism for production reuse, preserves test adapter behavior, excludes VIAL-specific lifecycle authority, fixes HDL timeout/capture/cwd/cleanup/no-retry policy, names public contract and mdBook consequences, and supplies distinct re-derivation, falsification, and durability legs before code changes.`
+  Verification: `pending`
+  Commit: `pending decision`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.2`
+  Status: `proposed`
+  Goal: `Implement and verify the selected shared supervisor plus sealed HDL-validation policy.`
+  Acceptance: `The selected mechanism is moved rather than copied; the test compatibility boundary retains exact behavior; HDLExternalValidation has no IPC::Cmd launch, uses fixed 120-second/8,388,608-byte process-group policy from repository cwd, preserves shell-free argv, separate stdout/stderr, success shape, and failure prefix, maps timeout/overflow/exec/signal/nonzero/cleanup truth without retry, and publishes accurate manifest/book guidance; hostile and real-tool focused gates pass without residue.`
   Verification: `pending`
   Commit: `pending implementation`
 
