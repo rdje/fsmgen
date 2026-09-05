@@ -2103,16 +2103,16 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Give HDL external-validation steps one finite, contained process lifecycle.`
   Acceptance: `Replace HDLExternalValidation's direct IPC::Cmd execution with a caller-sealed policy that reuses or extracts one reviewed supervision mechanism, launches shell-free argv from a repository-derived working directory, applies fixed wall and aggregate-capture bounds, preserves separate stdout/stderr and existing success/failure prefixes, owns and verifies process-group TERM/KILL cleanup, never retries, and exposes stable timeout failure evidence; no third drifting process engine or VIAL authority leak is introduced.`
-  Verification: `Read-only architecture audit found two reviewed but deliberately separate mechanisms: FSM::Test::ProcessSupervisor owns the split-stream process-group mechanics selected by decisions 0086/0087, while FSM::VIAL::Backend::ProcessSupervisor owns stronger VIAL-specific detached-descendant and outer-worker semantics. Direct reuse of the latter would leak VIAL authority; copying the former would create a third engine. Children .1 and .2 own selection and implementation separately.`
+  Verification: `Read-only architecture audit found two reviewed but deliberately separate mechanisms: FSM::Test::ProcessSupervisor owns the split-stream process-group mechanics selected by decisions 0086/0087, while FSM::VIAL::Backend::ProcessSupervisor owns stronger VIAL-specific detached-descendant and outer-worker semantics. Direct reuse of the latter would leak VIAL authority; copying the former would create a third engine. Child .1 selects move-not-copy promotion behind sealed policies; child .2 remains the implementation owner.`
   Commit: `pending implementation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Select the shared-mechanism and sealed-policy boundary for HDL external validation.`
   Acceptance: `An accepted decision selects whether and how to promote the reviewed split-stream test process mechanism for production reuse, preserves test adapter behavior, excludes VIAL-specific lifecycle authority, fixes HDL timeout/capture/cwd/cleanup/no-retry policy, names public contract and mdBook consequences, and supplies distinct re-derivation, falsification, and durability legs before code changes.`
-  Verification: `pending`
-  Commit: `pending decision`
+  Verification: `Decision 0101 is accepted. It selects a move-not-copy promotion of FSM::Test::ProcessSupervisor mechanics into caller-sealed internal FSM::Support authority, retains the test module as a thin compatibility/policy wrapper, excludes the specialized VIAL supervisor, and fixes each HDL validation step at a 120-second wall, 8,388,608-byte aggregate capture, repository-derived cwd, one process group, verified TERM/KILL cleanup, separate streams, unchanged success shape/failure prefix, and no retry. Its independent re-derivation, falsification, and durability legs bind implementation and public contract evidence. The bounded Knowledge Map answer routes the selection without adding another card under current containment pressure.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.1: select shared HDL process supervision`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.2`
   Status: `proposed`

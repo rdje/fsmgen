@@ -8,14 +8,14 @@ answers:
   - "does the legacy Verilator test supervisor replace the VIAL lifecycle?"
   - "how should t296 resume after a RAM guard interruption?"
   - "does t296 support checkpointed corpus-matrix recovery?"
-  - "can an interrupted uncheckpointed t296 run be resumed?"
+  - "how is HDL external validation process execution bounded?"
   - "why must external-command tests avoid PATH-selected true or false fixtures?"
 date: 2026-09-05
 status: current
 tags: [verilator, tests, runtime, darwin, process-supervision, qualification]
 evidence: >-
   docs/decisions/0086-legacy-verilator-tests-use-one-bounded-test-runtime-supervisor.md;
-  docs/decisions/0087-test-subprocesses-use-shared-mechanism-and-sealed-policy-adapters.md;
+  docs/decisions/0087-test-subprocesses-use-shared-mechanism-and-sealed-policy-adapters.md; docs/decisions/0101-hdl-validation-shares-process-supervision.md;
   docs/tasks/DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.md;
   docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md;
   t/lib/FSM/Test/ProcessSupervisor.pm;
@@ -86,5 +86,5 @@ reconstructable credit and must restart t296. A host-pressure interruption may
 resume the exact command with the same checkpoint after headroom returns; it
 does not justify raising either RAM ceiling or weakening the matrix.
 
-External-command doubles follow the same identity rule: generate them below the repository-local test temp root and name the canonical already-running interpreter instead of resolving `true` or `false` through mutable host `PATH`.
-T313 proves explicit success/failure fixtures keep their exit truth beside hostile same-named PATH traps; production deadline, capture, and containment policy remains separate.
+External-command doubles use repository-local test temp and the canonical running interpreter, never host `true`/`false` lookup.
+T313 proves their exit truth beside hostile PATH traps; Decision 0101 moves this reviewed split-stream engine to caller-sealed support, preserves test/VIAL policy boundaries, and fixes HDL steps at 120 seconds/8,388,608 bytes with group cleanup and no retry.
