@@ -2073,7 +2073,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Repair blockers exposed by the portable-SystemVerilog lifecycle contract selection pre-push qualification.`
   Acceptance: `The full pre-push gate reaches a deterministic terminal result without duplicating the maintained-reference surface count or depending on an arbitrary PATH-selected no-op executable; each independently rooted blocker is repaired and committed in its own child before the full gate is rerun.`
-  Verification: `The first full-gate attempt was cleanly RAM-guarded at 88% host memory because unrelated host workloads raised measured pressure to 88.3%. The second clean attempt advanced through T303 and exposed two exact blockers: T1553 expected the common containment checker's obsolete 22-surface success text after the selected VIAL reference became the twenty-third maintained surface, and T313 selected Homebrew GNU true as a test stub; that otherwise valid binary reproducibly remained before main in _dyld_start while /usr/bin/true exited immediately. Required Knowledge Map queries returned no existing answer for either blocker. Child .1 is repaired and committed; child .2 is active for the independent bounded-process repair before qualification restarts.`
+  Verification: `The first full-gate attempt was cleanly RAM-guarded at 88% host memory because unrelated host workloads raised measured pressure to 88.3%. The second clean attempt advanced through T303 and exposed two exact blockers: T1553 expected the common containment checker's obsolete 22-surface success text after the selected VIAL reference became the twenty-third maintained surface, and T313 selected Homebrew GNU true as a test stub; that otherwise valid binary reproducibly remained before main in _dyld_start while /usr/bin/true exited immediately. Required Knowledge Map queries returned no existing answer for either blocker. Child .1 removed the duplicated surface cardinality. Child .2 replaced mutable fixture identity and unbounded HDL launches with repository-local fixtures plus the fixed, contained shared process policy. Both independent repairs are verified and committed; the exact next action is to restart the complete RAM-guarded pre-push gate from its beginning.`
   Commit: `pending implementation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2`
 
@@ -2085,11 +2085,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.1: delegate live surface-count authority`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Make T313's no-op external-validator stubs deterministic and bounded.`
   Acceptance: `T313 uses explicit known-safe no-op/failing executables rather than arbitrary PATH-selected Homebrew aliases, and external validation steps have a finite timeout that reports one stable bounded failure instead of hanging the full gate; focused contract tests reproduce the former Homebrew-stub exposure and pass without off-volume artifacts.`
-  Verification: `During the second clean full-CI attempt, T313's PATH-resolved /opt/homebrew/opt/coreutils/libexec/gnubin/true remained alive for more than seven minutes before main in _dyld_start. A standalone invocation reproduced the stall; /usr/bin/true exited immediately; the binary is native arm64, code-signature-valid, unquarantined, and linked only to libSystem; host memory was 60% free and 678 processes were below the 4,000 soft limit. HDLExternalValidation uses IPC::Cmd::run without a timeout, so an external-tool launch stall can block the gate indefinitely. The required Knowledge Map query returned no answer. Decisions 0086 and 0087 independently reject an IPC::Cmd alarm without owned process-group cleanup. Child .1 now closes deterministic fixture identity; child .2 is active for production lifecycle supervision. The interrupted run and exact sampler artifacts were terminated/removed with residue checks.`
-  Commit: `pending implementation`
+  Verification: `During the second clean full-CI attempt, T313's PATH-resolved /opt/homebrew/opt/coreutils/libexec/gnubin/true remained alive for more than seven minutes before main in _dyld_start. A standalone invocation reproduced the stall; /usr/bin/true exited immediately; the binary is native arm64, code-signature-valid, unquarantined, and linked only to libSystem; host memory was 60% free and 678 processes were below the 4,000 soft limit. HDLExternalValidation used IPC::Cmd::run without a timeout, so an external-tool launch stall could block the gate indefinitely. The required Knowledge Map query returned no answer. Decisions 0086 and 0087 independently reject an IPC::Cmd alarm without owned process-group cleanup. Child .1 closes deterministic fixture identity; child .2 moves one reviewed supervision engine behind sealed test/HDL policies and applies fixed wall, capture, cwd, process-group, cleanup, stream, and retry semantics. Focused and widened gates, real Verilator/Yosys validation, mdBook rendering, claim checks, locality, residue, staged acceptance, and the complete doctrine driver are green. The interrupted run and exact sampler artifacts were terminated/removed with residue checks.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.1: make validator fixtures PATH-independent; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.2: contain HDL validator processes`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.1`
@@ -2100,11 +2100,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.1: make validator fixtures PATH-independent`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Give HDL external-validation steps one finite, contained process lifecycle.`
   Acceptance: `Replace HDLExternalValidation's direct IPC::Cmd execution with a caller-sealed policy that reuses or extracts one reviewed supervision mechanism, launches shell-free argv from a repository-derived working directory, applies fixed wall and aggregate-capture bounds, preserves separate stdout/stderr and existing success/failure prefixes, owns and verifies process-group TERM/KILL cleanup, never retries, and exposes stable timeout failure evidence; no third drifting process engine or VIAL authority leak is introduced.`
-  Verification: `Read-only architecture audit found two reviewed but deliberately separate mechanisms: FSM::Test::ProcessSupervisor owns the split-stream process-group mechanics selected by decisions 0086/0087, while FSM::VIAL::Backend::ProcessSupervisor owns stronger VIAL-specific detached-descendant and outer-worker semantics. Direct reuse of the latter would leak VIAL authority; copying the former would create a third engine. Child .1 selects move-not-copy promotion behind sealed policies; child .2 remains the implementation owner.`
-  Commit: `pending implementation`
+  Verification: `Read-only architecture audit found two reviewed but deliberately separate mechanisms: FSM::Test::ProcessSupervisor owned the split-stream process-group mechanics selected by decisions 0086/0087, while FSM::VIAL::Backend::ProcessSupervisor owns stronger VIAL-specific detached-descendant and outer-worker semantics. Direct reuse of the latter would leak VIAL authority; copying the former would create a third engine. Child .1 selected move-not-copy promotion behind sealed policies. Child .2 implements that selection: the common mechanism now resides in caller-sealed FSM::Support authority, the test API is a thin compatibility wrapper, and HDL validation supplies its own fixed policy without acquiring VIAL lifecycle semantics. Contract, hostile-process, real-tool, documentation, claim, locality, residue, and complete staged-doctrine checks pass.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.1: select shared HDL process supervision; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.2: contain HDL validator processes`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.1`
@@ -2115,11 +2115,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.1: select shared HDL process supervision`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement and verify the selected shared supervisor plus sealed HDL-validation policy.`
   Acceptance: `The selected mechanism is moved rather than copied; the test compatibility boundary retains exact behavior; HDLExternalValidation has no IPC::Cmd launch, uses fixed 120-second/8,388,608-byte process-group policy from repository cwd, preserves shell-free argv, separate stdout/stderr, success shape, and failure prefix, maps timeout/overflow/exec/signal/nonzero/cleanup truth without retry, and publishes accurate manifest/book guidance; hostile and real-tool focused gates pass without residue.`
-  Verification: `Decision 0101 is committed at 9d3c55290d with the repository clean and the commit-message brief cleared. This implementation child is now the sole active owner for moving the reviewed supervisor mechanics, sealing production HDL policy, updating its contract/book surfaces, and running the focused gates named by its acceptance.`
-  Commit: `pending implementation`
+  Verification: `Decision 0101 is committed at 9d3c55290d. The reviewed split-stream/process-group engine is moved to caller-sealed FSM::Support authority; the old test API is a five-function delegating policy wrapper, and T1669 proves that no unsealed or VIAL caller can acquire the common launch authority. HDL validation no longer launches through IPC::Cmd: every step uses repository-root cwd, shell-free argv, separate streams, one 120-second wall, one 8,388,608-byte aggregate-capture limit, verified TERM/KILL process-group cleanup, stable status/diagnostic failure truth, and no retry. During T313, the new wall converted its direct Perl-stub launch from an indefinite hang into status=timed_out. An independent two-second repository-local probe reproduced the hang outside FSMGen's validator; a one-second process sample found /usr/bin/perl stationary at _dyld_start with a 96 KiB footprint, while T1669's explicit interpreter-plus-script argv remained green. Plain Perl tool entrypoints—including installed Verilator—therefore retain exact tool identity but are handed explicitly to the canonical running interpreter. T313 maps all eight failure classes and passes its installed-tool smoke; T1669 proves hostile-tree cleanup. The widened eight-file gate passes Files=8/Tests=30, the final HDL/process band passes Files=3/Tests=17, all seven changed Perl/test files are syntax-clean, all 63 book chapters test, and an inspected repository-local 97-file/22,272-KiB render is removed exactly. Knowledge Map, claim inventory/dispositions, live containment, locality, task integrity/acceptance, docs paths, diff, residue, and the complete staged doctrine driver pass.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.2: contain HDL validator processes`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.2`
   Status: `proposed`
@@ -4508,3 +4508,38 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   inventory independently agrees at 12,270 numeric lines/1,899 candidates,
   and dispositions close 1,899/1,899 with zero gaps or open owners. Final
   staged task acceptance and the complete doctrine driver pass.
+
+## Acceptance Checklist (.19.2.3.1.2.2.2.2.2, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` traces the unbounded
+  `IPC::Cmd qw(can_run run)` validation launch to `51720be7b` and the reviewed
+  test supervisor to `d630261e6`. The first post-wiring T313 run changed the
+  former indefinite wait into `status=timed_out`; an independent two-second
+  direct-script probe reproduced `/usr/bin/perl` stationary at `_dyld_start`,
+  while T1669's explicit interpreter-plus-script argv completed. The exact
+  off-volume sample was copied to the repository volume, verified byte/hash
+  equal, consumed, and removed at both paths with an absent-residue check.
+- [x] **ADDRESSED (verified)** — the reviewed engine is moved into
+  `FSM::Support::ProcessSupervisor`, the test module is a thin delegating
+  boundary, and only it plus HDL external validation can launch through the
+  low-level engine. HDL steps use fixed 120-second/8,388,608-byte bounds from
+  repository cwd with shell-free argv, split capture, process-group cleanup,
+  stable status/diagnostic failure text, and no retry. Plain Perl tool scripts
+  use explicit canonical-interpreter argv; T313 completes in under one second
+  with five green top-level subtests, including all eight failure classes and
+  installed Verilator/Yosys, while T1669 proves real hostile-tree cleanup.
+- [x] **NO REGRESSION (real tools, adapters, contracts, docs, and residue)** —
+  the widened process/HDL/manifest/JSON/defensive-copy suite reports
+  `All tests successful.` at `Files=8, Tests=30`, including the full external
+  HDL smoke and unchanged legacy supervisor oracle. All seven changed Perl and
+  test files report `syntax OK`. All 63 mdBook chapters test; the inspected
+  repository-local render contains 97 files/22,272 KiB and the new policy,
+  then is removed exactly. `knowledge-map: OK` remains 1,161 facts/6,322
+  questions/6,493 occurrences/139 shards. Claim inventory independently
+  agrees at 12,273 numeric lines/1,900 candidates/2,671 constants; the one new
+  safety-policy claim has distinct re-derive/falsify/durability evidence and
+  zero open owner. Probe, sample, process, render, log, and brief residue is
+  absent. Final staged task acceptance reports
+  `[task-acceptance] OK` with independent Git-history root-cause and prove-summary
+  no-regression evidence; the complete doctrine driver reports
+  `[doctrine] all doctrine checks passed`.

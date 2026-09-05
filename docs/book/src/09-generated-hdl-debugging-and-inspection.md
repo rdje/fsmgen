@@ -89,6 +89,19 @@ the `.sv` file is written, it runs:
 - Verilator with `--lint-only --sv`
 - Yosys with `read_verilog -sv -noautowire`, `synth -noabc -top`, and `stat`
 
+Each external step runs as shell-free argv from the repository-derived root,
+with a fixed 120-second wall-clock limit and an 8,388,608-byte aggregate
+stdout/stderr capture ceiling. FSMGen keeps the two streams separate, owns one
+process group for the step, escalates cleanup from TERM to KILL when needed,
+and does not retry a failed step. Failures retain the validation-stage prefix
+and add the supervisor status and diagnostic, so timeout, capture overflow,
+exec, signal, nonzero-exit, descendant, cleanup, and host failures remain
+distinguishable without an unbounded tool wait.
+Plain Perl-script tool entrypoints—including common Verilator installations—
+are passed explicitly to FSMGen's canonical running Perl interpreter instead
+of relying on a second kernel shebang launch; the resulting command remains an
+argument vector and never passes through a shell.
+
 This split is intentional. Verilator and Yosys are independent backend
 validation gates for the emitted HDL; they do not replace FSMGen's internal AST
 and semantic contracts. More specifically, Verilator answers “did FSMGen emit

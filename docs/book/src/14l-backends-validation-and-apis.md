@@ -281,9 +281,12 @@ abc_mapping => 1)`. That mode requires optional ABC discovery and runs Yosys
 `synth -top`, while default `--verify-hdl` remains ABC-free with
 `synth -noabc`.
 
-Remaining hardening direction: any ABC-backed Yosys optimization/mapping gate
-still needs broader timeout/error policy and regression coverage before it can
-become a validation requirement or CLI default.
+The shared external-tool lifecycle is now bounded for both default and opt-in
+steps: each launch has a fixed wall and aggregate capture ceiling, shell-free
+argv, owned process-group cleanup, stable failure evidence, and no retry.
+Remaining ABC hardening is therefore about mapping correctness, representative
+performance, and broader regression qualification—not an unbounded baseline
+process policy—before ABC can become a validation requirement or CLI default.
 
 ### Structured Non-Flattened Generation
 

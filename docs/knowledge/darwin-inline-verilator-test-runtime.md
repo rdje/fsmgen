@@ -87,4 +87,4 @@ resume the exact command with the same checkpoint after headroom returns; it
 does not justify raising either RAM ceiling or weakening the matrix.
 
 External-command doubles use repository-local test temp and the canonical running interpreter, never host `true`/`false` lookup.
-T313 proves their exit truth beside hostile PATH traps; Decision 0101 moves this reviewed split-stream engine to caller-sealed support, preserves test/VIAL policy boundaries, and fixes HDL steps at 120 seconds/8,388,608 bytes with group cleanup and no retry.
+T313 proves their exit truth beside hostile PATH traps; Decision 0101 moves the engine to caller-sealed support and fixes HDL steps at 120 seconds/8,388,608 bytes with group cleanup/no retry; plain Perl tool scripts use explicit interpreter argv because direct shebang launch can stall in `_dyld_start`.

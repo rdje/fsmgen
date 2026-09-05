@@ -174,6 +174,55 @@ CHECKER
 };
 
 subtest 'policy adapters exclusively own low-level test supervision' => sub {
+    my $support = slurp(File::Spec->catfile(
+        $repo_root, qw(perl FSM Support ProcessSupervisor.pm),
+    ));
+    my $wrapper = slurp(File::Spec->catfile(
+        $repo_root, qw(t lib FSM Test ProcessSupervisor.pm),
+    ));
+    like(
+        $support,
+        qr/^package FSM::Support::ProcessSupervisor;/m,
+        'the reviewed mechanics have one production support owner',
+    );
+    unlike(
+        $wrapper,
+        qr/\b(?:fork|waitpid|setpgid|IO::Select|_terminate_owned_process)\b/,
+        'the test compatibility module contains no copied process mechanics',
+    );
+    like(
+        $wrapper,
+        qr/FSM::Support::ProcessSupervisor::supervise_process\s*\(/,
+        'the test compatibility boundary delegates process creation',
+    );
+    unlike(
+        $support,
+        qr/FSM::VIAL::Backend::ProcessSupervisor/,
+        'the shared engine does not borrow VIAL lifecycle authority',
+    );
+    like(
+        capture_error(sub {
+            FSM::Support::ProcessSupervisor::supervise_process();
+        }),
+        qr/caller-sealed; 'main' cannot launch a process/,
+        'a caller outside the two sealed policy boundaries cannot launch',
+    );
+
+    my @production_owner;
+    for my $path (glob File::Spec->catfile(
+            $repo_root, qw(perl FSM Support *.pm),
+        )) {
+        next if $path =~ /ProcessSupervisor\.pm\z/;
+        my $source = slurp($path);
+        push @production_owner, File::Spec->abs2rel($path, $repo_root)
+            if $source =~ /\bsupervise_process\s*\(/;
+    }
+    is_deeply(
+        [sort @production_owner],
+        ['perl/FSM/Support/HDLExternalValidation.pm'],
+        'only HDL external validation holds production supervision authority',
+    );
+
     my $t1545 = slurp(File::Spec->catfile(
         $repo_root, 't', '1545-task-acceptance-doctrine.t',
     ));
@@ -214,6 +263,13 @@ subtest 'policy adapters exclusively own low-level test supervision' => sub {
 };
 
 done_testing();
+
+sub capture_error {
+    my ($code) = @_;
+    local $@;
+    eval { $code->(); 1 };
+    return "$@";
+}
 
 sub write_executable {
     my ($path, $content) = @_;

@@ -22,16 +22,33 @@ use warnings;
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+use Config qw(%Config);
+use Cwd qw(abs_path);
 use Exporter qw(import);
-use IPC::Cmd qw(can_run run);
+use File::Basename qw(basename);
+use File::Spec;
+use IPC::Cmd qw(can_run);
+
+use FSM::ProjectDataLocality qw(repository_root);
+use FSM::Support::ProcessSupervisor qw(supervise_process);
 
 our @EXPORT_OK = qw(
     hdl_external_validation_abc_tool_candidates
+    hdl_external_validation_process_containment
     hdl_external_validation_required_tools
+    hdl_external_validation_step_capture_limit_bytes
+    hdl_external_validation_step_timeout_seconds
     hdl_external_validation_tools
     missing_systemverilog_validation_tools
     validate_systemverilog_file
 );
+
+my $PROCESS_SCHEMA = 'fsmgen.hdl_external_validation_process_result.v1';
+my $PROCESS_CONTAINMENT = 'hdl_external_validation_process_group';
+my $STEP_TIMEOUT_SECONDS = 120;
+my $STEP_CAPTURE_LIMIT_BYTES = 8_388_608;
+my $REPOSITORY_ROOT = repository_root();
+my $RUNNING_PERL = _canonical_running_perl();
 
 sub hdl_external_validation_required_tools () {
     return qw(verilator yosys);
@@ -39,6 +56,18 @@ sub hdl_external_validation_required_tools () {
 
 sub hdl_external_validation_abc_tool_candidates () {
     return qw(yosys-abc berkeley-abc abc);
+}
+
+sub hdl_external_validation_process_containment () {
+    return $PROCESS_CONTAINMENT;
+}
+
+sub hdl_external_validation_step_capture_limit_bytes () {
+    return $STEP_CAPTURE_LIMIT_BYTES;
+}
+
+sub hdl_external_validation_step_timeout_seconds () {
+    return $STEP_TIMEOUT_SECONDS;
 }
 
 sub hdl_external_validation_tools () {
@@ -65,6 +94,7 @@ sub validate_systemverilog_file (%args) {
 
     die "[HDLExternalValidation.pm][validate_systemverilog_file()] Source file does not exist: $source_file"
         unless -f $source_file;
+    my $source_path = File::Spec->rel2abs($source_file);
 
     my $tools = hdl_external_validation_tools();
     my @missing = sort grep { !$tools->{$_} } qw(verilator yosys);
@@ -77,28 +107,28 @@ sub validate_systemverilog_file (%args) {
     my @steps;
     push @steps, _run_step(
         name => 'verilator_lint',
-        command => [
+        command => _tool_command(
             $tools->{verilator},
             '--lint-only',
             '--sv',
-            $source_file,
-        ],
+            $source_path,
+        ),
     );
 
     my $yosys_stage = $abc_mapping
         ? 'synth -top ' . _yosys_identifier($top_module)
         : 'synth -noabc -top ' . _yosys_identifier($top_module);
     my $yosys_script = join '; ',
-        'read_verilog -sv -noautowire ' . _yosys_quote($source_file),
+        'read_verilog -sv -noautowire ' . _yosys_quote($source_path),
         $yosys_stage,
         'stat';
     push @steps, _run_step(
         name => $abc_mapping ? 'yosys_abc_synthesis' : 'yosys_synthesis',
-        command => [
+        command => _tool_command(
             $tools->{yosys},
             '-p',
             $yosys_script,
-        ],
+        ),
     );
 
     return {
@@ -113,29 +143,70 @@ sub _run_step (%args) {
     my $name = $args{name};
     my $command = $args{command};
 
-    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
-        command => $command,
-        verbose => 0,
+    my $result = supervise_process(
+        schema => $PROCESS_SCHEMA,
+        stage => $name,
+        bounds => {
+            timeout_seconds => $STEP_TIMEOUT_SECONDS,
+            capture_limit_bytes => $STEP_CAPTURE_LIMIT_BYTES,
+        },
+        containment => $PROCESS_CONTAINMENT,
+        cwd => $REPOSITORY_ROOT,
+        argv => $command,
     );
-    my $stdout = join('', @{$stdout_buf || []});
-    my $stderr = join('', @{$stderr_buf || []});
 
-    unless ($success) {
+    unless ($result->{ok}) {
         die _format_step_failure(
             name => $name,
             command => $command,
-            error_message => $error_message,
-            stdout => $stdout,
-            stderr => $stderr,
+            error_message => _process_failure_reason($result),
+            stdout => $result->{stdout},
+            stderr => $result->{stderr},
         );
     }
 
     return {
         name => $name,
         command => [@$command],
-        stdout => $stdout,
-        stderr => $stderr,
+        stdout => $result->{stdout},
+        stderr => $result->{stderr},
     };
+}
+
+sub _process_failure_reason ($result) {
+    my $status = defined($result->{status}) && length($result->{status})
+        ? $result->{status} : 'host_error';
+    my $text = "status=$status";
+    $text .= ": $result->{diagnostic}"
+        if defined($result->{diagnostic}) && length($result->{diagnostic});
+    return $text;
+}
+
+sub _canonical_running_perl () {
+    my $candidate = File::Spec->file_name_is_absolute($^X)
+        ? $^X : $Config{perlpath};
+    my $resolved = defined($candidate) ? abs_path($candidate) : undef;
+    die "[HDLExternalValidation.pm] Cannot resolve the running Perl interpreter"
+        unless defined($resolved) && -f $resolved && -x $resolved;
+    return $resolved;
+}
+
+sub _tool_command ($tool, @arguments) {
+    return [$tool, @arguments] unless _has_plain_perl_shebang($tool);
+    return [$RUNNING_PERL, $tool, @arguments];
+}
+
+sub _has_plain_perl_shebang ($path) {
+    return 0 unless defined($path) && !ref($path) && -f $path;
+    open my $fh, '<:raw', $path or return 0;
+    my $prefix = '';
+    my $read = read($fh, $prefix, 256);
+    close $fh;
+    return 0 unless defined($read) && $read;
+    my ($line) = $prefix =~ /\A([^\r\n]*)/;
+    return 1 if $line eq '#!/usr/bin/env perl';
+    return 0 unless $line =~ /\A#!(\S+)\z/;
+    return basename($1) eq 'perl' ? 1 : 0;
 }
 
 sub _format_step_failure (%args) {
@@ -203,6 +274,18 @@ validation lane. This remains C<verilator> and C<yosys>.
 Returns the optional ABC mapping executable command names probed by
 C<hdl_external_validation_tools>, in priority order.
 
+=head2 hdl_external_validation_step_timeout_seconds
+
+Returns the fixed per-step wall-clock limit used for Verilator and Yosys.
+
+=head2 hdl_external_validation_step_capture_limit_bytes
+
+Returns the fixed aggregate stdout/stderr capture ceiling for each step.
+
+=head2 hdl_external_validation_process_containment
+
+Returns the stable process-group containment policy label.
+
 =head2 missing_systemverilog_validation_tools
 
 Returns the sorted list of required SystemVerilog validation tools that are
@@ -222,5 +305,9 @@ Passing C<abc_mapping =E<gt> 1> enables the explicit opt-in ABC mapping probe.
 That mode requires the optional C<abc_mapping> tool discovery to succeed and
 uses C<synth -top> instead of C<synth -noabc -top>. The default CLI validation
 path remains ABC-free.
+
+Every external step is launched without a shell from the repository-derived
+working directory, with one fixed wall-clock limit, one aggregate capture
+ceiling, and owned process-group cleanup. A failed step is never retried.
 
 =cut

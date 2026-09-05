@@ -3285,6 +3285,17 @@ The capability manifest advertises the command shape, tool identities, stage
 names, and bounded success result/step keys for embedders that want the same
 post-emission gate without reverse-engineering sample output.
 
+It also publishes the execution policy: `step_timeout_seconds` is `120`,
+`step_capture_limit_bytes` is `8388608`, `working_directory` is
+`repository_root`, `process_containment` is
+`hdl_external_validation_process_group`, argv is shell-free, stdout and stderr
+stay separate, process-group cleanup is required, and retry-on-failure is
+false. `perl_script_interpreter_handoff` is `canonical_running_perl`, avoiding
+an implicit shebang re-launch for Perl-based tool entrypoints. These fields
+describe the SystemVerilog validation lane; they do not
+grant access to a general-purpose process runner or to VIAL's specialized
+backend lifecycle authority.
+
 That same contract now also publishes a grouped
 `success_presence_key_family_map` so embedders can discover the bounded
 success top-level and step key families from one place instead of collecting

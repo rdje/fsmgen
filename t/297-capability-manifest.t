@@ -65,6 +65,11 @@ use FSM::Support::HDLGeneratorFacadeContract qw(
     hdl_generator_facade_public_top_level_keys
     hdl_generator_facade_structured_nonflattened_generation_status
 );
+use FSM::Support::HDLExternalValidation qw(
+    hdl_external_validation_process_containment
+    hdl_external_validation_step_capture_limit_bytes
+    hdl_external_validation_step_timeout_seconds
+);
 use FSM::Support::HDLExternalValidationContract qw(
     hdl_external_validation_abc_mapping_status
     hdl_external_validation_abc_mapping_success_step_names
@@ -1902,6 +1907,47 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         $manifest->{backend_validation}{systemverilog_external}{report_source},
         'FSM::Support::HDLExternalValidation',
         'manifest records the external HDL validation owner',
+    );
+    is(
+        $manifest->{backend_validation}{systemverilog_external}{step_timeout_seconds},
+        hdl_external_validation_step_timeout_seconds(),
+        'manifest records the fixed external-tool wall',
+    );
+    is(
+        $manifest->{backend_validation}{systemverilog_external}{step_capture_limit_bytes},
+        hdl_external_validation_step_capture_limit_bytes(),
+        'manifest records the aggregate external-tool capture ceiling',
+    );
+    is(
+        $manifest->{backend_validation}{systemverilog_external}{process_containment},
+        hdl_external_validation_process_containment(),
+        'manifest records the external-tool process-group identity',
+    );
+    is(
+        $manifest->{backend_validation}{systemverilog_external}{working_directory},
+        'repository_root',
+        'manifest records the repository-derived working directory',
+    );
+    ok(
+        $manifest->{backend_validation}{systemverilog_external}{shell_free_argv},
+        'manifest records shell-free external-tool argv',
+    );
+    ok(
+        $manifest->{backend_validation}{systemverilog_external}{separate_stdout_stderr},
+        'manifest records separate external-tool output streams',
+    );
+    ok(
+        $manifest->{backend_validation}{systemverilog_external}{process_group_cleanup_required},
+        'manifest requires external-tool process-group cleanup',
+    );
+    ok(
+        !$manifest->{backend_validation}{systemverilog_external}{retry_on_failure},
+        'manifest records first-failure truth without retry',
+    );
+    is(
+        $manifest->{backend_validation}{systemverilog_external}{perl_script_interpreter_handoff},
+        'canonical_running_perl',
+        'manifest records deterministic Perl-script interpreter handoff',
     );
     is(
         $manifest->{backend_validation}{systemverilog_external}{contract_source},

@@ -6,11 +6,12 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2.2.2`
-  (`active`; implementation owner)
-- next_action: Implement the shared supervisor and sealed HDL-validation policy
-  selected by Decision 0101, then run its focused contract/process gates.
-- in_flight_uncommitted: task-tree activation only; no production change yet.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2`
+  (`active`; complete pre-push qualification owner)
+- next_action: Commit the verified HDL process-containment repair, then restart
+  the complete RAM-guarded pre-push gate from its beginning.
+- in_flight_uncommitted: verified implementation and closeout are staged for one
+  task-owned commit; no partial implementation remains.
 - in_flight_background: none.
-- blockers: Pre-push qualification cannot pass until T313's PATH-selected,
-  unbounded no-op stub is repaired and the full gate reaches a terminal result.
+- blockers: Both observed blockers are repaired; push remains withheld until the
+  restarted complete CI and mandatory hosted qualification reach green results.

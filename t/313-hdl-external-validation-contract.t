@@ -12,11 +12,15 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::HDLExternalValidation qw(
     hdl_external_validation_abc_tool_candidates
+    hdl_external_validation_process_containment
     hdl_external_validation_required_tools
+    hdl_external_validation_step_capture_limit_bytes
+    hdl_external_validation_step_timeout_seconds
     hdl_external_validation_tools
     missing_systemverilog_validation_tools
     validate_systemverilog_file
 );
+use FSM::ProjectDataLocality qw(repository_root);
 use FSM::Support::HDLExternalValidationContract qw(
     hdl_external_validation_abc_mapping_status
     hdl_external_validation_abc_mapping_success_step_names
@@ -56,6 +60,41 @@ subtest 'contract exposes the bounded external validation surface' => sub {
         $contract->{report_source},
         'FSM::Support::HDLExternalValidation',
         'contract records the validation owner',
+    );
+    is(
+        $contract->{step_timeout_seconds},
+        hdl_external_validation_step_timeout_seconds(),
+        'contract publishes the fixed per-step wall',
+    );
+    is(
+        $contract->{step_capture_limit_bytes},
+        hdl_external_validation_step_capture_limit_bytes(),
+        'contract publishes the fixed aggregate capture ceiling',
+    );
+    is(
+        $contract->{process_containment},
+        hdl_external_validation_process_containment(),
+        'contract publishes the process-group containment identity',
+    );
+    is(
+        $contract->{working_directory},
+        'repository_root',
+        'contract publishes the repository-derived working-directory policy',
+    );
+    ok($contract->{shell_free_argv}, 'contract requires shell-free argv');
+    ok(
+        $contract->{separate_stdout_stderr},
+        'contract requires separate stdout and stderr',
+    );
+    ok(
+        $contract->{process_group_cleanup_required},
+        'contract requires process-group cleanup proof',
+    );
+    ok(!$contract->{retry_on_failure}, 'contract forbids retry after failure');
+    is(
+        $contract->{perl_script_interpreter_handoff},
+        'canonical_running_perl',
+        'contract publishes deterministic Perl-script interpreter handoff',
     );
     is_deeply(
         $contract->{tools},
@@ -311,6 +350,11 @@ SV
             $report->{ok},
             'explicit repository-local success fixture ignores hostile PATH aliases',
         );
+        is_deeply(
+            [map { [@{$_->{command}}[0, 1]] } @{$report->{steps}}],
+            [[$perl, $success], [$perl, $success]],
+            'plain Perl tool scripts use explicit canonical-interpreter argv',
+        );
         like(
             capture_error(sub {
                 validate_systemverilog_file(
@@ -348,6 +392,102 @@ SV
             'explicit repository-local failure fixture keeps its failure truth',
         );
     }
+};
+
+subtest 'sealed supervisor policy preserves every first-failure class' => sub {
+    my @outcome = (
+        [timed_out => 'supervised process exceeded its fixed deadline'],
+        [output_limited => 'supervised process exceeded its aggregate capture limit'],
+        [exec_error => 'exec failed: deterministic fixture'],
+        [signaled => 'supervised process exited after a signal'],
+        [nonzero_exit => 'supervised process exited nonzero'],
+        [surviving_descendants => 'supervised process left descendants after leader exit'],
+        [cleanup_failed => 'supervised process cleanup could not prove leader and group disappearance'],
+        [host_error => 'deterministic host failure'],
+    );
+    my $prefix = hdl_external_validation_failure_text_prefix_map()
+        ->{tool_step_failed};
+
+    for my $outcome (@outcome) {
+        my ($status, $diagnostic) = @$outcome;
+        my @request;
+        no warnings 'redefine';
+        local *FSM::Support::HDLExternalValidation::hdl_external_validation_tools = sub {
+            return {
+                verilator => $perl,
+                yosys => $perl,
+                abc_mapping => undef,
+                abc_mapping_tool => undef,
+            };
+        };
+        local *FSM::Support::HDLExternalValidation::supervise_process = sub {
+            my (%args) = @_;
+            push @request, \%args;
+            return {
+                ok => 0,
+                status => $status,
+                diagnostic => $diagnostic,
+                stdout => "bounded stdout\n",
+                stderr => "bounded stderr\n",
+            };
+        };
+
+        my $failure = capture_error(sub {
+            validate_systemverilog_file(
+                source_file => __FILE__,
+                top_module => 'demo_top',
+            );
+        });
+        is(scalar(@request), 1, "$status fails the first step without retry");
+        is(
+            $request[0]{schema},
+            'fsmgen.hdl_external_validation_process_result.v1',
+            "$status uses the sealed process-result schema",
+        );
+        is($request[0]{stage}, 'verilator_lint', "$status retains the stage");
+        is(
+            $request[0]{bounds}{timeout_seconds},
+            120,
+            "$status cannot widen the fixed wall",
+        );
+        is(
+            $request[0]{bounds}{capture_limit_bytes},
+            8_388_608,
+            "$status cannot widen the aggregate capture ceiling",
+        );
+        is(
+            $request[0]{containment},
+            'hdl_external_validation_process_group',
+            "$status uses the sealed process-group identity",
+        );
+        is(
+            $request[0]{cwd},
+            repository_root(),
+            "$status launches from the repository-derived cwd",
+        );
+        is(ref($request[0]{argv}), 'ARRAY', "$status is passed as argv");
+        like(
+            $failure,
+            qr/^\Q$prefix\Everilator_lint' failed/m,
+            "$status retains the external step-failure prefix",
+        );
+        like(
+            $failure,
+            qr/^Reason: status=\Q$status\E: \Q$diagnostic\E$/m,
+            "$status and diagnostic remain explicit",
+        );
+        like($failure, qr/^stdout:\nbounded stdout$/m, "$status retains stdout");
+        like($failure, qr/^stderr:\nbounded stderr$/m, "$status retains stderr");
+    }
+
+    my $source = slurp(File::Spec->catfile(
+        repository_root(), qw(perl FSM Support HDLExternalValidation.pm),
+    ));
+    unlike(
+        $source,
+        qr/use IPC::Cmd qw\([^)]*\brun\b|\bIPC::Cmd::run\b|\brun\s*\(\s*command\s*=>/,
+        'HDL validation retains discovery but has no direct IPC::Cmd launch',
+    );
 };
 
 subtest 'successful in-process external validation conforms to the bounded contract' => sub {
@@ -416,6 +556,15 @@ sub write_file {
     open my $fh, '>', $path or die "Cannot open $path for write: $!";
     print {$fh} $content or die "Cannot write $path: $!";
     close $fh or die "Cannot close $path: $!";
+}
+
+sub slurp {
+    my ($path) = @_;
+    open my $fh, '<:raw', $path or die "Cannot open $path for read: $!";
+    local $/;
+    my $content = <$fh>;
+    close $fh or die "Cannot close $path: $!";
+    return $content;
 }
 
 sub write_exit_program {
