@@ -6,11 +6,11 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.1`
-  (`done`; verified T1553 containment-success assertion repair awaiting commit)
-- next_action: Commit `.2.1`, verify a clean tree, then activate `.2.2` for
-  deterministic bounded T313 stubs.
-- in_flight_uncommitted: verified `.2.1` test, task, guide/book, and fact-map changes.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2`
+  (`active`; deterministic bounded external-validator repair)
+- next_action: Audit existing process-supervision authority, then replace T313's
+  PATH-selected stubs and add a finite external-validation failure bound.
+- in_flight_uncommitted: none after the activation commit.
 - in_flight_background: none.
-- blockers: Pre-push qualification cannot pass until T1553's stale exact count
-  and T313's PATH-selected unbounded no-op stub are repaired.
+- blockers: Pre-push qualification cannot pass until T313's PATH-selected,
+  unbounded no-op stub is repaired and the full gate reaches a terminal result.
