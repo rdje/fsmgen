@@ -2125,19 +2125,19 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Repair the validator output-retention policy falsified by a valid large Yosys synthesis.`
   Acceptance: `Select and implement one finite stdout/stderr retention policy that admits the complete-CI Yosys workload, keeps memory and diagnostic volume bounded, preserves split-stream and process-group truth, rejects genuinely excessive output deterministically, and does not weaken timeout, cleanup, cwd, argv, retry, or caller-seal guarantees; rerun the complete RAM-guarded gate from its beginning.`
-  Verification: `The third clean complete-CI attempt reached T1524 after T1436/T1437/T1438 and the enabled T1498-T1523 band had passed or taken declared Darwin runtime skips. T1524's generated HDL parsed successfully and entered Yosys synthesis, but the supervised process crossed the fixed 8,388,608-byte aggregate capture limit; HDLExternalValidation rejected it as status=output_limited and the test failed at line 226. The failure diagnostic itself retained roughly 8 MiB and expanded the TAP stream above two million tokens. The required Knowledge Map query returned no existing answer. Child .1 selects a corrected finite policy before child .2 changes behavior.`
+  Verification: `The third clean complete-CI attempt reached T1524 after T1436/T1437/T1438 and the enabled T1498-T1523 band had passed or taken declared Darwin runtime skips. T1524's generated HDL parsed successfully and entered Yosys synthesis, but the supervised process crossed the fixed 8,388,608-byte aggregate capture limit; HDLExternalValidation rejected it as status=output_limited and the test failed at line 226. The failure diagnostic itself retained roughly 8 MiB and expanded the TAP stream above two million tokens. The required Knowledge Map query returned no existing answer. Child .1 selects native quiet success output plus bounded failure excerpts without changing the supervisor ceiling; child .2 owns implementation.`
   Commit: `pending implementation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.3.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.3.1`
-  Status: `in_progress`
+  Status: `done`
   Goal: `Select the finite HDL-validator output-retention and failure-diagnostic contract.`
   Acceptance: `Measure the valid T1524 Yosys stdout/stderr volume without unbounded in-memory capture, identify which output is semantically required on success and failure, compare finite full-capture, repository-local spool, and bounded head/tail retention strategies, and accept one policy with explicit re-derivation, falsification, durability, cleanup, locality, and nonclaim boundaries before code changes.`
-  Verification: `pending selection`
-  Commit: `pending selection`
+  Verification: `Decision 0101 is amended from three independent observations. Re-derivation regenerated the tracked T1524 source and streamed the exact RAM-guarded Yosys 0.68 synthesis output into a byte counter: the valid 999-KiB HDL emitted 46,647,945 bytes without retention. Falsification reran the identical script with native -q and measured zero output at exit 0, then proved an independent quiet absent-source invocation still exited 1 with its precise ERROR diagnostic. The selection therefore keeps the 120-second/8,388,608-byte supervisor policy, adds -q to both Yosys modes, and bounds each rendered failure stream at 65,536 bytes as a first-32,768/last-32,768 excerpt with an exact omission marker. Raising capture, spooling unused success logs, changing shared capture semantics, and hiding failures are rejected. Decision, task, Knowledge Map, future contract/book metadata, T313/T1524 watchers, and Git are the durability chain; the recorded measurements are one-fixture/tool observations, not performance, capacity, or support claims.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.3.1: select bounded validator output policy`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.3.2`
-  Status: `proposed`
+  Status: `in_progress`
   Goal: `Implement and qualify the selected finite HDL-validator output-retention policy.`
   Acceptance: `The accepted policy is implemented in the shared supervisor/HDL policy boundary with exact focused RED/GREEN and hostile overflow coverage; T1524 passes without an unbounded memory or diagnostic path, all prior timeout/capture/cleanup/caller-seal contracts remain green, generated residue is removed, and the complete RAM-guarded pre-push gate reaches a deterministic terminal result.`
   Verification: `pending implementation`

@@ -8,7 +8,7 @@ answers:
   - "does the legacy Verilator test supervisor replace the VIAL lifecycle?"
   - "how should t296 resume after a RAM guard interruption?"
   - "does t296 support checkpointed corpus-matrix recovery?"
-  - "how is HDL external validation process execution bounded?"
+  - "how does HDL validation quiet Yosys success logs and bound failure excerpts?"
   - "why must external-command tests avoid PATH-selected true or false fixtures?"
 date: 2026-09-05
 status: current
@@ -87,4 +87,4 @@ resume the exact command with the same checkpoint after headroom returns; it
 does not justify raising either RAM ceiling or weakening the matrix.
 
 External-command doubles use repository-local test temp and the canonical running interpreter, never host `true`/`false` lookup.
-T313 proves their exit truth beside hostile PATH traps; Decision 0101 moves the engine to caller-sealed support and fixes HDL steps at 120 seconds/8,388,608 bytes with group cleanup/no retry; plain Perl tool scripts use explicit interpreter argv because direct shebang launch can stall in `_dyld_start`.
+T313 proves their exit truth beside hostile PATH traps. Amended Decision 0101 keeps HDL steps at 120 seconds/8,388,608 captured bytes after T1524 measured 46,647,945 ordinary versus zero quiet Yosys bytes while quiet failure retained `ERROR:`; it selects native `-q` plus 65,536-byte per-stream head/tail failure excerpts. Split capture, exact success, timeout, cleanup/no-retry, explicit Perl handoff, and VIAL authority remain unchanged; `.19.2.3.1.2.2.3.2` owns implementation.
