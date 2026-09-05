@@ -97,6 +97,10 @@ and does not retry a failed step. Failures retain the validation-stage prefix
 and add the supervisor status and diagnostic, so timeout, capture overflow,
 exec, signal, nonzero-exit, descendant, cleanup, and host failures remain
 distinguishable without an unbounded tool wait.
+Yosys runs in its native quiet log mode so unused success progress does not
+consume capture. Failure presentation retains a bounded byte-exact head/tail
+excerpt per stream with an omitted-byte marker; process status, split capture,
+and first-failure truth remain unchanged.
 Plain Perl-script tool entrypoints—including common Verilator installations—
 are passed explicitly to FSMGen's canonical running Perl interpreter instead
 of relying on a second kernel shebang launch; the resulting command remains an

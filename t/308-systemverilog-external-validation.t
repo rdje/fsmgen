@@ -33,7 +33,12 @@ subtest 'generated lte_dif_pmaster SystemVerilog passes Verilator lint and ABC-f
         'external validation runs Verilator lint before Yosys synthesis',
     );
     my ($yosys_step) = grep { $_->{name} eq 'yosys_synthesis' } @{$report->{steps}};
-    my $yosys_script = $yosys_step->{command}[2];
+    is_deeply(
+        [@{$yosys_step->{command}}[1, 2]],
+        [qw(-q -p)],
+        'Yosys validation enables native quiet logging before its script',
+    );
+    my $yosys_script = $yosys_step->{command}[-1];
     like(
         $yosys_script,
         qr/\bsynth\s+-noabc\s+-top\s+lte_dif_pmaster\b/,
@@ -60,7 +65,12 @@ subtest 'generated lte_dif_pmaster SystemVerilog can opt into ABC-backed Yosys m
         'ABC mapping opt-in runs Verilator lint before ABC-enabled Yosys synthesis',
     );
     my ($yosys_step) = grep { $_->{name} eq 'yosys_abc_synthesis' } @{$report->{steps}};
-    my $yosys_script = $yosys_step->{command}[2];
+    is_deeply(
+        [@{$yosys_step->{command}}[1, 2]],
+        [qw(-q -p)],
+        'ABC mapping validation enables native quiet logging before its script',
+    );
+    my $yosys_script = $yosys_step->{command}[-1];
     like(
         $yosys_script,
         qr/\bsynth\s+-top\s+lte_dif_pmaster\b/,
@@ -71,10 +81,10 @@ subtest 'generated lte_dif_pmaster SystemVerilog can opt into ABC-backed Yosys m
         qr/\bsynth\s+-noabc\b/,
         'ABC mapping opt-in does not use the default ABC-free Yosys stage',
     );
-    like(
+    is(
         $yosys_step->{stdout} . $yosys_step->{stderr},
-        qr/\bABC\b|yosys-abc|berkeley-abc|\babc\b/i,
-        'ABC mapping opt-in Yosys output reports ABC activity',
+        '',
+        'successful ABC mapping keeps quiet Yosys output empty',
     );
 };
 

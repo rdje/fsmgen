@@ -28,17 +28,21 @@ use Exporter qw(import);
 use File::Basename qw(basename);
 use File::Spec;
 use IPC::Cmd qw(can_run);
+use bytes ();
 
 use FSM::ProjectDataLocality qw(repository_root);
 use FSM::Support::ProcessSupervisor qw(supervise_process);
 
 our @EXPORT_OK = qw(
     hdl_external_validation_abc_tool_candidates
+    hdl_external_validation_failure_stream_excerpt_strategy
+    hdl_external_validation_failure_stream_retained_bytes
     hdl_external_validation_process_containment
     hdl_external_validation_required_tools
     hdl_external_validation_step_capture_limit_bytes
     hdl_external_validation_step_timeout_seconds
     hdl_external_validation_tools
+    hdl_external_validation_yosys_log_mode
     missing_systemverilog_validation_tools
     validate_systemverilog_file
 );
@@ -47,6 +51,9 @@ my $PROCESS_SCHEMA = 'fsmgen.hdl_external_validation_process_result.v1';
 my $PROCESS_CONTAINMENT = 'hdl_external_validation_process_group';
 my $STEP_TIMEOUT_SECONDS = 120;
 my $STEP_CAPTURE_LIMIT_BYTES = 8_388_608;
+my $FAILURE_STREAM_RETAINED_BYTES = 65_536;
+my $FAILURE_STREAM_EXCERPT_STRATEGY = 'head_tail_with_omitted_byte_count';
+my $YOSYS_LOG_MODE = 'quiet';
 my $REPOSITORY_ROOT = repository_root();
 my $RUNNING_PERL = _canonical_running_perl();
 
@@ -56,6 +63,14 @@ sub hdl_external_validation_required_tools () {
 
 sub hdl_external_validation_abc_tool_candidates () {
     return qw(yosys-abc berkeley-abc abc);
+}
+
+sub hdl_external_validation_failure_stream_excerpt_strategy () {
+    return $FAILURE_STREAM_EXCERPT_STRATEGY;
+}
+
+sub hdl_external_validation_failure_stream_retained_bytes () {
+    return $FAILURE_STREAM_RETAINED_BYTES;
 }
 
 sub hdl_external_validation_process_containment () {
@@ -68,6 +83,10 @@ sub hdl_external_validation_step_capture_limit_bytes () {
 
 sub hdl_external_validation_step_timeout_seconds () {
     return $STEP_TIMEOUT_SECONDS;
+}
+
+sub hdl_external_validation_yosys_log_mode () {
+    return $YOSYS_LOG_MODE;
 }
 
 sub hdl_external_validation_tools () {
@@ -126,6 +145,7 @@ sub validate_systemverilog_file (%args) {
         name => $abc_mapping ? 'yosys_abc_synthesis' : 'yosys_synthesis',
         command => _tool_command(
             $tools->{yosys},
+            '-q',
             '-p',
             $yosys_script,
         ),
@@ -214,11 +234,23 @@ sub _format_step_failure (%args) {
     $text .= "Command: " . join(' ', map { _shellish($_) } @{$args{command} || []}) . "\n";
     $text .= "Reason: $args{error_message}\n"
         if defined($args{error_message}) && length($args{error_message});
-    $text .= "stdout:\n$args{stdout}\n"
+    $text .= "stdout:\n" . _failure_stream_excerpt($args{stdout}) . "\n"
         if defined($args{stdout}) && length($args{stdout});
-    $text .= "stderr:\n$args{stderr}\n"
+    $text .= "stderr:\n" . _failure_stream_excerpt($args{stderr}) . "\n"
         if defined($args{stderr}) && length($args{stderr});
     return $text;
+}
+
+sub _failure_stream_excerpt ($text) {
+    return '' unless defined($text) && length($text);
+    my $length = bytes::length($text);
+    return $text if $length <= $FAILURE_STREAM_RETAINED_BYTES;
+
+    my $half = int($FAILURE_STREAM_RETAINED_BYTES / 2);
+    my $omitted = $length - $FAILURE_STREAM_RETAINED_BYTES;
+    return bytes::substr($text, 0, $half)
+        . "\n... [$omitted captured bytes omitted; retained first $half and last $half bytes] ...\n"
+        . bytes::substr($text, -$half);
 }
 
 sub _yosys_quote ($text) {
@@ -274,6 +306,16 @@ validation lane. This remains C<verilator> and C<yosys>.
 Returns the optional ABC mapping executable command names probed by
 C<hdl_external_validation_tools>, in priority order.
 
+=head2 hdl_external_validation_failure_stream_excerpt_strategy
+
+Returns the stable strategy label for rendering bounded failed-step streams.
+
+=head2 hdl_external_validation_failure_stream_retained_bytes
+
+Returns the maximum number of captured tool-output bytes retained in each
+failed stream's rendered head/tail excerpt. The omission marker is bounded
+diagnostic metadata and is additional to the retained tool-output bytes.
+
 =head2 hdl_external_validation_step_timeout_seconds
 
 Returns the fixed per-step wall-clock limit used for Verilator and Yosys.
@@ -286,6 +328,10 @@ Returns the fixed aggregate stdout/stderr capture ceiling for each step.
 
 Returns the stable process-group containment policy label.
 
+=head2 hdl_external_validation_yosys_log_mode
+
+Returns the stable label for native quiet Yosys validation logging.
+
 =head2 missing_systemverilog_validation_tools
 
 Returns the sorted list of required SystemVerilog validation tools that are
@@ -295,11 +341,11 @@ not currently available.
 
 Runs Verilator lint and ABC-free Yosys structural synthesis over one generated
 SystemVerilog file. Required arguments are C<source_file> and C<top_module>.
-The Yosys pass uses C<read_verilog -sv -noautowire>, C<synth -noabc -top>,
-and C<stat>. The C<-noabc> guard is intentional: this lane proves FSMGen did
-not emit garbage HDL and that Yosys can lower it into structural logic, while
-leaving ABC timeout/optimization edge cases for a later dedicated hardening
-lane.
+The Yosys pass uses native C<-q> logging, C<read_verilog -sv -noautowire>,
+C<synth -noabc -top>, and C<stat>. The C<-noabc> guard is intentional: this
+lane proves FSMGen did not emit garbage HDL and that Yosys can lower it into
+structural logic, while leaving ABC timeout/optimization edge cases for a
+later dedicated hardening lane.
 
 Passing C<abc_mapping =E<gt> 1> enables the explicit opt-in ABC mapping probe.
 That mode requires the optional C<abc_mapping> tool discovery to succeed and
@@ -309,5 +355,7 @@ path remains ABC-free.
 Every external step is launched without a shell from the repository-derived
 working directory, with one fixed wall-clock limit, one aggregate capture
 ceiling, and owned process-group cleanup. A failed step is never retried.
+Failed stdout and stderr are presented independently as byte-exact bounded
+head/tail excerpts with an exact omitted-byte count.
 
 =cut

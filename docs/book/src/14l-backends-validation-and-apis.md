@@ -284,6 +284,9 @@ abc_mapping => 1)`. That mode requires optional ABC discovery and runs Yosys
 The shared external-tool lifecycle is now bounded for both default and opt-in
 steps: each launch has a fixed wall and aggregate capture ceiling, shell-free
 argv, owned process-group cleanup, stable failure evidence, and no retry.
+Yosys uses native quiet logging, while failed streams are presented through
+bounded byte-exact head/tail excerpts without changing process status or split
+capture truth.
 Remaining ABC hardening is therefore about mapping correctness, representative
 performance, and broader regression qualification—not an unbounded baseline
 process policy—before ABC can become a validation requirement or CLI default.

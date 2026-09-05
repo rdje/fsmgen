@@ -24,9 +24,9 @@ Yosys 0.68 synthesis emitted 46,647,945 bytes normally and zero with `-q`; a qui
 4. Seal each HDL step to 120 seconds, 8,388,608 aggregate bytes, repository cwd,
    shell-free argv, and `hdl_external_validation_process_group`; run Yosys with
    native `-q` before `-p` in default and explicit ABC-mapping modes.
-5. Preserve split capture and exact success payloads. Render at most 65,536
-   bytes per failed stream: first 32,768 plus last 32,768 with an exact omitted-
-   byte marker. Preserve status/diagnostic, first-failure truth, and no retry.
+5. Preserve split capture and exact success payloads. Retain at most 65,536
+   tool-output bytes per failed stream: first 32,768 plus last 32,768, separated
+   by a bounded exact omitted-byte marker. Preserve failure truth and no retry.
 6. Publish these values and strategies as additive schema-v1 metadata and mdBook
    guidance. Leave `FSM::VIAL::Backend::ProcessSupervisor` unchanged.
 

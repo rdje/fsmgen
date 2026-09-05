@@ -2133,14 +2133,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `done`
   Goal: `Select the finite HDL-validator output-retention and failure-diagnostic contract.`
   Acceptance: `Measure the valid T1524 Yosys stdout/stderr volume without unbounded in-memory capture, identify which output is semantically required on success and failure, compare finite full-capture, repository-local spool, and bounded head/tail retention strategies, and accept one policy with explicit re-derivation, falsification, durability, cleanup, locality, and nonclaim boundaries before code changes.`
-  Verification: `Decision 0101 is amended from three independent observations. Re-derivation regenerated the tracked T1524 source and streamed the exact RAM-guarded Yosys 0.68 synthesis output into a byte counter: the valid 999-KiB HDL emitted 46,647,945 bytes without retention. Falsification reran the identical script with native -q and measured zero output at exit 0, then proved an independent quiet absent-source invocation still exited 1 with its precise ERROR diagnostic. The selection therefore keeps the 120-second/8,388,608-byte supervisor policy, adds -q to both Yosys modes, and bounds each rendered failure stream at 65,536 bytes as a first-32,768/last-32,768 excerpt with an exact omission marker. Raising capture, spooling unused success logs, changing shared capture semantics, and hiding failures are rejected. Decision, task, Knowledge Map, future contract/book metadata, T313/T1524 watchers, and Git are the durability chain; the recorded measurements are one-fixture/tool observations, not performance, capacity, or support claims.`
+  Verification: `Decision 0101 is amended from three independent observations. Re-derivation regenerated the tracked T1524 source and streamed the exact RAM-guarded Yosys 0.68 synthesis output into a byte counter: the valid 999-KiB HDL emitted 46,647,945 bytes without retention. Falsification reran the identical script with native -q and measured zero output at exit 0, then proved an independent quiet absent-source invocation still exited 1 with its precise ERROR diagnostic. The selection therefore keeps the 120-second/8,388,608-byte supervisor policy, adds -q to both Yosys modes, and bounds each rendered failure stream to 65,536 retained tool-output bytes as a first-32,768/last-32,768 excerpt plus a bounded exact omission marker. Raising capture, spooling unused success logs, changing shared capture semantics, and hiding failures are rejected. Decision, task, Knowledge Map, future contract/book metadata, T313/T1524 watchers, and Git are the durability chain; the recorded measurements are one-fixture/tool observations, not performance, capacity, or support claims.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.3.1: select bounded validator output policy`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.3.2`
   Status: `in_progress`
   Goal: `Implement and qualify the selected finite HDL-validator output-retention policy.`
   Acceptance: `The accepted policy is implemented in the shared supervisor/HDL policy boundary with exact focused RED/GREEN and hostile overflow coverage; T1524 passes without an unbounded memory or diagnostic path, all prior timeout/capture/cleanup/caller-seal contracts remain green, generated residue is removed, and the complete RAM-guarded pre-push gate reaches a deterministic terminal result.`
-  Verification: `pending implementation`
+  Verification: `Implementation is focused-green and ready for a verification-pending commit; the complete gate remains deliberately outstanding. RED T313 aborted at line 25 because the three selected getters were not exported. GREEN adds native -q before -p to default and ABC Yosys argv, keeps the unchanged 120-second/8,388,608-byte supervisor ceiling, publishes additive quiet/excerpt metadata, and renders each failed stream through a shared byte-exact first-32,768/last-32,768 excerpt retaining 65,536 tool-output bytes plus a bounded exact omitted-byte marker. T313 proves the exact boundary, boundary-plus-one, independent stdout/stderr, both argv modes, and installed-tool success at Files=1/Tests=6. Real T308 default/ABC validation passes Files=1/Tests=8 with empty quiet success output. The formerly failing exact T1524 workload passes under the RAM guard at Files=1/Tests=4 in 174 seconds without raising capture. T1669/T313 pass Files=2/Tests=10, and the 17-file manifest/section/JSON-round-trip/defensive-copy band passes Tests=26. All 63 book chapters test; the inspected repository-local render contains 98 files/22,280 KiB and is removed exactly beside the session-owned HDL/lowering residue. Fresh task-owned maintained-reference authority accounts for the exact 12-line/780-byte book delta, the Knowledge Card is compacted inside its prior allowance, and no containment ceiling rises. Knowledge Map is current at 1,161 facts/6,322 questions/6,493 occurrences/139 shards. Claim inventory independently agrees at 12,273 numeric lines/1,900 candidates/2,671 constants, and dispositions close 1,900/1,900 with zero gaps/open owners. Decision 0101, contract POD, capability metadata/tests, mdBook guidance, task, Knowledge Card, and derived projections remain aligned; full from-scratch CI is the next action.`
   Commit: `pending implementation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.2`
@@ -4565,3 +4565,30 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   `[task-acceptance] OK` with independent Git-history root-cause and prove-summary
   no-regression evidence; the complete doctrine driver reports
   `[doctrine] all doctrine checks passed`.
+
+## Acceptance Checklist (.19.2.3.1.2.2.3.2 implementation, verification pending; enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — the third clean complete-CI run reported
+  `Failed test 'generated HDL passes Verilator lint and Yosys synthesis' at
+  t/1524-ial2-ahb-exact-two-paired-busy-composition-profile-alias.t line 226`
+  after valid Yosys synthesis crossed the aggregate capture ceiling and returned
+  `status=output_limited`. The test-first contract then failed at
+  `t/313-hdl-external-validation-contract.t line 25` because the selected quiet
+  and failure-excerpt policy getters did not yet exist. Exact diagnostic
+  signature: `BEGIN failed--compilation aborted at t/313-hdl-external-validation-contract.t line 25`.
+- [x] **ADDRESSED (verified)** — HDL validation now uses native quiet Yosys argv
+  in both modes and byte-exact bounded per-stream failure excerpts without
+  changing supervisor capture, timeout, cwd, cleanup, retry, caller-seal, split
+  stream, or success-payload semantics. T313 proves exact-boundary and
+  boundary-plus-one stdout/stderr behavior; T1524 now admits the valid large
+  synthesis under the unchanged process and RAM guards.
+- [x] **NO REGRESSION (focused implementation, complete gate pending)** — the
+  focused validator, T1524, supervisor, manifest, backend-section, JSON
+  round-trip, and defensive-copy runs each report `All tests successful.`; the
+  largest surrounding band reports `Files=17, Tests=26`. All mdBook chapters,
+  Knowledge Map, claim inventory/dispositions, diff hygiene, and exact generated
+  residue removal are green. Fresh maintained-reference authority accepts the
+  exact book delta without any ceiling increase. The implementation commit is
+  explicitly
+  verification-pending until the complete RAM-guarded pre-push gate reruns from
+  its beginning.

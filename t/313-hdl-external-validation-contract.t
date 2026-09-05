@@ -12,11 +12,14 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::HDLExternalValidation qw(
     hdl_external_validation_abc_tool_candidates
+    hdl_external_validation_failure_stream_excerpt_strategy
+    hdl_external_validation_failure_stream_retained_bytes
     hdl_external_validation_process_containment
     hdl_external_validation_required_tools
     hdl_external_validation_step_capture_limit_bytes
     hdl_external_validation_step_timeout_seconds
     hdl_external_validation_tools
+    hdl_external_validation_yosys_log_mode
     missing_systemverilog_validation_tools
     validate_systemverilog_file
 );
@@ -70,6 +73,21 @@ subtest 'contract exposes the bounded external validation surface' => sub {
         $contract->{step_capture_limit_bytes},
         hdl_external_validation_step_capture_limit_bytes(),
         'contract publishes the fixed aggregate capture ceiling',
+    );
+    is(
+        $contract->{failure_stream_retained_bytes},
+        hdl_external_validation_failure_stream_retained_bytes(),
+        'contract publishes the per-stream failure retention ceiling',
+    );
+    is(
+        $contract->{failure_stream_excerpt_strategy},
+        hdl_external_validation_failure_stream_excerpt_strategy(),
+        'contract publishes the failure excerpt strategy',
+    );
+    is(
+        $contract->{yosys_log_mode},
+        hdl_external_validation_yosys_log_mode(),
+        'contract publishes native quiet Yosys logging',
     );
     is(
         $contract->{process_containment},
@@ -490,6 +508,98 @@ subtest 'sealed supervisor policy preserves every first-failure class' => sub {
     );
 };
 
+subtest 'Yosys quiet argv and bounded failure excerpts are exact' => sub {
+    my $retained = hdl_external_validation_failure_stream_retained_bytes();
+    is($retained, 65_536, 'failure retention ceiling is fixed');
+    is(
+        hdl_external_validation_failure_stream_excerpt_strategy(),
+        'head_tail_with_omitted_byte_count',
+        'failure excerpt strategy is fixed',
+    );
+    is(
+        hdl_external_validation_yosys_log_mode(),
+        'quiet',
+        'Yosys log mode is fixed',
+    );
+
+    my @request;
+    {
+        no warnings 'redefine';
+        local *FSM::Support::HDLExternalValidation::hdl_external_validation_tools = sub {
+            return {
+                verilator => $perl,
+                yosys => $perl,
+                abc_mapping => $perl,
+                abc_mapping_tool => 'abc',
+            };
+        };
+        local *FSM::Support::HDLExternalValidation::supervise_process = sub {
+            my (%args) = @_;
+            push @request, \%args;
+            return {ok => 1, stdout => '', stderr => ''};
+        };
+        validate_systemverilog_file(
+            source_file => __FILE__,
+            top_module => 'demo_top',
+        );
+        validate_systemverilog_file(
+            source_file => __FILE__,
+            top_module => 'demo_top',
+            abc_mapping => 1,
+        );
+    }
+    is(scalar(@request), 4, 'both validation modes keep two ordered steps');
+    for my $index (1, 3) {
+        is_deeply(
+            [@{$request[$index]{argv}}[1, 2]],
+            [qw(-q -p)],
+            "Yosys step $index places native quiet mode before its script",
+        );
+    }
+
+    my $exact = 'E' x $retained;
+    my $exact_failure = mocked_step_failure(stdout => $exact, stderr => '');
+    ok(
+        index($exact_failure, "stdout:\n$exact\n") >= 0,
+        'exact-boundary stdout is retained byte-for-byte',
+    );
+    unlike(
+        $exact_failure,
+        qr/captured bytes omitted/,
+        'exact-boundary stdout has no omission marker',
+    );
+
+    my $half = int($retained / 2);
+    my $over = ('H' x $half) . 'X' . ('T' x $half);
+    my $stderr_over = ('S' x $half) . 'Y' . ('R' x $half);
+    my $over_failure = mocked_step_failure(
+        stdout => $over,
+        stderr => $stderr_over,
+    );
+    my $excerpt = ('H' x $half)
+        . "\n... [1 captured bytes omitted; retained first $half and last $half bytes] ...\n"
+        . ('T' x $half);
+    ok(
+        index($over_failure, "stdout:\n$excerpt\n") >= 0,
+        'boundary-plus-one stdout retains exact head, tail, and omission count',
+    );
+    ok(
+        index($over_failure, ('H' x $half) . 'X') < 0,
+        'boundary-plus-one middle byte is not rendered',
+    );
+    my $stderr_excerpt = ('S' x $half)
+        . "\n... [1 captured bytes omitted; retained first $half and last $half bytes] ...\n"
+        . ('R' x $half);
+    ok(
+        index($over_failure, "stderr:\n$stderr_excerpt\n") >= 0,
+        'boundary-plus-one stderr is bounded independently from stdout',
+    );
+    ok(
+        index($over_failure, ('S' x $half) . 'Y') < 0,
+        'boundary-plus-one stderr middle byte is not rendered',
+    );
+};
+
 subtest 'successful in-process external validation conforms to the bounded contract' => sub {
     my @missing_tools = missing_systemverilog_validation_tools();
     plan skip_all => 'External SystemVerilog validation tools are not installed: ' . join(', ', @missing_tools)
@@ -549,6 +659,34 @@ sub assert_keys_present {
     for my $key (@{$keys || []}) {
         ok(exists $payload->{$key}, "$label: keeps key $key");
     }
+}
+
+sub mocked_step_failure {
+    my (%stream) = @_;
+    no warnings 'redefine';
+    local *FSM::Support::HDLExternalValidation::hdl_external_validation_tools = sub {
+        return {
+            verilator => $perl,
+            yosys => $perl,
+            abc_mapping => undef,
+            abc_mapping_tool => undef,
+        };
+    };
+    local *FSM::Support::HDLExternalValidation::supervise_process = sub {
+        return {
+            ok => 0,
+            status => 'nonzero_exit',
+            diagnostic => 'deterministic excerpt fixture',
+            stdout => $stream{stdout},
+            stderr => $stream{stderr},
+        };
+    };
+    return capture_error(sub {
+        validate_systemverilog_file(
+            source_file => __FILE__,
+            top_module => 'demo_top',
+        );
+    });
 }
 
 sub write_file {

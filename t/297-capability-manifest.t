@@ -66,9 +66,12 @@ use FSM::Support::HDLGeneratorFacadeContract qw(
     hdl_generator_facade_structured_nonflattened_generation_status
 );
 use FSM::Support::HDLExternalValidation qw(
+    hdl_external_validation_failure_stream_excerpt_strategy
+    hdl_external_validation_failure_stream_retained_bytes
     hdl_external_validation_process_containment
     hdl_external_validation_step_capture_limit_bytes
     hdl_external_validation_step_timeout_seconds
+    hdl_external_validation_yosys_log_mode
 );
 use FSM::Support::HDLExternalValidationContract qw(
     hdl_external_validation_abc_mapping_status
@@ -1919,9 +1922,24 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
         'manifest records the aggregate external-tool capture ceiling',
     );
     is(
+        $manifest->{backend_validation}{systemverilog_external}{failure_stream_retained_bytes},
+        hdl_external_validation_failure_stream_retained_bytes(),
+        'manifest records the per-stream failed-output retention ceiling',
+    );
+    is(
+        $manifest->{backend_validation}{systemverilog_external}{failure_stream_excerpt_strategy},
+        hdl_external_validation_failure_stream_excerpt_strategy(),
+        'manifest records the failed-output excerpt strategy',
+    );
+    is(
         $manifest->{backend_validation}{systemverilog_external}{process_containment},
         hdl_external_validation_process_containment(),
         'manifest records the external-tool process-group identity',
+    );
+    is(
+        $manifest->{backend_validation}{systemverilog_external}{yosys_log_mode},
+        hdl_external_validation_yosys_log_mode(),
+        'manifest records native quiet Yosys logging',
     );
     is(
         $manifest->{backend_validation}{systemverilog_external}{working_directory},

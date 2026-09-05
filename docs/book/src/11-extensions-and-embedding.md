@@ -2972,6 +2972,11 @@ explicit in-process opt-in
 abc_mapping => 1)`, which runs an ABC-backed Yosys mapping step when the
 optional mapping tool is available while keeping default `--verify-hdl`
 ABC-free.
+The same manifest contract publishes `yosys_log_mode`,
+`failure_stream_retained_bytes`, and `failure_stream_excerpt_strategy`.
+These fields describe native quiet Yosys logging and bounded byte-exact
+head/tail presentation for each failed output stream; they do not change the
+split success payload or underlying process-failure status.
 
 The public `support_accounting` match objects emitted by both `--check --json`
 and `--emit-semantic-json` now share one bounded nested-object owner too:

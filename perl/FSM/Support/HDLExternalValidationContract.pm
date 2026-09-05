@@ -7,10 +7,13 @@ use Exporter 'import';
 use JSON::PP ();
 use FSM::Support::HDLExternalValidation qw(
     hdl_external_validation_abc_tool_candidates
+    hdl_external_validation_failure_stream_excerpt_strategy
+    hdl_external_validation_failure_stream_retained_bytes
     hdl_external_validation_process_containment
     hdl_external_validation_required_tools
     hdl_external_validation_step_capture_limit_bytes
     hdl_external_validation_step_timeout_seconds
+    hdl_external_validation_yosys_log_mode
 );
 
 our @EXPORT_OK = qw(
@@ -59,7 +62,10 @@ sub build_hdl_external_validation_contract {
         report_source => 'FSM::Support::HDLExternalValidation',
         step_timeout_seconds => hdl_external_validation_step_timeout_seconds(),
         step_capture_limit_bytes => hdl_external_validation_step_capture_limit_bytes(),
+        failure_stream_retained_bytes => hdl_external_validation_failure_stream_retained_bytes(),
+        failure_stream_excerpt_strategy => hdl_external_validation_failure_stream_excerpt_strategy(),
         process_containment => hdl_external_validation_process_containment(),
+        yosys_log_mode => hdl_external_validation_yosys_log_mode(),
         working_directory => 'repository_root',
         shell_free_argv => JSON::PP::true,
         separate_stdout_stderr => JSON::PP::true,
@@ -116,6 +122,7 @@ sub build_hdl_external_validation_contract {
             'ABC executable discovery is optional metadata for the default validation lane; it does not make ABC a required validation tool and does not add ABC to the default CLI validation sequence.',
             'ABC mapping validation is available only through explicit in-process opt-in via abc_mapping => 1; default --verify-hdl remains ABC-free.',
             'Each Verilator or Yosys step uses shell-free argv from the repository root, a fixed 120-second wall, an 8,388,608-byte aggregate capture ceiling, owned process-group cleanup, separate stdout/stderr, and no retry; plain Perl-script tool entrypoints are handed to the canonical running Perl interpreter explicitly.',
+            'Yosys uses native quiet logging; failed streams retain byte-exact bounded head and tail excerpts with an exact omitted-byte marker.',
             'Direct VHDL generation has a scaffold subset, but this external validation contract remains SystemVerilog-only until a separate GHDL validation lane is runnable, documented, support-accounted, and regression-backed.',
             'The legacy vhdl_validation_deferred_until_vhdl_backend flag is retained for compatibility; prefer vhdl_validation_deferred_until_ghdl_validation_lane for the current blocker.',
         ],
