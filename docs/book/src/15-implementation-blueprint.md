@@ -123,3 +123,20 @@ runtime behavior. The `.3.3` slice added a test-only Rust projection binary and
 `t/1467-rust-portable-api-check-parity.t`, which compares the one supported
 direct `.fsm` check result against the Perl oracle after normalized
 check-JSON field projection.
+
+Run the parity gate and its hostile subprocess checks from the repository root:
+
+```sh
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib \
+  t/1467-rust-portable-api-check-parity.t t/1810-rust-parity-runtime.t
+```
+
+The test adapter selects installed Cargo, rustc, and Perl executables, builds
+the locked Rust package offline in a fresh repository-local directory, and
+admits only the matching Cargo-reported binary. It runs the Perl oracle and
+that binary as separate supervised stages. Every stage has a fixed deadline,
+bounded separate stdout/stderr, and process-group cleanup; the first failed
+stage fails the test without a retry. Build directories are removed after
+proved process cleanup. This contains startup stalls and identifies the failed
+stage; it does not diagnose an operating-system loader fault or extend the
+Rust experiment's supported source language.

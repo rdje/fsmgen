@@ -2144,10 +2144,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `a0b7f62d39567cc2e7399b9e43af19af3093670c; f579a078f; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.3.2: record recovered T1436 pass`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.4`
-  Status: `active`
-  Goal: `Select a bounded Rust parity subprocess policy before implementation.`
+  Status: `done`
+  Goal: `Select, implement, and qualify bounded Rust parity subprocess handling.`
   Acceptance: `Diagnose the T1467 pre-main stall with an independent bounded replay; select exact cargo/build/program command identity, repository-local artifact ownership, finite wall/capture bounds, process-group cleanup, failure preservation, and hostile-test coverage using the existing sealed supervisor architecture; split implementation into a separate child before changing the test or adding a policy adapter. Do not waive Rust parity, retry a failed launch into success, or classify the manually terminated full run as green.`
-  Verification: `The 2026-09-06 complete guarded recovery run reports both T1438 files and T1436/T1437 ok, then T1467 waits indefinitely in IPC::Cmd::run at line 52. Its cargo-launched rust/target/debug/fsmgen-portable-api-check-smoke child remains before main: a repository-local one-second /usr/bin/sample capture identifies only _dyld_start, no binary-image map, and an idle startup process. The required Knowledge Map queries found the existing parity contract but no startup-hang answer. Git identifies the unbounded test launch in 07d9df7eb. The verified child alone received TERM; T1467 then reported Failed test Rust portable API check projection command succeeds at line 59 and Failed 1/3 subtests. The later host-memory guard stop preserves that failure; no final TAP summary was produced. Stack evidence is in .artifacts/logs/session-recovery-20260906/t1467-process.sample. A separately contained direct replay of the same executable path exits zero with success=true JSON and an absent process group; rust-direct-probe.json records argv and executable/fixture digests. This falsifies a universal binary-startup failure but does not isolate the cargo/test launch chain or erase the failed gate. Policy selection remains pending.`
+  Verification: `The 2026-09-06 complete guarded recovery run reports both T1438 files and T1436/T1437 ok, then T1467 waits indefinitely in IPC::Cmd::run at line 52. Its cargo-launched rust/target/debug/fsmgen-portable-api-check-smoke child remains before main: a repository-local one-second /usr/bin/sample capture identifies only _dyld_start, no binary-image map, and an idle startup process. The required Knowledge Map queries found the existing parity contract but no startup-hang answer. Git identifies the unbounded test launch in 07d9df7eb. The verified child alone received TERM; T1467 then reported Failed test Rust portable API check projection command succeeds at line 59 and Failed 1/3 subtests. The later host-memory guard stop preserves that failure; no final TAP summary was produced. Stack evidence is in .artifacts/logs/session-recovery-20260906/t1467-process.sample. A separately contained direct replay of the same executable path exits zero with success=true JSON and an absent process group; rust-direct-probe.json records argv and executable/fixture digests. This falsifies a universal binary-startup failure but does not isolate the cargo/test launch chain or erase the failed gate. Child .1 selected the bounded policy, and child .2 implements it with real parity and hostile controls passing; the original failed complete gate is preserved. Full qualification still requires sibling .5/.6 repairs and a fresh guarded run.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.4: own Rust parity startup blocker`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.4.2`
@@ -2156,15 +2156,15 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `done`
   Goal: `Complete the bounded startup audit and select the Rust parity subprocess policy from independent contained launch evidence.`
   Acceptance: `Record the approved bounded bootstrap scope, compare the selected policy templates, inspect the runtime import closure, independently replay the Cargo/test launch boundary with fixed wall and capture limits, select exact command and artifact identity with failure-preserving cleanup, and leave implementation owned by sibling .2.`
-  Verification: `The director confirmed decision 0047 and bounded startup scope. Required policies, roadmap, CLI/facade/source orchestration, Rust crate/projection/T1467, shared supervisor/policy, and relevant mdBook were read. Module::ScanDeps and an independent literal use/require traversal agree on 266 reachable project files; every traversed path is now represented in the refreshed import note. Counts are a dated capture; older line measurements remain explicitly historical. README policy and containment are locally adopted; the current guide includes the committed surface-count delegation update. The selected claim template changed from the local adoption hash; proposed CLAIM-VERIFICATION-TEMPLATE-REVIEW.1 owns deliberate review, without automatic adoption. The task-local policy under decisions 0087/0101 selects sealed tool resolution, offline local build, exact artifact admission, separate oracle/program execution, fixed bounds, and failure preservation. Bounded Cargo run, fresh isolated build, direct Rust, and validated Perl controls pass with absent groups, and their normalized parity fields agree. The diagnostic relative-Perl directory exec_error remains failed; an empty stdin-fed guard invocation produced no replay evidence. The prior T1467 gate failure is not reclassified and the OS startup cause remains unknown. The exact diagnostic build is removed after count/byte/hash capture in .artifacts/logs/rust-parity-policy-20260906/build-cleanup.json. Guarded T1669 passes Files=1/Tests=4; task integrity and diff hygiene pass. The complete staged doctrine driver passes, including Knowledge Map, claim inventory/dispositions, containment, locality, and task integrity; its docs-only acceptance exemption is not an implementation pass. The adapter and hostile watcher remain an explicit missing implementation/durability leg under sibling .4.2; no product behavior or mdBook support boundary changes.`
+  Verification: `The director confirmed decision 0047 and bounded startup scope. Required policies, roadmap, CLI/facade/source orchestration, Rust crate/projection/T1467, shared supervisor/policy, and relevant mdBook were read. Module::ScanDeps and an independent literal use/require traversal agree on 266 reachable project files; every traversed path is now represented in the refreshed import note. Counts are a dated capture; older line measurements remain explicitly historical. README policy and containment are locally adopted; the current guide includes the committed surface-count delegation update. The selected claim template changed from the local adoption hash; proposed CLAIM-VERIFICATION-TEMPLATE-REVIEW.1 owns deliberate review, without automatic adoption. The task-local policy under decisions 0087/0101 selects sealed tool resolution, offline local build, exact artifact admission, separate oracle/program execution, fixed bounds, and failure preservation. Bounded Cargo run, fresh isolated build, direct Rust, and validated Perl controls pass with absent groups, and their normalized parity fields agree. The diagnostic relative-Perl directory exec_error remains failed; an empty stdin-fed guard invocation produced no replay evidence. The prior T1467 gate failure is not reclassified and the OS startup cause remains unknown. The exact diagnostic build is removed after count/byte/hash capture in .artifacts/logs/rust-parity-policy-20260906/build-cleanup.json. Guarded T1669 passes Files=1/Tests=4; task integrity and diff hygiene pass. The complete staged doctrine driver passes, including Knowledge Map, claim inventory/dispositions, containment, locality, and task integrity; its docs-only acceptance exemption is not an implementation pass. At selection, the adapter and hostile watcher remained an explicit missing implementation/durability leg under sibling .4.2; no product behavior or mdBook support boundary changes.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.4.1: select bounded Rust parity stages`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.4.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and qualify the selected sealed Rust parity runtime adapter and T1467 launch path.`
   Acceptance: `After sibling .1 selects the contract, preserve every normalized parity assertion, seal executable identity and repository-local stores, supervise build/oracle/program stages under fixed finite limits, reject hostile path/argument/policy changes, preserve first failure and split-stream signal/cleanup truth, synchronize the mdBook, and pass focused parity plus shared-supervisor regressions without residue.`
-  Verification: `Blocked on sibling .1 policy selection; no implementation started.`
-  Commit: `pending`
+  Verification: `The sealed RustParityRuntime reuses the shared test supervisor, resolves validated Perl/Cargo/rustc identities from the initial absolute PATH, unwraps rustup through bounded exact tool queries, restores the caller environment, and fixes offline locked build/oracle/direct-program stages. Each call builds into a fresh owned directory under .artifacts/build/rust-parity, rejects symlink ancestry and stale/outside/ambiguous/decoy artifacts, preserves ordered split-stream status and group-cleanup evidence, and stops at its first failure. Build policy is 120 seconds/8,388,608 bytes; other launched stages use 10 seconds/1,048,576 bytes. These are selected bounds, not capacity measurements. The initial T1810 RED reports missing RustParityRuntime at line 11. T1467's parity_projection and helpers are byte-identical to the previous commit. Final guarded T1467/T1669/T1810 is All tests successful, Files=3/Tests=13, Result: PASS. The hostile controls cover unavailable/directory tools, failing and misleading rustup resolution, PATH mutation, rejected caller arguments, exact local argv/environment, malformed/duplicate/decoy/outside/symlink/non-executable artifacts, nonzero/signal/exec/overflow/timeout truth, and TERM-resistant descendant removal. Every verified build workspace is removed. All changed Perl/test sources are syntax-clean, all 63 book chapters test, and the updated parity guidance renders successfully. The mdBook destination mistake was immediately task-owned and recovered by exact copy/size/hash/use/delete verification; both old and reviewed local outputs are absent. Fresh maintained-reference authority records the 17-line/875-byte book delta without changing ceilings. Claim census independently agrees at 12,274 numeric lines with unchanged 1,900 candidates/2,671 constants; the final staged driver reports [doctrine] all doctrine checks passed, including fresh implementation task acceptance. Prior full-CI failure remains failed; .5/.6 and fresh complete qualification remain open. Commands and supporting logs are under .artifacts/logs/rust-parity-policy-20260906/.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.4.2: bound Rust parity build and execution`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5`
   Status: `pending`
@@ -4758,7 +4758,8 @@ selected real tool through a bounded rustup query.
 5. Build the exact `fsmgen_portable_api` package and
    `fsmgen-portable-api-check-smoke` binary from `rust/Cargo.toml`, using
    `--offline --locked --message-format=json-render-diagnostics`. Fix its
-   target directory to `.artifacts/build/rust-parity`; use repository cwd,
+   target root to `.artifacts/build/rust-parity`; implementation child `.4.2`
+   selects a fresh owned directory beneath it for every operation. Use repository cwd,
    repository-local Cargo cache and temporary roots, and the selected rustc.
    Cargo/rustc and installed toolchain files are read-only host dependencies;
    downloads and global cache writes are not admitted.
@@ -4812,3 +4813,45 @@ The first staged gate rejected the unnecessary additional decision record and
 duplicated card summary against existing rollover-debt allowances. This complete
 policy is retained here in its work-unit layer; the card routes to the richer
 architecture note. No existing fact or enforcement ceiling is removed or raised.
+
+## Acceptance Checklist (.19.2.3.1.2.2.4.2 sealed Rust parity; enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'run('` identifies
+  `07d9df7ebefe7618ad4581ee172fe24085a1d1df` as the unbounded T1467 launch
+  introduction; the retained recovery sample places its child at `_dyld_start`.
+  Initial T1810 RED reports `Can't locate FSM/Test/RustParityRuntime.pm`
+  at `t/1810-rust-parity-runtime.t line 11`. This diagnoses the missing
+  containment boundary; it does not claim an OS loader root cause.
+- [x] **ADDRESSED (verified)** — Guarded T1467/T1669/T1810 GREEN reports
+  `All tests successful`, `Files=3, Tests=13`, `Result: PASS` in
+  `adapter-final.log`. Sealed tool/build/artifact/runtime controls preserve
+  first failure, finite split-stream capture, signal identity, and proved
+  TERM/KILL cleanup. Independent comparison with the previous Git version
+  proves the entire normalized parity projection and helpers byte-identical.
+- [x] **NO REGRESSION** — The shared-process/fixture/real-parity band reports
+  `All tests successful`, `Files=3, Tests=13`; all changed Perl sources report
+  `syntax OK`. `mdbook test docs/book` and the corrected root-derived HTML
+  build exit zero. Exact render copy/hash/residue verification is below.
+  Claim inventory independently agrees, and the final staged gate reports
+  `[doctrine] all doctrine checks passed`, including fresh evidence-backed
+  task acceptance, containment, locality, Knowledge Map, and dispositions.
+  Full-CI and push qualification remain blocked by the separately owned work.
+
+### Rust parity implementation artifact-location recovery
+
+The implementation book build passed `--dest-dir ../../.artifacts/build/rust-parity-book-20260906`
+assuming mdBook interpreted it from `docs/book`. Its terminal output instead
+resolved the path from the repository working directory, creating the exact
+build below the caller's `../../.artifacts/build/` on the repository volume.
+This leaf owns immediate copy/verify/use/delete recovery into
+`.artifacts/build/rust-parity-book-20260906`, a corrected root-derived build,
+and an exact-old-path residue census. No parent directory or shared data is
+owned for deletion. The successful render is not evidence of correct locality;
+recovery completed: the initial copy verified all 98 files and 22,636,617
+bytes by per-file SHA-256. The corrected command uses
+`--dest-dir .artifacts/build/rust-parity-book-20260906` from the root and
+exits zero at the repository-local destination. The rendered parity guidance
+was inspected. Both the exact misplaced directory and the reviewed local render
+were removed; an explicit residue census proves both absent. The per-file
+manifest and terminal results are retained in `book-location-recovery.json`
+under the owned log root. Only the exact session-owned leaves were deleted.

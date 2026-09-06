@@ -8,6 +8,7 @@ use File::Basename qw(dirname);
 use File::Path qw(make_path);
 use File::Spec;
 use FindBin;
+use JSON::PP qw(decode_json);
 use Test::More;
 use Time::HiRes qw(sleep);
 
@@ -173,6 +174,46 @@ CHECKER
     ok($failed->{cleanup}{group_gone}, 'failed checker group is gone');
 };
 
+subtest 'Rust parity rejects unresolved and misleading tool identities before building' => sub {
+    my $probe = File::Spec->catfile($workspace, 'rust-tool-resolution');
+    write_executable($probe, <<'PROBE');
+use strict;
+use warnings;
+use JSON::PP qw(encode_json);
+$ENV{PATH} = shift @ARGV;
+require FSM::Test::RustParityRuntime;
+print encode_json(FSM::Test::RustParityRuntime::run_rust_parity());
+PROBE
+    my $bin = File::Spec->catdir($workspace, 'rust-tools');
+    make_path(File::Spec->catdir($bin, 'cargo'));
+    my $cargo = File::Spec->catfile($bin, 'cargo');
+    my $proxy = File::Spec->catfile($bin, 'rustup');
+    for my $mode (qw(directory proxy_nonzero proxy_decoy)) {
+        if ($mode ne 'directory') {
+            rmdir $cargo if -d $cargo;
+            unlink $cargo if -l $cargo;
+            write_executable($proxy, "#!$perl\n" . ($mode eq 'proxy_nonzero'
+                ? "print STDERR qq(resolution-failed\\n); exit 9;\n"
+                : "print qq(relative-cargo\\n);\n"));
+            symlink $proxy, $cargo or die "cannot make Cargo proxy: $!";
+        }
+        my $outer = supervise_process(
+            schema => 'fsmgen.test.rust_tool_resolution_probe.v1', stage => 'probe',
+            bounds => {timeout_seconds => 20, capture_limit_bytes => 65_536},
+            containment => 'rust_tool_resolution_probe_group', cwd => $repo_root,
+            argv => [$perl, '-Iperl', '-It/lib', $probe, $bin],
+        );
+        ok($outer->{ok}, "$mode probe terminates under the independent watcher") or diag explain $outer;
+        my $result = eval { decode_json($outer->{stdout}) };
+        ok(ref($result) eq 'HASH', "$mode returns a structured adapter result") or return;
+        ok(!$result->{ok}, "$mode fails closed");
+        is($result->{failure_stage}, $mode eq 'proxy_decoy' ? 'tool_admission' : 'tool_resolution', "$mode has exact stage attribution");
+        is($result->{status}, $mode eq 'proxy_nonzero' ? 'nonzero_exit' : 'invocation_error', "$mode preserves failure class");
+        ok(!grep($_->{stage} eq 'cargo_build', @{$result->{stages}}), "$mode cannot start Cargo build");
+        ok(!grep(!$_->{cleanup}{group_gone}, @{$result->{stages}}), "$mode leaves no owned process group");
+    }
+};
+
 subtest 'policy adapters exclusively own low-level test supervision' => sub {
     my $support = slurp(File::Spec->catfile(
         $repo_root, qw(perl FSM Support ProcessSupervisor.pm),
@@ -231,6 +272,10 @@ subtest 'policy adapters exclusively own low-level test supervision' => sub {
     like($t1545, qr/\brun_fixture_git\s*\(/, 'fixture Git is adapter-owned');
     like($t1545, qr/\brun_fixture_checker\s*\(/, 'fixture checker is adapter-owned');
 
+    my $t1467 = slurp(File::Spec->catfile($repo_root, 't', '1467-rust-portable-api-check-parity.t'));
+    unlike($t1467, qr/IPC::Cmd|run\s*\(\s*command\s*=>/, 'T1467 has no unbounded IPC launch');
+    like($t1467, qr/use FSM::Test::RustParityRuntime qw\(run_rust_parity\)/, 'Rust parity uses its sealed adapter');
+
     my @owner;
     for my $path (glob File::Spec->catfile(
             $repo_root, qw(t lib FSM Test *.pm),
@@ -243,6 +288,7 @@ subtest 'policy adapters exclusively own low-level test supervision' => sub {
     is_deeply(
         [sort @owner],
         [qw(
+            t/lib/FSM/Test/RustParityRuntime.pm
             t/lib/FSM/Test/TaskAcceptanceFixtureRuntime.pm
             t/lib/FSM/Test/VerilatorRuntime.pm
         )],

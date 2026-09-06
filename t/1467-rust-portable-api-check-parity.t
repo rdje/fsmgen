@@ -5,38 +5,23 @@ use warnings;
 use Test::More;
 use File::Spec;
 use FindBin;
-use IPC::Cmd qw(run);
 use JSON::PP qw(decode_json);
+use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
+use FSM::Test::RustParityRuntime qw(run_rust_parity);
 
-my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
-my $fixture = File::Spec->catfile(
-    $repo_root,
-    qw(t corpus direct_sreset_active_high.fsm),
-);
-my $rust_manifest = File::Spec->catfile($repo_root, qw(rust Cargo.toml));
-
-my $perl_oracle = run_json_command(
-    'Perl oracle check JSON',
-    [
-        './bin/fsmgen',
-        '--check-json',
-        $fixture,
-    ],
-);
-my $rust_projection = run_json_command(
-    'Rust portable API check projection',
-    [
-        'cargo',
-        'run',
-        '--quiet',
-        '--manifest-path',
-        $rust_manifest,
-        '--bin',
-        'fsmgen-portable-api-check-smoke',
-        '--',
-        $fixture,
-    ],
-);
+my $result = run_rust_parity();
+ok($result->{ok}, 'bounded Rust parity stages succeed') or do {
+    for my $stage (@{$result->{stages}}) {
+        diag("$stage->{stage}: $stage->{status}: $stage->{diagnostic}");
+        diag(substr($stage->{stderr}, 0, 4096)) if length $stage->{stderr};
+    }
+    done_testing();
+    exit 1;
+};
+my %stage = map { $_->{stage} => $_ } @{$result->{stages}};
+my $perl_oracle = stage_json($stage{perl_oracle});
+my $rust_projection = stage_json($stage{rust_execution});
 
 is_deeply(
     parity_projection($rust_projection),
@@ -46,31 +31,15 @@ is_deeply(
 
 done_testing();
 
-sub run_json_command {
-    my ($label, $command) = @_;
-
-    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
-        command => $command,
-    );
-    my $stdout = join('', @{$stdout_buf || []});
-    my $stderr = join('', @{$stderr_buf || []});
-
-    ok($success, "$label command succeeds")
-        or do {
-            diag("stderr:\n$stderr") if length $stderr;
-            diag("stdout:\n$stdout") if length $stdout;
-            done_testing();
-            exit 0;
-        };
-
-    my $decoded = eval { decode_json($stdout) };
-    ok($decoded, "$label emits decodable JSON")
+sub stage_json {
+    my ($stage) = @_;
+    my $decoded = eval { decode_json($stage->{stdout}) };
+    ok(ref($decoded) eq 'HASH', "$stage->{stage} emits a JSON object")
         or do {
             diag($@) if $@;
-            diag("stderr:\n$stderr") if length $stderr;
-            diag("stdout:\n$stdout") if length $stdout;
+            diag(substr($stage->{stdout}, 0, 4096));
             done_testing();
-            exit 0;
+            exit 1;
         };
 
     return $decoded;
