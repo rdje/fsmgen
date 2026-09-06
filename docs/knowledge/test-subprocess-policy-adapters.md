@@ -34,7 +34,7 @@ reverify: >-
 ---
 
 Decisions `0087`/`0101` keep one engine in `FSM::Support::ProcessSupervisor`
-behind the test compatibility wrapper. It owns shell-free argv, same-volume
+with private nonblocking advancement behind synchronous callers. It owns shell-free argv, same-volume
 repository cwd, bounded split streams, exec handoff, monotonic time, one process
 group, first-failure status and TERM/KILL cleanup. Sealed adapters own commands,
 bounds, schemas and platform guards; T1669 watches exclusive ownership.
@@ -71,4 +71,4 @@ The exact escaped group was terminated and absence verified. HIAL/VIAL
 watcher; neutral-verifier extraction remains provisional and blocked.
 The task selects one launch coordinator, private clients, reserved identities
 and an exact bounded wire/context/lifecycle protocol. T1669 proves reservation
-feasibility; asynchronous extraction, routing and hostile qualification remain pending.
+feasibility; extraction is complete, while coordination/routing and hostile qualification remain pending.

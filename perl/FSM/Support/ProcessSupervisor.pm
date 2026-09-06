@@ -207,17 +207,65 @@ sub _is_below_repo {
     return index($path, $REPO_ROOT . File::Spec->catfile('', '')) == 0;
 }
 
+# Private state-machine entrypoints stay behind the existing caller-sealed
+# facade. Advancing a job never sleeps or waits for I/O/termination; the driver
+# alone owns waiting, so a later coordinator can service several owned jobs.
 sub _supervise {
+    my ($request) = @_;
+    my $state = _start_supervision($request);
+    while ($state->{phase} ne 'finished') {
+        _advance_supervision($state);
+        last if $state->{phase} eq 'finished';
+        my $wait = _supervision_poll_delay($state);
+        if ($state->{select} && $state->{select}->count) {
+            $state->{select}->can_read($wait);
+        }
+        else {
+            sleep($wait) if $wait > 0;
+        }
+    }
+    return $state->{result};
+}
+
+sub _failed_supervision_start {
+    return {phase => 'finished', result => _host_failure(@_)};
+}
+
+sub _supervision_poll_delay {
+    my ($state) = @_;
+    return 0 if $state->{phase} eq 'finished';
+    my $terminating = $state->{phase} eq 'cleanup';
+    my $deadline = $terminating
+        ? $state->{termination}{deadline} : $state->{deadline};
+    my $wait = $deadline - clock_gettime(CLOCK_MONOTONIC);
+    return 0 if $wait <= 0;
+    my $interval = $terminating ? 0.02 : 0.05;
+    return $wait < $interval ? $wait : $interval;
+}
+
+sub _advance_supervision {
+    my ($state) = @_;
+    return if $state->{phase} eq 'finished';
+    if ($state->{phase} eq 'cleanup') {
+        _advance_owned_termination($state->{termination});
+        _complete_supervision($state)
+            if $state->{termination}{phase} eq 'finished';
+        return;
+    }
+    _advance_supervision_capture($state);
+}
+
+sub _start_supervision {
     my ($request) = @_;
     my ($stdin_reader, $stdin_writer);
     my ($stdout_reader, $stdout_writer);
     my ($stderr_reader, $stderr_writer);
     my ($control_reader, $control_writer);
-    return _host_failure($request, "cannot create stdin pipe: $!", undef)
+    return _failed_supervision_start($request, "cannot create stdin pipe: $!", undef)
         unless pipe($stdin_reader, $stdin_writer);
     unless (pipe($stdout_reader, $stdout_writer)) {
         _close_handles($stdin_reader, $stdin_writer);
-        return _host_failure(
+        return _failed_supervision_start(
             $request, "cannot create stdout pipe: $!", undef,
         );
     }
@@ -225,7 +273,7 @@ sub _supervise {
         _close_handles(
             $stdin_reader, $stdin_writer, $stdout_reader, $stdout_writer,
         );
-        return _host_failure(
+        return _failed_supervision_start(
             $request, "cannot create stderr pipe: $!", undef,
         );
     }
@@ -234,7 +282,7 @@ sub _supervise {
             $stdin_reader, $stdin_writer, $stdout_reader, $stdout_writer,
             $stderr_reader, $stderr_writer,
         );
-        return _host_failure(
+        return _failed_supervision_start(
             $request, "cannot create exec-control pipe: $!", undef,
         );
     }
@@ -247,7 +295,7 @@ sub _supervise {
             $stdin_reader, $stdin_writer, $stdout_reader, $stdout_writer,
             $stderr_reader, $stderr_writer, $control_reader, $control_writer,
         );
-        return _host_failure(
+        return _failed_supervision_start(
             $request,
             "cannot seal exec-control pipe close-on-exec: $!",
             undef,
@@ -261,7 +309,7 @@ sub _supervise {
             $stdin_reader, $stdin_writer, $stdout_reader, $stdout_writer,
             $stderr_reader, $stderr_writer, $control_reader, $control_writer,
         );
-        return _host_failure(
+        return _failed_supervision_start(
             $request, "cannot fork supervised process: $!", $started,
         );
     }
@@ -316,169 +364,165 @@ sub _supervise {
         $stdin_writer,
     );
     eval { setpgid($pid, $pid); 1 };
-    my $cleanup = _new_cleanup(1, $request->{containment});
+    my $state = {
+        %$request,
+        phase => 'capture', pid => $pid, started => $started,
+        stdout => '', stderr => '', exec_error => '',
+        exec_handoff => undef, first_output => undef,
+        leader_reaped => 0, leader_status => undef,
+        timed_out => 0, output_limited => 0,
+        cleanup => _new_cleanup(1, $request->{containment}),
+        deadline => $started + $request->{bounds}{timeout_seconds},
+        select => IO::Select->new(), streams => {},
+    };
+    for my $entry (
+        ['stdout', $stdout_reader], ['stderr', $stderr_reader],
+        ['control', $control_reader],
+    ) {
+        my ($name, $fh) = @$entry;
+        $state->{streams}{fileno($fh)} = $entry;
+        $state->{select}->add($fh);
+    }
+    $state->{control_fileno} = fileno($control_reader);
     for my $fh ($stdout_reader, $stderr_reader, $control_reader) {
         unless (_set_nonblocking($fh)) {
-            my $message = "cannot make supervised pipe nonblocking: $!";
-            _close_handles($stdout_reader, $stderr_reader, $control_reader);
-            my ($leader_reaped, $leader_status) = (0, undef);
-            _terminate_owned_process(
-                $pid, \$leader_reaped, \$leader_status, $cleanup,
-            );
-            return _finish_result({
-                %$request, status => 'host_error',
-                diagnostic => $message, stdout => '', stderr => '',
-                exec_error => undef, started => $started,
-                exec_handoff => undef, first_output => undef,
-                finished => clock_gettime(CLOCK_MONOTONIC),
-                leader_status => $leader_status, cleanup => $cleanup,
-                timed_out => 0, output_limited => 0, exec_failed => 0,
-            });
+            $state->{host_error} = "cannot make supervised pipe nonblocking: $!";
+            # This setup failure predates observable exec-handoff evidence.
+            $state->{handoff_unknown} = 1;
+            _end_supervision_capture($state);
+            last;
         }
     }
+    return $state;
+}
 
-    my %stream = (
-        fileno($stdout_reader) => ['stdout', $stdout_reader],
-        fileno($stderr_reader) => ['stderr', $stderr_reader],
-        fileno($control_reader) => ['control', $control_reader],
+sub _advance_supervision_capture {
+    my ($state) = @_;
+    _poll_leader(
+        $state->{pid}, \$state->{leader_reaped},
+        \$state->{leader_status}, \$state->{host_error},
     );
-    my $control_fileno = fileno($control_reader);
-    my $select = IO::Select->new(
-        $control_reader, $stdout_reader, $stderr_reader,
-    );
-    my ($stdout, $stderr, $exec_error) = ('', '', '');
-    my ($exec_handoff, $first_output);
-    my ($leader_reaped, $leader_status) = (0, undef);
-    my ($timed_out, $output_limited) = (0, 0);
-    my ($host_error, $surviving_descendants);
-    my $deadline = $started + $request->{bounds}{timeout_seconds};
+    if ($state->{leader_reaped} && _group_alive($state->{pid})) {
+        $state->{surviving_descendants} = 1;
+        $state->{cleanup}{surviving_descendants} = 1;
+        _end_supervision_capture($state);
+        return;
+    }
+    if ($state->{leader_reaped} && !$state->{select}->count) {
+        _end_supervision_capture($state);
+        return;
+    }
+    if (clock_gettime(CLOCK_MONOTONIC) >= $state->{deadline}) {
+        $state->{timed_out} = 1;
+        _end_supervision_capture($state);
+        return;
+    }
 
-    while (1) {
-        _poll_leader($pid, \$leader_reaped, \$leader_status, \$host_error);
-        if ($leader_reaped && _group_alive($pid)) {
-            $surviving_descendants = 1;
-            $cleanup->{surviving_descendants} = 1;
+    my @ready = $state->{select}->can_read(0);
+    @ready = sort {
+        (fileno($a) == $state->{control_fileno} ? 0 : 1)
+            <=> (fileno($b) == $state->{control_fileno} ? 0 : 1)
+    } @ready;
+    for my $fh (@ready) {
+        my $fileno = fileno($fh);
+        next unless defined($fileno) && exists $state->{streams}{$fileno};
+        my ($name) = @{$state->{streams}{$fileno}};
+        my $chunk = '';
+        my $read = sysread($fh, $chunk, $READ_CHUNK_BYTES);
+        if (!defined $read) {
+            next if $! == EINTR || $! == EAGAIN || $! == EWOULDBLOCK;
+            $state->{host_error} = "$name pipe read failed: $!";
             last;
         }
-        last if $leader_reaped && !$select->count;
-        my $now = clock_gettime(CLOCK_MONOTONIC);
-        if ($now >= $deadline) {
-            $timed_out = 1;
-            last;
+        if ($read == 0) {
+            $state->{exec_handoff} = clock_gettime(CLOCK_MONOTONIC)
+                if $name eq 'control' && !length($state->{exec_error})
+                    && !defined($state->{exec_handoff});
+            $state->{select}->remove($fh);
+            close $fh;
+            delete $state->{streams}{$fileno};
+            next;
         }
-        my $wait = $deadline - $now;
-        $wait = 0.05 if $wait > 0.05;
-        my @ready = $select->count ? $select->can_read($wait) : ();
-        sleep($wait) unless @ready || $select->count;
-        @ready = sort {
-            (fileno($a) == $control_fileno ? 0 : 1)
-                <=> (fileno($b) == $control_fileno ? 0 : 1)
-        } @ready;
-        for my $fh (@ready) {
-            my $fileno = fileno($fh);
-            next unless defined($fileno) && exists $stream{$fileno};
-            my ($name) = @{$stream{$fileno}};
-            my $chunk = '';
-            my $read = sysread($fh, $chunk, $READ_CHUNK_BYTES);
-            if (!defined $read) {
-                next if $! == EINTR || $! == EAGAIN || $! == EWOULDBLOCK;
-                $host_error = "$name pipe read failed: $!";
-                last;
-            }
-            if ($read == 0) {
-                $exec_handoff = clock_gettime(CLOCK_MONOTONIC)
-                    if $name eq 'control' && !length($exec_error)
-                        && !defined($exec_handoff);
-                $select->remove($fh);
-                close $fh;
-                delete $stream{$fileno};
-                next;
-            }
-            if ($name eq 'control') {
-                my $remaining = $CONTROL_LIMIT_BYTES - bytes::length($exec_error);
-                if ($remaining <= 0 || $read > $remaining) {
-                    $host_error = 'exec-control message exceeded its fixed limit';
-                    last;
-                }
-                $exec_error .= $chunk;
-                next;
-            }
-            $first_output = clock_gettime(CLOCK_MONOTONIC)
-                unless defined $first_output;
-            my $captured = bytes::length($stdout) + bytes::length($stderr);
-            my $remaining =
-                $request->{bounds}{capture_limit_bytes} - $captured;
+        if ($name eq 'control') {
+            my $remaining = $CONTROL_LIMIT_BYTES
+                - bytes::length($state->{exec_error});
             if ($remaining <= 0 || $read > $remaining) {
-                if ($remaining > 0) {
-                    if ($name eq 'stdout') {
-                        $stdout .= substr($chunk, 0, $remaining);
-                    }
-                    else {
-                        $stderr .= substr($chunk, 0, $remaining);
-                    }
-                }
-                $output_limited = 1;
+                $state->{host_error} = 'exec-control message exceeded its fixed limit';
                 last;
             }
-            if ($name eq 'stdout') {
-                $stdout .= $chunk;
-            }
-            else {
-                $stderr .= $chunk;
-            }
+            $state->{exec_error} .= $chunk;
+            next;
         }
-        last if defined($host_error) || $output_limited;
+        $state->{first_output} = clock_gettime(CLOCK_MONOTONIC)
+            unless defined $state->{first_output};
+        my $captured = bytes::length($state->{stdout})
+            + bytes::length($state->{stderr});
+        my $remaining = $state->{bounds}{capture_limit_bytes} - $captured;
+        if ($remaining <= 0 || $read > $remaining) {
+            $state->{$name} .= substr($chunk, 0, $remaining)
+                if $remaining > 0;
+            $state->{output_limited} = 1;
+            last;
+        }
+        $state->{$name} .= $chunk;
     }
+    _end_supervision_capture($state)
+        if defined($state->{host_error}) || $state->{output_limited};
+}
 
-    _close_handles($stdout_reader, $stderr_reader, $control_reader);
-    if ($timed_out || $output_limited || $surviving_descendants
-            || defined($host_error)
-            || length($exec_error)) {
-        _terminate_owned_process(
-            $pid, \$leader_reaped, \$leader_status, $cleanup,
+sub _end_supervision_capture {
+    my ($state) = @_;
+    _close_handles(map { $_->[1] } values %{$state->{streams}});
+    $state->{streams} = {};
+    $state->{select} = IO::Select->new();
+    if ($state->{timed_out} || $state->{output_limited}
+            || $state->{surviving_descendants}
+            || defined($state->{host_error}) || length($state->{exec_error})) {
+        $state->{phase} = 'cleanup';
+        $state->{termination} = _start_owned_termination(
+            $state->{pid}, \$state->{leader_reaped},
+            \$state->{leader_status}, $state->{cleanup},
         );
+        return;
     }
-    else {
-        while (!$leader_reaped
-                && clock_gettime(CLOCK_MONOTONIC) < $deadline) {
-            _poll_leader(
-                $pid, \$leader_reaped, \$leader_status, \$host_error,
-            );
-            sleep(0.01) unless $leader_reaped;
-        }
-        unless ($leader_reaped) {
-            $timed_out = 1;
-            _terminate_owned_process(
-                $pid, \$leader_reaped, \$leader_status, $cleanup,
-            );
-        }
-        if (_group_alive($pid)) {
-            $surviving_descendants = 1;
-            $cleanup->{surviving_descendants} = 1;
-            _terminate_owned_process(
-                $pid, \$leader_reaped, \$leader_status, $cleanup,
-            );
-        }
+    # Normal capture ends only once the direct child was harvested and all
+    # streams closed. Preserve the final independent group check.
+    if (_group_alive($state->{pid})) {
+        $state->{surviving_descendants} = 1;
+        $state->{cleanup}{surviving_descendants} = 1;
+        $state->{phase} = 'cleanup';
+        $state->{termination} = _start_owned_termination(
+            $state->{pid}, \$state->{leader_reaped},
+            \$state->{leader_status}, $state->{cleanup},
+        );
+        return;
     }
-    $cleanup->{leader_reaped} = $leader_reaped ? 1 : 0;
-    $cleanup->{group_gone} = _group_alive($pid) ? 0 : 1;
-    my $finished = clock_gettime(CLOCK_MONOTONIC);
-    $exec_handoff = $finished
-        if !defined($exec_handoff) && !length($exec_error);
-    $exec_error = _sanitize_control($exec_error);
+    _complete_supervision($state);
+}
 
-    my $status = defined($host_error) ? 'host_error'
-        : $timed_out ? 'timed_out'
-        : $output_limited ? 'output_limited'
+sub _complete_supervision {
+    my ($state) = @_;
+    my $cleanup = $state->{cleanup};
+    $cleanup->{leader_reaped} = $state->{leader_reaped} ? 1 : 0;
+    $cleanup->{group_gone} = _group_alive($state->{pid}) ? 0 : 1;
+    $state->{finished} = clock_gettime(CLOCK_MONOTONIC);
+    $state->{exec_handoff} = $state->{finished}
+        if !$state->{handoff_unknown} && !defined($state->{exec_handoff})
+            && !length($state->{exec_error});
+    my $exec_error = _sanitize_control($state->{exec_error});
+    my $leader_status = $state->{leader_status};
+    my $status = defined($state->{host_error}) ? 'host_error'
+        : $state->{timed_out} ? 'timed_out'
+        : $state->{output_limited} ? 'output_limited'
         : length($exec_error) ? 'exec_error'
-        : $surviving_descendants ? 'surviving_descendants'
+        : $state->{surviving_descendants} ? 'surviving_descendants'
         : !$cleanup->{leader_reaped} || !$cleanup->{group_gone}
             ? 'cleanup_failed'
         : !defined($leader_status) ? 'host_error'
         : ($leader_status & 127) ? 'signaled'
         : ($leader_status >> 8) != 0 ? 'nonzero_exit'
         : 'success';
-    my $diagnostic = defined($host_error) ? $host_error
+    my $diagnostic = defined($state->{host_error}) ? $state->{host_error}
         : $status eq 'success' ? 'supervised process completed successfully'
         : $status eq 'timed_out' ? 'supervised process exceeded its fixed deadline'
         : $status eq 'output_limited' ? 'supervised process exceeded its aggregate capture limit'
@@ -488,16 +532,12 @@ sub _supervise {
         : $status eq 'signaled' ? 'supervised process exited after a signal'
         : $status eq 'nonzero_exit' ? 'supervised process exited nonzero'
         : 'supervised process status could not be determined';
-    return _finish_result({
-        %$request, status => $status,
-        diagnostic => $diagnostic, stdout => $stdout, stderr => $stderr,
+    $state->{result} = _finish_result({
+        %$state, status => $status, diagnostic => $diagnostic,
         exec_error => length($exec_error) ? $exec_error : undef,
-        started => $started, exec_handoff => $exec_handoff,
-        first_output => $first_output, finished => $finished,
-        leader_status => $leader_status, cleanup => $cleanup,
-        timed_out => $timed_out, output_limited => $output_limited,
         exec_failed => length($exec_error) ? 1 : 0,
     });
+    $state->{phase} = 'finished';
 }
 
 sub _host_failure {
@@ -590,6 +630,14 @@ sub _poll_leader {
 }
 
 sub _terminate_owned_process {
+    my $state = _start_owned_termination(@_);
+    while ($state->{phase} ne 'finished') {
+        _advance_owned_termination($state);
+        sleep(0.02) if $state->{phase} ne 'finished';
+    }
+}
+
+sub _start_owned_termination {
     my ($pid, $reaped, $status, $cleanup) = @_;
     my $group_alive = _group_alive($pid);
     my $leader_alive = !$$reaped && kill(0, $pid);
@@ -597,31 +645,43 @@ sub _terminate_owned_process {
     if ($group_alive || $leader_alive) {
         $cleanup->{term_sent} = kill('TERM', $target) ? 1 : 0;
     }
-    my $deadline = clock_gettime(CLOCK_MONOTONIC) + $TERM_GRACE_SECONDS;
-    while (clock_gettime(CLOCK_MONOTONIC) < $deadline) {
-        my $ignored;
-        _poll_leader($pid, $reaped, $status, \$ignored);
-        last if $$reaped && !_group_alive($pid);
-        sleep(0.02);
+    return {
+        pid => $pid, reaped => $reaped, status => $status, cleanup => $cleanup,
+        phase => 'term',
+        deadline => clock_gettime(CLOCK_MONOTONIC) + $TERM_GRACE_SECONDS,
+    };
+}
+
+sub _advance_owned_termination {
+    my ($state) = @_;
+    return if $state->{phase} eq 'finished';
+    my ($pid, $reaped, $status, $cleanup) = @{$state}{qw(pid reaped status cleanup)};
+    my $ignored;
+    _poll_leader($pid, $reaped, $status, \$ignored);
+    my $group_alive = _group_alive($pid);
+    if ($$reaped && !$group_alive) {
+        _complete_owned_termination($state);
+        return;
     }
-    $group_alive = _group_alive($pid);
-    $leader_alive = !$$reaped && kill(0, $pid);
-    if ($group_alive || $leader_alive) {
-        $target = $group_alive ? -$pid : $pid;
-        $cleanup->{kill_sent} = kill('KILL', $target) ? 1 : 0;
+    return if clock_gettime(CLOCK_MONOTONIC) < $state->{deadline};
+    if ($state->{phase} eq 'term') {
+        my $leader_alive = !$$reaped && kill(0, $pid);
+        if ($group_alive || $leader_alive) {
+            my $target = $group_alive ? -$pid : $pid;
+            $cleanup->{kill_sent} = kill('KILL', $target) ? 1 : 0;
+        }
+        $state->{phase} = 'kill';
+        $state->{deadline} = clock_gettime(CLOCK_MONOTONIC) + $KILL_GRACE_SECONDS;
+        return;
     }
-    # KILL delivery does not prove that the kernel can finish the child yet.
-    # Bound leader reaping and group disappearance by the same cleanup grace.
-    my $kill_deadline =
-        clock_gettime(CLOCK_MONOTONIC) + $KILL_GRACE_SECONDS;
-    while (clock_gettime(CLOCK_MONOTONIC) < $kill_deadline) {
-        my $ignored;
-        _poll_leader($pid, $reaped, $status, \$ignored);
-        last if $$reaped && !_group_alive($pid);
-        sleep(0.02);
-    }
-    $cleanup->{leader_reaped} = $$reaped ? 1 : 0;
-    $cleanup->{group_gone} = _group_alive($pid) ? 0 : 1;
+    _complete_owned_termination($state);
+}
+
+sub _complete_owned_termination {
+    my ($state) = @_;
+    $state->{cleanup}{leader_reaped} = ${$state->{reaped}} ? 1 : 0;
+    $state->{cleanup}{group_gone} = _group_alive($state->{pid}) ? 0 : 1;
+    $state->{phase} = 'finished';
 }
 
 sub _group_alive {

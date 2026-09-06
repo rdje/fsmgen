@@ -2263,17 +2263,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1.2: specify private coordinator protocol`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Extract the shared process state machine without changing current callers.`
   Acceptance: `After .2.1, separate launch, bounded stream polling, wait status, termination and result construction into one reusable asynchronous mechanism; retain a synchronous compatibility entrypoint and prove current success/failure/timing/cleanup shapes and both prerequisite fixes before coordinator integration.`
-  Verification: `Protocol selection in sibling .1 is complete. Next extract the asynchronous state machine while retaining the synchronous facade and current behavior; coordinator activation remains under later siblings.`
-  Commit: `pending`
+  Verification: `After protocol commit e4dcb66ba, the existing shared owner separates private launch, nonblocking capture, nonblocking TERM/KILL advancement, terminal result construction and synchronous waiting. Public exports, caller sealing, adapter bounds, schemas and result fields remain unchanged; no coordinator routing is enabled. T1669 independently traps sleep and blocking select inside advancement, proves both traps with failed controls, retains binary split output and timeout/escalation truth, and checks actual command/group absence after each oracle. The existing unreapable-leader and failed-admission controls remain green. Syntax and guarded T1669/T1668/T1545/T313 pass; initial and final evidence is under .artifacts/logs/process-async-extraction-20260907/. The book's own-group-only limit remains accurate. Staged doctrine and hook checks gate this slice before commit.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.2: extract asynchronous process advancement`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3`
   Status: `pending`
   Goal: `Implement root-owned launch records and bounded private IPC service.`
   Acceptance: `After .2.2, create each supervised child only from the surviving coordinator; record ownership before exec release; enforce the selected finite requests/connections/queues/jobs and repository-local endpoint contract; reject malformed or unauthorized context before launch and prove partial-start cleanup without a public runner.`
-  Verification: `Pending the unchanged-callsite extraction in sibling .2.`
+  Verification: `The unchanged-callsite asynchronous extraction is complete. Next implement the selected root coordinator, private framing/admission and reservation handoff under this owner; nested client routing and complete closure remain following siblings.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.4`
@@ -5762,3 +5762,26 @@ deleted while it owns pending failure or verification evidence.
   commit. Diff hygiene is clean, the mdBook's nested-cleanup limitation is
   unchanged, and the existing fact card points to this selected contract.
   Evidence: `.artifacts/logs/nested-coordinator-protocol-20260907/`.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.2 asynchronous extraction; enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _supervise'` locates
+  the shared-owner extraction. `_supervise` formerly combined launch, stream
+  waiting, polling, termination graces and result construction in one call;
+  that prevents a coordinator from servicing other jobs during cleanup.
+  Existing admission, reservation and unreapable-child evidence remains
+  authoritative; this slice changes scheduling structure, not group ownership.
+- [x] **ADDRESSED (verified)** — One shared implementation now exposes private
+  start/advance/complete states, with waiting confined to its compatibility
+  drivers. T1669's independent oracle rejects sleep or blocking select within
+  advancement, observes deliberately broken drivers fail at each trap, and
+  proves binary output, separate streams, timeout/escalation and actual child/
+  group absence. No IPC, new public runner or nested-cleanup claim is enabled.
+- [x] **NO REGRESSION** — `perl -Iperl -c` reports `syntax OK` for the shared
+  engine and updated watcher. Both the original and updated guarded
+  T1669/T1668/T1545/T313 bands report `All tests successful`; the updated band
+  adds the nonblocking oracle. Sealed adapters and public result keys are
+  unchanged. The mdBook's current own-group limitation and import architecture
+  remain accurate; no behavior-document edit is needed. The staged doctrine
+  gate and commit hook must pass before commit. Evidence is retained under
+  `.artifacts/logs/process-async-extraction-20260907/`.

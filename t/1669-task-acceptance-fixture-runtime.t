@@ -204,6 +204,111 @@ PROBE
     ok($observed->{cleanup}{kill_sent}, 'cleanup escalates to KILL');
 };
 
+subtest 'asynchronous capture and cleanup steps never wait inside the engine' => sub {
+    my $probe = File::Spec->catfile($workspace, 'nonblocking-advancement');
+    write_executable($probe, <<'PROBE');
+use strict;
+use warnings;
+use JSON::PP qw(encode_json);
+use Time::HiRes ();
+use FSM::Support::ProcessSupervisor ();
+my $owner = $$;
+my $mode = shift @ARGV;
+my $state;
+END {
+    local $?;
+    if ($$ == $owner && $state && $state->{phase} ne 'finished') {
+        FSM::Support::ProcessSupervisor::_terminate_owned_process(
+            $state->{pid}, \$state->{leader_reaped},
+            \$state->{leader_status}, $state->{cleanup},
+        );
+    }
+}
+$SIG{ALRM} = sub { die "independent advancement oracle deadline\n" };
+alarm 8;
+my $code = $mode eq 'timeout'
+    ? '$SIG{TERM} = "IGNORE"; $| = 1; print "ready\n"; sleep 30;'
+    : 'select undef, undef, undef, 0.1; print STDOUT "out\x00\xff\n"; print STDERR "err\n";';
+$state = FSM::Support::ProcessSupervisor::_start_supervision({
+    schema => 'fsmgen.test.process_supervisor_probe.v1', stage => 'probe',
+    bounds => {timeout_seconds => 1, capture_limit_bytes => 65_536},
+    containment => 'process_supervisor_probe_group',
+    cwd => FSM::Support::ProcessSupervisor::repository_root(),
+    argv => [$^X, '-e', $code],
+});
+my $read_ready = IO::Select->can('can_read');
+my $finished = eval {
+    while ($state->{phase} ne 'finished') {
+        {
+            no warnings 'redefine';
+            local *FSM::Support::ProcessSupervisor::sleep = sub {
+                die "advancement attempted to sleep\n";
+            };
+            local *IO::Select::can_read = sub {
+                die "advancement attempted a blocking select\n"
+                    unless defined($_[1]) && $_[1] == 0;
+                return $read_ready->(@_);
+            };
+            # Deliberately broken drivers prove each independent trap is live.
+            FSM::Support::ProcessSupervisor::sleep(0.01)
+                if $mode eq 'control_sleep';
+            $state->{select}->can_read(0.01) if $mode eq 'control_wait';
+            FSM::Support::ProcessSupervisor::_advance_supervision($state);
+        }
+        Time::HiRes::sleep(0.01) if $state->{phase} ne 'finished';
+    }
+    1;
+};
+my $error = "$@";
+alarm 0;
+print encode_json({
+    finished => $finished ? 1 : 0, error => $error,
+    command_pid => $state->{pid}, result => $state->{result},
+});
+exit($finished ? 0 : 1);
+PROBE
+    for my $mode (qw(success timeout control_sleep control_wait)) {
+        my $outer = supervise_process(
+            schema => 'fsmgen.test.process_supervisor_probe.v1', stage => 'probe',
+            bounds => {timeout_seconds => 15, capture_limit_bytes => 65_536},
+            containment => 'process_supervisor_probe_group', cwd => $repo_root,
+            argv => [$perl, '-Iperl', $probe, $mode],
+        );
+        my $observed = eval { decode_json($outer->{stdout}) };
+        ok(ref($observed) eq 'HASH', "$mode returns independent oracle evidence")
+            or do { diag explain $outer; next };
+        if ($mode =~ /^control_/) {
+            is($outer->{status}, 'nonzero_exit', "$mode rejects a blocking driver");
+            ok(!$observed->{finished}, "$mode cannot claim advancement completed");
+            like($observed->{error}, $mode eq 'control_sleep'
+                ? qr/advancement attempted to sleep/
+                : qr/advancement attempted a blocking select/,
+                "$mode exercises the intended trap");
+        }
+        else {
+            ok($outer->{ok} && $observed->{finished}, "$mode advances without hidden waiting")
+                or diag explain $outer;
+            my $result = $observed->{result};
+            is($result->{status}, $mode eq 'success' ? 'success' : 'timed_out',
+                "$mode preserves the closed command outcome");
+            ok($result->{cleanup}{leader_reaped} && $result->{cleanup}{group_gone},
+                "$mode finishes both cleanup obligations");
+            if ($mode eq 'success') {
+                is($result->{stdout}, "out\x00\xff\n", 'asynchronous capture preserves raw bytes');
+                is($result->{stderr}, "err\n", 'asynchronous capture keeps streams separate');
+            }
+            else {
+                ok($result->{cleanup}{term_sent} && $result->{cleanup}{kill_sent},
+                    'cleanup advances through both graces without sleeping in a step');
+            }
+        }
+        my $pid = $observed->{command_pid};
+        ok(defined($pid) && $pid > 0, "$mode identifies its actual command") or next;
+        ok(!kill(0, $pid), "$mode independently leaves no command process");
+        ok(!kill(0, -$pid), "$mode independently leaves no command group");
+    }
+};
+
 subtest 'prospective coordinator can reserve group identity through command cleanup' => sub {
     my $probe = File::Spec->catfile($workspace, 'group-reservation');
     write_executable($probe, <<'PROBE');
