@@ -1,7 +1,7 @@
 # Knowledge Map: `live-document`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **91** uniquely owned question entries.
+> **4** facts · **92** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -87,6 +87,7 @@
 - q="which tasks own the large roadmap, task, book, changelog, development notes, and knowledge map migrations?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="who owns a live-document transition allowance?" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="why are migration products not added as disjoint line counts?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
+- q="why can T1554 hang in a core verifier before startup?" · facts=[live-document-size-containment](../../docs/knowledge/live-document-size-containment.md)
 - q="why did raising the allowance to the actual not unblock the next write?" · facts=[live-document-transition-allowance-headroom](../../docs/knowledge/live-document-transition-allowance-headroom.md)
 - q="why did root_documents allow 12000 lines per root markdown file?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
 - q="why does a live-document surface hit its line warning while byte pressure is tiny?" · facts=[live-document-target-pair-calibration](../../docs/knowledge/live-document-target-pair-calibration.md)
@@ -103,7 +104,7 @@
 
 _Live documents use bounded views over durable stores_
 
-- **date:** 2026-09-05 · **status:** current
+- **date:** 2026-09-06 · **status:** current
 - **source and verification:** [`docs/knowledge/live-document-size-containment.md`](../../docs/knowledge/live-document-size-containment.md)
 
 ### live-document-surface-growth-procedure

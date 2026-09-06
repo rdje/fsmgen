@@ -54,10 +54,12 @@ answers:
   - "what is the main downstream entry point for containment doctrine updates?"
   - "how are repeated task-tree acceptance checklists contained?"
   - "should integration tests hard-code the live-document surface count?"
-date: 2026-09-05
+  - "why can T1554 hang in a core verifier before startup?"
+date: 2026-09-06
 status: current
 tags: [documentation, doctrine, continuity, size, derived-state, sharding, rollover, archive, harness-neutral]
 evidence: >-
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
   LIVE_DOCUMENT_SIZE_CONTAINMENT.md; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md; live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md; live-document-size/scripts/check_live_document_size.pl; doctrine/live_document_size/surfaces.jsonl; doctrine/live_document_size/derived_state_contracts.jsonl; doctrine/live_document_size/archive_descriptors.jsonl; doctrine/live_document_size/ledger_manifests.jsonl; doctrine/live_document_size/version_retention_contracts.jsonl;
   scripts/check_live_document_size.sh; scripts/run_live_document_adapter_verifiers.pl; scripts/check_live_document_resulting_tree.pl; docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md; docs/decisions/0041-live-documents-use-bounded-views-over-durable-stores.md; docs/decisions/0044-external-live-document-review-corrections-precede-wider-reuse.md; docs/decisions/0045-maintained-reference-bounds-the-read-path-not-product-scope.md; docs/decisions/0054-derived-state-is-derived-on-read-or-authority-verified.md;
   docs/decisions/0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl; scripts/check_task_tree_integrity.pl; knowledge-map/scripts/knowledge_map.pl; knowledge-map/scripts/query_knowledge_map.sh; scripts/check_knowledge_card_history.pl; t/1549-task-tree-integrity-doctrine.t; t/1554-live-document-size-doctrine.t; t/1567-knowledge-map-shards.t; t/1568-knowledge-card-history.t
@@ -66,46 +68,42 @@ reverify: >-
   scripts/check_live_document_size.sh && knowledge-map/scripts/check_knowledge_map.sh && scripts/check_knowledge_card_history.pl && prove -Iperl t/1553-readme-routed-destination-pressure.t t/1554-live-document-size-doctrine.t t/1560-live-document-ceiling-authority.t t/1561-live-document-reference-authority.t t/1567-knowledge-map-shards.t t/1568-knowledge-card-history.t
 ---
 
-`LIVE_DOCUMENT_SIZE_CONTAINMENT.md` is the project-owned doctrine. Its reusable
-body is project-neutral, project-agnostic, and harness-neutral; FSMGen authority,
-80/90/100 milestones, same-volume rule, measurements, paths, and migration
-owners live only in its fenced adoption note, the local audit, and JSONL data
-registries.
+`LIVE_DOCUMENT_SIZE_CONTAINMENT.md` owns the doctrine. Its reusable body is
+project- and harness-neutral; FSMGen authority, 80/90/100 milestones, locality,
+measurements, paths, and migration owners belong in the adoption fence, audit,
+and JSONL registries.
 
-The central rule is “bounded live view over an addressable durable store.”
-Current state overwrites, maintained user reference stays in navigable semantic
-partitions, generated projections shard from small canonical sources, rolling
-ledgers rotate and later archive, and exact old evidence uses an immutable
-query-first terminal with digest/retrieval proof. Sharding alone is insufficient:
-collections also need file-count and aggregate transitions.
+Bounded live views address durable stores: overwrite current state, partition
+user references by topic, shard projections from canonical cards, rotate and
+archive ledgers, and retrieve immutable old evidence through query terminals
+with digest proof. Sharded collections still need file-count/aggregate transitions.
 
-The common checker is the sole authority for the current registered-surface
-count. An integration test may assert the stable success phrase and that a
-numeric count is reported, but must not duplicate the live cardinality. A test
-may assert an exact count only when its own fixed synthetic registry is the
-complete authority for that fixture. T1553 and T1554 enforce that distinction.
+The common checker alone owns the registered-surface count. Integration tests
+assert its stable success phrase and numeric shape; only fixed synthetic
+registries justify exact counts. T1553/T1554 enforce this distinction.
 
-Decision `0054` adds the content-truth rule for mechanically exact current
-fields. A `derive_on_read` contract forbids the declared stored marker and
-requires the exact accessor in the reader's path. A `verified_copy` keeps a
-deliberate contract, baseline, or projection only with a named authority,
-recomputation path, and executed verifier. The bounded local registry is
-`doctrine/live_document_size/derived_state_contracts.jsonl`; the neutral core
-contains no project field names and performs no date, number, or prose guess.
+Decision `0054` requires `derive_on_read` to forbid the stored marker and put
+the exact accessor in the reader's path. A `verified_copy` needs a named
+authority, recomputation, and executed verifier for its contract/baseline/projection.
+`doctrine/live_document_size/derived_state_contracts.jsonl` is the bounded
+registry; the neutral core neither names project fields nor guesses from dates,
+numbers, or prose.
 
-FSMGen now obtains the current revision and subject with
-`git log -1 --format='%H %s'` instead of storing a `HEAD` shadow in either the
-resume pointer or its template. The active task-index frontier remains a
-verified copy backed by `scripts/check_task_tree_integrity.pl`; generated maps
-retain their canonical-input freshness checks. Revision- or invocation-bound
-task and decision measurements remain historical evidence, not claims about
-the current tree.
+`git log -1 --format='%H %s'` derives revision/subject; neither Memory nor its
+template stores HEAD. `scripts/check_task_tree_integrity.pl` verifies the copied
+active frontier, and maps check canonical-input freshness. Task/decision
+measurements bound to revisions or invocations remain historical evidence.
 
-`docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md` is the canonical
-downstream entry point and must be updated with every portable doctrine
-revision. The guide routes adopters to the normative doctrine and neutral
-checker while keeping donor paths, fields, measurements, thresholds, and
-migration decisions out of the portable body.
+`docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md` is the downstream
+entry point, updated with every portable doctrine revision. It routes to the
+doctrine/checker and keeps donor paths, fields, measurements, thresholds, and
+migration decisions outside the portable body.
+
+T1554's recovery run sampled both freshness and version shells at `_dyld_start`
+before main. The neutral core's `execute_core_verifier` and test `run_checker`
+have unbounded waits. HIAL/VIAL leaf `.19.2.3.1.2.2.5` owns samples, verified
+termination, the interrupted result, and pending policy selection; neither the
+OS cause nor a repair is established.
 
 Decision 0041 accepts the architecture. The measured revision and exact family
 owners are in `docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md`. Leaf `.2` uses
