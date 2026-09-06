@@ -47,7 +47,7 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.29` is done; `.12` remains behind director-deferred `.26` | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
-| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.19.2.3.1.2.2.3.2` blocked: recovery gate stopped at host-memory cutoff; next `.19.2.3.1.2.2.4` Rust policy selection; .5/.6 retain other startup blockers | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
+| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.19.2.3.1.2.2.3.2` blocked: recovery gate stopped at host-memory cutoff; next `.19.2.3.1.2.2.4.2` sealed Rust parity implementation; .5/.6 retain other startup blockers | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `ISF-SPEC-TEST-INDEX-SYNC` | `active` | `R14` | `.3` exact post-partition transformation is green; commit it before resolving the remaining complete-CI findings | [task](docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 completeness` | `.844` terminal | [task](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
 
@@ -58,6 +58,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
+| `CLAIM-VERIFICATION-TEMPLATE-REVIEW` | `proposed` | `evidence architecture` | `.1` reviews the changed director-selected template before any local adoption | [task](docs/tasks/CLAIM-VERIFICATION-TEMPLATE-REVIEW.md) |
 | `MDBOOK-CROSS-LAYER-CURRENT-STATUS-TRUTH-REPAIR` | `proposed` | `cross-layer book truth` | `.1` repairs stale Chapter 11 status prose after an evidence audit | [task](docs/tasks/MDBOOK-CROSS-LAYER-CURRENT-STATUS-TRUTH-REPAIR.md) |
 | `NEXSIM-REQUIREMENTS-HEADING-NUMBERING-REPAIR` | `proposed` | `NEXSIM document integrity` | `.1` aligns lagging subsection numbers without semantic change | [task](docs/tasks/NEXSIM-REQUIREMENTS-HEADING-NUMBERING-REPAIR.md) |
 | `DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT` | `proposed` | `downstream paths` | `.1` contract choice | [task](docs/tasks/DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT.md) |

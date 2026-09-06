@@ -16,7 +16,7 @@ answers:
   - "which VIAL backend packages are reachable from bin/fsmgen?"
   - "does bin/fsmgen reach the shared Verilator lifecycle?"
   - "does bin/fsmgen reach the shared backend-emission authority?"
-date: 2026-08-29
+date: 2026-09-06
 status: current
 tags: [bootstrap, architecture, import-tree, bin-fsmgen, semantic-introspection, ial2, ppif, vial]
 evidence: docs/BIN_FSMGEN_IMPORT_TREE.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; bin/fsmgen; perl/FSM/VIAL/ToolCLI.pm; perl/FSM/VIAL/Tool.pm; perl/FSM/VIAL/PlanBuilder.pm; perl/FSM/VIAL/ArtifactTransaction.pm; perl/FSM/VIAL/Backend/SVPortableVerilator.pm; perl/FSM/VIAL/Backend/Runner.pm; perl/FSM/VIAL/Backend/VerilatorLifecycle.pm; perl/FSM/VIAL/Backend/ProcessSupervisor.pm; perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/VIAL/Backend/ResultProducer.pm; perl/FSM/VIAL/BackendEmissionAuthority.pm; perl/FSM/Support/VIALNativeUVMEmissionContract.pm; perl/FSM/Support/VIALVHDLEmissionContract.pm
@@ -26,8 +26,8 @@ reverify: perl -Iperl -MModule::ScanDeps=scan_deps -E 'my $d=scan_deps(files=>["
 `docs/BIN_FSMGEN_IMPORT_TREE.md` is the canonical live maintainer-facing
 architecture note for the `bin/fsmgen` runtime spine.
 
-As of the 2026-08-29 refresh, the closure is `257` project files: `256`
-packages plus `bin/fsmgen`, including `19` IAL2, `20` VIAL, and `3` HIAL
+As of the 2026-09-06 capture, the closure is `266` project files: `265`
+packages plus `bin/fsmgen`, including `19` IAL2, `24` VIAL, and `3` HIAL
 packages. It covers the `.isf` and `.ppif` front doors, shipped protocol-intent
 families, HDL backends, semantic/tool support, and repository-local data owner.
 Public VIAL runtime owns qualified portable-SystemVerilog emission, thin Runner

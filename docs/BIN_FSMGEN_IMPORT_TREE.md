@@ -11,8 +11,8 @@ Use it to keep one current, high-signal picture of:
 Refresh this document at the start of a later session whenever the effective entrypoint/import-tree architecture has moved enough that this note is no longer honest.
 
 Current baseline:
-- Reviewed on `2026-08-29`.
-- Startup bootstrap refreshed on `2026-08-29`; the live static trace includes
+- Import closure reverified on `2026-09-06`; line-count samples below retain their `2026-08-29` capture boundary.
+- Startup import review refreshed on `2026-09-06`; the live static trace includes
   the R14 `.isf` intent-scheduling path, the IAL2 `.ppif` and profile-alias
   protocol-intent pre-lowering path, the Valid-Ready, AXI manager plus bounded
   AXI initiator, APB, and AHB protocol-intent owners, the first-class
@@ -22,12 +22,12 @@ Current baseline:
   VIAL capabilities/check/normal-terse source tooling, canonical
   HIAL-routed planning, the shared backend-emission limit authority, and the
   qualified portable-SystemVerilog run/result lifecycle and its shared sealed
-  process supervisor. The project-owned closure now reaches `257` project
-  files total / `256` `.pm` packages, including `19` packages under `FSM/IAL2`.
-  Selected line-count measurements below were refreshed from source.
+  process supervisor. The project-owned closure now reaches `266` project
+  files total / `265` `.pm` packages, including `19` packages under `FSM/IAL2`.
+  Line-count samples retain the separate dated capture below.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
-- Static trace from [bin/fsmgen](bin/fsmgen) currently reaches `257` project files total, `256` `.pm` packages.
+- Static trace from [bin/fsmgen](bin/fsmgen) reached `266` project files total, `265` `.pm` packages at that capture.
 - The R14 `.isf` front door is reachable from [bin/fsmgen](bin/fsmgen)
   through conditional runtime requires of [perl/FSM/Adapter/ISF.pm](perl/FSM/Adapter/ISF.pm)
   and [perl/FSM/Scheduler/ISF.pm](perl/FSM/Scheduler/ISF.pm). That path lowers
@@ -357,13 +357,13 @@ The heaviest remaining complexity is still the direct single-module HDL backend 
 - [perl/FSM/Synthesis/EnableGraph/SignalSupport.pm](perl/FSM/Synthesis/EnableGraph/SignalSupport.pm)
 
 ## Measured snapshot
-This is the current static measurement view behind the qualitative assessment
-above.
+Import-family counts were captured on `2026-09-06`; per-file line counts retain
+the separate `2026-08-29` capture boundary and are not current-size claims.
 
 Reachable package-family counts from [bin/fsmgen](bin/fsmgen):
-- total reachable project files: `257`
-- reachable `.pm` packages: `256`
-- `Support`: `76`
+- total reachable project files: `266`
+- reachable `.pm` packages: `265`
+- `Support`: `81`
 - `Composition`: `36`
 - `HDL`: `33`
 - `Package`: `14`
@@ -378,10 +378,10 @@ Reachable package-family counts from [bin/fsmgen](bin/fsmgen):
 - `IAL2`: `19`
 - `HIAL`: `3`
 - `VerificationOutput`: `2`
-- `VIAL`: `20`
+- `VIAL`: `24`
 - singleton support surfaces: `CoreAST.pm`, `Debug.pm`, `ExpressionNamer.pm`, `ParameterValueSupport.pm`, `ProjectDataLocality.pm`, `SourceClassifier.pm`, `SourcePathResolver.pm`
 
-Current thin-coordinator / public-surface assembler line counts:
+Captured thin-coordinator / public-surface assembler line counts:
 - [bin/fsmgen](bin/fsmgen): `1838`
 - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm): `495`
 - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](perl/FSM/Pipeline/SourceGenerationOrchestrator.pm): `175`
@@ -735,6 +735,23 @@ Important distinction:
 
 ### Public VIAL source, planning, and qualified runtime tooling
 
+The current closure also includes version-2 source/semantic/planning owners:
+
+- [perl/FSM/VIAL/SourceMigration.pm](perl/FSM/VIAL/SourceMigration.pm)
+- [perl/FSM/VIAL/SemanticBuilderV2.pm](perl/FSM/VIAL/SemanticBuilderV2.pm)
+- [perl/FSM/VIAL/ExecutionBuilderV2.pm](perl/FSM/VIAL/ExecutionBuilderV2.pm)
+- [perl/FSM/VIAL/LifecycleControl.pm](perl/FSM/VIAL/LifecycleControl.pm)
+- [perl/FSM/Support/VIALSemanticFamilyContract.pm](perl/FSM/Support/VIALSemanticFamilyContract.pm)
+- [perl/FSM/Support/VIALSemanticFamilyRegistry.pm](perl/FSM/Support/VIALSemanticFamilyRegistry.pm)
+- [perl/FSM/Support/VIALSemanticFamilyBackendAdapter.pm](perl/FSM/Support/VIALSemanticFamilyBackendAdapter.pm)
+- [perl/FSM/Support/VIALArchitectureScaleRegressionContract.pm](perl/FSM/Support/VIALArchitectureScaleRegressionContract.pm)
+
+These owners provide explicit source migration, semantic-family negotiation,
+lifecycle meaning, versioned planning, backend admission, and regression-contract
+discovery. Reachability does not imply version-2 backend emission or runtime:
+those maturity boundaries remain independently fail-closed under the family
+registry and adapter. Version-1 runtime keeps its qualified lifecycle.
+
 - [perl/FSM/VIAL/ToolCLI.pm](perl/FSM/VIAL/ToolCLI.pm)
 - [perl/FSM/VIAL/Tool.pm](perl/FSM/VIAL/Tool.pm)
 - [perl/FSM/VIAL/SourceProjection.pm](perl/FSM/VIAL/SourceProjection.pm)
@@ -759,7 +776,7 @@ Important distinction:
 - [perl/FSM/HIAL/VIALBridge/Manifest.pm](perl/FSM/HIAL/VIALBridge/Manifest.pm)
 - [perl/FSM/HIAL/VIALBridge/Report.pm](perl/FSM/HIAL/VIALBridge/Report.pm)
 
-Both authored projections normalize before the single semantic builder.
+Both authored projections normalize before version-specific semantic building.
 Source actions remain no-write. `plan` routes HIAL through canonical review
 artifacts and exposes only sanitized JSON-safe projections. `run` additionally
 selects the exact qualified Verilator 5.046 profile, emits portable
@@ -813,6 +830,12 @@ sources into explicit `.fsm` artifacts or a schedule JSON report. The generated
 create a second HDL backend path.
 
 ### Support accounting, capability manifest, semantic reports, and external HDL validation
+
+HDL validation also reaches
+[perl/FSM/Support/ProcessSupervisor.pm](perl/FSM/Support/ProcessSupervisor.pm).
+Decision `0101` moved the reviewed test engine here behind caller-sealed HDL
+and test-policy boundaries. The specialized VIAL supervisor remains separate;
+sharing ordinary process mechanics does not share VIAL lifecycle authority.
 - [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
 - [perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.pm)
 - [perl/FSM/Support/ProducerSection.pm](perl/FSM/Support/ProducerSection.pm)
