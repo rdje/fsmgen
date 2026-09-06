@@ -1,7 +1,7 @@
 # Knowledge Map: `backend-language`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **10** facts · **51** uniquely owned question entries.
+> **10** facts · **52** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -55,6 +55,7 @@
 - q="which FSM fixture does the Rust portable API check support?" · facts=[backend-language-rust-direct-fsm-check-smoke](../../docs/knowledge/backend-language-rust-direct-fsm-check-smoke.md)
 - q="which implementation language is FSMGen trying first?" · facts=[backend-language-first-implementation-experiment](../../docs/knowledge/backend-language-first-implementation-experiment.md)
 - q="which test covers Rust check JSON parity?" · facts=[backend-language-rust-check-perl-oracle-parity](../../docs/knowledge/backend-language-rust-check-perl-oracle-parity.md)
+- q="why can T1467 hang before the Rust parity program starts?" · facts=[backend-language-rust-check-perl-oracle-parity](../../docs/knowledge/backend-language-rust-check-perl-oracle-parity.md)
 - q="why was Rust selected before browser JavaScript Dart or Julia?" · facts=[backend-language-first-implementation-experiment](../../docs/knowledge/backend-language-first-implementation-experiment.md)
 
 ## Facts
@@ -105,7 +106,7 @@ _Portable parity harness compares normalized public contracts against the Perl o
 
 _The Rust direct check smoke has a Perl-oracle parity test_
 
-- **date:** 2026-06-26 · **status:** current
+- **date:** 2026-09-06 · **status:** current
 - **source and verification:** [`docs/knowledge/backend-language-rust-check-perl-oracle-parity.md`](../../docs/knowledge/backend-language-rust-check-perl-oracle-parity.md)
 
 ### backend-language-rust-direct-fsm-check-smoke

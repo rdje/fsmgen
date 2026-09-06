@@ -14,5 +14,5 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - in_flight_background: RAM-guarded `./bin/ci-regression full`, launched
   2026-09-06; guard PID 43485, driver PID 43550, prove PID 43641.
   Check live process identity and the exit file before restarting any work.
-- blockers: none in the implementation; complete CI and the overdue push remain
-  pending qualification.
+- blockers: Rust parity startup hang is owned by `.19.2.3.1.2.2.4`;
+  the running gate has a preserved T1467 failure, and push remains unqualified.

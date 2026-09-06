@@ -2075,7 +2075,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `The full pre-push gate reaches a deterministic terminal result without duplicating the maintained-reference surface count or depending on an arbitrary PATH-selected no-op executable; each independently rooted blocker is repaired and committed in its own child before the full gate is rerun.`
   Verification: `The first full-gate attempt was cleanly RAM-guarded at 88% host memory because unrelated host workloads raised measured pressure to 88.3%. The second clean attempt advanced through T303 and exposed two exact blockers: T1553 expected the common containment checker's obsolete 22-surface success text after the selected VIAL reference became the twenty-third maintained surface, and T313 selected Homebrew GNU true as a test stub; that otherwise valid binary reproducibly remained before main in _dyld_start while /usr/bin/true exited immediately. Required Knowledge Map queries returned no existing answer for either blocker. Child .1 removed the duplicated surface cardinality. Child .2 replaced mutable fixture identity and unbounded HDL launches with repository-local fixtures plus the fixed, contained shared process policy. The third complete RAM-guarded attempt reached T1524 and falsified that fixed policy: a valid large Yosys synthesis exceeded the 8,388,608-byte aggregate capture limit and was rejected as output_limited. Child .3 owns selection and implementation of a bounded policy that admits valid validator output without restoring an unbounded launch.`
   Commit: `pending implementation`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.3`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.4`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.1`
   Status: `done`
@@ -2142,6 +2142,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `The accepted policy is implemented in the shared supervisor/HDL policy boundary with exact focused RED/GREEN and hostile overflow coverage; T1524 passes without an unbounded memory or diagnostic path, all prior timeout/capture/cleanup/caller-seal contracts remain green, generated residue is removed, and the complete RAM-guarded pre-push gate reaches a deterministic terminal result.`
   Verification: `Implementation is focused-green and committed at a0b7f62d39567cc2e7399b9e43af19af3093670c; complete qualification remains outstanding. After the reported session crash during T1436, recovery found a clean worktree and no surviving test processes. The from-scratch RAM-guarded ./bin/ci-regression full run launched on 2026-09-06 reports T1436 ok and has advanced to T1437; its repository-local full-ci.log and terminal full-ci.exit are under .artifacts/logs/session-recovery-20260906/. No pass is inferred from the interrupted run. RED T313 aborted at line 25 because the three selected getters were not exported. GREEN adds native -q before -p to default and ABC Yosys argv, keeps the unchanged 120-second/8,388,608-byte supervisor ceiling, publishes additive quiet/excerpt metadata, and renders each failed stream through a shared byte-exact first-32,768/last-32,768 excerpt retaining 65,536 tool-output bytes plus a bounded exact omitted-byte marker. T313 proves the exact boundary, boundary-plus-one, independent stdout/stderr, both argv modes, and installed-tool success at Files=1/Tests=6. Real T308 default/ABC validation passes Files=1/Tests=8 with empty quiet success output. The formerly failing exact T1524 workload passes under the RAM guard at Files=1/Tests=4 in 174 seconds without raising capture. T1669/T313 pass Files=2/Tests=10, and the 17-file manifest/section/JSON-round-trip/defensive-copy band passes Tests=26. All 63 book chapters test; the inspected repository-local render contains 98 files/22,280 KiB and is removed exactly beside the session-owned HDL/lowering residue. Fresh task-owned maintained-reference authority accounts for the exact 12-line/780-byte book delta, the Knowledge Card is compacted inside its prior allowance, and no containment ceiling rises. Knowledge Map is current at 1,161 facts/6,322 questions/6,493 occurrences/139 shards. Claim inventory independently agrees at 12,273 numeric lines/1,900 candidates/2,671 constants, and dispositions close 1,900/1,900 with zero gaps/open owners. Decision 0101, contract POD, capability metadata/tests, mdBook guidance, task, Knowledge Card, and derived projections remain aligned; consuming the running full-CI terminal result is the next action.`
   Commit: `a0b7f62d39567cc2e7399b9e43af19af3093670c; f579a078f; HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.3.2: record recovered T1436 pass`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.4`
+  Status: `pending`
+  Goal: `Select a bounded Rust parity subprocess policy before implementation.`
+  Acceptance: `Diagnose the T1467 pre-main stall with an independent bounded replay; select exact cargo/build/program command identity, repository-local artifact ownership, finite wall/capture bounds, process-group cleanup, failure preservation, and hostile-test coverage using the existing sealed supervisor architecture; split implementation into a separate child before changing the test or adding a policy adapter. Do not waive Rust parity, retry a failed launch into success, or classify the manually terminated full run as green.`
+  Verification: `The 2026-09-06 complete guarded recovery run reports both T1438 files and T1436/T1437 ok, then T1467 waits indefinitely in IPC::Cmd::run at line 52. Its cargo-launched rust/target/debug/fsmgen-portable-api-check-smoke child remains before main: a repository-local one-second /usr/bin/sample capture identifies only _dyld_start, no binary-image map, and an idle startup process. The required Knowledge Map queries found the existing parity contract but no startup-hang answer. Git identifies the unbounded test launch in 07d9df7eb. The verified child alone received TERM; T1467 then reported Failed test Rust portable API check projection command succeeds at line 59 and Failed 1/3 subtests. The full suite continues with that failure preserved. Stack evidence is in .artifacts/logs/session-recovery-20260906/t1467-process.sample; independent replay and policy selection remain pending.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.4: own Rust parity startup blocker`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.2`
   Status: `proposed`
@@ -4592,3 +4599,24 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   explicitly
   verification-pending until the complete RAM-guarded pre-push gate reruns from
   its beginning.
+
+## Acceptance Checklist (.19.2.3.1.2.2.4 recovery ownership and inventory sync, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'command => $command'`
+  identifies `07d9df7eb` as the unbounded T1467 launch owner. The OS sample
+  places its Rust child at `_dyld_start` before application code. After TERM
+  to that verified child, T1467 reports the failed command assertion at line
+  59. The new Knowledge Map question changes the claim inventory's source
+  census digest; leaving the derived inventory unchanged reports inventory drift.
+- [x] **ADDRESSED (recovery evidence and derived inventory)** — the pending
+  `.4` leaf owns bounded replay and policy selection; the task and resume
+  pointer preserve the known failure while the complete run continues. The
+  existing parity card retains its facts in shorter prose and removes only
+  duplicated landing-page evidence links still present in its reverify command.
+  The regenerated inventory changes its source digest while retaining its
+  candidate and constant sets. No Rust implementation or test behavior is fixed.
+- [x] **NO REGRESSION (knowledge, census, dispositions, and diff)** —
+  `knowledge-map: OK` includes cached/direct query parity; the inventory's
+  current-surface and independent numeric-line censuses agree, the disposition
+  join remains closed, and `git diff --check` passes. The full suite is still
+  running with T1467 failed; no complete-CI success is claimed.
