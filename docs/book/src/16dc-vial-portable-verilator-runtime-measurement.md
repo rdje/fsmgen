@@ -462,6 +462,15 @@ The quantitative statements above have three independent legs:
   Knowledge Map card `test-subprocess-policy-adapters`, the focused watcher,
   and the work-unit Git commit.
 
+The shared supervisor's cleanup proof covers its own process group. A bounded
+nested-supervisor probe found an inner child still alive in a separate group
+after the outer timeout reported its own group gone. That escaped group was
+explicitly terminated and its disappearance verified. Whole nested-subtree
+cleanup is therefore an open limitation; the neutral-verifier integration is
+blocked on the owned containment repair in HIAL/VIAL task
+`.19.2.3.1.2.2.5.5`. Do not treat an outer group's disappearance as proof that
+independently supervised inner groups have stopped.
+
 ## Selected authored runtime activity
 
 The runtime-stream axis measures the cost of producing, validating, and

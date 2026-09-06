@@ -6,13 +6,13 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5`
-  (`pending`; bounded neutral live-document verifier policy)
-- next_action: Select the neutral verifier and test-fixture execution policy
-  under `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5`.
-- in_flight_uncommitted: none after the Rust parity implementation commit.
-- in_flight_background: none.
-- blockers: Startup repairs `.19.2.3.1.2.2.5`/`.6` and a complete guarded
-  rerun at safe host pressure are required; retain the configured limits.
-  Terminal evidence: `.artifacts/logs/session-recovery-20260906/full-ci-terminal.json`.
-  Full qualification and push remain blocked.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.1`
+  (`pending`; nested-supervisor ownership policy)
+- next_action: Select compositional process ownership under `.19.2.3.1.2.2.5.5.1`
+  before accepting the provisional neutral-verifier policy in parent `.5.1`.
+- in_flight_uncommitted: none after the nested-containment blocker checkpoint.
+- in_flight_background: none; every diagnostic process group is gone.
+- blockers: Nested group escape blocks neutral-verifier policy acceptance.
+  Startup repair `.19.2.3.1.2.2.6` and fresh complete guarded CI also remain open.
+  Evidence: owning task and `.artifacts/logs/live-document-policy-20260906/`.
+  Full qualification and push remain blocked; retain configured RAM limits.

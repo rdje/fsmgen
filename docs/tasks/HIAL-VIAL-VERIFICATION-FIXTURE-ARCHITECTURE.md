@@ -2167,11 +2167,70 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.4.2: bound Rust parity build and execution`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Select bounded live-document verifier execution and fixture-launch policies.`
   Acceptance: `Diagnose T1554's repeated pre-main shell stalls and distinguish fixture identity from the neutral checker's unbounded core-verifier wait; select finite process/capture/cleanup and failure-preservation contracts without importing FSMGen policy into the portable checker; split implementation into owned children before source changes. Preserve the interrupted full-run failure and do not retry it into success.`
   Verification: `The 2026-09-06 complete recovery run reached T1554 after T1553 passed. Its repository-local bin/freshness shell stayed before main in _dyld_start; a one-second OS sample shows no loaded binary-image map. TERM to that verified child advanced the same checker to bin/version, which independently stalled at the same sampled boundary. Knowledge Map queries found no startup answer. git log -S traces execute_core_verifier's system plus waitpid without a wall to 25c815326630d49a457d4393909fad8d659c753d; T1554 run_checker also uses open3, sequential stream reads, and unbounded waitpid. The verified T1554 test and its remaining descendants received TERM; a subsequent process check found no survivors. The partial TAP says All 5 subtests passed but has no terminal plan and is not a successful test. The suite continued at T1555, then the later host-memory guard stop prevented a final TAP summary. Samples and exact terminated process identities are retained under .artifacts/logs/session-recovery-20260906/t1554-*. Re-derivation is the first shell sample and launch-source/history inspection; falsification is the independent next verifier stalling after first-child termination, ruling out a freshness-body-only explanation without diagnosing the OS cause. This task, the containment fact card, and Git own durability. No checker/test behavior is repaired.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5: own live-document verifier startup blocker`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.1`
+  Status: `blocked`
+  Goal: `Select portable process-mechanism reuse and sealed core-verifier/fixture policies.`
+  Acceptance: `Inspect the neutral contract and exact fork/system/wait/input paths, independently contain the original T1554 test, preserve earlier interrupted evidence, select one physical process engine without project identity in the portable component or a new public runner, and specify fixed bounds, input/path admission, direct fixture interpreter identity, compatibility, migration and hostile checks before implementation.`
+  Verification: `The bounded original T1554 replay passes once with all 18 terminal subtests, but independent nested-group falsification proves that an outer timed_out result can report leader_reaped=1/group_gone=1/surviving_descendants=0 while the inner separately grouped child is still alive. Explicit TERM to the exact escaped group succeeds and absence is verified. The portable extraction and fixture/core policies below are provisional, not accepted for implementation. This expands beyond a safe verifier-launch slice: child .5 owns the prerequisite nested-supervision containment design, implementation and hostile qualification. Decisions 0087/0101 remain unchanged. All diagnostic groups are gone; no source implementation changed.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.1: record nested supervision containment blocker`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.2`
+  Status: `pending`
+  Goal: `Extract the existing process mechanics into a private project-neutral component.`
+  Acceptance: `Move the shared engine without copying it; preserve the FSM support facade caller seals, repository validation, results and existing test/HDL policy; prove mechanical equivalence and focused regressions, update import architecture and package dependency guidance, and commit before adding neutral checker behavior.`
+  Verification: `Pending sibling .1 policy selection and preceding implementation dependency.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.3`
+  Status: `pending`
+  Goal: `Bound T1554 fixture execution and its finite coverage input.`
+  Acceptance: `Add the sealed fixture adapter, exact canonical interpreter handoff, finite repository-local input-file transport and fixed test walls/capture; preserve all fixture assertions and coverage/adapter-proof semantics, reject caller policy/path mutation, extend the exclusive-owner and hostile cleanup watchers, and leave standalone checker behavior to sibling .4.`
+  Verification: `Pending sibling .1 policy selection and preceding implementation dependency.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.4`
+  Status: `pending`
+  Goal: `Bound standalone neutral core-verifier execution using the selected shared mechanics.`
+  Acceptance: `Add a neutral core-verifier policy with fixed finite bounds, root-relative same-volume non-symlink admission, separate bounded output, signal/exit/timeout/cleanup truth and no retry; preserve the existing success and failure contracts, prove relocated neutral-package operation and hostile behavior, synchronize the portable contract/adoption guide/book, and rerun focused containment and process regressions.`
+  Verification: `Pending sibling .1 policy selection and preceding implementation dependency.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5`
+  Status: `active`
+  Goal: `Resolve nested process-group containment before introducing supervised neutral core verifiers.`
+  Acceptance: `Select an ownership model that cannot lose a separately grouped child when an outer supervisor times out or terminates its inner supervisor; implement the selected design without weakening existing caller, status, bound, locality or cleanup contracts, and prove hostile nested cancellation and current adapters.`
+  Verification: `The .1 diagnostic proves a live inner group after outer group cleanup; its exact process was subsequently terminated and verified absent.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.1`
+  Status: `pending`
+  Goal: `Select compositional ownership and cancellation semantics for nested supervisors.`
+  Acceptance: `Compare a single outer group owner, coordinated nested group ownership, and an explicit supported nesting boundary; identify cancellation, signal propagation, forced termination, descendant discovery, race and orphan handling; select a finite independently testable contract under decisions 0087/0101 before source changes.`
+  Verification: `Blocked prerequisite to the provisional neutral verifier extraction; no architecture is selected.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2`
+  Status: `pending`
+  Goal: `Implement the selected nested-supervision ownership contract.`
+  Acceptance: `After sibling .1 selection, preserve the initial failed reproduction, implement the exact selected containment boundary with no new unrestricted test runner, and prove that outer failure cannot report complete cleanup while an owned inner group survives.`
+  Verification: `Pending ownership-policy selection.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.3`
+  Status: `pending`
+  Goal: `Qualify nested containment and resume neutral verifier policy selection.`
+  Acceptance: `Run independent nested timeout/TERM/KILL/overflow/nonzero and orphan-race controls plus existing real-tool and sealed-adapter regressions; synchronize task/book/contract evidence and return to parent .5.1 only after the selected cleanup guarantee is demonstrated.`
+  Verification: `Pending selected implementation.`
+  Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.6`
   Status: `pending`
@@ -4855,3 +4914,166 @@ was inspected. Both the exact misplaced directory and the reviewed local render
 were removed; an explicit residue census proves both absent. The per-file
 manifest and terminal results are retained in `book-location-recovery.json`
 under the owned log root. Only the exact session-owned leaves were deleted.
+
+## Neutral verifier policy selection (.19.2.3.1.2.2.5.1)
+
+The independent bounded original-T1554 replay completed once: exit zero,
+18 terminal subtests, 12,858 stdout bytes, no stderr, and proved leader/group
+cleanup. The diagnostic used a sixty-second wall and eight-MiB aggregate
+capture. These are one invocation's observation and diagnostic bounds, not
+reliability or capacity claims. `original-t1554.json` and its driver log under
+`.artifacts/logs/live-document-policy-20260906/` retain the result. It falsifies
+a universal fixture failure without erasing the prior interrupted gate or
+claiming an operating-system loader cause.
+
+`git log -S` identifies core execution introduction
+`25c815326630d49a457d4393909fad8d659c753d`, and the T1554 `open3` introduction
+`18e2dcbc65095003207102d1af4f2f7fa63b1ba3`. The current core forks a wrapper,
+uses `system` for the declared program, and waits indefinitely; the wrapper
+folds a child signal into a synthetic exit code. T1554 writes coverage input,
+reads stdout then stderr, and waits without a wall. Therefore changing only
+fixture shebangs cannot repair standalone verifier containment or split-stream
+backpressure. The existing engine supplies the required process mechanics.
+
+### Provisional boundaries and sequence — blocked before acceptance
+
+- **One private engine:** move mechanics and closed result construction into
+  `perl/Process/Supervisor/Engine.pm`, with no exports or public runner. Keep
+  repository admission and the existing two-caller seal in
+  `FSM::Support::ProcessSupervisor`; keep the test compatibility wrapper and
+  all existing domain policies exact. The generic component must contain no
+  project/harness identity. A source watcher admits only the existing support
+  facade and the new neutral verifier facade as direct engine owners. This
+  preserves the public seal; the present engine's private implementation
+  routines are already internal rather than a security boundary against
+  arbitrary Perl symbol access. Do not expose new low-level test calls.
+- **Portable dependency:** the neutral checker resolves its own bundle library
+  and the shared `perl/Process/Supervisor/Engine.pm` from runtime-derived paths.
+  The portable adoption manifest/guide must enumerate this required neutral
+  component; a relocated minimal package must run without any `FSM::` module,
+  original checkout, home cache, or absolute persisted path. Do not copy a
+  second process engine into the checker bundle.
+- **Fixture policy:** add `FSM::Test::LiveDocumentFixtureRuntime` for T1554.
+  Admit only immediate owned `fsmgen-*` directories under
+  `.artifacts/tmp/live-document-size-tests`, fixed original checker/registry
+  argv, validated coverage path lists, and the existing adapter-proof grammar.
+  Resolve the executing Perl once, validate it as a regular executable, and
+  retain identity after PATH mutation. Generated Perl fixtures use its absolute
+  shebang, eliminating `env`; preserve all existing fixture assertions.
+  Fix each checker call to thirty seconds and 8,388,608 aggregate bytes.
+- **Finite coverage transport:** preserve `--coverage-stdin` and its NUL data
+  semantics. The sealed fixture adapter serializes at most 1,048,576 bytes into
+  its own regular non-symlink same-volume temporary file. Extend only the private
+  mechanism's stdin handoff for that admitted file; absent input retains the
+  existing immediate-EOF behavior. No caller-selected arbitrary input path,
+  command, environment or budget reaches this adapter. Preserve signal, exec,
+  split-stream, timeout and descendant-cleanup truth, and remove the exact input
+  file after cleanup. Test admission, exact bytes/EOF and failure cleanup.
+- **Standalone verifier policy:** place the project-neutral facade in
+  `live-document-size/lib/LiveDocumentSize/VerifierRuntime.pm`. It admits only
+  the root supplied to the neutral checker and the declared root-relative
+  regular executable, with non-symlink ancestry and same-volume validation.
+  Invoke that exact program directly; the neutral production policy does not
+  reinterpret arbitrary user shebangs or pick an alternate tool after failure.
+  Use root cwd, immediate-EOF stdin, one process group, one 120-second wall,
+  and 8,388,608 aggregate captured bytes. Return separate streams and the shared
+  exit/signal/exec/timeout/overflow/descendant/cleanup evidence without retry.
+  Forward admitted output to its original stream, preserve the existing
+  executed-success phrase and nonzero diagnostic phrase, and name signals as
+  signals rather than synthesizing exit codes. Timeout/overflow/cleanup must
+  make the checker fail. The schema and portable bounds belong in its contract.
+- **Commit boundaries:** child .2 is the mechanical extraction and unchanged
+  facade verification; .3 is sealed fixture/input containment; .4 is standalone
+  neutral policy and portable adoption. Each updates the affected book/import
+  guidance and completes COMMIT.md before the next begins. Do not run full CI
+  until this repair and the separately owned RAM fixture repair are complete.
+
+### Evidence legs and rejected alternatives
+
+Re-derivation uses the exact source/history boundaries and the successful
+contained original test above. Falsification preserves the earlier independent
+freshness/version startup stalls; implementation watchers must inject timeout,
+TERM resistance, overflow, split streams, nonzero and signal failures, and
+prove a relocated neutral package cannot silently import adopting-project
+code. The task, amended decision 0101, source-owner watcher, focused tests,
+portable contract/adoption guide, book and Git are the durability chain.
+Implementation legs are explicitly pending in children .2/.3/.4.
+
+A copied engine would violate decisions 0087/0101 and drift in cleanup. Importing
+`FSM::` policy into the neutral checker would violate its portable contract.
+An alarm or outer RAM guard alone lacks the selected per-verifier wall,
+split-stream and signal/cleanup guarantees. Adding a new public checker input
+option solely for test plumbing is unnecessary; keep the existing stdin API.
+The provisionally proposed finite values describe safety policy, not measured performance.
+
+### Nested supervision falsification — verified blocker
+
+Policy review identified a possible composition failure: both a sealed T1554
+adapter and its future core-verifier adapter would create process groups.
+An outer deadline could kill the inner supervisor while its separately grouped
+verifier survives. Leaf .5.1 owns a bounded independent reproduction with a
+self-expiring child, exact PID/group recording, verified explicit cleanup,
+and no later passing result substituted for a failed containment claim.
+The provisional sequence above is not accepted for implementation until this
+boundary is resolved. No source implementation has changed in this selection.
+
+The reproduction returned `status=timed_out`, outer signal 15,
+`leader_reaped=1`, `group_gone=1`, and `surviving_descendants=0`.
+An independent `kill(0, PID)` and `kill(0, -PGID)` both found the inner child
+still alive. This is not an incorrect outer-group measurement: it falsifies
+composing that group-scoped guarantee into whole nested-subtree cleanup.
+The inner PID equalled its separately created group id, 32441, in this dated
+capture. Exact-group TERM succeeded, followed by an absent-PID observation;
+the child also had an independent eight-second self-expiry safeguard.
+
+The bounded reproduction uses the current test wrapper at both levels. The
+outer stage has a one-second wall; it launches the running Perl interpreter
+with an inner `supervise_process` call. The inner stage has a ten-second wall
+and launches a Perl child that records its PID and `getpgrp()` into the owned
+local workspace, then sleeps for eight seconds. After the outer result, the
+independent driver checks both recorded identities, terminates only that exact
+group, and checks disappearance. `nested-group-probe.json` and the driver log
+under the owned policy log root retain the closed results. The defect follows
+from `_supervise` unconditionally calling `setpgid(0, 0)` for each child while
+`_terminate_owned_process` signals only its own leader/group.
+
+Child `.5.5` owns the repair; `.5.5.1` must select the compositional ownership
+contract before `.5.2` extraction or `.5.3` fixture containment can proceed.
+This is the batch's real scope blocker, not permission to weaken process
+cleanup, skip the checker, change memory thresholds, or retry a failure away.
+No portable-engine amendment to decision 0101 has been made.
+
+Re-derivation is the nested launch through the current shared implementation.
+Falsification is the independent PID/group liveness check after the returned
+outer cleanup record, followed by exact cleanup and absence verification.
+Durability is this task, the routed Knowledge Map answer, Git, and the owned
+future hostile regression under `.5.5.2`/`.5.5.3`; the automated regression leg
+is explicitly missing until that implementation lands. Full CI remains blocked.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.1 blocked policy checkpoint; enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'setpgid(0, 0)'`
+  traces the shared mechanism to `b253263c847a2ac641f9cae14603d28d1a755122`.
+  The bounded nested probe returns outer `timed_out` with `group_gone=1`,
+  while independent PID and group probes both report the inner child alive.
+  `_supervise` creates each child group; `_terminate_owned_process` signals
+  only its own group. Core `system`/`waitpid` and T1554 `open3` history are
+  identified above. The group-composition failure is reproduced; no OS loader
+  cause is claimed.
+- [x] **ADDRESSED (verified checkpoint, repair pending)** — The exact escaped
+  group received TERM and its absence was verified. The finite diagnostic
+  workspace and inspected book render are removed. The book now states the
+  observed nested-cleanup limitation. Children `.5.5.1`/`.5.5.2`/`.5.5.3` own
+  policy, implementation and qualification; provisional neutral extraction
+  is blocked and existing decisions remain unchanged. This checkpoint
+  preserves diagnosis and repair ownership, not a completed defect fix.
+- [x] **NO REGRESSION (documentation checkpoint)** — `knowledge-map: OK`
+  proves current bounded indexes and query parity. The independently contained
+  original T1554 exits zero; a separate TAP census finds every top-level
+  assertion and its complete terminal plan. The corrected local mdBook build
+  exits zero and the rendered limitation is inspected in the supervision
+  section. The final staged driver reports `[doctrine] all doctrine checks passed`,
+  including fresh acceptance for the changed registry metadata, containment,
+  locality, task integrity and claim dispositions. The initial gate caught and
+  rejected a pending status on a new container; it was corrected to active.
+  No completed source repair or full-CI success is claimed by this checkpoint.

@@ -7,6 +7,7 @@ answers:
   - "why does the task-acceptance fixture invoke Bash directly?"
   - "who may call the low-level test process supervisor?"
   - "why can T1595 stall before measuring host memory?"
+  - "can a nested supervised child survive an outer timeout?"
 date: 2026-09-06
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -23,46 +24,42 @@ evidence: >-
   t/1668-darwin-inline-verilator-test-runtime.t;
   t/1669-task-acceptance-fixture-runtime.t
 reverify: >-
-  prove -Iperl -It/lib
+  scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
   t/1545-task-acceptance-doctrine.t
   t/1668-darwin-inline-verilator-test-runtime.t
   t/1669-task-acceptance-fixture-runtime.t
 ---
 
-Decision `0087` separates process mechanics from domain policy. Private
-`FSM::Test::ProcessSupervisor` owns shell-free argv, same-volume repository cwd,
-split aggregate-bounded capture, close-on-exec handoff evidence, monotonic time,
-one process group, first-failure status, and verified TERM/KILL cleanup.
-Commands, bounds, schemas, and platform guards belong to sealed adapters under
-`t/lib/FSM/Test/`; the watcher recomputes their exclusive call ownership.
+Decisions `0087`/`0101` keep one engine in `FSM::Support::ProcessSupervisor`
+behind the test compatibility wrapper. It owns shell-free argv, same-volume
+repository cwd, bounded split streams, exec handoff, monotonic time, one process
+group, first-failure status and TERM/KILL cleanup. Sealed adapters own commands,
+bounds, schemas and platform guards; T1669 watches exclusive ownership.
 
-`FSM::Test::VerilatorRuntime` retains decision `0086`'s Darwin qualification and
-version/compile/runtime contracts. `FSM::Test::TaskAcceptanceFixtureRuntime`
-accepts only project-local task-acceptance fixture repositories. It allowlists
-fixture Git argv, including only local identity configuration and relative add
-paths; walls are ten seconds, Git/checker capture is 1,048,576/4,194,304 bytes,
-and results use closed `fsmgen.test.task_acceptance_fixture_result.v1` records.
-Callers cannot widen policy. Git is resolved/canonicalized once at load time;
-later PATH replacement cannot change it.
+`VerilatorRuntime` retains decision `0086`'s Darwin qualification and version/
+compile/runtime contracts. `TaskAcceptanceFixtureRuntime` admits only owned
+fixture roots and fixed local Git argv. Its ten-second Git/checker stages cap
+capture at 1,048,576/4,194,304 bytes and use the closed
+`fsmgen.test.task_acceptance_fixture_result.v1` schema. Load-time canonical
+Git/Bash identities ignore later PATH mutation; callers cannot widen policy.
 
-The original checker used unbounded `IPC::Cmd` through `#!/usr/bin/env bash`
-and stalled before main on Darwin. The adapter resolves caller-selected Bash
-from absolute PATH entries, canonicalizes it, and invokes it directly. The
-retained falsification proves macOS `/bin/bash` 3.2 cannot run the checker's
-empty-array loop under `set -u`. Bash and Git are read-only host dependencies;
-fixtures, scratch, captured bytes, and diagnostics stay on the repository volume.
+The original env-Bash checker stalled before main on Darwin. Direct selected
+Bash preserves capability: the retained `/bin/bash` 3.2 control fails its empty
+array under `set -u`. Bash/Git are read-only host dependencies; project data
+stays local. Timeout, overflow, nonzero, signal, exec, group-descendant and
+cleanup failures stay failed without retry; original fixture assertions pass.
 
-No retry: timeout, overflow, nonzero exit, signal, exec failure, surviving
-descendants, and cleanup failure remain failures. Original task-acceptance
-fixtures and result assertions pass unchanged through the adapter.
+The Verilator watcher uses canonical Perl fixture shebangs after an env-Perl
+fixture reached exec handoff but timed out before output. Only the entrypoint
+invoked through Perl by `prove` may retain an env shebang.
 
-The Verilator hostile watcher generates fixture shebangs with canonical running
-Perl. A combined gate observed its former env-Perl success fixture complete exec
-handoff but hit the sealed wall before output. A source assertion allows env
-Perl only on the watcher entrypoint invoked through Perl by `prove`.
+T1595's env-Bash fake uname stalled at `_dyld_start` before measuring memory.
+Its sequential open3 capture, unbounded wait and exit-only projection remain
+owned by HIAL/VIAL `.19.2.3.1.2.2.6`. This does not diagnose the OS cause or
+change production memory formulas/thresholds.
 
-T1595's recovery run sampled its env-Bash fake `uname` at `_dyld_start`, before
-the metric ran. `run_guard` has sequential open3 capture, unbounded waitpid,
-and exit-only status projection. HIAL/VIAL leaf `.19.2.3.1.2.2.6` owns verified
-termination, interrupted failure, and pending fixture-policy selection. This
-does not diagnose the OS cause or change production RAM formula/thresholds.
+A nested probe found an inner group alive after outer timeout reported its
+own group gone. Group cleanup does not compose into nested-subtree cleanup.
+The exact escaped group was terminated and absence verified. HIAL/VIAL
+`.19.2.3.1.2.2.5.5` owns the required ownership design, repair and hostile
+watcher; neutral-verifier extraction remains provisional and blocked.
