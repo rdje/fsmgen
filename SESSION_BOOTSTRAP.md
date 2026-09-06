@@ -16,11 +16,22 @@ before momentum builds.
 This is not a generic onboarding note.
 It is the explicit session-start ritual for ongoing FSMGen architecture work.
 
+The director selected this task-directed reading scope;
+[SESSION-READING-SCOPE](docs/tasks/SESSION-READING-SCOPE.md) owns the decision.
+Read the mandatory entrypoints and roadmap, then the active task's source,
+tests, decisions, and relevant mdBook chapters. Review the CLI import
+architecture and expand along dependencies as needed; exhaustive reading of
+every source, test, tool, and book chapter is not a startup prerequisite.
+Report the scope actually reviewed and do not reopen this settled choice
+because a generic startup prompt says to read the codebase and mdBook; only
+a later explicit director instruction changes it. Task ownership, code/book
+alignment, evidence, locality, and commit requirements still apply.
+
 ## Default start-of-session task
 Before doing anything else, perform this task first:
 
 > Read `README.md`, the mandatory continuity/doctrine documents, the roadmap,
-> and the mdBook, then thoroughly, meticulously and precisely analyze
+> and the relevant mdBook chapters, then thoroughly, meticulously and precisely analyze
 > `bin/fsmgen` and its import tree.
 > Treat `COMMIT.md` as a hard safety invariant, not a suggestion.
 > Do not start code, test, generated-artifact, source, or config changes unless
