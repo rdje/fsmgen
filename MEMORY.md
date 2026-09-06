@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1`
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1.2`
   (`pending`; private coordinator protocol)
 - next_action: Specify the coordinator wire, resource and lifecycle contract
-  under `.19.2.3.1.2.2.5.5.2.1` before process-engine changes; use the owning task selection.
+  under `.19.2.3.1.2.2.5.5.2.1.2`, including the task-owned group-reservation refinement.
 - in_flight_uncommitted: none.
 - in_flight_background: none; every diagnostic process group is gone.
 - blockers: Nested group escape blocks neutral-verifier policy acceptance.

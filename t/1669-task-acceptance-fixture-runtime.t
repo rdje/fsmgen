@@ -204,6 +204,199 @@ PROBE
     ok($observed->{cleanup}{kill_sent}, 'cleanup escalates to KILL');
 };
 
+subtest 'prospective coordinator can reserve group identity through command cleanup' => sub {
+    my $probe = File::Spec->catfile($workspace, 'group-reservation');
+    write_executable($probe, <<'PROBE');
+use strict;
+use warnings;
+use JSON::PP qw(encode_json);
+use POSIX qw(setpgid WNOHANG _exit);
+use Time::HiRes qw(CLOCK_MONOTONIC clock_gettime sleep);
+
+my $owner = $$;
+my $caller_group = getpgrp(0);
+my ($reservation, $command);
+my %reaped;
+my $group_retired = 0;
+my $caller_terms = 0;
+my %observed;
+$SIG{TERM} = sub { ++$caller_terms };
+$SIG{ALRM} = sub { die "reservation oracle deadline\n" };
+
+sub byte {
+    my ($fh, $expected, $write) = @_;
+    my $value = '';
+    my $count = $write ? syswrite($fh, $expected, 1)
+        : sysread($fh, $value, 1);
+    die "reservation oracle handoff failed\n"
+        unless defined($count) && $count == 1
+            && ($write || $value eq $expected);
+}
+
+sub reap {
+    my ($pid) = @_;
+    my $deadline = clock_gettime(CLOCK_MONOTONIC) + 2;
+    while (clock_gettime(CLOCK_MONOTONIC) < $deadline) {
+        my $waited = waitpid($pid, WNOHANG);
+        if ($waited == $pid) {
+            my $status = $?;
+            $reaped{$pid} = 1;
+            return $status;
+        }
+        die "reservation oracle lost child status\n" if $waited == -1;
+        sleep(0.01);
+    }
+    die "reservation oracle reap deadline\n";
+}
+
+# Only the original oracle process may clean up. Never release the reserved
+# numeric identity before its last possible group signal; never signal a
+# direct child after harvesting it. Children also have their own final alarm.
+END {
+    local $?; # Reaping fixture children must not overwrite the oracle exit.
+    if ($$ == $owner) {
+        alarm 0;
+        kill 'KILL', -$reservation
+            if $reservation && !$reaped{$reservation} && !$group_retired;
+        for my $pid (grep { defined($_) && $_ > 0 } ($command, $reservation)) {
+            next if $reaped{$pid};
+            kill 'KILL', $pid;
+            eval { reap($pid) };
+        }
+    }
+}
+
+alarm 8;
+my $finished = eval {
+    pipe(my $reserve_read, my $reserve_write) or die "reserve pipe: $!";
+    pipe(my $reply_read, my $reply_write) or die "reply pipe: $!";
+    $reservation = fork();
+    die "reservation fork: $!" unless defined $reservation;
+    if (!$reservation) {
+        $SIG{ALRM} = $SIG{TERM} = 'DEFAULT';
+        alarm 6;
+        close $reserve_write;
+        close $reply_read;
+        my $ok = eval {
+            my $set = setpgid(0, 0);
+            die "reservation group admission" unless defined($set)
+                && $set == 0 && getpgrp(0) == $$;
+            byte($reply_write, 'G', 1);
+            byte($reserve_read, 'M', 0);
+            unless ($ARGV[0] eq 'unmoved') {
+                $set = setpgid(0, $caller_group);
+                die "reservation group departure" unless defined($set)
+                    && $set == 0 && getpgrp(0) == $caller_group;
+            }
+            byte($reply_write, 'M', 1);
+            byte($reserve_read, 'X', 0);
+            1;
+        };
+        _exit($ok ? 0 : 91);
+    }
+    close $reserve_read;
+    close $reply_write;
+    byte($reply_read, 'G', 0);
+
+    pipe(my $command_read, my $command_write) or die "command pipe: $!";
+    pipe(my $ready_read, my $ready_write) or die "ready pipe: $!";
+    $command = fork();
+    die "command fork: $!" unless defined $command;
+    if (!$command) {
+        $SIG{ALRM} = 'DEFAULT';
+        $SIG{TERM} = sub { _exit(19) };
+        alarm 6;
+        close $reserve_write;
+        close $reply_read;
+        close $command_write;
+        close $ready_read;
+        my $ok = eval {
+            my $set = setpgid(0, $reservation);
+            die "command group admission" unless defined($set)
+                && $set == 0 && getpgrp(0) == $reservation;
+            byte($ready_write, 'C', 1);
+            byte($command_read, 'X', 0);
+            1;
+        };
+        _exit($ok ? 0 : 92);
+    }
+    close $command_read;
+    close $ready_write;
+    $observed{reservation_pid} = $reservation;
+    $observed{command_pid} = $command;
+    byte($ready_read, 'C', 0);
+    byte($reserve_write, 'M', 1);
+    byte($reply_read, 'M', 0);
+    $observed{group_present} = kill(0, -$reservation) ? 1 : 0;
+    if ($ARGV[0] eq 'cancel') {
+        $observed{term_sent} = kill('TERM', -$reservation) ? 1 : 0;
+    }
+    else {
+        byte($command_write, 'X', 1);
+    }
+    $observed{command_status} = reap($command);
+    $observed{group_gone} = kill(0, -$reservation) ? 0 : 1;
+    die "command group survived\n" unless $observed{group_gone};
+    $group_retired = 1;
+    $observed{reservation_live_after_group} = kill(0, $reservation) ? 1 : 0;
+    byte($reserve_write, 'X', 1);
+    $observed{reservation_status} = reap($reservation);
+    $observed{children_reaped} = $reaped{$command} && $reaped{$reservation} ? 1 : 0;
+    $observed{caller_group_unchanged} = getpgrp(0) == $caller_group ? 1 : 0;
+    1;
+};
+alarm 0;
+$observed{finished} = $finished ? 1 : 0;
+$observed{error} = "$@";
+$observed{caller_terms} = $caller_terms;
+print encode_json(\%observed);
+exit($finished ? 0 : 1);
+PROBE
+    for my $mode (qw(normal cancel)) {
+        my $outer = supervise_process(
+            schema => 'fsmgen.test.process_supervisor_probe.v1', stage => 'probe',
+            bounds => {timeout_seconds => 15, capture_limit_bytes => 65_536},
+            containment => 'process_supervisor_probe_group', cwd => $repo_root,
+            argv => [$perl, $probe, $mode],
+        );
+        ok($outer->{ok}, "$mode kernel oracle completes under its independent wall")
+            or diag explain $outer;
+        my $observed = eval { decode_json($outer->{stdout}) };
+        ok(ref($observed) eq 'HASH', "$mode returns structured evidence") or next;
+        ok($observed->{finished}, "$mode completes every handoff")
+            or diag $observed->{error};
+        ok($observed->{group_present}, "$mode command retains the reserved group");
+        is($observed->{command_status}, $mode eq 'cancel' ? 19 << 8 : 0,
+            "$mode preserves the direct child's actual wait status");
+        ok($observed->{group_gone}, "$mode proves group absence before identity release");
+        ok($observed->{reservation_live_after_group}, "$mode retains its reservation through group cleanup");
+        is($observed->{reservation_status}, 0, "$mode releases the reservation normally");
+        ok($observed->{children_reaped}, "$mode reaps both exact direct children");
+        ok($observed->{caller_group_unchanged}, "$mode leaves caller membership unchanged");
+        is($observed->{caller_terms}, 0, "$mode never signals the caller group");
+        ok($observed->{term_sent}, 'cancellation reaches only the command group')
+            if $mode eq 'cancel';
+        ok($outer->{cleanup}{group_gone}, "$mode oracle leaves no outer group");
+    }
+    my $control = supervise_process(
+        schema => 'fsmgen.test.process_supervisor_probe.v1', stage => 'probe',
+        bounds => {timeout_seconds => 15, capture_limit_bytes => 65_536},
+        containment => 'process_supervisor_probe_group', cwd => $repo_root,
+        argv => [$perl, $probe, 'unmoved'],
+    );
+    is($control->{status}, 'nonzero_exit', 'unmoved reservation is a failed control');
+    my $observed = eval { decode_json($control->{stdout}) };
+    ok(ref($observed) eq 'HASH', 'negative control returns evidence') or return;
+    ok(!$observed->{group_gone}, 'negative control detects the reservation inside the command group');
+    like($observed->{error} // '', qr/command group survived/,
+        'negative control fails at the actual group-absence check');
+    for my $field (qw(command_pid reservation_pid)) {
+        my $pid = $observed->{$field};
+        ok(defined($pid) && $pid > 0, "negative control identifies $field") or next;
+        ok(!kill(0, $pid), "negative control cleaned its exact $field before returning");
+    }
+};
+
 subtest 'task-acceptance adapter seals path, command, interpreter, and bounds' => sub {
     my $fixture = create_project_tempdir(
         purpose => 'task-acceptance-tests',

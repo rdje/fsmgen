@@ -2241,10 +2241,25 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.5`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Specify the private coordinator wire, resource and lifecycle contract.`
   Acceptance: `Select exact framing, stream/backpressure bounds, run/job/parent identities, inherited-context admission, endpoint locality and long-path handling, spawn publication, cancellation ordering, identity retirement and closed result reconstruction. Define a finite state machine and hostile oracle for every transition before process code changes; preserve existing adapter limits and caller contracts.`
-  Verification: `The architecture is selected; exact protocol and resource constants remain to be selected.`
+  Verification: `Protocol inspection exposes a prerequisite: process-group identity must remain reserved through the last possible signal even after the command leader is reaped. The selected Perl exposes neither waitid nor WNOWAIT; the read-only Darwin SDK declares both. Child .1 qualifies core-Perl reservation feasibility; sibling .2 remains the exact wire and lifecycle frontier.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1.1`
+  Status: `done`
+  Goal: `Qualify a reserved process-group identity without adding a native binding.`
+  Acceptance: `Use an isolated bounded real-kernel oracle to prove that a coordinator-owned child can establish a group, admit a separately forked command, leave that group while retaining its PID, and keep the command group independently signalable until cleanup. Retain both direct children until their last signals, preserve the caller group, reap exact children, and qualify success and cancellation without claiming the production coordinator exists.`
+  Verification: `T1669 independently forks a group-reservation child and command as direct children of a bounded oracle. Normal completion and TERM cancellation preserve the actual command wait status, leave the caller group untouched, prove the command group absent while the reservation is still alive, then reap both exact children. An unmoved-reservation control fails at the actual group-absence check and removes both children. Its initial END-block reaping accidentally changed the intended failure exit; direct Perl controls isolate this and local $? repairs the fixture. The guarded T1669/T1668/T1545/T313 band reports All tests successful. Logs are under .artifacts/logs/nested-group-reservation-20260907/. This is current-host design feasibility, not production nesting, Linux qualification or a measured PID-reuse incident. The exact wire/lifecycle contract remains pending under sibling .2.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1.1: qualify reserved group identity`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1.2`
+  Status: `pending`
+  Goal: `Finish exact coordinator framing, inherited execution context, bounded queues and lifecycle transitions.`
+  Acceptance: `After the reservation oracle, specify byte-exact argv/environment transport, repository-local long-path-safe IPC, closed identities/messages, fixed finite connections/frames/jobs/depth/queues, monotonic cancellation and result reconstruction. Include oracle obligations for every partial publication, disconnect, identity retirement and cleanup transition before production extraction.`
+  Verification: `Pending sibling .1 identity-lifetime qualification; no coordinator or widened nested guarantee is implemented.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.2`
@@ -5328,3 +5343,103 @@ the complete selected nesting boundary succeeds.
   rejection is retained in `initial-doctrines.log`; the final resulting tree
   keeps the original ceilings and allowances and all substantive selection
   content. Logs are under `.artifacts/logs/nested-ownership-selection-20260907/`.
+
+## Group identity refinement (.19.2.3.1.2.2.5.5.2.1.1)
+
+The coordinator selection is refined before production extraction: recording a
+numeric group ID is insufficient if its reserving process has already been
+reaped and later cancellation may signal that number again. Existing
+`_poll_leader` harvests the command before `_terminate_owned_process` may send
+later group signals. This is a lifecycle design gap; no unrelated-process
+signal or PID-reuse frequency was observed or claimed.
+
+The current Perl rejects `POSIX::waitid`, `POSIX::WNOWAIT` and `POSIX::WEXITED`
+as invalid macros. The installed Darwin SDK declares `waitid` and `WNOWAIT`.
+This distinguishes a language binding gap from an absent operating-system
+facility. SDK headers are a required read-only toolchain dependency outside
+the repository volume; locate them at runtime with `xcrun --show-sdk-path`
+and inspect `usr/include/sys/wait.h`. No project data is written there. A new
+native binding is unnecessary for the independently observed alternative.
+
+The refined candidate keeps the coordinator as the direct parent of both a
+reservation child and the actual command:
+
+1. Fork and record a reservation child before allowing it to establish a group
+   whose ID is its own PID. Fork and record the command separately, and require
+   its acknowledged membership in that reserved group before execution.
+2. Move the reservation child back to the coordinator's existing group, and
+   acknowledge that departure before releasing command execution. The command
+   retains its separate group while the reservation retains the numeric PID.
+   Keep both command and reservation roles explicit; they no longer share a
+   single PID/PGID field. Neither identity comes from the requesting client.
+3. Keep the reservation alive or unreaped through the last possible signal to
+   the command group. The coordinator may harvest the command's direct wait
+   status without releasing the reserved group number. Never positively signal
+   a command whose status has already been harvested.
+4. On ordinary completion, prove command-group absence, retire that group from
+   further signaling, release the reservation, and reap it within the finite
+   cleanup budget. Reservation closure is additional internal cleanup proof;
+   existing command `leader_reaped` and `group_gone` fields keep their meanings.
+5. Partial admission, premature reservation death, failed departure and forced
+   termination require explicit protocol states. A dead reservation must stay
+   unreaped until all possible group signals have been issued. If final group
+   absence cannot be proved after retirement, retain incomplete cleanup and
+   never signal a retired numeric identity. The current oracle does not yet
+   qualify those production transitions; sibling `.2` must specify them and
+   implementation/hostile leaves must test them.
+
+This refinement adds a bounded control child per admitted job; the existing
+selected live-job ceiling must account for both direct-child roles before
+implementation. It does not raise any adapter wall, capture or RAM bound. The
+reservation must close unrelated job/IPC descriptors, inherit no executable
+client authority and remain inside the current run's finite cleanup budget.
+Exact descriptor, admission, queue and timing limits remain owned by sibling
+`.2`; none is caller-selectable and no coordinator is enabled by this slice.
+
+T1669's fresh interpreter independently exercises normal completion and TERM
+cancellation. It observes actual group membership, actual command wait status,
+absence of the command group while its reservation remains alive, exact child
+reaping and unchanged caller membership without caller-directed TERM. Leaving
+the reservation inside the group is a negative control: it fails the real
+absence check and cleans up its exact children before returning. Every oracle
+has its own alarm plus the existing outer supervisor deadline.
+
+The negative control initially exposed a fixture defect: `waitpid` in `END`
+overwrote the intended failure exit. The direct controls
+`perl -e 'END { $? = 0 } exit 1'` and
+`perl -e 'END { local $?; $? = 0 } exit 1'` return success and failure,
+respectively. Localizing that status in the oracle's cleanup retains its
+failure. The first failed regression log is preserved; the corrected complete
+focused band is green. This is not a repaired production status bug.
+
+Re-derivation is the live kernel handoff and direct wait observations;
+falsification is the unmoved-reservation control and independent absence
+checks; durability is T1669, this owning task, the existing fact card and Git.
+Production coordinator integration, hostile partial-start/owner-loss races and
+Linux execution remain missing legs under the following owned leaves. The
+mdBook's current nested-cleanup limitation stays accurate and is unchanged.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.1.1 reservation oracle; enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'waitpid($pid, WNOHANG)'`
+  identifies `d630261e61ebd240dd4e9817c362e0ea185629d7` and the shared-engine
+  move `d1235212cd7b15d4867edf9f8f08e3937fae6cc6`. The source harvests the
+  command identity before later group cleanup. The selected coordinator must
+  retain a separate group identity through its last signal; the independent
+  kernel oracle supplies that feasibility evidence without claiming a live
+  PID-reuse incident. The failed negative-control exit is separately reduced
+  to Perl END status clobbering by the direct success/failure controls above.
+- [x] **ADDRESSED (design feasibility verified; integration pending)** — T1669
+  verifies reservation departure, retained command membership, independent
+  normal/cancel wait truth, group absence before reservation release and exact
+  cleanup. Its unmoved control fails at group absence; localizing END status
+  preserves that failure. The task-local coordinator selection is refined and
+  the wire/lifecycle frontier is split explicitly before production changes.
+- [x] **NO REGRESSION** — Guarded T1669/T1668/T1545/T313 report
+  `All tests successful` in `green.log`; the preceding fixture failure remains
+  in `regression.log`. No production process engine, adapter contract or book
+  behavior changes. Logs are under
+  `.artifacts/logs/nested-group-reservation-20260907/`; `staged-doctrines.log`
+  reports `[doctrine] all doctrine checks passed`, including fresh acceptance,
+  task integrity, Knowledge Map and unchanged containment limits. Full CI and
+  push remain blocked by the active nested and RAM-fixture frontiers.
