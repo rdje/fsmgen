@@ -10,6 +10,7 @@ answers:
   - "can a nested supervised child survive an outer timeout?"
   - "how does the supervisor reject failed setpgid before exec?"
   - "can post-KILL leader reaping bypass the cleanup deadline?"
+  - "which ownership model is selected for nested supervision?"
 date: 2026-09-07
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -37,7 +38,6 @@ behind the test compatibility wrapper. It owns shell-free argv, same-volume
 repository cwd, bounded split streams, exec handoff, monotonic time, one process
 group, first-failure status and TERM/KILL cleanup. Sealed adapters own commands,
 bounds, schemas and platform guards; T1669 watches exclusive ownership.
-
 The child checks the POSIX `setpgid` return and its actual group before exec.
 Nonthrowing failure and false success reject with `exec_error` and no command
 execution; T1669 injects both plus an exception. The parent's race-closing
@@ -45,24 +45,20 @@ attempt cannot replace child admission. Nested cleanup remains open below.
 Post-KILL reaping uses nonblocking polling inside the existing cleanup grace;
 an unreapable leader or surviving group remains explicitly incomplete. T1669's
 isolated mock oracle rejects blocking waits without creating an unkillable child.
-
 `VerilatorRuntime` retains decision `0086`'s Darwin qualification and version/
 compile/runtime contracts. `TaskAcceptanceFixtureRuntime` admits only owned
 fixture roots and fixed local Git argv. Its ten-second Git/checker stages cap
 capture at 1,048,576/4,194,304 bytes and use the closed
 `fsmgen.test.task_acceptance_fixture_result.v1` schema. Load-time canonical
 Git/Bash identities ignore later PATH mutation; callers cannot widen policy.
-
 The original env-Bash checker stalled before main on Darwin. Direct selected
 Bash preserves capability: the retained `/bin/bash` 3.2 control fails its empty
 array under `set -u`. Bash/Git are read-only host dependencies; project data
 stays local. Timeout, overflow, nonzero, signal, exec, group-descendant and
 cleanup failures stay failed without retry; original fixture assertions pass.
-
 The Verilator watcher uses canonical Perl fixture shebangs after an env-Perl
 fixture reached exec handoff but timed out before output. Only the entrypoint
 invoked through Perl by `prove` may retain an env shebang.
-
 T1595's env-Bash fake uname stalled at `_dyld_start` before measuring memory.
 Its sequential open3 capture, unbounded wait and exit-only projection remain
 owned by HIAL/VIAL `.19.2.3.1.2.2.6`. This does not diagnose the OS cause or
@@ -73,3 +69,6 @@ own group gone. Group cleanup does not compose into nested-subtree cleanup.
 The exact escaped group was terminated and absence verified. HIAL/VIAL
 `.19.2.3.1.2.2.5.5` owns the required ownership design, repair and hostile
 watcher; neutral-verifier extraction remains provisional and blocked.
+The task-local selection chooses one surviving launch coordinator with private nested
+clients. Protocol, implementation and independent hostile qualification remain
+pending; the selection does not widen the current cleanup guarantee.

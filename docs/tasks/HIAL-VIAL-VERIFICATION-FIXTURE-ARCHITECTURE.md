@@ -2226,17 +2226,53 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.5: bound post-KILL leader reaping`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select compositional ownership and cancellation semantics for nested supervisors.`
   Acceptance: `Compare a single outer group owner, coordinated nested group ownership, and an explicit supported nesting boundary; identify cancellation, signal propagation, forced termination, descendant discovery, race and orphan handling; select a finite independently testable contract under decisions 0087/0101 before source changes.`
-  Verification: `Blocked prerequisite to the provisional neutral verifier extraction; no architecture is selected.`
-  Commit: `pending`
+  Verification: `The task-local selection compares shared outer groups, intermediate group registration, one root launch coordinator and refusal of nesting against the retained escaped-child counterexample and current Rust/HDL adapter contracts. It selects coordinator-owned launch records and direct child ownership, private cooperating clients, finite admission, explicit logical parentage, failure-preserving results and complete cancellation before success. It names root-owner loss and deliberately unregistered execution as limits, and requires independent process probes rather than internal counters. This expands beyond a safe verifier-wrapper slice; .2 is decomposed into protocol, extraction, coordinator, client and closure leaves, followed by independent .3 qualification. The current nested guarantee remains unimplemented and neutral verifier acceptance stays blocked.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.1: select nested launch ownership`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Implement the selected nested-supervision ownership contract.`
   Acceptance: `After sibling .1 selection, preserve the initial failed reproduction, implement the exact selected containment boundary with no new unrestricted test runner, and prove that outer failure cannot report complete cleanup while an owned inner group survives.`
-  Verification: `Pending ownership-policy selection.`
+  Verification: `The architecture is selected; the expanded implementation requires the exact child sequence before neutral-verifier integration.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.5`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1`
+  Status: `pending`
+  Goal: `Specify the private coordinator wire, resource and lifecycle contract.`
+  Acceptance: `Select exact framing, stream/backpressure bounds, run/job/parent identities, inherited-context admission, endpoint locality and long-path handling, spawn publication, cancellation ordering, identity retirement and closed result reconstruction. Define a finite state machine and hostile oracle for every transition before process code changes; preserve existing adapter limits and caller contracts.`
+  Verification: `The architecture is selected; exact protocol and resource constants remain to be selected.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.2`
+  Status: `pending`
+  Goal: `Extract the shared process state machine without changing current callers.`
+  Acceptance: `After .2.1, separate launch, bounded stream polling, wait status, termination and result construction into one reusable asynchronous mechanism; retain a synchronous compatibility entrypoint and prove current success/failure/timing/cleanup shapes and both prerequisite fixes before coordinator integration.`
+  Verification: `Pending exact protocol selection in sibling .1.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3`
+  Status: `pending`
+  Goal: `Implement root-owned launch records and bounded private IPC service.`
+  Acceptance: `After .2.2, create each supervised child only from the surviving coordinator; record ownership before exec release; enforce the selected finite requests/connections/queues/jobs and repository-local endpoint contract; reject malformed or unauthorized context before launch and prove partial-start cleanup without a public runner.`
+  Verification: `Pending the unchanged-callsite extraction in sibling .2.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.4`
+  Status: `pending`
+  Goal: `Route nested sealed invocations through the coordinator.`
+  Acceptance: `After .2.3, inherit the exact run context, validate logical parents and requests, reconstruct separate streams and closed results, and preserve adapter schemas/limits/caller cwd/environment. Refuse stale or partial client contexts without falling back to an independent group owner; prove current Rust nested controls and standalone calls.`
+  Verification: `Pending root coordinator implementation in sibling .3.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.5`
+  Status: `pending`
+  Goal: `Close nested cancellation, result delivery and endpoint cleanup.`
+  Acceptance: `After .2.4, close admission before root failure cleanup, cancel subtrees on lost clients, drain finite queued output without starving deadlines, preserve first failure and incomplete cleanup, retire only closed identities, and remove exact owned endpoints. Prove intermediate death before/after spawn publication and during exec/result delivery, then hand off independent qualification to .5.5.3.`
+  Verification: `Pending nested routing in sibling .4.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.3`
@@ -5155,3 +5191,140 @@ architecture-note refresh, complete-CI pass or nested cleanup repair is claimed.
   cleanup hashes and absent-root evidence are in `book-cleanup.json`. The
   staged driver reports `[doctrine] all doctrine checks passed`, including
   fresh task acceptance, Knowledge Map, containment, locality and claim joins.
+
+## Nested ownership selection (.19.2.3.1.2.2.5.5.1)
+
+This task-local selection remains subject to the exact protocol leaf and
+implementation qualification under decisions `0087` and `0101`. The initial
+standalone decision candidate was rejected by existing rationale rollover
+debt. Its complete substantive selection is retained here before the duplicate
+is removed; no new numbered decision, ceiling or debt allowance is adopted.
+The existing fact card routes the selection without another representation.
+
+### Context
+
+
+The retained nested probe returns an outer timeout and absent outer group
+while an inner child remains alive in its separately created group. Killing
+the intermediate supervisor removes the only process that remembers that
+inner launch. The current group-disappearance measurement is accurate; its
+composition into complete nested cleanup is false.
+
+The prerequisite admission and reaping repairs now reject failed group
+creation before exec and keep post-KILL waiting within the existing grace.
+They do not repair ownership across nested supervisors. The standalone neutral
+verifier integration must remain blocked until that ownership is qualified.
+
+### Alternatives
+
+| Model | Disposition |
+| --- | --- |
+| All commands inherit one outer group | Outer cancellation is simple, but independent inner cancellation can kill its supervisor and siblings. Inner success cannot truthfully report its shared group gone under the existing result contract. |
+| Each intermediate supervisor registers and owns its groups | Registration must precede group escape, cleanup must close admission atomically, and ownership must survive intermediate KILL. A list discovered after launch or a signal handler alone does not satisfy those conditions. |
+| One surviving coordinator creates every supervised group | Selected. The process that records a launch also forks it and retains cleanup responsibility independently of the requesting client's lifetime. |
+| Reject nested supervision | A valid temporary refusal boundary, but not the final integration: existing Rust tool-resolution probes already nest, and the proposed fixture/checker/verifier chain requires nesting. |
+
+### Selected contract
+
+1. A top-level shared-engine invocation is the coordinator for its finite run.
+   Nested invocations become private clients of that coordinator. They do not
+   independently fork supervised commands. Logical parentage remains explicit
+   even though the coordinator is the direct operating-system parent of each
+   supervised group leader. There is no persistent daemon or public runner.
+2. Record each broker-created child and logical parent before releasing the
+   child to group establishment and exec. Parent-provided PIDs or group IDs
+   never authorize a signal. Failed admission, fork, handoff or publication
+   cancels the recorded child; it cannot produce an unregistered execution.
+3. Keep domain admission, argv, cwd, schemas, time/capture limits and tool
+   identity in their existing sealed adapters. Preserve the compatibility
+   facade and one physical process mechanism. Do not reuse VIAL's private
+   lifecycle owner or duplicate the engine inside the neutral checker.
+4. Use private local IPC with a run-bound inherited context, closed framing,
+   explicit job identities and validated parent relationships. A missing,
+   stale or malformed inherited context fails before launch; it never falls
+   back to an independent nested supervisor. This is cooperative process
+   infrastructure, not a security sandbox against arbitrary same-user code.
+5. Bound the coordinator to eight live jobs including the root, with depth
+   bounded by the same live-job limit. Requests, pending connections, control
+   frames and stream queues must have fixed finite admission limits selected
+   in the protocol leaf before implementation. Derive each stream's accepted
+   total from its unchanged adapter capture ceiling. Stream bounded chunks;
+   do not build another unbounded JSON copy of complete captured output.
+6. Preserve separate streams, original exit/signal/exec truth, monotonic times
+   and first-failure results for every job. Ordinary inner nonzero results may
+   be handled by their caller, as existing negative fixtures require. A lost
+   client cannot promote a failed job or abandon a still-running child.
+7. Client death or disconnection cancels its owned unfinished subtree. Root
+   timeout, overflow, cancellation or failure closes launch admission before
+   draining and terminating all remaining owned jobs. Service control traffic
+   during capture so a busy stream cannot starve cancellation or deadlines.
+8. Reap direct leaders and verify their groups within finite cleanup deadlines.
+   Retire identities after closure and never signal a released job. Preserve
+   incomplete cleanup instead of returning success if any owned job remains
+   unresolved. Existing `group_gone` fields keep their actual group meaning;
+   do not relabel one group's absence as the complete ownership proof.
+9. IPC storage and fixtures are runtime-derived on the repository volume;
+   persisted paths remain root-relative. The protocol must prove relocation,
+   including long checkout paths, and preserve caller cwd/environment. Close
+   client descriptors on exec, bound malformed/incomplete frames and slow
+   peers, remove only exact owned endpoints, and retain failure evidence.
+
+The live-job limit is selected safety policy, not a measured capacity claim.
+The protocol leaf must finish the remaining wire/resource constants before any
+runtime code changes. No current adapter receives a new caller-selected knob.
+
+### Guarantee boundary and sequencing
+
+The coordinator must remain alive to return a cleanup result. Uncatchable loss
+of that final owner cannot establish cleanup success. Arbitrary external code
+that discards inherited context or deliberately creates unregistered sessions
+or groups remains outside the cooperative nesting contract; do not describe
+this design as operating-system isolation of hostile programs.
+
+Implementation is deliberately decomposed: exact protocol/resource/lifecycle
+contract; asynchronous extraction preserving current behavior; root launch and
+IPC ownership; nested client routing; and cancellation/result/endpoint closure.
+Each slice has its own acceptance and commit. The existing neutral extraction
+and fixture/core policies remain provisional until hostile qualification of
+the complete selected nesting boundary succeeds.
+
+### Evidence and missing legs
+
+- **Re-derive:** use the original nested result and independent liveness probe
+  retained in the owning task; inspect `_supervise`, `_terminate_owned_process`
+  and the existing Rust/HDL sealed adapters. The prerequisite source fixes have
+  observed-RED controls and passing real-process regressions.
+- **Falsify:** the implementation must survive intermediate timeout, TERM and
+  KILL, lost clients, overflow, nonzero exit, registration/exec cancellation
+  races, orphaning and malformed IPC. Check recorded process identities from
+  an independent driver after returned cleanup, not from broker counters alone.
+- **Durability:** this decision and the task decomposition retain the selected
+  design. The automated protocol, lifecycle, portability and hostile-cleanup
+  watchers are a missing leg owned by `.5.5.2` and `.5.5.3`; no implemented
+  nested-containment guarantee is published by this decision.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.1 selection and decomposition; enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The retained independent nested probe in
+  `.5.1` observes a live inner group after the returned outer `group_gone`.
+  `git log -S 'setpgid(0, 0)'` traces the separate-group mechanism to
+  `b253263c847a2ac641f9cae14603d28d1a755122`. The current Rust adapter consults
+  each stage's group cleanup before removing its workspace; sharing one group
+  cannot silently preserve that meaning. Existing admission and bounded-reap
+  controls pass; neither addresses loss of the intermediate group owner.
+- [x] **ADDRESSED (architecture selected; runtime repair pending)** — The task-local
+  selection compares the alternatives and selects coordinator-owned forks,
+  recorded-before-exec ownership, finite private cooperating clients, logical
+  parents, failure preservation, cancellation and explicit guarantee limits.
+  The implementation container now has independently reviewable child leaves.
+  Memory, the active index and the existing fact card route to the
+  exact protocol frontier. Automated implementation and qualification remain
+  explicitly missing under `.5.5.2` and `.5.5.3`.
+- [x] **NO REGRESSION (selection only)** — The preceding focused process band
+  reports `All tests successful` at clean source commit `6155096cd`; this slice
+  changes no process source, test or public behavior. The final staged driver
+  reports `[doctrine] all doctrine checks passed`, including task integrity,
+  Knowledge Map, claim joins and fresh acceptance. The initial rollover-debt
+  rejection is retained in `initial-doctrines.log`; the final resulting tree
+  keeps the original ceilings and allowances and all substantive selection
+  content. Logs are under `.artifacts/logs/nested-ownership-selection-20260907/`.
