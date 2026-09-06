@@ -8,9 +8,11 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.3.2`
   (`in_progress`; complete-CI qualification of focused-green output policy)
-- next_action: Restart the complete RAM-guarded pre-push gate from its beginning
-  and consume its deterministic terminal result before closing the repair.
-- in_flight_uncommitted: none after the focused-green implementation commit.
-- in_flight_background: none.
+- next_action: Consume the running complete pre-push gate's terminal result
+  from `.artifacts/logs/session-recovery-20260906/full-ci.log` and `full-ci.exit`.
+- in_flight_uncommitted: none after this recovery-pointer commit.
+- in_flight_background: RAM-guarded `./bin/ci-regression full`, launched
+  2026-09-06; guard PID 43485, driver PID 43550, prove PID 43641.
+  Check live process identity and the exit file before restarting any work.
 - blockers: none in the implementation; complete CI and the overdue push remain
   pending qualification.
