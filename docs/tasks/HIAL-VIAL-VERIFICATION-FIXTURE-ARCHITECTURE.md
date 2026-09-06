@@ -2075,7 +2075,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `The full pre-push gate reaches a deterministic terminal result without duplicating the maintained-reference surface count or depending on an arbitrary PATH-selected no-op executable; each independently rooted blocker is repaired and committed in its own child before the full gate is rerun.`
   Verification: `The first full-gate attempt was cleanly RAM-guarded at 88% host memory because unrelated host workloads raised measured pressure to 88.3%. The second clean attempt advanced through T303 and exposed two exact blockers: T1553 expected the common containment checker's obsolete 22-surface success text after the selected VIAL reference became the twenty-third maintained surface, and T313 selected Homebrew GNU true as a test stub; that otherwise valid binary reproducibly remained before main in _dyld_start while /usr/bin/true exited immediately. Required Knowledge Map queries returned no existing answer for either blocker. Child .1 removed the duplicated surface cardinality. Child .2 replaced mutable fixture identity and unbounded HDL launches with repository-local fixtures plus the fixed, contained shared process policy. The third complete RAM-guarded attempt reached T1524 and falsified that fixed policy: a valid large Yosys synthesis exceeded the 8,388,608-byte aggregate capture limit and was rejected as output_limited. Child .3 owns selection and implementation of a bounded policy that admits valid validator output without restoring an unbounded launch.`
   Commit: `pending implementation`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.6`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.1`
   Status: `done`
@@ -2156,6 +2156,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Diagnose T1554's repeated pre-main shell stalls and distinguish fixture identity from the neutral checker's unbounded core-verifier wait; select finite process/capture/cleanup and failure-preservation contracts without importing FSMGen policy into the portable checker; split implementation into owned children before source changes. Preserve the interrupted full-run failure and do not retry it into success.`
   Verification: `The 2026-09-06 complete recovery run reached T1554 after T1553 passed. Its repository-local bin/freshness shell stayed before main in _dyld_start; a one-second OS sample shows no loaded binary-image map. TERM to that verified child advanced the same checker to bin/version, which independently stalled at the same sampled boundary. Knowledge Map queries found no startup answer. git log -S traces execute_core_verifier's system plus waitpid without a wall to 25c815326630d49a457d4393909fad8d659c753d; T1554 run_checker also uses open3, sequential stream reads, and unbounded waitpid. The verified T1554 test and its remaining descendants received TERM; a subsequent process check found no survivors. The partial TAP says All 5 subtests passed but has no terminal plan and is not a successful test. The complete suite continued at T1555; its terminal summary remains pending. Samples and exact terminated process identities are retained under .artifacts/logs/session-recovery-20260906/t1554-*. Re-derivation is the first shell sample and launch-source/history inspection; falsification is the independent next verifier stalling after first-child termination, ruling out a freshness-body-only explanation without diagnosing the OS cause. This task, the containment fact card, and Git own durability. No checker/test behavior is repaired.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5: own live-document verifier startup blocker`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.6`
+  Status: `pending`
+  Goal: `Select deterministic bounded RAM-guard test-fixture launches.`
+  Acceptance: `Select fixed fixture interpreter identity and a sealed bounded run policy for T1595 without weakening metric assertions, changing production RAM thresholds, or retrying failures into success; distinguish fixture startup from metric computation, preserve signal truth and cleanup, and split implementation into an owned child before source changes.`
+  Verification: `In the 2026-09-06 recovery full run, T1595's first healthy fixture blocks in fake-bin/uname -s before measurement. A one-second OS sample places /usr/bin/env at _dyld_start before main with no loaded binary-image map; its shebang is env bash. The outer complete-run RAM guard remains active with unchanged thresholds. Knowledge Map returns the metric and sealed-adapter contracts but no T1595 startup answer. Git traces the fixture to 30885823b54a0677b4396550d9d3cfc2fc7fa3a9. run_guard uses open3, sequential stream reads, unbounded waitpid, and exit-only status projection. The verified T1595 tree received TERM; t1595-process.sample and t1595-terminated-processes.json under .artifacts/logs/session-recovery-20260906/ retain evidence. This is an interrupted test, not a metric assertion failure or successful qualification. Re-derivation is the sample plus fixture/source/history inspection; the independent T1467 and T1554 pre-main samples falsify a RAM-formula-only explanation without establishing the OS cause. Task, subprocess fact card, and Git own durability. Policy selection and repair remain pending.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.6: own RAM-guard fixture startup blocker`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.2`
   Status: `proposed`
@@ -4645,3 +4652,21 @@ The manifest binds the complete predecessor task file and its exact suffix from 
   censuses agree with unchanged candidate/constant sets, and `git diff --check`
   passes. The full run remains failed/interrupted at T1467/T1554 while later
   tests continue; no complete-CI success is claimed.
+
+## Acceptance Checklist (.19.2.3.1.2.2.6 recovery ownership and inventory sync, enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S '#!/usr/bin/env bash'`
+  identifies `30885823b` as T1595's fixture-launch owner; the OS sample places
+  fake-uname's env process at `_dyld_start` before metric computation. The test
+  reports `No subtests run` after its verified process tree receives TERM.
+  The new Knowledge Map question changes the inventory source census digest.
+- [x] **ADDRESSED (recovery evidence and derived inventory)** — pending `.6`
+  owns deterministic bounded fixture-policy selection. Task, index, Memory,
+  and the existing subprocess card retain the interrupted failure; the card
+  preserves its prior contracts in shorter prose inside its prior byte budget.
+  Derived map and inventory are synchronized; no runtime/test behavior changes.
+- [x] **NO REGRESSION (knowledge, census, and diff)** — `knowledge-map: OK`
+  includes cached/direct query parity, current-surface and independent censuses
+  agree with unchanged candidate/constant sets, and `git diff --check` passes.
+  Process inspection finds no surviving T1595 descendants; the outer RAM guard
+  remains active with its original limits. Full-CI success is not claimed.

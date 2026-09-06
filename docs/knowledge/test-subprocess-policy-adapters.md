@@ -6,10 +6,13 @@ answers:
   - "why does t1545 not use IPC Cmd?"
   - "why does the task-acceptance fixture invoke Bash directly?"
   - "who may call the low-level test process supervisor?"
-date: 2026-08-26
+  - "why can T1595 stall before measuring host memory?"
+date: 2026-09-06
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
 evidence: >-
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
+  t/1595-agent-runtime-ram-guard-macos-metric.t;
   docs/decisions/0087-test-subprocesses-use-shared-mechanism-and-sealed-policy-adapters.md;
   docs/tasks/DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.md;
   docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md;
@@ -26,44 +29,40 @@ reverify: >-
   t/1669-task-acceptance-fixture-runtime.t
 ---
 
-Decision `0087` separates reusable process mechanics from domain policy.
-Private `FSM::Test::ProcessSupervisor` owns shell-free argv, repository-
-contained same-volume cwd, separate aggregate-bounded streams, close-on-exec
-handoff evidence, monotonic timing, one owned process group, first-failure
-statuses, and verified TERM/KILL cleanup. It does not choose commands, bounds,
-schemas, or platform guards. Only sealed policy adapters in `t/lib/FSM/Test/`
-may call it, and the focused watcher recomputes that ownership.
+Decision `0087` separates process mechanics from domain policy. Private
+`FSM::Test::ProcessSupervisor` owns shell-free argv, same-volume repository cwd,
+split aggregate-bounded capture, close-on-exec handoff evidence, monotonic time,
+one process group, first-failure status, and verified TERM/KILL cleanup.
+Commands, bounds, schemas, and platform guards belong to sealed adapters under
+`t/lib/FSM/Test/`; the watcher recomputes their exclusive call ownership.
 
-`FSM::Test::VerilatorRuntime` remains decision `0086`'s policy adapter with
-unchanged Darwin qualification and version/compile/runtime contracts.
-`FSM::Test::TaskAcceptanceFixtureRuntime` owns `t/1545`: it accepts only
-project-local task-acceptance fixture repositories, allowlists the fixture Git
-argument shapes (including only local identity configuration and repository-
-relative add paths), applies fixed ten-second walls, caps aggregate Git/checker
-capture at 1,048,576/4,194,304 bytes, and returns the closed
-`fsmgen.test.task_acceptance_fixture_result.v1` record. Callers cannot widen
-those choices.
-The adapter resolves and canonicalizes the inherited `git` executable once at
-load time, so later `PATH` replacement cannot change the admitted tool.
+`FSM::Test::VerilatorRuntime` retains decision `0086`'s Darwin qualification and
+version/compile/runtime contracts. `FSM::Test::TaskAcceptanceFixtureRuntime`
+accepts only project-local task-acceptance fixture repositories. It allowlists
+fixture Git argv, including only local identity configuration and relative add
+paths; walls are ten seconds, Git/checker capture is 1,048,576/4,194,304 bytes,
+and results use closed `fsmgen.test.task_acceptance_fixture_result.v1` records.
+Callers cannot widen policy. Git is resolved/canonicalized once at load time;
+later PATH replacement cannot change it.
 
-The original checker launch used unbounded `IPC::Cmd` through
-`#!/usr/bin/env bash` and stopped at the qualified Darwin pre-main boundary.
-The adapter likewise resolves the caller-selected `bash` from absolute `PATH` entries,
-canonicalizes it, and invokes that exact executable directly. This removes the
-failed `env` handoff without switching the checker to macOS `/bin/bash` 3.2,
-which the retained falsification replay proves cannot execute the current
-empty-array loop under `set -u`. Bash is an explicit read-only host/toolchain
-dependency alongside Git; every project-owned fixture, scratch file, captured byte, and
-diagnostic remains on the repository volume.
+The original checker used unbounded `IPC::Cmd` through `#!/usr/bin/env bash`
+and stalled before main on Darwin. The adapter resolves caller-selected Bash
+from absolute PATH entries, canonicalizes it, and invokes it directly. The
+retained falsification proves macOS `/bin/bash` 3.2 cannot run the checker's
+empty-array loop under `set -u`. Bash and Git are read-only host dependencies;
+fixtures, scratch, captured bytes, and diagnostics stay on the repository volume.
 
-There is no retry. Timeout, output overflow, nonzero exit, signal, exec
-failure, surviving descendants, or cleanup failure stays failed. The original
-task-acceptance fixtures and result assertions remain unchanged and pass under
-the adapter.
+No retry: timeout, overflow, nonzero exit, signal, exec failure, surviving
+descendants, and cleanup failure remain failures. Original task-acceptance
+fixtures and result assertions pass unchanged through the adapter.
 
-The Verilator hostile watcher also generates its programs with the canonical
-already-running Perl interpreter in their shebangs. A combined gate proved why:
-its former `#!/usr/bin/env perl` success fixture completed exec handoff but
-reached the sealed wall before first output. A source assertion now permits an
-env-Perl shebang only on the watcher entrypoint that `prove` invokes through
-Perl, closing recurrence without retry.
+The Verilator hostile watcher generates fixture shebangs with canonical running
+Perl. A combined gate observed its former env-Perl success fixture complete exec
+handoff but hit the sealed wall before output. A source assertion allows env
+Perl only on the watcher entrypoint invoked through Perl by `prove`.
+
+T1595's recovery run sampled its env-Bash fake `uname` at `_dyld_start`, before
+the metric ran. `run_guard` has sequential open3 capture, unbounded waitpid,
+and exit-only status projection. HIAL/VIAL leaf `.19.2.3.1.2.2.6` owns verified
+termination, interrupted failure, and pending fixture-policy selection. This
+does not diagnose the OS cause or change production RAM formula/thresholds.
