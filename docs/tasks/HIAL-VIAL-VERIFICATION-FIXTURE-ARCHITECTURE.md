@@ -2270,10 +2270,39 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.2: extract asynchronous process advancement`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Implement root-owned launch records and bounded private IPC service.`
   Acceptance: `After .2.2, create each supervised child only from the surviving coordinator; record ownership before exec release; enforce the selected finite requests/connections/queues/jobs and repository-local endpoint contract; reject malformed or unauthorized context before launch and prove partial-start cleanup without a public runner.`
-  Verification: `The unchanged-callsite asynchronous extraction is complete. Next implement the selected root coordinator, private framing/admission and reservation handoff under this owner; nested client routing and complete closure remain following siblings.`
+  Verification: `Source review after asynchronous extraction 51a3a3914 confirms that _start_supervision still forks and releases exec immediately, while the selected coordinator requires separately qualified byte transport, endpoint/cwd transactions, two-child reservation handoffs and ownership publication before release. These are independent failure domains and exceed one safe implementation slice. Decompose them before process changes; nested routing and end-to-end cancellation qualification remain sibling owners.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3: split coordinator implementation boundaries`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1`
+  Status: `pending`
+  Goal: `Implement and qualify the private bounded coordinator wire codec and execution snapshot.`
+  Acceptance: `Implement the selected closed frame/message grammar, canonical byte scalars, ordered environment, metadata and fixed resource admission without launching a coordinator. Qualify byte-exact argv/environment conversion against an independent direct-exec oracle, not only codec round trips. Reject truncated/oversized/unknown/direction-invalid frames, duplicate or malformed keys, invalid contexts and boundary-plus-one inputs before allocation or command execution. Keep runtime activation and public contracts unchanged.`
+  Verification: `First executable coordinator child after the committed safe-slice decomposition; exact protocol is retained above.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2`
+  Status: `pending`
+  Goal: `Implement private repository-local endpoints and finite nonblocking connection handling.`
+  Acceptance: `After .1, implement exact run-directory/socket identity, random run/job authority, close-on-exec descriptors, bounded connections/partial frames/queues and fixed progress walls. Prove actual long-path bind/connect, handle-based cwd restoration on success and failure, exact environment/signal-mask restoration, symlink/foreign/stale endpoint rejection and identity-safe endpoint cleanup. No supervised command launch or public routing is enabled.`
+  Verification: `Pending the qualified wire and context codec in sibling .1.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3`
+  Status: `pending`
+  Goal: `Add asynchronous reserved-group launch gates inside the shared process owner.`
+  Acceptance: `After .2, reserve both child slots and record each exact fork before release; qualify reservation group creation, command membership, reservation departure, exec gating and failed partial-start cleanup. Preserve the default synchronous legacy path while internal coordinator launches use the explicit private strategy. Never reap a group reservation before its last signal or infer group authority from an unacknowledged handoff. Prove descriptor closure, actual wait truth and caller-group isolation with independent real-process and model-only retirement controls.`
+  Verification: `Pending endpoint/context qualification in sibling .2; existing T1669 reservation feasibility is a prerequisite, not production handoff proof.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4`
+  Status: `pending`
+  Goal: `Integrate bounded root ownership records, admission service and fair process advancement.`
+  Acceptance: `After .3, compose the qualified codec, endpoints and gated shared engine into the selected private root coordinator. Validate parent/run authority, reserve all resources before fork, publish ACCEPT before exec release and service all job control/stream/deadline work without starvation. Reject lost or malformed admission without unregistered execution, preserve adapter policy and first failure, and prove private service partial-publication cleanup. Do not enable nested caller routing until sibling .5.5.2.4; complete closure and independent end-to-end qualification remain .5.5.2.5 and .5.5.3.`
+  Verification: `Pending the gated reserved-group mechanism in sibling .3.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.4`
@@ -5785,3 +5814,32 @@ deleted while it owns pending failure or verification evidence.
   remain accurate; no behavior-document edit is needed. The staged doctrine
   gate and commit hook must pass before commit. Evidence is retained under
   `.artifacts/logs/process-async-extraction-20260907/`.
+
+## Coordinator safe-slice decomposition (.19.2.3.1.2.2.5.5.2.3)
+
+The post-extraction source exposes a material implementation boundary:
+`_start_supervision` still releases its single command directly to exec. The
+selected coordinator cannot safely be added merely by calling that function
+from a socket loop. It must publish owned records before releasing exec,
+retain a separate reservation child, transport each client's execution context
+without changing bytes, and preserve caller cwd while binding a local endpoint
+under long checkout paths. The preceding synchronous and nonblocking-step
+regressions do not qualify any of those new failure domains.
+
+Apply the director's batch stop condition for a task expanding beyond a safe
+slice. The live coordinator node is now a container with the exact sequence:
+wire/snapshot and independent exec oracle; endpoint/connection lifecycle;
+reserved-group launch gates; root admission/service integration. Every child
+has explicit acceptance and predecessor evidence before source changes. This
+is an early batch stop after the verified protocol and extraction commits,
+not completion of the requested default batch or the coordinator repair.
+A fresh session resumes directly at `.5.5.2.3.1`; no implementation from that
+child is in flight. Existing neutral-verifier, RAM-fixture and full-CI blockers
+remain open, and no push is attempted.
+
+Validation for this documentation-only decomposition is the staged task-tree
+and doctrine gate plus diff hygiene. The preceding source commit's guarded
+T1669/T1668/T1545/T313 band remains its behavioral evidence; this decomposition
+changes no process code, book behavior, policy constant, or public result.
+Retain the gate and commit output under
+`.artifacts/logs/coordinator-safe-slices-20260907/`.
