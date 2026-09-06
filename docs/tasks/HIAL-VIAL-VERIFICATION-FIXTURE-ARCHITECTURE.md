@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
-- Last updated: `2026-09-06`
+- Last updated: `2026-09-07`
 - Owner: repo-local workflow
 - Segment manifest: `docs/tasks/segments/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/manifest.jsonl`
 
@@ -2209,7 +2209,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Select an ownership model that cannot lose a separately grouped child when an outer supervisor times out or terminates its inner supervisor; implement the selected design without weakening existing caller, status, bound, locality or cleanup contracts, and prove hostile nested cancellation and current adapters.`
   Verification: `The .1 diagnostic proves a live inner group after outer group cleanup; its exact process was subsequently terminated and verified absent.`
   Commit: `pending`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.3`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.4`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.4`
+  Status: `done`
+  Goal: `Reject failed child process-group establishment before command execution.`
+  Acceptance: `Inject nonthrowing setpgid failure and false success in the existing hostile watcher; require an exec_error with no command output, exact leader cleanup and no unrelated group signal. Check the POSIX return and actual child group before exec; preserve caller seals, result schemas, fixed bounds and existing adapter behavior. Nested ownership remains separately blocked.`
+  Verification: `The direct invalid-PID POSIX oracle returns undef/ESRCH without throwing; git log -S traces the ignored return to b253263c847a2ac641f9cae14603d28d1a755122. T1669 is RED on the unchanged engine: undefined, negative and false-success injections execute the command; the exception control already rejects. The child now requires a defined zero return and its own PGID before exec. Guarded T1669/T1668/T1545 each report ok; that combined invocation then rejects a mistyped T313 filename and is retained as incomplete. The corrected standalone T313 reports All tests successful. The mdBook builds and its rendered admission paragraph is inspected. Source import closure agrees with the existing dated baseline, so the architecture note is unchanged. Logs are under .artifacts/logs/process-group-admission-20260907/. Nested group escape, neutral policy acceptance and complete CI remain open.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.4: reject failed child group admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.1`
   Status: `pending`
@@ -5077,3 +5084,41 @@ is explicitly missing until that implementation lands. Full CI remains blocked.
   locality, task integrity and claim dispositions. The initial gate caught and
   rejected a pending status on a new container; it was corrected to active.
   No completed source repair or full-CI success is claimed by this checkpoint.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.4 child group admission; enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'unless (eval { setpgid(0, 0); 1 })'`
+  identifies the original process engine at `b253263c847a2ac641f9cae14603d28d1a755122`.
+  The real POSIX invalid-PID oracle returns `undef`/`ESRCH`, without throwing.
+  The old child branch ends its eval with literal true. T1669's new controls
+  consequently observe command execution for nonthrowing failure and false
+  success, while the exception control rejects. The initial RAM-guard attempt
+  refused unavailable sandbox process inspection; the authorized guarded run
+  supplies the RED evidence in `red.log` under the task log root.
+- [x] **ADDRESSED (verified)** — The child now checks the returned zero and
+  actual PGID before descriptor/exec handoff. The unchanged hostile controls
+  pass with `exec_error`, no command output, reaped leader, absent child group
+  and unchanged caller group. The parent retains its race-closing attempt;
+  caller seals, result schemas, budgets and retry policy do not change.
+  The fact card and rendered book describe this guarantee separately from
+  the still-open nested-group limitation. The task index returns to `.5.5.1`.
+- [x] **NO REGRESSION** — Guarded T1669, T1668 and T1545 report `ok` in
+  `green.log`; its later invalid T313 filename makes that invocation incomplete,
+  not a complete-band pass. Corrected T313 reports `All tests successful` in
+  `hdl-validation.log`. The book build succeeds and its rendered paragraph is
+  inspected. Import re-derivation matches the existing architecture baseline.
+  The staged driver reports `[doctrine] all doctrine checks passed`, including
+  fresh acceptance, Knowledge Map, containment, locality, task integrity and
+  claim joins. The inspected book render is removed with exact file hashes
+  and absent-root evidence retained in `book-cleanup.json` under the log root.
+
+The startup review followed the director's recorded task-directed scope in
+`SESSION-READING-SCOPE`: mandatory entrypoints, complete roadmap, task workflow,
+active repair nodes and evidence, CLI source and import architecture, shared
+engine and relevant tests, book contents and the relevant product/supervision
+sections. This is not an exhaustive source/test/book review. The requested
+read-only sibling claim-template digest still matches the already-owned
+`CLAIM-VERIFICATION-TEMPLATE-REVIEW` discovery; no new template delta is inferred.
+The local containment adoption guide includes the current stable-success
+contract revision. README policy is already adopted. No new policy adoption,
+architecture-note refresh, complete-CI pass or nested cleanup repair is claimed.

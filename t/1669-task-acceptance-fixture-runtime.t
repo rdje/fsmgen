@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Cwd qw(abs_path);
+use Errno qw(EPERM);
 use File::Basename qw(dirname);
 use File::Path qw(make_path);
 use File::Spec;
@@ -66,6 +67,36 @@ PROGRAM
     is($result->{cleanup}{containment}, 'process_supervisor_probe_group', 'caller policy owns the containment label');
     ok($result->{cleanup}{leader_reaped}, 'leader is reaped');
     ok($result->{cleanup}{group_gone}, 'process group is gone');
+};
+
+subtest 'child containment must be established before exec' => sub {
+    my $caller_group = getpgrp(0);
+    for my $mode (qw(undefined negative false_success exception)) {
+        no warnings 'redefine';
+        local *FSM::Support::ProcessSupervisor::setpgid = sub {
+            $! = EPERM;
+            die "injected containment exception\n" if $mode eq 'exception';
+            return undef if $mode eq 'undefined';
+            return -1 if $mode eq 'negative';
+            return 0;
+        };
+        my $result = supervise_process(
+            schema => 'fsmgen.test.process_supervisor_probe.v1',
+            stage => 'probe',
+            bounds => {timeout_seconds => 1, capture_limit_bytes => 65_536},
+            containment => 'process_supervisor_probe_group',
+            cwd => $workspace,
+            argv => [$perl, '-e', 'print "command-executed\n"'],
+        );
+        is($result->{status}, 'exec_error', "$mode rejects the exec handoff");
+        ok($result->{exec_failed}, "$mode reports failed handoff");
+        like($result->{exec_error} // '', qr/process-group containment failed/,
+            "$mode identifies the containment boundary");
+        is($result->{stdout}, '', "$mode never executes the command");
+        ok($result->{cleanup}{leader_reaped}, "$mode reaps the rejected child");
+        ok($result->{cleanup}{group_gone}, "$mode leaves no child group");
+        is(getpgrp(0), $caller_group, "$mode leaves the caller group unchanged");
+    }
 };
 
 subtest 'shared engine kills a TERM-resistant process tree at its wall' => sub {

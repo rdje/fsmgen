@@ -8,7 +8,8 @@ answers:
   - "who may call the low-level test process supervisor?"
   - "why can T1595 stall before measuring host memory?"
   - "can a nested supervised child survive an outer timeout?"
-date: 2026-09-06
+  - "how does the supervisor reject failed setpgid before exec?"
+date: 2026-09-07
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
 evidence: >-
@@ -35,6 +36,11 @@ behind the test compatibility wrapper. It owns shell-free argv, same-volume
 repository cwd, bounded split streams, exec handoff, monotonic time, one process
 group, first-failure status and TERM/KILL cleanup. Sealed adapters own commands,
 bounds, schemas and platform guards; T1669 watches exclusive ownership.
+
+The child checks the POSIX `setpgid` return and its actual group before exec.
+Nonthrowing failure and false success reject with `exec_error` and no command
+execution; T1669 injects both plus an exception. The parent's race-closing
+attempt cannot replace child admission. Nested cleanup remains open below.
 
 `VerilatorRuntime` retains decision `0086`'s Darwin qualification and version/
 compile/runtime contracts. `TaskAcceptanceFixtureRuntime` admits only owned

@@ -270,7 +270,13 @@ sub _supervise {
         close $stdout_reader;
         close $stderr_reader;
         close $control_reader;
-        unless (eval { setpgid(0, 0); 1 }) {
+        # POSIX failures normally return undef instead of throwing. The child
+        # must verify containment itself before exec; the parent's matching
+        # setpgid call is only a race-closing attempt, not admission evidence.
+        unless (eval {
+            my $group_result = setpgid(0, 0);
+            defined($group_result) && $group_result == 0 && getpgrp(0) == $$;
+        }) {
             _write_child_control(
                 $control_writer, "process-group containment failed: $!",
             );

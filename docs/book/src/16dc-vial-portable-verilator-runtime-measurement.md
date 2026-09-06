@@ -386,6 +386,11 @@ Every child owns one process group; timeout, overflow, handoff failure, or a
 surviving descendant triggers TERM, bounded grace, KILL when required, leader
 reaping, and a final group-disappearance check.
 
+Before executing the command, the child checks both the process-group call's
+return value and its actual group identity. A failed call or a child outside
+its intended group returns `exec_error` without executing the command. The
+parent's parallel group-creation attempt does not replace this child check.
+
 The low-level module deliberately does not pick a command or a safety budget.
 Only sealed policy adapters in `t/lib/FSM/Test/` may call it, and
 `t/1669-task-acceptance-fixture-runtime.t` recomputes that owner set.
