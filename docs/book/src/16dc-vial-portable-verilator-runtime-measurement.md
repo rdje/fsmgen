@@ -390,6 +390,9 @@ Before executing the command, the child checks both the process-group call's
 return value and its actual group identity. A failed call or a child outside
 its intended group returns `exec_error` without executing the command. The
 parent's parallel group-creation attempt does not replace this child check.
+After KILL, leader reaping uses nonblocking polling within the existing cleanup
+grace. If the leader or group remains, the result retains incomplete cleanup
+evidence; sending a signal alone never proves that the process has disappeared.
 
 The low-level module deliberately does not pick a command or a safety budget.
 Only sealed policy adapters in `t/lib/FSM/Test/` may call it, and

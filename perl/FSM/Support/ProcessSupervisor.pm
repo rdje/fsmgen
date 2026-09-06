@@ -610,23 +610,14 @@ sub _terminate_owned_process {
         $target = $group_alive ? -$pid : $pid;
         $cleanup->{kill_sent} = kill('KILL', $target) ? 1 : 0;
     }
-    unless ($$reaped) {
-        while (1) {
-            my $waited = waitpid($pid, 0);
-            if ($waited == $pid) {
-                $$reaped = 1;
-                $$status = $?;
-                last;
-            }
-            next if $waited == -1 && $! == EINTR;
-            $$reaped = 1 if $waited == -1 && $! == ECHILD;
-            last;
-        }
-    }
+    # KILL delivery does not prove that the kernel can finish the child yet.
+    # Bound leader reaping and group disappearance by the same cleanup grace.
     my $kill_deadline =
         clock_gettime(CLOCK_MONOTONIC) + $KILL_GRACE_SECONDS;
-    while (_group_alive($pid)
-            && clock_gettime(CLOCK_MONOTONIC) < $kill_deadline) {
+    while (clock_gettime(CLOCK_MONOTONIC) < $kill_deadline) {
+        my $ignored;
+        _poll_leader($pid, $reaped, $status, \$ignored);
+        last if $$reaped && !_group_alive($pid);
         sleep(0.02);
     }
     $cleanup->{leader_reaped} = $$reaped ? 1 : 0;

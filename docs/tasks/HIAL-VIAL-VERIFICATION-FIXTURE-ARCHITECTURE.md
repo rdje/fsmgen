@@ -2209,7 +2209,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Select an ownership model that cannot lose a separately grouped child when an outer supervisor times out or terminates its inner supervisor; implement the selected design without weakening existing caller, status, bound, locality or cleanup contracts, and prove hostile nested cancellation and current adapters.`
   Verification: `The .1 diagnostic proves a live inner group after outer group cleanup; its exact process was subsequently terminated and verified absent.`
   Commit: `pending`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.4`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.5`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.4`
   Status: `done`
@@ -2217,6 +2217,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Inject nonthrowing setpgid failure and false success in the existing hostile watcher; require an exec_error with no command output, exact leader cleanup and no unrelated group signal. Check the POSIX return and actual child group before exec; preserve caller seals, result schemas, fixed bounds and existing adapter behavior. Nested ownership remains separately blocked.`
   Verification: `The direct invalid-PID POSIX oracle returns undef/ESRCH without throwing; git log -S traces the ignored return to b253263c847a2ac641f9cae14603d28d1a755122. T1669 is RED on the unchanged engine: undefined, negative and false-success injections execute the command; the exception control already rejects. The child now requires a defined zero return and its own PGID before exec. Guarded T1669/T1668/T1545 each report ok; that combined invocation then rejects a mistyped T313 filename and is retained as incomplete. The corrected standalone T313 reports All tests successful. The mdBook builds and its rendered admission paragraph is inspected. Source import closure agrees with the existing dated baseline, so the architecture note is unchanged. Logs are under .artifacts/logs/process-group-admission-20260907/. Nested group escape, neutral policy acceptance and complete CI remain open.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.4: reject failed child group admission`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.5`
+  Status: `done`
+  Goal: `Keep post-KILL leader reaping inside the existing finite cleanup grace.`
+  Acceptance: `A controlled oracle must reject blocking waitpid and keep a simulated unreapable leader/group explicitly incomplete; use monotonic nonblocking polling within the existing KILL grace, preserve real signal/exit/cleanup behavior, and pass focused process/adapter regressions before resuming nesting policy.`
+  Verification: `git log -S traces the blocking post-KILL wait to b253263c847a2ac641f9cae14603d28d1a755122. The isolated T1669 oracle mocks signals and wait status, advances a monotonic clock and rejects blocking waitpid without creating an unkillable child. It goes RED against the prior source, then GREEN after leader reaping and group disappearance share the existing KILL-grace polling loop. An unreapable leader and surviving group remain explicitly incomplete. The guarded real-process/adapter band T1669/T1668/T1545/T313 reports All tests successful. Book, fact card and exact reference authority are synchronized. Evidence is under .artifacts/logs/process-reap-deadline-20260907/. This bounded-wait repair does not close nested ownership or complete CI.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.5: bound post-KILL leader reaping`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.1`
   Status: `pending`
@@ -5122,3 +5129,29 @@ read-only sibling claim-template digest still matches the already-owned
 The local containment adoption guide includes the current stable-success
 contract revision. README policy is already adopted. No new policy adoption,
 architecture-note refresh, complete-CI pass or nested cleanup repair is claimed.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.5 finite post-KILL reap; enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'my $waited = waitpid($pid, 0);'`
+  traces the blocking wait to the original shared-engine ancestor
+  `b253263c847a2ac641f9cae14603d28d1a755122`. That wait precedes creation of the
+  KILL-grace deadline in `_terminate_owned_process`. The isolated mock oracle
+  goes RED with `blocking wait bypasses cleanup deadline`; its clock advances
+  while its leader/group remain present. Signal and wait syscalls are mocked
+  inside a separate bounded process, so the oracle signals no real PID and
+  creates no unkillable child. The earlier process-admission fix stays green.
+- [x] **ADDRESSED (verified)** — The existing KILL grace now covers both
+  nonblocking leader polling and group disappearance. The unchanged oracle
+  returns normally with incomplete leader/group evidence and observes TERM
+  then KILL. First-failure status and fixed grace values remain unchanged;
+  there is no retry or new process-runner entrypoint. Book and fact-card prose
+  distinguish bounded cleanup attempts from proved disappearance.
+- [x] **NO REGRESSION** — The guarded T1669/T1668/T1545/T313 band reports
+  `All tests successful` in `green.log` under
+  `.artifacts/logs/process-reap-deadline-20260907/`. It includes real
+  TERM-resistant descendant cleanup, success, signal/exit/exec/overflow and
+  sealed-adapter controls, alongside the new deliberately unresolved mock.
+  The book builds and the rendered cleanup paragraph is inspected; exact
+  cleanup hashes and absent-root evidence are in `book-cleanup.json`. The
+  staged driver reports `[doctrine] all doctrine checks passed`, including
+  fresh task acceptance, Knowledge Map, containment, locality and claim joins.

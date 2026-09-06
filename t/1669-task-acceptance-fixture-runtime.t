@@ -148,6 +148,62 @@ PROGRAM
     }
 };
 
+subtest 'cleanup cannot block while waiting for an unreapable leader' => sub {
+    my $probe = File::Spec->catfile($workspace, 'unreapable-leader');
+    write_executable($probe, <<'PROBE');
+use strict;
+use warnings;
+use JSON::PP qw(encode_json);
+our $blocking_wait = 0;
+BEGIN {
+    *CORE::GLOBAL::waitpid = sub {
+        if ($_[1] == 0) {
+            $blocking_wait = 1;
+            die "blocking wait bypasses cleanup deadline\n";
+        }
+        return 0;
+    };
+    # This oracle creates no process and must never signal a real PID.
+    *CORE::GLOBAL::kill = sub { return 1 };
+}
+require FSM::Support::ProcessSupervisor;
+my $clock = 0;
+no warnings 'redefine';
+local *FSM::Support::ProcessSupervisor::clock_gettime = sub { $clock += 0.25 };
+local *FSM::Support::ProcessSupervisor::sleep = sub {};
+local *FSM::Support::ProcessSupervisor::_group_alive = sub { return 1 };
+my $cleanup = FSM::Support::ProcessSupervisor::_new_cleanup(1, 'probe');
+my ($reaped, $status) = (0, undef);
+my $finished = eval {
+    FSM::Support::ProcessSupervisor::_terminate_owned_process(
+        42, \$reaped, \$status, $cleanup,
+    );
+    1;
+};
+print encode_json({
+    finished => $finished ? 1 : 0, error => "$@",
+    blocking_wait => $blocking_wait, cleanup => $cleanup,
+});
+PROBE
+    my $outer = supervise_process(
+        schema => 'fsmgen.test.process_supervisor_probe.v1', stage => 'probe',
+        bounds => {timeout_seconds => 10, capture_limit_bytes => 65_536},
+        containment => 'process_supervisor_probe_group', cwd => $repo_root,
+        argv => [$perl, '-Iperl', $probe],
+    );
+    ok($outer->{ok}, 'isolated mock oracle returns under a real deadline')
+        or diag explain $outer;
+    my $observed = eval { decode_json($outer->{stdout}) };
+    ok(ref($observed) eq 'HASH', 'oracle returns structured evidence') or return;
+    ok($observed->{finished}, 'cleanup returns when its grace expires')
+        or diag $observed->{error};
+    ok(!$observed->{blocking_wait}, 'cleanup never asks for a blocking wait');
+    ok(!$observed->{cleanup}{leader_reaped}, 'unreapable leader remains unreaped');
+    ok(!$observed->{cleanup}{group_gone}, 'surviving group remains explicitly present');
+    ok($observed->{cleanup}{term_sent}, 'cleanup first attempts TERM');
+    ok($observed->{cleanup}{kill_sent}, 'cleanup escalates to KILL');
+};
+
 subtest 'task-acceptance adapter seals path, command, interpreter, and bounds' => sub {
     my $fixture = create_project_tempdir(
         purpose => 'task-acceptance-tests',
